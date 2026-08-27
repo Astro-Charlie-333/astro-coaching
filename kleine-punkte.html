@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die kleinen Punkte · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.say{border-left:3px solid var(--ind);padding-left:14px;margin:10px 0;
+  font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ind);line-height:1.45;}
+select,input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.inrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.inrow{grid-template-columns:1fr;}}
+.inrow > div > select, .inrow > div > input{width:100%;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:4px;color:var(--ind);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Ein Chart lesen</div>
+<h1>Die kleinen <em>Punkte.</em></h1>
+<p class="lede">Chiron, Lilith, die Mondknoten, Vertex und Glückspunkt. Man lässt sie gern weg, weil das Chart ohnehin voll ist — und übersieht dabei manchmal genau die Stelle, die alles erklärt. Diese Seite zeigt, was sie bedeuten und wie eng du sie fassen musst.</p>
+
+
+<div class="tip"><b>Die Grundregel für alle kleinen Punkte:</b> Sie stützen eine Deutung, sie tragen sie nicht. Wenn deine ganze Aussage an einer Lilith hängt und der Rest des Charts nichts dazu sagt, ist die Aussage zu dünn. Aber wenn ein kleiner Punkt gradgenau auf etwas Wichtigem sitzt, ist er oft das fehlende Stück.</div>
+
+<h2>Chiron</h2>
+<div class="card">
+<p><b>Die Wunde, die zur Kompetenz wird.</b> Chiron zeigt, wo jemand früh etwas erlebt hat, das nicht heilbar im üblichen Sinn war — und wo genau deshalb später eine ungewöhnliche Fähigkeit entsteht. Nicht „was kaputt ist“, sondern „wo du Experte wurdest, weil du musstest“.</p>
+<p><b>Im Haus:</b> der Lebensbereich, in dem die Verletzlichkeit sitzt. <b>Im Zeichen:</b> die Art, wie sie sich zeigt.</p>
+<p><b>Coaching-Frage:</b> „Wo hast du früh etwas verstehen müssen, das andere in deinem Alter nicht verstehen mussten?“</p>
+</div>
+
+<h2>Lilith (Schwarzer Mond)</h2>
+<div class="card">
+<p><b>Das Unzähmbare.</b> Der Teil, der sich nicht anpasst, nicht klein macht und nicht um Erlaubnis fragt — und der genau deshalb oft weggesperrt wurde. Lilith beschreibt, wo jemand entweder zu viel geschluckt hat oder sich kompromisslos zeigt.</p>
+<p><b>Typisches Muster:</b> Im betroffenen Bereich gibt es entweder Scham oder Wildheit, selten etwas dazwischen. Unter Druck (etwa Saturn im Quadrat) wird daraus Sprachlosigkeit.</p>
+<p><b>Coaching-Frage:</b> „Worüber sprichst du nicht, obwohl es zu dir gehört?“</p>
+</div>
+
+<h2>Die Mondknoten</h2>
+<div class="card">
+<p><b>Nordknoten:</b> die Richtung, die sich ungewohnt anfühlt und trotzdem stimmt. <b>Südknoten:</b> das Vertraute, das Können, der Rückzugsort — und die Komfortzone, in die man zurückfällt.</p>
+<p>Wichtig: Der Südknoten ist nicht „schlecht“. Er ist die Begabung. Er wird nur zum Problem, wenn er zur Ausrede wird, den Nordknoten nicht zu betreten.</p>
+<p><b>Coaching-Frage:</b> „Was fällt dir so leicht, dass du es unterschätzt — und was vermeidest du, obwohl es dich zieht?“</p>
+</div>
+
+<h2>Der Glückspunkt (Pars Fortunae)</h2>
+<div class="card">
+<p><b>Wo Dinge leicht laufen, wenn du dich zeigst.</b> Der Glückspunkt wird aus Sonne, Mond und Aszendent berechnet — er ist kein Himmelskörper, sondern eine Rechengröße. Sein Haus zeigt, wo Fluss entsteht, wenn die drei Grundfaktoren zusammenspielen.</p>
+<p>Besonders aussagekräftig, wenn er auf einem Planeten sitzt: Dann läuft das Glück über genau diese Funktion. Auf Chiron etwa bedeutet es, dass der eigene Heilungsprozess zum Weg wird — nicht das fertige Ergebnis.</p>
+<p><b>Coaching-Frage:</b> „In welchem Bereich hast du das Gefühl, dass dir Dinge zufallen, wenn du einfach du bist?“</p>
+</div>
+
+<h2>Der Vertex</h2>
+<div class="card">
+<p><b>Der Punkt der Begegnung.</b> Ein rechnerischer Schnittpunkt im westlichen Chartbereich, traditionell mit schicksalhaften Kontakten und Wendepunkten verbunden — Dinge, die von außen kommen und die man nicht geplant hat.</p>
+<p>Ehrlich eingeordnet: Der Vertex ist umstritten und wird von vielen Astrolog:innen gar nicht verwendet. Nimm ihn als Zusatzhinweis, wenn ein Transit oder eine Synastrie ihn gradgenau berührt — und baue keine Deutung allein darauf.</p>
+<p><b>Coaching-Frage:</b> „Gab es Begegnungen, die dein Leben verändert haben, ohne dass du etwas dafür getan hast?“</p>
+</div>
+
+<h2>Wie eng du sie fassen musst</h2>
+<table>
+<tr><th>Punkt</th><th>Konjunktion</th><th>Andere Aspekte</th></tr>
+<tr><td>Chiron</td><td class="mono">3°</td><td class="mono">2°</td></tr>
+<tr><td>Lilith</td><td class="mono">2–3°</td><td class="mono">1,5°</td></tr>
+<tr><td>Mondknoten</td><td class="mono">3°</td><td class="mono">2°</td></tr>
+<tr><td>Glückspunkt</td><td class="mono">2°</td><td class="mono">1,5°</td></tr>
+<tr><td>Vertex</td><td class="mono">2°</td><td class="mono">nur Konjunktion werten</td></tr>
+</table>
+
+<div class="tip"><b>Wo kleine Punkte am meisten leisten:</b> in der Synastrie. Zwischen zwei Charts erklären sie oft genau das, was die Planetenkontakte allein nicht hergeben — warum eine Verbindung sich anders anfühlt, als die großen Aspekte vermuten lassen. Aber auch dort gilt: eng fassen, sonst wird alles bedeutungsvoll.</div>
+
+
+<div class="weiter"><a href="herrscher.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Herrscher &amp; Dispositoren</span></a><a href="aspekt-muster.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Aspekt-Muster</span></a></div>
+<div class="foot">Kleine Punkte &middot; Orben eng halten: 2–3°, bei Konjunktionen maximal 3°. Wer sie weit fasst, findet zu jeder These etwas.</div>
+</div>
+
+</body></html>

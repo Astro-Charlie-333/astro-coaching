@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solar Return Vertiefung · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.say{border-left:3px solid var(--ind);padding-left:14px;margin:10px 0;
+  font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ind);line-height:1.45;}
+select,input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.inrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.inrow{grid-template-columns:1fr;}}
+.inrow > div > select, .inrow > div > input{width:100%;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:4px;color:var(--ind);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing-Vertiefung</div>
+<h1>Solar Return, <em>vertieft.</em></h1>
+<p class="lede">Das Jahreschart ist mehr als ein zweiter Aszendent. Richtig gelesen zeigt es, wo dein Lebensjahr stattfindet, welche Themen es in den Vordergrund holt — und wie es sich mit deinem Radix verzahnt. Die Methode in sieben Schritten.</p>
+
+
+<h2>Was ein Solar Return ist</h2>
+<p>Der Moment, in dem die Sonne exakt wieder auf ihrem Radix-Grad steht — meist am Geburtstag, manchmal einen Tag davor oder danach. Für diesen Moment wird ein vollständiges Chart gerechnet. Es gilt bis zum nächsten Solar Return.</p>
+<div class="tip"><b>Ortsfrage:</b> Gerechnet wird auf den Aufenthaltsort zum Zeitpunkt der Rückkehr, nicht auf den Geburtsort. Deshalb verändert eine Reise über den Geburtstag das Chart erheblich — vor allem Aszendent und MC. Ob man das gezielt nutzen sollte („Relocation“), ist unter Astrolog:innen umstritten. Meine Empfehlung: lesen, was ist, statt zu manipulieren, was sein könnte.</div>
+
+<h2>Die sieben Schritte</h2>
+<ol class="steps">
+<li><b>Der Solar-Aszendent</b>Das Tor zum Jahr. Sein Zeichen beschreibt die Haltung, mit der du durch dieses Jahr gehst. Prüfe zusätzlich, in welches <i>Radix-Haus</i> dieser Grad fällt — das ist die Lebensbühne des Jahres.</li>
+<li><b>Wo die Sonne steht</b>Im Solar-Chart zeigt das Haus der Sonne den Bereich, um den sich das Jahr zentral dreht. Ein Jahr mit Sonne im 7. Haus dreht sich um andere Menschen, eines mit Sonne im 10. um den Beruf.</li>
+<li><b>Häufungen</b>Stehen drei oder mehr Planeten in einem Haus, ist das der Schauplatz. Meistens ist das die deutlichste Aussage des ganzen Charts — und sie überschreibt viele Einzelheiten.</li>
+<li><b>Der Solar-MC und Jupiter/Saturn</b>Was auf dem Solar-MC sitzt, beschreibt das öffentliche Thema des Jahres. Jupiter dort heißt Wachstum und Sichtbarkeit, Saturn dort Last und Struktur.</li>
+<li><b>Die Überlagerung mit dem Radix</b>Der eigentliche Trick: Wo fallen die Solar-Planeten in dein <i>Geburtschart</i>? Ein Solar-Jupiter, der im Solar-Chart im 10. steht, aber im Radix ins 2. Haus fällt, verbindet Beruf mit Einkünften. Diese Doppellesung ist der Kern der Methode.</li>
+<li><b>Gradgenaue Kontakte zum Radix</b>Berührt ein Solar-Planet einen Radix-Punkt auf unter 2°, ist das ein Hauptthema. Alles darüber ist Nebengeräusch.</li>
+<li><b>Gegenprobe mit den Transiten</b>Das Solar Return ist eine Momentaufnahme. Die Transite über das Jahr sagen dir, <i>wann</i> die Themen fällig werden. Ohne diese Gegenprobe hast du ein Bild ohne Zeitachse.</li>
+</ol>
+
+<h2>Was welches Haus im Solar-Chart bedeutet</h2>
+<table>
+<tr><th>Sonne im</th><th>Das Jahr dreht sich um</th></tr>
+<tr><td class="mono">1. Haus</td><td>Dich selbst — Neustart, Auftreten, Körper</td></tr>
+<tr><td class="mono">2. Haus</td><td>Geld, Wert, Ressourcen, Selbstwert</td></tr>
+<tr><td class="mono">3. Haus</td><td>Lernen, Sprache, Nahbereich, Geschwister</td></tr>
+<tr><td class="mono">4. Haus</td><td>Zuhause, Familie, Wurzeln, Rückzug</td></tr>
+<tr><td class="mono">5. Haus</td><td>Ausdruck, Kreativität, Romantik, Kinder</td></tr>
+<tr><td class="mono">6. Haus</td><td>Alltag, Arbeit, Gesundheit, Routinen</td></tr>
+<tr><td class="mono">7. Haus</td><td>Andere Menschen — Partnerschaft, Kooperation</td></tr>
+<tr><td class="mono">8. Haus</td><td>Tiefe, Krise, Gemeinsames, Verwandlung</td></tr>
+<tr><td class="mono">9. Haus</td><td>Weite, Sinn, Reisen, Ausbildung</td></tr>
+<tr><td class="mono">10. Haus</td><td>Beruf, Sichtbarkeit, Verantwortung</td></tr>
+<tr><td class="mono">11. Haus</td><td>Gruppen, Netzwerke, Ziele, Freundschaft</td></tr>
+<tr><td class="mono">12. Haus</td><td>Rückzug, Inneres, Abschluss eines Zyklus</td></tr>
+</table>
+
+<h2>Häufige Fehler</h2>
+<ul>
+<li><b>Das Solar Return wie ein zweites Geburtschart lesen.</b> Es beschreibt ein Jahr, keinen Charakter. Es überschreibt das Radix nie.</li>
+<li><b>Die Überlagerung weglassen.</b> Ohne den Blick ins Radix bleibt die Deutung allgemein und austauschbar.</li>
+<li><b>Alles deuten.</b> Auch hier gilt: die drei bis fünf engsten Kontakte, mehr nicht.</li>
+<li><b>Den Jahreswechsel dramatisieren.</b> Themen laufen weich ineinander über; die letzten Wochen vor dem Geburtstag tragen oft schon das nächste Chart.</li>
+</ul>
+
+<div class="tip"><b>Fürs Reading:</b> Fasse das Jahr in <i>einem</i> Satz zusammen, bevor du ins Detail gehst. Wenn dir dieser Satz nicht gelingt, hast du die Häufung noch nicht gefunden. Ein Solar Return, das man nicht in einem Satz sagen kann, ist noch nicht gelesen.</div>
+
+
+<div class="weiter"><a href="solar-return-light.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Solar Return light</span></a><a href="profektionen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Jahresprofektionen</span></a></div>
+<div class="foot">Solar Return &middot; Aufbau zu „Solar Return light“. Gerechnet wird auf den Ort, an dem du dich zum Zeitpunkt der Sonnenrückkehr aufhältst — daher weicht das Chart bei Reisen ab.</div>
+</div>
+
+</body></html>

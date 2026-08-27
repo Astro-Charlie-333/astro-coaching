@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astrokartographie · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.say{border-left:3px solid var(--ind);padding-left:14px;margin:10px 0;
+  font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ind);line-height:1.45;}
+select,input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.inrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.inrow{grid-template-columns:1fr;}}
+.inrow > div > select, .inrow > div > input{width:100%;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:4px;color:var(--ind);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing & Beziehungen</div>
+<h1>Orte <em>lesen.</em></h1>
+<p class="lede">Warum sich manche Städte anders anfühlen als andere — und warum das keine Einbildung sein muss. Astrokartographie überträgt dein Geburtschart auf die Weltkarte: Jeder Planet bekommt Linien, entlang derer er besonders stark wirkt.</p>
+
+
+<h2>Die Idee</h2>
+<p>Dein Chart hält einen Moment fest — aber dieser Moment sah von jedem Punkt der Erde anders aus. Was in Berlin am Deszendenten stand, stand zur selben Sekunde in Tokio am Himmelspunkt. Astrokartographie zeichnet für jeden Planeten die Orte ein, an denen er in einer der vier Achsen stand.</p>
+
+<h2>Die vier Linientypen</h2>
+<div class="inrow">
+<div class="card"><div class="chead"><span class="pill fire">AC</span><h3>Aszendent-Linie</h3></div>
+<p>Der Planet steht am Osthorizont. Hier wirkt seine Qualität <b>auf dich und durch dich</b> — Auftreten, Körpergefühl, wie andere dich sehen. Die persönlichste der vier Linien.</p></div>
+<div class="card"><div class="chead"><span class="pill air">MC</span><h3>Medium-Coeli-Linie</h3></div>
+<p>Der Planet steht im Zenit. Hier geht es um <b>Sichtbarkeit, Beruf, Ruf</b>. Orte, an denen man beruflich etwas wird — im Guten wie im Anstrengenden.</p></div>
+<div class="card"><div class="chead"><span class="pill water">DC</span><h3>Deszendent-Linie</h3></div>
+<p>Der Planet steht am Westhorizont. Hier begegnet dir seine Qualität <b>in anderen Menschen</b> — Beziehungen, Partnerschaften, Begegnungen mit Gewicht.</p></div>
+<div class="card"><div class="chead"><span class="pill earth">IC</span><h3>Imum-Coeli-Linie</h3></div>
+<p>Der Planet steht am Tiefpunkt. Hier geht es um <b>Zuhause, Wurzeln, inneren Grund</b>. Orte zum Ankommen — oder zum Aufwühlen dessen, was man mitbringt.</p></div>
+</div>
+
+<h2>Was welche Planetenlinie macht</h2>
+<table>
+<tr><th>Planet</th><th>Wirkung am Ort</th></tr>
+<tr><td>Sonne</td><td>Sichtbarkeit, Vitalität, man wird gesehen</td></tr>
+<tr><td>Mond</td><td>Emotional dicht, Zugehörigkeit, aber auch Empfindlichkeit</td></tr>
+<tr><td>Merkur</td><td>Sprache, Lernen, Kontakte, viel Bewegung im Kopf</td></tr>
+<tr><td>Venus</td><td>Leichtigkeit, Ästhetik, Zuneigung — oft geliebte Orte</td></tr>
+<tr><td>Mars</td><td>Antrieb, Reibung, Durchsetzung, manchmal Konflikt</td></tr>
+<tr><td>Jupiter</td><td>Weite, Chancen, Wachstum — auch Übermaß</td></tr>
+<tr><td>Saturn</td><td>Ernst, Struktur, Arbeit, Reifung. Anstrengend, aber tragfähig</td></tr>
+<tr><td>Uranus</td><td>Unruhe, Freiheit, Brüche, plötzliche Wendungen</td></tr>
+<tr><td>Neptun</td><td>Traum, Auflösung, Inspiration — Realitätsgrenzen verschwimmen</td></tr>
+<tr><td>Pluto</td><td>Intensität, Machtthemen, Verwandlung, kein Zurück</td></tr>
+</table>
+
+<h2>Wie du es liest</h2>
+<ol class="steps">
+<li><b>Orbis auch hier</b>Eine Linie wirkt etwa 100–150 km beidseitig deutlich, bis rund 300 km spürbar. Weiter weg: nicht mehr werten.</li>
+<li><b>Zwei Linien nah beieinander</b>Liegt ein Ort zwischen zwei Linien, mischen sich beide Qualitäten. Das ist häufiger als ein exakter Treffer und meistens die interessantere Aussage.</li>
+<li><b>Achse vor Planet</b>Frag zuerst: Welche Achse? Ob ein Planet dir <i>selbst</i> zusetzt (AC) oder dir in <i>Menschen</i> begegnet (DC), macht den größten Unterschied.</li>
+<li><b>Erfahrung schlägt Karte</b>Frag die Person nach Orten, an denen sie war. Wenn die Linien nicht zu ihren Erlebnissen passen, hat die Erfahrung recht — nicht die Karte.</li>
+</ol>
+
+<div class="tip"><b>Ein Beispiel für die Praxis:</b> Wer Saturn und Uranus im 7. Haus hat, findet die zugehörigen DC-Linien östlich oder westlich des Geburtsorts wieder. Liegt eine Stadt genau im Korridor zwischen beiden, verbindet sich dort Verbindlichkeit mit Unberechenbarkeit — Begegnungen, die gleichzeitig ernst und ungeplant sind. Solche Korridore erklären oft, warum bestimmte Städte im Leben eines Menschen immer wieder auftauchen.</div>
+
+<h2>Die Grenzen</h2>
+<ul>
+<li>Astrokartographie sagt nichts darüber, ob ein Umzug „richtig“ ist. Sie beschreibt, welche Funktion an einem Ort lauter wird.</li>
+<li>Eine anstrengende Linie ist kein Verbot. Saturn-Orte sind hart und bauen etwas — viele Menschen leben genau dort am produktivsten.</li>
+<li>Reisen berührt Linien anders als Umziehen. Ein Wochenende auf einer Pluto-Linie ist intensiv, kein Lebensumbau.</li>
+<li>Rate niemandem aufgrund von Linien von einem Ort ab, an dem sein Leben stattfindet. Das ist Deutung, die in Lebensführung eingreift — genau da hört Astrologie auf.</li>
+</ul>
+
+
+<div class="weiter"><a href="finsternisse.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Finsternisse lesen</span></a><a href="synastrie.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Synastrie</span></a></div>
+<div class="foot">Astrokartographie &middot; Linien beschreiben Betonung, nicht Qualität. Kein Ort ist „gut“ oder „schlecht“ — er verstärkt eine bestimmte Funktion.</div>
+</div>
+
+</body></html>

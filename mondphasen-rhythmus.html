@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Mondphasen als Rhythmus · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:660px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:22px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+.step{display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);}
+.stepnum{width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+svg{display:block;width:100%;height:auto;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.gr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.gr2{grid-template-columns:1fr;}}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.rad{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;}
+.jetzt{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;}
+@media(max-width:560px){.jetzt{grid-template-columns:1fr;}}
+.big{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--ind);margin-bottom:2px;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0;}
+@media(max-width:640px){.kacheln{grid-template-columns:repeat(2,1fr);}}
+.kacheln button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;cursor:pointer;text-align:center;font-family:'Inter',sans-serif;width:100%;}
+.kacheln button[aria-pressed="true"]{border-color:var(--ind);background:#FBEFE6;}
+.kacheln button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.kacheln .nm{display:block;font-size:13px;font-weight:600;margin-top:6px;}
+.kacheln .gr{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--soft);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.balken{height:8px;background:var(--line);border-radius:8px;overflow:hidden;min-width:70px;}
+.balken i{display:block;height:100%;background:var(--ind);border-radius:8px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.rlist{display:grid;gap:8px;}
+.rzeile{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;}
+.rzeile.rx{border-color:var(--ind);background:#FBEFE6;}
+.marke{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.marke.rx{color:var(--ind);} .marke.dir{color:var(--soft);}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing-Vertiefung</div>
+<h1>Die <em>Mondphasen</em> als Rhythmus.</h1>
+<p class="lede">Rund 29 Tage vom Neumond zum Neumond — ein Takt, der Struktur gibt, ohne Disziplin zu verlangen. Hier siehst du die aktuelle Phase live, kannst den Zyklus abfahren und herausfinden, in welcher Mondphase du selbst geboren bist.</p>
+
+
+<h2>Gerade jetzt</h2>
+<div class="white"><div class="jetzt">
+  <div class="rad"><svg id="live" viewBox="0 0 120 120" role="img" aria-label="Aktuelle Mondphase"></svg></div>
+  <div><div class="big" id="lname">—</div>
+  <p class="sub mono" id="lmeta" style="margin-bottom:8px;"></p>
+  <p style="margin-bottom:0;font-size:15px;" id="ltext"></p></div>
+</div></div>
+
+<h2>Der ganze Zyklus</h2>
+<p class="sub">Acht Stationen statt vier — dadurch wird der Zyklus im Alltag erst brauchbar. Tippe eine an.</p>
+<div class="rad" style="margin-bottom:12px;"><svg id="rad" viewBox="0 0 620 270" role="img" aria-label="Der Mondzyklus in acht Phasen"></svg></div>
+<div class="kacheln" id="kacheln"></div>
+<div class="white">
+  <div class="big" id="pname">—</div>
+  <p class="sub mono" id="pmeta" style="margin-bottom:8px;"></p>
+  <p style="font-size:15.5px;" id="ptext"></p>
+  <p style="margin-bottom:0;" class="sub" id="ptun"></p>
+</div>
+
+<h2>Deine Geburtsmondphase</h2>
+<p class="sub">Wenig bekannt und überraschend treffend: Der Abstand zwischen deiner Sonne und deinem Mond bei der Geburt beschreibt, wie du grundsätzlich an Dinge herangehst — ob du anfängst, aufbaust, erntest oder abschließt. Diese Technik funktioniert unabhängig von Zeichen und Häusern.</p>
+<div class="white">
+  <div class="gr2">
+    <div><label>Geburtsdatum</label><input type="date" id="gd" value="1990-06-15"></div>
+    <div><label>Uhrzeit in Weltzeit (grob reicht)</label><input type="time" id="gt" value="12:00"></div>
+  </div>
+  <div class="gr2" style="margin-top:12px;">
+    <div><label>Sonne in Grad (optional)</label><input type="number" id="ms" step="0.01" placeholder="z. B. 9.05"></div>
+    <div><label>Mond in Grad (optional)</label><input type="number" id="mm" step="0.01" placeholder="z. B. 18.53"></div>
+  </div>
+  <div class="out"><div class="jetzt">
+    <div class="rad"><svg id="geb" viewBox="0 0 120 120" role="img" aria-label="Deine Geburtsmondphase"></svg></div>
+    <div><div class="big" id="gname">—</div>
+    <p class="sub mono" id="gmeta" style="margin-bottom:8px;"></p>
+    <p style="margin-bottom:6px;font-size:15px;" id="gtext"></p>
+    <p style="margin-bottom:0;" class="sub" id="gfrage"></p></div>
+  </div></div>
+</div>
+<p class="sub" style="margin-top:10px;">Die Grad-Felder überschreiben das Datum. Nützlich, wenn du die Werte aus einem anderen Programm hast: 9° Widder sind 9,05 — 18° Stier wären 48,53, also 30 plus 18,53.</p>
+
+<h2>Wie du damit arbeitest</h2>
+<ol class="steps">
+<li><b>Nicht alles auf einmal</b>Du musst nicht acht Phasen beachten. Fang mit zweien an: am Neumond etwas beginnen, am Vollmond anschauen, was daraus geworden ist. Der Rest kommt von selbst.</li>
+<li><b>Das Zeichen dazunehmen</b>In welchem Zeichen der Neumond steht, färbt das Thema. Einer in Stier will etwas Handfestes, einer in Zwillingen etwas Gedankliches.</li>
+<li><b>Auf dein Chart beziehen</b>Wichtig wird ein Neumond erst, wenn er in eines deiner Häuser fällt oder einen Punkt bei dir trifft. Sonst ist er allgemeines Wetter.</li>
+<li><b>Die abnehmende Hälfte ernst nehmen</b>Der am häufigsten übersprungene Teil. Zwei Wochen Aufräumen und Runterfahren gehören zum Zyklus — das ist keine verlorene Zeit.</li>
+</ol>
+
+<div class="tip"><b>Für AuDHD und sensible Menschen:</b> Der Mondrhythmus gibt Struktur ohne Zwang. Er erlaubt ausdrücklich, dass nicht jeder Tag gleich leistungsfähig ist — und macht aus Phasen niedriger Energie einen normalen Teil des Zyklus statt eines Versagens. Genau das ist der entlastende Teil.</div>
+
+<div class="tip"><b>Die Grenze:</b> Der Mondrhythmus ist ein Angebot, kein Gesetz. Sobald er Druck macht — „ich hätte am Neumond etwas beginnen müssen" —, arbeitet er gegen dich. Dann lieber weglassen. Ein Werkzeug, das Schuldgefühle produziert, ist kein gutes Werkzeug.</div>
+
+<h2>Die Zahlen dahinter</h2>
+<table>
+<tr><th>Größe</th><th>Wert</th><th>Warum das zählt</th></tr>
+<tr><td>Synodischer Monat</td><td class="mono">29,53 Tage</td><td>Neumond zu Neumond — der Zyklus dieser Seite</td></tr>
+<tr><td>Siderischer Monat</td><td class="mono">27,32 Tage</td><td>Einmal durch alle Zeichen. Daher wandert der Mond rund 13° pro Tag</td></tr>
+<tr><td>Eine Phase</td><td class="mono">rund 3,7 Tage</td><td>29,53 geteilt durch acht</td></tr>
+<tr><td>Mond pro Zeichen</td><td class="mono">rund 2,3 Tage</td><td>Warum sich Stimmungen alle zwei bis drei Tage verschieben</td></tr>
+</table>
+
+
+<div class="weiter"><a href="timing.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Timing lesen</span></a><a href="lunationen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Neumonde, Vollmonde & Finsternisse</span></a></div>
+<div class="foot">Mondphasen &middot; Die Phase wird aus dem Winkelabstand von Sonne und Mond gerechnet, im Browser und ohne gespeicherte Daten. Achtphasen-Einteilung nach Dane Rudhyar. Der Rhythmus ist ein Angebot, keine Vorschrift.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+function sunLon(T){var L=norm(280.46646+36000.76983*T),M=norm(357.52911+35999.05029*T)*RAD;
+ var C=(1.914602-0.004817*T)*Math.sin(M)+(0.019993-0.000101*T)*Math.sin(2*M)+0.000289*Math.sin(3*M);
+ return norm(L+C);}
+function moonLon(T){
+ var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,
+ F=93.2720950+483202.0175233*T-0.0036539*T*T,A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],
+ [-114332,0,0,0,2],[58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],
+ [-40923,0,1,-1,0],[-34720,1,0,0,0],[-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],
+ [10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],[8548,4,0,-2,0],[-7888,2,1,-1,0],
+ [-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],[3994,2,0,2,0],[3861,4,0,0,0],
+ [3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],[-2348,1,0,1,0],
+ [2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+
+var PH=[
+ {a:0,n:'Neumond',s:'Säen',t:'Der dunkle Punkt des Zyklus. Etwas will beginnen, ist aber noch nicht sichtbar — auch für dich selbst nicht ganz.',
+  tun:'Aufschreiben, was anfangen will. Noch nichts veröffentlichen.',
+  geb:'Du fängst an, ohne Landkarte. Instinktiv, mutig, oft ohne begründen zu können, warum. Rückblickend wirkt dein Weg schlüssig — während du drinsteckst, nicht.',
+  frage:'Was fängst du an, bevor du weißt, wie es geht?'},
+ {a:45,n:'Sichel',s:'Wagen',t:'Der erste sichtbare Streifen. Das Vorhaben nimmt Form an und trifft auf den ersten Widerstand — meist die Frage, ob es realistisch ist.',
+  tun:'Dranbleiben, obwohl es wackelt. Nicht alles nochmal überdenken.',
+  geb:'Du kämpfst gegen das Alte an. Es zieht dich vorwärts, und gleichzeitig hält dich Vertrautes fest. Dein Wachstum passiert genau in dieser Spannung.',
+  frage:'Was hält dich fest, obwohl du weiterwillst?'},
+ {a:90,n:'Erstes Viertel',s:'Handeln',t:'Halbmond, wachsend. Jetzt braucht es Entscheidungen — nicht mehr überlegen, sondern bauen. Oft der anstrengendste Teil.',
+  tun:'Entscheiden und umsetzen. Krisen hier gehören dazu.',
+  geb:'Du handelst und baust dabei Strukturen um. Widerstand schreckt dich nicht, er aktiviert dich. Geduld ist die Übung.',
+  frage:'Wo baust du gerade um, statt zu warten?'},
+ {a:135,n:'Zunehmend gewölbt',s:'Verfeinern',t:'Fast voll. Die Sache steht, ist aber noch nicht rund. Details, Feinschliff, und die Frage, ob es für andere verständlich ist.',
+  tun:'Überarbeiten, testen, jemanden drüberschauen lassen.',
+  geb:'Du willst verstehen, bevor du zeigst. Gründlich, manchmal zu gründlich — irgendwann muss es raus, auch unfertig.',
+  frage:'Was verbesserst du gerade, das eigentlich fertig ist?'},
+ {a:180,n:'Vollmond',s:'Ernten',t:'Sonne und Mond stehen sich gegenüber, alles liegt im Licht. Etwas kulminiert und kippt ins Bewusstsein. Emotional oft intensiv.',
+  tun:'Anschauen, was geworden ist. Klären. Nichts Neues beginnen.',
+  geb:'Du erkennst dich über das Gegenüber. Beziehungen sind bei dir der Ort der Erkenntnis — du verstehst dich, indem du dich spiegelst.',
+  frage:'Was zeigt dir gerade jemand über dich selbst?'},
+ {a:225,n:'Verbreitend',s:'Teilen',t:'Abnehmend, noch hell. Was du verstanden hast, will weitergegeben werden. Die Phase des Erklärens und Erzählens.',
+  tun:'Weitergeben, veröffentlichen, jemandem beibringen.',
+  geb:'Du bist zum Teilen gebaut. Was du erlebst, wird bei dir automatisch zu etwas, das anderen hilft. Lehren liegt dir, auch ohne Titel.',
+  frage:'Was hast du verstanden, das jemand anders gerade braucht?'},
+ {a:270,n:'Letztes Viertel',s:'Prüfen',t:'Halbmond, abnehmend. Eine Sinnkrise im Kleinen: War das richtig? Alte Überzeugungen werden überprüft, manche fallen weg.',
+  tun:'Ehrlich bilanzieren. Was hat nicht funktioniert und warum?',
+  geb:'Du hinterfragst, was andere für gesetzt halten. Das macht dich weitsichtig — und manchmal einsam mit deiner Sicht.',
+  frage:'Welche Überzeugung von dir stimmt vielleicht nicht mehr?'},
+ {a:315,n:'Balsamisch',s:'Loslassen',t:'Die letzten dunklen Tage. Kraft sammeln, abschließen, nichts erzwingen. Wer hier durchzieht, startet den nächsten Zyklus leer.',
+  tun:'Ruhen. Aufräumen. Absagen. Schlafen.',
+  geb:'Du spürst Enden, bevor andere sie sehen, und brauchst mehr Rückzug als die meisten. Abschließen ist bei dir eine Begabung.',
+  frage:'Wovon verabschiedest du dich gerade, ohne es zu benennen?'}
+];
+function phaseVon(w){return PH[Math.floor(norm(w)/45)];}
+function NS(t,at){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+function mondSVG(svg,w,r,cx,cy){
+ svg.innerHTML='';cx=cx||60;cy=cy||60;r=r||44;
+ svg.appendChild(NS('circle',{cx:cx,cy:cy,r:r,fill:'#2A1B12'}));
+ var k=Math.cos(norm(w)*RAD), rechts=norm(w)<180;
+ var d='M '+cx+' '+(cy-r)+' A '+r+' '+r+' 0 0 '+(rechts?1:0)+' '+cx+' '+(cy+r)+
+       ' A '+(r*Math.abs(k)).toFixed(2)+' '+r+' 0 0 '+(rechts?(k>0?0:1):(k>0?1:0))+' '+cx+' '+(cy-r)+' Z';
+ svg.appendChild(NS('path',{d:d,fill:'#F7E9C9'}));
+ svg.appendChild(NS('circle',{cx:cx,cy:cy,r:r,fill:'none',stroke:'#C9B4A2','stroke-width':1}));
+}
+function jetzt(){
+ var n=new Date();
+ var T=(jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60)-2451545)/36525;
+ var w=norm(moonLon(T)-sunLon(T)),p=phaseVon(w);
+ mondSVG(document.getElementById('live'),w);
+ document.getElementById('lname').textContent=p.n+' — '+p.s;
+ document.getElementById('lmeta').textContent='Abstand Sonne–Mond '+w.toFixed(1)+'° · Tag '+(w/360*29.53).toFixed(1)+
+  ' von 29,5 · beleuchtet etwa '+Math.round((1-Math.cos(w*RAD))/2*100)+' %';
+ document.getElementById('ltext').textContent=p.t+' '+p.tun;
+}
+jetzt();
+var sel=0, box=document.getElementById('kacheln');
+PH.forEach(function(p,i){
+ var b=document.createElement('button');b.type='button';
+ b.innerHTML='<svg viewBox="0 0 120 120" style="width:46px;margin:0 auto;"></svg><span class="nm">'+p.n+'</span><span class="gr">'+p.a+'°</span>';
+ mondSVG(b.querySelector('svg'),p.a+22);
+ b.addEventListener('click',function(){sel=i;zeig();});
+ box.appendChild(b);
+});
+function radZeichnen(){
+ var s=document.getElementById('rad');s.innerHTML='';
+ s.appendChild(NS('line',{x1:30,y1:150,x2:590,y2:150,stroke:'#F0D8C6','stroke-width':2}));
+ PH.forEach(function(p,i){
+  var x=42+i*(536/8)+31;
+  var g=NS('g',{style:'cursor:pointer'});
+  var sub=NS('svg',{x:x-24,y:126,width:48,height:48,viewBox:'0 0 120 120'});
+  mondSVG(sub,p.a+22);
+  if(i===sel) g.appendChild(NS('circle',{cx:x,cy:150,r:30,fill:'none',stroke:'#C1440E','stroke-width':2}));
+  g.appendChild(sub);
+  var t1=NS('text',{x:x,y:200,'text-anchor':'middle','font-size':12,fill:'#2A1B12','font-family':'Inter'});
+  t1.textContent=p.s;g.appendChild(t1);
+  var t2=NS('text',{x:x,y:216,'text-anchor':'middle','font-size':10,fill:'#8A6F5C','font-family':'JetBrains Mono'});
+  t2.textContent=p.a+'°';g.appendChild(t2);
+  g.addEventListener('click',function(){sel=i;zeig();});
+  s.appendChild(g);
+ });
+ var l1=NS('text',{x:30,y:255,'font-size':11,fill:'#8A6F5C','font-family':'JetBrains Mono'});
+ l1.textContent='ZUNEHMEND — aufbauen';s.appendChild(l1);
+ var l2=NS('text',{x:590,y:255,'font-size':11,fill:'#8A6F5C','font-family':'JetBrains Mono','text-anchor':'end'});
+ l2.textContent='ABNEHMEND — abbauen';s.appendChild(l2);
+}
+function zeig(){
+ Array.prototype.forEach.call(box.children,function(b,i){b.setAttribute('aria-pressed',i===sel);});
+ var p=PH[sel];
+ document.getElementById('pname').textContent=p.n+' — '+p.s;
+ document.getElementById('pmeta').textContent=p.a+'° bis '+(p.a+45)+'° · etwa Tag '+(p.a/360*29.53).toFixed(1)+
+  ' bis '+((p.a+45)/360*29.53).toFixed(1)+' des Zyklus';
+ document.getElementById('ptext').textContent=p.t;
+ document.getElementById('ptun').innerHTML='<b>Was jetzt dran ist:</b> '+p.tun;
+ radZeichnen();
+}
+zeig();
+function geburt(){
+ var ms=parseFloat(document.getElementById('ms').value),mm=parseFloat(document.getElementById('mm').value),w,q;
+ if(!isNaN(ms)&&!isNaN(mm)){w=norm(mm-ms);q='aus den eingetragenen Positionen';}
+ else{
+  var d=document.getElementById('gd').value,t=document.getElementById('gt').value||'12:00';
+  if(!d)return;
+  var p=d.split('-').map(Number),u=t.split(':').map(Number);
+  var T=(jdFromUT(p[0],p[1],p[2],u[0]+u[1]/60)-2451545)/36525;
+  w=norm(moonLon(T)-sunLon(T));q='aus dem Geburtsdatum gerechnet';
+ }
+ var p=phaseVon(w);
+ mondSVG(document.getElementById('geb'),w);
+ document.getElementById('gname').textContent=p.n+'-Typ';
+ document.getElementById('gmeta').textContent='Abstand Sonne–Mond '+w.toFixed(1)+'° · '+q;
+ document.getElementById('gtext').textContent=p.geb;
+ document.getElementById('gfrage').innerHTML='<b>Deine Frage:</b> '+p.frage;
+}
+['gd','gt','ms','mm'].forEach(function(id){document.getElementById(id).addEventListener('input',geburt);});
+geburt();
+</script>
+</body></html>

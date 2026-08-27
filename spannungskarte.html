@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Spannungskarte · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
+--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+select,input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:600px){.grid,.grid3{grid-template-columns:1fr;}}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;border:1px solid var(--ind);background:var(--ind);color:#fff;padding:11px 20px;border-radius:22px;cursor:pointer;width:auto;}
+.btn.ghost{background:none;color:var(--ind);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chips button{font-family:'Inter',sans-serif;font-size:13.5px;padding:7px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;width:auto;}
+.chips button:hover{border-color:var(--ind);}
+.chips button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+summary{cursor:pointer;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ind);}
+details[open] summary{margin-bottom:8px;}
+details p{font-size:14.5px;color:var(--soft);}
+.kette{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0;}
+.kette .node{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.kette .arr{color:var(--gold);font-size:16px;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.big{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
+.mono{font-family:'JetBrains Mono',monospace;}
+svg{display:block;width:100%;height:auto;}
+.karte{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:12px;}
+.eingabe{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:14px;}
+.zeile2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:end;margin-bottom:9px;}
+@media(max-width:640px){.zeile2{grid-template-columns:1fr 1fr;}}
+.zeile2 label{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+select,input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);
+ font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.btn2{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.05em;border:1px solid var(--ind);
+ background:none;color:var(--ind);padding:9px 16px;border-radius:20px;cursor:pointer;}
+.btn2.voll{background:var(--ind);color:#fff;}
+.btn2:hover{background:var(--ind);color:#fff;}
+.bp{background:#FBE3DA;border:1px solid #E9C3B2;border-radius:16px;margin-bottom:11px;overflow:hidden;}
+.bp .kopf{display:flex;gap:10px;align-items:center;padding:14px 16px;cursor:pointer;}
+.bp .rang{font-family:'JetBrains Mono',monospace;font-size:11px;color:#fff;background:var(--tense);
+ border-radius:20px;padding:3px 9px;white-space:nowrap;}
+.bp .nm{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ink);flex:1;line-height:1.25;}
+.bp .orb{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--soft);}
+.bp .inhalt{display:none;padding:0 16px 16px;}
+.bp.auf .inhalt{display:block;}
+.bp .pole{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:4px 0 11px;}
+@media(max-width:560px){.bp .pole{grid-template-columns:1fr;}}
+.pol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+.pol .lab{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+ color:var(--gold);display:block;margin-bottom:3px;}
+.pol b{font-family:'Fraunces',serif;font-size:15.5px;display:block;margin-bottom:4px;}
+.pol p{margin:0;font-size:13.8px;line-height:1.5;color:var(--soft);}
+.bp .satz{background:#fff;border-left:3px solid var(--tense);border-radius:11px;padding:12px 14px;
+ font-size:14.3px;line-height:1.55;margin-bottom:9px;}
+.bp .frage{font-family:'Fraunces',serif;font-style:italic;font-size:15.5px;color:var(--ind);
+ border-left:3px solid var(--ind);padding-left:13px;margin:0;}
+.leer{background:#E8EDDC;border-left:3px solid var(--earth);border-radius:14px;padding:15px 17px;font-size:14.5px;line-height:1.55;}
+.legende{display:flex;gap:15px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin:8px 2px 0;}
+.legende span{display:inline-flex;align-items:center;gap:6px;}
+.sw{width:16px;height:3px;border-radius:2px;display:inline-block;}
+.pkt{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;
+ background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;
+ font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Ein Chart lesen</div>
+<h1>Die <em>Spannungskarte.</em></h1>
+<p class="lede">Wo in einem Chart der Druck sitzt — sichtbar statt aufgelistet. Die Seite sortiert alle Spannungsachsen nach Stärke, zeigt sie als Karte und benennt für jede die beiden Pole: was die eine Seite will, was die andere braucht. Denn Spannung wird nicht aufgelöst, sondern bedienbar.</p>
+
+
+<div class="tip"><b>Warum hier nicht steht, was du „auflösen" musst.</b> Ein Spannungsaspekt beschreibt zwei Kräfte, die Gegensätzliches wollen — und <b>beide haben recht</b>. Man löst so etwas nicht auf, man wechselt sich ab. Wer daraus eine Reparaturliste macht, verwandelt eine Landkarte in ein Urteil. Was hier steht, ist deshalb immer: hier zieht es, das braucht die eine Seite, das die andere, und das ist die Frage dazu.</div>
+
+<h2>Was ein Breaking Point ist</h2>
+<p>Nicht jede Spannung im Chart ist gleich laut. Ein Breaking Point ist die Stelle, an der mehreres zusammenkommt:</p>
+<ul>
+<li>Ein <b>enger</b> harter Aspekt — unter 2°, am lautesten unter 1°.</li>
+<li>Ein <b>persönlicher</b> Punkt ist beteiligt: Sonne, Mond, Aszendent, MC, Merkur, Venus oder Mars.</li>
+<li>Oft <b>mehrfach belegt</b> — derselbe Punkt hängt an mehreren Achsen.</li>
+</ul>
+<p>Alles andere ist Hintergrund. Deshalb sortiert diese Seite nach Druck und zeigt nur die obersten Stellen — nicht alle Aspekte, die es gibt.</p>
+
+<h2>Dein Chart</h2>
+<p class="sub">Trag die Positionen ein. Punkte, die du nicht brauchst, lässt du leer. Nichts wird gespeichert.</p>
+<div class="eingabe">
+  <div id="felder"></div>
+  <div class="btnrow">
+    <button class="btn2 voll" id="beispiel">Beispiel laden</button>
+    <button class="btn2" id="leeren">Alles leeren</button>
+  </div>
+</div>
+
+<h2>Die Karte</h2>
+<p class="sub">Jede rote Linie ist eine Spannungsachse — je dicker, desto enger der Orbis. Die orangefarbenen Ringe markieren Punkte, die an den stärksten Achsen hängen. Tippe unten eine Achse an, um sie hier hervorzuheben.</p>
+<div class="karte"><svg id="rad" viewBox="0 0 620 620" role="img" aria-label="Spannungskarte des Charts"></svg></div>
+<div class="legende">
+  <span><i class="sw" style="background:#B5502E"></i> Spannung, je dicker desto enger</span>
+  <span><i class="pkt" style="background:#D9922E"></i> Punkt unter Druck</span>
+  <span><i class="pkt" style="background:#F0D8C6"></i> unbeteiligt</span>
+</div>
+
+<h2>Die Breaking Points</h2>
+<p class="sub" id="zaehler"></p>
+<div id="liste"></div>
+
+<h2>Wie du damit arbeitest</h2>
+<ol class="steps">
+<li><b>Nur den obersten nehmen</b>Der stärkste Breaking Point beschreibt meistens schon das Hauptthema. Drei sind das Maximum, mit dem ein Mensch gleichzeitig arbeiten kann.</li>
+<li><b>Beide Pole benennen</b>Nicht „ich müsste weniger X sein", sondern: Diese Seite will das, jene will jenes. Beide sind du.</li>
+<li><b>Abwechseln planen statt entscheiden</b>Was braucht die eine Seite diese Woche, was die andere? Konkret, mit Termin. Spannung wird bedienbar, nicht kleiner.</li>
+<li><b>Das Frühwarnsignal suchen</b>Woran merkst du, dass eine Seite zu lange zu kurz kam? Meistens ist es ein Gedanke, kein Gefühl. Siehe <a href="learning-seite.html">Die Learning-Seite</a>.</li>
+<li><b>Nach sechs Wochen prüfen</b>Ist die Stelle ruhiger geworden? Wenn nicht, hat vermutlich eine Seite immer noch keinen echten Platz.</li>
+</ol>
+
+<div class="tip"><b>Fürs Reading:</b> Zeig einer Klientin nie alle Spannungsaspekte. Zeig ihr einen — den engsten mit persönlichem Punkt — und arbeite ihn ganz durch. Eine vollständige Liste macht Menschen voll, statt ihnen zu helfen. Zur Gewichtung siehe <a href="orbis-gewichtung.html">Orbis &amp; Gewichtung</a>.</div>
+
+<div class="tip"><b>Und die wichtigste Einordnung:</b> Ein Breaking Point ist kein Defekt. Es ist die Stelle, an der in einem Leben am meisten Energie steckt — deshalb reibt es dort. Menschen entwickeln ihre größte Kompetenz fast immer genau an dieser Stelle, nicht an den leichten.</div>
+
+
+<div class="weiter"><a href="orbis-gewichtung.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Orbis &amp; Gewichtung</span></a><a href="aspekt-muster.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Aspekt-Muster im Chart</span></a></div>
+<div class="foot">Spannungskarte &middot; Nur Quadrate und Oppositionen, gewichtet nach Orbis und Beteiligung persönlicher Punkte. Nichts wird gespeichert. Ein Breaking Point ist kein Defekt, sondern die Stelle mit der meisten Energie.</div>
+</div>
+<script>
+var POL = {"Sonne": ["gesehen werden und wirken", "Raum, in dem du sichtbar sein darfst, ohne dich zu rechtfertigen"], "Mond": ["sich sicher fühlen", "Ruhe, Regelmäßigkeit und jemanden, dem du es sagen kannst"], "Merkur": ["verstehen und benennen", "Zeit zum Sortieren, bevor du antwortest"], "Venus": ["Nähe, Schönheit und Wert", "etwas, das du einfach genießt, ohne Zweck"], "Mars": ["handeln und sich durchsetzen", "einen Ort, an dem du dich verausgaben und Nein sagen darfst"], "Jupiter": ["wachsen und weiter gehen", "ein realistisches Maß und einen Kalender"], "Saturn": ["Sicherheit durch Struktur", "klare Regeln, kleine Schritte, Geduld mit dir selbst"], "Uranus": ["frei sein und anders sein dürfen", "Freiraum, den du nicht erst erkämpfen musst"], "Neptun": ["sich verbinden und auflösen", "klare Absprachen und regelmäßige Realitätsprüfung"], "Pluto": ["in die Tiefe gehen", "Ehrlichkeit über Kontrolle, Macht und Angst"], "Chiron": ["nicht nochmal verletzt werden", "Mitgefühl mit dir selbst statt Reparatur"], "Lilith": ["unangepasst sein dürfen", "einen Raum, in dem es ungefiltert raus darf"], "Knoten": ["den eigenen Weg gehen", "kleine Schritte in die ungewohnte Richtung"], "ASC": ["so wirken, wie du bist", "die Erlaubnis, nicht immer gefallen zu müssen"], "MC": ["etwas darstellen und gelten", "Klarheit darüber, wofür du stehen willst"], "Glückspunkt": ["mühelos im Fluss sein", "dich zeigen, statt es zu verdienen"]};
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',
+ Neptun:'♆',Pluto:'♇',Chiron:'⚷',Lilith:'⚸',Knoten:'☊',ASC:'AC',MC:'MC','Glückspunkt':'⊗'};
+var ORDER=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Chiron','Lilith','Knoten','Glückspunkt','ASC','MC'];
+var ORB={Sonne:8,Mond:8,ASC:6,MC:6,Merkur:6,Venus:6,Mars:6,Jupiter:5,Saturn:5,Uranus:4,Neptun:4,Pluto:4,
+ Knoten:3,Chiron:3,Lilith:2.5,'Glückspunkt':2.5};
+var PERS={Sonne:1,Mond:1,ASC:1,MC:1,Merkur:1,Venus:1,Mars:1};
+var HART=[[90,'Quadrat',0.85],[180,'Opposition',1]];
+var POS={}, offen=-1;
+
+function norm(x){x=x%360;return x<0?x+360:x;}
+function NS(t,at){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+
+var fb=document.getElementById('felder');
+for(var i=0;i<ORDER.length;i+=3){
+  var row=document.createElement('div'); row.className='zeile2';
+  for(var j=i;j<Math.min(i+3,ORDER.length);j++){
+    var k=ORDER[j], d=document.createElement('div');
+    d.innerHTML='<label>'+k+'</label><div style="display:flex;gap:5px;">'+
+      '<select data-s="'+k+'" style="flex:1;"><option value="">—</option>'+
+      SIGNS.map(function(s,n){return '<option value="'+n+'">'+s.slice(0,4)+'</option>';}).join('')+'</select>'+
+      '<input type="number" data-g="'+k+'" min="0" max="29.99" step="0.01" placeholder="°" style="width:62px;"></div>';
+    row.appendChild(d);
+  }
+  fb.appendChild(row);
+}
+fb.querySelectorAll('select,input').forEach(function(e){e.addEventListener('input',lesen);});
+
+function lesen(){
+  POS={};
+  ORDER.forEach(function(k){
+    var s=fb.querySelector('select[data-s="'+k+'"]'), g=fb.querySelector('input[data-g="'+k+'"]');
+    var gv=parseFloat(g.value);
+    if(s.value!=='' && !isNaN(gv)) POS[k]=norm((+s.value)*30+gv);
+  });
+  offen=-1; render();
+}
+document.getElementById('leeren').addEventListener('click',function(){
+  fb.querySelectorAll('select').forEach(function(s){s.value='';});
+  fb.querySelectorAll('input').forEach(function(i){i.value='';});
+  lesen();
+});
+document.getElementById('beispiel').addEventListener('click',function(){
+  var B={Sonne:[0,9.05],Mond:[0,18.53],Merkur:[11,11.55],Venus:[11,1.92],Mars:[1,25.70],
+   Jupiter:[0,6.62],Saturn:[8,21.16],Uranus:[8,26.73],Neptun:[9,7.97],Pluto:[7,9.39],
+   Chiron:[2,16.65],Lilith:[3,14.20],Knoten:[0,11.50],'Glückspunkt':[2,17.45],ASC:[2,7.98],MC:[10,2.77]};
+  Object.keys(B).forEach(function(k){
+    fb.querySelector('select[data-s="'+k+'"]').value=B[k][0];
+    fb.querySelector('input[data-g="'+k+'"]').value=B[k][1];
+  });
+  lesen();
+});
+
+function achsen(){
+  var ks=Object.keys(POS), out=[];
+  for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
+    var a=ks[i],b=ks[j];
+    if((a==='ASC'&&b==='MC')||(a==='MC'&&b==='ASC')) continue;
+    var sep=Math.abs(norm(POS[a]-POS[b]+180)-180);
+    for(var q=0;q<HART.length;q++){
+      var orb=Math.abs(sep-HART[q][0]), max=((ORB[a]+ORB[b])/2)*HART[q][2];
+      if(orb<=max){
+        var pers=(PERS[a]?1:0)+(PERS[b]?1:0);
+        var druck=(max-orb)/max*10 + pers*3 + (orb<1?4:0);
+        out.push({a:a,b:b,t:HART[q][1],o:orb,pers:pers,druck:druck});
+      }
+    }
+  }
+  out.sort(function(x,y){return y.druck-x.druck;});
+  return out;
+}
+
+function render(){ var A=achsen(); zeichne(A); liste(A); }
+
+function zeichne(A){
+  var s=document.getElementById('rad'); s.innerHTML='';
+  s.appendChild(NS('circle',{cx:310,cy:310,r:290,fill:'#FBF7F2',stroke:'#F0D8C6','stroke-width':1.5}));
+  s.appendChild(NS('circle',{cx:310,cy:310,r:238,fill:'#fff',stroke:'#F0D8C6','stroke-width':1.5}));
+  var basis=(POS.ASC!==undefined)?Math.floor(POS.ASC/30)*30:0;
+  function pos(l,r){var d=(180+(l-basis))*Math.PI/180;return [310+r*Math.cos(d),310-r*Math.sin(d)];}
+  var GL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+  for(var i=0;i<12;i++){
+    var a=basis+i*30, p1=pos(a,238), p2=pos(a,290);
+    s.appendChild(NS('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#F0D8C6','stroke-width':1.2}));
+    var m=pos(a+15,264), t=NS('text',{x:m[0],y:m[1]+7,'text-anchor':'middle','font-size':19,fill:'#C9B4A2'});
+    t.textContent=GL[Math.floor(norm(a)/30)]; s.appendChild(t);
+  }
+  var druck={};
+  A.forEach(function(x,i){
+    var w=(i===0)?1:(i<3?0.7:0.35);
+    druck[x.a]=(druck[x.a]||0)+w; druck[x.b]=(druck[x.b]||0)+w;
+  });
+  A.forEach(function(x,i){
+    var p1=pos(POS[x.a],196), p2=pos(POS[x.b],196);
+    var dick=Math.max(1.4, 5.2-x.o*1.5);
+    var hell=(offen>=0&&offen!==i);
+    s.appendChild(NS('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#B5502E',
+      'stroke-width':(offen===i)?6:dick,'stroke-opacity':hell?0.12:(offen===i?1:0.72),
+      'stroke-linecap':'round'}));
+  });
+  Object.keys(POS).forEach(function(k){
+    var pt=pos(POS[k],215), d=druck[k]||0;
+    var farbe=d>=1?'#D9922E':(d>0?'#E8C89A':'#F0D8C6');
+    if(d>=1) s.appendChild(NS('circle',{cx:pt[0],cy:pt[1],r:23,fill:'none',stroke:'#D9922E','stroke-width':2,'stroke-opacity':0.55}));
+    s.appendChild(NS('circle',{cx:pt[0],cy:pt[1],r:17,fill:'#fff',stroke:farbe,'stroke-width':d>=1?2.4:1.3}));
+    var g=GLY[k]||k;
+    var t=NS('text',{x:pt[0],y:pt[1]+(g.length>1?4:6),'text-anchor':'middle','font-size':g.length>1?12:17,
+      fill:'#2A1B12','font-family':g.length>1?'JetBrains Mono, monospace':'inherit'});
+    t.textContent=g; s.appendChild(t);
+  });
+  if(!Object.keys(POS).length){
+    var tt=NS('text',{x:310,y:315,'text-anchor':'middle','font-size':15,fill:'#B9A392','font-family':'Inter'});
+    tt.textContent='Trag oben dein Chart ein oder lade das Beispiel.'; s.appendChild(tt);
+  }
+}
+
+function liste(A){
+  var box=document.getElementById('liste'); box.innerHTML='';
+  var z=document.getElementById('zaehler');
+  if(!Object.keys(POS).length){ z.textContent='Noch kein Chart eingetragen.'; return; }
+  if(!A.length){
+    z.textContent='';
+    var d=document.createElement('div'); d.className='leer';
+    d.innerHTML='<b>Keine Spannungsachse im Orbis.</b> Das klingt bequem und heißt vor allem: wenig eingebauter Antrieb. '+
+      'Charts ohne harte Aspekte beschreiben Menschen, bei denen die Bewegung eher von außen kommen muss — durch Transite, durch andere, durch Umstände. Kein Mangel, nur eine andere Bauweise.';
+    box.appendChild(d); return;
+  }
+  var top=A.slice(0,5);
+  z.innerHTML=A.length+' Spannungsachsen gefunden, sortiert nach Druck. Die obersten '+top.length+' stehen hier — <b>arbeite mit einer, nicht mit allen.</b>';
+  top.forEach(function(x,i){
+    var pa=POL[x.a]||['diese Seite','Raum'], pb=POL[x.b]||['jene Seite','Raum'];
+    var laut=x.o<=1?'Unter 1° — ein Lebensthema.':(x.o<=2?'Deutlich spürbar im Alltag.':'Im Hintergrund wirksam.');
+    var pers=x.pers===2?'Zwei persönliche Punkte beteiligt — so persönlich, wie ein Aspekt werden kann.'
+      :(x.pers===1?'Ein persönlicher Punkt beteiligt.':'Kein persönlicher Punkt beteiligt — eher Generationenthema als eigenes.');
+    var d=document.createElement('div'); d.className='bp'+(offen===i?' auf':'');
+    d.innerHTML=
+      '<div class="kopf"><span class="rang">'+(i+1)+'</span>'+
+      '<span class="nm">'+x.a+' '+x.t+' '+x.b+'</span><span class="orb">'+x.o.toFixed(2)+'°</span></div>'+
+      '<div class="inhalt"><div class="pole">'+
+      '<div class="pol"><span class="lab">Der eine Pol</span><b>'+x.a+'</b><p>will '+pa[0]+'.<br>Braucht: '+pa[1]+'.</p></div>'+
+      '<div class="pol"><span class="lab">Der andere Pol</span><b>'+x.b+'</b><p>will '+pb[0]+'.<br>Braucht: '+pb[1]+'.</p></div>'+
+      '</div><div class="satz"><b>'+laut+'</b> '+pers+' '+
+      'Beide Seiten gehören zu dir, und beide haben recht. Der Druck entsteht nicht dadurch, dass eine falsch ist — sondern dadurch, dass meistens eine gewinnt und die andere sich später als Unruhe meldet.</div>'+
+      '<p class="frage">Was hat '+x.a+' diese Woche bekommen — und was '+x.b+'?</p></div>';
+    d.querySelector('.kopf').addEventListener('click',function(){ offen=(offen===i)?-1:i; render(); });
+    box.appendChild(d);
+  });
+  if(A.length>5){
+    var r=document.createElement('div'); r.className='leer'; r.style.marginTop='10px';
+    r.innerHTML='<b>'+(A.length-5)+' weitere Spannungsachsen</b> liegen noch im Orbis, sind aber weiter oder ohne persönlichen Punkt. Das ist Hintergrundrauschen — nicht ins Reading und nicht auf deine Liste.';
+    box.appendChild(r);
+  }
+}
+render();
+</script>
+</body></html>

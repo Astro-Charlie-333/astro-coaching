@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Linien im Chart lesen · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;--neutral:#8A6F5C;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+a{color:var(--ind);}
+svg{display:block;width:100%;height:auto;}
+
+/* Winkelschule */
+.angles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0 6px;}
+@media(max-width:640px){.angles{grid-template-columns:repeat(3,1fr);}}
+.angles button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 6px;cursor:pointer;text-align:center;font-family:'Inter',sans-serif;}
+.angles button[aria-pressed="true"]{border-color:var(--ind);background:#FBEFE6;}
+.angles button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.angles .g{font-size:22px;display:block;line-height:1.2;}
+.angles .n{font-size:11px;color:var(--soft);font-family:'JetBrains Mono',monospace;}
+.angledesc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:130px 1fr;gap:16px;align-items:center;}
+@media(max-width:560px){.angledesc{grid-template-columns:1fr;}}
+
+/* Chart */
+.chartbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 12px 4px;}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 10px;}
+.filters button{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;padding:7px 13px;
+  border:1px solid var(--line);background:#fff;color:var(--soft);border-radius:20px;cursor:pointer;}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;}
+.filters button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin:4px 2px 0;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.sw{width:18px;height:3px;border-radius:2px;display:inline-block;}
+.hint{font-size:13px;color:var(--soft);margin:10px 2px 0;}
+
+/* Aspektliste */
+.alist{margin-top:18px;}
+.arow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px;cursor:pointer;}
+.arow.on{border-color:var(--ind);background:#FBEFE6;}
+.arow .top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
+.arow .nm{font-family:'Fraunces',serif;font-size:17px;font-weight:600;}
+.arow .orb{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);margin-left:auto;}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.arow .txt{font-size:14.5px;color:var(--soft);margin-top:6px;line-height:1.55;display:none;}
+.arow.on .txt{display:block;}
+.obar{height:5px;background:var(--line);border-radius:5px;margin-top:8px;overflow:hidden;}
+.obar i{display:block;height:100%;border-radius:5px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Startseite</a>
+
+<div class="eyebrow">Praxis · Zusammenhänge</div>
+<h1>Die <em>Linien</em> im Chart lesen.</h1>
+<p class="lede">Die Linien in der Mitte des Charts sind die Aspekte. Sie verbinden die Planeten und zeigen, wie deine inneren Kräfte miteinander reden. Auf dieser Seite siehst du sie nicht nur erklärt, sondern gezeichnet — an deinem eigenen Chart.</p>
+
+<h2>Zuerst: Was ist überhaupt ein Winkel?</h2>
+<p>Ein Aspekt ist nichts Mystisches. Es ist der <b>Abstand zwischen zwei Planeten auf dem Kreis</b>, gemessen in Grad. Der Kreis hat 360°. Bestimmte Abstände gelten als bedeutsam, weil sie den Kreis sauber teilen: 360 geteilt durch 2, durch 3, durch 4, durch 6.</p>
+<p class="sub">Tipp zum Anschauen unten: erst auf einen Winkel tippen, das Bild ansehen, dann weiterlesen. Ein Winkel nach dem anderen.</p>
+
+<div class="angles" id="angles"></div>
+<div class="angledesc">
+  <svg id="angsvg" viewBox="0 0 130 130" role="img" aria-label="Darstellung des gewählten Winkels"></svg>
+  <div>
+    <h3 id="angname">Konjunktion</h3>
+    <p class="sub" style="margin-bottom:6px;" id="angmeta">0° · Kreis geteilt durch 1</p>
+    <p style="margin-bottom:0;font-size:15px;" id="angtext"></p>
+  </div>
+</div>
+
+<h2>Was die Farben bedeuten</h2>
+<div class="white">
+<p><span class="dot" style="background:var(--flow);"></span> <b>Grün = weiche Aspekte</b> (Trigon, Sextil). Hier fließt Energie leicht. Talente, Dinge, die dir zufallen — und die du deshalb oft unterschätzt.</p>
+<p><span class="dot" style="background:var(--tense);"></span> <b>Rot = Spannungsaspekte</b> (Quadrat, Opposition). Hier reibt es. Das ist nicht schlecht, sondern der Motor: Spannung erzeugt Bewegung. Menschen wachsen an roten Linien, nicht an blauen.</p>
+<p style="margin-bottom:0;"><span class="dot" style="background:var(--neutral);"></span> <b>Grau gestrichelt = Konjunktion.</b> Weder weich noch hart — sie verschmilzt zwei Kräfte. Ob das angenehm ist, hängt allein davon ab, welche zwei.</p>
+</div>
+
+<h2>Dein Chart, interaktiv</h2>
+<p class="sub">Tippe auf einen Planeten, um nur seine Linien zu sehen. Oder filtere nach Aspektart. Unten erscheint zu jeder Linie ein Satz — tippe eine Zeile an, um sie im Bild hervorzuheben.</p>
+
+<div class="chartbox">
+  <svg id="wheel" viewBox="0 0 620 620" role="img" aria-label="Dein Geburtschart mit eingezeichneten Aspektlinien"></svg>
+</div>
+
+<div class="filters" id="filters"></div>
+<div class="legend">
+  <span><i class="sw" style="background:var(--tense)"></i> Spannung</span>
+  <span><i class="sw" style="background:var(--flow)"></i> weich</span>
+  <span><i class="sw" style="background:var(--neutral)"></i> Konjunktion</span>
+  <span>Je dicker die Linie, desto enger der Orbis.</span>
+</div>
+<p class="hint" id="hint">13 Aspekte im Orbis. Tippe eine Zeile an.</p>
+
+<div class="alist" id="alist"></div>
+
+<div class="tip"><b>Zwei Linien, die du im Bild nicht siehst — und warum:</b> Deine <b>Sonne und dein Mond</b> stehen beide im Widder, aber 9°28 auseinander. Für eine Konjunktion ist das zu weit (Grenze: 8°). Sie stehen im selben Zeichen, aber sie bilden keinen Aspekt. Dasselbe gilt für <b>Saturn und Uranus</b> mit 5°34 Abstand — thematisch spürst du sie als Paar, weil sie im selben Zeichen und Haus stehen, aber rechnerisch sind sie außerhalb. Genau solche Fälle sind der Grund, warum Orbis-Regeln existieren.</div>
+
+<h2>So liest du eine Linie — fünf Schritte</h2>
+<ol class="steps">
+<li><b>Wer hat viele Linien?</b>Ein Planet mit vielen Verbindungen ist ein Knotenpunkt — er spielt in viele Themen hinein. Bei dir sind das Sonne und Merkur. Ein Planet ohne Linien wirkt eher für sich: Bei dir ist das <b>Mars</b>, der von keinem anderen Planeten im Orbis berührt wird. Deshalb läuft er so eigenständig — und meldet sich erst, wenn er voll ist.</li>
+<li><b>Folge einer Linie</b>Welche zwei Planeten verbindet sie? Sag laut, was jeder bedeutet. Merkur = Denken und Sprache. Pluto = Tiefe und Macht. Fertig ist die halbe Deutung.</li>
+<li><b>Welche Art von Linie?</b>Weich oder hart macht aus denselben zwei Planeten zwei verschiedene Geschichten. Merkur-Trigon-Pluto: Durchschauen fällt leicht. Merkur-Quadrat-Pluto wäre: Durchschauen tut weh.</li>
+<li><b>Wie eng?</b>Der Orbis entscheidet über die Lautstärke. Unter 1° ist ein Lebensthema, über 4° ist Hintergrundfarbe. Alles unten in der Liste ist nach Orbis sortiert — von oben nach unten wird es leiser.</li>
+<li><b>Ein Satz daraus</b>„Mein Mond und mein Chiron stehen im Sextil — ich kann über meine Verletzlichkeit sprechen, ohne daran zu zerbrechen." So wird aus einer Linie eine Aussage über einen Menschen.</li>
+</ol>
+
+<div class="tip"><b>Die wichtigste Frage bei jeder Linie</b> ist nicht „gut oder schlecht", sondern: <b>Welche zwei Teile dieses Menschen reden hier miteinander — und in welchem Ton?</b> Mond-Quadrat-Saturn heißt nicht „kaputt", sondern: das Gefühl und die Disziplin ringen, und dieser Mensch lernt, beides zu versöhnen.</div>
+
+<div class="tip"><b>Für deinen Kopf:</b> Linien lesen ist Muster-Sehen — deine Stärke. Lass dich von der Menge nicht erschlagen. Eine Linie, ganz verstanden, dann die nächste. Du musst nie alle gleichzeitig sehen. Nutze die Filter oben: erst nur die roten, an einem anderen Tag nur die blauen.</div>
+
+<div class="weiter"><a href="chart-lesen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Ein Chart lesen</span></a><a href="orbis-gewichtung.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Orbis & Gewichtung</span></a></div>
+<div class="foot">Linien im Chart lesen &middot; Aspekte und Orben aus deinem Geburtschart gerechnet. Whole Sign. Farbkonvention: rot = Spannung, blau = weich — kann je nach Programm leicht abweichen.</div>
+</div>
+
+<script>
+/* ── 1 · Winkelschule ───────────────────────────── */
+var ANG=[
+ {g:'☌',n:'Konjunktion',a:0,teil:'geteilt durch 1',t:'Zwei Planeten stehen am selben Punkt. Sie verschmelzen — man kann sie nicht mehr getrennt erleben. Ob das schön ist, hängt davon ab, wer da verschmilzt.',c:'var(--neutral)'},
+ {g:'⚹',n:'Sextil',a:60,teil:'geteilt durch 6',t:'Ein freundliches Angebot. Talent, das erst wirkt, wenn du es nutzt — Sextile arbeiten nicht von allein, sie warten auf dich.',c:'var(--flow)'},
+ {g:'□',n:'Quadrat',a:90,teil:'geteilt durch 4',t:'Reibung. Zwei Kräfte, die sich im Weg stehen und dich zwingen, etwas zu entwickeln. Der produktivste Aspekt überhaupt, auch wenn er sich nicht so anfühlt.',c:'var(--tense)'},
+ {g:'△',n:'Trigon',a:120,teil:'geteilt durch 3',t:'Fluss. Läuft von selbst, wird deshalb oft übersehen. Das, was du kannst, ohne dich anzustrengen — und für selbstverständlich hältst.',c:'var(--flow)'},
+ {g:'☍',n:'Opposition',a:180,teil:'geteilt durch 2',t:'Gegenüberstellung. Zwei Pole, die beide recht haben. Man erlebt sie oft über andere Menschen, bis man merkt, dass beide Seiten zu einem selbst gehören.',c:'var(--tense)'}
+];
+var ai=0, ab=document.getElementById('angles');
+ANG.forEach(function(o,i){
+  var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-pressed',i===0);
+  b.innerHTML='<span class="g">'+o.g+'</span><span class="n">'+o.a+'°</span>';
+  b.addEventListener('click',function(){ai=i;drawAng();});
+  ab.appendChild(b);
+});
+function drawAng(){
+  var o=ANG[ai];
+  Array.prototype.forEach.call(ab.children,function(b,i){b.setAttribute('aria-pressed',i===ai);});
+  document.getElementById('angname').textContent=o.n;
+  document.getElementById('angmeta').textContent=o.a+'° · Kreis '+o.teil;
+  document.getElementById('angtext').textContent=o.t;
+  var s=document.getElementById('angsvg'), N='http://www.w3.org/2000/svg';
+  s.innerHTML='';
+  function el(t,at){var e=document.createElementNS(N,t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+  s.appendChild(el('circle',{cx:65,cy:65,r:48,fill:'none',stroke:'#F0D8C6','stroke-width':2}));
+  var a1=90, a2=90-o.a;
+  function pt(d){return [65+48*Math.cos(d*Math.PI/180), 65-48*Math.sin(d*Math.PI/180)];}
+  var p1=pt(a1), p2=pt(a2);
+  if(o.a>0) s.appendChild(el('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:o.c,'stroke-width':2.5,
+    'stroke-dasharray':''}));
+  [p1,p2].forEach(function(p){ s.appendChild(el('circle',{cx:p[0],cy:p[1],r:7,fill:o.c})); });
+  if(o.a>0){
+    var mid=(a1+a2)/2, m=[65+22*Math.cos(mid*Math.PI/180),65-22*Math.sin(mid*Math.PI/180)];
+    var t=el('text',{x:m[0],y:m[1]+4,'text-anchor':'middle','font-family':'JetBrains Mono, monospace','font-size':12,fill:'#8A6F5C'});
+    t.textContent=o.a+'°'; s.appendChild(t);
+  }
+}
+drawAng();
+
+/* ── 2 · Chart ───────────────────────────── */
+var PL=[
+ {k:'Sonne',g:'☉',l:9.05},{k:'Mond',g:'☽',l:18.53},{k:'Merkur',g:'☿',l:341.55},
+ {k:'Venus',g:'♀',l:331.92},{k:'Mars',g:'♂',l:55.70},{k:'Jupiter',g:'♃',l:6.62},
+ {k:'Saturn',g:'♄',l:261.16},{k:'Uranus',g:'♅',l:266.73},{k:'Neptun',g:'♆',l:277.97},
+ {k:'Pluto',g:'♇',l:219.39},{k:'Knoten',g:'☊',l:11.50},{k:'Chiron',g:'⚷',l:76.65},
+ {k:'Lilith',g:'⚸',l:104.20},{k:'ASC',g:'AC',l:67.98},{k:'MC',g:'MC',l:302.77}
+];
+var ASPECTS=[
+ {a:'Sonne',b:'ASC',t:'Sextil',o:1.07,x:'Wer du bist und wie du auftrittst arbeiten leicht zusammen. Du wirkst nach außen ziemlich genau so, wie du innen bist — das klingt banal, ist es aber nicht.'},
+ {a:'Sonne',b:'Neptun',t:'Quadrat',o:1.08,x:'Dein Selbstbild und dein Sehnsuchtsbild reiben sich. Klarheit über dich selbst ist bei dir echte Arbeit, Idealisierung eine ständige Versuchung — und genau daraus kommt auch deine Vorstellungskraft.'},
+ {a:'Jupiter',b:'Neptun',t:'Quadrat',o:1.35,x:'Wachstum trifft Grenzenlosigkeit. Große Bilder, schwer zu dosieren. Der Aspekt für Visionen, die im Kopf schöner sind als im Kalender.'},
+ {a:'Jupiter',b:'ASC',t:'Sextil',o:1.36,x:'Zuversicht und Offenheit stehen dir zur Verfügung, wenn du sie abrufst. Menschen begegnen dir grundsätzlich wohlwollend.'},
+ {a:'Neptun',b:'Pluto',t:'Sextil',o:1.42,x:'Generationenaspekt — den haben fast alle deines Jahrgangs. Nicht persönlich deuten. Ein gutes Beispiel dafür, dass ein enger Orbis allein noch nichts über dich aussagt.'},
+ {a:'Mond',b:'Chiron',t:'Sextil',o:1.88,x:'Gefühl und Wunde haben einen guten Draht. Du kannst über deine Verletzlichkeit sprechen, ohne daran zu zerbrechen — das ist die Grundlage von allem, was du beruflich mit Menschen machst.'},
+ {a:'Merkur',b:'Pluto',t:'Trigon',o:2.16,x:'Dein Denken geht von allein in die Tiefe. Durchschauen fällt dir leicht, Oberflächlichkeit langweilt dich schnell.'},
+ {a:'Sonne',b:'Jupiter',t:'Konjunktion',o:2.43,x:'Großzügigkeit, Optimismus, ein Zug ins Weite. Du willst wachsen, nicht verwalten — und du überschätzt manchmal, wie viel in einen Tag passt.'},
+ {a:'Sonne',b:'Knoten',t:'Konjunktion',o:2.45,x:'Deine Identität und dein Lebensweg zeigen in dieselbe Richtung. Du wirst du selbst, indem du deinem Weg folgst — nicht, indem du dich anpasst.'},
+ {a:'Mond',b:'Saturn',t:'Trigon',o:2.63,x:'Du kannst Gefühle strukturieren und aushalten. Verlässlichkeit ist bei dir emotional möglich — auch wenn Saturn im 7. Haus dir einredet, dass sie teuer ist.'},
+ {a:'Merkur',b:'Lilith',t:'Trigon',o:2.65,x:'Du kannst das Unaussprechliche in Sprache bringen. Das ist selten und es ist buchstäblich dein Arbeitsmaterial.'},
+ {a:'Merkur',b:'ASC',t:'Quadrat',o:3.57,x:'Zwischen Denken und Auftreten hakt es manchmal. Was du sagst, kommt nicht immer so an, wie du es meinst — deshalb erklärst du gern nach.'},
+ {a:'Mond',b:'Lilith',t:'Quadrat',o:4.33,x:'Bedürfnis und Unbändiges reiben sich: Was du brauchst, fühlt sich manchmal zu viel an. Randbereich vom Orbis her — spürbar, aber keine tragende Aussage.'}
+];
+var COL={'Quadrat':'var(--tense)','Opposition':'var(--tense)','Trigon':'var(--flow)','Sextil':'var(--flow)','Konjunktion':'var(--neutral)'};
+var RAW={'Quadrat':'#B5502E','Opposition':'#B5502E','Trigon':'#4A7C59','Sextil':'#4A7C59','Konjunktion':'#8A6F5C'};
+var ASC=67.98, NS='http://www.w3.org/2000/svg';
+var filter='alle', sel=null, hi=null;
+
+function pos(l,r){ var d=(180+(l-ASC))*Math.PI/180; return [310+r*Math.cos(d), 310-r*Math.sin(d)]; }
+function E(t,at){var e=document.createElementNS(NS,t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+
+function visible(as){
+  if(sel && as.a!==sel && as.b!==sel) return false;
+  if(filter==='alle') return true;
+  if(filter==='weich') return as.t==='Trigon'||as.t==='Sextil';
+  if(filter==='spannung') return as.t==='Quadrat'||as.t==='Opposition';
+  if(filter==='konj') return as.t==='Konjunktion';
+  return true;
+}
+function draw(){
+  var s=document.getElementById('wheel'); s.innerHTML='';
+  var GL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+  s.appendChild(E('circle',{cx:310,cy:310,r:298,fill:'#FBF7F2',stroke:'#F0D8C6','stroke-width':1.5}));
+  s.appendChild(E('circle',{cx:310,cy:310,r:255,fill:'#fff',stroke:'#F0D8C6','stroke-width':1.5}));
+  s.appendChild(E('circle',{cx:310,cy:310,r:196,fill:'#fff',stroke:'#F0D8C6','stroke-width':1}));
+  for(var i=0;i<12;i++){
+    var a=i*30, p1=pos(a,255), p2=pos(a,298);
+    s.appendChild(E('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#F0D8C6','stroke-width':1.2}));
+    var m=pos(a+15,277), t=E('text',{x:m[0],y:m[1]+7,'text-anchor':'middle','font-size':19,fill:'#8A6F5C'});
+    t.textContent=GL[i]; s.appendChild(t);
+  }
+  /* Achsenkreuz */
+  [[ASC,'AC'],[ASC+180,'DC'],[302.77,'MC'],[122.77,'IC']].forEach(function(o){
+    var p1=pos(o[0],196), p2=pos(o[0],255);
+    s.appendChild(E('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#2A1B12','stroke-width':2}));
+  });
+  /* Aspektlinien */
+  ASPECTS.forEach(function(as,idx){
+    if(!visible(as)) return;
+    var A=PL.filter(function(p){return p.k===as.a;})[0], B=PL.filter(function(p){return p.k===as.b;})[0];
+    var p1=pos(A.l,192), p2=pos(B.l,192);
+    var w=Math.max(1.1, 3.6-as.o*0.6);
+    var on=(hi===idx);
+    s.appendChild(E('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:RAW[as.t],
+      'stroke-width':on?4.5:w,'stroke-opacity':on?1:(hi===null?0.75:0.18),
+      'stroke-dasharray':as.t==='Konjunktion'?'5 5':'', 'stroke-linecap':'round'}));
+  });
+  /* Planeten */
+  PL.forEach(function(p){
+    var pt=pos(p.l,225), dim=(sel && sel!==p.k);
+    var g=E('g',{style:'cursor:pointer'});
+    g.appendChild(E('circle',{cx:pt[0],cy:pt[1],r:17,fill:sel===p.k?'#FBEFE6':'#fff',
+      stroke:sel===p.k?'#C1440E':'#F0D8C6','stroke-width':sel===p.k?2:1.2,opacity:dim?0.4:1}));
+    var t=E('text',{x:pt[0],y:pt[1]+(p.g.length>1?4:6),'text-anchor':'middle',
+      'font-size':p.g.length>1?12:17,fill:'#2A1B12',opacity:dim?0.4:1,
+      'font-family':p.g.length>1?'JetBrains Mono, monospace':'inherit'});
+    t.textContent=p.g; g.appendChild(t);
+    g.addEventListener('click',function(){ sel=(sel===p.k)?null:p.k; hi=null; render(); });
+    s.appendChild(g);
+    var dp=pos(p.l,250), d=E('text',{x:dp[0],y:dp[1]+3,'text-anchor':'middle',
+      'font-family':'JetBrains Mono, monospace','font-size':9.5,fill:'#8A6F5C',opacity:dim?0.35:1});
+    d.textContent=Math.floor(p.l%30)+'°'; s.appendChild(d);
+  });
+}
+function list(){
+  var box=document.getElementById('alist'); box.innerHTML='';
+  var vis=ASPECTS.map(function(a,i){return {a:a,i:i};}).filter(function(o){return visible(o.a);});
+  document.getElementById('hint').textContent = vis.length+' von '+ASPECTS.length+' Aspekten'+
+    (sel?(' — nur '+sel):'')+'. Tippe eine Zeile an, um sie im Bild hervorzuheben.';
+  vis.forEach(function(o){
+    var as=o.a, d=document.createElement('div');
+    d.className='arow'+(hi===o.i?' on':'');
+    d.innerHTML='<div class="top"><span class="dot" style="background:'+RAW[as.t]+'"></span>'+
+      '<span class="nm">'+as.a+' '+as.t+' '+as.b+'</span>'+
+      '<span class="orb">Orbis '+as.o.toFixed(2)+'°</span></div>'+
+      '<div class="obar"><i style="width:'+Math.max(6,100-as.o*20)+'%;background:'+RAW[as.t]+'"></i></div>'+
+      '<div class="txt">'+as.x+'</div>';
+    d.addEventListener('click',function(){ hi=(hi===o.i)?null:o.i; render(); });
+    box.appendChild(d);
+  });
+}
+var FILT=[['alle','Alle'],['spannung','Nur Spannung'],['weich','Nur weich'],['konj','Konjunktionen']];
+var fb=document.getElementById('filters');
+FILT.forEach(function(f){
+  var b=document.createElement('button'); b.type='button'; b.textContent=f[1];
+  b.setAttribute('aria-pressed',f[0]==='alle');
+  b.addEventListener('click',function(){
+    filter=f[0]; hi=null;
+    Array.prototype.forEach.call(fb.children,function(x,i){x.setAttribute('aria-pressed',FILT[i][0]===filter);});
+    render();
+  });
+  fb.appendChild(b);
+});
+function render(){ draw(); list(); }
+render();
+</script>
+</body></html>

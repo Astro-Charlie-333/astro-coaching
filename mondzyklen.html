@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neumonde, Vollmonde und Finsternisse · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
+--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+select,input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:600px){.grid,.grid3{grid-template-columns:1fr;}}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;border:1px solid var(--ind);background:var(--ind);color:#fff;padding:11px 20px;border-radius:22px;cursor:pointer;width:auto;}
+.btn.ghost{background:none;color:var(--ind);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chips button{font-family:'Inter',sans-serif;font-size:13.5px;padding:7px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;width:auto;}
+.chips button:hover{border-color:var(--ind);}
+.chips button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+summary{cursor:pointer;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ind);}
+details[open] summary{margin-bottom:8px;}
+details p{font-size:14.5px;color:var(--soft);}
+.kette{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0;}
+.kette .node{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.kette .arr{color:var(--gold);font-size:16px;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.big{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.waehler{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:14px;}
+.spalten{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+@media(max-width:760px){.spalten{grid-template-columns:1fr;}}
+.spalte label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+.knoepfe{display:flex;flex-wrap:wrap;gap:5px;}
+.knoepfe button{font-family:'Inter',sans-serif;font-size:13px;padding:6px 11px;border:1px solid var(--line);
+ background:var(--bg);color:var(--ink);border-radius:16px;cursor:pointer;line-height:1.2;}
+.knoepfe button:hover{border-color:var(--ind);}
+.knoepfe button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.knoepfe button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.ergebnis{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin-bottom:14px;}
+.titel{font-family:'Fraunces',serif;font-size:clamp(22px,4.5vw,30px);font-weight:600;color:var(--ind);line-height:1.15;margin-bottom:4px;}
+.unter{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--soft);margin-bottom:18px;}
+.dreiteil{display:grid;gap:10px;margin-bottom:18px;}
+.teil{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px;}
+.teil .kopf{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+ color:var(--gold);margin-bottom:4px;}
+.teil .kopf b{color:var(--ink);font-family:'Inter',sans-serif;font-size:12.5px;letter-spacing:0;text-transform:none;}
+.teil p{margin:0;font-size:14.8px;line-height:1.55;}
+.synth{border-left:3px solid var(--ind);padding:4px 0 4px 16px;margin:0 0 16px;}
+.synth p{margin:0;font-family:'Fraunces',serif;font-size:18px;line-height:1.45;color:var(--ink);}
+.reso{border-radius:12px;padding:13px 15px;margin-bottom:14px;font-size:14.3px;line-height:1.55;}
+.reso.doppelt{background:#FBE3DA;border-left:3px solid var(--fire);}
+.reso.achse{background:#E6E1F0;border-left:3px solid var(--water);}
+.reso.spannung{background:#FBEFE6;border-left:3px solid var(--tense);}
+.reso.fliesst{background:#E8EDDC;border-left:3px solid var(--earth);}
+.reso.neutral{background:#F4F0EA;border-left:3px solid var(--line);}
+.reso b{color:var(--ink);}
+.zeilen{display:grid;gap:9px;}
+.zeile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-size:14.5px;line-height:1.55;}
+.zeile .lab{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.merkmale{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.merkmale span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;padding:4px 10px;
+ border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--soft);}
+.zufall{margin-top:12px;}
+.btn2{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;border:1px solid var(--ind);
+ background:none;color:var(--ind);padding:9px 17px;border-radius:20px;cursor:pointer;}
+.btn2:hover{background:var(--ind);color:#fff;}
+
+.waehler{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:14px;}
+.spalten{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+@media(max-width:760px){.spalten{grid-template-columns:1fr;}}
+.spalte label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+.knoepfe{display:flex;flex-wrap:wrap;gap:5px;}
+.knoepfe button{font-family:'Inter',sans-serif;font-size:13px;padding:6px 11px;border:1px solid var(--line);
+ background:var(--bg);color:var(--ink);border-radius:16px;cursor:pointer;line-height:1.2;}
+.knoepfe button:hover{border-color:var(--ind);}
+.knoepfe button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.knoepfe button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.ergebnis{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin-bottom:14px;}
+.titel{font-family:'Fraunces',serif;font-size:clamp(21px,4.4vw,29px);font-weight:600;color:var(--ind);line-height:1.15;margin-bottom:4px;}
+.unter{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--soft);margin-bottom:16px;}
+.synth{border-left:3px solid var(--ind);padding:4px 0 4px 16px;margin:0 0 16px;}
+.synth p{margin:0;font-family:'Fraunces',serif;font-size:18px;line-height:1.45;color:var(--ink);}
+.dreiteil{display:grid;gap:10px;margin-bottom:16px;}
+.teil{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px;}
+.teil .kopf{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.teil .kopf b{color:var(--ink);font-family:'Inter',sans-serif;font-size:12.5px;letter-spacing:0;text-transform:none;}
+.teil p{margin:0;font-size:14.8px;line-height:1.55;}
+.zeilen{display:grid;gap:9px;}
+.zeile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-size:14.5px;line-height:1.55;}
+.zeile .lab{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.zeile.warn{border-color:var(--gold);background:#FBEFE6;}
+.mond{width:60px;height:60px;flex:0 0 60px;}
+.kopfzeile{display:flex;gap:16px;align-items:center;margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+tr.fins td{background:#FBEFE6;}
+tr.fins td:first-child{font-weight:600;}
+.kal{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
+select{padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing-Vertiefung</div>
+<h1>Neumonde, Vollmonde, <em>Finsternisse.</em></h1>
+<p class="lede">Vier Ereignisarten, zwölf Zeichen, zwölf Häuser — und ein Kalender aller Lunationen bis Februar 2028. Die Art sagt, was passiert. Das Zeichen sagt, worum es geht. Das Haus sagt, wo in deinem Leben.</p>
+
+
+<h2>Der Unterschied in vier Sätzen</h2>
+<div class="waehler" style="padding:14px 16px;">
+<table style="margin:0;">
+<tr><th>Art</th><th>Was passiert</th><th>Wie lange</th></tr>
+<tr><td><b>Neumond</b></td><td>Sonne und Mond zusammen — ein Anfang, noch unsichtbar</td><td class="mono">4 Wochen</td></tr>
+<tr><td><b>Vollmond</b></td><td>Sonne und Mond gegenüber — etwas wird sichtbar</td><td class="mono">2 Wochen</td></tr>
+<tr><td><b>Sonnenfinsternis</b></td><td>Neumond an der Knotenachse — Reset mit blindem Fleck</td><td class="mono">6 Monate</td></tr>
+<tr><td><b>Mondfinsternis</b></td><td>Vollmond an der Knotenachse — etwas kippt ins Bewusstsein</td><td class="mono">6 Monate</td></tr>
+</table>
+</div>
+<p>Der entscheidende Unterschied ist nicht die Bedeutung, sondern die <b>Reichweite</b>. Ein Neumond ist Monatsrhythmus. Eine Finsternis ist ein Halbjahresthema.</p>
+
+<h2>Die Kombination</h2>
+<p class="sub">Art, Zeichen und Haus zusammen. Das Zeichen sagt, <i>worum</i> es geht. Das Haus sagt, <i>wo im Leben</i> es stattfindet.</p>
+
+<div class="waehler">
+  <div class="spalten">
+    <div class="spalte"><label>Art</label><div class="knoepfe" id="ka"></div></div>
+    <div class="spalte"><label>Zeichen</label><div class="knoepfe" id="kz"></div></div>
+    <div class="spalte"><label>Haus</label><div class="knoepfe" id="kh"></div></div>
+  </div>
+</div>
+
+<div class="ergebnis">
+  <div class="kopfzeile">
+    <svg class="mond" id="mondbild" viewBox="0 0 120 120" role="img" aria-label="Mondphase"></svg>
+    <div><div class="titel" id="titel">—</div><div class="unter" id="unter"></div></div>
+  </div>
+  <div class="synth" id="synth"><p></p></div>
+  <div class="dreiteil" id="dreiteil"></div>
+  <div class="zeilen" id="zeilen"></div>
+</div>
+
+<h2>Wann es dich wirklich betrifft</h2>
+<ol class="steps">
+<li><b>Bei Neu- und Vollmonden reicht das Haus</b>Sie laufen monatlich durch alle zwölf Häuser. Persönlich werden sie, wenn sie gradgenau einen Punkt in deinem Chart treffen — Orbis etwa 3°.</li>
+<li><b>Bei Finsternissen entscheidet der Gradtreffer</b>Ohne Kontakt unter 3° beschreibt eine Finsternis nur das Hausthema. Trifft sie Sonne, Mond, Aszendent oder MC, wird sie zum Halbjahresthema.</li>
+<li><b>Die Achse zählt immer mit</b>Ein Ereignis im 4. Haus berührt automatisch das 10., eines im 7. das 1. Gegenüberliegende Häuser gehören zusammen.</li>
+<li><b>Der Herrscher zeigt weiter</b>Wo steht der Herrscher des betroffenen Zeichens? Dorthin läuft das Thema weiter. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
+<li><b>Auslöser kommen später</b>Finsternisse zünden selten am Tag selbst. Meist braucht es einen schnellen Planeten, der Wochen später über denselben Grad läuft.</li>
+</ol>
+
+<h2>Der Kalender</h2>
+<p class="sub">Alle Neumonde, Vollmonde und Finsternisse bis Februar 2028, gerechnet mit Swiss Ephemeris. Wähle deinen Aszendenten, dann siehst du für jedes Ereignis das Haus (Whole Sign).</p>
+<div class="kal">
+  <label style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:7px;">Dein Aszendent</label>
+  <select id="asc"></select>
+  <div style="overflow-x:auto;margin-top:14px;"><table id="kaltab"></table></div>
+</div>
+
+<div class="tip"><b>Fürs Reading:</b> Prüfe zuerst, <b>ob</b> ein Gradtreffer vorliegt. Wenn nicht, sag genau das — „diese Finsternis berührt dein Chart nicht eng" schafft mehr Vertrauen als eine große Ansage auf dünner Datenlage. Und beschreibe die Art der Aufgabe, nie ein Ereignis.</div>
+
+<div class="tip"><b>Für den Alltag:</b> Du musst nicht jeden Neumond nutzen. Zwei Fragen reichen: Was will bei mir gerade anfangen? Und was ist inzwischen daraus geworden? Mehr dazu unter <a href="mondphasen-rhythmus.html">Die Mondphasen als Rhythmus</a>.</div>
+
+
+<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a></div>
+<div class="foot">Neumonde, Vollmonde und Finsternisse &middot; 576 Kombinationen, Kalender mit Swiss Ephemeris gerechnet, Whole Sign. Lunationen beschreiben Zeitqualität, keine Ereignisse — und nur ein Gradtreffer macht sie persönlich.</div>
+</div>
+<script>
+var D = {"art": {"Neumond": {"k": "Säen", "w": 0, "t": "Ein Anfang, der noch nicht sichtbar ist. Sonne und Mond stehen zusammen — Wille und Gefühl zeigen in dieselbe Richtung. Was hier beginnt, zeigt sich erst zwei Wochen später.", "tun": "Absicht setzen, aufschreiben, anfangen ohne Publikum.", "dauer": "Wirkt rund vier Wochen, bis zum nächsten Neumond."}, "Vollmond": {"k": "Ernten", "w": 180, "t": "Eine Kulmination. Sonne und Mond stehen sich gegenüber — was du willst und was du brauchst, treten auseinander und werden dadurch sichtbar. Emotional oft intensiv.", "tun": "Anschauen, klären, abschließen. Nichts Neues beginnen.", "dauer": "Wirkt rund zwei Wochen, bis zum nächsten Neumond."}, "Sonnenfinsternis": {"k": "Reset", "w": 0, "t": "Ein Neumond an der Mondknotenachse — der Mond verdeckt die Sonne. Etwas wird kurz unsichtbar, bevor es neu erscheint. Oft mit blindem Fleck: Man erkennt erst hinterher, was begonnen hat.", "tun": "Anfangen, ohne alles verstehen zu wollen. Nichts erzwingen.", "dauer": "Wirkt etwa zwei Wochen vorher bis rund sechs Monate danach."}, "Mondfinsternis": {"k": "Loslassen", "w": 180, "t": "Ein Vollmond an der Mondknotenachse — die Erde schiebt sich dazwischen. Etwas kippt ins Bewusstsein, meist abrupter als bei einem gewöhnlichen Vollmond.", "tun": "Beenden, aussprechen, gehen lassen. Nicht festhalten.", "dauer": "Wirkt etwa zwei Wochen vorher bis rund sechs Monate danach."}}, "zeichen": ["Widder", "Stier", "Zwillinge", "Krebs", "Löwe", "Jungfrau", "Waage", "Skorpion", "Schütze", "Steinbock", "Wassermann", "Fische"], "glyph": ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"], "haus": [["Person, Körper, Auftreten", "in dir selbst — Auftreten, Körper, wie du dich zeigst"], ["Wert, Geld, Ressourcen", "in dem, was dir gehört und was du dir wert bist"], ["Sprache, Lernen, Nahbereich", "im Reden, Lernen und im täglichen Umfeld"], ["Zuhause, Wurzeln, Herkunft", "zuhause, in der Familie und in dem, was dich geprägt hat"], ["Ausdruck, Spiel, Romantik", "in dem, was aus dir herauswill — Kreativität, Verliebtsein, Spiel"], ["Alltag, Arbeit, Gesundheit", "im gewöhnlichen Tag: Arbeit, Routinen, Körper"], ["Partnerschaft und Begegnung", "in der Begegnung mit einem Gegenüber"], ["Tiefe, Krise, Geteiltes", "dort, wo es ernst wird — Nähe, Krise, Gemeinsames"], ["Sinn, Weite, Lehre", "in Sinnfragen, Ferne, Lernen und Überzeugungen"], ["Beruf und Sichtbarkeit", "in der Öffentlichkeit — Beruf, Rolle, wofür du stehst"], ["Gruppen, Netzwerke, Ziele", "in Gruppen, Freundeskreis und langfristigen Vorhaben"], ["Rückzug, Inneres, Unsichtbares", "im Verborgenen — auch vor dir selbst"]], "frage": ["Was möchtest du über dich selbst herausfinden?", "Woran misst du gerade deinen Wert?", "Was möchtest du lernen oder endlich aussprechen?", "Was bräuchtest du, damit du dich wirklich zuhause fühlst?", "Was möchtest du machen, ohne dass es einen Zweck hat?", "Welche Routine würde dir das Leben leichter machen?", "Was erwartest du von einem Gegenüber, ohne es zu sagen?", "Was hältst du fest, obwohl du es loslassen könntest?", "Woran glaubst du gerade — und wovon hast du dich verabschiedet?", "Wofür möchtest du bekannt sein?", "Wo gehörst du dazu, ohne dich anstrengen zu müssen?", "Was möchtest du abschließen, bevor etwas Neues beginnt?"], "z": {"Neumond": ["Etwas anfangen, ohne den Plan zu haben. Mut vor Vorbereitung — der Rest ergibt sich beim Gehen.", "Etwas aufbauen, das bleiben soll. Langsam beginnen, dafür mit einem tragfähigen Fundament.", "Ein Gespräch beginnen, eine Frage stellen, etwas lernen. Neugier ist hier der Antrieb.", "Sich um etwas kümmern, das Nähe braucht. Ein Anfang, der Sicherheit schaffen soll.", "Sich zeigen. Etwas beginnen, das von dir handelt und Freude machen darf.", "Ordnen und verbessern. Ein unspektakulärer Anfang, der im Kleinen ansetzt.", "Auf jemanden zugehen. Ein Anfang, der zu zweit gedacht ist.", "Etwas beginnen, das ernst ist. Kein Probelauf, sondern Tiefe von Anfang an.", "Den Horizont weiten. Lernen, reisen, an etwas glauben, das größer ist als der Alltag.", "Verantwortung übernehmen. Ein Anfang mit Anspruch und langem Zeithorizont.", "Etwas anders machen als üblich. Ein Anfang, der nicht ins Schema passen soll.", "Loslassen und vertrauen. Ein Anfang, der sich mehr wie Hingabe anfühlt als wie Planung."], "Vollmond": ["Es kulminiert die Frage, was du selbst willst — gegen das, was das Umfeld erwartet.", "Es kulminiert die Frage nach Sicherheit und Wert. Was ist genug, und was hältst du fest?", "Es kulminiert etwas Gesagtes oder Ungesagtes. Informationen kommen zusammen.", "Es kulminiert ein Bedürfnis nach Zugehörigkeit. Familie und Herkunft werden spürbar.", "Es kulminiert der Wunsch, gesehen zu werden. Etwas will endlich Anerkennung.", "Es kulminiert die Frage, ob es reicht. Kritik und Perfektion werden laut.", "Es kulminiert eine Beziehungsfrage. Ausgleich oder Ungleichgewicht wird deutlich.", "Es kulminiert etwas Tiefes. Kontrolle, Vertrauen oder Geteiltes kommen an einen Punkt.", "Es kulminiert eine Sinnfrage. Eine Überzeugung wird bestätigt oder bricht weg.", "Es kulminiert eine Frage nach Leistung und Anerkennung. Ergebnisse werden sichtbar.", "Es kulminiert die Spannung zwischen Dazugehören und Eigenständigsein.", "Es kulminiert etwas Diffuses. Gefühle, Erschöpfung oder Sehnsucht werden greifbar."], "Sonnenfinsternis": ["Ein Neustart im Selbstbehaupten. Was hier beginnt, verlangt Mut und wird über Monate wachsen.", "Ein Neustart in Sachen Wert und Sicherheit. Langsam, aber grundlegend.", "Ein Neustart im Denken und Sprechen. Neue Kontakte, neue Themen, ein anderer Ton.", "Ein Neustart in Zugehörigkeit und Zuhause. Oft mit Umzug, Familie oder Wurzeln verbunden.", "Ein Neustart im Sichtbarwerden. Etwas Eigenes will nach draußen.", "Ein Neustart im Alltag. Routinen, Arbeit, Körper — unspektakulär und tiefgreifend.", "Ein Neustart in Beziehungen. Neue Menschen oder eine neue Art, mit ihnen umzugehen.", "Ein Neustart in der Tiefe. Etwas verändert sich grundlegend, oft ohne Ankündigung.", "Ein Neustart im Weltbild. Lernen, Ferne, Glauben — der Horizont verschiebt sich.", "Ein Neustart in Verantwortung und Rolle. Beruflich oft ein Einschnitt.", "Ein Neustart in Zugehörigkeit und Zukunft. Gruppen, Netzwerke, Ziele.", "Ein Neustart im Inneren. Wenig sichtbar, dafür grundlegend — oft ein Abschluss, der einen Anfang enthält."], "Mondfinsternis": ["Etwas im Selbstbehaupten kommt an sein Ende. Ein alter Kampf hört auf.", "Etwas in Sachen Besitz oder Selbstwert löst sich. Loslassen fällt hier besonders schwer.", "Etwas Ungesagtes kommt heraus. Eine Wahrheit findet ihre Worte.", "Etwas mit Familie oder Zuhause kulminiert. Ein Kapitel der Herkunft schließt.", "Etwas im Ausdruck kommt an sein Ende — eine Rolle, ein Auftritt, eine Verliebtheit.", "Etwas im Alltag bricht weg. Meist eine Routine, die nicht mehr trägt.", "Etwas in einer Beziehung kulminiert. Klarheit, in die eine oder andere Richtung.", "Etwas Tiefes löst sich. Kontrolle, Bindung oder ein Geheimnis kommt ans Licht.", "Eine Überzeugung endet. Was du geglaubt hast, hält der Prüfung nicht mehr stand.", "Etwas Berufliches kulminiert. Anerkennung oder Abschluss, oft öffentlich.", "Etwas in einer Gruppe löst sich. Zugehörigkeiten sortieren sich neu.", "Etwas Unbewusstes wird sichtbar. Erschöpfung oder eine alte Sehnsucht meldet sich."]}, "lun": [{"d": "28.08.2026", "a": "Mondfinsternis", "g": 335.8, "t": "5° Fische 48'"}, {"d": "11.09.2026", "a": "Neumond", "g": 168.54, "t": "18° Jungfrau 32'"}, {"d": "26.09.2026", "a": "Vollmond", "g": 4.29, "t": "4° Widder 17'"}, {"d": "10.10.2026", "a": "Neumond", "g": 197.45, "t": "17° Waage 27'"}, {"d": "26.10.2026", "a": "Vollmond", "g": 33.84, "t": "3° Stier 51'"}, {"d": "09.11.2026", "a": "Neumond", "g": 227.1, "t": "17° Skorpion 06'"}, {"d": "24.11.2026", "a": "Vollmond", "g": 64.28, "t": "4° Zwillinge 17'"}, {"d": "09.12.2026", "a": "Neumond", "g": 257.16, "t": "17° Schütze 10'"}, {"d": "24.12.2026", "a": "Vollmond", "g": 95.12, "t": "5° Krebs 07'"}, {"d": "08.01.2027", "a": "Neumond", "g": 287.46, "t": "17° Steinbock 27'"}, {"d": "22.01.2027", "a": "Vollmond", "g": 125.85, "t": "5° Löwe 51'"}, {"d": "06.02.2027", "a": "Sonnenfinsternis", "g": 317.71, "t": "17° Wassermann 43'"}, {"d": "21.02.2027", "a": "Mondfinsternis", "g": 152.46, "t": "2° Jungfrau 28'"}, {"d": "08.03.2027", "a": "Neumond", "g": 347.68, "t": "17° Fische 41'"}, {"d": "22.03.2027", "a": "Vollmond", "g": 182.33, "t": "2° Waage 20'"}, {"d": "07.04.2027", "a": "Neumond", "g": 16.96, "t": "16° Widder 57'"}, {"d": "21.04.2027", "a": "Vollmond", "g": 211.48, "t": "1° Skorpion 29'"}, {"d": "06.05.2027", "a": "Neumond", "g": 45.75, "t": "15° Stier 45'"}, {"d": "20.05.2027", "a": "Vollmond", "g": 239.76, "t": "29° Skorpion 46'"}, {"d": "05.06.2027", "a": "Neumond", "g": 74.14, "t": "14° Zwillinge 09'"}, {"d": "19.06.2027", "a": "Vollmond", "g": 270.21, "t": "0° Steinbock 12'"}, {"d": "04.07.2027", "a": "Neumond", "g": 102.07, "t": "12° Krebs 04'"}, {"d": "18.07.2027", "a": "Mondfinsternis", "g": 296.92, "t": "26° Steinbock 55'"}, {"d": "02.08.2027", "a": "Sonnenfinsternis", "g": 129.99, "t": "9° Löwe 60'"}, {"d": "17.08.2027", "a": "Mondfinsternis", "g": 326.43, "t": "26° Wassermann 26'"}, {"d": "31.08.2027", "a": "Neumond", "g": 158.12, "t": "8° Jungfrau 07'"}, {"d": "16.09.2027", "a": "Vollmond", "g": 353.36, "t": "23° Fische 22'"}, {"d": "30.09.2027", "a": "Neumond", "g": 186.86, "t": "6° Waage 52'"}, {"d": "15.10.2027", "a": "Vollmond", "g": 24.25, "t": "24° Widder 15'"}, {"d": "29.10.2027", "a": "Neumond", "g": 216.09, "t": "6° Skorpion 05'"}, {"d": "14.11.2027", "a": "Vollmond", "g": 52.98, "t": "22° Stier 59'"}, {"d": "28.11.2027", "a": "Neumond", "g": 245.76, "t": "5° Schütze 46'"}, {"d": "13.12.2027", "a": "Vollmond", "g": 82.52, "t": "22° Zwillinge 31'"}, {"d": "28.12.2027", "a": "Neumond", "g": 276.0, "t": "5° Steinbock 60'"}, {"d": "12.01.2028", "a": "Mondfinsternis", "g": 112.67, "t": "22° Krebs 40'"}, {"d": "26.01.2028", "a": "Sonnenfinsternis", "g": 306.3, "t": "6° Wassermann 18'"}, {"d": "10.02.2028", "a": "Vollmond", "g": 143.26, "t": "23° Löwe 16'"}, {"d": "25.02.2028", "a": "Neumond", "g": 336.41, "t": "6° Fische 24'"}]};
+var ARTEN = ['Neumond','Vollmond','Sonnenfinsternis','Mondfinsternis'];
+var sel = {a:0, z:0, h:0};
+var NS='http://www.w3.org/2000/svg';
+function NSel(t,at){var e=document.createElementNS(NS,t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+function mondSVG(svg,w){
+  svg.innerHTML='';var r=48,cx=60,cy=60;
+  svg.appendChild(NSel('circle',{cx:cx,cy:cy,r:r,fill:'#2A1B12'}));
+  var k=Math.cos(w*Math.PI/180), rechts=w<180;
+  var d='M '+cx+' '+(cy-r)+' A '+r+' '+r+' 0 0 '+(rechts?1:0)+' '+cx+' '+(cy+r)+
+        ' A '+(r*Math.abs(k)).toFixed(2)+' '+r+' 0 0 '+(rechts?(k>0?0:1):(k>0?1:0))+' '+cx+' '+(cy-r)+' Z';
+  svg.appendChild(NSel('path',{d:d,fill:'#F7E9C9'}));
+  svg.appendChild(NSel('circle',{cx:cx,cy:cy,r:r,fill:'none',stroke:'#C9B4A2','stroke-width':1}));
+}
+function knoepfe(box,arr,akt,cb){
+  box.innerHTML='';
+  arr.forEach(function(lab,i){
+    var b=document.createElement('button');b.type='button';b.textContent=lab;
+    b.setAttribute('aria-pressed',i===akt);
+    b.addEventListener('click',function(){cb(i);});
+    box.appendChild(b);
+  });
+}
+function render(){
+  knoepfe(document.getElementById('ka'),ARTEN,sel.a,function(i){sel.a=i;render();});
+  knoepfe(document.getElementById('kz'),D.zeichen.map(function(z,i){return D.glyph[i]+' '+z;}),sel.z,function(i){sel.z=i;render();});
+  knoepfe(document.getElementById('kh'),D.haus.map(function(h,i){return (i+1)+'.';}),sel.h,function(i){sel.h=i;render();});
+  var an=ARTEN[sel.a], a=D.art[an], z=D.zeichen[sel.z], h=D.haus[sel.h];
+  mondSVG(document.getElementById('mondbild'), a.w===0?2:178);
+  document.getElementById('titel').textContent=an+' in '+z+' · '+(sel.h+1)+'. Haus';
+  document.getElementById('unter').textContent=a.k.toUpperCase()+' — '+h[0].toUpperCase();
+  document.getElementById('synth').querySelector('p').innerHTML=
+    '<b>'+a.k+'</b> — '+D.z[an][sel.z].charAt(0).toLowerCase()+D.z[an][sel.z].slice(1).replace(/\.$/,'')+' — und das spielt sich ab '+h[1]+'.';
+  var dt=document.getElementById('dreiteil');dt.innerHTML='';
+  [['Die Art sagt was passiert',an,a.t],
+   ['Das Zeichen sagt worum es geht',z,D.z[an][sel.z]],
+   ['Das Haus sagt wo',(sel.h+1)+'. Haus',h[0]+'. Das Thema spielt sich ab '+h[1]+'.']
+  ].forEach(function(t){
+    var d=document.createElement('div');d.className='teil';
+    d.innerHTML='<div class="kopf">'+t[0]+' &middot; <b>'+t[1]+'</b></div><p>'+t[2]+'</p>';
+    dt.appendChild(d);
+  });
+  var zl=document.getElementById('zeilen');zl.innerHTML='';
+  var gegen=(sel.h+6)%12;
+  var reihen=[['Was jetzt dran ist',a.tun],['Zeitraum',a.dauer],
+   ['Die Gegenseite','Das '+(sel.h+1)+'. Haus gehört mit dem '+(gegen+1)+'. zusammen ('+D.haus[gegen][0]+'). Was hier passiert, verschiebt automatisch auch dort etwas.'],
+   ['Frage dazu',D.frage[sel.h]]];
+  if(an.indexOf('insternis')>=0){
+    reihen.push(['Achtung','Eine Finsternis wirkt persönlich nur, wenn sie gradgenau einen Punkt in deinem Chart trifft — Orbis etwa 3 Grad, bei Sonne, Mond und Achsen bis 5. Ohne Treffer beschreibt sie nur das Hausthema und ist Wetter, nicht Biografie.']);
+  }
+  reihen.forEach(function(t){
+    var d=document.createElement('div');d.className='zeile'+(t[0]==='Achtung'?' warn':'');
+    d.innerHTML='<span class="lab">'+t[0]+'</span>'+t[1];
+    zl.appendChild(d);
+  });
+}
+var asc=document.getElementById('asc');
+D.zeichen.forEach(function(z,i){var o=document.createElement('option');o.value=i;o.textContent=z;asc.appendChild(o);});
+function kalender(){
+  var a=+asc.value, t=document.getElementById('kaltab');
+  t.innerHTML='<tr><th>Datum</th><th>Art</th><th>Position</th><th>Haus</th><th>Thema</th></tr>';
+  D.lun.forEach(function(x){
+    var zi=Math.floor(x.g/30), hh=((zi-a)%12+12)%12;
+    var fins=x.a.indexOf('insternis')>=0;
+    t.innerHTML+='<tr class="'+(fins?'fins':'')+'"><td class="mono">'+x.d+'</td><td>'+x.a+
+      '</td><td class="mono">'+x.t+'</td><td class="mono">'+(hh+1)+'.</td><td>'+D.haus[hh][0]+'</td></tr>';
+  });
+}
+asc.addEventListener('change',kalender);
+render(); kalender();
+</script>
+</body></html>

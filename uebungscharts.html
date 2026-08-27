@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Übungscharts · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
+--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+select,input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:600px){.grid,.grid3{grid-template-columns:1fr;}}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;border:1px solid var(--ind);background:var(--ind);color:#fff;padding:11px 20px;border-radius:22px;cursor:pointer;width:auto;}
+.btn.ghost{background:none;color:var(--ind);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chips button{font-family:'Inter',sans-serif;font-size:13.5px;padding:7px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;width:auto;}
+.chips button:hover{border-color:var(--ind);}
+.chips button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+summary{cursor:pointer;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ind);}
+details[open] summary{margin-bottom:8px;}
+details p{font-size:14.5px;color:var(--soft);}
+.kette{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0;}
+.kette .node{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.kette .arr{color:var(--gold);font-size:16px;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.big{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
+.mono{font-family:'JetBrains Mono',monospace;}</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Üben & Nachschlagen</div>
+<h1>Übungs<em>charts.</em></h1>
+<p class="lede">Chart lesen lernt man nicht durch Lesen, sondern durch Deuten. Hier sind drei vollständige Charts erfundener Personen — echt gerechnet, aber niemand dahinter. Erst selbst versuchen, dann aufklappen und vergleichen.</p>
+
+
+<div class="tip"><b>So arbeitest du damit:</b> Nimm dir Papier. Beantworte die drei Fragen unter jedem Chart selbst, bevor du etwas aufklappst. Deine Antwort muss nicht mit meiner übereinstimmen — es geht nicht um richtig, sondern darum, dass du begründen kannst, woran du es festmachst. Ein Chart pro Sitzung reicht völlig.</div>
+
+<div id="charts"></div>
+
+<h2>Was du beim Üben trainierst</h2>
+<ol class="steps">
+<li><b>Zuerst das Auffällige</b>Wo häufen sich Planeten? Welches Element fehlt? Was springt sofort ins Auge? Diese erste Minute prägt das ganze Reading.</li>
+<li><b>Dann die Achsen</b>Aszendent, MC — wie tritt dieser Mensch auf, wofür steht er öffentlich?</li>
+<li><b>Dann die engsten Aspekte</b>Nur die unter 2°. Alles andere kommt später oder gar nicht.</li>
+<li><b>Dann die leeren Häuser über die Herrscher</b>Wo kein Planet steht, folgst du dem Herrscher. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
+<li><b>Zum Schluss ein Satz</b>Wenn du diesen Menschen in einem Satz beschreiben müsstest — welcher wäre es? Gelingt das nicht, hast du das Chart noch nicht gelesen.</li>
+</ol>
+
+<div class="tip"><b>Der wichtigste Übungseffekt:</b> Merk dir, <i>woran</i> du eine Aussage festgemacht hast. Nicht „ich hatte das Gefühl", sondern „Saturn im 10. mit 0,3° zur Sonne". Diese Begründungsfähigkeit ist der ganze Unterschied zwischen Raten und Können — und sie ist es auch, die dich im Reading sicher macht, wenn jemand nachfragt.</div>
+
+
+<div class="weiter"><a href="quiz.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Quiz</span></a><a href="glossar.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Glossar</span></a></div>
+<div class="foot">Übungscharts &middot; Drei erfundene Geburtsdaten, echt gerechnet, Whole Sign. Keine realen Personen. Deine Deutung muss nicht mit meiner übereinstimmen — sie muss begründet sein.</div>
+</div>
+<script>
+var CHARTS=[
+{ id:'A', titel:'Chart A', kurz:'Aszendent Schütze, Jungfrau-Stellium im 10. Haus',
+  daten:'12. September 1979, 16:20 Ortszeit, Frankfurt am Main',
+  pos:[['Sonne',"19° Jungfrau 09'",10],['Mond',"10° Zwillinge 12'",7],['Merkur',"18° Jungfrau 30'",10],
+   ['Venus',"24° Jungfrau 03'",10],['Mars',"22° Krebs 28'",8],['Jupiter',"26° Löwe 33'",9],
+   ['Saturn',"17° Jungfrau 30'",10],['Uranus',"17° Skorpion 54'",12],['Neptun',"17° Schütze 46'",1],
+   ['Pluto',"17° Waage 58'",11],['Nordknoten',"7° Jungfrau 45'",10],['ASC',"8° Schütze 01'",1],['MC',"5° Waage 00'",11]],
+  asp:[['Sonne','Konjunktion','Merkur','0,64'],['Saturn','Quadrat','Neptun','0,27'],
+   ['Saturn','Sextil','Uranus','0,40'],['Merkur','Sextil','Uranus','0,61'],['Nordknoten','Quadrat','ASC','0,27']],
+  fragen:['Wo liegt der Schwerpunkt dieses Lebens — und woran erkennst du das?',
+   'Das 7. Haus enthält nur den Mond. Was sagt dir das über Beziehungen?',
+   'Saturn steht im 10. Haus und im Quadrat zu Neptun. Was macht das mit dem Berufsweg?'],
+  loesung:['Vier Planeten plus Nordknoten im 10. Haus — das ist die auffälligste Häufung und beantwortet Frage eins fast allein: Ein Leben, das sich um Beruf, Verantwortung und öffentliche Rolle dreht. Jungfrau dazu heißt: über Können, Präzision und Nützlichkeit, nicht über Glanz.',
+   'Der Mond im 7. in Zwillingen: Emotionale Sicherheit entsteht über Gespräch und Austausch mit anderen. Diese Person braucht ein Gegenüber zum Denken. Das 7. Haus wird zusätzlich von Merkur beherrscht (Zwillinge), und Merkur steht im 10. — also laufen Beziehungen bei ihr auch über die Arbeit.',
+   'Saturn im 10. ist beruflicher Ernst und späte Anerkennung: viel Verantwortung, wenig geschenkt. Das Quadrat zu Neptun auf 0,27° — sehr eng, also ein Lebensthema — bringt Unschärfe hinein: Selbstzweifel, ein Berufsbild, das lange unklar bleibt, oder eine Diskrepanz zwischen Ideal und Realität. Zusammen: jemand, der beruflich hart arbeitet und trotzdem lange nicht weiß, ob es reicht.']},
+{ id:'B', titel:'Chart B', kurz:'Aszendent Schütze am letzten Grad, Wassermann-Betonung im 3. Haus',
+  daten:'26. Januar 1994, 06:45 Ortszeit, München',
+  pos:[['Sonne',"6° Wassermann 00'",3],['Mond',"18° Krebs 41'",8],['Merkur',"20° Wassermann 32'",3],
+   ['Venus',"8° Wassermann 11'",3],['Mars',"28° Steinbock 28'",2],['Jupiter',"12° Skorpion 58'",12],
+   ['Saturn',"29° Wassermann 41'",3],['Uranus',"23° Steinbock 04'",2],['Neptun',"21° Steinbock 25'",2],
+   ['Pluto',"27° Skorpion 44'",12],['Nordknoten',"29° Skorpion 46'",12],['ASC',"29° Schütze 13'",1],['MC',"0° Skorpion 11'",12]],
+  asp:[['Saturn','Quadrat','Nordknoten','0,09'],['Saturn','Sextil','ASC','0,46'],['Saturn','Trigon','MC','0,50'],
+   ['Mars','Sextil','Pluto','0,74'],['Uranus','Konjunktion','Neptun','1,66']],
+  fragen:['Vier Planeten stehen im 3. Haus. Was ist die naheliegendste Deutung — und was übersieht man dabei leicht?',
+   'Das MC steht auf 0° Skorpion, das 10. Haus ist leer. Wie kommst du trotzdem zu einer Berufsaussage?',
+   'Saturn quadriert den Nordknoten auf 0,09°. Was bedeutet ein so enger Kontakt?'],
+  loesung:['Naheliegend: jemand, der über Sprache, Lernen und Austausch lebt — Sonne, Merkur, Venus und Saturn im 3. Haus in Wassermann. Leicht übersehen wird der Mond im 8. Haus in Krebs: Diese Person redet viel und leicht, fühlt aber tief und schwer. Der Kontrast ist die eigentliche Aussage, nicht das Stellium allein.',
+   'Über den Herrscher. Am 10. Haus steht Skorpion, Herrscher ist Pluto (traditionell Mars). Pluto steht im 12. Haus — also ein Beruf, der mit Verborgenem, Tiefe oder Hintergrundarbeit zu tun hat. Mars als Mitherrscher steht im 2.: Es geht auch um Ressourcen und eigenen Verdienst. Beide zusammen: eine Arbeit im Stillen, die trotzdem ernährt.',
+   'Unter 0,1° ist praktisch exakt — das ist kein Aspekt mehr, sondern ein Lebensthema. Saturn am Nordknoten heißt: Der eigene Weg fühlt sich blockiert oder verpflichtend an. Verantwortung steht dort, wo Entwicklung hin will. Solche Menschen brauchen lange, gehen dann aber sehr belastbar. Zusätzlich ist Saturn hier gut gestellt (Sextil zum AC, Trigon zum MC) — die Struktur trägt, sie ist nur schwer.']},
+{ id:'C', titel:'Chart C', kurz:'Aszendent Skorpion mit Mond im 1. Haus, Zwillinge-Stellium im 8.',
+  daten:'3. Juni 2001, 20:10 Ortszeit, Hamburg',
+  pos:[['Sonne',"13° Zwillinge 08'",8],['Mond',"14° Skorpion 09'",1],['Merkur',"29° Zwillinge 57'",8],
+   ['Venus',"27° Widder 25'",6],['Mars',"25° Schütze 47'",2],['Jupiter',"21° Zwillinge 01'",8],
+   ['Saturn',"5° Zwillinge 33'",8],['Uranus',"24° Wassermann 50'",4],['Neptun',"8° Wassermann 38'",4],
+   ['Pluto',"13° Schütze 57'",2],['Nordknoten',"7° Krebs 33'",9],['ASC',"7° Skorpion 21'",1],['MC',"22° Löwe 19'",10]],
+  asp:[['Nordknoten','Trigon','ASC','0,20'],['Sonne','Opposition','Pluto','0,81'],['Mars','Sextil','Uranus','0,96'],
+   ['Neptun','Quadrat','ASC','1,28'],['Jupiter','Sextil','MC','1,30']],
+  fragen:['Mond im 1. Haus in Skorpion, Sonne im 8. — was hat das gemeinsam, und was ist der Unterschied?',
+   'Die Sonne steht in Opposition zu Pluto auf 0,81°. Wie beschreibst du das, ohne zu dramatisieren?',
+   'Wo würdest du bei dieser Person beruflich ansetzen?'],
+  loesung:['Gemeinsam: Beides zeigt auf Tiefe. Der Mond im 1. macht das Gefühl sofort sichtbar — diese Person kann nicht verbergen, wie es ihr geht. Die Sonne im 8. sagt, dass sie erst lebendig wird, wo es ernst wird. Der Unterschied: Der Mond ist unwillkürlich und nach außen, die Sonne ist Identität und nach innen. Sie wirkt intensiv, bevor sie es sein will.',
+   'Nicht als Machtkampf, sondern als Kraftfrage. Sonne gegenüber Pluto heißt: Diese Person begegnet Intensität immer wieder von außen — durch Menschen, die sehr viel Raum nehmen — und lernt daran, ihre eigene Kraft zu kennen. Die Deutung sollte beschreiben, nicht warnen: Sie ist nicht Opfer ihrer Umgebung, sie übt an ihr.',
+   'Am MC in Löwe: Sichtbarkeit, Ausdruck, etwas Eigenes zeigen. Herrscher ist die Sonne, und die steht im 8. Haus — also ein Beruf, in dem es um Tiefe, Krise oder das Verborgene geht, aber sichtbar ausgeübt. Jupiter im Sextil zum MC (1,3°) unterstützt das. Zusammen: jemand, der öffentlich über schwierige Dinge spricht.']}
+];
+var box=document.getElementById('charts');
+CHARTS.forEach(function(c){
+  var wrap=document.createElement('div');
+  var postab='<table><tr><th>Punkt</th><th>Position</th><th>Haus</th></tr>'+
+    c.pos.map(function(p){return '<tr><td>'+p[0]+'</td><td class="mono">'+p[1]+'</td><td class="mono">'+p[2]+'</td></tr>';}).join('')+'</table>';
+  var asptab='<table><tr><th>Aspekt</th><th>Orbis</th></tr>'+
+    c.asp.map(function(a){return '<tr><td>'+a[0]+' '+a[1]+' '+a[2]+'</td><td class="mono">'+a[3]+'°</td></tr>';}).join('')+'</table>';
+  var fragen=c.fragen.map(function(f,i){return '<li>'+f+'</li>';}).join('');
+  var loes=c.loesung.map(function(l,i){return '<p><b>Zu Frage '+(i+1)+':</b> '+l+'</p>';}).join('');
+  wrap.innerHTML='<h2>'+c.titel+'</h2><p class="sub">'+c.kurz+' &middot; '+c.daten+'</p>'+
+   '<div class="white"><div class="grid"><div>'+postab+'</div><div><p class="sub" style="margin-bottom:4px;">'+
+   'Engste Aspekte</p>'+asptab+'</div></div></div>'+
+   '<div class="card"><h3>Deine Aufgabe</h3><ol style="margin-bottom:0;">'+fragen+'</ol></div>'+
+   '<details><summary>Meine Deutung anzeigen</summary>'+loes+'</details>';
+  box.appendChild(wrap);
+});
+</script>
+</body></html>

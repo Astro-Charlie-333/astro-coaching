@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Häusersysteme · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.say{border-left:3px solid var(--ind);padding-left:14px;margin:10px 0;
+  font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ind);line-height:1.45;}
+select,input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.inrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.inrow{grid-template-columns:1fr;}}
+.inrow > div > select, .inrow > div > input{width:100%;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:4px;color:var(--ind);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Ein Chart lesen</div>
+<h1>Whole Sign oder <em>Placidus?</em></h1>
+<p class="lede">Zwei Systeme, dasselbe Chart, manchmal verschiedene Antworten. Diese Seite erklärt, warum das so ist, wann es überhaupt einen Unterschied macht — und was du tust, wenn beide Systeme sich widersprechen.</p>
+
+
+<h2>Der Unterschied in einem Absatz</h2>
+<p><b>Whole Sign:</b> Das Zeichen deines Aszendenten ist das gesamte 1. Haus, das nächste Zeichen das 2. und so weiter. Zwölf Zeichen, zwölf Häuser, saubere Deckung. Der Aszendentengrad markiert nur, <i>wo</i> im ersten Haus du stehst.</p>
+<p><b>Placidus:</b> Die Häuser werden nach der Zeit berechnet, die ein Grad braucht, um vom Horizont zum Meridian zu wandern. Dadurch sind Häuser unterschiedlich groß, ein Zeichen kann sich über zwei Häuser verteilen, und ein Haus kann ein Zeichen komplett verschlucken.</p>
+
+<div class="tip"><b>Die praktische Folge:</b> In Whole Sign fällt MC nicht automatisch auf die 10. Haus-Spitze — es kann im 9., 10. oder 11. Haus liegen. In Placidus <i>ist</i> das MC per Definition die 10. Spitze. Das ist der häufigste Grund, warum dieselbe Person in beiden Systemen unterschiedliche Berufsaussagen bekommt.</p></div>
+
+<h2>Wann es keinen Unterschied macht</h2>
+<ul>
+<li>Bei allem, was nichts mit Häusern zu tun hat: Zeichen, Aspekte, Orben, Planetenstärke, Transite nach Grad.</li>
+<li>Bei Planeten, die weit in der Mitte eines Zeichens stehen und deren Haus in beiden Systemen gleich ausfällt — das ist die Mehrheit der Fälle.</li>
+<li>In geografischen Breiten nahe dem Äquator, wo Placidus-Häuser fast gleich groß sind.</li>
+</ul>
+<p>Je weiter nördlich oder südlich der Geburtsort, desto stärker verzerrt Placidus. In Berlin, Kyiv oder Stockholm sind Unterschiede die Regel, nicht die Ausnahme.</p>
+
+<h2>Ein Beispielfall</h2>
+<div class="white">
+<p><b>Aszendent 7°59 Zwillinge, MC 2°46 Wassermann, Sonne 9°03 Widder.</b></p>
+<p><b>Whole Sign:</b> Widder ist das 11. Zeichen ab Zwillinge — die Sonne steht im 11. Haus. Gemeinschaft, Netzwerke, Zugehörigkeit.</p>
+<p><b>Placidus:</b> Die 12. Haus-Spitze liegt bei 8°49 Widder. Die Sonne steht 14 Bogenminuten dahinter — also im 12. Haus. Rückzug, Unsichtbares, innere Arbeit.</p>
+<p style="margin-bottom:0;">Beides ist rechnerisch korrekt. Und beides beschreibt dieselbe Person: jemanden, der inneres, kaum sichtbares Material so übersetzt, dass eine Gruppe etwas damit anfangen kann. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.</p>
+</div>
+
+<h2>Was du tust, wenn beide sich widersprechen</h2>
+<ol class="steps">
+<li><b>Beide notieren, nicht wählen</b>Ein Planet auf einer Hausgrenze gehört zu beiden Bereichen. Das ist keine Unschärfe — es ist die Information.</li>
+<li><b>Die Person fragen</b>„Fühlst du dich mehr in Gruppen zuhause oder eher im Rückzug?“ Ihre Antwort entscheidet, nicht dein System.</li>
+<li><b>Nach Bestätigung an anderer Stelle suchen</b>Sagt der Rest des Charts dasselbe? Zwei unabhängige Hinweise schlagen jede Systemfrage.</li>
+<li><b>Ein System als Standard behalten</b>Wechsle nicht mitten in einer Deutung. Wer je nach Wunschergebnis das System tauscht, deutet nichts mehr — er sucht Bestätigung.</li>
+</ol>
+
+<h2>Wofür welches System?</h2>
+<table>
+<tr><th>Frage</th><th>Eher Whole Sign</th><th>Eher Placidus</th></tr>
+<tr><td>Grundthema eines Lebensbereichs</td><td>✓ klar und ganzheitlich</td><td>—</td></tr>
+<tr><td>Zeitqualität, Transite über Hausspitzen</td><td>—</td><td>✓ feiner aufgelöst</td></tr>
+<tr><td>Traditionelle Techniken (Zeichenherrscher, Profektionen)</td><td>✓ dafür gebaut</td><td>—</td></tr>
+<tr><td>Präzise Winkel-Arbeit (AC, MC als Punkte)</td><td>—</td><td>✓ Achsen sind Spitzen</td></tr>
+<tr><td>Geburtsorte in hohen Breiten</td><td>✓ stabil</td><td>stark verzerrt</td></tr>
+</table>
+
+<h2>Übung</h2>
+<p class="sub">Zwei Entscheidungen, mit Erklärung.</p>
+<div id="quiz"></div>
+
+
+<div class="weiter"><a href="orbis-gewichtung.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Orbis & Gewichtung</span></a><a href="herrscher.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Herrscher &amp; Dispositoren</span></a></div>
+<div class="foot">Häusersysteme &middot; Diese Plattform arbeitet primär mit Whole Sign. Kein System ist „richtiger“ — sie beantworten leicht verschiedene Fragen.</div>
+</div>
+<script>
+var QUIZ=[
+ {q:'Ein Planet steht in Whole Sign im 10. und in Placidus im 9. Haus. Was machst du im Reading?',
+  o:['Ein System auswählen und dabei bleiben','Beide Bedeutungen ansprechen und nachfragen'],r:1,
+  e:'Auf einer Hausgrenze gehört der Planet zu beiden Bereichen — Berufung und Sinnsuche liegen ohnehin nah beieinander. Die Person weiß meistens sofort, welche Beschreibung sie stärker erkennt. Für die eigene Systematik bleibst du trotzdem bei einem Standardsystem.'},
+ {q:'Bei welchem Geburtsort weichen die Systeme am stärksten voneinander ab?',
+  o:['Quito, Ecuador (0° Breite)','Stockholm (59° Breite)'],r:1,
+  e:'Je weiter man sich vom Äquator entfernt, desto ungleichmäßiger fallen die Placidus-Häuser aus — in hohen Breiten können einzelne Häuser über 60° groß werden. Am Äquator sind beide Systeme fast deckungsgleich.'}
+];
+var qbox=document.getElementById('quiz');
+if(qbox){QUIZ.forEach(function(item){
+  var d=document.createElement('div'); d.className='q';
+  var p=document.createElement('p'); p.textContent=item.q; d.appendChild(p);
+  var o=document.createElement('div'); o.className='opts';
+  var ex=document.createElement('div'); ex.className='expl'; ex.textContent=item.e;
+  item.o.forEach(function(lab,j){
+    var b=document.createElement('button'); b.type='button'; b.textContent=lab;
+    b.addEventListener('click',function(){
+      o.querySelectorAll('button').forEach(function(x){x.className='';});
+      b.className=(j===item.r)?'right':'wrong';
+      if(j!==item.r){ o.querySelectorAll('button')[item.r].className='right'; }
+      ex.classList.add('show');
+    });
+    o.appendChild(b);
+  });
+  d.appendChild(o); d.appendChild(ex); qbox.appendChild(d);
+});}</script>
+</body></html>

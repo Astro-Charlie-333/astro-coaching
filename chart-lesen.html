@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ein Chart lesen</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap"><a class="back" href="index.html">&larr; Startseite</a>
+<div class="eyebrow">Praxis · Die Methode</div><h1>Wie du ein <em>Chart liest.</em></h1><p class="lede">Die Schritt-für-Schritt-Methode, damit du beim Chart-Lesen nicht ertrinkst. Deine Lese-Landkarte.</p>
+<div class="tip"><b>Die goldene Formel:</b> Planet (was) + Zeichen (wie) + Haus (wo) + Aspekte (wie zusammen) = die ganze Geschichte. Alles, was du liest, setzt sich so zusammen.</div>
+<h2>Die Methode — Schritt für Schritt</h2>
+<p class="sub">In dieser Reihenfolge, damit es nicht überwältigt.</p>
+<div class="card">
+<div style="display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);">
+<span style="width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</span>
+<div><div style="font-weight:600;margin-bottom:3px;font-size:15px;">Erst die drei Großen: Sonne, Mond, Aszendent</div><div style="font-size:14px;color:var(--soft);line-height:1.55;">Das Grundgerüst jedes Menschen. Sonne = Kern/Identität. Mond = Gefühl/Bedürfnis. Aszendent = Auftreten. Diese drei geben schon 50% des Bildes. Fang IMMER hier an.</div></div></div>
+<div style="display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);">
+<span style="width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</span>
+<div><div style="font-weight:600;margin-bottom:3px;font-size:15px;">Suche Häufungen (Stellien)</div><div style="font-size:14px;color:var(--soft);line-height:1.55;">Stehen 3+ Planeten im selben Zeichen oder Haus? Das ist ein Schwerpunkt, ein Lebensthema. Es zeigt dir sofort, worum sich viel dreht.</div></div></div>
+<div style="display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);">
+<span style="width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</span>
+<div><div style="font-weight:600;margin-bottom:3px;font-size:15px;">Jeden Planeten mit der Formel lesen</div><div style="font-size:14px;color:var(--soft);line-height:1.55;">Planet + Zeichen + Haus. »Merkur in Fische im 10.« = Denken (Merkur), intuitiv/bildhaft (Fische), im Beruf (10.). So durch alle 10 Planeten.</div></div></div>
+<div style="display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);">
+<span style="width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">4</span>
+<div><div style="font-weight:600;margin-bottom:3px;font-size:15px;">Dann die Aspekte — wer redet mit wem?</div><div style="font-size:14px;color:var(--soft);line-height:1.55;">Die Linien im Chart. Welche Planeten bilden Aspekte? Trigone (Talente), Quadrate (Reibung), Konjunktionen (Verschmelzung). Das verbindet die Einzelteile zur Geschichte.</div></div></div>
+<div style="display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);">
+<span style="width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">5</span>
+<div><div style="font-weight:600;margin-bottom:3px;font-size:15px;">Die Achsen & den Nordknoten prüfen</div><div style="font-size:14px;color:var(--soft);line-height:1.55;">Aszendent, MC, und wo der Nordknoten steht — das gibt Richtung und Berufung. Rundet das Bild.</div></div></div>
+<div style="display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);">
+<span style="width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">6</span>
+<div><div style="font-weight:600;margin-bottom:3px;font-size:15px;">Zuletzt: die Geschichte erzählen</div><div style="font-size:14px;color:var(--soft);line-height:1.55;">Fass in eigenen Worten zusammen, wie eine Charakterbeschreibung. Nicht »Mars Quadrat Saturn«, sondern »jemand, der Antrieb und Vorsicht ausbalancieren muss«. Aus Technik Bedeutung machen — DAS ist Chart-Lesen.</div></div></div>
+</div>
+<div class="tip"><b>Wichtigster Grundsatz:</b> Ein einzelnes Placement ist nie die ganze Wahrheit. Lies alles im Zusammenspiel — ein Krebs-Mond fühlt sich anders an in einem feurigen Widder-Menschen als in einem erdigen Steinbock-Menschen. Das Ganze ist mehr als die Summe der Teile.</div><div class="weiter"><a href="planeten-in-haeusern.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Planeten in den Häusern</span></a><a href="linien-lesen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die Linien lesen</span></a></div>
+<div class="foot">Ein Chart lesen · Deine Astro-Lernplattform.</div></div></body></html>

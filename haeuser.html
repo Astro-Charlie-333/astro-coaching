@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Häuser</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="grundlagen.html">&larr; Grundlagen</a>
+<div class="eyebrow">Grundlagen · Baustein 3</div>
+<h1>Die 12 <em>Häuser.</em></h1>
+<p class="lede">Die Häuser zeigen das WO — die Lebensbereiche, in denen die Planeten wirken. Das Rad des Lebens.</p>
+<div class="tip"><b>Die Häuser sind das WO</b> — in welchem Lebensbereich sich ein Planet auswirkt. Sie entstehen aus der genauen Geburtszeit (darum ist die Uhrzeit so wichtig).</div>
+<h2>Die 12 Häuser</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">1</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">1. Haus — Selbst</b><br><span style="font-size:13.5px;color:var(--soft);">Wer du bist, dein Auftreten, dein Körper. Der Aszendent.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">2</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">2. Haus — Werte & Besitz</b><br><span style="font-size:13.5px;color:var(--soft);">Geld, Selbstwert, Ressourcen, was dir wichtig ist.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">3</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">3. Haus — Kommunikation</b><br><span style="font-size:13.5px;color:var(--soft);">Denken, Reden, Lernen, Geschwister, nahes Umfeld.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">4</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">4. Haus — Zuhause & Wurzeln</b><br><span style="font-size:13.5px;color:var(--soft);">Familie, Herkunft, Heimat, inneres Fundament. Der IC.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">5</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">5. Haus — Kreativität & Liebe</b><br><span style="font-size:13.5px;color:var(--soft);">Selbstausdruck, Romantik, Spiel, Kinder, Freude.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">6</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">6. Haus — Alltag & Gesundheit</b><br><span style="font-size:13.5px;color:var(--soft);">Arbeit, Routine, Körper, Dienst, das Praktische.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">7</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">7. Haus — Beziehung</b><br><span style="font-size:13.5px;color:var(--soft);">Partnerschaft, das Du, enge Bindung. Der Deszendent.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">8</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">8. Haus — Tiefe & Wandlung</b><br><span style="font-size:13.5px;color:var(--soft);">Intimität, Krisen, Transformation, geteilte Ressourcen.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">9</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">9. Haus — Sinn & Weite</b><br><span style="font-size:13.5px;color:var(--soft);">Philosophie, Reisen, Glaube, Studium, Horizont.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">10</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">10. Haus — Berufung</b><br><span style="font-size:13.5px;color:var(--soft);">Beruf, Wirken, Ruf, Lebensziel. Der MC.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">11</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">11. Haus — Gemeinschaft</b><br><span style="font-size:13.5px;color:var(--soft);">Freunde, Netzwerke, Gruppen, Zukunft, Visionen.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">12</span>
+<div><b style="font-family:Fraunces,serif;font-size:16px;">12. Haus — Rückzug & Seele</b><br><span style="font-size:13.5px;color:var(--soft);">Unbewusstes, Spiritualität, Verborgenes, Rückzug.</span></div></div>
+<div class="tip"><b>Die vier Ecken (Achsen) sind am wichtigsten:</b> 1. Haus (Selbst/Aszendent), 4. Haus (Wurzeln/IC), 7. Haus (Beziehung/Deszendent), 10. Haus (Berufung/MC). Planeten nah an diesen Punkten wirken besonders stark.</div>
+<div class="weiter"><a href="zeichen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Zeichen</span></a><a href="aspekte.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die Aspekte</span></a></div>
+<div class="foot">Grundlagen · Die Häuser · Deine Astro-Lernplattform. Im Whole-Sign-System füllt ein Zeichen genau ein Haus.</div>
+</div></body></html>

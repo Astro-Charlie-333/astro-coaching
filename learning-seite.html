@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Learning-Seite · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.switch{display:inline-flex;border:1px solid var(--line);border-radius:22px;background:#fff;padding:3px;margin:26px 0 6px;}
+.switch button{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;
+  border:0;background:none;color:var(--soft);padding:8px 16px;border-radius:20px;cursor:pointer;}
+.switch button[aria-pressed="true"]{background:var(--ind);color:#fff;}
+.switch button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.mode-note{font-size:13.5px;color:var(--soft);margin-bottom:20px;}
+.fhead{display:flex;align-items:baseline;gap:10px;margin-bottom:2px;flex-wrap:wrap;}
+.num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);}
+.where{font-size:13.5px;color:var(--soft);margin:6px 0 14px;}
+.body p{margin-bottom:10px;font-size:15px;}
+.body p:last-child{margin-bottom:0;}
+.quote{font-family:'Fraunces',serif;font-style:italic;font-size:19px;color:var(--ind);
+  border-left:3px solid var(--ind);padding-left:14px;margin:4px 0 10px;line-height:1.45;}
+textarea{width:100%;min-height:104px;padding:13px 14px;border:1px solid var(--line);
+  background:#fff;border-radius:12px;font-family:'Inter',sans-serif;font-size:15px;
+  line-height:1.6;color:var(--ink);resize:vertical;}
+textarea:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+textarea::placeholder{color:#BBA695;}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px;}
+.btn{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;
+  border:1px solid var(--ind);background:none;color:var(--ind);
+  padding:10px 18px;border-radius:22px;cursor:pointer;}
+.btn:hover{background:var(--ind);color:#fff;}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.status{font-size:13px;color:var(--soft);}
+.two-level{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;}
+.two-level .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+@media(max-width:640px){.two-level .row{grid-template-columns:1fr;}}
+.two-level .row div{font-size:14px;line-height:1.55;}
+.lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px;}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Reading-Werkzeuge</div>
+<h1>Die <em>Learning-Seite.</em></h1>
+<p class="lede">Fünf Felder, die sich nie ändern. So wird aus dem, was du an dir selbst lernst, ein Format — etwas, das ein anderer Mensch auf sein eigenes Chart anwenden kann. Ein Archiv sammelt Erlebnisse. Ein Format macht daraus Methode.</p>
+
+<div class="tip"><b>Wann du eine Seite anlegst:</b> Immer dann, wenn du im Nachhinein verstehst, <i>warum</i> du etwas getan hast. Nicht bei jedem Gefühl — bei jedem Mechanismus. Eine Seite dauert zehn Minuten, wenn du sie direkt nach der Erkenntnis schreibst, und zwei Stunden, wenn du drei Wochen wartest.</div>
+
+<h2>Die fünf Felder</h2>
+<p class="sub">Wechsle zwischen dem ausgefüllten Beispiel und der leeren Vorlage.</p>
+
+<div class="switch" role="group" aria-label="Ansicht wählen">
+  <button id="btnEx" aria-pressed="true">Beispiel</button>
+  <button id="btnBlank" aria-pressed="false">Leere Vorlage</button>
+</div>
+<p class="mode-note" id="modeNote">Ein durchgezogener Fall — anonymisiert. Dieselbe Struktur bekommt jede weitere Seite.</p>
+
+<div id="fields"></div>
+
+<div class="actions" id="actions" hidden>
+  <button class="btn" id="copy">Als Markdown kopieren</button>
+  <button class="btn" id="clear">Felder leeren</button>
+  <span class="status" id="status"></span>
+</div>
+
+<h2>Die zweite Ebene</h2>
+<p class="sub">Der Schritt, der aus deiner Erfahrung ein Werkzeug macht.</p>
+<div class="two-level">
+  <p style="margin-bottom:0;font-size:15px;">Jedes Feld existiert zweimal: einmal als deine Beobachtung, einmal als Frage an ein fremdes Chart. Feld 2 lautet bei dir „Mars in Stier im 12." — beim Lesenden lautet es „wo steht dein Mars, und was macht das mit deinem Ärger?".</p>
+  <div class="row">
+    <div><span class="lab">Ebene 1 · Selbstbeobachtung</span>Mein Bedürfnis sammelt sich unsichtbar an und kommt erst bei 100 % — als Wand, nicht als Ausbruch.</div>
+    <div><span class="lab">Ebene 2 · Anleitung</span>In welchem Haus steht dein Mars? Zeigt sich dein Ärger sofort, oder staut er sich, bis er unverhandelbar ist?</div>
+  </div>
+</div>
+
+<div class="tip"><b>Die Faustregel:</b> Wenn eine Seite ohne deinen Namen keinen Sinn mehr ergibt, fehlt noch Ebene 2. Und falls du kürzen musst: Feld 3 und 4 sind der Kern, Feld 1, 2 und 5 sind Kontext. Kürze nie bei 3 und 4.</div>
+
+<div class="weiter"><a href="mondknoten-coaching.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Mondknoten fürs Coaching</span></a><a href="neurodivergente-astrologie.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Anders verdrahtete Köpfe</span></a></div>
+<div class="foot">Learning-Seite &middot; Format v1 &middot; Whole Sign. Nichts wird gespeichert — Eingaben vor dem Schließen kopieren. Charts zeigen Anlagen, keine Schicksale.</div>
+</div>
+
+<script>
+const FIELDS=[
+ {n:'01',t:'Auslöser',pill:['fire','Situation'],
+  where:'Nur Ablauf, keine Wertung: Was war die Situation, und was hast du getan?',
+  ex:['<p>Seit Wochen sehr intensiver schriftlicher Kontakt. Starkes Bedürfnis, endlich physisch zu treffen — bei gleichzeitiger Absprache, dass die andere Person diesen Schritt vorschlägt.</p>','<p>Das Bedürfnis wuchs über Tage, hatte aber keinen erlaubten Ausdruck. Reaktion: ohne Vorwarnung komplett zugemacht. Die andere Person lief gegen eine Wand, ohne zu wissen, warum.</p>'],
+  ph:'Was ist passiert — und was hast du gemacht?'},
+ {n:'02',t:'Chart-Signatur',pill:['earth','Anlage'],
+  where:'Wo du suchst: Mars nach Haus und Zeichen für die Art deines Ärgers. Das 7. Haus für dein Beziehungsmuster. Der Mond für die Form deines Bedürfnisses.',
+  ex:['<p><b>Mars in Stier im 12. Haus</b> — Bedürfnis und Ärger sammeln sich unsichtbar an, auch vor mir selbst. Nicht spürbar bei 30 %, sondern erst bei 100 %. Stier ist fix: Wenn es kommt, bewegt es sich nicht mehr.</p>','<p><b>Saturn und Uranus in Schütze im 7. Haus</b> — Uranus liefert den abrupten Abbruch, Saturn die kühle Begründung danach. Zusammen ergibt das keine Explosion, sondern eine Wand.</p>'],
+  ph:'Welche Stellungen beschreiben den Mechanismus?'},
+ {n:'03',t:'Frühwarnsignal',pill:['air','Kern'],
+  where:'Woran hättest du es zwanzig Minuten früher merken können? Meistens ist es ein Gedanke, kein Gefühl.',
+  ex:['<p>Der Moment, in dem sich der Rückzug <i>gerechtfertigt</i> anfühlt. Genau diese innere Rechtfertigung ist bei Mars im 12. der Mechanismus, mit dem das Bedürfnis vor mir selbst versteckt wird.</p>','<p>Sobald ich mir erkläre, warum ich jetzt zumachen darf: Das ist das Signal. Nicht der Ärger — die Begründung.</p>'],
+  ph:'Der erste erkennbare Hinweis, bevor es passiert.'},
+ {n:'04',t:'Der Satz statt der Wand',pill:['water','Kern'],
+  where:'Ein Satz. Benennt ein Bedürfnis, fordert nichts, enthält keine Frage und keine Frist.',
+  ex:['<div class="quote">„Ich merke gerade, wie sehr ich dich treffen will."</div>','<p>Ein Bedürfnis zu benennen bricht keine Absprache. Es gibt der anderen Person nur die Möglichkeit, mich richtig zu lesen, statt raten zu müssen.</p>'],
+  ph:'Was hättest du stattdessen sagen können?'},
+ {n:'05',t:'Transit-Kontext',pill:['fire','Timing'],
+  where:'Welche schnellen Planeten standen an deinen Achsen? Mond, Merkur, Venus, Mars — mit Grad und Aspekt.',
+  ex:['<p><b>Mars bei 23° Zwillinge</b>, in Opposition zu Saturn 21°09 und Uranus 26°44 Schütze — also exakt auf der 1./7.-Haus-Achse.</p>','<p>Derselbe Transit brachte zwei Tage später eine unerwartete Begegnung. Bei dieser Konstellation reagiert man zuerst und versteht später. Das entschuldigt nichts, aber es erklärt das Tempo.</p>'],
+  ph:'Welche Transite liefen an dem Tag?'}
+];
+
+let mode='ex';
+const store={};
+const box=document.getElementById('fields');
+
+function render(){
+  box.innerHTML='';
+  FIELDS.forEach(f=>{
+    const d=document.createElement('div'); d.className='card';
+    d.innerHTML='<div class="fhead"><span class="num">'+f.n+'</span><h3>'+f.t+'</h3>'+
+      '<span class="pill '+f.pill[0]+'">'+f.pill[1]+'</span></div>'+
+      '<p class="where">'+f.where+'</p>';
+    const b=document.createElement('div'); b.className='body';
+    if(mode==='ex'){ b.innerHTML=f.ex.join(''); }
+    else{
+      const ta=document.createElement('textarea');
+      ta.placeholder=f.ph; ta.value=store[f.n]||''; ta.setAttribute('aria-label',f.t);
+      ta.addEventListener('input',function(){store[f.n]=ta.value;});
+      b.appendChild(ta);
+    }
+    d.appendChild(b); box.appendChild(d);
+  });
+  document.getElementById('actions').hidden = (mode==='ex');
+  document.getElementById('modeNote').textContent = (mode==='ex')
+    ? 'Ein durchgezogener Fall — anonymisiert. Dieselbe Struktur bekommt jede weitere Seite.'
+    : 'Deine Version. Nichts wird gespeichert: am Ende kopieren und ins Dashboard übertragen.';
+}
+function setBtns(){
+  document.getElementById('btnEx').setAttribute('aria-pressed',String(mode==='ex'));
+  document.getElementById('btnBlank').setAttribute('aria-pressed',String(mode==='blank'));
+}
+document.getElementById('btnEx').addEventListener('click',function(){mode='ex';setBtns();render();});
+document.getElementById('btnBlank').addEventListener('click',function(){mode='blank';setBtns();render();});
+
+document.getElementById('copy').addEventListener('click',async function(){
+  const md='# Learning-Seite\n\n'+FIELDS.map(function(f){
+    return '## '+f.n+' · '+f.t+'\n'+((store[f.n]||'').trim()||'—')+'\n';}).join('\n');
+  const s=document.getElementById('status');
+  try{ await navigator.clipboard.writeText(md); s.textContent='Kopiert.'; }
+  catch(e){ s.textContent='Kopieren nicht möglich — Text bitte manuell markieren.'; }
+  setTimeout(function(){s.textContent='';},2600);
+});
+document.getElementById('clear').addEventListener('click',function(){
+  FIELDS.forEach(function(f){store[f.n]='';});render();
+});
+
+setBtns(); render();
+</script>
+</body></html>

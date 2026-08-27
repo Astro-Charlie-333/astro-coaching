@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbis &amp; Gewichtung · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;}
+
+.calc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;}
+.row{display:grid;grid-template-columns:1.1fr 1fr .8fr;gap:8px;margin-bottom:10px;}
+@media(max-width:560px){.row{grid-template-columns:1fr 1fr;}}
+select,input{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;
+  background:var(--bg);font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.rowlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);margin:4px 0 6px;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:4px;}
+.v-loud{color:var(--ind);} .v-clear{color:var(--tense);} .v-bg{color:var(--soft);} .v-no{color:var(--soft);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:12px 0 6px;}
+.bar i{display:block;height:100%;background:var(--ind);border-radius:8px;width:0;transition:width .3s;}
+
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Ein Chart lesen</div>
+<h1>Orbis &amp; <em>Gewichtung.</em></h1>
+<p class="lede">Der Unterschied zwischen präziser und schwammiger Astrologie ist nicht mehr Wissen. Es ist Weglassen. Ein Chart enthält Dutzende Aspekte — nur eine Handvoll davon sagt wirklich etwas. Auf dieser Seite lernst du zu entscheiden, welche.</p>
+
+<h2>Was Orbis bedeutet</h2>
+<p>Ein Aspekt ist ein Winkel zwischen zwei Punkten. Exakt sind diese Winkel fast nie — ein Trigon ist selten genau 120°, sondern 117° oder 123°. Die Abweichung vom exakten Winkel heißt <b>Orbis</b>.</p>
+<p>Die Regel dahinter ist einfach und gilt ohne Ausnahme: <b>Je enger der Orbis, desto lauter der Aspekt.</b> Ein Quadrat mit 0,5° Abweichung beschreibt ein Lebensthema. Dasselbe Quadrat mit 7° Abweichung beschreibt fast nichts.</p>
+
+<div class="tip"><b>Der häufigste Anfängerfehler:</b> Man hat eine Deutung im Kopf und sucht dann Aspekte, die dazu passen — notfalls mit 8° Orbis. Das ist rückwärts gedacht. Die Regel lautet: erst die engsten Kontakte finden, dann daraus die Deutung bauen. Wenn du Orbis vergrößern musst, damit deine Geschichte aufgeht, stimmt die Geschichte nicht.</div>
+
+<h2>Die Orben nach Punktart</h2>
+<p class="sub">Nicht jeder Punkt bekommt denselben Spielraum. Leuchten und Achsen strahlen weit, kleine Punkte fast gar nicht.</p>
+<table>
+<tr><th>Punkt</th><th>Orbis</th><th>Warum</th></tr>
+<tr><td>Sonne, Mond</td><td class="mono">bis 8°</td><td>Die Leuchten dominieren jedes Chart</td></tr>
+<tr><td>AC, MC (und Gegenpunkte)</td><td class="mono">bis 6°</td><td>Angelpunkte, körperlich spürbar</td></tr>
+<tr><td>Merkur, Venus, Mars</td><td class="mono">bis 6°</td><td>Persönliche Planeten, schnell, konkret</td></tr>
+<tr><td>Jupiter, Saturn</td><td class="mono">bis 5°</td><td>Gesellschaftliche Ebene</td></tr>
+<tr><td>Uranus, Neptun, Pluto</td><td class="mono">bis 4°</td><td>Langsam — deshalb enger fassen</td></tr>
+<tr><td>Chiron, Lilith, Knoten, Vertex, Glückspunkt</td><td class="mono">bis 2–3°</td><td>Nur eng zählen, sonst deutet man alles</td></tr>
+</table>
+<p class="sub" style="margin-top:12px;">Dazu kommt der Aspekt selbst: Konjunktion und Opposition bekommen den vollen Orbis, Quadrat und Trigon etwas weniger, Sextil deutlich weniger, Quinkunx nur 1–2°.</p>
+
+<h2>Der Orbis-Rechner</h2>
+<p class="sub">Zwei Positionen eingeben — du bekommst den Aspekt, den Orbis und die Gewichtung.</p>
+<div class="calc">
+  <div class="rowlab">Punkt 1</div>
+  <div class="row">
+    <select id="k1"></select><select id="s1"></select><input id="d1" type="number" min="0" max="29.98" step="0.01" value="9.05" aria-label="Grad Punkt 1">
+  </div>
+  <div class="rowlab">Punkt 2</div>
+  <div class="row">
+    <select id="k2"></select><select id="s2"></select><input id="d2" type="number" min="0" max="29.98" step="0.01" value="18.53" aria-label="Grad Punkt 2">
+  </div>
+  <div class="out">
+    <div class="verdict" id="verdict">—</div>
+    <div class="outdetail" id="detail">Grad als Dezimalzahl: 18°32' = 18.53</div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="outdetail" id="scale"></div>
+  </div>
+</div>
+
+<h2>Was einen Aspekt zusätzlich laut macht</h2>
+<p class="sub">Der Orbis ist das erste Kriterium, aber nicht das einzige. Fünf Verstärker, in dieser Reihenfolge:</p>
+
+<div class="card">
+  <div style="display:flex;gap:10px;align-items:baseline;"><span class="pill fire">01</span><h3>Wer beteiligt ist</h3></div>
+  <p style="margin:0;font-size:15px;">Ein Aspekt an Sonne, Mond, AC oder MC ist immer wichtiger als einer zwischen zwei Nebenpunkten. Zwei langsame Planeten im Aspekt zueinander teilst du mit allen, die im selben Jahr geboren wurden — persönlich wird es erst, wenn ein persönlicher Punkt beteiligt ist.</p>
+</div>
+<div class="card">
+  <div style="display:flex;gap:10px;align-items:baseline;"><span class="pill earth">02</span><h3>Applikativ oder separativ</h3></div>
+  <p style="margin:0;font-size:15px;">Läuft der schnellere Punkt auf den Aspekt zu (applikativ) oder von ihm weg (separativ)? Zulaufend ist stärker — das Thema steht noch bevor. Bei Transiten ist das der Unterschied zwischen „kommt" und „war".</p>
+</div>
+<div class="card">
+  <div style="display:flex;gap:10px;align-items:baseline;"><span class="pill air">03</span><h3>Wiederholung</h3></div>
+  <p style="margin:0;font-size:15px;">Sagt dasselbe Thema noch an anderer Stelle dasselbe? Ein Aspekt allein ist eine Notiz. Derselbe Inhalt in Aspekt, Hausstellung und Zeichen ist ein Lebensthema. Deute nur, was mindestens zweimal auftaucht.</p>
+</div>
+<div class="card">
+  <div style="display:flex;gap:10px;align-items:baseline;"><span class="pill water">04</span><h3>Gradgleichheit über Zeichengrenzen</h3></div>
+  <p style="margin:0;font-size:15px;">Ein Kontakt bleibt eng, auch wenn er über eine Zeichengrenze läuft (29° Widder zu 1° Stier ist eine Konjunktion mit 2° Orbis). Das übersieht man leicht — und es sind oft die interessantesten Stellen.</p>
+</div>
+<div class="card">
+  <div style="display:flex;gap:10px;align-items:baseline;"><span class="pill fire">05</span><h3>Wiederholte Berührung</h3></div>
+  <p style="margin:0;font-size:15px;">Bei Transiten: Läuft der Planet nur einmal über den Punkt oder dreimal, weil er rückläufig wird? Drei Durchgänge sind ein Kapitel, einer ist eine Episode.</p>
+</div>
+
+<h2>Wann du aufhörst zu deuten</h2>
+<p>Drei klare Abbruchkriterien, die dich vor Überdeutung schützen:</p>
+<ul style="margin:0 0 14px 20px;font-size:15px;line-height:1.7;">
+  <li>Der Orbis liegt über der Tabelle oben — dann lässt du den Aspekt weg, ohne Ausnahme.</li>
+  <li>Du brauchst mehr als fünf Aussagen, um ein Thema zu erklären — dann hast du das Thema noch nicht gefunden.</li>
+  <li>Du stapelst schwache Kontakte, um eine starke Aussage zu stützen. Fünf 6°-Aspekte ergeben zusammen keinen 1°-Aspekt. Schwaches addiert sich nicht zu Starkem.</li>
+</ul>
+<div class="tip"><b>Fürs Reading:</b> Sortiere alle Kontakte nach Orbis und nimm die engsten drei bis fünf. Das ist dein Reading. Der Rest ist Hintergrundrauschen und gehört nicht ins Gespräch — er macht Menschen nur voll, statt ihnen zu helfen.</div>
+
+<h2>Übung</h2>
+<p class="sub">Vier Entscheidungen. Nach jeder Antwort kommt die Erklärung.</p>
+<div id="quiz"></div>
+
+<div class="weiter"><a href="linien-lesen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Linien lesen</span></a><a href="spannungskarte.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die Spannungskarte</span></a></div>
+<div class="foot">Orbis &amp; Gewichtung &middot; Whole Sign. Die Orbis-Werte sind Konvention, keine Naturkonstante — verschiedene Schulen setzen sie leicht anders. Wichtig ist, dass du <i>eine</i> Regel konsequent anwendest, statt sie pro Deutung zu verschieben.</div>
+</div>
+
+<script>
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var KINDS=[
+ {n:'Sonne / Mond',o:8},{n:'AC / MC',o:6},{n:'Merkur / Venus / Mars',o:6},
+ {n:'Jupiter / Saturn',o:5},{n:'Uranus / Neptun / Pluto',o:4},
+ {n:'Chiron / Lilith / Knoten / Vertex',o:2.5}
+];
+var ASP=[{a:0,n:'Konjunktion',f:1},{a:60,n:'Sextil',f:.6},{a:90,n:'Quadrat',f:.85},
+         {a:120,n:'Trigon',f:.85},{a:150,n:'Quinkunx',f:.35},{a:180,n:'Opposition',f:1}];
+
+function fill(id,arr,val){
+  var s=document.getElementById(id);
+  arr.forEach(function(o,i){var e=document.createElement('option');e.value=i;e.textContent=o.n||o;s.appendChild(e);});
+  s.value=val; s.addEventListener('change',calc);
+}
+fill('k1',KINDS,0); fill('k2',KINDS,0);
+fill('s1',SIGNS,0); fill('s2',SIGNS,0);
+document.getElementById('d1').addEventListener('input',calc);
+document.getElementById('d2').addEventListener('input',calc);
+
+function calc(){
+  var p1=+document.getElementById('s1').value*30+(parseFloat(document.getElementById('d1').value)||0);
+  var p2=+document.getElementById('s2').value*30+(parseFloat(document.getElementById('d2').value)||0);
+  var k1=KINDS[+document.getElementById('k1').value], k2=KINDS[+document.getElementById('k2').value];
+  var sep=Math.abs(((p1-p2+180)%360+360)%360-180);
+  var best=null;
+  ASP.forEach(function(a){
+    var orb=Math.abs(sep-a.a);
+    var max=((k1.o+k2.o)/2)*a.f;
+    if(!best||orb-max<best.orb-best.max) best={a:a,orb:orb,max:max};
+  });
+  var v=document.getElementById('verdict'), d=document.getElementById('detail'),
+      b=document.getElementById('bar'), sc=document.getElementById('scale');
+  var pct=Math.max(0,Math.min(100,(1-best.orb/best.max)*100));
+  b.style.width=pct+'%';
+  d.textContent=best.a.n+' · Orbis '+best.orb.toFixed(2)+'° · zulässig bis '+best.max.toFixed(1)+'° · Abstand '+sep.toFixed(2)+'°';
+  if(best.orb>best.max){ v.textContent='Zählt nicht'; v.className='verdict v-no';
+    sc.textContent='Zu weit für diese Punktart. Weglassen — auch wenn es inhaltlich passen würde.'; b.style.width='0%'; }
+  else if(best.orb<=1){ v.textContent='Laut'; v.className='verdict v-loud';
+    sc.textContent='Unter 1°. Das gehört in jedes Reading, meistens als erster Satz.'; }
+  else if(best.orb<=best.max*0.45){ v.textContent='Deutlich'; v.className='verdict v-clear';
+    sc.textContent='Klar spürbar. Gehört ins Reading, wenn es zum Thema passt.'; }
+  else { v.textContent='Hintergrund'; v.className='verdict v-bg';
+    sc.textContent='Färbt mit, trägt aber keine eigene Aussage. Nur erwähnen, wenn es etwas anderes bestätigt.'; }
+}
+calc();
+
+var QUIZ=[
+ {q:'Sonne Quadrat Saturn mit 0,8° Orbis — oder Sonne Quadrat Saturn mit 5,5° Orbis. Was gehört ins Reading?',
+  o:['0,8°','5,5°'],r:0,
+  e:'Derselbe Aspekt, zwei völlig verschiedene Gewichte. Unter 1° beschreibt er ein prägendes Lebensthema. Bei 5,5° ist er zwar noch im zulässigen Bereich, aber Hintergrund — er färbt, er trägt nicht.'},
+ {q:'Was ist persönlicher: Neptun Trigon Pluto mit 1° oder Mond Quadrat Neptun mit 3°?',
+  o:['Neptun–Pluto','Mond–Neptun'],r:1,
+  e:'Neptun–Pluto haben alle Menschen deines Jahrgangs — das beschreibt eine Generation, nicht dich. Sobald ein persönlicher Punkt beteiligt ist, wird es individuell, auch bei größerem Orbis.'},
+ {q:'Lilith Trigon Venus mit 4,5° Orbis — deuten oder weglassen?',
+  o:['Deuten','Weglassen'],r:1,
+  e:'Kleine Punkte bekommen 2–3°, beim Trigon noch etwas weniger. 4,5° ist außerhalb. Genau hier fangen Readings an, beliebig zu werden — weil sich mit großzügigen Orben zu jeder These etwas findet.'},
+ {q:'Transit-Saturn läuft dreimal über deine Sonne — oder einmal glatt darüber. Was wiegt schwerer?',
+  o:['Dreimal','Einmal'],r:0,
+  e:'Drei Durchgänge durch Rückläufigkeit ziehen das Thema über Monate und zwingen zur Wiederholung. Ein einzelner Durchgang ist eine Episode, drei sind ein Kapitel.'}
+];
+var qbox=document.getElementById('quiz');
+QUIZ.forEach(function(item,i){
+  var d=document.createElement('div'); d.className='q';
+  var p=document.createElement('p'); p.textContent=item.q; d.appendChild(p);
+  var o=document.createElement('div'); o.className='opts';
+  var ex=document.createElement('div'); ex.className='expl'; ex.textContent=item.e;
+  item.o.forEach(function(lab,j){
+    var b=document.createElement('button'); b.type='button'; b.textContent=lab;
+    b.addEventListener('click',function(){
+      o.querySelectorAll('button').forEach(function(x){x.className='';});
+      b.className=(j===item.r)?'right':'wrong';
+      if(j!==item.r){ o.querySelectorAll('button')[item.r].className='right'; }
+      ex.classList.add('show');
+    });
+    o.appendChild(b);
+  });
+  d.appendChild(o); d.appendChild(ex); qbox.appendChild(d);
+});
+</script>
+</body></html>

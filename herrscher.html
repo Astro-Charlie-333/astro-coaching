@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herrscher & Dispositoren · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
+--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+select,input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:600px){.grid,.grid3{grid-template-columns:1fr;}}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;border:1px solid var(--ind);background:var(--ind);color:#fff;padding:11px 20px;border-radius:22px;cursor:pointer;width:auto;}
+.btn.ghost{background:none;color:var(--ind);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chips button{font-family:'Inter',sans-serif;font-size:13.5px;padding:7px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;width:auto;}
+.chips button:hover{border-color:var(--ind);}
+.chips button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+summary{cursor:pointer;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ind);}
+details[open] summary{margin-bottom:8px;}
+details p{font-size:14.5px;color:var(--soft);}
+.kette{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0;}
+.kette .node{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.kette .arr{color:var(--gold);font-size:16px;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.big{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
+.mono{font-family:'JetBrains Mono',monospace;}</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Ein Chart lesen</div>
+<h1>Herrscher &amp; <em>Dispositoren.</em></h1>
+<p class="lede">Die wichtigste Technik überhaupt — und die, die am häufigsten fehlt. Sie beantwortet die Frage, vor der jede Lernende irgendwann steht: Was mache ich mit einem Haus, in dem kein Planet steht? Antwort: Du folgst dem Herrscher.</p>
+
+
+<h2>Die Grundidee</h2>
+<p>Jedes Zeichen hat einen <b>Herrscher</b> — einen Planeten, der für dieses Zeichen zuständig ist. Steht Widder an einem Haus, ist Mars der Herrscher dieses Hauses. Und wo <i>Mars</i> steht, dort läuft das Thema dieses Hauses tatsächlich ab.</p>
+<p>Das ist der ganze Trick: Ein leeres Haus ist nicht leer. Es ist nur woanders zu finden.</p>
+
+<div class="kette">
+  <span class="node">Haus 10</span><span class="arr">→</span>
+  <span class="node">Wassermann steht davor</span><span class="arr">→</span>
+  <span class="node">Herrscher: Saturn</span><span class="arr">→</span>
+  <span class="node">Saturn steht im 7. Haus</span>
+</div>
+<p class="sub">Gelesen: Der Beruf (10) läuft über die direkte Begegnung (7). Das steht so in keinem einzelnen Planeten — es entsteht erst durch die Kette.</p>
+
+<h2>Die Herrscher</h2>
+<table>
+<tr><th>Zeichen</th><th>Traditionell</th><th>Modern</th></tr>
+<tr><td>Widder</td><td>Mars</td><td>Mars</td></tr>
+<tr><td>Stier</td><td>Venus</td><td>Venus</td></tr>
+<tr><td>Zwillinge</td><td>Merkur</td><td>Merkur</td></tr>
+<tr><td>Krebs</td><td>Mond</td><td>Mond</td></tr>
+<tr><td>Löwe</td><td>Sonne</td><td>Sonne</td></tr>
+<tr><td>Jungfrau</td><td>Merkur</td><td>Merkur</td></tr>
+<tr><td>Waage</td><td>Venus</td><td>Venus</td></tr>
+<tr><td>Skorpion</td><td>Mars</td><td>Pluto (Mars als Mitherrscher)</td></tr>
+<tr><td>Schütze</td><td>Jupiter</td><td>Jupiter</td></tr>
+<tr><td>Steinbock</td><td>Saturn</td><td>Saturn</td></tr>
+<tr><td>Wassermann</td><td>Saturn</td><td>Uranus (Saturn als Mitherrscher)</td></tr>
+<tr><td>Fische</td><td>Jupiter</td><td>Neptun (Jupiter als Mitherrscher)</td></tr>
+</table>
+<div class="tip"><b>Traditionell oder modern?</b> Bei Skorpion, Wassermann und Fische gibt es zwei Antworten. Praktisch: Nimm beide und schau, welche mehr erklärt. Der traditionelle Herrscher sagt meist etwas über den Alltag der Sache, der moderne über ihre Tiefe. Wichtig ist nur, dass du es nicht je nach gewünschtem Ergebnis wechselst.</div>
+
+<h2>Dein Herrscher-Rechner</h2>
+<p class="sub">Aszendent wählen — du bekommst alle zwölf Häuser mit Zeichen und Herrscher (Whole Sign). Trag dann ein, in welchem Haus jeder Planet steht, und die Ketten schreiben sich von selbst.</p>
+<div class="white">
+  <div class="grid">
+    <div><label>Dein Aszendent</label><select id="asc"></select></div>
+    <div><label>Herrschersystem</label><select id="sys"><option value="m">Modern</option><option value="t">Traditionell</option></select></div>
+  </div>
+  <div style="overflow-x:auto;"><table id="tab"></table></div>
+</div>
+
+<div class="tip"><b>Eine Feinheit, die oft verwechselt wird:</b> In Whole Sign ist das <b>MC nicht automatisch das 10. Haus</b>. Bei einem Aszendenten in Zwillingen ist das 10. Haus Fische — das MC kann aber im 9., 10. oder 11. Haus liegen. Beide Wege sind gültig und beantworten leicht verschiedene Fragen: Der Herrscher des <i>10. Hauses</i> sagt, wo dein Beruf stattfindet. Der Herrscher des <i>MC-Zeichens</i> sagt, worüber du öffentlich sichtbar wirst. Praktisch: beide anschauen. Wenn sie auf dasselbe Haus zeigen, hast du eine sehr belastbare Aussage.</div>
+
+<h2>Die Dispositoren-Kette</h2>
+<p>Man kann weitergehen: Wo steht der Herrscher des Zeichens, in dem der Herrscher steht? Diese Kette heißt <b>Dispositoren-Kette</b>, und sie endet immer an einer von zwei Stellen.</p>
+<div class="card">
+  <h3>Der Endherrscher</h3>
+  <p>Ein Planet, der in seinem eigenen Zeichen steht (Mars in Widder, Venus in Stier). Er beherrscht sich selbst — die Kette hört bei ihm auf. Ein solcher Planet ist meist der stärkste Punkt im ganzen Chart: Sehr viele Themen laufen bei ihm zusammen.</p>
+</div>
+<div class="card">
+  <h3>Der Kreis</h3>
+  <p>Zwei oder mehr Planeten beherrschen sich gegenseitig im Kreis. Dann gibt es keinen einzelnen Chef — die Themen verteilen sich. Das ist kein Mangel, sondern beschreibt jemanden, bei dem mehrere Lebensbereiche gleichberechtigt nebeneinander stehen.</p>
+</div>
+
+<h2>So benutzt du es im Reading</h2>
+<ol class="steps">
+<li><b>Erst das leere Haus benennen</b>Klientin fragt nach Beruf, im 10. Haus steht nichts. Statt „dazu sagt dein Chart nichts" gehst du zum Herrscher.</li>
+<li><b>Das Zeichen am Haus ablesen</b>Bei Whole Sign ist das immer das ganze Zeichen — einfach abzählen ab dem Aszendenten.</li>
+<li><b>Den Herrscher finden</b>Aus der Tabelle oben. Bei Skorpion, Wassermann, Fische beide prüfen.</li>
+<li><b>Schauen, wo er steht</b>Sein Haus ist der Ort, an dem das Thema stattfindet. Sein Zeichen sagt, in welchem Stil.</li>
+<li><b>Zwei Häuser zu einem Satz verbinden</b>„Deine Berufung läuft über andere Menschen." Erst dieser Satz ist die Deutung — nicht die Kette selbst.</li>
+</ol>
+
+<div class="tip"><b>Die häufigsten Verbindungen, in Kurzform:</b> Herrscher des 10. im 7. — Beruf über Begegnung. Herrscher des 2. im 9. — Geld über Wissen oder Ferne. Herrscher des 7. im 12. — Beziehung mit einem Rückzugs- oder Geheimnisanteil. Herrscher des 1. im 10. — die eigene Person ist untrennbar mit dem Beruf verknüpft. Baue dir daraus keine Liste, sondern übe die Bewegung: von Haus zu Zeichen zu Planet zu Haus.</div>
+
+<h2>Wo die Technik an ihre Grenze kommt</h2>
+<ul>
+<li>Sie erklärt <i>Verbindungen</i> zwischen Lebensbereichen, nicht deren Qualität. Ob es gut läuft, sagen Aspekte und Zeichen.</li>
+<li>Ein besetztes Haus schlägt den Herrscher. Steht ein Planet im 10., ist er der erste Hinweis — der Herrscher kommt danach.</li>
+<li>Mit Placidus wird es unübersichtlich, weil ein Zeichen zwei Häusern vorstehen kann. Diese Technik ist für Whole Sign gebaut.</li>
+</ul>
+
+
+<div class="weiter"><a href="haeusersysteme.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Häusersysteme</span></a><a href="kleine-punkte.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die kleinen Punkte</span></a></div>
+<div class="foot">Herrscher &amp; Dispositoren &middot; Whole Sign, traditionelle Herrscher mit modernen Mitherrschern. Diese Technik macht leere Häuser lesbar — sie ersetzt aber nicht den Blick auf das ganze Chart.</div>
+</div>
+<script>
+var Z=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var TRAD=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+var MOD=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Pluto','Jupiter','Saturn','Uranus','Neptun'];
+var THEMA=['Person und Auftreten','Wert, Geld, Ressourcen','Sprache, Lernen, Nahbereich','Zuhause und Wurzeln',
+ 'Ausdruck, Kreativität, Romantik','Alltag, Arbeit, Routinen','Partnerschaft und Begegnung','Tiefe, Krise, Gemeinsames',
+ 'Sinn, Weite, Ausbildung','Beruf und Sichtbarkeit','Gruppen, Netzwerke, Ziele','Rückzug, Inneres, Unsichtbares'];
+var PL=['—','Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var stand={};
+var a=document.getElementById('asc');
+Z.forEach(function(z,i){var o=document.createElement('option');o.value=i;o.textContent=z;a.appendChild(o);});
+function bau(){
+  var s=+a.value, sys=document.getElementById('sys').value, H=(sys==='t')?TRAD:MOD;
+  var t=document.getElementById('tab');
+  t.innerHTML='<tr><th>Haus</th><th>Zeichen</th><th>Herrscher</th><th>steht in Haus</th><th>Das ergibt</th></tr>';
+  for(var i=0;i<12;i++){
+    var zi=(s+i)%12, h=H[zi];
+    var opts='<option value="">?</option>';
+    for(var k=1;k<=12;k++) opts+='<option value="'+k+'"'+(stand[h]==k?' selected':'')+'>'+k+'</option>';
+    var satz = stand[h] ? '<b>'+THEMA[i]+'</b> läuft über <b>'+THEMA[stand[h]-1]+'</b>' :
+      '<span style="color:#B9A392">Haus des Herrschers wählen</span>';
+    t.innerHTML+='<tr><td class="mono">'+(i+1)+'</td><td>'+Z[zi]+'</td><td><b>'+h+'</b></td>'+
+      '<td><select data-p="'+h+'" style="padding:5px 7px;font-size:13px;width:auto;">'+opts+'</select></td>'+
+      '<td style="font-size:14px;">'+satz+'</td></tr>';
+  }
+  t.querySelectorAll('select[data-p]').forEach(function(sel){
+    sel.addEventListener('change',function(){ stand[sel.dataset.p]=sel.value?+sel.value:null; bau(); });
+  });
+}
+a.addEventListener('change',bau);
+document.getElementById('sys').addEventListener('change',bau);
+bau();
+</script>
+</body></html>

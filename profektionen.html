@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jahresprofektionen · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
+--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+select,input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:600px){.grid,.grid3{grid-template-columns:1fr;}}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;border:1px solid var(--ind);background:var(--ind);color:#fff;padding:11px 20px;border-radius:22px;cursor:pointer;width:auto;}
+.btn.ghost{background:none;color:var(--ind);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chips button{font-family:'Inter',sans-serif;font-size:13.5px;padding:7px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;width:auto;}
+.chips button:hover{border-color:var(--ind);}
+.chips button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+summary{cursor:pointer;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ind);}
+details[open] summary{margin-bottom:8px;}
+details p{font-size:14.5px;color:var(--soft);}
+.kette{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0;}
+.kette .node{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.kette .arr{color:var(--gold);font-size:16px;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.big{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
+.mono{font-family:'JetBrains Mono',monospace;}</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing-Vertiefung</div>
+<h1>Jahres<em>profektionen.</em></h1>
+<p class="lede">Die einfachste starke Timing-Technik, die es gibt. Eine Division mit Rest sagt dir, welcher Lebensbereich in diesem Jahr im Vordergrund steht — und welcher Planet das Jahr regiert. In fünfzehn Minuten gelernt, im Reading sofort brauchbar.</p>
+
+
+<h2>Die Rechnung</h2>
+<p>Mit jedem Geburtstag rückt der Aszendent um ein Haus weiter. Im Geburtsjahr steht er im 1. Haus, mit einem Jahr im 2., mit elf im 12., mit zwölf wieder im 1. — und so weiter.</p>
+<div class="kette">
+  <span class="node">Alter am letzten Geburtstag</span><span class="arr">÷ 12</span>
+  <span class="node">Rest merken</span><span class="arr">+ 1</span>
+  <span class="node">= Profektionshaus</span>
+</div>
+<p class="sub">Beispiel: 39 Jahre alt. 39 geteilt durch 12 ergibt 3 Rest 3. Also 3 + 1 = 4. Profektionshaus ist das vierte: Zuhause, Wurzeln, Basis.</p>
+
+<h2>Der Jahresherrscher</h2>
+<p>Der wichtigere Teil: Der Herrscher des Profektionshauses wird zum <b>Jahresherrscher</b>. Alles, was diesem Planeten in diesem Jahr passiert — Transite über ihn, seine Stellung im Solar Return — bekommt besonderes Gewicht.</p>
+<div class="tip"><b>Das ist der eigentliche Nutzen:</b> Von hundert Transiten im Jahr weißt du damit, welche zählen. Läuft Saturn über deinen Merkur und Merkur ist Jahresherrscher, ist das ein Hauptthema. Ist er es nicht, ist es eine Episode. Profektionen sind vor allem ein Filter.</div>
+
+<h2>Dein Profektions-Rechner</h2>
+<div class="white">
+  <div class="grid3">
+    <div><label>Geburtstag</label><input type="date" id="gb" value="1990-06-15"></div>
+    <div><label>Stichtag</label><input type="date" id="st"></div>
+    <div><label>Dein Aszendent</label><select id="asc"></select></div>
+  </div>
+  <div class="out">
+    <div class="big" id="titel">—</div>
+    <p class="sub" id="meta" style="margin-bottom:10px;"></p>
+    <p style="font-size:16px;" id="text"></p>
+    <p style="margin-bottom:0;" id="frage" class="sub"></p>
+  </div>
+</div>
+
+<h2>Der Zwölfjahres-Rhythmus</h2>
+<p class="sub">Weil zwölf Häuser durchlaufen werden, wiederholt sich das Profektionshaus alle zwölf Jahre — bei 12, 24, 36, 48 bist du wieder im 1. Haus. Praktisch heißt das: Frag nach dem, was vor zwölf Jahren war. Das ist derselbe Bereich, eine Runde früher.</p>
+<div id="rhythmus"></div>
+
+<h2>Die vier wichtigsten Jahre</h2>
+<table>
+<tr><th>Haus</th><th>Alter</th><th>Worum es typischerweise geht</th></tr>
+<tr><td class="mono">1</td><td class="mono">12, 24, 36, 48</td><td>Neustart, Körper, eigene Person. Oft sichtbare Veränderung am Äußeren.</td></tr>
+<tr><td class="mono">4</td><td class="mono">15, 27, 39, 51</td><td>Zuhause, Familie, Wurzeln. Umzüge häufen sich hier auffällig.</td></tr>
+<tr><td class="mono">7</td><td class="mono">18, 30, 42, 54</td><td>Partnerschaft und Kooperation. Beziehungen beginnen oder klären sich.</td></tr>
+<tr><td class="mono">10</td><td class="mono">21, 33, 45, 57</td><td>Beruf und Sichtbarkeit. Karriereschritte, Verantwortung, Öffentlichkeit.</td></tr>
+</table>
+<p class="sub" style="margin-top:12px;">Das sind Tendenzen, keine Termine. Ein 4-Jahr ohne Umzug ist völlig normal — dann geht es innerlich um Basis statt um Quadratmeter.</p>
+
+<h2>So kombinierst du es</h2>
+<ol class="steps">
+<li><b>Profektionshaus bestimmen</b>Alter durch zwölf, Rest plus eins. Das ist die Bühne des Jahres.</li>
+<li><b>Jahresherrscher finden</b>Herrscher des Zeichens an diesem Haus. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
+<li><b>Sein Radix-Haus anschauen</b>Wo steht dieser Planet von Geburt an? Das verbindet zwei Lebensbereiche.</li>
+<li><b>Seine Transite prüfen</b>Was passiert diesem Planeten in diesem Jahr? Das sind die Termine, die zählen.</li>
+<li><b>Mit dem Solar Return abgleichen</b>Sagt das Jahreschart dasselbe? Doppelt belegt heißt: Hauptthema.</li>
+</ol>
+
+<div class="tip"><b>Ehrlich eingeordnet:</b> Profektionen sind eine traditionelle Technik und funktionieren nur mit Whole Sign. Sie sagen nichts über gut oder schlecht, sondern nur, <i>worum</i> ein Jahr kreist. Ein 8-Jahr ist kein Krisenjahr — es ist ein Jahr, in dem Tiefe und Geteiltes an der Reihe sind.</div>
+
+
+<div class="weiter"><a href="solar-return-vertiefung.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Solar Return Vertiefung</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a></div>
+<div class="foot">Jahresprofektionen &middot; Traditionelle Technik, funktioniert nur mit Whole Sign. Das Profektionsjahr läuft von Geburtstag zu Geburtstag, nicht von Januar zu Januar.</div>
+</div>
+<script>
+var Z=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var HERR=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Pluto (Mars)','Jupiter','Saturn','Uranus (Saturn)','Neptun (Jupiter)'];
+var THEMA=[['Person, Körper, Neuanfang','Ein Jahr über dich selbst. Häufig verändert sich etwas Sichtbares — Aussehen, Auftreten, wie du dich zeigst. Gute Zeit für alles, was mit dir beginnt.'],
+['Wert, Geld, Ressourcen','Ein Jahr über Besitz und Selbstwert. Einkommen, Preise, was dir gehört und was du dir wert bist.'],
+['Sprache, Lernen, Nahbereich','Ein Jahr über Kommunikation. Kurse, Schreiben, Geschwister, kurze Wege, viel Bewegung im Alltag.'],
+['Zuhause, Familie, Wurzeln','Ein Jahr über die Basis. Umzüge häufen sich hier, ebenso Familienthemen und die Frage, wo du hingehörst.'],
+['Ausdruck, Spiel, Romantik','Ein Jahr über das, was aus dir herauswill. Kreativität, Verliebtsein, Kinder, Sichtbarwerden mit dem Eigenen.'],
+['Alltag, Arbeit, Gesundheit','Ein Jahr über den gewöhnlichen Tag. Routinen, Arbeitsbedingungen, Körperpflege — unspektakulär und sehr grundlegend.'],
+['Partnerschaft und Begegnung','Ein Jahr über andere. Beziehungen beginnen, klären sich oder enden. Auch Kooperationen und offene Gegnerschaften.'],
+['Tiefe, Krise, Geteiltes','Ein Jahr über das Ernste. Gemeinsame Ressourcen, Abhängigkeiten, Verwandlung. Kein Unglücksjahr — ein tiefes.'],
+['Sinn, Weite, Lehre','Ein Jahr über den Horizont. Reisen, Ausbildung, Glauben, Veröffentlichen, Fernes.'],
+['Beruf und Sichtbarkeit','Ein Jahr über die Öffentlichkeit. Verantwortung, Karriereschritte, wofür du stehst.'],
+['Gruppen, Netzwerke, Ziele','Ein Jahr über Zugehörigkeit. Freundeskreis, Gemeinschaft, langfristige Vorhaben.'],
+['Rückzug, Inneres, Abschluss','Ein Jahr des Aufräumens. Weniger sichtbar, viel innere Arbeit — und die Vorbereitung auf den Neustart im nächsten Jahr.']];
+var FRAGE=['Was möchtest du in diesem Jahr über dich selbst herausfinden?',
+'Woran misst du gerade deinen Wert?','Was möchtest du lernen oder endlich aussprechen?',
+'Was bräuchtest du, damit du dich wirklich zuhause fühlst?','Was möchtest du machen, ohne dass es einen Zweck hat?',
+'Welche Routine würde dir das Leben leichter machen?','Was erwartest du von einem Gegenüber, ohne es zu sagen?',
+'Was hältst du fest, obwohl du es loslassen könntest?','Woran glaubst du gerade — und wovon hast du dich verabschiedet?',
+'Wofür möchtest du in fünf Jahren bekannt sein?','Wo gehörst du dazu, ohne dich anstrengen zu müssen?',
+'Was möchtest du abschließen, bevor etwas Neues beginnt?'];
+var a=document.getElementById('asc');
+Z.forEach(function(z,i){var o=document.createElement('option');o.value=i;o.textContent=z;a.appendChild(o);});
+document.getElementById('st').value=new Date().toISOString().slice(0,10);
+function rechne(){
+  var g=document.getElementById('gb').value, s=document.getElementById('st').value;
+  if(!g||!s) return;
+  var gd=new Date(g), sd=new Date(s);
+  var alter=sd.getFullYear()-gd.getFullYear();
+  var vorGeb=(sd.getMonth()<gd.getMonth())||(sd.getMonth()===gd.getMonth()&&sd.getDate()<gd.getDate());
+  if(vorGeb) alter--;
+  if(alter<0){document.getElementById('titel').textContent='Stichtag liegt vor der Geburt';return;}
+  var haus=(alter%12)+1;
+  var asc=+a.value, zi=(asc+haus-1)%12;
+  document.getElementById('titel').textContent=haus+'. Haus — '+THEMA[haus-1][0];
+  document.getElementById('meta').innerHTML='Alter am letzten Geburtstag: <b>'+alter+'</b> &middot; '+
+    alter+' ÷ 12 = Rest '+(alter%12)+' &middot; Zeichen am Haus: <b>'+Z[zi]+'</b> &middot; Jahresherrscher: <b>'+HERR[zi]+'</b>';
+  document.getElementById('text').textContent=THEMA[haus-1][1];
+  document.getElementById('frage').innerHTML='<b>Frage fürs Jahr:</b> '+FRAGE[haus-1];
+  var r=document.getElementById('rhythmus'); r.innerHTML='';
+  var t=document.createElement('table');
+  t.innerHTML='<tr><th>Alter</th><th>Jahr ab Geburtstag</th><th>Haus</th><th>Thema</th></tr>';
+  for(var k=Math.max(0,alter-2);k<alter+6;k++){
+    var hh=(k%12)+1, jahr=gd.getFullYear()+k;
+    var hl=(k===alter)?' style="background:#FBEFE6"':'';
+    t.innerHTML+='<tr'+hl+'><td class="mono">'+k+'</td><td class="mono">'+jahr+'/'+((jahr+1)%100)+'</td>'+
+      '<td class="mono">'+hh+'.</td><td>'+THEMA[hh-1][0]+(k===alter?' <b>&larr; jetzt</b>':'')+'</td></tr>';
+  }
+  r.appendChild(t);
+}
+['gb','st'].forEach(function(id){document.getElementById(id).addEventListener('input',rechne);});
+a.addEventListener('change',rechne);
+rechne();
+</script>
+</body></html>

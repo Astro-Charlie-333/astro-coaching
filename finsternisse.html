@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finsternisse lesen · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.say{border-left:3px solid var(--ind);padding-left:14px;margin:10px 0;
+  font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ind);line-height:1.45;}
+select,input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.inrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.inrow{grid-template-columns:1fr;}}
+.inrow > div > select, .inrow > div > input{width:100%;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:4px;color:var(--ind);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing-Vertiefung</div>
+<h1>Finsternisse <em>lesen.</em></h1>
+<p class="lede">Eine Finsternis ist ein Neu- oder Vollmond in der Nähe der Mondknotenachse — eine Lunation unter Strom. Sie wirkt aber nur dann persönlich, wenn sie gradgenau etwas in deinem Chart trifft. Hier lernst du, das zu prüfen, statt es zu vermuten.</p>
+
+
+<h2>Die Mechanik</h2>
+<p>Sonne und Mond stehen bei jedem Neumond in Konjunktion — aber nur dann kommt es zur Finsternis, wenn das nah genug an der Mondknotenachse passiert. Der Knoten ist der Schnittpunkt der Mondbahn mit der Erdbahn: Nur dort können sich die drei Körper wirklich verdecken.</p>
+<div class="inrow">
+<div class="card"><div class="chead"><span class="pill fire">Neumond</span><h3>Sonnenfinsternis</h3></div>
+<p>Der Mond verdeckt die Sonne. Etwas wird kurz unsichtbar, bevor es neu erscheint. Thema: <b>Anfang, Reset, Saat.</b> Oft mit einem blinden Fleck — man sieht erst hinterher, was begonnen hat.</p></div>
+<div class="card"><div class="chead"><span class="pill water">Vollmond</span><h3>Mondfinsternis</h3></div>
+<p>Die Erde schiebt sich zwischen Sonne und Mond. Thema: <b>Kulmination, Sichtbarwerden, Loslassen.</b> Meist abrupter und emotionaler als eine Sonnenfinsternis — etwas kippt ins Bewusstsein.</p></div>
+</div>
+
+<h2>Die drei Regeln</h2>
+<ol class="steps">
+<li><b>Ohne Gradtreffer keine persönliche Wirkung</b>Trifft die Finsternis keinen Punkt in deinem Chart (Orbis ca. 3°, bei Sonne, Mond und Achsen bis 5°), beschreibt sie nur das Haus, in das sie fällt. Dann ist sie Wetter, nicht Biografie.</li>
+<li><b>Das Haus sagt, worum es geht</b>Der Lebensbereich, in den sie fällt, ist der Schauplatz. Der getroffene Planet sagt, welche Funktion betroffen ist.</li>
+<li><b>Das Zeitfenster ist weit</b>Etwa zwei Wochen davor bis rund sechs Monate danach. Ausgelöst wird oft später, wenn ein schneller Planet über denselben Grad läuft.</li>
+</ol>
+
+<div class="tip"><b>Häufigster Fehler:</b> Jede Finsternis auf jedes Leben zu beziehen. Es gibt vier bis sechs pro Jahr — die meisten davon berühren dich gar nicht. Genau das macht die wenigen, die dich treffen, so aussagekräftig.</div>
+
+<h2>Trifft dich diese Finsternis?</h2>
+<p class="sub">Finsternis auswählen, deinen Punkt eingeben — du bekommst Orbis und Einstufung.</p>
+<div class="white">
+<div class="inrow">
+<div><span class="inlab">Finsternis</span><select id="ecl"></select></div>
+<div><span class="inlab">Dein Punkt</span>
+  <div style="display:flex;gap:8px;"><select id="sg" style="flex:1;"></select><input id="dg" type="number" min="0" max="29.98" step="0.01" value="9.05" style="width:96px;" aria-label="Grad"></div>
+</div>
+</div>
+<div class="out">
+  <div class="verdict" id="v">—</div>
+  <div class="outdetail" id="d">Grad als Dezimalzahl: 9°03' = 9.05</div>
+</div>
+</div>
+
+<h2>Die Finsternisse 2026–2028</h2>
+<table>
+<tr><th>Datum</th><th>Art</th><th>Grad</th></tr>
+<tr><td class="mono">12.08.2026</td><td>Sonnenfinsternis, total</td><td class="mono">20° Löwe 02'</td></tr>
+<tr><td class="mono">28.08.2026</td><td>Mondfinsternis, partiell</td><td class="mono">4° Fische 51'</td></tr>
+<tr><td class="mono">06.02.2027</td><td>Sonnenfinsternis, ringförmig</td><td class="mono">17° Wassermann 38'</td></tr>
+<tr><td class="mono">20.02.2027</td><td>Mondfinsternis, Halbschatten</td><td class="mono">1° Jungfrau 59'</td></tr>
+<tr><td class="mono">18.07.2027</td><td>Mondfinsternis</td><td class="mono">25° Steinbock 58'</td></tr>
+<tr><td class="mono">02.08.2027</td><td>Sonnenfinsternis, total</td><td class="mono">9° Löwe 55'</td></tr>
+<tr><td class="mono">17.08.2027</td><td>Mondfinsternis</td><td class="mono">24° Wassermann 04'</td></tr>
+<tr><td class="mono">12.01.2028</td><td>Mondfinsternis</td><td class="mono">21° Krebs 34'</td></tr>
+<tr><td class="mono">26.01.2028</td><td>Sonnenfinsternis, ringförmig</td><td class="mono">6° Wassermann 11'</td></tr>
+<tr><td class="mono">06.07.2028</td><td>Mondfinsternis</td><td class="mono">15° Steinbock 16'</td></tr>
+<tr><td class="mono">22.07.2028</td><td>Sonnenfinsternis, total</td><td class="mono">29° Krebs 51'</td></tr>
+</table>
+<p class="sub" style="margin-top:10px;">Gut zu sehen: Die Finsternisse wandern paarweise über eine Zeichenachse und rücken dabei rückwärts. Wer eine Achse im Chart hat, die gerade dran ist, bekommt über etwa 18 Monate mehrere Treffer nacheinander.</p>
+
+<h2>Im Reading</h2>
+<ul>
+<li>Prüfe zuerst, <b>ob</b> es einen Gradtreffer gibt. Wenn nicht, sag genau das — das schafft Vertrauen.</li>
+<li>Beschreibe die Art der Aufgabe, nicht das Ereignis. „Etwas kommt zum Abschluss“ statt „du verlierst deinen Job“.</li>
+<li>Nenne das Zeitfenster ehrlich weit. Wer einen Tag verspricht, wird an diesem Tag widerlegt.</li>
+<li>Finsternisse sind kein Grund für Angst. Sie beschleunigen, was ohnehin unterwegs war.</li>
+</ul>
+
+<h2>Übung</h2>
+<div id="quiz"></div>
+
+
+<div class="weiter"><a href="lunationen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Neumonde, Vollmonde & Finsternisse</span></a><a href="astrokartographie.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Astrokartographie</span></a></div>
+<div class="foot">Finsternisse &middot; Daten mit Swiss Ephemeris gerechnet, Zeitangaben nach mitteleuropäischer Zeit. Finsternisse markieren Wendepunkte, keine Katastrophen.</div>
+</div>
+<script>
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var ECL=[
+ {n:'12.08.2026 · Sonnenfinsternis',p:140.03,k:'Sonnenfinsternis'},
+ {n:'28.08.2026 · Mondfinsternis',p:334.85,k:'Mondfinsternis'},
+ {n:'06.02.2027 · Sonnenfinsternis',p:317.63,k:'Sonnenfinsternis'},
+ {n:'20.02.2027 · Mondfinsternis',p:151.98,k:'Mondfinsternis'},
+ {n:'18.07.2027 · Mondfinsternis',p:295.97,k:'Mondfinsternis'},
+ {n:'02.08.2027 · Sonnenfinsternis',p:129.92,k:'Sonnenfinsternis'},
+ {n:'17.08.2027 · Mondfinsternis',p:324.07,k:'Mondfinsternis'},
+ {n:'12.01.2028 · Mondfinsternis',p:111.57,k:'Mondfinsternis'},
+ {n:'26.01.2028 · Sonnenfinsternis',p:306.18,k:'Sonnenfinsternis'},
+ {n:'06.07.2028 · Mondfinsternis',p:285.27,k:'Mondfinsternis'},
+ {n:'22.07.2028 · Sonnenfinsternis',p:119.85,k:'Sonnenfinsternis'}
+];
+var e=document.getElementById('ecl');
+ECL.forEach(function(o,i){var x=document.createElement('option');x.value=i;x.textContent=o.n;e.appendChild(x);});
+var s=document.getElementById('sg');
+SIGNS.forEach(function(o,i){var x=document.createElement('option');x.value=i;x.textContent=o;s.appendChild(x);});
+s.value=0;
+function calc(){
+  var ec=ECL[+e.value];
+  var p=(+s.value)*30+(parseFloat(document.getElementById('dg').value)||0);
+  var sep=Math.abs(((ec.p-p+180)%360+360)%360-180);
+  var conj=sep, opp=Math.abs(sep-180), sq=Math.abs(sep-90);
+  var best={t:'Konjunktion',o:conj};
+  if(opp<best.o) best={t:'Opposition',o:opp};
+  if(sq<best.o) best={t:'Quadrat',o:sq};
+  var v=document.getElementById('v'), d=document.getElementById('d');
+  d.textContent=best.t+' · Orbis '+best.o.toFixed(2)+'° · Abstand '+sep.toFixed(2)+'°';
+  if(best.o<=1){ v.textContent='Direkter Treffer'; v.style.color='var(--ind)';
+    d.textContent+=' — das gehört ins Reading, mit Zeitfenster von sechs Monaten.'; }
+  else if(best.o<=3){ v.textContent='Trifft dich'; v.style.color='var(--tense)';
+    d.textContent+=' — spürbar, besonders bei Sonne, Mond oder Achsen.'; }
+  else if(best.o<=5){ v.textContent='Randbereich'; v.style.color='var(--soft)';
+    d.textContent+=' — nur werten, wenn es Sonne, Mond, AC oder MC betrifft.'; }
+  else { v.textContent='Trifft dich nicht'; v.style.color='var(--soft)';
+    d.textContent+=' — diese Finsternis beschreibt bei dir nur das Hausthema.'; }
+}
+e.addEventListener('change',calc); s.addEventListener('change',calc);
+document.getElementById('dg').addEventListener('input',calc); calc();
+
+var QUIZ=[
+ {q:'Eine Finsternis fällt in dein 7. Haus, trifft aber keinen Planeten näher als 8°. Was sagst du?',
+  o:['„Deine Beziehungen stehen vor einem Umbruch.“','„Das Thema Beziehung ist im Hintergrund aktiv — ohne konkreten Auslöser.“'],r:1,
+  e:'Ohne Gradtreffer beschreibt die Finsternis nur den Schauplatz, nicht ein Ereignis. Große Ankündigungen auf schwacher Datenlage sind der schnellste Weg, Vertrauen zu verlieren — spätestens dann, wenn nichts passiert.'},
+ {q:'Was ist der typische Unterschied zwischen Sonnen- und Mondfinsternis?',
+  o:['Sonnenfinsternis = Anfang, Mondfinsternis = Kulmination','Sonnenfinsternis = gut, Mondfinsternis = schlecht'],r:0,
+  e:'Neumond sät, Vollmond erntet — bei Finsternissen jeweils in verstärkter Form. Eine Wertung in gut und schlecht gibt es nicht; beide beschreiben eine Bewegung, keine Qualität.'}
+];
+var qbox=document.getElementById('quiz');
+if(qbox){QUIZ.forEach(function(item){
+  var d=document.createElement('div'); d.className='q';
+  var p=document.createElement('p'); p.textContent=item.q; d.appendChild(p);
+  var o=document.createElement('div'); o.className='opts';
+  var ex=document.createElement('div'); ex.className='expl'; ex.textContent=item.e;
+  item.o.forEach(function(lab,j){
+    var b=document.createElement('button'); b.type='button'; b.textContent=lab;
+    b.addEventListener('click',function(){
+      o.querySelectorAll('button').forEach(function(x){x.className='';});
+      b.className=(j===item.r)?'right':'wrong';
+      if(j!==item.r){ o.querySelectorAll('button')[item.r].className='right'; }
+      ex.classList.add('show');
+    });
+    o.appendChild(b);
+  });
+  d.appendChild(o); d.appendChild(ex); qbox.appendChild(d);
+});}</script>
+</body></html>

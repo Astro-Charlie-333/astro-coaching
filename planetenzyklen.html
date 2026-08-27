@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planetenzyklen · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+
+.calc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;}
+.inrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--ink);width:130px;}
+input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold);}
+tr.past td{color:var(--soft);}
+tr.next td{background:#FBEFE6;}
+tr.next td:first-child{font-weight:600;}
+.tagnow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ind);
+  border:1px solid var(--ind);border-radius:20px;padding:2px 8px;margin-left:6px;white-space:nowrap;}
+
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Timing-Vertiefung</div>
+<h1>Planeten<em>zyklen.</em></h1>
+<p class="lede">Das stärkste Timing-Werkzeug braucht kaum Deutung — nur Rechnen und Erinnerung. Jeder Planet kehrt in festen Abständen an dieselbe Stelle zurück. Wenn du weißt, wann er zuletzt dort war, weißt du, welches Thema gerade wieder anklopft. Und du hast einen Zeugen: dich selbst.</p>
+
+<h2>Die Umlaufzeiten</h2>
+<p class="sub">Wie lange ein Planet braucht, um einmal durch dein ganzes Chart zu laufen.</p>
+<table>
+<tr><th>Planet</th><th>Umlauf</th><th>Was wiederkehrt</th></tr>
+<tr><td>Mond</td><td class="mono">27,3 Tage</td><td>Stimmungslagen, der emotionale Grundton</td></tr>
+<tr><td>Sonne</td><td class="mono">1 Jahr</td><td>Der Jahresbogen, dein Solar Return</td></tr>
+<tr><td>Merkur, Venus</td><td class="mono">ca. 1 Jahr</td><td>Denken und Beziehungsstil, mit Rückläufigkeiten</td></tr>
+<tr><td>Mars</td><td class="mono">2 Jahre</td><td>Antrieb, Ärger, Durchsetzung — der kürzeste greifbare Zyklus</td></tr>
+<tr><td>Jupiter</td><td class="mono">11,9 Jahre</td><td>Wachstum, Weite, wo du dich ausdehnst</td></tr>
+<tr><td>Saturn</td><td class="mono">29,5 Jahre</td><td>Struktur, Reife, Verantwortung</td></tr>
+<tr><td>Mondknoten</td><td class="mono">18,6 Jahre</td><td>Richtung, Lebensweg, rückläufig</td></tr>
+<tr><td>Chiron</td><td class="mono">ca. 50 Jahre</td><td>Die Wunde, die zur Kompetenz wird</td></tr>
+<tr><td>Uranus</td><td class="mono">84 Jahre</td><td>Befreiung, Bruch, Eigenständigkeit</td></tr>
+<tr><td>Neptun</td><td class="mono">165 Jahre</td><td>Auflösung, Sehnsucht — nie eine volle Rückkehr</td></tr>
+<tr><td>Pluto</td><td class="mono">248 Jahre</td><td>Verwandlung, Macht — nie eine volle Rückkehr</td></tr>
+</table>
+
+<div class="tip"><b>Der Kern in einem Satz:</b> Ein Zyklus wiederholt das <i>Thema</i>, nicht das <i>Ereignis</i>. Wer beim letzten Jupiter-Durchgang umgezogen ist, zieht diesmal nicht zwingend wieder um — aber es geht wieder um Raum, Zuhause und Ausdehnung. Wer das verwechselt, macht aus Astrologie Wahrsagerei.</div>
+
+<h2>Dein Zyklen-Rechner</h2>
+<p class="sub">Geburtsjahr eingeben — du bekommst die Jahre deiner wichtigsten Zyklus-Punkte. Nichts wird gespeichert.</p>
+<div class="calc">
+  <div class="inrow">
+    <span class="inlab">Geburtsjahr</span>
+    <input id="yr" type="number" min="1900" max="2030" step="1" value="1990" aria-label="Geburtsjahr">
+  </div>
+  <div id="out" style="margin-top:16px;"></div>
+</div>
+<p class="sub" style="margin-top:10px;">Die Jahre sind auf ±1 genau — der exakte Zeitpunkt hängt von Geburtsdatum und Rückläufigkeiten ab. Für die Rückblick-Methode reicht das völlig.</p>
+
+<h2>Die Lebensmarken</h2>
+<p class="sub">Diese Punkte gelten für alle Menschen, unabhängig vom Chart. Sie sind das Skelett jeder Biografie.</p>
+<table>
+<tr><th>Alter</th><th>Zyklus</th><th>Worum es geht</th></tr>
+<tr><td class="mono">7 · 14 · 22</td><td>Saturn Quadrat / Opposition</td><td>Erste Härten, Abgrenzung, Ernst des Lebens in Etappen</td></tr>
+<tr><td class="mono">12 · 24 · 36 · 48</td><td>Jupiter-Rückkehr</td><td>Neue Weite, neuer Anlauf, mehr Raum</td></tr>
+<tr><td class="mono">18–19 · 37 · 56</td><td>Mondknoten-Rückkehr</td><td>Richtungsfrage: Bin ich auf meinem Weg?</td></tr>
+<tr><td class="mono">29–30</td><td>Saturn-Rückkehr</td><td>Erwachsenwerden im echten Sinn — was nicht trägt, fällt</td></tr>
+<tr><td class="mono">40–45<br><span style="font-size:11px;color:var(--soft)">stark schwankend</span></td><td>Uranus-Opposition</td><td>Die „Midlife"-Passage: Freiheit gegen Gewordenes. Der einzige Zyklus, dessen Alter man wirklich ausrechnen muss — siehe Kasten unten.</td></tr>
+<tr><td class="mono">50</td><td>Chiron-Rückkehr</td><td>Aus der eigenen Wunde wird Kompetenz für andere</td></tr>
+<tr><td class="mono">58–60</td><td>Zweite Saturn-Rückkehr</td><td>Ernte, Bilanz, was bleibt</td></tr>
+</table>
+
+<div class="tip"><b>Vorsicht bei der Uranus-Opposition — die Altersangabe stimmt nur ungefähr.</b> Uranus läuft auf einer stark elliptischen Bahn und braucht für manche Zeichen sieben Jahre, für andere nur vier. Dadurch verschiebt sich das Alter je nach Generation erheblich:
+<table style="margin-top:10px;">
+<tr><th>Uranus im Radix</th><th>Opposition mit etwa</th></tr>
+<tr><td>Löwe, Jungfrau</td><td class="mono">40–41</td></tr>
+<tr><td>Waage, Skorpion</td><td class="mono">42–43</td></tr>
+<tr><td>Schütze, Steinbock</td><td class="mono">44–45</td></tr>
+</table>
+<p style="margin:10px 0 0;">Alle anderen Marken auf dieser Seite sind zuverlässig — Jupiter, Saturn und die Mondknoten laufen gleichmäßig genug. Bei Uranus solltest du das Datum ausrechnen statt nachschlagen: Nimm die Position deines Radix-Uranus, addiere 180 Grad, und schau nach, wann der laufende Uranus dort ankommt.</p></div>
+
+<h2>Die Rückblick-Methode</h2>
+<p class="sub">Wie du einen Zyklus im Reading benutzt — funktioniert bei dir selbst genauso.</p>
+<ol class="steps">
+  <li><b>Den laufenden Transit bestimmen</b>Welcher Planet berührt gerade welchen Punkt? Nimm nur einen — den engsten.</li>
+  <li><b>Die Umlaufzeit abziehen</b>Jupiter minus 12 Jahre, Saturn minus 29, Mars minus 2, Mondknoten minus 18,5. Das ergibt ein konkretes Jahr.</li>
+  <li><b>Fragen, nicht behaupten</b>„Was war bei dir damals los?" Diese Frage öffnet mehr als jede Deutung — und du bekommst gleichzeitig die Bestätigung oder Korrektur deiner Lesart.</li>
+  <li><b>Das Thema herausschälen, nicht das Ereignis</b>Nicht „damals ein Umzug, also jetzt wieder", sondern: Worum ging es im Kern? Raum? Zugehörigkeit? Neuanfang? Das ist der wiederkehrende Faden.</li>
+  <li><b>Den Unterschied benennen</b>Die wichtigste Frage überhaupt: Was kannst du heute, was du damals nicht konntest? Genau darin liegt der Fortschritt — der Zyklus kommt wieder, du bist eine andere.</li>
+</ol>
+
+<div class="tip"><b>Warum das im Coaching so stark wirkt:</b> Du sagst der Person nichts über ihre Zukunft. Du gibst ihr ein Jahr, sie liefert die Geschichte, und ihr seht gemeinsam das Muster. Das ist keine Prognose, sondern Erinnerungsarbeit mit Struktur — und sie ist überprüfbar. Wenn deine Zuordnung nicht passt, sagt die Person es dir sofort.</div>
+
+<h2>Die Grenze</h2>
+<p>Drei Dinge, die ein Zyklus <i>nicht</i> kann, und die du im Reading klar aussprechen solltest:</p>
+<ul style="margin:0 0 14px 20px;font-size:15px;line-height:1.7;">
+  <li>Er sagt kein Ereignis voraus. Er beschreibt eine Art von Aufgabe.</li>
+  <li>Er sagt nichts über gut oder schlecht. Derselbe Jupiter-Durchgang kann Wachstum bedeuten oder Übermaß.</li>
+  <li>Er ist keine Entschuldigung. „Das ist gerade mein Saturn" erklärt eine Schwierigkeit — es erledigt sie nicht.</li>
+</ul>
+
+<h2>Übung</h2>
+<p class="sub">Drei Entscheidungen. Erklärung nach jeder Antwort.</p>
+<div id="quiz"></div>
+
+<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen</span></a><a href="solar-return-light.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Solar Return light</span></a></div>
+<div class="foot">Planetenzyklen &middot; Whole Sign. Umlaufzeiten gerundet. Jupiter, Saturn und die Mondknoten laufen gleichmäßig — die Uranus-Opposition dagegen schwankt je nach Generation um mehrere Jahre und gehört ausgerechnet, nicht nachgeschlagen. Zyklen wiederholen Themen, keine Schicksale.</div>
+</div>
+
+<script>
+var NOW=new Date().getFullYear();
+var MARKS=[
+ {a:7,t:'Saturn Quadrat',d:'Erste Begegnung mit Grenzen und Verantwortung'},
+ {a:12,t:'Jupiter-Rückkehr',d:'Erster voller Wachstumszyklus'},
+ {a:14,t:'Saturn Opposition',d:'Widerstand, Abgrenzung, Pubertät'},
+ {a:19,t:'Mondknoten-Rückkehr',d:'Erste eigene Richtungsentscheidung'},
+ {a:22,t:'Saturn Quadrat',d:'Ernst des Erwachsenenlebens'},
+ {a:24,t:'Jupiter-Rückkehr',d:'Neuer Anlauf, mehr Raum'},
+ {a:29,t:'Saturn-Rückkehr',d:'Was nicht trägt, fällt. Der große Umbau'},
+ {a:36,t:'Jupiter-Rückkehr',d:'Ausdehnung auf gefestigter Basis'},
+ {a:37,t:'Mondknoten-Rückkehr',d:'Bin ich auf meinem Weg?'},
+ {a:37,t:'Saturn Quadrat',d:'Erste Prüfung des Nach-Saturn-Lebens'},
+ {a:43,t:'Uranus-Opposition (ungefähr)',d:'Freiheit gegen das Gewordene. Achtung: Dieses Alter schwankt je nach Uranus-Zeichen zwischen 40 und 45 — bitte nachrechnen, siehe Kasten oben.'},
+ {a:44,t:'Saturn Opposition',d:'Halbzeit: hält die Struktur?'},
+ {a:48,t:'Jupiter-Rückkehr',d:'Neue Weite, oft beruflich'},
+ {a:50,t:'Chiron-Rückkehr',d:'Aus der Wunde wird Kompetenz'},
+ {a:56,t:'Mondknoten-Rückkehr',d:'Dritte Richtungsfrage'},
+ {a:59,t:'Zweite Saturn-Rückkehr',d:'Bilanz und Ernte'},
+ {a:60,t:'Jupiter-Rückkehr',d:'Fünfter Wachstumszyklus'}
+];
+function build(){
+  var y=parseInt(document.getElementById('yr').value,10);
+  var out=document.getElementById('out');
+  if(!y||y<1900||y>2030){ out.innerHTML='<p class="sub" style="margin:0;">Bitte ein Jahr zwischen 1900 und 2030 eingeben.</p>'; return; }
+  var age=NOW-y;
+  var nextIdx=-1;
+  MARKS.forEach(function(m,i){ if(nextIdx<0 && m.a>=age) nextIdx=i; });
+  var rows=MARKS.map(function(m,i){
+    var yr=y+m.a;
+    var cls = (m.a<age)?'past':((i===nextIdx)?'next':'');
+    var tag = (i===nextIdx)?'<span class="tagnow">als Nächstes</span>':'';
+    return '<tr class="'+cls+'"><td class="mono">'+yr+'</td><td class="mono">'+m.a+'</td><td><b>'+m.t+'</b>'+tag+'<br><span style="font-size:13.5px;color:var(--soft)">'+m.d+'</span></td></tr>';
+  }).join('');
+  out.innerHTML='<p class="sub" style="margin:0 0 6px;">Aktuelles Alter im Jahr '+NOW+': etwa '+age+'.</p>'+
+    '<table><tr><th>Jahr</th><th>Alter</th><th>Zyklus</th></tr>'+rows+'</table>';
+}
+document.getElementById('yr').addEventListener('input',build);
+build();
+
+var QUIZ=[
+ {q:'Beim letzten Jupiter-Durchgang durch das 4. Haus ist jemand umgezogen. Jupiter läuft jetzt wieder durch das 4. Haus. Was sagst du im Reading?',
+  o:['„Du wirst wieder umziehen."','„Es geht wieder um Zuhause und Raum — in welcher Form?"'],r:1,
+  e:'Der Zyklus wiederholt das Thema, nicht das Ereignis. Es kann diesmal ein Umbau sein, ein Familienthema, ein neues Verhältnis zur eigenen Herkunft. Eine Ereignis-Prognose ist nicht nur unseriös — sie verschließt auch den Blick für das, was tatsächlich passiert.'},
+ {q:'Welcher Zyklus eignet sich am besten, um im Coaching schnell ein überprüfbares Muster zu finden?',
+  o:['Mars, 2 Jahre','Neptun, 165 Jahre'],r:0,
+  e:'Kurze Zyklen sind im Gespräch überprüfbar: An zwei Jahre zurück erinnert sich jeder. Neptun kehrt in einem Menschenleben nie zurück — er beschreibt Generationen, keine Biografie. Für die Rückblick-Methode brauchst du Zeiträume, die im Gedächtnis liegen.'},
+ {q:'Eine Klientin ist 29 und beschreibt, dass gerade alles zusammenbricht. Was ist die hilfreichste Frage?',
+  o:['„Was hält davon nicht mehr, und wusstest du das schon vorher?"','„Wann ist es endlich vorbei?"'],r:0,
+  e:'Die Saturn-Rückkehr entfernt, was nicht getragen hat — meistens Dinge, die man selbst längst geahnt hat. Die Frage nach dem Ende vertröstet nur. Die Frage nach dem, was ohnehin nicht mehr hielt, gibt der Person ihre Handlungsfähigkeit zurück.'}
+];
+var qbox=document.getElementById('quiz');
+QUIZ.forEach(function(item){
+  var d=document.createElement('div'); d.className='q';
+  var p=document.createElement('p'); p.textContent=item.q; d.appendChild(p);
+  var o=document.createElement('div'); o.className='opts';
+  var ex=document.createElement('div'); ex.className='expl'; ex.textContent=item.e;
+  item.o.forEach(function(lab,j){
+    var b=document.createElement('button'); b.type='button'; b.textContent=lab;
+    b.addEventListener('click',function(){
+      o.querySelectorAll('button').forEach(function(x){x.className='';});
+      b.className=(j===item.r)?'right':'wrong';
+      if(j!==item.r){ o.querySelectorAll('button')[item.r].className='right'; }
+      ex.classList.add('show');
+    });
+    o.appendChild(b);
+  });
+  d.appendChild(o); d.appendChild(ex); qbox.appendChild(d);
+});
+</script>
+</body></html>

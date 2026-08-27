@@ -1,0 +1,480 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chart-Rechner · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
+ --line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+ --flow:#4A7C59;--tense:#B5502E;--neutral:#8A6F5C;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+a{color:var(--ind);}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:22px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+ font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+input:focus,select:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:600px){.grid,.grid3{grid-template-columns:1fr;}}
+.btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;border:1px solid var(--ind);
+ background:var(--ind);color:#fff;padding:12px 22px;border-radius:22px;cursor:pointer;width:auto;}
+.btn.ghost{background:none;color:var(--ind);}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px;}
+svg{display:block;width:100%;height:auto;}
+.chartbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:10px;}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+td select,td input{padding:5px 7px;font-size:13px;border-radius:7px;}
+td .cell{display:flex;gap:5px;}
+td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
+.arow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 15px;margin-bottom:9px;}
+.arow .top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
+.arow .nm{font-family:'Fraunces',serif;font-size:17px;font-weight:600;}
+.arow .orb{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);margin-left:auto;}
+.arow .txt{font-size:14.5px;color:var(--soft);margin-top:8px;line-height:1.55;}
+.lab2{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 4px;}
+.filters button{font-family:'JetBrains Mono',monospace;font-size:11px;padding:7px 13px;border:1px solid var(--line);
+ background:#fff;color:var(--soft);border-radius:20px;cursor:pointer;width:auto;}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin:8px 2px 0;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.sw{width:18px;height:3px;border-radius:2px;display:inline-block;}
+#result{display:none;}
+.err{color:var(--tense);font-size:14px;margin-top:8px;}
+#deutung{white-space:pre-wrap;font-size:15.5px;line-height:1.7;}
+#deutung h4{font-family:'Fraunces',serif;font-size:19px;color:var(--ind);margin:18px 0 4px;font-weight:600;}
+#deutung h4:first-child{margin-top:0;}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);
+ border-top-color:var(--ind);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:7px;}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Reading-Werkzeuge</div>
+<h1>Der <em>Chart-Rechner.</em></h1>
+<p class="lede">Geburtsdaten eingeben — die Seite rechnet Planeten, Achsen und Häuser, zeichnet das Chart und erklärt jede Aspektlinie. Alle Positionen bleiben danach korrigierbar, falls du sie mit einem Profi-Programm abgleichst.</p>
+
+<h2>Geburtsdaten</h2>
+<div class="white">
+  <div class="grid3">
+    <div><label>Datum</label><input type="date" id="date" value="1990-06-15"></div>
+    <div><label>Uhrzeit (Ortszeit)</label><input type="time" id="time" value="12:00"></div>
+    <div><label>Zeitzone</label><select id="tz"></select></div>
+  </div>
+  <div class="grid3">
+    <div><label>Ort (Vorauswahl)</label><select id="city"></select></div>
+    <div><label>Breite (Nord +)</label><input type="number" id="lat" step="0.0001" value="52.5167"></div>
+    <div><label>Länge (Ost +)</label><input type="number" id="lon" step="0.0001" value="13.4167"></div>
+  </div>
+  <div class="row">
+    <button class="btn" id="go">Chart berechnen</button>
+    <span class="sub" style="margin:0;" id="utinfo"></span>
+  </div>
+  <div class="err" id="err"></div>
+</div>
+
+<div class="tip"><b>Die häufigste Fehlerquelle ist die Zeitzone.</b> Gib die Uhrzeit so ein, wie sie auf der Uhr stand, und wähle den passenden Versatz — in Deutschland <b>+1 im Winter</b> und <b>+2 in der Sommerzeit</b> (Ende März bis Ende Oktober). Rechts neben dem Button siehst du die daraus errechnete Weltzeit; die kannst du mit einer Geburtsurkunde oder einem anderen Programm abgleichen.</div>
+
+<div id="result">
+
+<h2>Die Positionen</h2>
+<p class="sub">Alles hier ist editierbar. Wenn du Werte aus einem anderen Programm übernehmen willst, trag sie einfach ein — Chart und Aspekte rechnen sich sofort neu. Chiron und Lilith sind leer und können ergänzt werden.</p>
+<div class="white"><div style="overflow-x:auto;"><table id="postab"></table></div>
+<div class="row"><label style="margin:0 8px 0 0;">Häusersystem</label>
+  <select id="hsys" style="width:auto;"><option value="W">Whole Sign</option><option value="P">Placidus</option></select>
+</div></div>
+
+<h2>Das Chart</h2>
+<div class="chartbox"><svg id="wheel" viewBox="0 0 620 620" role="img" aria-label="Berechnetes Geburtschart"></svg></div>
+<div class="filters" id="filters"></div>
+<div class="legend">
+  <span><i class="sw" style="background:var(--tense)"></i> Spannung</span>
+  <span><i class="sw" style="background:var(--flow)"></i> weich</span>
+  <span><i class="sw" style="background:var(--neutral)"></i> Konjunktion</span>
+  <span>Linienstärke = Enge des Orbis</span>
+</div>
+
+<h2>Die Aspekte</h2>
+<p class="sub" id="acount"></p>
+<div class="tip" style="margin-top:0;"><b>Wie du die Erklärungen benutzt:</b> Bei <b>roten Linien</b> geht es nie darum, sich für eine Seite zu entscheiden — beide Anteile brauchen ihren Platz, nur nicht gleichzeitig. Abwechseln statt auflösen. Bei <b>blauen Linien</b> ist das Gegenteil das Problem: Sie funktionieren so mühelos, dass man sie übersieht. Die Frage dort lautet nicht „wie repariere ich das", sondern „wo setze ich das eigentlich ein".</div>
+<div id="alist"></div>
+
+<h2>Individuelle Deutung</h2>
+<p class="sub">Die Bausteine oben sind Rohmaterial. Für eine Deutung, die die Kombination liest statt der Einzelteile, schicken wir die berechneten Daten an ein Sprachmodell — mit deinen Regeln im Gepäck: Whole Sign, Gewichtung nach Orbis, keine Vorhersagen, keine Gesundheitsaussagen.</p>
+<div class="white">
+  <div class="grid">
+    <div><label>Frage oder Fokus (optional)</label><input id="fokus" placeholder="z. B. berufliche Ausrichtung"></div>
+    <div><label>Funktions-Adresse</label><input id="endpoint" value="/api/deutung"></div>
+  </div>
+  <div class="row">
+    <button class="btn" id="deuten">Deutung erzeugen</button>
+    <span class="sub" style="margin:0;" id="dstatus"></span>
+  </div>
+  <div id="deutung" style="margin-top:16px;"></div>
+</div>
+<p class="sub" style="margin-top:10px;">Läuft die Seite auf GitHub Pages und die Funktion bei Netlify, trag oben die volle Adresse ein, etwa <span class="mono">https://deine-seite.netlify.app/api/deutung</span>.</p>
+
+<div class="tip"><b>Hinweis für die Klientinnen-Version:</b> Geburtsdatum, -zeit und -ort sind personenbezogene Daten. Sobald sie zur Deutung an einen Anbieter gehen, gehört ein Satz dazu, der das offenlegt — am besten direkt neben den Button. Ohne Klick auf „Deutung erzeugen" verlässt hier nichts den Browser.</div>
+
+<div class="tip"><b>Was diese Seite nicht ist:</b> ein fertiges Reading. Sie liefert Rohmaterial — welche Kräfte miteinander reden und in welchem Ton. Was daraus für einen konkreten Menschen folgt, entsteht im Gespräch. Zur Gewichtung siehe <a href="orbis-gewichtung.html">Orbis &amp; Gewichtung</a>, zum Deuten der Linien <a href="linien-lesen.html">Die Linien lesen</a>, zur Systemfrage <a href="haeusersysteme.html">Häusersysteme</a>.</div>
+</div>
+
+<div class="weiter"><a href="aspekt-muster.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Aspekt-Muster</span></a><a href="element-mix.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Dein Element-Mix</span></a></div>
+<div class="foot">Chart-Rechner &middot; Eigene Berechnung im Browser, nichts wird gespeichert oder übertragen. Genauigkeit gegenüber Profi-Ephemeriden: Sonne, Mond, Achsen und Häuser unter 5 Bogenminuten, Jupiter und Saturn bis etwa 10 Bogenminuten. Für Deutungen ausreichend — für gradgenaue Arbeit die Werte oben abgleichen und korrigieren.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+/* ── Daten ── */
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var ORDER=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Knoten','Chiron','Lilith','ASC','MC'];
+var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',
+ Neptun:'♆',Pluto:'♇',Knoten:'☊',Chiron:'⚷',Lilith:'⚸',ASC:'AC',MC:'MC'};
+var PD={
+ Sonne:{f:'Identität und Lebenskraft',z:'wie du dich zeigst und wofür du Kraft hast',
+   b:'Zeit, in der du sichtbar sein darfst, ohne dich zu rechtfertigen',g:'Selbstverständlichkeit und Ausstrahlung'},
+ Mond:{f:'Gefühl und Bedürfnis',z:'was du brauchst, um dich sicher zu fühlen',
+   b:'Ruhe, Regelmäßigkeit und jemanden, dem du es sagen kannst',g:'ein feines Gespür für Stimmungen'},
+ Merkur:{f:'Denken und Sprache',z:'wie du denkst, sprichst und lernst',
+   b:'Zeit zum Sortieren, bevor du antwortest',g:'Sprache, Neugier und schnelle Verknüpfungen'},
+ Venus:{f:'Zuneigung und Wert',z:'wie du zeigst, dass dir jemand wichtig ist',
+   b:'etwas, das du einfach genießt, ohne Zweck',g:'Geschmack, Zuwendung und ein Gefühl für Wert'},
+ Mars:{f:'Antrieb und Durchsetzung',z:'wie schnell du in Bewegung kommst und wie du mit Ärger umgehst',
+   b:'einen Ort, an dem du dich verausgaben und Nein sagen darfst',g:'Antrieb, Mut und Durchsetzungskraft'},
+ Jupiter:{f:'Wachstum und Sinn',z:'wo du wächst und wie viel du dir zutraust',
+   b:'ein realistisches Maß und einen Kalender',g:'Zuversicht, Weitblick und Großzügigkeit'},
+ Saturn:{f:'Struktur und Verantwortung',z:'wo du dich verantwortlich fühlst und wo du dich zurückhältst',
+   b:'klare Regeln, kleine Schritte und Geduld mit dir selbst',g:'Ausdauer, Verlässlichkeit und Struktur'},
+ Uranus:{f:'Freiheit und Eigensinn',z:'wo du ausbrichst, sobald es zu eng wird',
+   b:'Freiraum, den du nicht erst erkämpfen musst',g:'Originalität und ein eigener Blick'},
+ Neptun:{f:'Sehnsucht und Vorstellungskraft',z:'wo du dich verlierst und wo du inspiriert bist',
+   b:'klare Absprachen und regelmäßige Realitätsprüfung',g:'Vorstellungskraft, Mitgefühl und Zugang zum Feinen'},
+ Pluto:{f:'Tiefe und Verwandlung',z:'wo es dir ernst wird und wo du nicht loslassen kannst',
+   b:'Ehrlichkeit über Kontrolle, Macht und Angst',g:'Tiefe, Ausdauer in Krisen und die Fähigkeit zu durchschauen'},
+ Knoten:{f:'die Lebensrichtung',z:'wohin dein Weg zeigt',
+   b:'kleine Schritte in die ungewohnte Richtung',g:'Richtungssinn'},
+ Chiron:{f:'die alte Verletzung',z:'wo du dich schnell verletzt fühlst',
+   b:'Mitgefühl mit dir selbst statt Reparatur',g:'echtes Verständnis für andere in derselben Lage'},
+ Lilith:{f:'das Unbändige',z:'was du dir selbst nicht erlaubst',
+   b:'einen Raum, in dem es ungefiltert raus darf',g:'Klarheit, Unbestechlichkeit und Kraft'},
+ ASC:{f:'Auftreten und Selbstbild',z:'wie du auf andere wirkst',
+   b:'die Erlaubnis, nicht immer gefallen zu müssen',g:'ein Auftreten, das Türen öffnet'},
+ MC:{f:'Beruf und Sichtbarkeit',z:'wie du beruflich gesehen wirst',
+   b:'Klarheit darüber, wofür du stehen willst',g:'Sichtbarkeit und Richtung im Beruf'}};
+var ORB={Sonne:8,Mond:8,ASC:6,MC:6,Merkur:6,Venus:6,Mars:6,Jupiter:5,Saturn:5,Uranus:4,Neptun:4,Pluto:4,
+ Knoten:3,Chiron:3,Lilith:2.5};
+var ASPT=[
+ [0,'Konjunktion',1,'spannung',
+  function(A,B){return 'Diese beiden treten bei dir immer gemeinsam auf — zwei Fragen, ein Vorgang: '+PD[A].z+'; und '+PD[B].z+'. Das wirkt nach außen wie eine einzige starke Eigenschaft, in der du selbst die Anteile kaum auseinanderhalten kannst.';},
+  function(A,B){return 'Übe, die Stimmen zu unterscheiden: Wenn es intensiv wird, frag dich, welcher der beiden Anteile gerade spricht. Wer sie trennen kann, wird von der Mischung nicht mehr überrollt — und kann gezielt bedienen, was gerade dran ist: '+PD[A].b+' oder '+PD[B].b+'.';}],
+ [60,'Sextil',0.6,'weich',
+  function(A,B){return 'Ein Angebot, kein Automatismus. Zwei Stärken, die gut zusammenarbeiten können: '+PD[A].g+' auf der einen Seite, '+PD[B].g+' auf der anderen. Sie tun es aber nur, wenn du sie zusammenbringst.';},
+  function(A,B){return 'Nimm dir konkret etwas vor, das beide braucht. Sextile brauchen einen Anlass: ein Projekt, eine Verabredung, einen Termin im Kalender. Ohne Anstoß passiert hier nichts, und du merkst gar nicht, dass dir etwas fehlt.';}],
+ [90,'Quadrat',0.85,'spannung',
+  function(A,B){return 'Die beiden verlangen Gegensätzliches. Meist gewinnt einer von ihnen — und der andere meldet sich später als Unruhe, Gereiztheit oder Erschöpfung. Im Alltag kollidieren dabei zwei Fragen: '+PD[A].z+'; und '+PD[B].z+'.';},
+  function(A,B){return 'Nicht entscheiden, sondern abwechseln. Beide brauchen ihren Anteil: '+PD[A].b+' — und '+PD[B].b+'. Quadrate lösen sich nie auf, aber sie werden mit der Zeit bedienbar. Wer beide Seiten regelmäßig füttert, hat hier die meiste Energie im ganzen Chart.';}],
+ [120,'Trigon',0.85,'weich',
+  function(A,B){return 'Das läuft so selbstverständlich, dass du es kaum bemerkst: '+PD[A].g+' auf der einen Seite, '+PD[B].g+' auf der anderen — beides greift bei dir ohne Anstrengung ineinander. Genau deshalb hältst du es vermutlich für normal.';},
+  function(A,B){return 'Bau etwas darauf. Trigone sind die Stelle, an der Arbeit leicht fällt und andere staunen — aber sie melden sich nie von selbst. Frag dich: Wo im Leben setze ich das schon ein, und wo könnte ich es zum Angebot machen? Nicht genutzte Talente bleiben unsichtbar.';}],
+ [180,'Opposition',1,'spannung',
+  function(A,B){return 'Zwei Pole, die beide recht haben. Du erlebst sie meist nacheinander — oder eine der beiden Seiten über andere Menschen, die dich damit reizen. Was dich an anderen stört, gehört hier oft zu dir selbst.';},
+  function(A,B){return 'Die Frage ist nie, welche Seite gewinnt, sondern in welcher Dosierung. Gib beiden ihren Platz: '+PD[A].b+' und '+PD[B].b+'. Und wenn dich jemand mit genau diesem Thema auf die Palme bringt, ist das der Hinweis, dass eine der beiden Seiten bei dir gerade zu kurz kommt.';}]];
+var RAW={Quadrat:'#B5502E',Opposition:'#B5502E',Trigon:'#4A7C59',Sextil:'#4A7C59',Konjunktion:'#8A6F5C'};
+var CITIES=[['Berlin',52.5167,13.4167],['Hamburg',53.5503,9.9920],['München',48.1372,11.5755],
+ ['Köln',50.9364,6.9528],['Frankfurt a. M.',50.1109,8.6821],['Leipzig',51.3397,12.3731],
+ ['Wien',48.2082,16.3738],['Zürich',47.3769,8.5417],['Kyiv',50.4501,30.5234],
+ ['London',51.5074,-0.1278],['Paris',48.8566,2.3522],['New York',40.7128,-74.0060]];
+
+var POS={}, filter='alle';
+
+/* Formulare füllen */
+var tzs=document.getElementById('tz');
+for(var o=-12;o<=14;o++){var e=document.createElement('option');e.value=o;
+ e.textContent=(o>=0?'+':'')+o+(o===1?' (MEZ)':o===2?' (MESZ)':'');tzs.appendChild(e);}
+tzs.value=1;
+var cs=document.getElementById('city');
+var e0=document.createElement('option');e0.value=-1;e0.textContent='— eigene Koordinaten —';cs.appendChild(e0);
+CITIES.forEach(function(c,i){var e=document.createElement('option');e.value=i;e.textContent=c[0];cs.appendChild(e);});
+cs.value=0; 
+cs.addEventListener('change',function(){var i=+cs.value; if(i<0)return;
+ document.getElementById('lat').value=CITIES[i][1]; document.getElementById('lon').value=CITIES[i][2];});
+
+document.getElementById('go').addEventListener('click',compute);
+
+function compute(){
+  var err=document.getElementById('err'); err.textContent='';
+  var dv=document.getElementById('date').value, tv=document.getElementById('time').value;
+  if(!dv||!tv){err.textContent='Bitte Datum und Uhrzeit angeben.';return;}
+  var p=dv.split('-').map(Number), t=tv.split(':').map(Number);
+  var lat=parseFloat(document.getElementById('lat').value), lon=parseFloat(document.getElementById('lon').value);
+  if(isNaN(lat)||isNaN(lon)||Math.abs(lat)>66){err.textContent='Breite und Länge prüfen (über 66° Breite ist Placidus nicht definiert).';return;}
+  var ut=t[0]+t[1]/60-(+document.getElementById('tz').value);
+  var y=p[0],mo=p[1],d=p[2];
+  if(ut<0){ut+=24; d-=1;} if(ut>=24){ut-=24; d+=1;}
+  var jd=jdFromUT(y,mo,d,ut), T=(jd-2451545)/36525;
+  var hh=Math.floor((ut+24)%24), mm=Math.round((((ut+24)%24)-hh)*60);
+  document.getElementById('utinfo').textContent='Weltzeit: '+('0'+hh).slice(-2)+':'+('0'+mm).slice(-2)+' UT';
+  var a=angles(jd,lat,lon), pc=placidus(a.ramc,a.eps,lat);
+  POS={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),Knoten:nodeLon(T),Chiron:null,Lilith:null,ASC:a.asc,MC:a.mc};
+  window.CUSPS=[a.asc,pc[2],pc[3],norm(a.mc+180),norm(pc[0]+180),norm(pc[1]+180),
+   norm(a.asc+180),norm(pc[2]+180),norm(pc[3]+180),a.mc,pc[0],pc[1]];
+  document.getElementById('result').style.display='block';
+  table(); render();
+}
+
+function house(l){
+  if(l===null) return '';
+  if(document.getElementById('hsys').value==='W'){
+    return ((Math.floor(l/30)-Math.floor(POS.ASC/30)+12)%12)+1;
+  }
+  for(var i=0;i<12;i++){
+    var a=CUSPS[i], b=CUSPS[(i+1)%12], x=norm(l-a), w=norm(b-a);
+    if(x<w) return i+1;
+  }
+  return '';
+}
+function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*60);
+ var dd=Math.floor(d); if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+' '+('0'+m).slice(-2)+"'";}
+
+function table(){
+  var t=document.getElementById('postab');
+  t.innerHTML='<tr><th>Punkt</th><th>Position</th><th>Haus</th></tr>';
+  ORDER.forEach(function(k){
+    var tr=document.createElement('tr');
+    var l=POS[k], si=l===null?0:Math.floor(l/30), dg=l===null?'':(l-30*si).toFixed(2);
+    var sel='<select data-k="'+k+'">'+SIGNS.map(function(s,i){
+      return '<option value="'+i+'"'+(l!==null&&i===si?' selected':'')+'>'+s+'</option>';}).join('')+'</select>';
+    tr.innerHTML='<td><b>'+GLY[k]+'</b> '+k+'</td>'+
+      '<td><div class="cell">'+sel+'<input type="number" min="0" max="29.99" step="0.01" data-d="'+k+'" value="'+dg+'" placeholder="Grad"></div></td>'+
+      '<td class="mono">'+(l===null?'—':house(l))+'</td>';
+    t.appendChild(tr);
+  });
+  t.querySelectorAll('select[data-k]').forEach(function(s){s.addEventListener('change',edit);});
+  t.querySelectorAll('input[data-d]').forEach(function(i){i.addEventListener('input',edit);});
+}
+function edit(){
+  var t=document.getElementById('postab');
+  ORDER.forEach(function(k){
+    var s=t.querySelector('select[data-k="'+k+'"]'), i=t.querySelector('input[data-d="'+k+'"]');
+    var v=parseFloat(i.value);
+    POS[k]=(i.value===''||isNaN(v))?null:norm((+s.value)*30+v);
+  });
+  var rows=t.querySelectorAll('tr');
+  ORDER.forEach(function(k,i){ rows[i+1].cells[2].textContent = POS[k]===null?'—':house(POS[k]); });
+  render();
+}
+document.getElementById('hsys').addEventListener('change',function(){edit();});
+
+function aspects(){
+  var out=[], ks=ORDER.filter(function(k){return POS[k]!==null&&POS[k]!==undefined;});
+  for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
+    var A=ks[i],B=ks[j];
+    if((A==='ASC'&&B==='MC')||(A==='MC'&&B==='ASC')) continue;
+    var sep=Math.abs(norm(POS[A]-POS[B]+180)-180);
+    for(var q=0;q<ASPT.length;q++){
+      var orb=Math.abs(sep-ASPT[q][0]), max=((ORB[A]+ORB[B])/2)*ASPT[q][2];
+      if(orb<=max) out.push({a:A,b:B,t:ASPT[q][1],o:orb,art:ASPT[q][3],
+        zeigt:ASPT[q][4](A,B),hilft:ASPT[q][5](A,B)});
+    }
+  }
+  out.sort(function(x,y){return x.o-y.o;});
+  return out;
+}
+function pos2(l,r){var d=(180+(l-POS.ASC))*Math.PI/180;return [310+r*Math.cos(d),310-r*Math.sin(d)];}
+function EL(t,at){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+function vis(as){
+  if(filter==='alle')return true;
+  if(filter==='weich')return as.t==='Trigon'||as.t==='Sextil';
+  if(filter==='spannung')return as.t==='Quadrat'||as.t==='Opposition';
+  return as.t==='Konjunktion';
+}
+function render(){
+  var s=document.getElementById('wheel'); s.innerHTML='';
+  s.appendChild(EL('circle',{cx:310,cy:310,r:298,fill:'#FBF7F2',stroke:'#F0D8C6','stroke-width':1.5}));
+  s.appendChild(EL('circle',{cx:310,cy:310,r:255,fill:'#fff',stroke:'#F0D8C6','stroke-width':1.5}));
+  s.appendChild(EL('circle',{cx:310,cy:310,r:196,fill:'#fff',stroke:'#F0D8C6','stroke-width':1}));
+  for(var i=0;i<12;i++){
+    var a=Math.floor(POS.ASC/30)*30+i*30, p1=pos2(a,255), p2=pos2(a,298);
+    s.appendChild(EL('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#F0D8C6','stroke-width':1.2}));
+    var m=pos2(a+15,277), t=EL('text',{x:m[0],y:m[1]+7,'text-anchor':'middle','font-size':19,fill:'#8A6F5C'});
+    t.textContent=GL[Math.floor(norm(a)/30)]; s.appendChild(t);
+  }
+  var cus = document.getElementById('hsys').value==='W'
+    ? [0,1,2,3,4,5,6,7,8,9,10,11].map(function(i){return norm(Math.floor(POS.ASC/30)*30+i*30);})
+    : CUSPS;
+  cus.forEach(function(c,i){
+    var p1=pos2(c,196), p2=pos2(c,255), main=(i%3===0);
+    s.appendChild(EL('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:main?'#2A1B12':'#F0D8C6','stroke-width':main?2:1}));
+    var m=pos2(norm(c+8),204), t=EL('text',{x:m[0],y:m[1]+3,'text-anchor':'middle',
+      'font-family':'JetBrains Mono, monospace','font-size':9,fill:'#C9B4A2'});
+    t.textContent=i+1; s.appendChild(t);
+  });
+  var A=aspects();
+  A.forEach(function(as){
+    if(!vis(as))return;
+    var p1=pos2(POS[as.a],192), p2=pos2(POS[as.b],192);
+    s.appendChild(EL('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:RAW[as.t],
+     'stroke-width':Math.max(1.1,3.6-as.o*0.6),'stroke-opacity':0.75,
+     'stroke-dasharray':as.t==='Konjunktion'?'5 5':'','stroke-linecap':'round'}));
+  });
+  ORDER.forEach(function(k){
+    if(POS[k]===null||POS[k]===undefined)return;
+    var pt=pos2(POS[k],225);
+    s.appendChild(EL('circle',{cx:pt[0],cy:pt[1],r:17,fill:'#fff',stroke:'#F0D8C6','stroke-width':1.2}));
+    var g=GLY[k], t=EL('text',{x:pt[0],y:pt[1]+(g.length>1?4:6),'text-anchor':'middle',
+     'font-size':g.length>1?12:17,fill:'#2A1B12','font-family':g.length>1?'JetBrains Mono, monospace':'inherit'});
+    t.textContent=g; s.appendChild(t);
+    var dp=pos2(POS[k],250), d=EL('text',{x:dp[0],y:dp[1]+3,'text-anchor':'middle',
+     'font-family':'JetBrains Mono, monospace','font-size':9.5,fill:'#8A6F5C'});
+    d.textContent=Math.floor(POS[k]%30)+'°'; s.appendChild(d);
+  });
+  var box=document.getElementById('alist'); box.innerHTML='';
+  var shown=A.filter(vis);
+  document.getElementById('acount').textContent=shown.length+' Aspekte, nach Orbis sortiert — von laut nach leise.';
+  shown.forEach(function(as){
+    var laut = as.o<=1?'Unter 1° Orbis — das ist ein Lebensthema, kein Detail.'
+      :(as.o<=3?'Deutlich spürbar im Alltag.':'Hintergrundfarbe — färbt mit, trägt aber keine eigene Aussage.');
+    var lab = as.art==='weich' ? 'So nutzt du es' : 'Was hilft';
+    var d=document.createElement('div'); d.className='arow';
+    d.innerHTML='<div class="top"><span class="dot" style="background:'+RAW[as.t]+'"></span>'+
+      '<span class="nm">'+as.a+' '+as.t+' '+as.b+'</span>'+
+      '<span class="orb">Orbis '+as.o.toFixed(2)+'°</span></div>'+
+      '<div class="txt"><b>'+PD[as.a].f+'</b> trifft <b>'+PD[as.b].f+'</b>. '+laut+'</div>'+
+      '<div class="txt"><span class="lab2">Zeigt sich meist so</span>'+as.zeigt+'</div>'+
+      '<div class="txt"><span class="lab2">'+lab+'</span>'+as.hilft+'</div>';
+    box.appendChild(d);
+  });
+}
+
+/* ── Individuelle Deutung ── */
+document.getElementById('deuten').addEventListener('click', async function(){
+  var btn=this, st=document.getElementById('dstatus'), out=document.getElementById('deutung');
+  if(!POS.ASC){ st.textContent='Bitte zuerst das Chart berechnen.'; return; }
+  var A=aspects();
+  var payload={
+    haussystem:document.getElementById('hsys').value,
+    fokus:document.getElementById('fokus').value.slice(0,400),
+    positionen:ORDER.filter(function(k){return POS[k]!==null&&POS[k]!==undefined;})
+      .map(function(k){return {punkt:k,position:fmt(POS[k]),haus:house(POS[k])};}),
+    aspekte:A.map(function(a){return {a:a.a,b:a.b,typ:a.t,orbis:a.o.toFixed(2)};})
+  };
+  btn.disabled=true; out.innerHTML='';
+  st.innerHTML='<span class="spin"></span>Wird geschrieben, das dauert etwa zwanzig Sekunden …';
+  try{
+    var r=await fetch(document.getElementById('endpoint').value,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    var d=await r.json();
+    if(!r.ok||d.error){ st.textContent='Fehler: '+(d.error||r.status); }
+    else{
+      st.textContent='';
+      var HEAD=['KERN','DAS STÄRKSTE','WO ES REIBT','WAS LEICHT GEHT','FRAGEN FÜRS GESPRÄCH'];
+      var html=d.deutung.split('\n').map(function(z){
+        var t=z.trim();
+        return HEAD.indexOf(t)>=0 ? '<h4>'+t.charAt(0)+t.slice(1).toLowerCase()+'</h4>' : z;
+      }).join('\n');
+      out.innerHTML=html;
+    }
+  }catch(e){ st.textContent='Die Funktion war nicht erreichbar. Adresse prüfen.'; }
+  btn.disabled=false;
+});
+
+var FILT=[['alle','Alle'],['spannung','Nur Spannung'],['weich','Nur weich'],['konj','Konjunktionen']];
+var fb=document.getElementById('filters');
+FILT.forEach(function(f,i){
+  var b=document.createElement('button');b.type='button';b.textContent=f[1];
+  b.setAttribute('aria-pressed',i===0);
+  b.addEventListener('click',function(){filter=f[0];
+    Array.prototype.forEach.call(fb.children,function(x,j){x.setAttribute('aria-pressed',FILT[j][0]===filter);});
+    render();});
+  fb.appendChild(b);
+});
+</script>
+</body></html>

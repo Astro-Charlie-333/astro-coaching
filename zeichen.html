@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Zeichen</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="grundlagen.html">&larr; Grundlagen</a>
+<div class="eyebrow">Grundlagen · Baustein 2</div>
+<h1>Die 12 <em>Zeichen.</em></h1>
+<p class="lede">Die Zeichen färben jeden Planeten — sie sind das WIE, die Stilrichtung, in der eine Kraft sich zeigt.</p>
+<div class="tip"><b>Die Zeichen sind das WIE</b> — die Art und Weise, wie ein Planet sich ausdrückt. Ein Planet "in" einem Zeichen wird von dessen Farbe gefärbt.</div>
+<h2>Die 4 Elemente</h2>
+<div class="card"><b>Feuer</b> (Widder, Löwe, Schütze): Begeisterung, Tat, Lebendigkeit, Intuition.<br>
+<b>Erde</b> (Stier, Jungfrau, Steinbock): Praxis, Körper, Beständigkeit, Realität.<br>
+<b>Luft</b> (Zwillinge, Waage, Wassermann): Denken, Austausch, Verbindung, Ideen.<br>
+<b>Wasser</b> (Krebs, Skorpion, Fische): Gefühl, Tiefe, Intuition, Empathie.</div>
+<h2>Die 3 Qualitäten</h2>
+<div class="card"><b>Kardinal</b> (Widder, Krebs, Waage, Steinbock): initiiert, startet, geht voran.<br>
+<b>Fix</b> (Stier, Löwe, Skorpion, Wassermann): hält, festigt, bleibt dran.<br>
+<b>Veränderlich</b> (Zwillinge, Jungfrau, Schütze, Fische): passt an, wandelt, vermittelt.</div>
+<h2>Die 12 Zeichen</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--fire);flex-shrink:0;">♈</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Widder</b> <span class="pill fire">Feuer · Kardinal</span><br><span style="font-size:13.5px;color:var(--soft);">Mut, Aufbruch, Initiative, Ich-Kraft</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--earth);flex-shrink:0;">♉</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Stier</b> <span class="pill earth">Erde · Fix</span><br><span style="font-size:13.5px;color:var(--soft);">Beständigkeit, Sinnlichkeit, Sicherheit, Genuss</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--air);flex-shrink:0;">♊</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Zwillinge</b> <span class="pill air">Luft · Veränderlich</span><br><span style="font-size:13.5px;color:var(--soft);">Neugier, Austausch, Sprache, Vielseitigkeit</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--water);flex-shrink:0;">♋</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Krebs</b> <span class="pill water">Wasser · Kardinal</span><br><span style="font-size:13.5px;color:var(--soft);">Gefühl, Fürsorge, Zuhause, Geborgenheit</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--fire);flex-shrink:0;">♌</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Löwe</b> <span class="pill fire">Feuer · Fix</span><br><span style="font-size:13.5px;color:var(--soft);">Ausdruck, Wärme, Kreativität, Herz</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--earth);flex-shrink:0;">♍</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Jungfrau</b> <span class="pill earth">Erde · Veränderlich</span><br><span style="font-size:13.5px;color:var(--soft);">Klarheit, Dienst, Analyse, Sorgfalt</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--air);flex-shrink:0;">♎</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Waage</b> <span class="pill air">Luft · Kardinal</span><br><span style="font-size:13.5px;color:var(--soft);">Harmonie, Beziehung, Ausgleich, Schönheit</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--water);flex-shrink:0;">♏</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Skorpion</b> <span class="pill water">Wasser · Fix</span><br><span style="font-size:13.5px;color:var(--soft);">Tiefe, Intensität, Wandlung, Wahrheit</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--fire);flex-shrink:0;">♐</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Schütze</b> <span class="pill fire">Feuer · Veränderlich</span><br><span style="font-size:13.5px;color:var(--soft);">Sinn, Weite, Freiheit, Optimismus</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--earth);flex-shrink:0;">♑</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Steinbock</b> <span class="pill earth">Erde · Kardinal</span><br><span style="font-size:13.5px;color:var(--soft);">Struktur, Verantwortung, Aufbau, Meisterschaft</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--air);flex-shrink:0;">♒</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Wassermann</b> <span class="pill air">Luft · Fix</span><br><span style="font-size:13.5px;color:var(--soft);">Freiheit, Vision, Gemeinschaft, Originalität</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
+<span style="font-size:22px;color:var(--water);flex-shrink:0;">♓</span>
+<div style="flex:1;"><b style="font-family:Fraunces,serif;font-size:17px;">Fische</b> <span class="pill water">Wasser · Veränderlich</span><br><span style="font-size:13.5px;color:var(--soft);">Mitgefühl, Traum, Hingabe, Auflösung</span></div></div>
+<div class="weiter"><a href="planeten.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Planeten</span></a><a href="haeuser.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die Häuser</span></a></div>
+<div class="foot">Grundlagen · Die Zeichen · Deine Astro-Lernplattform.</div>
+</div></body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.hero{text-align:center;padding:20px 0 10px;}
+.hero h1{font-size:clamp(40px,9vw,72px);}
+.big-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:30px 0;}
+@media(max-width:640px){.big-grid{grid-template-columns:1fr;}}
+.big-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 22px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;display:block;}
+.big-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(193,68,14,.12);}
+.big-card .ico{font-size:32px;margin-bottom:10px;display:block;}
+.big-card b{font-family:Fraunces,serif;font-size:21px;font-weight:600;color:var(--ind);display:block;margin-bottom:5px;}
+.big-card span{font-size:13.5px;color:var(--soft);line-height:1.5;}
+.section-label{font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:36px 0 4px;}
+</style></head><body>
+<div class="wrap">
+<div class="hero">
+<div class="eyebrow">Deine Astrologie-Lernplattform</div>
+<h1>Lerne, Charts <em>zu lesen.</em></h1>
+<p class="lede" style="margin:0 auto;">Alles, was du brauchst, um Geburtscharts selbst zu verstehen und Menschen astrologisch zu begleiten — vom ersten Baustein bis zum fertigen Reading. Aufgebaut zum Lernen, gemacht zum Nachschlagen.</p>
+</div>
+
+<div class="section-label">Fang hier an</div>
+<div class="big-grid">
+<a class="big-card" href="grundlagen.html"><span class="ico">✦</span><b>Die Grundlagen</b><span>Planeten, Zeichen, Häuser, Aspekte — das Fundament. Plus Achsen, Mondknoten, Retrograde. Wenn du das hast, kannst du jedes Chart lesen.</span></a>
+<a class="big-card" href="planeten-in-zeichen.html"><span class="ico">☉</span><b>Planeten in den Zeichen</b><span>Die Wissensdatenbank: jeder Planet durch alle 12 Zeichen. Dein Nachschlagewerk fürs Deuten.</span></a>
+<a class="big-card" href="planeten-in-haeusern.html" style="grid-column:1/-1;"><span class="ico">⌂</span><b>Planet, Zeichen, Haus</b><span>Alle drei Ebenen kombiniert: der Punkt sagt was, das Zeichen wie, das Haus wo. 2448 Kombinationen — inklusive Chiron, Lilith, Mondknoten, Glückspunkt, MC, IC und Juno, mit Resonanzanalyse und Achsenberechnung.</span></a>
+</div>
+
+<div class="section-label">Ein Chart lesen</div>
+<div class="big-grid">
+<a class="big-card" href="chart-lesen.html"><span class="ico">◐</span><b>Ein Chart lesen</b><span>Die Schritt-für-Schritt-Methode, damit du nicht ertrinkst. Deine Lese-Landkarte.</span></a>
+<a class="big-card" href="linien-lesen.html"><span class="ico">△</span><b>Die Linien lesen</b><span>Wie du die Aspekt-Linien im Chart entschlüsselst, um Zusammenhänge zu verstehen.</span></a>
+<a class="big-card" href="orbis-gewichtung.html" style="grid-column:1/-1;"><span class="ico">◎</span><b>Orbis &amp; Gewichtung</b><span>Was zählt und was nicht: wie eng ein Aspekt sein muss, welche Kontakte tragen und wann du aufhörst zu deuten. Mit Orbis-Rechner und Übungen — die Disziplin, die jede andere Deutung präziser macht.</span></a>
+<a class="big-card" href="spannungskarte.html" style="grid-column:1/-1;"><span class="ico">⚡</span><b>Die Spannungskarte</b><span>Wo in einem Chart der Druck sitzt — als Karte statt als Liste. Sortiert nach Stärke, mit beiden Polen jeder Achse: was die eine Seite will, was die andere braucht. Deine Breaking Points auf einen Blick.</span></a>
+<a class="big-card" href="herrscher.html" style="grid-column:1/-1;"><span class="ico">⚿</span><b>Herrscher &amp; Dispositoren</b><span>Die Technik, die leere Häuser lesbar macht: Welches Zeichen steht am Haus, wo steht dessen Herrscher — und was verbindet das miteinander? Mit Herrscher-Rechner für dein eigenes Chart.</span></a>
+<a class="big-card" href="haeusersysteme.html" style="grid-column:1/-1;"><span class="ico">⌗</span><b>Häusersysteme</b><span>Whole Sign oder Placidus? Warum dasselbe Chart zwei Antworten geben kann, wann es überhaupt einen Unterschied macht — und was du tust, wenn beide sich widersprechen.</span></a>
+<a class="big-card" href="kleine-punkte.html" style="grid-column:1/-1;"><span class="ico">✧</span><b>Die kleinen Punkte</b><span>Chiron, Lilith, Mondknoten, Glückspunkt und Vertex — was sie bedeuten, wie eng du sie fassen musst und warum sie in der Synastrie oft das fehlende Stück sind.</span></a>
+</div>
+
+<div class="section-label">Timing & Beziehungen</div>
+<div class="big-grid">
+<a class="big-card" href="timing.html"><span class="ico">◔</span><b>Timing lesen</b><span>Transite, Solar Return, Mondphasen — wie der Himmel heute auf ein Chart wirkt.</span></a>
+<a class="big-card" href="synastrie.html"><span class="ico">♁</span><b>Synastrie</b><span>Zwei Charts vergleichen — wie zwei Menschen astrologisch zusammenwirken.</span></a>
+<a class="big-card" href="astrokartographie.html" style="grid-column:1/-1;"><span class="ico">⌖</span><b>Astrokartographie</b><span>Dein Chart auf der Weltkarte: Warum sich Orte unterschiedlich anfühlen, welche Linie was macht — und wo die Grenzen dieser Technik liegen.</span></a>
+</div>
+
+<div class="section-label">Deine Coaching-Kunst</div>
+<div class="big-grid">
+<a class="big-card" href="coaching.html" style="grid-column:1/-1;"><span class="ico">✧</span><b>Coaching & Astrologie</b><span>Astrologie & Coaching verbinden, Readings als Gespräch führen, Haltung & Ethik. Wo Chart-Wissen zu echter Begleitung wird.</span></a>
+<a class="big-card" href="leitfaden.html" style="grid-column:1/-1;"><span class="ico">✦</span><b>Der Ansprech-Leitfaden</b><span>Das Herzstück: Wie du jeden Menschen richtig ansprichst. Mond, Merkur, Mars & Fundament — der Wesenstyp bestimmt, wie du sprichst, fragst und begleitest. Astrologie trifft Gesprächsführung.</span></a>
+<a class="big-card" href="grenzen.html" style="grid-column:1/-1;"><span class="ico">⊘</span><b>Wann du nicht deutest</b><span>Klare Ausstiegskriterien und fertige Sätze: Gesundheit, Tod, abwesende Dritte, abgegebene Entscheidungen — und was du tust, wenn jemand in einer Krise sitzt.</span></a>
+</div>
+
+<div class="section-label">Reading-Werkzeuge</div>
+<div class="big-grid">
+<a class="big-card" href="werkzeuge.html" style="grid-column:1/-1;"><span class="ico">✧</span><b>Werkzeuge-Übersicht</b><span>Alle Reading-Werkzeuge & Module an einem Ort gesammelt — dein Praxis-Hub.</span></a>
+<a class="big-card" href="chart-rechner.html" style="grid-column:1/-1;"><span class="ico">✵</span><b>Der Chart-Rechner</b><span>Geburtsdaten eingeben, Chart bekommen: Planeten, Achsen, Häuser, gezeichnetes Rad und zu jeder Aspektlinie eine Erklärung. Alle Positionen bleiben korrigierbar.</span></a>
+<a class="big-card" href="learning-seite.html" style="grid-column:1/-1;"><span class="ico">✺</span><b>Die Learning-Seite</b><span>Fünf Felder, die sich nie ändern: Auslöser, Chart-Signatur, Frühwarnsignal, der Satz statt der Wand, Transit-Kontext. So wird aus eigenem Erleben ein Format, das andere auf ihr Chart anwenden können — mit Beispiel und leerer Vorlage.</span></a>
+<a class="big-card" href="reading-ablauf.html"><span class="ico">◇</span><b>Der Reading-Ablauf</b><span>Die Schritt-für-Schritt-Struktur fürs Reading — dein roter Faden im Gespräch.</span></a>
+<a class="big-card" href="fragen-schatzkiste.html"><span class="ico">?</span><b>Die Fragen-Schatzkiste</b><span>Gute Coaching-Fragen nach Thema sortiert, zum Ziehen im Reading.</span></a>
+<a class="big-card" href="lebens-kompass.html" style="grid-column:1/-1;"><span class="ico">✦</span><b>Der Lebens-Kompass</b><span>Jeder Planet als Wegweiser für einen Lebensbereich — mit Coaching-Fragen. Der Chart als Navigationssystem fürs ganze Leben.</span></a>
+</div>
+
+<div class="section-label">Deine Nische</div>
+<div class="big-grid">
+<a class="big-card" href="neurodivergente-astrologie.html" style="grid-column:1/-1;"><span class="ico">♆</span><b>Astrologie für anders verdrahtete Köpfe</b><span>Dein Herzstück: wie Astrologie neurodivergenten Menschen Selbstverständnis schenkt — ohne Pathologisierung, mit Sprache statt Scham.</span></a>
+</div>
+
+<div class="section-label">Selbstverständnis-Module</div>
+<div class="big-grid">
+<a class="big-card" href="haeuser-lebensbuehnen.html"><span class="ico">⌂</span><b>Die 12 Lebensbühnen</b><span>Die Häuser als Lebensbereiche — mit einer Reflexionsfrage zu jedem.</span></a>
+<a class="big-card" href="element-mix.html"><span class="ico">△</span><b>Dein Element-Mix</b><span>Wie Feuer, Erde, Luft & Wasser dein Temperament formen.</span></a>
+<a class="big-card" href="haus-achsen.html" style="grid-column:1/-1;"><span class="ico">⇄</span><b>Die Haus-Achsen</b><span>Wie du einem Haus über sein Gegenüber begegnest — jede Achse mit Ausgleich in beide Richtungen. Aus der Flut ins Konkrete kommen.</span></a>
+<a class="big-card" href="mein-chart.html" style="grid-column:1/-1;"><span class="ico">✷</span><b>Dein Chart, Haus für Haus</b><span>Dein Geburtschart in drei Schichten gelesen: Haus, Zeichen und Planeten zusammen — ausführlich, mit Deutung für jeden Bereich. Zum Selbstverstehen und Chart-Lesen-Lernen.</span></a>
+</div>
+
+<div class="section-label">Timing-Vertiefung</div>
+<div class="big-grid">
+<a class="big-card" href="mondphasen-rhythmus.html"><span class="ico">☽</span><b>Die Mondphasen als Rhythmus</b><span>Säen, wachsen, ernten, ruhen — der sanfte Lebenstakt.</span></a>
+<a class="big-card" href="lunationen.html" style="grid-column:1/-1;"><span class="ico">◍</span><b>Neumonde, Vollmonde &amp; Finsternisse</b><span>Alle vier Ereignistypen in jedem Zeichen und jedem Haus — 576 Kombinationen mit Gegenseiten-Analyse. Dazu alle Finsternisse bis 2030 mit der Angabe, in welches deiner Häuser sie fallen.</span></a>
+<a class="big-card" href="mondzyklen.html" style="grid-column:1/-1;"><span class="ico">◑</span><b>Neumonde, Vollmonde, Finsternisse</b><span>Vier Ereignisarten mal zwölf Zeichen mal zwölf Häuser — plus ein Kalender aller Lunationen bis Februar 2028. Aszendent eingeben und für jedes Datum das Haus sehen.</span></a>
+<a class="big-card" href="solar-return-light.html"><span class="ico">☉</span><b>Solar Return light</b><span>Das Jahreschart lesen — worum sich das Lebensjahr dreht.</span></a>
+<a class="big-card" href="profektionen.html" style="grid-column:1/-1;"><span class="ico">↺</span><b>Jahresprofektionen</b><span>Eine Division mit Rest zeigt dir das Haus des Jahres und den Jahresherrscher — der beste Filter, um von hundert Transiten die fünf wichtigen zu finden. Mit Rechner.</span></a>
+<a class="big-card" href="planetenzyklen.html" style="grid-column:1/-1;"><span class="ico">↻</span><b>Planetenzyklen</b><span>Wo warst du beim letzten Durchgang? Jupiter alle 12 Jahre, Saturn alle 29, Mars alle 2 — mit Zyklen-Rechner, den Lebensmarken und der Rückblick-Methode fürs Reading.</span></a>
+<a class="big-card" href="finsternisse.html" style="grid-column:1/-1;"><span class="ico">◍</span><b>Finsternisse lesen</b><span>Wann eine Finsternis dich wirklich betrifft und wann nicht. Mit Treffer-Prüfer, allen Finsternissen bis 2028 und den Regeln fürs Zeitfenster.</span></a>
+<a class="big-card" href="solar-return-vertiefung.html" style="grid-column:1/-1;"><span class="ico">⊙</span><b>Solar Return Vertiefung</b><span>Die Methode in sieben Schritten — Solar-Aszendent, Häufungen, Solar-MC und vor allem die Überlagerung mit deinem Radix.</span></a>
+</div>
+
+<div class="section-label">Coaching-Vertiefung</div>
+<div class="big-grid">
+<a class="big-card" href="mondknoten-coaching.html"><span class="ico">☊</span><b>Die Mondknoten fürs Coaching</b><span>Der Seelenweg — alle 12 Knotenachsen mit Coaching-Frage.</span></a>
+<a class="big-card" href="klientinnen-fragen.html"><span class="ico">✧</span><b>Häufige Klientinnen-Fragen</b><span>Souverän & sicher antworten — deine Sicherheit im Gespräch.</span></a>
+<a class="big-card" href="synastrie-vertiefung.html"><span class="ico">♁</span><b>Synastrie-Vertiefung</b><span>Die Beziehungs-Kontakte im Detail — Anlage beschreiben, nicht bewerten.</span></a>
+<a class="big-card" href="aspekt-muster.html"><span class="ico">✶</span><b>Aspekt-Muster im Chart</b><span>Großes Trigon, T-Quadrat, Stellium, Kite — die zentralen Lebensthemen.</span></a>
+</div>
+
+<div class="section-label">Für dein Business</div>
+<div class="big-grid">
+<a class="big-card" href="ueber-mich-vorlage.html"><span class="ico">✍</span><b>Deine Über-mich-Seite</b><span>Eine Vorlage für deine Story — dein stärkster Vertrauensanker.</span></a>
+<a class="big-card" href="angebote-struktur.html"><span class="ico">◈</span><b>Deine Angebote</b><span>Deine Pakete klar strukturieren — vom Einstiegs-Reading zur Begleitung.</span></a>
+</div>
+
+<div class="section-label">Üben & Nachschlagen</div>
+<div class="big-grid">
+<a class="big-card" href="quiz.html"><span class="ico">✓</span><b>Quiz</b><span>Teste dein Wissen mit Sofort-Erklärung nach jeder Antwort.</span></a>
+<a class="big-card" href="uebungscharts.html" style="grid-column:1/-1;"><span class="ico">◑</span><b>Übungscharts</b><span>Drei vollständige Charts erfundener Personen, echt gerechnet. Erst selbst deuten, dann aufklappen und vergleichen. Chart lesen lernt man nur am Chart.</span></a>
+<a class="big-card" href="glossar.html"><span class="ico">✎</span><b>Glossar</b><span>Alle Fachbegriffe kurz erklärt, zum schnellen Nachschlagen.</span></a>
+</div>
+
+<div class="tip" style="margin-top:34px;"><b>So nutzt du diese Plattform — ADHS-freundlich:</b> Du musst nicht alles auf einmal lernen. Geh der Reihe nach, aber hör auf, wenn dein Kopf voll ist. Ein Modul pro Session reicht. Die Grundlagen zuerst — wenn du Planeten, Zeichen, Häuser und Aspekte hast, kannst du schon 80% eines Charts lesen. Der Rest kommt mit der Übung. Und du lernst am schnellsten an echten Charts, nicht an Theorie. <b>Neu:</b> Unten auf jeder Seite findest du jetzt einen Weiter-Knopf — du kannst dich also durchklicken, ohne jedes Mal hierher zurückzukehren.</div>
+
+<div class="foot">Deine Astrologie-Lernplattform &middot; Whole Sign. Charts zeigen Anlagen, keine Schicksale — du lernst, Menschen zu verstehen und zu begleiten, nicht sie festzulegen. Wächst mit dir.</div>
+</div></body></html>

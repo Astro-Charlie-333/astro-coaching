@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wann du nicht deutest · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
+  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
+  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
+  --flow:#4A7C59;--tense:#B5502E;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
+li{margin-bottom:6px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.card p:last-child{margin-bottom:0;}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.chead{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;
+  border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);
+  font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.say{border-left:3px solid var(--ind);padding-left:14px;margin:10px 0;
+  font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ind);line-height:1.45;}
+select,input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.inlab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px;}
+.inrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.inrow{grid-template-columns:1fr;}}
+.inrow > div > select, .inrow > div > input{width:100%;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.verdict{font-family:'Fraunces',serif;font-size:23px;font-weight:600;margin-bottom:4px;color:var(--ind);}
+.outdetail{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--soft);}
+.q{border-bottom:1px solid var(--line);padding:16px 0;}
+.q:last-child{border-bottom:0;}
+.q p{margin-bottom:10px;font-size:15px;}
+.opts{display:flex;gap:8px;flex-wrap:wrap;}
+.opts button{font-family:'Inter',sans-serif;font-size:14px;padding:8px 14px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;}
+.opts button:hover{border-color:var(--ind);}
+.opts button.right{background:#E8EDDC;border-color:var(--earth);color:var(--earth);}
+.opts button.wrong{background:#FBE3DA;border-color:var(--tense);color:var(--tense);}
+.expl{margin-top:10px;font-size:14px;color:var(--soft);line-height:1.6;display:none;}
+.expl.show{display:block;}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Deine Coaching-Kunst</div>
+<h1>Wann du <em>nicht</em> deutest.</h1>
+<p class="lede">Die Frage, die seriöse Astrologie ausmacht, ist nicht „was kann ich sehen“, sondern „was sage ich nicht“. Diese Seite gibt dir klare Kriterien für den Ausstieg — und fertige Sätze, damit du im Moment nicht suchen musst.</p>
+
+
+<div class="tip"><b>Der Grundsatz:</b> Ein Chart beschreibt Anlagen und Zeitqualität. Es beschreibt keine Ereignisse, keine Diagnosen und keine Entscheidungen. Alles, was du sagst, sollte die Handlungsfähigkeit der Person vergrößern — nicht sie an dein Urteil binden.</div>
+
+<h2>Die harten Grenzen</h2>
+<div class="card">
+<div class="chead"><span class="pill fire">Stopp</span><h3>Gesundheit und Diagnosen</h3></div>
+<p>Keine Aussagen über Krankheiten, Verläufe, Medikamente oder Schwangerschaften — auch nicht auf Nachfrage, auch nicht vorsichtig formuliert. Das gilt für das 6. und 12. Haus, für Chiron und für alles, was sich medizinisch anhört.</p>
+<div class="say">„Dazu sage ich grundsätzlich nichts — das gehört zu einer Ärztin, nicht in ein Chart. Ich kann dir aber zeigen, wie du mit deiner Energie in dieser Phase gut umgehst.“</div>
+</div>
+
+<div class="card">
+<div class="chead"><span class="pill fire">Stopp</span><h3>Tod und Lebensdauer</h3></div>
+<p>Nie, unter keinen Umständen, auch nicht angedeutet. Weder für die Person selbst noch für Angehörige.</p>
+<div class="say">„Das lese ich nicht, und niemand sollte es tun. Was ich dir sagen kann, ist, welche Themen dieses Jahr für dich anstehen.“</div>
+</div>
+
+<div class="card">
+<div class="chead"><span class="pill fire">Stopp</span><h3>Aussagen über Dritte</h3></div>
+<p>Charts von Menschen, die nicht anwesend sind und nicht zugestimmt haben, deutest du nicht — auch nicht das der Ex-Partnerin oder des Chefs. Synastrie ja, wenn beide es wollen. Ein Persönlichkeitsurteil über einen Abwesenden nein.</p>
+<div class="say">„Ich kann dir zeigen, wie <i>du</i> in dieser Konstellation funktionierst. Über sie zu urteilen, ohne dass sie hier ist, wäre nicht fair — und für dich auch nicht hilfreich.“</div>
+</div>
+
+<h2>Die weichen Grenzen</h2>
+<div class="white">
+<p><b>Wenn jemand eine Entscheidung abgeben will.</b> „Soll ich kündigen?“ — hier ist die Versuchung groß, weil man gebraucht wird. Aber wer die Entscheidung übernimmt, übernimmt auch die Verantwortung, und die Person lernt nichts.</p>
+<div class="say">„Ich sage dir nicht, was du tun sollst. Ich kann dir zeigen, was gerade Druck macht und wann ein guter Zeitpunkt wäre — entscheiden musst du.“</div>
+</div>
+<div class="white">
+<p><b>Wenn Astrologie als Ausrede dient.</b> „Ich bin halt Skorpion.“ Astrologie erklärt Muster, sie entschuldigt kein Verhalten.</p>
+<div class="say">„Das beschreibt gut, wie es sich anfühlt. Es nimmt dir aber nicht ab, damit umzugehen — sonst wäre das Chart ein Gefängnis, und das ist es nicht.“</div>
+</div>
+<div class="white">
+<p><b>Wenn jemand Angst mitbringt.</b> Menschen kommen manchmal mit einer Panik-Prognose aus dem Internet. Hier ist deine wichtigste Aufgabe, zu entdramatisieren, ohne zu verharmlosen.</p>
+<div class="say">„Lass uns nachsehen, ob das überhaupt gradgenau dein Chart trifft. Meistens ist es das nicht — und wenn doch, sortieren wir, was es realistisch bedeutet.“</div>
+</div>
+
+<h2>Wenn jemand in einer Krise ist</h2>
+<p>Wenn dir jemand von akuter Verzweiflung, Gewalt oder Suizidgedanken erzählt, ist das Reading vorbei. Nicht pausiert — vorbei. In diesem Moment bist du ein Mensch, keine Astrologin.</p>
+<ul>
+<li>Deute nichts. Keine Transite, keine Erklärung, kein „das geht bald vorbei“.</li>
+<li>Bleib da, hör zu, nimm es ernst.</li>
+<li>Verweise auf professionelle Hilfe und biete an, dabei zu unterstützen, den ersten Schritt zu machen.</li>
+<li>Erstattung anbieten, Termin beenden, später nachfragen, wie es geht.</li>
+</ul>
+<div class="say">„Was du gerade beschreibst, ist zu wichtig für ein Reading. Ich möchte, dass du damit zu jemandem gehst, der dir wirklich helfen kann — lass uns das jetzt zusammen anschauen.“</div>
+<p class="sub">In Deutschland: Telefonseelsorge, kostenlos und rund um die Uhr, 0800 111 0 111 und 0800 111 0 222. Halte solche Nummern griffbereit, bevor du sie brauchst.</p>
+
+<h2>Drei Sätze, die dich immer rausbringen</h2>
+<div class="white">
+<div class="say" style="margin-top:0;">„Das kann ich aus einem Chart nicht seriös beantworten.“</div>
+<div class="say">„Da bin ich nicht die Richtige — dafür brauchst du jemand anderes.“</div>
+<div class="say" style="margin-bottom:0;">„Ich weiß es nicht.“</div>
+</div>
+<p style="margin-top:14px;">Der dritte ist der wichtigste und der schwerste. Er kostet dich nichts an Autorität — im Gegenteil. Wer klar sagen kann, was er nicht weiß, wird bei allem anderen geglaubt.</p>
+
+<div class="tip"><b>Zum Schluss:</b> Grenzen machen dich nicht kleiner. Sie sind der Unterschied zwischen jemandem, der Astrologie benutzt, um gebraucht zu werden, und jemandem, der sie benutzt, um Menschen handlungsfähiger zu machen. Nur das Zweite hält über Jahre.</div>
+
+
+<div class="weiter"><a href="leitfaden.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Der Ansprech-Leitfaden</span></a><a href="reading-ablauf.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Der Reading-Ablauf</span></a></div>
+<div class="foot">Grenzen &middot; Astrologische Beratung ersetzt keine medizinische, psychotherapeutische, juristische oder finanzielle Beratung. Diese Haltung schützt deine Klient:innen und dich.</div>
+</div>
+
+</body></html>

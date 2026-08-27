@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rückläufige Planeten · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:660px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:22px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+.step{display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);}
+.stepnum{width:34px;height:34px;border-radius:50%;background:var(--ind);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+svg{display:block;width:100%;height:auto;}
+label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);}
+input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.gr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.gr2{grid-template-columns:1fr;}}
+.white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
+.rad{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;}
+.jetzt{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;}
+@media(max-width:560px){.jetzt{grid-template-columns:1fr;}}
+.big{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--ind);margin-bottom:2px;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
+.kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0;}
+@media(max-width:640px){.kacheln{grid-template-columns:repeat(2,1fr);}}
+.kacheln button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 8px;cursor:pointer;text-align:center;font-family:'Inter',sans-serif;width:100%;}
+.kacheln button[aria-pressed="true"]{border-color:var(--ind);background:#FBEFE6;}
+.kacheln button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.kacheln .nm{display:block;font-size:13px;font-weight:600;margin-top:6px;}
+.kacheln .gr{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--soft);}
+table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
+.balken{height:8px;background:var(--line);border-radius:8px;overflow:hidden;min-width:70px;}
+.balken i{display:block;height:100%;background:var(--ind);border-radius:8px;}
+.steps{counter-reset:s;list-style:none;margin:0;}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.rlist{display:grid;gap:8px;}
+.rzeile{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;}
+.rzeile.rx{border-color:var(--ind);background:#FBEFE6;}
+.marke{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.marke.rx{color:var(--ind);} .marke.dir{color:var(--soft);}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Übersicht</a>
+
+<div class="eyebrow">Grundlagen · Vertiefung</div>
+<h1>Rückläufige <em>Planeten.</em></h1>
+<p class="lede">Kein Planet fliegt rückwärts — es ist ein Überholvorgang, den wir von der Erde aus sehen. Was das astrologisch bedeutet, wie du es in deinem eigenen Chart erkennst und warum manche Rückläufigkeiten viel mehr aussagen als andere.</p>
+
+
+<h2>Warum das überhaupt passiert</h2>
+<p>Kein Planet fliegt rückwärts. Was wir sehen, ist ein Überholvorgang: Die Erde ist schneller als die äußeren Planeten und zieht innen an ihnen vorbei. Für ein paar Wochen wandert der überholte Planet vor dem Sternenhintergrund scheinbar zurück — genau wie ein Auto auf der Nachbarspur, wenn man daran vorbeizieht.</p>
+<div class="rad"><svg id="loop" viewBox="0 0 620 200" role="img" aria-label="Wie die scheinbare Rückläufigkeit durch das Überholen entsteht"></svg></div>
+<p class="sub" style="margin-top:8px;">Links die tatsächlichen Bahnen, rechts das, was am Himmel dabei herauskommt. Die gestrichelten Linien sind die Blickrichtung von der Erde zu verschiedenen Zeitpunkten — sie kippen um, obwohl beide Planeten durchgehend vorwärts fliegen.</p>
+
+<div class="tip"><b>Warum das für die Deutung zählt:</b> Astrologisch bedeutet Rückläufigkeit nicht „falsch herum", sondern <b>nach innen gerichtet</b>. Die Energie des Planeten wirkt eher im Inneren als im Außen — bei einem Transit als Phase des Überarbeitens, im Geburtschart als lebenslange Eigenart.</p></div>
+
+<h2>Was war bei deiner Geburt rückläufig?</h2>
+<p class="sub">Trag dein Geburtsdatum ein. Die Uhrzeit spielt fast keine Rolle — nur wenn ein Planet genau an diesem Tag wendet, kann sie den Ausschlag geben.</p>
+<div class="white">
+  <label>Geburtsdatum</label><input type="date" id="rd" value="1990-06-15" style="max-width:260px;">
+  <p style="margin:14px 0 12px;font-size:15px;" id="rzus"></p>
+  <div class="rlist" id="rliste"></div>
+</div>
+
+<div class="tip"><b>Wie du es auch ohne Rechner erkennst:</b> In fast jedem Chartbild steht ein kleines <b>R</b> oder <b>℞</b> neben dem Planetensymbol — bei Astro-Seek klein und tiefgestellt hinter dem Glyphen. In Tabellenansichten wie „Positions" gibt es meist eine eigene Spalte, oder die Geschwindigkeit steht mit einem Minuszeichen davor. Ein negativer Wert heißt rückläufig.</div>
+
+<h2>Wie oft welcher Planet rückläufig ist</h2>
+<p class="sub">Wichtig für die Gewichtung: Je häufiger etwas vorkommt, desto weniger sagt es über einen einzelnen Menschen aus.</p>
+<table id="haeuf"></table>
+<p class="sub" style="margin-top:12px;">Daraus folgt eine klare Regel: <b>Rückläufiger Merkur, Venus oder Mars ist eine persönliche Aussage</b> — das haben deutlich weniger Menschen. <b>Rückläufiger Uranus, Neptun oder Pluto ist Generationenwetter</b> und nur dann persönlich, wenn der Planet eng an Sonne, Mond oder einer Achse steht.</p>
+
+<h2>Der stärkste Fall: stationäre Planeten</h2>
+<p>Bevor ein Planet die Richtung wechselt, wird er langsamer und steht für ein paar Tage praktisch still. Wer in genau diesem Fenster geboren wird, hat einen <b>stationären Planeten</b> — und der gilt traditionell als besonders stark. Die Logik ist einfach: Er bewegt sich kaum, verharrt lange auf demselben Grad und drückt dadurch stärker auf alles, was dort steht.</p>
+<p>Der Rechner oben zeigt dir das an, falls es bei dir zutrifft. Es ist selten — aber wenn es vorkommt, ist es meistens eines der lautesten Dinge im ganzen Chart.</p>
+
+<h2>Rückläufig als Transit</h2>
+<ol class="steps">
+<li><b>Die Vorschattenphase</b>Der Planet läuft über einen Gradbereich, kehrt später zurück und läuft ihn ein drittes Mal ab. Themen, die in der Vorschattenphase auftauchen, kommen während der Rückläufigkeit wieder.</li>
+<li><b>Die eigentliche Phase</b>Zeit des Überarbeitens statt Vorpreschens. Alles mit „Re-" funktioniert gut: revidieren, reflektieren, reparieren, reaktivieren.</li>
+<li><b>Die Rückkehr zum Ausgangspunkt</b>Wenn der Planet den Grad erreicht, an dem er stationär wurde, ist die Runde zu Ende — meistens der Moment, in dem die Sache eine Entscheidung findet.</li>
+<li><b>Dreifachberührung deuten</b>Läuft ein Planet dreimal über einen Punkt in deinem Chart, ist das ein Kapitel, kein Ereignis. Genau das macht Saturn- und Jupiter-Transite so prägend.</li>
+</ol>
+
+<div class="tip"><b>Nicht dramatisieren:</b> Merkur ist an knapp einem Fünftel aller Tage rückläufig — das ist völlig gewöhnlich. Wer alles Misslungene darauf schiebt, findet immer einen Schuldigen und lernt nichts. Die brauchbare Lesart lautet: eine Einladung zum Innehalten, nicht eine Erklärung für schlechte Laune.</div>
+
+
+<div class="weiter"><a href="mondknoten.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondknoten</span></a><a href="planeten-in-zeichen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Planeten in den Zeichen</span></a></div>
+<div class="foot">Rückläufige Planeten &middot; Positionen und Geschwindigkeiten werden im Browser gerechnet, nichts wird gespeichert. Häufigkeitsangaben gemittelt über zehn Jahre. Rückläufigkeit ist eine Richtung, keine Wertung.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function tempo(n,jd){var T1=(jd-0.5-2451545)/36525,T2=(jd+0.5-2451545)/36525;
+ return ((geo(n,T2)-geo(n,T1)+540)%360)-180;}
+
+var PLAN=['Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var DEUT={
+ Merkur:'Denken und Sprechen laufen nach innen. Du formulierst im Kopf zu Ende, bevor du sprichst — und wirkst dadurch manchmal langsamer, als du bist. Oft mit einem ganz eigenen Denkweg, der sich schlecht erklären lässt.',
+ Venus:'Zuneigung und Selbstwert werden verinnerlicht. Du zeigst Liebe eher indirekt und brauchst länger, um dir sicher zu sein, was du eigentlich willst. Der eigene Geschmack wird erst erarbeitet, nicht übernommen.',
+ Mars:'Der Antrieb geht nach innen statt nach außen. Du setzt dich nicht sofort durch, sondern erst, wenn es wirklich wichtig ist. Ärger sammelt sich, statt sich zu entladen.',
+ Jupiter:'Sinn und Zuversicht kommen von innen. Du glaubst nichts, weil es alle glauben — dein Weltbild musst du dir selbst erarbeiten. Wachstum passiert leiser als bei anderen.',
+ Saturn:'Struktur und Autorität werden zur inneren Frage. Regeln von außen überzeugen dich nicht; du entwickelst deine eigenen Maßstäbe und bist mit dir oft strenger als jeder Chef.',
+ Uranus:'Sehr häufig — knapp die Hälfte aller Menschen hat das. Die Freiheitsfrage läuft innerlich, nicht als sichtbarer Ausbruch. Als Generationenthema kaum persönlich zu deuten.',
+ Neptun:'Ebenfalls sehr häufig. Sehnsucht und Vorstellungskraft arbeiten nach innen. Nur persönlich zu deuten, wenn Neptun einen wichtigen Punkt im Chart berührt.',
+ Pluto:'Sehr häufig — knapp die Hälfte aller Geburten. Verwandlung passiert im Verborgenen. Als Generationenthema nur dann persönlich, wenn Pluto eng an Sonne, Mond oder einer Achse steht.'};
+var HAEUFIG={Merkur:19,Venus:7,Mars:10,Jupiter:30,Saturn:37,Uranus:40,Neptun:44,Pluto:44};
+
+function pruefe(){
+  var d=document.getElementById('rd').value; if(!d) return;
+  var p=d.split('-').map(Number);
+  var jd=jdFromUT(p[0],p[1],p[2],12);
+  var box=document.getElementById('rliste'); box.innerHTML='';
+  var anzahl=0, stationaer=[];
+  PLAN.forEach(function(n){
+    var v=tempo(n,jd);
+    var rx=v<0;
+    var still=Math.abs(v)<0.004;
+    if(rx) anzahl++;
+    if(still) stationaer.push(n);
+    var z=document.createElement('div');
+    z.className='rzeile'+(rx?' rx':'');
+    z.innerHTML='<div><b>'+n+'</b><br><span class="marke '+(rx?'rx':'dir')+'">'+
+      (still?'stationär':(rx?'rückläufig':'direkt'))+'</span></div>'+
+      '<div style="font-size:14px;color:var(--soft);">'+(rx?DEUT[n]:'Läuft direkt — das Thema wirkt nach außen, wie üblich.')+'</div>';
+    box.appendChild(z);
+  });
+  var z=document.getElementById('rzus');
+  var txt='<b>'+anzahl+' von 8 Planeten rückläufig.</b> ';
+  txt += anzahl===0 ? 'Das ist selten — deine Themen wirken durchweg nach außen.'
+    : (anzahl<=2 ? 'Im normalen Bereich; die meisten Menschen haben zwei bis vier.'
+    : (anzahl<=4 ? 'Ganz typisch — der Durchschnitt liegt bei etwa drei.'
+    : 'Überdurchschnittlich viel. Ein Mensch, der vieles zuerst mit sich selbst ausmacht.'));
+  if(stationaer.length){
+    txt += '<br><br><b>Und etwas Besonderes: '+stationaer.join(' und ')+
+      (stationaer.length>1?' waren':' war')+' an diesem Tag praktisch stillstehend.</b> '+
+      'Ein Planet, der genau bei der Geburt wendet, gilt traditionell als besonders stark — er bewegt sich kaum, und seine Themen bekommen dadurch ungewöhnlich viel Gewicht im ganzen Leben.';
+  }
+  z.innerHTML=txt;
+  var t=document.getElementById('haeuf'); t.innerHTML='<tr><th>Planet</th><th>Rückläufig an</th><th></th></tr>';
+  PLAN.forEach(function(n){
+    t.innerHTML+='<tr><td>'+n+'</td><td class="mono">'+HAEUFIG[n]+' % der Tage</td>'+
+      '<td><span class="balken"><i style="width:'+(HAEUFIG[n]*2)+'%"></i></span></td></tr>';
+  });
+}
+document.getElementById('rd').addEventListener('input',pruefe);
+pruefe();
+
+/* Schleifen-Grafik */
+(function(){
+  var s=document.getElementById('loop'); if(!s) return;
+  function E(t,at){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+  s.appendChild(E('circle',{cx:110,cy:150,r:9,fill:'#D9922E'}));
+  var t0=E('text',{x:110,y:178,'text-anchor':'middle','font-size':11,fill:'#8A6F5C','font-family':'JetBrains Mono'});
+  t0.textContent='SONNE'; s.appendChild(t0);
+  s.appendChild(E('circle',{cx:110,cy:150,r:52,fill:'none',stroke:'#F0D8C6','stroke-width':1.5}));
+  s.appendChild(E('circle',{cx:110,cy:150,r:96,fill:'none',stroke:'#F0D8C6','stroke-width':1.5}));
+  // Erde und Mars
+  var erde=[110+52*Math.cos(-0.5),150+52*Math.sin(-0.5)];
+  var mars=[110+96*Math.cos(-0.15),150+96*Math.sin(-0.15)];
+  s.appendChild(E('circle',{cx:erde[0],cy:erde[1],r:7,fill:'#3E7C9A'}));
+  s.appendChild(E('circle',{cx:mars[0],cy:mars[1],r:7,fill:'#C1440E'}));
+  var e1=E('text',{x:erde[0],y:erde[1]-13,'text-anchor':'middle','font-size':11,fill:'#3E7C9A','font-family':'JetBrains Mono'});
+  e1.textContent='ERDE'; s.appendChild(e1);
+  var m1=E('text',{x:mars[0]+4,y:mars[1]-13,'text-anchor':'middle','font-size':11,fill:'#C1440E','font-family':'JetBrains Mono'});
+  m1.textContent='MARS'; s.appendChild(m1);
+  // Sichtlinien
+  [[-1.0,-0.35],[-0.7,-0.25],[-0.4,-0.16],[-0.1,-0.08],[0.2,-0.01]].forEach(function(pp,i){
+    var a=[110+52*Math.cos(pp[0]),150+52*Math.sin(pp[0])];
+    var b=[110+96*Math.cos(pp[1]),150+96*Math.sin(pp[1])];
+    var dx=b[0]-a[0],dy=b[1]-a[1],len=Math.sqrt(dx*dx+dy*dy);
+    s.appendChild(E('line',{x1:a[0],y1:a[1],x2:a[0]+dx/len*230,y2:a[1]+dy/len*230,
+      stroke:'#C9B4A2','stroke-width':1,'stroke-dasharray':'3 4'}));
+  });
+  // Schleife am Himmel
+  s.appendChild(E('path',{d:'M 340 60 C 400 70, 430 95, 470 85 C 500 78, 505 60, 480 55 C 450 49, 440 78, 470 95 C 500 112, 540 118, 580 122',
+    fill:'none',stroke:'#C1440E','stroke-width':2.5,'stroke-linecap':'round'}));
+  var lt=E('text',{x:460,y:150,'text-anchor':'middle','font-size':12,fill:'#8A6F5C','font-family':'Inter'});
+  lt.textContent='So sieht die Bahn von der Erde aus:'; s.appendChild(lt);
+  var lt2=E('text',{x:460,y:170,'text-anchor':'middle','font-size':12,fill:'#8A6F5C','font-family':'Inter'});
+  lt2.textContent='eine Schleife, kein Rückwärtsgang.'; s.appendChild(lt2);
+  var lt3=E('text',{x:340,y:42,'font-size':11,fill:'#8A6F5C','font-family':'JetBrains Mono'});
+  lt3.textContent='HIMMEL'; s.appendChild(lt3);
+})();
+</script>
+</body></html>
