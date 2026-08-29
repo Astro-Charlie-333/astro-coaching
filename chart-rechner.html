@@ -77,6 +77,29 @@ td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
 .weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
+
+.kette{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:12px;}
+.kwahl{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;}
+.kwahl button{font-family:'Inter',sans-serif;font-size:13px;padding:6px 11px;border:1px solid var(--line);
+ background:var(--bg);color:var(--ink);border-radius:16px;cursor:pointer;}
+.kwahl button:hover{border-color:var(--ind);}
+.kwahl button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+.hop{position:relative;padding:0 0 0 34px;margin-bottom:16px;}
+.hop::before{content:'';position:absolute;left:11px;top:26px;bottom:-16px;width:2px;background:var(--line);}
+.hop:last-child::before{display:none;}
+.hop .num{position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--card);
+ border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:11px;
+ display:flex;align-items:center;justify-content:center;}
+.hop .pos{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.hop .weil{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--gold);
+ text-transform:uppercase;margin-bottom:6px;}
+.hop .satz{background:var(--bg);border-left:3px solid var(--ind);border-radius:10px;padding:11px 13px;
+ font-size:14.5px;line-height:1.55;}
+.kende{border-radius:14px;padding:15px 17px;font-size:14.5px;line-height:1.55;margin-top:4px;}
+.kende.loop{background:#E6E1F0;border-left:3px solid var(--water);}
+.kende.stop{background:#E8EDDC;border-left:3px solid var(--earth);}
+.klese{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:14px;padding:15px 17px;
+ margin-top:12px;font-size:14.5px;line-height:1.6;}
 </style></head><body>
 <div class="wrap">
 <a class="back" href="index.html">&larr; Übersicht</a>
@@ -129,6 +152,17 @@ td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
 <p class="sub" id="acount"></p>
 <div class="tip" style="margin-top:0;"><b>Wie du die Erklärungen benutzt:</b> Bei <b>roten Linien</b> geht es nie darum, sich für eine Seite zu entscheiden — beide Anteile brauchen ihren Platz, nur nicht gleichzeitig. Abwechseln statt auflösen. Bei <b>blauen Linien</b> ist das Gegenteil das Problem: Sie funktionieren so mühelos, dass man sie übersieht. Die Frage dort lautet nicht „wie repariere ich das", sondern „wo setze ich das eigentlich ein".</div>
 <div id="alist"></div>
+
+<h2>Der Kettenleser</h2>
+<p class="sub">Jeder Planet steht in einem Zeichen, und dieses Zeichen hat einen Herrscher. Wo der steht, dorthin läuft das Thema weiter. Wähle einen Punkt — die Seite verfolgt die Kette und schreibt für jeden Schritt einen Satz.</p>
+<div class="kette">
+  <div class="kwahl" id="kwahl"></div>
+  <div id="kinhalt"></div>
+</div>
+
+<div class="tip"><b>Warum das der wichtigste Schritt nach den Einzelstellungen ist:</b> Eine Stellung allein sagt, <i>wo</i> etwas sitzt. Die Kette sagt, <b>wohin es führt</b>. Damit wird aus einer Liste von Bausteinen eine Bewegung — und genau die kann man im Coaching benutzen, weil sie eine Richtung beschreibt statt eines Zustands.</div>
+
+<div class="tip"><b>Fürs Reading:</b> Nimm nie die ganze Kette. Zwei Schritte reichen fast immer: „Das sitzt hier — und es läuft dorthin weiter." Drei Schritte sind das Maximum, das jemand beim Zuhören mitnimmt. Der Rest ist Struktur für dich, nicht für die Klientin.</div>
 
 <h2>Individuelle Deutung</h2>
 <p class="sub">Die Bausteine oben sind Rohmaterial. Für eine Deutung, die die Kombination liest statt der Einzelteile, schicken wir die berechneten Daten an ein Sprachmodell — mit deinen Regeln im Gepäck: Whole Sign, Gewichtung nach Orbis, keine Vorhersagen, keine Gesundheitsaussagen.</p>
@@ -307,7 +341,7 @@ function compute(){
   window.CUSPS=[a.asc,pc[2],pc[3],norm(a.mc+180),norm(pc[0]+180),norm(pc[1]+180),
    norm(a.asc+180),norm(pc[2]+180),norm(pc[3]+180),a.mc,pc[0],pc[1]];
   document.getElementById('result').style.display='block';
-  table(); render();
+  table(); render(); try{kette();}catch(e){console.error('Kette:',e);}
 }
 
 function house(l){
@@ -376,6 +410,101 @@ function vis(as){
   if(filter==='spannung')return as.t==='Quadrat'||as.t==='Opposition';
   return as.t==='Konjunktion';
 }
+
+/* Kettenleser */
+var ZHERR={0:'Mars',1:'Venus',2:'Merkur',3:'Mond',4:'Sonne',5:'Merkur',6:'Venus',
+ 7:'Pluto',8:'Jupiter',9:'Saturn',10:'Uranus',11:'Neptun'};
+var KFUNK={Sonne:'wofür du Kraft hast',Mond:'was du brauchst, um dich sicher zu fühlen',
+ Merkur:'wie du denkst und redest',Venus:'wie du Zuneigung und Wert zeigst',
+ Mars:'wie du in Bewegung kommst',Jupiter:'wo du wächst',Saturn:'wo du Verantwortung trägst',
+ Uranus:'wo du ausbrichst',Neptun:'wonach du dich sehnst',Pluto:'wo es dir ernst wird',
+ Chiron:'wo du verletzlich bist',Lilith:'was du dir nicht erlaubst',Knoten:'wohin dein Weg zeigt'};
+var KHAUS=['in deinem Auftreten','in deinem Selbstwert und Besitz','in Sprache und Nahbereich',
+ 'zuhause und in deinen Wurzeln','in Ausdruck und Romantik','in Alltag und Arbeit',
+ 'in Partnerschaft und Begegnung','in Tiefe und Geteiltem','in Sinn und Weite',
+ 'in Beruf und Sichtbarkeit','in Gruppen und Zielen','im Verborgenen'];
+var KKURZ=['dein Auftreten','dein Selbstwert','Sprache und Nahbereich','Zuhause und Wurzeln',
+ 'Ausdruck und Romantik','Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite',
+ 'Beruf und Sichtbarkeit','Gruppen und Ziele','das Verborgene'];
+var KSTIL=['direkt und ungeduldig','langsam, dafür unverrückbar','beweglich und über Sprache',
+ 'schützend und über Gefühl','großzügig und sichtbar','genau und prüfend',
+ 'abwägend und aufs Gegenüber bezogen','intensiv und unter der Oberfläche',
+ 'weit und überzeugt','ernsthaft und ausdauernd','eigenwillig und distanziert','durchlässig und feinfühlig'];
+var kSel='Sonne';
+
+function kBar(){
+  var box=document.getElementById('kwahl'); if(!box) return;
+  var da=ORDER.filter(function(k){return POS[k]!==null&&POS[k]!==undefined&&k!=='ASC'&&k!=='MC';});
+  if(da.indexOf(kSel)<0 && da.length) kSel=da[0];
+  box.innerHTML='';
+  da.forEach(function(k){
+    var b=document.createElement('button'); b.type='button'; b.textContent=k;
+    b.setAttribute('aria-pressed', k===kSel);
+    b.addEventListener('click',function(){kSel=k;kette();});
+    box.appendChild(b);
+  });
+}
+function kette(){
+  kBar();
+  var box=document.getElementById('kinhalt'); if(!box) return;
+  box.innerHTML='';
+  if(POS[kSel]===null||POS[kSel]===undefined){box.innerHTML='<p class="sub">Position fehlt.</p>';return;}
+  var cur=kSel, seen=[], schritte=[], ende=null;
+  while(true){
+    if(seen.indexOf(cur)>=0){ende={t:'loop',bei:cur};break;}
+    seen.push(cur);
+    var zi=Math.floor(POS[cur]/30), hz=house(POS[cur]), nx=ZHERR[zi];
+    schritte.push({p:cur,zi:zi,h:hz,nx:nx});
+    if(nx===cur){ende={t:'stop',bei:cur};break;}
+    if(POS[nx]===null||POS[nx]===undefined){ende={t:'fehlt',bei:nx};break;}
+    cur=nx;
+    if(schritte.length>9){ende={t:'lang'};break;}
+  }
+  schritte.forEach(function(s,i){
+    var d=document.createElement('div'); d.className='hop';
+    var funk=KFUNK[s.p]||s.p, haus=KHAUS[(s.h||1)-1], stil=KSTIL[s.zi];
+    var satz;
+    if(i===0){
+      satz='<b>'+funk.charAt(0).toUpperCase()+funk.slice(1)+'</b> zeigt sich '+haus+' \u2014 und zwar '+stil+'.';
+    } else {
+      var v=schritte[i-1];
+      satz='Weiter zu <b>'+s.p+'</b>: '+funk+' zeigt sich '+haus+', '+stil+'.<br><br>'+
+        '<b>Also: Was \u00fcber '+KKURZ[(v.h||1)-1]+' l\u00e4uft, kommt \u00fcber '+KKURZ[(s.h||1)-1]+' heraus.</b>';
+    }
+    d.innerHTML='<span class="num">'+(i+1)+'</span>'+
+      '<div class="pos">'+s.p+' in '+SIGNS[s.zi]+', '+s.h+'. Haus</div>'+
+      (i>0?'<div class="weil">weil '+SIGNS[schritte[i-1].zi]+' von '+s.p+' beherrscht wird</div>':'')+
+      '<div class="satz">'+satz+'</div>';
+    box.appendChild(d);
+  });
+  var e=document.createElement('div');
+  if(ende.t==='stop'){
+    e.className='kende stop';
+    e.innerHTML='<b>Endpunkt: '+ende.bei+'.</b> Dieser Planet steht im eigenen Zeichen und beherrscht sich selbst \u2014 hier h\u00f6rt die Kette auf. Bei ihm laufen Themen zusammen, und er ist meistens der st\u00e4rkste Punkt im ganzen Chart. Sein Haus verdient besondere Aufmerksamkeit.';
+  } else if(ende.t==='loop'){
+    e.className='kende loop';
+    e.innerHTML='<b>Geschlossener Kreis:</b> '+schritte.map(function(s){return s.p;}).join(' \u2192 ')+' \u2192 '+ende.bei+'.<br><br>'+
+      'Die Kette endet nicht, sie l\u00e4uft im Kreis. Es gibt hier keinen einzelnen Chef \u2014 die beteiligten Themen halten sich gegenseitig und sind gleichwertig. '+
+      'Praktisch hei\u00dft das zweierlei: Du kannst an jeder Stelle des Kreises ansetzen, es wirkt auf alle anderen. Und kein Punkt l\u00e4sst sich isoliert bearbeiten.';
+  } else if(ende.t==='fehlt'){
+    e.className='kende stop';
+    e.innerHTML='<b>Kette bricht ab.</b> Die Position von '+ende.bei+' fehlt. Trag sie oben ein, dann l\u00e4uft die Kette weiter.';
+  } else {
+    e.className='kende stop'; e.innerHTML='<b>Kette abgebrochen</b> nach neun Schritten.';
+  }
+  box.appendChild(e);
+  var l=document.createElement('div'); l.className='klese';
+  var a=schritte[0], b=schritte[1];
+  if(b){
+    l.innerHTML='<b>So benutzt du das im Coaching.</b> Die Frage lautet nie \u201ewas bedeutet '+a.p+' im '+a.h+'. Haus", sondern: '+
+      '<i>\u201e'+(KFUNK[a.p]||a.p).charAt(0).toUpperCase()+(KFUNK[a.p]||a.p).slice(1)+' \u2014 wo landet das bei dir am Ende?"</i> '+
+      'Die Antwort steht in Schritt zwei: '+KKURZ[(b.h||1)-1]+'. Damit hast du keine Beschreibung mehr, sondern eine Bewegung \u2014 und \u00fcber Bewegung kann man sprechen.';
+  } else {
+    l.innerHTML='<b>So benutzt du das im Coaching.</b> Diese Kette hat nur einen Schritt, der Punkt beherrscht sich selbst. Dann lautet die Frage nicht \u201ewohin l\u00e4uft es", sondern \u201ewas h\u00e4lt dich hier fest" \u2014 bei Endpunkten sammelt sich viel an einer Stelle.';
+  }
+  box.appendChild(l);
+}
+
 function render(){
   var s=document.getElementById('wheel'); s.innerHTML='';
   s.appendChild(EL('circle',{cx:310,cy:310,r:298,fill:'#FBF7F2',stroke:'#F0D8C6','stroke-width':1.5}));
