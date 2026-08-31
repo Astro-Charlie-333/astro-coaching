@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fang bei dir an · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+:root{
+  --creme:#FDF6EC; --papier:#FFFCF8; --tinte:#241F1A; --leise:#6E655B;
+  --linie:#E9DECF; --nacht:#2E3A5C; --messing:#9A7235; --nacht-bg:#EAEDF4;
+  --warm:#B5502E; --gruen:#4E6B4A;
+}
+html{-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--creme);color:var(--tinte);
+ font-family:'DM Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;}
+.wrap{max-width:720px;margin:0 auto;padding:0 22px 80px;}
+a{color:var(--nacht);}
+.leiste{border-bottom:1px solid var(--linie);background:var(--papier);}
+.leiste-inner{max-width:720px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:10px;}
+.marke{font-size:15px;letter-spacing:.02em;}
+.zurueck{margin-left:auto;font-size:14px;color:var(--leise);text-decoration:none;}
+.zurueck:hover{color:var(--nacht);}
+h1{font-family:'Caveat',cursive;font-size:clamp(38px,9vw,58px);font-weight:600;color:var(--nacht);
+ line-height:1.05;margin:34px 0 10px;}
+h2{font-size:clamp(21px,4vw,26px);font-weight:500;margin:42px 0 6px;line-height:1.25;}
+h2:first-of-type{margin-top:32px;}
+.augenbraue{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--messing);margin:0;}
+.lede{font-size:18px;color:var(--leise);line-height:1.6;margin:0 0 8px;max-width:62ch;}
+p{max-width:64ch;}
+.schritt{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;margin-bottom:16px;}
+label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+input,select{width:100%;padding:11px 13px;border:1px solid var(--linie);border-radius:12px;
+ background:var(--creme);font-family:inherit;font-size:16px;color:var(--tinte);}
+input:focus,select:focus{outline:2px solid var(--messing);outline-offset:-1px;}
+.raster{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:560px){.raster{grid-template-columns:1fr;}}
+.btn{font-family:inherit;font-size:16px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;
+ padding:13px 26px;border-radius:26px;cursor:pointer;}
+.btn:hover{background:#3B4970;}
+.btn.leer{background:none;color:var(--nacht);}
+.btn.leer:hover{background:var(--nacht-bg);}
+.knopfreihe{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px;}
+.hinweis{font-size:13.5px;color:var(--leise);margin:8px 0 0;}
+svg.rad{display:block;width:100%;height:auto;max-width:440px;margin:0 auto;}
+.kern{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:20px 22px;margin-bottom:12px;}
+.kern .gly{font-size:26px;color:var(--nacht);line-height:1;margin-bottom:8px;display:block;}
+.kern .titel{font-size:19px;font-weight:500;margin-bottom:2px;}
+.kern .stellung{font-size:13px;color:var(--messing);letter-spacing:.05em;margin-bottom:10px;}
+.kern p{margin:0 0 10px;font-size:16px;line-height:1.6;}
+.kern p:last-child{margin-bottom:0;}
+.kern .braucht{background:var(--creme);border-radius:12px;padding:12px 14px;font-size:15px;}
+.kern .braucht b{color:var(--nacht);}
+.spann{background:#FBF0E8;border:1px solid #EBD5C4;border-radius:18px;padding:20px 22px;margin-bottom:12px;}
+.spann .pole{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+@media(max-width:520px){.spann .pole{grid-template-columns:1fr;}}
+.spann .pol{background:var(--papier);border-radius:12px;padding:13px 15px;font-size:15px;}
+.spann .pol b{display:block;margin-bottom:3px;}
+.heute-block{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:18px;padding:20px 22px;}
+.mondz{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.mondz svg{width:46px;height:46px;flex:none;}
+.tz{background:var(--papier);border-radius:13px;padding:13px 15px;margin-bottom:9px;font-size:15.5px;line-height:1.55;}
+.tz .k{font-size:12.5px;color:var(--leise);letter-spacing:.04em;margin-bottom:3px;}
+.stop{background:var(--papier);border:1px dashed var(--linie);border-radius:18px;padding:20px 22px;
+ text-align:center;font-size:16px;color:var(--leise);line-height:1.6;margin-top:28px;}
+.stop b{color:var(--tinte);display:block;font-size:18px;margin-bottom:5px;}
+.weiterlinks{display:grid;gap:10px;margin-top:16px;}
+.weiterlinks a{display:block;background:var(--papier);border:1px solid var(--linie);border-radius:14px;
+ padding:14px 16px;text-decoration:none;}
+.weiterlinks a:hover{border-color:var(--nacht);}
+.weiterlinks b{display:block;font-weight:500;margin-bottom:2px;color:var(--tinte);}
+.weiterlinks span{font-size:14.5px;color:var(--leise);}
+.fuss{margin-top:44px;padding-top:18px;border-top:1px solid var(--linie);font-size:13.5px;color:var(--leise);line-height:1.6;}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style></head><body>
+<div class="leiste"><div class="leiste-inner">
+  <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+    <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+  <span class="marke">Astro-Charlie</span>
+  <a class="zurueck" href="index.html">← Startseite</a>
+</div></div>
+
+<div class="wrap">
+<p class="augenbraue" style="margin-top:34px;">Für dich selbst</p>
+<h1 id="anrede">Fang bei dir an.</h1>
+<p class="lede">Drei Angaben, und du siehst dein Chart, deine drei Kernsätze und was der Himmel heute daran berührt. Kein Vorwissen nötig. Du kannst nach jedem Abschnitt aufhören.</p>
+
+<div id="form">
+  <div class="schritt">
+    <div class="raster">
+      <div><label>Wie heißt du? (freiwillig)</label><input id="gname" placeholder="Dein Name"></div>
+      <div><label>Geburtsdatum</label><input type="date" id="gdate" value="1990-01-01"></div>
+      <div><label>Uhrzeit</label><input type="time" id="gtime" value="12:00"></div>
+      <div><label>Zeitzone bei der Geburt</label><select id="gtz">
+        <option value="1">MEZ (UTC+1)</option><option value="2" selected>MESZ (UTC+2)</option>
+        <option value="0">UTC</option><option value="3">UTC+3</option>
+        <option value="-5">UTC-5</option><option value="-8">UTC-8</option></select></div>
+      <div><label>Breitengrad</label><input type="number" id="glat" step="0.01" value="52.52"></div>
+      <div><label>Längengrad</label><input type="number" id="glon" step="0.01" value="13.40"></div>
+    </div>
+    <div class="knopfreihe"><button class="btn" id="los">Mein Chart ansehen</button>
+      <span class="hinweis" id="fehler" style="color:var(--warm);"></span></div>
+    <p class="hinweis">Berlin ist voreingestellt. Deine Daten bleiben in deinem Browser — sie werden nirgendwohin geschickt. Wenn du die Uhrzeit nicht kennst, nimm 12:00; dann stimmen Sonne und Planeten, nur Aszendent und Häuser nicht.</p>
+  </div>
+</div>
+
+<div id="out" style="display:none;">
+  <p class="lede" id="kurz" style="margin-bottom:18px;"></p>
+  <div class="schritt"><svg class="rad" id="rad" viewBox="0 0 400 400" role="img" aria-label="Dein Geburtschart"></svg></div>
+
+  <h2>Deine drei Kernsätze</h2>
+  <p class="lede">Sonne, Mond und Aszendent tragen die Hälfte jedes Charts. Wenn du nur drei Dinge über dich wissen willst, sind es diese.</p>
+  <div id="kerne"></div>
+
+  <h2>Wo es bei dir zieht</h2>
+  <p class="lede">Die stärkste Spannungsachse in deinem Chart. Nicht zum Auflösen — zum Abwechseln.</p>
+  <div class="spann" id="spannung"></div>
+
+  <h2>Und heute?</h2>
+  <p class="lede">Was der Himmel gerade an deinem Chart berührt.</p>
+  <div class="heute-block" id="heute"></div>
+
+  <div class="stop"><b>Das reicht für heute.</b>
+  Du musst nichts davon weiterlesen. Wenn du magst, kommst du morgen wieder — der Heute-Teil ist dann ein anderer.</div>
+
+  <h2>Wenn du weitergehen willst</h2>
+  <div class="weiterlinks">
+    <a href="chart-rechner.html"><b>Dein vollständiges Chart</b><span>Alle Positionen, Aspekte, Häuser — und der Kettenleser</span></a>
+    <a href="spannungskarte.html"><b>Alle deine Spannungsachsen</b><span>Sortiert nach Druck, mit beiden Polen</span></a>
+    <a href="grundlagen.html"><b>Die Grundlagen</b><span>Planeten, Zeichen, Häuser — falls du es selbst lernen willst</span></a>
+    <a href="neurodivergente-astrologie.html"><b>Für anders verdrahtete Köpfe</b><span>Wie du das hier nutzt, ohne dich zu überfordern</span></a>
+  </div>
+  <p class="hinweis" style="margin-top:16px;"><a href="#" id="aendern">Daten ändern</a></p>
+</div>
+
+<div class="fuss">Berechnet in deinem Browser, nichts wird übertragen. Ein Chart beschreibt Möglichkeiten und Muster — es sagt nicht, wer du sein musst oder was passieren wird. Bei Gesundheits-, Rechts- oder Geldfragen gehört die Antwort zu einer Fachperson, nicht in ein Chart.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC'};
+
+var ZSTIL=['direkt und ungeduldig — du fängst an, bevor der Plan steht',
+'langsam und beständig — du brauchst Anlauf, dann bist du nicht zu stoppen',
+'beweglich und neugierig — du denkst in vielen Fäden gleichzeitig',
+'schützend und über Gefühl — du spürst zuerst und begründest später',
+'großzügig und sichtbar — du gibst gern und willst, dass es ankommt',
+'genau und prüfend — du siehst die Details, die andere übersehen',
+'abwägend und aufs Gegenüber bezogen — du denkst andere immer mit',
+'intensiv und tief — halbe Sachen langweilen dich zuverlässig',
+'weit und überzeugt — du brauchst ein Warum, sonst läuft nichts',
+'ernsthaft und ausdauernd — du misst dich an Ergebnissen',
+'eigenwillig und unabhängig — du machst es anders, weil du nicht anders kannst',
+'durchlässig und feinfühlig — du nimmst mehr auf, als dir guttut'];
+
+var SONNE=['Du willst vorangehen und etwas anstoßen.','Du willst etwas aufbauen, das bleibt.',
+'Du willst verstehen und verknüpfen.','Du willst dazugehören und schützen.',
+'Du willst gesehen werden für das, was du gibst.','Du willst nützlich sein und es richtig machen.',
+'Du willst Ausgleich und echte Begegnung.','Du willst wissen, was wirklich dahintersteckt.',
+'Du willst Sinn und Weite.','Du willst etwas Bleibendes schaffen.',
+'Du willst frei bleiben und anders sein dürfen.','Du willst dich verbinden — mit Menschen und mit etwas Größerem.'];
+
+var MOND=['Du fühlst sofort und heftig, und es ist auch schnell wieder vorbei.',
+'Du brauchst Ruhe, Körperlichkeit und Verlässlichkeit.',
+'Du verarbeitest über Reden. Was du nicht aussprichst, wird zu Unruhe.',
+'Du fühlst tief und brauchst Nähe. Bei Verletzung ziehst du dich zurück.',
+'Du brauchst Wärme und Bestätigung. Übersehen zu werden trifft dich mehr, als du zeigst.',
+'Du beruhigst dich über Ordnung. Sorge äußert sich bei dir als Kontrolle.',
+'Du brauchst Harmonie. Konflikt kostet dich echte Substanz.',
+'Du fühlst alles doppelt und behältst es für dich. Vertrauen entsteht langsam.',
+'Du brauchst Bewegungsfreiheit. Enge ohne Luft macht dich rastlos.',
+'Du zeigst Gefühle sparsam und hältst viel aus. Umsorgt werden fällt dir schwerer als sorgen.',
+'Du gehst emotional auf Distanz, um klar zu bleiben.',
+'Du nimmst Stimmungen auf wie ein Schwamm — auch die von anderen.'];
+
+var MBRAUCHT=['kurze, klare Entladung — Bewegung hilft mehr als Reden',
+'Ruhe, etwas Gutes zu essen, keine Hektik',
+'jemanden zum Reden, und zwar sofort',
+'einen sicheren Ort und jemanden, der bleibt',
+'Wärme, Zuwendung, jemanden, der dich sieht',
+'Ordnung um dich herum und eine erledigte Sache',
+'Harmonie und die Erlaubnis, nicht sofort entscheiden zu müssen',
+'Rückzug, bis du dich sortiert hast — und dann eine Person, der du alles sagst',
+'Bewegung, Weite, raus aus dem Raum',
+'eine Struktur, an der du dich festhalten kannst',
+'Abstand und Zeit für dich, ohne dass es persönlich gemeint ist',
+'Reizschutz — weniger Menschen, weniger Geräusch, weniger Bildschirm'];
+
+var ASZ=['Du wirkst direkt und energisch — Menschen merken sofort, dass du da bist.',
+'Du wirkst ruhig und beständig. Menschen entspannen sich in deiner Nähe.',
+'Du wirkst wach und gesprächig. Menschen finden dich schnell zugänglich.',
+'Du wirkst zugewandt und schützend. Menschen erzählen dir Dinge.',
+'Du wirkst warm und präsent. Menschen schauen hin, auch wenn du nichts tust.',
+'Du wirkst aufmerksam und zurückhaltend. Menschen halten dich für kompetent.',
+'Du wirkst freundlich und ausgleichend. Menschen mögen dich schnell.',
+'Du wirkst intensiv und schwer einschätzbar. Menschen reagieren stark auf dich.',
+'Du wirkst offen und begeisterungsfähig. Menschen kommen mit.',
+'Du wirkst ernsthaft und verlässlich. Menschen trauen dir Verantwortung zu.',
+'Du wirkst eigen und ein bisschen distanziert. Menschen finden dich interessant.',
+'Du wirkst weich und schwer greifbar. Menschen legen viel in dich hinein.'];
+
+var HTHEMA=['dein Auftreten','deinen Selbstwert','Sprache und Nahbereich','Zuhause und Wurzeln',
+'Ausdruck und Romantik','Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite',
+'Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+
+var POLWILL={Sonne:'gesehen werden',Mond:'sich sicher fühlen',Merkur:'verstehen und benennen',
+Venus:'Nähe und Wert',Mars:'handeln',Jupiter:'wachsen',Saturn:'Sicherheit durch Struktur',
+Uranus:'frei sein',Neptun:'sich verbinden',Pluto:'in die Tiefe gehen',ASC:'so wirken, wie du bist',MC:'etwas gelten'};
+var POLBRAUCHT={Sonne:'Raum, ohne dich zu rechtfertigen',Mond:'Ruhe und jemanden zum Reden',
+Merkur:'Zeit zum Sortieren',Venus:'etwas, das du einfach genießt',Mars:'einen Ort zum Verausgaben',
+Jupiter:'ein realistisches Maß',Saturn:'kleine Schritte und Geduld',Uranus:'Freiraum ohne Kampf',
+Neptun:'klare Absprachen',Pluto:'Ehrlichkeit über Kontrolle',ASC:'nicht gefallen zu müssen',MC:'Klarheit, wofür du stehst'};
+
+var TWIRK={Sonne:'macht sichtbar',Mond:'färbt die Stimmung',Merkur:'bringt Worte und Gedanken',
+Venus:'bringt Wärme ins Spiel',Mars:'gibt Antrieb und kurze Zündschnur',Jupiter:'macht weit',
+Saturn:'verlangt Struktur und Geduld',Uranus:'bringt Unruhe',Neptun:'macht durchlässig',Pluto:'geht in die Tiefe'};
+var NPUNKT={Sonne:'deine Identität',Mond:'dein Sicherheitsgefühl',Merkur:'dein Denken',
+Venus:'deine Zuneigung',Mars:'deinen Antrieb',Jupiter:'dein Wachstum',Saturn:'deine Struktur',
+Uranus:'dein Freiheitsbedürfnis',Neptun:'deine Sehnsucht',Pluto:'deine Tiefe',ASC:'dein Auftreten',MC:'deine Rolle nach außen'};
+
+var HORB={Sonne:5,Mond:5,ASC:4,MC:4,Merkur:4,Venus:4,Mars:4,Jupiter:3.5,Saturn:3.5,Uranus:2.5,Neptun:2.5,Pluto:2.5};
+var HGEW={Sonne:3,Mond:3,ASC:3,MC:2.5,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
+var HASP=[[0,'trifft',1],[60,'unterstützt',.6],[90,'reibt an',.9],[120,'fließt zu',.9],[180,'steht gegenüber',1]];
+
+function sp(o){try{localStorage.setItem('ac_geburt',JSON.stringify(o));}catch(e){}}
+function ld(){try{var s=localStorage.getItem('ac_geburt');return s?JSON.parse(s):null;}catch(e){return null;}}
+function EL(t,a){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*60),dd=Math.floor(d);
+ if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+" "+('0'+m).slice(-2)+"'";}
+
+function chartAt(y,mo,d,ut,lat,lon){
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,lat,lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){return ((Math.floor(l/30)-Math.floor(P.ASC/30)+12)%12)+1;}
+
+function radZeichnen(P){
+  var s=document.getElementById('rad'); s.innerHTML='';
+  var basis=Math.floor(P.ASC/30)*30;
+  function pos(l,r){var d=(180+(l-basis))*Math.PI/180;return [200+r*Math.cos(d),200-r*Math.sin(d)];}
+  s.appendChild(EL('circle',{cx:200,cy:200,r:192,fill:'#FFFCF8',stroke:'#E9DECF','stroke-width':1.5}));
+  s.appendChild(EL('circle',{cx:200,cy:200,r:154,fill:'#FDF6EC',stroke:'#E9DECF','stroke-width':1.5}));
+  s.appendChild(EL('circle',{cx:200,cy:200,r:118,fill:'#FFFCF8',stroke:'#E9DECF','stroke-width':1}));
+  for(var i=0;i<12;i++){
+    var a=basis+i*30,p1=pos(a,154),p2=pos(a,192);
+    s.appendChild(EL('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#E9DECF','stroke-width':1.2}));
+    var m=pos(a+15,173),t=EL('text',{x:m[0],y:m[1]+6,'text-anchor':'middle','font-size':17,fill:'#9A7235'});
+    t.textContent=GL[Math.floor(norm(a)/30)];s.appendChild(t);
+    var q1=pos(a,118),q2=pos(a,154),main=(i%3===0);
+    s.appendChild(EL('line',{x1:q1[0],y1:q1[1],x2:q2[0],y2:q2[1],stroke:main?'#2E3A5C':'#E9DECF','stroke-width':main?1.8:1}));
+    var hn=pos(a+15,132),ht=EL('text',{x:hn[0],y:hn[1]+4,'text-anchor':'middle','font-size':10.5,fill:'#8B8177'});
+    ht.textContent=(i+1);s.appendChild(ht);
+  }
+  var benutzt=[];
+  Object.keys(P).forEach(function(k){
+    if(k==='ASC'||k==='MC') return;
+    var l=P[k],r=100;
+    while(benutzt.some(function(b){return Math.abs(norm(b.l-l+180)-180)<9 && Math.abs(b.r-r)<12;})) r-=19;
+    benutzt.push({l:l,r:r});
+    var p=pos(l,r);
+    var t=EL('text',{x:p[0],y:p[1]+7,'text-anchor':'middle','font-size':20,fill:'#2E3A5C'});
+    t.textContent=GLY[k];s.appendChild(t);
+  });
+  [['ASC',P.ASC],['MC',P.MC]].forEach(function(x){
+    var p=pos(x[1],205),t=EL('text',{x:p[0],y:p[1]+4,'text-anchor':'middle','font-size':11,fill:'#9A7235'});
+    t.textContent=x[0];s.appendChild(t);
+  });
+}
+
+function mondSVG(w){
+  var k=Math.cos(w*Math.PI/180),re=w<180;
+  var d='M 60 14 A 46 46 0 0 '+(re?1:0)+' 60 106 A '+(46*Math.abs(k)).toFixed(2)+' 46 0 0 '+(re?(k>0?0:1):(k>0?1:0))+' 60 14 Z';
+  return '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" fill="#2E3A5C"/>'+
+   '<path d="'+d+'" fill="#F5E6C8"/><circle cx="60" cy="60" r="46" fill="none" stroke="#E9DECF" stroke-width="2"/></svg>';
+}
+function phase(w){if(w<20)return 'Neumond';if(w<70)return 'zunehmende Sichel';if(w<110)return 'erstes Viertel';
+ if(w<160)return 'zunehmender Mond';if(w<200)return 'Vollmond';if(w<250)return 'abnehmender Mond';
+ if(w<290)return 'letztes Viertel';if(w<340)return 'abnehmende Sichel';return 'Neumond';}
+
+function zeigen(g){
+  var ut=g.h+g.mi/60-g.tz,y=g.y,mo=g.mo,d=g.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var P=chartAt(y,mo,d,ut,g.lat,g.lon);
+  document.getElementById('form').style.display='none';
+  document.getElementById('out').style.display='';
+  var nam=(g.name||'').trim();
+  document.getElementById('anrede').textContent = nam? ('Hallo '+nam+'.') : 'Dein Chart.';
+
+  radZeichnen(P);
+  document.getElementById('kurz').innerHTML =
+    '<b>'+SIGNS[Math.floor(P.Sonne/30)]+'</b>-Sonne · <b>'+SIGNS[Math.floor(P.Mond/30)]+'</b>-Mond · '+
+    '<b>'+SIGNS[Math.floor(P.ASC/30)]+'</b>-Aszendent';
+
+  var kb=document.getElementById('kerne'); kb.innerHTML='';
+  [['Sonne','Was dich antreibt',SONNE[Math.floor(P.Sonne/30)],null],
+   ['Mond','Was du brauchst',MOND[Math.floor(P.Mond/30)],MBRAUCHT[Math.floor(P.Mond/30)]],
+   ['ASC','Wie du wirkst',ASZ[Math.floor(P.ASC/30)],null]
+  ].forEach(function(x){
+    var zi=Math.floor(P[x[0]]/30), hh=haus(P,P[x[0]]);
+    var d2=document.createElement('div'); d2.className='kern';
+    d2.innerHTML='<span class="gly">'+GLY[x[0]]+'</span>'+
+      '<div class="titel">'+x[1]+'</div>'+
+      '<div class="stellung">'+(x[0]==='ASC'?'Aszendent':x[0])+' in '+SIGNS[zi]+
+        (x[0]==='ASC'?'':' · '+hh+'. Haus')+'</div>'+
+      '<p>'+x[2]+'</p>'+
+      '<p style="color:var(--leise);font-size:15px;">Dein Stil dabei: '+ZSTIL[zi]+'.</p>'+
+      (x[3]?'<div class="braucht"><b>Wenn es dir schlecht geht, brauchst du:</b> '+x[3]+'.</div>':
+        (x[0]==='Sonne'?'<div class="braucht"><b>Das findet statt:</b> '+HTHEMA[hh-1]+'.</div>':''));
+    kb.appendChild(d2);
+  });
+
+  // stärkste Spannung
+  var ks=Object.keys(P), best=null;
+  for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
+    var a=ks[i],b=ks[j]; if((a==='ASC'&&b==='MC')||(a==='MC'&&b==='ASC'))continue;
+    var sep=Math.abs(norm(P[a]-P[b]+180)-180);
+    [[90,'Quadrat'],[180,'Opposition']].forEach(function(H){
+      var o=Math.abs(sep-H[0]), max=((HORB[a]+HORB[b])/2)*1.1;
+      if(o<=max){var sc=(max-o)/max*6+(HGEW[a]||1)+(HGEW[b]||1);
+        if(!best||sc>best.sc) best={a:a,b:b,t:H[1],o:o,sc:sc};}
+    });
+  }
+  var sb=document.getElementById('spannung');
+  if(best){
+    sb.innerHTML='<div class="stellung" style="color:var(--warm);">'+best.a+' '+best.t+' '+best.b+' · '+best.o.toFixed(1)+'°</div>'+
+      '<p style="margin-top:8px;">Zwei Seiten in dir wollen Verschiedenes — und <b>beide haben recht</b>. Das ist kein Fehler, sondern die Stelle, an der bei dir die meiste Energie steckt.</p>'+
+      '<div class="pole"><div class="pol"><b>'+best.a+'</b>will '+(POLWILL[best.a]||'etwas')+'.<br>Braucht: '+(POLBRAUCHT[best.a]||'Raum')+'.</div>'+
+      '<div class="pol"><b>'+best.b+'</b>will '+(POLWILL[best.b]||'etwas')+'.<br>Braucht: '+(POLBRAUCHT[best.b]||'Raum')+'.</div></div>'+
+      '<p style="margin:0;font-size:15.5px;"><b>Die Frage für diese Woche:</b> Was hat '+best.a+' bekommen — und was '+best.b+'?</p>';
+  } else {
+    sb.innerHTML='<p style="margin:0;">In deinem Chart gibt es keine enge Spannungsachse. Das heißt: weniger eingebauter Druck — und weniger eingebauter Antrieb. Bewegung kommt bei dir eher von außen.</p>';
+  }
+
+  // Heute
+  var n=new Date();
+  var T2=chartAt(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60,g.lat,g.lon);
+  var res=[];
+  for(var tn in T2){ if(tn==='ASC'||tn==='MC')continue;
+    for(var rn in P){
+      var sep2=Math.abs(norm(T2[tn]-P[rn]+180)-180);
+      HASP.forEach(function(A){
+        var o=Math.abs(sep2-A[0]), max=((HORB[tn]+HORB[rn])/2)*A[2];
+        if(o<=max) res.push({t:tn,r:rn,a:A[1],o:o,s:(max-o)/max*6+(HGEW[tn]||1)+(HGEW[rn]||1)+(o<1?4:0)});
+      });
+    }
+  }
+  res.sort(function(x,y2){return y2.s-x.s;});
+  var w=norm(T2.Mond-T2.Sonne);
+  var hb='<div class="mondz">'+mondSVG(w)+'<div><b>Mond in '+SIGNS[Math.floor(T2.Mond/30)]+'</b><br>'+
+    '<span style="color:var(--leise);font-size:14.5px;">'+phase(w)+'</span></div></div>';
+  if(!res.length){
+    hb+='<div class="tz">Heute berührt nichts dein Chart eng genug. Ruhige Tage sind die, an denen man tut, was man sich vorgenommen hat.</div>';
+  } else {
+    res.slice(0,2).forEach(function(x){
+      var satz;
+      if(x.a==='trifft') satz=(TWIRK[x.t]||'').replace(/^./,function(c){return c.toUpperCase();})+' — direkt auf '+(NPUNKT[x.r]||x.r)+'.';
+      else if(x.a==='reibt an') satz=(TWIRK[x.t]||'').replace(/^./,function(c){return c.toUpperCase();})+', aber quer zu '+(NPUNKT[x.r]||x.r)+'. Heute reibt es dort.';
+      else if(x.a==='steht gegenüber') satz=(TWIRK[x.t]||'').replace(/^./,function(c){return c.toUpperCase();})+' — von außen her. Betroffen ist '+(NPUNKT[x.r]||x.r)+'.';
+      else satz=(TWIRK[x.t]||'').replace(/^./,function(c){return c.toUpperCase();})+', und es kommt bei '+(NPUNKT[x.r]||x.r)+' leicht an.';
+      hb+='<div class="tz"><div class="k">'+x.t+' '+x.a+' '+x.r+' · '+x.o.toFixed(1)+'°</div>'+satz+'</div>';
+    });
+  }
+  document.getElementById('heute').innerHTML=hb;
+}
+
+document.getElementById('los').addEventListener('click',function(){
+  var dv=document.getElementById('gdate').value,tv=document.getElementById('gtime').value;
+  var e=document.getElementById('fehler'); e.textContent='';
+  if(!dv||!tv){e.textContent='Bitte Datum und Uhrzeit angeben.';return;}
+  var p=dv.split('-').map(Number),t=tv.split(':').map(Number);
+  var lat=parseFloat(document.getElementById('glat').value),lon=parseFloat(document.getElementById('glon').value);
+  if(isNaN(lat)||isNaN(lon)||Math.abs(lat)>66){e.textContent='Breite und Länge prüfen.';return;}
+  var g={name:document.getElementById('gname').value,y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],
+    tz:+document.getElementById('gtz').value,lat:lat,lon:lon};
+  sp(g); zeigen(g);
+});
+document.getElementById('aendern').addEventListener('click',function(ev){
+  ev.preventDefault();
+  document.getElementById('form').style.display='';
+  document.getElementById('out').style.display='none';
+});
+var gg=ld(); if(gg){ try{ zeigen(gg); }catch(e){ console.error(e); } }
+
+</script>
+</body></html>

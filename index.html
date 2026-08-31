@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --creme:#FDF6EC; --papier:#FFFCF8; --tinte:#2A2520; --leise:#8B8177;
-  --linie:#E9DECF; --nacht:#2E3A5C; --messing:#B08544; --nacht-bg:#EAEDF4;
+  --creme:#FDF6EC; --papier:#FFFCF8; --tinte:#2A2520; --leise:#6E655B;
+  --linie:#E9DECF; --nacht:#2E3A5C; --messing:#9A7235; --nacht-bg:#EAEDF4;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -107,8 +107,8 @@ footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
 .heute-kopf h2{font-family:'Caveat',cursive;font-size:30px;font-weight:600;color:var(--nacht);margin:0;line-height:1;}
 .heute-datum{font-size:12.5px;color:var(--leise);letter-spacing:.02em;}
 .heute-sub{font-size:14px;color:var(--leise);margin:0 0 16px;line-height:1.55;}
-.heute-form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end;}
-@media(max-width:720px){.heute-form{grid-template-columns:1fr 1fr;}}
+.heute-form{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:end;}
+@media(max-width:900px){.heute-form{grid-template-columns:1fr 1fr;}}
 .heute-form label{display:block;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
  color:var(--messing);margin-bottom:5px;}
 .heute-form input,.heute-form select{width:100%;padding:9px 11px;border:1px solid var(--linie);
@@ -139,6 +139,7 @@ footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
  border:1px solid var(--linie);border-radius:14px;padding:15px 17px;}
 .heute-fuss{margin-top:14px;font-size:12.5px;color:var(--leise);line-height:1.5;}
 .heute-fuss a{color:var(--nacht);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
 <body>
@@ -161,8 +162,8 @@ footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
   <svg class="ring" id="ring" viewBox="0 0 400 400" aria-hidden="true"></svg>
   <div class="held-inner">
     <p class="augenbraue">Astrologie &amp; Selbstverständnis</p>
-    <h1>Ein Chart ist keine <em>Diagnose.</em></h1>
-    <p class="intro">Es ist eine Sprache für das, wofür du bisher keine Worte hattest. Vier Wege hinein — nimm den, der heute passt.</p>
+    <h1>Endlich Worte für das, <em>was du längst spürst.</em></h1>
+    <p class="intro">Astrologie erklärt dich nicht — sie übersetzt dich. Ein Chart zeigt, wie du gebaut bist, was du brauchst und wo bei dir am meisten Energie steckt. Nichts davon musst du glauben; du kannst es an deinem eigenen Leben prüfen.<br><br>Vier Wege hinein — nimm den, der heute passt. Du kannst jederzeit aufhören.</p>
   </div>
 </div>
 
@@ -172,6 +173,7 @@ footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
     <p class="heute-sub" id="hsub">Trag deine Geburtsdaten einmal ein — danach siehst du hier bei jedem Besuch, was der Himmel gerade an deinem Chart berührt. Die Daten bleiben in deinem Browser und werden nirgendwohin geschickt.</p>
     <div id="hform">
       <div class="heute-form">
+        <div><label>Name (freiwillig)</label><input id="hname" placeholder="Dein Name"></div>
         <div><label>Geburtsdatum</label><input type="date" id="hdate" value="1990-01-01"></div>
         <div><label>Uhrzeit</label><input type="time" id="htime" value="12:00"></div>
         <div><label>Zeitzone</label><select id="htz">
@@ -192,7 +194,7 @@ footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
     <div id="hout" style="display:none;"></div>
     <p class="heute-fuss" id="hfuss" style="display:none;">
       Gerechnet im Browser, nichts gespeichert außer lokal bei dir.
-      <a href="#" id="hneu">Daten ändern</a> · <a href="chart-rechner.html">Vollständiges Chart</a> · <a href="timing.html">Wie Transite wirken</a>
+      <a href="#" id="hneu">Daten ändern</a> · <a href="tool.html">Dein ganzes Bild</a> · <a href="chart-rechner.html">Vollständiges Chart</a> · <a href="timing.html">Wie Transite wirken</a>
     </p>
   </div>
 </div>
@@ -538,6 +540,8 @@ function hZeigen(g){
   document.getElementById('hout').style.display='';
   document.getElementById('hform').style.display='none';
   document.getElementById('hfuss').style.display='';
+  var nm=(g.name||'').trim();
+  var hk=document.querySelector('.heute-kopf h2'); if(hk) hk.textContent = nm? ('Heute für '+nm) : 'Heute';
   document.getElementById('hsub').textContent='Was der Himmel heute an deinem Chart berührt — die drei engsten Kontakte.';
 }
 (function(){
@@ -553,7 +557,8 @@ function hZeigen(g){
     var p=dv.split('-').map(Number), t=tv.split(':').map(Number);
     var lat=parseFloat(document.getElementById('hlat').value), lon=parseFloat(document.getElementById('hlon').value);
     if(isNaN(lat)||isNaN(lon)||Math.abs(lat)>66) return;
-    var g={y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:+document.getElementById('htz').value,lat:lat,lon:lon};
+    var nf=document.getElementById('hname');
+    var g={name:nf?nf.value:'',y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:+document.getElementById('htz').value,lat:lat,lon:lon};
     hSpeicher(g); hZeigen(g);
   });
   var neu=document.getElementById('hneu');
