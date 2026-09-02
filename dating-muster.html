@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muster im Dating &mdash; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235; --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --akz:#2E3A5C;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--creme);color:var(--tinte);
+  font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--nacht)}
+:focus-visible{outline:2px solid var(--nacht);outline-offset:3px;border-radius:4px}
+.bahn{max-width:720px;margin:0 auto;padding:0 24px}
+
+.leiste{border-bottom:1px solid var(--linie);background:var(--papier);position:sticky;top:0;z-index:20}
+.leiste-inner{max-width:720px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:11px}
+.logo{width:22px;height:22px;flex:0 0 auto}
+.marke{font-family:var(--serif);font-weight:400;font-size:19px}
+.zurueck{margin-left:auto;font-size:14px;color:var(--leise);text-decoration:none}
+.zurueck:hover{color:var(--nacht)}
+
+.held{padding:clamp(52px,8vw,88px) 0 clamp(34px,5vw,50px)}
+.augenbraue{font-size:13.5px;color:var(--messing);letter-spacing:.14em;margin:0 0 20px}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(36px,6.4vw,58px);
+  line-height:1.07;letter-spacing:-.022em;margin:0 0 22px;max-width:14ch}
+.intro{font-size:18.5px;line-height:1.72;color:var(--leise);margin:0 0 1rem;max-width:46ch}
+p{margin:0 0 1.05rem;max-width:60ch}
+em{color:var(--leise);font-style:italic}
+
+/* Abschnitte mit Nummer und Farbe */
+.abschnitt{margin:clamp(56px,8vw,84px) 0 0;padding-top:clamp(28px,4vw,36px);border-top:1px solid var(--linie-stark)}
+.a-kopf{display:flex;align-items:baseline;gap:14px;margin:0 0 6px}
+.a-num{font-family:var(--serif);font-size:15px;color:var(--akz);border:1px solid var(--akz);
+  border-radius:50%;width:30px;height:30px;flex:0 0 30px;display:flex;align-items:center;
+  justify-content:center;line-height:1;align-self:center}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,4vw,34px);
+  letter-spacing:-.015em;margin:0;line-height:1.15}
+h3{font-size:17.5px;font-weight:600;margin:1.9rem 0 .4rem;color:var(--akz)}
+
+.karte{background:var(--papier);border:1px solid var(--linie);border-left:3px solid var(--akz);
+  border-radius:14px;padding:24px 26px;margin:1.5rem 0}
+label{display:block;font-size:13px;color:var(--messing);font-weight:500;margin:1.1rem 0 .35rem}
+.karte>label:first-child{margin-top:0}
+input,select,textarea{width:100%;font-family:var(--sans);font-size:15.5px;
+  border:1px solid var(--linie-stark);background:var(--creme);color:var(--tinte);
+  padding:10px 12px;border-radius:10px}
+textarea{min-height:4.2rem;resize:vertical;line-height:1.6}
+.reihe{display:flex;gap:12px;flex-wrap:wrap}
+.reihe>div{flex:1 1 9rem}
+button{font-family:var(--sans);font-size:15px;font-weight:500;background:var(--nacht);
+  color:#fff;border:1px solid var(--nacht);border-radius:24px;padding:11px 24px;
+  margin-top:1.2rem;cursor:pointer}
+button:hover{background:#3A4A70}
+button.leer{background:none;color:var(--nacht);margin-left:8px}
+button.leer:hover{background:var(--nacht-bg)}
+.hinweis{font-size:13.5px;color:var(--leise);margin:.7rem 0 0}
+
+.erg{margin-top:1.3rem;background:var(--nacht-bg);border-radius:12px;padding:20px 22px;font-size:16px}
+.erg:empty{display:none}
+.erg p{margin:0 0 .8rem;max-width:none}
+.erg p:last-child{margin:0}
+.erg b{font-weight:600;color:var(--nacht)}
+.chip{font-size:13.5px;color:var(--leise);background:var(--messing-bg);display:inline-block;
+  padding:5px 13px;border-radius:20px;margin-bottom:1.2rem}
+
+ul{padding-left:0;list-style:none;margin:0 0 1.05rem;max-width:60ch}
+ul li{padding-left:1.5rem;position:relative;margin-bottom:.6rem}
+ul li::before{content:"";position:absolute;left:0;top:.72em;width:9px;height:1px;background:var(--messing)}
+.hakenliste li{padding-left:0}
+.hakenliste li::before{display:none}
+.haken{display:flex;gap:.7rem;align-items:flex-start;margin:.6rem 0;font-size:16px}
+.haken input{width:auto;margin-top:.45rem;accent-color:var(--nacht);flex:0 0 auto}
+
+.notiz{background:var(--messing-bg);border-radius:14px;padding:22px 24px;margin:2.4rem 0 0}
+.notiz p{margin:0;font-size:15.5px;color:#6E5730;line-height:1.65}
+.hide{display:none}
+footer{max-width:720px;margin:64px auto 0;padding:28px 24px 80px;border-top:1px solid var(--linie);
+  font-size:14.5px;color:var(--leise);line-height:1.75}
+@media(max-width:560px){
+  body{font-size:16.5px}
+  .karte{padding:20px 20px}
+  .a-kopf{gap:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="leiste">
+  <div class="leiste-inner">
+    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="10.5" fill="none" stroke="#B08544" stroke-width="1"/>
+      <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/>
+      <line x1="12" y1="1.5" x2="12" y2="4.5" stroke="#B08544" stroke-width="1"/>
+      <line x1="12" y1="19.5" x2="12" y2="22.5" stroke="#B08544" stroke-width="1"/>
+      <line x1="1.5" y1="12" x2="4.5" y2="12" stroke="#B08544" stroke-width="1"/>
+      <line x1="19.5" y1="12" x2="22.5" y2="12" stroke="#B08544" stroke-width="1"/>
+    </svg>
+    <span class="marke">Astro-Charlie</span>
+    <a class="zurueck" href="index.html">&larr; &Uuml;bersicht</a>
+  </div>
+</div>
+
+<div class="bahn">
+  <div class="held">
+    <p class="augenbraue">&#10042;&nbsp;&nbsp;Selbst arbeiten</p>
+    <h1>Muster im Dating</h1>
+    <p class="intro">Warum es sich immer wieder gleich anf&uuml;hlt &mdash; und was bei dir dagegen hilft.</p>
+    <p>Die meisten erkennen ihre Muster irgendwann. Erkennen allein ver&auml;ndert nichts. Was fehlt, sind die zwei Schritte danach: es f&uuml;hlen d&uuml;rfen, ohne unterzugehen &mdash; und dann eine einzige Sache anders machen.</p>
+    <p>Trag deine Geburtsdaten ein, den Rest rechnet die Seite. Du musst nichts &uuml;ber Astrologie wissen.</p>
+  </div>
+
+  <div class="karte" id="form">
+    <label for="nm">Name (freiwillig)</label>
+    <input type="text" id="nm" placeholder="Dein Name">
+    <div class="reihe">
+      <div><label for="dt">Geburtsdatum</label><input type="date" id="dt" value="1990-01-01"></div>
+      <div><label for="tm">Uhrzeit</label><input type="time" id="tm" value="12:00"></div>
+    </div>
+    <label for="tz">Zeitzone bei der Geburt</label>
+    <select id="tz">
+      <option value="1">MEZ (UTC+1)</option><option value="2" selected>MESZ (UTC+2)</option>
+      <option value="0">UTC</option><option value="3">UTC+3</option>
+      <option value="-5">UTC-5</option><option value="-8">UTC-8</option>
+    </select>
+    <div class="reihe">
+      <div><label for="la">Breite</label><input type="text" id="la" value="52.52"></div>
+      <div><label for="lo">L&auml;nge</label><input type="text" id="lo" value="13.40"></div>
+    </div>
+    <button onclick="build()">Meine Seite anzeigen</button>
+    <p class="hinweis">Berlin ist voreingestellt. Gerechnet im Browser, nichts wird gespeichert oder verschickt.</p>
+  </div>
+
+<div id="res" class="hide">
+
+  <div class="abschnitt" style="--akz:#2E3A5C">
+    <div class="a-kopf"><span class="a-num">1</span><h2 id="h1t">Dein Muster im Beziehungsfeld</h2></div>
+    <p class="chip" id="chartline"></p>
+    <div id="pattern"></div>
+  </div>
+
+  <div class="abschnitt" style="--akz:#3D6B62">
+    <div class="a-kopf"><span class="a-num">2</span><h2>Was bei dir beim F&uuml;hlen hilft</h2></div>
+    <p>Menschen verarbeiten unterschiedlich. Wer die falsche Methode benutzt, kommt nicht durch &mdash; sondern funktioniert weiter. Das hier ist aus deinem Chart abgeleitet.</p>
+    <div id="feel"></div>
+    <p><em>Die Reihenfolge z&auml;hlt: erst die Energie rausbringen, dann beruhigen. Andersherum bleibt die Unruhe stecken.</em></p>
+  </div>
+
+  <div class="abschnitt" style="--akz:#9A7235">
+    <div class="a-kopf"><span class="a-num">3</span><h2>Dein kleinster Schritt</h2></div>
+    <p>Ein Muster bricht nicht durch Einsicht. Es bricht durch eine Handlung, die es nicht vorgesehen hat. Die darf klein sein &mdash; sie muss nur das Gegenteil von dem sein, was du sonst tust.</p>
+    <div id="step"></div>
+    <div class="karte">
+      <label for="g2">Was ist deine kleinste Sache?</label>
+      <input type="text" id="g2" placeholder="Einen Satz schreiben, in dem steht, was ich brauche.">
+      <label for="g3">Und was machst du, wenn sich dadurch nichts &auml;ndert?</label>
+      <input type="text" id="g3" placeholder="Dann wei&szlig; ich Bescheid und muss nicht mehr raten.">
+      <button onclick="gegen()">Festhalten</button>
+      <div class="erg" id="gOut"></div>
+    </div>
+    <p>Die zweite Frage entscheidet, ob es Selbstarbeit ist oder eine Wette. Ohne sie h&auml;ngt dein Schritt an der Reaktion der anderen Person.</p>
+  </div>
+
+  <div class="abschnitt" style="--akz:#6A4A62">
+    <div class="a-kopf"><span class="a-num">4</span><h2>Der Realit&auml;ts-Check</h2></div>
+    <p>F&uuml;r die Momente, in denen du im Kopf kreist. Drei Spalten, mehr nicht.</p>
+    <div class="karte">
+      <label for="rc1">Was ist tats&auml;chlich passiert? Nur Worte, Handlungen, Zeiten.</label>
+      <textarea id="rc1"></textarea>
+      <label for="rc2">Was habe ich erg&auml;nzt?</label>
+      <textarea id="rc2"></textarea>
+      <label for="rc3">Woran w&uuml;rde ich merken, dass meine Erg&auml;nzung stimmt?</label>
+      <textarea id="rc3"></textarea>
+      <button onclick="rcheck()">Zusammenfassen</button>
+      <button class="leer" onclick="rcclear()">Leeren</button>
+      <div class="erg" id="rcOut"></div>
+    </div>
+    <h3>Fragen, die etwas aufmachen</h3>
+    <ul>
+      <li>Wann hatte ich dieses Gef&uuml;hl schon einmal? Wie alt f&uuml;hle ich mich gerade?</li>
+      <li>Was habe ich gesagt &mdash; und was habe ich geschluckt?</li>
+      <li>Was war meine erste Erkl&auml;rung f&uuml;r ihr Verhalten? Woher kenne ich sie?</li>
+      <li>Was von dem, was mich besch&auml;ftigt, hat diese Person tats&auml;chlich getan?</li>
+      <li>Woran w&uuml;rde ich merken, dass es diesmal anders l&auml;uft?</li>
+    </ul>
+  </div>
+
+  <div class="abschnitt" style="--akz:#A05A3A">
+    <div class="a-kopf"><span class="a-num">5</span><h2>Alleinsein &uuml;ben</h2></div>
+    <p>Nicht als Notl&ouml;sung, sondern als F&auml;higkeit. Wer allein gut auskommt, w&auml;hlt anders und bleibt seltener aus Angst. Fang bei dem an, was gerade noch machbar wirkt.</p>
+    <div class="karte">
+      <div class="haken"><input type="checkbox"><span>Spazieren ohne Ziel, ohne Podcast, ohne Telefon</span></div>
+      <div class="haken"><input type="checkbox"><span>Allein in einem Caf&eacute; sitzen und nichts dabei tun</span></div>
+      <div class="haken"><input type="checkbox"><span>Allein ins Kino</span></div>
+      <div class="haken"><input type="checkbox"><span>Abends allein essen gehen</span></div>
+      <div class="haken"><input type="checkbox"><span>Ein Wochenende allein verreisen</span></div>
+      <div class="haken"><input type="checkbox"><span>Einen ganzen Tag ohne Nachricht an die Person, um die es geht</span></div>
+    </div>
+    <p>Nach jedem Schritt eine Frage: Was war schwer daran, und wann war es am schwersten? Da sitzt das Muster, nicht im Alleinsein selbst.</p>
+  </div>
+
+  <div class="abschnitt" style="--akz:#8A575B">
+    <div class="a-kopf"><span class="a-num">&#9679;</span><h2>Eine Grenze der Methode</h2></div>
+    <p>Ein Chart zeigt Anlage. Es zeigt nicht, ob ein Mensch gerade verf&uuml;gbar ist &mdash; ob er Zeit, Kraft und Bereitschaft hat, etwas aufzubauen. Das ist der teuerste Irrtum in der Beziehungsastrologie: eine enge Verbindung als Versprechen zu lesen.</p>
+    <p>Verf&uuml;gbarkeit erkennst du an Verhalten. An Terminen, die zustande kommen. An Initiative, die nicht nur von dir ausgeht. Wenn Chart und Verhalten sich widersprechen, hat das Verhalten recht.</p>
+    <div class="notiz"><p>Diese Seite ersetzt keine Therapie. Wenn ein Muster mit Erfahrungen zusammenh&auml;ngt, die dich bis heute belasten, ist begleitete Arbeit der bessere Ort daf&uuml;r.</p></div>
+  </div>
+
+</div>
+</div>
+
+<footer><a href="index.html">&larr; Zur&uuml;ck zur &Uuml;bersicht</a><br><br>Whole Sign &middot; Charts zeigen Anlagen, keine Schicksale.</footer>
+
+<script>
+
+var RAD=Math.PI/180, DEG=180/Math.PI;
+function rev(x){x=x%360;return x<0?x+360:x;}
+function dayno(y,m,d,ut){return 367*y-Math.floor(7*(y+Math.floor((m+9)/12))/4)+Math.floor(275*m/9)+d-730530+ut/24;}
+function kep(M,e){M*=RAD;var E=M+e*Math.sin(M)*(1+e*Math.cos(M));for(var i=0;i<30;i++){var E1=E-(E-e*Math.sin(E)-M)/(1-e*Math.cos(E));if(Math.abs(E1-E)<1e-10){E=E1;break}E=E1}return E;}
+var EL={Mercury:[48.3313,3.24587e-5,7.0047,5e-8,29.1241,1.01444e-5,.387098,0,.205635,5.59e-10,168.6562,4.0923344368],
+Venus:[76.6799,2.4659e-5,3.3946,2.75e-8,54.891,1.38374e-5,.72333,0,.006773,-1.302e-9,48.0052,1.6021302244],
+Mars:[49.5574,2.11081e-5,1.8497,-1.78e-8,286.5016,2.92961e-5,1.523688,0,.093405,2.516e-9,18.6021,.5240207766],
+Jupiter:[100.4542,2.76854e-5,1.303,-1.557e-7,273.8777,1.64505e-5,5.20256,0,.048498,4.469e-9,19.895,.0830853001],
+Saturn:[113.6634,2.3898e-5,2.4886,-1.081e-7,339.3939,2.97661e-5,9.55475,0,.055546,-9.499e-9,316.967,.0334442282],
+Uranus:[74.0005,1.3978e-5,.7733,1.9e-8,96.6612,3.0565e-5,19.18171,-1.55e-8,.047318,7.45e-9,142.5905,.011725806],
+Neptune:[131.7806,3.0173e-5,1.77,-2.55e-7,272.8461,-6.027e-6,30.05826,3.313e-8,.008606,2.15e-9,260.2471,.005995147]};
+function sun(d){var w=rev(282.9404+4.70935e-5*d),e=.016709-1.151e-9*d,M=rev(356.047+.9856002585*d);
+var E=kep(M,e),x=Math.cos(E)-e,y=Math.sin(E)*Math.sqrt(1-e*e);
+return{lon:rev(DEG*Math.atan2(y,x)+w),r:Math.sqrt(x*x+y*y),M:M,w:w};}
+function helio(n,d){var p=EL[n],N=rev(p[0]+p[1]*d),i=p[2]+p[3]*d,w=rev(p[4]+p[5]*d),a=p[6]+p[7]*d,e=p[8]+p[9]*d,M=rev(p[10]+p[11]*d);
+var E=kep(M,e),xv=a*(Math.cos(E)-e),yv=a*Math.sqrt(1-e*e)*Math.sin(E);
+var v=DEG*Math.atan2(yv,xv),r=Math.sqrt(xv*xv+yv*yv),Nr=N*RAD,ir=i*RAD,vw=(v+w)*RAD;
+return{x:r*(Math.cos(Nr)*Math.cos(vw)-Math.sin(Nr)*Math.sin(vw)*Math.cos(ir)),
+y:r*(Math.sin(Nr)*Math.cos(vw)+Math.cos(Nr)*Math.sin(vw)*Math.cos(ir)),
+z:r*Math.sin(vw)*Math.sin(ir)};}
+function geo(n,d){var s=sun(d),xs=s.r*Math.cos(s.lon*RAD),ys=s.r*Math.sin(s.lon*RAD),h=helio(n,d),x=h.x,y=h.y,z=h.z;
+if(n=='Jupiter'||n=='Saturn'||n=='Uranus'){
+ var Mj=rev(19.895+.0830853001*d),Ms=rev(316.967+.0334442282*d),Mu=rev(142.5905+.011725806*d),c=0,S=Math.sin,C=Math.cos;
+ if(n=='Jupiter')c=-.332*S((2*Mj-5*Ms-67.6)*RAD)-.056*S((2*Mj-2*Ms+21)*RAD)+.042*S((3*Mj-5*Ms+21)*RAD)-.036*S((Mj-2*Ms)*RAD)+.022*C((Mj-Ms)*RAD)+.023*S((2*Mj-3*Ms+52)*RAD)-.016*S((Mj-5*Ms-69)*RAD);
+ else if(n=='Saturn')c=.812*S((2*Mj-5*Ms-67.6)*RAD)-.229*C((2*Mj-4*Ms-2)*RAD)+.119*S((Mj-2*Ms-3)*RAD)+.046*S((2*Mj-6*Ms-69)*RAD)+.014*S((Mj-3*Ms+32)*RAD);
+ else c=.04*S((Ms-2*Mu+6)*RAD)+.035*S((Ms-3*Mu+33)*RAD)-.015*S((Mj-Mu+20)*RAD);
+ var rh=Math.sqrt(x*x+y*y+z*z),lh=rev(DEG*Math.atan2(y,x))+c,bh=DEG*Math.asin(z/rh);
+ x=rh*Math.cos(lh*RAD)*Math.cos(bh*RAD);y=rh*Math.sin(lh*RAD)*Math.cos(bh*RAD);}
+return rev(DEG*Math.atan2(y+ys,x+xs));}
+function moon(d){var N=rev(125.1228-.0529538083*d),i=5.1454,w=rev(318.0634+.1643573223*d),a=60.2666,e=.0549,M=rev(115.3654+13.0649929509*d);
+var E=kep(M,e),xv=a*(Math.cos(E)-e),yv=a*Math.sqrt(1-e*e)*Math.sin(E),v=DEG*Math.atan2(yv,xv),r=Math.sqrt(xv*xv+yv*yv);
+var Nr=N*RAD,ir=i*RAD,vw=(v+w)*RAD;
+var x=r*(Math.cos(Nr)*Math.cos(vw)-Math.sin(Nr)*Math.sin(vw)*Math.cos(ir)),
+y=r*(Math.sin(Nr)*Math.cos(vw)+Math.cos(Nr)*Math.sin(vw)*Math.cos(ir)),z=r*Math.sin(vw)*Math.sin(ir);
+var lon=rev(DEG*Math.atan2(y,x)),s=sun(d),Ls=rev(s.w+s.M),Lm=rev(N+w+M),Dd=rev(Lm-Ls),F=rev(Lm-N),Mm=M,Ms=s.M,S=Math.sin;
+lon+= -1.274*S((Mm-2*Dd)*RAD)+.658*S(2*Dd*RAD)-.186*S(Ms*RAD)-.059*S((2*Mm-2*Dd)*RAD)-.057*S((Mm-2*Dd+Ms)*RAD)+.053*S((Mm+2*Dd)*RAD)+.041*S((2*Dd-Ms)*RAD)+.046*S((Mm-Ms)*RAD)-.035*S(Dd*RAD)-.031*S((Mm+Ms)*RAD)-.015*S((2*F-2*Dd)*RAD)+.011*S((Mm-4*Dd)*RAD);
+return rev(lon);}
+function pluto(d){var P=rev(238.95+.003968789*d),S0=rev(50.03+.033459652*d),S=Math.sin,C=Math.cos;
+return rev(238.9508+.00400703*d-19.799*S(P*RAD)+19.848*C(P*RAD)+.897*S(2*P*RAD)-4.956*C(2*P*RAD)+.61*S(3*P*RAD)+1.211*C(3*P*RAD)-.341*S(4*P*RAD)-.19*C(4*P*RAD)+.128*S(5*P*RAD)-.034*C(5*P*RAD)-.038*S(6*P*RAD)+.031*C(6*P*RAD)+.02*S((S0-P)*RAD)-.01*C((S0-P)*RAD));}
+function ascf(d,ut,lat,lon){var s=sun(d),gm=rev(rev(s.w+s.M)+180),lst=rev(gm+ut*15+lon),ec=(23.4393-3.563e-7*d)*RAD,r=lst*RAD,p=lat*RAD;
+return rev(DEG*Math.atan2(Math.cos(r),-(Math.sin(r)*Math.cos(ec)+Math.tan(p)*Math.sin(ec))));}
+
+var SIGN=["Widder","Stier","Zwillinge","Krebs","Löwe","Jungfrau","Waage","Skorpion","Schütze","Steinbock","Wassermann","Fische"];
+var ELEMENT=["f","e","l","w","f","e","l","w","f","e","l","w"];
+var RULER=["Mars","Venus","Merkur","Mond","Sonne","Merkur","Venus","Pluto","Jupiter","Saturn","Uranus","Neptun"];
+function fmt(x){var s=Math.floor(x/30),dd=x-30*s;return Math.floor(dd)+"°"+("0"+Math.round(dd%1*60)).slice(-2)+"' "+SIGN[s];}
+
+var MARS={f:"Deine Energie muss <b>raus und in Bewegung</b>. Laufen, tanzen, etwas heben, laut sein. Stillsitzen und nachdenken funktioniert bei dir erst danach.",
+e:"Deine Energie geht <b>über den Körper und über Langsamkeit</b>. Spazieren, kochen, mit den Händen arbeiten, aufräumen. Es wirkt erst nach einer Weile — das ist kein Fehler.",
+l:"Deine Energie muss <b>in Sprache</b>. Reden, schreiben, eine Sprachnachricht aufnehmen. Solange etwas unbenannt ist, kreist es bei dir.",
+w:"Deine Energie geht <b>über Wasser, Musik und Weinen</b>. Duschen, schwimmen, ein Lied, das trifft. Du musst es nicht verstehen, damit es abfließt."};
+var MOND={f:"Beruhigt wirst du dadurch, <b>gesehen zu werden</b> — jemand, der zuhört und reagiert. Rückzug macht es bei dir eher schlimmer.",
+e:"Beruhigt wirst du durch <b>Vertrautes und Körperliches</b>: Essen, Decke, dieselbe Route, dieselbe Serie. Nicht originell, aber wirksam.",
+l:"Beruhigt wirst du dadurch, dass du <b>verstehst</b>. Solange etwas unerklärt ist, kommst du nicht runter. Benennen hilft dir mehr als Trost.",
+w:"Beruhigt wirst du durch <b>Nähe zu einem Menschen oder durch Rückzug</b> — selten durch viele Menschen. Eine Person reicht."};
+var PL={
+Saturn:["Nähe muss ich mir verdienen. Wenn ich genug leiste, darf ich bleiben.","Wofür genau werde ich hier gerade bewertet — und von wem?","Einmal etwas annehmen, ohne es auszugleichen."],
+Uranus:["Wenn ich mich binde, verliere ich mich. Abstand ist sicherer.","Was genau würde ich verlieren, wenn ich näher ginge? Ist das schon passiert oder befürchte ich es?","Eine Verabredung nicht offenlassen, sondern ein Datum nennen."],
+Neptun:["Wenn ich stark genug fühle, wird es real. Sehnsucht ist der Beweis.","Was weiß ich über diesen Menschen aus Begegnungen — und was aus meiner Vorstellung?","Eine Sache aufschreiben, die du zu wissen glaubst, und danebenschreiben, woher du sie hast."],
+Pluto:["Wenn ich loslasse, verliere ich alles. Also halte ich fest.","Was passiert konkret, wenn das hier endet? Nicht gefühlt, sondern praktisch.","Einen Tag lang nicht nachschauen, ob die Person online war."]};
+var HOUSE=["dir selbst und deinem Auftreten","Geld, Besitz und Selbstwert","Gesprächen, Nachbarschaft und Alltag","Zuhause, Familie und Herkunft","Spiel, Kreativität und Verliebtsein","Arbeit, Alltag und Routinen","Partnerschaft und Begegnung","Tiefe, Vertrauen und Geteiltem","Reisen, Lernen und Überzeugungen","Beruf, Rolle und Sichtbarkeit","Freundschaft, Gruppen und Zukunftsplänen","Rückzug, Innenleben und dem Unbewussten"];
+
+function build(){
+  var dt=document.getElementById('dt').value, tm=document.getElementById('tm').value;
+  if(!dt||!tm){alert("Bitte Datum und Uhrzeit eintragen.");return;}
+  var y=+dt.slice(0,4),mo=+dt.slice(5,7),da=+dt.slice(8,10);
+  var ut=(+tm.slice(0,2))+(+tm.slice(3,5))/60-(+document.getElementById('tz').value);
+  var lat=parseFloat(document.getElementById('la').value); if(isNaN(lat))lat=52.52;
+  var lon=parseFloat(document.getElementById('lo').value); if(isNaN(lon))lon=13.40;
+  var d=dayno(y,mo,da,ut);
+  var P={"Sonne":sun(d).lon,"Mond":moon(d),"Merkur":geo('Mercury',d),"Venus":geo('Venus',d),
+    "Mars":geo('Mars',d),"Jupiter":geo('Jupiter',d),"Saturn":geo('Saturn',d),
+    "Uranus":geo('Uranus',d),"Neptun":geo('Neptune',d),"Pluto":pluto(d)};
+  var A=ascf(d,ut,lat,lon), a0=Math.floor(A/30);
+  function H(x){return ((Math.floor(x/30)-a0)%12+12)%12+1;}
+
+  var nm=document.getElementById('nm').value.trim();
+  document.getElementById('h1t').textContent = nm? "Dein Muster im Beziehungsfeld, "+nm : "Dein Muster im Beziehungsfeld";
+  document.getElementById('chartline').textContent =
+    "Aszendent "+fmt(A)+" · Mond "+fmt(P["Mond"])+" · Venus "+fmt(P["Venus"])+" · Mars "+fmt(P["Mars"])+" · Whole Sign";
+
+  var found=[], html="";
+  ["Saturn","Uranus","Neptun","Pluto"].forEach(function(pl){
+    var where=[];
+    if(H(P[pl])==7) where.push("steht in deinem 7. Haus");
+    [["Venus","deiner Venus"],["Mond","deinem Mond"]].forEach(function(t){
+      var diff=Math.abs(((P[pl]-P[t[0]]+180)%360+360)%360-180), lbl=null;
+      if(diff<=6)lbl="in Konjunktion mit "+t[1];
+      else if(Math.abs(diff-90)<=6)lbl="im Quadrat zu "+t[1];
+      else if(Math.abs(diff-180)<=6)lbl="in Opposition zu "+t[1];
+      if(lbl)where.push(lbl);
+    });
+    if(where.length) found.push([pl,where.join(" und ")]);
+  });
+  if(H(P["Mond"])==12) found.push(["Mond12","dein Mond steht im 12. Haus"]);
+  if(H(P["Venus"])==8) found.push(["Venus8","deine Venus steht im 8. Haus"]);
+
+  if(!found.length){
+    html+="<p>Bei dir liegt keiner der schweren Planeten direkt auf dem Beziehungsfeld. Das heißt nicht, dass du keine Muster hast — sie sitzen woanders, nicht in der Anlage von Nähe selbst.</p>";
+  }
+  found.forEach(function(f){
+    if(f[0]=="Mond12"){
+      html+="<h3>Mond im 12. Haus</h3><div class='erg'><p><b>Möglicher Glaubenssatz:</b> „Meine Bedürfnisse stören. Besser, ich melde sie gar nicht erst an.\u201c</p>"+
+      "<p><b>Gegenfrage:</b> Was brauche ich gerade — und wann habe ich es zuletzt jemandem gesagt?</p>"+
+      "<p><b>Kleinstes Gegenverhalten:</b> Einmal etwas ansprechen, bevor es dringend ist.</p></div>";
+    } else if(f[0]=="Venus8"){
+      html+="<h3>Venus im 8. Haus</h3><div class='erg'><p><b>Möglicher Glaubenssatz:</b> „Nur was weh tut, ist echt. Ruhige Zuneigung ist langweilig.\u201c</p>"+
+      "<p><b>Gegenfrage:</b> Wann war es zuletzt schön und ruhig — und wie habe ich darauf reagiert?</p>"+
+      "<p><b>Kleinstes Gegenverhalten:</b> Bei jemandem bleiben, bei dem nichts Dramatisches passiert.</p></div>";
+    } else {
+      var t=PL[f[0]];
+      html+="<h3>"+f[0]+" — "+f[1]+"</h3><div class='erg'><p><b>Möglicher Glaubenssatz:</b> „"+t[0]+"\u201c</p>"+
+      "<p><b>Gegenfrage:</b> "+t[1]+"</p><p><b>Kleinstes Gegenverhalten:</b> "+t[2]+"</p></div>";
+    }
+  });
+
+  var dsc=(a0+6)%12, rl=RULER[dsc], rh=H(P[rl]);
+  html+="<h3>Wo Beziehungen bei dir anfangen</h3><div class='erg'><p>Dein Deszendent steht in "+SIGN[dsc]+
+    ", regiert von "+rl+" — und "+rl+" steht bei dir im <b>"+rh+". Haus</b>. Beziehungen entstehen bei dir also über "+HOUSE[rh-1]+
+    ". Dort lohnt es sich hinzuschauen, nicht dort, wo du sie suchst.</p></div>"+
+    "<p><em>Prüf jeden dieser Sätze an deiner Geschichte. Was nicht passt, gilt nicht.</em></p>";
+  document.getElementById('pattern').innerHTML=html;
+
+  var me=ELEMENT[Math.floor(P["Mars"]/30)], le=ELEMENT[Math.floor(P["Mond"]/30)];
+  var innen=0,aussen=0;
+  for(var k in P){var h=H(P[k]);if(h==4||h==8||h==12)innen++;if(h==1||h==3||h==7||h==11)aussen++;}
+  var ht = innen>aussen
+    ? "Du verarbeitest eher <b>allein</b>. In Gesellschaft funktionierst du, statt zu fühlen. Zeit ohne Menschen ist bei dir keine Isolation, sondern die Bedingung dafür, dass etwas ankommt."
+    : (aussen>innen
+    ? "Du verarbeitest eher <b>im Kontakt</b>. Allein zu grübeln bringt dich selten weiter. Ruf jemanden an, bevor du dich hinsetzt und nachdenkst."
+    : "Bei dir hält sich beides die Waage. Probier es aus und schau, wonach du dich <em>kleiner</em> fühlst — nicht besser, kleiner. Das ist das Zeichen, dass etwas abgeflossen ist.");
+  document.getElementById('feel').innerHTML=
+    "<div class='erg'><p><b>Mars in "+SIGN[Math.floor(P["Mars"]/30)]+" — wohin die Energie muss:</b><br>"+MARS[me]+"</p>"+
+    "<p><b>Mond in "+SIGN[Math.floor(P["Mond"]/30)]+" — was beruhigt:</b><br>"+MOND[le]+"</p>"+
+    "<p><b>Allein oder mit Menschen:</b><br>"+ht+"</p></div>";
+
+  var first = found.length ? (found[0][0]=="Mond12"?"Einmal etwas ansprechen, bevor es dringend ist."
+      : found[0][0]=="Venus8"?"Bei jemandem bleiben, bei dem nichts Dramatisches passiert."
+      : PL[found[0][0]][2])
+      : "Eine Sache aussprechen, die du sonst für dich behalten würdest.";
+  document.getElementById('step').innerHTML="<div class='erg'><p><b>Vorschlag aus deinem Chart:</b> "+first+"</p></div>";
+
+  document.getElementById('res').classList.remove('hide');
+  document.getElementById('res').scrollIntoView({behavior:'smooth'});
+}
+
+function esc(s){return (s||"").replace(/[<>&]/g,function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;"}[c];});}
+function rcheck(){var a=esc(document.getElementById('rc1').value.trim()),b=esc(document.getElementById('rc2').value.trim()),c=esc(document.getElementById('rc3').value.trim()),o=document.getElementById('rcOut');
+if(!a&&!b){o.innerHTML="<p>Fang mit dem ersten Feld an. Nur das, was jemand gesagt oder getan hat.</p>";return;}
+var h="";if(a)h+="<p><b>Belegt:</b> "+a+"</p>";if(b)h+="<p><b>Von mir ergänzt:</b> "+b+"</p>";if(c)h+="<p><b>Prüfbar daran:</b> "+c+"</p>";
+if(b&&!c)h+="<p>Es fehlt das Kriterium. Ohne das dritte Feld bleibt deine Ergänzung unwiderlegbar — und dann behältst du sie.</p>";
+if(b&&c)h+="<p>Alles im zweiten Feld ist bis auf Weiteres offen. Nicht falsch, nur ungeprüft. Warte auf das Kriterium, bevor du danach handelst.</p>";
+o.innerHTML=h;}
+function rcclear(){document.getElementById('rc1').value="";document.getElementById('rc2').value="";document.getElementById('rc3').value="";document.getElementById('rcOut').innerHTML="";}
+function gegen(){var b=esc(document.getElementById('g2').value.trim()),c=esc(document.getElementById('g3').value.trim()),o=document.getElementById('gOut');
+if(!b){o.innerHTML="<p>Die erste Zeile ist die eigentliche. Sie darf klein sein — je kleiner, desto wahrscheinlicher machst du sie.</p>";return;}
+var s="<p><b>Mein Schritt:</b> "+b+"</p>";
+s+= c? "<p><b>Wenn nichts passiert:</b> "+c+"</p><p>Damit ist es unabhängig von der Reaktion. Der Schritt zählt, weil du ihn gemacht hast.</p>"
+     : "<p>Die zweite Zeile fehlt noch. Ohne sie hängt dein Schritt an ihrer Antwort — und dann ist es kein Gegenverhalten, sondern eine Hoffnung.</p>";
+o.innerHTML=s;}
+</script>
+</body>
+</html>

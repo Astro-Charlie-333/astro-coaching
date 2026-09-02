@@ -4,142 +4,152 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Astro-Charlie</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --creme:#FDF6EC; --papier:#FFFCF8; --tinte:#2A2520; --leise:#6E655B;
-  --linie:#E9DECF; --nacht:#2E3A5C; --messing:#9A7235; --nacht-bg:#EAEDF4;
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  --sp:clamp(64px,9vw,104px);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--creme);color:var(--tinte);
-  font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.65;
-  -webkit-font-smoothing:antialiased}
+  font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
 a{color:inherit}
+:focus-visible{outline:2px solid var(--nacht);outline-offset:3px;border-radius:4px}
+.bahn{max-width:900px;margin:0 auto;padding:0 24px}
 
-.leiste{border-bottom:1px solid var(--linie);background:var(--papier)}
-.leiste-inner{max-width:940px;margin:0 auto;padding:16px 24px;
-  display:flex;align-items:center;gap:10px}
-.logo{width:24px;height:24px;flex:0 0 auto}
-.marke{font-family:'Caveat',cursive;font-size:23px;line-height:1;padding-top:3px}
+/* Kopfleiste */
+.leiste{border-bottom:1px solid var(--linie);background:var(--papier);position:sticky;top:0;z-index:20}
+.leiste-inner{max-width:900px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:11px}
+.logo{width:22px;height:22px;flex:0 0 auto}
+.marke{font-family:var(--serif);font-weight:400;font-size:19px;letter-spacing:.01em}
+.sprung{margin-left:auto;display:flex;gap:20px;font-size:14px;color:var(--leise)}
+.sprung a{text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent}
+.sprung a:hover{color:var(--nacht);border-bottom-color:var(--messing)}
+@media(max-width:640px){.sprung{display:none}}
 
-.held{position:relative;overflow:hidden;border-bottom:1px solid var(--linie)}
-.held-inner{max-width:940px;margin:0 auto;padding:88px 24px 76px;position:relative;z-index:2}
-.ring{position:absolute;top:50%;right:-190px;transform:translateY(-50%);
-  width:520px;height:520px;opacity:.5;z-index:1;pointer-events:none}
-@media(prefers-reduced-motion:no-preference){
-  .ring{animation:dreh 300s linear infinite}
-}
+/* Held */
+.held{position:relative;overflow:hidden}
+.held-inner{max-width:900px;margin:0 auto;padding:clamp(60px,10vw,104px) 24px clamp(48px,7vw,72px);position:relative;z-index:2}
+.ring{position:absolute;top:50%;right:-200px;transform:translateY(-50%);
+  width:540px;height:540px;opacity:.4;z-index:1;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){.ring{animation:dreh 420s linear infinite}}
 @keyframes dreh{to{transform:translateY(-50%) rotate(360deg)}}
-
-.augenbraue{font-size:13px;color:var(--messing);letter-spacing:1.4px;margin:0 0 18px}
-h1{font-family:'Caveat',cursive;font-weight:600;font-size:clamp(46px,9vw,76px);
-  line-height:1.02;margin:0 0 20px;max-width:12ch}
+.augenbraue{font-size:13.5px;color:var(--messing);letter-spacing:.14em;margin:0 0 22px}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7.2vw,68px);
+  line-height:1.06;letter-spacing:-.022em;margin:0 0 24px;max-width:15ch}
 h1 em{font-style:normal;color:var(--nacht)}
-.intro{font-size:18px;line-height:1.6;color:var(--leise);margin:0;max-width:40ch}
+.intro{font-size:18.5px;line-height:1.72;color:var(--leise);margin:0;max-width:46ch}
+.intro b{color:var(--tinte);font-weight:500}
 
-.bahn{max-width:940px;margin:0 auto;padding:0 24px}
-.kapitel{font-family:'Caveat',cursive;font-size:34px;font-weight:600;margin:0 0 4px}
-.kapitel-sub{font-size:15px;color:var(--leise);margin:0 0 26px}
+/* Abschnittsmarke */
+.marke-zeile{display:flex;align-items:center;gap:14px;margin:var(--sp) 0 8px}
+.marke-zeile h2{font-family:var(--serif);font-weight:400;font-size:clamp(27px,4vw,36px);
+  letter-spacing:-.015em;margin:0;line-height:1.15}
+.marke-zeile .strich{flex:1;height:1px;background:var(--linie-stark)}
+.marke-sub{font-size:16px;color:var(--leise);margin:0 0 28px;max-width:52ch}
 
-.wege{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:16px;margin:-38px 0 0;position:relative;z-index:3}
+/* Heute */
+.heute-karte{background:var(--papier);border:1px solid var(--linie);border-radius:18px;
+  padding:26px 28px;box-shadow:0 1px 0 var(--linie)}
+.heute-kopf{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.heute-kopf h2{font-family:var(--serif);font-weight:400;font-size:30px;color:var(--nacht);margin:0;line-height:1.1}
+.heute-datum{font-size:13px;color:var(--leise)}
+.heute-sub{font-size:15.5px;color:var(--leise);margin:0 0 20px;line-height:1.6;max-width:56ch}
+.heute-form{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end}
+@media(max-width:860px){.heute-form{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.heute-form{grid-template-columns:1fr}}
+.heute-form label{display:block;font-size:12.5px;color:var(--messing);margin-bottom:6px;font-weight:500}
+.heute-form input,.heute-form select{width:100%;padding:10px 12px;border:1px solid var(--linie-stark);
+  border-radius:10px;background:var(--creme);font-family:var(--sans);font-size:15px;color:var(--tinte)}
+.heute-knopf{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hbtn{font-family:var(--sans);font-size:15px;font-weight:500;border:1px solid var(--nacht);
+  background:var(--nacht);color:#fff;padding:11px 24px;border-radius:24px;cursor:pointer}
+.hbtn:hover{background:#3A4A70}
+.hbtn.leer{background:none;color:var(--nacht)}
+.hbtn.leer:hover{background:var(--nacht-bg)}
+.heute-hint{font-size:13.5px;color:var(--leise)}
+.mondzeile{display:flex;align-items:center;gap:16px;padding:16px 0 18px;
+  border-bottom:1px solid var(--linie);margin-bottom:18px}
+.mondzeile svg{width:44px;height:44px;flex:none}
+.mondzeile b{font-size:16.5px;font-weight:500;display:block}
+.mondzeile span{font-size:14px;color:var(--leise)}
+.tlist{display:grid;gap:11px}
+.tzeile{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:start;
+  background:var(--creme);border:1px solid var(--linie);border-left:3px solid var(--linie-stark);
+  border-radius:12px;padding:14px 16px}
+.tzeile .tgly{font-size:19px;color:var(--nacht);line-height:1.25;white-space:nowrap}
+.tzeile .tkopf{font-size:14.5px;margin-bottom:3px}
+.tzeile .tkopf b{font-weight:500}
+.tzeile .torb{font-size:12px;color:var(--leise)}
+.tzeile .ttext{font-size:15px;line-height:1.6;margin-top:6px}
+.tzeile.eng{border-color:#E3D2B2;border-left-color:var(--messing);background:var(--messing-bg)}
+.tzeile.eng .torb{color:var(--messing)}
+.tnichts{font-size:15px;color:var(--leise);line-height:1.6;background:var(--creme);
+  border:1px solid var(--linie);border-radius:12px;padding:16px 18px}
+.heute-fuss{margin-top:16px;font-size:13.5px;color:var(--leise);line-height:1.6}
+.heute-fuss a{color:var(--nacht)}
+
+/* Wege */
+.wege{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
 .weg{display:flex;flex-direction:column;text-decoration:none;background:var(--papier);
-  border:1px solid var(--linie);border-radius:16px;padding:26px 26px 24px}
-.weg:hover{border-color:var(--nacht)}
-.weg:focus-visible{outline:2px solid var(--nacht);outline-offset:3px}
-.weg-glyph{font-size:20px;color:var(--messing);line-height:1;margin-bottom:16px}
-.weg-frage{font-size:19px;font-weight:500;line-height:1.35;margin:0 0 10px}
-.weg-text{font-size:15px;color:var(--leise);margin:0}
-.weg.betont{background:var(--nacht);border-color:var(--nacht);color:var(--papier)}
-.weg.betont .weg-text{color:#C7CEDE}
-.weg.betont .weg-glyph{color:var(--messing)}
-.weg.betont:hover{background:#26304C}
-.weg-marke{align-self:flex-start;background:rgba(176,133,68,.22);color:#E8D3AE;
-  font-size:12px;letter-spacing:.4px;padding:4px 11px;border-radius:20px;margin-bottom:14px}
+  border:1px solid var(--linie);border-left:3px solid var(--akz,var(--linie-stark));
+  border-radius:14px;padding:24px 26px 22px;transition:border-color .15s,transform .15s}
+.weg:hover{border-color:var(--akz);transform:translateY(-1px)}
+.weg-glyph{font-size:19px;color:var(--akz);line-height:1;margin-bottom:14px}
+.weg-frage{font-size:18.5px;font-weight:500;line-height:1.4;margin:0 0 9px}
+.weg-text{font-size:15px;color:var(--leise);margin:0;line-height:1.6}
+.weg.betont{background:var(--nacht);border-color:var(--nacht);border-left-color:var(--messing);color:#FFFDFA}
+.weg.betont .weg-text{color:#C6CEDF}
+.weg.betont .weg-glyph{color:#D8B77E}
+.weg.betont:hover{background:#3A4A70}
+.weg-marke{align-self:flex-start;background:rgba(216,183,126,.2);color:#EBD9B6;
+  font-size:12.5px;padding:4px 12px;border-radius:20px;margin-bottom:14px;font-weight:500}
 
-.trenner{display:flex;align-items:center;gap:16px;margin:78px 0 34px}
-.trenner-linie{flex:1;height:1px;background:var(--linie)}
-.trenner span{font-size:13px;color:var(--messing);letter-spacing:1.4px}
-
-.regal{display:flex;flex-direction:column;gap:12px}
-details{background:var(--papier);border:1px solid var(--linie);border-radius:16px}
-summary{cursor:pointer;list-style:none;padding:22px 26px;
-  display:flex;align-items:flex-start;gap:16px}
+/* Regal */
+.regal{display:flex;flex-direction:column;gap:11px}
+details{background:var(--papier);border:1px solid var(--linie);
+  border-left:3px solid var(--akz,var(--linie-stark));border-radius:14px}
+summary{cursor:pointer;list-style:none;padding:20px 24px;display:flex;align-items:flex-start;gap:15px}
 summary::-webkit-details-marker{display:none}
-summary:hover .sum-titel{color:var(--nacht)}
-summary:focus-visible{outline:2px solid var(--nacht);outline-offset:-2px;border-radius:16px}
-.sum-glyph{font-size:18px;color:var(--messing);line-height:1.5;flex:0 0 22px}
+summary:hover .sum-titel{color:var(--akz)}
+.sum-glyph{font-size:17px;color:var(--akz);line-height:1.55;flex:0 0 20px}
 .sum-body{flex:1;min-width:0}
-.sum-titel{display:block;font-size:17px;font-weight:500;line-height:1.4}
-.sum-text{display:block;font-size:14.5px;color:var(--leise);margin-top:6px;line-height:1.5}
-.sum-zeichen{flex:0 0 auto;color:var(--leise);font-size:22px;line-height:1.3;padding-left:8px}
-details[open] .sum-zeichen{color:var(--nacht)}
+.sum-titel{display:block;font-size:17.5px;font-weight:500;line-height:1.4}
+.sum-text{display:block;font-size:14.5px;color:var(--leise);margin-top:5px;line-height:1.5}
+.sum-zahl{flex:0 0 auto;font-size:13px;color:var(--leise);padding-left:10px;line-height:1.9}
+.sum-zeichen{flex:0 0 auto;color:var(--leise);font-size:20px;line-height:1.5;padding-left:6px;transition:transform .15s}
+details[open] .sum-zeichen{transform:rotate(90deg);color:var(--akz)}
+.inhalt{padding:0 24px 10px}
+.inhalt a{display:block;text-decoration:none;padding:15px 0;border-top:1px solid var(--linie)}
+.inhalt a:hover .zeile-titel{color:var(--akz)}
+.zeile-titel{display:block;font-size:16px;font-weight:500;line-height:1.45}
+.zeile-text{display:block;font-size:14.5px;color:var(--leise);margin-top:5px;line-height:1.55}
+.neu{display:inline-block;background:var(--messing-bg);color:var(--messing);font-size:11.5px;
+  font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:2px}
 
-.inhalt{padding:0 26px 10px}
-.inhalt a{display:block;text-decoration:none;padding:16px 0;
-  border-top:1px solid var(--linie)}
-.inhalt a:hover .zeile-titel{color:var(--nacht)}
-.inhalt a:focus-visible{outline:2px solid var(--nacht);outline-offset:2px;border-radius:8px}
-.zeile-titel{display:block;font-size:16px;font-weight:500;line-height:1.4}
-.zeile-text{display:block;font-size:14.5px;color:var(--leise);margin-top:7px;line-height:1.5}
-
-.notiz{background:var(--nacht-bg);border-radius:16px;padding:28px 30px;margin:64px 0 0}
-.notiz p{margin:0;font-size:15.5px;color:#4A5675;line-height:1.65}
-.notiz strong{color:var(--nacht);font-weight:500}
-
-footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
-  border-top:1px solid var(--linie);font-size:14px;color:var(--leise);line-height:1.7}
-
+.notiz{background:var(--nacht-bg);border-radius:16px;padding:26px 30px;margin:var(--sp) 0 0}
+.notiz p{margin:0;font-size:16px;color:#46536F;line-height:1.7;max-width:58ch}
+.notiz strong{color:var(--nacht);font-weight:600}
+footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
+  border-top:1px solid var(--linie);font-size:14.5px;color:var(--leise);line-height:1.75}
 @media(max-width:640px){
-  .held-inner{padding:60px 24px 62px}
-  .ring{right:-260px;width:420px;height:420px;opacity:.35}
-  .wege{margin-top:-26px}
-  .weg{padding:22px}
-  summary{padding:20px 22px}
-  .inhalt{padding:0 22px 8px}
+  .held-inner{padding:52px 24px 48px}
+  .ring{right:-270px;width:430px;height:430px;opacity:.28}
+  .weg{padding:20px 22px}
+  summary{padding:18px 20px}
+  .inhalt{padding:0 20px 8px}
+  .heute-karte{padding:22px 20px}
+  .sum-zahl{display:none}
 }
-
-/* Heute-Band */
-.heute{max-width:940px;margin:0 auto 8px;padding:0 24px;}
-.heute-karte{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;}
-.heute-kopf{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px;}
-.heute-kopf h2{font-family:'Caveat',cursive;font-size:30px;font-weight:600;color:var(--nacht);margin:0;line-height:1;}
-.heute-datum{font-size:12.5px;color:var(--leise);letter-spacing:.02em;}
-.heute-sub{font-size:14px;color:var(--leise);margin:0 0 16px;line-height:1.55;}
-.heute-form{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:end;}
-@media(max-width:900px){.heute-form{grid-template-columns:1fr 1fr;}}
-.heute-form label{display:block;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
- color:var(--messing);margin-bottom:5px;}
-.heute-form input,.heute-form select{width:100%;padding:9px 11px;border:1px solid var(--linie);
- border-radius:10px;background:var(--creme);font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--tinte);}
-.heute-form input:focus,.heute-form select:focus{outline:2px solid var(--messing);outline-offset:-1px;}
-.heute-knopf{margin-top:14px;display:flex;gap:9px;flex-wrap:wrap;align-items:center;}
-.hbtn{font-family:'DM Sans',sans-serif;font-size:14px;border:1px solid var(--nacht);background:var(--nacht);
- color:#fff;padding:10px 20px;border-radius:22px;cursor:pointer;}
-.hbtn:hover{background:#3B4970;}
-.hbtn.leer{background:none;color:var(--nacht);}
-.hbtn.leer:hover{background:var(--nacht-bg);}
-.heute-hint{font-size:12.5px;color:var(--leise);}
-.mondzeile{display:flex;align-items:center;gap:14px;padding:13px 0 15px;border-bottom:1px solid var(--linie);margin-bottom:15px;}
-.mondzeile svg{width:42px;height:42px;flex:none;}
-.mondzeile b{font-size:15.5px;color:var(--tinte);display:block;}
-.mondzeile span{font-size:13.5px;color:var(--leise);}
-.tlist{display:grid;gap:10px;}
-.tzeile{display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;
- background:var(--creme);border:1px solid var(--linie);border-radius:14px;padding:13px 15px;}
-.tzeile .tgly{font-size:19px;color:var(--nacht);line-height:1.2;white-space:nowrap;}
-.tzeile .tkopf{font-size:14px;color:var(--tinte);margin-bottom:3px;}
-.tzeile .tkopf b{font-weight:500;}
-.tzeile .torb{font-size:11.5px;color:var(--leise);letter-spacing:.03em;}
-.tzeile .ttext{font-size:14.5px;line-height:1.55;color:var(--tinte);margin-top:5px;}
-.tzeile.eng{border-color:#D9C39B;background:#FBF3E4;}
-.tzeile.eng .torb{color:var(--messing);}
-.tnichts{font-size:14.5px;color:var(--leise);line-height:1.6;background:var(--creme);
- border:1px solid var(--linie);border-radius:14px;padding:15px 17px;}
-.heute-fuss{margin-top:14px;font-size:12.5px;color:var(--leise);line-height:1.5;}
-.heute-fuss a{color:var(--nacht);}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
 <body>
@@ -155,239 +165,212 @@ footer{max-width:940px;margin:72px auto 0;padding:30px 24px 72px;
       <line x1="19.5" y1="12" x2="22.5" y2="12" stroke="#B08544" stroke-width="1"/>
     </svg>
     <span class="marke">Astro-Charlie</span>
+    <nav class="sprung">
+      <a href="#heute">Heute</a>
+      <a href="#wege">Wege</a>
+      <a href="#nachschlagen">Nachschlagen</a>
+    </nav>
   </div>
 </div>
 
 <div class="held">
   <svg class="ring" id="ring" viewBox="0 0 400 400" aria-hidden="true"></svg>
   <div class="held-inner">
-    <p class="augenbraue">Astrologie &amp; Selbstverständnis</p>
-    <h1>Endlich Worte für das, <em>was du längst spürst.</em></h1>
-    <p class="intro">Astrologie erklärt dich nicht — sie übersetzt dich. Ein Chart zeigt, wie du gebaut bist, was du brauchst und wo bei dir am meisten Energie steckt. Nichts davon musst du glauben; du kannst es an deinem eigenen Leben prüfen.<br><br>Vier Wege hinein — nimm den, der heute passt. Du kannst jederzeit aufhören.</p>
+    <p class="augenbraue">Astrologie &amp; Selbstverst&auml;ndnis</p>
+    <h1>Endlich Worte f&uuml;r das, <em>was du l&auml;ngst sp&uuml;rst.</em></h1>
+    <p class="intro">Astrologie erkl&auml;rt dich nicht &mdash; sie &uuml;bersetzt dich. Ein Chart zeigt, wie du gebaut bist, was du brauchst und wo bei dir am meisten Energie steckt. Nichts davon musst du glauben; du kannst es an deinem eigenen Leben pr&uuml;fen.<br><br><b>Vier Wege hinein &mdash; nimm den, der heute passt.</b> Du kannst jederzeit aufh&ouml;ren.</p>
   </div>
 </div>
 
-<div class="heute">
+<div class="bahn" id="heute">
   <div class="heute-karte">
     <div class="heute-kopf"><h2>Heute</h2><span class="heute-datum" id="hdatum"></span></div>
-    <p class="heute-sub" id="hsub">Trag deine Geburtsdaten einmal ein — danach siehst du hier bei jedem Besuch, was der Himmel gerade an deinem Chart berührt. Die Daten bleiben in deinem Browser und werden nirgendwohin geschickt.</p>
+    <p class="heute-sub" id="hsub">Trag deine Geburtsdaten einmal ein &mdash; danach siehst du hier bei jedem Besuch, was der Himmel gerade an deinem Chart ber&uuml;hrt. Die Daten bleiben in deinem Browser und werden nirgendwohin geschickt.</p>
     <div id="hform">
       <div class="heute-form">
-        <div><label>Name (freiwillig)</label><input id="hname" placeholder="Dein Name"></div>
-        <div><label>Geburtsdatum</label><input type="date" id="hdate" value="1990-01-01"></div>
-        <div><label>Uhrzeit</label><input type="time" id="htime" value="12:00"></div>
-        <div><label>Zeitzone</label><select id="htz">
+        <div><label for="hname">Name (freiwillig)</label><input id="hname" placeholder="Dein Name"></div>
+        <div><label for="hdate">Geburtsdatum</label><input type="date" id="hdate" value="1990-01-01"></div>
+        <div><label for="htime">Uhrzeit</label><input type="time" id="htime" value="12:00"></div>
+        <div><label for="htz">Zeitzone</label><select id="htz">
           <option value="1">MEZ (UTC+1)</option><option value="2" selected>MESZ (UTC+2)</option>
           <option value="0">UTC</option><option value="3">UTC+3</option><option value="-5">UTC-5</option>
           <option value="-8">UTC-8</option></select></div>
-        <div><label>Breite / Länge</label>
-          <div style="display:flex;gap:6px;">
+        <div><label for="hlat">Breite / L&auml;nge</label>
+          <div style="display:flex;gap:7px">
             <input type="number" id="hlat" step="0.01" value="52.52" placeholder="Breite">
-            <input type="number" id="hlon" step="0.01" value="13.40" placeholder="Länge">
+            <input type="number" id="hlon" step="0.01" value="13.40" placeholder="L&auml;nge">
           </div></div>
       </div>
       <div class="heute-knopf">
         <button class="hbtn" id="hgo">Meinen Tag anzeigen</button>
-        <span class="heute-hint">Berlin ist voreingestellt. Für andere Orte die Koordinaten anpassen.</span>
+        <span class="heute-hint">Berlin ist voreingestellt. F&uuml;r andere Orte die Koordinaten anpassen.</span>
       </div>
     </div>
-    <div id="hout" style="display:none;"></div>
-    <p class="heute-fuss" id="hfuss" style="display:none;">
-      Gerechnet im Browser, nichts gespeichert außer lokal bei dir.
-      <a href="#" id="hneu">Daten ändern</a> · <a href="tool.html">Dein ganzes Bild</a> · <a href="chart-rechner.html">Vollständiges Chart</a> · <a href="timing.html">Wie Transite wirken</a>
+    <div id="hout" style="display:none"></div>
+    <p class="heute-fuss" id="hfuss" style="display:none">
+      Gerechnet im Browser, nichts gespeichert au&szlig;er lokal bei dir.
+      <a href="#" id="hneu">Daten &auml;ndern</a> &middot; <a href="tool.html">Dein ganzes Bild</a> &middot; <a href="chart-rechner.html">Vollst&auml;ndiges Chart</a> &middot; <a href="timing.html">Wie Transite wirken</a>
     </p>
   </div>
-</div>
 
-<div class="bahn">
+  <div class="marke-zeile" id="wege"><h2>Vier Wege hinein</h2><div class="strich"></div></div>
+  <p class="marke-sub">Jeder Weg hat seine eigene Farbe &mdash; die findest du auf den Unterseiten wieder.</p>
+
   <div class="wege">
-
-    <a class="weg betont" href="tool.html">
-      <span class="weg-marke">Für dich selbst</span>
-      <span class="weg-glyph" aria-hidden="true">✺</span>
+    <a class="weg betont" href="tool.html" style="--akz:var(--messing)">
+      <span class="weg-marke">F&uuml;r dich selbst</span>
+      <span class="weg-glyph" aria-hidden="true">&#10042;</span>
       <p class="weg-frage">Ich will mich besser verstehen</p>
-      <p class="weg-text">Deine Muster benennen, im Chart verorten, und einen Satz haben, der im Moment trägt. Ohne Vorwissen, ohne Diagnose.</p>
+      <p class="weg-text">Deine Muster benennen, im Chart verorten, und einen Satz haben, der im Moment tr&auml;gt. Ohne Vorwissen, ohne Diagnose.</p>
     </a>
-
-    <a class="weg" href="grundlagen.html">
-      <span class="weg-glyph" aria-hidden="true">✦</span>
+    <a class="weg" href="grundlagen.html" style="--akz:var(--messing)">
+      <span class="weg-glyph" aria-hidden="true">&#10022;</span>
       <p class="weg-frage">Ich fange gerade erst an</p>
-      <p class="weg-text">Planeten, Zeichen, Häuser, Aspekte. Wenn du das hast, liest du 80 % von jedem Chart.</p>
+      <p class="weg-text">Planeten, Zeichen, H&auml;user, Aspekte. Wenn du das hast, liest du 80&nbsp;% von jedem Chart.</p>
     </a>
-
-    <a class="weg" href="chart-lesen.html">
-      <span class="weg-glyph" aria-hidden="true">◐</span>
-      <p class="weg-frage">Ich habe ein Chart vor mir und weiß nicht, wo anfangen</p>
-      <p class="weg-text">Die Schritt-für-Schritt-Methode, damit du nicht in den Details ertrinkst.</p>
+    <a class="weg" href="chart-lesen.html" style="--akz:var(--teal)">
+      <span class="weg-glyph" aria-hidden="true">&#9680;</span>
+      <p class="weg-frage">Ich habe ein Chart vor mir und wei&szlig; nicht, wo anfangen</p>
+      <p class="weg-text">Die Schritt-f&uuml;r-Schritt-Methode, damit du nicht in den Details ertrinkst.</p>
     </a>
-
-    <a class="weg" href="leitfaden.html">
-      <span class="weg-glyph" aria-hidden="true">☽</span>
+    <a class="weg" href="leitfaden.html" style="--akz:var(--pflaume)">
+      <span class="weg-glyph" aria-hidden="true">&#9789;</span>
       <p class="weg-frage">Ich begleite jemanden</p>
-      <p class="weg-text">Wie du diesen Menschen ansprichst, wie das Gespräch läuft — und wann du aufhörst zu deuten.</p>
+      <p class="weg-text">Wie du diesen Menschen ansprichst, wie das Gespr&auml;ch l&auml;uft &mdash; und wann du aufh&ouml;rst zu deuten.</p>
     </a>
-
   </div>
 
-  <div class="trenner">
-    <span>Nachschlagen</span>
-    <div class="trenner-linie"></div>
-  </div>
-
-  <p class="kapitel">Alles Weitere</p>
-  <p class="kapitel-sub">Aufklappen, wenn du es brauchst. Nicht zum Durchlesen gedacht.</p>
+  <div class="marke-zeile" id="nachschlagen"><h2>Alles Weitere</h2><div class="strich"></div></div>
+  <p class="marke-sub">Aufklappen, wenn du es brauchst. Nicht zum Durchlesen gedacht.</p>
 
   <div class="regal">
-
-    <details>
+    <details style="--akz:var(--messing)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">✦</span>
-        <span class="sum-body">
-          <span class="sum-titel">Das Fundament</span>
-          <span class="sum-text">Woraus ein Chart überhaupt besteht</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#10022;</span>
+        <span class="sum-body"><span class="sum-titel">Das Fundament</span><span class="sum-text">Woraus ein Chart &uuml;berhaupt besteht</span></span>
+        <span class="sum-zahl">6 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="grundlagen.html"><span class="zeile-titel">Die Grundlagen</span><span class="zeile-text">Planeten, Zeichen, Häuser, Aspekte, Achsen, Mondknoten, Retrograde</span></a>
-        <a href="planeten-in-zeichen.html"><span class="zeile-titel">Planeten in den Zeichen</span><span class="zeile-text">Jeder Planet durch alle zwölf Zeichen — dein Nachschlagewerk</span></a>
-        <a href="planeten-in-haeusern.html"><span class="zeile-titel">Planet, Zeichen, Haus</span><span class="zeile-text">Vier Blickwinkel: Persönlichkeit, Lebensweg, Berufung, Liebe</span></a>
-        <a href="haeusersysteme.html"><span class="zeile-titel">Häusersysteme</span><span class="zeile-text">Whole Sign oder Placidus — und was du tust, wenn sie sich widersprechen</span></a>
-        <a href="kleine-punkte.html"><span class="zeile-titel">Die kleinen Punkte</span><span class="zeile-text">Chiron, Lilith, Mondknoten, Glückspunkt, Vertex</span></a>
-        <a href="glossar.html"><span class="zeile-titel">Glossar</span><span class="zeile-text">Alle Fachbegriffe kurz erklärt</span></a>
+        <a href="grundlagen.html"><span class="zeile-titel">Die Grundlagen</span><span class="zeile-text">Planeten, Zeichen, H&auml;user, Aspekte, Achsen, Mondknoten, Retrograde</span></a>
+        <a href="planeten-in-zeichen.html"><span class="zeile-titel">Planeten in den Zeichen</span><span class="zeile-text">Jeder Planet durch alle zw&ouml;lf Zeichen &mdash; dein Nachschlagewerk</span></a>
+        <a href="planeten-in-haeusern.html"><span class="zeile-titel">Planet, Zeichen, Haus</span><span class="zeile-text">Vier Blickwinkel: Pers&ouml;nlichkeit, Lebensweg, Berufung, Liebe</span></a>
+        <a href="haeusersysteme.html"><span class="zeile-titel">H&auml;usersysteme</span><span class="zeile-text">Whole Sign oder Placidus &mdash; und was du tust, wenn sie sich widersprechen</span></a>
+        <a href="kleine-punkte.html"><span class="zeile-titel">Die kleinen Punkte</span><span class="zeile-text">Chiron, Lilith, Mondknoten, Gl&uuml;ckspunkt, Vertex</span></a>
+        <a href="glossar.html"><span class="zeile-titel">Glossar</span><span class="zeile-text">Alle Fachbegriffe kurz erkl&auml;rt</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--teal)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">◐</span>
-        <span class="sum-body">
-          <span class="sum-titel">Ein Chart lesen</span>
-          <span class="sum-text">Von der einzelnen Linie zur Aussage</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#9680;</span>
+        <span class="sum-body"><span class="sum-titel">Ein Chart lesen</span><span class="sum-text">Von der einzelnen Linie zur Aussage</span></span>
+        <span class="sum-zahl">6 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
         <a href="chart-lesen.html"><span class="zeile-titel">Die Lese-Methode</span><span class="zeile-text">Deine Reihenfolge, damit du nicht ertrinkst</span></a>
-        <a href="orbis-gewichtung.html"><span class="zeile-titel">Aspekte: Linien, Orbis, Gewichtung</span><span class="zeile-text">Was zählt, wie eng es sein muss, wann du aufhörst — mit Rechner</span></a>
-        <a href="herrscher.html"><span class="zeile-titel">Herrscher &amp; Dispositoren</span><span class="zeile-text">Wie leere Häuser lesbar werden — mit Rechner</span></a>
-        <a href="spannungskarte.html"><span class="zeile-titel">Die Spannungskarte</span><span class="zeile-text">Wo der Druck sitzt, sortiert nach Stärke, mit beiden Polen jeder Achse</span></a>
-        <a href="aspekt-muster.html"><span class="zeile-titel">Aspekt-Muster</span><span class="zeile-text">T-Quadrat, Großes Trigon, Stellium, Kite</span></a>
-        <a href="chart-rechner.html"><span class="zeile-titel">Der Chart-Rechner</span><span class="zeile-text">Geburtsdaten rein, Chart raus — alle Positionen korrigierbar</span></a>
+        <a href="orbis-gewichtung.html"><span class="zeile-titel">Aspekte: Linien, Orbis, Gewichtung</span><span class="zeile-text">Was z&auml;hlt, wie eng es sein muss, wann du aufh&ouml;rst &mdash; mit Rechner</span></a>
+        <a href="herrscher.html"><span class="zeile-titel">Herrscher &amp; Dispositoren</span><span class="zeile-text">Wie leere H&auml;user lesbar werden &mdash; mit Rechner</span></a>
+        <a href="spannungskarte.html"><span class="zeile-titel">Die Spannungskarte</span><span class="zeile-text">Wo der Druck sitzt, sortiert nach St&auml;rke, mit beiden Polen jeder Achse</span></a>
+        <a href="aspekt-muster.html"><span class="zeile-titel">Aspekt-Muster</span><span class="zeile-text">T-Quadrat, Gro&szlig;es Trigon, Stellium, Kite</span></a>
+        <a href="chart-rechner.html"><span class="zeile-titel">Der Chart-Rechner</span><span class="zeile-text">Geburtsdaten rein, Chart raus &mdash; alle Positionen korrigierbar</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--rost)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">◔</span>
-        <span class="sum-body">
-          <span class="sum-titel">Timing</span>
-          <span class="sum-text">Wie der Himmel heute auf ein Chart wirkt</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#9684;</span>
+        <span class="sum-body"><span class="sum-titel">Timing</span><span class="sum-text">Wie der Himmel heute auf ein Chart wirkt</span></span>
+        <span class="sum-zahl">5 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="timing.html"><span class="zeile-titel">Timing lesen</span><span class="zeile-text">Transite, Solar Return, Mondphasen im Überblick</span></a>
-        <a href="profektionen.html"><span class="zeile-titel">Jahresprofektionen</span><span class="zeile-text">Der beste Filter: von hundert Transiten die fünf wichtigen — mit Rechner</span></a>
+        <a href="lunationen.html"><span class="zeile-titel">Neumonde, Vollmonde &amp; Finsternisse</span><span class="zeile-text">Alle vier Ereignistypen in Zeichen und H&auml;usern &mdash; plus alle Finsternisse bis 2030 mit deinem Haus</span></a>
+        <a href="timing.html"><span class="zeile-titel">Timing lesen</span><span class="zeile-text">Transite, Solar Return, Mondphasen im &Uuml;berblick</span></a>
+        <a href="profektionen.html"><span class="zeile-titel">Jahresprofektionen</span><span class="zeile-text">Der beste Filter: von hundert Transiten die f&uuml;nf wichtigen &mdash; mit Rechner</span></a>
         <a href="mondzyklen.html"><span class="zeile-titel">Mondzyklen &amp; Finsternisse</span><span class="zeile-text">Neumond, Vollmond und Finsternisse in jedem Zeichen und Haus, mit Kalender</span></a>
-        <a href="solar-return-vertiefung.html"><span class="zeile-titel">Solar Return</span><span class="zeile-text">Das Jahreschart in sieben Schritten, überlagert mit deinem Radix</span></a>
+        <a href="solar-return-vertiefung.html"><span class="zeile-titel">Solar Return</span><span class="zeile-text">Das Jahreschart in sieben Schritten, &uuml;berlagert mit deinem Radix</span></a>
         <a href="planetenzyklen.html"><span class="zeile-titel">Planetenzyklen</span><span class="zeile-text">Wo warst du beim letzten Durchgang? Mit Zyklen-Rechner</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--pflaume)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">☽</span>
-        <span class="sum-body">
-          <span class="sum-titel">Menschen begleiten</span>
-          <span class="sum-text">Vom Chart-Wissen zum Gespräch</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#9789;</span>
+        <span class="sum-body"><span class="sum-titel">Menschen begleiten</span><span class="sum-text">Vom Chart-Wissen zum Gespr&auml;ch</span></span>
+        <span class="sum-zahl">6 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="leitfaden.html"><span class="zeile-titel">Der Ansprech-Leitfaden</span><span class="zeile-text">Wie du diesen Menschen ansprichst — Mond, Merkur, Mars, Fundament</span></a>
-        <a href="reading-ablauf.html"><span class="zeile-titel">Der Reading-Ablauf</span><span class="zeile-text">Dein roter Faden im Gespräch</span></a>
+        <a href="leitfaden.html"><span class="zeile-titel">Der Ansprech-Leitfaden</span><span class="zeile-text">Wie du diesen Menschen ansprichst &mdash; Mond, Merkur, Mars, Fundament</span></a>
+        <a href="reading-ablauf.html"><span class="zeile-titel">Der Reading-Ablauf</span><span class="zeile-text">Dein roter Faden im Gespr&auml;ch</span></a>
         <a href="fragen-schatzkiste.html"><span class="zeile-titel">Die Fragen-Schatzkiste</span><span class="zeile-text">Coaching-Fragen nach Thema, zum Ziehen im Reading</span></a>
-        <a href="grenzen.html"><span class="zeile-titel">Wann du nicht deutest</span><span class="zeile-text">Ausstiegskriterien und fertige Sätze — Gesundheit, Krise, abwesende Dritte</span></a>
-        <a href="klientinnen-fragen.html"><span class="zeile-titel">Häufige Fragen von Klientinnen</span><span class="zeile-text">Souverän antworten, auch bei den unbequemen</span></a>
+        <a href="grenzen.html"><span class="zeile-titel">Wann du nicht deutest</span><span class="zeile-text">Ausstiegskriterien und fertige S&auml;tze &mdash; Gesundheit, Krise, abwesende Dritte</span></a>
+        <a href="klientinnen-fragen.html"><span class="zeile-titel">H&auml;ufige Fragen von Klientinnen</span><span class="zeile-text">Souver&auml;n antworten, auch bei den unbequemen</span></a>
         <a href="coaching.html"><span class="zeile-titel">Haltung &amp; Ethik</span><span class="zeile-text">Wo Chart-Wissen zu echter Begleitung wird</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--nacht)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">✺</span>
-        <span class="sum-body">
-          <span class="sum-titel">Selbst arbeiten</span>
-          <span class="sum-text">Das Material hinter dem Tool</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#10042;</span>
+        <span class="sum-body"><span class="sum-titel">Selbst arbeiten</span><span class="sum-text">Das Material hinter dem Tool</span></span>
+        <span class="sum-zahl">7 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="neurodivergente-astrologie.html"><span class="zeile-titel">Astrologie für anders verdrahtete Köpfe</span><span class="zeile-text">Sprache statt Scham, ohne Pathologisierung</span></a>
-        <a href="learning-seite.html"><span class="zeile-titel">Die Learning-Seite</span><span class="zeile-text">Die fünf Felder: Auslöser, Signatur, Frühwarnsignal, Satz, Transit-Kontext</span></a>
-        <a href="haus-achsen.html"><span class="zeile-titel">Die Haus-Achsen</span><span class="zeile-text">Einem Haus über sein Gegenüber begegnen — Ausgleich in beide Richtungen</span></a>
+        <a href="dating-muster.html"><span class="zeile-titel">Muster im Dating<span class="neu">neu</span></span><span class="zeile-text">Erkennen, f&uuml;hlen, integrieren &mdash; mit deinen Glaubenss&auml;tzen aus dem Chart</span></a>
+        <a href="neurodivergente-astrologie.html"><span class="zeile-titel">Astrologie f&uuml;r anders verdrahtete K&ouml;pfe</span><span class="zeile-text">Sprache statt Scham, ohne Pathologisierung</span></a>
+        <a href="learning-seite.html"><span class="zeile-titel">Die Learning-Seite</span><span class="zeile-text">Die f&uuml;nf Felder: Ausl&ouml;ser, Signatur, Fr&uuml;hwarnsignal, Satz, Transit-Kontext</span></a>
+        <a href="haus-achsen.html"><span class="zeile-titel">Die Haus-Achsen</span><span class="zeile-text">Einem Haus &uuml;ber sein Gegen&uuml;ber begegnen &mdash; Ausgleich in beide Richtungen</span></a>
         <a href="lebens-kompass.html"><span class="zeile-titel">Der Lebens-Kompass</span><span class="zeile-text">Jeder Planet als Wegweiser, mit Coaching-Frage</span></a>
         <a href="element-mix.html"><span class="zeile-titel">Dein Element-Mix</span><span class="zeile-text">Wie Feuer, Erde, Luft und Wasser dein Temperament formen</span></a>
-        <a href="mein-chart.html"><span class="zeile-titel">Dein Chart, Haus für Haus</span><span class="zeile-text">Dein Geburtschart in drei Schichten, ausführlich gedeutet</span></a>
+        <a href="mein-chart.html"><span class="zeile-titel">Dein Chart, Haus f&uuml;r Haus</span><span class="zeile-text">Dein Geburtschart in drei Schichten, ausf&uuml;hrlich gedeutet</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--rose)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">♁</span>
-        <span class="sum-body">
-          <span class="sum-titel">Beziehungen &amp; Orte</span>
-          <span class="sum-text">Zwei Charts, und Charts auf der Landkarte</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#9793;</span>
+        <span class="sum-body"><span class="sum-titel">Beziehungen &amp; Orte</span><span class="sum-text">Zwei Charts, und Charts auf der Landkarte</span></span>
+        <span class="sum-zahl">3 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="synastrie-vertiefung.html"><span class="zeile-titel">Synastrie</span><span class="zeile-text">Zwei Charts vergleichen — Anlage beschreiben, nicht bewerten</span></a>
+        <a href="synastrie-vertiefung.html"><span class="zeile-titel">Synastrie</span><span class="zeile-text">Zwei Charts vergleichen &mdash; Anlage beschreiben, nicht bewerten</span></a>
         <a href="astrokartographie.html"><span class="zeile-titel">Astrokartographie</span><span class="zeile-text">Dein Chart auf der Weltkarte, und die Grenzen der Technik</span></a>
-        <a href="mondknoten-coaching.html"><span class="zeile-titel">Die Mondknoten</span><span class="zeile-text">Alle zwölf Knotenachsen mit Coaching-Frage</span></a>
+        <a href="mondknoten-coaching.html"><span class="zeile-titel">Die Mondknoten</span><span class="zeile-text">Alle zw&ouml;lf Knotenachsen mit Coaching-Frage</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--teal)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">✓</span>
-        <span class="sum-body">
-          <span class="sum-titel">Üben</span>
-          <span class="sum-text">Chart lesen lernt man nur am Chart</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#10003;</span>
+        <span class="sum-body"><span class="sum-titel">&Uuml;ben</span><span class="sum-text">Chart lesen lernt man nur am Chart</span></span>
+        <span class="sum-zahl">2 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="uebungscharts.html"><span class="zeile-titel">Übungscharts</span><span class="zeile-text">Drei vollständige Charts — erst selbst deuten, dann vergleichen</span></a>
-        <a href="quiz.html"><span class="zeile-titel">Quiz</span><span class="zeile-text">Mit Sofort-Erklärung nach jeder Antwort</span></a>
+        <a href="uebungscharts.html"><span class="zeile-titel">&Uuml;bungscharts</span><span class="zeile-text">Drei vollst&auml;ndige Charts &mdash; erst selbst deuten, dann vergleichen</span></a>
+        <a href="quiz.html"><span class="zeile-titel">Quiz</span><span class="zeile-text">Mit Sofort-Erkl&auml;rung nach jeder Antwort</span></a>
       </div>
     </details>
 
-    <details>
+    <details style="--akz:var(--messing)">
       <summary>
-        <span class="sum-glyph" aria-hidden="true">◈</span>
-        <span class="sum-body">
-          <span class="sum-titel">Dein Business</span>
-          <span class="sum-text">Wenn du damit arbeiten willst</span>
-        </span>
-        <span class="sum-zeichen" aria-hidden="true">›</span>
+        <span class="sum-glyph" aria-hidden="true">&#9672;</span>
+        <span class="sum-body"><span class="sum-titel">Dein Business</span><span class="sum-text">Wenn du damit arbeiten willst</span></span>
+        <span class="sum-zahl">2 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
       </summary>
       <div class="inhalt">
-        <a href="ueber-mich-vorlage.html"><span class="zeile-titel">Deine Über-mich-Seite</span><span class="zeile-text">Vorlage für deine Story — dein stärkster Vertrauensanker</span></a>
-        <a href="angebote-struktur.html"><span class="zeile-titel">Deine Angebote</span><span class="zeile-text">Vom Einstiegs-Reading zur längeren Begleitung</span></a>
+        <a href="ueber-mich-vorlage.html"><span class="zeile-titel">Deine &Uuml;ber-mich-Seite</span><span class="zeile-text">Vorlage f&uuml;r deine Story &mdash; dein st&auml;rkster Vertrauensanker</span></a>
+        <a href="angebote-struktur.html"><span class="zeile-titel">Deine Angebote</span><span class="zeile-text">Vom Einstiegs-Reading zur l&auml;ngeren Begleitung</span></a>
       </div>
     </details>
 
   </div>
 
   <div class="notiz">
-    <p><strong>Ein Modul pro Session reicht.</strong> Du musst nicht alles auf einmal. Hör auf, wenn dein Kopf voll ist — die Seiten laufen dir nicht weg. Unten auf jeder Seite kommst du mit einem Klick weiter.</p>
+    <p><strong>Ein Modul pro Session reicht.</strong> Du musst nicht alles auf einmal. H&ouml;r auf, wenn dein Kopf voll ist &mdash; die Seiten laufen dir nicht weg. Unten auf jeder Seite kommst du mit einem Klick weiter.</p>
   </div>
 </div>
 
 <footer>
-  Whole Sign · Charts zeigen Anlagen, keine Schicksale. Du lernst, Menschen zu verstehen und zu begleiten — nicht, sie festzulegen.
+  Whole Sign &middot; Charts zeigen Anlagen, keine Schicksale. Du lernst, Menschen zu verstehen und zu begleiten &mdash; nicht, sie festzulegen.
 </footer>
 
 <script>
@@ -595,6 +578,5 @@ function hZeigen(g){
   svg.innerHTML = teile.join("");
 })();
 </script>
-
 </body>
 </html>
