@@ -172,6 +172,28 @@ a{color:var(--nacht);}
 .ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
  border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
 .ac-tool:hover{background:var(--nacht-bg);}
+
+tr.klick{cursor:pointer;}
+tr.klick:hover td{background:var(--messing-bg);}
+tr.klick td:first-child::after{content:'▾';color:var(--messing);margin-left:7px;font-size:11px;}
+tr.klick.auf td:first-child::after{content:'▴';}
+tr.detail td{background:var(--papier);border-bottom:2px solid var(--linie);padding:0;}
+.dinner{padding:18px 20px;}
+.dtitel{font-family:var(--serif);font-size:19px;color:var(--nacht);margin-bottom:3px;}
+.dsub{font-family:var(--sans);font-size:11.5px;letter-spacing:.06em;color:var(--leise);
+ text-transform:uppercase;margin-bottom:14px;}
+.dsatz{border-left:3px solid var(--nacht);padding:5px 0 5px 15px;margin-bottom:14px;}
+.dsatz p{margin:0;font-family:var(--serif);font-size:17px;line-height:1.45;}
+.dtreffer{background:var(--creme);border:1px solid var(--linie);border-radius:13px;padding:13px 15px;margin-bottom:9px;}
+.dtreffer.sr{background:var(--nacht-bg);border-color:#D3D9E6;}
+.dtreffer .dk{font-family:var(--sans);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:4px;}
+.dtreffer.sr .dk{color:var(--nacht);}
+.dtreffer .dn{font-size:15.5px;font-weight:500;margin-bottom:4px;}
+.dtreffer p{margin:0;font-size:14.5px;line-height:1.6;}
+.dfazit{background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:12px;
+ padding:13px 15px;font-size:14.5px;line-height:1.6;}
+.dnichts{font-size:14.5px;color:var(--leise);line-height:1.6;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -260,7 +282,7 @@ a{color:var(--nacht);}
 <div class="filter" id="filter"></div>
 <div style="overflow-x:auto;"><table id="luntab"></table></div>
 
-<div class="tip"><b>Wie du die Tabelle benutzt:</b> Filtere auf „Nur meine Treffer". Was übrig bleibt, sind die Termine, an denen bei dir wirklich etwas angesprochen wird — meistens vier bis acht im Jahr. Alle anderen sind allgemeines Mondwetter. Genau diese Unterscheidung ist der Unterschied zwischen Astrologie und Aberglaube.</div>
+<div class="tip"><b>Wie du die Tabelle benutzt:</b> Tippe eine Zeile an, dann klappt die Erklärung auf: was die Lunation anstößt, welcher Punkt berührt wird und ob es ein Lebens- oder ein Jahresthema ist. Filtere auf „Nur meine Treffer". Was übrig bleibt, sind die Termine, an denen bei dir wirklich etwas angesprochen wird — meistens vier bis acht im Jahr. Alle anderen sind allgemeines Mondwetter. Genau diese Unterscheidung ist der Unterschied zwischen Astrologie und Aberglaube.</div>
 
 <h2>Was du prüfst, in dieser Reihenfolge</h2>
 <ol class="steps">
@@ -452,6 +474,81 @@ function treffer(grad,C){
   out.sort(function(a,b){return a.o-b.o;});
   return out;
 }
+
+/* ── Erklärungen zu den Treffern ─────────────────────────── */
+var DPUNKT={
+ Sonne:['deine Identität und deine Lebenskraft','wofür du Kraft hast und wofür man dich kennt'],
+ Mond:['dein Gefühlsleben und dein Sicherheitsbedürfnis','was du brauchst, um dich sicher zu fühlen'],
+ Merkur:['dein Denken und deine Sprache','wie du denkst, redest und Dinge sortierst'],
+ Venus:['deine Zuneigung und deinen Selbstwert','wie du Nähe zeigst und was du dir wert bist'],
+ Mars:['deinen Antrieb und deine Durchsetzung','wie du in Bewegung kommst und mit Ärger umgehst'],
+ Jupiter:['dein Wachstum und dein Vertrauen','wo du dir etwas zutraust'],
+ Saturn:['deine Struktur und deine Verantwortung','wo du dich verpflichtet fühlst und zurückhältst'],
+ Uranus:['dein Freiheitsbedürfnis','wo du ausbrichst, sobald es eng wird'],
+ Neptun:['deine Sehnsucht und deine Durchlässigkeit','wo du dich verlierst und wo du inspiriert bist'],
+ Pluto:['deine Tiefe','wo es dir ernst wird und wo du nicht loslässt'],
+ ASC:['dein Auftreten','wie du wirkst und wie du dich zeigst'],
+ MC:['deine Rolle nach außen','wofür du öffentlich stehst']};
+
+var DART={
+ 'auf':['fällt direkt darauf','Die Lunation und dieser Punkt verschmelzen. Das Thema wird nicht angestoßen, sondern <b>ist</b> das Thema.'],
+ 'gegenüber':['steht genau gegenüber','Der Anstoß kommt von der Gegenseite — meistens über andere Menschen oder von außen. Du reagierst eher, als dass du auslöst.']};
+
+var DTYP={
+ NM:['Ein Neumond setzt an','Was hier beginnt, ist zunächst unsichtbar. Zwei Wochen Vorlauf, dann zeigt sich, ob es trägt.'],
+ VM:['Ein Vollmond bringt zum Punkt','Was hier kulminiert, war schon unterwegs. Es wird sichtbar, geklärt oder beendet — selten neu begonnen.'],
+ NMe:['Eine Sonnenfinsternis setzt neu an','Ein Reset über rund sechs Monate. Der Anfang zeigt sich oft erst rückblickend, und meistens mit einem blinden Fleck.'],
+ VMe:['Eine Mondfinsternis schließt ab','Ein Abschluss über rund sechs Monate. Was ohnehin nicht mehr trug, fällt weg — oft abrupter, als einem lieb ist.']};
+
+var LHAUSLANG=['deine Person und dein Auftreten','deinen Wert und deinen Besitz','Sprache und dein Nahbereich',
+ 'dein Zuhause und deine Wurzeln','dein Ausdruck und deine Romantik','dein Alltag und deine Arbeit',
+ 'deine Partnerschaften','Tiefe und Geteiltes','Sinn und Weite','dein Beruf und deine Sichtbarkeit',
+ 'deine Gruppen und Ziele','dein Rückzug und dein Inneres'];
+var offenIdx=-1;
+
+function erklaerung(e, tr, tsr, hh){
+  var key=(e.t==='NM'?'NM':'VM')+(e.e?'e':'');
+  var typ=DTYP[key];
+  var h='<div class="dinner">'+
+    '<div class="dtitel">'+e.d+' · '+typ[0]+'</div>'+
+    '<div class="dsub">'+e.gt+' · dein '+(hh+1)+'. Haus · '+LHAUS[hh]+'</div>';
+
+  h+='<div class="dsatz"><p>'+typ[1]+' Der Schauplatz bei dir ist <b>'+LHAUSLANG[hh]+
+     '</b> — dort spielt sich ab, was diese Lunation anstößt.</p></div>';
+
+  if(!tr.length && !tsr.length){
+    h+='<div class="dnichts"><b>Kein Gradtreffer bei dir.</b> Diese Lunation berührt keinen deiner Punkte eng genug. '+
+       'Sie beleuchtet nur das Haus — also den Lebensbereich, ohne eine bestimmte Funktion in dir anzusprechen. '+
+       'Das ist der Normalfall und heißt: allgemeines Mondwetter, kein persönliches Thema.</div></div>';
+    return h;
+  }
+  tr.forEach(function(x){
+    var p=DPUNKT[x.p]||[x.p,''], a=DART[x.a];
+    var naeh = x.o<1?'Sehr eng — das spürst du deutlich.':(x.o<2?'Eng genug, um bemerkbar zu sein.':'Am Rand des Orbis, eher als Färbung.');
+    h+='<div class="dtreffer"><div class="dk">Radix · '+naeh+'</div>'+
+      '<div class="dn">'+(e.t==='NM'?'Neumond':'Vollmond')+' '+a[0]+' '+x.p+' ('+x.o.toFixed(1)+'°)</div>'+
+      '<p>Berührt wird <b>'+p[0]+'</b> — also '+p[1]+'. '+a[1]+' '+
+      'Weil es dein Geburtschart trifft, gilt das lebenslang und immer gleich: <b>das ist ein Dauerthema von dir</b>, das gerade beleuchtet wird.</p></div>';
+  });
+  tsr.forEach(function(x){
+    var p=DPUNKT[x.p]||[x.p,''], a=DART[x.a];
+    h+='<div class="dtreffer sr"><div class="dk">Solar Return · nur dieses Jahr</div>'+
+      '<div class="dn">'+(e.t==='NM'?'Neumond':'Vollmond')+' '+a[0]+' Jahres-'+x.p+' ('+x.o.toFixed(1)+'°)</div>'+
+      '<p>Getroffen wird <b>'+p[0]+'</b> in deinem <b>Jahreschart</b>, nicht im Geburtschart. '+a[1]+' '+
+      'Das heißt: Es ist ein <b>Thema dieses einen Jahres</b>, kein Lebensthema. Es fühlt sich in diesen Monaten wichtig an und ist im nächsten Jahr an anderer Stelle. '+
+      'Wenn kein Radix-Treffer dabeisteht, würde ich daraus keine großen Schlüsse ziehen.</p></div>';
+  });
+
+  var nurSR=(!tr.length && tsr.length>0);
+  var beides=(tr.length>0 && tsr.length>0);
+  var fazit;
+  if(beides) fazit='<b>Beide Ebenen zeigen auf denselben Termin.</b> Das ist der stärkste Befund, den es gibt — deutlich stärker als ein einzelner enger Kontakt. Wenn du dir in diesem Zeitraum etwas vornimmst, dann hier.';
+  else if(nurSR) fazit='<b>Nur das Jahreschart ist betroffen.</b> Ein Jahresthema, kein Lebensthema. Ernst nehmen, aber nicht überhöhen — nächstes Jahr steht dieser Punkt woanders.';
+  else fazit='<b>Nur das Geburtschart ist betroffen.</b> Das ist die belastbarere Ebene. Ein Dauerthema von dir wird beleuchtet — was daraus wird, hängt davon ab, was du in diesem Bereich ohnehin gerade tust.';
+  h+='<div class="dfazit">'+fazit+'</div></div>';
+  return h;
+}
+
 function tabelle(){
   var tb=document.getElementById('luntab');
   var kopf='<tr><th>Datum</th><th>Zeit</th><th>Art</th><th>Grad</th>'+
@@ -484,13 +581,25 @@ function tabelle(){
     } else {
       zell=LSIGNS[zi];
     }
-    zeilen+='<tr class="'+(e.t==='NM'?'nm':'vm')+(e.e?' ecl':'')+(hatEng?' treffer':'')+'">'+
+    var idx=LUN.indexOf(e);
+    zeilen+='<tr data-i="'+idx+'" class="'+(e.t==='NM'?'nm':'vm')+(e.e?' ecl':'')+(hatEng?' treffer':'')+
+      (NAT?' klick':'')+(offenIdx===idx?' auf':'')+'">'+
       '<td class="mono">'+e.d+'</td><td class="mono">'+e.z+'</td><td>'+art+'</td>'+
       '<td class="mono">'+e.gt+'</td>'+
       (NAT?'<td><span class="hausz">'+(hh+1)+'. Haus</span><br><span style="font-size:12px;color:var(--soft)">'+LHAUS[hh]+'</span></td>':'')+
       '<td>'+zell+'</td></tr>';
+    if(NAT && offenIdx===idx){
+      zeilen+='<tr class="detail"><td colspan="6">'+erklaerung(e,tr,tsr,hh)+'</td></tr>';
+    }
   });
   tb.innerHTML=kopf+(zeilen||'<tr><td colspan="6" style="color:var(--soft);padding:18px 8px;">Keine Lunation in dieser Auswahl.</td></tr>');
+  Array.prototype.forEach.call(tb.querySelectorAll('tr.klick'),function(r){
+    r.addEventListener('click',function(){
+      var i=+r.getAttribute('data-i');
+      offenIdx=(offenIdx===i)?-1:i;
+      tabelle();
+    });
+  });
 }
 function filterBar(){
   var f=document.getElementById('filter');
