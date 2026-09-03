@@ -1,12 +1,20 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glossar</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;}
+<title>Glossar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;
-  --ind:#C1440E;--gold:#D9922E;--line:#F0D8C6;
-  --fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;
-  --flow:#4A7C59;--tense:#B5502E;
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 .wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
@@ -41,9 +49,30 @@ a{color:var(--ind);}
 .weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
 </style></head><body>
-<div class="wrap"><a class="back" href="index.html">&larr; Startseite</a>
-<div class="eyebrow">Nachschlagen</div><h1>Das <em>Glossar.</em></h1>
+<div class="wrap"><div class="eyebrow">Nachschlagen</div><h1>Das <em>Glossar.</em></h1>
 <p class="lede">Alle wichtigen Fachbegriffe kurz erklärt — zum schnellen Nachschlagen, wenn dir mal ein Wort fehlt.</p>
 <h2>Begriffe von A bis Z</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Aszendent (AC)</b><br><span style="font-size:13.5px;color:var(--soft);">Das Zeichen am Osthorizont bei Geburt. Auftreten, erster Eindruck. Beginn des 1. Hauses.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Aspekt</b><br><span style="font-size:13.5px;color:var(--soft);">Winkel zwischen zwei Planeten (0°, 60°, 90°, 120°, 180°). Zeigt, wie Kräfte zusammenwirken.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Deszendent (DC)</b><br><span style="font-size:13.5px;color:var(--soft);">Gegenüber dem Aszendenten. Was man in Beziehung sucht. Beginn des 7. Hauses.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Element</b><br><span style="font-size:13.5px;color:var(--soft);">Feuer, Erde, Luft, Wasser — die vier Grundqualitäten der Zeichen.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Haus</b><br><span style="font-size:13.5px;color:var(--soft);">Einer von 12 Lebensbereichen. Das WO — wo ein Planet wirkt.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">IC (Imum Coeli)</b><br><span style="font-size:13.5px;color:var(--soft);">Tiefster Punkt des Charts. Wurzeln, Zuhause, Herkunft. Beginn des 4. Hauses.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Konjunktion</b><br><span style="font-size:13.5px;color:var(--soft);">Aspekt von 0° — zwei Planeten verschmelzen.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">MC (Medium Coeli)</b><br><span style="font-size:13.5px;color:var(--soft);">Höchster Punkt des Charts. Berufung, Ruf, öffentliches Wirken. Beginn des 10. Hauses.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Mondknoten</b><br><span style="font-size:13.5px;color:var(--soft);">Nord- & Südknoten. Der Seelenweg: woher man kommt (Süd), wohin man wächst (Nord).</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Opposition</b><br><span style="font-size:13.5px;color:var(--soft);">Aspekt von 180° — zwei Planeten gegenüber, Spannung & Bewusstheit.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Orb</b><br><span style="font-size:13.5px;color:var(--soft);">Der erlaubte Spielraum um einen exakten Aspektwinkel. Enger = stärker.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Quadrat</b><br><span style="font-size:13.5px;color:var(--soft);">Aspekt von 90° — Spannung, Reibung, Wachstum.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Qualität</b><br><span style="font-size:13.5px;color:var(--soft);">Kardinal (initiiert), Fix (hält), Veränderlich (passt an) — die drei Modi der Zeichen.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Retrograd</b><br><span style="font-size:13.5px;color:var(--soft);">Rückläufig — ein Planet scheint sich rückwärts zu bewegen. Energie wirkt nach innen.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Sextil</b><br><span style="font-size:13.5px;color:var(--soft);">Aspekt von 60° — sanfte Chance, Talent, das aktiviert werden will.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Solar Return</b><br><span style="font-size:13.5px;color:var(--soft);">Das Chart zum Moment der jährlichen Sonnen-Rückkehr. Zeigt die Themen des Lebensjahres.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Stellium</b><br><span style="font-size:13.5px;color:var(--soft);">Häufung von 3+ Planeten im selben Zeichen oder Haus. Ein Lebensschwerpunkt.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Synastrie</b><br><span style="font-size:13.5px;color:var(--soft);">Vergleich zweier Charts — wie zwei Menschen astrologisch zusammenwirken.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Transit</b><br><span style="font-size:13.5px;color:var(--soft);">Ein Planet am heutigen Himmel, der einen Punkt im Geburtschart aktiviert.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Trigon</b><br><span style="font-size:13.5px;color:var(--soft);">Aspekt von 120° — harmonischer Fluss, natürliches Talent.</span></div><div class="card" style="padding:14px 18px;margin-bottom:8px;"><b style="font-family:Fraunces,serif;font-size:16px;color:var(--ind);">Whole Sign</b><br><span style="font-size:13.5px;color:var(--soft);">Häusersystem, bei dem ein Zeichen genau ein Haus füllt. Einfach und klar.</span></div>
 <div class="weiter"><a href="uebungscharts.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Übungscharts</span></a></div>

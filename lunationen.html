@@ -1,9 +1,21 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Neumonde, Vollmonde und Finsternisse · Astrologie-Lernplattform</title><style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#FBF7F2;--card:#FCE9DD;--ink:#2A1B12;--soft:#8A6F5C;--ind:#C1440E;--gold:#D9922E;
---line:#F0D8C6;--fire:#C1440E;--earth:#6B7C3F;--air:#3E7C9A;--water:#6B5B95;--flow:#4A7C59;--tense:#B5502E;}
+<title>Neumonde, Vollmonde und Finsternisse · Astrologie-Lernplattform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 .wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
@@ -105,13 +117,66 @@ select:focus{outline:2px solid var(--gold);outline-offset:-1px;}
 .steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
 .vier{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:640px){.vier{grid-template-columns:1fr;}}
+
+.mein{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:14px;}
+.mein .felder{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:end;}
+@media(max-width:760px){.mein .felder{grid-template-columns:1fr 1fr;}}
+.mein label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.mein input,.mein select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:10px;
+ background:var(--bg);font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);}
+.mein input:focus,.mein select:focus{outline:2px solid var(--gold);outline-offset:-1px;}
+.mreihe{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:13px;}
+.mbtn{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.05em;border:1px solid var(--ind);
+ background:var(--ind);color:#fff;padding:10px 18px;border-radius:20px;cursor:pointer;}
+.mbtn.leer{background:none;color:var(--ind);}
+.mbtn:hover{background:#3B4970;color:#fff;}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 10px;}
+.filter button{font-family:'Inter',sans-serif;font-size:13px;padding:6px 12px;border:1px solid var(--line);
+ background:var(--bg);color:var(--ink);border-radius:16px;cursor:pointer;}
+.filter button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
+tr.nm td:first-child{border-left:3px solid #C9B4A2;}
+tr.vm td:first-child{border-left:3px solid var(--gold);}
+tr.ecl td:first-child{border-left-width:5px;}
+tr.treffer{background:#FBF3E4;}
+.tref{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--tense);
+ color:#fff;border-radius:12px;padding:2px 8px;margin:1px 3px 1px 0;}
+.tref.sr{background:var(--water);}
+.tref.weit{background:#D9C6B4;color:var(--ink);}
+.ebenen{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+@media(max-width:640px){.ebenen{grid-template-columns:1fr;}}
+.ebene{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 17px;}
+.ebene h4{font-family:'Fraunces',serif;font-size:16.5px;margin:0 0 5px;color:var(--ind);}
+.ebene p{margin:0;font-size:14.3px;line-height:1.55;}
+.ebene .rang{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+ color:var(--gold);display:block;margin-bottom:3px;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
 </style></head><body>
 <div class="wrap">
-<a class="back" href="index.html">&larr; Übersicht</a>
-
 <div class="eyebrow">Timing-Vertiefung</div>
 <h1>Neumonde, Vollmonde &amp; <em>Finsternisse.</em></h1>
-<p class="lede">Alle vier Ereignistypen an einem Ort — in jedem Zeichen und in jedem Haus. Dazu alle Finsternisse bis 2030 mit der Angabe, in welches deiner Häuser sie fallen. Denn das Haus entscheidet, worum es geht, und der Gradtreffer entscheidet, ob es dich überhaupt betrifft.</p>
+<p class="lede">Alle vier Ereignistypen an einem Ort — in jedem Zeichen und in jedem Haus. Dazu alle 59 Neu- und Vollmonde bis Ende 2028 — mit deinem Haus, deinen Radix-Treffern und deinen Solar-Return-Treffern. Denn das Haus entscheidet, worum es geht, und der Gradtreffer entscheidet, ob es dich überhaupt betrifft.</p>
 
 
 <h2>Vier Ereignisse, ein Prinzip</h2>
@@ -145,13 +210,50 @@ select:focus{outline:2px solid var(--gold);outline-offset:-1px;}
   <div class="tunbox" id="tun"></div>
 </div>
 
-<h2>Alle Finsternisse 2026–2030</h2>
-<p class="sub">Wähle deinen Aszendenten — dann siehst du für jede Finsternis, in welches deiner Häuser sie fällt (Whole Sign).</p>
-<div style="margin-bottom:12px;"><label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Dein Aszendent</label>
-<select id="asc"></select></div>
-<div style="overflow-x:auto;"><table id="ecltab"></table></div>
+<h2>Welche Ebenen eine Lunation berührt</h2>
+<p>Eine Lunation trifft nicht nur dein Geburtschart. Sie berührt mehrere Ebenen gleichzeitig — nur eben nicht gleich stark. Diese Reihenfolge ist die brauchbarste:</p>
+<div class="ebenen">
+  <div class="ebene"><span class="rang">Ebene 1 · am stärksten</span><h4>Dein Radix</h4>
+  <p>Ein Gradtreffer auf einen Geburtspunkt. Das wirkt immer und ein Leben lang gleich. Wenn hier nichts trifft, ist alles Weitere nur noch Hintergrund.</p></div>
+  <div class="ebene"><span class="rang">Ebene 2 · jahresabhängig</span><h4>Dein Solar Return</h4>
+  <p>Trifft die Lunation dein Jahreschart, wird sie für dieses eine Jahr lauter. Sie erzeugt aber nichts Neues — sie verstärkt, was ohnehin angelegt ist.</p></div>
+  <div class="ebene"><span class="rang">Ebene 3 · Schauplatz</span><h4>Das Haus</h4>
+  <p>Auch ohne Gradtreffer sagt das Haus, welcher Lebensbereich beleuchtet wird. Das ist die schwächste, aber immer vorhandene Aussage.</p></div>
+  <div class="ebene"><span class="rang">Ebene 4 · nur als Zusatz</span><h4>Progressionen &amp; Profektionen</h4>
+  <p>Trifft eine Lunation dein Profektionsjahr-Haus oder einen progressiven Punkt, ist das ein Zusatzargument — nie ein eigenständiger Befund.</p></div>
+</div>
+<div class="tip"><b>Die Regel dahinter:</b> Ebenen <b>bestätigen</b> einander, sie ersetzen sich nicht. Ein Solar-Return-Treffer ohne Radix-Treffer ist ein Jahresthema, kein Lebensthema. Und drei Ebenen, die auf denselben Punkt zeigen, sind ein sehr starker Befund — deutlich stärker als eine einzelne enge Konjunktion.</div>
 
-<div class="tip"><b>Was dir an der Tabelle auffallen wird:</b> Die Grade laufen <b>rückwärts</b>. Eine Serie beginnt bei hohen Graden eines Zeichens und wandert über anderthalb Jahre nach unten, dann springt sie ins nächste Zeichenpaar. Wer eine Achse im Chart hat, die gerade dran ist, bekommt mehrere Treffer hintereinander — genau das macht diese Phasen so prägend.</div>
+<h2>Alle Lunationen 2026–2028</h2>
+<p class="sub">59 Neu- und Vollmonde, davon 11 Finsternisse. Trag deine Geburtsdaten ein, dann zeigt die Tabelle für jede Lunation dein Haus, deine Radix-Treffer und deine Solar-Return-Treffer. Nichts wird übertragen — deine Daten bleiben in deinem Browser.</p>
+
+<div class="mein">
+  <div id="mform">
+    <div class="felder">
+      <div><label>Geburtsdatum</label><input type="date" id="mdate" value="1990-01-01"></div>
+      <div><label>Uhrzeit</label><input type="time" id="mtime" value="12:00"></div>
+      <div><label>Zeitzone</label><select id="mtz">
+        <option value="1">MEZ (UTC+1)</option><option value="2" selected>MESZ (UTC+2)</option>
+        <option value="0">UTC</option><option value="3">UTC+3</option>
+        <option value="-5">UTC-5</option><option value="-8">UTC-8</option></select></div>
+      <div><label>Breite / Länge</label><div style="display:flex;gap:6px;">
+        <input type="number" id="mlat" step="0.01" value="52.52"><input type="number" id="mlon" step="0.01" value="13.40"></div></div>
+    </div>
+    <div class="mreihe"><button class="mbtn" id="mgo">Meine Treffer zeigen</button>
+      <span style="font-size:13px;color:var(--soft);" id="mfehler"></span></div>
+  </div>
+  <div id="mfertig" style="display:none;">
+    <div class="mreihe" style="margin-top:0;">
+      <span style="font-size:14px;" id="minfo"></span>
+      <button class="mbtn leer" id="mneu">Daten ändern</button>
+    </div>
+  </div>
+</div>
+
+<div class="filter" id="filter"></div>
+<div style="overflow-x:auto;"><table id="luntab"></table></div>
+
+<div class="tip"><b>Wie du die Tabelle benutzt:</b> Filtere auf „Nur meine Treffer". Was übrig bleibt, sind die Termine, an denen bei dir wirklich etwas angesprochen wird — meistens vier bis acht im Jahr. Alle anderen sind allgemeines Mondwetter. Genau diese Unterscheidung ist der Unterschied zwischen Astrologie und Aberglaube.</div>
 
 <h2>Was du prüfst, in dieser Reihenfolge</h2>
 <ol class="steps">
@@ -238,23 +340,199 @@ function render(){
   tabelle();
 }
 
-/* Finsternis-Tabelle */
-var a=document.getElementById('asc');
-SIGNS.forEach(function(n,i){var o=document.createElement('option');o.value=i;o.textContent=n;a.appendChild(o);});
-a.value=2;
-a.addEventListener('change',tabelle);
+
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var LUN = [{"d": "12.08.2026", "t": "NM", "g": 140.033, "gt": "20° Löwe 02'", "z": "19:36", "e": true}, {"d": "28.08.2026", "t": "VM", "g": 334.902, "gt": "4° Fische 54'", "z": "06:18", "e": true}, {"d": "11.09.2026", "t": "NM", "g": 168.432, "gt": "18° Jungfrau 26'", "z": "05:27", "e": false}, {"d": "26.09.2026", "t": "VM", "g": 3.62, "gt": "3° Widder 37'", "z": "18:49", "e": false}, {"d": "10.10.2026", "t": "NM", "g": 197.361, "gt": "17° Waage 22'", "z": "17:50", "e": false}, {"d": "26.10.2026", "t": "VM", "g": 32.762, "gt": "2° Stier 46'", "z": "06:11", "e": false}, {"d": "09.11.2026", "t": "NM", "g": 226.89, "gt": "16° Skorpion 53'", "z": "09:02", "e": false}, {"d": "24.11.2026", "t": "VM", "g": 62.336, "gt": "2° Zwillinge 20'", "z": "16:53", "e": false}, {"d": "09.12.2026", "t": "NM", "g": 256.947, "gt": "16° Schütze 57'", "z": "02:51", "e": false}, {"d": "24.12.2026", "t": "VM", "g": 92.233, "gt": "2° Krebs 14'", "z": "03:28", "e": false}, {"d": "07.01.2027", "t": "NM", "g": 287.304, "gt": "17° Steinbock 18'", "z": "22:24", "e": false}, {"d": "22.01.2027", "t": "VM", "g": 122.238, "gt": "2° Löwe 14'", "z": "14:17", "e": false}, {"d": "06.02.2027", "t": "NM", "g": 317.627, "gt": "17° Wassermann 38'", "z": "17:56", "e": true}, {"d": "21.02.2027", "t": "VM", "g": 152.093, "gt": "2° Jungfrau 06'", "z": "01:23", "e": true}, {"d": "08.03.2027", "t": "NM", "g": 347.58, "gt": "17° Fische 35'", "z": "11:29", "e": false}, {"d": "22.03.2027", "t": "VM", "g": 181.585, "gt": "1° Waage 35'", "z": "12:43", "e": false}, {"d": "07.04.2027", "t": "NM", "g": 16.952, "gt": "16° Widder 57'", "z": "01:51", "e": false}, {"d": "21.04.2027", "t": "VM", "g": 210.617, "gt": "0° Skorpion 37'", "z": "00:27", "e": false}, {"d": "06.05.2027", "t": "NM", "g": 45.709, "gt": "15° Stier 43'", "z": "12:58", "e": false}, {"d": "20.05.2027", "t": "VM", "g": 239.226, "gt": "29° Skorpion 14'", "z": "12:59", "e": false}, {"d": "04.06.2027", "t": "NM", "g": 73.972, "gt": "13° Zwillinge 58'", "z": "21:40", "e": false}, {"d": "19.06.2027", "t": "VM", "g": 267.557, "gt": "27° Schütze 33'", "z": "02:44", "e": false}, {"d": "04.07.2027", "t": "NM", "g": 101.956, "gt": "11° Krebs 57'", "z": "05:02", "e": false}, {"d": "18.07.2027", "t": "VM", "g": 295.813, "gt": "25° Steinbock 49'", "z": "17:44", "e": true}, {"d": "02.08.2027", "t": "NM", "g": 129.917, "gt": "9° Löwe 55'", "z": "12:05", "e": true}, {"d": "17.08.2027", "t": "VM", "g": 324.197, "gt": "24° Wassermann 12'", "z": "09:28", "e": true}, {"d": "31.08.2027", "t": "NM", "g": 158.104, "gt": "8° Jungfrau 06'", "z": "19:41", "e": false}, {"d": "16.09.2027", "t": "VM", "g": 352.883, "gt": "22° Fische 53'", "z": "01:03", "e": false}, {"d": "30.09.2027", "t": "NM", "g": 186.724, "gt": "6° Waage 43'", "z": "04:36", "e": false}, {"d": "15.10.2027", "t": "VM", "g": 21.983, "gt": "21° Widder 59'", "z": "15:46", "e": false}, {"d": "29.10.2027", "t": "NM", "g": 215.904, "gt": "5° Skorpion 54'", "z": "15:36", "e": false}, {"d": "14.11.2027", "t": "VM", "g": 51.521, "gt": "21° Stier 31'", "z": "05:25", "e": false}, {"d": "28.11.2027", "t": "NM", "g": 245.653, "gt": "5° Schütze 39'", "z": "05:24", "e": false}, {"d": "13.12.2027", "t": "VM", "g": 81.413, "gt": "21° Zwillinge 25'", "z": "18:08", "e": false}, {"d": "27.12.2027", "t": "NM", "g": 275.838, "gt": "5° Steinbock 50'", "z": "22:12", "e": false}, {"d": "12.01.2028", "t": "VM", "g": 111.459, "gt": "21° Krebs 28'", "z": "06:03", "e": true}, {"d": "26.01.2028", "t": "NM", "g": 306.184, "gt": "6° Wassermann 11'", "z": "17:12", "e": true}, {"d": "10.02.2028", "t": "VM", "g": 141.396, "gt": "21° Löwe 24'", "z": "17:03", "e": false}, {"d": "25.02.2028", "t": "NM", "g": 336.348, "gt": "6° Fische 21'", "z": "12:37", "e": false}, {"d": "11.03.2028", "t": "VM", "g": 170.987, "gt": "20° Jungfrau 59'", "z": "03:06", "e": false}, {"d": "26.03.2028", "t": "NM", "g": 6.046, "gt": "6° Widder 03'", "z": "06:31", "e": false}, {"d": "09.04.2028", "t": "VM", "g": 200.097, "gt": "20° Waage 06'", "z": "12:26", "e": false}, {"d": "24.04.2028", "t": "NM", "g": 35.147, "gt": "5° Stier 09'", "z": "21:46", "e": false}, {"d": "08.05.2028", "t": "VM", "g": 228.734, "gt": "18° Skorpion 44'", "z": "21:48", "e": false}, {"d": "24.05.2028", "t": "NM", "g": 63.692, "gt": "3° Zwillinge 41'", "z": "10:16", "e": false}, {"d": "07.06.2028", "t": "VM", "g": 257.028, "gt": "17° Schütze 02'", "z": "08:08", "e": false}, {"d": "22.06.2028", "t": "NM", "g": 91.847, "gt": "1° Krebs 51'", "z": "20:27", "e": false}, {"d": "06.07.2028", "t": "VM", "g": 285.186, "gt": "15° Steinbock 11'", "z": "20:10", "e": true}, {"d": "22.07.2028", "t": "NM", "g": 119.846, "gt": "29° Krebs 51'", "z": "05:01", "e": true}, {"d": "05.08.2028", "t": "VM", "g": 313.436, "gt": "13° Wassermann 26'", "z": "10:09", "e": false}, {"d": "20.08.2028", "t": "NM", "g": 147.941, "gt": "27° Löwe 56'", "z": "12:43", "e": false}, {"d": "04.09.2028", "t": "VM", "g": 341.988, "gt": "11° Fische 59'", "z": "01:47", "e": false}, {"d": "18.09.2028", "t": "NM", "g": 176.359, "gt": "26° Jungfrau 22'", "z": "20:23", "e": false}, {"d": "03.10.2028", "t": "VM", "g": 10.987, "gt": "10° Widder 59'", "z": "18:25", "e": false}, {"d": "18.10.2028", "t": "NM", "g": 205.264, "gt": "25° Waage 16'", "z": "04:56", "e": false}, {"d": "02.11.2028", "t": "VM", "g": 40.484, "gt": "10° Stier 29'", "z": "11:17", "e": false}, {"d": "16.11.2028", "t": "NM", "g": 234.717, "gt": "24° Skorpion 43'", "z": "15:18", "e": false}, {"d": "02.12.2028", "t": "VM", "g": 70.404, "gt": "10° Zwillinge 24'", "z": "03:40", "e": false}, {"d": "16.12.2028", "t": "NM", "g": 264.645, "gt": "24° Schütze 39'", "z": "04:06", "e": false}];
+var LSIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var LHAUS=['Person','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft','Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
+var LORB={Sonne:4,Mond:4,ASC:4,MC:4,Merkur:3,Venus:3,Mars:3,Jupiter:2.5,Saturn:2.5,Uranus:2,Neptun:2,Pluto:2};
+var NAT=null, SR=null, filt='alle';
+
+function lsp(o){try{localStorage.setItem('ac_geburt',JSON.stringify(o));}catch(e){}}
+function lld(){try{var s=localStorage.getItem('ac_geburt');return s?JSON.parse(s):null;}catch(e){return null;}}
+
+function chartAt(y,mo,d,ut,lat,lon){
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,lat,lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+/* Solar Return: Moment, in dem die Sonne wieder auf dem Radix-Grad steht */
+function solarReturn(natSonne,jahr,lat,lon){
+  function sonneAm(jd){var T=(jd-2451545)/36525;return sunLon(T);}
+  var jd0=jdFromUT(jahr,1,1,0), a=jd0, b=jd0+366, ziel=natSonne;
+  function diff(jd){var v=norm(sonneAm(jd)-ziel);return v>180?v-360:v;}
+  var prev=diff(a), t=null;
+  for(var jd=a+1;jd<b;jd+=1){
+    var d=diff(jd);
+    if(prev<0&&d>=0&&Math.abs(prev)<10){
+      var lo=jd-1,hi=jd;
+      for(var i=0;i<45;i++){var m=(lo+hi)/2;(diff(m)<0)?lo=m:hi=m;}
+      t=(lo+hi)/2;break;
+    }
+    prev=d;
+  }
+  if(t===null) return null;
+  var T=(t-2451545)/36525, an=angles(t,lat,lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:an.asc,MC:an.mc,_jd:t};
+}
+function treffer(grad,C){
+  var out=[];
+  for(var k in C){ if(k==='_jd') continue;
+    var s=Math.abs(norm(grad-C[k]+180)-180);
+    var art=null,o=null;
+    if(s<=(LORB[k]||3)){art='auf';o=s;}
+    else if(Math.abs(s-180)<=(LORB[k]||3)){art='gegenüber';o=Math.abs(s-180);}
+    if(art) out.push({p:k,a:art,o:o});
+  }
+  out.sort(function(a,b){return a.o-b.o;});
+  return out;
+}
 function tabelle(){
-  var asc=+a.value, tb=document.getElementById('ecltab');
-  tb.innerHTML='<tr><th>Datum</th><th>Art</th><th>Grad</th><th>Dein Haus</th><th>Thema</th></tr>';
-  D.ecl.forEach(function(e){
-    var zi=Math.floor(e[2]/30), hh=((zi-asc)%12+12)%12;
-    var art=(e[1]==='SoFi')?'Sonnenfinsternis':'Mondfinsternis';
-    tb.innerHTML+='<tr class="'+(e[1]==='SoFi'?'sofi':'mofi')+'">'+
-      '<td class="mono">'+e[0]+'</td><td>'+art+'<br><span style="font-size:11.5px;color:var(--soft)">'+e[4]+'</span></td>'+
-      '<td class="mono">'+e[3]+'</td><td><span class="hausz">'+(hh+1)+'. Haus</span></td>'+
-      '<td style="font-size:13.5px;">'+D.haus[hh].t+'</td></tr>';
+  var tb=document.getElementById('luntab');
+  var kopf='<tr><th>Datum</th><th>Zeit</th><th>Art</th><th>Grad</th>'+
+    (NAT?'<th>Dein Haus</th><th>Deine Treffer</th>':'<th>Zeichen</th>')+'</tr>';
+  var zeilen='';
+  LUN.forEach(function(e){
+    var zi=Math.floor(e.g/30);
+    var hh=NAT?(((zi-Math.floor(NAT.ASC/30))%12+12)%12):null;
+    var tr=[],tsr=[];
+    if(NAT){
+      tr=treffer(e.g,NAT);
+      if(SR) tsr=treffer(e.g,SR);
+    }
+    var hatEng=tr.some(function(x){return x.o<3;})||tsr.some(function(x){return x.o<3;});
+    if(filt==='treffer'&&!hatEng) return;
+    if(filt==='ecl'&&!e.e) return;
+    if(filt==='nm'&&e.t!=='NM') return;
+    if(filt==='vm'&&e.t!=='VM') return;
+    var art=e.t==='NM'?'Neumond':'Vollmond';
+    if(e.e) art+=' <span style="font-size:11.5px;color:var(--tense);">· Finsternis</span>';
+    var zell='';
+    if(NAT){
+      tr.slice(0,3).forEach(function(x){
+        zell+='<span class="tref'+(x.o<1?'':(x.o<3?'':' weit'))+'">'+x.a+' '+x.p+' '+x.o.toFixed(1)+'°</span>';
+      });
+      tsr.slice(0,2).forEach(function(x){
+        zell+='<span class="tref sr">SR: '+x.a+' '+x.p+' '+x.o.toFixed(1)+'°</span>';
+      });
+      if(!zell) zell='<span style="color:var(--soft);font-size:13px;">—</span>';
+    } else {
+      zell=LSIGNS[zi];
+    }
+    zeilen+='<tr class="'+(e.t==='NM'?'nm':'vm')+(e.e?' ecl':'')+(hatEng?' treffer':'')+'">'+
+      '<td class="mono">'+e.d+'</td><td class="mono">'+e.z+'</td><td>'+art+'</td>'+
+      '<td class="mono">'+e.gt+'</td>'+
+      (NAT?'<td><span class="hausz">'+(hh+1)+'. Haus</span><br><span style="font-size:12px;color:var(--soft)">'+LHAUS[hh]+'</span></td>':'')+
+      '<td>'+zell+'</td></tr>';
+  });
+  tb.innerHTML=kopf+(zeilen||'<tr><td colspan="6" style="color:var(--soft);padding:18px 8px;">Keine Lunation in dieser Auswahl.</td></tr>');
+}
+function filterBar(){
+  var f=document.getElementById('filter');
+  var opt=[['alle','Alle'],['nm','Nur Neumonde'],['vm','Nur Vollmonde'],['ecl','Nur Finsternisse']];
+  if(NAT) opt.push(['treffer','Nur meine Treffer']);
+  f.innerHTML='';
+  opt.forEach(function(o){
+    var b=document.createElement('button');b.type='button';b.textContent=o[1];
+    b.setAttribute('aria-pressed',filt===o[0]);
+    b.addEventListener('click',function(){filt=o[0];filterBar();tabelle();});
+    f.appendChild(b);
   });
 }
-render();
+function rechne(g){
+  var ut=g.h+g.mi/60-g.tz,y=g.y,mo=g.mo,d=g.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  NAT=chartAt(y,mo,d,ut,g.lat,g.lon);
+  var jetzt=new Date().getFullYear();
+  SR=solarReturn(NAT.Sonne,jetzt,g.lat,g.lon);
+  if(SR){
+    var srd=new Date((SR._jd-2440587.5)*86400000);
+    document.getElementById('minfo').innerHTML='Dein Chart ist geladen. Solar Return '+jetzt+': <b>'+
+      srd.getDate()+'.'+(srd.getMonth()+1)+'.'+jetzt+'</b>, Jahres-Aszendent <b>'+
+      LSIGNS[Math.floor(SR.ASC/30)]+'</b>.';
+  } else {
+    document.getElementById('minfo').textContent='Dein Chart ist geladen.';
+  }
+  document.getElementById('mform').style.display='none';
+  document.getElementById('mfertig').style.display='';
+  filterBar(); tabelle();
+}
+document.getElementById('mgo').addEventListener('click',function(){
+  var e=document.getElementById('mfehler'); e.textContent='';
+  var dv=document.getElementById('mdate').value, tv=document.getElementById('mtime').value;
+  if(!dv||!tv){e.textContent='Datum und Uhrzeit fehlen.';return;}
+  var p=dv.split('-').map(Number),t=tv.split(':').map(Number);
+  var lat=parseFloat(document.getElementById('mlat').value),lon=parseFloat(document.getElementById('mlon').value);
+  if(isNaN(lat)||isNaN(lon)||Math.abs(lat)>66){e.textContent='Breite und Länge prüfen.';return;}
+  var g={y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:+document.getElementById('mtz').value,lat:lat,lon:lon};
+  lsp(g); rechne(g);
+});
+document.getElementById('mneu').addEventListener('click',function(){
+  document.getElementById('mform').style.display='';
+  document.getElementById('mfertig').style.display='none';
+});
+(function(){
+  filterBar(); tabelle();
+  var g=lld(); if(g){ try{ rechne(g); }catch(e){ console.error('Lunationen:',e); } }
+})();
+
 </script>
 </body></html>
