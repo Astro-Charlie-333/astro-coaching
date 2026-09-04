@@ -150,7 +150,27 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
   .heute-karte{padding:22px 20px}
   .sum-zahl{display:none}
 }
+
+.ortfeld{position:relative;}
+.ortfeld input{width:100%;}
+.ortliste{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--papier,#fff);
+ border:1px solid var(--linie,#EBE1D2);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
+ max-height:270px;overflow-y:auto;display:none;}
+.ortliste.auf{display:block;}
+.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
+ padding:10px 13px;cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.35;}
+.ortliste button:last-child{border-bottom:0;}
+.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg,#E9EDF4);}
+.ortok{font-size:12.5px;color:var(--leise,#6B6259);margin-top:5px;line-height:1.45;}
+.ortok b{color:var(--tinte,#231F1A);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
 </style>
+<script src="staedte.js"></script>
 </head>
 <body>
 
@@ -170,7 +190,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
       <a href="#wege">Wege</a>
       <a href="#nachschlagen">Nachschlagen</a>
     </nav>
-  </div>
+  <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html">Wissen</a></nav></div>
 </div>
 
 <div class="held">
@@ -191,15 +211,10 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
         <div><label for="hname">Name (freiwillig)</label><input id="hname" placeholder="Dein Name"></div>
         <div><label for="hdate">Geburtsdatum</label><input type="date" id="hdate" value="1990-01-01"></div>
         <div><label for="htime">Uhrzeit</label><input type="time" id="htime" value="12:00"></div>
-        <div><label for="htz">Zeitzone</label><select id="htz">
-          <option value="1">MEZ (UTC+1)</option><option value="2" selected>MESZ (UTC+2)</option>
-          <option value="0">UTC</option><option value="3">UTC+3</option><option value="-5">UTC-5</option>
-          <option value="-8">UTC-8</option></select></div>
-        <div><label for="hlat">Breite / L&auml;nge</label>
-          <div style="display:flex;gap:7px">
-            <input type="number" id="hlat" step="0.01" value="52.52" placeholder="Breite">
-            <input type="number" id="hlon" step="0.01" value="13.40" placeholder="L&auml;nge">
-          </div></div>
+        <div style="grid-column:span 2;"><label for="hort">Geburtsort</label>
+          <div class="ortfeld"><input id="hort" placeholder="Stadt eintippen, z. B. Berlin" autocomplete="off">
+          <div class="ortliste" id="hortliste"></div></div>
+          <div class="ortok" id="hortok"></div></div>
       </div>
       <div class="heute-knopf">
         <button class="hbtn" id="hgo">Meinen Tag anzeigen</button>
@@ -217,21 +232,21 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
   <p class="marke-sub">Jeder Weg hat seine eigene Farbe &mdash; die findest du auf den Unterseiten wieder.</p>
 
   <div class="wege">
-    <a class="weg betont" href="tool.html" style="--akz:var(--messing)">
-      <span class="weg-marke">F&uuml;r dich selbst</span>
+    <a class="weg betont" href="uebersicht.html" style="--akz:var(--messing)">
+      <span class="weg-marke">Ich</span>
       <span class="weg-glyph" aria-hidden="true">&#10042;</span>
       <p class="weg-frage">Ich will mich besser verstehen</p>
-      <p class="weg-text">Deine Muster benennen, im Chart verorten, und einen Satz haben, der im Moment tr&auml;gt. Ohne Vorwissen, ohne Diagnose.</p>
+      <p class="weg-text">Dein Chart, deine Positionen, deine Spannungen, dein Jahr und was gerade l&auml;uft &mdash; alles auf einer Seite. Neu hier? Dann fang <a href="tool.html" style="color:inherit;text-decoration:underline">hier ganz einfach an</a>.</p>
     </a>
-    <a class="weg" href="grundlagen.html" style="--akz:var(--messing)">
+    <a class="weg" href="wissen.html" style="--akz:var(--messing)">
       <span class="weg-glyph" aria-hidden="true">&#10022;</span>
       <p class="weg-frage">Ich fange gerade erst an</p>
       <p class="weg-text">Planeten, Zeichen, H&auml;user, Aspekte. Wenn du das hast, liest du 80&nbsp;% von jedem Chart.</p>
     </a>
-    <a class="weg" href="chart-lesen.html" style="--akz:var(--teal)">
+    <a class="weg" href="menschen.html" style="--akz:var(--teal)">
       <span class="weg-glyph" aria-hidden="true">&#9680;</span>
-      <p class="weg-frage">Ich habe ein Chart vor mir und wei&szlig; nicht, wo anfangen</p>
-      <p class="weg-text">Die Schritt-f&uuml;r-Schritt-Methode, damit du nicht in den Details ertrinkst.</p>
+      <p class="weg-frage">Ich arbeite mit anderen Menschen</p>
+      <p class="weg-text">Profile anlegen, Charts nebeneinanderlegen, anonymisiert arbeiten. F&uuml;r Coaching, Freundschaft oder Familie.</p>
     </a>
     <a class="weg" href="leitfaden.html" style="--akz:var(--pflaume)">
       <span class="weg-glyph" aria-hidden="true">&#9789;</span>
@@ -539,10 +554,11 @@ function hZeigen(g){
     var dv=document.getElementById('hdate').value, tv=document.getElementById('htime').value;
     if(!dv||!tv) return;
     var p=dv.split('-').map(Number), t=tv.split(':').map(Number);
-    var lat=parseFloat(document.getElementById('hlat').value), lon=parseFloat(document.getElementById('hlon').value);
-    if(isNaN(lat)||isNaN(lon)||Math.abs(lat)>66) return;
+    var od=AC_ortDaten(p[0],p[1],p[2],t[0],t[1]);
+    if(!od){ var ho=document.getElementById('hortok'); if(ho) ho.innerHTML='<b style="color:#A05A3A">Bitte einen Ort aus der Liste w&auml;hlen.</b>'; return; }
+    if(Math.abs(od.lat)>66) return;
     var nf=document.getElementById('hname');
-    var g={name:nf?nf.value:'',y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:+document.getElementById('htz').value,lat:lat,lon:lon};
+    var g={name:nf?nf.value:'',y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:od.tz,lat:od.lat,lon:od.lon,ort:od.name};
     hSpeicher(g); hZeigen(g);
   });
   var neu=document.getElementById('hneu');
@@ -578,6 +594,67 @@ function hZeigen(g){
   }
   svg.innerHTML = teile.join("");
 })();
+
+/* ── Ortssuche: ein Feld statt Koordinaten und Zeitzone ────── */
+window.AC_ORT=null;
+function AC_ortFeld(inputId, listId, statusId){
+  var inp=document.getElementById(inputId), liste=document.getElementById(listId), st=document.getElementById(statusId);
+  if(!inp||!liste) return;
+  var treffer=[], aktiv=-1;
+  function zu(){ liste.classList.remove('auf'); aktiv=-1; }
+  function waehle(o){
+    window.AC_ORT=o;
+    inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
+    if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
+      o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
+      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
+    zu();
+    try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
+  }
+  function zeichne(){
+    liste.innerHTML='';
+    if(!treffer.length){ zu(); return; }
+    treffer.forEach(function(o,i){
+      var b=document.createElement('button'); b.type='button';
+      b.innerHTML=o.name+(o.alt?' <span class="land">· '+o.alt+'</span>':'')+' <span class="land">· '+o.land+'</span>';
+      if(i===aktiv) b.className='aktiv';
+      b.addEventListener('mousedown',function(ev){ ev.preventDefault(); waehle(o); });
+      liste.appendChild(b);
+    });
+    liste.classList.add('auf');
+  }
+  inp.addEventListener('input',function(){
+    window.AC_ORT=null;
+    if(st) st.textContent='';
+    treffer=window.AC_ortSuche(inp.value,8); aktiv=-1; zeichne();
+  });
+  inp.addEventListener('keydown',function(e){
+    if(!treffer.length) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); aktiv=Math.min(aktiv+1,treffer.length-1); zeichne(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); aktiv=Math.max(aktiv-1,0); zeichne(); }
+    else if(e.key==='Enter'&&aktiv>=0){ e.preventDefault(); waehle(treffer[aktiv]); }
+    else if(e.key==='Escape'){ zu(); }
+  });
+  inp.addEventListener('blur',function(){ setTimeout(zu,140); });
+  /* zuletzt gewählten Ort wiederherstellen */
+  try{
+    var g=JSON.parse(localStorage.getItem('ac_geburt')||'null');
+    var o=JSON.parse(localStorage.getItem('ac_ort')||'null');
+    if(o&&o.tz){ waehle(o); }
+  }catch(e){}
+}
+/* Liefert {lat,lon,tz} für die aktuelle Eingabe — tz als Stundenversatz zum Geburtszeitpunkt */
+function AC_ortDaten(y,mo,d,h,mi){
+  var o=window.AC_ORT;
+  if(!o) return null;
+  var off=window.AC_offset(o.tz,y,mo,d,h,mi);
+  if(off===null||isNaN(off)) return null;
+  return {lat:o.lat, lon:o.lon, tz:off, name:o.name+', '+o.land};
+}
+
+try{ AC_ortFeld('hort','hortliste','hortok'); }catch(e){ console.error('Ortssuche:',e); }
+
+
 </script>
 </body>
 </html>

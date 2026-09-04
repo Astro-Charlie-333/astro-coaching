@@ -1,0 +1,376 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deine Profile · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="staedte.js"></script>
+<script src="profil.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+.ortfeld{position:relative;} .ortfeld input{width:100%;}
+.ortliste{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--papier);
+ border:1px solid var(--linie);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
+ max-height:270px;overflow-y:auto;display:none;}
+.ortliste.auf{display:block;}
+.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;
+ border-bottom:1px solid var(--linie);padding:10px 13px;cursor:pointer;font-family:inherit;
+ font-size:14.5px;color:var(--tinte);line-height:1.35;}
+.ortliste button:last-child{border-bottom:0;}
+.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg);}
+.ortliste .land{font-size:12px;color:var(--leise);}
+.ortok{font-size:12.5px;color:var(--leise);margin-top:5px;}
+.karte{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:20px 22px;margin-bottom:14px;}
+.felder{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.felder{grid-template-columns:1fr;}}
+.felder label{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.felder input,.felder select,.felder textarea{width:100%;padding:10px 12px;border:1px solid var(--linie);
+ border-radius:11px;background:var(--bg);font-family:var(--sans);font-size:15px;color:var(--tinte);}
+.felder textarea{min-height:70px;resize:vertical;}
+.reihe{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+.b{font-family:var(--sans);font-size:14.5px;border:1px solid var(--nacht);background:var(--nacht);
+ color:#fff;padding:10px 20px;border-radius:22px;cursor:pointer;}
+.b.leer{background:none;color:var(--nacht);}
+.b.leer:hover{background:var(--nacht-bg);}
+.b.klein{font-size:13px;padding:7px 14px;}
+.b.warn{border-color:#A05A3A;color:#A05A3A;background:none;}
+.b.warn:hover{background:#A05A3A;color:#fff;}
+.pliste{display:grid;gap:10px;}
+.pk{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:15px 17px;
+ display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:center;}
+@media(max-width:620px){.pk{grid-template-columns:auto 1fr;} .pk .pakt{grid-column:1/-1;}}
+.pk.ist{border-color:var(--nacht);background:var(--nacht-bg);}
+.pk .kreis{width:42px;height:42px;border-radius:50%;background:var(--messing-bg);border:1px solid var(--linie);
+ display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;color:var(--nacht);}
+.pk.ist .kreis{background:var(--nacht);color:#fff;border-color:var(--nacht);}
+.pk .pn{font-size:16.5px;font-weight:500;line-height:1.25;}
+.pk .pd{font-size:13px;color:var(--leise);margin-top:2px;}
+.pk .pakt{display:flex;gap:6px;flex-wrap:wrap;}
+.marke2{font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+ background:var(--messing);color:#fff;border-radius:12px;padding:2px 8px;margin-left:7px;vertical-align:2px;}
+.schalter{display:flex;align-items:center;gap:10px;background:var(--messing-bg);border:1px solid var(--linie);
+ border-radius:14px;padding:13px 16px;margin-bottom:14px;font-size:14.5px;}
+.schalter input{width:18px;height:18px;}
+.leerhinweis{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;
+ padding:24px;text-align:center;color:var(--leise);line-height:1.6;}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html" class="ist">Menschen</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Arbeitsfläche</div>
+<h1>Deine <em>Profile.</em></h1>
+<p class="lede">Ein Profil für dich, beliebig viele für Menschen, mit denen du arbeitest. Alle Werkzeuge der Plattform greifen auf das Profil zu, das hier aktiv ist. <b>Alle Daten bleiben in deinem Browser</b> — sie werden nirgendwohin übertragen.</p>
+
+<div class="schalter">
+  <input type="checkbox" id="namenAn">
+  <label for="namenAn" style="margin:0;font-family:var(--sans);font-size:14.5px;letter-spacing:0;text-transform:none;color:var(--tinte);">
+    Vollständige Namen anzeigen — <span style="color:var(--leise)">standardmäßig siehst du nur Initialen oder Kürzel, damit beim Teilen des Bildschirms niemand identifizierbar ist</span></label>
+</div>
+
+<h2>Profile</h2>
+<div class="pliste" id="liste"></div>
+
+<h2 id="formtitel">Profil anlegen</h2>
+<div class="karte">
+  <div class="felder">
+    <div><label>Name (bleibt bei dir)</label><input id="fname" placeholder="Vor- und Nachname"></div>
+    <div><label>Kürzel für die Anzeige</label><input id="falias" placeholder="z. B. Klientin 04"></div>
+    <div><label>Geburtsdatum</label><input type="date" id="fdate" value="1990-01-01"></div>
+    <div><label>Uhrzeit</label><input type="time" id="ftime" value="12:00"></div>
+    <div style="grid-column:1/-1;"><label>Geburtsort</label>
+      <div class="ortfeld"><input id="fort" placeholder="Stadt eintippen" autocomplete="off">
+      <div class="ortliste" id="fortliste"></div></div>
+      <div class="ortok" id="fortok"></div></div>
+    <div style="grid-column:1/-1;"><label>Notiz (freiwillig)</label>
+      <textarea id="fnotiz" placeholder="Anliegen, Kontext, worum es geht"></textarea></div>
+  </div>
+  <div class="reihe">
+    <button class="b" id="speichern">Profil speichern</button>
+    <button class="b leer" id="abbrechen" style="display:none;">Abbrechen</button>
+    <label style="display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:14px;
+      letter-spacing:0;text-transform:none;color:var(--leise);margin:0;">
+      <input type="checkbox" id="feigen" style="width:17px;height:17px;"> Das bin ich selbst</label>
+    <span style="font-size:13.5px;color:#A05A3A;" id="ffehler"></span>
+  </div>
+</div>
+
+<h2>Sichern und übertragen</h2>
+<p class="sub">Weil alles nur lokal liegt, sind deine Profile weg, wenn du den Browserspeicher löschst oder das Gerät wechselst. Lade dir deshalb regelmäßig eine Sicherung herunter.</p>
+<div class="karte">
+  <div class="reihe" style="margin-top:0;">
+    <button class="b leer" id="export">Sicherung herunterladen</button>
+    <button class="b leer" id="importbtn">Sicherung einspielen</button>
+    <input type="file" id="importfile" accept="application/json" style="display:none;">
+    <span style="font-size:13.5px;color:var(--leise);" id="iomeldung"></span>
+  </div>
+</div>
+
+<div class="tip"><b>Zum Datenschutz, wenn du beruflich damit arbeitest:</b> Dass die Daten nur lokal liegen, ist technisch der sauberste Weg — es findet keine Übermittlung an Dritte statt. Trotzdem verarbeitest du personenbezogene Daten: Geburtsdatum, Uhrzeit und Ort sind identifizierend. Du brauchst dafür eine Einwilligung deiner Klient:innen und einen Absatz in deiner Datenschutzerklärung. Das Kürzel-Feld hilft zusätzlich: Trag als Namen nur ein, was du wirklich brauchst.</div>
+
+<div class="tip"><b>So arbeitest du damit:</b> Setz ein Profil aktiv, dann öffne ein Werkzeug — Chart-Rechner, Spannungskarte, Lunationen. Alle rechnen dann mit diesem Chart. Dein eigenes Profil ist immer mit einem Punkt markiert und lässt sich mit einem Klick zurückholen.</div>
+
+<div class="weiter"><a href="index.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Startseite</span></a><a href="tool.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Chart ansehen</span></a></div>
+<div class="foot">Profile &middot; Alle Daten liegen ausschlie&szlig;lich in deinem Browser und werden nicht &uuml;bertragen. Lade regelm&auml;&szlig;ig eine Sicherung herunter &mdash; beim L&ouml;schen des Browserspeichers sind sie sonst verloren.</div>
+</div>
+<script>
+/* ── Ortssuche: ein Feld statt Koordinaten und Zeitzone ────── */
+window.AC_ORT=null;
+function AC_ortFeld(inputId, listId, statusId){
+  var inp=document.getElementById(inputId), liste=document.getElementById(listId), st=document.getElementById(statusId);
+  if(!inp||!liste) return;
+  var treffer=[], aktiv=-1;
+  function zu(){ liste.classList.remove('auf'); aktiv=-1; }
+  function waehle(o){
+    window.AC_ORT=o;
+    inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
+    if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
+      o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
+      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
+    zu();
+    try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
+  }
+  function zeichne(){
+    liste.innerHTML='';
+    if(!treffer.length){ zu(); return; }
+    treffer.forEach(function(o,i){
+      var b=document.createElement('button'); b.type='button';
+      b.innerHTML=o.name+(o.alt?' <span class="land">· '+o.alt+'</span>':'')+' <span class="land">· '+o.land+'</span>';
+      if(i===aktiv) b.className='aktiv';
+      b.addEventListener('mousedown',function(ev){ ev.preventDefault(); waehle(o); });
+      liste.appendChild(b);
+    });
+    liste.classList.add('auf');
+  }
+  inp.addEventListener('input',function(){
+    window.AC_ORT=null;
+    if(st) st.textContent='';
+    treffer=window.AC_ortSuche(inp.value,8); aktiv=-1; zeichne();
+  });
+  inp.addEventListener('keydown',function(e){
+    if(!treffer.length) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); aktiv=Math.min(aktiv+1,treffer.length-1); zeichne(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); aktiv=Math.max(aktiv-1,0); zeichne(); }
+    else if(e.key==='Enter'&&aktiv>=0){ e.preventDefault(); waehle(treffer[aktiv]); }
+    else if(e.key==='Escape'){ zu(); }
+  });
+  inp.addEventListener('blur',function(){ setTimeout(zu,140); });
+  /* zuletzt gewählten Ort wiederherstellen */
+  try{
+    var g=JSON.parse(localStorage.getItem('ac_geburt')||'null');
+    var o=JSON.parse(localStorage.getItem('ac_ort')||'null');
+    if(o&&o.tz){ waehle(o); }
+  }catch(e){}
+}
+/* Liefert {lat,lon,tz} für die aktuelle Eingabe — tz als Stundenversatz zum Geburtszeitpunkt */
+function AC_ortDaten(y,mo,d,h,mi){
+  var o=window.AC_ORT;
+  if(!o) return null;
+  var off=window.AC_offset(o.tz,y,mo,d,h,mi);
+  if(off===null||isNaN(off)) return null;
+  return {lat:o.lat, lon:o.lon, tz:off, name:o.name+', '+o.land};
+}
+
+
+function el(id){return document.getElementById(id);}
+var bearbeite=null;
+
+function zeichne(){
+  var d=AC_P.lade(), voll=AC_P.zeigeNamen();
+  el('namenAn').checked=voll;
+  var box=el('liste'); box.innerHTML='';
+  if(!d.liste.length){
+    box.innerHTML='<div class="leerhinweis"><b>Noch keine Profile.</b><br>'+
+      'Leg unten dein eigenes an — setz dabei den Haken „Das bin ich selbst". Danach kannst du weitere Menschen hinzufügen.</div>';
+    return;
+  }
+  var sortiert=d.liste.slice().sort(function(a,b){
+    if(a.eigen!==b.eigen) return a.eigen?-1:1;
+    return (AC_P.anzeige(a,voll)).localeCompare(AC_P.anzeige(b,voll));
+  });
+  sortiert.forEach(function(p){
+    var ist=(p.id===d.aktiv);
+    var k=document.createElement('div'); k.className='pk'+(ist?' ist':'');
+    var kurz=AC_P.anzeige(p,false).replace(/[^A-Za-zÄÖÜäöü0-9]/g,'').slice(0,2).toUpperCase();
+    k.innerHTML=
+      '<div class="kreis">'+(kurz||'?')+'</div>'+
+      '<div><div class="pn">'+AC_P.anzeige(p,voll)+
+        (p.eigen?'<span class="marke2">du</span>':'')+
+        (ist?'<span class="marke2" style="background:var(--nacht)">aktiv</span>':'')+'</div>'+
+        '<div class="pd">'+('0'+p.d).slice(-2)+'.'+('0'+p.mo).slice(-2)+'.'+p.y+' · '+
+        ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'')+
+        (p.notiz?'<br>'+p.notiz.slice(0,90)+(p.notiz.length>90?'…':''):'')+'</div></div>'+
+      '<div class="pakt">'+
+        (ist?'<a class="b klein" style="text-decoration:none;display:inline-block" href="uebersicht.html">Übersicht öffnen</a>':'<button class="b klein" data-a="aktiv" data-i="'+p.id+'">Aktiv setzen</button>')+
+        '<button class="b leer klein" data-a="bearb" data-i="'+p.id+'">Bearbeiten</button>'+
+        (p.eigen?'':'<button class="b leer klein" data-a="eigen" data-i="'+p.id+'">Das bin ich</button>')+
+        '<button class="b warn klein" data-a="weg" data-i="'+p.id+'">Löschen</button>'+
+      '</div>';
+    box.appendChild(k);
+  });
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-a]'),function(b){
+    b.addEventListener('click',function(){
+      var a=b.getAttribute('data-a'), i=b.getAttribute('data-i');
+      if(a==='aktiv'){ AC_P.setzeAktiv(i); zeichne(); }
+      if(a==='eigen'){ AC_P.alsEigenes(i); zeichne(); }
+      if(a==='weg'){
+        var p=AC_P.alle().filter(function(x){return x.id===i;})[0];
+        if(confirm('Profil „'+AC_P.anzeige(p,AC_P.zeigeNamen())+'" wirklich löschen? Das lässt sich nicht rückgängig machen.')){
+          AC_P.loesche(i); zeichne();
+        }
+      }
+      if(a==='bearb'){ laden(i); }
+    });
+  });
+}
+
+function laden(pid){
+  var p=AC_P.alle().filter(function(x){return x.id===pid;})[0];
+  if(!p) return;
+  bearbeite=pid;
+  el('fname').value=p.name||''; el('falias').value=p.alias||'';
+  el('fdate').value=p.y+'-'+('0'+p.mo).slice(-2)+'-'+('0'+p.d).slice(-2);
+  el('ftime').value=('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2);
+  el('fnotiz').value=p.notiz||''; el('feigen').checked=!!p.eigen;
+  el('fort').value=p.ort||'';
+  window.AC_ORT=null;
+  el('fortok').innerHTML=p.ort?('Gespeichert: <b>'+p.ort+'</b> — nur ändern, wenn du einen neuen Ort wählst.'):'';
+  el('formtitel').textContent='Profil bearbeiten';
+  el('abbrechen').style.display='';
+  el('formtitel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function leeren(){
+  bearbeite=null;
+  ['fname','falias','fnotiz','fort'].forEach(function(i){el(i).value='';});
+  el('fdate').value='1990-01-01'; el('ftime').value='12:00';
+  el('feigen').checked=false; el('fortok').textContent=''; el('ffehler').textContent='';
+  window.AC_ORT=null;
+  el('formtitel').textContent='Profil anlegen';
+  el('abbrechen').style.display='none';
+}
+
+el('speichern').addEventListener('click',function(){
+  var f=el('ffehler'); f.textContent='';
+  var dv=el('fdate').value, tv=el('ftime').value;
+  if(!dv||!tv){ f.textContent='Datum und Uhrzeit fehlen.'; return; }
+  var p=dv.split('-').map(Number), t=tv.split(':').map(Number);
+  var alt=bearbeite?AC_P.alle().filter(function(x){return x.id===bearbeite;})[0]:null;
+  var od=AC_ortDaten(p[0],p[1],p[2],t[0],t[1]);
+  if(!od && !alt){ f.textContent='Bitte einen Geburtsort aus der Liste wählen.'; return; }
+  var daten={ name:el('fname').value, alias:el('falias').value,
+    y:p[0], mo:p[1], d:p[2], h:t[0], mi:t[1], notiz:el('fnotiz').value, eigen:el('feigen').checked };
+  if(od){ daten.lat=od.lat; daten.lon=od.lon; daten.tz=od.tz; daten.ort=od.name; }
+  else { daten.lat=alt.lat; daten.lon=alt.lon; daten.tz=alt.tz; daten.ort=alt.ort; }
+  if(Math.abs(daten.lat)>66){ f.textContent='Für Orte nördlich des Polarkreises funktioniert die Häuserberechnung nicht.'; return; }
+  if(bearbeite){
+    AC_P.aendere(bearbeite,daten);
+    if(daten.eigen) AC_P.alsEigenes(bearbeite);
+    if(AC_P.lade().aktiv===bearbeite) AC_P.setzeAktiv(bearbeite);
+  } else {
+    var np=AC_P.hinzu(daten);
+    AC_P.setzeAktiv(np.id);
+  }
+  leeren(); zeichne();
+});
+el('abbrechen').addEventListener('click',leeren);
+el('namenAn').addEventListener('change',function(){ AC_P.setzeNamenSichtbar(el('namenAn').checked); zeichne(); });
+el('export').addEventListener('click',function(){ AC_P.exportieren(); });
+el('importbtn').addEventListener('click',function(){ el('importfile').click(); });
+el('importfile').addEventListener('change',function(e){
+  var f=e.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var n=AC_P.importieren(r.result,false);
+      el('iomeldung').textContent=n+' Profil(e) hinzugefügt.';
+      zeichne();
+    }catch(err){ el('iomeldung').textContent='Datei konnte nicht gelesen werden.'; }
+  };
+  r.readAsText(f);
+  e.target.value='';
+});
+zeichne();
+
+try{ AC_ortFeld('fort','fortliste','fortok'); }catch(e){ console.error('Ortssuche:',e); }
+</script>
+</body></html>

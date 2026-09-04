@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wissen · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+.stufe{margin-bottom:34px;}
+.stufekopf{display:flex;gap:13px;align-items:baseline;margin-bottom:5px;}
+.stufenr{font-family:var(--serif);font-size:34px;color:var(--linie-stark);line-height:1;}
+.stufekopf h2{margin:0;font-size:23px;}
+.stufetext{font-size:14.5px;color:var(--leise);margin:0 0 14px 47px;max-width:60ch;}
+@media(max-width:560px){.stufetext{margin-left:0;}}
+.zeilen{display:grid;gap:8px;}
+.zeilen a{display:grid;grid-template-columns:1fr;gap:2px;background:var(--papier);border:1px solid var(--linie);
+ border-radius:14px;padding:13px 16px;text-decoration:none;}
+.zeilen a:hover{border-color:var(--nacht);background:var(--nacht-bg);}
+.zeilen b{font-weight:500;color:var(--tinte);font-size:16px;}
+.zeilen span{font-size:13.5px;color:var(--leise);line-height:1.45;}
+.wz{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px;}
+@media(max-width:600px){.wz{grid-template-columns:1fr;}}
+.wz a{display:block;background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:16px;padding:15px 17px;text-decoration:none;}
+.wz a:hover{border-color:var(--nacht);}
+.wz b{display:block;font-family:var(--serif);font-size:17px;color:var(--nacht);margin-bottom:2px;}
+.wz span{font-size:13.5px;color:var(--leise);}
+.springen{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:26px;}
+.springen a{font-family:var(--sans);font-size:13.5px;border:1px solid var(--linie);background:var(--bg);
+ color:var(--nacht);padding:7px 14px;border-radius:18px;text-decoration:none;}
+.springen a:hover{background:var(--nacht-bg);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+<div class="eyebrow">Bibliothek</div>
+<h1>Alles zum <em>Nachschlagen.</em></h1>
+<p class="lede">Sechs Stufen, die aufeinander aufbauen. Du musst nicht der Reihe nach vorgehen — aber wenn du bei null anfängst, ist das die Reihenfolge, die am wenigsten frustriert. Ein Modul pro Sitzung reicht völlig.</p>
+<div class="springen"><a href="#s1">1 · Fundament</a><a href="#s2">2 · Chart lesen</a><a href="#s3">3 · Dich verstehen</a><a href="#s4">4 · Timing</a><a href="#s5">5 · Beziehungen</a><a href="#s6">6 · Begleiten</a><a href="#s7">7 · Eigene Praxis</a></div>
+<h2 style="margin-top:0;">Deine Werkzeuge</h2>
+<p class="sub">Rechnen statt lesen — diese vier arbeiten mit echten Daten.</p>
+<div class="wz"><a href="uebersicht.html"><b>Übersicht</b><span>Alles zum aktiven Profil auf einer Seite</span></a><a href="chart-rechner.html"><b>Chart-Rechner</b><span>Vollständige Berechnung mit Kettenleser</span></a><a href="tool.html"><b>Fang bei dir an</b><span>Der einfache Einstieg ohne Vorwissen</span></a><a href="menschen.html"><b>Profile</b><span>Deine Arbeitsfläche verwalten</span></a></div>
+<div class="stufe" id="s1">
+<div class="stufekopf"><span class="stufenr">1</span><h2>Fundament</h2></div>
+<p class="stufetext">Die Bausteine. Wenn du bei null anfängst, ist das hier die Reihenfolge.</p>
+<div class="zeilen">
+<a href="grundlagen.html"><b>Die Grundlagen</b><span>Was ein Chart überhaupt ist und woraus es besteht</span></a>
+<a href="planeten.html"><b>Die 10 Planeten</b><span>Welche Funktion jeder Planet beschreibt</span></a>
+<a href="zeichen.html"><b>Die 12 Zeichen</b><span>Der Stil, in dem ein Planet arbeitet</span></a>
+<a href="haeuser.html"><b>Die 12 Häuser</b><span>Die Lebensbereiche, auf denen es stattfindet</span></a>
+<a href="aspekte.html"><b>Die Aspekte</b><span>Wie die Planeten miteinander reden</span></a>
+<a href="achsen.html"><b>Die 4 Achsen</b><span>Aszendent, MC, Deszendent, IC</span></a>
+<a href="mondknoten.html"><b>Die Mondknoten</b><span>Herkunft und Richtung</span></a>
+<a href="retrograde.html"><b>Rückläufige Planeten</b><span>Was Rückläufigkeit wirklich bedeutet</span></a>
+<a href="glossar.html"><b>Das Glossar</b><span>Alle Begriffe zum Nachschlagen</span></a>
+</div></div>
+<div class="stufe" id="s2">
+<div class="stufekopf"><span class="stufenr">2</span><h2>Chart lesen</h2></div>
+<p class="stufetext">Vom Nachschlagen zum Können. Methode statt Auswendiglernen.</p>
+<div class="zeilen">
+<a href="chart-lesen.html"><b>Wie du ein Chart liest</b><span>Die Reihenfolge, in der man vorgeht</span></a>
+<a href="linien-lesen.html"><b>Die Linien im Chart lesen</b><span>Aspektfiguren erkennen</span></a>
+<a href="orbis-gewichtung.html"><b>Orbis &amp; Gewichtung</b><span>Was laut ist und was Hintergrund</span></a>
+<a href="herrscher.html"><b>Herrscher &amp; Dispositoren</b><span>Wohin ein Thema weiterläuft</span></a>
+<a href="haeusersysteme.html"><b>Whole Sign oder Placidus?</b><span>Die Systemfrage, praktisch beantwortet</span></a>
+<a href="planeten-in-zeichen.html"><b>Planeten in den Zeichen</b><span>Der Stil jedes Planeten</span></a>
+<a href="planet-sonne.html"><b>☉ Sonne in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planet-mond.html"><b>☽ Mond in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planet-merkur.html"><b>☿ Merkur in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planet-venus.html"><b>♀ Venus in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planet-mars.html"><b>♂ Mars in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planet-jupiter.html"><b>♃ Jupiter in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planet-saturn.html"><b>♄ Saturn in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
+<a href="planeten-in-haeusern.html"><b>Planet, Zeichen, Haus</b><span>Alle drei Ebenen kombiniert, mit vier Blickwinkeln</span></a>
+<a href="kleine-punkte.html"><b>Die kleinen Punkte</b><span>Chiron, Lilith, Glückspunkt und wie eng man sie fasst</span></a>
+<a href="aspekt-muster.html"><b>Die Aspekt-Muster</b><span>T-Quadrat, Großes Trigon, Stellium</span></a>
+<a href="uebungscharts.html"><b>Übungscharts</b><span>Zum Selbertesten</span></a>
+<a href="quiz.html"><b>Teste dein Wissen</b><span>Fragen zu allen Stufen</span></a>
+</div></div>
+<div class="stufe" id="s3">
+<div class="stufekopf"><span class="stufenr">3</span><h2>Dich verstehen</h2></div>
+<p class="stufetext">Die Anwendung auf einen konkreten Menschen — dich oder jemand anderen.</p>
+<div class="zeilen">
+<a href="haeuser-lebensbuehnen.html"><b>Die 12 Lebensbühnen</b><span>Häuser als Erfahrungsräume</span></a>
+<a href="haus-achsen.html"><b>Deine Haus-Achsen</b><span>Gegenüberliegende Häuser gehören zusammen</span></a>
+<a href="element-mix.html"><b>Dein Element-Mix</b><span>Feuer, Erde, Luft, Wasser gewichtet</span></a>
+<a href="mein-chart.html"><b>Dein Chart, Haus für Haus</b><span>Die vollständige Durchsicht</span></a>
+<a href="spannungskarte.html"><b>Die Spannungskarte</b><span>Wo der Druck sitzt — deine Breaking Points</span></a>
+<a href="lilith-arbeit.html"><b>Die Lilith-Arbeit</b><span>Was du dir nicht erlaubst, in vier Arbeitsfeldern</span></a>
+<a href="lebens-kompass.html"><b>Dein Chart als Lebens-Kompass</b><span>Orientierung statt Vorhersage</span></a>
+<a href="neurodivergente-astrologie.html"><b>Für anders verdrahtete Köpfe</b><span>Wie du das hier nutzt, ohne dich zu überfordern</span></a>
+<a href="neurodivergenz-vertiefung.html"><b>Neurodivergentes Erleben im Chart</b><span>Vertiefung</span></a>
+<a href="ruhe-schlaf.html"><b>Ruhe &amp; Zur-Ruhe-Kommen</b><span>Was dein Chart über Erholung sagt</span></a>
+</div></div>
+<div class="stufe" id="s4">
+<div class="stufekopf"><span class="stufenr">4</span><h2>Timing</h2></div>
+<p class="stufetext">Was gerade dran ist — und wann etwas ansteht.</p>
+<div class="zeilen">
+<a href="timing.html"><b>Timing lesen</b><span>Wie Transite überhaupt wirken</span></a>
+<a href="lunationen.html"><b>Neumonde, Vollmonde &amp; Finsternisse</b><span>Alle Termine bis 2028 mit deinen Treffern</span></a>
+<a href="mondphasen-rhythmus.html"><b>Die Mondphasen als Rhythmus</b><span>Der monatliche Takt</span></a>
+<a href="mondzyklen.html"><b>Mondzyklen</b><span>Grundlagen der Lunationen</span></a>
+<a href="finsternisse.html"><b>Finsternisse lesen</b><span>Serien, Achsen, Zeitfenster</span></a>
+<a href="planetenzyklen.html"><b>Planetenzyklen</b><span>Saturn, Jupiter, Uranus und ihre Wiederkehr</span></a>
+<a href="solar-return-light.html"><b>Der Solar Return</b><span>Das Jahreschart, einfach erklärt</span></a>
+<a href="solar-return-vertiefung.html"><b>Solar Return, vertieft</b><span>Für die genaue Arbeit</span></a>
+<a href="profektionen.html"><b>Jahresprofektionen</b><span>Welches Haus dein Jahr regiert</span></a>
+<a href="astrokartographie.html"><b>Orte lesen</b><span>Wie ein Ort das Chart verschiebt</span></a>
+</div></div>
+<div class="stufe" id="s5">
+<div class="stufekopf"><span class="stufenr">5</span><h2>Beziehungen</h2></div>
+<p class="stufetext">Zwei Charts nebeneinander — und was zwischen ihnen passiert.</p>
+<div class="zeilen">
+<a href="synastrie.html"><b>Synastrie — zwei Charts</b><span>Die Grundlagen des Vergleichs</span></a>
+<a href="synastrie-vertiefung.html"><b>Synastrie-Vertiefung</b><span>Häuserüberlagerung, Gewichtung, Fallstricke</span></a>
+<a href="dating-muster.html"><b>Muster im Dating</b><span>Wiederkehrende Dynamiken erkennen</span></a>
+</div></div>
+<div class="stufe" id="s6">
+<div class="stufekopf"><span class="stufenr">6</span><h2>Begleiten</h2></div>
+<p class="stufetext">Für alle, die mit anderen arbeiten. Das ist die Stufe, die aus Wissen einen Beruf macht.</p>
+<div class="zeilen">
+<a href="coaching.html"><b>Coaching &amp; Astrologie</b><span>Die Haltung dahinter</span></a>
+<a href="coaching-verbinden.html"><b>Astrologie &amp; Coaching verbinden</b><span>Wie beides ineinandergreift</span></a>
+<a href="leitfaden.html"><b>Jeden Menschen richtig ansprechen</b><span>Der Einstieg in die Leitfäden</span></a>
+<a href="leitfaden-fundament.html"><b>Was jemand schon mitbringt</b><span>Ressourcen erkennen</span></a>
+<a href="leitfaden-mond.html"><b>Den Mond ansprechen</b><span>Bedürfnisse benennen</span></a>
+<a href="leitfaden-merkur.html"><b>Den Merkur ansprechen</b><span>Passend erklären</span></a>
+<a href="leitfaden-mars.html"><b>Den Mars ansprechen</b><span>Antrieb aktivieren</span></a>
+<a href="reading-ablauf.html"><b>Der Reading-Ablauf</b><span>Struktur für ein Gespräch</span></a>
+<a href="reading-gespraech.html"><b>Ein Reading als Gespräch</b><span>Nicht vortragen, sondern fragen</span></a>
+<a href="fragen-schatzkiste.html"><b>Die Fragen-Schatzkiste</b><span>Gute Fragen für jede Situation</span></a>
+<a href="klientinnen-fragen.html"><b>Häufige Fragen</b><span>Souverän beantwortet</span></a>
+<a href="mondknoten-coaching.html"><b>Die Mondknoten fürs Coaching</b><span>Richtung statt Diagnose</span></a>
+<a href="learning-seite.html"><b>Die Learning-Seite</b><span>Erkenntnisse festhalten</span></a>
+<a href="grenzen.html"><b>Wann du nicht deutest</b><span>Die wichtigste Seite überhaupt</span></a>
+<a href="haltung-ethik.html"><b>Haltung &amp; Ethik</b><span>Verantwortung im Reading</span></a>
+</div></div>
+<div class="stufe" id="s7">
+<div class="stufekopf"><span class="stufenr">7</span><h2>Eigene Praxis</h2></div>
+<p class="stufetext">Wenn du aus dem Können ein Angebot machen willst. Diese Seiten sind Vorlagen und Struktur, kein Astrologiewissen.</p>
+<div class="zeilen">
+<a href="angebote-struktur.html"><b>Deine Angebote</b><span>Wie du Formate und Preise strukturierst</span></a>
+<a href="ueber-mich-vorlage.html"><b>Deine Über-mich-Seite</b><span>Vorlage für die eigene Darstellung</span></a>
+<a href="werkzeuge.html"><b>Deine Werkzeuge</b><span>Was du praktisch brauchst</span></a>
+<a href="konzept-plattform.html"><b>Deine Coaching-Plattform</b><span>Konzept und Aufbau</span></a>
+</div></div>
+
+<div class="tip"><b>Wie du am besten lernst:</b> Nimm ein Modul, wende es sofort auf dein eigenes Chart an, und lass es liegen. Wissen, das man nicht benutzt, verschwindet. Deshalb steht in fast jedem Modul ein Rechner oder eine Übung — nutz die, statt weiterzulesen.</div>
+<div class="foot">Bibliothek &middot; 69 Module in sechs Stufen. Alles im Browser, nichts wird &uuml;bertragen.</div>
+</div>
+</body></html>

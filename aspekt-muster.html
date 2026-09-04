@@ -70,13 +70,20 @@ a{color:var(--nacht);}
 .ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
  border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
 .ac-tool:hover{background:var(--nacht-bg);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<a class="ac-tool" href="tool.html">Dein Chart</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html" class="ist">Wissen</a></nav>
 </div></div>
 
 <div class="wrap"><div class="eyebrow">Vertiefung</div><h1>Die <em>Aspekt-Muster.</em></h1><p class="lede">Wenn mehrere Aspekte zusammen eine Figur bilden — großes Trigon, T-Quadrat, Stellium, Kite. Die zentralen Lebensthemen im Chart.</p>
