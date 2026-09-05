@@ -74,22 +74,71 @@ a{color:var(--nacht);}
  border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
 .ac-tool:hover{background:var(--nacht-bg);}
 
-.kopfkarte{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:20px 22px;margin-bottom:16px;
- display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-.kopfkarte .kreis{width:54px;height:54px;border-radius:50%;background:var(--nacht);color:#fff;
+.ub-kopfkarte .kreis{width:54px;height:54px;border-radius:50%;background:var(--nacht);color:#fff;
  display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;flex:none;}
-.kopfkarte .kn{font-family:var(--serif);font-size:23px;line-height:1.15;}
-.kopfkarte .kd{font-size:13.5px;color:var(--leise);margin-top:3px;}
-.kopfkarte .kw{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;}
-.kbtn{font-family:var(--sans);font-size:13px;border:1px solid var(--linie);background:var(--bg);color:var(--nacht);
+.ub-kopfkarte .kn{font-family:var(--serif);font-size:23px;line-height:1.15;}
+.ub-kopfkarte .kd{font-size:13.5px;color:var(--leise);margin-top:3px;}
+.ub-kopfkarte .kw{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;}
+.ub-kbtn{font-family:var(--sans);font-size:13px;border:1px solid var(--linie);background:var(--bg);color:var(--nacht);
  padding:7px 14px;border-radius:18px;text-decoration:none;}
-.kbtn:hover{background:var(--nacht-bg);}
-.reiter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--linie);padding-bottom:10px;}
-.reiter button{font-family:var(--sans);font-size:14.5px;padding:8px 16px;border:1px solid var(--linie);
+.ub-kbtn:hover{background:var(--nacht-bg);}
+.ub-reiter button{font-family:var(--sans);font-size:14.5px;padding:8px 16px;border:1px solid var(--linie);
  background:var(--bg);color:var(--tinte);border-radius:20px;cursor:pointer;}
-.reiter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
-.zweispalt{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:18px;align-items:start;}
-@media(max-width:760px){.zweispalt{grid-template-columns:1fr;}}
+.ub-reiter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+@media(max-width:700px){.ub-oben{grid-template-columns:1fr;}}
+.ub-tabbox{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.ub-unten{display:grid;grid-template-columns:1fr;gap:0;}
+@media(min-width:900px){.ub-unten{grid-template-columns:1fr 1fr;gap:13px;align-items:start;}
+ .ub-unten>.box{margin-bottom:0;}
+ .ub-unten>.voll{grid-column:1/-1;}}
+svg.rad{display:block;width:100%;height:auto;}
+table.pl{width:100%;border-collapse:collapse;font-size:14.5px;}
+table.pl th,table.pl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linie);}
+table.pl th{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--messing);font-weight:500;}
+table.pl{table-layout:auto;}
+table.pl td.g{font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap;}
+table.pl td,table.pl th{word-break:normal;}
+table.pl td.gly{font-size:17px;color:var(--nacht);width:26px;}
+table.pl tr.achse td{background:var(--messing-bg);}
+table.pl td.r{color:var(--leise);font-size:12.5px;}
+.ub-box h3{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.ub-box .hint{font-size:13px;color:var(--leise);margin-bottom:12px;}
+.ub-kernz b{display:block;font-family:var(--serif);font-size:16px;margin-bottom:2px;}
+.ub-kernz .st{font-size:12px;color:var(--messing);letter-spacing:.04em;margin-bottom:5px;}
+.ub-kernz p{margin:0;font-size:14.8px;line-height:1.55;}
+.ub-spz b{color:var(--tinte);}
+.ub-kette .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:7px;padding:3px 8px;white-space:nowrap;}
+.ub-kette .s{flex:1 1 100%;font-size:13.5px;color:var(--leise);margin-top:2px;}
+.ub-tz2 .k{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:2px;}
+.ub-tz2.eng{background:var(--messing-bg);}
+.ub-lunz .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
+.ub-lunz.treffer{background:var(--nacht-bg);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+/* — Übersicht — */
+
+.ub-kopfkarte{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:20px 22px;margin-bottom:16px;
+ display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.ub-kopfkarte .kreis{width:54px;height:54px;border-radius:50%;background:var(--nacht);color:#fff;
+ display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;flex:none;}
+.ub-kopfkarte .kn{font-family:var(--serif);font-size:23px;line-height:1.15;}
+.ub-kopfkarte .kd{font-size:13.5px;color:var(--leise);margin-top:3px;}
+.ub-kopfkarte .kw{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;}
+.ub-kbtn{font-family:var(--sans);font-size:13px;border:1px solid var(--linie);background:var(--bg);color:var(--nacht);
+ padding:7px 14px;border-radius:18px;text-decoration:none;}
+.ub-kbtn:hover{background:var(--nacht-bg);}
+.ub-reiter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--linie);padding-bottom:10px;}
+.ub-reiter button{font-family:var(--sans);font-size:14.5px;padding:8px 16px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:20px;cursor:pointer;}
+.ub-reiter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+@media(max-width:760px){}
 svg.rad{display:block;width:100%;height:auto;}
 table.pl{width:100%;border-collapse:collapse;font-size:14.5px;}
 table.pl th,table.pl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linie);}
@@ -98,37 +147,31 @@ table.pl td.g{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:
 table.pl td.gly{font-size:17px;color:var(--nacht);width:26px;}
 table.pl tr.achse td{background:var(--messing-bg);}
 table.pl td.r{color:var(--leise);font-size:12.5px;}
-.box{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:18px 20px;margin-bottom:13px;}
-.box h3{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
-.box .hint{font-size:13px;color:var(--leise);margin-bottom:12px;}
-.kernz{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:8px;}
-.kernz b{display:block;font-family:var(--serif);font-size:16px;margin-bottom:2px;}
-.kernz .st{font-size:12px;color:var(--messing);letter-spacing:.04em;margin-bottom:5px;}
-.kernz p{margin:0;font-size:14.8px;line-height:1.55;}
-.spz{background:#FBF0E8;border:1px solid #EBD5C4;border-radius:13px;padding:13px 15px;margin-bottom:8px;font-size:14.5px;line-height:1.55;}
-.spz b{color:var(--tinte);}
-.kette{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--bg);border-radius:11px;
+.ub-box{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:18px 20px;margin-bottom:13px;}
+.ub-box h3{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.ub-box .hint{font-size:13px;color:var(--leise);margin-bottom:12px;}
+.ub-kernz{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:8px;}
+.ub-kernz b{display:block;font-family:var(--serif);font-size:16px;margin-bottom:2px;}
+.ub-kernz .st{font-size:12px;color:var(--messing);letter-spacing:.04em;margin-bottom:5px;}
+.ub-kernz p{margin:0;font-size:14.8px;line-height:1.55;}
+.ub-spz{background:#FBF0E8;border:1px solid #EBD5C4;border-radius:13px;padding:13px 15px;margin-bottom:8px;font-size:14.5px;line-height:1.55;}
+.ub-spz b{color:var(--tinte);}
+.ub-kette{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--bg);border-radius:11px;
  padding:9px 12px;margin-bottom:6px;font-size:14px;}
-.kette .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
+.ub-kette .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
  border:1px solid var(--linie);border-radius:7px;padding:3px 8px;white-space:nowrap;}
-.kette .s{flex:1 1 100%;font-size:13.5px;color:var(--leise);margin-top:2px;}
-.tz2{background:var(--bg);border-radius:12px;padding:11px 14px;margin-bottom:7px;font-size:14.5px;line-height:1.55;}
-.tz2 .k{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:2px;}
-.tz2.eng{background:var(--messing-bg);}
-.lunz{background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:7px;font-size:14.5px;line-height:1.55;}
-.lunz .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
-.lunz.treffer{background:var(--nacht-bg);}
-.leerh{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;padding:26px;text-align:center;
+.ub-kette .s{flex:1 1 100%;font-size:13.5px;color:var(--leise);margin-top:2px;}
+.ub-tz2{background:var(--bg);border-radius:12px;padding:11px 14px;margin-bottom:7px;font-size:14.5px;line-height:1.55;}
+.ub-tz2 .k{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:2px;}
+.ub-tz2.eng{background:var(--messing-bg);}
+.ub-lunz{background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:7px;font-size:14.5px;line-height:1.55;}
+.ub-lunz .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
+.ub-lunz.treffer{background:var(--nacht-bg);}
+.ub-leerh{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;padding:26px;text-align:center;
  color:var(--leise);line-height:1.6;}
-.notizbox{background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:12px;padding:13px 16px;
+.ub-notizbox{background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:12px;padding:13px 16px;
  font-size:14.5px;line-height:1.6;margin-bottom:13px;}
-
-.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
-.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
- padding:6px 12px;border-radius:16px;}
-.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
-.ac-nav a.ist{background:var(--nacht);color:#fff;}
-@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+.tabbox{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -340,7 +383,7 @@ function bauen(){
   var box=document.getElementById('inhalt');
   var p=(window.AC_P?AC_P.aktives():null);
   if(!p){
-    box.innerHTML='<div class="leerh"><b>Noch kein Profil angelegt.</b><br><br>Leg unter <a href="menschen.html">Profile</a> dein eigenes Chart an — danach siehst du hier alles auf einen Blick.</div>';
+    box.innerHTML='<div class="ub-leerh"><b>Noch kein Profil angelegt.</b><br><br>Leg unter <a href="menschen.html">Profile</a> dein eigenes Chart an — danach siehst du hier alles auf einen Blick.</div>';
     return;
   }
   var voll=AC_P.zeigeNamen(), name=AC_P.anzeige(p,voll);
@@ -349,41 +392,43 @@ function bauen(){
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
   var P=chartAt(y,mo,d,ut,p.lat,p.lon);
   var jahr=new Date().getFullYear();
-  var SR=solarReturn(P.Sonne,jahr,p.lat,p.lon);
+  var wl=(p.wlat!==undefined&&p.wlat!==null)?p.wlat:p.lat, wo=(p.wlon!==undefined&&p.wlon!==null)?p.wlon:p.lon;
+  var SR=solarReturn(P.Sonne,jahr,wl,wo);
   var n=new Date();
   var T=chartAt(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60,p.lat,p.lon);
   var kurz=name.replace(/[^A-Za-zÄÖÜäöü0-9]/g,'').slice(0,2).toUpperCase();
-  var h='<div class="kopfkarte"><div class="kreis">'+(kurz||'?')+'</div><div><div class="kn">'+name+
+  var h='<div class="ub-kopfkarte"><div class="kreis">'+(kurz||'?')+'</div><div><div class="kn">'+name+
     (p.eigen?' <span style="font-size:11px;background:var(--messing);color:#fff;border-radius:11px;padding:2px 8px;vertical-align:4px;">du</span>':'')+
     '</div><div class="kd">'+('0'+p.d).slice(-2)+'.'+('0'+p.mo).slice(-2)+'.'+p.y+' · '+
     ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'')+' · '+
     SIGNS[Math.floor(P.Sonne/30)]+'-Sonne, '+SIGNS[Math.floor(P.Mond/30)]+'-Mond, '+SIGNS[Math.floor(P.ASC/30)]+'-Aszendent</div></div>'+
-    '<div class="kw"><a class="kbtn" href="menschen.html">Profil wechseln</a>'+
-    '<a class="kbtn" href="chart-rechner.html">Chart-Rechner</a>'+
-    '<a class="kbtn" href="spannungskarte.html">Spannungskarte</a></div></div>';
-  if(p.notiz) h+='<div class="notizbox"><b>Notiz:</b> '+p.notiz+'</div>';
-  h+='<div class="reiter">'+[['radix','Geburtschart'],['jahr','Jahreschart '+jahr],['jetzt','Was gerade läuft']].map(function(r){
+    '<div class="kw"><a class="ub-kbtn" href="menschen.html">Profil wechseln</a>'+
+    '<a class="ub-kbtn" href="chart-rechner.html">Chart-Rechner</a>'+
+    '<a class="ub-kbtn" href="spannungskarte.html">Spannungskarte</a></div></div>';
+  if(p.notiz) h+='<div class="ub-notizbox"><b>Notiz:</b> '+p.notiz+'</div>';
+  h+='<div class="ub-reiter">'+[['radix','Geburtschart'],['jahr','Jahreschart '+jahr],['jetzt','Was gerade läuft']].map(function(r){
       return '<button type="button" data-r="'+r[0]+'" aria-pressed="'+(aktiverReiter===r[0])+'">'+r[1]+'</button>';}).join('')+
     '</div><div id="tab"></div>';
   box.innerHTML=h;
-  Array.prototype.forEach.call(box.querySelectorAll('.reiter button'),function(b){
+  Array.prototype.forEach.call(box.querySelectorAll('.ub-reiter button'),function(b){
     b.addEventListener('click',function(){aktiverReiter=b.getAttribute('data-r');bauen();});
   });
   var el=document.getElementById('tab');
   if(aktiverReiter==='radix') el.innerHTML=tabRadix(P);
-  else if(aktiverReiter==='jahr') el.innerHTML=tabJahr(P,SR,jahr);
+  else if(aktiverReiter==='jahr') el.innerHTML=tabJahr(P,SR,jahr,p);
   else el.innerHTML=tabJetzt(P,T);
   var svg=el.querySelector('svg.rad');
   if(svg) radZeichnen(svg,(aktiverReiter==='jahr'&&SR)?SR:P);
 }
 function tabRadix(P){
   var sz=Math.floor(P.Sonne/30),mz=Math.floor(P.Mond/30),az=Math.floor(P.ASC/30);
-  var h='<div class="zweispalt"><div><div class="box" style="padding:12px;"><svg class="rad" viewBox="0 0 400 400" role="img" aria-label="Geburtschart"></svg></div>'+
-    '<div class="box">'+tabelle(P,'Radix')+'</div></div><div>';
-  h+='<div class="box"><h3>Die drei Kernsätze</h3><div class="hint">Sonne, Mond und Aszendent tragen die Hälfte jedes Charts.</div>'+
-    '<div class="kernz"><b>Antrieb</b><div class="st">Sonne in '+SIGNS[sz]+' · '+(haus(P,P.Sonne)+1)+'. Haus</div><p>'+SONNE[sz]+' Der Schauplatz: '+HT[haus(P,P.Sonne)]+'.</p></div>'+
-    '<div class="kernz"><b>Bedürfnis</b><div class="st">Mond in '+SIGNS[mz]+' · '+(haus(P,P.Mond)+1)+'. Haus</div><p>'+MOND[mz]+'</p></div>'+
-    '<div class="kernz"><b>Wirkung</b><div class="st">Aszendent in '+SIGNS[az]+'</div><p>'+ASZ[az]+'</p></div></div>';
+  var h='<div class="ub-oben">'+
+    '<div class="ub-box" style="padding:12px;"><svg class="rad" viewBox="0 0 400 400" role="img" aria-label="Geburtschart"></svg></div>'+
+    '<div class="ub-box tabbox">'+tabelle(P,'Radix')+'</div></div><div class="ub-unten">';
+  h+='<div class="ub-box"><h3>Die drei Kernsätze</h3><div class="hint">Sonne, Mond und Aszendent tragen die Hälfte jedes Charts.</div>'+
+    '<div class="ub-kernz"><b>Antrieb</b><div class="st">Sonne in '+SIGNS[sz]+' · '+(haus(P,P.Sonne)+1)+'. Haus</div><p>'+SONNE[sz]+' Der Schauplatz: '+HT[haus(P,P.Sonne)]+'.</p></div>'+
+    '<div class="ub-kernz"><b>Bedürfnis</b><div class="st">Mond in '+SIGNS[mz]+' · '+(haus(P,P.Mond)+1)+'. Haus</div><p>'+MOND[mz]+'</p></div>'+
+    '<div class="ub-kernz"><b>Wirkung</b><div class="st">Aszendent in '+SIGNS[az]+'</div><p>'+ASZ[az]+'</p></div></div>';
   var ks=Object.keys(P).filter(function(k){return k!=='_jd';}),sp=[];
   for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
     var a=ks[i],b=ks[j];
@@ -396,35 +441,36 @@ function tabRadix(P){
     });
   }
   sp.sort(function(x,y){return y.s-x.s;});
-  h+='<div class="box"><h3>Wo es zieht</h3><div class="hint">Die stärksten Spannungsachsen. Nicht zum Auflösen — zum Abwechseln.</div>';
+  h+='<div class="ub-box"><h3>Wo es zieht</h3><div class="hint">Die stärksten Spannungsachsen. Nicht zum Auflösen — zum Abwechseln.</div>';
   if(!sp.length) h+='<p style="margin:0;font-size:14.5px;">Keine enge Spannungsachse. Weniger eingebauter Druck, aber auch weniger eingebauter Antrieb.</p>';
   sp.slice(0,3).forEach(function(x){
-    h+='<div class="spz"><b>'+x.a+' '+x.t+' '+x.b+'</b> · '+x.o.toFixed(1)+'°<br>'+
+    h+='<div class="ub-spz"><b>'+x.a+' '+x.t+' '+x.b+'</b> · '+x.o.toFixed(1)+'°<br>'+
       x.a+' will '+(POLW[x.a]||'etwas')+', '+x.b+' will '+(POLW[x.b]||'etwas')+'. Beide gehören dazu.</div>';
   });
   h+='<p class="hint" style="margin:8px 0 0;"><a href="spannungskarte.html">Alle Spannungsachsen ansehen →</a></p></div>';
-  h+='<div class="box"><h3>Wohin die Lebensbereiche laufen</h3><div class="hint">Das Zeichen am Haus bestimmt den Herrscher. Wo der steht, dort findet das Thema statt.</div>';
+  h+='<div class="ub-box voll"><h3>Wohin die Lebensbereiche laufen</h3><div class="hint">Das Zeichen am Haus bestimmt den Herrscher. Wo der steht, dort findet das Thema statt.</div>';
   for(var k=0;k<12;k++){
     var zi=(Math.floor(P.ASC/30)+k)%12,hp=HERR[zi];
     if(P[hp]===undefined) continue;
     var hh=haus(P,P[hp]);
-    h+='<div class="kette"><span class="n">'+(k+1)+'. Haus</span><span style="color:var(--messing)">→</span>'+
+    h+='<div class="ub-kette"><span class="n">'+(k+1)+'. Haus</span><span style="color:var(--messing)">→</span>'+
       '<span class="n">'+SIGNS[zi]+'</span><span style="color:var(--messing)">→</span>'+
       '<span class="n">'+hp+' im '+(hh+1)+'.</span>'+
       '<span class="s"><b>'+HK[k]+'</b> läuft über <b>'+HK[hh]+'</b>.</span></div>';
   }
-  return h+'</div></div></div>';
+  return h+'</div></div>';
 }
-function tabJahr(P,SR,jahr){
-  if(!SR) return '<div class="leerh">Jahreschart konnte nicht berechnet werden.</div>';
-  var h='<div class="zweispalt"><div><div class="box" style="padding:12px;"><svg class="rad" viewBox="0 0 400 400" role="img" aria-label="Jahreschart"></svg></div>'+
-    '<div class="box">'+tabelle(SR,'Solar Return')+'</div></div><div>';
-  h+='<div class="box"><h3>Dein Jahr '+jahr+'</h3><div class="hint">Gilt vom Geburtstag bis zum nächsten.</div>'+
-    '<div class="kernz"><b>Beginn</b><p>'+jdDatum(SR._jd)+' · Jahres-Aszendent in <b>'+SIGNS[Math.floor(SR.ASC/30)]+
+function tabJahr(P,SR,jahr,p){
+  if(!SR) return '<div class="ub-leerh">Jahreschart konnte nicht berechnet werden.</div>';
+  var h='<div class="ub-oben">'+
+    '<div class="ub-box" style="padding:12px;"><svg class="rad" viewBox="0 0 400 400" role="img" aria-label="Jahreschart"></svg></div>'+
+    '<div class="ub-box tabbox">'+tabelle(SR,'Solar Return')+'</div></div><div class="ub-unten">';
+  h+='<div class="ub-box"><h3>Dein Jahr '+jahr+'</h3><div class="hint">Gilt vom Geburtstag bis zum nächsten.</div>'+
+    '<div class="ub-kernz"><b>Beginn</b><p>'+jdDatum(SR._jd)+' · gerechnet für <b>'+((p&&p.wort)?p.wort:(p&&p.ort?p.ort:'den Geburtsort'))+'</b><br>Jahres-Aszendent in <b>'+SIGNS[Math.floor(SR.ASC/30)]+
     '</b>, Jahres-MC in <b>'+SIGNS[Math.floor(SR.MC/30)]+'</b></p></div>'+
-    '<div class="kernz"><b>Wo die Jahressonne steht</b><p>'+(haus(SR,SR.Sonne)+1)+'. Haus des Jahrescharts — <b>'+
+    '<div class="ub-kernz"><b>Wo die Jahressonne steht</b><p>'+(haus(SR,SR.Sonne)+1)+'. Haus des Jahrescharts — <b>'+
     HT[haus(SR,SR.Sonne)]+'</b>. Das ist der Bereich, um den sich dieses Jahr am meisten dreht.</p></div></div>';
-  h+='<div class="box"><h3>Wo das Jahr das Geburtschart berührt</h3><div class="hint">Nur solche Kontakte machen ein Jahresthema persönlich.</div>';
+  h+='<div class="ub-box voll"><h3>Wo das Jahr das Geburtschart berührt</h3><div class="hint">Nur solche Kontakte machen ein Jahresthema persönlich.</div>';
   var tr=[];
   Object.keys(SR).forEach(function(a){ if(a==='_jd'||!ORB[a])return;
     Object.keys(P).forEach(function(b){ if(b==='_jd'||!ORB[b])return;
@@ -436,10 +482,10 @@ function tabJahr(P,SR,jahr){
   tr.sort(function(x,y){return x.o-y.o;});
   if(!tr.length) h+='<p style="margin:0;font-size:14.5px;">Keine engen Kontakte. Ein Jahr mit eigenen Themen statt verstärkter alter.</p>';
   tr.slice(0,6).forEach(function(x){
-    h+='<div class="tz2'+(x.o<1?' eng':'')+'"><div class="k">Jahres-'+x.a+' '+x.art+' Radix-'+x.b+' · '+x.o.toFixed(1)+'°</div>'+
+    h+='<div class="ub-tz2'+(x.o<1?' eng':'')+'"><div class="k">Jahres-'+x.a+' '+x.art+' Radix-'+x.b+' · '+x.o.toFixed(1)+'°</div>'+
       'Dieses Jahr wird '+(NPKT[x.b]||x.b)+' besonders angesprochen.</div>';
   });
-  return h+'<p class="hint" style="margin:8px 0 0;"><a href="solar-return-vertiefung.html">Mehr zum Solar Return →</a></p></div></div></div>';
+  return h+'<p class="hint" style="margin:8px 0 0;"><a href="solar-return-vertiefung.html">Mehr zum Solar Return →</a></p></div></div>';
 }
 function tabJetzt(P,T){
   var res=[];
@@ -455,16 +501,16 @@ function tabJetzt(P,T){
   res.sort(function(x,y){return y.s-x.s;});
   var w=norm(T.Mond-T.Sonne);
   var ph=(w<20?'Neumond':w<160?'zunehmender Mond':w<200?'Vollmond':w<340?'abnehmender Mond':'Neumond');
-  var h='<div class="box"><h3>Heute am Himmel</h3><p style="margin:0;font-size:15px;">Sonne in <b>'+
+  var h='<div class="ub-box"><h3>Heute am Himmel</h3><p style="margin:0;font-size:15px;">Sonne in <b>'+
     SIGNS[Math.floor(T.Sonne/30)]+'</b>, Mond in <b>'+SIGNS[Math.floor(T.Mond/30)]+'</b> · '+ph+
     ' · fällt in das <b>'+(haus(P,T.Mond)+1)+'. Haus</b> dieses Charts</p></div>';
-  h+='<div class="box"><h3>Die stärksten Transite</h3><div class="hint">Nach Enge und Gewicht sortiert. Alles unter einem Grad ist deutlich spürbar.</div>';
+  h+='<div class="ub-box"><h3>Die stärksten Transite</h3><div class="hint">Nach Enge und Gewicht sortiert. Alles unter einem Grad ist deutlich spürbar.</div>';
   if(!res.length) h+='<p style="margin:0;font-size:14.5px;">Gerade berührt nichts dieses Chart eng genug.</p>';
   res.slice(0,6).forEach(function(x){
-    h+='<div class="tz2'+(x.o<1?' eng':'')+'"><div class="k">'+x.a+' '+x.art+' '+x.b+' · '+x.o.toFixed(1)+'°</div>'+
+    h+='<div class="ub-tz2'+(x.o<1?' eng':'')+'"><div class="k">'+x.a+' '+x.art+' '+x.b+' · '+x.o.toFixed(1)+'°</div>'+
       (TWIRK[x.a]||'').replace(/^./,function(c){return c.toUpperCase();})+' — betroffen ist '+(NPKT[x.b]||x.b)+'.</div>';
   });
-  h+='</div><div class="box"><h3>Die nächsten Lunationen</h3><div class="hint">Mit dem Haus, in das sie bei diesem Chart fallen.</div>';
+  h+='</div><div class="ub-box"><h3>Die nächsten Lunationen</h3><div class="hint">Mit dem Haus, in das sie bei diesem Chart fallen.</div>';
   lunationen(4).forEach(function(x){
     var hh=haus(P,x.g),tref=null;
     Object.keys(P).forEach(function(b){ if(b==='_jd'||!ORB[b])return;
@@ -472,7 +518,7 @@ function tabJetzt(P,T){
       if(s<=3&&(!tref||s<tref.o)) tref={p:b,o:s,art:'auf'};
       else if(Math.abs(s-180)<=3&&(!tref||Math.abs(s-180)<tref.o)) tref={p:b,o:Math.abs(s-180),art:'gegenüber'};
     });
-    h+='<div class="lunz'+(tref?' treffer':'')+'"><span class="d">'+jdDatum(x.jd)+'</span> · <b>'+
+    h+='<div class="ub-lunz'+(tref?' treffer':'')+'"><span class="d">'+jdDatum(x.jd)+'</span> · <b>'+
       (x.t==='NM'?'Neumond':'Vollmond')+'</b> auf '+fmt(x.g)+'<br>Fällt in das <b>'+(hh+1)+'. Haus</b> — '+HT[hh]+'.'+
       (tref?' <b>Trifft '+tref.art+' '+tref.p+'</b> mit '+tref.o.toFixed(1)+'° — das macht den Termin persönlich.':' Kein Gradtreffer, also allgemeines Mondwetter.')+'</div>';
   });

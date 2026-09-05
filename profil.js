@@ -28,6 +28,8 @@
     return {id:id(), name:(o.name||'').trim(), alias:(o.alias||'').trim(),
       y:o.y, mo:o.mo, d:o.d, h:o.h, mi:o.mi, tz:o.tz, tzName:o.tzName||'',
       lat:o.lat, lon:o.lon, ort:o.ort||'', notiz:o.notiz||'',
+      wlat:(o.wlat!==undefined?o.wlat:o.lat), wlon:(o.wlon!==undefined?o.wlon:o.lon),
+      wort:o.wort||'', wtz:o.wtz||'',
       eigen:!!o.eigen, angelegt:new Date().toISOString().slice(0,10)};
   }
   /* Anzeige-Name: Alias, sonst Initialen — der volle Name nur auf Wunsch */
@@ -55,7 +57,8 @@
       var p=d.liste.filter(function(x){return x.id===pid;})[0];
       /* Rückwärtskompatibel: die vorhandenen Werkzeuge lesen weiterhin ac_geburt */
       if(p){ try{ localStorage.setItem('ac_geburt', JSON.stringify({
-        name:p.name, y:p.y, mo:p.mo, d:p.d, h:p.h, mi:p.mi, tz:p.tz, lat:p.lat, lon:p.lon, ort:p.ort
+        name:p.name, y:p.y, mo:p.mo, d:p.d, h:p.h, mi:p.mi, tz:p.tz, lat:p.lat, lon:p.lon, ort:p.ort,
+        wlat:(p.wlat!==undefined?p.wlat:p.lat), wlon:(p.wlon!==undefined?p.wlon:p.lon), wort:p.wort||p.ort
       })); }catch(e){} }
       return p||null;
     },

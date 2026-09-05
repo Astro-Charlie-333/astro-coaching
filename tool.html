@@ -122,9 +122,7 @@ a{color:var(--nacht);}
 .ac-profilbar b{font-size:15px;}
 .ac-pb-eigen{font-size:11px;background:var(--messing);color:#fff;border-radius:11px;padding:2px 8px;}
 .ac-pb-w{margin-left:auto;font-size:13.5px;color:var(--nacht);}
-</style><script src="staedte.js">
-try{ AC_ortFeld('gort','gortliste','gortok'); }catch(e){ console.error('Ortssuche:',e); }
-</script>
+</style><script src="staedte.js"></script>
 <script src="profil.js"></script>
 </head><body>
 <div class="leiste"><div class="leiste-inner">
@@ -555,5 +553,7 @@ var gg=ld(); if(gg){ try{ zeigen(gg); }catch(e){ console.error(e); } }
 
 
 try{ AC_profilLeiste(); }catch(e){}
+
+try{ AC_ortFeld('gort','gortliste','gortok'); }catch(e){ console.error('Ortssuche:',e); }
 </script>
 </body></html>

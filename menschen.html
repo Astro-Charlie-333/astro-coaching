@@ -162,6 +162,10 @@ a{color:var(--nacht);}
       <div class="ortfeld"><input id="fort" placeholder="Stadt eintippen" autocomplete="off">
       <div class="ortliste" id="fortliste"></div></div>
       <div class="ortok" id="fortok"></div></div>
+    <div style="grid-column:1/-1;"><label>Aktueller Wohnort <span style="text-transform:none;letter-spacing:0;color:var(--leise);font-size:11.5px;">— für das Jahreschart. Leer lassen, wenn identisch mit dem Geburtsort.</span></label>
+      <div class="ortfeld"><input id="fwort" placeholder="Stadt eintippen" autocomplete="off">
+      <div class="ortliste" id="fwortliste"></div></div>
+      <div class="ortok" id="fwortok"></div></div>
     <div style="grid-column:1/-1;"><label>Notiz (freiwillig)</label>
       <textarea id="fnotiz" placeholder="Anliegen, Kontext, worum es geht"></textarea></div>
   </div>
@@ -278,7 +282,7 @@ function zeichne(){
         (p.eigen?'<span class="marke2">du</span>':'')+
         (ist?'<span class="marke2" style="background:var(--nacht)">aktiv</span>':'')+'</div>'+
         '<div class="pd">'+('0'+p.d).slice(-2)+'.'+('0'+p.mo).slice(-2)+'.'+p.y+' · '+
-        ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'')+
+        ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'')+((p.wort&&p.wort!==p.ort)?' → wohnt in '+p.wort:'')+
         (p.notiz?'<br>'+p.notiz.slice(0,90)+(p.notiz.length>90?'…':''):'')+'</div></div>'+
       '<div class="pakt">'+
         (ist?'<a class="b klein" style="text-decoration:none;display:inline-block" href="uebersicht.html">Übersicht öffnen</a>':'<button class="b klein" data-a="aktiv" data-i="'+p.id+'">Aktiv setzen</button>')+
@@ -313,6 +317,9 @@ function laden(pid){
   el('ftime').value=('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2);
   el('fnotiz').value=p.notiz||''; el('feigen').checked=!!p.eigen;
   el('fort').value=p.ort||'';
+  el('fwort').value=(p.wort&&p.wort!==p.ort)?p.wort:'';
+  window.AC_ORT2=null;
+  el('fwortok').innerHTML=(p.wort&&p.wort!==p.ort)?('Gespeichert: <b>'+p.wort+'</b>'):'';
   window.AC_ORT=null;
   el('fortok').innerHTML=p.ort?('Gespeichert: <b>'+p.ort+'</b> — nur ändern, wenn du einen neuen Ort wählst.'):'';
   el('formtitel').textContent='Profil bearbeiten';
@@ -321,7 +328,8 @@ function laden(pid){
 }
 function leeren(){
   bearbeite=null;
-  ['fname','falias','fnotiz','fort'].forEach(function(i){el(i).value='';});
+  ['fname','falias','fnotiz','fort','fwort'].forEach(function(i){el(i).value='';});
+  window.AC_ORT2=null; el('fwortok').textContent='';
   el('fdate').value='1990-01-01'; el('ftime').value='12:00';
   el('feigen').checked=false; el('fortok').textContent=''; el('ffehler').textContent='';
   window.AC_ORT=null;
@@ -341,6 +349,10 @@ el('speichern').addEventListener('click',function(){
     y:p[0], mo:p[1], d:p[2], h:t[0], mi:t[1], notiz:el('fnotiz').value, eigen:el('feigen').checked };
   if(od){ daten.lat=od.lat; daten.lon=od.lon; daten.tz=od.tz; daten.ort=od.name; }
   else { daten.lat=alt.lat; daten.lon=alt.lon; daten.tz=alt.tz; daten.ort=alt.ort; }
+  var wo=window.AC_ORT2;
+  if(wo){ daten.wlat=wo.lat; daten.wlon=wo.lon; daten.wort=wo.name+', '+wo.land; daten.wtz=wo.tz; }
+  else if(alt && alt.wort){ daten.wlat=alt.wlat; daten.wlon=alt.wlon; daten.wort=alt.wort; daten.wtz=alt.wtz; }
+  else { daten.wlat=daten.lat; daten.wlon=daten.lon; daten.wort=daten.ort; daten.wtz=''; }
   if(Math.abs(daten.lat)>66){ f.textContent='Für Orte nördlich des Polarkreises funktioniert die Häuserberechnung nicht.'; return; }
   if(bearbeite){
     AC_P.aendere(bearbeite,daten);
@@ -371,6 +383,47 @@ el('importfile').addEventListener('change',function(e){
 });
 zeichne();
 
+
+/* Zweites Ortsfeld für den Wohnort */
+window.AC_ORT2=null;
+function AC_ortFeld2(inputId,listId,statusId){
+  var inp=document.getElementById(inputId), liste=document.getElementById(listId), st=document.getElementById(statusId);
+  if(!inp||!liste) return;
+  var treffer=[],aktiv=-1;
+  function zu(){liste.classList.remove('auf');aktiv=-1;}
+  function waehle(o){
+    window.AC_ORT2=o;
+    inp.value=o.name+', '+o.land;
+    if(st) st.innerHTML='Wohnort: <b>'+o.name+', '+o.land+'</b> — das Jahreschart wird für diesen Ort gerechnet.';
+    zu();
+  }
+  function zeichne(){
+    liste.innerHTML='';
+    if(!treffer.length){zu();return;}
+    treffer.forEach(function(o,i){
+      var b=document.createElement('button');b.type='button';
+      b.innerHTML=o.name+(o.alt?' <span class="land">· '+o.alt+'</span>':'')+' <span class="land">· '+o.land+'</span>';
+      if(i===aktiv) b.className='aktiv';
+      b.addEventListener('mousedown',function(e){e.preventDefault();waehle(o);});
+      liste.appendChild(b);
+    });
+    liste.classList.add('auf');
+  }
+  inp.addEventListener('input',function(){
+    window.AC_ORT2=null; if(st) st.textContent='';
+    treffer=window.AC_ortSuche(inp.value,8); aktiv=-1; zeichne();
+  });
+  inp.addEventListener('keydown',function(e){
+    if(!treffer.length)return;
+    if(e.key==='ArrowDown'){e.preventDefault();aktiv=Math.min(aktiv+1,treffer.length-1);zeichne();}
+    else if(e.key==='ArrowUp'){e.preventDefault();aktiv=Math.max(aktiv-1,0);zeichne();}
+    else if(e.key==='Enter'&&aktiv>=0){e.preventDefault();waehle(treffer[aktiv]);}
+    else if(e.key==='Escape'){zu();}
+  });
+  inp.addEventListener('blur',function(){setTimeout(zu,140);});
+}
+
 try{ AC_ortFeld('fort','fortliste','fortok'); }catch(e){ console.error('Ortssuche:',e); }
+try{ AC_ortFeld2('fwort','fwortliste','fwortok'); }catch(e){ console.error('Wohnort:',e); }
 </script>
 </body></html>

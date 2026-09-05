@@ -160,66 +160,7 @@ a{color:var(--nacht);}
 .ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
 .ac-nav a.ist{background:var(--nacht);color:#fff;}
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
-</style><script src="staedte.js">
-/* ── Ortssuche: ein Feld statt Koordinaten und Zeitzone ────── */
-window.AC_ORT=null;
-function AC_ortFeld(inputId, listId, statusId){
-  var inp=document.getElementById(inputId), liste=document.getElementById(listId), st=document.getElementById(statusId);
-  if(!inp||!liste) return;
-  var treffer=[], aktiv=-1;
-  function zu(){ liste.classList.remove('auf'); aktiv=-1; }
-  function waehle(o){
-    window.AC_ORT=o;
-    inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
-    if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
-      o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
-      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
-    zu();
-    try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
-  }
-  function zeichne(){
-    liste.innerHTML='';
-    if(!treffer.length){ zu(); return; }
-    treffer.forEach(function(o,i){
-      var b=document.createElement('button'); b.type='button';
-      b.innerHTML=o.name+(o.alt?' <span class="land">· '+o.alt+'</span>':'')+' <span class="land">· '+o.land+'</span>';
-      if(i===aktiv) b.className='aktiv';
-      b.addEventListener('mousedown',function(ev){ ev.preventDefault(); waehle(o); });
-      liste.appendChild(b);
-    });
-    liste.classList.add('auf');
-  }
-  inp.addEventListener('input',function(){
-    window.AC_ORT=null;
-    if(st) st.textContent='';
-    treffer=window.AC_ortSuche(inp.value,8); aktiv=-1; zeichne();
-  });
-  inp.addEventListener('keydown',function(e){
-    if(!treffer.length) return;
-    if(e.key==='ArrowDown'){ e.preventDefault(); aktiv=Math.min(aktiv+1,treffer.length-1); zeichne(); }
-    else if(e.key==='ArrowUp'){ e.preventDefault(); aktiv=Math.max(aktiv-1,0); zeichne(); }
-    else if(e.key==='Enter'&&aktiv>=0){ e.preventDefault(); waehle(treffer[aktiv]); }
-    else if(e.key==='Escape'){ zu(); }
-  });
-  inp.addEventListener('blur',function(){ setTimeout(zu,140); });
-  /* zuletzt gewählten Ort wiederherstellen */
-  try{
-    var g=JSON.parse(localStorage.getItem('ac_geburt')||'null');
-    var o=JSON.parse(localStorage.getItem('ac_ort')||'null');
-    if(o&&o.tz){ waehle(o); }
-  }catch(e){}
-}
-/* Liefert {lat,lon,tz} für die aktuelle Eingabe — tz als Stundenversatz zum Geburtszeitpunkt */
-function AC_ortDaten(y,mo,d,h,mi){
-  var o=window.AC_ORT;
-  if(!o) return null;
-  var off=window.AC_offset(o.tz,y,mo,d,h,mi);
-  if(off===null||isNaN(off)) return null;
-  return {lat:o.lat, lon:o.lon, tz:off, name:o.name+', '+o.land};
-}
-
-try{ AC_ortFeld('cort','cortliste','cortok'); }catch(e){ console.error('Ortssuche:',e); }
-</script>
+</style><script src="staedte.js"></script>
 <script src="profil.js"></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -746,5 +687,64 @@ FILT.forEach(function(f,i){
 });
 
 try{ AC_profilLeiste(); }catch(e){}
+
+/* ── Ortssuche: ein Feld statt Koordinaten und Zeitzone ────── */
+window.AC_ORT=null;
+function AC_ortFeld(inputId, listId, statusId){
+  var inp=document.getElementById(inputId), liste=document.getElementById(listId), st=document.getElementById(statusId);
+  if(!inp||!liste) return;
+  var treffer=[], aktiv=-1;
+  function zu(){ liste.classList.remove('auf'); aktiv=-1; }
+  function waehle(o){
+    window.AC_ORT=o;
+    inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
+    if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
+      o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
+      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
+    zu();
+    try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
+  }
+  function zeichne(){
+    liste.innerHTML='';
+    if(!treffer.length){ zu(); return; }
+    treffer.forEach(function(o,i){
+      var b=document.createElement('button'); b.type='button';
+      b.innerHTML=o.name+(o.alt?' <span class="land">· '+o.alt+'</span>':'')+' <span class="land">· '+o.land+'</span>';
+      if(i===aktiv) b.className='aktiv';
+      b.addEventListener('mousedown',function(ev){ ev.preventDefault(); waehle(o); });
+      liste.appendChild(b);
+    });
+    liste.classList.add('auf');
+  }
+  inp.addEventListener('input',function(){
+    window.AC_ORT=null;
+    if(st) st.textContent='';
+    treffer=window.AC_ortSuche(inp.value,8); aktiv=-1; zeichne();
+  });
+  inp.addEventListener('keydown',function(e){
+    if(!treffer.length) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); aktiv=Math.min(aktiv+1,treffer.length-1); zeichne(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); aktiv=Math.max(aktiv-1,0); zeichne(); }
+    else if(e.key==='Enter'&&aktiv>=0){ e.preventDefault(); waehle(treffer[aktiv]); }
+    else if(e.key==='Escape'){ zu(); }
+  });
+  inp.addEventListener('blur',function(){ setTimeout(zu,140); });
+  /* zuletzt gewählten Ort wiederherstellen */
+  try{
+    var g=JSON.parse(localStorage.getItem('ac_geburt')||'null');
+    var o=JSON.parse(localStorage.getItem('ac_ort')||'null');
+    if(o&&o.tz){ waehle(o); }
+  }catch(e){}
+}
+/* Liefert {lat,lon,tz} für die aktuelle Eingabe — tz als Stundenversatz zum Geburtszeitpunkt */
+function AC_ortDaten(y,mo,d,h,mi){
+  var o=window.AC_ORT;
+  if(!o) return null;
+  var off=window.AC_offset(o.tz,y,mo,d,h,mi);
+  if(off===null||isNaN(off)) return null;
+  return {lat:o.lat, lon:o.lon, tz:off, name:o.name+', '+o.land};
+}
+
+try{ AC_ortFeld('cort','cortliste','cortok'); }catch(e){ console.error('Ortssuche:',e); }
 </script>
 </body></html>

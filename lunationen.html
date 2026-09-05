@@ -222,9 +222,7 @@ tr.detail td{background:var(--papier);border-bottom:2px solid var(--linie);paddi
 .ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
 .ac-nav a.ist{background:var(--nacht);color:#fff;}
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
-</style><script src="staedte.js">
-try{ AC_ortFeld('mort','mortliste','mortok'); }catch(e){ console.error('Ortssuche:',e); }
-</script>
+</style><script src="staedte.js"></script>
 <script src="profil.js"></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -237,9 +235,74 @@ try{ AC_ortFeld('mort','mortliste','mortok'); }catch(e){ console.error('Ortssuch
 <div class="wrap">
 <div class="eyebrow">Timing-Vertiefung</div>
 <h1>Neumonde, Vollmonde &amp; <em>Finsternisse.</em></h1>
-<p class="lede">Alle vier Ereignistypen an einem Ort — in jedem Zeichen und in jedem Haus. Dazu alle 59 Neu- und Vollmonde bis Ende 2028 — mit deinem Haus, deinen Radix-Treffern und deinen Solar-Return-Treffern. Denn das Haus entscheidet, worum es geht, und der Gradtreffer entscheidet, ob es dich überhaupt betrifft.</p>
+<p class="lede">Jeden Monat ein Neumond und ein Vollmond, zweimal im Jahr Finsternisse. Die meisten davon gehen dich nichts an — aber vier bis acht im Jahr treffen dein Chart auf den Grad genau. Trag deine Daten ein, und du siehst, welche.</p>
 
 
+<h2>Zuerst: dein Chart</h2>
+<p class="sub">Ohne deine Geburtsdaten ist das hier ein Kalender. Mit ihnen wird daraus eine Liste der Termine, die dich tatsächlich betreffen — meist vier bis acht im Jahr statt 24. Alles bleibt in deinem Browser.</p>
+<div class="mein">
+  <div id="mform">
+    <div class="felder">
+      <div><label>Geburtsdatum</label><input type="date" id="mdate" value="1990-01-01"></div>
+      <div><label>Uhrzeit</label><input type="time" id="mtime" value="12:00"></div>
+      <div style="grid-column:span 2;"><label>Geburtsort</label>
+        <div class="ortfeld"><input id="mort" placeholder="Stadt eintippen" autocomplete="off">
+        <div class="ortliste" id="mortliste"></div></div>
+        <div class="ortok" id="mortok"></div></div>
+    </div>
+<div class="tip"><b>Das ist der entscheidende Unterschied:</b> Eine Lunation ist für alle Menschen dieselbe. Ob sie <i>dich</i> etwas angeht, entscheidet sich daran, ob sie einen Punkt in deinem Chart auf wenige Grad genau trifft. Ohne Gradtreffer beschreibt sie nur ein Haus — also einen Lebensbereich, ohne eine bestimmte Funktion in dir anzusprechen.</div>
+
+<h2>Deine Termine</h2>
+<p class="sub">Alle 59 Neu- und Vollmonde bis Ende 2028, davon 11 Finsternisse. Tippe eine Zeile an, dann klappt die vollständige Erklärung auf: was der Termin anstößt, welcher deiner Punkte berührt wird, ob es über Radix oder Jahreschart läuft — und ob das ein Lebens- oder ein Jahresthema ist.</p>
+<div class="mreihe"><button class="mbtn" id="mgo">Meine Treffer zeigen</button>
+      <span style="font-size:13px;color:var(--soft);" id="mfehler"></span></div>
+  </div>
+  <div id="mfertig" style="display:none;">
+    <div class="mreihe" style="margin-top:0;">
+      <span style="font-size:14px;" id="minfo"></span>
+      <button class="mbtn leer" id="mneu">Daten ändern</button>
+    </div>
+  </div>
+</div>
+
+<div class="filter" id="filter"></div>
+<div style="overflow-x:auto;"><table id="luntab"></table></div>
+
+<div class="tip"><b>Wie du die Tabelle benutzt:</b> Tippe eine Zeile an, dann klappt die Erklärung auf: was die Lunation anstößt, welcher Punkt berührt wird und ob es ein Lebens- oder ein Jahresthema ist. Filtere auf „Nur meine Treffer". Was übrig bleibt, sind die Termine, an denen bei dir wirklich etwas angesprochen wird — meistens vier bis acht im Jahr. Alle anderen sind allgemeines Mondwetter. Genau diese Unterscheidung ist der Unterschied zwischen Astrologie und Aberglaube.</div>
+
+
+<h2>Welche Ebenen eine Lunation berührt</h2>
+<p>Eine Lunation trifft nicht nur dein Geburtschart. Sie berührt mehrere Ebenen gleichzeitig — nur eben nicht gleich stark. Diese Reihenfolge ist die brauchbarste:</p>
+<div class="ebenen">
+  <div class="ebene"><span class="rang">Ebene 1 · am stärksten</span><h4>Dein Radix</h4>
+  <p>Ein Gradtreffer auf einen Geburtspunkt. Das wirkt immer und ein Leben lang gleich. Wenn hier nichts trifft, ist alles Weitere nur noch Hintergrund.</p></div>
+  <div class="ebene"><span class="rang">Ebene 2 · jahresabhängig</span><h4>Dein Solar Return</h4>
+  <p>Trifft die Lunation dein Jahreschart, wird sie für dieses eine Jahr lauter. Sie erzeugt aber nichts Neues — sie verstärkt, was ohnehin angelegt ist.</p></div>
+  <div class="ebene"><span class="rang">Ebene 3 · Schauplatz</span><h4>Das Haus</h4>
+  <p>Auch ohne Gradtreffer sagt das Haus, welcher Lebensbereich beleuchtet wird. Das ist die schwächste, aber immer vorhandene Aussage.</p></div>
+  <div class="ebene"><span class="rang">Ebene 4 · nur als Zusatz</span><h4>Progressionen &amp; Profektionen</h4>
+  <p>Trifft eine Lunation dein Profektionsjahr-Haus oder einen progressiven Punkt, ist das ein Zusatzargument — nie ein eigenständiger Befund.</p></div>
+</div>
+<div class="tip"><b>Die Regel dahinter:</b> Ebenen <b>bestätigen</b> einander, sie ersetzen sich nicht. Ein Solar-Return-Treffer ohne Radix-Treffer ist ein Jahresthema, kein Lebensthema. Und drei Ebenen, die auf denselben Punkt zeigen, sind ein sehr starker Befund — deutlich stärker als eine einzelne enge Konjunktion.</div>
+
+
+<h2>Was du prüfst, in dieser Reihenfolge</h2>
+<ol class="steps">
+<li><b>Gradtreffer</b>Trifft die Lunation einen Punkt bei dir auf unter 3°? Wenn nein, hör hier auf und lies nur das Hausthema.</li>
+<li><b>Welches Haus</b>Der Lebensbereich ist der Schauplatz. Bei Vollmonden und Mondfinsternissen immer auch das Gegenüber mitlesen — die Achse gehört zusammen.</li>
+<li><b>Welcher Punkt</b>Ein getroffener Planet sagt, welche Funktion betroffen ist. Sonne, Mond, Aszendent und MC wiegen dabei am schwersten.</li>
+<li><b>Der Herrscher</b>Wer beherrscht das Zeichen der Lunation, und wo steht er in deinem Chart? Das zeigt, wohin das Thema weiterläuft. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
+<li><b>Der Rückblick</b>Bei Finsternissen: Wann lief dieselbe Serie zuletzt über diese Achse? Vor rund neunzehn Jahren, und vor eineinhalb Jahren war die vorige Station. Frag, was damals los war.</li>
+</ol>
+
+<div class="tip"><b>Fürs Reading:</b> Vollmonde und Neumonde sind Alltagswerkzeug, keine Prognose. Sag nie, was passieren wird — sag, welche Art von Bewegung dran ist. „Etwas kommt zum Abschluss" ist brauchbar. „Du verlierst deinen Job" ist es nicht. Und ein weites Zeitfenster ehrlich zu nennen ist besser, als sich auf einen Tag festzulegen und widerlegt zu werden.</div>
+
+<div class="tip"><b>Für den Alltag:</b> Du musst nicht jede Lunation beachten. Zwei reichen: Neumond anfangen, Vollmond anschauen, was daraus geworden ist. Den Rest nur, wenn es dein Haus oder deinen Grad trifft. Der Rhythmus soll entlasten, nicht Druck machen — mehr dazu unter <a href="mondphasen-rhythmus.html">Die Mondphasen als Rhythmus</a>.</div>
+
+
+
+<h2>Nachschlagewerk</h2>
+<p class="sub">Unabhängig von deinem Chart: Was jede Kombination aus Ereignis, Zeichen und Haus grundsätzlich bedeutet. Zum Lernen und für die Arbeit mit anderen.</p>
 <h2>Vier Ereignisse, ein Prinzip</h2>
 <p>Jeden Monat gibt es einen Neumond und einen Vollmond. Zweimal im Jahr fallen einige davon nahe der Mondknotenachse — dann werden aus Lunationen <b>Finsternisse</b>. Der Unterschied ist nicht die Art, sondern die Wucht und die Dauer.</p>
 <div class="vier">
@@ -270,63 +333,6 @@ try{ AC_ortFeld('mort','mortliste','mortok'); }catch(e){ console.error('Ortssuch
   <div class="gegen" id="gegen"></div>
   <div class="tunbox" id="tun"></div>
 </div>
-
-<h2>Welche Ebenen eine Lunation berührt</h2>
-<p>Eine Lunation trifft nicht nur dein Geburtschart. Sie berührt mehrere Ebenen gleichzeitig — nur eben nicht gleich stark. Diese Reihenfolge ist die brauchbarste:</p>
-<div class="ebenen">
-  <div class="ebene"><span class="rang">Ebene 1 · am stärksten</span><h4>Dein Radix</h4>
-  <p>Ein Gradtreffer auf einen Geburtspunkt. Das wirkt immer und ein Leben lang gleich. Wenn hier nichts trifft, ist alles Weitere nur noch Hintergrund.</p></div>
-  <div class="ebene"><span class="rang">Ebene 2 · jahresabhängig</span><h4>Dein Solar Return</h4>
-  <p>Trifft die Lunation dein Jahreschart, wird sie für dieses eine Jahr lauter. Sie erzeugt aber nichts Neues — sie verstärkt, was ohnehin angelegt ist.</p></div>
-  <div class="ebene"><span class="rang">Ebene 3 · Schauplatz</span><h4>Das Haus</h4>
-  <p>Auch ohne Gradtreffer sagt das Haus, welcher Lebensbereich beleuchtet wird. Das ist die schwächste, aber immer vorhandene Aussage.</p></div>
-  <div class="ebene"><span class="rang">Ebene 4 · nur als Zusatz</span><h4>Progressionen &amp; Profektionen</h4>
-  <p>Trifft eine Lunation dein Profektionsjahr-Haus oder einen progressiven Punkt, ist das ein Zusatzargument — nie ein eigenständiger Befund.</p></div>
-</div>
-<div class="tip"><b>Die Regel dahinter:</b> Ebenen <b>bestätigen</b> einander, sie ersetzen sich nicht. Ein Solar-Return-Treffer ohne Radix-Treffer ist ein Jahresthema, kein Lebensthema. Und drei Ebenen, die auf denselben Punkt zeigen, sind ein sehr starker Befund — deutlich stärker als eine einzelne enge Konjunktion.</div>
-
-<h2>Alle Lunationen 2026–2028</h2>
-<p class="sub">59 Neu- und Vollmonde, davon 11 Finsternisse. Trag deine Geburtsdaten ein, dann zeigt die Tabelle für jede Lunation dein Haus, deine Radix-Treffer und deine Solar-Return-Treffer. Nichts wird übertragen — deine Daten bleiben in deinem Browser.</p>
-
-<div class="mein">
-  <div id="mform">
-    <div class="felder">
-      <div><label>Geburtsdatum</label><input type="date" id="mdate" value="1990-01-01"></div>
-      <div><label>Uhrzeit</label><input type="time" id="mtime" value="12:00"></div>
-      <div style="grid-column:span 2;"><label>Geburtsort</label>
-        <div class="ortfeld"><input id="mort" placeholder="Stadt eintippen" autocomplete="off">
-        <div class="ortliste" id="mortliste"></div></div>
-        <div class="ortok" id="mortok"></div></div>
-    </div>
-    <div class="mreihe"><button class="mbtn" id="mgo">Meine Treffer zeigen</button>
-      <span style="font-size:13px;color:var(--soft);" id="mfehler"></span></div>
-  </div>
-  <div id="mfertig" style="display:none;">
-    <div class="mreihe" style="margin-top:0;">
-      <span style="font-size:14px;" id="minfo"></span>
-      <button class="mbtn leer" id="mneu">Daten ändern</button>
-    </div>
-  </div>
-</div>
-
-<div class="filter" id="filter"></div>
-<div style="overflow-x:auto;"><table id="luntab"></table></div>
-
-<div class="tip"><b>Wie du die Tabelle benutzt:</b> Tippe eine Zeile an, dann klappt die Erklärung auf: was die Lunation anstößt, welcher Punkt berührt wird und ob es ein Lebens- oder ein Jahresthema ist. Filtere auf „Nur meine Treffer". Was übrig bleibt, sind die Termine, an denen bei dir wirklich etwas angesprochen wird — meistens vier bis acht im Jahr. Alle anderen sind allgemeines Mondwetter. Genau diese Unterscheidung ist der Unterschied zwischen Astrologie und Aberglaube.</div>
-
-<h2>Was du prüfst, in dieser Reihenfolge</h2>
-<ol class="steps">
-<li><b>Gradtreffer</b>Trifft die Lunation einen Punkt bei dir auf unter 3°? Wenn nein, hör hier auf und lies nur das Hausthema.</li>
-<li><b>Welches Haus</b>Der Lebensbereich ist der Schauplatz. Bei Vollmonden und Mondfinsternissen immer auch das Gegenüber mitlesen — die Achse gehört zusammen.</li>
-<li><b>Welcher Punkt</b>Ein getroffener Planet sagt, welche Funktion betroffen ist. Sonne, Mond, Aszendent und MC wiegen dabei am schwersten.</li>
-<li><b>Der Herrscher</b>Wer beherrscht das Zeichen der Lunation, und wo steht er in deinem Chart? Das zeigt, wohin das Thema weiterläuft. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
-<li><b>Der Rückblick</b>Bei Finsternissen: Wann lief dieselbe Serie zuletzt über diese Achse? Vor rund neunzehn Jahren, und vor eineinhalb Jahren war die vorige Station. Frag, was damals los war.</li>
-</ol>
-
-<div class="tip"><b>Fürs Reading:</b> Vollmonde und Neumonde sind Alltagswerkzeug, keine Prognose. Sag nie, was passieren wird — sag, welche Art von Bewegung dran ist. „Etwas kommt zum Abschluss" ist brauchbar. „Du verlierst deinen Job" ist es nicht. Und ein weites Zeitfenster ehrlich zu nennen ist besser, als sich auf einen Tag festzulegen und widerlegt zu werden.</div>
-
-<div class="tip"><b>Für den Alltag:</b> Du musst nicht jede Lunation beachten. Zwei reichen: Neumond anfangen, Vollmond anschauen, was daraus geworden ist. Den Rest nur, wenn es dein Haus oder deinen Grad trifft. Der Rhythmus soll entlasten, nicht Druck machen — mehr dazu unter <a href="mondphasen-rhythmus.html">Die Mondphasen als Rhythmus</a>.</div>
-
 
 <div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a></div>
 <div class="foot">Lunationen &middot; Finsternisdaten mit Swiss Ephemeris gerechnet, Grade auf die Bogenminute. Häuser in Whole Sign. Eine Lunation beschreibt eine Art von Bewegung, niemals ein Ereignis.</div>
@@ -688,7 +694,8 @@ function rechne(g){
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
   NAT=chartAt(y,mo,d,ut,g.lat,g.lon);
   var jetzt=new Date().getFullYear();
-  SR=solarReturn(NAT.Sonne,jetzt,g.lat,g.lon);
+  var _wl=(g.wlat!==undefined&&g.wlat!==null)?g.wlat:g.lat, _wo=(g.wlon!==undefined&&g.wlon!==null)?g.wlon:g.lon;
+  SR=solarReturn(NAT.Sonne,jetzt,_wl,_wo);
   if(SR){
     var srd=new Date((SR._jd-2440587.5)*86400000);
     document.getElementById('minfo').innerHTML='Dein Chart ist geladen. Solar Return '+jetzt+': <b>'+
@@ -782,5 +789,7 @@ document.getElementById('mneu').addEventListener('click',function(){
 
 
 try{ AC_profilLeiste(); }catch(e){}
+
+try{ AC_ortFeld('mort','mortliste','mortok'); }catch(e){ console.error('Ortssuche:',e); }
 </script>
 </body></html>

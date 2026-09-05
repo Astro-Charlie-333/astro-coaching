@@ -465,6 +465,11 @@ var NPUNKT={
  Venus:'deine Zuneigung und deinen Selbstwert', Mars:'deinen Antrieb', Jupiter:'dein Wachstum',
  Saturn:'deine Struktur', Uranus:'dein Freiheitsbedürfnis', Neptun:'deine Sehnsucht',
  Pluto:'deine Tiefe', ASC:'dein Auftreten', MC:'deine Rolle nach außen'};
+var NDAT={
+ Sonne:'deiner Identität', Mond:'deinem Sicherheitsgefühl', Merkur:'deinem Denken',
+ Venus:'deiner Zuneigung', Mars:'deinem Antrieb', Jupiter:'deinem Wachstum',
+ Saturn:'deiner Struktur', Uranus:'deinem Freiheitsbedürfnis', Neptun:'deiner Sehnsucht',
+ Pluto:'deiner Tiefe', ASC:'deinem Auftreten', MC:'deiner Rolle nach außen'};
 
 function hSpeicher(o){ try{ localStorage.setItem('ac_geburt', JSON.stringify(o)); }catch(e){} }
 function hLaden(){ try{ var s=localStorage.getItem('ac_geburt'); return s?JSON.parse(s):null; }catch(e){ return null; } }
@@ -526,9 +531,9 @@ function hZeigen(g){
       var wirk=TWIRK[x.t]||'', np=NPUNKT[x.r]||x.r;
       var satz;
       if(x.a==='trifft') satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+' — direkt auf '+np+'.';
-      else if(HWEICH[x.a]) satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', und es kommt bei '+np+' leicht an.';
+      else if(HWEICH[x.a]) satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', und es kommt bei '+(NDAT[x.r]||np)+' leicht an.';
       else if(x.a==='steht gegenüber') satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+' — von der Gegenseite her, also über andere oder von außen. Betroffen ist '+np+'.';
-      else satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', aber quer zu '+np+'. Heute reibt es dort.';
+      else satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', aber quer zu '+(NDAT[x.r]||np)+'. Heute reibt es dort.';
       html+='<div class="tzeile'+eng+'"><span class="tgly">'+(HGLY[x.t]||'')+' '+(HGLY[x.r]||'')+'</span><div>'+
         '<div class="tkopf"><b>'+x.t+'</b> '+x.a+' <b>'+x.r+'</b> · <span class="torb">'+x.o.toFixed(1)+'°'+(x.o<1?' — sehr eng':'')+'</span></div>'+
         '<div class="ttext">'+satz+'</div></div></div>';
