@@ -1,0 +1,7 @@
+# netlify.toml — sagt Netlify, wo die Seiten und wo die Funktionen liegen
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"

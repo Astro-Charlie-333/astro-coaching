@@ -171,6 +171,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
 </style>
 <script src="staedte.js"></script>
+<script src="aspekte-daten.js"></script>
 </head>
 <body>
 
@@ -534,9 +535,12 @@ function hZeigen(g){
       else if(HWEICH[x.a]) satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', und es kommt bei '+(NDAT[x.r]||np)+' leicht an.';
       else if(x.a==='steht gegenüber') satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+' — von der Gegenseite her, also über andere oder von außen. Betroffen ist '+np+'.';
       else satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', aber quer zu '+(NDAT[x.r]||np)+'. Heute reibt es dort.';
+      var ARTN={'trifft':'Konjunktion','unterstützt':'Sextil','reibt an':'Quadrat','fließt zu':'Trigon','steht gegenüber':'Opposition'};
+      var dd=(window.AC_ASP?AC_ASP.deutung(x.t,x.r,ARTN[x.a]||'Konjunktion'):null);
       html+='<div class="tzeile'+eng+'"><span class="tgly">'+(HGLY[x.t]||'')+' '+(HGLY[x.r]||'')+'</span><div>'+
-        '<div class="tkopf"><b>'+x.t+'</b> '+x.a+' <b>'+x.r+'</b> · <span class="torb">'+x.o.toFixed(1)+'°'+(x.o<1?' — sehr eng':'')+'</span></div>'+
-        '<div class="ttext">'+satz+'</div></div></div>';
+        '<div class="tkopf"><b>'+x.t+'</b> '+x.a+' <b>'+x.r+'</b> · <span class="torb">'+x.o.toFixed(2)+'°'+(x.o<1?' — sehr eng':'')+'</span></div>'+
+        '<div class="ttext">'+satz+(dd?'<br><span style="color:var(--leise)">'+dd.thema+'</span> '+dd.text+
+        '<br><span style="font-style:italic">'+dd.frage+'</span>':'')+'</div></div></div>';
     });
     html+='</div>';
   }

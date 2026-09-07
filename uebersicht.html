@@ -3,6 +3,8 @@
 <title>Übersicht · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
+<script src="rad.js"></script>
+<script src="aspekte-daten.js"></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -172,6 +174,24 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
 .ub-notizbox{background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:12px;padding:13px 16px;
  font-size:14.5px;line-height:1.6;margin-bottom:13px;}
 .tabbox{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+.rad-huelle{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:12px;margin-bottom:12px;}
+.rad-huelle svg{display:block;width:100%;height:auto;}
+.rad-filter{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 10px;}
+.rad-filter button{font-family:var(--sans);font-size:12.5px;padding:6px 12px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:15px;cursor:pointer;}
+.rad-filter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.rad-hinweis{font-size:13.5px;color:var(--leise);text-align:center;padding:12px 8px;line-height:1.5;}
+.rad-info{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:16px 18px;}
+.rad-kopf{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.rad-punkt{font-size:22px;line-height:1;}
+.rad-typ{font-family:var(--serif);font-size:17px;color:var(--nacht);flex:1;line-height:1.25;}
+.rad-orb{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:12px;}
+.rad-thema{font-family:var(--serif);font-style:italic;font-size:16.5px;margin-bottom:10px;}
+.rad-text{margin:0 0 8px;font-size:14.8px;line-height:1.6;}
+.rad-frage{margin:12px 0 0;padding-left:14px;border-left:3px solid var(--nacht);font-family:var(--serif);
+ font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+.rad-mehr{margin:10px 0 0;font-size:13.5px;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -404,7 +424,7 @@ function bauen(){
     SIGNS[Math.floor(P.Sonne/30)]+'-Sonne, '+SIGNS[Math.floor(P.Mond/30)]+'-Mond, '+SIGNS[Math.floor(P.ASC/30)]+'-Aszendent</div></div>'+
     '<div class="kw"><a class="ub-kbtn" href="menschen.html">Profil wechseln</a>'+
     '<a class="ub-kbtn" href="chart-rechner.html">Chart-Rechner</a>'+
-    '<a class="ub-kbtn" href="spannungskarte.html">Spannungskarte</a></div></div>';
+    '<a class="ub-kbtn" href="briefing.html">Reading-Briefing</a><a class="ub-kbtn" href="spannungskarte.html">Spannungskarte</a></div></div>';
   if(p.notiz) h+='<div class="ub-notizbox"><b>Notiz:</b> '+p.notiz+'</div>';
   h+='<div class="ub-reiter">'+[['radix','Geburtschart'],['jahr','Jahreschart '+jahr],['jetzt','Was gerade läuft']].map(function(r){
       return '<button type="button" data-r="'+r[0]+'" aria-pressed="'+(aktiverReiter===r[0])+'">'+r[1]+'</button>';}).join('')+
@@ -417,13 +437,33 @@ function bauen(){
   if(aktiverReiter==='radix') el.innerHTML=tabRadix(P);
   else if(aktiverReiter==='jahr') el.innerHTML=tabJahr(P,SR,jahr,p);
   else el.innerHTML=tabJetzt(P,T);
-  var svg=el.querySelector('svg.rad');
-  if(svg) radZeichnen(svg,(aktiverReiter==='jahr'&&SR)?SR:P);
+  try{
+    var huelle=document.getElementById('radhuelle');
+    if(huelle && window.AC_rad){
+      var chart=(aktiverReiter==='jahr'&&SR)?SR:P;
+      var trans=(aktiverReiter==='jetzt')?T:null;
+      var steuerung=AC_rad({el:huelle, chart:chart, transit:trans, info:document.getElementById('radinfo')});
+      var fb=document.getElementById('radfilter'), aktivF='alle';
+      var zeichneFilter=function(){
+        fb.innerHTML='';
+        [['alle','Alle'],['hart','Nur rote'],['weich','Nur blaue'],['eng','Nur enge']].forEach(function(o){
+          var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+          b.setAttribute('aria-pressed', aktivF===o[0]);
+          b.addEventListener('click',function(){ aktivF=o[0]; steuerung.setFilter(o[0]); zeichneFilter(); });
+          fb.appendChild(b);
+        });
+      };
+      if(fb) zeichneFilter();
+    }
+  }catch(e){ console.error('Rad:',e); }
 }
 function tabRadix(P){
   var sz=Math.floor(P.Sonne/30),mz=Math.floor(P.Mond/30),az=Math.floor(P.ASC/30);
   var h='<div class="ub-oben">'+
-    '<div class="ub-box" style="padding:12px;"><svg class="rad" viewBox="0 0 400 400" role="img" aria-label="Geburtschart"></svg></div>'+
+    '<div class="rad-filter" id="radfilter"></div>'+
+    '<div class="rad-huelle" id="radhuelle"></div>'+
+    '<div id="radinfo"></div>'+
+
     '<div class="ub-box tabbox">'+tabelle(P,'Radix')+'</div></div><div class="ub-unten">';
   h+='<div class="ub-box"><h3>Die drei Kernsätze</h3><div class="hint">Sonne, Mond und Aszendent tragen die Hälfte jedes Charts.</div>'+
     '<div class="ub-kernz"><b>Antrieb</b><div class="st">Sonne in '+SIGNS[sz]+' · '+(haus(P,P.Sonne)+1)+'. Haus</div><p>'+SONNE[sz]+' Der Schauplatz: '+HT[haus(P,P.Sonne)]+'.</p></div>'+
@@ -463,7 +503,10 @@ function tabRadix(P){
 function tabJahr(P,SR,jahr,p){
   if(!SR) return '<div class="ub-leerh">Jahreschart konnte nicht berechnet werden.</div>';
   var h='<div class="ub-oben">'+
-    '<div class="ub-box" style="padding:12px;"><svg class="rad" viewBox="0 0 400 400" role="img" aria-label="Jahreschart"></svg></div>'+
+    '<div class="rad-filter" id="radfilter"></div>'+
+    '<div class="rad-huelle" id="radhuelle"></div>'+
+    '<div id="radinfo"></div>'+
+
     '<div class="ub-box tabbox">'+tabelle(SR,'Solar Return')+'</div></div><div class="ub-unten">';
   h+='<div class="ub-box"><h3>Dein Jahr '+jahr+'</h3><div class="hint">Gilt vom Geburtstag bis zum nächsten.</div>'+
     '<div class="ub-kernz"><b>Beginn</b><p>'+jdDatum(SR._jd)+' · gerechnet für <b>'+((p&&p.wort)?p.wort:(p&&p.ort?p.ort:'den Geburtsort'))+'</b><br>Jahres-Aszendent in <b>'+SIGNS[Math.floor(SR.ASC/30)]+
@@ -501,14 +544,29 @@ function tabJetzt(P,T){
   res.sort(function(x,y){return y.s-x.s;});
   var w=norm(T.Mond-T.Sonne);
   var ph=(w<20?'Neumond':w<160?'zunehmender Mond':w<200?'Vollmond':w<340?'abnehmender Mond':'Neumond');
-  var h='<div class="ub-box"><h3>Heute am Himmel</h3><p style="margin:0;font-size:15px;">Sonne in <b>'+
+  var h='<div class="ub-oben"><div>'+
+    '<div class="rad-filter" id="radfilter"></div>'+
+    '<div class="rad-huelle" id="radhuelle"></div>'+
+    '<div id="radinfo"></div>'+
+    '</div><div class="ub-unten">'+
+    '<div class="ub-box"><h3>Heute am Himmel</h3><p style="margin:0;font-size:15px;">Sonne in <b>'+
     SIGNS[Math.floor(T.Sonne/30)]+'</b>, Mond in <b>'+SIGNS[Math.floor(T.Mond/30)]+'</b> · '+ph+
     ' · fällt in das <b>'+(haus(P,T.Mond)+1)+'. Haus</b> dieses Charts</p></div>';
   h+='<div class="ub-box"><h3>Die stärksten Transite</h3><div class="hint">Nach Enge und Gewicht sortiert. Alles unter einem Grad ist deutlich spürbar.</div>';
   if(!res.length) h+='<p style="margin:0;font-size:14.5px;">Gerade berührt nichts dieses Chart eng genug.</p>';
-  res.slice(0,6).forEach(function(x){
-    h+='<div class="ub-tz2'+(x.o<1?' eng':'')+'"><div class="k">'+x.a+' '+x.art+' '+x.b+' · '+x.o.toFixed(1)+'°</div>'+
-      (TWIRK[x.a]||'').replace(/^./,function(c){return c.toUpperCase();})+' — betroffen ist '+(NPKT[x.b]||x.b)+'.</div>';
+  var ARTN={'auf':'Konjunktion','im Sextil zu':'Sextil','im Quadrat zu':'Quadrat','im Trigon zu':'Trigon','gegenüber':'Opposition'};
+  res.slice(0,5).forEach(function(x){
+    var d=(window.AC_ASP?AC_ASP.deutung(x.a,x.b,ARTN[x.art]||'Konjunktion'):null);
+    var nah=x.o<1?'sehr eng — das spürst du':(x.o<2?'eng':'im Hintergrund');
+    var kern=(TWIRK[x.a]||'').replace(/^./,function(c){return c.toUpperCase();})+' — berührt wird '+(NPKT[x.b]||x.b)+'.';
+    var txt='<b>'+kern+'</b>';
+    if(d){
+      txt+='<br><span style="color:var(--leise)">'+d.thema+'</span>'+
+           '<br>'+d.text+
+           '<br><span style="font-family:var(--serif);font-style:italic;color:var(--nacht)">'+d.frage+'</span>';
+    }
+    h+='<div class="ub-tz2'+(x.o<1?' eng':'')+'"><div class="k">'+x.a+' '+x.art+' '+x.b+' · '+
+      x.o.toFixed(2)+'° · '+nah+'</div>'+txt+'</div>';
   });
   h+='</div><div class="ub-box"><h3>Die nächsten Lunationen</h3><div class="hint">Mit dem Haus, in das sie bei diesem Chart fallen.</div>';
   lunationen(4).forEach(function(x){
@@ -522,7 +580,7 @@ function tabJetzt(P,T){
       (x.t==='NM'?'Neumond':'Vollmond')+'</b> auf '+fmt(x.g)+'<br>Fällt in das <b>'+(hh+1)+'. Haus</b> — '+HT[hh]+'.'+
       (tref?' <b>Trifft '+tref.art+' '+tref.p+'</b> mit '+tref.o.toFixed(1)+'° — das macht den Termin persönlich.':' Kein Gradtreffer, also allgemeines Mondwetter.')+'</div>';
   });
-  return h+'<p class="hint" style="margin:8px 0 0;"><a href="lunationen.html">Alle Lunationen bis 2028 →</a></p></div>';
+  return h+'<p class="hint" style="margin:8px 0 0;"><a href="lunationen.html">Alle Lunationen bis 2028 →</a></p></div></div></div>';
 }
 bauen();
 

@@ -285,7 +285,7 @@ function zeichne(){
         ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'')+((p.wort&&p.wort!==p.ort)?' → wohnt in '+p.wort:'')+
         (p.notiz?'<br>'+p.notiz.slice(0,90)+(p.notiz.length>90?'…':''):'')+'</div></div>'+
       '<div class="pakt">'+
-        (ist?'<a class="b klein" style="text-decoration:none;display:inline-block" href="uebersicht.html">Übersicht öffnen</a>':'<button class="b klein" data-a="aktiv" data-i="'+p.id+'">Aktiv setzen</button>')+
+        (ist?'<a class="b klein" style="text-decoration:none;display:inline-block" href="uebersicht.html">Übersicht</a><a class="b leer klein" style="text-decoration:none;display:inline-block" href="briefing.html">Briefing</a>':'<button class="b klein" data-a="aktiv" data-i="'+p.id+'">Aktiv setzen</button>')+
         '<button class="b leer klein" data-a="bearb" data-i="'+p.id+'">Bearbeiten</button>'+
         (p.eigen?'':'<button class="b leer klein" data-a="eigen" data-i="'+p.id+'">Das bin ich</button>')+
         '<button class="b warn klein" data-a="weg" data-i="'+p.id+'">Löschen</button>'+
