@@ -173,8 +173,23 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 .ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
 .ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
 .ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.nx-karte{max-width:940px;margin:0 auto 20px;padding:0 24px;}
+.nx-inner{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:20px;padding:22px 24px;
+ display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.nx-nr{width:44px;height:44px;border-radius:50%;background:var(--nacht);color:#fff;flex:none;
+ display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:17px;}
+.nx-txt{flex:1;min-width:220px;}
+.nx-lab{font-family:var(--sans);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--messing);}
+.nx-titel{font-family:var(--serif);font-size:21px;line-height:1.2;margin:2px 0 3px;}
+.nx-was{font-size:14.5px;color:var(--leise);line-height:1.55;}
+.nx-b{font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;
+ padding:12px 24px;border-radius:24px;text-decoration:none;white-space:nowrap;}
+.nx-b:hover{background:#3B4970;}
+.nx-fort{font-size:12.5px;color:var(--leise);margin-top:10px;padding:0 4px;}
 </style>
 <script src="profil.js"></script>
+<script src="fortschritt.js"></script>
 <script src="staedte.js"></script>
 <script src="aspekte-daten.js"></script>
 <script src="begriffe.js" defer></script>
@@ -197,7 +212,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
       <a href="#wege">Wege</a>
       <a href="#nachschlagen">Nachschlagen</a>
     </nav>
-  <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav></div>
+  <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="weg.html">Weg</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav></div>
 </div>
 
 <div class="held">
@@ -209,6 +224,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
   </div>
 </div>
 
+<div class="nx-karte"><div class="nx-inner" id="nxinner"></div><div class="nx-fort" id="nxfort"></div></div>
 <div class="bahn" id="heute">
   <div class="heute-karte">
     <div class="heute-kopf"><h2>Heute</h2><span class="heute-datum" id="hdatum"></span></div>
@@ -675,6 +691,47 @@ function AC_ortDaten(y,mo,d,h,mi){
 try{ AC_ortFeld('hort','hortliste','hortok'); }catch(e){ console.error('Ortssuche:',e); }
 
 
+
+/* Ein Vorschlag statt vier gleichwertiger Wege */
+(function(){
+  var STUFEN=[
+   {n:1,t:'Fang bei dir an',w:'Drei Sätze über dich — Sonne, Mond, Aszendent in normaler Sprache. Fünf Minuten, kein Vorwissen.',z:'tool.html',k:'Los geht’s'},
+   {n:2,t:'Schau dir dein Muster an',w:'Wo bei dir der Druck sitzt und welche zwei Seiten gegeneinander ziehen.',z:'spannungskarte.html',k:'Ansehen'},
+   {n:3,t:'Finde deinen Rhythmus',w:'Was gerade läuft — und die erste Beobachtung, aus der mit der Zeit dein eigenes Muster wird.',z:'weg.html',k:'Weiter'},
+   {n:4,t:'Nimm dir eine Sache vor',w:'Was du dir nicht erlaubst, und eine kleine Erlaubnis für diese Woche.',z:'lilith-arbeit.html',k:'Öffnen'},
+   {n:5,t:'Versteh das System',w:'Jetzt lohnt sich das Lernen: Häuser, Aspekte, Herrscher, Timing.',z:'wissen.html',k:'Zur Bibliothek'}
+  ];
+  function zeichne(){
+    var box=document.getElementById('nxinner'); if(!box) return;
+    var fort=document.getElementById('nxfort');
+    var hat=false;
+    try{ hat=!!(window.AC_P&&AC_P.eigenes()); }catch(e){}
+    if(!hat){
+      box.innerHTML='<div class="nx-nr">1</div><div class="nx-txt">'+
+        '<div class="nx-lab">Hier anfangen</div>'+
+        '<div class="nx-titel">Erst mal dein Chart</div>'+
+        '<div class="nx-was">Ein Geburtsdatum, ein Ort — danach wird alles auf dieser Seite persönlich. Deine Daten bleiben in deinem Browser.</div>'+
+        '</div><a class="nx-b" href="tool.html">Anfangen</a>';
+      if(fort) fort.textContent='';
+      return;
+    }
+    var hoch=0;
+    try{ hoch=window.AC_WEG?AC_WEG.hoechsteStufe():0; }catch(e){}
+    var s=STUFEN[Math.min(hoch,4)];
+    box.innerHTML='<div class="nx-nr">'+s.n+'</div><div class="nx-txt">'+
+      '<div class="nx-lab">'+(hoch===0?'Dein nächster Schritt':'Stufe '+s.n+' von 5')+'</div>'+
+      '<div class="nx-titel">'+s.t+'</div><div class="nx-was">'+s.w+'</div>'+
+      '</div><a class="nx-b" href="'+s.z+'">'+s.k+'</a>';
+    if(fort){
+      var b=0; try{ b=AC_WEG.beobachtungen().length; }catch(e){}
+      fort.innerHTML=(hoch>0?hoch+' von 5 Stufen · ':'')+
+        (b>0?b+' Beobachtungen gesammelt · ':'')+
+        '<a href="weg.html">deinen Weg ansehen</a>';
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',zeichne);
+  else zeichne();
+})();
 </script>
 </body>
 </html>

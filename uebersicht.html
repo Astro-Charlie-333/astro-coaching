@@ -3,6 +3,7 @@
 <title>Übersicht · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
+<script src="fortschritt.js"></script>
 <script src="rad.js"></script>
 <script src="aspekte-daten.js"></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
@@ -196,6 +197,31 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
 .ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
 .ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
 .ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.kt-ziel{background:var(--bg);border:1px solid var(--linie);border-radius:14px;padding:14px 16px;margin-bottom:9px;}
+.kt-kopf{display:flex;gap:12px;align-items:center;margin-bottom:9px;}
+.kt-nr{width:34px;height:34px;border-radius:50%;background:var(--nacht);color:#fff;flex:none;
+ display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:15px;}
+.kt-kopf b{font-family:var(--serif);font-size:16.5px;}
+.kt-klein{font-size:12.5px;color:var(--leise);}
+.kt-quellen{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
+.kt-q{font-family:var(--sans);font-size:12px;background:var(--papier);border:1px solid var(--linie);
+ border-radius:13px;padding:4px 10px;color:var(--leise);}
+.kt-satz{margin:0;font-size:14.5px;line-height:1.55;}
+.kt-details{background:var(--papier);border:1px solid var(--linie);border-radius:14px;padding:13px 15px;margin-bottom:9px;}
+.kt-details summary{cursor:pointer;font-family:var(--serif);font-size:16px;color:var(--nacht);}
+.kt-details[open] summary{margin-bottom:10px;}
+.kt-tab{width:100%;border-collapse:collapse;font-size:13.8px;}
+.kt-tab th,.kt-tab td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linie);}
+.kt-tab th{font-family:var(--sans);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--messing);font-weight:500;}
+.kt-tab td.kt-m{font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap;}
+.kt-tab tr.kt-selbst td{background:var(--messing-bg);}
+.kt-marke{font-family:var(--sans);font-size:9.5px;letter-spacing:.06em;background:var(--messing);color:#fff;
+ border-radius:10px;padding:2px 7px;}
+.kt-ende{background:var(--nacht-bg);border-left:3px solid var(--nacht);border-radius:12px;padding:13px 15px;
+ font-size:14.5px;line-height:1.6;margin-top:4px;}
+.tab-legende{background:var(--bg);border-radius:12px;padding:13px 15px;margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--leise);}
+.tab-legende b{color:var(--tinte);}
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -203,7 +229,7 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html" class="ist">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="weg.html">Weg</a><a href="uebersicht.html" class="ist">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 <div class="wrap">
 <div class="eyebrow">Übersicht</div>
@@ -404,7 +430,7 @@ function tabelle(P,titel){
       return norm(b-a)>180; }catch(e){ return false; }
   }
   var h='<table class="pl"><tr><th></th><th>'+titel+'</th><th>Position</th><th>Element</th>'+
-        '<th>Haus</th><th>Wirkt auf</th><th>Herrscht über</th></tr>';
+        '<th>Haus</th><th>Wirkt auf</th><th>Verantwortlich für</th></tr>';
   ORD.forEach(function(k){
     var zi=Math.floor(P[k]/30), hh=haus(P,P[k]);
     var r=(P._jd?rueck(k,P._jd):false);
@@ -432,7 +458,12 @@ function tabelle(P,titel){
        '<td class="g">'+(hh+1)+'.</td><td class="r">'+HT[hh]+'</td>'+
        '<td class="r">Herrscher '+HERRT[zi]+'</td></tr>';
   });
-  return h+'</table>';
+  h+='</table>'+
+   '<div class="tab-legende"><b>Verantwortlich für</b> heißt: Dieser Planet regiert das genannte Haus. '+
+   'Beispiel: Steht Widder an deinem 5. Haus, ist Mars für dein 5. Haus verantwortlich — und wo dein Mars steht, '+
+   'dort spielt sich dein Ausdrucksthema tatsächlich ab. Ein leeres Haus ist deshalb nie ohne Thema; man liest es über seinen Herrscher. '+
+   '<b>Wirkt auf</b> ist dagegen das Haus, in dem der Planet selbst sitzt.</div>';
+  return h;
 }
 var aktiverReiter='radix';
 function bauen(){
@@ -524,16 +555,70 @@ function tabRadix(P){
       x.a+' will '+(POLW[x.a]||'etwas')+', '+x.b+' will '+(POLW[x.b]||'etwas')+'. Beide gehören dazu.</div>';
   });
   h+='<p class="hint" style="margin:8px 0 0;"><a href="spannungskarte.html">Alle Spannungsachsen ansehen →</a></p></div>';
-  h+='<div class="ub-box voll"><h3>Wohin die Lebensbereiche laufen</h3><div class="hint">Das Zeichen am Haus bestimmt den Herrscher. Wo der steht, dort findet das Thema statt.</div>';
-  for(var k=0;k<12;k++){
-    var zi=(Math.floor(P.ASC/30)+k)%12,hp=HERR[zi];
-    if(P[hp]===undefined) continue;
-    var hh=haus(P,P[hp]);
-    h+='<div class="ub-kette"><span class="n">'+(k+1)+'. Haus</span><span style="color:var(--messing)">→</span>'+
-      '<span class="n">'+SIGNS[zi]+'</span><span style="color:var(--messing)">→</span>'+
-      '<span class="n">'+hp+' im '+(hh+1)+'.</span>'+
-      '<span class="s"><b>'+HK[k]+'</b> läuft über <b>'+HK[hh]+'</b>.</span></div>';
+  /* Wohin die Lebensbereiche laufen */
+  var ziele={}, ketten=[];
+  for(var kk=0;kk<12;kk++){
+    var zi2=(Math.floor(P.ASC/30)+kk)%12, hp2=HERR[zi2];
+    if(P[hp2]===undefined) continue;
+    var hh2=haus(P,P[hp2]);
+    ketten.push({von:kk,nach:hh2,zeichen:SIGNS[zi2],herr:hp2});
+    (ziele[hh2]=ziele[hh2]||[]).push(kk);
   }
+  var rang=Object.keys(ziele).map(function(x){return {h:+x,n:ziele[x].length,aus:ziele[x]};})
+    .sort(function(a,b){return b.n-a.n;});
+
+  h+='<div class="ub-box voll"><h3>Wohin deine Lebensbereiche laufen</h3>'+
+    '<div class="hint">Jedes Haus wird von einem Planeten regiert. Wo dieser Planet steht, dort spielt sich das Thema tatsächlich ab — '+
+    'das ist der Unterschied zwischen „wo etwas angelegt ist" und „wo es passiert".</div>';
+
+  var top=rang.filter(function(r){return r.n>=2;}).slice(0,3);
+  if(top.length){
+    var s1='<b>Der Befund:</b> ';
+    if(top[0].n>=4){
+      s1+='Bei dir läuft auffällig viel an einer Stelle zusammen. <b>'+top[0].n+' von 12 Lebensbereichen</b> enden im '+
+        (top[0].h+1)+'. Haus — '+HT[top[0].h]+'. Wenn es dort klemmt, spürst du das überall.';
+    } else {
+      s1+='Deine Themen verteilen sich breit. Die stärkste Konzentration liegt im '+
+        (top[0].h+1)+'. Haus ('+HT[top[0].h]+') mit '+top[0].n+' Zuflüssen.';
+    }
+    h+='<div class="ub-kernz" style="margin-bottom:12px;"><p style="margin:0;">'+s1+'</p></div>';
+  }
+
+  top.forEach(function(r){
+    h+='<div class="kt-ziel"><div class="kt-kopf"><span class="kt-nr">'+(r.h+1)+'</span>'+
+      '<div><b>'+HT[r.h]+'</b><br><span class="kt-klein">bekommt Zufluss aus '+r.n+' Bereichen</span></div></div>'+
+      '<div class="kt-quellen">';
+    r.aus.forEach(function(v){ h+='<span class="kt-q">'+(v+1)+'. '+HK[v]+'</span>'; });
+    h+='</div><p class="kt-satz">Was du in '+r.aus.map(function(v){return HK[v];}).join(', ')+
+      ' anfängst, zeigt seine Wirkung in <b>'+HK[r.h]+'</b>.</p></div>';
+  });
+
+  h+='<details class="kt-details"><summary>Alle zwölf Ketten im Detail</summary><table class="kt-tab">'+
+     '<tr><th>Lebensbereich</th><th>Zeichen am Haus</th><th>Herrscher</th><th>steht im</th><th>läuft nach</th></tr>';
+  ketten.forEach(function(c){
+    h+='<tr'+(c.von===c.nach?' class="kt-selbst"':'')+'><td><b>'+(c.von+1)+'.</b> '+HK[c.von]+'</td>'+
+       '<td>'+c.zeichen+'</td><td>'+c.herr+'</td><td class="kt-m">'+(c.nach+1)+'. Haus</td>'+
+       '<td>'+HK[c.nach]+(c.von===c.nach?' <span class="kt-marke">bei sich</span>':'')+'</td></tr>';
+  });
+  h+='</table></details>';
+
+  var enden=[];
+  ORD.forEach(function(pl){
+    if(P[pl]===undefined) return;
+    if(HERR[Math.floor(P[pl]/30)]===pl) enden.push(pl);
+  });
+  if(enden.length){
+    enden.forEach(function(pl){
+      h+='<div class="kt-ende"><b>'+pl+' beherrscht sich selbst.</b> Er steht in '+SIGNS[Math.floor(P[pl]/30)]+
+        ', seinem eigenen Zeichen — bei ihm enden die Ketten. Das macht ihn meistens zum stärksten Punkt im ganzen Chart, '+
+        'und sein Haus ('+(haus(P,P[pl])+1)+'. — '+HT[haus(P,P[pl])]+') verdient besondere Aufmerksamkeit.</div>';
+    });
+  } else {
+    h+='<div class="kt-ende">Kein Planet steht im eigenen Zeichen. Die Ketten laufen im Kreis — es gibt keinen einzelnen Chef, '+
+       'die Themen halten sich gegenseitig. Praktisch: Du kannst an jeder Stelle ansetzen, es wirkt auf die anderen mit.</div>';
+  }
+  h+='<p class="hint" style="margin:10px 0 0;"><a href="chart-rechner.html">Ketten Schritt für Schritt im Chart-Rechner →</a></p></div>';
+
   return h+'</div></div>';
 }
 function tabJahr(P,SR,jahr,p){
