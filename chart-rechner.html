@@ -160,15 +160,20 @@ a{color:var(--nacht);}
 .ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
 .ac-nav a.ist{background:var(--nacht);color:#fff;}
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
 </style><script src="staedte.js"></script>
 <script src="profil.js"></script>
+<script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
 </div></div>
 
 <div class="wrap">
@@ -746,5 +751,35 @@ function AC_ortDaten(y,mo,d,h,mi){
 }
 
 try{ AC_ortFeld('cort','cortliste','cortok'); }catch(e){ console.error('Ortssuche:',e); }
+
+/* Geburtsdaten aus dem aktiven Profil übernehmen — kein doppeltes Eintippen */
+(function(){
+  try{
+    if(!window.AC_P) return;
+    var p=AC_P.aktives(); if(!p) return;
+    var dv=document.getElementById('date'), tv=document.getElementById('time');
+    if(dv) dv.value=p.y+'-'+('0'+p.mo).slice(-2)+'-'+('0'+p.d).slice(-2);
+    if(tv) tv.value=('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2);
+    var la=document.getElementById('lat'), lo=document.getElementById('lon');
+    if(la) la.value=p.lat; if(lo) lo.value=p.lon;
+    var o=document.getElementById('cort');
+    if(o && p.ort){
+      o.value=p.ort;
+      var teile=p.ort.split(',');
+      var tr=window.AC_ortSuche?AC_ortSuche(teile[0].trim(),1):[];
+      if(tr.length) window.AC_ORT=tr[0];
+      var ok=document.getElementById('cortok');
+      if(ok) ok.innerHTML='Aus deinem Profil übernommen: <b>'+p.ort+'</b> — zum Ändern einfach neu tippen.';
+    }
+    var hin=document.createElement('div');
+    hin.style.cssText='background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:12px;padding:11px 14px;margin-bottom:12px;font-size:14px;';
+    var voll=AC_P.zeigeNamen();
+    hin.innerHTML='Vorausgefüllt mit <b>'+AC_P.anzeige(p,voll)+'</b>'+(p.eigen?' (dein Profil)':'')+
+      ' · <a href="profile.html">wechseln</a>';
+    var w=document.querySelector('.white');
+    if(w&&w.parentNode) w.parentNode.insertBefore(hin,w);
+    if(typeof compute==='function') setTimeout(compute,60);
+  }catch(e){ console.error('Profil-Vorbelegung:',e); }
+})();
 </script>
 </body></html>

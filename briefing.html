@@ -109,13 +109,18 @@ a{color:var(--nacht);}
  padding:15px 17px;margin-bottom:14px;font-size:14.5px;line-height:1.6;}
 .bf-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;padding:26px;
  text-align:center;color:var(--leise);line-height:1.6;}
-</style></head><body>
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+</style><script src="begriffe.js" defer></script>
+</head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html" class="ist">Menschen</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html" class="ist">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 <div class="wrap">
 
@@ -127,7 +132,7 @@ a{color:var(--nacht);}
 
 <div id="bfinhalt"></div>
 
-<div class="weiter"><a href="menschen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Profile</span></a><a href="reading-ablauf.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Der Reading-Ablauf</span></a></div>
+<div class="weiter"><a href="profile.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Profile</span></a><a href="reading-ablauf.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Der Reading-Ablauf</span></a></div>
 <div class="foot">Reading-Briefing &middot; Berechnung im Browser, Formulierung &uuml;ber eine Schnittstelle. Immer pr&uuml;fen, bevor du damit arbeitest.</div>
 </div>
 <script>
@@ -266,7 +271,7 @@ function bauen(){
   var box=document.getElementById('bfinhalt');
   var p=(window.AC_P?AC_P.aktives():null);
   if(!p){
-    box.innerHTML='<div class="bf-leer"><b>Kein Profil aktiv.</b><br><br>Wähle unter <a href="menschen.html">Profile</a> aus, für wen du dich vorbereiten willst.</div>';
+    box.innerHTML='<div class="bf-leer"><b>Kein Profil aktiv.</b><br><br>Wähle unter <a href="profile.html">Profile</a> aus, für wen du dich vorbereiten willst.</div>';
     return;
   }
   var voll=AC_P.zeigeNamen(), name=AC_P.anzeige(p,voll);
@@ -276,7 +281,7 @@ function bauen(){
       '<div class="bf-kopf"><div class="bf-kreis">'+(kurz||'?')+'</div>'+
       '<div><div class="bf-name">'+name+'</div><div class="bf-daten">'+
       ('0'+p.d).slice(-2)+'.'+('0'+p.mo).slice(-2)+'.'+p.y+(p.ort?' · '+p.ort:'')+'</div></div>'+
-      '<a class="bf-btn leer" style="margin-left:auto;text-decoration:none;padding:8px 16px;font-size:13.5px;" href="menschen.html">wechseln</a></div>'+
+      '<a class="bf-btn leer" style="margin-left:auto;text-decoration:none;padding:8px 16px;font-size:13.5px;" href="profile.html">wechseln</a></div>'+
       '<div class="bf-feld"><label>Anliegen für dieses Gespräch</label>'+
       '<textarea id="bfanliegen" placeholder="Worum geht es? Was hat die Person erzählt? Was steht an?">'+(p.notiz||'')+'</textarea></div>'+
       '<div class="bf-feld"><label>Art des Briefings</label><select id="bfart">'+

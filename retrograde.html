@@ -112,13 +112,37 @@ a{color:var(--nacht);}
 .ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
 .ac-nav a.ist{background:var(--nacht);color:#fff;}
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
-</style></head><body>
+
+.rk-filter{display:flex;gap:5px;flex-wrap:wrap;margin:14px 0 10px;}
+.rk-filter button{font-family:var(--sans);font-size:13px;padding:6px 12px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:16px;cursor:pointer;}
+.rk-filter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+table.rk{width:100%;border-collapse:collapse;font-size:14.5px;}
+table.rk th,table.rk td{text-align:left;padding:9px 9px;border-bottom:1px solid var(--linie);vertical-align:top;}
+table.rk th{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+ color:var(--messing);font-weight:500;}
+table.rk td.m{font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap;}
+table.rk tr.jetzt{background:var(--messing-bg);}
+table.rk tr.jetzt td:first-child{border-left:3px solid var(--messing);}
+table.rk tr.treffer td{background:var(--nacht-bg);}
+.rk-marke{display:inline-block;font-family:var(--sans);font-size:10px;letter-spacing:.06em;
+ background:var(--nacht);color:#fff;border-radius:11px;padding:2px 8px;margin-left:6px;}
+.rk-marke.now{background:var(--messing);}
+.rk-hin{background:var(--papier);border:1px solid var(--linie);border-radius:14px;padding:14px 16px;
+ margin:12px 0;font-size:14.5px;line-height:1.6;}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+</style><script src="profil.js"></script>
+<script src="begriffe.js" defer></script>
+</head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
 </div></div>
 
 <div class="wrap">
@@ -163,6 +187,18 @@ a{color:var(--nacht);}
 
 <div class="tip"><b>Nicht dramatisieren:</b> Merkur ist an knapp einem Fünftel aller Tage rückläufig — das ist völlig gewöhnlich. Wer alles Misslungene darauf schiebt, findet immer einen Schuldigen und lernt nichts. Die brauchbare Lesart lautet: eine Einladung zum Innehalten, nicht eine Erklärung für schlechte Laune.</div>
 
+
+<h2>Der Kalender — alle Rückläufigkeiten bis 2029</h2>
+<p class="sub">33 Phasen, mit Datum, Anfangs- und Endgrad. Die laufende Phase ist hervorgehoben. Wenn ein Profil aktiv ist, markiert die Tabelle zusätzlich die Phasen, deren Grade einen Punkt in diesem Chart berühren — das sind die, die tatsächlich etwas bedeuten.</p>
+
+<div class="rk-filter" id="rkfilter"></div>
+<div style="overflow-x:auto;"><table class="rk" id="rktab"></table></div>
+
+<div class="rk-hin" id="rkhinweis"></div>
+
+<div class="tip"><b>Wie du den Kalender liest:</b> Interessant ist nicht, <i>dass</i> etwas rückläufig ist — sondern <b>über welchen Bereich deines Charts es zurückläuft</b>. Merkur rückläufig ist für alle Menschen dasselbe. Merkur rückläufig über deinem Mond ist es nicht. Deshalb ist die Spalte „Deine Punkte" die einzige, die wirklich zählt.</div>
+
+<div class="tip"><b>Die Schattenphase:</b> Ein Planet läuft vor der Rückläufigkeit schon einmal über dieselben Grade — und danach ein drittes Mal. Genau deshalb kommen Themen aus dieser Zeit oft dreimal: einmal als Ankündigung, einmal als Durcheinander, einmal als Klärung. Der Endgrad in der Tabelle zeigt dir, wo die Rückwärtsstrecke aufhört; alles zwischen End- und Anfangsgrad wird dreimal berührt.</div>
 
 <div class="weiter"><a href="mondknoten.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondknoten</span></a><a href="planeten-in-zeichen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Planeten in den Zeichen</span></a></div>
 <div class="foot">Rückläufige Planeten &middot; Positionen und Geschwindigkeiten werden im Browser gerechnet, nichts wird gespeichert. Häufigkeitsangaben gemittelt über zehn Jahre. Rückläufigkeit ist eine Richtung, keine Wertung.</div>
@@ -281,6 +317,148 @@ pruefe();
   lt2.textContent='eine Schleife, kein Rückwärtsgang.'; s.appendChild(lt2);
   var lt3=E('text',{x:340,y:42,'font-size':11,fill:'#8A6F5C','font-family':'JetBrains Mono'});
   lt3.textContent='HIMMEL'; s.appendChild(lt3);
+})();
+
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var RL = [{"p":"Merkur","a":"26.02.2026","e":"21.03.2026","ag":"22° Fische 34'","eg":"8° Fische 31'","ad":352.5614639597497,"ed":338.51377763962296,"t":23,"s":"20260226"},{"p":"Pluto","a":"07.05.2026","e":"16.10.2026","ag":"5° Wassermann 31'","eg":"3° Wassermann 04'","ad":305.50924414098415,"ed":303.0685244670399,"t":162,"s":"20260507"},{"p":"Merkur","a":"30.06.2026","e":"24.07.2026","ag":"26° Krebs 14'","eg":"16° Krebs 20'","ad":116.23476630259353,"ed":106.3305618502132,"t":24,"s":"20260630"},{"p":"Neptun","a":"07.07.2026","e":"13.12.2026","ag":"4° Widder 25'","eg":"1° Widder 37'","ad":4.417965560358247,"ed":1.6129037441260248,"t":159,"s":"20260707"},{"p":"Saturn","a":"27.07.2026","e":"11.12.2026","ag":"14° Widder 45'","eg":"7° Widder 56'","ad":14.749572397428222,"ed":7.931270131977486,"t":137,"s":"20260727"},{"p":"Uranus","a":"11.09.2026","e":"09.02.2027","ag":"5° Zwillinge 42'","eg":"1° Zwillinge 41'","ad":65.69677457812723,"ed":61.68305048622495,"t":151,"s":"20260911"},{"p":"Venus","a":"03.10.2026","e":"14.11.2026","ag":"8° Skorpion 29'","eg":"22° Waage 52'","ad":218.4903778508016,"ed":202.86830514119032,"t":42,"s":"20261003"},{"p":"Merkur","a":"24.10.2026","e":"14.11.2026","ag":"20° Skorpion 59'","eg":"5° Skorpion 06'","ad":230.97634903391705,"ed":215.09785225422746,"t":21,"s":"20261024"},{"p":"Jupiter","a":"13.12.2026","e":"13.04.2027","ag":"27° Löwe 01'","eg":"17° Löwe 00'","ad":147.0243030579761,"ed":136.99574358818387,"t":121,"s":"20261213"},{"p":"Mars","a":"11.01.2027","e":"02.04.2027","ag":"10° Jungfrau 25'","eg":"20° Löwe 56'","ad":160.42314467349468,"ed":140.93166109056912,"t":81,"s":"20270111"},{"p":"Merkur","a":"10.02.2027","e":"04.03.2027","ag":"5° Fische 56'","eg":"20° Wassermann 58'","ad":335.9281143388508,"ed":320.9742014636984,"t":22,"s":"20270210"},{"p":"Pluto","a":"09.05.2027","e":"18.10.2027","ag":"7° Wassermann 11'","eg":"4° Wassermann 45'","ad":307.17774274404724,"ed":304.7481802669822,"t":162,"s":"20270509"},{"p":"Merkur","a":"11.06.2027","e":"05.07.2027","ag":"6° Krebs 20'","eg":"27° Zwillinge 29'","ad":96.34065153962403,"ed":87.48810384079046,"t":24,"s":"20270611"},{"p":"Neptun","a":"10.07.2027","e":"15.12.2027","ag":"6° Widder 40'","eg":"3° Widder 51'","ad":6.659358377363748,"ed":3.852508527000128,"t":158,"s":"20270710"},{"p":"Saturn","a":"10.08.2027","e":"24.12.2027","ag":"27° Widder 53'","eg":"21° Widder 01'","ad":27.879918747886975,"ed":21.020713888122717,"t":136,"s":"20270810"},{"p":"Uranus","a":"15.09.2027","e":"13.02.2028","ag":"9° Zwillinge 57'","eg":"5° Zwillinge 56'","ad":69.95570448863965,"ed":65.93125789367662,"t":151,"s":"20270915"},{"p":"Merkur","a":"08.10.2027","e":"29.10.2027","ag":"4° Skorpion 53'","eg":"19° Waage 23'","ad":214.8796855734996,"ed":199.3887398456554,"t":21,"s":"20271008"},{"p":"Jupiter","a":"12.01.2028","e":"14.05.2028","ag":"27° Jungfrau 31'","eg":"17° Jungfrau 32'","ad":177.51212661301705,"ed":167.54098928149406,"t":123,"s":"20280112"},{"p":"Merkur","a":"24.01.2028","e":"15.02.2028","ag":"19° Wassermann 42'","eg":"4° Wassermann 02'","ad":319.6983041946349,"ed":304.0409555629104,"t":22,"s":"20280124"},{"p":"Pluto","a":"09.05.2028","e":"19.10.2028","ag":"8° Wassermann 50'","eg":"6° Wassermann 24'","ad":308.8253189473145,"ed":306.40682969487216,"t":163,"s":"20280509"},{"p":"Venus","a":"11.05.2028","e":"23.06.2028","ag":"19° Zwillinge 41'","eg":"3° Zwillinge 11'","ad":79.68095477671626,"ed":63.18604362937182,"t":43,"s":"20280511"},{"p":"Merkur","a":"21.05.2028","e":"14.06.2028","ag":"16° Zwillinge 19'","eg":"7° Zwillinge 46'","ad":76.31384896482757,"ed":67.75907488645663,"t":24,"s":"20280521"},{"p":"Neptun","a":"12.07.2028","e":"17.12.2028","ag":"8° Widder 54'","eg":"6° Widder 06'","ad":8.899978611403322,"ed":6.091923182119249,"t":158,"s":"20280712"},{"p":"Saturn","a":"23.08.2028","e":"06.01.2029","ag":"11° Stier 19'","eg":"4° Stier 25'","ad":41.31329784814308,"ed":34.41739481736891,"t":136,"s":"20280823"},{"p":"Uranus","a":"19.09.2028","e":"16.02.2029","ag":"14° Zwillinge 14'","eg":"10° Zwillinge 12'","ad":74.24087223728174,"ed":70.20543651271194,"t":150,"s":"20280919"},{"p":"Merkur","a":"20.09.2028","e":"11.10.2028","ag":"18° Waage 33'","eg":"3° Waage 29'","ad":198.5582548164956,"ed":183.48093820012082,"t":21,"s":"20280920"},{"p":"Merkur","a":"07.01.2029","e":"28.01.2029","ag":"3° Wassermann 38'","eg":"17° Steinbock 35'","ad":303.6312341553194,"ed":287.5750487896531,"t":21,"s":"20290107"},{"p":"Jupiter","a":"11.02.2029","e":"14.06.2029","ag":"27° Waage 25'","eg":"17° Waage 30'","ad":207.42244124240395,"ed":197.50754347168066,"t":123,"s":"20290211"},{"p":"Mars","a":"14.02.2029","e":"06.05.2029","ag":"13° Waage 55'","eg":"24° Jungfrau 56'","ad":193.9224455682098,"ed":174.93219373112333,"t":81,"s":"20290214"},{"p":"Merkur","a":"02.05.2029","e":"26.05.2029","ag":"26° Stier 40'","eg":"17° Stier 35'","ad":56.659545725955304,"ed":47.57893181879115,"t":24,"s":"20290502"},{"p":"Pluto","a":"11.05.2029","e":"21.10.2029","ag":"10° Wassermann 27'","eg":"8° Wassermann 03'","ad":310.45274532635045,"ed":308.04559267809987,"t":163,"s":"20290511"},{"p":"Neptun","a":"14.07.2029","e":"19.12.2029","ag":"11° Widder 08'","eg":"8° Widder 20'","ad":11.141181437992,"ed":8.33193609171993,"t":158,"s":"20290714"},{"p":"Merkur","a":"03.09.2029","e":"25.09.2029","ag":"1° Waage 47'","eg":"17° Jungfrau 28'","ad":181.78233895196956,"ed":167.46163654193955,"t":22,"s":"20290903"}];
+var RLGLY={Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+var RLDAUER={Merkur:'etwa 3 Wochen, dreimal im Jahr',Venus:'etwa 6 Wochen, alle 18 Monate',
+ Mars:'etwa 11 Wochen, alle 2 Jahre',Jupiter:'etwa 4 Monate, jedes Jahr',Saturn:'etwa 4,5 Monate, jedes Jahr',
+ Uranus:'etwa 5 Monate, jedes Jahr',Neptun:'etwa 5 Monate, jedes Jahr',Pluto:'etwa 5,5 Monate, jedes Jahr'};
+var rkFilter='alle';
+
+function rkDatum(t){var p=t.split('.');return new Date(+p[2],+p[1]-1,+p[0]);}
+function rkChart(){
+  try{
+    if(!window.AC_P) return null;
+    var p=AC_P.aktives(); if(!p) return null;
+    if(typeof chartAt!=='function' && typeof jdFromUT!=='function') return null;
+    var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+    if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+    var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+    return {name:AC_P.anzeige(p,AC_P.zeigeNamen()),
+      P:{Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+       Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+       Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc}};
+  }catch(e){ return null; }
+}
+function rkTreffer(e,C){
+  if(!C) return [];
+  var lo=Math.min(e.ad,e.ed), hi=Math.max(e.ad,e.ed);
+  if(hi-lo>180){ var t=lo; lo=hi; hi=t+360; }
+  var out=[];
+  for(var k in C.P){
+    var v=C.P[k];
+    var vv=v; if(vv<lo) vv+=360;
+    if(vv>=lo-1 && vv<=hi+1) out.push(k);
+  }
+  return out;
+}
+function rkZeichne(){
+  var C=rkChart();
+  var tb=document.getElementById('rktab'); if(!tb) return;
+  var heute=new Date();
+  var kopf='<tr><th>Planet</th><th>Von</th><th>Bis</th><th>Dauer</th><th>Strecke</th>'+
+    (C?'<th>Deine Punkte</th>':'')+'</tr>';
+  var zeilen='';
+  RL.forEach(function(e){
+    var a=rkDatum(e.a), b=rkDatum(e.e);
+    var laeuft=(heute>=a&&heute<=b);
+    var vorbei=(heute>b);
+    var tr=rkTreffer(e,C);
+    if(rkFilter==='jetzt'&&!laeuft&&!(a>heute)) return;
+    if(rkFilter==='treffer'&&!tr.length) return;
+    if(rkFilter!=='alle'&&rkFilter!=='jetzt'&&rkFilter!=='treffer'&&e.p!==rkFilter) return;
+    if(rkFilter!=='alle'&&vorbei&&rkFilter!=='treffer') return;
+    zeilen+='<tr class="'+(laeuft?'jetzt':'')+(tr.length?' treffer':'')+'" style="'+(vorbei?'opacity:.45':'')+'">'+
+      '<td><b>'+(RLGLY[e.p]||'')+' '+e.p+'</b>'+(laeuft?'<span class="rk-marke now">läuft</span>':'')+'</td>'+
+      '<td class="m">'+e.a+'</td><td class="m">'+e.e+'</td>'+
+      '<td class="m">'+e.t+' Tage</td>'+
+      '<td class="m">'+e.ag+'<br>bis '+e.eg+'</td>'+
+      (C?('<td>'+(tr.length?tr.join(', ')+'<span class="rk-marke">berührt</span>':'<span style="color:var(--soft)">—</span>')+'</td>'):'')+
+      '</tr>';
+  });
+  tb.innerHTML=kopf+(zeilen||'<tr><td colspan="6" style="padding:18px 8px;color:var(--soft)">Nichts in dieser Auswahl.</td></tr>');
+
+  var h=document.getElementById('rkhinweis');
+  if(C){
+    var alle=RL.filter(function(e){return rkTreffer(e,C).length && rkDatum(e.e)>=heute;});
+    h.innerHTML='<b>Für '+C.name+':</b> Von den kommenden Rückläufigkeiten berühren <b>'+alle.length+'</b> einen Punkt im Chart. '+
+      (alle.length?'Die nächste ist '+alle[0].p+' ab '+alle[0].a+' über '+rkTreffer(alle[0],C).join(', ')+'. ':'')+
+      'Alle anderen sind allgemeines Wetter.';
+  } else {
+    h.innerHTML='<b>Noch kein Profil aktiv.</b> Leg unter <a href="profile.html">Profile</a> ein Chart an — dann zeigt die Tabelle zusätzlich, welche Rückläufigkeiten deine eigenen Punkte berühren.';
+  }
+}
+(function(){
+  var fb=document.getElementById('rkfilter'); if(!fb) return;
+  var opt=[['alle','Alle'],['jetzt','Ab heute'],['treffer','Nur meine Treffer'],
+   ['Merkur','☿ Merkur'],['Venus','♀ Venus'],['Mars','♂ Mars'],['Jupiter','♃ Jupiter'],['Saturn','♄ Saturn']];
+  function zeichneF(){
+    fb.innerHTML='';
+    opt.forEach(function(o){
+      var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+      b.setAttribute('aria-pressed', rkFilter===o[0]);
+      b.addEventListener('click',function(){ rkFilter=o[0]; zeichneF(); rkZeichne(); });
+      fb.appendChild(b);
+    });
+  }
+  zeichneF(); rkZeichne();
 })();
 </script>
 </body></html>

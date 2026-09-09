@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Übersicht · Astro-Charlie</title>
+<title>Profil-Ansicht · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="rad.js"></script>
@@ -203,12 +203,12 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html" class="ist">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html" class="ist">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 <div class="wrap">
-<div class="eyebrow">Übersicht</div>
-<h1 id="h1">Dein <em>Bild.</em></h1>
-<p class="lede">Das vollständige Bild zum aktiven Profil — Chart, alle Positionen mit Haus und Zeichen, die Kernsätze, Spannungen, das Jahreschart und was gerade läuft. Ohne zwischen Seiten zu springen.</p>
+<div class="eyebrow">Arbeitsfläche</div>
+<h1 id="h1">Profil.</h1>
+<p class="lede">Das vollständige Bild zur ausgewählten Person — Chart, alle Positionen mit Haus und Zeichen, die Kernsätze, Spannungen, das Jahreschart und was gerade läuft. Ohne zwischen Seiten zu springen.</p>
 
 <div id="inhalt"></div>
 
@@ -437,13 +437,13 @@ function tabelle(P,titel){
 var aktiverReiter='radix';
 function bauen(){
   var box=document.getElementById('inhalt');
-  var p=(window.AC_P?AC_P.eigenes():null);
+  var p=(window.AC_P?AC_P.aktives():null);
   if(!p){
-    box.innerHTML='<div class="ub-leerh"><b>Noch kein eigenes Profil.</b><br><br>Leg unter <a href="profile.html">Profile</a> dein Chart an und setz den Haken „Das bin ich selbst" — danach siehst du hier immer dein eigenes Bild.</div>';
+    box.innerHTML='<div class="ub-leerh"><b>Kein Profil ausgewählt.</b><br><br>Wähl unter <a href="profile.html">Profile</a> aus, mit wem du arbeiten willst.</div>';
     return;
   }
   var voll=AC_P.zeigeNamen(), name=AC_P.anzeige(p,voll);
-  document.getElementById('h1').innerHTML='Dein <em>Bild.</em>';
+  document.getElementById('h1').innerHTML='Alles zu <em>'+name.replace(/\.$/,'')+'.</em>';
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
   var P=chartAt(y,mo,d,ut,p.lat,p.lon);

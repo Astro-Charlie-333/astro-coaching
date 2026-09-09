@@ -30,7 +30,8 @@
       lat:o.lat, lon:o.lon, ort:o.ort||'', notiz:o.notiz||'',
       wlat:(o.wlat!==undefined?o.wlat:o.lat), wlon:(o.wlon!==undefined?o.wlon:o.lon),
       wort:o.wort||'', wtz:o.wtz||'',
-      eigen:!!o.eigen, angelegt:new Date().toISOString().slice(0,10)};
+      eigen:!!o.eigen, angelegt:new Date().toISOString().slice(0,10),
+      readings:(o.readings||[])};
   }
   /* Anzeige-Name: Alias, sonst Initialen — der volle Name nur auf Wunsch */
   function anzeige(p, voll){
@@ -85,6 +86,29 @@
       var d=lade();
       d.liste.forEach(function(p){ p.eigen=(p.id===pid); });
       d.eigen=pid; sichere(d);
+    },
+    readings:function(pid){
+      var p=lade().liste.filter(function(x){return x.id===pid;})[0];
+      return (p&&p.readings)?p.readings:[];
+    },
+    readingHinzu:function(pid,titel,text){
+      var d=lade();
+      d.liste.forEach(function(p){
+        if(p.id===pid){
+          p.readings=p.readings||[];
+          p.readings.push({id:'r'+Date.now().toString(36),
+            titel:titel||'Reading', text:text||'',
+            datum:new Date().toISOString().slice(0,10)});
+        }
+      });
+      sichere(d);
+    },
+    readingLoeschen:function(pid,rid){
+      var d=lade();
+      d.liste.forEach(function(p){
+        if(p.id===pid&&p.readings) p.readings=p.readings.filter(function(r){return r.id!==rid;});
+      });
+      sichere(d);
     },
     exportieren:function(){
       var d=lade();

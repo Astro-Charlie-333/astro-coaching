@@ -102,13 +102,18 @@ a{color:var(--nacht);}
 .ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
 .ac-nav a.ist{background:var(--nacht);color:#fff;}
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
-</style></head><body>
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+</style><script src="begriffe.js" defer></script>
+</head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
 </div></div>
 <div class="wrap">
 <div class="eyebrow">Bibliothek</div>
@@ -117,8 +122,9 @@ a{color:var(--nacht);}
 <div class="springen"><a href="#s1">1 · Fundament</a><a href="#s2">2 · Chart lesen</a><a href="#s3">3 · Dich verstehen</a><a href="#s4">4 · Timing</a><a href="#s5">5 · Beziehungen</a><a href="#s6">6 · Begleiten</a><a href="#s7">7 · Eigene Praxis</a></div>
 <h2 style="margin-top:0;">Deine Werkzeuge</h2>
 <p class="sub">Rechnen statt lesen — diese vier arbeiten mit echten Daten.</p>
-<div class="wz"><a href="uebersicht.html"><b>Übersicht</b><span>Alles zum aktiven Profil auf einer Seite</span></a>
-<a href="briefing.html"><b>Reading-Briefing</b><span>Gesprächsvorbereitung aus dem aktiven Profil</span></a><a href="chart-rechner.html"><b>Chart-Rechner</b><span>Vollständige Berechnung mit Kettenleser</span></a><a href="tool.html"><b>Fang bei dir an</b><span>Der einfache Einstieg ohne Vorwissen</span></a><a href="menschen.html"><b>Profile</b><span>Deine Arbeitsfläche verwalten</span></a></div>
+<div class="wz"><a href="uebersicht.html"><b>Ich — dein Bild</b><span>Dein Chart, deine Positionen, dein Jahr, deine Transite</span></a>
+<a href="profil-ansicht.html"><b>Profil-Ansicht</b><span>Dasselbe Bild für eine ausgewählte Person</span></a>
+<a href="briefing.html"><b>Reading-Briefing</b><span>Gesprächsvorbereitung aus dem aktiven Profil</span></a><a href="chart-rechner.html"><b>Chart-Rechner</b><span>Vollständige Berechnung mit Kettenleser</span></a><a href="tool.html"><b>Fang bei dir an</b><span>Der einfache Einstieg ohne Vorwissen</span></a><a href="profile.html"><b>Profile</b><span>Menschen anlegen, Readings ablegen, anonymisiert arbeiten</span></a></div>
 <div class="stufe" id="s1">
 <div class="stufekopf"><span class="stufenr">1</span><h2>Fundament</h2></div>
 <p class="stufetext">Die Bausteine. Wenn du bei null anfängst, ist das hier die Reihenfolge.</p>

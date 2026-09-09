@@ -169,9 +169,15 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 .ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
 .ac-nav a.ist{background:var(--nacht);color:#fff;}
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
 </style>
+<script src="profil.js"></script>
 <script src="staedte.js"></script>
 <script src="aspekte-daten.js"></script>
+<script src="begriffe.js" defer></script>
 </head>
 <body>
 
@@ -191,7 +197,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
       <a href="#wege">Wege</a>
       <a href="#nachschlagen">Nachschlagen</a>
     </nav>
-  <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="uebersicht.html">Ich</a><a href="menschen.html">Menschen</a><a href="wissen.html">Wissen</a></nav></div>
+  <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav></div>
 </div>
 
 <div class="held">
@@ -225,7 +231,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
     <div id="hout" style="display:none"></div>
     <p class="heute-fuss" id="hfuss" style="display:none">
       Gerechnet im Browser, nichts gespeichert au&szlig;er lokal bei dir.
-      <a href="#" id="hneu">Daten &auml;ndern</a> &middot; <a href="tool.html">Dein ganzes Bild</a> &middot; <a href="chart-rechner.html">Vollst&auml;ndiges Chart</a> &middot; <a href="timing.html">Wie Transite wirken</a>
+      <a href="#" id="hneu">Daten &auml;ndern</a> &middot; <a href="uebersicht.html">Dein ganzes Bild</a> &middot; <a href="chart-rechner.html">Vollst&auml;ndiges Chart</a> &middot; <a href="timing.html">Wie Transite wirken</a>
     </p>
   </div>
 
@@ -244,7 +250,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
       <p class="weg-frage">Ich fange gerade erst an</p>
       <p class="weg-text">Planeten, Zeichen, H&auml;user, Aspekte. Wenn du das hast, liest du 80&nbsp;% von jedem Chart.</p>
     </a>
-    <a class="weg" href="menschen.html" style="--akz:var(--teal)">
+    <a class="weg" href="profile.html" style="--akz:var(--teal)">
       <span class="weg-glyph" aria-hidden="true">&#9680;</span>
       <p class="weg-frage">Ich arbeite mit anderen Menschen</p>
       <p class="weg-text">Profile anlegen, Charts nebeneinanderlegen, anonymisiert arbeiten. F&uuml;r Coaching, Freundschaft oder Familie.</p>
@@ -568,7 +574,9 @@ function hZeigen(g){
     if(Math.abs(od.lat)>66) return;
     var nf=document.getElementById('hname');
     var g={name:nf?nf.value:'',y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:od.tz,lat:od.lat,lon:od.lon,ort:od.name};
-    hSpeicher(g); hZeigen(g);
+    hSpeicher(g);
+    try{ if(window.AC_P && !AC_P.eigenes()){ var np=AC_P.hinzu({name:g.name,y:g.y,mo:g.mo,d:g.d,h:g.h,mi:g.mi,tz:g.tz,lat:g.lat,lon:g.lon,ort:g.ort,eigen:true}); AC_P.alsEigenes(np.id); } }catch(e){}
+    hZeigen(g);
   });
   var neu=document.getElementById('hneu');
   if(neu) neu.addEventListener('click',function(e){
@@ -577,7 +585,10 @@ function hZeigen(g){
     document.getElementById('hout').style.display='none';
     document.getElementById('hfuss').style.display='none';
   });
-  var g=hLaden();
+  /* Das Heute-Band gehört immer dir selbst — nie einem ausgewählten Profil */
+  var g=null;
+  try{ if(window.AC_P){ var e0=AC_P.eigenes(); if(e0) g={name:e0.name,y:e0.y,mo:e0.mo,d:e0.d,h:e0.h,mi:e0.mi,tz:e0.tz,lat:e0.lat,lon:e0.lon,ort:e0.ort}; } }catch(e){}
+  if(!g) g=hLaden();
   if(g){ try{ hZeigen(g); }catch(e){ console.error('Heute:',e); } }
 })();
 
