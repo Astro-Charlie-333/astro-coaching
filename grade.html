@@ -114,6 +114,14 @@ table.gr tr.warn td{background:#FBF0E8;}
  padding:2px 7px;background:var(--messing);color:#fff;}
 .gr-tag.spaet{background:#A05A3A;} .gr-tag.frueh{background:#3D6B62;}
 .gr-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;padding:24px;text-align:center;color:var(--leise);line-height:1.6;}
+
+.gr-det{background:var(--papier);border:1px solid var(--linie);border-radius:15px;padding:13px 16px;margin-bottom:8px;}
+.gr-det summary{cursor:pointer;font-size:15.5px;line-height:1.5;}
+.gr-det[open] summary{margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--linie);}
+.gd-gly{font-size:18px;color:var(--nacht);}
+.gd-haus{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--leise);}
+.gd-inhalt p{margin:0 0 9px;font-size:14.8px;line-height:1.62;}
+.gd-inhalt p:last-child{margin-bottom:0;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -251,6 +259,7 @@ var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skor
 var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC'};
 var ORD=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik','Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
 var HK=['Person','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft','Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
 
 /* Chaldäische Dekanate — je 10° ein Unterherrscher */
@@ -372,61 +381,175 @@ function wahlZeichnen(){
   });
 }
 
+/* ── Deutungsbausteine ───────────────────────────────── */
+var PL_TUT={
+ Sonne:'dein Wille und deine Lebenskraft',Mond:'dein Gefühl und dein Bedürfnis nach Sicherheit',
+ Merkur:'dein Denken und deine Sprache',Venus:'deine Zuneigung und dein Selbstwert',
+ Mars:'dein Antrieb und deine Durchsetzung',Jupiter:'dein Wachstum und dein Vertrauen',
+ Saturn:'deine Struktur und deine Verantwortung',Uranus:'dein Freiheitsbedürfnis',
+ Neptun:'deine Sehnsucht und deine Durchlässigkeit',Pluto:'deine Tiefe und deine Wandlungskraft',
+ ASC:'dein Auftreten',MC:'deine Rolle nach außen'};
+
+/* Was ein Unterherrscher hinzufügt */
+var SUB={
+ Mars:['Schärfe und Tempo','Es wird direkter, ungeduldiger und konfliktbereiter, als das Zeichen allein vermuten lässt.'],
+ Sonne:['Sichtbarkeit','Es will gesehen werden. Das Thema bleibt selten im Verborgenen, auch wenn du es dort hättest.'],
+ Venus:['Weichheit und Kontakt','Es sucht Verbindung statt Konfrontation. Der Ton wird verbindlicher, manchmal zu nachgiebig.'],
+ Merkur:['Verstand und Sprache','Es will benannt und sortiert werden. Du denkst darüber nach, bevor du fühlst.'],
+ Mond:['Gefühl und Durchlässigkeit','Es wird weicher und schwankender. Stimmungen spielen stärker mit hinein.'],
+ Saturn:['Ernst und Verzögerung','Es wird langsamer, schwerer und belastbarer. Was hier läuft, braucht Zeit — und hält dann.'],
+ Jupiter:['Weite und Zuversicht','Es wird größer angelegt. Im guten Fall großzügig, im schlechten überzogen.']};
+
+/* Was Anfangs- und Endgrade bei jedem Planeten konkret heißen */
+var ZONE_TEXT={
+ Sonne:['Du bist mit deiner Identität noch im Entstehen — auch mit 50 noch. Das hält dich beweglich und macht dich manchmal unsicher, wer du eigentlich bist.',
+        'Du hast mit dir selbst viel Erfahrung. Das gibt Souveränität und gleichzeitig das Gefühl, mit dieser Version von dir eigentlich durch zu sein.'],
+ Mond:['Deine Bedürfnisse sind ungefiltert und unmittelbar. Du spürst sofort, was los ist, weißt aber oft nicht, was du damit sollst.',
+       'Du kennst deine Bedürfnisse genau — und bist es leid, sie immer wieder erklären zu müssen.'],
+ Merkur:['Du denkst schnell und unfertig. Gedanken sind bei dir eher Anfänge als Ergebnisse.',
+         'Du hast fertig gedacht, bevor andere anfangen. Das macht ungeduldig in Gesprächen.'],
+ Venus:['Dein Geschmack und dein Wertgefühl sind noch nicht festgelegt. Du probierst länger als andere, was dir gefällt.',
+        'Du weißt genau, was du magst und was du wert bist — und hast wenig Geduld mit dem Gegenteil.'],
+ Mars:['Dein Antrieb ist roh. Du startest leicht und weißt beim Start noch nicht, wohin.',
+       'Du weißt, wie du etwas durchziehst — und bist genervt, wenn es wieder von vorn losgeht.'],
+ Jupiter:['Dein Vertrauen ist unverbraucht. Du gehst offen an Dinge heran, auch nach Enttäuschungen.',
+          'Du hast ausreichend Erfahrung damit, wie weit Optimismus trägt. Manchmal zu viel Erfahrung.'],
+ Saturn:['Deine Struktur ist noch im Aufbau. Verantwortung fühlt sich fremder an als bei anderen.',
+         'Du hast viel getragen. Das Thema ist bei dir fertig durchgearbeitet — und trotzdem lässt es dich nicht ganz los.'],
+ Uranus:['Der Freiheitsimpuls ist ungeschliffen — er kommt plötzlich und ohne Plan.',
+         'Du weißt, wie Ausbrechen geht. Die Frage ist inzwischen eher, wofür.'],
+ Neptun:['Deine Sehnsucht ist noch ohne Form. Sie zieht dich, ohne dir zu sagen wohin.',
+         'Du kennst deine Illusionen inzwischen. Das schützt nicht immer, aber es hilft.'],
+ Pluto:['Die Tiefe ist angelegt, aber noch nicht ausgelotet.',
+        'Du hast mit Umbrüchen Erfahrung. Du weißt, dass du sie überlebst.'],
+ ASC:['Deine Wirkung ist noch nicht ausgeformt — Menschen lesen dich verschieden.',
+      'Deine Wirkung ist eindeutig. Menschen ordnen dich schnell ein, manchmal zu schnell.'],
+ MC:['Deine berufliche Rolle ist noch im Werden.',
+     'Deine berufliche Rolle ist durchgearbeitet. Oft steht ein Wechsel an.']};
+
+var HERRZ={0:'Mars',1:'Venus',2:'Merkur',3:'Mond',4:'Sonne',5:'Merkur',6:'Venus',7:'Pluto',8:'Jupiter',9:'Saturn',10:'Uranus',11:'Neptun'};
+
+function deutung(k, g, hausNr, ascGrad, mcGrad){
+  var zi=Math.floor(g/30), d=g%30;
+  var dekIdx=Math.min(2,Math.floor(d/10)), dek=DEKAN[zi][dekIdx];
+  var gr=grenzeVon(g), z=zone(g);
+  var zeichenHerr=HERRZ[zi];
+  var t=[];
+
+  /* 1 · Zone */
+  if(z.k==='frueh' && ZONE_TEXT[k]) t.push('<b>Anfangsgrad.</b> '+ZONE_TEXT[k][0]);
+  else if(z.k==='spaet' && ZONE_TEXT[k]) t.push('<b>Endgrad.</b> '+ZONE_TEXT[k][1]);
+  else t.push('<b>Mittelgrad.</b> '+(PL_TUT[k]||k).replace(/^dein[e]? /,'Dein ')+
+      ' steht stabil im Zeichen — hier braucht es weder Anlauf noch Abschluss. Die normale Deutung über '+
+      SIGNS[zi]+' trägt ohne Zusatz.');
+
+  /* 2 · Dekanat */
+  var sub=SUB[dek];
+  if(dek===zeichenHerr){
+    t.push('<b>Dekanat '+dek+'</b> — und '+dek+' regiert auch '+SIGNS[zi]+' selbst. '+
+      'Das ist die <b>doppelte Variante</b>: Was '+SIGNS[zi]+' ausmacht, wird hier nicht gemildert, sondern verstärkt. '+
+      'Die reinste Form dieses Zeichens.');
+  } else if(dek===k){
+    t.push('<b>Dekanat '+dek+'</b> — also das eigene Dekanat. '+k+' steht in seinem eigenen Unterabschnitt und '+
+      'kommt dadurch deutlicher zum Ausdruck, als die Zeichenstellung allein sagen würde.');
+  } else if(sub){
+    t.push('<b>Dekanat '+dek+'</b> legt '+sub[0]+' darüber. '+sub[1]);
+  }
+
+  /* 3 · Grenze */
+  var gsub=SUB[gr.herr];
+  if(gsub){
+    if(gr.herr===dek) t.push('<b>Grenze '+gr.herr+'</b> ('+gr.von+'–'+gr.bis+'°) — dieselbe Handschrift wie im Dekanat. '+
+      'Beide Feinebenen zeigen in dieselbe Richtung, das macht die Färbung eindeutig.');
+    else t.push('<b>Grenze '+gr.herr+'</b> ('+gr.von+'–'+gr.bis+'°) legt darunter noch eine Schicht: '+
+      gsub[0]+'. Das ist die feinere Ebene — sie zeigt sich weniger im Auftreten als im Vorgehen.');
+  }
+
+  /* 4 · Haus */
+  t.push('<b>Im '+hausNr+'. Haus</b> spielt sich das ab in '+HT[hausNr-1]+'. '+
+    'Praktisch: '+(PL_TUT[k]||k)+' zeigt sich bei dir vor allem dort — und zwar '+
+    (z.k==='frueh'?'noch suchend':(z.k==='spaet'?'erfahren und ungeduldig':'stabil'))+
+    ', mit '+(SUB[dek]?SUB[dek][0]:'eigener Färbung')+' darin.');
+
+  /* 5 · Achsennähe */
+  if(k!=='ASC'&&k!=='MC'){
+    var dA=Math.abs(((d-(ascGrad%30))+45)%30-15), dM=Math.abs(((d-(mcGrad%30))+45)%30-15);
+    var m=Math.min(dA,dM);
+    if(m<=2){
+      t.push('<b>Achtung, Achsengrad:</b> Dieser Punkt liegt nur '+m.toFixed(1)+'° vom Gradwert deines '+
+        (dA<dM?'Aszendenten':'MC')+' entfernt. Das verstärkt ihn erheblich — unabhängig davon, in welchem Haus er sitzt. '+
+        'Solche Punkte sind im Erleben meistens lauter, als ihre Hausposition vermuten lässt.');
+    }
+  }
+  return t;
+}
+
 function chartZeichnen(){
   var box=document.getElementById('grchart'); if(!box) return;
   var p=null;
   try{ p=window.AC_P?AC_P.aktives():null; }catch(e){}
   if(!p){
-    box.innerHTML='<div class="gr-leer"><b>Kein Profil aktiv.</b><br><br>Leg unter <a href="profile.html">Profile</a> ein Chart an — dann siehst du hier deine eigenen Grade.</div>';
+    box.innerHTML='<div class="gr-leer"><b>Kein Profil aktiv.</b><br><br>Leg unter <a href="profile.html">Profile</a> ein Chart an — dann steht hier zu jeder deiner Platzierungen, was der Grad konkret bedeutet.</div>';
     return;
   }
-  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
-  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
-  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d0=p.d;
+  if(ut<0){ut+=24;d0-=1;} if(ut>=24){ut-=24;d0+=1;}
+  var jd=jdFromUT(y,mo,d0,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
   var P={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
    Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
    Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+  function haus(l){return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12;}
 
-  var h='<div style="overflow-x:auto;"><table class="gr"><tr><th></th><th>Punkt</th><th>Position</th>'+
-        '<th>Lage im Zeichen</th><th>Zone</th><th>Dekanat</th><th>Grenze</th><th>Nähe zur Achse</th></tr>';
   var liste=ORD.concat(['ASC','MC']);
+
+  /* Übersichtstabelle */
+  var h='<div style="overflow-x:auto;"><table class="gr"><tr><th></th><th>Punkt</th><th>Position</th>'+
+        '<th>Lage</th><th>Zone</th><th>Dekanat</th><th>Grenze</th><th>Haus</th></tr>';
   liste.forEach(function(k){
-    var g=P[k], d2=g%30, z=zone(g), dek=dekanVon(g), gr=grenzeVon(g);
-    var rand=(d2<1||d2>=29);
-    /* Gradnähe zu ASC/MC */
-    var nah='—';
-    if(k!=='ASC'&&k!=='MC'){
-      var dA=Math.abs(((d2-(P.ASC%30))+45)%30-15);
-      var dM=Math.abs(((d2-(P.MC%30))+45)%30-15);
-      var m=Math.min(dA,dM);
-      if(m<=2) nah='<b style="color:#A05A3A">'+m.toFixed(1)+'° zum '+(dA<dM?'AC':'MC')+'-Grad</b>';
-      else if(m<=4) nah=m.toFixed(1)+'° zum '+(dA<dM?'AC':'MC')+'-Grad';
-    }
-    h+='<tr'+(rand?' class="warn"':'')+'><td class="gl">'+(GLY[k]||'')+'</td>'+
+    var g=P[k], d2=g%30, z=zone(g), dek=dekanVon(g), gr=grenzeVon(g), hn=haus(g)+1;
+    h+='<tr'+((d2<1||d2>=29)?' class="warn"':'')+'><td class="gl">'+(GLY[k]||'')+'</td>'+
       '<td><b>'+k+'</b></td><td class="m">'+fmt(g)+'</td>'+
       '<td><div class="gr-mini"><u style="left:0;width:20%;background:#3D6B62"></u>'+
         '<u style="left:80%;width:20%;background:#A05A3A"></u>'+
         '<i style="left:'+(d2/30*100).toFixed(1)+'%"></i></div></td>'+
       '<td><span class="gr-tag '+z.k+'">'+z.t+'</span></td>'+
-      '<td>'+dek+'</td><td>'+gr.herr+'<br><span style="font-size:11.5px;color:var(--leise)">'+gr.von+'–'+gr.bis+'°</span></td>'+
-      '<td>'+nah+'</td></tr>';
+      '<td>'+dek+'</td><td>'+gr.herr+'</td><td class="m">'+hn+'.</td></tr>';
   });
   h+='</table></div>';
 
-  /* Befunde */
+  /* Einzeldeutungen */
+  h+='<h3 style="font-family:var(--serif);font-weight:400;font-size:21px;margin:26px 0 6px;">Was das bei dir jeweils heißt</h3>'+
+     '<p class="sub" style="margin-bottom:14px;">Für jede Platzierung: Zone, Dekanat, Grenze und Haus zusammengelesen.</p>';
+  liste.forEach(function(k){
+    var g=P[k], hn=haus(g)+1, z=zone(g);
+    var teile=deutung(k,g,hn,P.ASC,P.MC);
+    h+='<details class="gr-det"'+(z.k!=='mitte'?' open':'')+'>'+
+      '<summary><span class="gd-gly">'+(GLY[k]||'')+'</span> <b>'+k+'</b> '+fmt(g)+
+      ' <span class="gd-haus">'+hn+'. Haus</span> <span class="gr-tag '+z.k+'">'+z.t+'</span></summary>'+
+      '<div class="gd-inhalt">'+teile.map(function(t){return '<p>'+t+'</p>';}).join('')+'</div></details>';
+  });
+
+  /* Gesamtbefund */
   var spaet=liste.filter(function(k){return (P[k]%30)>=29;});
   var frueh=liste.filter(function(k){return (P[k]%30)<1;});
   var achs=ORD.filter(function(k){
     var d3=P[k]%30;
     return Math.min(Math.abs(((d3-(P.ASC%30))+45)%30-15), Math.abs(((d3-(P.MC%30))+45)%30-15))<=2;
   });
-  h+='<div class="gr-zone" style="margin-top:14px;"><h4>Was bei dir auffällt</h4><p>';
-  var teile=[];
-  if(achs.length) teile.push('<b>'+achs.join(', ')+'</b> steht auf fast demselben Grad wie eine deiner Achsen — das verstärkt diese Punkte deutlich, unabhängig vom Häusersystem. Das ist der wichtigste Befund in dieser Tabelle.');
-  if(spaet.length) teile.push('<b>'+spaet.join(', ')+'</b> sitzt auf dem letzten Grad. Viel Erfahrung mit dem Thema, oft Ungeduld damit — und: Deine Geburtszeit sollte hier stimmen, zehn Minuten Abweichung ändern das Zeichen.');
-  if(frueh.length) teile.push('<b>'+frueh.join(', ')+'</b> steht ganz am Anfang eines Zeichens. Das Thema ist roh und unverbraucht.');
-  if(!teile.length) teile.push('Keine Auffälligkeit an den Rändern, und nichts liegt auf einem Achsengrad. Deine Grade sind unspektakulär — was heißt, dass du die Deutung ganz normal über Zeichen, Haus und Aspekte machen kannst.');
-  h+=teile.join(' ')+'</p></div>';
+  var dekZ={};
+  ORD.forEach(function(k){ var dk=dekanVon(P[k]); dekZ[dk]=(dekZ[dk]||0)+1; });
+  var haeufig=Object.keys(dekZ).sort(function(x,y){return dekZ[y]-dekZ[x];})[0];
+
+  h+='<div class="gr-zone" style="margin-top:18px;"><h4>Der Gesamtbefund</h4><p>';
+  var t2=[];
+  if(achs.length) t2.push('<b>'+achs.join(', ')+'</b> liegt auf einem Achsengrad — diese Punkte wirken stärker, als ihr Haus vermuten lässt. Das ist die wichtigste Aussage hier.');
+  if(dekZ[haeufig]>=4) t2.push('<b>'+dekZ[haeufig]+' deiner Planeten stehen in einem '+haeufig+'-Dekanat.</b> Das zieht sich als Grundton durch dein ganzes Chart: '+
+    (SUB[haeufig]?SUB[haeufig][1]:'')+' Auch dort, wo die Zeichen etwas anderes sagen.');
+  if(spaet.length) t2.push('<b>'+spaet.join(', ')+'</b> auf dem letzten Grad — viel Erfahrung, wenig Geduld. Und ein Hinweis: Prüf hier deine Geburtszeit, zehn Minuten ändern das Zeichen.');
+  if(frueh.length) t2.push('<b>'+frueh.join(', ')+'</b> ganz am Anfang eines Zeichens — roh und unverbraucht.');
+  if(t2.length<2) t2.push('Ansonsten sind deine Grade unauffällig verteilt. Das heißt: Die Deutung läuft ganz normal über Zeichen, Haus und Aspekte, und die Feinebenen ergänzen nur.');
+  h+=t2.join(' ')+'</p></div>';
+
   box.innerHTML=h;
 }
 
