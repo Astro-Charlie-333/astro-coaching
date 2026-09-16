@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nähe · Themenraum · Astro-Charlie</title>
+<title>Herkunft · Themenraum · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="fortschritt.js"></script>
@@ -138,6 +138,9 @@ a{color:var(--nacht);}
  padding:11px 13px;font-size:14px;line-height:1.6;}
 .rm-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:18px;padding:28px;
  text-align:center;color:var(--leise);line-height:1.65;}
+
+.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
+ margin-bottom:18px;font-size:14.8px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -149,15 +152,16 @@ a{color:var(--nacht);}
 <div class="wrap">
 
 <div class="eyebrow">Themenraum</div>
-<h1>Nähe.</h1>
+<h1>Herkunft.</h1>
 <div class="rm-tuer">
-  <div class="rm-frage">„Warum wiederholt sich das immer?"</div>
-  <p>Dating, Beziehung, Liebe — die Frage dahinter ist meistens dieselbe: Warum läuft es wieder so wie beim letzten Mal? Nähe ist im Chart kein einzelner Punkt, sondern sieben Fäden: was dich anzieht, was du im Gegenüber suchst, wie viel Nähe du aushältst, wie du streitest, was du begehrst, was sich wiederholt und was dich bleiben lässt. Bei den meisten Menschen ist einer davon deutlich lauter als die anderen — und genau der erklärt das Muster.</p>
+  <div class="rm-frage">„Was läuft aus meiner Familie noch mit?"</div>
+  <p>Dieser Raum liegt unter vielen anderen. Was du über Geld glaubst, wie nah du Menschen kommst, wann du dich zusammenreißt — vieles davon wurde entschieden, bevor du mitreden konntest. Sieben Facetten: die Atmosphäre von damals, was dich genährt hat, welche Autorität du verinnerlicht hast, was nie ausgesprochen wurde, was du übernommen hast, welche Rolle du hattest — und was du daraus machst.</p>
 </div>
+<div class="rm-hinweis"><b>Eine Grenze vorab:</b> Dieser Raum arbeitet mit Mustern, nicht mit Verletzungen. Ein Chart kann zeigen, wo etwas sitzt — es kann es nicht behandeln. Wenn beim Lesen etwas hochkommt, das größer ist als eine Erinnerung, ist das kein Zeichen, dass du weitermachen sollst, sondern dass es Begleitung braucht. Das ist keine Schwäche und kein Rückzieher, sondern der ehrliche Rahmen.</div>
 <div id="raum"></div>
 
-<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="synastrie.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Synastrie — zwei Charts</span></a></div>
-<div class="foot">Themenraum Nähe &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="lilith-arbeit.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Lilith-Arbeit</span></a></div>
+<div class="foot">Themenraum Herkunft &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
 </div>
 <script>
 var RAD=Math.PI/180;
@@ -217,268 +221,255 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 
 var RAUM = {
- name:'Nähe',
- slug:'naehe',
- sortierTitel:'Wo deine Beziehungsfrage tatsächlich sitzt',
+ name:'Herkunft',
+ slug:'herkunft',
+ sortierTitel:'Wo deine Herkunft heute noch wirkt',
  facetten:[
- {id:'anziehung', name:'Was dich anzieht',
-  frage:'Warum immer wieder dieser Typ Mensch?',
-  anker:{haeuser:[5], punkte:['Venus','Mars']},
+ {id:'atmosphaere', name:'Die Atmosphäre, in der du groß wurdest',
+  frage:'Wie war die Stimmung, in der ich aufgewachsen bin?',
+  anker:{haeuser:[4], punkte:['Mond','Pluto','Neptun','Saturn']},
   regeln:[
     function(f,P,H){
-      if(P.Venus===undefined) return null;
-      var hn=H.haus(P.Venus)+1, zi=Math.floor(P.Venus/30);
-      return 'Deine <b>Venus in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Venus)+') beschreibt, wie du magst — '+
-        'nicht wen. Zuneigung zeigt sich bei dir über <b>'+H.HT[hn-1]+'</b>. Dort machst du auf, dort merkst du, ob jemand ankommt.';
-    },
-    function(f,P,H){
-      if(P.Mars===undefined) return null;
-      var hn=H.haus(P.Mars)+1, zi=Math.floor(P.Mars/30);
-      return 'Dein <b>Mars in '+H.SIGNS[zi]+', '+hn+'. Haus</b> sagt, was dich reizt und wie du auf jemanden zugehst. '+
-        'Venus mag, Mars will — und die beiden ziehen nicht immer in dieselbe Richtung. '+
-        'Genau dort entsteht das Muster, dass man sich zu Menschen hingezogen fühlt, die einem nicht guttun.';
-    },
-    function(f,P,H){
-      var vm=f.aspekte.filter(function(x){return (x.a==='Venus'&&x.b==='Mars')||(x.a==='Mars'&&x.b==='Venus');})[0];
-      if(!vm) return 'Venus und Mars bilden bei dir keinen Aspekt. Zuneigung und Begehren laufen getrennt — '+
-        'das kann heißen, dass du Menschen magst, die du nicht willst, und willst, die du nicht magst. Beides aufzulösen ist Arbeit, kein Defekt.';
-      return '<b>Venus '+vm.typ+' Mars</b> mit '+vm.o.toFixed(1)+'°. '+
-        (vm.art==='weich'
-         ? 'Mögen und Wollen gehören bei dir zusammen. Das ist seltener, als man denkt — du verliebst dich nicht gegen dich selbst.'
-         : 'Mögen und Wollen reiben. Anziehung und Spannung hängen bei dir zusammen: Was ruhig ist, fühlt sich schnell nach nichts an.');
-    },
-    function(f,P,H){
-      var im5=f.planeten.filter(function(x){return x.haus===5;});
-      if(!im5.length) return null;
-      return 'Im 5. Haus — Verliebtsein, Spiel, Romantik — steht <b>'+im5.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Das färbt die frühe Phase: wie du flirtest, wie schnell es geht, wie viel Show dabei ist.';
-    }],
-  uebung:['Die Liste der letzten Drei',
-   'Schreib die letzten drei Menschen auf, in die du verliebt warst. Dann daneben: <i>Was hatten die gemeinsam?</i> Nicht Aussehen — Verhalten. Wie erreichbar waren sie? Wer hat mehr gewollt? Das Muster steht meistens nach drei Zeilen da.'],
-  rueckfrage:'Hast du das Muster gefunden?',
-  coach:{fragen:['Was zieht dich an, von dem du weißt, dass es dir nicht guttut?',
-   'Wann fühlt sich etwas für dich spannend an — und wann langweilig?',
-   'Was hatten die letzten drei gemeinsam?'],
-   vorsicht:'Nicht bewerten, welcher Typ Mensch gut oder schlecht ist. Es geht darum, dass die Person ihr Muster sieht, nicht dass sie deins übernimmt.'}},
-
- {id:'gegenueber', name:'Was du im Gegenüber suchst',
-  frage:'Was erwarte ich eigentlich von einer Beziehung?',
-  anker:{haeuser:[7], punkte:['Saturn','Uranus','Juno']},
-  regeln:[
-    function(f,P,H){
-      var dc=(P.ASC+180)%360, zi=Math.floor(dc/30), hp=H.HERR[zi];
+      var ic=(P.MC+180)%360, zi=Math.floor(ic/30), hp=H.HERR[zi];
       var hin=(P[hp]!==undefined)?(H.haus(P[hp])+1):null;
-      var t='Dein <b>Deszendent steht in '+H.SIGNS[zi]+'</b> ('+H.fmt(dc)+'). Das beschreibt, was du im Gegenüber suchst — '+
-        'oft genau das, was du dir selbst nicht zutraust. ';
-      if(hin) t+='Der Herrscher <b>'+hp+'</b> steht im '+hin+'. Haus: <b>Beziehung läuft bei dir über '+H.HT[hin-1]+'</b>. '+
-        'Dort entscheidet sich, ob es trägt.';
+      var t='Dein <b>IC steht in '+H.SIGNS[zi]+'</b> ('+H.fmt(ic)+') — der tiefste Punkt deines Charts, '+
+        'die Wurzel. Das beschreibt nicht die Fakten deiner Kindheit, sondern <b>die Atmosphäre</b>: '+
+        'was in der Luft lag, auch wenn niemand darüber sprach. ';
+      if(hin) t+='Beherrscht wird das von <b>'+hp+'</b> im '+hin+'. Haus — dein Herkunftsthema wirkt bis heute in <b>'+H.HT[hin-1]+'</b> hinein.';
       return t;
     },
     function(f,P,H){
-      var im7=f.planeten.filter(function(x){return x.haus===7;});
-      if(!im7.length) return 'Dein 7. Haus ist unbesetzt. Partnerschaft ist bei dir kein Dauerthema im Hintergrund — '+
-        'was heißt: Du bist in Beziehungen weniger getrieben als andere, aber auch weniger geübt darin, sie zum Thema zu machen.';
-      return 'Im 7. Haus steht <b>'+im7.map(function(x){return x.p+' ('+H.fmt(x.pos)+')';}).join(', ')+'</b>. '+
-        'Diese Funktionen erlebst du zuerst über andere — sie tauchen im Partner auf, bevor du sie bei dir findest.';
-    },
-    function(f,P,H){
-      var s7=f.planeten.filter(function(x){return x.haus===7&&(x.p==='Saturn'||x.p==='Uranus'||x.p==='Pluto');});
-      if(!s7.length) return null;
+      var im4=f.planeten.filter(function(x){return x.haus===4;});
+      if(!im4.length) return 'Dein 4. Haus ist unbesetzt. Herkunft ist bei dir kein Dauerthema im Vordergrund — '+
+        'was nicht heißt, dass nichts da ist, sondern dass es über den Herrscher läuft und leiser wirkt.';
       var t=[];
-      s7.forEach(function(x){
-        if(x.p==='Saturn') t.push('<b>Saturn im 7.</b> — Beziehung fühlt sich nach Verantwortung an, manchmal nach Last. Du gehst spät rein und dann ganz.');
-        if(x.p==='Uranus') t.push('<b>Uranus im 7.</b> — du brauchst Freiraum in der Nähe. Enge löst bei dir Fluchtimpulse aus, auch wo du bleiben willst.');
-        if(x.p==='Pluto') t.push('<b>Pluto im 7.</b> — Beziehungen gehen bei dir tief oder gar nicht. Machtfragen gehören dazu, ob du willst oder nicht.');
+      im4.forEach(function(x){
+        if(x.p==='Saturn') t.push('<b>Saturn im 4.</b> — es war eng, ernst oder karg. Wärme musste verdient werden oder kam spät.');
+        else if(x.p==='Pluto') t.push('<b>Pluto im 4.</b> — Macht spielte eine Rolle, und vieles blieb unausgesprochen. Nicht unbedingt laut, oft eher das Gegenteil.');
+        else if(x.p==='Uranus') t.push('<b>Uranus im 4.</b> — etwas war unberechenbar. Verlässlichkeit war nichts, worauf man bauen konnte.');
+        else if(x.p==='Neptun') t.push('<b>Neptun im 4.</b> — Grenzen waren unklar, manches wurde beschönigt oder verschwieg sich von selbst.');
+        else if(x.p==='Mond') t.push('<b>Mond im 4.</b> — Zuhause und Gefühl fallen bei dir zusammen. Du bist stark mit der Herkunft verbunden, im Guten wie im Schweren.');
+        else t.push('<b>'+x.p+' im 4.</b> ('+H.fmt(x.pos)+') färbt die Grundstimmung deines Aufwachsens.');
       });
       return t.join(' ');
+    },
+    function(f,P,H){
+      var ic=(P.MC+180)%360, nah=[];
+      Object.keys(P).forEach(function(k){
+        if(k==='_jd'||k==='MC'||k==='ASC'||P[k]===undefined) return;
+        var d=Math.abs(((P[k]-ic+180)%360+360)%360-180);
+        if(d<=4) nah.push(k+' ('+d.toFixed(1)+'°)');
+      });
+      if(!nah.length) return null;
+      return '<b>'+nah.join(', ')+'</b> steht direkt auf deinem IC. Das ist der stärkste Hinweis auf ein Herkunftsthema, '+
+        'das bis heute mitläuft — und meistens der Punkt, den man als Letztes bei sich selbst vermutet.';
     }],
-  uebung:['Drei Bedingungen aufschreiben',
-   'Schreib drei Dinge auf, die für dich nicht verhandelbar sind. Nicht Wünsche — Bedingungen. Wenn du keine drei zusammenbekommst, ist das die Information: Du weißt noch nicht, was du brauchst, und verhandelst deshalb alles.'],
-  rueckfrage:'Hast du deine drei Bedingungen?',
-  coach:{fragen:['Was suchst du bei anderen, das du dir selbst nicht erlaubst?',
-   'Was ist für dich nicht verhandelbar — und wann hast du es zuletzt trotzdem verhandelt?',
-   'Was war in deiner letzten Beziehung gut? Nicht schlecht — gut.'],
-   vorsicht:'Nicht zur Anforderungsliste machen. Bedingungen sind etwas anderes als Wunschzettel.'}},
+  uebung:['Den Satz finden, der nie gesagt wurde',
+   'Schreib einen Satz auf, der in deiner Familie allen klar war und nie ausgesprochen wurde. Einer reicht. Ihn hinzuschreiben verändert schon etwas — weil er dann außerhalb von dir existiert.'],
+  rueckfrage:'Hast du den Satz gefunden?',
+  coach:{fragen:['Was war bei euch allen klar und wurde nie benannt?',
+   'Wie war die Stimmung, wenn alle zuhause waren?',
+   'Woran hast du als Kind gemerkt, dass etwas nicht stimmt?'],
+   vorsicht:'Das ist die Facette, die am schnellsten zu tief geht. Wenn Gewalt, Vernachlässigung oder anhaltende Scham auftauchen: benennen, würdigen, und an eine Therapeutin verweisen. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.'}},
 
- {id:'naehe', name:'Wie viel Nähe du zulässt',
-  frage:'Warum wird es eng, wenn es gut wird?',
-  anker:{haeuser:[4,8], punkte:['Mond','Saturn','Uranus']},
+ {id:'naehrend', name:'Was dich genährt hat',
+  frage:'Habe ich bekommen, was ich brauchte?',
+  anker:{haeuser:[4], punkte:['Mond','Venus','Ceres']},
   regeln:[
     function(f,P,H){
       if(P.Mond===undefined) return null;
       var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
-      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Mond)+') ist dein Nähe-Thermostat. '+
-        'Du fühlst dich sicher, wenn <b>'+H.HT[hn-1]+'</b> stimmt — und unsicher, sobald es dort wackelt. '+
-        'Das hat mit dem Menschen gegenüber oft weniger zu tun, als es sich anfühlt.';
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Mond)+') beschreibt zwei Dinge gleichzeitig: '+
+        'was du an Fürsorge erlebt hast, und was du heute brauchst, um dich sicher zu fühlen. '+
+        'Bei dir läuft beides über <b>'+H.HT[hn-1]+'</b>.';
     },
     function(f,P,H){
       var ms=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Mond'));})[0];
       if(!ms) return null;
       return '<b>Mond '+ms.typ+' Saturn</b> mit '+ms.o.toFixed(1)+'°. '+
         (ms.art==='hart'
-         ? 'Bedürftig zu sein empfindest du als Schwäche. Du sorgst lieber, als versorgt zu werden — und wunderst dich dann, dass niemand merkt, was du brauchst. Das ist der häufigste Grund, warum Nähe einseitig wird.'
-         : 'Du kannst Gefühl und Verlässlichkeit verbinden. Nähe fühlt sich bei dir nicht bedrohlich an, sondern tragfähig.');
+         ? 'Der wichtigste Aspekt in diesem Raum. Bedürftig zu sein wurde früh als unpassend erlebt — vielleicht, weil kein Platz dafür war, vielleicht, weil jemand anderes mehr brauchte. Du hast gelernt, ohne auszukommen, und hältst das bis heute für Stärke. Es ist eher eine Gewohnheit.'
+         : 'Fürsorge und Verlässlichkeit gehörten bei dir zusammen. Das ist eine gute Grundlage — du kannst Nähe aushalten, ohne dich bedroht zu fühlen.');
     },
     function(f,P,H){
-      var mu=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Uranus')||(x.a==='Uranus'&&x.b==='Mond'));})[0];
-      if(!mu) return null;
-      return '<b>Mond '+mu.typ+' Uranus</b> mit '+mu.o.toFixed(1)+'°. Sobald es eng wird, gehst du auf Abstand — '+
-        'auch bei Menschen, die dir wichtig sind. Das ist kein Desinteresse, sondern ein Schutzreflex. '+
-        'Die nützliche Frage ist nicht „warum gehe ich", sondern „was genau wird eng, kurz bevor ich gehe".';
+      var mn=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Neptun')||(x.a==='Neptun'&&x.b==='Mond'));})[0];
+      if(!mn) return null;
+      return '<b>Mond '+mn.typ+' Neptun</b> mit '+mn.o.toFixed(1)+'°. Die Grenze zwischen deinen Gefühlen und denen anderer '+
+        'war früh durchlässig. Du hast womöglich Stimmungen im Haus mitgetragen, die nicht deine waren — und tust es manchmal noch.';
+    }],
+  uebung:['Einmal versorgt werden',
+   'Lass dir diese Woche einmal etwas geben, ohne Gegenleistung und ohne es später auszugleichen. Ein Essen, eine Hilfe, ein Gefallen. Sag danke und mehr nicht. Der Impuls, es zurückzuzahlen, ist die eigentliche Übung.'],
+  rueckfrage:'Hast du etwas angenommen, ohne auszugleichen?',
+  coach:{fragen:['Wer hat sich um dich gekümmert, als du klein warst?',
+   'Was hast du gebraucht und nicht bekommen?',
+   'Wen versorgst du heute — und wer versorgt dich?'],
+   vorsicht:'Nicht die Eltern bewerten. Es geht um die Erfahrung der Person, nicht um ein Urteil über andere.'}},
+
+ {id:'autoritaet', name:'Autorität und Anspruch',
+  frage:'Wessen Erwartungen trage ich noch mit?',
+  anker:{haeuser:[10], punkte:['Saturn','Sonne','Pluto']},
+  regeln:[
+    function(f,P,H){
+      if(P.Saturn===undefined) return null;
+      var hn=H.haus(P.Saturn)+1, zi=Math.floor(P.Saturn/30);
+      return 'Dein <b>Saturn in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Saturn)+') beschreibt die Autoritätsfigur deiner Kindheit — '+
+        'und die innere Stimme, die daraus geworden ist. Sie meldet sich bei dir in <b>'+H.HT[hn-1]+'</b>. '+
+        'Der Ton ist meistens nicht deiner, auch wenn er sich inzwischen so anfühlt.';
+    },
+    function(f,P,H){
+      var ss=f.aspekte.filter(function(x){return ((x.a==='Sonne'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Sonne'));})[0];
+      if(!ss) return null;
+      return '<b>Sonne '+ss.typ+' Saturn</b> mit '+ss.o.toFixed(1)+'°. '+
+        (ss.art==='hart'
+         ? 'Anerkennung war an Bedingungen geknüpft. Du hast früh gelernt, dass du etwas leisten musst, um in Ordnung zu sein — und arbeitest bis heute gegen einen Maßstab, den niemand mehr überprüft.'
+         : 'Du hast Struktur als etwas Tragendes erlebt, nicht als Last. Das ist eine seltene und sehr brauchbare Grundlage.');
+    },
+    function(f,P,H){
+      var im10=f.planeten.filter(function(x){return x.haus===10;});
+      if(!im10.length) return null;
+      return 'Im 10. Haus steht <b>'+im10.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Das beschreibt auch, was von außen an dich herangetragen wurde: welche Rolle für dich vorgesehen war, '+
+        'bevor du selbst mitreden konntest.';
+    }],
+  uebung:['Die Stimme identifizieren',
+   'Wenn du dich diese Woche innerlich kritisierst, halt kurz inne und frag: <i>In wessen Stimme höre ich das gerade?</i> Nicht analysieren, nur bemerken. Wenn du eine Person erkennst, verliert der Satz einen Teil seiner Macht.'],
+  rueckfrage:'Hast du eine Stimme erkannt?',
+  coach:{fragen:['Wofür gab es bei euch Anerkennung?',
+   'Was hättest du werden sollen?',
+   'Welchen Satz hörst du innerlich, wenn du einen Fehler machst?'],
+   vorsicht:'Wenn Autoritätserfahrungen in Richtung Übergriffigkeit gehen, ist das kein Coaching-Thema mehr.'}},
+
+ {id:'unausgesprochen', name:'Was nie ausgesprochen wurde',
+  frage:'Was läuft bei uns unter der Oberfläche?',
+  anker:{haeuser:[8,12], punkte:['Pluto','Neptun']},
+  regeln:[
+    function(f,P,H){
+      if(P.Pluto===undefined) return null;
+      var hn=H.haus(P.Pluto)+1;
+      var ic=(P.MC+180)%360;
+      var dIC=Math.abs(((P.Pluto-ic+180)%360+360)%360-180);
+      var t='Dein <b>Pluto im '+hn+'. Haus</b> ('+H.fmt(P.Pluto)+') zeigt, wo bei dir das Ungesagte sitzt: in <b>'+H.HT[hn-1]+'</b>. ';
+      if(dIC<=5) t+='<b>Und er steht auf deinem IC</b> ('+dIC.toFixed(1)+'°) — das ist die deutlichste Variante: '+
+        'In deiner Herkunft gab es ein Machtthema, über das nicht geredet wurde. Alle wussten es, niemand benannte es.';
+      return t;
+    },
+    function(f,P,H){
+      var im12=f.planeten.filter(function(x){return x.haus===12;});
+      if(!im12.length) return null;
+      return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. Das beschreibt Anteile, '+
+        'die du selbst schlecht sehen kannst — oft solche, die in der Familie keinen Platz hatten und deshalb unsichtbar wurden.';
     },
     function(f,P,H){
       var im8=f.planeten.filter(function(x){return x.haus===8;});
       if(!im8.length) return null;
-      return 'Im 8. Haus — echte Intimität, Abhängigkeit, das Ungesagte — steht <b>'+im8.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Du gehst mit Menschen in Bereiche, die andere meiden. Das ist eine Fähigkeit und eine Anfälligkeit zugleich.';
+      return 'Im 8. Haus steht <b>'+im8.map(function(x){return x.p;}).join(', ')+'</b>. Geheimnisse, Geld, Abhängigkeit — '+
+        'Themen, über die in Familien selten offen gesprochen wird und die trotzdem alles mitbestimmen.';
     }],
-  uebung:['Einen Satz sagen, statt ihn zu erklären',
-   'Sag diese Woche einer Person einmal, was du brauchst — in einem Satz, ohne Vorbau und ohne Begründung. „Ich brauche, dass du dich meldest." Punkt. Der Reflex, danach etwas hinterherzuschieben, ist die eigentliche Übung.'],
-  rueckfrage:'Hast du gesagt, was du brauchst?',
-  coach:{fragen:['Was passiert in dir, kurz bevor du dich zurückziehst?',
-   'Wann hast du zuletzt um etwas gebeten?',
-   'Woran merkst du, dass dir jemand zu nah kommt — körperlich, nicht gedanklich?'],
-   vorsicht:'Rückzug kann Muster sein oder Selbstschutz nach echten Verletzungen. Diese beiden nicht verwechseln — und wenn Gewalt oder Angst im Spiel waren, gehört das begleitet.'}},
+  uebung:['Eine Frage stellen, die du nie gestellt hast',
+   'Wenn es möglich und sicher ist: Stell diese Woche einer Person aus deiner Familie eine Frage, die du nie gestellt hast. Wenn das nicht geht, schreib sie auf und beantworte sie, so gut du kannst, selbst. Beides bewegt etwas.'],
+  rueckfrage:'Hast du die Frage gestellt oder aufgeschrieben?',
+  coach:{fragen:['Worüber wurde bei euch nicht gesprochen?',
+   'Was hast du als Kind gewusst, ohne dass es dir jemand gesagt hat?',
+   'Gibt es in deiner Familie eine Geschichte, die alle kennen und niemand erzählt?'],
+   vorsicht:'Familiengeheimnisse können Traumatisches enthalten. Nicht graben, nicht spekulieren, nichts andeuten. Wenn etwas aufbricht, gehört das begleitet.'}},
 
- {id:'streit', name:'Wie du streitest',
-  frage:'Warum eskaliert es immer an derselben Stelle?',
-  anker:{haeuser:[3,7], punkte:['Mars','Merkur']},
+ {id:'uebernommen', name:'Was du übernommen hast',
+  frage:'Welche Muster gehören gar nicht mir?',
+  anker:{haeuser:[2,4], punkte:['Saturn','Mond','Knoten']},
   regeln:[
     function(f,P,H){
-      if(P.Merkur===undefined||P.Mars===undefined) return null;
-      var hm=H.haus(P.Merkur)+1, ha=H.haus(P.Mars)+1;
-      return 'Dein <b>Merkur im '+hm+'. Haus</b> und dein <b>Mars im '+ha+'. Haus</b>. '+
-        'Merkur ist, wie du formulierst; Mars, wie du dich wehrst. Im Streit übernimmt fast immer der Mars — '+
-        'und der arbeitet bei dir über <b>'+H.HT[ha-1]+'</b>.';
+      var nn=(P.Knoten!==undefined)?P.Knoten:null;
+      if(nn===null) return null;
+      var sn=(nn+180)%360, hs=H.haus(sn)+1, hn=H.haus(nn)+1;
+      return 'Dein <b>Südknoten im '+hs+'. Haus</b> beschreibt das Vertraute — das, was du schon mitbringst und worin du dich '+
+        'automatisch einrichtest: <b>'+H.HT[hs-1]+'</b>. Vieles davon ist nicht deine Entscheidung, sondern Erbe. '+
+        'Der Nordknoten gegenüber, im '+hn+'. Haus, zeigt die Richtung, in die du dich davon wegbewegst.';
     },
     function(f,P,H){
-      var mm=f.aspekte.filter(function(x){return ((x.a==='Merkur'&&x.b==='Mars')||(x.a==='Mars'&&x.b==='Merkur'));})[0];
-      if(!mm) return null;
-      return '<b>Merkur '+mm.typ+' Mars</b> mit '+mm.o.toFixed(1)+'°. '+
-        (mm.art==='hart'
-         ? 'Deine Worte werden scharf, bevor du es merkst. Du kannst streiten besser als klären — und bereust hinterher die Formulierung, nicht den Inhalt.'
-         : 'Du kannst deutlich werden, ohne verletzend zu sein. Das ist im Konflikt ein echter Vorteil.');
+      if(P.Saturn===undefined||P.Mond===undefined) return null;
+      var hs=H.haus(P.Saturn)+1;
+      return 'Saturn im '+hs+'. Haus ist die Stelle, an der du dich zusammenreißt. '+
+        'Zusammenreißen ist fast immer etwas Erlerntes — es beschreibt, was in deiner Familie als richtig galt, '+
+        'nicht was dir entspricht.';
     },
     function(f,P,H){
-      var mo=f.aspekte.filter(function(x){return (x.a==='Mond'||x.b==='Mond')&&x.art==='hart'&&x.o<4;})[0];
-      if(!mo) return null;
-      var and=(mo.a==='Mond')?mo.b:mo.a;
-      return '<b>Mond '+mo.typ+' '+and+'</b> mit '+mo.o.toFixed(1)+'°. Unter dem Ärger sitzt bei dir fast immer '+
-        'etwas Verletztes. Die Frage im Streit lautet deshalb nicht „wer hat recht", sondern „was war eigentlich der Stich".';
+      var im2=f.planeten.filter(function(x){return x.haus===2;});
+      if(!im2.length) return null;
+      return 'Im 2. Haus steht <b>'+im2.map(function(x){return x.p;}).join(', ')+'</b>. Was Dinge wert sind, '+
+        'lernt man zuhause, bevor man es selbst prüfen kann. Diese Sätze sitzen tief und werden selten hinterfragt.';
     }],
-  uebung:['Zwanzig Minuten warten',
-   'Wenn dir diese Woche etwas hochkommt: schreib die Nachricht, aber schick sie nicht. Zwanzig Minuten warten, dann noch mal lesen. Meistens ändert sich nicht der Inhalt, sondern der Ton — und der entscheidet, ob es ein Gespräch wird oder ein Streit.'],
-  rueckfrage:'Hast du einmal zwanzig Minuten gewartet?',
-  coach:{fragen:['Woran merkst du, dass du gleich scharf wirst?',
-   'Was war beim letzten Streit die eigentliche Verletzung?',
-   'Streitest du, um recht zu haben oder um verstanden zu werden?'],
-   vorsicht:'Streitmuster sind ein Coaching-Thema. Abwertung, Kontrolle oder Angst vor dem Partner sind es nicht.'}},
+  uebung:['Drei Sätze prüfen',
+   'Schreib drei Überzeugungen auf, die du über Geld, Arbeit oder Liebe hast. Frag bei jeder: <i>Habe ich das selbst herausgefunden oder mitbekommen?</i> Was mitgebracht ist, darf bleiben — aber als Wahl, nicht als Wahrheit.'],
+  rueckfrage:'Hast du deine drei Sätze geprüft?',
+  coach:{fragen:['Welchen Satz über Geld hast du von zuhause?',
+   'Was war bei euch selbstverständlich, das du heute merkwürdig findest?',
+   'Worin bist du deinen Eltern ähnlich, obwohl du es nicht wolltest?'],
+   vorsicht:'Nicht zum Abgrenzen drängen. Manche Muster sind nützlich und dürfen behalten werden.'}},
 
- {id:'begehren', name:'Begehren und Körper',
-  frage:'Darf ich wollen, was ich will?',
-  anker:{haeuser:[8,5], punkte:['Mars','Venus','Lilith','Pluto']},
+ {id:'geschwister', name:'Geschwister und Nahbereich',
+  frage:'Welche Rolle hatte ich in der Familie?',
+  anker:{haeuser:[3], punkte:['Merkur','Mars']},
   regeln:[
     function(f,P,H){
-      if(P.Lilith===undefined) return null;
-      var hn=H.haus(P.Lilith)+1;
-      return 'Deine <b>Lilith im '+hn+'. Haus</b> zeigt, was du dir nicht erlaubst — bei dir in <b>'+H.HT[hn-1]+'</b>. '+
-        'In der Nähe ist das die Stelle, an der du dich zurücknimmst, obwohl du mehr willst. '+
-        'Mehr dazu unter <a href="lilith-arbeit.html">Lilith-Arbeit</a>.';
+      var im3=f.planeten.filter(function(x){return x.haus===3;});
+      if(!im3.length) return 'Dein 3. Haus ist unbesetzt. Geschwister und das nahe Umfeld sind in deinem Chart kein großes Thema — '+
+        'die prägenden Erfahrungen liegen woanders.';
+      return 'Im 3. Haus — Geschwister, Nachbarschaft, das Nahe — steht <b>'+im3.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Hier entscheidet sich, welche Rolle du in der Konstellation hattest: die Vermittelnde, die Laute, die Unsichtbare.';
     },
     function(f,P,H){
-      if(P.Mars===undefined) return null;
-      var zi=Math.floor(P.Mars/30);
-      return 'Dein <b>Mars in '+H.SIGNS[zi]+'</b> beschreibt, wie du begehrst: '+
-        'in welchem Tempo, mit wie viel Direktheit, wie viel Initiative du übernimmst. '+
-        'Das passt nicht immer zu dem, was du für angemessen hältst — und genau diese Lücke ist das Thema dieser Facette.';
-    },
-    function(f,P,H){
-      var vp=f.aspekte.filter(function(x){return ((x.a==='Venus'||x.b==='Venus')&&(x.a==='Pluto'||x.b==='Pluto'));})[0];
-      if(!vp) return null;
-      return '<b>Venus '+vp.typ+' Pluto</b> mit '+vp.o.toFixed(1)+'°. Deine Zuneigung geht in die Tiefe — '+
-        'Oberflächliches interessiert dich nicht. Die Kehrseite: Besitz, Eifersucht und Verlustangst liegen dicht darunter.';
-    }],
-  uebung:['Einmal zuerst wollen',
-   'Sag oder zeig diese Woche einmal, dass du jemanden willst — bevor du weißt, ob es erwidert wird. Klein reicht: eine Einladung, ein Satz, eine Berührung. Das Unangenehme daran ist nicht die Reaktion, sondern das Warten davor.'],
-  rueckfrage:'Hast du zuerst gewollt?',
-  coach:{fragen:['Was hältst du bei dir zurück, weil es zu viel sein könnte?',
-   'Wann fühlst du dich begehrenswert — und hängt das von jemand anderem ab?',
-   'Wofür schämst du dich, das vermutlich völlig normal ist?'],
-   vorsicht:'Sexualität nur so weit ansprechen, wie die Person es öffnet. Nie nachfragen, nie ausdeuten. Bei Scham oder Erfahrungen von Übergriffen: sofort Grenze ziehen und verweisen.'}},
-
- {id:'wiederholung', name:'Was sich wiederholt',
-  frage:'Warum endet es immer gleich?',
-  anker:{haeuser:[7,12], punkte:['Saturn','Pluto','Chiron','Neptun']},
-  regeln:[
-    function(f,P,H){
-      var schwer=[];
-      ['Saturn','Pluto','Chiron','Neptun'].forEach(function(k){
-        if(P[k]===undefined) return;
-        var hn=H.haus(P[k])+1;
-        if(hn===7||hn===5||hn===8) schwer.push({p:k,h:hn});
-      });
-      if(!schwer.length) return null;
-      return '<b>'+schwer.map(function(x){return x.p+' im '+x.h+'. Haus';}).join(', ')+'</b> — '+
-        'die langsamen Planeten stehen bei dir in Beziehungshäusern. Das beschreibt Themen, die sich über Jahre wiederholen, '+
-        'nicht weil du etwas falsch machst, sondern weil sie zur Anlage gehören. Sie verändern sich durch Bewusstheit, nicht durch andere Partner.';
-    },
-    function(f,P,H){
-      var hart=f.aspekte.filter(function(x){return x.art==='hart'&&x.o<3;}).slice(0,2);
-      if(!hart.length) return null;
-      return 'Die engsten Spannungen in diesem Bereich: <b>'+
-        hart.map(function(x){return x.a+' '+x.typ+' '+x.b+' ('+x.o.toFixed(1)+'°)';}).join('</b> und <b>')+'</b>. '+
-        'Solche Achsen lösen sich nicht auf — man lernt, beide Seiten abwechselnd zu bedienen statt eine zu gewinnen.';
-    },
-    function(f,P,H){
-      if(P.Chiron===undefined) return null;
-      var hn=H.haus(P.Chiron)+1;
-      return 'Dein <b>Chiron im '+hn+'. Haus</b> ('+H.fmt(P.Chiron)+') markiert die Stelle, an der es zuverlässig wehtut — '+
-        'in <b>'+H.HT[hn-1]+'</b>. In Beziehungen ist das der Punkt, an dem dich Kleinigkeiten härter treffen, als sie sollten.';
-    }],
-  uebung:['Den Abbruchpunkt benennen',
-   'Denk an die letzten zwei Beziehungen oder Dates, die geendet haben. Schreib auf, <i>wann</i> es gekippt ist — nach welchem Ereignis, nach wie vielen Wochen. Wenn beide Male derselbe Punkt auftaucht, hast du dein Muster gefunden.'],
-  rueckfrage:'Hast du deinen Abbruchpunkt gefunden?',
-  coach:{fragen:['An welcher Stelle kippt es bei dir regelmäßig?',
-   'Was sagst du dir selbst, wenn es zu Ende geht?',
-   'Was wäre anders, wenn du an genau dieser Stelle einmal bleibst?'],
-   vorsicht:'Wiederholung kann Muster sein oder Folge schlechter Erfahrungen. Nicht als Selbstverschulden framen — und wenn wiederholt Übergriffigkeit vorkam, ist das kein Muster der Person, sondern etwas, das begleitet gehört.'}},
-
- {id:'bleiben', name:'Was du brauchst, um zu bleiben',
-  frage:'Was macht, dass es hält?',
-  anker:{haeuser:[4,2], punkte:['Mond','Venus','Saturn','Juno']},
-  regeln:[
-    function(f,P,H){
-      if(P.Juno!==undefined){
-        var hn=H.haus(P.Juno)+1;
-        return 'Deine <b>Juno im '+hn+'. Haus</b> beschreibt, worüber Verbindlichkeit bei dir entsteht: <b>'+H.HT[hn-1]+'</b>. '+
-          'Nicht Verliebtsein — das Bleiben.';
-      }
-      return null;
-    },
-    function(f,P,H){
-      var h=f.herrscher.filter(function(x){return x.haus===4;})[0];
+      var h=f.herrscher.filter(function(x){return x.haus===3;})[0];
       if(!h) return null;
-      return 'Der Herrscher deines 4. Hauses ist <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
-        'Zuhause-Gefühl entsteht bei dir über <b>'+H.HT[h.inHaus-1]+'</b> — auch in einer Beziehung. '+
-        'Wenn das fehlt, hilft alle Zuneigung nichts.';
+      return 'Der Herrscher deines 3. Hauses ist <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
+        'Deine Art zu sprechen und dich mitzuteilen hängt an <b>'+H.HT[h.inHaus-1]+'</b> — auch heute noch.';
     },
     function(f,P,H){
-      if(P.Venus===undefined||P.Saturn===undefined) return null;
-      var vs=f.aspekte.filter(function(x){return ((x.a==='Venus'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Venus'));})[0];
-      if(!vs) return 'Venus und Saturn bilden bei dir keinen Aspekt — Verbindlichkeit ist bei dir weniger schwer besetzt als bei vielen. '+
-        'Das macht es leichter, kann aber auch heißen, dass du Beständigkeit unterschätzt.';
-      return '<b>Venus '+vs.typ+' Saturn</b> mit '+vs.o.toFixed(1)+'°. '+
-        (vs.art==='hart'
-         ? 'Du glaubst, Liebe verdienen zu müssen. Zuneigung ohne Gegenleistung macht dich misstrauisch — und du bleibst manchmal aus Pflichtgefühl, wo du längst gehen wolltest.'
-         : 'Was du gibst, gilt. Deine Zuneigung ist verlässlich, und du hältst aus, was andere aufgeben.');
+      if(P.Merkur===undefined) return null;
+      var zi=Math.floor(P.Merkur/30);
+      return 'Dein <b>Merkur in '+H.SIGNS[zi]+'</b> beschreibt, wie du damals gelernt hast, dich verständlich zu machen. '+
+        'Kommunikationsmuster aus der Kindheit sind zäh — man merkt sie am ehesten daran, wie man in Stresssituationen redet.';
     }],
-  uebung:['Das Dienstags-Kriterium',
-   'Frag dich bei einem Menschen, der dir wichtig ist, nicht „liebe ich sie oder ihn". Frag: <i>Wie fühlt sich ein ganz normaler Dienstagabend mit dieser Person an?</i> Verliebtheit sagt wenig über das Bleiben. Dienstage sagen alles.'],
-  rueckfrage:'Hast du dir den Dienstag vorgestellt?',
-  coach:{fragen:['Woran merkst du, dass du irgendwo bleiben willst?',
-   'Was war in deiner Familie das Zeichen für Verlässlichkeit?',
-   'Was brauchst du, um dich sicher zu fühlen, ohne dich einzuengen?'],
-   vorsicht:'Bleiben ist kein Wert an sich. Manche bleiben zu lange — das darf im Gespräch genauso vorkommen wie die Angst vor Bindung.'}}
+  uebung:['Deine Rolle benennen',
+   'Beschreib in drei Wörtern, welche Rolle du in deiner Familie hattest. Die Vernünftige, die Vermittlerin, die Unauffällige. Dann frag dich: <i>Spiele ich die heute noch — bei der Arbeit, bei Freundinnen?</i>'],
+  rueckfrage:'Hast du deine Rolle erkannt?',
+  coach:{fragen:['Als was galtst du in deiner Familie?',
+   'Wer hat bei euch geschlichtet?',
+   'Welche Rolle hast du übernommen, weil sie frei war?'],
+   vorsicht:'Rollen sind oft mit Loyalität verbunden. Nicht drängen, sie abzulegen — erst einmal reicht, sie zu sehen.'}},
+
+ {id:'daraus', name:'Was du daraus machst',
+  frage:'Wie komme ich da weiter, ohne alles abzulehnen?',
+  anker:{haeuser:[10,9], punkte:['Knoten','MC','Jupiter']},
+  regeln:[
+    function(f,P,H){
+      var nn=(P.Knoten!==undefined)?P.Knoten:null;
+      if(nn===null) return null;
+      var hn=H.haus(nn)+1;
+      return 'Dein <b>Nordknoten im '+hn+'. Haus</b> zeigt die Richtung: <b>'+H.HT[hn-1]+'</b>. '+
+        'Das ist nicht, was du gut kannst — es ist das, was sich ungewohnt anfühlt und trotzdem stimmt. '+
+        'Entwicklung heißt hier nicht, die Herkunft abzulehnen, sondern sie zu nutzen und trotzdem woanders hinzugehen.';
+    },
+    function(f,P,H){
+      if(P.MC===undefined) return null;
+      var zi=Math.floor(P.MC/30);
+      var ic=(P.MC+180)%360, zi2=Math.floor(ic/30);
+      return 'Deine <b>MC-IC-Achse steht in '+H.SIGNS[zi]+' und '+H.SIGNS[zi2]+'</b>. '+
+        'Das ist die Achse zwischen Herkunft und eigenem Weg. Beide Enden gehören zu dir — '+
+        'die Frage ist nicht, welches gewinnt, sondern wie du zwischen ihnen hin und her gehst, ohne eins zu opfern.';
+    },
+    function(f,P,H){
+      if(P.Jupiter===undefined) return null;
+      var hn=H.haus(P.Jupiter)+1;
+      return 'Dein <b>Jupiter im '+hn+'. Haus</b> ist die Ressource in diesem Raum: In <b>'+H.HT[hn-1]+'</b> '+
+        'findest du leichter Zugang zu etwas Eigenem, das nicht aus deiner Herkunft stammt.';
+    }],
+  uebung:['Eine Sache bewusst anders machen',
+   'Wähl eine einzige Sache, die in deiner Familie üblich war, und mach sie diese Woche bewusst anders. Klein reicht — wie man Konflikte anspricht, wie man Geschenke macht, wie man einen Sonntag verbringt. Es geht nicht ums Ablehnen, sondern darum, zu merken, dass es eine Wahl ist.'],
+  rueckfrage:'Hast du eine Sache anders gemacht?',
+  coach:{fragen:['Was möchtest du aus deiner Familie behalten?',
+   'Was hast du bewusst anders gemacht — und hat es funktioniert?',
+   'Was würdest du einem Kind weitergeben wollen?'],
+   vorsicht:'Nicht zum Bruch raten. Abgrenzung und Kontaktabbruch sind sehr verschiedene Dinge, und Letzteres ist keine Coaching-Empfehlung.'}}
 
  ]
 };
