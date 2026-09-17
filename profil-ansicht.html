@@ -223,6 +223,34 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
  font-size:14.5px;line-height:1.6;margin-top:4px;}
 .tab-legende{background:var(--bg);border-radius:12px;padding:13px 15px;margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--leise);}
 .tab-legende b{color:var(--tinte);}
+
+.ch-box{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:18px;padding:20px 22px;margin-bottom:13px;}
+.ch-kopf{display:flex;gap:15px;align-items:center;margin-bottom:13px;}
+.ch-gly{width:52px;height:52px;border-radius:50%;background:var(--nacht);color:#fff;flex:none;
+ display:flex;align-items:center;justify-content:center;font-size:25px;}
+.ch-lab{font-family:var(--sans);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--messing);}
+.ch-name{font-family:var(--serif);font-size:23px;line-height:1.1;color:var(--nacht);}
+.ch-pos{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--leise);margin-top:2px;}
+.ch-erkl{margin:0 0 9px;font-size:15px;line-height:1.65;}
+.ch-erkl:last-child{margin-bottom:0;}
+.bf-box{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:19px 21px;margin-bottom:13px;}
+.bf-box h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 12px;}
+.bf-titel{font-family:var(--sans);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+ color:var(--messing);margin:12px 0 7px;}
+.bf-bars{display:grid;gap:5px;margin-bottom:6px;}
+.bf-bar{display:grid;grid-template-columns:84px 1fr 40px;gap:9px;align-items:center;font-size:13.5px;}
+.bf-bt{height:11px;background:var(--linie);border-radius:7px;overflow:hidden;}
+.bf-bt i{display:block;height:100%;border-radius:7px;}
+.bf-bt i.el0{background:#B5502E;} .bf-bt i.el1{background:#6B7C3F;}
+.bf-bt i.el2{background:#3E7C9A;} .bf-bt i.el3{background:#6A4A62;}
+.bf-bt i.mo{background:var(--nacht);}
+.bf-bp{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);text-align:right;}
+.bf-text{margin:11px 0 0;font-size:15px;line-height:1.65;}
+.bf-mehr{margin:13px 0 0;font-size:13.5px;}
+.tab-aus{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:14px 16px;margin-bottom:13px;}
+.tab-aus summary{cursor:pointer;font-family:var(--serif);font-size:17px;color:var(--nacht);}
+.tab-aus[open] summary{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--linie);}
+.th-klein{display:block;font-size:8.5px;letter-spacing:.02em;text-transform:none;color:var(--leise);font-weight:400;margin-top:2px;}
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -418,6 +446,170 @@ function radZeichnen(el,P){
     t.textContent=x[0];el.appendChild(t);
   });
 }
+
+/* ── Chart-Herrscher ──────────────────────────────────── */
+var HERRWAS={
+ Mars:['Antrieb und Durchsetzung','Du kommst über Handeln zu dir. Erst tun, dann verstehen — nicht umgekehrt.'],
+ Venus:['Zuwendung und Wert','Du kommst über Beziehung und Geschmack zu dir. Was dir gefällt, ist bei dir kein Nebenthema.'],
+ Merkur:['Denken und Sprache','Du kommst über Verstehen und Benennen zu dir. Unsortiertes bleibt bei dir unruhig, bis es Worte hat.'],
+ Mond:['Gefühl und Bedürfnis','Du kommst über dein Empfinden zu dir. Was sich falsch anfühlt, ist für dich falsch — auch wenn die Argumente dagegen sprechen.'],
+ Sonne:['Wille und Sichtbarkeit','Du kommst über Gesehenwerden zu dir. Im Verborgenen funktionierst du schlechter, als du denkst.'],
+ Jupiter:['Sinn und Weite','Du kommst über Zusammenhänge und Überzeugung zu dir. Ohne Sinn machst du nichts lange.'],
+ Saturn:['Struktur und Verantwortung','Du kommst über Verlässlichkeit zu dir. Was du aufgebaut hast, trägt — und du misst dich daran.'],
+ Uranus:['Freiheit und Eigensinn','Du kommst über Unabhängigkeit zu dir. Enge macht dich nicht störrisch, sondern unbrauchbar.'],
+ Neptun:['Sehnsucht und Durchlässigkeit','Du kommst über etwas Größeres zu dir. Rein Praktisches trägt dich nicht.'],
+ Pluto:['Tiefe und Verwandlung','Du kommst über echte Auseinandersetzung zu dir. Oberfläche langweilt dich, auch wenn sie bequemer wäre.']};
+
+function chartHerrscher(P){
+  var zi=Math.floor(P.ASC/30), hp=HERR[zi];
+  if(P[hp]===undefined) return '';
+  var hn=haus(P,P[hp])+1, hzi=Math.floor(P[hp]/30);
+  var w=HERRWAS[hp]||['',''];
+  var h='<div class="ch-box"><div class="ch-kopf">'+
+    '<div class="ch-gly">'+(GLY[hp]||hp)+'</div>'+
+    '<div><div class="ch-lab">Dein Chart-Herrscher</div>'+
+    '<div class="ch-name">'+hp+'</div>'+
+    '<div class="ch-pos">'+fmt(P[hp])+' · '+hn+'. Haus</div></div></div>';
+
+  h+='<p class="ch-erkl"><b>Was das heißt:</b> Dein Aszendent steht in '+SIGNS[zi]+
+    ', und '+SIGNS[zi]+' wird von '+hp+' regiert. Damit ist <b>'+hp+' der Steuermann deines ganzen Charts</b> — '+
+    'nicht der wichtigste Planet, sondern der, über den alles läuft. Wo er steht und wie es ihm geht, '+
+    'färbt jedes andere Thema mit.</p>';
+
+  h+='<p class="ch-erkl"><b>Dein Zugang zur Welt:</b> '+w[0]+'. '+w[1]+'</p>';
+
+  h+='<p class="ch-erkl"><b>Wo er sitzt:</b> '+hp+' steht in <b>'+SIGNS[hzi]+'</b> im <b>'+hn+'. Haus</b> — '+
+    HT[hn-1]+'. Das ist der Lebensbereich, über den bei dir am meisten läuft. '+
+    'Wenn du nicht weißt, wo du ansetzen sollst: dort.</p>';
+
+  /* Zustand des Herrschers */
+  var ks=Object.keys(P).filter(function(k){return k!=='_jd'&&ORB[k];});
+  var eng=[];
+  ks.forEach(function(k){
+    if(k===hp) return;
+    var sp=Math.abs(norm(P[hp]-P[k]+180)-180);
+    [[0,'Konjunktion','neutral'],[60,'Sextil','weich'],[90,'Quadrat','hart'],[120,'Trigon','weich'],[180,'Opposition','hart']].forEach(function(A){
+      var o=Math.abs(sp-A[0]);
+      if(o<=3.5) eng.push({p:k,typ:A[1],art:A[2],o:o});
+    });
+  });
+  eng.sort(function(a,b){return a.o-b.o;});
+  if(eng.length){
+    h+='<p class="ch-erkl"><b>Wie es ihm geht:</b> '+hp+' steht eng mit '+
+      eng.slice(0,3).map(function(x){return '<b>'+x.p+'</b> ('+x.typ+', '+x.o.toFixed(1)+'°)';}).join(', ')+
+      '. Diese Funktionen reden bei dir immer mit — sie sind über den Chart-Herrscher mit allem verbunden.</p>';
+  } else {
+    h+='<p class="ch-erkl"><b>Wie es ihm geht:</b> '+hp+' bildet keinen engen Aspekt. '+
+      'Er arbeitet ungestört und unvermischt — das macht deinen Grundzugang klarer, aber auch weniger vielseitig.</p>';
+  }
+
+  /* Wohin er weiterläuft */
+  var zi2=Math.floor(P[hp]/30), hp2=HERR[zi2];
+  if(P[hp2]!==undefined && hp2!==hp){
+    var hn2=haus(P,P[hp2])+1;
+    h+='<p class="ch-erkl"><b>Und weiter:</b> '+hp+' steht in '+SIGNS[zi2]+', das von <b>'+hp2+'</b> regiert wird — '+
+      'und der steht im '+hn2+'. Haus. Die Kette läuft also von dir über '+HK[hn-1]+' weiter nach <b>'+HK[hn2-1]+'</b>.</p>';
+  } else if(hp2===hp){
+    h+='<p class="ch-erkl"><b>Und weiter:</b> '+hp+' steht im eigenen Zeichen — die Kette endet bei ihm. '+
+      'Das macht ihn ungewöhnlich stark: Es gibt keine Instanz über ihm.</p>';
+  }
+  return h+'</div>';
+}
+
+/* ── Ausführlicher Gesamtbefund ───────────────────────── */
+var ELN=['Feuer','Erde','Luft','Wasser'], MON=['kardinal','fix','veränderlich'];
+var ELTXT=['Du gehst voran, handelst schnell und verbrauchst dich, wenn nichts passiert.',
+ 'Du brauchst Greifbares. Ideen ohne Umsetzung machen dich unruhig.',
+ 'Du denkst und redest, bevor du fühlst. Austausch ist bei dir kein Luxus.',
+ 'Du nimmst auf, was im Raum ist — auch was niemand ausspricht.'];
+var MOTXT=['Du startest gern und verlierst schnell die Lust.',
+ 'Du brauchst lange zum Anfangen und bist dann kaum zu stoppen.',
+ 'Du passt dich an und wechselst die Richtung, bevor es eng wird.'];
+
+function befund(P){
+  var gewicht={Sonne:3,Mond:3,ASC:3,MC:2,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
+  var el=[0,0,0,0], mo=[0,0,0], haeuser={}, hemN=0,hemS=0,hemO=0,hemW=0, ges=0;
+  Object.keys(P).forEach(function(k){
+    if(k==='_jd'||!gewicht[k]) return;
+    var g=gewicht[k], zi=Math.floor(P[k]/30);
+    el[zi%4]+=g; mo[zi%3]+=g; ges+=g;
+    var hn=haus(P,P[k]);
+    haeuser[hn]=(haeuser[hn]||0)+g;
+    if(hn<6) hemN+=g; else hemS+=g;
+    if(hn<3||hn>=9) hemO+=g; else hemW+=g;
+  });
+  var elMax=el.indexOf(Math.max.apply(null,el)), elMin=el.indexOf(Math.min.apply(null,el));
+  var moMax=mo.indexOf(Math.max.apply(null,mo));
+  var hListe=Object.keys(haeuser).map(function(k){return {h:+k,w:haeuser[k]};}).sort(function(a,b){return b.w-a.w;});
+
+  var h='<div class="bf-box"><h3>Dein Gesamtbefund</h3>';
+
+  /* Balken Elemente */
+  h+='<div class="bf-titel">Elemente</div><div class="bf-bars">';
+  el.forEach(function(v,i){
+    h+='<div class="bf-bar"><div class="bf-bl">'+ELN[i]+'</div>'+
+      '<div class="bf-bt"><i class="el'+i+'" style="width:'+Math.round(v/ges*100)+'%"></i></div>'+
+      '<div class="bf-bp">'+Math.round(v/ges*100)+'%</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="bf-titel">Qualitäten</div><div class="bf-bars">';
+  mo.forEach(function(v,i){
+    h+='<div class="bf-bar"><div class="bf-bl">'+MON[i]+'</div>'+
+      '<div class="bf-bt"><i class="mo" style="width:'+Math.round(v/ges*100)+'%"></i></div>'+
+      '<div class="bf-bp">'+Math.round(v/ges*100)+'%</div></div>';
+  });
+  h+='</div>';
+
+  h+='<p class="bf-text"><b>Dein Grundton:</b> '+ELN[elMax]+' überwiegt bei dir. '+ELTXT[elMax]+' '+
+    'Am wenigsten hast du von <b>'+ELN[elMin]+'</b> — das ist die Qualität, die dir am ehesten fehlt und die du dir '+
+    'bewusst holen musst, weil sie nicht von allein kommt. Dazu ist deine Grundbewegung <b>'+MON[moMax]+'</b>: '+MOTXT[moMax]+'</p>';
+
+  /* Schwerpunkt-Häuser */
+  if(hListe.length){
+    var top=hListe.slice(0,2);
+    h+='<p class="bf-text"><b>Dein Schwerpunkt:</b> Am meisten Gewicht liegt im <b>'+(top[0].h+1)+'. Haus</b> — '+HT[top[0].h]+
+      (top.length>1?' und im '+(top[1].h+1)+'. Haus ('+HT[top[1].h]+')':'')+
+      '. Dort spielt sich dein Leben überdurchschnittlich ab, und dort entscheidet sich am ehesten, ob es rund läuft.</p>';
+  }
+
+  /* Hemisphären */
+  var obenUnten=(hemS>hemN)?'oberen':'unteren';
+  var linksRechts=(hemW>hemO)?'westlichen':'östlichen';
+  h+='<p class="bf-text"><b>Die Verteilung:</b> Der Großteil deiner Punkte steht in der '+obenUnten+' Hälfte '+
+    (hemS>hemN?'— dein Leben spielt sich stärker nach außen ab, in Sichtbarkeit und Kontakt.'
+             :'— dein Leben spielt sich stärker im Privaten ab, in dem, was andere nicht sehen.')+' '+
+    'In der '+linksRechts+' Hälfte '+
+    (hemW>hemO?'— viel läuft bei dir über andere Menschen. Du entwickelst dich im Kontakt, nicht allein.'
+             :'— viel liegt bei dir selbst. Du bestimmst eher, als dass du reagierst.')+'</p>';
+
+  /* Spannungsbilanz */
+  var ks=Object.keys(P).filter(function(k){return k!=='_jd'&&ORB[k];});
+  var hart=0, weich=0, engste=null;
+  for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
+    var a=ks[i],b=ks[j];
+    if((a==='ASC'&&b==='MC')||(a==='MC'&&b==='ASC')) continue;
+    var sp=Math.abs(norm(P[a]-P[b]+180)-180);
+    [[0,'Konjunktion',0],[60,'Sextil',1],[90,'Quadrat',2],[120,'Trigon',1],[180,'Opposition',2]].forEach(function(A){
+      var o=Math.abs(sp-A[0]), max=((ORB[a]+ORB[b])/2)*(A[0]===60?.6:.9);
+      if(o<=max){
+        if(A[2]===2) hart++; else if(A[2]===1) weich++;
+        if(!engste||o<engste.o) engste={a:a,b:b,t:A[1],o:o};
+      }
+    });
+  }
+  h+='<p class="bf-text"><b>Spannung und Fluss:</b> '+hart+' fordernde gegen '+weich+' fließende Aspekte. '+
+    (hart>weich? 'Bei dir überwiegt der Druck. Das ist anstrengender und produktiver — Kompetenz entsteht fast immer an roten Aspekten.'
+      : hart<weich? 'Bei dir überwiegt der Fluss. Vieles fällt dir zu, und genau deshalb bleibt manches ungenutzt: Was leicht geht, nimmt man selten ernst.'
+      : 'Druck und Fluss halten sich bei dir die Waage.')+
+    (engste?' Der engste Aspekt überhaupt ist <b>'+engste.a+' '+engste.t+' '+engste.b+'</b> mit '+engste.o.toFixed(2)+'° — '+
+      'das ist der Satz, der in deinem Chart am lautesten gesprochen wird.':'')+'</p>';
+
+  h+='<p class="bf-mehr"><a href="spannungskarte.html" target="_blank" rel="noopener">Alle Spannungsachsen →</a> · '+
+     '<a href="element-mix.html" target="_blank" rel="noopener">Element-Mix vertiefen →</a> · '+
+     '<a href="grade.html" target="_blank" rel="noopener">Deine Grade →</a></p>';
+  return h+'</div>';
+}
+
 function tabelle(P,titel){
   var HERRT={0:'Mars',1:'Venus',2:'Merkur',3:'Mond',4:'Sonne',5:'Merkur',6:'Venus',7:'Pluto',8:'Jupiter',9:'Saturn',10:'Uranus',11:'Neptun'};
   var WAS={Sonne:'Kraft & Identität',Mond:'Bedürfnis & Gefühl',Merkur:'Denken & Sprache',
@@ -431,7 +623,7 @@ function tabelle(P,titel){
       return norm(b-a)>180; }catch(e){ return false; }
   }
   var h='<table class="pl"><tr><th></th><th>'+titel+'</th><th>Position</th><th>Element</th>'+
-        '<th>Haus</th><th>Wirkt auf</th><th>Verantwortlich für</th></tr>';
+        '<th>Haus</th><th>Wirkt auf<br><span class="th-klein">Haus, in dem er steht</span></th><th>Verantwortlich für<br><span class="th-klein">Haus, das er regiert</span></th></tr>';
   ORD.forEach(function(k){
     var zi=Math.floor(P[k]/30), hh=haus(P,P[k]);
     var r=(P._jd?rueck(k,P._jd):false);
@@ -532,7 +724,8 @@ function tabRadix(P){
     '<div class="rad-huelle" id="radhuelle"></div>'+
     '<div id="radinfo"></div>'+
 
-    '<div class="ub-box tabbox">'+tabelle(P,'Radix')+'</div></div><div class="ub-unten">';
+    '<details class="tab-aus"><summary>Alle Positionen im Detail</summary><div class="tabbox">'+
+    tabelle(P,'Radix')+'</div></details></div><div class="ub-unten">'+chartHerrscher(P)+befund(P);
   h+='<div class="ub-box"><h3>Die drei Kernsätze</h3><div class="hint">Sonne, Mond und Aszendent tragen die Hälfte jedes Charts.</div>'+
     '<div class="ub-kernz"><b>Antrieb</b><div class="st">Sonne in '+SIGNS[sz]+' · '+(haus(P,P.Sonne)+1)+'. Haus</div><p>'+SONNE[sz]+' Der Schauplatz: '+HT[haus(P,P.Sonne)]+'.</p></div>'+
     '<div class="ub-kernz"><b>Bedürfnis</b><div class="st">Mond in '+SIGNS[mz]+' · '+(haus(P,P.Mond)+1)+'. Haus</div><p>'+MOND[mz]+'</p></div>'+
@@ -629,7 +822,8 @@ function tabJahr(P,SR,jahr,p){
     '<div class="rad-huelle" id="radhuelle"></div>'+
     '<div id="radinfo"></div>'+
 
-    '<div class="ub-box tabbox">'+tabelle(SR,'Solar Return')+'</div></div><div class="ub-unten">';
+    '<details class="tab-aus"><summary>Alle Jahres-Positionen im Detail</summary><div class="tabbox">'+
+    tabelle(SR,'Solar Return')+'</div></details></div><div class="ub-unten">';
   h+='<div class="ub-box"><h3>Dein Jahr '+jahr+'</h3><div class="hint">Gilt vom Geburtstag bis zum nächsten.</div>'+
     '<div class="ub-kernz"><b>Beginn</b><p>'+jdDatum(SR._jd)+' · gerechnet für <b>'+((p&&p.wort)?p.wort:(p&&p.ort?p.ort:'den Geburtsort'))+'</b><br>Jahres-Aszendent in <b>'+SIGNS[Math.floor(SR.ASC/30)]+
     '</b>, Jahres-MC in <b>'+SIGNS[Math.floor(SR.MC/30)]+'</b></p></div>'+
