@@ -84,22 +84,24 @@ a{color:var(--nacht);}
 .ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
 .ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
 
-.rl-gitter{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-@media(max-width:680px){.rl-gitter{grid-template-columns:1fr;}}
-.rk{display:block;background:var(--papier);border:1px solid var(--linie);border-radius:18px;
- padding:19px 21px;text-decoration:none;}
-.rk.offen:hover{border-color:var(--nacht);background:var(--nacht-bg);}
-.rk.bald{opacity:.62;cursor:default;border-style:dashed;}
-.rk .rk-name{font-family:var(--serif);font-size:20px;color:var(--tinte);margin-bottom:4px;}
-.rk .rk-frage{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.4;margin-bottom:9px;}
-.rk .rk-anker{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);}
-.rk .rk-marke{display:inline-block;font-family:var(--sans);font-size:10px;letter-spacing:.07em;
- border-radius:11px;padding:3px 9px;margin-top:9px;}
-.rk .rk-marke.fertig{background:var(--nacht);color:#fff;}
-.rk .rk-marke.geplant{background:var(--linie);color:var(--leise);}
-.rl-wie{background:var(--messing-bg);border-radius:18px;padding:20px 22px;margin-bottom:18px;}
-.rl-wie h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 8px;}
-.rl-wie ol{margin:0 0 0 20px;padding:0;font-size:15px;line-height:1.7;}
+
+.rl-gitter{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-bottom:22px;}
+.rk{display:flex;flex-direction:column;gap:6px;background:var(--papier);border:1px solid var(--linie);
+ border-radius:18px;padding:20px 22px;text-decoration:none;min-height:172px;}
+.rk.offen{transition:border-color .15s,background .15s,transform .15s;}
+.rk.offen:hover{border-color:var(--nacht);background:var(--nacht-bg);transform:translateY(-2px);}
+.rk.bald{opacity:.55;cursor:default;border-style:dashed;background:none;}
+.rk-name{font-family:var(--serif);font-size:21px;font-weight:400;color:var(--tinte);line-height:1.15;}
+.rk-frage{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.4;flex:1;}
+.rk-anker{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--leise);line-height:1.5;}
+.rk-marke{align-self:flex-start;font-family:var(--sans);font-size:9.5px;letter-spacing:.09em;
+ text-transform:uppercase;border-radius:11px;padding:3px 10px;margin-top:4px;}
+.rk-marke.fertig{background:var(--nacht);color:#fff;}
+.rk-marke.geplant{background:var(--linie);color:var(--leise);}
+.rl-wie{background:var(--messing-bg);border-radius:18px;padding:22px 24px;margin-bottom:20px;}
+.rl-wie h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 10px;}
+.rl-wie ol{margin:0 0 0 20px;padding:0;font-size:15px;line-height:1.75;}
+.rl-wie li{margin-bottom:3px;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -114,21 +116,18 @@ a{color:var(--nacht);}
 <p class="lede">Zehn Themen, mit denen Menschen tatsächlich kommen. Jeder Raum hat mehrere Facetten — und dein Chart entscheidet, welche davon bei dir laut sind und welche du getrost liegen lassen kannst. Das ist der Unterschied zwischen vollständig und überfordernd.</p>
 <div class="rl-wie"><h3>So funktioniert ein Raum</h3><ol><li>Du kommst mit einer Frage herein — der Satz, den du tatsächlich denkst.</li><li>Die Plattform gewichtet die Facetten nach deinem Chart und sortiert sie.</li><li>Zu jeder Facette: was deine Stellungen dazu sagen, mit den Daten zum Nachprüfen.</li><li>Eine Übung für diese Woche. Eine, nicht fünf.</li><li>Nach ein paar Tagen die Rückfrage — vier Knöpfe, fertig.</li><li>Und eine Schublade für die Arbeit mit anderen: Gesprächsfragen und Grenzen.</li></ol></div>
 <div class="rl-gitter">
-<a class="rk offen" href="raum-selbstwert.html"><div class="rk-name">Selbstwert</div><div class="rk-frage">„Warum nehme ich eigentlich zu wenig?"</div><div class="rk-anker">2. Haus, Venus, Saturn, Lilith</div><span class="rk-marke fertig">offen</span></a>
-<a class="rk offen" href="raum-berufung.html"><div class="rk-name">Berufung</div><div class="rk-frage">„Wofür bin ich eigentlich hier?"</div><div class="rk-anker">10./9./2. Haus, MC, Mondknoten, Jupiter</div><span class="rk-marke fertig">offen</span></a>
-<a class="rk offen" href="raum-unerlaubte.html"><div class="rk-name">Das Unerlaubte</div><div class="rk-frage">„Was traue ich mir eigentlich nicht zu?"</div><div class="rk-anker">Lilith, ihr Haus, ihre Aspekte</div><span class="rk-marke fertig">offen</span></a>
-<div class="rk-anker">Lilith, 8. und 12. Haus</div><span class="rk-marke geplant">in Arbeit</span></div>
-<a class="rk offen" href="raum-wunder-punkt.html"><div class="rk-name">Der wunde Punkt</div><div class="rk-frage">„Warum trifft mich das jedes Mal so?"</div><div class="rk-anker">Chiron, sein Haus und seine Aspekte</div><span class="rk-marke fertig">offen</span></a>
-<div class="rk-anker">Chiron, sein Haus und seine Aspekte</div><span class="rk-marke geplant">in Arbeit</span></div>
-<a class="rk offen" href="raum-herkunft.html"><div class="rk-name">Herkunft</div><div class="rk-frage">„Was läuft aus meiner Familie noch mit?"</div><div class="rk-anker">4./3./8./12. Haus, IC, Mond, Saturn, Pluto</div><span class="rk-marke fertig">offen</span></a>
-<div class="rk-anker">4. Haus, IC, Mond, Pluto</div><span class="rk-marke geplant">in Arbeit</span></div>
-<a class="rk offen" href="raum-naehe.html"><div class="rk-name">Nähe</div><div class="rk-frage">„Warum wiederholt sich das immer?"</div><div class="rk-anker">7./5./8. Haus, Venus, Mars, Mond, Lilith</div><span class="rk-marke fertig">offen</span></a>
-<div class="rk bald"><div class="rk-name">Zugehörigkeit</div><div class="rk-frage">„Warum fühle ich mich außen?"</div><div class="rk-anker">11./3. Haus, Uranus</div><span class="rk-marke geplant">in Arbeit</span></div>
-<a class="rk offen" href="raum-anders-verdrahtet.html"><div class="rk-name">Anders verdrahtet</div><div class="rk-frage">„Warum ist der Alltag für mich so anstrengend?"</div><div class="rk-anker">3./6./11./12. Haus, Merkur, Mond, Uranus</div><span class="rk-marke fertig">offen</span></a>
-<div class="rk-anker">6./12. Haus, Merkur, Uranus</div><span class="rk-marke geplant">in Arbeit</span></div>
-<div class="rk bald"><div class="rk-name">Alltag</div><div class="rk-frage">„Wie kriege ich Struktur, die hält?"</div><div class="rk-anker">6. Haus, Saturn, Mond</div><span class="rk-marke geplant">in Arbeit</span></div>
-<div class="rk bald"><div class="rk-name">Körper</div><div class="rk-frage">„Was braucht mein Körper von mir?"</div><div class="rk-anker">1./6. Haus, Mars, Aszendent</div><span class="rk-marke geplant">in Arbeit</span></div>
+<a class="rk offen" href="raum-selbstwert.html"><div class="rk-name">Selbstwert</div><div class="rk-frage">&bdquo;Warum nehme ich eigentlich zu wenig?&ldquo;</div><div class="rk-anker">2. Haus, Venus, Saturn, Lilith</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-berufung.html"><div class="rk-name">Berufung</div><div class="rk-frage">&bdquo;Wofür bin ich eigentlich hier?&ldquo;</div><div class="rk-anker">10./9./2. Haus, MC, Mondknoten, Jupiter</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-naehe.html"><div class="rk-name">Nähe</div><div class="rk-frage">&bdquo;Warum wiederholt sich das immer?&ldquo;</div><div class="rk-anker">7./5./8. Haus, Venus, Mars, Mond, Lilith</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-unerlaubte.html"><div class="rk-name">Das Unerlaubte</div><div class="rk-frage">&bdquo;Was traue ich mir eigentlich nicht zu?&ldquo;</div><div class="rk-anker">Lilith, ihr Haus, ihre Aspekte</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-wunder-punkt.html"><div class="rk-name">Der wunde Punkt</div><div class="rk-frage">&bdquo;Warum trifft mich das jedes Mal so?&ldquo;</div><div class="rk-anker">Chiron, sein Haus und seine Aspekte</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-herkunft.html"><div class="rk-name">Herkunft</div><div class="rk-frage">&bdquo;Was läuft aus meiner Familie noch mit?&ldquo;</div><div class="rk-anker">4./3./8./12. Haus, IC, Mond, Saturn, Pluto</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-anders-verdrahtet.html"><div class="rk-name">Anders verdrahtet</div><div class="rk-frage">&bdquo;Warum ist der Alltag für mich so anstrengend?&ldquo;</div><div class="rk-anker">3./6./11./12. Haus, Merkur, Mond, Uranus</div><span class="rk-marke fertig">offen</span></a>
+<div class="rk bald"><div class="rk-name">Zugehörigkeit</div><div class="rk-frage">&bdquo;Warum fühle ich mich außen?&ldquo;</div><div class="rk-anker">11./3. Haus, Uranus, Saturn</div><span class="rk-marke geplant">in Arbeit</span></div>
+<div class="rk bald"><div class="rk-name">Alltag</div><div class="rk-frage">&bdquo;Wie kriege ich Struktur, die hält?&ldquo;</div><div class="rk-anker">6. Haus, Saturn, Mond, Merkur</div><span class="rk-marke geplant">in Arbeit</span></div>
+<div class="rk bald"><div class="rk-name">Körper</div><div class="rk-frage">&bdquo;Was braucht mein Körper von mir?&ldquo;</div><div class="rk-anker">1./6. Haus, Mars, Aszendent, Venus</div><span class="rk-marke geplant">in Arbeit</span></div>
 </div>
+
 <div class="tip"><b>Die Haltung dahinter:</b> Die Räume arbeiten nach Alfred Adlers Grundsatz, dass jedes Muster einen Zweck erfüllt — die Frage ist nicht „warum bin ich so", sondern „wozu ist das gut". Woher die Methode sonst noch kommt, steht unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div class="tip"><b>Warum die Räume so heißen, wie sie heißen:</b> Nicht nach der Technik, sondern nach der Frage. Niemand wacht auf und will „Lilith-Arbeit". Menschen wachen auf und denken „warum traue ich mir das nicht zu". Die Fachbegriffe stehen drin — aber sie sind nicht die Tür.</div>
 <div class="tip"><b>Und die Grenze, die überall gilt:</b> Ein Raum ist Selbstarbeit oder Coaching — keine Therapie. Wenn beim Arbeiten etwas hochkommt, das größer ist als eine Erinnerung, gehört das begleitet. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.</div>
