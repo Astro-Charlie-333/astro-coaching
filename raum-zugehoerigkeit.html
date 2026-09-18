@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anders verdrahtet · Themenraum · Astro-Charlie</title>
+<title>Zugehörigkeit · Themenraum · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="fortschritt.js"></script>
@@ -139,15 +139,15 @@ a{color:var(--nacht);}
 .rm-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:18px;padding:28px;
  text-align:center;color:var(--leise);line-height:1.65;}
 
-.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
- margin-bottom:18px;font-size:14.8px;line-height:1.65;}
-
 .fa-wozu{background:var(--messing-bg);border-radius:14px;padding:14px 16px;margin-top:11px;}
 .fa-wozu .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
  text-transform:uppercase;color:var(--messing);margin-bottom:6px;}
 .fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
+ margin-bottom:18px;font-size:14.8px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -159,16 +159,15 @@ a{color:var(--nacht);}
 <div class="wrap">
 
 <div class="eyebrow">Themenraum</div>
-<h1>Anders verdrahtet.</h1>
+<h1>Zugehörigkeit.</h1>
 <div class="rm-tuer">
-  <div class="rm-frage">„Warum ist der Alltag für mich so anstrengend?"</div>
-  <p>Manche Menschen verbrauchen für ganz normale Tage mehr Kraft als andere — und halten das lange für einen Charakterfehler. Dieser Raum schaut sich an, wie dein Kopf Informationen verarbeitet, was dich überlastet, wie deine Energie ankommt und was dich tatsächlich auflädt. '+res.length+' Facetten, gewichtet nach deinem Chart.</p>
+  <div class="rm-frage">&bdquo;Warum fühle ich mich überall ein bisschen außen?&ldquo;</div>
+  <p>Man kann viele Menschen kennen und trotzdem nirgends ganz dazugehören. Dieser Raum schaut sich an, wie du in Gruppen bist, was dich das Dazugehören kostet, wie deine Freundschaften funktionieren, welche Rolle dir zufällt, woher das Fremdheitsgefühl kommt — und wofür du tatsächlich gebraucht wirst. Sechs Facetten, gewichtet nach deinem Chart.</p>
 </div>
-<div class="rm-hinweis"><b>Wichtig vorab:</b> Ein Chart kann nichts diagnostizieren. Weder ADHS noch Autismus noch irgendetwas anderes Medizinisches — und dieser Raum versucht es auch nicht. Was hier steht, sind <b>Belastungsmuster</b>: wo bei dir Kraft verloren geht und was dabei hilft. Das ist unabhängig davon nützlich, ob eine Diagnose vorliegt, ansteht oder nie kommt. Wenn du dem nachgehen willst, gehört die Einschätzung zu einer Fachperson.</div>
 <div id="raum"></div>
 
-<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="neurodivergente-astrologie.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Für anders verdrahtete Köpfe</span></a></div>
-<div class="foot">Themenraum Anders verdrahtet &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie und keine Diagnostik.</div>
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-anders-verdrahtet.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Anders verdrahtet</span></a></div>
+<div class="foot">Themenraum Zugehörigkeit &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
 </div>
 <script>
 var RAD=Math.PI/180;
@@ -228,263 +227,213 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 
 var RAUM = {
- name:'Anders verdrahtet',
- slug:'anders-verdrahtet',
- sortierTitel:'Wo bei dir die Kraft verloren geht',
+ name:'Zugehörigkeit',
+ slug:'zugehoerigkeit',
+ sortierTitel:'Wo deine Zugehörigkeitsfrage sitzt',
  facetten:[
- {id:'verarbeitung', name:'Wie dein Kopf arbeitet',
-  frage:'Warum denke ich anders als andere?',
-  anker:{haeuser:[3], punkte:['Merkur','Uranus']},
+ {id:'gruppe', name:'Wie du in Gruppen bist',
+  frage:'Warum bin ich dabei und trotzdem außen?',
+  anker:{haeuser:[11], punkte:['Uranus','Saturn','Sonne']},
   regeln:[
-    function(f,P,H){
-      if(P.Merkur===undefined) return null;
-      var hn=H.haus(P.Merkur)+1, zi=Math.floor(P.Merkur/30);
-      return 'Dein <b>Merkur in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Merkur)+') beschreibt, wie du Informationen aufnimmst und sortierst. '+
-        'Nicht wie klug du bist — in welchem Format. Bei dir läuft das über <b>'+H.HT[hn-1]+'</b>. '+
-        'Alles, was in einem anderen Format kommt, kostet dich Übersetzungsarbeit, die andere nicht leisten müssen.';
-    },
-    function(f,P,H){
-      var mu=f.aspekte.filter(function(x){return ((x.a==='Merkur'&&x.b==='Uranus')||(x.a==='Uranus'&&x.b==='Merkur'));})[0];
-      if(!mu) return null;
-      return '<b>Merkur '+mu.typ+' Uranus</b> mit '+mu.o.toFixed(1)+'°. Dein Denken springt und verknüpft über Ecken. '+
-        'Das ist der Grund, warum dir Zusammenhänge auffallen, die andere übersehen — und warum lineares Zuhören anstrengend ist. '+
-        'Du bist meistens schon drei Schritte weiter.';
-    },
-    function(f,P,H){
-      var mn=f.aspekte.filter(function(x){return ((x.a==='Merkur'&&x.b==='Neptun')||(x.a==='Neptun'&&x.b==='Merkur'));})[0];
-      if(!mn) return null;
-      return '<b>Merkur '+mn.typ+' Neptun</b> mit '+mn.o.toFixed(1)+'°. Du denkst in Bildern und Stimmungen statt in Listen. '+
-        'Klare Strukturen von außen helfen dir deshalb mehr als Motivation — nicht weil du unstrukturiert bist, '+
-        'sondern weil dein Kopf in einem anderen Format läuft.';
-    },
-    function(f,P,H){
-      var im3=f.planeten.filter(function(x){return x.haus===3;});
-      if(!im3.length) return null;
-      return 'Im 3. Haus — Reizaufnahme, Sprache, Nahbereich — steht <b>'+im3.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Das färbt, wie viel Input du gleichzeitig verträgst und wie du kommunizierst, wenn es zu viel wird.';
-    }],
-  uebung:['Dein Format herausfinden',
-   'Nimm diese Woche eine Sache, die du verstehen musst, und probier sie in drei Formaten: lesen, jemandem erzählen, aufzeichnen. Merk dir, welches am wenigsten anstrengt. Das ist dein Format — und du darfst es ab jetzt einfordern, statt dich anzupassen.'],
-  rueckfrage:'Weißt du jetzt, welches Format dir liegt?',
-  coach:{fragen:['Wann fällt dir Verstehen leicht und wann zäh?',
-   'Was musst du dir übersetzen, was andere direkt aufnehmen?',
-   'Wie erklärst du selbst etwas, wenn du frei wählen darfst?'],
-   vorsicht:'Ein Chart beschreibt einen Denkstil, keine Diagnose. Wenn jemand nach einer Einschätzung zu ADHS oder Autismus fragt: freundlich auf eine Fachperson verweisen und nichts andeuten.'}},
-
- {id:'reize', name:'Was dich überlastet',
-  frage:'Warum bin ich nach normalen Tagen so fertig?',
-  anker:{haeuser:[6,12], punkte:['Mond','Neptun','Merkur']},
-  regeln:[
-    function(f,P,H){
-      var im12=f.planeten.filter(function(x){return x.haus===12;});
-      if(!im12.length) return null;
-      return 'Im 12. Haus — dem Haus der Durchlässigkeit — steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Was dort steht, arbeitet im Hintergrund und unsichtbar. Du verbrauchst dort Energie, ohne es zu bemerken, '+
-        'und merkst es erst, wenn nichts mehr geht.';
-    },
-    function(f,P,H){
-      if(P.Mond===undefined) return null;
-      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
-      var wasser=(zi===3||zi===7||zi===11);
-      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ist dein Reizfilter. '+
-        (wasser
-         ? 'In einem Wasserzeichen heißt das: durchlässig. Du nimmst Stimmungen auf, auch fremde, und hältst sie für deine eigenen.'
-         : 'Du brauchst Sicherheit über '+H.HT[hn-1]+' — fehlt die, steigt dein Grundpegel, und alles andere wird anstrengender als nötig.');
-    },
-    function(f,P,H){
-      var mn=f.aspekte.filter(function(x){return (x.a==='Mond'||x.b==='Mond')&&x.art==='hart'&&x.o<4;})[0];
-      if(!mn) return null;
-      var and=(mn.a==='Mond')?mn.b:mn.a;
-      return '<b>Mond '+mn.typ+' '+and+'</b> mit '+mn.o.toFixed(1)+'°. Dein Grundpegel ist selten bei null — '+
-        'ein Teil deiner Kapazität ist dauerhaft mit '+and+' beschäftigt. Was für andere ein normaler Tag ist, '+
-        'ist bei dir ein normaler Tag plus diese Grundlast.';
-    },
-    function(f,P,H){
-      var im6=f.planeten.filter(function(x){return x.haus===6;});
-      if(!im6.length) return null;
-      return 'Im 6. Haus steht <b>'+im6.map(function(x){return x.p;}).join(', ')+'</b>. Der Alltag selbst — nicht die großen Dinge — '+
-        'ist bei dir der Ort, an dem sich Belastung ansammelt.';
-    }],
-  uebung:['Die Uhrzeit notieren',
-   'Schreib diese Woche jeden Tag eine einzige Uhrzeit auf: den Moment, an dem es kippt. Kein Kommentar, keine Bewertung, nur die Zahl. Nach einer Woche siehst du, ob es ein Muster gibt — und ob es an der Uhrzeit liegt oder an dem, was vorher war.'],
-  rueckfrage:'Hast du deine Kipp-Zeiten gesammelt?',
-  coach:{fragen:['Was kostet dich mehr, als es sollte?',
-   'Woran merkst du, dass du über deiner Grenze bist — körperlich?',
-   'Was machst du, wenn es zu viel wird, und hilft das wirklich?'],
-   vorsicht:'Anhaltende Erschöpfung ist keine Coaching-Frage. Wenn es über Wochen geht, gehört das ärztlich abgeklärt, bevor an Strukturen gearbeitet wird.'}},
-
- {id:'energie', name:'Dein Energiehaushalt',
-  frage:'Warum geht mal alles und dann gar nichts?',
-  anker:{haeuser:[1,6], punkte:['Mars','Saturn','Uranus']},
-  regeln:[
-    function(f,P,H){
-      if(P.Mars===undefined) return null;
-      var hn=H.haus(P.Mars)+1, zi=Math.floor(P.Mars/30);
-      var fix=(zi===1||zi===4||zi===7||zi===10);
-      return 'Dein <b>Mars in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, wie deine Energie ankommt. '+
-        (fix ? 'In einem fixen Zeichen: langsam hoch, dann lange durch — und schwer zu stoppen, wenn du einmal drin bist.'
-             : 'Sie kommt in Schüben. Anfangen ist leicht, Dranbleiben ist die Arbeit.')+
-        ' Der Schauplatz ist <b>'+H.HT[hn-1]+'</b>.';
-    },
-    function(f,P,H){
-      var ms=f.aspekte.filter(function(x){return ((x.a==='Mars'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Mars'));})[0];
-      if(!ms) return null;
-      return '<b>Mars '+ms.typ+' Saturn</b> mit '+ms.o.toFixed(1)+'°. '+
-        (ms.art==='hart'
-         ? 'Gas und Bremse gleichzeitig. Ein erheblicher Teil deiner Energie geht nicht ins Tun, sondern ins Selbstbremsen. Das ist der Grund, warum ein normaler Tag sich anfühlt wie anderthalb.'
-         : 'Antrieb und Ausdauer arbeiten zusammen — du kannst dranbleiben, ohne dich zu zwingen.');
-    },
-    function(f,P,H){
-      if(P.Uranus===undefined) return null;
-      var hn=H.haus(P.Uranus)+1;
-      return 'Dein <b>Uranus im '+hn+'. Haus</b> sorgt für Unterbrechungen — dort reißt dir regelmäßig der Faden, '+
-        'in <b>'+H.HT[hn-1]+'</b>. Nicht aus Unzuverlässigkeit, sondern weil Gleichförmigkeit dort für dich nicht funktioniert.';
-    }],
-  uebung:['Die 20-Prozent-Regel',
-   'Nimm diese Woche eine Sache, die du dir vorgenommen hast, und mach bewusst nur ein Fünftel davon. Fünf Minuten statt einer halben Stunde. Ziel ist nicht die Leistung, sondern die Erfahrung, dass angefangen wurde, ohne dass es teuer war.'],
-  rueckfrage:'Hast du etwas in der kleinen Version gemacht?',
-  coach:{fragen:['Woran merkst du, dass du gleich Energie hast — bevor du sie nutzt?',
-   'Was bringt dich zuverlässig ins Tun?',
-   'Was passiert, wenn du dir etwas vornimmst und nicht schaffst?'],
-   vorsicht:'Nicht in Produktivitätscoaching kippen. Die Frage ist nicht, wie jemand mehr schafft, sondern wie jemand mit schwankender Kapazität gut leben kann.'}},
-
- {id:'struktur', name:'Struktur, die trägt',
-  frage:'Warum halten meine Systeme nie?',
-  anker:{haeuser:[6,10], punkte:['Saturn','Mond','Merkur']},
-  regeln:[
-    function(f,P,H){
-      if(P.Saturn===undefined) return null;
-      var hn=H.haus(P.Saturn)+1;
-      return 'Dein <b>Saturn im '+hn+'. Haus</b> ('+H.fmt(P.Saturn)+') zeigt, wo du Struktur bauen kannst, die hält — '+
-        'in <b>'+H.HT[hn-1]+'</b>. Systeme, die dort ansetzen, halten bei dir. Alle anderen zerfallen nach zwei Wochen, '+
-        'egal wie gut sie bei anderen funktionieren.';
-    },
-    function(f,P,H){
-      var h=f.herrscher.filter(function(x){return x.haus===6;})[0];
-      if(!h) return null;
-      return 'Dein 6. Haus steht in '+h.zeichen+', beherrscht von <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
-        'Deine Alltagsstruktur hängt an <b>'+H.HT[h.inHaus-1]+'</b> — wenn es dort nicht stimmt, hilft kein Kalender.';
-    },
-    function(f,P,H){
-      if(P.Mond===undefined) return null;
-      var zi=Math.floor(P.Mond/30);
-      var mod=['kardinal','fix','veränderlich'][zi%3];
-      return 'Dein Mond ist <b>'+mod+'</b>. '+
-        (mod==='fix'
-         ? 'Du brauchst Wiederholung und Verlässlichkeit — einmal etabliert, hält eine Routine bei dir lange. Der Aufbau ist das Zähe, nicht das Halten.'
-         : mod==='kardinal'
-         ? 'Du startest gut und verlierst schnell die Lust. Routinen brauchen bei dir eingebaute Neustarts statt Durchhalten.'
-         : 'Du brauchst Abwechslung innerhalb der Struktur. Starre Pläne scheitern bei dir nicht an Disziplin, sondern an Langeweile.');
-    }],
-  uebung:['Eine Routine an etwas hängen, das schon läuft',
-   'Häng diese Woche eine einzige neue Gewohnheit an etwas, das du ohnehin täglich tust — nach dem Zähneputzen, beim Wasserkocher. Nicht neu terminieren, sondern anhängen. Das ist bei sprunghafter Energie der einzige Mechanismus, der zuverlässig funktioniert.'],
-  rueckfrage:'Hast du etwas angehängt statt neu geplant?',
-  coach:{fragen:['Welche Routine hat bei dir tatsächlich mal gehalten — und was war daran anders?',
-   'Was machst du jeden Tag, ohne darüber nachzudenken?',
-   'Welche Systeme hast du übernommen, weil sie bei anderen funktionieren?'],
-   vorsicht:'Struktur ist bei manchen Menschen kein Willensproblem. Wenn Scham über gescheiterte Systeme auftaucht, ist das der wichtigere Punkt als das nächste System.'}},
-
- {id:'reizsuche', name:'Reizsuche und Interesse',
-  frage:'Warum kann ich mich stundenlang vertiefen — und sonst gar nicht?',
-  anker:{haeuser:[5,9,11], punkte:['Uranus','Jupiter','Merkur']},
-  regeln:[
-    function(f,P,H){
-      if(P.Jupiter===undefined) return null;
-      var hn=H.haus(P.Jupiter)+1;
-      return 'Dein <b>Jupiter im '+hn+'. Haus</b> zeigt, wo du dich verlierst — im guten Sinn. '+
-        'In <b>'+H.HT[hn-1]+'</b> hast du keinen Motivationsmangel, sondern eher das gegenteilige Problem. '+
-        'Das ist keine Disziplinfrage: Interesse ist bei dir der Schalter, nicht der Wille.';
-    },
-    function(f,P,H){
-      var im5=f.planeten.filter(function(x){return x.haus===5;});
-      var im9=f.planeten.filter(function(x){return x.haus===9;});
-      var t=[];
-      if(im5.length) t.push('Im 5. Haus steht <b>'+im5.map(function(x){return x.p;}).join(', ')+'</b> — dort kommt Eigenes leicht raus.');
-      if(im9.length) t.push('Im 9. Haus steht <b>'+im9.map(function(x){return x.p;}).join(', ')+'</b> — dort zieht es dich in die Tiefe eines Themas.');
-      return t.length?t.join(' '):null;
-    },
-    function(f,P,H){
-      if(P.Uranus===undefined) return null;
-      var ua=f.aspekte.filter(function(x){return (x.a==='Uranus'||x.b==='Uranus')&&x.o<4;})[0];
-      if(!ua) return null;
-      var and=(ua.a==='Uranus')?ua.b:ua.a;
-      return '<b>Uranus '+ua.typ+' '+and+'</b> mit '+ua.o.toFixed(1)+'°. Neues zieht dich stark an — '+
-        'und genau das ist die Falle: Der Reiz des Anfangs ist bei dir größer als die Befriedigung des Abschlusses.';
-    }],
-  uebung:['Eine Sache zu Ende bringen — die kleinste',
-   'Such dir eine angefangene Sache, die fast fertig ist, und bring sie diese Woche zu Ende. Nicht die wichtigste — die kleinste. Es geht darum, den Abschluss einmal zu spüren, weil der bei dir seltener belohnt wird als der Anfang.'],
-  rueckfrage:'Hast du etwas abgeschlossen?',
-  coach:{fragen:['Wobei vergisst du die Zeit?',
-   'Wie viele Dinge hast du gerade angefangen?',
-   'Was war das Letzte, das du fertig gemacht hast — und wie hat sich das angefühlt?'],
-   vorsicht:'Angefangene Projekte nicht als Charakterschwäche behandeln. Für viele ist das kein Fehler, sondern die Bauweise.'}},
-
- {id:'rueckzug', name:'Rückzug und Erholung',
-  frage:'Was lädt mich wirklich auf?',
-  anker:{haeuser:[12,4], punkte:['Mond','Neptun','Saturn']},
-  regeln:[
-    function(f,P,H){
-      var h=f.herrscher.filter(function(x){return x.haus===12;})[0];
-      if(!h) return null;
-      return 'Der Herrscher deines 12. Hauses ist <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
-        'Echte Erholung findest du über <b>'+H.HT[h.inHaus-1]+'</b> — nicht über das, was allgemein als Entspannung gilt.';
-    },
-    function(f,P,H){
-      if(P.Mond===undefined) return null;
-      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
-      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein Mond steht in einem <b>'+el+'zeichen</b>, im '+hn+'. Haus. '+
-        (el==='Feuer'?'Du erholst dich über Bewegung und Begeisterung, nicht über Stillsitzen.':
-         el==='Erde'?'Du erholst dich über Körperlichkeit und Konkretes — etwas anfassen, etwas fertig machen.':
-         el==='Luft'?'Du erholst dich über Austausch und Gedanken. Völlige Reizlosigkeit macht dich unruhiger, nicht ruhiger.':
-         'Du erholst dich über Rückzug und Wasser. Volle Räume kosten dich mehr als Arbeit.');
-    },
-    function(f,P,H){
-      var im4=f.planeten.filter(function(x){return x.haus===4;});
-      if(!im4.length) return null;
-      return 'Im 4. Haus steht <b>'+im4.map(function(x){return x.p;}).join(', ')+'</b>. Dein Zuhause ist bei dir kein Nebenschauplatz — '+
-        'wenn es dort nicht stimmt, funktioniert Erholung nirgendwo.';
-    }],
-  uebung:['Drei Erholungsarten testen',
-   'Probier diese Woche drei verschiedene Arten von Pause: eine mit Bewegung, eine mit Menschen, eine allein und still. Je 20 Minuten. Notier danach, wie es dir geht. Die meisten erholen sich anders, als sie glauben.'],
-  rueckfrage:'Weißt du jetzt, was dich wirklich auflädt?',
-  coach:{fragen:['Was machst du zur Erholung, weil man das so macht?',
-   'Wann warst du zuletzt wirklich ausgeruht?',
-   'Was brauchst du nach einem vollen Tag als Erstes?'],
-   vorsicht:'Wenn Erholung grundsätzlich nicht mehr wirkt, ist das ein Warnzeichen und keine Frage der Methode.'}},
-
- {id:'maske', name:'Anders sein unter Menschen',
-  frage:'Warum ist Sozialsein so anstrengend?',
-  anker:{haeuser:[11,1], punkte:['Uranus','Saturn','ASC']},
-  regeln:[
-    function(f,P,H){
-      if(P.Uranus===undefined) return null;
-      var hn=H.haus(P.Uranus)+1;
-      return 'Dein <b>Uranus im '+hn+'. Haus</b> markiert, wo du anders bist als erwartet — in <b>'+H.HT[hn-1]+'</b>. '+
-        'Dort spürst du am deutlichsten, dass du nicht ins Raster passt. Das ist gleichzeitig die Stelle, '+
-        'an der du am wenigsten anpassen solltest, weil es dort am meisten kostet.';
-    },
     function(f,P,H){
       var im11=f.planeten.filter(function(x){return x.haus===11;});
-      if(!im11.length) return 'Dein 11. Haus ist unbesetzt. Gruppen sind bei dir kein Dauerthema — du brauchst sie weniger, '+
-        'was es leichter macht, dich nicht zu verbiegen, und schwerer, Anschluss zu suchen, wenn du ihn brauchst.';
-      return 'Im 11. Haus — Gruppen und Zugehörigkeit — steht <b>'+im11.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Gemeinschaft ist bei dir wichtig, und genau deshalb ist Anpassung dort eine echte Versuchung.';
+      if(!im11.length) return 'Dein 11. Haus ist unbesetzt. Gruppen sind bei dir kein Dauerthema — '+
+        'du brauchst sie weniger als andere. Das macht dich unabhängiger und lässt dich manchmal übersehen, '+
+        'dass Anschluss auch eine Ressource ist.';
+      return 'Im 11. Haus — Gruppen, Gleichgesinnte, gemeinsame Ziele — steht <b>'+
+        im11.map(function(x){return x.p+' ('+H.fmt(x.pos)+')';}).join(', ')+'</b>. '+
+        'Diese Funktionen zeigst du in Gemeinschaft zuerst. Sie sind auch der Grund, warum Gruppen dich stärker beschäftigen als andere.';
+    },
+    function(f,P,H){
+      var h=f.herrscher.filter(function(x){return x.haus===11;})[0];
+      if(!h) return null;
+      return 'Der Herrscher deines 11. Hauses ist <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
+        '<b>Zugang zu Gruppen bekommst du über '+H.HT[h.inHaus-1]+'</b> — nicht über Geselligkeit, '+
+        'sondern über diesen Bereich. Wo du dort auftauchst, findest du Anschluss.';
+    },
+    function(f,P,H){
+      if(P.Uranus===undefined) return null;
+      var hn=H.haus(P.Uranus)+1;
+      if(hn!==11) return null;
+      return '<b>Uranus im 11. Haus.</b> Du bist die, die nicht ganz mitmacht — und zahlst dafür mit Zugehörigkeit. '+
+        'Das ist kein Charakterfehler: In Gruppen, die Abweichung aushalten, bist du wertvoll. In anderen bist du anstrengend. '+
+        'Die Frage ist die Gruppe, nicht du.';
+    },
+    function(f,P,H){
+      var su=f.aspekte.filter(function(x){return (x.a==='Sonne'||x.b==='Sonne')&&(x.a==='Uranus'||x.b==='Uranus');})[0];
+      if(!su) return null;
+      return '<b>Sonne '+su.typ+' Uranus</b> mit '+su.o.toFixed(1)+'°. Dazugehören und du selbst bleiben stehen bei dir '+
+        (su.art==='hart'?'in Spannung. Du spürst früh, wann Anpassung zu teuer wird — manchmal früher, als nötig wäre.'
+                        :'in gutem Verhältnis. Du kannst eigen sein und trotzdem dabei — das ist selten.');
+    }],
+  uebung:['Einmal widersprechen, während alle nicken',
+   'Sag diese Woche in einer Gruppe einmal etwas, das nicht zur Stimmung passt. Nicht konfrontativ — nur ehrlich. Beobachte, was tatsächlich passiert. Meistens weniger, als du befürchtest, und oft ist jemand erleichtert.'],
+  rueckfrage:'Hast du einmal widersprochen?',
+  coach:{fragen:['In welcher Gruppe bist du am ehesten du selbst?',
+   'Was tust du in Gruppen automatisch, ohne es zu wollen?',
+   'Wann hast du zuletzt eine Gruppe verlassen — und warum wirklich?'],
+   vorsicht:'Nicht auf mehr Geselligkeit hinarbeiten. Manche Menschen brauchen weniger Gruppe, nicht mehr, und das ist in Ordnung.'}},
+
+ {id:'anpassen', name:'Was dich das Dazugehören kostet',
+  frage:'Wie viel von mir gebe ich dafür auf?',
+  anker:{haeuser:[1,12], punkte:['Lilith','Saturn','Neptun','ASC']},
+  regeln:[
+    function(f,P,H){
+      if(P.Lilith===undefined||P.Lilith===null) return null;
+      var hn=H.haus(P.Lilith)+1;
+      return 'Deine <b>Lilith im '+hn+'. Haus</b> zeigt, was du dir nicht erlaubst — in <b>'+H.HT[hn-1]+'</b>. '+
+        'In Gruppen ist das genau der Teil, den du zurücknimmst, um dazuzugehören. '+
+        'Der Preis fällt nicht sofort auf, sondern als Erschöpfung nach dem Treffen.';
     },
     function(f,P,H){
       var zi=Math.floor(P.ASC/30);
       return 'Dein <b>Aszendent in '+H.SIGNS[zi]+'</b> ist die Schicht, die Menschen zuerst sehen. '+
-        'Wenn sich das stark von deinem Inneren unterscheidet, entsteht Übersetzungsarbeit: '+
-        'Du wirkst anders, als du bist, und musst die Lücke selbst überbrücken. Das ist ein Teil der Erschöpfung, '+
-        'die nach sozialen Situationen bleibt.';
+        'Wenn sie sich stark von deinem Inneren unterscheidet, entsteht Übersetzungsarbeit: '+
+        'Du wirkst anders, als du bist, und musst die Lücke selbst überbrücken. '+
+        'Genau das ist der unsichtbare Teil der Anstrengung.';
+    },
+    function(f,P,H){
+      var im12=f.planeten.filter(function(x){return x.haus===12;});
+      if(!im12.length) return null;
+      return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Was dort steht, zeigst du nicht — auch nicht denen, die dir nahe sind. '+
+        'Ein Teil deiner Anpassung läuft unbewusst und kostet trotzdem.';
     }],
-  uebung:['Zehn Minuten unmaskiert',
-   'Sei diese Woche in einer sicheren Situation zehn Minuten lang ohne die Anpassungsschicht: kein automatisches Lächeln, kein Nachfragen aus Höflichkeit, keine Energie fürs Passendsein. Schau, was tatsächlich passiert. Meistens weniger als befürchtet.'],
-  rueckfrage:'Hattest du zehn Minuten ohne Maske?',
+  uebung:['Die Erschöpfung messen',
+   'Notier diese Woche nach jedem sozialen Treffen eine Zahl von eins bis zehn: Wie leer bist du danach? Nur die Zahl. Nach fünf Treffen siehst du, welche dich nähren und welche dich kosten — und das ist eine Information, die man sich nicht erdenken kann.'],
+  rueckfrage:'Hast du deine Zahlen gesammelt?',
   coach:{fragen:['Bei wem musst du dich nicht zusammenreißen?',
-   'Was tust du in Gesellschaft automatisch, ohne es zu wollen?',
+   'Was verschweigst du in deinem Freundeskreis?',
    'Wie fühlst du dich direkt nach einem Treffen — und zwei Stunden später?'],
-   vorsicht:'Maskieren ist ein ernsthaftes Thema mit realen Kosten. Es benennen ja, es analysieren nein — und keine Rückschlüsse auf eine Diagnose ziehen.'}}
+   vorsicht:'Anpassung ist bei manchen Menschen Überlebensstrategie, nicht Gewohnheit. Nicht zum Ablegen drängen, bevor klar ist, was sie geschützt hat.'}},
+
+ {id:'freunde', name:'Deine Freundschaften',
+  frage:'Warum habe ich viele Kontakte und wenig Nähe?',
+  anker:{haeuser:[11,3], punkte:['Venus','Merkur','Mond']},
+  regeln:[
+    function(f,P,H){
+      if(P.Venus===undefined) return null;
+      var hn=H.haus(P.Venus)+1, zi=Math.floor(P.Venus/30);
+      return 'Deine <b>Venus in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, wie du Zuneigung zeigst — '+
+        'auch in Freundschaft, nicht nur in Liebe. Bei dir läuft das über <b>'+H.HT[hn-1]+'</b>. '+
+        'Menschen, mit denen du das nicht teilen kannst, bleiben Bekanntschaften.';
+    },
+    function(f,P,H){
+      var im3=f.planeten.filter(function(x){return x.haus===3;});
+      if(!im3.length) return null;
+      return 'Im 3. Haus — der Nahbereich, das Alltägliche — steht <b>'+im3.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Freundschaft entsteht bei dir über regelmäßigen, beiläufigen Kontakt, nicht über große Anlässe.';
+    },
+    function(f,P,H){
+      if(P.Mond===undefined) return null;
+      var hn=H.haus(P.Mond)+1;
+      return 'Dein <b>Mond im '+hn+'. Haus</b> sagt, wo du dich sicher fühlst: <b>'+H.HT[hn-1]+'</b>. '+
+        'Nähe in Freundschaft entsteht bei dir genau dort — wenn ihr das teilt, wird es tief. Wenn nicht, bleibt es nett.';
+    }],
+  uebung:['Eine Verabredung ohne Anlass',
+   'Schreib diese Woche einer Person, die du magst und selten siehst — ohne Grund, ohne Anlass, ohne Geburtstag. Die meisten warten darauf, dass jemand anfängt. Sei diesmal die, die anfängt.'],
+  rueckfrage:'Hast du dich ohne Anlass gemeldet?',
+  coach:{fragen:['Wen würdest du anrufen, wenn etwas passiert?',
+   'Welche Freundschaft hält, obwohl ihr euch selten seht?',
+   'Wem hast du lange nicht gesagt, dass sie dir wichtig ist?'],
+   vorsicht:'Wenig Freundschaften sind kein Defizit. Die Frage ist Qualität, nicht Anzahl.'}},
+
+ {id:'rolle', name:'Welche Rolle du übernimmst',
+  frage:'Warum bin ich immer die, die das macht?',
+  anker:{haeuser:[6,10], punkte:['Saturn','Mars','Sonne']},
+  regeln:[
+    function(f,P,H){
+      if(P.Saturn===undefined) return null;
+      var hn=H.haus(P.Saturn)+1;
+      return 'Dein <b>Saturn im '+hn+'. Haus</b> zeigt, wo du Verantwortung übernimmst, auch ungefragt — '+
+        'in <b>'+H.HT[hn-1]+'</b>. In Gruppen landet diese Aufgabe bei dir, weil du sie schneller siehst als andere. '+
+        'Und weil du sie übernimmst, fragt bald niemand mehr.';
+    },
+    function(f,P,H){
+      if(P.Sonne===undefined) return null;
+      var hn=H.haus(P.Sonne)+1;
+      if(hn!==11&&hn!==10) return null;
+      return 'Deine <b>Sonne im '+hn+'. Haus</b> — du bist in Gemeinschaft sichtbar, ob du willst oder nicht. '+
+        'Das bringt Rollen mit sich, auch solche, die du dir nicht ausgesucht hast.';
+    },
+    function(f,P,H){
+      if(P.Mars===undefined) return null;
+      var hn=H.haus(P.Mars)+1;
+      return 'Dein <b>Mars im '+hn+'. Haus</b> ist dein Grenzmuskel. In Gruppen entscheidet sich an dieser Stelle, '+
+        'ob du Aufgaben annimmst oder abgibst — bei dir in <b>'+H.HT[hn-1]+'</b>.';
+    }],
+  uebung:['Eine Aufgabe nicht übernehmen',
+   'Wenn diese Woche in einer Gruppe etwas liegen bleibt, das sonst du machst: lass es liegen. Nicht kommentieren, nicht erklären. Schau, was passiert. Entweder macht es jemand anderes, oder es war nicht so wichtig, wie du dachtest.'],
+  rueckfrage:'Hast du etwas liegen lassen?',
+  coach:{fragen:['Welche Rolle hast du in deinem Freundeskreis?',
+   'Hast du sie gewählt oder ist sie dir zugefallen?',
+   'Was wäre, wenn du sie einmal nicht ausfüllst?'],
+   vorsicht:'Rollen bringen auch Zugehörigkeit. Nicht zum Ablegen drängen, ohne zu klären, was danach bleibt.'}},
+
+ {id:'aussen', name:'Das Gefühl, nicht dazuzugehören',
+  frage:'Warum fühle ich mich überall ein bisschen fremd?',
+  anker:{haeuser:[12,11], punkte:['Uranus','Chiron','Neptun','Saturn']},
+  regeln:[
+    function(f,P,H){
+      if(P.Chiron===undefined||P.Chiron===null) return null;
+      var hn=H.haus(P.Chiron)+1;
+      if(hn!==11&&hn!==12&&hn!==1&&hn!==3) return null;
+      return '<b>Chiron im '+hn+'. Haus</b> — der wunde Punkt liegt bei dir nah am Thema Zugehörigkeit. '+
+        'Das Gefühl, nicht ganz richtig zu sein, ist alt und meldet sich in Gruppen zuverlässig. '+
+        'Es sagt allerdings mehr über eine frühe Erfahrung als über deine jetzige Lage.';
+    },
+    function(f,P,H){
+      if(P.Uranus===undefined) return null;
+      var hn=H.haus(P.Uranus)+1;
+      return 'Dein <b>Uranus im '+hn+'. Haus</b> markiert, wo du anders bist als erwartet: <b>'+H.HT[hn-1]+'</b>. '+
+        'Fremdheit entsteht bei dir nicht überall gleich — sie hängt an diesem Bereich. '+
+        'In Zusammenhängen, in denen der keine Rolle spielt, fühlst du dich meistens wohl.';
+    },
+    function(f,P,H){
+      var im12=f.planeten.filter(function(x){return x.haus===12;});
+      if(!im12.length) return null;
+      return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Ein Teil von dir bleibt grundsätzlich außen — auch bei Menschen, die dich mögen. '+
+        'Das ist eher eine Bauweise als ein Problem, wird aber zum Problem, wenn man es für ein Urteil über sich hält.';
+    }],
+  uebung:['Den Ort finden, an dem es nicht so ist',
+   'Denk an eine Situation, in der du dich zuletzt selbstverständlich zugehörig gefühlt hast. Was war dort anders? Meistens ist es ein bestimmtes Thema oder eine bestimmte Art zu reden — und davon brauchst du mehr, nicht mehr Anstrengung.'],
+  rueckfrage:'Hast du so einen Ort gefunden?',
+  coach:{fragen:['Wann hast du dich zuletzt völlig zugehörig gefühlt?',
+   'Was war dort anders als sonst?',
+   'Wem gegenüber musst du dich nicht erklären?'],
+   vorsicht:'Anhaltendes Außenseitergefühl kann auch Teil einer depressiven Phase sein. Wenn es dauerhaft und schwer ist, gehört das abgeklärt.'}},
+
+ {id:'beitrag', name:'Wofür du gebraucht wirst',
+  frage:'Was bringe ich einer Gemeinschaft eigentlich?',
+  anker:{haeuser:[11,6], punkte:['Jupiter','Sonne','Merkur']},
+  regeln:[
+    function(f,P,H){
+      if(P.Jupiter===undefined) return null;
+      var hn=H.haus(P.Jupiter)+1;
+      return 'Dein <b>Jupiter im '+hn+'. Haus</b> ist das, was du leicht gibst, ohne es zu bemerken: <b>'+H.HT[hn-1]+'</b>. '+
+        'Genau deshalb hältst du es für selbstverständlich — und genau deshalb ist es dein Beitrag.';
+    },
+    function(f,P,H){
+      var weich=f.aspekte.filter(function(x){return x.art==='weich'&&x.o<3;}).slice(0,2);
+      if(!weich.length) return null;
+      return 'Leicht läuft bei dir <b>'+weich.map(function(x){return x.a+' '+x.typ+' '+x.b;}).join('</b> und <b>')+'</b>. '+
+        'Was einem leichtfällt, hält man für normal — und übersieht, dass andere dafür dankbar sind.';
+    },
+    function(f,P,H){
+      if(P.Sonne===undefined) return null;
+      var hn=H.haus(P.Sonne)+1;
+      return 'Deine <b>Sonne im '+hn+'. Haus</b>: Dort bist du am meisten du selbst — in <b>'+H.HT[hn-1]+'</b>. '+
+        'Eine Gemeinschaft, in der dieser Teil keinen Platz hat, wird dich auf Dauer nicht halten, '+
+        'egal wie nett die Menschen sind.';
+    }],
+  uebung:['Einmal fragen, was fehlt',
+   'Frag diese Woche in einem Zusammenhang, der dir wichtig ist: „Was fehlt euch gerade?" Und dann schau, ob etwas dabei ist, das dir leichtfällt. Zugehörigkeit entsteht über Nützlichsein häufiger als über Sympathie.'],
+  rueckfrage:'Hast du gefragt, was fehlt?',
+  coach:{fragen:['Wofür kommen Menschen zu dir?',
+   'Was gibst du, ohne es zu merken?',
+   'In welcher Gruppe würdest du fehlen, wenn du gingst?'],
+   vorsicht:'Nicht auf Nützlichkeit reduzieren. Zugehörigkeit darf auch ohne Gegenleistung existieren.'}}
 
  ]
 };
@@ -504,7 +453,7 @@ function bauen(){
   var voll=AC_P.zeigeNamen();
 
   /* Sortierung */
-  var h='<div class="rm-sortierung"><h3>'+(RAUM.sortierTitel||('Wo dein Thema bei dir sitzt'))+'</h3>'+
+  var h='<div class="rm-sortierung"><h3>'+(RAUM.sortierTitel||'Wo dein Thema bei dir sitzt')+'</h3>'+
     '<div class="hint">'+res.length+' Facetten, gewichtet nach deinem Chart — nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe.</div>';
   res.forEach(function(r){
     h+='<div class="rm-bal"><div>'+r.fc.name+'</div>'+
@@ -576,8 +525,8 @@ function bauen(){
         Array.prototype.forEach.call(w.children,function(c){c.setAttribute('aria-pressed','false');});
         b.setAttribute('aria-pressed','true');
         try{
-          if(window.AC_WEG) AC_WEG.notieren({schluessel:'raum-'+RAUM.slug+'-'+fid,
-            titel:RAUM.name+' · '+fid, planet:'', punkt:'', art:'uebung', antwort:o[0], chips:[]});
+          if(window.AC_WEG) AC_WEG.notieren({schluessel:'raum-selbstwert-'+fid,
+            titel:'Selbstwert · '+fid, planet:'', punkt:'', art:'uebung', antwort:o[0], chips:[]});
         }catch(e){}
       });
       w.appendChild(b);

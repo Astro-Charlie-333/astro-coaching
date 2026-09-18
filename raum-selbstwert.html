@@ -229,6 +229,8 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 /* ── Definition des Raums: Selbstwert ───────────────────── */
 var RAUM = {
  name:'Selbstwert',
+ slug:'selbstwert',
+ sortierTitel:'Wo dein Selbstwert tatsächlich sitzt',
  facetten:[
 
  {id:'geld', name:'Geld und Preise',
@@ -501,7 +503,7 @@ function bauen(){
   try{ p=window.AC_P?AC_P.aktives():null; }catch(e){}
   if(!p){
     box.innerHTML='<div class="rm-leer"><b>Noch kein Chart hinterlegt.</b><br><br>'+
-      'Dieser Raum sortiert sich nach deinem Chart — welche der sieben Facetten bei dir laut sind und welche leise. '+
+      'Dieser Raum sortiert sich nach deinem Chart — welche Facetten bei dir laut sind und welche leise. '+
       'Dafür brauche ich einmal deine Geburtsdaten.<br><br><a class="wg-b" href="profile.html" style="display:inline-block;font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;padding:11px 22px;border-radius:22px;text-decoration:none;">Chart anlegen</a></div>';
     return;
   }
@@ -510,8 +512,8 @@ function bauen(){
   var voll=AC_P.zeigeNamen();
 
   /* Sortierung */
-  var h='<div class="rm-sortierung"><h3>Wo dein Selbstwert tatsächlich sitzt</h3>'+
-    '<div class="hint">Sieben Facetten, gewichtet nach deinem Chart — nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe.</div>';
+  var h='<div class="rm-sortierung"><h3>'+(RAUM.sortierTitel||'Wo dein Thema bei dir sitzt')+'</h3>'+
+    '<div class="hint">'+res.length+' Facetten, gewichtet nach deinem Chart — nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe.</div>';
   res.forEach(function(r){
     h+='<div class="rm-bal"><div>'+r.fc.name+'</div>'+
       '<div class="bar"><i class="'+(r.rel<45?'leise':'')+'" style="width:'+Math.max(4,r.rel)+'%"></i></div>'+
