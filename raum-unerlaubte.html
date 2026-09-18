@@ -141,6 +141,13 @@ a{color:var(--nacht);}
 
 .rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
  margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+
+.fa-wozu{background:var(--messing-bg);border-radius:14px;padding:14px 16px;margin-top:11px;}
+.fa-wozu .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:6px;}
+.fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
+.fa-wozu p:last-child{margin-bottom:0;}
+.fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -508,7 +515,11 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
+    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
+      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
+      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
+      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+      '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 
     h+='<details class="fa-coach"><summary>Für die Arbeit mit anderen — Gesprächsleitfaden</summary>'+
