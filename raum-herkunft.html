@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -148,6 +149,9 @@ a{color:var(--nacht);}
 .fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -165,6 +169,7 @@ a{color:var(--nacht);}
   <p>Dieser Raum liegt unter vielen anderen. Was du über Geld glaubst, wie nah du Menschen kommst, wann du dich zusammenreißt — vieles davon wurde entschieden, bevor du mitreden konntest. Sieben Facetten: die Atmosphäre von damals, was dich genährt hat, welche Autorität du verinnerlicht hast, was nie ausgesprochen wurde, was du übernommen hast, welche Rolle du hattest — und was du daraus machst.</p>
 </div>
 <div class="rm-hinweis"><b>Eine Grenze vorab:</b> Dieser Raum arbeitet mit Mustern, nicht mit Verletzungen. Ein Chart kann zeigen, wo etwas sitzt — es kann es nicht behandeln. Wenn beim Lesen etwas hochkommt, das größer ist als eine Erinnerung, ist das kein Zeichen, dass du weitermachen sollst, sondern dass es Begleitung braucht. Das ist keine Schwäche und kein Rückzieher, sondern der ehrliche Rahmen.</div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="erinnerung.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Deine früheste Erinnerung</span></a></div>
@@ -232,7 +237,7 @@ var RAUM = {
  slug:'herkunft',
  sortierTitel:'Wo deine Herkunft heute noch wirkt',
  facetten:[
- {id:'atmosphaere', name:'Die Atmosphäre, in der du groß wurdest',
+ {id:'atmosphaere', wozuSchutz:'Das Unbenannte muss nicht verhandelt werden. Schweigen hält die Familie zusammen.', wozuFrage:'Was würde sich in deiner Familie verschieben, wenn du es aussprichst?', name:'Die Atmosphäre, in der du groß wurdest',
   frage:'Wie war die Stimmung, in der ich aufgewachsen bin?',
   anker:{haeuser:[4], punkte:['Mond','Pluto','Neptun','Saturn']},
   regeln:[
@@ -279,7 +284,7 @@ var RAUM = {
    'Woran hast du als Kind gemerkt, dass etwas nicht stimmt?'],
    vorsicht:'Das ist die Facette, die am schnellsten zu tief geht. Wenn Gewalt, Vernachlässigung oder anhaltende Scham auftauchen: benennen, würdigen, und an eine Therapeutin verweisen. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.'}},
 
- {id:'naehrend', name:'Was dich genährt hat',
+ {id:'naehrend', wozuSchutz:'Wer nichts braucht, kann nicht enttäuscht werden.', wozuFrage:'Was wäre das Risiko, wenn du um etwas bittest — und nichts kommt?', name:'Was dich genährt hat',
   frage:'Habe ich bekommen, was ich brauchte?',
   anker:{haeuser:[4], punkte:['Mond','Venus','Ceres']},
   regeln:[
@@ -312,7 +317,7 @@ var RAUM = {
    'Wen versorgst du heute — und wer versorgt dich?'],
    vorsicht:'Nicht die Eltern bewerten. Es geht um die Erfahrung der Person, nicht um ein Urteil über andere.'}},
 
- {id:'autoritaet', name:'Autorität und Anspruch',
+ {id:'autoritaet', wozuSchutz:'Die alte Stimme zu befolgen ist anstrengend, aber vertraut. Ohne sie fehlt der Maßstab.', wozuFrage:'Woran würdest du dich messen, wenn du diese Stimme nicht mehr befolgst?', name:'Autorität und Anspruch',
   frage:'Wessen Erwartungen trage ich noch mit?',
   anker:{haeuser:[10], punkte:['Saturn','Sonne','Pluto']},
   regeln:[
@@ -346,7 +351,7 @@ var RAUM = {
    'Welchen Satz hörst du innerlich, wenn du einen Fehler machst?'],
    vorsicht:'Wenn Autoritätserfahrungen in Richtung Übergriffigkeit gehen, ist das kein Coaching-Thema mehr.'}},
 
- {id:'unausgesprochen', name:'Was nie ausgesprochen wurde',
+ {id:'unausgesprochen', wozuSchutz:'Nicht zu fragen bewahrt alle davor, eine Antwort aushalten zu müssen.', wozuFrage:'Was fürchtest du zu hören — und was wäre schlimmer: es zu wissen oder es weiter zu ahnen?', name:'Was nie ausgesprochen wurde',
   frage:'Was läuft bei uns unter der Oberfläche?',
   anker:{haeuser:[8,12], punkte:['Pluto','Neptun']},
   regeln:[
@@ -380,7 +385,7 @@ var RAUM = {
    'Gibt es in deiner Familie eine Geschichte, die alle kennen und niemand erzählt?'],
    vorsicht:'Familiengeheimnisse können Traumatisches enthalten. Nicht graben, nicht spekulieren, nichts andeuten. Wenn etwas aufbricht, gehört das begleitet.'}},
 
- {id:'uebernommen', name:'Was du übernommen hast',
+ {id:'uebernommen', wozuSchutz:'Geerbte Sätze fühlen sich wie Wahrheit an. Sie zu prüfen hieße, allein zu entscheiden.', wozuFrage:'Wem wärst du untreu, wenn du es anders siehst als deine Familie?', name:'Was du übernommen hast',
   frage:'Welche Muster gehören gar nicht mir?',
   anker:{haeuser:[2,4], punkte:['Saturn','Mond','Knoten']},
   regeln:[
@@ -413,7 +418,7 @@ var RAUM = {
    'Worin bist du deinen Eltern ähnlich, obwohl du es nicht wolltest?'],
    vorsicht:'Nicht zum Abgrenzen drängen. Manche Muster sind nützlich und dürfen behalten werden.'}},
 
- {id:'geschwister', name:'Geschwister und Nahbereich',
+ {id:'geschwister', wozuSchutz:'Die alte Rolle sichert einen Platz. Ohne sie ist unklar, wo man hingehört.', wozuFrage:'Was wäre dein Platz, wenn du diese Rolle nicht mehr spielst?', name:'Geschwister und Nahbereich',
   frage:'Welche Rolle hatte ich in der Familie?',
   anker:{haeuser:[3], punkte:['Merkur','Mars']},
   regeln:[
@@ -444,7 +449,7 @@ var RAUM = {
    'Welche Rolle hast du übernommen, weil sie frei war?'],
    vorsicht:'Rollen sind oft mit Loyalität verbunden. Nicht drängen, sie abzulegen — erst einmal reicht, sie zu sehen.'}},
 
- {id:'daraus', name:'Was du daraus machst',
+ {id:'daraus', wozuSchutz:'Alles beim Alten zu lassen ist loyal und verlangt keine Rechtfertigung.', wozuFrage:'Was hättest du zu verlieren, wenn du es bewusst anders machst?', name:'Was du daraus machst',
   frage:'Wie komme ich da weiter, ohne alles abzulehnen?',
   anker:{haeuser:[10,9], punkte:['Knoten','MC','Jupiter']},
   regeln:[
@@ -480,6 +485,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"atmosphaere": ["Nicht hinzusehen hält das Bild der Familie intakt. Zu benennen, wie es war, verändert die Geschichte.", "Was ginge verloren, wenn du aussprichst, wie es wirklich war?"], "naehrend": ["Keine Bedürfnisse zu haben macht unabhängig von Menschen, die sie nicht erfüllt haben.", "Was müsstest du erwarten dürfen, wenn du zugibst, dass du etwas brauchst?"], "autoritaet": ["Dem inneren Maßstab zu folgen ist vertraut und gibt Richtung. Ohne ihn müsstest du selbst entscheiden, was genug ist.", "Wer entscheidet, wann es reicht, wenn nicht diese Stimme?"], "unausgesprochen": ["Schweigen schützt alle Beteiligten. Sprechen bringt Bewegung in etwas, das mühsam stillgestellt wurde.", "Wen würdest du in Schwierigkeiten bringen, wenn du es ansprichst?"], "uebernommen": ["Die geerbten Sätze zu behalten bedeutet Zugehörigkeit. Sie zu prüfen heißt, sich zu unterscheiden.", "Was würde sich zwischen dir und deiner Familie ändern, wenn du anders denkst?"], "geschwister": ["Die alte Rolle weiterzuspielen macht dich berechenbar und gebraucht. Sie abzulegen heißt, deinen Platz neu zu verhandeln.", "Welchen Platz hättest du noch, wenn du diese Rolle nicht mehr ausfüllst?"], "daraus": ["Zwischen Herkunft und eigenem Weg zu schwanken vermeidet die Entscheidung. Beides halb zu leben tut niemandem weh.", "Wem gegenüber müsstest du dich erklären, wenn du dich klar entscheidest?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -538,10 +544,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

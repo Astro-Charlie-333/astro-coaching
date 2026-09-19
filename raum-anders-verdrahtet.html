@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -148,6 +149,9 @@ a{color:var(--nacht);}
 .fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -165,6 +169,7 @@ a{color:var(--nacht);}
   <p>Manche Menschen verbrauchen für ganz normale Tage mehr Kraft als andere — und halten das lange für einen Charakterfehler. Dieser Raum schaut sich an, wie dein Kopf Informationen verarbeitet, was dich überlastet, wie deine Energie ankommt und was dich tatsächlich auflädt. '+res.length+' Facetten, gewichtet nach deinem Chart.</p>
 </div>
 <div class="rm-hinweis"><b>Wichtig vorab:</b> Ein Chart kann nichts diagnostizieren. Weder ADHS noch Autismus noch irgendetwas anderes Medizinisches — und dieser Raum versucht es auch nicht. Was hier steht, sind <b>Belastungsmuster</b>: wo bei dir Kraft verloren geht und was dabei hilft. Das ist unabhängig davon nützlich, ob eine Diagnose vorliegt, ansteht oder nie kommt. Wenn du dem nachgehen willst, gehört die Einschätzung zu einer Fachperson.</div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="neurodivergente-astrologie.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Für anders verdrahtete Köpfe</span></a></div>
@@ -232,7 +237,7 @@ var RAUM = {
  slug:'anders-verdrahtet',
  sortierTitel:'Wo bei dir die Kraft verloren geht',
  facetten:[
- {id:'verarbeitung', name:'Wie dein Kopf arbeitet',
+ {id:'verarbeitung', wozuSchutz:'Sich anzupassen erspart die Erklärung, warum man anders funktioniert.', wozuFrage:'Was müsstest du erklären oder einfordern, wenn du dein Format offen benennst?', name:'Wie dein Kopf arbeitet',
   frage:'Warum denke ich anders als andere?',
   anker:{haeuser:[3], punkte:['Merkur','Uranus']},
   regeln:[
@@ -271,7 +276,7 @@ var RAUM = {
    'Wie erklärst du selbst etwas, wenn du frei wählen darfst?'],
    vorsicht:'Ein Chart beschreibt einen Denkstil, keine Diagnose. Wenn jemand nach einer Einschätzung zu ADHS oder Autismus fragt: freundlich auf eine Fachperson verweisen und nichts andeuten.'}},
 
- {id:'reize', name:'Was dich überlastet',
+ {id:'reize', wozuSchutz:'Durchhalten verhindert, dass jemand merkt, wie viel es dich kostet.', wozuFrage:'Was befürchtest du, wenn du sagst, dass du eine Pause brauchst?', name:'Was dich überlastet',
   frage:'Warum bin ich nach normalen Tagen so fertig?',
   anker:{haeuser:[6,12], punkte:['Mond','Neptun','Merkur']},
   regeln:[
@@ -313,7 +318,7 @@ var RAUM = {
    'Was machst du, wenn es zu viel wird, und hilft das wirklich?'],
    vorsicht:'Anhaltende Erschöpfung ist keine Coaching-Frage. Wenn es über Wochen geht, gehört das ärztlich abgeklärt, bevor an Strukturen gearbeitet wird.'}},
 
- {id:'energie', name:'Dein Energiehaushalt',
+ {id:'energie', wozuSchutz:'Wer sich nichts vornimmt, kann auch nichts nicht schaffen.', wozuFrage:'Wovor schützt dich das Aufschieben — und was wäre riskant am Anfangen?', name:'Dein Energiehaushalt',
   frage:'Warum geht mal alles und dann gar nichts?',
   anker:{haeuser:[1,6], punkte:['Mars','Saturn','Uranus']},
   regeln:[
@@ -348,7 +353,7 @@ var RAUM = {
    'Was passiert, wenn du dir etwas vornimmst und nicht schaffst?'],
    vorsicht:'Nicht in Produktivitätscoaching kippen. Die Frage ist nicht, wie jemand mehr schafft, sondern wie jemand mit schwankender Kapazität gut leben kann.'}},
 
- {id:'struktur', name:'Struktur, die trägt',
+ {id:'struktur', wozuSchutz:'Ein System, das scheitert, ist ein Beweis, dass es nicht an dir lag.', wozuFrage:'Was wäre, wenn eine Struktur tatsächlich hielte — was käme dann auf dich zu?', name:'Struktur, die trägt',
   frage:'Warum halten meine Systeme nie?',
   anker:{haeuser:[6,10], punkte:['Saturn','Mond','Merkur']},
   regeln:[
@@ -384,7 +389,7 @@ var RAUM = {
    'Welche Systeme hast du übernommen, weil sie bei anderen funktionieren?'],
    vorsicht:'Struktur ist bei manchen Menschen kein Willensproblem. Wenn Scham über gescheiterte Systeme auftaucht, ist das der wichtigere Punkt als das nächste System.'}},
 
- {id:'reizsuche', name:'Reizsuche und Interesse',
+ {id:'reizsuche', wozuSchutz:'Immer wieder neu anzufangen schützt davor, an einer Sache gemessen zu werden.', wozuFrage:'Was würde sichtbar, wenn du eine Sache wirklich zu Ende bringst?', name:'Reizsuche und Interesse',
   frage:'Warum kann ich mich stundenlang vertiefen — und sonst gar nicht?',
   anker:{haeuser:[5,9,11], punkte:['Uranus','Jupiter','Merkur']},
   regeln:[
@@ -419,7 +424,7 @@ var RAUM = {
    'Was war das Letzte, das du fertig gemacht hast — und wie hat sich das angefühlt?'],
    vorsicht:'Angefangene Projekte nicht als Charakterschwäche behandeln. Für viele ist das kein Fehler, sondern die Bauweise.'}},
 
- {id:'rueckzug', name:'Rückzug und Erholung',
+ {id:'rueckzug', wozuSchutz:'Wer keine Pause macht, muss nicht merken, wie erschöpft er ist.', wozuFrage:'Was käme hoch, wenn du wirklich zur Ruhe kommst?', name:'Rückzug und Erholung',
   frage:'Was lädt mich wirklich auf?',
   anker:{haeuser:[12,4], punkte:['Mond','Neptun','Saturn']},
   regeln:[
@@ -453,7 +458,7 @@ var RAUM = {
    'Was brauchst du nach einem vollen Tag als Erstes?'],
    vorsicht:'Wenn Erholung grundsätzlich nicht mehr wirkt, ist das ein Warnzeichen und keine Frage der Methode.'}},
 
- {id:'maske', name:'Anders sein unter Menschen',
+ {id:'maske', wozuSchutz:'Die Anpassungsschicht sichert Zugehörigkeit — sie kostet nur.', wozuFrage:'Wen könntest du verlieren, wenn du sie weglässt? Und stimmt das wirklich?', name:'Anders sein unter Menschen',
   frage:'Warum ist Sozialsein so anstrengend?',
   anker:{haeuser:[11,1], punkte:['Uranus','Saturn','ASC']},
   regeln:[
@@ -488,6 +493,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"verarbeitung": ["Dich anzupassen an fremde Formate erspart Erklärungen. Um dein eigenes zu bitten, hieße zuzugeben, dass du eins brauchst.", "Was befürchtest du, wenn du sagst: So verstehe ich es besser?"], "reize": ["Durchzuhalten wirkt belastbar. Früher aufzuhören hieße einzugestehen, dass du weniger verträgst als andere.", "Was denkst du, würde man über dich denken, wenn du eher gehst?"], "energie": ["Dir viel vorzunehmen hält das Bild aufrecht, dass du es könntest, wenn du nur wolltest.", "Was müsstest du dir eingestehen, wenn du deine Liste halbierst?"], "struktur": ["Die Schuld bei dir zu suchen ist vertraut. Dass Strukturen für andere Köpfe gebaut sind, wäre eine unbequemere Erklärung.", "Was änderst du, wenn nicht du das Problem bist, sondern die Vorlage?"], "reizsuche": ["Immer Neues anzufangen hält die Begeisterung frisch. Etwas zu Ende zu bringen heißt, es an der Realität zu messen.", "Was riskierst du, wenn du eine Sache fertig machst und sie dann beurteilt wird?"], "rueckzug": ["Erst zusammenzubrechen statt früher zu pausieren hat einen Vorteil: Dann ist es legitim. Vorher wäre es Faulheit.", "Wozu brauchst du einen so guten Grund, um dir Ruhe zu erlauben?"], "maske": ["Die Maske sichert Zugehörigkeit. Sie abzunehmen hieße herauszufinden, ob man dich auch so will.", "Was fürchtest du, wenn Menschen dich ohne die Schicht erleben?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -546,10 +552,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

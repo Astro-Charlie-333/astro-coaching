@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -148,6 +149,9 @@ a{color:var(--nacht);}
 .fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -165,6 +169,7 @@ a{color:var(--nacht);}
   <p>Es gibt in jedem Menschen einen Anteil, der nie gelernt hat, sich zu verkleinern — und dem man deshalb keinen Platz gibt. Im Chart heißt dieser Punkt Lilith. Sechs Facetten: was du dir versagst, wie du es verbirgst, wo es trotzdem rauskommt, was es dich kostet, wie andere darauf reagieren — und welche Kraft darin steckt. Die letzte Facette ist die eigentliche: Wo man sich etwas nicht erlaubt, liegt meistens die meiste ungenutzte Energie.</p>
 </div>
 <div class="rm-hinweis"><b>Zur Methode:</b> Lilith ist ein Rechenpunkt mit junger und uneinheitlicher Deutungstradition — hier wird die <b>mittlere Lilith</b> verwendet. Halte den Orbis eng und bau nie eine ganze Deutung allein darauf. Und: Dieser Raum arbeitet mit dem, was man sich versagt, nicht mit Verletzungen. Wenn beim Lesen etwas hochkommt, das größer ist als eine Gewohnheit, gehört das begleitet.</div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="lilith-arbeit.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Lilith-Arbeit</span></a></div>
@@ -232,7 +237,7 @@ var RAUM = {
  slug:'unerlaubte',
  sortierTitel:'Wie dein unangepasster Anteil bei dir arbeitet',
  facetten:[
- {id:'was', name:'Was du dir nicht erlaubst',
+ {id:'was', wozuSchutz:'Das Verbot ist alt und hat dich einmal geschützt. Es gilt weiter, weil niemand es aufgehoben hat.', wozuFrage:'Wer hat es dir verboten — und wäre diese Person heute noch dagegen?', name:'Was du dir nicht erlaubst',
   frage:'Was traue ich mir eigentlich nicht zu?',
   anker:{haeuser:[], punkte:['Lilith','Sonne','ASC']},
   regeln:[
@@ -283,7 +288,7 @@ var RAUM = {
    'Wofür entschuldigst du dich, das keine Entschuldigung braucht?'],
    vorsicht:'Lilith ist kein Defekt, der weg muss. Nicht auf Befreiung hinarbeiten — erst einmal reicht, dass der Anteil einen Namen bekommt.'}},
 
- {id:'verbergen', name:'Wie du es verbirgst',
+ {id:'verbergen', wozuSchutz:'Gute Gründe zu haben ist bequemer, als sich zu zeigen.', wozuFrage:'Welchen Satz benutzt du dafür regelmäßig — und wem würde er nicht standhalten?', name:'Wie du es verbirgst',
   frage:'Was mache ich stattdessen?',
   anker:{haeuser:[12], punkte:['Lilith','Saturn','Neptun']},
   regeln:[
@@ -317,7 +322,7 @@ var RAUM = {
    'Wann hast du zuletzt gedacht „jetzt ist nicht der richtige Zeitpunkt"?'],
    vorsicht:'Nicht bloßstellen. Begründungen sind Schutz, und den darf man sich nur freiwillig ansehen.'}},
 
- {id:'rauskommt', name:'Wo es trotzdem rauskommt',
+ {id:'rauskommt', wozuSchutz:'Ein Ausbruch entlädt, ohne dass man vorher etwas fordern musste.', wozuFrage:'Was hättest du sagen können, bevor es rausplatzte — und warum hast du es nicht?', name:'Wo es trotzdem rauskommt',
   frage:'Warum platzt es manchmal einfach raus?',
   anker:{haeuser:[1,8], punkte:['Lilith','Mars','Uranus','Pluto']},
   regeln:[
@@ -353,7 +358,7 @@ var RAUM = {
    'Woran merkst du, dass sich etwas aufstaut?'],
    vorsicht:'Ausbrüche nicht als Charakterproblem behandeln. Sie sind fast immer ein Stauproblem.'}},
 
- {id:'kosten', name:'Was es dich kostet',
+ {id:'kosten', wozuSchutz:'Den Preis nicht zu benennen erspart die Rechnung.', wozuFrage:'Was würdest du ändern müssen, wenn du den Preis genau kennst?', name:'Was es dich kostet',
   frage:'Was verliere ich dadurch?',
   anker:{haeuser:[2,6], punkte:['Lilith','Saturn','Mond']},
   regeln:[
@@ -384,7 +389,7 @@ var RAUM = {
    'Was kostet dich das Zusammenreißen — körperlich?'],
    vorsicht:'Nicht in Reue kippen. Der Blick auf den Preis soll Bewegung erzeugen, nicht Schuld.'}},
 
- {id:'reaktion', name:'Wie andere reagieren',
+ {id:'reaktion', wozuSchutz:'Wenn andere schuld an ihrer Reaktion sind, musst du nichts an dir ändern.', wozuFrage:'Was gehört wirklich zu dir an dem, worauf Menschen reagieren?', name:'Wie andere reagieren',
   frage:'Warum reagieren Menschen so stark auf mich?',
   anker:{haeuser:[7,11], punkte:['Lilith','ASC','Venus']},
   regeln:[
@@ -421,7 +426,7 @@ var RAUM = {
    'Bei wem bist du ganz du selbst — und was ist dort anders?'],
    vorsicht:'Starke Reaktionen anderer können auch Übergriffigkeit sein. Nicht jede Reaktion ist eine Information über die Person.'}},
 
- {id:'kraft', name:'Deine ungenutzte Kraft',
+ {id:'kraft', wozuSchutz:'Ungenutzte Kraft kann nicht falsch eingesetzt werden.', wozuFrage:'Wofür würdest du verantwortlich, wenn du diese Kraft benutzt?', name:'Deine ungenutzte Kraft',
   frage:'Was steckt da eigentlich drin?',
   anker:{haeuser:[8,5], punkte:['Lilith','Pluto','Mars','Sonne']},
   regeln:[
@@ -457,6 +462,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"was": ["Das Verbot hat dich einmal geschützt — vermutlich vor Ablehnung durch Menschen, auf die du angewiesen warst.", "Vor wessen Reaktion schützt dich das heute noch?"], "verbergen": ["Die guten Gründe funktionieren, weil sie stimmen. Deshalb musst du dich nie damit auseinandersetzen, dass sie auch etwas verhindern.", "Was könntest du nicht mehr aufschieben, wenn die Begründung wegfiele?"], "rauskommt": ["Der plötzliche Ausbruch entlädt den Druck, ohne dass du entscheiden musst. Es passiert einfach.", "Was müsstest du regelmäßig ansprechen, damit es nicht mehr platzt?"], "kosten": ["Den Preis nicht zu beziffern hält ihn erträglich. Genau zu wissen, was es gekostet hat, macht es dringend.", "Was müsstest du ändern, wenn du die Rechnung genau kennst?"], "reaktion": ["Nicht zu fragen, wie du wirkst, schützt vor einer Antwort, die wehtun könnte.", "Was wäre, wenn die Außensicht freundlicher ausfällt, als du denkst?"], "kraft": ["Die Kraft eingesperrt zu lassen ist sicher. Freigesetzt wäre sie nicht mehr kontrollierbar, und du wüsstest nicht, was passiert.", "Wovor hättest du mehr Angst: dass es schiefgeht oder dass es funktioniert?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -515,10 +521,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

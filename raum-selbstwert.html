@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -146,6 +147,9 @@ a{color:var(--nacht);}
 .fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -164,6 +168,7 @@ a{color:var(--nacht);}
   <p>Die meisten kommen mit dieser Frage — und merken dann, dass es nicht ums Geld geht. Selbstwert sitzt an sieben Stellen gleichzeitig: im Körper, in der Leistung, in Grenzen, im Raum den man einnimmt, in dem was man teilt, und in Sätzen, die aus der Herkunft stammen. Der Preis ist nur die Stelle, an der es zuerst auffällt.</p>
 </div>
 
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="lilith-arbeit.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Lilith-Arbeit</span></a></div>
@@ -233,7 +238,7 @@ var RAUM = {
  sortierTitel:'Wo dein Selbstwert tatsächlich sitzt',
  facetten:[
 
- {id:'geld', name:'Geld und Preise',
+ {id:'geld', wozuSchutz:'Wenn du zu wenig verlangst, kann dich niemand für zu teuer halten und niemand kann ablehnen.', wozuFrage:'Was würdest du riskieren, wenn du deinen echten Preis nennst — und wovor bewahrt dich der niedrige?', name:'Geld und Preise',
   frage:'Was bin ich wert, in Zahlen ausgedrückt?',
   anker:{haeuser:[2], punkte:['Venus','Saturn','Jupiter']},
   regeln:[
@@ -275,7 +280,7 @@ var RAUM = {
    'Was würdest du verlangen, wenn niemand es erfahren würde?'],
    vorsicht:'Nicht in Preisberatung kippen. Die Frage ist nicht, was marktüblich ist — die Frage ist, was die Person sich erlaubt.'}},
 
- {id:'koerper', name:'Körper und Erscheinung',
+ {id:'koerper', wozuSchutz:'Solange du dich verhüllst, wirst du nicht danach beurteilt.', wozuFrage:'Wovor schützt dich die Schicht, die du jeden Morgen aufträgst?', name:'Körper und Erscheinung',
   frage:'Darf ich so aussehen, wie ich aussehe?',
   anker:{haeuser:[1], punkte:['Venus','Mars','ASC']},
   regeln:[
@@ -305,7 +310,7 @@ var RAUM = {
    'Wann hast du dich zuletzt im Spiegel angesehen, ohne zu bewerten?'],
    vorsicht:'Körperbild ist heikel. Wenn Essen, Gewicht oder Kontrolle auftauchen, ist das kein Coaching-Thema mehr.'}},
 
- {id:'leistung', name:'Leistung und Genügen',
+ {id:'leistung', wozuSchutz:'Wer immer mehr leistet, muss sich nie fragen, ob er auch ohne Leistung genügt.', wozuFrage:'Was müsstest du dir eingestehen, wenn du aufhörst, dich zu beweisen?', name:'Leistung und Genügen',
   frage:'Muss ich es mir erst verdienen?',
   anker:{haeuser:[10,6], punkte:['Saturn','Chiron','Sonne']},
   regeln:[
@@ -349,7 +354,7 @@ var RAUM = {
    'Was würde passieren, wenn du 80 Prozent gibst?'],
    vorsicht:'Nicht in Produktivitätsberatung abbiegen. Es geht nicht um bessere Methoden, sondern darum, wann jemand aufhören darf.'}},
 
- {id:'grenzen', name:'Grenzen und Nein sagen',
+ {id:'grenzen', wozuSchutz:'Wer nie Nein sagt, wird nicht abgelehnt — und muss keinen Konflikt aushalten.', wozuFrage:'Was hättest du zu verlieren, wenn jemand sauer auf dich wäre?', name:'Grenzen und Nein sagen',
   frage:'Darf ich Nein sagen, ohne mich zu rechtfertigen?',
   anker:{haeuser:[1,7], punkte:['Mars','Saturn']},
   regeln:[
@@ -386,7 +391,7 @@ var RAUM = {
    'Bei wem fällt es dir am schwersten — und warum ausgerechnet dort?'],
    vorsicht:'Wenn jemand grundsätzlich keine Grenzen setzen kann und dabei Angst auftaucht, gehört das begleitet, nicht trainiert.'}},
 
- {id:'raum', name:'Raum einnehmen',
+ {id:'raum', wozuSchutz:'Wer klein bleibt, wird nicht beneidet und fällt nicht.', wozuFrage:'Wovor schützt dich das Kleinerwerden — und wer hätte etwas davon, wenn du groß wirst?', name:'Raum einnehmen',
   frage:'Darf ich groß sein und gesehen werden?',
   anker:{haeuser:[5,1], punkte:['Sonne','Lilith','Jupiter']},
   regeln:[
@@ -415,7 +420,7 @@ var RAUM = {
    'Wann hast du dich zuletzt groß gefühlt — und was kam danach?'],
    vorsicht:'Nicht zum Auftritt drängen. Manche brauchen erst einen sicheren Ort, bevor sie einen sichtbaren wollen.'}},
 
- {id:'geteilt', name:'Geteiltes und Abhängigkeit',
+ {id:'geteilt', wozuSchutz:'Solange du nicht hinschaust, musst du nichts entscheiden.', wozuFrage:'Was würde sich ändern müssen, wenn du die Zahlen kennst?', name:'Geteiltes und Abhängigkeit',
   frage:'Was ist meins, was gehört dem anderen?',
   anker:{haeuser:[8], punkte:['Pluto','Venus','Saturn']},
   regeln:[
@@ -450,7 +455,7 @@ var RAUM = {
    'Wo hängst du finanziell an jemandem — und wie fühlt sich das an?'],
    vorsicht:'Hier tauchen häufig Abhängigkeitsverhältnisse auf. Wenn Kontrolle oder Angst im Spiel sind, ist das keine Coaching-Frage mehr.'}},
 
- {id:'herkunft', name:'Sätze aus der Herkunft',
+ {id:'herkunft', wozuSchutz:'Solange der Satz von früher gilt, musst du ihn nicht überprüfen — und niemanden enttäuschen.', wozuFrage:'Wem gegenüber wärst du illoyal, wenn du es anders machst als zuhause?', name:'Sätze aus der Herkunft',
   frage:'Wessen Stimme ist das eigentlich?',
   anker:{haeuser:[4], punkte:['Mond','Saturn','Pluto','IC']},
   regeln:[
@@ -496,6 +501,7 @@ var RAUM = {
  ]
 };
 
+var WOZU={"geld": ["Wenig zu verlangen schützt dich davor, abgelehnt zu werden — ein niedriger Preis wird selten verhandelt.", "Was würdest du riskieren, wenn du beim ersten Angebot eine Zahl nennst, bei der du schlucken musst?"], "koerper": ["Dich unauffällig zu halten schützt vor Bewertung. Wer nicht auffällt, wird nicht gemessen.", "Was müsstest du aushalten, wenn Menschen dich wirklich anschauen?"], "leistung": ["Immer mehr zu leisten schützt vor der Frage, ob du auch ohne genügst. Solange du lieferst, muss sie niemand stellen.", "Was käme hoch, wenn du eine Woche lang nichts beweist?"], "grenzen": ["Ja zu sagen hält den Frieden und die Zugehörigkeit. Ein Nein ist ein Risiko, ein Ja nie.", "Wen könntest du verlieren, wenn du das nächste Mal Nein sagst — und stimmt das wirklich?"], "raum": ["Klein zu bleiben schützt vor Neid, Erwartung und Fallhöhe. Wer nicht oben steht, kann nicht fallen.", "Was müsstest du durchhalten, wenn du einmal wirklich Platz einnimmst?"], "geteilt": ["Nicht hinzuschauen hält die Beziehung angenehm. Zahlen und Abhängigkeiten anzusprechen macht sie ernst.", "Was würde sich zwischen euch ändern, wenn du es benennst?"], "herkunft": ["Den alten Sätzen zu folgen hält die Loyalität. Sie infrage zu stellen heißt, sich ein Stück zu entfernen.", "Wem gegenüber wärst du illoyal, wenn du es anders machst als zuhause?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -554,10 +560,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

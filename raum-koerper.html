@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -148,6 +149,9 @@ a{color:var(--nacht);}
 
 .rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
  margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -165,6 +169,7 @@ a{color:var(--nacht);}
   <p>Der Körper kommt in Readings selten vor, und wenn, dann falsch. Dieser Raum macht keine Gesundheitsaussagen — er schaut sich an, wie du körperlich da bist, welche Bewegung zu dir passt, wo sich Anspannung sammelt, was dich schlafen lässt, ob du dir etwas gönnst und wie gut du deine eigenen Signale hörst.</p>
 </div>
 <div class="rm-hinweis"><b>Eine klare Grenze vorab:</b> Astrologie kann <b>nichts Medizinisches</b>. Keine Diagnose, keine Erklärung für Beschwerden, keine Behandlungsempfehlung. Die alten Körperzonen-Zuordnungen, die hier vorkommen, sind Tradition und kein Wissen über deinen Körper. Bei Symptomen, die bleiben, gehört die Antwort zur Ärztin — immer, ohne Ausnahme. Was dieser Raum kann: dir helfen, deine eigenen Muster besser zu bemerken.</div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-alltag.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Alltag</span></a></div>
@@ -232,7 +237,7 @@ var RAUM = {
  slug:'koerper',
  sortierTitel:'Wo dein Körperthema sitzt',
  facetten:[
- {id:'praesenz', name:'Wie du im Körper bist',
+ {id:'praesenz', wozuSchutz:'Im Kopf zu sein schützt davor, zu spüren, was der Körper meldet.', wozuFrage:'Was würdest du merken, wenn du ganz in dir wärst?', name:'Wie du im Körper bist',
   frage:'Bin ich eigentlich anwesend in mir?',
   anker:{haeuser:[1], punkte:['ASC','Mars','Mond']},
   regeln:[
@@ -267,7 +272,7 @@ var RAUM = {
    'Was macht dein Körper, wenn du dich unwohl fühlst?'],
    vorsicht:'Körperwahrnehmung kann bei belastenden Erfahrungen überfordern. Wenn jemand dabei unruhig wird, abbrechen und nicht vertiefen.'}},
 
- {id:'energie', name:'Deine Energie und Bewegung',
+ {id:'energie', wozuSchutz:'Sich nicht zu bewegen erspart die Erfahrung, dass es anstrengend ist.', wozuFrage:'Wovor schützt dich das Nichtstun — und was wäre unangenehm am Anfangen?', name:'Deine Energie und Bewegung',
   frage:'Welche Art von Bewegung tut mir gut?',
   anker:{haeuser:[1,6], punkte:['Mars','Sonne','Jupiter']},
   regeln:[
@@ -307,7 +312,7 @@ var RAUM = {
    'Bewegst du dich für dein Aussehen oder für dein Gefühl?'],
    vorsicht:'Keine Trainingspläne, keine Zahlen, keine Ziele. Wenn Gewicht oder Kontrolle ins Spiel kommen, ist das kein Coaching-Thema mehr.'}},
 
- {id:'stress', name:'Wo Anspannung sich zeigt',
+ {id:'stress', wozuSchutz:'Anspannung zu halten hält dich funktionsfähig.', wozuFrage:'Was würde nicht mehr funktionieren, wenn du loslässt?', name:'Wo Anspannung sich zeigt',
   frage:'Warum meldet sich mein Körper immer an derselben Stelle?',
   anker:{haeuser:[6,12], punkte:['Saturn','Mond','Mars','Chiron']},
   regeln:[
@@ -344,7 +349,7 @@ var RAUM = {
    'Was hat schon mal geholfen?'],
    vorsicht:'<b>Wichtig:</b> Körperzonen im Chart sind eine alte Zuordnung, keine Medizin. Ein Chart kann nichts diagnostizieren und keine Beschwerde erklären. Bei anhaltenden Symptomen gehört das zur Ärztin — immer, ohne Ausnahme.'}},
 
- {id:'schlaf', name:'Schlaf und Zur-Ruhe-Kommen',
+ {id:'schlaf', wozuSchutz:'Wachzubleiben verlängert den Tag, über den du selbst bestimmst.', wozuFrage:'Was holst du dir nachts, das dir tagsüber fehlt?', name:'Schlaf und Zur-Ruhe-Kommen',
   frage:'Warum komme ich abends nicht runter?',
   anker:{haeuser:[4,12], punkte:['Mond','Neptun','Merkur','Uranus']},
   regeln:[
@@ -384,7 +389,7 @@ var RAUM = {
    'Was war in Phasen, in denen du gut geschlafen hast, anders?'],
    vorsicht:'Anhaltende Schlafstörungen sind medizinisch, nicht astrologisch. Nach ein paar Wochen gehört das abgeklärt.'}},
 
- {id:'genuss', name:'Genuss und Versorgung',
+ {id:'genuss', wozuSchutz:'Sich nichts zu gönnen hält die Rechnung sauber — man schuldet niemandem etwas.', wozuFrage:'Was müsstest du dir zugestehen, wenn du dir ohne Anlass etwas gönnst?', name:'Genuss und Versorgung',
   frage:'Gönne ich mir eigentlich etwas?',
   anker:{haeuser:[2,5], punkte:['Venus','Jupiter','Mond']},
   regeln:[
@@ -416,7 +421,7 @@ var RAUM = {
    'Wer hat dir beigebracht, dass man sich etwas verdienen muss?'],
    vorsicht:'Bei Themen rund um Essen, Gewicht oder Kontrolle: nicht weiterarbeiten, sondern verweisen.'}},
 
- {id:'hoeren', name:'Auf den Körper hören',
+ {id:'hoeren', wozuSchutz:'Signale zu überhören erlaubt, weiterzumachen wie geplant.', wozuFrage:'Was müsstest du absagen, wenn du auf deinen Körper hörst?', name:'Auf den Körper hören',
   frage:'Woher weiß ich, was mein Körper braucht?',
   anker:{haeuser:[6,12], punkte:['Mond','Neptun','Chiron']},
   regeln:[
@@ -455,6 +460,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"praesenz": ["Nicht ganz im Körper zu sein hält Unangenehmes auf Abstand. Was man nicht spürt, muss man nicht regeln.", "Was würdest du bemerken, wenn du wirklich anwesend bist?"], "energie": ["Unpassenden Sport durchzuhalten wirkt diszipliniert. Zuzugeben, dass eine Bewegungsart nicht zu dir passt, klingt nach Ausrede.", "Was müsstest du loslassen, wenn du dir erlaubst, es anders zu machen als vorgeschrieben?"], "stress": ["Die Anspannung zu ignorieren hält dich funktionsfähig. Sie ernst zu nehmen würde Konsequenzen verlangen.", "Was müsstest du ändern, wenn du dieses Signal jedes Mal ernst nimmst?"], "schlaf": ["Spät wach zu bleiben ist oft die einzige Zeit, die wirklich dir gehört. Früher ins Bett hieße, darauf zu verzichten.", "Was holst du dir abends, das tagsüber fehlt?"], "genuss": ["Sich nichts zu gönnen hält den eigenen Anspruch aufrecht und schützt vor dem Gefühl, es nicht verdient zu haben.", "Was müsstest du über dich glauben, damit dir etwas einfach so zusteht?"], "hoeren": ["Signale zu überhören erlaubt weiterzumachen. Sie zu bemerken hieße, den Plan zu ändern.", "Was würdest du absagen müssen, wenn du deinem Körper glaubst?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -513,10 +519,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

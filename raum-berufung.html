@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -145,6 +146,9 @@ a{color:var(--nacht);}
 .fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -163,6 +167,7 @@ a{color:var(--nacht);}
   <p>Die Frage kommt fast nie als Berufsfrage — sie kommt als Unruhe. Berufung ist im Chart auch kein einzelner Punkt, sondern sieben Fäden: was dich antreibt, wofür du gesehen wirst, was du täglich tust, womit du Geld verdienst, wohin es dich zieht, was du schon kannst und wem das nützt. Bei den meisten Menschen stimmt es an drei Stellen und hakt an einer. Diese eine zu finden bringt mehr als jeder Berufstest.</p>
 </div>
 
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-selbstwert.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Selbstwert</span></a></div>
@@ -230,7 +235,7 @@ var RAUM = {
  slug:'berufung',
  sortierTitel:'Wo deine Berufungsfrage tatsächlich hakt',
  facetten:[
- {id:'antrieb', name:'Was dich antreibt',
+ {id:'antrieb', wozuSchutz:'Wer nichts Eigenes will, kann darin auch nicht scheitern.', wozuFrage:'Was würde von dir verlangt, wenn du zugibst, was du wirklich willst?', name:'Was dich antreibt',
   frage:'Wofür stehe ich morgens überhaupt auf?',
   anker:{haeuser:[1,5], punkte:['Sonne','Mars','Jupiter']},
   regeln:[
@@ -269,7 +274,7 @@ var RAUM = {
    'Wofür würdest du morgens aufstehen, wenn Geld keine Rolle spielte?'],
    vorsicht:'Nicht zur Leidenschaft drängen. Manche Menschen haben keine brennende Berufung und brauchen stattdessen einen erträglichen Alltag. Das ist kein Defizit.'}},
 
- {id:'sichtbarkeit', name:'Wofür du gesehen wirst',
+ {id:'sichtbarkeit', wozuSchutz:'Unsichtbar zu bleiben schützt vor Kritik und vor dem Vergleich.', wozuFrage:'Was könnte passieren, wenn Menschen genau wüssten, wofür du stehst?', name:'Wofür du gesehen wirst',
   frage:'Als was sollen mich Menschen kennen?',
   anker:{haeuser:[10], punkte:['MC','Saturn','Jupiter','Chiron']},
   regeln:[
@@ -311,7 +316,7 @@ var RAUM = {
    'Welchen Teil deiner Arbeit versteckst du?'],
    vorsicht:'Nicht mit Positionierungsberatung verwechseln. Die Frage ist nicht, wie man sich verkauft, sondern was tatsächlich stimmt.'}},
 
- {id:'alltag', name:'Was du täglich tust',
+ {id:'alltag', wozuSchutz:'Ein voller Tag lässt keine Zeit für die Frage, ob es der richtige ist.', wozuFrage:'Was müsstest du dir anschauen, wenn dein Kalender leerer wäre?', name:'Was du täglich tust',
   frage:'Hält mein Arbeitsalltag mich aus — oder ich ihn?',
   anker:{haeuser:[6], punkte:['Merkur','Mars','Saturn','Mond']},
   regeln:[
@@ -348,7 +353,7 @@ var RAUM = {
    'Wie sähe ein Tag aus, nach dem du abends nicht leer bist?'],
    vorsicht:'Bei anhaltender Erschöpfung ist das keine Struktur-, sondern eine Gesundheitsfrage. Dann gehört es zur Ärztin.'}},
 
- {id:'verdienst', name:'Womit du Geld verdienst',
+ {id:'verdienst', wozuSchutz:'Solange du deine Zahl nicht kennst, musst du sie auch nicht einfordern.', wozuFrage:'Was würdest du ändern müssen, wenn du genau wüsstest, was du brauchst?', name:'Womit du Geld verdienst',
   frage:'Kann ich davon leben — und will ich das so?',
   anker:{haeuser:[2], punkte:['Venus','Jupiter','Saturn']},
   regeln:[
@@ -380,7 +385,7 @@ var RAUM = {
    'Was würdest du tun, wenn Geld für ein Jahr gesichert wäre?'],
    vorsicht:'Keine Finanzberatung. Du arbeitest am Verhältnis zum Geld, nicht an Zahlen oder Anlagen.'}},
 
- {id:'richtung', name:'Wohin es dich zieht',
+ {id:'richtung', wozuSchutz:'Beim Bekannten zu bleiben kostet nichts und enttäuscht niemanden.', wozuFrage:'Was hättest du aufzugeben, wenn du die Richtung wechselst — und wer würde es merken?', name:'Wohin es dich zieht',
   frage:'Ist das noch mein Weg oder nur Gewohnheit?',
   anker:{haeuser:[9], punkte:['Jupiter','Neptun']},
   regeln:[
@@ -411,7 +416,7 @@ var RAUM = {
    'Was müsste wegfallen, damit Platz für das Neue wäre?'],
    vorsicht:'Vorsicht mit Aufbruchsromantik. Manchmal ist bleiben die reifere Entscheidung, und das darf im Gespräch vorkommen.'}},
 
- {id:'koennen', name:'Was du schon mitbringst',
+ {id:'koennen', wozuSchutz:'Wer seine Stärken für selbstverständlich hält, muss sie nicht verantworten.', wozuFrage:'Was käme auf dich zu, wenn du zugibst, dass du das wirklich gut kannst?', name:'Was du schon mitbringst',
   frage:'Was kann ich eigentlich, ohne es zu merken?',
   anker:{haeuser:[6,3], punkte:['Saturn','Merkur','Mars']},
   regeln:[
@@ -442,7 +447,7 @@ var RAUM = {
    'Was hast du dir mühsam beigebracht und inzwischen vergessen, dass es Mühe war?'],
    vorsicht:'Nicht in Lob kippen. Es geht um Beobachtung von außen, nicht um Aufmunterung.'}},
 
- {id:'beitrag', name:'Wem du damit nützt',
+ {id:'beitrag', wozuSchutz:'Ohne benannten Zweck kann man auch nicht daran gemessen werden.', wozuFrage:'Was würde verbindlich, wenn du sagst, wofür deine Arbeit gut sein soll?', name:'Wem du damit nützt',
   frage:'Wofür soll das am Ende gut sein?',
   anker:{haeuser:[11,12], punkte:['Neptun','Jupiter','Pluto']},
   regeln:[
@@ -475,6 +480,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"antrieb": ["Nützlich zu bleiben ist sicherer, als dem nachzugehen, was dich antreibt. Nützlichkeit wird immer gebraucht.", "Was verlierst du an Sicherheit, wenn du Zeit für etwas nimmst, das niemandem dient?"], "sichtbarkeit": ["Unsichtbar zu bleiben schützt vor Erwartungen. Wer nicht bekannt ist, muss nichts halten.", "Was müsstest du einlösen, wenn Menschen wüssten, wofür du stehst?"], "alltag": ["Den Alltag zu ertragen ist einfacher, als ihn umzubauen. Umbau bedeutet Streit mit Gewohnheiten und mit anderen.", "Was müsstest du ändern — und wem gegenüber durchsetzen —, wenn dein Tag dir passen soll?"], "verdienst": ["Nicht genau hinzusehen hält die Sache offen. Solange du die Zahl nicht kennst, musst du dich nicht entscheiden.", "Wozu müsstest du dich verhalten, wenn du genau wüsstest, was du brauchst?"], "richtung": ["Beim Bekannten zu bleiben ist berechenbar. Der neue Weg kostet Kompetenz, die du dir erarbeitet hast.", "Was gibst du auf, wenn du dorthin gehst, wo du nochmal Anfängerin bist?"], "koennen": ["Das eigene Können kleinzureden schützt vor Anspruch. Wer nichts kann, muss nichts abliefern.", "Was würde von dir erwartet, wenn du zugibst, was du tatsächlich kannst?"], "beitrag": ["Ohne klaren Adressaten zu arbeiten hält alles offen. Sich festzulegen heißt, andere Möglichkeiten zu streichen.", "Was schließt du aus, wenn du dich für eine bestimmte Gruppe entscheidest?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -533,10 +539,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

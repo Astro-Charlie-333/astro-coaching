@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -148,6 +149,9 @@ a{color:var(--nacht);}
 
 .rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
  margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -164,6 +168,7 @@ a{color:var(--nacht);}
   <div class="rm-frage">&bdquo;Warum fühle ich mich überall ein bisschen außen?&ldquo;</div>
   <p>Man kann viele Menschen kennen und trotzdem nirgends ganz dazugehören. Dieser Raum schaut sich an, wie du in Gruppen bist, was dich das Dazugehören kostet, wie deine Freundschaften funktionieren, welche Rolle dir zufällt, woher das Fremdheitsgefühl kommt — und wofür du tatsächlich gebraucht wirst. Sechs Facetten, gewichtet nach deinem Chart.</p>
 </div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-anders-verdrahtet.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Anders verdrahtet</span></a></div>
@@ -231,7 +236,7 @@ var RAUM = {
  slug:'zugehoerigkeit',
  sortierTitel:'Wo deine Zugehörigkeitsfrage sitzt',
  facetten:[
- {id:'gruppe', name:'Wie du in Gruppen bist',
+ {id:'gruppe', wozuSchutz:'Mitzumachen sichert den Platz. Widerspruch könnte ihn kosten.', wozuFrage:'Was fürchtest du zu verlieren, wenn du in einer Gruppe nicht mitgehst?', name:'Wie du in Gruppen bist',
   frage:'Warum bin ich dabei und trotzdem außen?',
   anker:{haeuser:[11], punkte:['Uranus','Saturn','Sonne']},
   regeln:[
@@ -274,7 +279,7 @@ var RAUM = {
    'Wann hast du zuletzt eine Gruppe verlassen — und warum wirklich?'],
    vorsicht:'Nicht auf mehr Geselligkeit hinarbeiten. Manche Menschen brauchen weniger Gruppe, nicht mehr, und das ist in Ordnung.'}},
 
- {id:'anpassen', name:'Was dich das Dazugehören kostet',
+ {id:'anpassen', wozuSchutz:'Die angepasste Version wird gemocht. Die echte müsste es erst beweisen.', wozuFrage:'Wer würde bleiben, wenn du dich nicht anpasst — und woher weißt du das?', name:'Was dich das Dazugehören kostet',
   frage:'Wie viel von mir gebe ich dafür auf?',
   anker:{haeuser:[1,12], punkte:['Lilith','Saturn','Neptun','ASC']},
   regeln:[
@@ -307,7 +312,7 @@ var RAUM = {
    'Wie fühlst du dich direkt nach einem Treffen — und zwei Stunden später?'],
    vorsicht:'Anpassung ist bei manchen Menschen Überlebensstrategie, nicht Gewohnheit. Nicht zum Ablegen drängen, bevor klar ist, was sie geschützt hat.'}},
 
- {id:'freunde', name:'Deine Freundschaften',
+ {id:'freunde', wozuSchutz:'Viele lockere Kontakte schützen davor, dass ein Verlust wehtut.', wozuFrage:'Was wäre das Risiko, wenn eine Freundschaft dir wirklich wichtig wird?', name:'Deine Freundschaften',
   frage:'Warum habe ich viele Kontakte und wenig Nähe?',
   anker:{haeuser:[11,3], punkte:['Venus','Merkur','Mond']},
   regeln:[
@@ -338,7 +343,7 @@ var RAUM = {
    'Wem hast du lange nicht gesagt, dass sie dir wichtig ist?'],
    vorsicht:'Wenig Freundschaften sind kein Defizit. Die Frage ist Qualität, nicht Anzahl.'}},
 
- {id:'rolle', name:'Welche Rolle du übernimmst',
+ {id:'rolle', wozuSchutz:'Die Rolle sichert Zugehörigkeit, ohne dass du darum bitten musst.', wozuFrage:'Wärst du noch dabei, wenn du die Aufgabe nicht übernimmst?', name:'Welche Rolle du übernimmst',
   frage:'Warum bin ich immer die, die das macht?',
   anker:{haeuser:[6,10], punkte:['Saturn','Mars','Sonne']},
   regeln:[
@@ -370,7 +375,7 @@ var RAUM = {
    'Was wäre, wenn du sie einmal nicht ausfüllst?'],
    vorsicht:'Rollen bringen auch Zugehörigkeit. Nicht zum Ablegen drängen, ohne zu klären, was danach bleibt.'}},
 
- {id:'aussen', name:'Das Gefühl, nicht dazuzugehören',
+ {id:'aussen', wozuSchutz:'Von außen zu bleiben schützt vor der Enttäuschung, drinnen doch nicht gemeint zu sein.', wozuFrage:'Was riskierst du, wenn du dich zugehörig fühlst und es dann doch nicht bist?', name:'Das Gefühl, nicht dazuzugehören',
   frage:'Warum fühle ich mich überall ein bisschen fremd?',
   anker:{haeuser:[12,11], punkte:['Uranus','Chiron','Neptun','Saturn']},
   regeln:[
@@ -404,7 +409,7 @@ var RAUM = {
    'Wem gegenüber musst du dich nicht erklären?'],
    vorsicht:'Anhaltendes Außenseitergefühl kann auch Teil einer depressiven Phase sein. Wenn es dauerhaft und schwer ist, gehört das abgeklärt.'}},
 
- {id:'beitrag', name:'Wofür du gebraucht wirst',
+ {id:'beitrag', wozuSchutz:'Gebraucht zu werden ist sicherer, als einfach gemocht zu werden.', wozuFrage:'Würdest du dazugehören, auch wenn du nichts beiträgst — und hältst du das für möglich?', name:'Wofür du gebraucht wirst',
   frage:'Was bringe ich einer Gemeinschaft eigentlich?',
   anker:{haeuser:[11,6], punkte:['Jupiter','Sonne','Merkur']},
   regeln:[
@@ -437,6 +442,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"gruppe": ["Nicht ganz dazuzugehören hält dich unabhängig. Wer außen steht, muss sich nicht an Regeln halten, die er nicht gemacht hat.", "Was gibst du an Freiheit auf, wenn du irgendwo wirklich dazugehörst?"], "anpassen": ["Die Anpassung sichert dir den Platz. Ohne sie müsstest du herausfinden, ob der Platz auch dir gilt oder nur der Rolle.", "Was würdest du erfahren, wenn du dich in einer Gruppe nicht mehr zusammennimmst?"], "freunde": ["Kontakte auf Abstand zu halten kostet wenig und enttäuscht nicht. Nähe wäre teurer.", "Was riskierst du, wenn du jemandem sagst, dass sie dir wichtig ist?"], "rolle": ["Die Rolle gibt dir einen sicheren Platz und macht dich unentbehrlich. Ohne sie wärst du einfach nur dabei.", "Was bliebe von deinem Platz, wenn du die Aufgabe nicht mehr übernimmst?"], "aussen": ["Das Gefühl, außen zu sein, kommt einem zuvor: Wer sich selbst nicht dazuzählt, kann nicht ausgeschlossen werden.", "Was müsstest du aushalten, wenn du dich zugehörig fühlst und es doch nicht bleibt?"], "beitrag": ["Nützlich zu sein ist ein sicherer Zugang zu Gruppen. Einfach dabei zu sein, ohne etwas beizutragen, wäre ungeschützt.", "Dürftest du bleiben, wenn du gerade nichts beiträgst?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -495,10 +501,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 

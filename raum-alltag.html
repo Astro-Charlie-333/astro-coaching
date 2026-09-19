@@ -6,6 +6,7 @@
 <script src="fortschritt.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
+<script src="format.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -148,6 +149,9 @@ a{color:var(--nacht);}
 
 .rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
  margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -164,6 +168,7 @@ a{color:var(--nacht);}
   <div class="rm-frage">&bdquo;Wie kriege ich Struktur, die hält?&ldquo;</div>
   <p>Die meisten Ratschläge zu Struktur scheitern daran, dass sie für alle dieselben sind. Dein Chart sagt aber ziemlich genau, welcher Rhythmus zu dir passt, welche Art von System bei dir hält und woran es zerfällt. Sechs Facetten: dein natürlicher Takt, tragfähige Struktur, Ordnung und Umgebung, Anfangen und Dranbleiben, Pausen — und woran du merkst, dass es zu viel wird.</p>
 </div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-anders-verdrahtet.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Anders verdrahtet</span></a></div>
@@ -231,7 +236,7 @@ var RAUM = {
  slug:'alltag',
  sortierTitel:'Wo dein Alltag tatsächlich hakt',
  facetten:[
- {id:'rhythmus', name:'Dein natürlicher Rhythmus',
+ {id:'rhythmus', wozuSchutz:'Gegen den eigenen Takt zu arbeiten zeigt Fleiß. Ihn zu akzeptieren klingt nach Ausrede.', wozuFrage:'Wer würde es dir vorwerfen, wenn du deinen Tag nach dir richtest?', name:'Dein natürlicher Rhythmus',
   frage:'Wann bin ich eigentlich brauchbar?',
   anker:{haeuser:[6], punkte:['Mond','Mars','Sonne']},
   regeln:[
@@ -270,7 +275,7 @@ var RAUM = {
    'Welcher Tagesrhythmus wurde dir beigebracht und passt nicht?'],
    vorsicht:'Nicht zum Frühaufstehen überreden. Rhythmen sind weitgehend biologisch und nicht Charakterfrage.'}},
 
- {id:'struktur', name:'Struktur, die hält',
+ {id:'struktur', wozuSchutz:'Kein System zu haben hält alles offen — man kann nichts falsch machen.', wozuFrage:'Was würde verbindlich, wenn eine Struktur tatsächlich hält?', name:'Struktur, die hält',
   frage:'Warum zerfallen meine Systeme nach zwei Wochen?',
   anker:{haeuser:[6,10], punkte:['Saturn','Merkur']},
   regeln:[
@@ -305,7 +310,7 @@ var RAUM = {
    'Welche Systeme hast du übernommen, weil sie bei anderen funktionieren?'],
    vorsicht:'Wenn Scham über gescheiterte Systeme auftaucht, ist das der wichtigere Punkt als das nächste System.'}},
 
- {id:'ordnung', name:'Ordnung und Umgebung',
+ {id:'ordnung', wozuSchutz:'Unordnung ist bequem und hält die Wohnung in Bewegung.', wozuFrage:'Was müsstest du anschauen, wenn die Fläche leer ist?', name:'Ordnung und Umgebung',
   frage:'Warum fühle ich mich in meinem eigenen Zuhause unwohl?',
   anker:{haeuser:[4,6], punkte:['Mond','Venus','Saturn']},
   regeln:[
@@ -343,7 +348,7 @@ var RAUM = {
    'Wie sah Ordnung bei euch früher aus?'],
    vorsicht:'Unordnung ist bei vielen ein Symptom, nicht die Ursache. Nicht an der Oberfläche arbeiten, wenn darunter Erschöpfung liegt.'}},
 
- {id:'anfangen', name:'Anfangen und Dranbleiben',
+ {id:'anfangen', wozuSchutz:'Was nicht begonnen ist, kann nicht misslingen.', wozuFrage:'Was befürchtest du, wenn du anfängst — und wie schlimm wäre das wirklich?', name:'Anfangen und Dranbleiben',
   frage:'Warum fange ich nie an, obwohl ich will?',
   anker:{haeuser:[1,3], punkte:['Mars','Merkur','Uranus','Saturn']},
   regeln:[
@@ -375,7 +380,7 @@ var RAUM = {
    'Was hat beim letzten Mal geholfen, dass du doch angefangen hast?'],
    vorsicht:'Aufschieben ist selten ein Zeitmanagement-Problem. Meistens steckt eine Befürchtung dahinter — die ist das Thema.'}},
 
- {id:'pausen', name:'Pausen und Erholung',
+ {id:'pausen', wozuSchutz:'Durchzuarbeiten ist anerkannt. Pausen muss man rechtfertigen.', wozuFrage:'Vor wem rechtfertigst du deine Pausen — und ist diese Person überhaupt anwesend?', name:'Pausen und Erholung',
   frage:'Warum erhole ich mich nicht in meiner Freizeit?',
   anker:{haeuser:[12,5], punkte:['Mond','Neptun','Venus']},
   regeln:[
@@ -409,7 +414,7 @@ var RAUM = {
    'Was brauchst du nach einem vollen Tag als Erstes?'],
    vorsicht:'Wenn Erholung grundsätzlich nicht mehr wirkt, ist das ein Warnzeichen und keine Methodenfrage.'}},
 
- {id:'zuviel', name:'Wenn es zu viel wird',
+ {id:'zuviel', wozuSchutz:'Grenzen nicht zu spüren erlaubt, weiterzumachen.', wozuFrage:'Was würdest du absagen müssen, wenn du deine Grenze ernst nimmst?', name:'Wenn es zu viel wird',
   frage:'Woran merke ich, dass ich über meiner Grenze bin?',
   anker:{haeuser:[6,12], punkte:['Saturn','Mond','Neptun','Chiron']},
   regeln:[
@@ -442,6 +447,7 @@ var RAUM = {
 
  ]
 };
+var WOZU={"rhythmus": ["Gegen den eigenen Takt zu arbeiten hält dich anschlussfähig an eine Welt, die früh anfängt.", "Was müsstest du verhandeln, wenn du deinen Tag nach dir ausrichtest?"], "struktur": ["Das nächste System zu suchen hält die Hoffnung am Leben, dass es nur an der Methode lag.", "Was wäre, wenn nicht das System das Problem ist, sondern die Menge?"], "ordnung": ["Die Umgebung so zu lassen, wie sie ist, spart Auseinandersetzung — mit dir und mit denen, die mitwohnen.", "Was müsstest du durchsetzen, damit dein Zuhause dir passt?"], "anfangen": ["Nicht anzufangen schützt das Ergebnis. Was nie begonnen wurde, kann nicht misslingen.", "Was stünde zur Beurteilung, wenn du es machst?"], "pausen": ["Pausen zu überspringen hält das Tempo und das Bild von dir aufrecht. Auszuruhen hieße zuzugeben, dass du nicht durchhältst.", "Wer würde etwas merken, wenn du dir eine echte Pause nimmst?"], "zuviel": ["Die Grenze nicht zu spüren erlaubt dir weiterzumachen. Sie zu spüren würde bedeuten, etwas abzusagen.", "Was müsstest du absagen, wenn du ehrlich wärst, wie viel geht?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -500,10 +506,12 @@ function bauen(){
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
-    h+='<div class="fa-wozu"><span class="lab">Die Wozu-Frage</span>'+
-      '<p>Nach Alfred Adler ist die nützlichere Frage nicht „warum bin ich so", sondern <b>„wozu ist das gut?"</b> '+
-      'Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht.</p>'+
-      '<p class="fa-wozu-f">Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?</p></div>'+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
 
