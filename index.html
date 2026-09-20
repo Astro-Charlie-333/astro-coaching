@@ -187,10 +187,53 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
  padding:12px 24px;border-radius:24px;text-decoration:none;white-space:nowrap;}
 .nx-b:hover{background:#3B4970;}
 .nx-fort{font-size:12.5px;color:var(--leise);margin-top:10px;padding:0 4px;}
+
+.hw{max-width:940px;margin:0 auto 24px;padding:0 24px;}
+.hw-kopf{font-family:var(--serif);font-size:clamp(23px,4vw,31px);font-weight:300;color:var(--tinte);
+ margin:0 0 4px;letter-spacing:-.01em;}
+.hw-unter{font-size:14.5px;color:var(--leise);margin-bottom:16px;line-height:1.55;}
+.hw-buehne{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+@media(max-width:640px){.hw-buehne{grid-template-columns:1fr;}}
+.hw-gross{display:flex;gap:16px;align-items:center;border:1px solid;border-radius:20px;padding:20px 22px;}
+.hw-gl{font-size:46px;line-height:1;flex:none;}
+.hw-lab{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--leise);}
+.hw-name{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--tinte);margin:2px 0 4px;}
+.hw-txt{font-size:14.3px;line-height:1.5;color:var(--tinte);}
+.hw-mein{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nacht);margin-top:7px;
+ background:rgba(255,255,255,.6);border-radius:9px;padding:4px 9px;display:inline-block;}
+.hw-titel{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--messing);margin:22px 0 9px;}
+.hw-streifen{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+@media(max-width:640px){.hw-streifen{grid-template-columns:1fr;}}
+.hw-kachel{background:var(--papier);border:1px solid;border-radius:16px;padding:15px 17px;}
+.hw-kgl{font-size:26px;line-height:1;margin-bottom:6px;}
+.hw-kname{font-family:var(--serif);font-size:17px;color:var(--tinte);margin-bottom:5px;}
+.hw-r{font-family:var(--sans);font-size:11px;color:#A05A3A;}
+.hw-ktxt{font-size:13.8px;line-height:1.55;color:var(--leise);margin-bottom:8px;}
+.hw-kwech{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--messing);}
+.hw-kmein{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--nacht);margin-top:3px;}
+.hw-lang{display:flex;gap:7px;flex-wrap:wrap;}
+.hw-lp{font-size:13px;background:var(--papier);border:1px solid var(--linie);border-radius:14px;
+ padding:6px 12px;color:var(--leise);}
+.hw-lp b{font-size:15px;}
+.hw-lp i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--nacht);}
+.hw-rl{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:13px;padding:13px 16px;
+ margin-top:16px;font-size:14px;line-height:1.6;}
+.hw-lun{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+@media(max-width:640px){.hw-lun{grid-template-columns:1fr;}}
+.hw-lk{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:16px;padding:15px 17px;}
+.hw-lk.voll{background:var(--messing-bg);border-color:var(--linie);}
+.hw-ldat{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
+.hw-lname{font-family:var(--serif);font-size:19px;color:var(--nacht);margin:2px 0 3px;}
+.hw-lzeichen{font-size:14px;color:var(--tinte);margin-bottom:8px;}
+.hw-lmein{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nacht);line-height:1.5;}
+.hw-lmein span{color:var(--leise);}
+.hw-fuss{font-size:13.5px;color:var(--leise);margin-top:16px;line-height:1.6;}
 </style>
 <script src="profil.js"></script>
 <script src="fortschritt.js"></script>
 <script src="staedte.js"></script>
+<script src="wetter.js"></script>
 <script src="aspekte-daten.js"></script>
 <script src="begriffe.js" defer></script>
 </head>
@@ -224,6 +267,7 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
   </div>
 </div>
 
+<div class="hw"><div class="hw-kopf">Der Himmel <em>heute</em>.</div><div class="hw-unter">Was gerade läuft — für alle gleich. Darunter, wenn du dein Chart hinterlegt hast, was davon in deine Häuser fällt.</div><div id="hwetter"></div></div>
 <div class="nx-karte"><div class="nx-inner" id="nxinner"></div><div class="nx-fort" id="nxfort"></div></div>
 <div class="bahn" id="heute">
   <div class="heute-karte">
@@ -731,6 +775,12 @@ try{ AC_ortFeld('hort','hortliste','hortok'); }catch(e){ console.error('Ortssuch
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',zeichne);
   else zeichne();
+})();
+
+/* Himmelswetter aufbauen */
+(function(){
+  function los(){ try{ if(window.AC_wetter) AC_wetter(document.getElementById('hwetter')); }catch(e){ console.error('Wetter:',e); } }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',los); else los();
 })();
 </script>
 </body>

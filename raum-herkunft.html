@@ -152,6 +152,21 @@ a{color:var(--nacht);}
 
 .rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
  font-size:14.6px;line-height:1.65;}
+
+.fa-visuell{display:none;}
+body.fmt-visuell .fa-visuell{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:center;
+ background:var(--bg);border-radius:16px;padding:16px 18px;margin-bottom:14px;}
+@media(max-width:600px){body.fmt-visuell .fa-visuell{grid-template-columns:1fr;justify-items:center;text-align:center;}}
+.mini-rad{width:230px;height:230px;display:block;}
+.fa-vtext b{display:block;font-family:var(--serif);font-size:20px;color:var(--nacht);margin-bottom:4px;}
+.fa-vtext p{margin:0 0 11px;font-family:var(--serif);font-style:italic;font-size:16.5px;line-height:1.4;}
+.fa-vchips{display:flex;gap:6px;flex-wrap:wrap;}
+.fa-vchips .vc{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:13px;padding:4px 10px;color:var(--leise);}
+.fa-vchips .vc.hart{border-color:#E2C3B4;background:#FBF0E8;color:#8A4326;}
+.fa-vchips .vc.weich{border-color:#C6D7E2;background:#EDF4F8;color:#2F5E78;}
+.fa-vchips .vc.achs{border-color:var(--messing);background:var(--messing-bg);color:#6B4A18;}
+body.fmt-visuell .fa-frage{display:none;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -528,7 +543,15 @@ function bauen(){
       '<div class="fa-inhalt">'+
       '<div class="fa-frage">'+r.fc.frage+'</div>';
 
-    h+='<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+    h+='<div class="fa-visuell">'+
+      (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
+      '<div class="fa-vtext"><b>'+r.fc.name+'</b><p>'+r.fc.frage+'</p>'+
+      '<div class="fa-vchips">'+
+        (r.f.planeten||[]).slice(0,5).map(function(x){return '<span class="vc">'+x.p+' im '+x.haus+'.</span>';}).join('')+
+        (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
+        (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
+      '</div></div></div>'+
+      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -539,6 +562,13 @@ function bauen(){
     r.f.herrscher.forEach(function(x){ d.push('Herrscher '+x.haus+'. Haus: '+x.p+' im '+x.inHaus+'.'); });
     r.f.aspekte.slice(0,3).forEach(function(x){ d.push(x.a+' '+x.typ+' '+x.b+' '+x.o.toFixed(1)+'°'); });
     r.f.achsnah.forEach(function(x){ d.push(x.p+' auf '+x.zu+'-Grad ('+x.o.toFixed(1)+'°)'); });
+    /* Datenpaket für die visuelle Ansicht */
+    var vis={rel:r.rel, haeuser:(r.fc.anker.haeuser||[]),
+      planeten:r.f.planeten.map(function(x){return [x.p,x.haus];}),
+      herrscher:r.f.herrscher.map(function(x){return [x.haus,x.p,x.inHaus];}),
+      aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
+      achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
+    h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
     if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
     h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
