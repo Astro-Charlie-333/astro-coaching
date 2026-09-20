@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="utf-8">
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Astro-Charlie</title>
+<title>Heute · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="fortschritt.js"></script>
+<script src="wetter.js"></script>
 <style>
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
@@ -229,232 +229,82 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 .hw-lmein{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nacht);line-height:1.5;}
 .hw-lmein span{color:var(--leise);}
 .hw-fuss{font-size:13.5px;color:var(--leise);margin-top:16px;line-height:1.6;}
-</style>
-<script src="profil.js"></script>
-<script src="fortschritt.js"></script>
-<script src="staedte.js"></script>
-<script src="wetter.js"></script>
-<script src="aspekte-daten.js"></script>
-<script src="begriffe.js" defer></script>
-</head>
-<body>
 
-<div class="leiste">
-  <div class="leiste-inner">
-    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="10.5" fill="none" stroke="#B08544" stroke-width="1"/>
-      <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/>
-      <line x1="12" y1="1.5" x2="12" y2="4.5" stroke="#B08544" stroke-width="1"/>
-      <line x1="12" y1="19.5" x2="12" y2="22.5" stroke="#B08544" stroke-width="1"/>
-      <line x1="1.5" y1="12" x2="4.5" y2="12" stroke="#B08544" stroke-width="1"/>
-      <line x1="19.5" y1="12" x2="22.5" y2="12" stroke="#B08544" stroke-width="1"/>
-    </svg>
-    <span class="marke">Astro-Charlie</span>
-    <nav class="sprung">
-      <a href="#heute">Heute</a>
-      <a href="#wege">Wege</a>
-      <a href="#nachschlagen">Nachschlagen</a>
-    </nav>
-  <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="raeume.html">Räume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav></div>
+.st-wrap{max-width:660px;margin:0 auto;padding:34px 24px 60px;}
+.st-datum{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.09em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:7px;}
+.st-gruss{font-family:var(--serif);font-size:clamp(27px,5.6vw,38px);font-weight:300;
+ color:var(--tinte);line-height:1.12;letter-spacing:-.015em;margin:0 0 30px;}
+.st-gruss em{font-style:italic;color:var(--nacht);}
+
+.kap{background:var(--papier);border:1px solid var(--linie);border-radius:22px;padding:24px 26px;margin-bottom:34px;}
+.kap-f{font-family:var(--serif);font-size:21px;color:var(--nacht);margin-bottom:5px;}
+.kap-h{font-size:14px;color:var(--leise);line-height:1.55;margin-bottom:16px;}
+.kap-w{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.kap-w button{font-family:var(--sans);font-size:16px;padding:18px 10px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:16px;cursor:pointer;line-height:1.25;}
+.kap-w button:hover{border-color:var(--nacht);}
+.kap-w button span{display:block;font-size:12px;color:var(--leise);margin-top:4px;}
+.kap-w button:hover span{color:var(--tinte);}
+.kap-w button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.kap-w button[aria-pressed="true"] span{color:rgba(255,255,255,.72);}
+.kap-zurueck{margin-top:14px;font-size:13.5px;color:var(--leise);}
+.kap-zurueck button{font-family:var(--sans);font-size:13.5px;background:none;border:none;
+ color:var(--nacht);text-decoration:underline;cursor:pointer;padding:0;}
+
+/* Abschnitte — immer dieselbe Reihenfolge, einer pro Block */
+.ab{margin-bottom:34px;}
+.ab-lab{font-family:var(--sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:10px;}
+.ab-satz{font-family:var(--serif);font-size:clamp(20px,4.1vw,26px);line-height:1.38;color:var(--tinte);margin:0;}
+.ab-satz b{color:var(--nacht);font-weight:400;}
+.ab-dazu{font-size:15px;line-height:1.65;color:var(--leise);margin:12px 0 0;}
+.ab-karte{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;}
+.ab-karte.ruhig{background:var(--nacht-bg);border-color:#D3D9E6;}
+.ab-karte h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 8px;}
+.ab-karte p{margin:0 0 9px;font-size:15px;line-height:1.65;}
+.ab-karte p:last-child{margin-bottom:0;}
+.ab-mehr{margin-top:14px;}
+.ab-mehr button{font-family:var(--sans);font-size:14.5px;background:none;border:1px solid var(--linie);
+ color:var(--nacht);border-radius:20px;padding:10px 20px;cursor:pointer;}
+.ab-mehr button:hover{border-color:var(--nacht);background:var(--papier);}
+
+.st-log{background:var(--messing-bg);border-radius:20px;padding:22px 24px;}
+.st-log .frg{font-family:var(--serif);font-size:19px;color:var(--nacht);line-height:1.35;margin-bottom:13px;}
+.st-wahl{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+@media(max-width:520px){.st-wahl{grid-template-columns:1fr 1fr;}}
+.st-wahl button{font-family:var(--sans);font-size:14px;padding:13px 6px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:13px;cursor:pointer;}
+.st-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.st-dank{font-size:14.5px;color:var(--leise);margin-top:11px;line-height:1.55;}
+
+.st-schluss{text-align:center;padding:32px 0 12px;border-top:1px solid var(--linie);margin-top:12px;}
+.st-schluss p{font-family:var(--serif);font-size:19px;color:var(--nacht);margin:0 0 6px;}
+.st-schluss .kl{font-size:13.5px;color:var(--leise);line-height:1.6;}
+.st-weiter{display:grid;gap:8px;margin-top:20px;}
+.st-weiter a{display:flex;justify-content:space-between;align-items:center;gap:12px;
+ background:var(--papier);border:1px solid var(--linie);border-radius:15px;padding:15px 18px;
+ text-decoration:none;color:var(--tinte);}
+.st-weiter a:hover{border-color:var(--nacht);background:var(--nacht-bg);}
+.st-weiter b{font-family:var(--serif);font-size:17px;font-weight:400;}
+.st-weiter span{font-size:13px;color:var(--leise);}
+.st-weiter i{font-style:normal;color:var(--messing);font-size:17px;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="st-wrap">
+  <div class="st-datum" id="stdatum"></div>
+  <h1 class="st-gruss" id="stgruss">Guten Tag.</h1>
+
+  <div class="kap" id="stkap"></div>
+  <div id="stinhalt"></div>
 </div>
-
-<div class="held">
-  <svg class="ring" id="ring" viewBox="0 0 400 400" aria-hidden="true"></svg>
-  <div class="held-inner">
-    <p class="augenbraue">Astrologie &amp; Selbstverst&auml;ndnis</p>
-    <h1>Endlich Worte f&uuml;r das, <em>was du l&auml;ngst sp&uuml;rst.</em></h1>
-    <p class="intro">Astrologie erkl&auml;rt dich nicht &mdash; sie &uuml;bersetzt dich. Ein Chart zeigt, wie du gebaut bist, was du brauchst und wo bei dir am meisten Energie steckt. Nichts davon musst du glauben; du kannst es an deinem eigenen Leben pr&uuml;fen.<br><br><b>Vier Wege hinein &mdash; nimm den, der heute passt.</b> Du kannst jederzeit aufh&ouml;ren.</p>
-  </div>
-</div>
-
-<div class="hw"><div class="hw-kopf">Der Himmel <em>heute</em>.</div><div class="hw-unter">Was gerade läuft — für alle gleich. Darunter, wenn du dein Chart hinterlegt hast, was davon in deine Häuser fällt.</div><div id="hwetter"></div></div>
-<div class="nx-karte"><div class="nx-inner" id="nxinner"></div><div class="nx-fort" id="nxfort"></div></div>
-<div class="bahn" id="heute">
-  <div class="heute-karte">
-    <div class="heute-kopf"><h2>Heute</h2><span class="heute-datum" id="hdatum"></span></div>
-    <p class="heute-sub" id="hsub">Trag deine Geburtsdaten einmal ein &mdash; danach siehst du hier bei jedem Besuch, was der Himmel gerade an deinem Chart ber&uuml;hrt. Die Daten bleiben in deinem Browser und werden nirgendwohin geschickt.</p>
-    <div id="hform">
-      <div class="heute-form">
-        <div><label for="hname">Name (freiwillig)</label><input id="hname" placeholder="Dein Name"></div>
-        <div><label for="hdate">Geburtsdatum</label><input type="date" id="hdate" value="1990-01-01"></div>
-        <div><label for="htime">Uhrzeit</label><input type="time" id="htime" value="12:00"></div>
-        <div style="grid-column:span 2;"><label for="hort">Geburtsort</label>
-          <div class="ortfeld"><input id="hort" placeholder="Stadt eintippen, z. B. Berlin" autocomplete="off">
-          <div class="ortliste" id="hortliste"></div></div>
-          <div class="ortok" id="hortok"></div></div>
-      </div>
-      <div class="heute-knopf">
-        <button class="hbtn" id="hgo">Meinen Tag anzeigen</button>
-        <span class="heute-hint">Berlin ist voreingestellt. F&uuml;r andere Orte die Koordinaten anpassen.</span>
-      </div>
-    </div>
-    <div id="hout" style="display:none"></div>
-    <p class="heute-fuss" id="hfuss" style="display:none">
-      Gerechnet im Browser, nichts gespeichert au&szlig;er lokal bei dir.
-      <a href="#" id="hneu">Daten &auml;ndern</a> &middot; <a href="uebersicht.html">Dein ganzes Bild</a> &middot; <a href="chart-rechner.html">Vollst&auml;ndiges Chart</a> &middot; <a href="timing.html">Wie Transite wirken</a>
-    </p>
-  </div>
-
-  <div class="marke-zeile" id="wege"><h2>Vier Wege hinein</h2><div class="strich"></div></div>
-  <p class="marke-sub">Jeder Weg hat seine eigene Farbe &mdash; die findest du auf den Unterseiten wieder.</p>
-
-  <div class="wege">
-    <a class="weg betont" href="uebersicht.html" style="--akz:var(--messing)">
-      <span class="weg-marke">Ich</span>
-      <span class="weg-glyph" aria-hidden="true">&#10042;</span>
-      <p class="weg-frage">Ich will mich besser verstehen</p>
-      <p class="weg-text">Dein Chart, deine Positionen, deine Spannungen, dein Jahr und was gerade l&auml;uft &mdash; alles auf einer Seite. Neu hier? Dann fang <a href="tool.html" style="color:inherit;text-decoration:underline">hier ganz einfach an</a>.</p>
-    </a>
-    <a class="weg" href="wissen.html" style="--akz:var(--messing)">
-      <span class="weg-glyph" aria-hidden="true">&#10022;</span>
-      <p class="weg-frage">Ich fange gerade erst an</p>
-      <p class="weg-text">Planeten, Zeichen, H&auml;user, Aspekte. Wenn du das hast, liest du 80&nbsp;% von jedem Chart.</p>
-    </a>
-    <a class="weg" href="profile.html" style="--akz:var(--teal)">
-      <span class="weg-glyph" aria-hidden="true">&#9680;</span>
-      <p class="weg-frage">Ich arbeite mit anderen Menschen</p>
-      <p class="weg-text">Profile anlegen, Charts nebeneinanderlegen, anonymisiert arbeiten. F&uuml;r Coaching, Freundschaft oder Familie.</p>
-    </a>
-    <a class="weg" href="leitfaden.html" style="--akz:var(--pflaume)">
-      <span class="weg-glyph" aria-hidden="true">&#9789;</span>
-      <p class="weg-frage">Ich begleite jemanden</p>
-      <p class="weg-text">Wie du diesen Menschen ansprichst, wie das Gespr&auml;ch l&auml;uft &mdash; und wann du aufh&ouml;rst zu deuten.</p>
-    </a>
-  </div>
-
-  <div class="marke-zeile" id="nachschlagen"><h2>Alles Weitere</h2><div class="strich"></div></div>
-  <p class="marke-sub">Aufklappen, wenn du es brauchst. Nicht zum Durchlesen gedacht.</p>
-
-  <div class="regal">
-    <details style="--akz:var(--messing)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#10022;</span>
-        <span class="sum-body"><span class="sum-titel">Das Fundament</span><span class="sum-text">Woraus ein Chart &uuml;berhaupt besteht</span></span>
-        <span class="sum-zahl">6 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="grundlagen.html"><span class="zeile-titel">Die Grundlagen</span><span class="zeile-text">Planeten, Zeichen, H&auml;user, Aspekte, Achsen, Mondknoten, Retrograde</span></a>
-        <a href="planeten-in-zeichen.html"><span class="zeile-titel">Planeten in den Zeichen</span><span class="zeile-text">Jeder Planet durch alle zw&ouml;lf Zeichen &mdash; dein Nachschlagewerk</span></a>
-        <a href="planeten-in-haeusern.html"><span class="zeile-titel">Planet, Zeichen, Haus</span><span class="zeile-text">Vier Blickwinkel: Pers&ouml;nlichkeit, Lebensweg, Berufung, Liebe</span></a>
-        <a href="haeusersysteme.html"><span class="zeile-titel">H&auml;usersysteme</span><span class="zeile-text">Whole Sign oder Placidus &mdash; und was du tust, wenn sie sich widersprechen</span></a>
-        <a href="kleine-punkte.html"><span class="zeile-titel">Die kleinen Punkte</span><span class="zeile-text">Chiron, Lilith, Mondknoten, Gl&uuml;ckspunkt, Vertex</span></a>
-        <a href="glossar.html"><span class="zeile-titel">Glossar</span><span class="zeile-text">Alle Fachbegriffe kurz erkl&auml;rt</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--teal)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#9680;</span>
-        <span class="sum-body"><span class="sum-titel">Ein Chart lesen</span><span class="sum-text">Von der einzelnen Linie zur Aussage</span></span>
-        <span class="sum-zahl">6 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="chart-lesen.html"><span class="zeile-titel">Die Lese-Methode</span><span class="zeile-text">Deine Reihenfolge, damit du nicht ertrinkst</span></a>
-        <a href="orbis-gewichtung.html"><span class="zeile-titel">Aspekte: Linien, Orbis, Gewichtung</span><span class="zeile-text">Was z&auml;hlt, wie eng es sein muss, wann du aufh&ouml;rst &mdash; mit Rechner</span></a>
-        <a href="herrscher.html"><span class="zeile-titel">Herrscher &amp; Dispositoren</span><span class="zeile-text">Wie leere H&auml;user lesbar werden &mdash; mit Rechner</span></a>
-        <a href="spannungskarte.html"><span class="zeile-titel">Die Spannungskarte</span><span class="zeile-text">Wo der Druck sitzt, sortiert nach St&auml;rke, mit beiden Polen jeder Achse</span></a>
-        <a href="aspekt-muster.html"><span class="zeile-titel">Aspekt-Muster</span><span class="zeile-text">T-Quadrat, Gro&szlig;es Trigon, Stellium, Kite</span></a>
-        <a href="chart-rechner.html"><span class="zeile-titel">Der Chart-Rechner</span><span class="zeile-text">Geburtsdaten rein, Chart raus &mdash; alle Positionen korrigierbar</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--rost)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#9684;</span>
-        <span class="sum-body"><span class="sum-titel">Timing</span><span class="sum-text">Wie der Himmel heute auf ein Chart wirkt</span></span>
-        <span class="sum-zahl">5 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="lunationen.html"><span class="zeile-titel">Neumonde, Vollmonde &amp; Finsternisse</span><span class="zeile-text">Alle vier Ereignistypen in Zeichen und H&auml;usern &mdash; plus alle Finsternisse bis 2030 mit deinem Haus</span></a>
-        <a href="timing.html"><span class="zeile-titel">Timing lesen</span><span class="zeile-text">Transite, Solar Return, Mondphasen im &Uuml;berblick</span></a>
-        <a href="profektionen.html"><span class="zeile-titel">Jahresprofektionen</span><span class="zeile-text">Der beste Filter: von hundert Transiten die f&uuml;nf wichtigen &mdash; mit Rechner</span></a>
-        <a href="mondzyklen.html"><span class="zeile-titel">Mondzyklen &amp; Finsternisse</span><span class="zeile-text">Neumond, Vollmond und Finsternisse in jedem Zeichen und Haus, mit Kalender</span></a>
-        <a href="solar-return-vertiefung.html"><span class="zeile-titel">Solar Return</span><span class="zeile-text">Das Jahreschart in sieben Schritten, &uuml;berlagert mit deinem Radix</span></a>
-        <a href="planetenzyklen.html"><span class="zeile-titel">Planetenzyklen</span><span class="zeile-text">Wo warst du beim letzten Durchgang? Mit Zyklen-Rechner</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--pflaume)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#9789;</span>
-        <span class="sum-body"><span class="sum-titel">Menschen begleiten</span><span class="sum-text">Vom Chart-Wissen zum Gespr&auml;ch</span></span>
-        <span class="sum-zahl">6 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="leitfaden.html"><span class="zeile-titel">Der Ansprech-Leitfaden</span><span class="zeile-text">Wie du diesen Menschen ansprichst &mdash; Mond, Merkur, Mars, Fundament</span></a>
-        <a href="reading-ablauf.html"><span class="zeile-titel">Der Reading-Ablauf</span><span class="zeile-text">Dein roter Faden im Gespr&auml;ch</span></a>
-        <a href="fragen-schatzkiste.html"><span class="zeile-titel">Die Fragen-Schatzkiste</span><span class="zeile-text">Coaching-Fragen nach Thema, zum Ziehen im Reading</span></a>
-        <a href="grenzen.html"><span class="zeile-titel">Wann du nicht deutest</span><span class="zeile-text">Ausstiegskriterien und fertige S&auml;tze &mdash; Gesundheit, Krise, abwesende Dritte</span></a>
-        <a href="klientinnen-fragen.html"><span class="zeile-titel">H&auml;ufige Fragen von Klientinnen</span><span class="zeile-text">Souver&auml;n antworten, auch bei den unbequemen</span></a>
-        <a href="coaching.html"><span class="zeile-titel">Haltung &amp; Ethik</span><span class="zeile-text">Wo Chart-Wissen zu echter Begleitung wird</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--nacht)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#10042;</span>
-        <span class="sum-body"><span class="sum-titel">Selbst arbeiten</span><span class="sum-text">Das Material hinter dem Tool</span></span>
-        <span class="sum-zahl">7 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="dating-muster.html"><span class="zeile-titel">Muster im Dating<span class="neu">neu</span></span><span class="zeile-text">Erkennen, f&uuml;hlen, integrieren &mdash; mit deinen Glaubenss&auml;tzen aus dem Chart</span></a>
-        <a href="neurodivergente-astrologie.html"><span class="zeile-titel">Astrologie f&uuml;r anders verdrahtete K&ouml;pfe</span><span class="zeile-text">Sprache statt Scham, ohne Pathologisierung</span></a>
-        <a href="learning-seite.html"><span class="zeile-titel">Die Learning-Seite</span><span class="zeile-text">Die f&uuml;nf Felder: Ausl&ouml;ser, Signatur, Fr&uuml;hwarnsignal, Satz, Transit-Kontext</span></a>
-        <a href="haus-achsen.html"><span class="zeile-titel">Die Haus-Achsen</span><span class="zeile-text">Einem Haus &uuml;ber sein Gegen&uuml;ber begegnen &mdash; Ausgleich in beide Richtungen</span></a>
-        <a href="lebens-kompass.html"><span class="zeile-titel">Der Lebens-Kompass</span><span class="zeile-text">Jeder Planet als Wegweiser, mit Coaching-Frage</span></a>
-        <a href="element-mix.html"><span class="zeile-titel">Dein Element-Mix</span><span class="zeile-text">Wie Feuer, Erde, Luft und Wasser dein Temperament formen</span></a>
-        <a href="mein-chart.html"><span class="zeile-titel">Dein Chart, Haus f&uuml;r Haus</span><span class="zeile-text">Dein Geburtschart in drei Schichten, ausf&uuml;hrlich gedeutet</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--rose)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#9793;</span>
-        <span class="sum-body"><span class="sum-titel">Beziehungen &amp; Orte</span><span class="sum-text">Zwei Charts, und Charts auf der Landkarte</span></span>
-        <span class="sum-zahl">3 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="synastrie-vertiefung.html"><span class="zeile-titel">Synastrie</span><span class="zeile-text">Zwei Charts vergleichen &mdash; Anlage beschreiben, nicht bewerten</span></a>
-        <a href="astrokartographie.html"><span class="zeile-titel">Astrokartographie</span><span class="zeile-text">Dein Chart auf der Weltkarte, und die Grenzen der Technik</span></a>
-        <a href="lilith-arbeit.html"><span class="zeile-titel">Die Lilith-Arbeit</span><span class="zeile-text">Der Punkt, an dem du dir selbst etwas nicht erlaubst &mdash; mit Arbeitsfeldern f&uuml;r Beziehung, Geld, K&ouml;rper und Stimme</span></a>
-        <a href="mondknoten-coaching.html"><span class="zeile-titel">Die Mondknoten</span><span class="zeile-text">Alle zw&ouml;lf Knotenachsen mit Coaching-Frage</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--teal)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#10003;</span>
-        <span class="sum-body"><span class="sum-titel">&Uuml;ben</span><span class="sum-text">Chart lesen lernt man nur am Chart</span></span>
-        <span class="sum-zahl">2 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="uebungscharts.html"><span class="zeile-titel">&Uuml;bungscharts</span><span class="zeile-text">Drei vollst&auml;ndige Charts &mdash; erst selbst deuten, dann vergleichen</span></a>
-        <a href="quiz.html"><span class="zeile-titel">Quiz</span><span class="zeile-text">Mit Sofort-Erkl&auml;rung nach jeder Antwort</span></a>
-      </div>
-    </details>
-
-    <details style="--akz:var(--messing)">
-      <summary>
-        <span class="sum-glyph" aria-hidden="true">&#9672;</span>
-        <span class="sum-body"><span class="sum-titel">Dein Business</span><span class="sum-text">Wenn du damit arbeiten willst</span></span>
-        <span class="sum-zahl">2 Seiten</span><span class="sum-zeichen" aria-hidden="true">&rsaquo;</span>
-      </summary>
-      <div class="inhalt">
-        <a href="ueber-mich-vorlage.html"><span class="zeile-titel">Deine &Uuml;ber-mich-Seite</span><span class="zeile-text">Vorlage f&uuml;r deine Story &mdash; dein st&auml;rkster Vertrauensanker</span></a>
-        <a href="angebote-struktur.html"><span class="zeile-titel">Deine Angebote</span><span class="zeile-text">Vom Einstiegs-Reading zur l&auml;ngeren Begleitung</span></a>
-      </div>
-    </details>
-
-  </div>
-
-  <div class="notiz">
-    <p><strong>Ein Modul pro Session reicht.</strong> Du musst nicht alles auf einmal. H&ouml;r auf, wenn dein Kopf voll ist &mdash; die Seiten laufen dir nicht weg. Unten auf jeder Seite kommst du mit einem Klick weiter.</p>
-  </div>
-</div>
-
-<footer>
-  Whole Sign &middot; Charts zeigen Anlagen, keine Schicksale. Du lernst, Menschen zu verstehen und zu begleiten &mdash; nicht, sie festzulegen.
-</footer>
 
 <script>
 var RAD=Math.PI/180;
@@ -538,9 +388,6 @@ var NDAT={
  Saturn:'deiner Struktur', Uranus:'deinem Freiheitsbedürfnis', Neptun:'deiner Sehnsucht',
  Pluto:'deiner Tiefe', ASC:'deinem Auftreten', MC:'deiner Rolle nach außen'};
 
-function hSpeicher(o){ try{ localStorage.setItem('ac_geburt', JSON.stringify(o)); }catch(e){} }
-function hLaden(){ try{ var s=localStorage.getItem('ac_geburt'); return s?JSON.parse(s):null; }catch(e){ return null; } }
-
 function hPos(y,mo,d,ut,lat,lon){
   var jd=jdFromUT(y,mo,d,ut), T=(jd-2451545)/36525;
   var a=angles(jd,lat,lon);
@@ -560,228 +407,254 @@ function hPhase(w){
   if(w<160)return 'zunehmender Mond'; if(w<200)return 'Vollmond'; if(w<250)return 'abnehmender Mond';
   if(w<290)return 'letztes Viertel'; if(w<340)return 'abnehmende Sichel'; return 'Neumond';
 }
-function hZeigen(g){
-  var jetzt=new Date();
-  var utNow=jetzt.getUTCHours()+jetzt.getUTCMinutes()/60;
-  var T=hPos(jetzt.getUTCFullYear(),jetzt.getUTCMonth()+1,jetzt.getUTCDate(),utNow,g.lat,g.lon);
-  var ut=g.h+g.mi/60-g.tz, y=g.y,mo=g.mo,d=g.d;
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var TAGE=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+var MONATE=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+/* Stufe gilt nur für heute und wird nicht mitgeschrieben */
+var KAPKEY='ac_kap_heute';
+function heuteStr(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function kapLesen(){
+  try{ var r=JSON.parse(localStorage.getItem(KAPKEY)||'null');
+    return (r&&r.d===heuteStr())?r.s:null; }catch(e){ return null; }
+}
+function kapSchreiben(s){
+  try{ localStorage.setItem(KAPKEY, JSON.stringify({d:heuteStr(), s:s})); }catch(e){}
+}
+
+function eigen(){
+  try{ return window.AC_P?AC_P.eigenes():null; }catch(e){ return null; }
+}
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
-  var N=hPos(y,mo,d,ut,g.lat,g.lon);
-
-  var res=[];
-  for(var tn in T){ if(tn==='ASC'||tn==='MC') continue;
-    for(var rn in N){
-      var sep=Math.abs(norm(T[tn]-N[rn]+180)-180);
-      for(var i=0;i<HASP.length;i++){
-        var o=Math.abs(sep-HASP[i][0]), max=((HORB[tn]+HORB[rn])/2)*HASP[i][2];
-        if(o<=max){
-          var g2=(HGEW[tn]||1)+(HGEW[rn]||1);
-          res.push({t:tn,r:rn,a:HASP[i][1],o:o,s:(max-o)/max*6+g2+(o<1?4:0)});
-        }
-      }
-    }
-  }
-  res.sort(function(x,y2){return y2.s-x.s;});
-
-  var w=norm(T.Mond-T.Sonne);
-  var html='<div class="mondzeile">'+hMondSVG(w)+'<div><b>Mond in '+HSIGNS[Math.floor(T.Mond/30)]+'</b>'+
-    '<span>'+hPhase(w)+' · Sonne in '+HSIGNS[Math.floor(T.Sonne/30)]+'</span></div></div>';
-
-  var top=res.slice(0,3);
-  if(!top.length){
-    html+='<div class="tnichts"><b>Heute berührt nichts dein Chart eng genug.</b> Das kommt häufiger vor, als man denkt — '+
-      'und es ist eine gute Nachricht: ruhige Tage sind die, an denen man tut, was man sich vorgenommen hat.</div>';
-  } else {
-    html+='<div class="tlist">';
-    top.forEach(function(x){
-      var eng=x.o<1?' eng':'';
-      var wirk=TWIRK[x.t]||'', np=NPUNKT[x.r]||x.r;
-      var satz;
-      if(x.a==='trifft') satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+' — direkt auf '+np+'.';
-      else if(HWEICH[x.a]) satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', und es kommt bei '+(NDAT[x.r]||np)+' leicht an.';
-      else if(x.a==='steht gegenüber') satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+' — von der Gegenseite her, also über andere oder von außen. Betroffen ist '+np+'.';
-      else satz=wirk.charAt(0).toUpperCase()+wirk.slice(1)+', aber quer zu '+(NDAT[x.r]||np)+'. Heute reibt es dort.';
-      var ARTN={'trifft':'Konjunktion','unterstützt':'Sextil','reibt an':'Quadrat','fließt zu':'Trigon','steht gegenüber':'Opposition'};
-      var dd=(window.AC_ASP?AC_ASP.deutung(x.t,x.r,ARTN[x.a]||'Konjunktion'):null);
-      html+='<div class="tzeile'+eng+'"><span class="tgly">'+(HGLY[x.t]||'')+' '+(HGLY[x.r]||'')+'</span><div>'+
-        '<div class="tkopf"><b>'+x.t+'</b> '+x.a+' <b>'+x.r+'</b> · <span class="torb">'+x.o.toFixed(2)+'°'+(x.o<1?' — sehr eng':'')+'</span></div>'+
-        '<div class="ttext">'+satz+(dd?'<br><span style="color:var(--leise)">'+dd.thema+'</span> '+dd.text+
-        '<br><span style="font-style:italic">'+dd.frage+'</span>':'')+'</div></div></div>';
-    });
-    html+='</div>';
-  }
-  document.getElementById('hout').innerHTML=html;
-  document.getElementById('hout').style.display='';
-  document.getElementById('hform').style.display='none';
-  document.getElementById('hfuss').style.display='';
-  var nm=(g.name||'').trim();
-  var hk=document.querySelector('.heute-kopf h2'); if(hk) hk.textContent = nm? ('Heute für '+nm) : 'Heute';
-  document.getElementById('hsub').textContent='Was der Himmel heute an deinem Chart berührt — die drei engsten Kontakte.';
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
 }
-(function(){
-  var mon=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+function jetztChart(){
   var n=new Date();
-  var el=document.getElementById('hdatum');
-  if(el) el.textContent=n.getDate()+'. '+mon[n.getMonth()]+' '+n.getFullYear();
+  var jd=jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60);
+  var T=(jd-2451545)/36525;
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),Pluto:geo('Pluto',T)};
+}
+function nrm(x){x=x%360;return x<0?x+360:x;}
 
-  var go=document.getElementById('hgo');
-  if(go) go.addEventListener('click',function(){
-    var dv=document.getElementById('hdate').value, tv=document.getElementById('htime').value;
-    if(!dv||!tv) return;
-    var p=dv.split('-').map(Number), t=tv.split(':').map(Number);
-    var od=AC_ortDaten(p[0],p[1],p[2],t[0],t[1]);
-    if(!od){ var ho=document.getElementById('hortok'); if(ho) ho.innerHTML='<b style="color:#A05A3A">Bitte einen Ort aus der Liste w&auml;hlen.</b>'; return; }
-    if(Math.abs(od.lat)>66) return;
-    var nf=document.getElementById('hname');
-    var g={name:nf?nf.value:'',y:p[0],mo:p[1],d:p[2],h:t[0],mi:t[1],tz:od.tz,lat:od.lat,lon:od.lon,ort:od.name};
-    hSpeicher(g);
-    try{ if(window.AC_P && !AC_P.eigenes()){ var np=AC_P.hinzu({name:g.name,y:g.y,mo:g.mo,d:g.d,h:g.h,mi:g.mi,tz:g.tz,lat:g.lat,lon:g.lon,ort:g.ort,eigen:true}); AC_P.alsEigenes(np.id); } }catch(e){}
-    hZeigen(g);
-  });
-  var neu=document.getElementById('hneu');
-  if(neu) neu.addEventListener('click',function(e){
-    e.preventDefault();
-    document.getElementById('hform').style.display='';
-    document.getElementById('hout').style.display='none';
-    document.getElementById('hfuss').style.display='none';
-  });
-  /* Das Heute-Band gehört immer dir selbst — nie einem ausgewählten Profil */
-  var g=null;
-  try{ if(window.AC_P){ var e0=AC_P.eigenes(); if(e0) g={name:e0.name,y:e0.y,mo:e0.mo,d:e0.d,h:e0.h,mi:e0.mi,tz:e0.tz,lat:e0.lat,lon:e0.lon,ort:e0.ort}; } }catch(e){}
-  if(!g) g=hLaden();
-  if(g){ try{ hZeigen(g); }catch(e){ console.error('Heute:',e); } }
-})();
+/* Stärkster Transit, in Alltagssprache */
+var TTXT={
+ 'Sonne':'Sichtbarkeit','Mond':'Stimmung','Merkur':'Gespräche','Venus':'Zuneigung und Wert',
+ 'Mars':'Antrieb','Jupiter':'Zuversicht','Saturn':'Verantwortung','Uranus':'Unruhe',
+ 'Neptun':'Sehnsucht','Pluto':'Umbau'};
+var TART={
+ 'Konjunktion':['trifft direkt auf','Das verstärkt und macht das Thema unübersehbar.'],
+ 'Opposition':['steht gegenüber','Zwei Seiten ziehen. Beide haben recht, nur nicht gleichzeitig.'],
+ 'Quadrat':['reibt an','Es klemmt. Genau dort entsteht aber auch Bewegung.'],
+ 'Trigon':['fließt zu','Es geht leichter als sonst. Nutzbar, wenn du es bemerkst.'],
+ 'Sextil':['reicht die Hand an','Eine Gelegenheit, die nichts erzwingt.']};
+var GEW={Sonne:3,Mond:2,ASC:3,MC:2.5,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:2,Uranus:1.5,Neptun:1.5,Pluto:1.5};
 
-/* ── bestehendes Skript ── */
-
-(function(){
-  var svg = document.getElementById("ring");
-  if(!svg) return;
-  var cx = 200, cy = 200, aussen = 186, teile = [];
-  teile.push('<circle cx="200" cy="200" r="186" fill="none" stroke="#E9DECF" stroke-width="1"/>');
-  teile.push('<circle cx="200" cy="200" r="162" fill="none" stroke="#E9DECF" stroke-width="1"/>');
-  teile.push('<circle cx="200" cy="200" r="96" fill="none" stroke="#E9DECF" stroke-width="1"/>');
-  for(var g = 0; g < 360; g += 5){
-    var lang = g % 30 === 0;
-    var rad = (g - 90) * Math.PI / 180;
-    var innen = lang ? 96 : 162;
-    var farbe = lang ? "#B08544" : "#E9DECF";
-    teile.push('<line x1="' + (cx + Math.cos(rad) * innen).toFixed(1) +
-      '" y1="' + (cy + Math.sin(rad) * innen).toFixed(1) +
-      '" x2="' + (cx + Math.cos(rad) * aussen).toFixed(1) +
-      '" y2="' + (cy + Math.sin(rad) * aussen).toFixed(1) +
-      '" stroke="' + farbe + '" stroke-width="1"/>');
-  }
-  svg.innerHTML = teile.join("");
-})();
-
-/* ── Ortssuche: ein Feld statt Koordinaten und Zeitzone ────── */
-window.AC_ORT=null;
-function AC_ortFeld(inputId, listId, statusId){
-  var inp=document.getElementById(inputId), liste=document.getElementById(listId), st=document.getElementById(statusId);
-  if(!inp||!liste) return;
-  var treffer=[], aktiv=-1;
-  function zu(){ liste.classList.remove('auf'); aktiv=-1; }
-  function waehle(o){
-    window.AC_ORT=o;
-    inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
-    if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
-      o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
-      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
-    zu();
-    try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
-  }
-  function zeichne(){
-    liste.innerHTML='';
-    if(!treffer.length){ zu(); return; }
-    treffer.forEach(function(o,i){
-      var b=document.createElement('button'); b.type='button';
-      b.innerHTML=o.name+(o.alt?' <span class="land">· '+o.alt+'</span>':'')+' <span class="land">· '+o.land+'</span>';
-      if(i===aktiv) b.className='aktiv';
-      b.addEventListener('mousedown',function(ev){ ev.preventDefault(); waehle(o); });
-      liste.appendChild(b);
+function stärksterTransit(){
+  var p=eigen(); if(!p) return null;
+  var R=chartVon(p), T=jetztChart();
+  var beste=null;
+  var TEMPO={Jupiter:2,Saturn:3,Uranus:3,Neptun:3,Pluto:3,Mars:1,Sonne:.5,Merkur:.3,Venus:.5};
+  var AGEW={Konjunktion:3,Opposition:2.6,Quadrat:2.6,Trigon:1.8,Sextil:.8};
+  Object.keys(T).forEach(function(t){
+    if(t==='Mond') return;
+    Object.keys(R).forEach(function(r){
+      if(!GEW[r]) return;
+      var sep=Math.abs(nrm(T[t]-R[r]+180)-180);
+      [[0,'Konjunktion'],[60,'Sextil'],[90,'Quadrat'],[120,'Trigon'],[180,'Opposition']].forEach(function(A){
+        var o=Math.abs(sep-A[0]);
+        var max=(A[0]===60)?2:3;
+        if(o>max) return;
+        var sc=(max-o)/max*3 + (GEW[r]||1) + (TEMPO[t]||0) + (AGEW[A[1]]||1);
+        if(t===r&&A[1]==='Sextil') sc-=2;
+        if(!beste||sc>beste.sc) beste={t:t,r:r,typ:A[1],o:o,sc:sc,
+          haus:(((Math.floor(T[t]/30)-Math.floor(R.ASC/30))%12+12)%12)+1};
+      });
     });
-    liste.classList.add('auf');
-  }
-  inp.addEventListener('input',function(){
-    window.AC_ORT=null;
-    if(st) st.textContent='';
-    treffer=window.AC_ortSuche(inp.value,8); aktiv=-1; zeichne();
   });
-  inp.addEventListener('keydown',function(e){
-    if(!treffer.length) return;
-    if(e.key==='ArrowDown'){ e.preventDefault(); aktiv=Math.min(aktiv+1,treffer.length-1); zeichne(); }
-    else if(e.key==='ArrowUp'){ e.preventDefault(); aktiv=Math.max(aktiv-1,0); zeichne(); }
-    else if(e.key==='Enter'&&aktiv>=0){ e.preventDefault(); waehle(treffer[aktiv]); }
-    else if(e.key==='Escape'){ zu(); }
-  });
-  inp.addEventListener('blur',function(){ setTimeout(zu,140); });
-  /* zuletzt gewählten Ort wiederherstellen */
-  try{
-    var g=JSON.parse(localStorage.getItem('ac_geburt')||'null');
-    var o=JSON.parse(localStorage.getItem('ac_ort')||'null');
-    if(o&&o.tz){ waehle(o); }
-  }catch(e){}
-}
-/* Liefert {lat,lon,tz} für die aktuelle Eingabe — tz als Stundenversatz zum Geburtszeitpunkt */
-function AC_ortDaten(y,mo,d,h,mi){
-  var o=window.AC_ORT;
-  if(!o) return null;
-  var off=window.AC_offset(o.tz,y,mo,d,h,mi);
-  if(off===null||isNaN(off)) return null;
-  return {lat:o.lat, lon:o.lon, tz:off, name:o.name+', '+o.land};
+  return beste;
 }
 
-try{ AC_ortFeld('hort','hortliste','hortok'); }catch(e){ console.error('Ortssuche:',e); }
+function satzBauen(b){
+  if(!b) return null;
+  var a=TART[b.typ]||['berührt',''];
+  return {
+    kurz:'<b>'+b.t+'</b> '+a[0]+' deinen <b>'+b.r+'</b> — es geht um <b>'+(TTXT[b.t]||'')+'</b>, '+
+      'in deinem '+b.haus+'. Haus.',
+    dazu: a[1]+' Der Bereich ist <b>'+HT[b.haus-1]+'</b>. Orbis '+b.o.toFixed(1)+'° — '+
+      (b.o<1?'sehr eng, das spürt man.':(b.o<2?'eng.':'noch im Rahmen.'))
+  };
+}
 
+/* ── Aufbau ── */
+function datumZeigen(){
+  var d=new Date();
+  document.getElementById('stdatum').textContent=
+    TAGE[d.getDay()]+', '+d.getDate()+'. '+MONATE[d.getMonth()]+' '+d.getFullYear();
+  var st=d.getHours();
+  var g=(st<5)?'Noch wach':(st<11)?'Guten Morgen':(st<18)?'Guten Tag':'Guten Abend';
+  var p=eigen(), nm='';
+  try{ if(p&&window.AC_P) nm=AC_P.anzeige(p,AC_P.zeigeNamen()); }catch(e){}
+  document.getElementById('stgruss').innerHTML=g+(nm?', <em>'+nm+'</em>':'')+'.';
+}
 
-
-/* Ein Vorschlag statt vier gleichwertiger Wege */
-(function(){
-  var STUFEN=[
-   {n:1,t:'Fang bei dir an',w:'Drei Sätze über dich — Sonne, Mond, Aszendent in normaler Sprache. Fünf Minuten, kein Vorwissen.',z:'tool.html',k:'Los geht’s'},
-   {n:2,t:'Schau dir dein Muster an',w:'Wo bei dir der Druck sitzt und welche zwei Seiten gegeneinander ziehen.',z:'spannungskarte.html',k:'Ansehen'},
-   {n:3,t:'Finde deinen Rhythmus',w:'Was gerade läuft — und die erste Beobachtung, aus der mit der Zeit dein eigenes Muster wird.',z:'weg.html',k:'Weiter'},
-   {n:4,t:'Nimm dir eine Sache vor',w:'Was du dir nicht erlaubst, und eine kleine Erlaubnis für diese Woche.',z:'lilith-arbeit.html',k:'Öffnen'},
-   {n:5,t:'Versteh das System',w:'Jetzt lohnt sich das Lernen: Häuser, Aspekte, Herrscher, Timing.',z:'wissen.html',k:'Zur Bibliothek'}
-  ];
-  function zeichne(){
-    var box=document.getElementById('nxinner'); if(!box) return;
-    var fort=document.getElementById('nxfort');
-    var hat=false;
-    try{ hat=!!(window.AC_P&&AC_P.eigenes()); }catch(e){}
-    if(!hat){
-      box.innerHTML='<div class="nx-nr">1</div><div class="nx-txt">'+
-        '<div class="nx-lab">Hier anfangen</div>'+
-        '<div class="nx-titel">Erst mal dein Chart</div>'+
-        '<div class="nx-was">Ein Geburtsdatum, ein Ort — danach wird alles auf dieser Seite persönlich. Deine Daten bleiben in deinem Browser.</div>'+
-        '</div><a class="nx-b" href="tool.html">Anfangen</a>';
-      if(fort) fort.textContent='';
-      return;
-    }
-    var hoch=0;
-    try{ hoch=window.AC_WEG?AC_WEG.hoechsteStufe():0; }catch(e){}
-    var s=STUFEN[Math.min(hoch,4)];
-    box.innerHTML='<div class="nx-nr">'+s.n+'</div><div class="nx-txt">'+
-      '<div class="nx-lab">'+(hoch===0?'Dein nächster Schritt':'Stufe '+s.n+' von 5')+'</div>'+
-      '<div class="nx-titel">'+s.t+'</div><div class="nx-was">'+s.w+'</div>'+
-      '</div><a class="nx-b" href="'+s.z+'">'+s.k+'</a>';
-    if(fort){
-      var b=0; try{ b=AC_WEG.beobachtungen().length; }catch(e){}
-      fort.innerHTML=(hoch>0?hoch+' von 5 Stufen · ':'')+
-        (b>0?b+' Beobachtungen gesammelt · ':'')+
-        '<a href="weg.html">deinen Weg ansehen</a>';
-    }
+function kapZeigen(){
+  var box=document.getElementById('stkap'), s=kapLesen();
+  if(s){
+    var NAM={wenig:'Wenig',mittel:'Mittel',viel:'Viel'};
+    box.innerHTML='<div class="kap-f">Heute: '+NAM[s]+'</div>'+
+      '<div class="kap-zurueck">Passt nicht? <button type="button" id="kapneu">Anders wählen</button></div>';
+    document.getElementById('kapneu').addEventListener('click',function(){
+      try{ localStorage.removeItem(KAPKEY); }catch(e){}
+      kapZeigen(); inhaltZeigen();
+    });
+    return;
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',zeichne);
-  else zeichne();
-})();
+  box.innerHTML='<div class="kap-f">Wie viel geht heute?</div>'+
+    '<div class="kap-h">Danach richtet sich, was du hier siehst. Es wird nichts mitgeschrieben und nichts gezählt — '+
+    'morgen fragt die Seite wieder neu.</div>'+
+    '<div class="kap-w" id="kapw"></div>';
+  var w=document.getElementById('kapw');
+  [['wenig','Wenig','ein Satz'],['mittel','Mittel','das Wichtigste'],['viel','Viel','alles']].forEach(function(o){
+    var b=document.createElement('button'); b.type='button';
+    b.innerHTML=o[1]+'<span>'+o[2]+'</span>';
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){ kapSchreiben(o[0]); kapZeigen(); inhaltZeigen(); });
+    w.appendChild(b);
+  });
+}
 
-/* Himmelswetter aufbauen */
-(function(){
-  function los(){ try{ if(window.AC_wetter) AC_wetter(document.getElementById('hwetter')); }catch(e){ console.error('Wetter:',e); } }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',los); else los();
-})();
+function inhaltZeigen(){
+  var box=document.getElementById('stinhalt');
+  var stufe=kapLesen();
+  if(!stufe){ box.innerHTML=''; return; }
+
+  var p=eigen(), h='';
+
+  /* 1 · Immer: der eine Satz */
+  var b=stärksterTransit(), sz=satzBauen(b);
+  h+='<div class="ab"><div class="ab-lab">Heute bei dir</div>';
+  if(sz){
+    h+='<p class="ab-satz">'+sz.kurz+'</p>';
+    if(stufe!=='wenig') h+='<p class="ab-dazu">'+sz.dazu+'</p>';
+  } else if(!p){
+    h+='<p class="ab-satz">Noch kein Chart hinterlegt.</p>'+
+      '<p class="ab-dazu">Damit hier dein eigener Tag steht, brauche ich einmal deine Geburtsdaten. '+
+      '<a href="profile.html">Chart anlegen</a></p>';
+  } else {
+    h+='<p class="ab-satz">Heute berührt nichts dein Chart eng.</p>'+
+      '<p class="ab-dazu">Ruhige Tage gehören dazu und sind keine Lücke.</p>';
+  }
+  h+='</div>';
+
+  /* 2 · Ab Mittel: Himmelswetter */
+  if(stufe==='mittel'||stufe==='viel'){
+    h+='<div class="ab"><div class="ab-lab">Der Himmel allgemein</div>'+
+      '<div id="stwetter"></div></div>';
+  }
+
+  /* 3 · Ab Mittel: eine Frage ans Log */
+  if((stufe==='mittel'||stufe==='viel')&&sz){
+    h+='<div class="ab"><div class="st-log">'+
+      '<div class="frg">Merkst du heute etwas davon?</div>'+
+      '<div class="st-wahl" id="stlog"></div>'+
+      '<div class="st-dank" id="stdank"></div></div></div>';
+  }
+
+  /* 4 · Nur Viel: ein Schritt und die Räume */
+  if(stufe==='viel'){
+    h+='<div class="ab"><div class="ab-lab">Falls du magst</div>'+
+      '<div class="ab-karte ruhig"><h3>Ein Schritt für heute</h3>'+
+      '<p id="stvorschlag">—</p></div></div>';
+    h+='<div class="ab"><div class="ab-lab">Wo du dran bist</div><div class="st-weiter" id="stweiter"></div></div>';
+  }
+
+  /* 5 · Bei Wenig: sichtbarer Ausstieg nach oben */
+  if(stufe==='wenig'){
+    h+='<div class="ab-mehr"><button type="button" id="stmehr">Doch mehr zeigen</button></div>';
+  }
+
+  /* 6 · Immer: ruhiger Abschluss */
+  h+='<div class="st-schluss"><p>Das war’s für heute.</p>'+
+    '<div class="kl">'+(stufe==='wenig'
+      ? 'Mehr braucht es nicht. Morgen ist wieder Gelegenheit.'
+      : 'Alles andere liegt da, wenn du es suchst — es läuft dir nicht weg.')+'</div></div>';
+
+  box.innerHTML=h;
+
+  /* Nachträge */
+  if(document.getElementById('stwetter')&&window.AC_wetter){
+    try{ AC_wetter(document.getElementById('stwetter')); }catch(e){}
+  }
+  var mehr=document.getElementById('stmehr');
+  if(mehr) mehr.addEventListener('click',function(){ kapSchreiben('mittel'); kapZeigen(); inhaltZeigen(); });
+
+  var lg=document.getElementById('stlog');
+  if(lg){
+    [['ja','Ja'],['teils','Ein bisschen'],['nein','Nein'],['weiss','Weiß nicht']].forEach(function(o){
+      var bt=document.createElement('button'); bt.type='button'; bt.textContent=o[1];
+      bt.setAttribute('aria-pressed','false');
+      bt.addEventListener('click',function(){
+        Array.prototype.forEach.call(lg.children,function(c){c.setAttribute('aria-pressed','false');});
+        bt.setAttribute('aria-pressed','true');
+        document.getElementById('stdank').textContent='Notiert. Mehr ist nicht nötig.';
+        try{
+          if(window.AC_WEG&&b) AC_WEG.notieren({schluessel:'heute-'+b.t+'-'+b.r,
+            titel:b.t+' '+b.typ+' '+b.r, planet:b.t, punkt:b.r, art:'transit', antwort:o[0], chips:[]});
+        }catch(e){}
+      });
+      lg.appendChild(bt);
+    });
+  }
+
+  var vs=document.getElementById('stvorschlag');
+  if(vs) vs.innerHTML=vorschlag(b);
+
+  var wt=document.getElementById('stweiter');
+  if(wt) wt.innerHTML=raeumeVorschlag(b);
+}
+
+function vorschlag(b){
+  if(!b) return 'Nimm dir heute nichts vor. Das ist auch eine Entscheidung.';
+  var V={Saturn:'Schau dir eine Sache an, die du aufgeschoben hast. Nur anschauen, nicht erledigen.',
+   Jupiter:'Sag heute einmal Ja zu etwas, das du sonst abwägen würdest.',
+   Uranus:'Mach eine Kleinigkeit anders als sonst. Anderer Weg, andere Reihenfolge.',
+   Neptun:'Lass heute eine Stunde ungeplant. Nichts hineinschreiben.',
+   Pluto:'Benenne eine Sache, die du sonst umschiffst. Nur für dich, nur ein Satz.',
+   Mars:'Fang etwas an, das fünf Minuten dauert.',
+   Venus:'Gönn dir eine Kleinigkeit ohne Anlass.',
+   Merkur:'Schreib einen Gedanken auf, statt ihn weiterzudenken.',
+   Sonne:'Zeig heute einmal etwas Eigenes, ohne es kleinzureden.'};
+  return (V[b.t]||'Beobachte heute nur, ohne etwas zu ändern.')+
+    ' <span style="color:var(--leise);font-size:14px;">Muss nicht sein. Es steht hier, falls du magst.</span>';
+}
+
+function raeumeVorschlag(b){
+  var R=[['raum-selbstwert.html','Selbstwert','Warum nehme ich zu wenig?'],
+   ['raum-berufung.html','Berufung','Wofür bin ich hier?'],
+   ['raum-naehe.html','Nähe','Warum wiederholt sich das?'],
+   ['raum-anders-verdrahtet.html','Anders verdrahtet','Warum ist der Alltag so anstrengend?'],
+   ['raum-alltag.html','Alltag','Struktur, die hält'],
+   ['raum-herkunft.html','Herkunft','Was läuft aus der Familie mit?']];
+  var ZU={Saturn:0,Venus:0,Jupiter:1,Sonne:1,Mars:4,Merkur:3,Uranus:3,Mond:2,Pluto:5,Neptun:5};
+  var i=(b&&ZU[b.t]!==undefined)?ZU[b.t]:0;
+  var w=[R[i], R[(i+3)%R.length]];
+  return w.map(function(x){
+    return '<a href="'+x[0]+'"><span><b>'+x[1]+'</b><br><span>'+x[2]+'</span></span><i>→</i></a>';
+  }).join('')+'<a href="raeume.html"><span><b>Alle zehn Räume</b><br><span>Übersicht</span></span><i>→</i></a>';
+}
+
+datumZeigen();
+kapZeigen();
+inhaltZeigen();
+
 </script>
-</body>
-</html>
+</body></html>
