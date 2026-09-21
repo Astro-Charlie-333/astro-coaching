@@ -3,6 +3,8 @@
    Jeder Link öffnet in einem neuen Tab, damit man nicht aus dem Lesefluss fällt.
    Verlinkt wird pro Seite nur das ERSTE Vorkommen eines Begriffs — sonst wird der Text unruhig. */
 (function(){
+  try{ var _ich=JSON.parse(localStorage.getItem('ac_ich')||'null');
+    if(_ich&&_ich.erklaerung==='nein') return; }catch(e){}
   /* Begriff → Zielseite. Längere Begriffe zuerst, damit sie vor kürzeren greifen. */
   var ZIELE=[
     ['Whole Sign','haeusersysteme.html'],

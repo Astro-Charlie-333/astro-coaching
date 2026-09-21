@@ -6,6 +6,8 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="fortschritt.js"></script>
+<script src="staedte.js"></script>
+<script src="ankommen.js"></script>
 <script src="wetter.js"></script>
 <style>
 :root{
@@ -298,7 +300,8 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
-<div class="st-wrap">
+<div id="stankommen"></div>
+<div class="st-wrap" id="stnormal" style="display:none">
   <div class="st-datum" id="stdatum"></div>
   <h1 class="st-gruss" id="stgruss">Guten Tag.</h1>
 
@@ -307,6 +310,15 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 </div>
 
 <script>
+
+/* Erster Besuch: nichts hinterlegt → erst ankommen */
+(function(){
+  try{
+    var ich=JSON.parse(localStorage.getItem('ac_ich')||'null');
+    var e=window.AC_P?AC_P.eigenes():null;
+    if(!ich&&!e){ location.replace('ankommen.html'); }
+  }catch(err){}
+})();
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
@@ -574,7 +586,10 @@ function inhaltZeigen(){
     h+='<div class="ab"><div class="ab-lab">Falls du magst</div>'+
       '<div class="ab-karte ruhig"><h3>Ein Schritt für heute</h3>'+
       '<p id="stvorschlag">—</p></div></div>';
-    h+='<div class="ab"><div class="ab-lab">Wo du dran bist</div><div class="st-weiter" id="stweiter"></div></div>';
+    var thGew=[];
+    try{ thGew=window.AC_SETUP?AC_SETUP.themen():[]; }catch(e){}
+    h+='<div class="ab"><div class="ab-lab">'+(thGew.length?'Deine Themen':'Wo du anfangen könntest')+
+      '</div><div class="st-weiter" id="stweiter"></div></div>';
   }
 
   /* 5 · Bei Wenig: sichtbarer Ausstieg nach oben */
@@ -586,7 +601,10 @@ function inhaltZeigen(){
   h+='<div class="st-schluss"><p>Das war’s für heute.</p>'+
     '<div class="kl">'+(stufe==='wenig'
       ? 'Mehr braucht es nicht. Morgen ist wieder Gelegenheit.'
-      : 'Alles andere liegt da, wenn du es suchst — es läuft dir nicht weg.')+'</div></div>';
+      : 'Alles andere liegt da, wenn du es suchst — es läuft dir nicht weg.')+
+    '<div class="kl" style="margin-top:14px;"><button type="button" id="stsetup" style="font-family:var(--sans);'+
+    'font-size:13px;background:none;border:none;color:var(--leise);text-decoration:underline;cursor:pointer;padding:0;">'+
+    'Einstellungen ändern</button></div></div>';
 
   box.innerHTML=h;
 
@@ -620,6 +638,13 @@ function inhaltZeigen(){
 
   var wt=document.getElementById('stweiter');
   if(wt) wt.innerHTML=raeumeVorschlag(b);
+
+  var su=document.getElementById('stsetup');
+  if(su) su.addEventListener('click',function(){
+    if(!window.AC_ankommen) return;
+    document.getElementById('stnormal').style.display='none';
+    AC_ankommen(document.getElementById('stankommen'), function(){ normalZeigen(); });
+  });
 }
 
 function vorschlag(b){
@@ -638,23 +663,71 @@ function vorschlag(b){
 }
 
 function raeumeVorschlag(b){
-  var R=[['raum-selbstwert.html','Selbstwert','Warum nehme ich zu wenig?'],
-   ['raum-berufung.html','Berufung','Wofür bin ich hier?'],
-   ['raum-naehe.html','Nähe','Warum wiederholt sich das?'],
-   ['raum-anders-verdrahtet.html','Anders verdrahtet','Warum ist der Alltag so anstrengend?'],
-   ['raum-alltag.html','Alltag','Struktur, die hält'],
-   ['raum-herkunft.html','Herkunft','Was läuft aus der Familie mit?']];
-  var ZU={Saturn:0,Venus:0,Jupiter:1,Sonne:1,Mars:4,Merkur:3,Uranus:3,Mond:2,Pluto:5,Neptun:5};
-  var i=(b&&ZU[b.t]!==undefined)?ZU[b.t]:0;
-  var w=[R[i], R[(i+3)%R.length]];
+  var ich=null; try{ ich=JSON.parse(localStorage.getItem('ac_ich')||'null'); }catch(e){}
+  var ALLE={'selbstwert':['Selbstwert','Warum nehme ich zu wenig?'],'berufung':['Berufung','Wofür bin ich hier?'],
+   'naehe':['Nähe','Warum wiederholt sich das?'],'unerlaubte':['Das Unerlaubte','Was traue ich mir nicht zu?'],
+   'wunder-punkt':['Der wunde Punkt','Was tut immer wieder weh?'],'herkunft':['Herkunft','Was läuft aus der Familie mit?'],
+   'anders-verdrahtet':['Anders verdrahtet','Warum ist Alltag so anstrengend?'],'zugehoerigkeit':['Zugehörigkeit','Warum fühle ich mich außen?'],
+   'alltag':['Alltag','Struktur, die hält'],'koerper':['Körper','Was braucht mein Körper?']};
+  if(ich&&ich.themen&&ich.themen.length){
+    return ich.themen.slice(0,3).map(function(t){ var r=ALLE[t]; if(!r) return '';
+      return '<a href="raum-'+t+'.html"><span><b>'+r[0]+'</b><br><span>'+r[1]+'</span></span><i>→</i></a>'; }).join('')+
+      '<a href="raeume.html"><span><b>Alle zehn Räume</b><br><span>Übersicht</span></span><i>→</i></a>';
+  }
+  var ALLE={};
+  try{ if(window.AC_SETUP) AC_SETUP.RAEUME.forEach(function(r){ ALLE[r[0]]=r; }); }catch(e){}
+  var gewaehlt=[];
+  try{ gewaehlt=window.AC_SETUP?AC_SETUP.themen():[]; }catch(e){}
+  var w=[];
+  if(gewaehlt.length){
+    gewaehlt.slice(0,3).forEach(function(k){
+      var r=ALLE[k]; if(r) w.push(['raum-'+r[0]+'.html', r[1], r[2]]);
+    });
+  } else {
+    var R=[['raum-selbstwert.html','Selbstwert','Warum nehme ich zu wenig?'],
+     ['raum-berufung.html','Berufung','Wofür bin ich hier?'],
+     ['raum-naehe.html','Nähe','Warum wiederholt sich das?'],
+     ['raum-anders-verdrahtet.html','Anders verdrahtet','Warum ist der Alltag so anstrengend?'],
+     ['raum-alltag.html','Alltag','Struktur, die hält'],
+     ['raum-herkunft.html','Herkunft','Was läuft aus der Familie mit?']];
+    var ZU={Saturn:0,Venus:0,Jupiter:1,Sonne:1,Mars:4,Merkur:3,Uranus:3,Mond:2,Pluto:5,Neptun:5};
+    var i=(b&&ZU[b.t]!==undefined)?ZU[b.t]:0;
+    w=[R[i], R[(i+3)%R.length]];
+  }
   return w.map(function(x){
     return '<a href="'+x[0]+'"><span><b>'+x[1]+'</b><br><span>'+x[2]+'</span></span><i>→</i></a>';
   }).join('')+'<a href="raeume.html"><span><b>Alle zehn Räume</b><br><span>Übersicht</span></span><i>→</i></a>';
 }
 
-datumZeigen();
-kapZeigen();
-inhaltZeigen();
+function normalZeigen(){
+  document.getElementById('stankommen').innerHTML='';
+  document.getElementById('stnormal').style.display='';
+  /* Leseformat aus dem Ankommen anwenden */
+  try{
+    if(window.AC_SETUP){
+      var f=AC_SETUP.format();
+      document.body.classList.remove('fmt-kurz','fmt-lang','fmt-visuell');
+      document.body.classList.add('fmt-'+f);
+      localStorage.setItem('ac_format', f);
+    }
+  }catch(e){}
+  datumZeigen();
+  kapZeigen();
+  inhaltZeigen();
+}
+
+function start(){
+  var fertig=false;
+  try{ fertig=window.AC_SETUP?AC_SETUP.fertig():false; }catch(e){}
+  var hatChart=false;
+  try{ hatChart=!!(window.AC_P&&AC_P.eigenes()); }catch(e){}
+  if(fertig||hatChart){ normalZeigen(); return; }
+  if(window.AC_ankommen){
+    document.getElementById('stnormal').style.display='none';
+    AC_ankommen(document.getElementById('stankommen'), function(){ normalZeigen(); });
+  } else { normalZeigen(); }
+}
+start();
 
 </script>
 </body></html>
