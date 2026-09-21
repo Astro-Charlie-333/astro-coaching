@@ -1,0 +1,621 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herkunft · Themenraum · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="fortschritt.js"></script>
+<script src="kleine-punkte.js"></script>
+<script src="raum.js"></script>
+<script src="format.js" defer></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+.rm-tuer{background:var(--messing-bg);border-radius:20px;padding:26px 26px 22px;margin-bottom:18px;}
+.rm-tuer .rm-frage{font-family:var(--serif);font-size:clamp(21px,4.3vw,28px);line-height:1.25;color:var(--nacht);margin-bottom:10px;}
+.rm-tuer p{margin:0;font-size:15.5px;line-height:1.65;max-width:62ch;}
+.rm-sortierung{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:18px;padding:20px 22px;margin-bottom:16px;}
+.rm-sortierung h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.rm-sortierung .hint{font-size:13.5px;color:var(--leise);margin-bottom:14px;}
+.rm-bal{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;margin-bottom:7px;font-size:14px;}
+@media(max-width:560px){.rm-bal{grid-template-columns:110px 1fr 34px;font-size:13px;}}
+.rm-bal .bar{height:11px;background:#DDE3EE;border-radius:8px;overflow:hidden;}
+.rm-bal .bar i{display:block;height:100%;background:var(--nacht);border-radius:8px;}
+.rm-bal .bar i.leise{background:#B9C2D4;}
+.rm-bal .pz{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);text-align:right;}
+.rm-fazit{margin-top:14px;font-size:15px;line-height:1.65;}
+.fa{background:var(--papier);border:1px solid var(--linie);border-radius:18px;margin-bottom:12px;overflow:hidden;}
+.fa.laut{border-color:var(--nacht);}
+.fa summary{cursor:pointer;padding:17px 20px;display:flex;gap:13px;align-items:baseline;flex-wrap:wrap;}
+.fa summary::-webkit-details-marker{display:none;}
+.fa .fa-rang{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
+.fa .fa-name{font-family:var(--serif);font-size:19px;color:var(--tinte);flex:1;min-width:180px;}
+.fa .fa-marke{font-family:var(--sans);font-size:10px;letter-spacing:.07em;border-radius:11px;padding:3px 9px;}
+.fa .fa-marke.laut{background:var(--nacht);color:#fff;}
+.fa .fa-marke.leise{background:var(--linie);color:var(--leise);}
+.fa-inhalt{padding:0 20px 20px;}
+.fa-frage{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--nacht);
+ border-left:3px solid var(--messing);padding-left:15px;margin-bottom:14px;line-height:1.45;}
+.fa-block{margin-bottom:15px;}
+.fa-block .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:6px;}
+.fa-block p{margin:0 0 8px;font-size:15px;line-height:1.65;}
+.fa-block p:last-child{margin-bottom:0;}
+.fa-daten{background:var(--bg);border-radius:12px;padding:11px 14px;font-family:'JetBrains Mono',monospace;
+ font-size:12px;color:var(--leise);line-height:1.7;}
+.fa-ueb{background:var(--messing-bg);border-radius:14px;padding:15px 17px;}
+.fa-ueb b{display:block;font-family:var(--serif);font-size:17px;font-weight:400;margin-bottom:5px;color:var(--nacht);}
+.fa-ueb p{margin:0;font-size:14.8px;line-height:1.6;}
+.fa-rueck{background:var(--nacht-bg);border-radius:14px;padding:15px 17px;margin-top:11px;}
+.fa-rueck .rf{font-size:15px;margin-bottom:10px;}
+.fa-wahl{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+@media(max-width:520px){.fa-wahl{grid-template-columns:1fr 1fr;}}
+.fa-wahl button{font-family:var(--sans);font-size:14px;padding:12px 6px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:12px;cursor:pointer;}
+.fa-wahl button:hover{border-color:var(--nacht);}
+.fa-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.fa-coach{margin-top:12px;background:var(--bg);border:1px dashed var(--linie);border-radius:14px;padding:13px 16px;}
+.fa-coach summary{padding:0;font-family:var(--sans);font-size:13.5px;color:var(--leise);cursor:pointer;display:block;}
+.fa-coach ul{margin:10px 0 0 18px;padding:0;font-size:14.5px;line-height:1.65;}
+.fa-coach li{margin-bottom:5px;}
+.fa-coach .warn{margin-top:10px;background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:10px;
+ padding:11px 13px;font-size:14px;line-height:1.6;}
+.rm-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:18px;padding:28px;
+ text-align:center;color:var(--leise);line-height:1.65;}
+
+.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
+ margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+
+.fa-wozu{background:var(--messing-bg);border-radius:14px;padding:14px 16px;margin-top:11px;}
+.fa-wozu .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:6px;}
+.fa-wozu p{margin:0 0 7px;font-size:14.6px;line-height:1.6;}
+.fa-wozu p:last-child{margin-bottom:0;}
+.fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+.rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
+ font-size:14.6px;line-height:1.65;}
+
+.fa-visuell{display:none;}
+body.fmt-visuell .fa-visuell{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:center;
+ background:var(--bg);border-radius:16px;padding:16px 18px;margin-bottom:14px;}
+@media(max-width:600px){body.fmt-visuell .fa-visuell{grid-template-columns:1fr;justify-items:center;text-align:center;}}
+.mini-rad{width:230px;height:230px;display:block;}
+.fa-vtext b{display:block;font-family:var(--serif);font-size:20px;color:var(--nacht);margin-bottom:4px;}
+.fa-vtext p{margin:0 0 11px;font-family:var(--serif);font-style:italic;font-size:16.5px;line-height:1.4;}
+.fa-vchips{display:flex;gap:6px;flex-wrap:wrap;}
+.fa-vchips .vc{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:13px;padding:4px 10px;color:var(--leise);}
+.fa-vchips .vc.hart{border-color:#E2C3B4;background:#FBF0E8;color:#8A4326;}
+.fa-vchips .vc.weich{border-color:#C6D7E2;background:#EDF4F8;color:#2F5E78;}
+.fa-vchips .vc.achs{border-color:var(--messing);background:var(--messing-bg);color:#6B4A18;}
+body.fmt-visuell .fa-frage{display:none;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html" class="ist">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Themenraum</div>
+<h1>Herkunft.</h1>
+<div class="rm-tuer">
+  <div class="rm-frage">„Was läuft aus meiner Familie noch mit?"</div>
+  <p>Dieser Raum liegt unter vielen anderen. Was du über Geld glaubst, wie nah du Menschen kommst, wann du dich zusammenreißt — vieles davon wurde entschieden, bevor du mitreden konntest. Sieben Facetten: die Atmosphäre von damals, was dich genährt hat, welche Autorität du verinnerlicht hast, was nie ausgesprochen wurde, was du übernommen hast, welche Rolle du hattest — und was du daraus machst.</p>
+</div>
+<div class="rm-hinweis"><b>Eine Grenze vorab:</b> Dieser Raum arbeitet mit Mustern, nicht mit Verletzungen. Ein Chart kann zeigen, wo etwas sitzt — es kann es nicht behandeln. Wenn beim Lesen etwas hochkommt, das größer ist als eine Erinnerung, ist das kein Zeichen, dass du weitermachen sollst, sondern dass es Begleitung braucht. Das ist keine Schwäche und kein Rückzieher, sondern der ehrliche Rahmen.</div>
+<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
+<div id="raum"></div>
+
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="erinnerung.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Deine früheste Erinnerung</span></a></div>
+<div class="foot">Themenraum Herkunft &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var RAUM = {
+ name:'Herkunft',
+ slug:'herkunft',
+ sortierTitel:'Wo deine Herkunft heute noch wirkt',
+ facetten:[
+ {id:'atmosphaere', wozuSchutz:'Das Unbenannte muss nicht verhandelt werden. Schweigen hält die Familie zusammen.', wozuFrage:'Was würde sich in deiner Familie verschieben, wenn du es aussprichst?', name:'Die Atmosphäre, in der du groß wurdest',
+  frage:'Wie war die Stimmung, in der ich aufgewachsen bin?',
+  anker:{haeuser:[4], punkte:['Mond','Pluto','Neptun','Saturn']},
+  regeln:[
+    function(f,P,H){
+      var ic=(P.MC+180)%360, zi=Math.floor(ic/30), hp=H.HERR[zi];
+      var hin=(P[hp]!==undefined)?(H.haus(P[hp])+1):null;
+      var t='Dein <b>IC steht in '+H.SIGNS[zi]+'</b> ('+H.fmt(ic)+') — der tiefste Punkt deines Charts, '+
+        'die Wurzel. Das beschreibt nicht die Fakten deiner Kindheit, sondern <b>die Atmosphäre</b>: '+
+        'was in der Luft lag, auch wenn niemand darüber sprach. ';
+      if(hin) t+='Beherrscht wird das von <b>'+hp+'</b> im '+hin+'. Haus — dein Herkunftsthema wirkt bis heute in <b>'+H.HT[hin-1]+'</b> hinein.';
+      return t;
+    },
+    function(f,P,H){
+      var im4=f.planeten.filter(function(x){return x.haus===4;});
+      if(!im4.length) return 'Dein 4. Haus ist unbesetzt. Herkunft ist bei dir kein Dauerthema im Vordergrund — '+
+        'was nicht heißt, dass nichts da ist, sondern dass es über den Herrscher läuft und leiser wirkt.';
+      var t=[];
+      im4.forEach(function(x){
+        if(x.p==='Saturn') t.push('<b>Saturn im 4.</b> — es war eng, ernst oder karg. Wärme musste verdient werden oder kam spät.');
+        else if(x.p==='Pluto') t.push('<b>Pluto im 4.</b> — Macht spielte eine Rolle, und vieles blieb unausgesprochen. Nicht unbedingt laut, oft eher das Gegenteil.');
+        else if(x.p==='Uranus') t.push('<b>Uranus im 4.</b> — etwas war unberechenbar. Verlässlichkeit war nichts, worauf man bauen konnte.');
+        else if(x.p==='Neptun') t.push('<b>Neptun im 4.</b> — Grenzen waren unklar, manches wurde beschönigt oder verschwieg sich von selbst.');
+        else if(x.p==='Mond') t.push('<b>Mond im 4.</b> — Zuhause und Gefühl fallen bei dir zusammen. Du bist stark mit der Herkunft verbunden, im Guten wie im Schweren.');
+        else t.push('<b>'+x.p+' im 4.</b> ('+H.fmt(x.pos)+') färbt die Grundstimmung deines Aufwachsens.');
+      });
+      return t.join(' ');
+    },
+    function(f,P,H){
+      var ic=(P.MC+180)%360, nah=[];
+      Object.keys(P).forEach(function(k){
+        if(k==='_jd'||k==='MC'||k==='ASC'||P[k]===undefined) return;
+        var d=Math.abs(((P[k]-ic+180)%360+360)%360-180);
+        if(d<=4) nah.push(k+' ('+d.toFixed(1)+'°)');
+      });
+      if(!nah.length) return null;
+      return '<b>'+nah.join(', ')+'</b> steht direkt auf deinem IC. Das ist der stärkste Hinweis auf ein Herkunftsthema, '+
+        'das bis heute mitläuft — und meistens der Punkt, den man als Letztes bei sich selbst vermutet.';
+    }],
+  uebung:['Den Satz finden, der nie gesagt wurde',
+   'Schreib einen Satz auf, der in deiner Familie allen klar war und nie ausgesprochen wurde. Einer reicht. Ihn hinzuschreiben verändert schon etwas — weil er dann außerhalb von dir existiert.'],
+  rueckfrage:'Hast du den Satz gefunden?',
+  coach:{fragen:['Was war bei euch allen klar und wurde nie benannt?',
+   'Wie war die Stimmung, wenn alle zuhause waren?',
+   'Woran hast du als Kind gemerkt, dass etwas nicht stimmt?'],
+   vorsicht:'Das ist die Facette, die am schnellsten zu tief geht. Wenn Gewalt, Vernachlässigung oder anhaltende Scham auftauchen: benennen, würdigen, und an eine Therapeutin verweisen. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.'}},
+
+ {id:'naehrend', wozuSchutz:'Wer nichts braucht, kann nicht enttäuscht werden.', wozuFrage:'Was wäre das Risiko, wenn du um etwas bittest — und nichts kommt?', name:'Was dich genährt hat',
+  frage:'Habe ich bekommen, was ich brauchte?',
+  anker:{haeuser:[4], punkte:['Mond','Venus','Ceres']},
+  regeln:[
+    function(f,P,H){
+      if(P.Mond===undefined) return null;
+      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Mond)+') beschreibt zwei Dinge gleichzeitig: '+
+        'was du an Fürsorge erlebt hast, und was du heute brauchst, um dich sicher zu fühlen. '+
+        'Bei dir läuft beides über <b>'+H.HT[hn-1]+'</b>.';
+    },
+    function(f,P,H){
+      var ms=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Mond'));})[0];
+      if(!ms) return null;
+      return '<b>Mond '+ms.typ+' Saturn</b> mit '+ms.o.toFixed(1)+'°. '+
+        (ms.art==='hart'
+         ? 'Der wichtigste Aspekt in diesem Raum. Bedürftig zu sein wurde früh als unpassend erlebt — vielleicht, weil kein Platz dafür war, vielleicht, weil jemand anderes mehr brauchte. Du hast gelernt, ohne auszukommen, und hältst das bis heute für Stärke. Es ist eher eine Gewohnheit.'
+         : 'Fürsorge und Verlässlichkeit gehörten bei dir zusammen. Das ist eine gute Grundlage — du kannst Nähe aushalten, ohne dich bedroht zu fühlen.');
+    },
+    function(f,P,H){
+      var mn=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Neptun')||(x.a==='Neptun'&&x.b==='Mond'));})[0];
+      if(!mn) return null;
+      return '<b>Mond '+mn.typ+' Neptun</b> mit '+mn.o.toFixed(1)+'°. Die Grenze zwischen deinen Gefühlen und denen anderer '+
+        'war früh durchlässig. Du hast womöglich Stimmungen im Haus mitgetragen, die nicht deine waren — und tust es manchmal noch.';
+    }],
+  uebung:['Einmal versorgt werden',
+   'Lass dir diese Woche einmal etwas geben, ohne Gegenleistung und ohne es später auszugleichen. Ein Essen, eine Hilfe, ein Gefallen. Sag danke und mehr nicht. Der Impuls, es zurückzuzahlen, ist die eigentliche Übung.'],
+  rueckfrage:'Hast du etwas angenommen, ohne auszugleichen?',
+  coach:{fragen:['Wer hat sich um dich gekümmert, als du klein warst?',
+   'Was hast du gebraucht und nicht bekommen?',
+   'Wen versorgst du heute — und wer versorgt dich?'],
+   vorsicht:'Nicht die Eltern bewerten. Es geht um die Erfahrung der Person, nicht um ein Urteil über andere.'}},
+
+ {id:'autoritaet', wozuSchutz:'Die alte Stimme zu befolgen ist anstrengend, aber vertraut. Ohne sie fehlt der Maßstab.', wozuFrage:'Woran würdest du dich messen, wenn du diese Stimme nicht mehr befolgst?', name:'Autorität und Anspruch',
+  frage:'Wessen Erwartungen trage ich noch mit?',
+  anker:{haeuser:[10], punkte:['Saturn','Sonne','Pluto']},
+  regeln:[
+    function(f,P,H){
+      if(P.Saturn===undefined) return null;
+      var hn=H.haus(P.Saturn)+1, zi=Math.floor(P.Saturn/30);
+      return 'Dein <b>Saturn in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.fmt(P.Saturn)+') beschreibt die Autoritätsfigur deiner Kindheit — '+
+        'und die innere Stimme, die daraus geworden ist. Sie meldet sich bei dir in <b>'+H.HT[hn-1]+'</b>. '+
+        'Der Ton ist meistens nicht deiner, auch wenn er sich inzwischen so anfühlt.';
+    },
+    function(f,P,H){
+      var ss=f.aspekte.filter(function(x){return ((x.a==='Sonne'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Sonne'));})[0];
+      if(!ss) return null;
+      return '<b>Sonne '+ss.typ+' Saturn</b> mit '+ss.o.toFixed(1)+'°. '+
+        (ss.art==='hart'
+         ? 'Anerkennung war an Bedingungen geknüpft. Du hast früh gelernt, dass du etwas leisten musst, um in Ordnung zu sein — und arbeitest bis heute gegen einen Maßstab, den niemand mehr überprüft.'
+         : 'Du hast Struktur als etwas Tragendes erlebt, nicht als Last. Das ist eine seltene und sehr brauchbare Grundlage.');
+    },
+    function(f,P,H){
+      var im10=f.planeten.filter(function(x){return x.haus===10;});
+      if(!im10.length) return null;
+      return 'Im 10. Haus steht <b>'+im10.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Das beschreibt auch, was von außen an dich herangetragen wurde: welche Rolle für dich vorgesehen war, '+
+        'bevor du selbst mitreden konntest.';
+    }],
+  uebung:['Die Stimme identifizieren',
+   'Wenn du dich diese Woche innerlich kritisierst, halt kurz inne und frag: <i>In wessen Stimme höre ich das gerade?</i> Nicht analysieren, nur bemerken. Wenn du eine Person erkennst, verliert der Satz einen Teil seiner Macht.'],
+  rueckfrage:'Hast du eine Stimme erkannt?',
+  coach:{fragen:['Wofür gab es bei euch Anerkennung?',
+   'Was hättest du werden sollen?',
+   'Welchen Satz hörst du innerlich, wenn du einen Fehler machst?'],
+   vorsicht:'Wenn Autoritätserfahrungen in Richtung Übergriffigkeit gehen, ist das kein Coaching-Thema mehr.'}},
+
+ {id:'unausgesprochen', wozuSchutz:'Nicht zu fragen bewahrt alle davor, eine Antwort aushalten zu müssen.', wozuFrage:'Was fürchtest du zu hören — und was wäre schlimmer: es zu wissen oder es weiter zu ahnen?', name:'Was nie ausgesprochen wurde',
+  frage:'Was läuft bei uns unter der Oberfläche?',
+  anker:{haeuser:[8,12], punkte:['Pluto','Neptun']},
+  regeln:[
+    function(f,P,H){
+      if(P.Pluto===undefined) return null;
+      var hn=H.haus(P.Pluto)+1;
+      var ic=(P.MC+180)%360;
+      var dIC=Math.abs(((P.Pluto-ic+180)%360+360)%360-180);
+      var t='Dein <b>Pluto im '+hn+'. Haus</b> ('+H.fmt(P.Pluto)+') zeigt, wo bei dir das Ungesagte sitzt: in <b>'+H.HT[hn-1]+'</b>. ';
+      if(dIC<=5) t+='<b>Und er steht auf deinem IC</b> ('+dIC.toFixed(1)+'°) — das ist die deutlichste Variante: '+
+        'In deiner Herkunft gab es ein Machtthema, über das nicht geredet wurde. Alle wussten es, niemand benannte es.';
+      return t;
+    },
+    function(f,P,H){
+      var im12=f.planeten.filter(function(x){return x.haus===12;});
+      if(!im12.length) return null;
+      return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. Das beschreibt Anteile, '+
+        'die du selbst schlecht sehen kannst — oft solche, die in der Familie keinen Platz hatten und deshalb unsichtbar wurden.';
+    },
+    function(f,P,H){
+      var im8=f.planeten.filter(function(x){return x.haus===8;});
+      if(!im8.length) return null;
+      return 'Im 8. Haus steht <b>'+im8.map(function(x){return x.p;}).join(', ')+'</b>. Geheimnisse, Geld, Abhängigkeit — '+
+        'Themen, über die in Familien selten offen gesprochen wird und die trotzdem alles mitbestimmen.';
+    }],
+  uebung:['Eine Frage stellen, die du nie gestellt hast',
+   'Wenn es möglich und sicher ist: Stell diese Woche einer Person aus deiner Familie eine Frage, die du nie gestellt hast. Wenn das nicht geht, schreib sie auf und beantworte sie, so gut du kannst, selbst. Beides bewegt etwas.'],
+  rueckfrage:'Hast du die Frage gestellt oder aufgeschrieben?',
+  coach:{fragen:['Worüber wurde bei euch nicht gesprochen?',
+   'Was hast du als Kind gewusst, ohne dass es dir jemand gesagt hat?',
+   'Gibt es in deiner Familie eine Geschichte, die alle kennen und niemand erzählt?'],
+   vorsicht:'Familiengeheimnisse können Traumatisches enthalten. Nicht graben, nicht spekulieren, nichts andeuten. Wenn etwas aufbricht, gehört das begleitet.'}},
+
+ {id:'uebernommen', wozuSchutz:'Geerbte Sätze fühlen sich wie Wahrheit an. Sie zu prüfen hieße, allein zu entscheiden.', wozuFrage:'Wem wärst du untreu, wenn du es anders siehst als deine Familie?', name:'Was du übernommen hast',
+  frage:'Welche Muster gehören gar nicht mir?',
+  anker:{haeuser:[2,4], punkte:['Saturn','Mond','Knoten']},
+  regeln:[
+    function(f,P,H){
+      var nn=(P.Knoten!==undefined)?P.Knoten:null;
+      if(nn===null) return null;
+      var sn=(nn+180)%360, hs=H.haus(sn)+1, hn=H.haus(nn)+1;
+      return 'Dein <b>Südknoten im '+hs+'. Haus</b> beschreibt das Vertraute — das, was du schon mitbringst und worin du dich '+
+        'automatisch einrichtest: <b>'+H.HT[hs-1]+'</b>. Vieles davon ist nicht deine Entscheidung, sondern Erbe. '+
+        'Der Nordknoten gegenüber, im '+hn+'. Haus, zeigt die Richtung, in die du dich davon wegbewegst.';
+    },
+    function(f,P,H){
+      if(P.Saturn===undefined||P.Mond===undefined) return null;
+      var hs=H.haus(P.Saturn)+1;
+      return 'Saturn im '+hs+'. Haus ist die Stelle, an der du dich zusammenreißt. '+
+        'Zusammenreißen ist fast immer etwas Erlerntes — es beschreibt, was in deiner Familie als richtig galt, '+
+        'nicht was dir entspricht.';
+    },
+    function(f,P,H){
+      var im2=f.planeten.filter(function(x){return x.haus===2;});
+      if(!im2.length) return null;
+      return 'Im 2. Haus steht <b>'+im2.map(function(x){return x.p;}).join(', ')+'</b>. Was Dinge wert sind, '+
+        'lernt man zuhause, bevor man es selbst prüfen kann. Diese Sätze sitzen tief und werden selten hinterfragt.';
+    }],
+  uebung:['Drei Sätze prüfen',
+   'Schreib drei Überzeugungen auf, die du über Geld, Arbeit oder Liebe hast. Frag bei jeder: <i>Habe ich das selbst herausgefunden oder mitbekommen?</i> Was mitgebracht ist, darf bleiben — aber als Wahl, nicht als Wahrheit.'],
+  rueckfrage:'Hast du deine drei Sätze geprüft?',
+  coach:{fragen:['Welchen Satz über Geld hast du von zuhause?',
+   'Was war bei euch selbstverständlich, das du heute merkwürdig findest?',
+   'Worin bist du deinen Eltern ähnlich, obwohl du es nicht wolltest?'],
+   vorsicht:'Nicht zum Abgrenzen drängen. Manche Muster sind nützlich und dürfen behalten werden.'}},
+
+ {id:'geschwister', wozuSchutz:'Die alte Rolle sichert einen Platz. Ohne sie ist unklar, wo man hingehört.', wozuFrage:'Was wäre dein Platz, wenn du diese Rolle nicht mehr spielst?', name:'Geschwister und Nahbereich',
+  frage:'Welche Rolle hatte ich in der Familie?',
+  anker:{haeuser:[3], punkte:['Merkur','Mars']},
+  regeln:[
+    function(f,P,H){
+      var im3=f.planeten.filter(function(x){return x.haus===3;});
+      if(!im3.length) return 'Dein 3. Haus ist unbesetzt. Geschwister und das nahe Umfeld sind in deinem Chart kein großes Thema — '+
+        'die prägenden Erfahrungen liegen woanders.';
+      return 'Im 3. Haus — Geschwister, Nachbarschaft, das Nahe — steht <b>'+im3.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Hier entscheidet sich, welche Rolle du in der Konstellation hattest: die Vermittelnde, die Laute, die Unsichtbare.';
+    },
+    function(f,P,H){
+      var h=f.herrscher.filter(function(x){return x.haus===3;})[0];
+      if(!h) return null;
+      return 'Der Herrscher deines 3. Hauses ist <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
+        'Deine Art zu sprechen und dich mitzuteilen hängt an <b>'+H.HT[h.inHaus-1]+'</b> — auch heute noch.';
+    },
+    function(f,P,H){
+      if(P.Merkur===undefined) return null;
+      var zi=Math.floor(P.Merkur/30);
+      return 'Dein <b>Merkur in '+H.SIGNS[zi]+'</b> beschreibt, wie du damals gelernt hast, dich verständlich zu machen. '+
+        'Kommunikationsmuster aus der Kindheit sind zäh — man merkt sie am ehesten daran, wie man in Stresssituationen redet.';
+    }],
+  uebung:['Deine Rolle benennen',
+   'Beschreib in drei Wörtern, welche Rolle du in deiner Familie hattest. Die Vernünftige, die Vermittlerin, die Unauffällige. Dann frag dich: <i>Spiele ich die heute noch — bei der Arbeit, bei Freundinnen?</i>'],
+  rueckfrage:'Hast du deine Rolle erkannt?',
+  coach:{fragen:['Als was galtst du in deiner Familie?',
+   'Wer hat bei euch geschlichtet?',
+   'Welche Rolle hast du übernommen, weil sie frei war?'],
+   vorsicht:'Rollen sind oft mit Loyalität verbunden. Nicht drängen, sie abzulegen — erst einmal reicht, sie zu sehen.'}},
+
+ {id:'daraus', wozuSchutz:'Alles beim Alten zu lassen ist loyal und verlangt keine Rechtfertigung.', wozuFrage:'Was hättest du zu verlieren, wenn du es bewusst anders machst?', name:'Was du daraus machst',
+  frage:'Wie komme ich da weiter, ohne alles abzulehnen?',
+  anker:{haeuser:[10,9], punkte:['Knoten','MC','Jupiter']},
+  regeln:[
+    function(f,P,H){
+      var nn=(P.Knoten!==undefined)?P.Knoten:null;
+      if(nn===null) return null;
+      var hn=H.haus(nn)+1;
+      return 'Dein <b>Nordknoten im '+hn+'. Haus</b> zeigt die Richtung: <b>'+H.HT[hn-1]+'</b>. '+
+        'Das ist nicht, was du gut kannst — es ist das, was sich ungewohnt anfühlt und trotzdem stimmt. '+
+        'Entwicklung heißt hier nicht, die Herkunft abzulehnen, sondern sie zu nutzen und trotzdem woanders hinzugehen.';
+    },
+    function(f,P,H){
+      if(P.MC===undefined) return null;
+      var zi=Math.floor(P.MC/30);
+      var ic=(P.MC+180)%360, zi2=Math.floor(ic/30);
+      return 'Deine <b>MC-IC-Achse steht in '+H.SIGNS[zi]+' und '+H.SIGNS[zi2]+'</b>. '+
+        'Das ist die Achse zwischen Herkunft und eigenem Weg. Beide Enden gehören zu dir — '+
+        'die Frage ist nicht, welches gewinnt, sondern wie du zwischen ihnen hin und her gehst, ohne eins zu opfern.';
+    },
+    function(f,P,H){
+      if(P.Jupiter===undefined) return null;
+      var hn=H.haus(P.Jupiter)+1;
+      return 'Dein <b>Jupiter im '+hn+'. Haus</b> ist die Ressource in diesem Raum: In <b>'+H.HT[hn-1]+'</b> '+
+        'findest du leichter Zugang zu etwas Eigenem, das nicht aus deiner Herkunft stammt.';
+    }],
+  uebung:['Eine Sache bewusst anders machen',
+   'Wähl eine einzige Sache, die in deiner Familie üblich war, und mach sie diese Woche bewusst anders. Klein reicht — wie man Konflikte anspricht, wie man Geschenke macht, wie man einen Sonntag verbringt. Es geht nicht ums Ablehnen, sondern darum, zu merken, dass es eine Wahl ist.'],
+  rueckfrage:'Hast du eine Sache anders gemacht?',
+  coach:{fragen:['Was möchtest du aus deiner Familie behalten?',
+   'Was hast du bewusst anders gemacht — und hat es funktioniert?',
+   'Was würdest du einem Kind weitergeben wollen?'],
+   vorsicht:'Nicht zum Bruch raten. Abgrenzung und Kontaktabbruch sind sehr verschiedene Dinge, und Letzteres ist keine Coaching-Empfehlung.'}}
+
+ ]
+};
+var WOZU={"atmosphaere": ["Nicht hinzusehen hält das Bild der Familie intakt. Zu benennen, wie es war, verändert die Geschichte.", "Was ginge verloren, wenn du aussprichst, wie es wirklich war?"], "naehrend": ["Keine Bedürfnisse zu haben macht unabhängig von Menschen, die sie nicht erfüllt haben.", "Was müsstest du erwarten dürfen, wenn du zugibst, dass du etwas brauchst?"], "autoritaet": ["Dem inneren Maßstab zu folgen ist vertraut und gibt Richtung. Ohne ihn müsstest du selbst entscheiden, was genug ist.", "Wer entscheidet, wann es reicht, wenn nicht diese Stimme?"], "unausgesprochen": ["Schweigen schützt alle Beteiligten. Sprechen bringt Bewegung in etwas, das mühsam stillgestellt wurde.", "Wen würdest du in Schwierigkeiten bringen, wenn du es ansprichst?"], "uebernommen": ["Die geerbten Sätze zu behalten bedeutet Zugehörigkeit. Sie zu prüfen heißt, sich zu unterscheiden.", "Was würde sich zwischen dir und deiner Familie ändern, wenn du anders denkst?"], "geschwister": ["Die alte Rolle weiterzuspielen macht dich berechenbar und gebraucht. Sie abzulegen heißt, deinen Platz neu zu verhandeln.", "Welchen Platz hättest du noch, wenn du diese Rolle nicht mehr ausfüllst?"], "daraus": ["Zwischen Herkunft und eigenem Weg zu schwanken vermeidet die Entscheidung. Beides halb zu leben tut niemandem weh.", "Wem gegenüber müsstest du dich erklären, wenn du dich klar entscheidest?"]};
+/* ── Seite bauen ──────────────────────────────────────── */
+function bauen(){
+  var box=document.getElementById('raum');
+  var p=null;
+  try{ p=window.AC_P?AC_P.aktives():null; }catch(e){}
+  if(!p){
+    box.innerHTML='<div class="rm-leer"><b>Noch kein Chart hinterlegt.</b><br><br>'+
+      'Dieser Raum sortiert sich nach deinem Chart — welche Facetten bei dir laut sind und welche leise. '+
+      'Dafür brauche ich einmal deine Geburtsdaten.<br><br><a class="wg-b" href="profile.html" style="display:inline-block;font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;padding:11px 22px;border-radius:22px;text-decoration:none;">Chart anlegen</a></div>';
+    return;
+  }
+  var P=AC_RAUM.chart(p);
+  var res=AC_RAUM.auswerten(P, RAUM);
+  var voll=AC_P.zeigeNamen();
+
+  /* Sortierung */
+  var h='<div class="rm-sortierung"><h3>'+(RAUM.sortierTitel||('Wo dein Thema bei dir sitzt'))+'</h3>'+
+    '<div class="hint">'+res.length+' Facetten, gewichtet nach deinem Chart — nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe.</div>';
+  res.forEach(function(r){
+    h+='<div class="rm-bal"><div>'+r.fc.name+'</div>'+
+      '<div class="bar"><i class="'+(r.rel<45?'leise':'')+'" style="width:'+Math.max(4,r.rel)+'%"></i></div>'+
+      '<div class="pz">'+r.rel+'</div></div>';
+  });
+  var laut=res.filter(function(r){return r.rel>=62;});
+  var leise=res.filter(function(r){return r.rel<45;});
+  h+='<div class="rm-fazit"><b>Bei dir '+(laut.length===1?'ist eine Facette':'sind '+laut.length+' Facetten')+' deutlich lauter als der Rest';
+  if(laut.length) h+=' — vor allem <b>'+laut[0].fc.name+'</b>';
+  h+='.</b> ';
+  if(leise.length) h+='Dagegen ist <b>'+leise[leise.length-1].fc.name+'</b> bei dir auffällig ruhig. '+
+    'Das ist selbst eine Aussage: Dort liegt dein Thema nicht, auch wenn du dort zuerst gesucht hättest. ';
+  h+='Fang oben an. Die unteren kannst du später aufklappen.</div></div>';
+
+  /* Facetten */
+  res.forEach(function(r,i){
+    var texte=AC_RAUM.text(r,P);
+    var istLaut=r.rel>=62;
+    h+='<details class="fa'+(istLaut?' laut':'')+'"'+(i<2?' open':'')+'>'+
+      '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
+      '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
+      '<div class="fa-inhalt">'+
+      '<div class="fa-frage">'+r.fc.frage+'</div>';
+
+    h+='<div class="fa-visuell">'+
+      (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
+      '<div class="fa-vtext"><b>'+r.fc.name+'</b><p>'+r.fc.frage+'</p>'+
+      '<div class="fa-vchips">'+
+        (r.f.planeten||[]).slice(0,5).map(function(x){return '<span class="vc">'+x.p+' im '+x.haus+'.</span>';}).join('')+
+        (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
+        (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
+      '</div></div></div>'+
+      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+    if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
+    else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
+    h+='</div>';
+
+    /* Rohdaten zum Nachprüfen */
+    var d=[];
+    r.f.planeten.forEach(function(x){ d.push(x.p+' im '+x.haus+'. Haus'); });
+    r.f.herrscher.forEach(function(x){ d.push('Herrscher '+x.haus+'. Haus: '+x.p+' im '+x.inHaus+'.'); });
+    r.f.aspekte.slice(0,3).forEach(function(x){ d.push(x.a+' '+x.typ+' '+x.b+' '+x.o.toFixed(1)+'°'); });
+    r.f.achsnah.forEach(function(x){ d.push(x.p+' auf '+x.zu+'-Grad ('+x.o.toFixed(1)+'°)'); });
+    /* Datenpaket für die visuelle Ansicht */
+    var vis={rel:r.rel, haeuser:(r.fc.anker.haeuser||[]),
+      planeten:r.f.planeten.map(function(x){return [x.p,x.haus];}),
+      herrscher:r.f.herrscher.map(function(x){return [x.haus,x.p,x.inHaus];}),
+      aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
+      achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
+    h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+
+    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+      '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
+
+    if(r.fc.wozuFrage){
+      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+        '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
+        '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
+    }
+    h+=''+
+      '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
+      '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
+
+    h+='<details class="fa-coach"><summary>Für die Arbeit mit anderen — Gesprächsleitfaden</summary>'+
+      '<ul>'+r.fc.coach.fragen.map(function(q){return '<li>'+q+'</li>';}).join('')+'</ul>'+
+      '<div class="warn"><b>Vorsicht:</b> '+r.fc.coach.vorsicht+'</div></details>';
+
+    h+='</div></details>';
+  });
+
+  h+='<div class="tip" style="margin-top:20px;"><b>Wie du diesen Raum benutzt:</b> Nicht alles auf einmal. '+
+    'Nimm die oberste Facette, mach die Übung, und komm in ein paar Tagen zur Rückfrage zurück. '+
+    'Ein Raum ist kein Text zum Durchlesen, sondern eine Woche Arbeit.</div>';
+
+  box.innerHTML=h;
+
+  /* Rückfragen anschließen */
+  Array.prototype.forEach.call(box.querySelectorAll('.fa-wahl'),function(w){
+    var fid=w.getAttribute('data-f');
+    [['ja','Ja'],['teils','Ein bisschen'],['nein','Nein'],['spaeter','Später'] ].forEach(function(o){
+      var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+      b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',function(){
+        Array.prototype.forEach.call(w.children,function(c){c.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true');
+        try{
+          if(window.AC_WEG) AC_WEG.notieren({schluessel:'raum-'+RAUM.slug+'-'+fid,
+            titel:RAUM.name+' · '+fid, planet:'', punkt:'', art:'uebung', antwort:o[0], chips:[]});
+        }catch(e){}
+      });
+      w.appendChild(b);
+    });
+  });
+}
+bauen();
+
+
+</script>
+</body></html>

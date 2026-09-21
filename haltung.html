@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haltung &amp; Methode · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="begriffe.js" defer></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ha-satz{background:var(--nacht-bg);border-radius:20px;padding:26px 28px;margin-bottom:20px;}
+.ha-satz p{margin:0;font-family:var(--serif);font-size:clamp(19px,3.6vw,25px);line-height:1.4;color:var(--nacht);}
+.ha-zwei{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:16px 0;}
+@media(max-width:640px){.ha-zwei{grid-template-columns:1fr;}}
+.ha-k{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:17px 19px;}
+.ha-k h4{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin:0 0 6px;}
+.ha-k p{margin:0;font-size:14.8px;line-height:1.6;}
+.ha-prinzip{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:18px 20px;margin-bottom:11px;}
+.ha-prinzip .nr{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--messing);letter-spacing:.08em;}
+.ha-prinzip h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:3px 0 8px;}
+.ha-prinzip p{margin:0 0 9px;font-size:15px;line-height:1.65;}
+.ha-prinzip p:last-child{margin-bottom:0;}
+.ha-prinzip .ausc{background:var(--bg);border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.3px;line-height:1.6;}
+.ha-prinzip .ausc b{color:var(--nacht);}
+table.ha{width:100%;border-collapse:collapse;font-size:14.5px;margin:14px 0;}
+table.ha th,table.ha td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--linie);vertical-align:top;}
+table.ha th{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--messing);font-weight:500;}
+.ha-quelle{background:var(--bg);border-radius:14px;padding:15px 17px;margin-bottom:9px;}
+.ha-quelle .qn{font-family:var(--serif);font-size:17px;color:var(--nacht);}
+.ha-quelle .qw{font-family:var(--sans);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+ border-radius:11px;padding:2px 9px;margin-left:8px;vertical-align:2px;}
+.ha-quelle .qw.stark{background:var(--nacht);color:#fff;}
+.ha-quelle .qw.mittel{background:var(--messing);color:#fff;}
+.ha-quelle .qw.akzent{background:var(--linie);color:var(--leise);}
+.ha-quelle p{margin:7px 0 0;font-size:14.5px;line-height:1.6;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Methode</div>
+<h1>Woher das <em>hier</em> kommt.</h1>
+<p class="lede">Astrologie beschreibt Muster. Sie sagt aber nicht, was man damit macht. Dafür braucht es eine Arbeitsweise — und die kommt hier aus der Psychologie, nicht aus dem Chart. Diese Seite legt offen, welche.</p>
+
+<div class="ha-satz"><p>Das Chart liefert die Landkarte. Die Haltung entscheidet, wie man damit geht.</p></div>
+
+<h2>Das Rückgrat: Alfred Adler</h2>
+
+<p>Adler war einer der drei großen Wiener Psychologen und der am wenigsten bekannte — zu Unrecht. Seine Individualpsychologie passt aus einem bestimmten Grund besser zur Astrologie als alles andere: <b>Sie löst das Determinismus-Problem.</b></p>
+
+<div class="ha-zwei">
+  <div class="ha-k"><h4>Das Problem</h4>
+  <p>Astrologie klingt schnell nach Schicksal. „Du hast Saturn im 2. Haus, deshalb ist dein Selbstwert gering." Das erklärt etwas und nimmt gleichzeitig jede Handlungsfähigkeit. Genau daran scheitern die meisten Readings.</p></div>
+  <div class="ha-k"><h4>Adlers Antwort</h4>
+  <p>Verhalten wird nicht von der Vergangenheit verursacht, sondern auf ein Ziel hin ausgerichtet. Nicht „warum bin ich so", sondern <b>wozu ist das gut</b>. Damit wird aus einer Diagnose eine Frage — und aus einer Zuschreibung eine Wahl.</p></div>
+</div>
+
+<div class="ha-prinzip"><span class="nr">Prinzip 1</span>
+<h3>Finalität statt Ursache</h3>
+<p>Jedes Muster erfüllt einen Zweck. Sonst gäbe es das Muster nicht. Wer sich zurücknimmt, schützt damit etwas — vor Ablehnung, vor Enttäuschung, vor der Anstrengung, gesehen zu werden.</p>
+<div class="ausc"><b>So steht es in den Räumen:</b> Bei jeder Facette findest du die Wozu-Frage. „Was schützt dich daran? Und was hättest du zu verlieren, wenn du es ablegst?" Das ist keine rhetorische Frage — die ehrliche Antwort darauf ist der eigentliche Fortschritt.</div></div>
+
+<div class="ha-prinzip"><span class="nr">Prinzip 2</span>
+<h3>Minderwertigkeitsgefühl und Kompensation</h3>
+<p>Adler beschreibt, dass Menschen dort, wo sie sich unterlegen fühlen, überdurchschnittlich viel Energie hineinstecken — oft in genau derselben Richtung. Aus dem Gefühl, nicht zu genügen, entsteht Leistung. Aus dem Gefühl, nicht gesehen zu werden, entsteht Bühne.</p>
+<p>Das ist <b>keine Schwäche</b>, sondern ein Antriebsmotor. Er wird nur dann zum Problem, wenn er das Ziel ersetzt.</p>
+<div class="ausc"><b>So steht es in den Räumen:</b> Im Raum <a href="raum-wunder-punkt.html">Der wunde Punkt</a> gibt es dafür eine eigene Facette — „Womit du es überdeckst". Die häufigste Reaktion auf eine wunde Stelle ist nicht Rückzug, sondern Übertreibung in dieselbe Richtung.</div></div>
+
+<div class="ha-prinzip"><span class="nr">Prinzip 3</span>
+<h3>Die Lebensaufgaben</h3>
+<p>Adler sagt, ein Leben entscheidet sich an wenigen Aufgaben: <b>Arbeit, Gemeinschaft und Liebe</b> — später ergänzt um das Verhältnis zu sich selbst und zum Sinn. Niemand ist in allen gleich gut, und die schwächste bestimmt, wie es einem geht.</p>
+<table class="ha">
+<tr><th>Adlers Aufgabe</th><th>Der Raum dazu</th></tr>
+<tr><td>Arbeit</td><td><a href="raum-berufung.html">Berufung</a>, Alltag</td></tr>
+<tr><td>Gemeinschaft</td><td>Zugehörigkeit, <a href="raum-herkunft.html">Herkunft</a></td></tr>
+<tr><td>Liebe</td><td><a href="raum-naehe.html">Nähe</a></td></tr>
+<tr><td>Selbst</td><td><a href="raum-selbstwert.html">Selbstwert</a>, <a href="raum-unerlaubte.html">Das Unerlaubte</a>, <a href="raum-wunder-punkt.html">Der wunde Punkt</a></td></tr>
+<tr><td>Sinn</td><td><a href="raum-berufung.html">Berufung</a>, Körper</td></tr>
+</table>
+<div class="ausc">Die Räume dieser Plattform sind aus der Astrologie hergeleitet — und decken sich fast vollständig mit Adlers Aufgaben. Das ist kein Zufall: Beide Systeme beschreiben, woran sich ein Leben entscheidet.</div></div>
+
+<div class="ha-prinzip"><span class="nr">Prinzip 4</span>
+<h3>Ermutigung statt Lob</h3>
+<p>Adlers wichtigstes Werkzeug ist nicht Bestätigung, sondern <b>Zutrauen</b>. Lob bewertet von oben herab und macht abhängig. Ermutigung sagt: Du kannst das, und du entscheidest.</p>
+<div class="ausc"><b>Der Unterschied im Satz:</b> „Das hast du toll gemacht" ist Lob. „Du hast das durchgezogen, obwohl es unangenehm war" ist Ermutigung. Das erste bewertet, das zweite beschreibt.</div></div>
+
+<div class="ha-prinzip"><span class="nr">Prinzip 5</span>
+<h3>Aufgabentrennung</h3>
+<p>Die vielleicht praktischste Idee: <b>Wessen Aufgabe ist das?</b> Ob dich jemand mag, ist nicht deine Aufgabe, sondern seine. Deine Aufgabe ist, wie du dich verhältst. Diese Trennung klingt banal und beendet eine erstaunliche Menge unnötiger Sorge.</p>
+<div class="ausc"><b>Für Transite besonders brauchbar:</b> Dass Saturn über deine Sonne läuft, liegt nicht bei dir. Wie du die Wochen gestaltest, schon. Die Trennung zwischen beidem ist die ganze Arbeit.</div></div>
+
+<div class="ha-prinzip"><span class="nr">Werkzeug</span><h3>Die frühe Erinnerung</h3><p>Adlers bekannteste Technik: Man fragt nach einer der frühesten Erinnerungen — und es spielt keine Rolle, ob sie stimmt. Wichtig ist, <b>welche geblieben ist</b>. Aus tausenden Momenten bleiben ein paar übrig, und sie bleiben nicht zufällig.</p><div class="ausc"><a href="erinnerung.html"><b>Zum Werkzeug →</b></a> Sechs Fragen zum Antippen, daraus entsteht deine Lebensstil-Skizze — und ein Vergleich mit deinem Chart.</div></div>
+
+<h2>Was sonst noch einfließt</h2>
+<p class="sub">Alles Geliehene wird hier als geliehen benannt. Und nicht alles ist gleich gut belegt — das steht dabei.</p>
+
+<div class="ha-quelle"><span class="qn">Adlers Individualpsychologie</span><span class="qw stark">Rückgrat</span>
+<p>Trägt die Arbeitsweise dieser Plattform. Gut zugänglich über Kishimi und Koga, „Du musst nicht von allen gemocht werden" — ein Gespräch zwischen Philosoph und jungem Mann, das Adler in Alltagssprache übersetzt.</p></div>
+
+<div class="ha-quelle"><span class="qn">Verhaltensforschung zu Gewohnheiten</span><span class="qw mittel">Übungen</span>
+<p>Warum die Übungen hier immer klein sind und an Bestehendes angehängt werden: Kleine Schritte halten, große nicht. Gut belegt und praktisch — nachzulesen bei James Clear.</p></div>
+
+<div class="ha-quelle"><span class="qn">Akzeptanz- und Commitment-Ansatz</span><span class="qw mittel">Umgang mit Spannung</span>
+<p>Gefühle werden nicht bekämpft, sondern zugelassen, während man trotzdem nach seinen Werten handelt. Das steckt hinter dem Grundsatz, dass Spannungsachsen nicht aufgelöst, sondern abwechselnd bedient werden. Klinisch gut untersucht.</p></div>
+
+<div class="ha-quelle"><span class="qn">Stoische Unterscheidung</span><span class="qw akzent">Akzent</span>
+<p>Was liegt bei mir, was nicht. Zweitausend Jahre älter als Adlers Aufgabentrennung und dieselbe Idee. Nützlich vor allem beim Umgang mit Transiten.</p></div>
+
+<div class="ha-quelle"><span class="qn">Jungs Schattenbegriff</span><span class="qw akzent">sparsam</span>
+<p>Der Gedanke, dass Abgelehntes nicht verschwindet, sondern wirkt, ist brauchbar und steckt in der <a href="lilith-arbeit.html">Lilith-Arbeit</a>. Der Rest von Jung — Archetypen, Synchronizität — wird hier bewusst weggelassen: Astrologie plus Jung kippt schnell ins Mystische, und die Stärke dieser Plattform ist die Nüchternheit.</p></div>
+
+<h2>Warum die Plattform nichts für dich entscheidet</h2>
+<p>Es wäre naheliegend, die Darstellung automatisch an dein Chart anzupassen — wer Merkur in Fische hat, bekommt Bilder, wer ihn in Jungfrau hat, bekommt Listen. Das wäre aber genau der Determinismus, den diese Seite ablehnt: Wenn die Zuordnung danebenliegt, merkt es niemand, und die Person hält sich für begriffsstutzig statt die Darstellung für falsch.</p>
+<div class="ha-prinzip" id="fm-hinweis"><span class="nr">Deshalb</span>
+<h3>Vorschlag statt Zuweisung</h3>
+<p>Auf den Raumseiten gibt es einen Umschalter: <b>Kurz, Ausführlich, Visuell</b>. Beim ersten Besuch wird eine Variante vorgeschlagen — mit Begründung, welche Merkur-Stellung dahintersteckt, und mit dem ausdrücklichen Hinweis, dass du es besser weißt als die Rechnung.</p>
+<div class="ausc"><b>Der Unterschied ist klein im Code und groß in der Haltung:</b> Ein Vorschlag mit Begründung und Ausstieg lässt dir die Entscheidung. Eine automatische Anpassung nimmt sie dir und tut so, als wäre sie keine.</div></div>
+
+<h2>Was hier nicht vorkommt</h2>
+
+<div class="tip"><b>Manifestation und „Energie anziehen".</b> Die Vorstellung, dass Gedanken Realität erzeugen, ist nicht belegt und hat eine unangenehme Kehrseite: Wem es schlecht geht, der hat dann selbst schuld. Das ist ein Mechanismus, der Menschen schadet — besonders denen, die ohnehin zu viel Verantwortung bei sich suchen. Hier steht deshalb nirgends, dass du dir etwas herbeidenken kannst.</div>
+
+<div class="tip"><b>Vorhersagen.</b> Ein Transit beschreibt eine Art von Bewegung, kein Ereignis. Alles auf dieser Plattform ist so formuliert — und wo es nicht gelingt, ist es ein Fehler und keine Absicht.</div>
+
+<div class="tip"><b>Diagnosen.</b> Ein Chart kann nichts Medizinisches feststellen. Wo Themen daran grenzen, steht das ausdrücklich dabei. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.</div>
+
+<h2>Der Satz, auf den alles hinausläuft</h2>
+<div class="ha-satz"><p>Du bist nicht, was dein Chart zeigt. Du bist, was du damit machst.</p></div>
+<p>Adler würde das so formulieren: Nicht die Umstände bestimmen ein Leben, sondern die Bedeutung, die man ihnen gibt. Ein Chart ist ein Umstand. Die Bedeutung liegt bei dir.</p>
+
+<div class="weiter"><a href="grenzen.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Wann du nicht deutest</span></a><a href="raeume.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die R&auml;ume</span></a></div>
+<div class="foot">Haltung &amp; Methode &middot; Geliehenes wird als geliehen benannt. Astrologie liefert die Landkarte, nicht die Arbeitsweise.</div>
+</div>
+</body></html>

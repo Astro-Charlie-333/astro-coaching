@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Räume · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:34px 20px 80px;}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:var(--papier);margin-bottom:0;}
+.ac-leiste-inner{max-width:820px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:10px;}
+.ac-marke{font-family:var(--sans);font-size:15px;color:var(--tinte);text-decoration:none;letter-spacing:.01em;}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+.ac-nav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap;}
+.ac-nav a{font-family:var(--sans);font-size:14px;color:var(--leise);text-decoration:none;
+ padding:6px 12px;border-radius:16px;}
+.ac-nav a:hover{background:var(--nacht-bg);color:var(--nacht);}
+.ac-nav a.ist{background:var(--nacht);color:#fff;}
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+
+.rl-gitter{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-bottom:22px;}
+.rk{display:flex;flex-direction:column;gap:6px;background:var(--papier);border:1px solid var(--linie);
+ border-radius:18px;padding:20px 22px;text-decoration:none;min-height:172px;}
+.rk.offen{transition:border-color .15s,background .15s,transform .15s;}
+.rk.offen:hover{border-color:var(--nacht);background:var(--nacht-bg);transform:translateY(-2px);}
+.rk.bald{opacity:.55;cursor:default;border-style:dashed;background:none;}
+.rk-name{font-family:var(--serif);font-size:21px;font-weight:400;color:var(--tinte);line-height:1.15;}
+.rk-frage{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.4;flex:1;}
+.rk-anker{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--leise);line-height:1.5;}
+.rk-marke{align-self:flex-start;font-family:var(--sans);font-size:9.5px;letter-spacing:.09em;
+ text-transform:uppercase;border-radius:11px;padding:3px 10px;margin-top:4px;}
+.rk-marke.fertig{background:var(--nacht);color:#fff;}
+.rk-marke.geplant{background:var(--linie);color:var(--leise);}
+.rl-wie{background:var(--messing-bg);border-radius:18px;padding:22px 24px;margin-bottom:20px;}
+.rl-wie h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 10px;}
+.rl-wie ol{margin:0 0 0 20px;padding:0;font-size:15px;line-height:1.75;}
+.rl-wie li{margin-bottom:3px;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html" class="ist">Räume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+<div class="eyebrow">Arbeiten</div>
+<h1>Die <em>Räume.</em></h1>
+<p class="lede">Zehn Themen, mit denen Menschen tatsächlich kommen — alle offen. Jeder Raum hat mehrere Facetten — und dein Chart entscheidet, welche davon bei dir laut sind und welche du getrost liegen lassen kannst. Das ist der Unterschied zwischen vollständig und überfordernd.</p>
+<div class="rl-wie"><h3>So funktioniert ein Raum</h3><ol><li>Du kommst mit einer Frage herein — der Satz, den du tatsächlich denkst.</li><li>Die Plattform gewichtet die Facetten nach deinem Chart und sortiert sie.</li><li>Zu jeder Facette: was deine Stellungen dazu sagen, mit den Daten zum Nachprüfen.</li><li>Eine Übung für diese Woche. Eine, nicht fünf.</li><li>Nach ein paar Tagen die Rückfrage — vier Knöpfe, fertig.</li><li>Und eine Schublade für die Arbeit mit anderen: Gesprächsfragen und Grenzen.</li></ol></div>
+<div class="rl-gitter">
+<a class="rk offen" href="raum-selbstwert.html"><div class="rk-name">Selbstwert</div><div class="rk-frage">&bdquo;Warum nehme ich eigentlich zu wenig?&ldquo;</div><div class="rk-anker">2. Haus, Venus, Saturn, Lilith</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-berufung.html"><div class="rk-name">Berufung</div><div class="rk-frage">&bdquo;Wofür bin ich eigentlich hier?&ldquo;</div><div class="rk-anker">10./9./2. Haus, MC, Mondknoten, Jupiter</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-naehe.html"><div class="rk-name">Nähe</div><div class="rk-frage">&bdquo;Warum wiederholt sich das immer?&ldquo;</div><div class="rk-anker">7./5./8. Haus, Venus, Mars, Mond, Lilith</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-unerlaubte.html"><div class="rk-name">Das Unerlaubte</div><div class="rk-frage">&bdquo;Was traue ich mir eigentlich nicht zu?&ldquo;</div><div class="rk-anker">Lilith, ihr Haus, ihre Aspekte</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-wunder-punkt.html"><div class="rk-name">Der wunde Punkt</div><div class="rk-frage">&bdquo;Warum trifft mich das jedes Mal so?&ldquo;</div><div class="rk-anker">Chiron, sein Haus und seine Aspekte</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-herkunft.html"><div class="rk-name">Herkunft</div><div class="rk-frage">&bdquo;Was läuft aus meiner Familie noch mit?&ldquo;</div><div class="rk-anker">4./3./8./12. Haus, IC, Mond, Saturn, Pluto</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-anders-verdrahtet.html"><div class="rk-name">Anders verdrahtet</div><div class="rk-frage">&bdquo;Warum ist der Alltag für mich so anstrengend?&ldquo;</div><div class="rk-anker">3./6./11./12. Haus, Merkur, Mond, Uranus</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-zugehoerigkeit.html"><div class="rk-name">Zugehörigkeit</div><div class="rk-frage">&bdquo;Warum fühle ich mich überall ein bisschen außen?&ldquo;</div><div class="rk-anker">11./3./12. Haus, Uranus, Saturn, Lilith</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-alltag.html"><div class="rk-name">Alltag</div><div class="rk-frage">&bdquo;Wie kriege ich Struktur, die hält?&ldquo;</div><div class="rk-anker">6./4./12. Haus, Saturn, Mond, Mars</div><span class="rk-marke fertig">offen</span></a>
+<a class="rk offen" href="raum-koerper.html"><div class="rk-name">Körper</div><div class="rk-frage">&bdquo;Was braucht mein Körper eigentlich von mir?&ldquo;</div><div class="rk-anker">1./6./12. Haus, Mars, Venus, Aszendent</div><span class="rk-marke fertig">offen</span></a>
+</div>
+
+<div class="tip"><b>Die Haltung dahinter:</b> Die Räume arbeiten nach Alfred Adlers Grundsatz, dass jedes Muster einen Zweck erfüllt — die Frage ist nicht „warum bin ich so", sondern „wozu ist das gut". Woher die Methode sonst noch kommt, steht unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
+<div class="tip"><b>Warum die Räume so heißen, wie sie heißen:</b> Nicht nach der Technik, sondern nach der Frage. Niemand wacht auf und will „Lilith-Arbeit". Menschen wachen auf und denken „warum traue ich mir das nicht zu". Die Fachbegriffe stehen drin — aber sie sind nicht die Tür.</div>
+<div class="tip"><b>Und die Grenze, die überall gilt:</b> Ein Raum ist Selbstarbeit oder Coaching — keine Therapie. Wenn beim Arbeiten etwas hochkommt, das größer ist als eine Erinnerung, gehört das begleitet. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.</div>
+<div class="foot">Die R&auml;ume &middot; Jeder Raum gewichtet seine Facetten nach deinem Chart. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
+</div>
+</body></html>
