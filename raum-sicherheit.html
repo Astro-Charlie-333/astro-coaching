@@ -205,9 +205,9 @@ body.fmt-visuell .fa-frage{display:none;}
 <h1>Sicherheit & Fallenlassen.</h1>
 <div class="rm-tuer">
   <div class="rm-frage">&bdquo;Was brauche ich, um mich fallen lassen zu können?&ldquo;</div>
-  <p>Die Frage wird meistens anders gestellt — nach Technik, nach Tipps, nach dem, was angeblich gut sein soll. Die nützlichere Frage ist eine andere: <b>Was brauchst du, um dich sicher zu fühlen?</b> Wer sich nicht sicher fühlt, kann sich nicht fallen lassen, und daran ändert keine Technik etwas. Sechs Facetten: was Sicherheit für dich bedeutet, ob du Nein sagen kannst, was du dir versagst, warum Loslassen schwerfällt, wie du darüber sprichst und wie präsent du in deinem Körper bist.</p>
+  <p>Die Frage wird meistens anders gestellt — nach Technik, nach Tipps, nach dem, was angeblich gut sein soll. Die nützlichere Frage ist eine andere: <b>Was brauchst du, um dich sicher zu fühlen?</b> Wer sich nicht sicher fühlt, kann sich nicht fallen lassen, und daran ändert keine Technik etwas. Zehn Facetten: was Sicherheit für dich bedeutet, ob du Nein sagen kannst, wie dein Begehren überhaupt anspringt, was dir gefällt, was dich zuverlässig bremst, warum Loslassen schwerfällt, wie du darüber sprichst, wie präsent du im Körper bist und was du hinterher brauchst.</p>
 </div>
-<div class="rm-hinweis"><b>Wie dieser Raum gebaut ist:</b> Er beschreibt <b>Bedürfnisse, keine Praktiken</b> — es steht hier nichts Explizites, und das ist Absicht. Es geht um die Voraussetzungen, nicht um das Wie. <br><br><b>Und eine klare Grenze:</b> Wenn du Übergriffe oder Gewalt erlebt hast, hilft dir kein Chart und keine Übung auf dieser Seite. Das ist keine Frage von Mustern, sondern etwas, das Begleitung braucht — und das ist behandelbar. Wenn beim Lesen etwas hochkommt, hör auf und sprich mit einer Therapeutin. Beim <a href="https://www.hilfetelefon.de" target="_blank" rel="noopener">Hilfetelefon Gewalt gegen Frauen</a> gibt es rund um die Uhr kostenlos und anonym Beratung: <b>116 016</b>.</div>
+<div class="rm-hinweis"><b>Wie dieser Raum gebaut ist:</b> Er beschreibt <b>Bedingungen und Vorlieben, keine Anleitungen</b>. Es geht darum, wie dein Begehren funktioniert, was es bremst und was du brauchst — nicht darum, was man tun sollte. Wo Fachwissen einfließt, das nicht aus der Astrologie stammt, steht das ausdrücklich dabei. <br><br><b>Und eine klare Grenze:</b> Wenn du Übergriffe oder Gewalt erlebt hast, hilft dir kein Chart und keine Übung auf dieser Seite. Das ist keine Frage von Mustern, sondern etwas, das Begleitung braucht — und das ist behandelbar. Wenn beim Lesen etwas hochkommt, hör auf und sprich mit einer Therapeutin. Beim <a href="https://www.hilfetelefon.de" target="_blank" rel="noopener">Hilfetelefon Gewalt gegen Frauen</a> gibt es rund um die Uhr kostenlos und anonym Beratung: <b>116 016</b>.</div>
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-naehe.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Nähe</span></a></div>
@@ -494,6 +494,189 @@ var RAUM = {
    'Wann gehst du in den Kopf — gibt es einen Auslöser?',
    'Was hilft dir zurück?'],
    vorsicht:'Wenn jemand beschreibt, regelmäßig neben sich zu stehen oder den Kontakt zum Körper zu verlieren, ist das kein Coaching-Thema. Freundlich benennen und an eine Therapeutin verweisen — das ist behandelbar und lohnt sich.'}}
+,
+
+ {id:'begehren', wozuSchutz:'Solange du glaubst, mit dir stimme etwas nicht, musst du nichts einfordern.',
+  wozuFrage:'Was würde sich ändern, wenn du wüsstest, dass dein Begehren einfach anders anspringt — und nicht fehlt?',
+  name:'Wie dein Begehren anspringt',
+  frage:'Warum habe ich seltener Lust als andere — oder erst danach?',
+  anker:{haeuser:[5,8], punkte:['Mars','Venus','Pluto']},
+  regeln:[
+    function(f,P,H){
+      return '<b>Das Wichtigste zuerst, und es hat nichts mit dem Chart zu tun:</b> Es gibt zwei Arten, wie Lust entsteht. '+
+        'Die eine kommt <b>von selbst</b>, ohne Anlass — die kennt man aus Filmen. Die andere entsteht erst als <b>Antwort</b> '+
+        'auf Berührung, Nähe oder Stimmung: Man beginnt ohne Lust und bekommt sie unterwegs. Beides ist normal. '+
+        'Die zweite Variante ist bei Frauen sogar häufiger — nur hält man sie oft fälschlich für ein Problem.';
+    },
+    function(f,P,H){
+      if(P.Mars===undefined) return null;
+      var zi=Math.floor(P.Mars/30), hn=H.haus(P.Mars)+1;
+      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
+      var mod=['kardinal','fix','veränderlich'][zi%3];
+      return 'Dein <b>Mars in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, wie dein Antrieb ankommt: '+
+        (el==='Feuer'?'schnell und direkt. Du merkst Lust meistens als Erstes.'
+         :el==='Erde'?'körperlich und langsam. Bei dir kommt sie über Berührung, nicht über Gedanken.'
+         :el==='Luft'?'über den Kopf. Bei dir beginnt es mit einem Gespräch, einer Idee, einer Spannung — nicht mit dem Körper.'
+         :'stimmungsabhängig und wellenförmig. Bei dir kommt Lust dann, wenn emotional etwas stimmt, und sonst gar nicht.')+
+        ' Und '+mod+': '+
+        (mod==='kardinal'?'du beginnst gern und verlierst schnell wieder.'
+         :mod==='fix'?'du brauchst Anlauf, bleibst dann aber dabei.'
+         :'du wechselst gern und langweilst dich bei Gleichförmigkeit.');
+    },
+    function(f,P,H){
+      if(P.Venus===undefined||P.Mars===undefined) return null;
+      var vm=f.aspekte.filter(function(x){return (x.a==='Venus'&&x.b==='Mars')||(x.a==='Mars'&&x.b==='Venus');})[0];
+      if(!vm) return 'Venus und Mars bilden bei dir keinen Aspekt. Zuneigung und Begehren laufen getrennt — '+
+        'du kannst jemanden sehr mögen und trotzdem keine Lust haben, und umgekehrt. Das ist kein Widerspruch und kein Mangel, '+
+        'sondern heißt nur: Bei dir müssen beide Seiten getrennt angesprochen werden.';
+      return '<b>Venus '+vm.typ+' Mars</b> mit '+vm.o.toFixed(1)+'°. '+
+        (vm.art==='weich'
+         ? 'Mögen und Wollen gehören bei dir zusammen. Das ist seltener, als man denkt — bei dir entsteht Lust aus Zuneigung, nicht gegen sie.'
+         : 'Mögen und Wollen reiben. Anziehung und Spannung hängen bei dir zusammen: Was ganz harmonisch ist, fühlt sich schnell nach nichts an. Gut zu wissen, weil man das leicht für Beziehungsprobleme hält.');
+    }],
+  uebung:['Rückwärts denken',
+   'Denk an eine Situation, in der du Lust hattest, und geh rückwärts: Was war vorher? Wie war der Tag, die Stimmung, der Raum, dein Kopf? Nicht was der andere gemacht hat — der <i>Kontext</i>. Bei den meisten Menschen ist der entscheidender als alles andere, und die wenigsten haben ihn je angeschaut.'],
+  rueckfrage:'Hast du deinen Kontext gefunden?',
+  coach:{fragen:['Kommt deine Lust von allein oder als Antwort auf etwas?',
+   'Was war beim letzten Mal anders, als es gut war?',
+   'Was glaubst du über dein Begehren — und woher hast du das?'],
+   vorsicht:'Wenn jemand grundsätzlich keine Lust empfindet und darunter nicht leidet, ist das kein Problem, das gelöst werden muss — Asexualität ist eine Orientierung, keine Störung. Und wenn jemand leidet: Das kann viele Ursachen haben, auch körperliche und medikamentöse. Dann gehört es ärztlich abgeklärt, nicht gecoacht.'}},
+
+ {id:'bremsen', wozuSchutz:'Eine Bremse hat einen Grund. Sie schützt vor etwas, das einmal gefährlich war.',
+  wozuFrage:'Welche deiner Bremsen ist heute noch nötig — und welche läuft nur aus Gewohnheit mit?',
+  name:'Deine Bremsen und Beschleuniger',
+  frage:'Warum kippt es manchmal von einer Sekunde auf die andere?',
+  anker:{haeuser:[6,12], punkte:['Saturn','Neptun','Mond','Uranus']},
+  regeln:[
+    function(f,P,H){
+      return 'Ein brauchbares Modell: Bei jedem Menschen arbeiten <b>zwei Systeme gleichzeitig</b> — eines, das anregt, '+
+        'und eines, das hemmt. Wie viel Lust jemand empfindet, hängt weniger davon ab, wie stark das Gaspedal ist, '+
+        'als davon, <b>wie viele Bremsen gerade getreten sind</b>. Deshalb hilft es meistens mehr, Bremsen zu lösen, '+
+        'als das Gas zu suchen. Typische Bremsen: Zeitdruck, ein unaufgeräumter Raum, Sorge um die Wirkung, '+
+        'ungeklärter Streit, Müdigkeit, zu viele Reize, der Gedanke an die To-do-Liste.';
+    },
+    function(f,P,H){
+      if(P.Saturn===undefined) return null;
+      var hn=H.haus(P.Saturn)+1;
+      return 'Dein <b>Saturn im '+hn+'. Haus</b> ('+H.HT[hn-1]+') zeigt, wo bei dir die stärkste Bremse sitzt. '+
+        'Alles, was in diesem Bereich ungeklärt ist, wirkt bei dir als Dämpfer — auch wenn es mit der Situation nichts zu tun hat. '+
+        'Das ist die Stelle, an der Aufräumen mehr bringt als jede Technik.';
+    },
+    function(f,P,H){
+      if(P.Mond===undefined) return null;
+      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
+      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> sagt, was bei dir als Beschleuniger wirkt: '+
+        (el==='Feuer'?'Lebendigkeit, Tempo, echtes Begehrtwerden. Zu viel Behutsamkeit bremst dich eher.'
+         :el==='Erde'?'Verlässlichkeit, Zeit und Berührung ohne Ziel. Bei dir wirkt Langsamkeit, nicht Dringlichkeit.'
+         :el==='Luft'?'Worte, Vorstellung, Spannung im Kopf. Bei dir beginnt es vor dem Körper.'
+         :'emotionale Stimmigkeit und ein geschützter Raum. Wenn du dich beobachtet oder gehetzt fühlst, geht bei dir nichts.');
+    },
+    function(f,P,H){
+      var im12=f.planeten.filter(function(x){return x.haus===12;});
+      if(!im12.length) return null;
+      return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. '+
+        'Ein Teil deiner Bremsen arbeitet unbewusst — du merkst nicht, dass etwas dich hemmt, sondern nur, dass nichts passiert. '+
+        'Deshalb lohnt es sich bei dir besonders, den Kontext aufzuschreiben statt ihn zu erspüren.';
+    }],
+  uebung:['Drei Bremsen aufschreiben',
+   'Schreib drei Dinge auf, die dir zuverlässig die Lust nehmen. Ganz banal darf es sein — ein volles Zimmer, Zeitdruck, ein Gespräch, das offen ist. Und dann: Welche davon ließe sich diese Woche wegräumen? Meistens mindestens eine.'],
+  rueckfrage:'Hast du eine Bremse weggeräumt?',
+  coach:{fragen:['Was nimmt dir zuverlässig die Lust?',
+   'Was davon hat mit der anderen Person zu tun und was mit dem Drumherum?',
+   'Was müsste anders sein, damit es leichter ginge?'],
+   vorsicht:'Bremsen sind manchmal Schutz nach schlechten Erfahrungen. Nicht daran arbeiten, sie abzustellen — nur sie zu sehen. Was danach kommt, entscheidet die Person allein.'}},
+
+ {id:'gefaellt', wozuSchutz:'Wer nicht weiß, was er mag, muss es auch nicht sagen — und kann nicht falsch liegen.',
+  wozuFrage:'Was hättest du zu verlieren, wenn dein Gegenüber genau wüsste, was dir gefällt?',
+  name:'Was dir gefällt',
+  frage:'Was mag ich eigentlich — und woher soll ich das wissen?',
+  anker:{haeuser:[5,8], punkte:['Venus','Mars','Mond']},
+  regeln:[
+    function(f,P,H){
+      if(P.Venus===undefined) return null;
+      var zi=Math.floor(P.Venus/30), hn=H.haus(P.Venus)+1;
+      var V=['Direktheit und Tempo — du magst es, wenn jemand weiß, was er will',
+       'Zeit, Berührung und Sinnlichkeit — bei dir zählt das Wie mehr als das Was',
+       'Worte, Leichtigkeit, Abwechslung — Reden gehört bei dir dazu',
+       'Geborgenheit und Vertrautheit — du brauchst das Gefühl, aufgehoben zu sein',
+       'Aufmerksamkeit und Begeisterung — du willst gewollt werden, sichtbar und deutlich',
+       'Zugewandtheit im Detail — du merkst, ob jemand wirklich da ist',
+       'Gegenseitigkeit und Schönheit — Ungleichgewicht stört dich mehr als alles andere',
+       'Tiefe und Intensität — Beiläufiges interessiert dich nicht',
+       'Offenheit, Humor, Freiheit — Enge nimmt dir die Lust',
+       'Verlässlichkeit und Ernsthaftigkeit — bei dir wächst es über Zeit',
+       'Ungewöhnliches und Freiraum — Erwartungen bremsen dich',
+       'Verschmelzung und Hingabe — du löst dich gern auf, und das ist auch dein wunder Punkt'];
+      return 'Deine <b>Venus in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, worüber du überhaupt genießt: '+
+        '<b>'+V[zi]+'</b>. Der Schauplatz ist '+H.HT[hn-1]+' — was woanders stattfindet, erreicht dich weniger, '+
+        'auch wenn es allgemein als schön gilt.';
+    },
+    function(f,P,H){
+      var im5=f.planeten.filter(function(x){return x.haus===5;});
+      var im8=f.planeten.filter(function(x){return x.haus===8;});
+      var t=[];
+      if(im5.length) t.push('Im <b>5. Haus</b> steht '+im5.map(function(x){return x.p;}).join(', ')+
+        ' — das Verspielte, Leichte, Lustvolle ist bei dir stärker angelegt. Spaß darf ein Ziel sein.');
+      if(im8.length) t.push('Im <b>8. Haus</b> steht '+im8.map(function(x){return x.p;}).join(', ')+
+        ' — dich zieht es ins Tiefe und Intensive. Oberflächliches langweilt dich eher, als dass es dich entspannt.');
+      if(!t.length) return 'Weder 5. noch 8. Haus sind besetzt. Weder Verspieltheit noch Intensität sind bei dir vorgegeben — '+
+        'du hast hier mehr Freiheit und musst dafür bewusster herausfinden, was dir liegt.';
+      return t.join(' ');
+    },
+    function(f,P,H){
+      if(P.Lilith===undefined||P.Lilith===null) return null;
+      var hn=H.haus(P.Lilith)+1;
+      return 'Und deine <b>Lilith im '+hn+'. Haus</b> markiert, was du dir versagst. '+
+        'Erfahrungsgemäß liegt genau dort etwas, das dir gefallen würde — es hat nur nie Erlaubnis bekommen.';
+    }],
+  uebung:['Die stille Liste',
+   'Schreib für dich allein drei Dinge auf, die dir gefallen, und eine, bei der du dir nicht sicher bist. Niemand muss es sehen. '+
+   'Der Sinn ist nicht, es weiterzugeben, sondern es überhaupt einmal zu wissen — man kann schlecht etwas einfordern, '+
+   'das man selbst nie benannt hat.'],
+  rueckfrage:'Hast du deine Liste geschrieben?',
+  coach:{fragen:['Was gefällt dir — und woher weißt du das?',
+   'Was hast du übernommen, weil es von dir erwartet wurde?',
+   'Gibt es etwas, das du gern ausprobieren würdest und dich nicht traust zu sagen?'],
+   vorsicht:'Hier nie konkret werden und nie nachfragen. Die Person benennt, du hörst zu. Alles Detaillierte gehört in eine sexualtherapeutische Beratung, nicht ins Coaching.'}},
+
+ {id:'danach', wozuSchutz:'Sofort weiterzumachen erspart den verletzlichsten Moment.',
+  wozuFrage:'Was fürchtest du in dem Moment danach — und wer hat dir beigebracht, dass man da schnell weitermacht?',
+  name:'Was du danach brauchst',
+  frage:'Warum fühle ich mich hinterher manchmal seltsam?',
+  anker:{haeuser:[4,12], punkte:['Mond','Neptun','Saturn']},
+  regeln:[
+    function(f,P,H){
+      return 'Der Teil <b>danach</b> wird fast immer übersehen und entscheidet erstaunlich viel. '+
+        'Nach körperlicher Nähe fällt die Anspannung ab, und viele Menschen sind in diesem Moment ungewohnt durchlässig — '+
+        'da kommen manchmal Traurigkeit, Unruhe oder Rückzugsimpulse hoch, ganz ohne dass etwas schiefgelaufen wäre. '+
+        'Das ist verbreitet, hat einen Namen in der Fachliteratur und sagt nichts über die Beziehung aus.';
+    },
+    function(f,P,H){
+      if(P.Mond===undefined) return null;
+      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
+      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+'</b> sagt, was du danach brauchst: '+
+        (el==='Feuer'?'Bewegung und Leichtigkeit. Lange Stille wird dir schnell unangenehm.'
+         :el==='Erde'?'Körperkontakt und Ruhe. Aufstehen und Weitermachen ist bei dir das Falsche.'
+         :el==='Luft'?'ein Gespräch. Bei dir schließt sich etwas erst mit Worten.'
+         :'Nähe und Zeit. Wenn du danach allein bleibst, bleibt bei dir etwas offen.');
+    },
+    function(f,P,H){
+      var ms=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Mond'))&&x.art==='hart';})[0];
+      if(!ms) return null;
+      return '<b>Mond '+ms.typ+' Saturn</b> mit '+ms.o.toFixed(1)+'°. Genau in diesem Moment fällt es dir schwer, '+
+        'Zuwendung zu verlangen — obwohl du sie dann am dringendsten brauchst. Du wirst eher sachlich, stehst auf, machst etwas. '+
+        'Wenn du das bei dir kennst, kannst du es vorher ansprechen, statt es hinterher zu erklären.';
+    }],
+  uebung:['Vorher sagen, was danach hilft',
+   'Sag einer Person, mit der du Nähe teilst, einmal vorher, was du hinterher brauchst — Nähe, Reden, Ruhe, Wasser, eine Decke. '+
+   'Ein Satz genügt. Das ist unromantisch und funktioniert hervorragend, weil hinterher niemand gut formulieren kann.'],
+  rueckfrage:'Hast du vorher gesagt, was du danach brauchst?',
+  coach:{fragen:['Wie fühlst du dich direkt danach?',
+   'Was brauchst du dann — und bekommst du es?',
+   'Was machst du stattdessen?'],
+   vorsicht:'Wenn regelmäßig starke Traurigkeit, Scham oder Panik danach auftreten, ist das kein Coaching-Thema. Das kann viele Ursachen haben und gehört freundlich an eine Fachperson weitergegeben.'}}
 
  ]
 };
