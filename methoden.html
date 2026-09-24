@@ -1,0 +1,476 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methoden für den Moment · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="format.js" defer></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.mt-not{background:#FBF0E8;border:1px solid #E2C3B4;border-radius:20px;padding:20px 22px;margin-bottom:20px;}
+.mt-not h3{font-family:var(--serif);font-size:19px;font-weight:400;color:#8A4326;margin:0 0 6px;}
+.mt-not p{margin:0 0 12px;font-size:14.8px;line-height:1.6;}
+.mt-notb{display:flex;gap:8px;flex-wrap:wrap;}
+.mt-notb button{font-family:var(--sans);font-size:14.5px;padding:11px 18px;border:1px solid #D4A891;
+ background:var(--papier);color:#8A4326;border-radius:20px;cursor:pointer;}
+.mt-notb button:hover{background:#F6E6DD;}
+.mt-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.mt-filter button{font-family:var(--sans);font-size:13.5px;padding:8px 15px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:17px;cursor:pointer;}
+.mt-filter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.mt-k{background:var(--papier);border:1px solid var(--linie);border-radius:20px;margin-bottom:12px;overflow:hidden;}
+.mt-k summary{cursor:pointer;padding:19px 22px;display:flex;gap:15px;align-items:center;}
+.mt-k summary::-webkit-details-marker{display:none;}
+.mt-ic{width:46px;height:46px;border-radius:14px;background:var(--nacht-bg);flex:none;
+ display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--nacht);
+ font-family:'JetBrains Mono',monospace;}
+.mt-kn{font-family:var(--serif);font-size:19.5px;color:var(--tinte);line-height:1.2;}
+.mt-kw{font-size:13.5px;color:var(--leise);margin-top:2px;}
+.mt-in{padding:0 22px 22px;}
+.mt-z{background:var(--bg);border-radius:14px;padding:14px 16px;margin-bottom:9px;}
+.mt-z .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.mt-z p{margin:0 0 7px;font-size:15px;line-height:1.64;}
+.mt-z p:last-child{margin-bottom:0;}
+.mt-z ol,.mt-z ul{margin:0 0 0 19px;padding:0;font-size:15px;line-height:1.7;}
+.mt-chart{background:var(--nacht-bg);border-radius:14px;padding:14px 16px;font-size:15px;line-height:1.64;}
+.mt-chart .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.mt-quelle{font-size:12.5px;color:var(--leise);margin-top:10px;line-height:1.5;}
+.mt-warn{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:11px;padding:11px 14px;
+ margin-top:10px;font-size:14px;line-height:1.58;}
+.mt-uebung{margin-top:12px;}
+.mt-uebung button{font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);
+ color:#fff;padding:12px 24px;border-radius:22px;cursor:pointer;}
+.g5{background:var(--nacht);color:#F4EFE6;border-radius:22px;padding:30px 28px;text-align:center;}
+.g5-nr{font-family:var(--serif);font-size:64px;line-height:1;color:#E8C97A;margin-bottom:6px;}
+.g5-t{font-family:var(--serif);font-size:24px;line-height:1.25;margin-bottom:8px;}
+.g5-h{font-size:15px;color:rgba(244,239,230,.72);line-height:1.6;margin-bottom:22px;}
+.g5-b{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;}
+.g5-b button{font-family:var(--sans);font-size:15px;padding:12px 24px;border-radius:22px;cursor:pointer;
+ border:1px solid rgba(244,239,230,.4);background:none;color:#F4EFE6;}
+.g5-b button.haupt{background:#F4EFE6;color:#2E3A5C;border-color:#F4EFE6;}
+.g5-punkte{display:flex;gap:6px;justify-content:center;margin-bottom:20px;}
+.g5-punkte i{width:8px;height:8px;border-radius:50%;background:rgba(244,239,230,.28);}
+.g5-punkte i.ist{background:#E8C97A;}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html" class="ist">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Werkzeugkasten</div>
+<h1>Methoden für <em>den Moment.</em></h1>
+<p class="lede">Sieben Werkzeuge, die funktionieren, wenn gerade wenig geht. Keine Programme, keine Routinen — Dinge, die man in dem Moment macht, in dem man sie braucht. Zu jedem steht, woher es kommt, wann es hilft und was dein Chart dazu sagt.</p>
+
+<div class="mt-not">
+  <h3>Wenn es gerade akut ist</h3>
+  <p>Zwei Werkzeuge, die sofort gehen. Kein Lesen nötig.</p>
+  <div class="mt-notb">
+    <button type="button" id="mtg5">Erdung starten · 5-4-3-2-1</button>
+    <button type="button" id="mtgpause">Reizpause · 90 Sekunden</button>
+  </div>
+  <div id="mtbuehne" style="margin-top:16px;"></div>
+</div>
+
+<div class="mt-filter" id="mtfilter"></div>
+<div id="mtliste"></div>
+
+<div class="tip"><b>Warum kleine Werkzeuge bei anders verdrahteten Köpfen besser wirken als große Systeme:</b>
+Ein System verlangt, dass man an einem guten Tag entscheidet, wie man sich an einem schlechten verhält — und an schlechten Tagen greift man nicht darauf zu. Ein Werkzeug verlangt nur, dass man sich in dem Moment an eine Sache erinnert. Deshalb ist diese Seite eine Liste und kein Plan.</div>
+
+<div class="tip"><b>Und die Grenze:</b> Das hier ist Selbsthilfe. Erdungstechniken können akute Anspannung senken, sie behandeln nichts. Wenn Zustände häufig, lang oder sehr stark sind, gehört das zu einer Fachperson — und das ist kein Scheitern dieser Werkzeuge, sondern ihr richtiger Gebrauch.</div>
+
+<div class="weiter"><a href="nd-leitfaden.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Anders verdrahtet leben</span></a><a href="raum-alltag.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Themenraum Alltag</span></a></div>
+<div class="foot">Methoden f&uuml;r den Moment &middot; Selbsthilfe, keine Behandlung. Herkunft und Belegstand stehen bei jeder Methode dabei.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var EL=['Feuer','Erde','Luft','Wasser'];
+
+function chart(){
+  var p=null; try{ p=window.AC_P?AC_P.aktives():null; }catch(e){}
+  if(!p) return null;
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  var P={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+  P.h=function(l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; };
+  P.el=function(k){ return EL[Math.floor(P[k]/30)%4]; };
+  P.z=function(k){ return SIGNS[Math.floor(P[k]/30)]; };
+  return P;
+}
+
+var METHODEN=[
+{id:'g54321', ic:'5·1', name:'5-4-3-2-1 · Erdung über die Sinne', wann:'Panik, Reizflut, wenn alles zu viel wird',
+ tags:['akut','reiz'],
+ was:'Du benennst nacheinander fünf Dinge, die du siehst, vier, die du hörst, drei, die du fühlst, zwei, die du riechst, und eines, das du schmeckst. Laut oder still, beides geht.',
+ warum:'Bei Überflutung springt die Aufmerksamkeit unkontrolliert. Die Übung gibt ihr eine feste Aufgabe mit klarem Ende — und zwar über die Sinne, nicht über Gedanken. Genau deshalb funktioniert sie auch dann, wenn Nachdenken gerade nicht geht.',
+ chart:function(P){
+   var e=P.el('Mond'), hn=P.h(P.Mond);
+   return 'Dein <b>Mond in '+P.z('Mond')+', '+hn+'. Haus</b> ist dein Reizfilter. Als '+e+'zeichen heißt das: '+
+    (e==='Wasser'?'du nimmst viel auf, auch fremde Stimmung. Fang bei dieser Übung mit dem Fühlen an statt mit dem Sehen — Körperkontakt erdet dich schneller als Hinschauen.'
+     :e==='Erde'?'Körperliches wirkt bei dir am stärksten. Die Stufe mit dem Fühlen ist deine wichtigste, nimm dir dort mehr Zeit.'
+     :e==='Luft'?'Benenne laut statt still. Sprache ist bei dir der schnellere Weg zurück.'
+     :'Beweg dich dabei, statt still zu stehen. Bei dir wirkt Erdung besser im Gehen.');
+ },
+ quelle:'Erdungstechnik aus der Traumaarbeit, weit verbreitet in der Psychotherapie. Nicht zu verwechseln mit der 5-Sekunden-Regel.',
+ warn:'Bei Dissoziation oder wenn das Gefühl auftaucht, neben sich zu stehen, ist Erdung sinnvoll — und ein Zeichen, dass es Begleitung braucht.'},
+
+{id:'r5sek', ic:'5s', name:'Die 5-Sekunden-Regel', wann:'Aufschieben, Anfangen, kleine Überwindungen',
+ tags:['antrieb'],
+ was:'Sobald du den Impuls spürst, etwas zu tun, zähl innerlich rückwärts: fünf, vier, drei, zwei, eins — und beweg dich bei eins. Nicht überlegen, körperlich anfangen.',
+ warum:'Zwischen Impuls und Zweifel liegen ein paar Sekunden. Das Rückwärtszählen besetzt genau dieses Fenster und unterbricht das Abwägen, bevor es beginnt. Es erzeugt keine Motivation, es überbrückt nur die Lücke.',
+ chart:function(P){
+   var hn=P.h(P.Mars), e=P.el('Mars');
+   var ms=Math.abs(((P.Mars-P.Saturn+180)%360+360)%360-180);
+   var eng=(Math.abs(ms-90)<=6||Math.abs(ms-180)<=6||ms<=6);
+   return 'Dein <b>Mars im '+hn+'. Haus</b> ('+HT[hn-1]+') zeigt, wo du am leichtesten ins Tun kommst. '+
+    (eng?'Und du hast <b>Mars in engem Kontakt zu Saturn</b> — bei dir geht ein Teil der Kraft ins Selbstbremsen. Diese Methode ist deshalb besonders passend: Sie umgeht die Bremse, statt gegen sie anzuarbeiten.'
+        :'Deine Energie kommt als '+e+' — '+(e==='Feuer'?'schnell, du brauchst die Regel eher zum Stoppen als zum Starten.'
+        :e==='Erde'?'langsam. Rechne damit, dass nach dem Anfangen noch eine Anlaufzeit kommt, das ist normal.'
+        :e==='Luft'?'über den Kopf. Sag die Zahlen laut, dann greift es besser.'
+        :'wellenförmig. An Tagen mit Antrieb funktioniert die Regel, an anderen nicht — das ist keine Willensfrage.'));
+ },
+ quelle:'Populärpsychologische Methode, bekannt durch Mel Robbins. Nicht klinisch untersucht, aber in der Praxis oft wirksam — vermutlich, weil sie das Grübelfenster schließt.',
+ warn:''},
+
+{id:'letthem', ic:'LT', name:'Let Them · Let Me', wann:'Wenn dich fremdes Verhalten festhält',
+ tags:['beziehung','grenzen'],
+ was:'Zwei Sätze. <b>Let them</b> — lass die anderen machen, was sie machen. <b>Let me</b> — und ich entscheide, wie ich darauf reagiere und was ich daraus mache.',
+ warum:'Ein erheblicher Teil der Anstrengung im Umgang mit Menschen geht in den Versuch, ihr Verhalten zu steuern: erklären, rechtfertigen, überzeugen, es nochmal versuchen. Der erste Satz beendet diesen Versuch. Der zweite verhindert, dass daraus Gleichgültigkeit wird — er gibt dir die Handlung zurück.',
+ chart:function(P){
+   var h7=P.h(P.Saturn), hm=P.h(P.Mars);
+   return 'Dein <b>Mars im '+hm+'. Haus</b> ist dein Grenzmuskel — dort entscheidet sich, ob du „Let me" tatsächlich ausübst oder nur denkst. '+
+    'Und dein <b>Saturn im '+h7+'. Haus</b> ('+HT[h7-1]+') zeigt, wo du dich am ehesten für andere verantwortlich fühlst. '+
+    'Genau dort ist der Satz am schwersten und am nötigsten.';
+ },
+ quelle:'Bekannt durch Mel Robbins. Inhaltlich ist es Alfred Adlers <b>Aufgabentrennung</b>: Ob dich jemand mag, ist seine Aufgabe. Wie du dich verhältst, ist deine. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.',
+ warn:'Nicht anwendbar auf Übergriffigkeit oder Gewalt. Loslassen ist eine Haltung gegenüber Verhalten, das dich ärgert — nicht gegenüber Verhalten, das dir schadet.'},
+
+{id:'double', ic:'◎', name:'Body Doubling', wann:'Wenn Anfangen allein nicht geht',
+ tags:['antrieb','alltag'],
+ was:'Du machst deine Aufgabe, während jemand anderes anwesend ist und etwas Eigenes tut. Kein Gespräch, keine Hilfe, keine Kontrolle — nur Anwesenheit. Geht auch per Video oder Telefon.',
+ warum:'Bei schwankender Aufmerksamkeit fehlt oft nicht die Fähigkeit, sondern der äußere Rahmen. Eine anwesende Person liefert diesen Rahmen, ohne dass man sich rechtfertigen muss. Für viele ist es das wirksamste Einzelmittel überhaupt.',
+ chart:function(P){
+   var h11=P.h(P.Jupiter), h6=P.h(P.Saturn);
+   return 'Dein <b>Jupiter im '+h11+'. Haus</b> zeigt, wo dir etwas leichtfällt — Menschen aus diesem Bereich eignen sich am besten als Gegenüber. '+
+    'Dein <b>Saturn im '+h6+'. Haus</b> sagt, wo du dich zusammenreißt: dort brauchst du das Doppel am dringendsten, weil du dich sonst allein zwingst.';
+ },
+ quelle:'Etablierte Praxis in der ADHS-Selbsthilfe, zunehmend auch in Studien untersucht.',
+ warn:''},
+
+{id:'zweimin', ic:'2m', name:'Die Zwei-Minuten-Regel', wann:'Kleinkram, der sich staut',
+ tags:['alltag'],
+ was:'Wenn etwas weniger als zwei Minuten dauert, mach es sofort, statt es dir zu merken. Alles andere kommt auf eine Liste.',
+ warum:'Nicht die Aufgaben kosten Kraft, sondern das Merken. Jede offene Kleinigkeit belegt Arbeitsspeicher — und der ist bei vielen anders verdrahteten Köpfen knapper. Sofort erledigen ist deshalb keine Effizienzfrage, sondern Entlastung.',
+ chart:function(P){
+   var e=P.el('Merkur'), hn=P.h(P.Merkur);
+   return 'Dein <b>Merkur in '+P.z('Merkur')+', '+hn+'. Haus</b> beschreibt dein Aufnahmeformat als '+e+': '+
+    (e==='Erde'?'Listen funktionieren bei dir wirklich. Nutz sie für alles über zwei Minuten.'
+     :e==='Luft'?'Du brauchst Übersicht statt Reihenfolge — eine Liste, die du auf einen Blick siehst.'
+     :e==='Feuer'?'Listen langweilen dich. Arbeite mit wenigen Punkten und einem klaren Nächstes.'
+     :'Geschriebenes rutscht bei dir durch. Sprachnachrichten an dich selbst funktionieren oft besser als Notizen.');
+ },
+ quelle:'Aus der Selbstorganisation, bekannt durch David Allen.',
+ warn:''},
+
+{id:'extern', ic:'⌸', name:'Das externe Gehirn', wann:'Vergessen, Überlastung, zu viele offene Fäden',
+ tags:['alltag','reiz'],
+ was:'Ein einziger Ort, an dem alles landet, was du dir sonst merken müsstest. Ein Notizbuch, eine App, ein Zettel am Kühlschrank — die Hauptsache ist: <b>einer</b>, nicht fünf.',
+ warum:'Merken kostet permanent Kapazität, auch wenn man gerade nicht daran denkt. Alles Ausgelagerte gibt diese Kapazität frei. Der häufigste Fehler ist nicht Faulheit, sondern zu viele Systeme nebeneinander.',
+ chart:function(P){
+   var hs=P.h(P.Saturn);
+   return 'Dein <b>Saturn im '+hs+'. Haus</b> ('+HT[hs-1]+') zeigt, wo Struktur bei dir tatsächlich hält. '+
+    'Bau dein externes Gehirn an diesem Bereich an — Systeme, die woanders ansetzen, zerfallen bei dir nach zwei Wochen, egal wie gut sie sind.';
+ },
+ quelle:'Grundprinzip aus der Selbstorganisation und der ADHS-Selbsthilfe.',
+ warn:''},
+
+{id:'pause', ic:'⏸', name:'Die Reizpause', wann:'Kurz bevor es kippt',
+ tags:['akut','reiz'],
+ was:'Neunzig Sekunden raus: Raum verlassen, Augen zu, Kopfhörer auf, kaltes Wasser über die Handgelenke. Kein Handy, kein Gespräch, keine Information.',
+ warum:'Eine Erregungswelle im Nervensystem braucht etwa anderthalb Minuten, um von allein abzuflachen — wenn nichts Neues dazukommt. Das Entscheidende ist deshalb nicht Entspannung, sondern <b>keine neuen Reize</b>. Deshalb zählt das Handy nicht als Pause.',
+ chart:function(P){
+   var h12=P.h(P.Neptun), e=P.el('Mond');
+   return 'Was dich auflädt, sagt dein Mond in '+e+': '+
+    (e==='Feuer'?'Bewegung. Steh auf und geh, statt dich hinzusetzen.'
+     :e==='Erde'?'etwas anfassen. Kaltes Wasser, ein fester Gegenstand, Druck auf die Füße.'
+     :e==='Luft'?'Luft und Weite. Fenster auf, rausschauen, tief atmen.'
+     :'Rückzug und Wasser. Eine Tür zwischen dir und den anderen ist wichtiger als alles andere.')+
+    ' Und dein <b>Neptun im '+h12+'. Haus</b> markiert, wo deine Wahrnehmung unscharf wird — dort merkst du zu spät, dass es zu viel war.';
+ },
+ quelle:'Gestützt auf die Beobachtung, dass körperliche Stressreaktionen ohne neuen Auslöser nach kurzer Zeit abklingen.',
+ warn:''}
+];
+
+var mtFilter='alle';
+
+function listeZeichnen(){
+  var P=chart(), box=document.getElementById('mtliste'), s='';
+  METHODEN.filter(function(m){ return mtFilter==='alle'||m.tags.indexOf(mtFilter)>=0; }).forEach(function(m,i){
+    s+='<details class="mt-k"'+(i===0?' open':'')+'><summary>'+
+      '<div class="mt-ic">'+m.ic+'</div>'+
+      '<div><div class="mt-kn">'+m.name+'</div><div class="mt-kw">'+m.wann+'</div></div></summary>'+
+      '<div class="mt-in">'+
+      '<div class="mt-z"><span class="lab">Wie es geht</span><p>'+m.was+'</p></div>'+
+      '<div class="mt-z"><span class="lab">Warum das wirkt</span><p>'+m.warum+'</p></div>'+
+      '<div class="mt-chart"><span class="lab">Was dein Chart dazu sagt</span>'+
+        (P? m.chart(P) : 'Leg unter <a href="profile.html">Profile</a> ein Chart an — dann steht hier, wie du die Methode auf dich zuschneidest.')+'</div>'+
+      (m.warn?'<div class="mt-warn">'+m.warn+'</div>':'')+
+      '<div class="mt-quelle"><b>Woher:</b> '+m.quelle+'</div>'+
+      (m.id==='g54321'?'<div class="mt-uebung"><button type="button" class="mtstart">Jetzt durchführen</button></div>':'')+
+      '</div></details>';
+  });
+  box.innerHTML=s;
+  Array.prototype.forEach.call(box.querySelectorAll('.mtstart'),function(b){
+    b.addEventListener('click',function(){ erdung(); });
+  });
+}
+
+/* ── Geführte Erdung ── */
+var STUFEN=[
+ {n:5,t:'Fünf Dinge, die du siehst',h:'Schau dich um und benenne fünf Dinge. Egal wie banal — Türklinke, Fleck an der Wand, deine Hand.'},
+ {n:4,t:'Vier Dinge, die du hörst',h:'Auch leise. Ein Lüfter, Verkehr, dein eigener Atem.'},
+ {n:3,t:'Drei Dinge, die du spürst',h:'Der Boden unter den Füßen, Stoff auf der Haut, die Temperatur.'},
+ {n:2,t:'Zwei Dinge, die du riechst',h:'Wenn nichts da ist: zwei Gerüche, die du magst.'},
+ {n:1,t:'Eine Sache, die du schmeckst',h:'Oder eine, die du gerade gern schmecken würdest.'}
+];
+function erdung(){
+  var b=document.getElementById('mtbuehne'), i=0;
+  function zeig(){
+    if(i>=STUFEN.length){
+      b.innerHTML='<div class="g5"><div class="g5-t">Fertig.</div>'+
+        '<div class="g5-h">Wenn es noch nicht reicht, geh einfach nochmal durch. Wenn es reicht, ist hier Schluss.</div>'+
+        '<div class="g5-b"><button type="button" id="g5neu">Nochmal</button>'+
+        '<button type="button" id="g5zu" class="haupt">Schließen</button></div></div>';
+      document.getElementById('g5neu').addEventListener('click',function(){ i=0; zeig(); });
+      document.getElementById('g5zu').addEventListener('click',function(){ b.innerHTML=''; });
+      return;
+    }
+    var s=STUFEN[i];
+    var pk=STUFEN.map(function(_,j){ return '<i class="'+(j<=i?'ist':'')+'"></i>'; }).join('');
+    b.innerHTML='<div class="g5"><div class="g5-punkte">'+pk+'</div>'+
+      '<div class="g5-nr">'+s.n+'</div><div class="g5-t">'+s.t+'</div>'+
+      '<div class="g5-h">'+s.h+'</div>'+
+      '<div class="g5-b"><button type="button" id="g5ab">Abbrechen</button>'+
+      '<button type="button" id="g5w" class="haupt">'+(i===STUFEN.length-1?'Fertig':'Weiter')+'</button></div></div>';
+    document.getElementById('g5w').addEventListener('click',function(){ i++; zeig(); });
+    document.getElementById('g5ab').addEventListener('click',function(){ b.innerHTML=''; });
+  }
+  zeig();
+  b.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ── Reizpause mit Zähler ── */
+function reizpause(){
+  var b=document.getElementById('mtbuehne'), rest=90, lauf=null;
+  function zeig(){
+    b.innerHTML='<div class="g5"><div class="g5-nr">'+rest+'</div>'+
+      '<div class="g5-t">Neunzig Sekunden nichts</div>'+
+      '<div class="g5-h">Augen zu oder aus dem Fenster schauen. Kein Handy, keine Musik mit Text, kein Gespräch. '+
+      'Es geht nicht ums Entspannen — es geht darum, dass nichts Neues dazukommt.</div>'+
+      '<div class="g5-b"><button type="button" id="g5ab" class="haupt">'+(rest<=0?'Schließen':'Abbrechen')+'</button></div></div>';
+    document.getElementById('g5ab').addEventListener('click',function(){ clearInterval(lauf); b.innerHTML=''; });
+  }
+  zeig();
+  lauf=setInterval(function(){
+    rest--;
+    if(rest<=0){ clearInterval(lauf);
+      b.innerHTML='<div class="g5"><div class="g5-t">Vorbei.</div>'+
+        '<div class="g5-h">Wie ist der Pegel jetzt? Wenn er noch hoch ist, nochmal — das ist völlig normal und kein Zeichen, dass es nicht wirkt.</div>'+
+        '<div class="g5-b"><button type="button" id="g5n">Nochmal</button><button type="button" id="g5z" class="haupt">Schließen</button></div></div>';
+      document.getElementById('g5n').addEventListener('click',function(){ reizpause(); });
+      document.getElementById('g5z').addEventListener('click',function(){ b.innerHTML=''; });
+      return; }
+    var el=b.querySelector('.g5-nr'); if(el) el.textContent=rest;
+  },1000);
+  b.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ── Aufbau ── */
+var fb=document.getElementById('mtfilter');
+function filterZeichnen(){
+  fb.innerHTML='';
+  [['alle','Alle sieben'],['akut','Wenn es akut ist'],['antrieb','Anfangen'],
+   ['alltag','Alltag'],['reiz','Reizschutz'],['grenzen','Grenzen']].forEach(function(o){
+    var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+    b.setAttribute('aria-pressed', mtFilter===o[0]);
+    b.addEventListener('click',function(){ mtFilter=o[0]; filterZeichnen(); listeZeichnen(); });
+    fb.appendChild(b);
+  });
+}
+filterZeichnen();
+listeZeichnen();
+document.getElementById('mtg5').addEventListener('click',erdung);
+document.getElementById('mtgpause').addEventListener('click',reizpause);
+
+</script>
+</body></html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADHS, Autismus und beides · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="begriffe.js" defer></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.av-warn{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
+ margin-bottom:22px;font-size:14.8px;line-height:1.65;}
+.av-zwei{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:16px 0 20px;}
+@media(max-width:680px){.av-zwei{grid-template-columns:1fr;}}
+.av-k{border-radius:20px;padding:20px 22px;}
+.av-k.adhs{background:#F8EEE6;border:1px solid #E2C3B4;}
+.av-k.aut{background:#EAEFF5;border:1px solid #C8D6E2;}
+.av-k h3{font-family:var(--serif);font-size:21px;font-weight:400;margin:0 0 3px;}
+.av-k.adhs h3{color:#8A4326;} .av-k.aut h3{color:#2E4E68;}
+.av-k .kurz{font-size:13px;color:var(--leise);margin-bottom:12px;font-family:'JetBrains Mono',monospace;}
+.av-k p{margin:0 0 10px;font-size:14.8px;line-height:1.62;}
+.av-k ul{margin:0 0 0 18px;padding:0;font-size:14.6px;line-height:1.68;}
+.av-k li{margin-bottom:4px;}
+.av-ueber{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;margin-bottom:20px;}
+.av-ueber svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto 6px;}
+.av-tab{width:100%;border-collapse:collapse;font-size:14.5px;margin:16px 0;}
+.av-tab th,.av-tab td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--linie);vertical-align:top;}
+.av-tab th{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+ color:var(--messing);font-weight:500;}
+.av-tab td:first-child{font-family:var(--serif);font-size:15.5px;color:var(--nacht);width:26%;}
+.av-tab tr:last-child td{border-bottom:none;}
+.av-zeigt{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px;margin:14px 0 20px;}
+.av-z{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:16px 18px;}
+.av-z b{display:block;font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);margin-bottom:5px;}
+.av-z p{margin:0;font-size:14.3px;line-height:1.58;color:var(--leise);}
+.av-frau{background:var(--messing-bg);border-radius:20px;padding:22px 24px;margin-bottom:18px;}
+.av-frau h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--nacht);margin:0 0 10px;}
+.av-frau p{margin:0 0 10px;font-size:15px;line-height:1.65;}
+.av-frau p:last-child{margin-bottom:0;}
+.av-mythos{display:grid;gap:9px;margin:16px 0;}
+.av-m{display:grid;grid-template-columns:76px 1fr;gap:14px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:15px;padding:14px 16px;align-items:start;}
+.av-m .lab{font-family:var(--sans);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ border-radius:10px;padding:4px 8px;text-align:center;}
+.av-m .lab.f{background:#F3DED2;color:#8A4326;}
+.av-m p{margin:0;font-size:14.6px;line-height:1.6;}
+.av-m p b{color:var(--nacht);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Überblick</div>
+<h1>ADHS, Autismus — und <em>beides.</em></h1>
+<p class="lede">Zwei Begriffe, die oft in einen Topf geworfen werden, obwohl sie Verschiedenes beschreiben. Und eine Kombination, die es offiziell erst seit gut zehn Jahren geben darf. Diese Seite erklärt, was gemeint ist, wo sich beides überschneidet — und warum es bei Frauen so lange übersehen wird.</p>
+
+<div class="av-warn"><b>Was diese Seite ist und was nicht:</b> eine Orientierung, damit du weißt, worüber gesprochen wird. Sie ist <b>keine Diagnose und keine Checkliste</b>. Fast jeder findet sich in solchen Beschreibungen ein Stück weit wieder — das ist normal und bedeutet nichts. Entscheidend ist nicht, ob einzelne Punkte zutreffen, sondern ob ein Muster seit der Kindheit besteht und in mehreren Lebensbereichen Schwierigkeiten macht. Das kann nur eine Fachperson einschätzen.</div>
+
+<h2>Die beiden Begriffe</h2>
+<div class="av-zwei">
+  <div class="av-k adhs">
+    <h3>ADHS</h3>
+    <div class="kurz">Aufmerksamkeitsdefizit-/Hyperaktivitätsstörung</div>
+    <p>Beschreibt in erster Linie Schwierigkeiten mit <b>Aufmerksamkeitssteuerung</b>, <b>Impulskontrolle</b> und <b>Aktivitätsniveau</b>. Nicht „zu wenig Aufmerksamkeit", sondern eine Aufmerksamkeit, die sich schlecht bewusst lenken lässt — mal gar nicht, mal stundenlang auf eine Sache.</p>
+    <ul>
+      <li>Schwer anzufangen, auch bei wichtigen Dingen</li>
+      <li>Zeitgefühl, das nicht verlässlich arbeitet</li>
+      <li>Innere Unruhe, die nicht sichtbar sein muss</li>
+      <li>Starke Reaktion auf Zurückweisung</li>
+      <li>Interesse als Schalter, nicht Wille</li>
+    </ul>
+  </div>
+  <div class="av-k aut">
+    <h3>Autismus</h3>
+    <div class="kurz">Autismus-Spektrum-Störung, ASS</div>
+    <p>Beschreibt eine andere Art, <b>soziale Information</b> zu verarbeiten, dazu <b>Bedürfnis nach Gleichförmigkeit</b> und eine <b>abweichende Reizverarbeitung</b>. Nicht fehlendes Interesse an Menschen, sondern ein anderer Zugang zu ihnen.</p>
+    <ul>
+      <li>Soziale Regeln werden gelernt statt gespürt</li>
+      <li>Veränderung kostet überdurchschnittlich viel</li>
+      <li>Reize wirken stärker oder schwächer als bei anderen</li>
+      <li>Tiefe, dauerhafte Spezialinteressen</li>
+      <li>Erschöpfung nach sozialen Situationen</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Wo sich beides überschneidet</h2>
+<div class="av-ueber">
+  <svg viewBox="0 0 560 270" role="img" aria-label="Überschneidung von ADHS und Autismus">
+    <circle cx="205" cy="130" r="108" fill="#F3DED2" fill-opacity=".78" stroke="#D4A891"/>
+    <circle cx="355" cy="130" r="108" fill="#D8E3ED" fill-opacity=".78" stroke="#9FBACE"/>
+    <text x="128" y="70" font-size="16" fill="#8A4326" font-family="Fraunces,Georgia,serif">ADHS</text>
+    <text x="405" y="70" font-size="16" fill="#2E4E68" font-family="Fraunces,Georgia,serif">Autismus</text>
+    <text x="118" y="122" font-size="12" fill="#6B4A3A">Impulsivität</text>
+    <text x="118" y="142" font-size="12" fill="#6B4A3A">Reizsuche</text>
+    <text x="118" y="162" font-size="12" fill="#6B4A3A">Zeitblindheit</text>
+    <text x="403" y="122" font-size="12" fill="#2E4E68">Routinebedarf</text>
+    <text x="403" y="142" font-size="12" fill="#2E4E68">soziale Regeln</text>
+    <text x="403" y="162" font-size="12" fill="#2E4E68">Reizempfindlichkeit</text>
+    <text x="280" y="106" font-size="11.5" fill="#4A4038" text-anchor="middle">Überlastung</text>
+    <text x="280" y="126" font-size="11.5" fill="#4A4038" text-anchor="middle">Erschöpfung</text>
+    <text x="280" y="146" font-size="11.5" fill="#4A4038" text-anchor="middle">Maskieren</text>
+    <text x="280" y="166" font-size="11.5" fill="#4A4038" text-anchor="middle">Reizfilter</text>
+    <text x="280" y="248" font-size="12" fill="#8B7E6C" text-anchor="middle">In der Mitte liegt, was sich von außen gleich anfühlt — und trotzdem verschiedene Ursachen hat.</text>
+  </svg>
+  <p style="margin:12px 0 0;font-size:15px;line-height:1.65;">Bis 2013 durfte man beide Diagnosen <b>nicht gleichzeitig</b> stellen — die Handbücher schlossen es aus. Heute ist die Kombination anerkannt und gilt als häufig. Im deutschen Sprachraum kursieren dafür die Kürzel <b>AuDHS</b> oder <b>AutADHS</b>; offizielle Diagnosen sind das nicht, sondern eine Sprechweise für zwei Diagnosen nebeneinander.</p>
+</div>
+
+<div class="tip"><b>Warum die Kombination besonders anstrengend ist:</b> Die beiden Seiten wollen Gegensätzliches. Der eine Teil braucht Neues, Tempo und Abwechslung, der andere Gleichförmigkeit, Ruhe und Vorhersehbarkeit — <b>gleichzeitig</b>. Das ist kein Widerspruch im Verhalten, sondern ein dauerhafter innerer Zielkonflikt. Wer das erlebt, hält sich oft für widersprüchlich oder unzuverlässig. Es ist aber schlicht die Bauweise.</div>
+
+<h2>Dieselbe Schwierigkeit, verschiedene Gründe</h2>
+<p class="sub">Vieles sieht von außen gleich aus und kommt von woanders. Das ist auch der Grund, warum dieselbe Bewältigungsstrategie bei dem einen hilft und bei der anderen nicht.</p>
+<table class="av-tab">
+<tr><th>Das zeigt sich so</th><th>Bei ADHS eher</th><th>Bei Autismus eher</th></tr>
+<tr><td>Termin vergessen</td><td>Zeitgefühl und Arbeitsgedächtnis</td><td>Ablauf war unklar oder wurde geändert</td></tr>
+<tr><td>Gespräch unterbrochen</td><td>Impuls war schneller als die Bremse</td><td>Der richtige Moment war nicht erkennbar</td></tr>
+<tr><td>Party verlassen</td><td>langweilig geworden, Reizsuche woanders</td><td>zu viele Reize, Kapazität am Ende</td></tr>
+<tr><td>Plan nicht eingehalten</td><td>Interesse gekippt, Antrieb weg</td><td>Etwas Unvorhergesehenes hat alles blockiert</td></tr>
+<tr><td>Stundenlang vertieft</td><td>Hyperfokus, oft wechselndes Thema</td><td>Spezialinteresse, meist über Jahre stabil</td></tr>
+<tr><td>Kein Blickkontakt</td><td>Aufmerksamkeit springt ab</td><td>Blickkontakt kostet Verarbeitungskapazität</td></tr>
+</table>
+
+<h2>Warum es bei Frauen so spät erkannt wird</h2>
+<div class="av-frau">
+  <h3>Vier Gründe, die zusammenwirken</h3>
+  <p><b>1 · Die Forschung begann bei Jungen.</b> Die Beschreibungen, nach denen bis heute erkannt wird, stammen überwiegend aus Untersuchungen an hyperaktiven Jungen im Grundschulalter. Wer nicht so aussieht, fällt durch das Raster.</p>
+  <p><b>2 · Anpassung wird früher gelernt.</b> Mädchen werden stärker zu Rücksicht und Angepasstheit erzogen. Das Ergebnis ist eine gut funktionierende Außenschicht — und ein Innenleben, das niemand sieht. Dieses dauerhafte Anpassen ist keine Charakterstärke, sondern ein erheblicher Energieverbrauch.</p>
+  <p><b>3 · Es zeigt sich nach innen statt nach außen.</b> Statt Störung im Unterricht: Tagträumen, Grübeln, Selbstzweifel, Erschöpfung. Das fällt niemandem auf — außer der Person selbst, die es für ein persönliches Versagen hält.</p>
+  <p><b>4 · Es wird anders benannt.</b> Viele bekommen über Jahre andere Etiketten: Erschöpfung, Angst, depressive Episode, Persönlichkeitsstörung. Manche davon treffen zusätzlich zu — aber wenn die Grundlage fehlt, hilft die Behandlung nur begrenzt.</p>
+</div>
+
+<div class="tip"><b>Und ein Hinweis, der selten gemacht wird:</b> Bei Frauen schwanken die Symptome häufig mit dem Zyklus, weil die beteiligten Botenstoffe hormonabhängig sind. Wenn du eine Abklärung machst, lohnt es sich, über einige Wochen zu notieren, wie es dir geht — das ist eine Information, die in der Diagnostik ernst genommen wird und die sonst niemand mitbringt.</div>
+
+<h2>Fünf verbreitete Irrtümer</h2>
+<div class="av-mythos">
+  <div class="av-m"><span class="lab f">Irrtum</span><p><b>„Das wächst sich aus."</b><br>Bei einem großen Teil bleibt es bis ins Erwachsenenalter bestehen und ändert nur sein Erscheinungsbild — aus sichtbarer Unruhe wird innere.</p></div>
+  <div class="av-m"><span class="lab f">Irrtum</span><p><b>„Du kannst dich ja stundenlang konzentrieren."</b><br>Genau das gehört dazu. Das Problem ist nicht die Menge an Aufmerksamkeit, sondern dass sie sich nicht bewusst lenken lässt.</p></div>
+  <div class="av-m"><span class="lab f">Irrtum</span><p><b>„Autismus heißt, keine Gefühle zu haben."</b><br>Oft ist das Gegenteil der Fall. Was anders ist, ist der <b>Ausdruck</b> — nicht das Empfinden.</p></div>
+  <div class="av-m"><span class="lab f">Irrtum</span><p><b>„Du wirkst aber gar nicht so."</b><br>Das ist meistens eine Aussage über die Anpassungsleistung, nicht über den Zustand. Und je besser sie funktioniert, desto teurer ist sie.</p></div>
+  <div class="av-m"><span class="lab f">Irrtum</span><p><b>„Das ist doch gerade nur ein Trend."</b><br>Dass mehr Menschen davon erfahren und sich erkennen, ist keine Mode, sondern eine Nachholbewegung. Gleichzeitig stimmt: Ein Selbsttest im Netz ersetzt keine Abklärung.</p></div>
+</div>
+
+<h2>Was eine Diagnose bringt — und was nicht</h2>
+<div class="av-zeigt">
+  <div class="av-z"><b>Sie erklärt rückwirkend</b><p>Viele beschreiben, dass sich damit dreißig Jahre neu sortieren. Das allein verändert schon etwas, auch ohne Behandlung.</p></div>
+  <div class="av-z"><b>Sie öffnet Zugänge</b><p>Behandlung, Nachteilsausgleich, Anpassungen am Arbeitsplatz — vieles davon setzt einen schriftlichen Befund voraus.</p></div>
+  <div class="av-z"><b>Sie ist kein Freifahrtschein</b><p>Sie erklärt Schwierigkeiten, nimmt aber niemandem die Verantwortung für das eigene Verhalten ab.</p></div>
+  <div class="av-z"><b>Sie ist keine Voraussetzung</b><p>Alles, was dir gegen Überlastung hilft, darfst du auch ohne Diagnose tun. Du musst dir nichts verdienen.</p></div>
+</div>
+
+<div class="tip"><b>Wenn du dem nachgehen willst:</b> Unter <a href="diagnose-weg.html">Der Weg zur Abklärung</a> steht, wie das in Deutschland praktisch abläuft — Anlaufstellen, Unterlagen, Wartezeiten, Kosten. Und unter <a href="nd-leitfaden.html">Anders verdrahtet leben</a> geht es darum, was man im Alltag damit macht, unabhängig davon, ob eine Diagnose vorliegt.</div>
+
+<div class="weiter"><a href="nd-leitfaden.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Anders verdrahtet leben</span></a><a href="diagnose-weg.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Der Weg zur Abkl&auml;rung</span></a></div>
+<div class="foot">&Uuml;berblick &middot; Orientierungswissen, keine Diagnostik. Eine Einsch&auml;tzung kann nur eine Fachperson geben.</div>
+</div>
+</body></html>
