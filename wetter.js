@@ -145,21 +145,42 @@ window.AC_wetter=function(el){
   h+='</div>';
 
   /* ── Langsame Planeten kompakt ── */
-  h+='<div class="hw-titel">Der langsame Hintergrund</div><div class="hw-lang">';
+  var GES={Jupiter:'Wo eine Gesellschaft gerade großzügig ist und wo sie übertreibt — Bildung, Recht, Glaubensfragen, Expansion.',
+   Saturn:'Wo Regeln entstehen und Grenzen gezogen werden. Saturn zeigt, was eine Gesellschaft gerade ernst nimmt und wo sie streng wird.',
+   Uranus:'Wo gebrochen wird. Technik, Aufstände, plötzliche Kehrtwenden — Uranus beschreibt, wo das Alte nicht mehr hält.',
+   Neptun:'Wo Grenzen verschwimmen. Ideale, Täuschung, Kunst und Religion — und das, woran eine Zeit glauben will.',
+   Pluto:'Wo umgebaut wird, tief und unumkehrbar. Machtverhältnisse, Strukturen, das Verdrängte einer Gesellschaft.'};
+  h+='<details class="hw-details"><summary><b>Der langsame Hintergrund</b> <span>— was gesellschaftlich läuft</span></summary><div class="hw-dbox">';
   ['Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
-    var zi=Math.floor(P[k]/30), r=rueck(k,jd);
-    h+='<span class="hw-lp"'+(meinHaus(P[k])?' title="dein '+meinHaus(P[k])+'. Haus"':'')+'>'+
-      '<b style="color:'+ELF[zi%4]+'">'+GLY[k]+'</b> '+k+' in '+SIGNS[zi]+(r?' ℞':'')+
-      (meinHaus(P[k])?' <i>· '+meinHaus(P[k])+'. Haus</i>':'')+'</span>';
+    var zi=Math.floor(P[k]/30), r=rueck(k,jd), mh=meinHaus(P[k]);
+    h+='<div class="hw-dz"><div class="hw-dgl" style="color:'+ELF[zi%4]+'">'+GLY[k]+(r?' ℞':'')+'</div><div>'+
+      '<b>'+k+' in '+SIGNS[zi]+'</b><p>'+(GES[k]||'')+'</p>'+
+      (mh?'<div class="hw-dmein">bei dir im '+mh+'. Haus · '+HT[mh-1]+'</div>':'')+'</div></div>';
   });
-  h+='</div>';
+  h+='<div class="hw-dfuss">Diese Stände gelten für alle gleich und wechseln nur alle paar Jahre. '+
+    'Persönlich wird es dort, wo sie durch <b>deine</b> Häuser laufen.</div></div></details>';
 
   /* ── Rückläufigkeiten als Warnstreifen ── */
   var rl=['Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].filter(function(k){return rueck(k,jd);});
   if(rl.length){
-    h+='<div class="hw-rl"><b>Rückläufig gerade:</b> '+rl.join(', ')+'. '+
-      'Das heißt nicht, dass etwas schiefgeht — es heißt, dass diese Themen noch einmal durchlaufen werden. '+
-      '<a href="retrograde.html">Was das genau bedeutet →</a></div>';
+    var RLT={Merkur:['Verträge, Technik, Absprachen','Alles wird noch einmal durchlaufen. Gut zum Überarbeiten und für Gespräche, die ihr schon angefangen habt — heikler für alles, was endgültig sein soll.'],
+     Venus:['Werte, Beziehungen, Aussehen','Alte Kontakte tauchen auf, der eigene Geschmack verschiebt sich. Die eine Regel, bei der fast alle zustimmen: keine dauerhaften Veränderungen am Aussehen.'],
+     Mars:['Antrieb und Konflikte','Neues anzufangen ist zäher, Ärger richtet sich eher nach innen. Wiederaufnehmen geht dafür leichter als sonst.'],
+     Jupiter:['Sinn und Wachstum','Die Entwicklung verlagert sich nach innen. Was du jetzt lernst, zeigt sich später außen.'],
+     Saturn:['Struktur und Verantwortung','Was du gebaut hast, wird geprüft. Unangenehm, aber brauchbar: Es zeigt sich, was nicht trägt, bevor du darauf aufbaust.'],
+     Uranus:['Freiheit und Unruhe','Die Unruhe arbeitet im Hintergrund. Der Ausbruch kommt meistens nach der Phase, nicht mittendrin.'],
+     Neptun:['Sehnsucht und Illusion','Bilder lösen sich auf. Gut zum Klären, schlecht zum Träumen.'],
+     Pluto:['Macht und Umbau','Der Umbau läuft innen weiter. Kaum spürbar, aber wirksam.']};
+    h+='<details class="hw-details"><summary><b>'+rl.length+' Planet'+(rl.length>1?'en':'')+' rückläufig:</b> '+rl.join(', ')+
+      ' <span>— antippen für das, was das heißt</span></summary><div class="hw-dbox">';
+    rl.forEach(function(k){
+      var mh=meinHaus(P[k]);
+      h+='<div class="hw-dz"><div class="hw-dgl">'+GLY[k]+' ℞</div><div>'+
+        '<b>'+k+' · '+RLT[k][0]+'</b><p>'+RLT[k][1]+'</p>'+
+        (mh?'<div class="hw-dmein">bei dir im '+mh+'. Haus · '+HT[mh-1]+'</div>':'')+'</div></div>';
+    });
+    h+='<div class="hw-dfuss">Rückläufig heißt nicht, dass etwas schiefgeht — es heißt, dass diese Themen noch einmal durchlaufen werden. '+
+      '<a href="retrograde.html">Ausführlich mit Kalender →</a></div></div></details>';
   }
 
   /* ── Nächste Lunationen ── */
@@ -176,6 +197,9 @@ window.AC_wetter=function(el){
   });
   h+='</div>';
 
+  h+='<a class="hw-weg" href="zeitqualitaet.html"><span class="hw-wgl">⌖</span>'+
+    '<span><b>Was gerade leichtfällt</b><br><span>Haare, Farbe, Botox, Tattoo, Verträge — mit günstigen Terminen für die nächsten Wochen</span></span>'+
+    '<i>→</i></a>';
   h+='<div class="hw-fuss">Das oben gilt für alle gleich — es ist das Wetter. '+
     (eig?'Was <b>dir</b> davon nahegeht, steht in <a href="uebersicht.html">deinem Bild</a>.'
         :'Wenn du dein Chart hinterlegst, siehst du zusätzlich, in welche deiner Häuser das fällt.')+'</div>';

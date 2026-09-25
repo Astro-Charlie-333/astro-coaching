@@ -1,0 +1,650 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Was gerade leichtfällt · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.zq-med{background:#F6E3E3;border:1px solid #D9AFAF;border-radius:18px;padding:19px 21px;margin-bottom:22px;}
+.zq-med h3{font-family:var(--serif);font-size:19px;font-weight:400;color:#8A2E2E;margin:0 0 7px;}
+.zq-med p{margin:0 0 9px;font-size:15px;line-height:1.65;}
+.zq-med p:last-child{margin-bottom:0;}
+.zq-jetzt{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:11px;margin-bottom:22px;}
+.zq-f{border-radius:16px;padding:15px 17px;border:1px solid;}
+.zq-f.rot{background:#FBF0E8;border-color:#E2C3B4;}
+.zq-f.gelb{background:var(--messing-bg);border-color:var(--linie);}
+.zq-f.gruen{background:#EDF3EC;border-color:#C5D7C2;}
+.zq-f .gl{font-size:22px;line-height:1;margin-bottom:6px;}
+.zq-f b{display:block;font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);margin-bottom:4px;}
+.zq-f p{margin:0;font-size:14px;line-height:1.55;color:var(--leise);}
+.zq-bereiche{display:grid;gap:10px;margin:16px 0 22px;}
+.zq-b{display:grid;grid-template-columns:54px 1fr;gap:15px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:17px;padding:16px 18px;align-items:start;}
+.zq-ampel{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+ font-size:20px;flex:none;}
+.zq-ampel.gruen{background:#DCE9D9;color:#3F6B4A;}
+.zq-ampel.gelb{background:var(--messing-bg);color:#8A6A20;}
+.zq-ampel.rot{background:#F6E0D4;color:#8A4326;}
+.zq-b .nm{font-family:var(--serif);font-size:18px;color:var(--tinte);margin-bottom:3px;}
+.zq-b .urteil{font-family:var(--sans);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:6px;}
+.zq-b p{margin:0 0 6px;font-size:14.8px;line-height:1.6;}
+.zq-b p:last-child{margin-bottom:0;}
+.zq-b .grund{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-top:7px;}
+.zq-mond{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:18px;padding:19px 21px;margin-bottom:20px;}
+.zq-mond h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 8px;}
+.zq-mond p{margin:0 0 9px;font-size:15px;line-height:1.65;}
+.zq-mond p:last-child{margin-bottom:0;}
+.zq-trad{background:var(--bg);border-radius:13px;padding:13px 15px;font-size:14px;line-height:1.6;
+ color:var(--leise);margin-top:10px;}
+.zq-trad b{color:var(--tinte);}
+.zq-pers{background:var(--messing-bg);border-radius:18px;padding:19px 21px;margin-bottom:20px;}
+.zq-pers h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 8px;}
+.zq-pers p{margin:0 0 9px;font-size:15px;line-height:1.65;}
+
+.sk-gitter{display:grid;gap:11px;margin:16px 0 22px;}
+.sk-k{background:var(--papier);border:1px solid var(--linie);border-radius:18px;overflow:hidden;}
+.sk-k summary{cursor:pointer;padding:16px 18px;display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;}
+.sk-k summary::-webkit-details-marker{display:none;}
+.sk-ic{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:19px;}
+.sk-ic.gruen{background:#DCE9D9;color:#3F6B4A;}
+.sk-ic.gelb{background:var(--messing-bg);color:#8A6A20;}
+.sk-ic.rot{background:#F6E0D4;color:#8A4326;}
+.sk-nm{font-family:var(--serif);font-size:18px;color:var(--tinte);line-height:1.2;}
+.sk-kurz{font-size:13.5px;color:var(--leise);margin-top:2px;}
+.sk-urteil{font-family:var(--sans);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+ border-radius:12px;padding:5px 11px;white-space:nowrap;}
+.sk-urteil.gruen{background:#3F6B4A;color:#fff;}
+.sk-urteil.gelb{background:var(--messing);color:#fff;}
+.sk-urteil.rot{background:#8A4326;color:#fff;}
+.sk-in{padding:0 18px 18px;}
+.sk-z{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:9px;}
+.sk-z .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.sk-z p{margin:0;font-size:14.6px;line-height:1.62;}
+.sk-prakt{background:var(--nacht-bg);border-radius:13px;padding:13px 15px;font-size:14.6px;line-height:1.62;}
+.sk-prakt .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.sk-termine{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;}
+.sk-t{font-family:'JetBrains Mono',monospace;font-size:12px;background:#DCE9D9;color:#2F5137;
+ border-radius:12px;padding:6px 12px;}
+.sk-t.meiden{background:#F6E0D4;color:#8A4326;}
+.sk-warn{background:#F6E3E3;border-left:3px solid #A05A3A;border-radius:11px;padding:11px 14px;
+ margin-top:9px;font-size:14px;line-height:1.58;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Timing</div>
+<h1>Was gerade <em>leichtfällt.</em></h1>
+<p class="lede">Es gibt eine alte Tradition, bestimmte Vorhaben nach dem Himmel zu legen. Ein Teil davon ist brauchbar, ein Teil ist Aberglaube, und ein Teil ist gefährlich. Diese Seite trennt das — und sagt dir, was heute eher läuft und was du besser um ein paar Tage schiebst.</p>
+
+<div class="zq-med">
+  <h3>Die Grenze, die nie verhandelbar ist</h3>
+  <p><b>Arzttermine, Untersuchungen, Behandlungen und alles medizinisch Notwendige verschiebt man nicht.</b> Niemals, aus keinem Planetenstand. Wer eine Vorsorge aufschiebt, weil Merkur rückläufig ist, riskiert echten Schaden — und kein Himmelsstand gleicht das aus.</p>
+  <p>Die alten Regeln zum Nicht-Operieren bei bestimmten Mondständen stammen aus einer Zeit vor Narkose, Blutstillung und Antibiotika. Sie waren damals vernünftig und sind heute überholt. <b>Was hier steht, gilt ausschließlich für Dinge, die du freiwillig terminierst und folgenlos verschieben kannst.</b></p>
+</div>
+
+<h2>Was heute mitspielt</h2>
+<div class="zq-jetzt" id="zqjetzt"></div>
+
+<h2>Bereich für Bereich</h2>
+<p class="sub">Aus den aktuellen Ständen abgeleitet. Grün heißt: läuft eher. Gelb: geht, mit Aufmerksamkeit. Rot: wenn es sich verschieben lässt, verschieb es.</p>
+<div class="zq-bereiche" id="zqbereiche"></div>
+
+<div class="zq-mond" id="zqmond"></div>
+
+<div id="zqpers"></div>
+
+
+<h2>Schönheitstermine</h2>
+<p class="sub">Der Mondkalender ist hier am beliebtesten — und hier auch am harmlosesten, weil sich alles davon um ein paar Tage verschieben lässt. Bei jedem Punkt steht, was die Tradition sagt, <b>und</b> was unabhängig davon tatsächlich hilft. Der zweite Teil ist meistens der nützlichere.</p>
+<div class="sk-gitter" id="skgitter"></div>
+
+<h2>Was davon taugt — ehrlich</h2>
+<div class="tip"><b>Es gibt keinen Beleg dafür, dass Verträge bei rückläufigem Merkur häufiger scheitern.</b> Was es gibt, ist ein anderer Effekt, und der ist real: Wer weiß, dass gerade eine Phase zum Prüfen ist, <b>liest genauer</b>. Wer weiß, dass er müde ist, plant weniger ein. Der Nutzen liegt nicht im Himmel, sondern in der Aufmerksamkeit, die ein solcher Hinweis erzeugt.</div>
+
+<div class="tip"><b>Und die Gegenprobe:</b> Wenn dich ein Timing-Hinweis dazu bringt, etwas Wichtiges <i>gar nicht</i> zu tun oder dich handlungsunfähig zu fühlen, hat er seinen Zweck verfehlt. Dann leg ihn weg. Ein Wegweiser darf dir Aufmerksamkeit geben — er darf dir keine Entscheidungen abnehmen und erst recht keine Angst machen.</div>
+
+<div class="tip"><b>Woher die Regeln kommen:</b> Das Meiste stammt aus der <b>Elektionsastrologie</b>, einer Tradition, die seit der Antike günstige Zeitpunkte für Vorhaben bestimmt. Sie ist historisch interessant und nicht wissenschaftlich überprüft. Diese Seite nutzt davon nur den Teil, der sich auf Verschiebbares bezieht — und benennt ihn als Tradition, nicht als Tatsache.</div>
+
+<div class="weiter"><a href="retrograde.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">R&uuml;ckl&auml;ufig</span></a><a href="lunationen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Neumonde &amp; Vollmonde</span></a></div>
+<div class="foot">Zeitqualit&auml;t &middot; &Uuml;berlieferte Regeln, als solche benannt. Medizinisch Notwendiges wird nie nach dem Himmel terminiert.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLY={Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',Mond:'☽',Sonne:'☉'};
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60);}
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+function dat(jd){var d=new Date((jd-2440587.5)*86400000);
+ return ('0'+d.getUTCDate()).slice(-2)+'.'+('0'+(d.getUTCMonth()+1)).slice(-2)+'.';}
+
+var JD=heuteJD();
+var P={}; ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){P[k]=lon(k,JD);});
+var RL={}; ['Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){RL[k]=rueck(k,JD);});
+var phase=nrm(P.Mond-P.Sonne), zunehmend=(phase<180);
+var fuell=Math.round((1-Math.cos(phase*Math.PI/180))/2*100);
+var mondZ=Math.floor(P.Mond/30);
+
+/* Leerlaufender Mond: kein klassischer Aspekt mehr bis zum Zeichenwechsel */
+function leerlauf(){
+  var ziel=(Math.floor(P.Mond/30)+1)*30;
+  var rest=nrm(ziel-P.Mond);
+  var stunden=rest/(13.2/24);
+  for(var t=0;t<stunden;t+=0.5){
+    var j=JD+t/24, m=lon('Mond',j);
+    var treffer=false;
+    ['Sonne','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
+      var s=Math.abs(nrm(m-lon(k,j)+180)-180);
+      [0,60,90,120,180].forEach(function(w){ if(Math.abs(s-w)<0.4) treffer=true; });
+    });
+    if(treffer) return {leer:false, bis:null};
+  }
+  return {leer:true, bis:Math.round(stunden)};
+}
+var LL=leerlauf();
+
+/* ── Was heute mitspielt ── */
+function jetztZeichnen(){
+  var s='', n=0;
+  Object.keys(RL).forEach(function(k){
+    if(!RL[k]) return;
+    var schnell=(k==='Merkur'||k==='Venus'||k==='Mars');
+    var T={Merkur:'Verträge, Technik und Absprachen werden noch einmal durchlaufen.',
+     Venus:'Werte, Beziehungen und das eigene Aussehen stehen zur Überprüfung.',
+     Mars:'Antrieb stockt, Neues anzufangen ist zäher als sonst.',
+     Jupiter:'Wachstum verlagert sich nach innen.',Saturn:'Strukturen werden geprüft.',
+     Uranus:'Unruhe arbeitet im Hintergrund.',Neptun:'Bilder lösen sich auf.',Pluto:'Umbau läuft verdeckt weiter.'};
+    s+='<div class="zq-f '+(schnell?'rot':'gelb')+'"><div class="gl">'+GLY[k]+' ℞</div>'+
+      '<b>'+k+' rückläufig</b><p>'+T[k]+'</p></div>'; n++;
+  });
+  s+='<div class="zq-f '+(zunehmend?'gruen':'gelb')+'"><div class="gl">'+(zunehmend?'◐':'◑')+'</div>'+
+    '<b>Mond '+(zunehmend?'zunehmend':'abnehmend')+'</b><p>'+
+    (zunehmend?'Tradition: eine Zeit für Aufbauen, Anfangen und Hinzufügen.'
+             :'Tradition: eine Zeit für Abschließen, Loslassen und Wegnehmen.')+
+    ' Aktuell '+fuell+'% beleuchtet.</p></div>';
+  s+='<div class="zq-f '+(LL.leer?'gelb':'gruen')+'"><div class="gl">☽</div>'+
+    '<b>Mond in '+SIGNS[mondZ]+'</b><p>'+
+    (LL.leer?'Der Mond läuft gerade leer — bis zum Zeichenwechsel in etwa '+LL.bis+' Stunden bildet er keinen Aspekt mehr. '+
+      'Tradition: nichts Neues beginnen, gut für Routine.'
+     :'Der Mond hat heute noch Kontakte. Nichts spricht gegen Anfangen.')+'</p></div>';
+  if(!n) s='<div class="zq-f gruen"><div class="gl">✓</div><b>Kein Planet rückläufig</b>'+
+    '<p>Ruhige Lage — die Standardeinschränkungen entfallen gerade.</p></div>'+s;
+  document.getElementById('zqjetzt').innerHTML=s;
+}
+
+/* ── Bereiche mit Ampel ── */
+var BEREICHE=[
+ {n:'Verträge und Unterschriften', ic:'✎',
+  pruef:function(){
+    if(RL.Merkur) return ['rot','Merkur rückläufig',
+      'Wenn es sich um Tage schieben lässt: schieb es. Wenn nicht, lies gründlicher als sonst und bestehe auf Klarstellungen. '+
+      'Der Nutzen liegt in der erhöhten Aufmerksamkeit — nicht in einem Unglück, das sonst passieren würde.'];
+    if(LL.leer) return ['gelb','Mond leerlaufend','Für heute eher Bestehendes abschließen als Neues eingehen. Wenn der Termin steht, ist das kein Grund zur Sorge.'];
+    return ['gruen','frei','Nichts spricht dagegen. Trotzdem gilt wie immer: erst lesen, dann unterschreiben.'];
+  }},
+ {n:'Technik, Geräte, Daten', ic:'⌘',
+  pruef:function(){
+    if(RL.Merkur) return ['gelb','Merkur rückläufig',
+      'Die bekannteste aller Regeln. Belege gibt es dafür nicht — was hilft, ist trotzdem sinnvoll: <b>Sicherungskopie machen</b>, '+
+      'bevor du etwas Größeres umstellst. Das ist immer eine gute Idee, nicht nur jetzt.'];
+    return ['gruen','frei','Gute Zeit für Umzüge, Updates, Neueinrichtung.'];
+  }},
+ {n:'Aussehen — Übersicht', ic:'✂',
+  pruef:function(){
+    if(RL.Venus) return ['rot','Venus rückläufig',
+      'Die eine Regel, bei der auch nüchterne Menschen zustimmen: <b>Keine dauerhaften Veränderungen am Aussehen</b>, solange Venus rückläufig ist. '+
+      'Nicht weil etwas schiefgeht, sondern weil sich der eigene Geschmack in diesen Wochen erfahrungsgemäß verschiebt — '+
+      'und man danach oft anders darüber denkt. Nachschneiden, Pflege und Rückgängigmachbares sind unproblematisch.'];
+    if(!zunehmend) return ['gelb','Mond abnehmend',
+      'Tradition: Bei abnehmendem Mond schneiden, wenn Haare langsamer nachwachsen sollen, bei zunehmendem, wenn sie schneller wachsen sollen. '+
+      'Dafür gibt es keinen Beleg — aber es schadet auch nichts, und viele mögen die Ordnung darin.'];
+    return ['gruen','frei','Nichts spricht dagegen. Zunehmender Mond gilt traditionell als günstig für alles Aufbauende.'];
+  }},
+ {n:'Wahleingriffe — Übersicht', ic:'⚕',
+  pruef:function(){
+    var zone=['Kopf und Gesicht','Hals und Kiefer','Schultern und Arme','Brust und Magen','Herz und Rücken','Verdauung',
+     'Nieren und unterer Rücken','Becken','Hüften und Oberschenkel','Knie und Haut','Unterschenkel','Füße'][mondZ];
+    return [(!zunehmend?'gruen':'gelb'), 'Mond in '+SIGNS[mondZ],
+      '<b>Nur für rein wählbare, medizinisch nicht nötige Eingriffe.</b> Die Tradition rät, an der Körperzone zu vermeiden, '+
+      'die dem aktuellen Mondzeichen zugeordnet ist — derzeit <b>'+zone+'</b>. Außerdem gilt abnehmender Mond als günstiger für Eingriffe, '+
+      'zunehmender für Aufbauendes.<br><br><b>Und ganz klar:</b> Das ist überlieferte Regel, kein medizinisches Wissen. '+
+      'Für die Entscheidung zählen ärztliche Einschätzung, Vorbereitung und die Qualität der Behandlung — sonst nichts. '+
+      'Bei allem medizinisch Notwendigen gilt diese Zeile gar nicht.'];
+  }},
+ {n:'Etwas Neues anfangen', ic:'▶',
+  pruef:function(){
+    if(RL.Mars) return ['rot','Mars rückläufig','Starts brauchen gerade mehr Anlauf und verpuffen leichter. Gut geeignet ist dagegen alles, was du wieder aufnimmst.'];
+    if(LL.leer) return ['gelb','Mond leerlaufend','Für die nächsten Stunden eher fortführen als starten.'];
+    if(zunehmend) return ['gruen','Mond zunehmend','Traditionell die beste Phase für Anfänge. Und falls das nur ein Anlass ist, endlich loszulegen — auch gut.'];
+    return ['gelb','Mond abnehmend','Eher eine Phase zum Abschließen. Anfangen geht trotzdem, fühlt sich nur weniger schwungvoll an.'];
+  }},
+ {n:'Ein schwieriges Gespräch führen', ic:'❋',
+  pruef:function(){
+    if(RL.Merkur) return ['gruen','Merkur rückläufig',
+      'Überraschung: Das ist gerade eine <b>gute</b> Zeit. Rückläufiger Merkur eignet sich für alles Wiederaufgenommene — '+
+      'also genau für das Gespräch, das ihr schon zweimal angefangen habt.'];
+    if(RL.Venus) return ['gruen','Venus rückläufig','Passende Phase, um Ungeklärtes in Beziehungen noch einmal anzusehen.'];
+    return ['gelb','neutral','Kein besonderer Hinweis. Entscheidend ist eher, ob ihr beide ausgeschlafen seid.'];
+  }},
+ {n:'Größere Anschaffungen', ic:'◈',
+  pruef:function(){
+    if(RL.Venus) return ['rot','Venus rückläufig','Was du jetzt kaufst, gefällt dir in ein paar Wochen oft weniger. Gilt besonders für Schmuck, Kleidung, Einrichtung und alles Ästhetische.'];
+    if(RL.Merkur) return ['gelb','Merkur rückläufig','Kaufen ja — aber Rückgaberecht und Garantiebedingungen bewusst anschauen.'];
+    return ['gruen','frei','Nichts spricht dagegen.'];
+  }},
+ {n:'Weniger tun, mehr ruhen', ic:'☾',
+  pruef:function(){
+    var viele=Object.keys(RL).filter(function(k){return RL[k];}).length;
+    if(!zunehmend&&viele>=3) return ['gruen','abnehmend, '+viele+' rückläufig',
+      'Beides zeigt in dieselbe Richtung: eine Phase zum Reduzieren statt Draufsatteln. Wenn du dich müde fühlst, ist das gerade passend — nicht faul.'];
+    if(!zunehmend) return ['gruen','Mond abnehmend','Gute Zeit für Aufräumen, Abschließen, Weglassen.'];
+    return ['gelb','Mond zunehmend','Eher eine Aufbauphase. Pausen brauchst du trotzdem — die richten sich nicht nach dem Mond.'];
+  }}
+];
+
+function bereicheZeichnen(){
+  var s='';
+  BEREICHE.forEach(function(b){
+    var r=b.pruef();
+    s+='<div class="zq-b"><div class="zq-ampel '+r[0]+'">'+b.ic+'</div><div>'+
+      '<div class="nm">'+b.n+'</div>'+
+      '<div class="urteil">'+(r[0]==='gruen'?'läuft':r[0]==='gelb'?'mit Aufmerksamkeit':'lieber verschieben')+'</div>'+
+      '<p>'+r[2]+'</p>'+
+      '<div class="grund">Grund: '+r[1]+'</div></div></div>';
+  });
+  document.getElementById('zqbereiche').innerHTML=s;
+}
+
+/* ── Mondlauf erklären ── */
+function mondZeichnen(){
+  var M=['schnell und direkt — gut für Kurzes, schlecht für Geduldiges','langsam und beständig — gut für alles Handfeste',
+   'beweglich und gesprächig — gut für Austausch, schlecht für Tiefe','empfindlich und häuslich — gut für Zuhause und Vertrautes',
+   'großzügig und sichtbar — gut für Auftritte','genau und kritisch — gut für Aufräumen und Details',
+   'ausgleichend — gut für Absprachen und alles Ästhetische','intensiv und misstrauisch — gut für Klärung, schlecht für Leichtes',
+   'weit und optimistisch — gut für Planung und Lernen','sachlich und ausdauernd — gut für Struktur und Verhandlungen',
+   'eigenwillig und ideenreich — gut für Neues und Gruppen','durchlässig und träumerisch — gut für Kreatives, schlecht für Genauigkeit'];
+  document.getElementById('zqmond').innerHTML='<h3>Der Mond zieht durch '+SIGNS[mondZ]+'</h3>'+
+    '<p>Er bleibt gut zweieinhalb Tage in einem Zeichen und ist damit das schnellste Timing-Werkzeug überhaupt. '+
+    'Gerade: <b>'+M[mondZ]+'</b>.</p>'+
+    (LL.leer?'<p><b>Und er läuft leer.</b> Bis zum Zeichenwechsel in etwa '+LL.bis+' Stunden bildet er keinen klassischen Aspekt mehr. '+
+      'Die Tradition sagt dazu: nichts Neues anfangen, was Bestand haben soll — es „kommt nichts daraus". '+
+      'Für Routine, Aufräumen und Bestehendes ist die Zeit unproblematisch.</p>'
+     :'<p>Er bildet heute noch Aspekte — nach der Tradition also eine normale Zeit, in der Vorhaben „ankommen".</p>')+
+    '<div class="zq-trad"><b>Zum Einordnen:</b> Der leerlaufende Mond ist eine der ältesten Regeln der Stundenastrologie und '+
+    'eine der wenigen, die auch skeptische Praktiker noch verwenden. Überprüft ist sie nicht. '+
+    'Praktischer Nutzen: Sie erinnert daran, dass nicht jede Stunde für jede Art von Aufgabe gleich gut ist — das stimmt unabhängig vom Mond.</div>';
+}
+
+/* ── Persönlicher Bezug ── */
+function persZeichnen(){
+  var box=document.getElementById('zqpers');
+  var p=null; try{ p=window.AC_P?AC_P.eigenes():null; }catch(e){}
+  if(!p){ box.innerHTML='<div class="zq-pers"><h3>Mit deinem Chart wird es genauer</h3>'+
+    '<p>Leg unter <a href="profile.html">Profile</a> dein Chart an — dann steht hier zusätzlich, '+
+    'durch welche deiner Häuser die aktuellen Stände laufen und was das für dich verschiebt.</p></div>'; return; }
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var a=angles(jdFromUT(y,mo,d,ut),p.lat,p.lon);
+  function haus(l){ return ((Math.floor(l/30)-Math.floor(a.asc/30))%12+12)%12+1; }
+  var hm=haus(P.Mond), hs=haus(P.Sonne);
+  var s='<div class="zq-pers"><h3>Und bei dir persönlich</h3>'+
+    '<p>Der <b>Mond</b> läuft gerade durch dein <b>'+hm+'. Haus</b> ('+HT[hm-1]+'). '+
+    'Die nächsten zwei Tage passiert dort überdurchschnittlich viel — dort lohnt sich Aufmerksamkeit, dort ist auch Reibung wahrscheinlicher.</p>'+
+    '<p>Die <b>Sonne</b> steht in deinem <b>'+hs+'. Haus</b> ('+HT[hs-1]+'). Das ist dein Schwerpunkt für die nächsten Wochen.</p>';
+  var rlP=[];
+  Object.keys(RL).forEach(function(k){ if(RL[k]) rlP.push(k+' in deinem '+haus(P[k])+'. Haus'); });
+  if(rlP.length) s+='<p><b>Rückläufig bei dir:</b> '+rlP.join(', ')+'. '+
+    'Dort wird gerade wiederholt, überarbeitet und geprüft — nicht neu gestartet.</p>';
+  s+='</div>';
+  box.innerHTML=s;
+}
+
+jetztZeichnen(); bereicheZeichnen(); mondZeichnen(); persZeichnen();
+
+
+/* ── Schönheitstermine ───────────────────────────────── */
+var HAAR=['kräftig und mit Stand — gut für Volumen, schlecht für Glätte',
+ 'kräftig und glänzend. Traditionell eines der besten Zeichen fürs Schneiden',
+ 'luftig und fein. Gut für Stufen und Leichtigkeit, weniger für Fülle',
+ 'weich und schwer zu bändigen. Eher ungünstig, sagt die Tradition',
+ 'kräftig, voll, mit Volumen. Gilt als das beste Zeichen fürs Haareschneiden',
+ 'gepflegt und gleichmäßig. Sehr gut für Spitzen und alles Genaue',
+ 'schön und ausgewogen. Venus-Zeichen, gilt als günstig für alles Ästhetische',
+ 'dicht und eigenwillig. Farbe hält gut, Schnitt fällt schwerer',
+ 'mit Schwung und Bewegung. Gut für alles Lebendige',
+ 'strapazierfähig und haltbar. Sehr gut für Dauerhaftes',
+ 'eigenwillig, macht was es will. Für Experimente, nicht für Präzision',
+ 'weich und empfindlich. Traditionell das ungünstigste Zeichen fürs Schneiden'];
+
+function tagDaten(j){
+  var so=lon('Sonne',j), mo=lon('Mond',j);
+  var ph=nrm(mo-so);
+  return {zi:Math.floor(mo/30), zunehmend:(ph<180), voll:(ph>170&&ph<190), neu:(ph<10||ph>350)};
+}
+function naechste(pruef, anzahl){
+  var out=[];
+  for(var t=0;t<75&&out.length<anzahl;t++){
+    var j=JD+t, d=tagDaten(j);
+    if(pruef(d)) out.push(dat(j));
+  }
+  return out;
+}
+
+var SCHOEN=[
+ {id:'schnitt', ic:'✂', nm:'Haare schneiden', kurz:'Länge halten oder wachsen lassen',
+  urteil:function(){
+    var gut=(mondZ===4||mondZ===1||mondZ===5||mondZ===9);
+    var schlecht=(mondZ===11||mondZ===3);
+    return schlecht?'rot':(gut?'gruen':'gelb');
+  },
+  trad:function(){
+    return 'Der Mond steht in <b>'+SIGNS[mondZ]+'</b>. Nach dem Mondkalender wird das Haar damit '+HAAR[mondZ]+'. '+
+      'Zur Phase: <b>'+(zunehmend?'zunehmend':'abnehmend')+'</b> — die Regel lautet, bei zunehmendem Mond zu schneiden, '+
+      'wenn die Haare <b>schneller nachwachsen</b> sollen, und bei abnehmendem, wenn du die Form <b>länger halten</b> willst. '+
+      'Als beste Zeichen gelten Löwe und Jungfrau, als ungünstigste Fische und Krebs.';
+  },
+  prakt:'Unabhängig vom Mond: Spitzen alle acht bis zwölf Wochen halten die Form. Geh nicht mit frisch gewaschenem, '+
+   'stylingfreiem Haar hin, wenn du deinen Alltagslook besprechen willst — die Friseurin muss sehen, wie es sich normal verhält. '+
+   'Und bring Bilder mit, Worte wie „ein bisschen kürzer" bedeuten für jeden etwas anderes.',
+  termine:[{t:'Volumen und schnelles Wachstum', f:function(d){return d.zunehmend&&(d.zi===4||d.zi===5);}},
+           {t:'Form lange halten', f:function(d){return !d.zunehmend&&(d.zi===4||d.zi===5||d.zi===9);}}]},
+
+ {id:'farbe', ic:'◑', nm:'Färben, Strähnen, Tönung', kurz:'Farbhaltbarkeit und Geschmack',
+  urteil:function(){ return RL.Venus?'rot':(mondZ===7||mondZ===1||mondZ===9?'gruen':'gelb'); },
+  trad:function(){
+    if(RL.Venus) return '<b>Venus ist rückläufig.</b> Das ist die eine Regel, bei der auch nüchterne Astrologinnen zustimmen — '+
+      'nicht weil die Farbe misslingt, sondern weil sich der eigene Geschmack in diesen Wochen verschiebt. '+
+      'Viele finden danach nicht mehr gut, wofür sie sich gerade entschieden haben. Bei einem grundlegenden Farbwechsel: warten. '+
+      'Ansatz nachfärben und Pflege sind unproblematisch.';
+    return 'Venus läuft vorwärts — aus dieser Richtung spricht nichts dagegen. Der Mond in <b>'+SIGNS[mondZ]+'</b> gilt '+
+      (mondZ===7||mondZ===9?'als besonders günstig für Haltbarkeit.':(mondZ===1||mondZ===6?'als günstig für alles Ästhetische.':'als neutral.'));
+  },
+  prakt:'Wichtiger als jeder Mondstand: 48 Stunden vorher keine Kopfhautpflege mit Öl, am Tag davor nicht waschen, '+
+   'und bei einem größeren Wechsel immer eine Strähnenprobe machen lassen. Bei erster Farbe im Leben: Allergietest, auch wenn es lästig ist.',
+  termine:[{t:'Farbe hält lang', f:function(d){return !d.zunehmend&&(d.zi===7||d.zi===9);}}]},
+
+ {id:'botox', ic:'⌖', nm:'Botox und Filler', kurz:'Faltenbehandlung, Unterspritzung',
+  urteil:function(){
+    if(RL.Venus) return 'rot';
+    if(mondZ===0) return 'rot';
+    return zunehmend?'gelb':'gruen';
+  },
+  trad:function(){
+    var t='';
+    if(mondZ===0) t+='<b>Der Mond steht im Widder</b>, und Widder ist traditionell der Zone <b>Kopf und Gesicht</b> zugeordnet. '+
+      'Nach der alten Regel meidet man Eingriffe an genau der Körperzone, in der der Mond gerade steht. Das wären diese zweieinhalb Tage. ';
+    else t+='Der Mond steht in '+SIGNS[mondZ]+' und damit nicht in der Gesichtszone — aus dieser Richtung spricht nichts dagegen. ';
+    t+='Zur Phase: <b>'+(zunehmend?'zunehmend':'abnehmend')+'</b>. Die Tradition hält abnehmenden Mond für günstiger bei allem, '+
+      'was Schwellung und Blutergüsse mit sich bringen kann. ';
+    if(RL.Venus) t+='<b>Und Venus ist rückläufig</b> — wie beim Färben gilt: Der eigene Geschmack verschiebt sich gerade. '+
+      'Bei etwas, das Monate hält, ist das ein guter Grund zu warten.';
+    return t;
+  },
+  prakt:'Das hier ist wichtiger als alles oben: <b>Mindestens zwei Wochen vor einem wichtigen Termin</b>, nie zwei Tage vorher — '+
+   'Botox braucht bis zu vierzehn Tage für die volle Wirkung, und Blutergüsse brauchen Zeit. Eine Woche vorher keine blutverdünnenden '+
+   'Schmerzmittel und keinen Alkohol am Vorabend, das reduziert blaue Flecken deutlich. Und: nur bei ärztlich qualifizierten Behandelnden, '+
+   'mit Aufklärungsgespräch. Das ist ein medizinischer Eingriff, auch wenn er im Kosmetikstudio angeboten wird.',
+  warn:'Wenn deine Behandlerin einen anderen Zeitpunkt empfiehlt, gilt ihre Einschätzung — nicht der Mondstand. Und wenn du '+
+   'unsicher bist, ob du es überhaupt willst: Das ist eine Frage für den Kopf, nicht für den Kalender.',
+  termine:[{t:'günstig nach der Tradition', f:function(d){return !d.zunehmend&&d.zi!==0;}}]},
+
+ {id:'tattoo', ic:'✦', nm:'Tattoo und Piercing', kurz:'Haut, Heilung, Dauerhaftigkeit',
+  urteil:function(){
+    if(RL.Venus) return 'rot';
+    if(mondZ===9) return 'rot';
+    return zunehmend?'gelb':'gruen';
+  },
+  trad:function(){
+    var t='';
+    if(mondZ===9) t+='<b>Der Mond steht im Steinbock</b>, der traditionell der <b>Haut</b> zugeordnet ist — nach der alten Regel '+
+      'also ungünstig für alles, was in die Haut geht. ';
+    t+='Abnehmender Mond gilt als günstiger für die Heilung, zunehmender als günstiger für Farbbrillanz. '+
+      'Aktuell ist er <b>'+(zunehmend?'zunehmend':'abnehmend')+'</b>. ';
+    if(RL.Venus) t+='<b>Venus rückläufig</b>: Bei etwas, das für immer bleibt, ist das der deutlichste Warnhinweis dieser Seite. '+
+      'Nicht weil es schiefgeht — weil Geschmacksentscheidungen in dieser Phase erfahrungsgemäß anders ausfallen als sonst.';
+    return t;
+  },
+  prakt:'Praktisch entscheidend: Studio mit sichtbarer Hygiene und eigener Sterilisation, ausgeschlafen und gegessen hinkommen, '+
+   'kein Alkohol vorher. Nicht in den Sommerurlaub hinein stechen lassen — frische Tattoos vertragen Sonne und Salzwasser wochenlang nicht. '+
+   'Und die klassische Regel, die wirklich hilft: <b>Motiv sechs Monate auf dem Handy behalten.</b> Was dann noch gefällt, gefällt auch in zehn Jahren.',
+  termine:[{t:'günstig nach der Tradition', f:function(d){return !d.zunehmend&&d.zi!==9&&d.zi!==0;}}]},
+
+ {id:'wimpern', ic:'❖', nm:'Wimpern, Permanent Make-up, Microblading', kurz:'Alles Halbdauerhafte im Gesicht',
+  urteil:function(){ return RL.Venus?'rot':(mondZ===0?'gelb':'gruen'); },
+  trad:function(){
+    if(RL.Venus) return '<b>Venus rückläufig.</b> Bei allem, was Wochen bis Jahre bleibt und das Gesicht betrifft, ist das die '+
+      'deutlichste Empfehlung zu warten. Permanent Make-up und Microblading halten ein bis drei Jahre — eine Geschmacksentscheidung '+
+      'in einer Phase, in der sich der Geschmack nachweislich oft verschiebt, ist ungünstig.';
+    return 'Venus läuft vorwärts. '+(mondZ===0?'Der Mond steht im Widder und damit in der Gesichtszone — nach der Tradition eher abwarten.'
+      :'Aus beiden Richtungen spricht nichts dagegen.');
+  },
+  prakt:'Wichtiger: Lass dir vorher die abgeheilten Ergebnisse zeigen, nicht die frischen — frisch sieht alles gut aus. '+
+   'Bei Microblading gilt die Faustregel, dass die Farbe nach dem Abheilen etwa dreißig Prozent heller wird und mit den Jahren '+
+   'einen Farbstich bekommen kann. Und zwei Wochen Abstand zu wichtigen Terminen einplanen.',
+  termine:[{t:'günstig nach der Tradition', f:function(d){return d.zi!==0;}}]},
+
+ {id:'haarentfernung', ic:'◎', nm:'Waxing, Laser, Haarentfernung', kurz:'Wachstum verlangsamen',
+  urteil:function(){ return zunehmend?'gelb':'gruen'; },
+  trad:function(){
+    return 'Die Regel ist hier eindeutig: <b>abnehmender Mond</b>, weil die Haare dann langsamer nachwachsen sollen. '+
+      'Aktuell ist er <b>'+(zunehmend?'zunehmend — nach der Tradition also der schlechtere Zeitpunkt'
+      :'abnehmend — nach der Tradition also günstig')+'</b>. Belegt ist das nicht, aber es kostet nichts, den Termin danach zu legen.';
+  },
+  prakt:'Was tatsächlich zählt: Beim Waxing sollten die Haare etwa fünf Millimeter lang sein, vorher nicht rasieren. '+
+   '24 Stunden vorher und danach keine Sauna, kein Solarium, kein Sport direkt danach. Bei Laser gilt zusätzlich: '+
+   'vier Wochen vorher und nachher keine Sonne auf die behandelte Stelle, sonst drohen Pigmentflecken.',
+  termine:[{t:'abnehmend, nach der Tradition günstig', f:function(d){return !d.zunehmend;}}]},
+
+ {id:'naegel', ic:'◇', nm:'Nägel und Maniküre', kurz:'Festigkeit und Haltbarkeit',
+  urteil:function(){ return (mondZ===9||mondZ===5)?'gruen':(zunehmend?'gelb':'gruen'); },
+  trad:function(){
+    return 'Nägel gehören traditionell zum <b>Steinbock</b>, ebenso wie Haut und Knochen. '+
+      'Als günstig gilt, Nägel bei abnehmendem Mond zu kürzen, damit sie langsamer nachwachsen. '+
+      'Der Mond steht gerade in <b>'+SIGNS[mondZ]+'</b>'+((mondZ===9||mondZ===5)?' — nach der Tradition ein guter Zeitpunkt.':'.');
+  },
+  prakt:'Praktisch relevanter: Bei Gel und Shellac sind die Pausen wichtiger als der Termin — alle paar Monate ein paar Wochen '+
+   'ohne Beschichtung, sonst wird der Naturnagel dünn. Und beim Ablösen nie selbst abknibbeln, das nimmt Nagelschichten mit.',
+  termine:[{t:'abnehmend, nach der Tradition günstig', f:function(d){return !d.zunehmend;}}]}
+];
+
+function schoenZeichnen(){
+  var box=document.getElementById('skgitter'); if(!box) return;
+  var s='';
+  SCHOEN.forEach(function(x,i){
+    var u=x.urteil();
+    var txt={gruen:'läuft',gelb:'geht',rot:'lieber schieben'}[u];
+    s+='<details class="sk-k"'+(i===0?' open':'')+'><summary>'+
+      '<div class="sk-ic '+u+'">'+x.ic+'</div>'+
+      '<div><div class="sk-nm">'+x.nm+'</div><div class="sk-kurz">'+x.kurz+'</div></div>'+
+      '<span class="sk-urteil '+u+'">'+txt+'</span></summary>'+
+      '<div class="sk-in">'+
+      '<div class="sk-z"><span class="lab">Was die Tradition sagt</span><p>'+x.trad()+'</p></div>'+
+      '<div class="sk-prakt"><span class="lab">Was tatsächlich hilft</span>'+x.prakt+'</div>'+
+      (x.warn?'<div class="sk-warn">'+x.warn+'</div>':'');
+    if(x.termine&&x.termine.length){
+      x.termine.forEach(function(t){
+        var tage=naechste(t.f,4);
+        if(tage.length) s+='<div class="sk-termine"><span style="font-size:13px;color:var(--leise);align-self:center;">'+
+          t.t+':</span>'+tage.map(function(d){return '<span class="sk-t">'+d+'</span>';}).join('')+'</div>';
+      });
+    }
+    s+='</div></details>';
+  });
+  box.innerHTML=s;
+}
+schoenZeichnen();
+</script>
+</body></html>

@@ -503,180 +503,260 @@ var RAUM = {
   anker:{haeuser:[5,8], punkte:['Mars','Venus','Pluto']},
   regeln:[
     function(f,P,H){
-      return '<b>Das Wichtigste zuerst, und es hat nichts mit dem Chart zu tun:</b> Es gibt zwei Arten, wie Lust entsteht. '+
-        'Die eine kommt <b>von selbst</b>, ohne Anlass — die kennt man aus Filmen. Die andere entsteht erst als <b>Antwort</b> '+
-        'auf Berührung, Nähe oder Stimmung: Man beginnt ohne Lust und bekommt sie unterwegs. Beides ist normal. '+
-        'Die zweite Variante ist bei Frauen sogar häufiger — nur hält man sie oft fälschlich für ein Problem.';
+      return '<b>Zuerst das, was nicht aus dem Chart kommt und trotzdem das Wichtigste ist:</b> Lust entsteht auf zwei Arten. '+
+        'Die eine kommt <b>von selbst</b>, ohne Anlass — die kennt man aus Filmen und aus den ersten Monaten einer Verliebtheit. '+
+        'Die andere entsteht erst als <b>Antwort</b> auf Berührung, Stimmung oder Zuwendung: Man beginnt ohne Lust und bekommt sie unterwegs. '+
+        'Die zweite Variante ist bei Frauen die häufigere, und sie wird regelmäßig für einen Defekt gehalten. '+
+        'Wenn du dich darin wiedererkennst, ist die Frage nicht „warum habe ich keine Lust", sondern <b>„was muss passieren, damit sie kommt"</b>.';
     },
     function(f,P,H){
       if(P.Mars===undefined) return null;
       var zi=Math.floor(P.Mars/30), hn=H.haus(P.Mars)+1;
-      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      var mod=['kardinal','fix','veränderlich'][zi%3];
-      return 'Dein <b>Mars in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, wie dein Antrieb ankommt: '+
-        (el==='Feuer'?'schnell und direkt. Du merkst Lust meistens als Erstes.'
-         :el==='Erde'?'körperlich und langsam. Bei dir kommt sie über Berührung, nicht über Gedanken.'
-         :el==='Luft'?'über den Kopf. Bei dir beginnt es mit einem Gespräch, einer Idee, einer Spannung — nicht mit dem Körper.'
-         :'stimmungsabhängig und wellenförmig. Bei dir kommt Lust dann, wenn emotional etwas stimmt, und sonst gar nicht.')+
-        ' Und '+mod+': '+
-        (mod==='kardinal'?'du beginnst gern und verlierst schnell wieder.'
-         :mod==='fix'?'du brauchst Anlauf, bleibst dann aber dabei.'
-         :'du wechselst gern und langweilst dich bei Gleichförmigkeit.');
+      var M=['Dein Begehren ist <b>schnell und ungeduldig</b>. Du willst, wenn du willst, und Verzögerung kühlt dich ab statt dich anzuheizen. Verführung im Sinne von langem Hinarbeiten langweilt dich — Direktheit funktioniert bei dir besser als Andeutung.',
+       'Dein Begehren kommt <b>über den Körper und über Zeit</b>. Du brauchst Berührung, die nirgendwohin will, bevor etwas anderes geht. Dafür hältst du lange durch und kommst nicht so leicht aus dem Takt. Hetze ist dein größter Feind.',
+       'Dein Begehren beginnt <b>im Kopf</b>. Ein Satz, eine Vorstellung, eine Spannung im Gespräch — das wirkt bei dir stärker als jede Berührung ohne Worte. Stille Nähe lässt dich eher abdriften. Reden gehört bei dir mit dazu, nicht als Beiwerk.',
+       'Dein Begehren hängt <b>an der Stimmung</b> und schwankt erheblich. Wenn emotional etwas offen ist, geht bei dir nichts, egal wie gut die Bedingungen sonst sind. Umgekehrt: Wenn du dich aufgehoben fühlst, kommt es fast von allein.',
+       'Dein Begehren lebt davon, <b>gewollt zu werden</b> — sichtbar, deutlich und ohne Zweifel. Zurückhaltung beim Gegenüber liest du als Desinteresse, auch wenn sie nur Rücksicht ist. Du brauchst jemanden, der es zeigt.',
+       'Dein Begehren ist <b>aufmerksam und zurückhaltend</b> zugleich. Du merkst jede Kleinigkeit, auch ob jemand wirklich da ist — und genau das kann dich aus dem Moment holen. Bei dir hilft Konkretes: Wissen, was kommt, statt es zu erraten.',
+       'Dein Begehren braucht <b>Gegenseitigkeit</b>. Sobald es einseitig wird, kippt es bei dir, auch wenn du der begehrte Teil bist. Du willst kein Gefälle, sondern ein Miteinander — und du merkst sofort, wenn das nicht stimmt.',
+       'Dein Begehren ist <b>intensiv und kompromisslos</b>. Halbe Sachen interessieren dich nicht. Du willst Tiefe, auch wenn sie unbequem ist, und langweilst dich bei allem, was gefällig bleibt. Kontrolle und Hingabe sind bei dir eng verwandt.',
+       'Dein Begehren braucht <b>Freiheit und Humor</b>. Sobald etwas nach Verpflichtung riecht, geht bei dir die Luft raus. Du magst Leichtigkeit, Abenteuer und die Möglichkeit, dass es auch anders laufen könnte.',
+       'Dein Begehren ist <b>verhalten und ausdauernd</b>. Es braucht Vertrauen und Zeit, kommt spät, und wenn es da ist, ist es verlässlich. Von außen wirkt das kühl — es ist aber eher eine lange Anlaufstrecke.',
+       'Dein Begehren ist <b>eigenwillig</b> und folgt selten dem, was üblich ist. Erwartungen bremsen dich sofort. Du brauchst das Gefühl, dass nichts vorgeschrieben ist — dann bist du sehr wach.',
+       'Dein Begehren ist <b>verschmelzend und ohne klare Kanten</b>. Du gibst dich leicht hin und verlierst dabei manchmal die Linie zwischen dem, was du willst, und dem, was der andere will. Das ist deine Gabe und dein wunder Punkt in einem.'];
+      return M[zi]+' Der Schauplatz ist dein <b>'+hn+'. Haus</b> ('+H.HT[hn-1]+') — '+
+        (hn===1?'du zeigst es körperlich, ob du willst oder nicht.'
+         :hn===5?'Spiel und Ausdruck sind dabei wichtig, nicht nur Nähe.'
+         :hn===7?'es entsteht im Gegenüber, kaum allein.'
+         :hn===8?'es geht bei dir schnell in die Tiefe.'
+         :hn===12?'vieles läuft bei dir verdeckt, auch vor dir selbst.'
+         :'dort entscheidet sich, ob überhaupt etwas in Gang kommt.');
+    },
+    function(f,P,H){
+      if(P.Mars===undefined) return null;
+      var A=f.aspekte.filter(function(x){return (x.a==='Mars'||x.b==='Mars')&&x.o<4;});
+      if(!A.length) return null;
+      var t=[];
+      A.slice(0,2).forEach(function(x){
+        var and=(x.a==='Mars')?x.b:x.a;
+        if(and==='Saturn') t.push('<b>Mars '+x.typ+' Saturn</b> ('+x.o.toFixed(1)+'°): Du bremst dich mitten im Wollen. Das fühlt sich an wie fehlende Lust, ist aber Gleichzeitigkeit — Gas und Bremse. Was hilft: nicht mehr Gas, sondern weniger Anlass zu bremsen.');
+        else if(and==='Neptun') t.push('<b>Mars '+x.typ+' Neptun</b> ('+x.o.toFixed(1)+'°): Dein Wollen ist unscharf. Du merkst oft erst hinterher, ob du das wirklich wolltest. Deshalb lohnt es sich bei dir, vorher zu benennen statt im Moment zu entscheiden.');
+        else if(and==='Pluto') t.push('<b>Mars '+x.typ+' Pluto</b> ('+x.o.toFixed(1)+'°): Dein Begehren hat Wucht. Macht, Kontrolle und Hingabe spielen mit, ob du willst oder nicht — das ist weder falsch noch gefährlich, solange es besprochen ist.');
+        else if(and==='Uranus') t.push('<b>Mars '+x.typ+' Uranus</b> ('+x.o.toFixed(1)+'°): Dein Begehren kommt stoßweise und verschwindet ebenso. Routine tötet es zuverlässig — du brauchst Unvorhersehbares, und zwar mehr als andere.');
+        else if(and==='Venus') return;
+        else if(and==='Mond') t.push('<b>Mars '+x.typ+' Mond</b> ('+x.o.toFixed(1)+'°): Bei dir hängen Gefühl und Begehren direkt zusammen. Was emotional nicht stimmt, ist körperlich sofort spürbar.');
+      });
+      return t.length?t.join(' '):null;
     },
     function(f,P,H){
       if(P.Venus===undefined||P.Mars===undefined) return null;
       var vm=f.aspekte.filter(function(x){return (x.a==='Venus'&&x.b==='Mars')||(x.a==='Mars'&&x.b==='Venus');})[0];
-      if(!vm) return 'Venus und Mars bilden bei dir keinen Aspekt. Zuneigung und Begehren laufen getrennt — '+
-        'du kannst jemanden sehr mögen und trotzdem keine Lust haben, und umgekehrt. Das ist kein Widerspruch und kein Mangel, '+
-        'sondern heißt nur: Bei dir müssen beide Seiten getrennt angesprochen werden.';
+      if(!vm) return '<b>Venus und Mars ohne Aspekt.</b> Zuneigung und Begehren laufen bei dir getrennt. '+
+        'Du kannst jemanden sehr mögen und keine Lust haben — und umgekehrt. Das ist kein Mangel, sondern heißt: '+
+        'Beide Seiten brauchen bei dir getrennte Aufmerksamkeit. Zärtlichkeit erzeugt bei dir nicht automatisch Lust, und Lust nicht automatisch Nähe.';
       return '<b>Venus '+vm.typ+' Mars</b> mit '+vm.o.toFixed(1)+'°. '+
         (vm.art==='weich'
-         ? 'Mögen und Wollen gehören bei dir zusammen. Das ist seltener, als man denkt — bei dir entsteht Lust aus Zuneigung, nicht gegen sie.'
-         : 'Mögen und Wollen reiben. Anziehung und Spannung hängen bei dir zusammen: Was ganz harmonisch ist, fühlt sich schnell nach nichts an. Gut zu wissen, weil man das leicht für Beziehungsprobleme hält.');
+         ? 'Mögen und Wollen greifen ineinander. Bei dir wächst Begehren aus Zuneigung, nicht gegen sie — das ist seltener, als man denkt, und macht langfristige Beziehungen für dich leichter als für viele andere.'
+         : 'Mögen und Wollen reiben aneinander. Anziehung und Spannung hängen bei dir zusammen: Was ganz harmonisch und sicher ist, fühlt sich schnell nach nichts an. Das ist wichtig zu wissen, weil man es leicht für ein Beziehungsproblem hält — es ist aber deine Verdrahtung.');
     }],
   uebung:['Rückwärts denken',
-   'Denk an eine Situation, in der du Lust hattest, und geh rückwärts: Was war vorher? Wie war der Tag, die Stimmung, der Raum, dein Kopf? Nicht was der andere gemacht hat — der <i>Kontext</i>. Bei den meisten Menschen ist der entscheidender als alles andere, und die wenigsten haben ihn je angeschaut.'],
+   'Denk an eine Situation, in der es richtig gut war, und geh rückwärts: Wie war der Tag davor? Wie der Raum, dein Kopf, dein Körper, die Stunden vorher? Nicht was der andere gemacht hat — der <i>Kontext</i>. Bei den meisten Menschen entscheidet er mehr als alles andere, und die wenigsten haben ihn je bewusst angeschaut.'],
   rueckfrage:'Hast du deinen Kontext gefunden?',
   coach:{fragen:['Kommt deine Lust von allein oder als Antwort auf etwas?',
    'Was war beim letzten Mal anders, als es gut war?',
-   'Was glaubst du über dein Begehren — und woher hast du das?'],
-   vorsicht:'Wenn jemand grundsätzlich keine Lust empfindet und darunter nicht leidet, ist das kein Problem, das gelöst werden muss — Asexualität ist eine Orientierung, keine Störung. Und wenn jemand leidet: Das kann viele Ursachen haben, auch körperliche und medikamentöse. Dann gehört es ärztlich abgeklärt, nicht gecoacht.'}},
+   'Was glaubst du über dein Begehren — und woher hast du diesen Glauben?'],
+   vorsicht:'Wenn jemand grundsätzlich kein sexuelles Begehren empfindet und nicht darunter leidet: Asexualität ist eine Orientierung, keine Störung, und nichts, was bearbeitet werden muss. Wenn jemand leidet: Das kann körperliche, hormonelle oder medikamentöse Ursachen haben und gehört ärztlich abgeklärt, bevor man psychologisch arbeitet.'}},
 
- {id:'bremsen', wozuSchutz:'Eine Bremse hat einen Grund. Sie schützt vor etwas, das einmal gefährlich war.',
+ {id:'bremsen', wozuSchutz:'Eine Bremse hat einen Grund. Sie schützt vor etwas, das einmal nötig war.',
   wozuFrage:'Welche deiner Bremsen ist heute noch nötig — und welche läuft nur aus Gewohnheit mit?',
   name:'Deine Bremsen und Beschleuniger',
   frage:'Warum kippt es manchmal von einer Sekunde auf die andere?',
   anker:{haeuser:[6,12], punkte:['Saturn','Neptun','Mond','Uranus']},
   regeln:[
     function(f,P,H){
-      return 'Ein brauchbares Modell: Bei jedem Menschen arbeiten <b>zwei Systeme gleichzeitig</b> — eines, das anregt, '+
-        'und eines, das hemmt. Wie viel Lust jemand empfindet, hängt weniger davon ab, wie stark das Gaspedal ist, '+
-        'als davon, <b>wie viele Bremsen gerade getreten sind</b>. Deshalb hilft es meistens mehr, Bremsen zu lösen, '+
-        'als das Gas zu suchen. Typische Bremsen: Zeitdruck, ein unaufgeräumter Raum, Sorge um die Wirkung, '+
-        'ungeklärter Streit, Müdigkeit, zu viele Reize, der Gedanke an die To-do-Liste.';
+      return 'Ein Modell, das mehr erklärt als alles andere: Es arbeiten immer <b>zwei Systeme gleichzeitig</b> — '+
+        'eines, das anregt, und eines, das hemmt. Wie viel Lust jemand empfindet, hängt weniger davon ab, wie stark das Gas ist, '+
+        'als davon, <b>wie viele Bremsen gerade getreten sind</b>. Das ist der Grund, warum „mehr Erotik" selten hilft '+
+        'und Aufräumen oft schon. Typische Bremsen: Zeitdruck, ein Raum, in dem noch Arbeit liegt, ein ungeklärter Streit, '+
+        'Sorge um die eigene Wirkung, Müdigkeit, das Gefühl beobachtet zu werden, die Liste im Kopf.';
     },
     function(f,P,H){
       if(P.Saturn===undefined) return null;
-      var hn=H.haus(P.Saturn)+1;
-      return 'Dein <b>Saturn im '+hn+'. Haus</b> ('+H.HT[hn-1]+') zeigt, wo bei dir die stärkste Bremse sitzt. '+
-        'Alles, was in diesem Bereich ungeklärt ist, wirkt bei dir als Dämpfer — auch wenn es mit der Situation nichts zu tun hat. '+
-        'Das ist die Stelle, an der Aufräumen mehr bringt als jede Technik.';
+      var zi=Math.floor(P.Saturn/30), hn=H.haus(P.Saturn)+1;
+      var S=['der Gedanke, zu viel zu wollen oder zu fordernd zu sein',
+       'die Sorge, nicht zu genügen — körperlich oder überhaupt',
+       'alles Ungesagte. Solange ein Gespräch offen ist, bist du nicht da',
+       'fehlende Geborgenheit. Wenn du dich nicht zuhause fühlst, geht bei dir nichts',
+       'die Angst, nicht wirklich gewollt zu sein. Zurückhaltung liest du als Ablehnung',
+       'Selbstbeobachtung. Du prüfst, statt zu spüren, und merkst es oft zu spät',
+       'ein Ungleichgewicht zwischen euch, auch ein kleines',
+       'Misstrauen. Solange du nicht sicher bist, wo du dran bist, gibst du nichts preis',
+       'das Gefühl, eingeengt zu werden — auch durch Erwartung',
+       'unerledigte Pflichten. Solange noch etwas offen ist, schaltest du nicht ab',
+       'Vorgaben und Routine. Sobald es erwartbar wird, steigst du innerlich aus',
+       'Unklarheit. Wenn du nicht weißt, was läuft, löst du dich innerlich auf'];
+      return 'Dein <b>Saturn in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ('+H.HT[hn-1]+') markiert deine stärkste Bremse: '+
+        '<b>'+S[zi]+'</b>. Das ist keine Kleinigkeit und nicht wegzuatmen — aber es ist etwas, das man ansprechen '+
+        'und teilweise wegräumen kann. Bei dir bringt das mehr als jede Technik.';
     },
     function(f,P,H){
       if(P.Mond===undefined) return null;
-      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
-      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> sagt, was bei dir als Beschleuniger wirkt: '+
-        (el==='Feuer'?'Lebendigkeit, Tempo, echtes Begehrtwerden. Zu viel Behutsamkeit bremst dich eher.'
-         :el==='Erde'?'Verlässlichkeit, Zeit und Berührung ohne Ziel. Bei dir wirkt Langsamkeit, nicht Dringlichkeit.'
-         :el==='Luft'?'Worte, Vorstellung, Spannung im Kopf. Bei dir beginnt es vor dem Körper.'
-         :'emotionale Stimmigkeit und ein geschützter Raum. Wenn du dich beobachtet oder gehetzt fühlst, geht bei dir nichts.');
+      var zi=Math.floor(P.Mond/30), hn=H.haus(P.Mond)+1;
+      var B=['Lebendigkeit und Tempo. Zu viel Behutsamkeit langweilt dich — du willst spüren, dass jemand will',
+       'Zeit, Wärme und Berührung ohne Ziel. Bei dir wirkt Langsamkeit, nicht Dringlichkeit',
+       'Worte und Spannung im Kopf. Bei dir beginnt es im Gespräch, oft Stunden vorher',
+       'ein geschützter Raum und das Gefühl, aufgehoben zu sein. Fremde Umgebung bremst dich',
+       'Aufmerksamkeit, Bewunderung, das Gefühl gesehen zu werden — deutlich und ohne Zweifel',
+       'Klarheit und Sauberkeit im Wortsinn. Ein aufgeräumter Raum wirkt bei dir mehr als jedes Kerzenlicht',
+       'Gegenseitigkeit und Ästhetik. Du brauchst das Gefühl, dass es beiden gut geht',
+       'Tiefe, Blickkontakt, Ernsthaftigkeit. Leichtes Geplänkel erreicht dich nicht',
+       'Humor und Weite. Wenn ihr zusammen lacht, geht bei dir mehr als bei jeder Inszenierung',
+       'Verlässlichkeit und genug Zeit ohne Unterbrechung. Gehetzt geht bei dir gar nichts',
+       'Unerwartetes und Freiraum. Immer dasselbe schaltet dich ab',
+       'Musik, Stimmung, Zärtlichkeit ohne klare Richtung. Bei dir wirkt Atmosphäre stärker als alles Konkrete'];
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> sagt, was bei dir als <b>Beschleuniger</b> wirkt: '+
+        B[zi]+'. Das ist meistens die brauchbarere Information — Bremsen kennt man, Beschleuniger selten.';
     },
     function(f,P,H){
+      var vs=f.aspekte.filter(function(x){return ((x.a==='Venus'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Venus'))&&x.art==='hart';})[0];
+      if(vs) return '<b>Venus '+vs.typ+' Saturn</b> ('+vs.o.toFixed(1)+'°): Du glaubst, Zuwendung verdienen zu müssen. '+
+        'Im Bett heißt das oft: Du gibst mehr, als du nimmst, und fragst nicht nach dem, was du willst. Das ist die Bremse, '+
+        'die am schwersten auffällt, weil sie sich nach Großzügigkeit anfühlt.';
       var im12=f.planeten.filter(function(x){return x.haus===12;});
       if(!im12.length) return null;
-      return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. '+
+      return 'Im <b>12. Haus</b> steht '+im12.map(function(x){return x.p;}).join(', ')+'. '+
         'Ein Teil deiner Bremsen arbeitet unbewusst — du merkst nicht, dass etwas dich hemmt, sondern nur, dass nichts passiert. '+
         'Deshalb lohnt es sich bei dir besonders, den Kontext aufzuschreiben statt ihn zu erspüren.';
     }],
-  uebung:['Drei Bremsen aufschreiben',
-   'Schreib drei Dinge auf, die dir zuverlässig die Lust nehmen. Ganz banal darf es sein — ein volles Zimmer, Zeitdruck, ein Gespräch, das offen ist. Und dann: Welche davon ließe sich diese Woche wegräumen? Meistens mindestens eine.'],
+  uebung:['Drei Bremsen, eine davon weg',
+   'Schreib drei Dinge auf, die dir zuverlässig die Lust nehmen. Banal darf es sein: Wäsche auf dem Bett, ein offenes Gespräch, der Gedanke an morgen früh. Dann räum <b>eine</b> davon weg, bevor es das nächste Mal darauf ankommt. Nicht alle drei — eine.'],
   rueckfrage:'Hast du eine Bremse weggeräumt?',
   coach:{fragen:['Was nimmt dir zuverlässig die Lust?',
-   'Was davon hat mit der anderen Person zu tun und was mit dem Drumherum?',
-   'Was müsste anders sein, damit es leichter ginge?'],
-   vorsicht:'Bremsen sind manchmal Schutz nach schlechten Erfahrungen. Nicht daran arbeiten, sie abzustellen — nur sie zu sehen. Was danach kommt, entscheidet die Person allein.'}},
+   'Was davon hat mit der Person zu tun und was mit dem Drumherum?',
+   'Was davon könntest du morgen ändern?'],
+   vorsicht:'Bremsen sind manchmal Schutz nach schlechten Erfahrungen. Nicht darauf hinarbeiten, sie abzustellen — nur sie sichtbar zu machen. Was damit geschieht, entscheidet die Person allein.'}},
 
- {id:'gefaellt', wozuSchutz:'Wer nicht weiß, was er mag, muss es auch nicht sagen — und kann nicht falsch liegen.',
+ {id:'gefaellt', wozuSchutz:'Wer nicht weiß, was er mag, muss es nicht sagen — und kann nicht enttäuschen.',
   wozuFrage:'Was hättest du zu verlieren, wenn dein Gegenüber genau wüsste, was dir gefällt?',
   name:'Was dir gefällt',
   frage:'Was mag ich eigentlich — und woher soll ich das wissen?',
-  anker:{haeuser:[5,8], punkte:['Venus','Mars','Mond']},
+  anker:{haeuser:[5,8], punkte:['Venus','Mars','Lilith']},
   regeln:[
     function(f,P,H){
       if(P.Venus===undefined) return null;
       var zi=Math.floor(P.Venus/30), hn=H.haus(P.Venus)+1;
-      var V=['Direktheit und Tempo — du magst es, wenn jemand weiß, was er will',
-       'Zeit, Berührung und Sinnlichkeit — bei dir zählt das Wie mehr als das Was',
-       'Worte, Leichtigkeit, Abwechslung — Reden gehört bei dir dazu',
-       'Geborgenheit und Vertrautheit — du brauchst das Gefühl, aufgehoben zu sein',
-       'Aufmerksamkeit und Begeisterung — du willst gewollt werden, sichtbar und deutlich',
-       'Zugewandtheit im Detail — du merkst, ob jemand wirklich da ist',
-       'Gegenseitigkeit und Schönheit — Ungleichgewicht stört dich mehr als alles andere',
-       'Tiefe und Intensität — Beiläufiges interessiert dich nicht',
-       'Offenheit, Humor, Freiheit — Enge nimmt dir die Lust',
-       'Verlässlichkeit und Ernsthaftigkeit — bei dir wächst es über Zeit',
-       'Ungewöhnliches und Freiraum — Erwartungen bremsen dich',
-       'Verschmelzung und Hingabe — du löst dich gern auf, und das ist auch dein wunder Punkt'];
-      return 'Deine <b>Venus in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, worüber du überhaupt genießt: '+
-        '<b>'+V[zi]+'</b>. Der Schauplatz ist '+H.HT[hn-1]+' — was woanders stattfindet, erreicht dich weniger, '+
-        'auch wenn es allgemein als schön gilt.';
+      var V=['<b>Direktheit.</b> Du magst, wenn jemand weiß, was er will, und es zeigt. Zögern liest du als Desinteresse. Und du willst selbst auch wollen dürfen, nicht nur begehrt werden.',
+       '<b>Sinnlichkeit und Dauer.</b> Haut, Geruch, Wärme, Zeit. Bei dir ist der Weg wichtiger als das Ziel, und Unterbrechungen stören dich mehr als bei anderen.',
+       '<b>Sprache und Leichtigkeit.</b> Du magst Reden dabei, Lachen, Abwechslung. Zu viel Ernst und Andacht macht dich verlegen. Neugier ist bei dir ein Teil der Lust.',
+       '<b>Nähe und Halten.</b> Du magst es, gehalten zu werden und dich sicher zu fühlen. Zärtlichkeit ist bei dir kein Vorspiel, sondern die Hauptsache.',
+       '<b>Gesehenwerden.</b> Du magst Aufmerksamkeit, Bewunderung, ein bisschen Inszenierung. Wenn jemand dir zeigt, dass er dich will, ist das bei dir der halbe Weg.',
+       '<b>Aufmerksamkeit im Detail.</b> Du magst, wenn jemand genau ist und merkt, was wirkt. Grobheit oder Beiläufigkeit holen dich sofort raus.',
+       '<b>Gegenseitigkeit.</b> Du magst, wenn es sich ausgleicht — nicht abwechselnd, sondern gemeinsam. Einseitigkeit, in welche Richtung auch immer, kippt es bei dir.',
+       '<b>Intensität und Tiefe.</b> Du magst, wenn es ernst wird, wenn Blicke gehalten werden, wenn etwas auf dem Spiel steht. Gefälliges langweilt dich.',
+       '<b>Freiheit und Übermut.</b> Du magst, wenn etwas nicht geplant ist, wenn gelacht werden darf, wenn es auch schiefgehen könnte.',
+       '<b>Verlässlichkeit und Ernst.</b> Du magst, wenn Zeit da ist und niemand es eilig hat. Bei dir wächst es über Wiederholung, nicht über Neuheit.',
+       '<b>Das Unübliche.</b> Du magst, was nicht im Drehbuch steht, und du magst Freiraum. Erwartung ist bei dir das Gegenteil von anziehend.',
+       '<b>Hingabe und Atmosphäre.</b> Du magst, wenn Grenzen weich werden — Musik, Dunkelheit, Nähe ohne klare Richtung. Und du verlierst dabei leicht dich selbst.'];
+      var HW=['du zeigst es offen und körperlich — Zurückhaltung passt nicht zu dir',
+       'Besitz und Sicherheit spielen mit: Du magst, was dir gehört und bleibt',
+       'Reden gehört dazu, auch währenddessen — Stille macht dich unruhig',
+       'du brauchst dein eigenes Revier. Fremde Betten sind bei dir schwieriger',
+       'Spiel, Flirt und Inszenierung gehören dazu, nicht nur Nähe',
+       'Alltag und Körperlichkeit sind verbunden: Wenn der Alltag stimmt, stimmt auch das',
+       'es entsteht bei dir im Gegenüber — allein oder nebenher funktioniert es weniger',
+       'es geht bei dir schnell tief. Oberfläche hältst du nicht lange aus',
+       'Weite und Abenteuer gehören dazu: unterwegs, an neuen Orten, mit Humor',
+       'Anerkennung spielt mit. Du magst es, wenn jemand stolz auf dich ist oder dich begehrenswert findet — das klingt eitel und ist einfach deine Bauweise',
+       'Freundschaft und Freiraum gehören dazu. Besitzansprüche nehmen dir die Lust',
+       'es braucht Rückzug und geschützte Zeit. Unter Beobachtung geht bei dir nichts'];
+      return 'Deine <b>Venus in '+H.SIGNS[zi]+'</b>: '+V[zi]+' Und im <b>'+hn+'. Haus</b> heißt das: '+HW[hn-1]+'.';
+    },
+    function(f,P,H){
+      if(P.Lilith===undefined||P.Lilith===null) return null;
+      var zi=Math.floor(P.Lilith/30), hn=H.haus(P.Lilith)+1;
+      var L=['dass du selbst willst und es zeigst, statt zu warten',
+       'dass du dir Genuss nimmst, ohne ihn zu rechtfertigen',
+       'dass du aussprichst, was du dir vorstellst',
+       'dass du Bedürftigkeit zeigst, ohne dich dafür zu schämen',
+       'dass du im Mittelpunkt stehst und es genießt',
+       'dass du unordentlich und unkontrolliert sein darfst',
+       'dass du etwas forderst, statt es beiden recht zu machen',
+       'dass du dich ganz hingibst oder ganz führst — ohne Mittelweg',
+       'dass du ausprobierst, was nicht vorgesehen war',
+       'dass du Macht ausübst und es dir gefällt',
+       'dass du dich völlig aus der Rolle bewegst',
+       'dass du dich verlierst, ohne Angst davor zu haben'];
+      return 'Deine <b>Lilith in '+H.SIGNS[zi]+', '+hn+'. Haus</b> zeigt, was du dir nicht erlaubst: <b>'+L[zi]+'</b>. '+
+        'Erfahrungsgemäß liegt genau dort etwas, das dir gefallen würde — es hat nur nie Erlaubnis bekommen. '+
+        'Das ist kein Auftrag, sondern ein Hinweis, wo es sich lohnt hinzuschauen.';
     },
     function(f,P,H){
       var im5=f.planeten.filter(function(x){return x.haus===5;});
       var im8=f.planeten.filter(function(x){return x.haus===8;});
       var t=[];
       if(im5.length) t.push('Im <b>5. Haus</b> steht '+im5.map(function(x){return x.p;}).join(', ')+
-        ' — das Verspielte, Leichte, Lustvolle ist bei dir stärker angelegt. Spaß darf ein Ziel sein.');
+        ' — Spiel, Leichtigkeit und Ausprobieren sind bei dir stark angelegt. Bei dir darf Sex auch einfach Spaß sein, ohne Bedeutung.');
       if(im8.length) t.push('Im <b>8. Haus</b> steht '+im8.map(function(x){return x.p;}).join(', ')+
-        ' — dich zieht es ins Tiefe und Intensive. Oberflächliches langweilt dich eher, als dass es dich entspannt.');
-      if(!t.length) return 'Weder 5. noch 8. Haus sind besetzt. Weder Verspieltheit noch Intensität sind bei dir vorgegeben — '+
-        'du hast hier mehr Freiheit und musst dafür bewusster herausfinden, was dir liegt.';
+        ' — es zieht dich in die Tiefe. Du willst, dass etwas passiert, nicht nur, dass es schön ist. Das macht es intensiver und auch anfälliger.');
+      if(!t.length) return 'Weder 5. noch 8. Haus sind bei dir besetzt. Weder Verspieltheit noch Intensität sind vorgegeben — '+
+        'du hast mehr Freiheit und musst dafür bewusster herausfinden, was dir liegt. Das dauert länger und ist dafür wirklich deins.';
       return t.join(' ');
-    },
-    function(f,P,H){
-      if(P.Lilith===undefined||P.Lilith===null) return null;
-      var hn=H.haus(P.Lilith)+1;
-      return 'Und deine <b>Lilith im '+hn+'. Haus</b> markiert, was du dir versagst. '+
-        'Erfahrungsgemäß liegt genau dort etwas, das dir gefallen würde — es hat nur nie Erlaubnis bekommen.';
     }],
   uebung:['Die stille Liste',
-   'Schreib für dich allein drei Dinge auf, die dir gefallen, und eine, bei der du dir nicht sicher bist. Niemand muss es sehen. '+
-   'Der Sinn ist nicht, es weiterzugeben, sondern es überhaupt einmal zu wissen — man kann schlecht etwas einfordern, '+
-   'das man selbst nie benannt hat.'],
+   'Schreib drei Dinge auf, die dir gefallen, und eine, bei der du dir nicht sicher bist. Für dich allein, niemand muss es sehen, danach darfst du es wegwerfen. Der Sinn ist nicht, es weiterzugeben — <b>man kann schlecht etwas einfordern, das man selbst nie benannt hat.</b>'],
   rueckfrage:'Hast du deine Liste geschrieben?',
   coach:{fragen:['Was gefällt dir — und woher weißt du das?',
-   'Was hast du übernommen, weil es von dir erwartet wurde?',
-   'Gibt es etwas, das du gern ausprobieren würdest und dich nicht traust zu sagen?'],
-   vorsicht:'Hier nie konkret werden und nie nachfragen. Die Person benennt, du hörst zu. Alles Detaillierte gehört in eine sexualtherapeutische Beratung, nicht ins Coaching.'}},
+   'Was hast du übernommen, weil es erwartet wurde?',
+   'Was würdest du gern ausprobieren und traust dich nicht zu sagen?'],
+   vorsicht:'Hier nie konkret nachfragen. Die Person benennt, du hörst zu und wertest nicht. Alles, was in Richtung konkreter Praktiken oder Beratung dazu geht, gehört in eine sexualtherapeutische Begleitung — nicht ins Coaching.'}},
 
- {id:'danach', wozuSchutz:'Sofort weiterzumachen erspart den verletzlichsten Moment.',
+ {id:'danach', wozuSchutz:'Sofort weiterzumachen erspart dir den verletzlichsten Moment.',
   wozuFrage:'Was fürchtest du in dem Moment danach — und wer hat dir beigebracht, dass man da schnell weitermacht?',
   name:'Was du danach brauchst',
   frage:'Warum fühle ich mich hinterher manchmal seltsam?',
   anker:{haeuser:[4,12], punkte:['Mond','Neptun','Saturn']},
   regeln:[
     function(f,P,H){
-      return 'Der Teil <b>danach</b> wird fast immer übersehen und entscheidet erstaunlich viel. '+
-        'Nach körperlicher Nähe fällt die Anspannung ab, und viele Menschen sind in diesem Moment ungewohnt durchlässig — '+
-        'da kommen manchmal Traurigkeit, Unruhe oder Rückzugsimpulse hoch, ganz ohne dass etwas schiefgelaufen wäre. '+
-        'Das ist verbreitet, hat einen Namen in der Fachliteratur und sagt nichts über die Beziehung aus.';
+      return 'Der Teil <b>danach</b> wird fast immer übersehen und entscheidet erstaunlich viel darüber, wie man das Ganze in Erinnerung behält. '+
+        'Wenn die Anspannung abfällt, sind viele Menschen ungewohnt durchlässig: Da kommen manchmal Traurigkeit, Unruhe oder ein plötzlicher '+
+        'Rückzugsimpuls hoch, <b>ganz ohne dass etwas schiefgelaufen wäre</b>. Das ist verbreitet, in der Fachliteratur beschrieben '+
+        'und sagt nichts über die Beziehung aus. Wer das einmal weiß, erschrickt beim nächsten Mal nicht mehr darüber.';
     },
     function(f,P,H){
       if(P.Mond===undefined) return null;
-      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
-      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein <b>Mond in '+H.SIGNS[zi]+'</b> sagt, was du danach brauchst: '+
-        (el==='Feuer'?'Bewegung und Leichtigkeit. Lange Stille wird dir schnell unangenehm.'
-         :el==='Erde'?'Körperkontakt und Ruhe. Aufstehen und Weitermachen ist bei dir das Falsche.'
-         :el==='Luft'?'ein Gespräch. Bei dir schließt sich etwas erst mit Worten.'
-         :'Nähe und Zeit. Wenn du danach allein bleibst, bleibt bei dir etwas offen.');
+      var zi=Math.floor(P.Mond/30);
+      var D=['Bewegung und Leichtigkeit. Lange Stille wird dir unangenehm — steh ruhig auf, hol was zu trinken, red über irgendwas.',
+       'Körperkontakt und Ruhe. Bleib liegen. Aufstehen und Weitermachen ist bei dir das Falsche und hinterlässt ein schales Gefühl.',
+       'ein Gespräch. Bei dir schließt sich etwas erst mit Worten — auch banalen. Schweigen lässt bei dir eine Lücke.',
+       'Nähe und Zeit. Wenn du danach allein bleibst, bleibt bei dir etwas offen, das du am nächsten Tag noch spürst.',
+       'Bestätigung. Ein Satz reicht. Wenn nichts kommt, fängst du an zu zweifeln, auch ohne Grund.',
+       'Ordnung und ein klarer Übergang. Du kommst schlecht aus dem Moment, wenn danach Chaos herrscht.',
+       'Gemeinsamkeit. Du brauchst das Gefühl, dass es für beide gut war — Ungewissheit darüber beschäftigt dich lange.',
+       'Zeit ohne Reden. Bei dir wirkt es nach, und du magst es nicht, wenn sofort zerredet wird.',
+       'Leichtigkeit und Lachen. Zu viel Feierlichkeit danach macht dich unruhig.',
+       'Ruhe und Verlässlichkeit. Bei dir ist wichtig, dass jemand bleibt — nicht was gesagt wird.',
+       'Freiraum. Du brauchst manchmal Abstand, und das ist keine Ablehnung. Sag es vorher, dann wird es nicht falsch verstanden.',
+       'Wärme und Atmosphäre. Bei dir zieht sich der Moment noch lange hin, und ein harter Schnitt tut weh.'];
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+'</b> sagt, was du danach brauchst: '+D[zi];
     },
     function(f,P,H){
       var ms=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Mond'))&&x.art==='hart';})[0];
-      if(!ms) return null;
-      return '<b>Mond '+ms.typ+' Saturn</b> mit '+ms.o.toFixed(1)+'°. Genau in diesem Moment fällt es dir schwer, '+
+      if(ms) return '<b>Mond '+ms.typ+' Saturn</b> ('+ms.o.toFixed(1)+'°): Ausgerechnet in diesem Moment fällt es dir schwer, '+
         'Zuwendung zu verlangen — obwohl du sie dann am dringendsten brauchst. Du wirst eher sachlich, stehst auf, machst etwas. '+
-        'Wenn du das bei dir kennst, kannst du es vorher ansprechen, statt es hinterher zu erklären.';
+        'Das wirkt auf das Gegenüber oft wie Distanz. Wenn du das bei dir kennst, kannst du es vorher ansprechen statt hinterher erklären.';
+      var mn=f.aspekte.filter(function(x){return ((x.a==='Mond'&&x.b==='Neptun')||(x.a==='Neptun'&&x.b==='Mond'));})[0];
+      if(mn) return '<b>Mond '+mn.typ+' Neptun</b> ('+mn.o.toFixed(1)+'°): Die Grenze zwischen deinen Gefühlen und denen des anderen '+
+        'ist danach besonders dünn. Du nimmst mit, was im Raum liegt, und hältst es für deins. Ein bisschen Abstand nach kurzer Zeit '+
+        'hilft dir mehr, als du denkst.';
+      return null;
     }],
   uebung:['Vorher sagen, was danach hilft',
-   'Sag einer Person, mit der du Nähe teilst, einmal vorher, was du hinterher brauchst — Nähe, Reden, Ruhe, Wasser, eine Decke. '+
-   'Ein Satz genügt. Das ist unromantisch und funktioniert hervorragend, weil hinterher niemand gut formulieren kann.'],
+   'Sag einer Person, mit der du Nähe teilst, einmal <i>vorher</i>, was du hinterher brauchst — Nähe, Reden, Ruhe, Wasser, eine Decke, kurz allein sein. Ein Satz genügt. Das ist unromantisch und funktioniert hervorragend, weil hinterher niemand gut formulieren kann.'],
   rueckfrage:'Hast du vorher gesagt, was du danach brauchst?',
-  coach:{fragen:['Wie fühlst du dich direkt danach?',
-   'Was brauchst du dann — und bekommst du es?',
+  coach:{fragen:['Wie fühlst du dich direkt danach — und zwei Stunden später?',
+   'Was brauchst du dann, und bekommst du es?',
    'Was machst du stattdessen?'],
-   vorsicht:'Wenn regelmäßig starke Traurigkeit, Scham oder Panik danach auftreten, ist das kein Coaching-Thema. Das kann viele Ursachen haben und gehört freundlich an eine Fachperson weitergegeben.'}}
+   vorsicht:'Wenn regelmäßig starke Traurigkeit, Scham oder Panik danach auftreten, ist das kein Coaching-Thema. Das kann viele Ursachen haben, auch zurückliegende Erfahrungen, und gehört freundlich an eine Fachperson weitergegeben.'}}
 
  ]
 };
