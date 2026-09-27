@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organizer · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.og-kap{background:var(--papier);border:1px solid var(--linie);border-radius:22px;padding:22px 24px;margin-bottom:22px;}
+.og-kap .f{font-family:var(--serif);font-size:21px;color:var(--nacht);margin-bottom:5px;}
+.og-kap .h{font-size:14px;color:var(--leise);line-height:1.55;margin-bottom:16px;}
+.og-w{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.og-w button{font-family:var(--sans);font-size:16px;padding:18px 10px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:16px;cursor:pointer;line-height:1.25;}
+.og-w button span{display:block;font-size:12px;color:var(--leise);margin-top:4px;}
+.og-w button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.og-w button[aria-pressed="true"] span{color:rgba(255,255,255,.72);}
+.og-gewaehlt{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.og-gewaehlt button{font-family:var(--sans);font-size:13.5px;background:none;border:none;
+ color:var(--nacht);text-decoration:underline;cursor:pointer;padding:0;}
+.og-heute{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:22px;padding:22px 24px;margin-bottom:20px;}
+.og-heute h2{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.og-heute .sub5{font-size:13.5px;color:var(--leise);margin-bottom:16px;line-height:1.55;}
+.og-leer{text-align:center;padding:26px 18px;color:var(--leise);font-size:15px;line-height:1.65;}
+.og-k{background:var(--papier);border:1px solid var(--linie);border-radius:17px;padding:15px 17px;margin-bottom:10px;}
+.og-k.dran{border-color:var(--nacht);box-shadow:0 2px 12px rgba(46,58,92,.07);}
+.og-k.fertig{opacity:.55;background:var(--bg);}
+.og-kopf{display:flex;gap:12px;align-items:flex-start;}
+.og-hak{width:26px;height:26px;border-radius:9px;border:1.5px solid var(--linie);background:var(--bg);
+ flex:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:transparent;margin-top:1px;}
+.og-hak:hover{border-color:var(--nacht);}
+.og-k.fertig .og-hak{background:#3F6B4A;border-color:#3F6B4A;color:#fff;}
+.og-txt{flex:1;min-width:0;}
+.og-titel{font-size:16px;line-height:1.4;color:var(--tinte);}
+.og-k.fertig .og-titel{text-decoration:line-through;}
+.og-schritt{font-size:14px;color:var(--nacht);background:var(--messing-bg);border-radius:10px;
+ padding:7px 11px;margin-top:8px;line-height:1.5;}
+.og-schritt b{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+ color:var(--messing);display:block;margin-bottom:2px;}
+.og-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;align-items:center;}
+.og-chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;border-radius:10px;padding:3px 9px;
+ background:var(--bg);color:var(--leise);border:1px solid var(--linie);}
+.og-chip.e1{background:#EDF3EC;color:#3F6B4A;border-color:#C5D7C2;}
+.og-chip.e2{background:var(--messing-bg);color:#8A6A20;border-color:var(--linie);}
+.og-chip.e3{background:#FBF0E8;color:#8A4326;border-color:#E2C3B4;}
+.og-chip.frist{background:var(--nacht-bg);color:var(--nacht);border-color:#D3D9E6;}
+.og-akt{margin-left:auto;display:flex;gap:4px;}
+.og-akt button{font-family:var(--sans);font-size:12px;background:none;border:1px solid var(--linie);
+ color:var(--leise);border-radius:11px;padding:4px 10px;cursor:pointer;}
+.og-akt button:hover{border-color:var(--nacht);color:var(--nacht);}
+.og-neu{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:20px 22px;margin-bottom:20px;}
+.og-neu input,.og-neu textarea{width:100%;padding:13px 15px;border:1px solid var(--linie);border-radius:13px;
+ background:var(--bg);font-family:var(--sans);font-size:15.5px;color:var(--tinte);margin-bottom:10px;}
+.og-neu textarea{min-height:52px;resize:vertical;font-size:15px;}
+.og-neu label{display:block;font-family:var(--sans);font-size:12.5px;color:var(--leise);margin-bottom:5px;}
+.og-reihe{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px;}
+.og-reihe button{font-family:var(--sans);font-size:13.5px;padding:8px 14px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--leise);border-radius:17px;cursor:pointer;}
+.og-reihe button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.og-b{font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;
+ padding:12px 24px;border-radius:22px;cursor:pointer;}
+.og-b.leer{background:none;color:var(--nacht);}
+.og-b[disabled]{opacity:.4;cursor:default;}
+.og-abschnitt{margin-bottom:24px;}
+.og-abschnitt h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.og-abschnitt .sub5{font-size:13.5px;color:var(--leise);margin-bottom:13px;line-height:1.55;}
+.og-zaehler{background:var(--messing-bg);border-radius:20px;padding:22px 24px;text-align:center;margin-bottom:20px;}
+.og-zaehler .gross{font-family:var(--serif);font-size:46px;line-height:1;color:var(--nacht);}
+.og-zaehler p{margin:7px 0 0;font-size:15px;line-height:1.6;color:var(--leise);}
+.og-fort{display:flex;gap:4px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.og-fort i{width:9px;height:9px;border-radius:3px;background:var(--linie);}
+.og-fort i.voll{background:var(--messing);}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html" class="ist">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Werkzeug</div>
+<h1>Der <em>Organizer.</em></h1>
+<p class="lede">Kein Aufgabenverwalter, der dich erinnert, was du alles nicht geschafft hast. Dieser hier fragt zuerst, wie viel heute geht, und zeigt dann nur, was dazu passt. Nichts wird rot, nichts läuft ab, nichts zählt rückwärts.</p>
+
+<div class="og-kap" id="ogkap"></div>
+<div class="og-heute" id="ogheute"></div>
+<div id="ogzaehler"></div>
+<div class="og-neu" id="ogneu"></div>
+<div id="ogrest"></div>
+
+<div class="tip"><b>Warum es hier keine Streaks gibt:</b> Ein Zähler, der bei null anfängt, wenn man einen Tag auslässt, bestraft genau die Menschen, deren Kapazität schwankt — und das sind überdurchschnittlich oft anders verdrahtete Köpfe. Hier wächst der Zähler nur. Eine Pause kostet nichts, weil sie nichts kosten sollte.</div>
+
+<div class="tip"><b>Und warum nichts gelöscht wird:</b> Was du nicht mehr willst, wird geparkt, nicht entfernt. Das nimmt der Entscheidung das Gewicht — man muss nicht wissen, ob etwas endgültig wegfällt, um es heute wegzulegen. Alles Geparkte kannst du jederzeit zurückholen.</div>
+
+<div class="weiter"><a href="raum-versorgung.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Themenraum Versorgung</span></a><a href="methoden.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Methoden f&uuml;r den Moment</span></a></div>
+<div class="foot">Organizer &middot; Alles bleibt in deinem Browser. Keine Streaks, keine Fristenwarnungen, nichts wird gel&ouml;scht.</div>
+</div>
+<script>
+
+var KEY='ac_organizer', KAPKEY='ac_kap_heute';
+var BEREICHE=[['essen','Essen'],['papier','Papierkram'],['haushalt','Haushalt'],['koerper','Körper'],
+ ['arbeit','Arbeit'],['menschen','Menschen'],['sonst','Sonstiges']];
+var ENERGIE=[['1','Wenig Kraft'],['2','Mittel'],['3','Viel Kraft']];
+
+function lade(){ try{ var s=JSON.parse(localStorage.getItem(KEY)||'null');
+  return s||{sachen:[], geschafft:0}; }catch(e){ return {sachen:[], geschafft:0}; } }
+function sichere(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+function heuteStr(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function kapLesen(){ try{ var r=JSON.parse(localStorage.getItem(KAPKEY)||'null');
+  return (r&&r.d===heuteStr())?r.s:null; }catch(e){ return null; } }
+function kapSchreiben(s){ try{ localStorage.setItem(KAPKEY, JSON.stringify({d:heuteStr(), s:s})); }catch(e){} }
+function id(){ return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+var neuE='2', neuB='sonst';
+
+/* ── Kapazität ── */
+function kapZeichnen(){
+  var box=document.getElementById('ogkap'), s=kapLesen();
+  if(s){
+    var N={wenig:'Wenig',mittel:'Mittel',viel:'Viel'};
+    box.innerHTML='<div class="og-gewaehlt"><div class="f">Heute: '+N[s]+'</div>'+
+      '<button type="button" id="ogneuwahl">Anders wählen</button></div>'+
+      '<div class="h" style="margin:8px 0 0;">'+
+      (s==='wenig'?'Unten steht nur, was wenig Kraft kostet. Alles andere ist nicht weg — es ist nur nicht heute.'
+       :s==='mittel'?'Unten steht, was mit mittlerer Kraft geht.'
+       :'Unten steht alles. Wenn es zu viel wirkt, stell einfach zurück.')+'</div>';
+    document.getElementById('ogneuwahl').addEventListener('click',function(){
+      try{ localStorage.removeItem(KAPKEY); }catch(e){} kapZeichnen(); alles();
+    });
+    return;
+  }
+  box.innerHTML='<div class="f">Wie viel geht heute?</div>'+
+    '<div class="h">Danach richtet sich, was du unten siehst. Nichts wird gezählt oder gespeichert — morgen fragt der Organizer neu.</div>'+
+    '<div class="og-w" id="ogw"></div>';
+  var w=document.getElementById('ogw');
+  [['wenig','Wenig','nur Leichtes'],['mittel','Mittel','das Meiste'],['viel','Viel','alles']].forEach(function(o){
+    var b=document.createElement('button'); b.type='button';
+    b.innerHTML=o[1]+'<span>'+o[2]+'</span>'; b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',function(){ kapSchreiben(o[0]); kapZeichnen(); alles(); });
+    w.appendChild(b);
+  });
+}
+
+/* ── Karte ── */
+function karte(x, dran){
+  var EN={'1':['e1','wenig Kraft'],'2':['e2','mittel'],'3':['e3','viel Kraft']};
+  var e=EN[x.energie]||EN['2'];
+  var b=(BEREICHE.filter(function(y){return y[0]===x.bereich;})[0]||['','Sonstiges'])[1];
+  var h='<div class="og-k'+(x.fertig?' fertig':'')+(dran?' dran':'')+'" data-id="'+x.id+'">'+
+    '<div class="og-kopf"><div class="og-hak" data-hak="'+x.id+'">✓</div>'+
+    '<div class="og-txt"><div class="og-titel">'+x.text+'</div>';
+  if(x.schritt&&!x.fertig) h+='<div class="og-schritt"><b>Kleinster nächster Schritt</b>'+x.schritt+'</div>';
+  h+='<div class="og-meta"><span class="og-chip '+e[0]+'">'+e[1]+'</span>'+
+    '<span class="og-chip">'+b+'</span>'+
+    (x.frist?'<span class="og-chip frist">bis '+x.frist+'</span>':'')+
+    '<span class="og-akt">'+
+    (x.fertig?'<button type="button" data-zurueck="'+x.id+'">zurückholen</button>'
+     :(x.geparkt?'<button type="button" data-aktiv="'+x.id+'">zurückholen</button>'
+       :'<button type="button" data-park="'+x.id+'">liegt gut da</button>'))+
+    '</span></div></div></div></div>';
+  return h;
+}
+
+/* ── Heute ── */
+function heuteZeichnen(){
+  var box=document.getElementById('ogheute'), st=lade(), kap=kapLesen();
+  if(!kap){ box.innerHTML='<h2>Für heute</h2><div class="sub5">Sag oben, wie viel heute geht — dann sortiere ich.</div>'; return; }
+  var grenze=(kap==='wenig')?1:(kap==='mittel'?2:3);
+  var offen=st.sachen.filter(function(x){ return !x.fertig&&!x.geparkt&&(+x.energie)<=grenze; });
+  var fertigHeute=st.sachen.filter(function(x){ return x.fertig&&x.fertigAm===heuteStr(); });
+  var zahl=(kap==='wenig')?1:(kap==='mittel'?2:3);
+  var h='<h2>Für heute</h2><div class="sub5">'+
+    (kap==='wenig'?'Eine Sache reicht. Wirklich.'
+     :kap==='mittel'?'Zwei Sachen sind ein guter Tag.'
+     :'Bis zu drei. Mehr wird selten besser.')+'</div>';
+  if(!offen.length&&!fertigHeute.length){
+    h+='<div class="og-leer">Hier ist gerade nichts, was zu deiner Kraft passt.<br>'+
+      (st.sachen.length?'Das ist kein Versäumnis — leg etwas Neues an oder hol etwas Geparktes zurück.'
+       :'Leg unten etwas an, wenn du magst.')+'</div>';
+  } else {
+    offen.slice(0,zahl).forEach(function(x){ h+=karte(x,true); });
+    if(offen.length>zahl) h+='<div class="sub5" style="margin:4px 0 0;">'+(offen.length-zahl)+
+      ' weitere passen auch — sie stehen weiter unten und laufen nicht weg.</div>';
+    fertigHeute.forEach(function(x){ h+=karte(x,false); });
+  }
+  box.innerHTML=h;
+}
+
+/* ── Zähler ── */
+function zaehlerZeichnen(){
+  var st=lade(), box=document.getElementById('ogzaehler');
+  if(!st.geschafft){ box.innerHTML=''; return; }
+  var punkte='';
+  for(var i=0;i<Math.min(st.geschafft,40);i++) punkte+='<i class="voll"></i>';
+  box.innerHTML='<div class="og-zaehler"><div class="gross">'+st.geschafft+'</div>'+
+    '<p>'+(st.geschafft===1?'Sache':'Sachen')+' erledigt, seit du diesen Organizer benutzt. Diese Zahl wird nie kleiner — '+
+    'auch nicht, wenn du wochenlang nichts machst.</p><div class="og-fort">'+punkte+'</div></div>';
+}
+
+/* ── Neues anlegen ── */
+function neuZeichnen(){
+  var box=document.getElementById('ogneu');
+  box.innerHTML='<h3 style="font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 12px;">Etwas anlegen</h3>'+
+    '<label>Worum geht es?</label><input id="ogtext" type="text" placeholder="Steuererklärung, Zahnarzttermin, Brief beantworten…">'+
+    '<label>Und was wäre der <b>kleinste nächste Schritt</b>? <span style="color:var(--leise)">— freiwillig, hilft aber enorm</span></label>'+
+    '<textarea id="ogschritt" placeholder="Ordner aus dem Regal holen"></textarea>'+
+    '<label>Wie viel Kraft kostet der Schritt?</label><div class="og-reihe" id="ogen"></div>'+
+    '<label>Bereich</label><div class="og-reihe" id="ogbe"></div>'+
+    '<label>Gibt es eine echte Frist? <span style="color:var(--leise)">— nur wenn es wirklich eine gibt</span></label>'+
+    '<input id="ogfrist" type="date" style="max-width:220px;">'+
+    '<div><button class="og-b" id="ogadd" disabled>Anlegen</button></div>';
+  var en=document.getElementById('ogen');
+  ENERGIE.forEach(function(o){
+    var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+    b.setAttribute('aria-pressed', neuE===o[0]);
+    b.addEventListener('click',function(){ neuE=o[0]; neuZeichnenErhalt(); });
+    en.appendChild(b);
+  });
+  var be=document.getElementById('ogbe');
+  BEREICHE.forEach(function(o){
+    var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+    b.setAttribute('aria-pressed', neuB===o[0]);
+    b.addEventListener('click',function(){ neuB=o[0]; neuZeichnenErhalt(); });
+    be.appendChild(b);
+  });
+  var t=document.getElementById('ogtext');
+  t.addEventListener('input',function(){ document.getElementById('ogadd').disabled=!t.value.trim(); });
+  document.getElementById('ogadd').addEventListener('click',function(){
+    var st=lade();
+    var fr=document.getElementById('ogfrist').value;
+    var frTxt='';
+    if(fr){ var p=fr.split('-'); frTxt=p[2]+'.'+p[1]+'.'; }
+    st.sachen.unshift({id:id(), text:t.value.trim().replace(/</g,'&lt;'),
+      schritt:document.getElementById('ogschritt').value.trim().replace(/</g,'&lt;'),
+      energie:neuE, bereich:neuB, frist:frTxt, fertig:false, geparkt:false, angelegt:heuteStr()});
+    sichere(st); neuE='2'; neuB='sonst'; alles();
+  });
+}
+function neuZeichnenErhalt(){
+  var t=document.getElementById('ogtext').value, s=document.getElementById('ogschritt').value,
+      f=document.getElementById('ogfrist').value;
+  neuZeichnen();
+  document.getElementById('ogtext').value=t; document.getElementById('ogschritt').value=s;
+  document.getElementById('ogfrist').value=f;
+  document.getElementById('ogadd').disabled=!t.trim();
+}
+
+/* ── Restliche Listen ── */
+function restZeichnen(){
+  var st=lade(), box=document.getElementById('ogrest'), kap=kapLesen();
+  var grenze=(kap==='wenig')?1:(kap==='mittel'?2:3);
+  var zahl=(kap==='wenig')?1:(kap==='mittel'?2:3);
+  var heuteIds={};
+  if(kap) st.sachen.filter(function(x){return !x.fertig&&!x.geparkt&&(+x.energie)<=grenze;})
+    .slice(0,zahl).forEach(function(x){ heuteIds[x.id]=1; });
+  var offen=st.sachen.filter(function(x){ return !x.fertig&&!x.geparkt&&!heuteIds[x.id]; });
+  var geparkt=st.sachen.filter(function(x){ return x.geparkt&&!x.fertig; });
+  var fertig=st.sachen.filter(function(x){ return x.fertig&&x.fertigAm!==heuteStr(); });
+  var h='';
+  if(offen.length){
+    h+='<div class="og-abschnitt"><h3>Steht noch an</h3>'+
+      '<div class="sub5">Ohne Reihenfolge und ohne Dringlichkeit. Was heute nicht passt, passt an einem anderen Tag.</div>';
+    offen.forEach(function(x){ h+=karte(x,false); });
+    h+='</div>';
+  }
+  if(geparkt.length){
+    h+='<details class="og-abschnitt"><summary style="cursor:pointer;font-family:var(--serif);font-size:19px;color:var(--nacht);margin-bottom:10px;">'+
+      'Liegt gut da <span style="font-family:var(--sans);font-size:13.5px;color:var(--leise);">('+geparkt.length+')</span></summary>'+
+      '<div class="sub5">Nichts davon ist weg. Zurückholen geht jederzeit.</div>';
+    geparkt.forEach(function(x){ h+=karte(x,false); });
+    h+='</details>';
+  }
+  if(fertig.length){
+    h+='<details class="og-abschnitt"><summary style="cursor:pointer;font-family:var(--serif);font-size:19px;color:var(--nacht);margin-bottom:10px;">'+
+      'Geschafft <span style="font-family:var(--sans);font-size:13.5px;color:var(--leise);">('+fertig.length+')</span></summary>'+
+      '<div class="sub5">Zum Nachlesen an Tagen, an denen es sich anfühlt, als hättest du nichts hinbekommen.</div>';
+    fertig.slice(0,40).forEach(function(x){ h+=karte(x,false); });
+    h+='</details>';
+  }
+  box.innerHTML=h;
+}
+
+/* ── Klicks ── */
+document.addEventListener('click',function(e){
+  var t=e.target;
+  var hak=t.getAttribute&&t.getAttribute('data-hak');
+  var park=t.getAttribute&&t.getAttribute('data-park');
+  var aktiv=t.getAttribute&&t.getAttribute('data-aktiv');
+  var zur=t.getAttribute&&t.getAttribute('data-zurueck');
+  if(!hak&&!park&&!aktiv&&!zur) return;
+  var st=lade();
+  st.sachen.forEach(function(x){
+    if(hak===x.id){
+      if(!x.fertig){ x.fertig=true; x.fertigAm=heuteStr(); st.geschafft=(st.geschafft||0)+1; }
+      else { x.fertig=false; x.fertigAm=null; }
+    }
+    if(park===x.id) x.geparkt=true;
+    if(aktiv===x.id) x.geparkt=false;
+    if(zur===x.id){ x.fertig=false; x.fertigAm=null; }
+  });
+  sichere(st); alles();
+});
+
+function alles(){ heuteZeichnen(); zaehlerZeichnen(); restZeichnen(); }
+kapZeichnen(); neuZeichnen(); alles();
+
+</script>
+</body></html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alltag · Themenraum · Astro-Charlie</title>
+<title>Versorgung · Themenraum · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="fortschritt.js"></script>
@@ -87,6 +87,31 @@ a{color:var(--nacht);}
 .ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
 .ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
 .ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 .rm-tuer{background:var(--messing-bg);border-radius:20px;padding:26px 26px 22px;margin-bottom:18px;}
 .rm-tuer .rm-frage{font-family:var(--serif);font-size:clamp(21px,4.3vw,28px);line-height:1.25;color:var(--nacht);margin-bottom:10px;}
 .rm-tuer p{margin:0;font-size:15.5px;line-height:1.65;max-width:62ch;}
@@ -146,9 +171,6 @@ a{color:var(--nacht);}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
 
-.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
- margin-bottom:18px;font-size:14.8px;line-height:1.65;}
-
 .rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
  font-size:14.6px;line-height:1.65;}
 
@@ -191,6 +213,20 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
+ margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+.zs-box{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:20px;padding:22px 24px;margin-top:26px;}
+.zs-box h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--nacht);margin:0 0 5px;}
+.zs-box .sub4{font-size:13.5px;color:var(--leise);margin-bottom:16px;line-height:1.55;}
+.zs-z{display:grid;grid-template-columns:96px 1fr;gap:14px;background:var(--papier);border-radius:14px;
+ padding:13px 16px;margin-bottom:9px;align-items:start;}
+.zs-dat{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--messing);line-height:1.5;}
+.zs-z b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
+.zs-z p{margin:3px 0 0;font-size:14.4px;line-height:1.58;}
+.zs-z.leichter{border-left:3px solid #6B8C5F;}
+.zs-z.schwerer{border-left:3px solid #A05A3A;}
+.zs-fuss{font-size:13.3px;color:var(--leise);line-height:1.6;margin-top:12px;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -202,16 +238,17 @@ body.fmt-visuell .fa-frage{display:none;}
 <div class="wrap">
 
 <div class="eyebrow">Themenraum</div>
-<h1>Alltag.</h1>
+<h1>Versorgung.</h1>
 <div class="rm-tuer">
-  <div class="rm-frage">&bdquo;Wie kriege ich Struktur, die hält?&ldquo;</div>
-  <p>Die meisten Ratschläge zu Struktur scheitern daran, dass sie für alle dieselben sind. Dein Chart sagt aber ziemlich genau, welcher Rhythmus zu dir passt, welche Art von System bei dir hält und woran es zerfällt. Sechs Facetten: dein natürlicher Takt, tragfähige Struktur, Ordnung und Umgebung, Anfangen und Dranbleiben, Pausen — und woran du merkst, dass es zu viel wird.</p>
+  <div class="rm-frage">&bdquo;Warum kriege ich das Einfache nicht hin?&ldquo;</div>
+  <p>Essen, trinken, Papierkram, Haushalt, Schlaf — das Langweilige, das alles trägt und über das niemand spricht. Bei anders verdrahteten Menschen ist genau das oft das Schwerste, und der übliche Rat („einfach dranbleiben") geht daran vorbei. Sechs Facetten, die nicht fragen, wie du dich besser motivierst, sondern <b>woran es mechanisch hakt</b> — und was dein Chart darüber sagt, wo Struktur bei dir tatsächlich hält.</p>
 </div>
-<div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
+<div class="rm-hinweis"><b>Wie dieser Raum gebaut ist:</b> Er nennt <b>keine Mengen, keine Zeiten, keine Ziele und keine Pläne</b>. Nur Mechanismen — anhängen statt neu planen, sichtbar machen, Hürden senken. Das ist Absicht: Sobald Alltagsthemen mit Zahlen und Zielen verknüpft werden, erzeugen sie Druck, und Druck ist bei diesen Themen genau das Falsche. <br><br>Und: Astrologie beschreibt hier <b>wie</b> du funktionierst, nicht <b>warum</b>. Wenn Hungersignale fehlen, Erschöpfung bleibt oder Nährstoffe ein Thema sind — etwa bei rein pflanzlicher Ernährung — gehört das ärztlich angeschaut. Kein Chart ersetzt einen Blutwert.</div>
 <div id="raum"></div>
+<div id="zeitschiene"></div>
 
-<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-versorgung.html" class="nx"><span class="lbl">Konkreter &rarr;</span><span class="ttl">Versorgung</span></a></div>
-<div class="foot">Themenraum Alltag &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="organizer.html" class="nx"><span class="lbl">Werkzeug dazu &rarr;</span><span class="ttl">Der Organizer</span></a></div>
+<div class="foot">Themenraum Versorgung &middot; Mechanismen, keine Vorgaben. Keine Mengen, keine Zeiten, keine Ziele.</div>
 </div>
 <script>
 var RAD=Math.PI/180;
@@ -271,222 +308,271 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 
 var RAUM = {
- name:'Alltag',
- slug:'alltag',
- sortierTitel:'Wo dein Alltag tatsächlich hakt',
+ name:'Versorgung',
+ slug:'versorgung',
+ sortierTitel:'Wo dein Alltag tatsächlich klemmt',
  facetten:[
- {id:'rhythmus', wozuSchutz:'Gegen den eigenen Takt zu arbeiten zeigt Fleiß. Ihn zu akzeptieren klingt nach Ausrede.', wozuFrage:'Wer würde es dir vorwerfen, wenn du deinen Tag nach dir richtest?', name:'Dein natürlicher Rhythmus',
-  frage:'Wann bin ich eigentlich brauchbar?',
-  anker:{haeuser:[6], punkte:['Mond','Mars','Sonne']},
+ {id:'essen', wozuSchutz:'Sich zu überspringen spart im Moment Kraft — bis die Rechnung kommt.',
+  wozuFrage:'Was machst du in der Zeit, in der du nicht isst — und ist es das wert?',
+  name:'Essen und Versorgung',
+  frage:'Warum kriege ich das nicht regelmäßig hin?',
+  anker:{haeuser:[6,2], punkte:['Mond','Saturn','Venus']},
   regeln:[
+    function(f,P,H){
+      return '<b>Zuerst das, was nicht aus dem Chart kommt:</b> Bei vielen anders verdrahteten Menschen kommt das Hungersignal '+
+        'spät, schwach oder gar nicht als Hunger an — sondern als Gereiztheit, Kopfschmerz oder plötzliche Erschöpfung. '+
+        'Dazu ist Essen ein <b>vierstufiger Vorgang</b>: entscheiden, besorgen, zubereiten, aufräumen. '+
+        'Vier Stellen, an denen man hängenbleiben kann. Wer das weiß, hört auf, es für Disziplinlosigkeit zu halten — '+
+        'und fängt an, an der Stufe anzusetzen, die tatsächlich klemmt.';
+    },
     function(f,P,H){
       if(P.Mond===undefined) return null;
       var zi=Math.floor(P.Mond/30), hn=H.haus(P.Mond)+1;
       var mod=['kardinal','fix','veränderlich'][zi%3];
-      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ist dein innerer Takt — und der ist <b>'+mod+'</b>. '+
-        (mod==='fix' ? 'Du brauchst Wiederholung. Der Aufbau einer Routine ist bei dir zäh, das Halten dagegen leicht. Plan mehr Zeit für den Anfang ein und weniger Sorge um das Durchhalten.'
-         : mod==='kardinal' ? 'Du startest gut und verlierst schnell die Lust. Deine Routinen brauchen eingebaute Neustarts — Wochenanfänge, Monatsanfänge, neue Runden. Durchhalten ist bei dir das falsche Ziel.'
-         : 'Du brauchst Abwechslung innerhalb der Struktur. Starre Pläne scheitern bei dir nicht an Disziplin, sondern an Langeweile. Bau Varianten ein, nicht mehr Willenskraft.');
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt deinen Versorgungstakt, und der ist <b>'+mod+'</b>: '+
+        (mod==='fix'?'Einmal etabliert, hält eine Essensroutine bei dir erstaunlich lange. Der Aufbau ist das Zähe. '+
+          'Also: wenige feste Sachen, die immer gehen, statt Abwechslung.'
+         :mod==='kardinal'?'Du startest gut und verlierst nach zwei Wochen die Lust. Plan bei dir keine Dauerlösung, '+
+          'sondern etwas, das du alle paar Wochen neu aufsetzen darfst — das ist kein Scheitern, sondern dein Takt.'
+         :'Du brauchst Abwechslung, sonst steigst du aus. Gleiche Struktur, wechselnder Inhalt funktioniert bei dir '+
+          'besser als feste Wochenpläne.');
     },
-    function(f,P,H){
-      if(P.Mars===undefined) return null;
-      var hn=H.haus(P.Mars)+1, zi=Math.floor(P.Mars/30);
-      var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein <b>Mars in '+H.SIGNS[zi]+'</b> beschreibt, wie deine Energie ankommt. '+
-        (el==='Feuer'?'Schnell und stoßweise — du bist sofort da und ebenso schnell wieder weg.':
-         el==='Erde'?'Langsam und ausdauernd — du brauchst Anlauf und hältst dann lange durch.':
-         el==='Luft'?'Sprunghaft und gedanklich — du brauchst geistigen Reiz, sonst startest du nicht.':
-         'Wellenförmig und stimmungsabhängig — deine Energie folgt eher dem Gefühl als dem Plan.')+
-        ' Der Schauplatz ist <b>'+H.HT[hn-1]+'</b>.';
-    },
-    function(f,P,H){
-      var im6=f.planeten.filter(function(x){return x.haus===6;});
-      if(!im6.length) return 'Dein 6. Haus ist unbesetzt. Alltag und Routine sind bei dir kein Dauerthema — '+
-        'du hast weniger eingebaute Struktur, aber auch weniger eingebauten Zwang dazu.';
-      return 'Im 6. Haus — Alltag, Arbeitsweise, Gesundheit — steht <b>'+im6.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Das beschreibt, wie dein Tag tickt: in welchem Tempo, mit welcher Gründlichkeit, mit welchem Verschleiß.';
-    }],
-  uebung:['Eine Woche Uhrzeiten sammeln',
-   'Notier diese Woche jeden Tag zwei Uhrzeiten: wann du das erste Mal wach genug für Wichtiges bist, und wann es kippt. Nur zwei Zahlen. Danach kennst du dein Zeitfenster — und kannst aufhören, gegen es zu arbeiten.'],
-  rueckfrage:'Kennst du dein Zeitfenster jetzt?',
-  coach:{fragen:['Wann am Tag bist du am brauchbarsten?',
-   'Was machst du in dieser Zeit — und ist das das Richtige?',
-   'Welcher Tagesrhythmus wurde dir beigebracht und passt nicht?'],
-   vorsicht:'Nicht zum Frühaufstehen überreden. Rhythmen sind weitgehend biologisch und nicht Charakterfrage.'}},
-
- {id:'struktur', wozuSchutz:'Kein System zu haben hält alles offen — man kann nichts falsch machen.', wozuFrage:'Was würde verbindlich, wenn eine Struktur tatsächlich hält?', name:'Struktur, die hält',
-  frage:'Warum zerfallen meine Systeme nach zwei Wochen?',
-  anker:{haeuser:[6,10], punkte:['Saturn','Merkur']},
-  regeln:[
     function(f,P,H){
       if(P.Saturn===undefined) return null;
       var hn=H.haus(P.Saturn)+1;
-      return 'Dein <b>Saturn im '+hn+'. Haus</b> ('+H.fmt(P.Saturn)+') zeigt, wo du Struktur bauen kannst, die trägt: '+
-        'in <b>'+H.HT[hn-1]+'</b>. Systeme, die dort ansetzen, halten bei dir. Alle anderen zerfallen — '+
-        'nicht aus Disziplinmangel, sondern weil sie am falschen Ende ansetzen.';
+      return 'Dein <b>Saturn im '+hn+'. Haus</b> ('+H.HT[hn-1]+') zeigt, wo Struktur bei dir tatsächlich trägt. '+
+        'Häng deine Versorgung an diesen Bereich an — was dort verankert ist, hält. Was woanders ansetzt, zerfällt, '+
+        'egal wie gut das System ist.';
     },
     function(f,P,H){
-      var h=f.herrscher.filter(function(x){return x.haus===6;})[0];
-      if(!h) return null;
-      return 'Dein 6. Haus steht in '+h.zeichen+', beherrscht von <b>'+h.p+'</b> im '+h.inHaus+'. Haus. '+
-        '<b>Dein Alltag hängt an '+H.HT[h.inHaus-1]+'</b>. Wenn es dort nicht stimmt, hilft kein Kalender und keine App.';
+      var im6=f.planeten.filter(function(x){return x.haus===6;});
+      var h6=f.herrscher.filter(function(x){return x.haus===6;})[0];
+      var t=[];
+      if(im6.length) t.push('Im 6. Haus steht <b>'+im6.map(function(x){return x.p;}).join(', ')+'</b> — '+
+        'der Alltag ist bei dir stärker besetzt, als dir lieb ist. Kleine Dinge kosten dort überdurchschnittlich.');
+      if(h6) t.push('Der Herrscher deines 6. Hauses ist <b>'+h6.p+'</b> im '+h6.inHaus+'. Haus: '+
+        'Dein Alltag hängt an <b>'+H.HT[h6.inHaus-1]+'</b>. Wenn es dort klemmt, klemmt auch das Essen — und umgekehrt.');
+      return t.length?t.join(' '):null;
+    }],
+  uebung:['Eine Stufe senken, nicht alle vier',
+   'Schau dir die vier Stufen an — entscheiden, besorgen, zubereiten, aufräumen — und such die eine, an der du am häufigsten hängenbleibst. '+
+   'Dann senk <b>nur diese</b>. Wenn Entscheiden klemmt: drei feste Sachen festlegen, die immer gehen. Wenn Zubereiten klemmt: '+
+   'etwas kaufen, das keins braucht. Nicht alles gleichzeitig.'],
+  rueckfrage:'Hast du deine klemmende Stufe gefunden?',
+  coach:{fragen:['An welcher Stelle bleibst du hängen — vor dem Kühlschrank oder vorher?',
+   'Was isst du, wenn gar nichts geht?',
+   'Woran merkst du, dass du Hunger hast — und wie spät ist es dann?'],
+   vorsicht:'<b>Hier keine Mengen, Zeiten, Kalorien oder Pläne — niemals.</b> Sobald Essen mit Zahlen oder Zielen verknüpft wird, kann das bei manchen Menschen ernsthaften Schaden anrichten. Es geht ausschließlich um den Mechanismus. Wenn jemand von Kontrolle, Gewicht, Schuld oder Verzicht spricht, ist das Coaching sofort zu Ende und gehört an eine Fachperson. Und bei rein pflanzlicher Ernährung gehören die Nährstoffwerte ärztlich angeschaut — das ersetzt kein Chart.'}},
+
+ {id:'trinken', wozuSchutz:'Nicht zu trinken spart Unterbrechungen und Wege.',
+  wozuFrage:'Was unterbrichst du nicht gern — und was kostet dich das am Ende mehr?',
+  name:'Trinken',
+  frage:'Warum vergesse ich das dauernd?',
+  anker:{haeuser:[6], punkte:['Mond','Neptun','Merkur']},
+  regeln:[
+    function(f,P,H){
+      return 'Trinken ist die Sache, die am häufigsten untergeht, weil sie <b>kein eigenes Signal</b> hat, das laut genug wäre. '+
+        'Durst wird spät gemeldet und leicht überhört, besonders im Hyperfokus. Und es ist eine Handlung ohne Belohnung — '+
+        'nichts fühlt sich danach besser an, jedenfalls nicht sofort. '+
+        'Deshalb funktionieren hier <b>Sichtbarkeit und Kopplung</b> besser als jeder Vorsatz.';
+    },
+    function(f,P,H){
+      if(P.Neptun===undefined) return null;
+      var hn=H.haus(P.Neptun)+1;
+      return 'Dein <b>Neptun im '+hn+'. Haus</b> markiert, wo deine Wahrnehmung unscharf wird — in <b>'+H.HT[hn-1]+'</b>. '+
+        'Dort überhörst du Körpersignale am ehesten. Wenn dein Tag viel in diesem Bereich stattfindet, brauchst du etwas Sichtbares, '+
+        'nicht etwas Gefühltes.';
     },
     function(f,P,H){
       if(P.Merkur===undefined) return null;
       var zi=Math.floor(P.Merkur/30);
       var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein <b>Merkur in '+H.SIGNS[zi]+'</b> sagt, welches Format dir liegt. '+
-        (el==='Erde'?'Listen und Konkretes funktionieren bei dir tatsächlich.':
-         el==='Luft'?'Du brauchst Übersicht und Zusammenhänge — Listen ohne Struktur ermüden dich.':
-         el==='Feuer'?'Du brauchst Ziele und Dringlichkeit, keine Ablaufpläne.':
-         'Du brauchst Bilder und Stimmung — reine Aufzählungen rutschen bei dir durch.');
+      return 'Dein <b>Merkur in '+H.SIGNS[zi]+'</b> sagt, welche Art von Erinnerung bei dir ankommt: '+
+        (el==='Erde'?'etwas Gegenständliches. Die Flasche im Blickfeld wirkt bei dir besser als jede Erinnerung im Handy.'
+         :el==='Luft'?'etwas Sichtbares im Umfeld. Mehrere Gläser an verschiedenen Orten funktionieren bei dir gut.'
+         :el==='Feuer'?'etwas, das auffällt. Eine große Flasche, die du leer machen willst, ist bei dir eher ein Anreiz als ein Zwang.'
+         :'etwas Angenehmes. Bei dir zählt, dass es schmeckt und schön aussieht — Pflichtwasser trinkst du nicht.');
     }],
-  uebung:['Anhängen statt neu planen',
-   'Häng diese Woche eine einzige neue Gewohnheit an etwas, das du ohnehin täglich tust. Nach dem Zähneputzen, beim Wasserkocher, nach dem Rechner-Hochfahren. Nicht neu terminieren — anhängen. Das ist der einzige Mechanismus, der bei schwankender Energie zuverlässig funktioniert.'],
-  rueckfrage:'Hast du etwas angehängt?',
-  coach:{fragen:['Welche Routine hat bei dir mal wirklich gehalten — und was war daran anders?',
-   'Was machst du jeden Tag, ohne darüber nachzudenken?',
-   'Welche Systeme hast du übernommen, weil sie bei anderen funktionieren?'],
-   vorsicht:'Wenn Scham über gescheiterte Systeme auftaucht, ist das der wichtigere Punkt als das nächste System.'}},
+  uebung:['An etwas hängen, das du ohnehin tust',
+   'Koppel das Trinken an eine Handlung, die täglich mehrfach vorkommt: jedes Mal beim Aufstehen vom Schreibtisch, '+
+   'bei jedem Gang in die Küche, nach jedem Telefonat. Nicht an eine Uhrzeit — an eine Handlung. '+
+   'Das ist der einzige Mechanismus, der bei sprunghafter Aufmerksamkeit zuverlässig funktioniert.'],
+  rueckfrage:'Hast du eine Kopplung gefunden?',
+  coach:{fragen:['Wann trinkst du von allein?',
+   'Was steht gerade in deinem Blickfeld?',
+   'Was trinkst du gern — nicht, was du trinken solltest?'],
+   vorsicht:'Keine Mengenangaben. Wie viel jemand braucht, hängt von zu vielem ab, und Zahlen erzeugen hier nur Druck.'}},
 
- {id:'ordnung', wozuSchutz:'Unordnung ist bequem und hält die Wohnung in Bewegung.', wozuFrage:'Was müsstest du anschauen, wenn die Fläche leer ist?', name:'Ordnung und Umgebung',
-  frage:'Warum fühle ich mich in meinem eigenen Zuhause unwohl?',
-  anker:{haeuser:[4,6], punkte:['Mond','Venus','Saturn']},
+ {id:'papier', wozuSchutz:'Ungeöffnete Post enthält keine schlechten Nachrichten.',
+  wozuFrage:'Was fürchtest du in dem Stapel — und wie viel davon ist tatsächlich drin?',
+  name:'Papierkram und Behörden',
+  frage:'Warum liegt das seit Wochen da?',
+  anker:{haeuser:[6,3], punkte:['Merkur','Saturn']},
   regeln:[
     function(f,P,H){
-      var im4=f.planeten.filter(function(x){return x.haus===4;});
-      var h4=f.herrscher.filter(function(x){return x.haus===4;})[0];
-      var t='';
-      if(im4.length) t+='Im 4. Haus steht <b>'+im4.map(function(x){return x.p;}).join(', ')+'</b> — '+
-        'dein Zuhause ist bei dir kein Nebenschauplatz.';
-      if(h4) t+=(t?' ':'')+'Der Herrscher deines 4. Hauses ist <b>'+h4.p+'</b> im '+h4.inHaus+'. Haus: '+
-        'Zuhause-Gefühl entsteht bei dir über <b>'+H.HT[h4.inHaus-1]+'</b>.';
-      return t||null;
+      return 'Papierkram ist selten ein Zeitproblem. Er staut sich, weil drei Dinge zusammenkommen: '+
+        '<b>keine Rückmeldung</b> (niemand lobt dich für eine bearbeitete Rechnung), <b>unklarer nächster Schritt</b> '+
+        '(„Steuer machen" ist keine Handlung, sondern ein Projekt) und <b>Angst vor dem Inhalt</b>. '+
+        'Gegen alle drei hilft dasselbe: den Stapel in einzelne, benennbare Handlungen zerlegen — und die kleinste zuerst.';
     },
     function(f,P,H){
-      if(P.Venus===undefined) return null;
-      var zi=Math.floor(P.Venus/30);
-      return 'Deine <b>Venus in '+H.SIGNS[zi]+'</b> beschreibt, was dir gefällt — und das gilt auch für Räume. '+
-        'Eine Wohnung, die deinem Geschmack widerspricht, kostet dich täglich Energie, ohne dass du es benennen kannst.';
+      if(P.Saturn===undefined) return null;
+      var hn=H.haus(P.Saturn)+1;
+      return 'Dein <b>Saturn im '+hn+'. Haus</b> ist deine Verantwortungsstelle. Wenn Papierkram in diesem Bereich liegt, '+
+        'ist der Druck besonders hoch — und die Vermeidung auch. Was hilft: nicht mehr Disziplin, sondern ein fester Ort '+
+        'und ein fester Anlass, an dem es passiert.';
     },
     function(f,P,H){
-      if(P.Mond===undefined) return null;
-      var zi=Math.floor(P.Mond/30);
+      if(P.Merkur===undefined) return null;
+      var hn=H.haus(P.Merkur)+1, zi=Math.floor(P.Merkur/30);
+      return 'Dein <b>Merkur in '+H.SIGNS[zi]+', '+hn+'. Haus</b> beschreibt, wie du Informationen verarbeitest. '+
+        (zi%4===1?'Mit Erde-Merkur kannst du das Konkrete gut — dein Problem ist eher das Anfangen als das Durchhalten.'
+         :zi%4===2?'Mit Luft-Merkur brauchst du Übersicht, bevor du loslegst. Erst alles auf einen Tisch, dann sortieren.'
+         :zi%4===0?'Mit Feuer-Merkur brauchst du Dringlichkeit. Ohne Frist passiert bei dir wenig — also setz dir künstliche.'
+         :'Mit Wasser-Merkur rutschen Formulare bei dir durch. Was hilft: jemanden danebensetzen, der nichts tut außer da sein.');
+    },
+    function(f,P,H){
+      var im3=f.planeten.filter(function(x){return x.haus===3;});
+      if(!im3.length) return null;
+      return 'Im 3. Haus steht <b>'+im3.map(function(x){return x.p;}).join(', ')+'</b> — Schriftliches und Alltagskram '+
+        'sind bei dir stärker besetzt. Das kann heißen, dass du es gut kannst und trotzdem meidest.';
+    }],
+  uebung:['Die kleinste Handlung benennen',
+   'Nimm die Sache, die am längsten liegt, und schreib die <b>allerkleinste nächste Handlung</b> auf. '+
+   'Nicht „Steuer machen", sondern „Ordner aus dem Regal holen". Wenn die Handlung noch Angst macht, ist sie zu groß — '+
+   'dann zerleg sie nochmal. Das klingt albern und ist der einzige Trick, der bei Vermeidung wirklich greift.'],
+  rueckfrage:'Hast du eine kleinste Handlung gefunden?',
+  coach:{fragen:['Was liegt am längsten?',
+   'Was befürchtest du, wenn du es öffnest?',
+   'Was wäre die kleinste Handlung, die dir keine Angst macht?'],
+   vorsicht:'Bei ernsthaftem Behördenstau mit Fristen und Folgen reicht Coaching nicht. Dann sind Schuldner- oder Sozialberatung die richtige Adresse — die machen das hauptberuflich und kostenlos.'}},
+
+ {id:'lernen', wozuSchutz:'Solange du nicht anfängst, kannst du nicht merken, dass es schwerfällt.',
+  wozuFrage:'Was würde es über dich sagen, wenn du es versuchst und es dauert länger als gedacht?',
+  name:'Lernen und Dranbleiben',
+  frage:'Warum kann ich mich stundenlang vertiefen — und dann wochenlang nicht?',
+  anker:{haeuser:[3,9], punkte:['Merkur','Jupiter','Uranus']},
+  regeln:[
+    function(f,P,H){
+      if(P.Merkur===undefined) return null;
+      var zi=Math.floor(P.Merkur/30), hn=H.haus(P.Merkur)+1;
       var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein <b>Mond in '+H.SIGNS[zi]+'</b> sagt, was du brauchst, um zur Ruhe zu kommen: '+
-        (el==='Feuer'?'Bewegungsfreiheit und Farbe. Zu aufgeräumt wirkt auf dich leblos.':
-         el==='Erde'?'Ordnung und Haptik. Chaos kostet dich mehr als andere.':
-         el==='Luft'?'Luft, Licht und Übersicht. Enge Räume machen dich unruhig.':
-         'Rückzug und Weichheit. Du brauchst eine Ecke, in die niemand hineinsieht.');
-    }],
-  uebung:['Eine Fläche freiräumen',
-   'Räum diese Woche eine einzige Fläche frei und halt sie frei — einen Tisch, ein Regalbrett, die Küchenarbeitsplatte. Nicht die ganze Wohnung. Eine Fläche. Der Unterschied ist erstaunlich, und er kostet zwanzig Minuten.'],
-  rueckfrage:'Hast du eine Fläche freigeräumt?',
-  coach:{fragen:['In welchem Raum deiner Wohnung fühlst du dich am wohlsten?',
-   'Was stört dich zuhause täglich und du machst nichts?',
-   'Wie sah Ordnung bei euch früher aus?'],
-   vorsicht:'Unordnung ist bei vielen ein Symptom, nicht die Ursache. Nicht an der Oberfläche arbeiten, wenn darunter Erschöpfung liegt.'}},
-
- {id:'anfangen', wozuSchutz:'Was nicht begonnen ist, kann nicht misslingen.', wozuFrage:'Was befürchtest du, wenn du anfängst — und wie schlimm wäre das wirklich?', name:'Anfangen und Dranbleiben',
-  frage:'Warum fange ich nie an, obwohl ich will?',
-  anker:{haeuser:[1,3], punkte:['Mars','Merkur','Uranus','Saturn']},
-  regeln:[
+      return 'Dein <b>Merkur in '+H.SIGNS[zi]+', '+hn+'. Haus</b> ist dein Aufnahmeformat: '+
+        (el==='Feuer'?'Du brauchst zu wissen, wofür es gut ist, bevor du zuhörst. Ohne Zweck rutscht alles durch.'
+         :el==='Erde'?'Du brauchst Konkretes und Anfassbares. Abstraktes musst du dir erst übersetzen — das kostet doppelt.'
+         :el==='Luft'?'Du brauchst erst das große Bild, dann die Details. Umgekehrt ermüdest du schnell.'
+         :'Du lernst über Bilder und Geschichten. Listen und Aufzählungen bleiben bei dir nicht hängen, Zusammenhänge schon.')+
+        ' Das ist keine Vorliebe, sondern eine Verarbeitungsart — alles andere kostet dich Übersetzungsarbeit, die andere nicht leisten müssen.';
+    },
     function(f,P,H){
-      var ms=f.aspekte.filter(function(x){return ((x.a==='Mars'&&x.b==='Saturn')||(x.a==='Saturn'&&x.b==='Mars'));})[0];
-      if(!ms) return null;
-      return '<b>Mars '+ms.typ+' Saturn</b> mit '+ms.o.toFixed(1)+'°. '+
-        (ms.art==='hart'
-         ? 'Gas und Bremse gleichzeitig. Ein erheblicher Teil deiner Energie geht nicht ins Tun, sondern ins Selbstbremsen. Das ist der eigentliche Grund, warum Anfangen bei dir teurer ist als bei anderen — nicht Faulheit, sondern doppelte Arbeit.'
-         : 'Antrieb und Ausdauer arbeiten zusammen. Du kannst dranbleiben, ohne dich zu zwingen — nutz das, es ist nicht selbstverständlich.');
+      if(P.Jupiter===undefined) return null;
+      var hn=H.haus(P.Jupiter)+1;
+      return 'Dein <b>Jupiter im '+hn+'. Haus</b> ('+H.HT[hn-1]+') zeigt, wo du dich verlierst — im guten Sinn. '+
+        'Wenn du einen Stoff mit diesem Bereich verknüpfen kannst, brauchst du keine Disziplin. '+
+        'Interesse ist bei dir der Schalter, nicht der Wille.';
     },
     function(f,P,H){
       if(P.Uranus===undefined) return null;
       var hn=H.haus(P.Uranus)+1;
-      return 'Dein <b>Uranus im '+hn+'. Haus</b> sorgt für Unterbrechungen — dort reißt regelmäßig der Faden, '+
-        'in <b>'+H.HT[hn-1]+'</b>. Nicht aus Unzuverlässigkeit: Gleichförmigkeit funktioniert dort für dich nicht.';
-    },
-    function(f,P,H){
-      if(P.Mars===undefined) return null;
-      var hn=H.haus(P.Mars)+1;
-      return 'Dein <b>Mars im '+hn+'. Haus</b> zeigt, wo du am leichtesten ins Tun kommst: <b>'+H.HT[hn-1]+'</b>. '+
-        'Wenn du eine Sache nicht anfängst, versuch sie über diesen Bereich anzubinden — dort ist die Schwelle niedriger.';
+      return 'Dein <b>Uranus im '+hn+'. Haus</b> sorgt für Unterbrechungen — dort reißt regelmäßig der Faden. '+
+        'Rechne damit, statt dagegen zu arbeiten: Was bei dir hilft, sind kurze Einheiten mit Wiedereinstiegspunkten, '+
+        'nicht lange Blöcke, die man einmal verpasst und dann nie wieder aufnimmt.';
     }],
-  uebung:['Die Fünf-Minuten-Version',
-   'Nimm diese Woche eine Sache, die du aufschiebst, und mach fünf Minuten davon. Timer stellen, nach fünf Minuten aufhören dürfen. Die meisten hören nicht auf — aber die Erlaubnis ist der Grund, warum sie anfangen.'],
-  rueckfrage:'Hast du fünf Minuten angefangen?',
-  coach:{fragen:['Was schiebst du gerade auf, das eigentlich klein ist?',
-   'Was passiert in dir, kurz bevor du es nicht tust?',
-   'Was hat beim letzten Mal geholfen, dass du doch angefangen hast?'],
-   vorsicht:'Aufschieben ist selten ein Zeitmanagement-Problem. Meistens steckt eine Befürchtung dahinter — die ist das Thema.'}},
+  uebung:['Den Wiedereinstieg vorbereiten',
+   'Wenn du das nächste Mal aufhörst zu lernen, schreib <b>einen Satz auf, wie es weitergeht</b>. '+
+   'Nicht was du gelernt hast — was der nächste Schritt ist. Das Problem bei sprunghafter Aufmerksamkeit ist nie das Lernen, '+
+   'sondern das Wiederfinden der Stelle. Wer die Stelle markiert, kommt zurück.'],
+  rueckfrage:'Hast du einen Wiedereinstieg vorbereitet?',
+  coach:{fragen:['Wobei vergisst du die Zeit?',
+   'Was hast du dir selbst beigebracht, ohne dass es jemand verlangt hat?',
+   'Woran scheitert es — am Anfangen oder am Wiederfinden?'],
+   vorsicht:'Nicht auf Durchhalten hinarbeiten. Bei schwankender Kapazität ist Dranbleiben das falsche Ziel — Wiederaufnehmen ist das richtige.'}},
 
- {id:'pausen', wozuSchutz:'Durchzuarbeiten ist anerkannt. Pausen muss man rechtfertigen.', wozuFrage:'Vor wem rechtfertigst du deine Pausen — und ist diese Person überhaupt anwesend?', name:'Pausen und Erholung',
-  frage:'Warum erhole ich mich nicht in meiner Freizeit?',
-  anker:{haeuser:[12,5], punkte:['Mond','Neptun','Venus']},
+ {id:'haushalt', wozuSchutz:'Solange nichts aufgeräumt ist, muss auch nichts ordentlich bleiben.',
+  wozuFrage:'Was müsstest du dir zutrauen, wenn deine Wohnung in Ordnung wäre?',
+  name:'Haushalt und Wohnung',
+  frage:'Warum staut sich das immer wieder auf?',
+  anker:{haeuser:[4,6], punkte:['Mond','Venus','Saturn']},
   regeln:[
     function(f,P,H){
-      var h12=f.herrscher.filter(function(x){return x.haus===12;})[0];
-      if(!h12) return null;
-      return 'Der Herrscher deines 12. Hauses ist <b>'+h12.p+'</b> im '+h12.inHaus+'. Haus. '+
-        '<b>Echte Erholung findest du über '+H.HT[h12.inHaus-1]+'</b> — nicht über das, was allgemein als Entspannung gilt.';
+      return 'Unordnung ist bei anders verdrahteten Menschen fast nie Faulheit. Sie entsteht, weil Aufräumen '+
+        '<b>viele kleine Entscheidungen</b> verlangt — und Entscheiden ist genau das, was knapp ist. '+
+        'Dazu kommt, dass Dinge, die man nicht sieht, für manche Köpfe nicht existieren: Was im Schrank verschwindet, ist weg. '+
+        'Deshalb funktionieren offene Ablagen bei vielen besser als perfekte Ordnungssysteme.';
     },
     function(f,P,H){
       if(P.Mond===undefined) return null;
       var zi=Math.floor(P.Mond/30);
       var el=['Feuer','Erde','Luft','Wasser'][zi%4];
-      return 'Dein Mond steht in einem <b>'+el+'zeichen</b>. '+
-        (el==='Feuer'?'Du erholst dich über Bewegung, nicht über Stillsitzen. Ein Spaziergang bringt dir mehr als ein Sofa.':
-         el==='Erde'?'Du erholst dich über Körperliches und Konkretes — etwas anfassen, etwas fertig machen, draußen sein.':
-         el==='Luft'?'Du erholst dich über Austausch und Gedanken. Völlige Reizlosigkeit macht dich unruhiger statt ruhiger.':
-         'Du erholst dich über Rückzug, Wasser und Alleinsein. Volle Räume kosten dich mehr als Arbeit.');
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+'</b> sagt, was du zum Zurruhekommen brauchst: '+
+        (el==='Feuer'?'Bewegungsfreiheit und Farbe. Zu aufgeräumt wirkt auf dich leblos — dir reicht ein freier Weg, nicht ein leerer Raum.'
+         :el==='Erde'?'Ordnung und Haptik. Chaos kostet dich mehr Kraft als andere, und Aufräumen gibt dir tatsächlich etwas zurück.'
+         :el==='Luft'?'Luft, Licht, Übersicht. Bei dir ist nicht die Menge das Problem, sondern die Unübersichtlichkeit.'
+         :'einen Rückzugsort. Du brauchst nicht die ganze Wohnung ordentlich — du brauchst eine Ecke, die stimmt.');
     },
     function(f,P,H){
-      var im5=f.planeten.filter(function(x){return x.haus===5;});
-      if(!im5.length) return 'Dein 5. Haus ist unbesetzt. Spiel und Zweckfreies passieren bei dir nicht von allein — '+
-        'du musst dich aktiv dafür entscheiden, sonst geht es im Nützlichen unter.';
-      return 'Im 5. Haus steht <b>'+im5.map(function(x){return x.p;}).join(', ')+'</b> — dort kommt Zweckfreies bei dir leichter heraus.';
+      var h4=f.herrscher.filter(function(x){return x.haus===4;})[0];
+      if(!h4) return null;
+      return 'Der Herrscher deines 4. Hauses ist <b>'+h4.p+'</b> im '+h4.inHaus+'. Haus. '+
+        'Zuhause-Gefühl entsteht bei dir über <b>'+H.HT[h4.inHaus-1]+'</b> — wenn das fehlt, hilft auch eine aufgeräumte Wohnung nicht.';
     }],
-  uebung:['Drei Pausenarten testen',
-   'Probier diese Woche drei Arten von Pause: eine mit Bewegung, eine mit Menschen, eine allein und still. Je zwanzig Minuten. Notier danach eine Zahl von eins bis zehn. Die meisten erholen sich anders, als sie glauben.'],
-  rueckfrage:'Weißt du jetzt, was dich auflädt?',
-  coach:{fragen:['Was machst du zur Erholung, weil man das so macht?',
-   'Wann warst du zuletzt wirklich ausgeruht?',
-   'Was brauchst du nach einem vollen Tag als Erstes?'],
-   vorsicht:'Wenn Erholung grundsätzlich nicht mehr wirkt, ist das ein Warnzeichen und keine Methodenfrage.'}},
+  uebung:['Eine Fläche, nicht ein Zimmer',
+   'Such dir eine einzige Fläche und halt nur diese frei — den Esstisch, die Küchenarbeitsplatte, ein Regalbrett. '+
+   'Nicht mehr. Eine freie Fläche im Blickfeld verändert das Gefühl eines Raums erstaunlich stark, und sie kostet '+
+   'ein Zehntel der Energie eines aufgeräumten Zimmers.'],
+  rueckfrage:'Hast du eine Fläche freigehalten?',
+  coach:{fragen:['In welchem Raum fühlst du dich am wohlsten?',
+   'Was stört dich täglich und du machst nichts?',
+   'Wie sah Ordnung bei euch früher aus — und wessen Maßstab benutzt du heute?'],
+   vorsicht:'Wenn Unordnung so weit geht, dass sie Gesundheit oder Wohnung gefährdet, ist das kein Ordnungsthema mehr und gehört begleitet. Und Scham darüber ist fast immer größer als das Problem selbst.'}},
 
- {id:'zuviel', wozuSchutz:'Grenzen nicht zu spüren erlaubt, weiterzumachen.', wozuFrage:'Was würdest du absagen müssen, wenn du deine Grenze ernst nimmst?', name:'Wenn es zu viel wird',
-  frage:'Woran merke ich, dass ich über meiner Grenze bin?',
-  anker:{haeuser:[6,12], punkte:['Saturn','Mond','Neptun','Chiron']},
+ {id:'schlaf', wozuSchutz:'Die Stunden nach Mitternacht sind oft die einzigen, über die du wirklich selbst bestimmst.',
+  wozuFrage:'Was holst du dir nachts, das dir tagsüber fehlt?',
+  name:'Schlaf und Abschalten',
+  frage:'Warum gehe ich nicht ins Bett, obwohl ich müde bin?',
+  anker:{haeuser:[12,4], punkte:['Mond','Uranus','Merkur','Neptun']},
   regeln:[
     function(f,P,H){
+      return 'Das Phänomen hat einen Namen: <b>aufgeschobene Nachtruhe aus Trotz</b>. Wer den ganzen Tag funktioniert hat, '+
+        'holt sich abends die Zeit zurück, die ihm gehört — auch auf Kosten des Schlafs. Das ist keine Willensschwäche, '+
+        'sondern eine nachvollziehbare Rechnung. Wer das erkennt, kann an der richtigen Stelle ansetzen: '+
+        'nicht am Abend, sondern an dem, was im Tag fehlt.';
+    },
+    function(f,P,H){
       if(P.Mond===undefined) return null;
-      var hn=H.haus(P.Mond)+1;
-      return 'Dein <b>Mond im '+hn+'. Haus</b> ist dein Frühwarnsystem. Wenn es bei dir zu viel wird, zeigt sich das zuerst '+
-        'in <b>'+H.HT[hn-1]+'</b> — dort wird es unruhig, bevor du es merkst. Das ist die Stelle, auf die du achten solltest.';
+      var hn=H.haus(P.Mond)+1, zi=Math.floor(P.Mond/30);
+      return 'Dein <b>Mond in '+H.SIGNS[zi]+', '+hn+'. Haus</b> sagt, was bei dir erfüllt sein muss, damit Ruhe möglich ist: '+
+        '<b>'+H.HT[hn-1]+'</b>. Wenn es dort wackelt, findest du abends nicht runter — und keine Einschlafroutine der Welt ändert das.';
+    },
+    function(f,P,H){
+      var mu=f.aspekte.filter(function(x){return (x.a==='Mond'||x.b==='Mond')&&(x.a==='Uranus'||x.b==='Uranus');})[0];
+      if(mu) return '<b>Mond '+mu.typ+' Uranus</b> mit '+mu.o.toFixed(1)+'°. Dein Nervensystem fährt spät herunter und sprunghaft hoch. '+
+        'Was dir mehr hilft als jedes Abendritual: eine <b>feste Aufstehzeit</b>. Sie stabilisiert den Rhythmus zuverlässiger '+
+        'als alles, was man abends tut — und ist die am besten belegte Schlafmaßnahme überhaupt.';
+      var mm=f.aspekte.filter(function(x){return (x.a==='Mond'||x.b==='Mond')&&(x.a==='Merkur'||x.b==='Merkur');})[0];
+      if(mm) return '<b>Mond '+mm.typ+' Merkur</b> mit '+mm.o.toFixed(1)+'°. Bei dir hängt Abschalten am Denken. '+
+        'Was unsortiert ist, läuft nachts weiter. Aufschreiben hilft dir mehr als Entspannungsübungen — nicht als Technik, '+
+        'sondern weil es den Kopf entlastet.';
+      return null;
     },
     function(f,P,H){
       var im12=f.planeten.filter(function(x){return x.haus===12;});
       if(!im12.length) return null;
       return 'Im 12. Haus steht <b>'+im12.map(function(x){return x.p;}).join(', ')+'</b>. '+
-        'Ein Teil deiner Belastung läuft unsichtbar. Du merkst sie nicht als Gedanken, sondern als Müdigkeit — '+
-        'und deshalb oft zu spät.';
-    },
-    function(f,P,H){
-      if(P.Saturn===undefined) return null;
-      var hn=H.haus(P.Saturn)+1;
-      return 'Dein <b>Saturn im '+hn+'. Haus</b> ist die Stelle, an der du dich zusammenreißt. '+
-        'Genau dort hörst du auf, Grenzen zu spüren — Zusammenreißen und Wahrnehmen schließen sich aus.';
+        'Der Übergang in die Nacht braucht bei dir länger als bei anderen — eher eine Stunde als zehn Minuten. '+
+        'Das einzuplanen ist wirksamer, als es zu bekämpfen.';
     }],
-  uebung:['Das körperliche Zeichen finden',
-   'Achte diese Woche darauf, was dein Körper macht, wenn es zu viel wird. Kiefer, Schultern, Atem, Magen — bei den meisten ist es immer dieselbe Stelle. Wenn du deine kennst, hast du ein Frühwarnsystem, das früher reagiert als dein Kopf.'],
-  rueckfrage:'Hast du dein körperliches Zeichen gefunden?',
-  coach:{fragen:['Woran merkst du, dass es zu viel ist — körperlich, nicht gedanklich?',
-   'Was machst du dann, und hilft es?',
-   'Wer merkt es vor dir?'],
-   vorsicht:'Wenn Überlastung dauerhaft ist oder körperliche Symptome anhalten, gehört das ärztlich abgeklärt, bevor man an Routinen arbeitet.'}}
+  uebung:['Den Tag prüfen, nicht den Abend',
+   'Frag dich eine Woche lang abends nur eins: <b>Hatte ich heute Zeit für mich?</b> Wenn die Antwort oft nein ist, '+
+   'liegt dein Schlafproblem nicht am Abend. Dann ist die Aufgabe, tagsüber etwas zurückzuerobern — nicht, früher ins Bett zu gehen.'],
+  rueckfrage:'Hast du eine Woche lang nachgefragt?',
+  coach:{fragen:['Was machst du abends, wenn du eigentlich schlafen wolltest?',
+   'Hattest du an dem Tag Zeit für dich?',
+   'Was war in Phasen anders, in denen du gut geschlafen hast?'],
+   vorsicht:'Anhaltende Schlafstörungen sind medizinisch, nicht astrologisch. Nach ein paar Wochen gehört das abgeklärt — es gibt dafür gute, gut untersuchte Behandlungen.'}}
 
  ]
 };
-var WOZU={"rhythmus": ["Gegen den eigenen Takt zu arbeiten hält dich anschlussfähig an eine Welt, die früh anfängt.", "Was müsstest du verhandeln, wenn du deinen Tag nach dir ausrichtest?"], "struktur": ["Das nächste System zu suchen hält die Hoffnung am Leben, dass es nur an der Methode lag.", "Was wäre, wenn nicht das System das Problem ist, sondern die Menge?"], "ordnung": ["Die Umgebung so zu lassen, wie sie ist, spart Auseinandersetzung — mit dir und mit denen, die mitwohnen.", "Was müsstest du durchsetzen, damit dein Zuhause dir passt?"], "anfangen": ["Nicht anzufangen schützt das Ergebnis. Was nie begonnen wurde, kann nicht misslingen.", "Was stünde zur Beurteilung, wenn du es machst?"], "pausen": ["Pausen zu überspringen hält das Tempo und das Bild von dir aufrecht. Auszuruhen hieße zuzugeben, dass du nicht durchhältst.", "Wer würde etwas merken, wenn du dir eine echte Pause nimmst?"], "zuviel": ["Die Grenze nicht zu spüren erlaubt dir weiterzumachen. Sie zu spüren würde bedeuten, etwas abzusagen.", "Was müsstest du absagen, wenn du ehrlich wärst, wie viel geht?"]};
 /* ── Seite bauen ──────────────────────────────────────── */
 function bauen(){
   var box=document.getElementById('raum');
@@ -602,6 +688,72 @@ function bauen(){
 }
 bauen();
 
+
+/* ── Zeitschiene: wann Struktur leichter fällt ───────── */
+(function(){
+  var box=document.getElementById('zeitschiene'); if(!box) return;
+  var p=null; try{ p=window.AC_P?AC_P.aktives():null; }catch(e){}
+  if(!p){ box.innerHTML='<div class="zs-box"><h3>Wann Struktur bei dir leichter fällt</h3>'+
+    '<div class="sub4">Leg unter <a href="profile.html">Profile</a> ein Chart an — dann rechne ich hier aus, '+
+    'welche Phasen dir in den nächsten zwölf Monaten entgegenkommen und welche nicht.</div></div>'; return; }
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd0=jdFromUT(y,mo,d,ut), T0=(jd0-2451545)/36525, a=angles(jd0,p.lat,p.lon);
+  var R={Sonne:sunLon(T0),Mond:moonLon(T0),Merkur:geo('Merkur',T0),Venus:geo('Venus',T0),Mars:geo('Mars',T0),
+   Saturn:geo('Saturn',T0),ASC:a.asc,MC:a.mc};
+  var asc6=(Math.floor(a.asc/30)+5)%12*30+15;   /* Mitte des 6. Hauses */
+  function nrm2(x){x=x%360;return x<0?x+360:x;}
+  function heute(){var n=new Date();
+    return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+  function dtxt(j){var dd=new Date((j-2440587.5)*86400000);
+    var M=['Jan','Feb','März','Apr','Mai','Juni','Juli','Aug','Sep','Okt','Nov','Dez'];
+    return M[dd.getUTCMonth()]+' '+dd.getUTCFullYear();}
+
+  var JN=heute(), funde=[];
+  /* Jupiter und Saturn über 6. Haus / Radix-Saturn / Radix-Mond */
+  [['Jupiter','leichter','Jupiter berührt deinen Alltagsbereich — Struktur aufzubauen kostet in dieser Phase weniger Überwindung als sonst. Gute Zeit, etwas zu etablieren, das danach von allein läuft.'],
+   ['Saturn','schwerer','Saturn berührt deinen Alltagsbereich. Das fühlt sich zäh an und ist trotzdem die haltbarste Phase: Was du hier aufbaust, trägt lange. Erwarte nur keine Leichtigkeit dabei.'],
+   ['Uranus','schwerer','Uranus berührt deinen Alltagsbereich — Routinen reißen häufiger ab als sonst. Setz in dieser Zeit auf Wiederaufnehmen statt auf Durchhalten.'],
+   ['Neptun','schwerer','Neptun berührt deinen Alltagsbereich. Struktur verschwimmt, du überschätzt leicht, was du schaffst. Weniger vornehmen ist hier kein Rückschritt.']
+  ].forEach(function(x){
+    var k=x[0], vorher=null;
+    for(var t=0;t<400;t+=4){
+      var j=JN+t, l=geo(k,(j-2451545)/36525);
+      var d1=Math.abs(nrm2(l-asc6+180)-180);
+      var nah=(d1<9);
+      if(nah&&!vorher) funde.push({jd:j, art:x[1], t:k+' im Alltagsbereich', p:x[2]});
+      vorher=nah;
+    }
+  });
+  /* Saturn-Kontakt zum Radix-Mond */
+  (function(){
+    var vorher=null;
+    for(var t=0;t<400;t+=4){
+      var j=JN+t, l=geo('Saturn',(j-2451545)/36525);
+      var s=Math.abs(nrm2(l-R.Mond+180)-180);
+      var nah=[0,90,180].some(function(w){return Math.abs(s-w)<3;});
+      if(nah&&!vorher) funde.push({jd:j, art:'schwerer', t:'Saturn auf deinem Mond',
+        p:'Eine Phase, in der Versorgung und Selbstfürsorge schwerer fallen und mehr Disziplin verlangen als sonst. Kein guter Zeitpunkt für neue Vorsätze — ein sehr guter, um Bestehendes zu vereinfachen.'});
+      vorher=nah;
+    }
+  })();
+  funde.sort(function(x,y){return x.jd-y.jd;});
+  funde=funde.slice(0,5);
+
+  var h='<div class="zs-box"><h3>Wann Struktur bei dir leichter fällt</h3>'+
+    '<div class="sub4">Aus den kommenden zwölf Monaten. Der Sinn ist nicht Vorhersage, sondern Entlastung: '+
+    'Es gibt Phasen, in denen es objektiv zäher läuft — und dann bist du nicht faul, sondern in einer zähen Phase.</div>';
+  if(!funde.length) h+='<p style="margin:0;font-size:15px;line-height:1.65;">In den nächsten zwölf Monaten berührt '+
+    'kein langsamer Planet deinen Alltagsbereich. Das heißt: keine besonderen Hürden, aber auch kein Rückenwind — '+
+    'es liegt ganz bei dir und deinen Mechanismen.</p>';
+  else funde.forEach(function(x){
+    h+='<div class="zs-z '+x.art+'"><div class="zs-dat">ab '+dtxt(x.jd)+'<br><span style="color:var(--leise)">'+
+      (x.art==='leichter'?'leichter':'zäher')+'</span></div><div><b>'+x.t+'</b><p>'+x.p+'</p></div></div>';
+  });
+  h+='<div class="zs-fuss">Das sind grobe Zeiträume, keine Termine — langsame Planeten wirken über Monate. '+
+    'Und sie beschreiben Tendenzen, nicht Schicksal: In einer zähen Phase geht trotzdem etwas, es fühlt sich nur teurer an.</div></div>';
+  box.innerHTML=h;
+})();
 
 </script>
 </body></html>
