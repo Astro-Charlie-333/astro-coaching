@@ -191,6 +191,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -276,7 +279,7 @@ var RAUM = {
  slug:'unerlaubte',
  sortierTitel:'Wie dein unangepasster Anteil bei dir arbeitet',
  facetten:[
- {id:'was', wozuSchutz:'Das Verbot ist alt und hat dich einmal geschützt. Es gilt weiter, weil niemand es aufgehoben hat.', wozuFrage:'Wer hat es dir verboten — und wäre diese Person heute noch dagegen?', name:'Was du dir nicht erlaubst',
+ {id:'was', worum:'Hier geht es um den Teil von dir, dem du keinen Platz gibst. Merken tust du es daran, wofür du dich regelmäßig entschuldigst, obwohl es nichts zu entschuldigen gibt.', wozuSchutz:'Das Verbot ist alt und hat dich einmal geschützt. Es gilt weiter, weil niemand es aufgehoben hat.', wozuFrage:'Wer hat es dir verboten — und wäre diese Person heute noch dagegen?', name:'Was du dir nicht erlaubst',
   frage:'Was traue ich mir eigentlich nicht zu?',
   anker:{haeuser:[], punkte:['Lilith','Sonne','ASC']},
   regeln:[
@@ -327,7 +330,7 @@ var RAUM = {
    'Wofür entschuldigst du dich, das keine Entschuldigung braucht?'],
    vorsicht:'Lilith ist kein Defekt, der weg muss. Nicht auf Befreiung hinarbeiten — erst einmal reicht, dass der Anteil einen Namen bekommt.'}},
 
- {id:'verbergen', wozuSchutz:'Gute Gründe zu haben ist bequemer, als sich zu zeigen.', wozuFrage:'Welchen Satz benutzt du dafür regelmäßig — und wem würde er nicht standhalten?', name:'Wie du es verbirgst',
+ {id:'verbergen', worum:'Hier geht es um die Art, wie du diesen Teil wegsteckst. Merken tust du es an dem Satz, mit dem du dir Dinge regelmäßig ausredest.', wozuSchutz:'Gute Gründe zu haben ist bequemer, als sich zu zeigen.', wozuFrage:'Welchen Satz benutzt du dafür regelmäßig — und wem würde er nicht standhalten?', name:'Wie du es verbirgst',
   frage:'Was mache ich stattdessen?',
   anker:{haeuser:[12], punkte:['Lilith','Saturn','Neptun']},
   regeln:[
@@ -361,7 +364,7 @@ var RAUM = {
    'Wann hast du zuletzt gedacht „jetzt ist nicht der richtige Zeitpunkt"?'],
    vorsicht:'Nicht bloßstellen. Begründungen sind Schutz, und den darf man sich nur freiwillig ansehen.'}},
 
- {id:'rauskommt', wozuSchutz:'Ein Ausbruch entlädt, ohne dass man vorher etwas fordern musste.', wozuFrage:'Was hättest du sagen können, bevor es rausplatzte — und warum hast du es nicht?', name:'Wo es trotzdem rauskommt',
+ {id:'rauskommt', worum:'Hier geht es darum, wo das Unterdrückte doch hervorbricht. Merken tust du es daran, dass deine Reaktion manchmal deutlich größer ist als der Anlass.', wozuSchutz:'Ein Ausbruch entlädt, ohne dass man vorher etwas fordern musste.', wozuFrage:'Was hättest du sagen können, bevor es rausplatzte — und warum hast du es nicht?', name:'Wo es trotzdem rauskommt',
   frage:'Warum platzt es manchmal einfach raus?',
   anker:{haeuser:[1,8], punkte:['Lilith','Mars','Uranus','Pluto']},
   regeln:[
@@ -397,7 +400,7 @@ var RAUM = {
    'Woran merkst du, dass sich etwas aufstaut?'],
    vorsicht:'Ausbrüche nicht als Charakterproblem behandeln. Sie sind fast immer ein Stauproblem.'}},
 
- {id:'kosten', wozuSchutz:'Den Preis nicht zu benennen erspart die Rechnung.', wozuFrage:'Was würdest du ändern müssen, wenn du den Preis genau kennst?', name:'Was es dich kostet',
+ {id:'kosten', worum:'Hier geht es um den Preis, den das Zurückhalten hat. Merken tust du es an der Müdigkeit, für die es keinen offensichtlichen Grund gibt.', wozuSchutz:'Den Preis nicht zu benennen erspart die Rechnung.', wozuFrage:'Was würdest du ändern müssen, wenn du den Preis genau kennst?', name:'Was es dich kostet',
   frage:'Was verliere ich dadurch?',
   anker:{haeuser:[2,6], punkte:['Lilith','Saturn','Mond']},
   regeln:[
@@ -428,7 +431,7 @@ var RAUM = {
    'Was kostet dich das Zusammenreißen — körperlich?'],
    vorsicht:'Nicht in Reue kippen. Der Blick auf den Preis soll Bewegung erzeugen, nicht Schuld.'}},
 
- {id:'reaktion', wozuSchutz:'Wenn andere schuld an ihrer Reaktion sind, musst du nichts an dir ändern.', wozuFrage:'Was gehört wirklich zu dir an dem, worauf Menschen reagieren?', name:'Wie andere reagieren',
+ {id:'reaktion', worum:'Hier geht es darum, warum Menschen auf dich stärker reagieren, als du erwartest. Merken tust du es daran, was dir Leute unterstellen, die dich kaum kennen.', wozuSchutz:'Wenn andere schuld an ihrer Reaktion sind, musst du nichts an dir ändern.', wozuFrage:'Was gehört wirklich zu dir an dem, worauf Menschen reagieren?', name:'Wie andere reagieren',
   frage:'Warum reagieren Menschen so stark auf mich?',
   anker:{haeuser:[7,11], punkte:['Lilith','ASC','Venus']},
   regeln:[
@@ -465,7 +468,7 @@ var RAUM = {
    'Bei wem bist du ganz du selbst — und was ist dort anders?'],
    vorsicht:'Starke Reaktionen anderer können auch Übergriffigkeit sein. Nicht jede Reaktion ist eine Information über die Person.'}},
 
- {id:'kraft', wozuSchutz:'Ungenutzte Kraft kann nicht falsch eingesetzt werden.', wozuFrage:'Wofür würdest du verantwortlich, wenn du diese Kraft benutzt?', name:'Deine ungenutzte Kraft',
+ {id:'kraft', worum:'Hier geht es um die Energie, die in dem eingesperrten Teil steckt. Merken tust du es daran, wie lebendig du dich fühlst, wenn du dir dort einmal etwas erlaubst.', wozuSchutz:'Ungenutzte Kraft kann nicht falsch eingesetzt werden.', wozuFrage:'Wofür würdest du verantwortlich, wenn du diese Kraft benutzt?', name:'Deine ungenutzte Kraft',
   frage:'Was steckt da eigentlich drin?',
   anker:{haeuser:[8,5], punkte:['Lilith','Pluto','Mars','Sonne']},
   regeln:[
@@ -542,7 +545,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -552,7 +556,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -570,13 +574,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

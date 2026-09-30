@@ -191,6 +191,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -275,7 +278,7 @@ var RAUM = {
  slug:'sicherheit',
  sortierTitel:'Wo es dir schwerfällt, dich sicher zu fühlen',
  facetten:[
- {id:'sicherheit', wozuSchutz:'Wachsam zu bleiben hat dich schon einmal geschützt. Das Nervensystem vergisst das nicht.',
+ {id:'sicherheit', worum:'Hier geht es darum, was du brauchst, um dich wirklich sicher zu fühlen — nicht nur einverstanden. Merken tust du es daran, ob du dich in einem Moment der Nähe entspannen kannst oder aufmerksam bleibst.', wozuSchutz:'Wachsam zu bleiben hat dich schon einmal geschützt. Das Nervensystem vergisst das nicht.',
   wozuFrage:'Was müsste gegeben sein, damit Wachsamkeit heute nicht mehr nötig wäre?',
   name:'Was Sicherheit für dich bedeutet',
   frage:'Wann fühle ich mich wirklich sicher — nicht nur einverstanden?',
@@ -315,7 +318,7 @@ var RAUM = {
    'Wann hast du dich zuletzt wirklich fallen lassen?'],
    vorsicht:'Nicht nach Gründen fragen, warum Sicherheit fehlt. Wenn die Person von sich aus von belastenden Erfahrungen erzählt: zuhören, würdigen, und an eine Therapeutin verweisen. Nicht nachfragen, nicht deuten.'}},
 
- {id:'grenzen', wozuSchutz:'Wer nicht Nein sagt, riskiert keinen Konflikt und keine Enttäuschung des anderen.',
+ {id:'grenzen', worum:'Hier geht es darum, ob du mittendrin aufhören kannst. Merken tust du es daran, ob du schon mal weitergemacht hast, obwohl du nicht mehr wolltest.', wozuSchutz:'Wer nicht Nein sagt, riskiert keinen Konflikt und keine Enttäuschung des anderen.',
   wozuFrage:'Was fürchtest du zu verlieren, wenn du mittendrin stopp sagst?',
   name:'Nein sagen können',
   frage:'Traue ich mich, mittendrin aufzuhören?',
@@ -350,7 +353,7 @@ var RAUM = {
    'Bei wem fällt es dir leichter — und was ist dort anders?'],
    vorsicht:'Wenn jemand berichtet, dass ein Nein nicht respektiert wurde, ist das kein Grenzthema der Person, sondern ein Übergriff. Das benennen, nicht bearbeiten, und an eine Fachstelle verweisen.'}},
 
- {id:'erlauben', wozuSchutz:'Was man nicht ausspricht, kann nicht abgelehnt werden.',
+ {id:'erlauben', worum:'Hier geht es um das, was du zurückhältst, weil es zu viel sein könnte. Merken tust du es daran, ob du jemals ausgesprochen hast, was du dir wünschst.', wozuSchutz:'Was man nicht ausspricht, kann nicht abgelehnt werden.',
   wozuFrage:'Was wäre das Schlimmste daran, wenn jemand wüsste, was du willst?',
   name:'Was du dir nicht erlaubst',
   frage:'Was halte ich zurück, weil es zu viel sein könnte?',
@@ -386,7 +389,7 @@ var RAUM = {
    'Was hast du noch nie ausgesprochen?'],
    vorsicht:'Nur so weit gehen, wie die Person von sich aus öffnet. Nicht nachfragen, nicht konkretisieren, nichts deuten. Wenn Scham stark wird: Thema wechseln und der Person sagen, dass sie nichts erklären muss.'}},
 
- {id:'loslassen', wozuSchutz:'Kontrolle zu behalten heißt, dass dich nichts überraschen kann.',
+ {id:'loslassen', worum:'Hier geht es darum, warum Loslassen schwerfällt, obwohl du es willst. Merken tust du es daran, dass du im Kopf mitläufst, statt einfach da zu sein.', wozuSchutz:'Kontrolle zu behalten heißt, dass dich nichts überraschen kann.',
   wozuFrage:'Was könnte passieren, wenn du die Kontrolle für einen Moment abgibst — und wie wahrscheinlich ist das wirklich?',
   name:'Kontrolle und Loslassen',
   frage:'Warum kann ich mich nicht fallen lassen, obwohl ich will?',
@@ -422,7 +425,7 @@ var RAUM = {
    'Gibt es Situationen, in denen du dich fallen lässt — was ist dort anders?'],
    vorsicht:'Kontrollbedürfnis kann Persönlichkeit sein oder Folge von Erfahrungen. Nicht danach suchen, welches davon zutrifft. Wenn die Person es selbst benennt und es belastend ist, gehört es begleitet.'}},
 
- {id:'sprechen', wozuSchutz:'Solange nichts gesagt ist, muss man sich nicht festlegen und nichts aushalten.',
+ {id:'sprechen', worum:'Hier geht es darum, ob du sagen kannst, was du brauchst. Merken tust du es daran, ob du hoffst, dass es gespürt wird, statt es zu sagen.', wozuSchutz:'Solange nichts gesagt ist, muss man sich nicht festlegen und nichts aushalten.',
   wozuFrage:'Was wäre anders, wenn dein Gegenüber es wirklich wüsste?',
   name:'Darüber sprechen können',
   frage:'Warum sage ich nicht, was ich brauche?',
@@ -459,7 +462,7 @@ var RAUM = {
    'Was wäre der leichteste Zeitpunkt, es zu sagen?'],
    vorsicht:'Kommunikationsübungen sind hier Coaching-Gebiet. Alles, was in Richtung konkreter Praktiken geht, ist es nicht.'}},
 
- {id:'koerper', wozuSchutz:'Im Kopf zu bleiben verhindert, dass du spürst, was gerade nicht stimmt.',
+ {id:'koerper', worum:'Hier geht es darum, ob du währenddessen im Körper bist oder im Kopf. Merken tust du es daran, ob du dich dabei beobachtest.', wozuSchutz:'Im Kopf zu bleiben verhindert, dass du spürst, was gerade nicht stimmt.',
   wozuFrage:'Was würdest du merken, wenn du ganz in deinem Körper wärst?',
   name:'Im Körper sein',
   frage:'Warum bin ich so oft im Kopf statt da?',
@@ -496,7 +499,7 @@ var RAUM = {
    vorsicht:'Wenn jemand beschreibt, regelmäßig neben sich zu stehen oder den Kontakt zum Körper zu verlieren, ist das kein Coaching-Thema. Freundlich benennen und an eine Therapeutin verweisen — das ist behandelbar und lohnt sich.'}}
 ,
 
- {id:'begehren', wozuSchutz:'Solange du glaubst, mit dir stimme etwas nicht, musst du nichts einfordern.',
+ {id:'begehren', worum:'Hier geht es darum, wie deine Lust überhaupt entsteht. Merken tust du es daran, ob sie von allein kommt oder erst unterwegs — beides ist normal.', wozuSchutz:'Solange du glaubst, mit dir stimme etwas nicht, musst du nichts einfordern.',
   wozuFrage:'Was würde sich ändern, wenn du wüsstest, dass dein Begehren einfach anders anspringt — und nicht fehlt?',
   name:'Wie dein Begehren anspringt',
   frage:'Warum habe ich seltener Lust als andere — oder erst danach?',
@@ -567,7 +570,7 @@ var RAUM = {
    'Was glaubst du über dein Begehren — und woher hast du diesen Glauben?'],
    vorsicht:'Wenn jemand grundsätzlich kein sexuelles Begehren empfindet und nicht darunter leidet: Asexualität ist eine Orientierung, keine Störung, und nichts, was bearbeitet werden muss. Wenn jemand leidet: Das kann körperliche, hormonelle oder medikamentöse Ursachen haben und gehört ärztlich abgeklärt, bevor man psychologisch arbeitet.'}},
 
- {id:'bremsen', wozuSchutz:'Eine Bremse hat einen Grund. Sie schützt vor etwas, das einmal nötig war.',
+ {id:'bremsen', worum:'Hier geht es darum, was dir zuverlässig die Lust nimmt. Merken tust du es daran, dass es manchmal von einer Sekunde auf die andere kippt, ohne dass etwas passiert ist.', wozuSchutz:'Eine Bremse hat einen Grund. Sie schützt vor etwas, das einmal nötig war.',
   wozuFrage:'Welche deiner Bremsen ist heute noch nötig — und welche läuft nur aus Gewohnheit mit?',
   name:'Deine Bremsen und Beschleuniger',
   frage:'Warum kippt es manchmal von einer Sekunde auf die andere?',
@@ -636,7 +639,7 @@ var RAUM = {
    'Was davon könntest du morgen ändern?'],
    vorsicht:'Bremsen sind manchmal Schutz nach schlechten Erfahrungen. Nicht darauf hinarbeiten, sie abzustellen — nur sie sichtbar zu machen. Was damit geschieht, entscheidet die Person allein.'}},
 
- {id:'gefaellt', wozuSchutz:'Wer nicht weiß, was er mag, muss es nicht sagen — und kann nicht enttäuschen.',
+ {id:'gefaellt', worum:'Hier geht es darum, was dir eigentlich gefällt. Merken tust du es daran, ob du es benennen könntest, wenn dich jemand fragt.', wozuSchutz:'Wer nicht weiß, was er mag, muss es nicht sagen — und kann nicht enttäuschen.',
   wozuFrage:'Was hättest du zu verlieren, wenn dein Gegenüber genau wüsste, was dir gefällt?',
   name:'Was dir gefällt',
   frage:'Was mag ich eigentlich — und woher soll ich das wissen?',
@@ -710,7 +713,7 @@ var RAUM = {
    'Was würdest du gern ausprobieren und traust dich nicht zu sagen?'],
    vorsicht:'Hier nie konkret nachfragen. Die Person benennt, du hörst zu und wertest nicht. Alles, was in Richtung konkreter Praktiken oder Beratung dazu geht, gehört in eine sexualtherapeutische Begleitung — nicht ins Coaching.'}},
 
- {id:'danach', wozuSchutz:'Sofort weiterzumachen erspart dir den verletzlichsten Moment.',
+ {id:'danach', worum:'Hier geht es um den Moment danach, über den kaum jemand spricht. Merken tust du es daran, wie du dich zehn Minuten später fühlst.', wozuSchutz:'Sofort weiterzumachen erspart dir den verletzlichsten Moment.',
   wozuFrage:'Was fürchtest du in dem Moment danach — und wer hat dir beigebracht, dass man da schnell weitermacht?',
   name:'Was du danach brauchst',
   frage:'Warum fühle ich mich hinterher manchmal seltsam?',
@@ -800,7 +803,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -810,7 +814,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -828,13 +832,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

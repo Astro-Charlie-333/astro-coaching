@@ -188,6 +188,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -272,7 +275,7 @@ var RAUM = {
  slug:'naehe',
  sortierTitel:'Wo deine Beziehungsfrage tatsächlich sitzt',
  facetten:[
- {id:'anziehung', wozuSchutz:'Menschen zu wählen, die nicht ganz verfügbar sind, hält das Risiko klein.', wozuFrage:'Wovor schützt dich die Unerreichbarkeit der anderen?', name:'Was dich anzieht',
+ {id:'anziehung', worum:'Hier geht es darum, welche Art Mensch dich anzieht — und ob dir das guttut. Merken tust du es daran, was die letzten drei gemeinsam hatten.', wozuSchutz:'Menschen zu wählen, die nicht ganz verfügbar sind, hält das Risiko klein.', wozuFrage:'Wovor schützt dich die Unerreichbarkeit der anderen?', name:'Was dich anzieht',
   frage:'Warum immer wieder dieser Typ Mensch?',
   anker:{haeuser:[5], punkte:['Venus','Mars']},
   regeln:[
@@ -312,7 +315,7 @@ var RAUM = {
    'Was hatten die letzten drei gemeinsam?'],
    vorsicht:'Nicht bewerten, welcher Typ Mensch gut oder schlecht ist. Es geht darum, dass die Person ihr Muster sieht, nicht dass sie deins übernimmt.'}},
 
- {id:'gegenueber', wozuSchutz:'Ohne klare Bedingungen muss man nichts einfordern und wird nicht abgelehnt.', wozuFrage:'Was hättest du zu verlieren, wenn du sagst, was du brauchst?', name:'Was du im Gegenüber suchst',
+ {id:'gegenueber', worum:'Hier geht es darum, was du von einer Beziehung eigentlich erwartest. Merken tust du es daran, ob du drei Dinge nennen kannst, die für dich nicht verhandelbar sind.', wozuSchutz:'Ohne klare Bedingungen muss man nichts einfordern und wird nicht abgelehnt.', wozuFrage:'Was hättest du zu verlieren, wenn du sagst, was du brauchst?', name:'Was du im Gegenüber suchst',
   frage:'Was erwarte ich eigentlich von einer Beziehung?',
   anker:{haeuser:[7], punkte:['Saturn','Uranus','Juno']},
   regeln:[
@@ -351,7 +354,7 @@ var RAUM = {
    'Was war in deiner letzten Beziehung gut? Nicht schlecht — gut.'],
    vorsicht:'Nicht zur Anforderungsliste machen. Bedingungen sind etwas anderes als Wunschzettel.'}},
 
- {id:'naehe', wozuSchutz:'Abstand zu halten verhindert, dass dich jemand wirklich enttäuschen kann.', wozuFrage:'Was genau wird eng, kurz bevor du dich zurückziehst — und was schützt der Rückzug?', name:'Wie viel Nähe du zulässt',
+ {id:'naehe', worum:'Hier geht es darum, wie viel Nähe du aushältst, bevor es eng wird. Merken tust du es an dem Moment, in dem etwas gut läuft und du plötzlich Abstand brauchst.', wozuSchutz:'Abstand zu halten verhindert, dass dich jemand wirklich enttäuschen kann.', wozuFrage:'Was genau wird eng, kurz bevor du dich zurückziehst — und was schützt der Rückzug?', name:'Wie viel Nähe du zulässt',
   frage:'Warum wird es eng, wenn es gut wird?',
   anker:{haeuser:[4,8], punkte:['Mond','Saturn','Uranus']},
   regeln:[
@@ -391,7 +394,7 @@ var RAUM = {
    'Woran merkst du, dass dir jemand zu nah kommt — körperlich, nicht gedanklich?'],
    vorsicht:'Rückzug kann Muster sein oder Selbstschutz nach echten Verletzungen. Diese beiden nicht verwechseln — und wenn Gewalt oder Angst im Spiel waren, gehört das begleitet.'}},
 
- {id:'streit', wozuSchutz:'Wer scharf wird, muss nicht zeigen, dass er verletzt ist.', wozuFrage:'Was wäre sichtbar, wenn du im Streit statt Ärger die Verletzung zeigst?', name:'Wie du streitest',
+ {id:'streit', worum:'Hier geht es darum, was du tust, wenn es kracht. Merken tust du es daran, ob du hinterher den Inhalt bereust oder den Ton.', wozuSchutz:'Wer scharf wird, muss nicht zeigen, dass er verletzt ist.', wozuFrage:'Was wäre sichtbar, wenn du im Streit statt Ärger die Verletzung zeigst?', name:'Wie du streitest',
   frage:'Warum eskaliert es immer an derselben Stelle?',
   anker:{haeuser:[3,7], punkte:['Mars','Merkur']},
   regeln:[
@@ -425,7 +428,7 @@ var RAUM = {
    'Streitest du, um recht zu haben oder um verstanden zu werden?'],
    vorsicht:'Streitmuster sind ein Coaching-Thema. Abwertung, Kontrolle oder Angst vor dem Partner sind es nicht.'}},
 
- {id:'begehren', wozuSchutz:'Nicht zuerst zu wollen bewahrt davor, nicht gewollt zu werden.', wozuFrage:'Was hättest du zu verlieren, wenn du jemandem zeigst, dass du ihn willst?', name:'Begehren und Körper',
+ {id:'begehren', worum:'Hier geht es darum, ob du zeigen kannst, dass du jemanden willst. Merken tust du es daran, wie oft du wartest, bis der andere anfängt.', wozuSchutz:'Nicht zuerst zu wollen bewahrt davor, nicht gewollt zu werden.', wozuFrage:'Was hättest du zu verlieren, wenn du jemandem zeigst, dass du ihn willst?', name:'Begehren und Körper',
   frage:'Darf ich wollen, was ich will?',
   anker:{haeuser:[8,5], punkte:['Mars','Venus','Lilith','Pluto']},
   regeln:[
@@ -457,7 +460,7 @@ var RAUM = {
    'Wofür schämst du dich, das vermutlich völlig normal ist?'],
    vorsicht:'Sexualität nur so weit ansprechen, wie die Person es öffnet. Nie nachfragen, nie ausdeuten. Bei Scham oder Erfahrungen von Übergriffen: sofort Grenze ziehen und verweisen.'}},
 
- {id:'wiederholung', wozuSchutz:'Ein bekanntes Muster ist unangenehm, aber vorhersehbar. Neues wäre unberechenbar.', wozuFrage:'Was ist an der Wiederholung vertraut — und was wäre ungewiss, wenn es anders liefe?', name:'Was sich wiederholt',
+ {id:'wiederholung', worum:'Hier geht es um das Muster, das sich über verschiedene Menschen hinweg wiederholt. Merken tust du es daran, dass es meistens nach derselben Zeit oder an derselben Stelle kippt.', wozuSchutz:'Ein bekanntes Muster ist unangenehm, aber vorhersehbar. Neues wäre unberechenbar.', wozuFrage:'Was ist an der Wiederholung vertraut — und was wäre ungewiss, wenn es anders liefe?', name:'Was sich wiederholt',
   frage:'Warum endet es immer gleich?',
   anker:{haeuser:[7,12], punkte:['Saturn','Pluto','Chiron','Neptun']},
   regeln:[
@@ -494,7 +497,7 @@ var RAUM = {
    'Was wäre anders, wenn du an genau dieser Stelle einmal bleibst?'],
    vorsicht:'Wiederholung kann Muster sein oder Folge schlechter Erfahrungen. Nicht als Selbstverschulden framen — und wenn wiederholt Übergriffigkeit vorkam, ist das kein Muster der Person, sondern etwas, das begleitet gehört.'}},
 
- {id:'bleiben', wozuSchutz:'Wer nicht ganz bleibt, kann nicht ganz verlassen werden.', wozuFrage:'Was würdest du aufgeben, wenn du dich wirklich entscheidest?', name:'Was du brauchst, um zu bleiben',
+ {id:'bleiben', worum:'Hier geht es darum, was aus Verliebtsein etwas Dauerhaftes macht. Merken tust du es daran, wie sich ein ganz normaler Dienstagabend mit dieser Person anfühlt.', wozuSchutz:'Wer nicht ganz bleibt, kann nicht ganz verlassen werden.', wozuFrage:'Was würdest du aufgeben, wenn du dich wirklich entscheidest?', name:'Was du brauchst, um zu bleiben',
   frage:'Was macht, dass es hält?',
   anker:{haeuser:[4,2], punkte:['Mond','Venus','Saturn','Juno']},
   regeln:[
@@ -574,7 +577,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -584,7 +588,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -602,13 +606,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

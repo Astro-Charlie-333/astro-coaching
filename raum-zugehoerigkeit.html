@@ -191,6 +191,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -275,7 +278,7 @@ var RAUM = {
  slug:'zugehoerigkeit',
  sortierTitel:'Wo deine Zugehörigkeitsfrage sitzt',
  facetten:[
- {id:'gruppe', wozuSchutz:'Mitzumachen sichert den Platz. Widerspruch könnte ihn kosten.', wozuFrage:'Was fürchtest du zu verlieren, wenn du in einer Gruppe nicht mitgehst?', name:'Wie du in Gruppen bist',
+ {id:'gruppe', worum:'Hier geht es darum, wie du dich in Gruppen verhältst. Merken tust du es daran, wie oft du etwas denkst und nicht sagst, weil alle nicken.', wozuSchutz:'Mitzumachen sichert den Platz. Widerspruch könnte ihn kosten.', wozuFrage:'Was fürchtest du zu verlieren, wenn du in einer Gruppe nicht mitgehst?', name:'Wie du in Gruppen bist',
   frage:'Warum bin ich dabei und trotzdem außen?',
   anker:{haeuser:[11], punkte:['Uranus','Saturn','Sonne']},
   regeln:[
@@ -318,7 +321,7 @@ var RAUM = {
    'Wann hast du zuletzt eine Gruppe verlassen — und warum wirklich?'],
    vorsicht:'Nicht auf mehr Geselligkeit hinarbeiten. Manche Menschen brauchen weniger Gruppe, nicht mehr, und das ist in Ordnung.'}},
 
- {id:'anpassen', wozuSchutz:'Die angepasste Version wird gemocht. Die echte müsste es erst beweisen.', wozuFrage:'Wer würde bleiben, wenn du dich nicht anpasst — und woher weißt du das?', name:'Was dich das Dazugehören kostet',
+ {id:'anpassen', worum:'Hier geht es um den Preis des Dazugehörens. Merken tust du es daran, wie leer du nach einem Treffen bist, das eigentlich schön war.', wozuSchutz:'Die angepasste Version wird gemocht. Die echte müsste es erst beweisen.', wozuFrage:'Wer würde bleiben, wenn du dich nicht anpasst — und woher weißt du das?', name:'Was dich das Dazugehören kostet',
   frage:'Wie viel von mir gebe ich dafür auf?',
   anker:{haeuser:[1,12], punkte:['Lilith','Saturn','Neptun','ASC']},
   regeln:[
@@ -351,7 +354,7 @@ var RAUM = {
    'Wie fühlst du dich direkt nach einem Treffen — und zwei Stunden später?'],
    vorsicht:'Anpassung ist bei manchen Menschen Überlebensstrategie, nicht Gewohnheit. Nicht zum Ablegen drängen, bevor klar ist, was sie geschützt hat.'}},
 
- {id:'freunde', wozuSchutz:'Viele lockere Kontakte schützen davor, dass ein Verlust wehtut.', wozuFrage:'Was wäre das Risiko, wenn eine Freundschaft dir wirklich wichtig wird?', name:'Deine Freundschaften',
+ {id:'freunde', worum:'Hier geht es darum, warum viele Kontakte nicht dasselbe sind wie Nähe. Merken tust du es daran, wen du anrufen würdest, wenn etwas passiert.', wozuSchutz:'Viele lockere Kontakte schützen davor, dass ein Verlust wehtut.', wozuFrage:'Was wäre das Risiko, wenn eine Freundschaft dir wirklich wichtig wird?', name:'Deine Freundschaften',
   frage:'Warum habe ich viele Kontakte und wenig Nähe?',
   anker:{haeuser:[11,3], punkte:['Venus','Merkur','Mond']},
   regeln:[
@@ -382,7 +385,7 @@ var RAUM = {
    'Wem hast du lange nicht gesagt, dass sie dir wichtig ist?'],
    vorsicht:'Wenig Freundschaften sind kein Defizit. Die Frage ist Qualität, nicht Anzahl.'}},
 
- {id:'rolle', wozuSchutz:'Die Rolle sichert Zugehörigkeit, ohne dass du darum bitten musst.', wozuFrage:'Wärst du noch dabei, wenn du die Aufgabe nicht übernimmst?', name:'Welche Rolle du übernimmst',
+ {id:'rolle', worum:'Hier geht es um die Aufgabe, die dir in Gruppen automatisch zufällt. Merken tust du es daran, dass niemand mehr fragt, weil du es ohnehin machst.', wozuSchutz:'Die Rolle sichert Zugehörigkeit, ohne dass du darum bitten musst.', wozuFrage:'Wärst du noch dabei, wenn du die Aufgabe nicht übernimmst?', name:'Welche Rolle du übernimmst',
   frage:'Warum bin ich immer die, die das macht?',
   anker:{haeuser:[6,10], punkte:['Saturn','Mars','Sonne']},
   regeln:[
@@ -414,7 +417,7 @@ var RAUM = {
    'Was wäre, wenn du sie einmal nicht ausfüllst?'],
    vorsicht:'Rollen bringen auch Zugehörigkeit. Nicht zum Ablegen drängen, ohne zu klären, was danach bleibt.'}},
 
- {id:'aussen', wozuSchutz:'Von außen zu bleiben schützt vor der Enttäuschung, drinnen doch nicht gemeint zu sein.', wozuFrage:'Was riskierst du, wenn du dich zugehörig fühlst und es dann doch nicht bist?', name:'Das Gefühl, nicht dazuzugehören',
+ {id:'aussen', worum:'Hier geht es um das Gefühl, überall ein bisschen fremd zu sein. Merken tust du es daran, dass es auch dann da ist, wenn dich alle mögen.', wozuSchutz:'Von außen zu bleiben schützt vor der Enttäuschung, drinnen doch nicht gemeint zu sein.', wozuFrage:'Was riskierst du, wenn du dich zugehörig fühlst und es dann doch nicht bist?', name:'Das Gefühl, nicht dazuzugehören',
   frage:'Warum fühle ich mich überall ein bisschen fremd?',
   anker:{haeuser:[12,11], punkte:['Uranus','Chiron','Neptun','Saturn']},
   regeln:[
@@ -448,7 +451,7 @@ var RAUM = {
    'Wem gegenüber musst du dich nicht erklären?'],
    vorsicht:'Anhaltendes Außenseitergefühl kann auch Teil einer depressiven Phase sein. Wenn es dauerhaft und schwer ist, gehört das abgeklärt.'}},
 
- {id:'beitrag', wozuSchutz:'Gebraucht zu werden ist sicherer, als einfach gemocht zu werden.', wozuFrage:'Würdest du dazugehören, auch wenn du nichts beiträgst — und hältst du das für möglich?', name:'Wofür du gebraucht wirst',
+ {id:'beitrag', worum:'Hier geht es darum, was du einer Gemeinschaft tatsächlich gibst. Merken tust du es daran, ob du glaubst, auch ohne Leistung dazuzugehören.', wozuSchutz:'Gebraucht zu werden ist sicherer, als einfach gemocht zu werden.', wozuFrage:'Würdest du dazugehören, auch wenn du nichts beiträgst — und hältst du das für möglich?', name:'Wofür du gebraucht wirst',
   frage:'Was bringe ich einer Gemeinschaft eigentlich?',
   anker:{haeuser:[11,6], punkte:['Jupiter','Sonne','Merkur']},
   regeln:[
@@ -522,7 +525,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -532,7 +536,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -550,13 +554,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

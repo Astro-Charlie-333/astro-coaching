@@ -191,6 +191,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -211,7 +214,7 @@ body.fmt-visuell .fa-frage{display:none;}
 <div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
-<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="lilith-arbeit.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Lilith-Arbeit</span></a></div>
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="asteroiden.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Asteroiden</span></a></div>
 <div class="foot">Themenraum Der wunde Punkt &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
 </div>
 <script>
@@ -276,7 +279,7 @@ var RAUM = {
  slug:'wunder-punkt',
  sortierTitel:'Wie dein wunder Punkt bei dir arbeitet',
  facetten:[
- {id:'wunde', wozuSchutz:'Empfindlich zu bleiben hält dich wachsam — du siehst die Gefahr, bevor sie da ist.', wozuFrage:'Wovor hat dich diese Empfindlichkeit schon bewahrt?', name:'Wo es zuverlässig wehtut',
+ {id:'wunde', worum:'Hier geht es um die Stelle, an der dich Kleinigkeiten unverhältnismäßig treffen. Merken tust du es daran, dass du hinterher denkst: Warum hat mich das so mitgenommen?', wozuSchutz:'Empfindlich zu bleiben hält dich wachsam — du siehst die Gefahr, bevor sie da ist.', wozuFrage:'Wovor hat dich diese Empfindlichkeit schon bewahrt?', name:'Wo es zuverlässig wehtut',
   frage:'Warum trifft mich das jedes Mal so?',
   anker:{haeuser:[], punkte:['Chiron','Sonne','Mond','ASC']},
   regeln:[
@@ -322,7 +325,7 @@ var RAUM = {
    'Was sagst du dir selbst, wenn es passiert?'],
    vorsicht:'Chiron beschreibt Empfindlichkeit, nicht Trauma. Wenn konkrete Gewalt- oder Missbrauchserfahrungen auftauchen, ist das kein Coaching-Thema mehr — benennen, würdigen, verweisen.'}},
 
- {id:'vermeidung', wozuSchutz:'Was man nicht anfasst, kann nicht wehtun.', wozuFrage:'Was ist dein bester Grund, es zu vermeiden — und stimmt er noch?', name:'Was du deshalb vermeidest',
+ {id:'vermeidung', worum:'Hier geht es um das, worum du seit Jahren einen Bogen machst. Merken tust du es an den guten Gründen, die dir dafür immer sofort einfallen.', wozuSchutz:'Was man nicht anfasst, kann nicht wehtun.', wozuFrage:'Was ist dein bester Grund, es zu vermeiden — und stimmt er noch?', name:'Was du deshalb vermeidest',
   frage:'Wovor mache ich seit Jahren einen Bogen?',
   anker:{haeuser:[12], punkte:['Chiron','Saturn','Neptun']},
   regeln:[
@@ -354,7 +357,7 @@ var RAUM = {
    'Was wäre das Schlimmste, wenn du es tätest?'],
    vorsicht:'Nicht zum Konfrontieren drängen. Vermeidung hat oft gute Gründe, und Tempo bestimmt die Person.'}},
 
- {id:'ueberkompensation', wozuSchutz:'Übermäßig gut zu sein hält den Zweifel auf Abstand — und wird belohnt.', wozuFrage:'Was käme hoch, wenn du dort nur normal gut wärst?', name:'Womit du es überdeckst',
+ {id:'ueberkompensation', worum:'Hier geht es darum, wo du dich mehr anstrengst als nötig. Merken tust du es daran, dass Lob in diesem Bereich bei dir nicht ankommt.', wozuSchutz:'Übermäßig gut zu sein hält den Zweifel auf Abstand — und wird belohnt.', wozuFrage:'Was käme hoch, wenn du dort nur normal gut wärst?', name:'Womit du es überdeckst',
   frage:'Wo strenge ich mich zu sehr an?',
   anker:{haeuser:[10,6], punkte:['Chiron','Saturn','Sonne','Mars']},
   regeln:[
@@ -388,7 +391,7 @@ var RAUM = {
    'Für wen strengst du dich eigentlich an?'],
    vorsicht:'Überkompensation nicht als Fehler behandeln. Sie hat jemanden durch schwierige Jahre gebracht und verdient Respekt, bevor man sie hinterfragt.'}},
 
- {id:'heilsam', wozuSchutz:'Nichts anzunehmen schützt davor, sich abhängig zu fühlen.', wozuFrage:'Was hättest du zu verlieren, wenn jemand dich in diesem Zustand sieht?', name:'Was tatsächlich hilft',
+ {id:'heilsam', worum:'Hier geht es darum, was dir tatsächlich hilft, wenn es dich erwischt hat. Merken tust du es daran, was du in solchen Momenten stattdessen machst — und ob es hilft.', wozuSchutz:'Nichts anzunehmen schützt davor, sich abhängig zu fühlen.', wozuFrage:'Was hättest du zu verlieren, wenn jemand dich in diesem Zustand sieht?', name:'Was tatsächlich hilft',
   frage:'Was lindert das, ohne es wegzumachen?',
   anker:{haeuser:[], punkte:['Venus','Jupiter','Mond','Chiron']},
   regeln:[
@@ -422,7 +425,7 @@ var RAUM = {
    'Was brauchst du in so einem Moment — und sagst du es?'],
    vorsicht:'Nicht auf Heilung hinarbeiten. Chiron heilt nicht restlos aus. Das Ziel ist Umgang, nicht Verschwinden.'}},
 
- {id:'lehrerin', wozuSchutz:'Über andere zu sprechen ist leichter, als selbst betroffen zu sein.', wozuFrage:'Was ändert sich, wenn du zugibst, dass es auch deine Geschichte ist?', name:'Warum andere dir das glauben',
+ {id:'lehrerin', worum:'Hier geht es darum, warum Menschen mit genau diesem Thema zu dir kommen. Merken tust du es daran, wofür du gefragt wirst, ohne dafür geworben zu haben.', wozuSchutz:'Über andere zu sprechen ist leichter, als selbst betroffen zu sein.', wozuFrage:'Was ändert sich, wenn du zugibst, dass es auch deine Geschichte ist?', name:'Warum andere dir das glauben',
   frage:'Wieso kommen Menschen damit ausgerechnet zu mir?',
   anker:{haeuser:[11,9], punkte:['Chiron','Jupiter','Merkur']},
   regeln:[
@@ -456,7 +459,7 @@ var RAUM = {
    'Was hättest du damals gebraucht, das du heute geben kannst?'],
    vorsicht:'Aus eigener Betroffenheit wird nur dann Kompetenz, wenn genug Abstand da ist. Wer mitten drin steckt, sollte nicht begleiten.'}},
 
- {id:'zyklus', wozuSchutz:'Es als Schicksal zu sehen erspart die Frage, was man beim nächsten Mal anders macht.', wozuFrage:'Was könntest du beim nächsten Durchgang anders machen — und was hält dich davon ab?', name:'Wann es wieder aufbricht',
+ {id:'zyklus', worum:'Hier geht es darum, warum dasselbe Thema alle paar Jahre zurückkommt. Merken tust du es daran, dass ein altes Gefühl mit neuem Anlass auftaucht.', wozuSchutz:'Es als Schicksal zu sehen erspart die Frage, was man beim nächsten Mal anders macht.', wozuFrage:'Was könntest du beim nächsten Durchgang anders machen — und was hält dich davon ab?', name:'Wann es wieder aufbricht',
   frage:'Warum kommt das alle paar Jahre zurück?',
   anker:{haeuser:[], punkte:['Chiron','Saturn']},
   regeln:[
@@ -530,7 +533,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -540,7 +544,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -558,13 +562,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

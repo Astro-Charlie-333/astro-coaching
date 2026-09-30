@@ -189,6 +189,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -277,7 +280,7 @@ var RAUM = {
  sortierTitel:'Wo dein Selbstwert tatsächlich sitzt',
  facetten:[
 
- {id:'geld', wozuSchutz:'Wenn du zu wenig verlangst, kann dich niemand für zu teuer halten und niemand kann ablehnen.', wozuFrage:'Was würdest du riskieren, wenn du deinen echten Preis nennst — und wovor bewahrt dich der niedrige?', name:'Geld und Preise',
+ {id:'geld', worum:'Hier geht es darum, ob du dir zutraust, für deine Arbeit oder deine Zeit einen Preis zu nennen — und ihn stehen zu lassen. Merken tust du es daran, dass du beim Aussprechen einer Zahl schon innerlich zurückruderst.', wozuSchutz:'Wenn du zu wenig verlangst, kann dich niemand für zu teuer halten und niemand kann ablehnen.', wozuFrage:'Was würdest du riskieren, wenn du deinen echten Preis nennst — und wovor bewahrt dich der niedrige?', name:'Geld und Preise',
   frage:'Was bin ich wert, in Zahlen ausgedrückt?',
   anker:{haeuser:[2], punkte:['Venus','Saturn','Jupiter']},
   regeln:[
@@ -319,7 +322,7 @@ var RAUM = {
    'Was würdest du verlangen, wenn niemand es erfahren würde?'],
    vorsicht:'Nicht in Preisberatung kippen. Die Frage ist nicht, was marktüblich ist — die Frage ist, was die Person sich erlaubt.'}},
 
- {id:'koerper', wozuSchutz:'Solange du dich verhüllst, wirst du nicht danach beurteilt.', wozuFrage:'Wovor schützt dich die Schicht, die du jeden Morgen aufträgst?', name:'Körper und Erscheinung',
+ {id:'koerper', worum:'Hier geht es darum, ob du dich zeigen magst, wie du aussiehst. Merken tust du es an dem Aufwand, den du treibst, bevor du das Haus verlässt — und daran, wie du dich fühlst, wenn er mal wegfällt.', wozuSchutz:'Solange du dich verhüllst, wirst du nicht danach beurteilt.', wozuFrage:'Wovor schützt dich die Schicht, die du jeden Morgen aufträgst?', name:'Körper und Erscheinung',
   frage:'Darf ich so aussehen, wie ich aussehe?',
   anker:{haeuser:[1], punkte:['Venus','Mars','ASC']},
   regeln:[
@@ -349,7 +352,7 @@ var RAUM = {
    'Wann hast du dich zuletzt im Spiegel angesehen, ohne zu bewerten?'],
    vorsicht:'Körperbild ist heikel. Wenn Essen, Gewicht oder Kontrolle auftauchen, ist das kein Coaching-Thema mehr.'}},
 
- {id:'leistung', wozuSchutz:'Wer immer mehr leistet, muss sich nie fragen, ob er auch ohne Leistung genügt.', wozuFrage:'Was müsstest du dir eingestehen, wenn du aufhörst, dich zu beweisen?', name:'Leistung und Genügen',
+ {id:'leistung', worum:'Hier geht es um die Frage, ob du auch ohne Leistung in Ordnung bist. Merken tust du es daran, dass du nach einem freien Tag ein schlechtes Gewissen hast.', wozuSchutz:'Wer immer mehr leistet, muss sich nie fragen, ob er auch ohne Leistung genügt.', wozuFrage:'Was müsstest du dir eingestehen, wenn du aufhörst, dich zu beweisen?', name:'Leistung und Genügen',
   frage:'Muss ich es mir erst verdienen?',
   anker:{haeuser:[10,6], punkte:['Saturn','Chiron','Sonne']},
   regeln:[
@@ -393,7 +396,7 @@ var RAUM = {
    'Was würde passieren, wenn du 80 Prozent gibst?'],
    vorsicht:'Nicht in Produktivitätsberatung abbiegen. Es geht nicht um bessere Methoden, sondern darum, wann jemand aufhören darf.'}},
 
- {id:'grenzen', wozuSchutz:'Wer nie Nein sagt, wird nicht abgelehnt — und muss keinen Konflikt aushalten.', wozuFrage:'Was hättest du zu verlieren, wenn jemand sauer auf dich wäre?', name:'Grenzen und Nein sagen',
+ {id:'grenzen', worum:'Hier geht es darum, ob du Nein sagen kannst, ohne eine Erklärung hinterherzuschieben. Merken tust du es an dem Moment, in dem du zusagst und es im selben Atemzug bereust.', wozuSchutz:'Wer nie Nein sagt, wird nicht abgelehnt — und muss keinen Konflikt aushalten.', wozuFrage:'Was hättest du zu verlieren, wenn jemand sauer auf dich wäre?', name:'Grenzen und Nein sagen',
   frage:'Darf ich Nein sagen, ohne mich zu rechtfertigen?',
   anker:{haeuser:[1,7], punkte:['Mars','Saturn']},
   regeln:[
@@ -430,7 +433,7 @@ var RAUM = {
    'Bei wem fällt es dir am schwersten — und warum ausgerechnet dort?'],
    vorsicht:'Wenn jemand grundsätzlich keine Grenzen setzen kann und dabei Angst auftaucht, gehört das begleitet, nicht trainiert.'}},
 
- {id:'raum', wozuSchutz:'Wer klein bleibt, wird nicht beneidet und fällt nicht.', wozuFrage:'Wovor schützt dich das Kleinerwerden — und wer hätte etwas davon, wenn du groß wirst?', name:'Raum einnehmen',
+ {id:'raum', worum:'Hier geht es darum, wie viel Platz du dir nimmst — im Gespräch, im Raum, im eigenen Leben. Merken tust du es daran, dass du deine eigenen Erfolge kleinredest, bevor es jemand anderes tun kann.', wozuSchutz:'Wer klein bleibt, wird nicht beneidet und fällt nicht.', wozuFrage:'Wovor schützt dich das Kleinerwerden — und wer hätte etwas davon, wenn du groß wirst?', name:'Raum einnehmen',
   frage:'Darf ich groß sein und gesehen werden?',
   anker:{haeuser:[5,1], punkte:['Sonne','Lilith','Jupiter']},
   regeln:[
@@ -459,7 +462,7 @@ var RAUM = {
    'Wann hast du dich zuletzt groß gefühlt — und was kam danach?'],
    vorsicht:'Nicht zum Auftritt drängen. Manche brauchen erst einen sicheren Ort, bevor sie einen sichtbaren wollen.'}},
 
- {id:'geteilt', wozuSchutz:'Solange du nicht hinschaust, musst du nichts entscheiden.', wozuFrage:'Was würde sich ändern müssen, wenn du die Zahlen kennst?', name:'Geteiltes und Abhängigkeit',
+ {id:'geteilt', worum:'Hier geht es um Geld und Abhängigkeit zwischen Menschen — was dir gehört, was geteilt wird, was offen ist. Merken tust du es daran, welche Zahl du seit Monaten nicht anschaust.', wozuSchutz:'Solange du nicht hinschaust, musst du nichts entscheiden.', wozuFrage:'Was würde sich ändern müssen, wenn du die Zahlen kennst?', name:'Geteiltes und Abhängigkeit',
   frage:'Was ist meins, was gehört dem anderen?',
   anker:{haeuser:[8], punkte:['Pluto','Venus','Saturn']},
   regeln:[
@@ -494,7 +497,7 @@ var RAUM = {
    'Wo hängst du finanziell an jemandem — und wie fühlt sich das an?'],
    vorsicht:'Hier tauchen häufig Abhängigkeitsverhältnisse auf. Wenn Kontrolle oder Angst im Spiel sind, ist das keine Coaching-Frage mehr.'}},
 
- {id:'herkunft', wozuSchutz:'Solange der Satz von früher gilt, musst du ihn nicht überprüfen — und niemanden enttäuschen.', wozuFrage:'Wem gegenüber wärst du illoyal, wenn du es anders machst als zuhause?', name:'Sätze aus der Herkunft',
+ {id:'herkunft', worum:'Hier geht es um die Sätze über Wert und Geld, die du mitbekommen hast, bevor du sie prüfen konntest. Merken tust du es daran, dass manche Überzeugungen sich wie Tatsachen anfühlen, obwohl sie von jemand anderem stammen.', wozuSchutz:'Solange der Satz von früher gilt, musst du ihn nicht überprüfen — und niemanden enttäuschen.', wozuFrage:'Wem gegenüber wärst du illoyal, wenn du es anders machst als zuhause?', name:'Sätze aus der Herkunft',
   frage:'Wessen Stimme ist das eigentlich?',
   anker:{haeuser:[4], punkte:['Mond','Saturn','Pluto','IC']},
   regeln:[
@@ -581,7 +584,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -591,7 +595,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -609,13 +613,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

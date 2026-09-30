@@ -227,6 +227,9 @@ body.fmt-visuell .fa-frage{display:none;}
 .zs-z.leichter{border-left:3px solid #6B8C5F;}
 .zs-z.schwerer{border-left:3px solid #A05A3A;}
 .zs-fuss{font-size:13.3px;color:var(--leise);line-height:1.6;margin-top:12px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -312,7 +315,7 @@ var RAUM = {
  slug:'versorgung',
  sortierTitel:'Wo dein Alltag tatsächlich klemmt',
  facetten:[
- {id:'essen', wozuSchutz:'Sich zu überspringen spart im Moment Kraft — bis die Rechnung kommt.',
+ {id:'essen', worum:'Hier geht es darum, warum regelmäßig essen so schwer ist. Merken tust du es daran, dass du manchmal erst merkst, dass du Hunger hast, wenn du schon gereizt bist.', wozuSchutz:'Sich zu überspringen spart im Moment Kraft — bis die Rechnung kommt.',
   wozuFrage:'Was machst du in der Zeit, in der du nicht isst — und ist es das wert?',
   name:'Essen und Versorgung',
   frage:'Warum kriege ich das nicht regelmäßig hin?',
@@ -364,7 +367,7 @@ var RAUM = {
    'Woran merkst du, dass du Hunger hast — und wie spät ist es dann?'],
    vorsicht:'<b>Hier keine Mengen, Zeiten, Kalorien oder Pläne — niemals.</b> Sobald Essen mit Zahlen oder Zielen verknüpft wird, kann das bei manchen Menschen ernsthaften Schaden anrichten. Es geht ausschließlich um den Mechanismus. Wenn jemand von Kontrolle, Gewicht, Schuld oder Verzicht spricht, ist das Coaching sofort zu Ende und gehört an eine Fachperson. Und bei rein pflanzlicher Ernährung gehören die Nährstoffwerte ärztlich angeschaut — das ersetzt kein Chart.'}},
 
- {id:'trinken', wozuSchutz:'Nicht zu trinken spart Unterbrechungen und Wege.',
+ {id:'trinken', worum:'Hier geht es darum, warum Trinken zuverlässig untergeht. Merken tust du es an dem vollen Glas, das seit Stunden neben dir steht.', wozuSchutz:'Nicht zu trinken spart Unterbrechungen und Wege.',
   wozuFrage:'Was unterbrichst du nicht gern — und was kostet dich das am Ende mehr?',
   name:'Trinken',
   frage:'Warum vergesse ich das dauernd?',
@@ -403,7 +406,7 @@ var RAUM = {
    'Was trinkst du gern — nicht, was du trinken solltest?'],
    vorsicht:'Keine Mengenangaben. Wie viel jemand braucht, hängt von zu vielem ab, und Zahlen erzeugen hier nur Druck.'}},
 
- {id:'papier', wozuSchutz:'Ungeöffnete Post enthält keine schlechten Nachrichten.',
+ {id:'papier', worum:'Hier geht es um den Stapel, der liegen bleibt. Merken tust du es daran, wie lange der ungeöffnete Brief schon da ist.', wozuSchutz:'Ungeöffnete Post enthält keine schlechten Nachrichten.',
   wozuFrage:'Was fürchtest du in dem Stapel — und wie viel davon ist tatsächlich drin?',
   name:'Papierkram und Behörden',
   frage:'Warum liegt das seit Wochen da?',
@@ -447,7 +450,7 @@ var RAUM = {
    'Was wäre die kleinste Handlung, die dir keine Angst macht?'],
    vorsicht:'Bei ernsthaftem Behördenstau mit Fristen und Folgen reicht Coaching nicht. Dann sind Schuldner- oder Sozialberatung die richtige Adresse — die machen das hauptberuflich und kostenlos.'}},
 
- {id:'lernen', wozuSchutz:'Solange du nicht anfängst, kannst du nicht merken, dass es schwerfällt.',
+ {id:'lernen', worum:'Hier geht es darum, warum du dich stundenlang vertiefen kannst und dann wochenlang nicht. Merken tust du es daran, wie oft du eine Stelle nicht wiederfindest.', wozuSchutz:'Solange du nicht anfängst, kannst du nicht merken, dass es schwerfällt.',
   wozuFrage:'Was würde es über dich sagen, wenn du es versuchst und es dauert länger als gedacht?',
   name:'Lernen und Dranbleiben',
   frage:'Warum kann ich mich stundenlang vertiefen — und dann wochenlang nicht?',
@@ -488,7 +491,7 @@ var RAUM = {
    'Woran scheitert es — am Anfangen oder am Wiederfinden?'],
    vorsicht:'Nicht auf Durchhalten hinarbeiten. Bei schwankender Kapazität ist Dranbleiben das falsche Ziel — Wiederaufnehmen ist das richtige.'}},
 
- {id:'haushalt', wozuSchutz:'Solange nichts aufgeräumt ist, muss auch nichts ordentlich bleiben.',
+ {id:'haushalt', worum:'Hier geht es darum, warum sich alles aufstaut. Merken tust du es daran, dass Aufräumen sich nach mehr Entscheidungen anfühlt als nach Arbeit.', wozuSchutz:'Solange nichts aufgeräumt ist, muss auch nichts ordentlich bleiben.',
   wozuFrage:'Was müsstest du dir zutrauen, wenn deine Wohnung in Ordnung wäre?',
   name:'Haushalt und Wohnung',
   frage:'Warum staut sich das immer wieder auf?',
@@ -526,7 +529,7 @@ var RAUM = {
    'Wie sah Ordnung bei euch früher aus — und wessen Maßstab benutzt du heute?'],
    vorsicht:'Wenn Unordnung so weit geht, dass sie Gesundheit oder Wohnung gefährdet, ist das kein Ordnungsthema mehr und gehört begleitet. Und Scham darüber ist fast immer größer als das Problem selbst.'}},
 
- {id:'schlaf', wozuSchutz:'Die Stunden nach Mitternacht sind oft die einzigen, über die du wirklich selbst bestimmst.',
+ {id:'schlaf', worum:'Hier geht es darum, warum du nicht ins Bett gehst, obwohl du müde bist. Merken tust du es daran, was du stattdessen machst.', wozuSchutz:'Die Stunden nach Mitternacht sind oft die einzigen, über die du wirklich selbst bestimmst.',
   wozuFrage:'Was holst du dir nachts, das dir tagsüber fehlt?',
   name:'Schlaf und Abschalten',
   frage:'Warum gehe ich nicht ins Bett, obwohl ich müde bin?',
@@ -613,7 +616,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -623,7 +627,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -641,13 +645,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

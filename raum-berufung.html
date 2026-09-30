@@ -188,6 +188,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -274,7 +277,7 @@ var RAUM = {
  slug:'berufung',
  sortierTitel:'Wo deine Berufungsfrage tatsächlich hakt',
  facetten:[
- {id:'antrieb', wozuSchutz:'Wer nichts Eigenes will, kann darin auch nicht scheitern.', wozuFrage:'Was würde von dir verlangt, wenn du zugibst, was du wirklich willst?', name:'Was dich antreibt',
+ {id:'antrieb', worum:'Hier geht es darum, was dich tatsächlich in Bewegung bringt — nicht was auf dem Papier gut aussieht. Merken tust du es daran, wobei du nicht auf die Uhr schaust.', wozuSchutz:'Wer nichts Eigenes will, kann darin auch nicht scheitern.', wozuFrage:'Was würde von dir verlangt, wenn du zugibst, was du wirklich willst?', name:'Was dich antreibt',
   frage:'Wofür stehe ich morgens überhaupt auf?',
   anker:{haeuser:[1,5], punkte:['Sonne','Mars','Jupiter']},
   regeln:[
@@ -313,7 +316,7 @@ var RAUM = {
    'Wofür würdest du morgens aufstehen, wenn Geld keine Rolle spielte?'],
    vorsicht:'Nicht zur Leidenschaft drängen. Manche Menschen haben keine brennende Berufung und brauchen stattdessen einen erträglichen Alltag. Das ist kein Defizit.'}},
 
- {id:'sichtbarkeit', wozuSchutz:'Unsichtbar zu bleiben schützt vor Kritik und vor dem Vergleich.', wozuFrage:'Was könnte passieren, wenn Menschen genau wüssten, wofür du stehst?', name:'Wofür du gesehen wirst',
+ {id:'sichtbarkeit', worum:'Hier geht es darum, als was dich Menschen kennen sollen. Merken tust du es daran, wie schwer es dir fällt, in einem Satz zu sagen, was du machst.', wozuSchutz:'Unsichtbar zu bleiben schützt vor Kritik und vor dem Vergleich.', wozuFrage:'Was könnte passieren, wenn Menschen genau wüssten, wofür du stehst?', name:'Wofür du gesehen wirst',
   frage:'Als was sollen mich Menschen kennen?',
   anker:{haeuser:[10], punkte:['MC','Saturn','Jupiter','Chiron']},
   regeln:[
@@ -355,7 +358,7 @@ var RAUM = {
    'Welchen Teil deiner Arbeit versteckst du?'],
    vorsicht:'Nicht mit Positionierungsberatung verwechseln. Die Frage ist nicht, wie man sich verkauft, sondern was tatsächlich stimmt.'}},
 
- {id:'alltag', wozuSchutz:'Ein voller Tag lässt keine Zeit für die Frage, ob es der richtige ist.', wozuFrage:'Was müsstest du dir anschauen, wenn dein Kalender leerer wäre?', name:'Was du täglich tust',
+ {id:'alltag', worum:'Hier geht es nicht um deinen Beruf, sondern um deinen Dienstag. Merken tust du es daran, wie du dich abends fühlst — leer oder gefüllt.', wozuSchutz:'Ein voller Tag lässt keine Zeit für die Frage, ob es der richtige ist.', wozuFrage:'Was müsstest du dir anschauen, wenn dein Kalender leerer wäre?', name:'Was du täglich tust',
   frage:'Hält mein Arbeitsalltag mich aus — oder ich ihn?',
   anker:{haeuser:[6], punkte:['Merkur','Mars','Saturn','Mond']},
   regeln:[
@@ -392,7 +395,7 @@ var RAUM = {
    'Wie sähe ein Tag aus, nach dem du abends nicht leer bist?'],
    vorsicht:'Bei anhaltender Erschöpfung ist das keine Struktur-, sondern eine Gesundheitsfrage. Dann gehört es zur Ärztin.'}},
 
- {id:'verdienst', wozuSchutz:'Solange du deine Zahl nicht kennst, musst du sie auch nicht einfordern.', wozuFrage:'Was würdest du ändern müssen, wenn du genau wüsstest, was du brauchst?', name:'Womit du Geld verdienst',
+ {id:'verdienst', worum:'Hier geht es darum, wovon du lebst und ob das zu dir passt. Merken tust du es daran, ob du weißt, wie viel du im Monat tatsächlich brauchst.', wozuSchutz:'Solange du deine Zahl nicht kennst, musst du sie auch nicht einfordern.', wozuFrage:'Was würdest du ändern müssen, wenn du genau wüsstest, was du brauchst?', name:'Womit du Geld verdienst',
   frage:'Kann ich davon leben — und will ich das so?',
   anker:{haeuser:[2], punkte:['Venus','Jupiter','Saturn']},
   regeln:[
@@ -424,7 +427,7 @@ var RAUM = {
    'Was würdest du tun, wenn Geld für ein Jahr gesichert wäre?'],
    vorsicht:'Keine Finanzberatung. Du arbeitest am Verhältnis zum Geld, nicht an Zahlen oder Anlagen.'}},
 
- {id:'richtung', wozuSchutz:'Beim Bekannten zu bleiben kostet nichts und enttäuscht niemanden.', wozuFrage:'Was hättest du aufzugeben, wenn du die Richtung wechselst — und wer würde es merken?', name:'Wohin es dich zieht',
+ {id:'richtung', worum:'Hier geht es darum, ob dein Weg noch deiner ist oder nur Gewohnheit. Merken tust du es daran, wovon du seit Jahren redest und es nie anfängst.', wozuSchutz:'Beim Bekannten zu bleiben kostet nichts und enttäuscht niemanden.', wozuFrage:'Was hättest du aufzugeben, wenn du die Richtung wechselst — und wer würde es merken?', name:'Wohin es dich zieht',
   frage:'Ist das noch mein Weg oder nur Gewohnheit?',
   anker:{haeuser:[9], punkte:['Jupiter','Neptun']},
   regeln:[
@@ -455,7 +458,7 @@ var RAUM = {
    'Was müsste wegfallen, damit Platz für das Neue wäre?'],
    vorsicht:'Vorsicht mit Aufbruchsromantik. Manchmal ist bleiben die reifere Entscheidung, und das darf im Gespräch vorkommen.'}},
 
- {id:'koennen', wozuSchutz:'Wer seine Stärken für selbstverständlich hält, muss sie nicht verantworten.', wozuFrage:'Was käme auf dich zu, wenn du zugibst, dass du das wirklich gut kannst?', name:'Was du schon mitbringst',
+ {id:'koennen', worum:'Hier geht es um das, was du kannst, ohne es für besonders zu halten. Merken tust du es daran, wofür Menschen sich bei dir bedanken, obwohl du nichts Besonderes getan hast.', wozuSchutz:'Wer seine Stärken für selbstverständlich hält, muss sie nicht verantworten.', wozuFrage:'Was käme auf dich zu, wenn du zugibst, dass du das wirklich gut kannst?', name:'Was du schon mitbringst',
   frage:'Was kann ich eigentlich, ohne es zu merken?',
   anker:{haeuser:[6,3], punkte:['Saturn','Merkur','Mars']},
   regeln:[
@@ -486,7 +489,7 @@ var RAUM = {
    'Was hast du dir mühsam beigebracht und inzwischen vergessen, dass es Mühe war?'],
    vorsicht:'Nicht in Lob kippen. Es geht um Beobachtung von außen, nicht um Aufmunterung.'}},
 
- {id:'beitrag', wozuSchutz:'Ohne benannten Zweck kann man auch nicht daran gemessen werden.', wozuFrage:'Was würde verbindlich, wenn du sagst, wofür deine Arbeit gut sein soll?', name:'Wem du damit nützt',
+ {id:'beitrag', worum:'Hier geht es darum, wofür deine Arbeit am Ende gut sein soll. Merken tust du es daran, ob dir eine Person einfällt, der du konkret geholfen hast.', wozuSchutz:'Ohne benannten Zweck kann man auch nicht daran gemessen werden.', wozuFrage:'Was würde verbindlich, wenn du sagst, wofür deine Arbeit gut sein soll?', name:'Wem du damit nützt',
   frage:'Wofür soll das am Ende gut sein?',
   anker:{haeuser:[11,12], punkte:['Neptun','Jupiter','Pluto']},
   regeln:[
@@ -560,7 +563,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -570,7 +574,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -588,13 +592,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }

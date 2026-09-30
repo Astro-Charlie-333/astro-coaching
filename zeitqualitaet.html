@@ -175,6 +175,25 @@ a{color:var(--nacht);}
 .sk-t.meiden{background:#F6E0D4;color:#8A4326;}
 .sk-warn{background:#F6E3E3;border-left:3px solid #A05A3A;border-radius:11px;padding:11px 14px;
  margin-top:9px;font-size:14px;line-height:1.58;}
+
+.jk-wahl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.jk-wahl button{font-family:var(--sans);font-size:13.5px;padding:8px 15px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:17px;cursor:pointer;}
+.jk-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.jk-box{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:20px 22px;margin-bottom:16px;overflow-x:auto;}
+.jk-box svg{display:block;min-width:620px;}
+.jk-leg{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--leise);margin-top:12px;}
+.jk-leg span{display:flex;align-items:center;gap:7px;}
+.jk-leg i{width:15px;height:15px;border-radius:4px;display:inline-block;}
+.jk-fenster{display:grid;gap:9px;margin-top:16px;}
+.jk-f{display:grid;grid-template-columns:132px 1fr;gap:14px;background:var(--bg);border-radius:14px;
+ padding:13px 16px;align-items:start;}
+.jk-f.gut{border-left:3px solid #6B8C5F;}
+.jk-f.schlecht{border-left:3px solid #A05A3A;}
+.jk-dat{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--nacht);line-height:1.5;}
+.jk-dat span{color:var(--leise);font-size:11px;}
+.jk-f p{margin:0;font-size:14.5px;line-height:1.6;}
+.jk-hin{font-size:13.3px;color:var(--leise);line-height:1.6;margin-top:14px;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -210,6 +229,20 @@ a{color:var(--nacht);}
 <h2>Schönheitstermine</h2>
 <p class="sub">Der Mondkalender ist hier am beliebtesten — und hier auch am harmlosesten, weil sich alles davon um ein paar Tage verschieben lässt. Bei jedem Punkt steht, was die Tradition sagt, <b>und</b> was unabhängig davon tatsächlich hilft. Der zweite Teil ist meistens der nützlichere.</p>
 <div class="sk-gitter" id="skgitter"></div>
+
+
+<h2>Die nächsten Monate im Überblick</h2>
+<p class="sub">Weil man Termine Wochen vorher macht: eine Übersicht über das kommende Jahr. Grün heißt, die Bedingungen stimmen; rot heißt, es gibt einen Grund zu schieben. Wähl aus, worum es geht.</p>
+<div class="jk-wahl" id="jkwahl"></div>
+<div class="jk-box"><svg id="jkkalender" role="img" aria-label="Jahresübersicht"></svg>
+<div class="jk-leg">
+  <span><i style="background:#C5D9C0"></i> gute Fenster</span>
+  <span><i style="background:#F0D8C8"></i> lieber schieben</span>
+  <span><i style="background:#EFE7D8"></i> geht, mit Aufmerksamkeit</span>
+  <span><i style="background:#2E3A5C;width:3px;border-radius:2px;"></i> heute</span>
+</div></div>
+<div class="jk-fenster" id="jkfenster"></div>
+<div class="jk-hin" id="jkhin"></div>
 
 <h2>Was davon taugt — ehrlich</h2>
 <div class="tip"><b>Es gibt keinen Beleg dafür, dass Verträge bei rückläufigem Merkur häufiger scheitern.</b> Was es gibt, ist ein anderer Effekt, und der ist real: Wer weiß, dass gerade eine Phase zum Prüfen ist, <b>liest genauer</b>. Wer weiß, dass er müde ist, plant weniger ein. Der Nutzen liegt nicht im Himmel, sondern in der Aufmerksamkeit, die ein solcher Hinweis erzeugt.</div>
@@ -646,5 +679,149 @@ function schoenZeichnen(){
   box.innerHTML=s;
 }
 schoenZeichnen();
+
+/* ── Jahresübersicht ─────────────────────────────────── */
+var JK_THEMA='farbe';
+var JK_THEMEN=[
+ {id:'farbe', nm:'Färben & Strähnen',
+  regel:function(d){
+    if(d.venusRL) return [-1,'Venus rückläufig — Geschmack verschiebt sich'];
+    if(d.zi===6||d.zi===9||d.zi===1) return [1,'Mond in '+SIGNS[d.zi]+' — gilt als besonders haltbar'];
+    if(d.zi===3||d.zi===11) return [0,'Mond in '+SIGNS[d.zi]+' — Farbe hält weniger gut'];
+    return [0,''];
+  }},
+ {id:'schnitt', nm:'Haare schneiden',
+  regel:function(d){
+    if(d.zi===4||d.zi===5) return [1,'Mond in '+SIGNS[d.zi]+' — das beste Zeichen fürs Schneiden'];
+    if(d.zi===11||d.zi===3) return [-1,'Mond in '+SIGNS[d.zi]+' — gilt als ungünstig'];
+    if(d.zi===1||d.zi===9) return [1,'Mond in '+SIGNS[d.zi]+' — kräftig und haltbar'];
+    return [0,''];
+  }},
+ {id:'botox', nm:'Botox & Filler',
+  regel:function(d){
+    if(d.venusRL) return [-1,'Venus rückläufig — bei Monatelangem lieber warten'];
+    if(d.zi===0) return [-1,'Mond im Widder — der Gesichtszone'];
+    if(!d.zunehmend) return [1,'abnehmender Mond, Mond nicht in der Gesichtszone'];
+    return [0,'zunehmender Mond'];
+  }},
+ {id:'tattoo', nm:'Tattoo & Piercing',
+  regel:function(d){
+    if(d.venusRL) return [-1,'Venus rückläufig — bei Dauerhaftem der deutlichste Hinweis'];
+    if(d.zi===9) return [-1,'Mond im Steinbock — der Hautzone'];
+    if(!d.zunehmend) return [1,'abnehmender Mond, günstig für die Heilung'];
+    return [0,'zunehmender Mond'];
+  }},
+ {id:'pmu', nm:'Wimpern & Permanent Make-up',
+  regel:function(d){
+    if(d.venusRL) return [-1,'Venus rückläufig — hält ein bis drei Jahre, also warten'];
+    if(d.zi===0) return [0,'Mond in der Gesichtszone'];
+    return [1,''];
+  }},
+ {id:'laser', nm:'Waxing & Laser',
+  regel:function(d){ return d.zunehmend?[0,'zunehmender Mond']:[1,'abnehmender Mond — Tradition: langsameres Nachwachsen']; }},
+ {id:'vertrag', nm:'Verträge & Unterschriften',
+  regel:function(d){
+    if(d.merkurRL) return [-1,'Merkur rückläufig — gründlicher lesen oder schieben'];
+    return [1,''];
+  }},
+ {id:'kauf', nm:'Größere Anschaffungen',
+  regel:function(d){
+    if(d.venusRL) return [-1,'Venus rückläufig — gefällt dir später oft weniger'];
+    if(d.merkurRL) return [0,'Merkur rückläufig — Rückgaberecht prüfen'];
+    return [1,''];
+  }},
+ {id:'start', nm:'Etwas Neues anfangen',
+  regel:function(d){
+    if(d.marsRL) return [-1,'Mars rückläufig — Starts verpuffen leichter'];
+    if(d.zunehmend) return [1,'zunehmender Mond — traditionell die Zeit für Anfänge'];
+    return [0,'abnehmender Mond'];
+  }}
+];
+
+function jkTag(j){
+  var so=lon('Sonne',j), mo=lon('Mond',j);
+  return {zi:Math.floor(mo/30), zunehmend:(nrm(mo-so)<180),
+   venusRL:rueck('Venus',j), merkurRL:rueck('Merkur',j), marsRL:rueck('Mars',j)};
+}
+var JK_CACHE=null;
+function jkDaten(){
+  if(JK_CACHE) return JK_CACHE;
+  var a=[];
+  for(var t=0;t<365;t++){ a.push({j:JD+t, d:jkTag(JD+t)}); }
+  JK_CACHE=a; return a;
+}
+
+function jkZeichnen(){
+  var TH=JK_THEMEN.filter(function(x){return x.id===JK_THEMA;})[0];
+  var tage=jkDaten();
+  var s=document.getElementById('jkkalender');
+  var B=920, M=12, ZH=42, H=M*ZH+40;
+  s.setAttribute('viewBox','0 0 '+B+' '+H);
+  var o=[];
+  var d0=new Date((JD-2440587.5)*86400000);
+  var MN=['Jan','Feb','März','Apr','Mai','Juni','Juli','Aug','Sep','Okt','Nov','Dez'];
+  var L=58, R=B-16, breite=(R-L)/31;
+
+  /* Kopfzeile Tagesnummern */
+  for(var t=1;t<=31;t+=5){
+    o.push('<text x="'+(L+(t-1)*breite+breite/2).toFixed(1)+'" y="16" text-anchor="middle" font-size="10" fill="#B5A996">'+t+'</text>');
+  }
+  var heuteY=null, heuteX=null;
+  tage.forEach(function(x){
+    var dd=new Date((x.j-2440587.5)*86400000);
+    var jahrMon=(dd.getUTCFullYear()-d0.getUTCFullYear())*12+(dd.getUTCMonth()-d0.getUTCMonth());
+    if(jahrMon<0||jahrMon>=M) return;
+    var tag=dd.getUTCDate();
+    var y=28+jahrMon*ZH, xx=L+(tag-1)*breite;
+    var r=TH.regel(x.d);
+    var farbe=(r[0]===1)?'#C5D9C0':(r[0]===-1?'#F0D8C8':'#EFE7D8');
+    o.push('<rect x="'+xx.toFixed(1)+'" y="'+y+'" width="'+(breite-1.5).toFixed(1)+'" height="26" rx="4" fill="'+farbe+'"/>');
+    if(x.j===JD){ heuteY=y; heuteX=xx; }
+  });
+  for(var m=0;m<M;m++){
+    var dm=new Date(d0.getUTCFullYear(), d0.getUTCMonth()+m, 1);
+    o.push('<text x="8" y="'+(28+m*ZH+17)+'" font-size="12" fill="#6B6259">'+MN[dm.getMonth()]+' '+
+      (String(dm.getFullYear()).slice(2))+'</text>');
+  }
+  if(heuteY!==null) o.push('<rect x="'+(heuteX-1).toFixed(1)+'" y="'+(heuteY-3)+'" width="3" height="32" rx="1.5" fill="#2E3A5C"/>');
+  s.innerHTML=o.join('');
+
+  /* Fensterliste */
+  var fenster=[], lauf=null;
+  tage.forEach(function(x,i){
+    var r=TH.regel(x.d);
+    if(!lauf||lauf.w!==r[0]){
+      if(lauf&&lauf.w!==0&&lauf.len>=3) fenster.push(lauf);
+      lauf={w:r[0], von:x.j, bis:x.j, len:1, grund:r[1]};
+    } else { lauf.bis=x.j; lauf.len++; if(r[1]&&!lauf.grund) lauf.grund=r[1]; }
+  });
+  if(lauf&&lauf.w!==0&&lauf.len>=3) fenster.push(lauf);
+  var box=document.getElementById('jkfenster'), h='';
+  fenster.slice(0,9).forEach(function(f){
+    h+='<div class="jk-f '+(f.w===1?'gut':'schlecht')+'">'+
+      '<div class="jk-dat">'+dat(f.von)+' – '+dat(f.bis)+'<br><span>'+f.len+' Tage · '+
+      (f.w===1?'günstig':'lieber schieben')+'</span></div>'+
+      '<p>'+(f.grund||(f.w===1?'Bedingungen stimmen.':'Es gibt einen Grund zu warten.'))+'</p></div>';
+  });
+  box.innerHTML=h;
+
+  var gute=fenster.filter(function(f){return f.w===1;});
+  document.getElementById('jkhin').innerHTML=
+    'Im kommenden Jahr gibt es <b>'+gute.length+'</b> längere günstige Fenster für <b>'+TH.nm+'</b>'+
+    (gute.length?', das nächste ab <b>'+dat(gute[0].von)+'</b>':'')+'. '+
+    'Die Übersicht rechnet mit Mondzeichen, Mondphase und Rückläufigkeiten — alles überlieferte Regeln, keine überprüften. '+
+    'Nimm sie als Planungshilfe, nicht als Vorschrift: Ein Termin, den du bekommst, ist mehr wert als ein perfekter, den es nicht gibt.';
+}
+
+function jkWahl(){
+  var w=document.getElementById('jkwahl'); w.innerHTML='';
+  JK_THEMEN.forEach(function(x){
+    var b=document.createElement('button'); b.type='button'; b.textContent=x.nm;
+    b.setAttribute('aria-pressed', JK_THEMA===x.id);
+    b.addEventListener('click',function(){ JK_THEMA=x.id; jkWahl(); jkZeichnen(); });
+    w.appendChild(b);
+  });
+}
+jkWahl(); jkZeichnen();
 </script>
 </body></html>

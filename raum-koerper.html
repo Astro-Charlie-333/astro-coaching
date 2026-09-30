@@ -191,6 +191,9 @@ body.fmt-visuell .fa-frage{display:none;}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
+ font-size:15.3px;line-height:1.62;color:var(--tinte);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -276,7 +279,7 @@ var RAUM = {
  slug:'koerper',
  sortierTitel:'Wo dein Körperthema sitzt',
  facetten:[
- {id:'praesenz', wozuSchutz:'Im Kopf zu sein schützt davor, zu spüren, was der Körper meldet.', wozuFrage:'Was würdest du merken, wenn du ganz in dir wärst?', name:'Wie du im Körper bist',
+ {id:'praesenz', worum:'Hier geht es darum, ob du in deinem Körper anwesend bist oder hauptsächlich im Kopf. Merken tust du es daran, wann du zuletzt bewusst gespürt hast, wie du sitzt.', wozuSchutz:'Im Kopf zu sein schützt davor, zu spüren, was der Körper meldet.', wozuFrage:'Was würdest du merken, wenn du ganz in dir wärst?', name:'Wie du im Körper bist',
   frage:'Bin ich eigentlich anwesend in mir?',
   anker:{haeuser:[1], punkte:['ASC','Mars','Mond']},
   regeln:[
@@ -311,7 +314,7 @@ var RAUM = {
    'Was macht dein Körper, wenn du dich unwohl fühlst?'],
    vorsicht:'Körperwahrnehmung kann bei belastenden Erfahrungen überfordern. Wenn jemand dabei unruhig wird, abbrechen und nicht vertiefen.'}},
 
- {id:'energie', wozuSchutz:'Sich nicht zu bewegen erspart die Erfahrung, dass es anstrengend ist.', wozuFrage:'Wovor schützt dich das Nichtstun — und was wäre unangenehm am Anfangen?', name:'Deine Energie und Bewegung',
+ {id:'energie', worum:'Hier geht es darum, welche Bewegung zu dir passt. Merken tust du es daran, welche Sportart du angefangen und wieder aufgegeben hast — und warum.', wozuSchutz:'Sich nicht zu bewegen erspart die Erfahrung, dass es anstrengend ist.', wozuFrage:'Wovor schützt dich das Nichtstun — und was wäre unangenehm am Anfangen?', name:'Deine Energie und Bewegung',
   frage:'Welche Art von Bewegung tut mir gut?',
   anker:{haeuser:[1,6], punkte:['Mars','Sonne','Jupiter']},
   regeln:[
@@ -351,7 +354,7 @@ var RAUM = {
    'Bewegst du dich für dein Aussehen oder für dein Gefühl?'],
    vorsicht:'Keine Trainingspläne, keine Zahlen, keine Ziele. Wenn Gewicht oder Kontrolle ins Spiel kommen, ist das kein Coaching-Thema mehr.'}},
 
- {id:'stress', wozuSchutz:'Anspannung zu halten hält dich funktionsfähig.', wozuFrage:'Was würde nicht mehr funktionieren, wenn du loslässt?', name:'Wo Anspannung sich zeigt',
+ {id:'stress', worum:'Hier geht es darum, wo sich Anspannung bei dir sammelt. Merken tust du es an der Körperstelle, die sich als Erstes meldet.', wozuSchutz:'Anspannung zu halten hält dich funktionsfähig.', wozuFrage:'Was würde nicht mehr funktionieren, wenn du loslässt?', name:'Wo Anspannung sich zeigt',
   frage:'Warum meldet sich mein Körper immer an derselben Stelle?',
   anker:{haeuser:[6,12], punkte:['Saturn','Mond','Mars','Chiron']},
   regeln:[
@@ -388,7 +391,7 @@ var RAUM = {
    'Was hat schon mal geholfen?'],
    vorsicht:'<b>Wichtig:</b> Körperzonen im Chart sind eine alte Zuordnung, keine Medizin. Ein Chart kann nichts diagnostizieren und keine Beschwerde erklären. Bei anhaltenden Symptomen gehört das zur Ärztin — immer, ohne Ausnahme.'}},
 
- {id:'schlaf', wozuSchutz:'Wachzubleiben verlängert den Tag, über den du selbst bestimmst.', wozuFrage:'Was holst du dir nachts, das dir tagsüber fehlt?', name:'Schlaf und Zur-Ruhe-Kommen',
+ {id:'schlaf', worum:'Hier geht es darum, warum du abends nicht runterkommst. Merken tust du es daran, was du tust, statt ins Bett zu gehen.', wozuSchutz:'Wachzubleiben verlängert den Tag, über den du selbst bestimmst.', wozuFrage:'Was holst du dir nachts, das dir tagsüber fehlt?', name:'Schlaf und Zur-Ruhe-Kommen',
   frage:'Warum komme ich abends nicht runter?',
   anker:{haeuser:[4,12], punkte:['Mond','Neptun','Merkur','Uranus']},
   regeln:[
@@ -428,7 +431,7 @@ var RAUM = {
    'Was war in Phasen, in denen du gut geschlafen hast, anders?'],
    vorsicht:'Anhaltende Schlafstörungen sind medizinisch, nicht astrologisch. Nach ein paar Wochen gehört das abgeklärt.'}},
 
- {id:'genuss', wozuSchutz:'Sich nichts zu gönnen hält die Rechnung sauber — man schuldet niemandem etwas.', wozuFrage:'Was müsstest du dir zugestehen, wenn du dir ohne Anlass etwas gönnst?', name:'Genuss und Versorgung',
+ {id:'genuss', worum:'Hier geht es darum, ob du dir etwas gönnst, ohne es dir zu verdienen. Merken tust du es daran, ob dir spontan etwas einfällt, das du zuletzt ohne Anlass getan hast.', wozuSchutz:'Sich nichts zu gönnen hält die Rechnung sauber — man schuldet niemandem etwas.', wozuFrage:'Was müsstest du dir zugestehen, wenn du dir ohne Anlass etwas gönnst?', name:'Genuss und Versorgung',
   frage:'Gönne ich mir eigentlich etwas?',
   anker:{haeuser:[2,5], punkte:['Venus','Jupiter','Mond']},
   regeln:[
@@ -460,7 +463,7 @@ var RAUM = {
    'Wer hat dir beigebracht, dass man sich etwas verdienen muss?'],
    vorsicht:'Bei Themen rund um Essen, Gewicht oder Kontrolle: nicht weiterarbeiten, sondern verweisen.'}},
 
- {id:'hoeren', wozuSchutz:'Signale zu überhören erlaubt, weiterzumachen wie geplant.', wozuFrage:'Was müsstest du absagen, wenn du auf deinen Körper hörst?', name:'Auf den Körper hören',
+ {id:'hoeren', worum:'Hier geht es darum, ob du merkst, was dein Körper will. Merken tust du es daran, wie oft du erst reagierst, wenn es schon wehtut.', wozuSchutz:'Signale zu überhören erlaubt, weiterzumachen wie geplant.', wozuFrage:'Was müsstest du absagen, wenn du auf deinen Körper hörst?', name:'Auf den Körper hören',
   frage:'Woher weiß ich, was mein Körper braucht?',
   anker:{haeuser:[6,12], punkte:['Mond','Neptun','Chiron']},
   regeln:[
@@ -540,7 +543,8 @@ function bauen(){
       '<summary><span class="fa-rang">'+(i+1)+'</span><span class="fa-name">'+r.fc.name+'</span>'+
       '<span class="fa-marke '+(istLaut?'laut':'leise')+'">'+(istLaut?'laut bei dir':(r.rel<45?'leise':'mittel'))+'</span></summary>'+
       '<div class="fa-inhalt">'+
-      '<div class="fa-frage">'+r.fc.frage+'</div>';
+      '<div class="fa-frage">'+r.fc.frage+'</div>'+
+      (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
 
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
@@ -550,7 +554,7 @@ function bauen(){
         (r.f.aspekte||[]).slice(0,2).map(function(x){return '<span class="vc '+(x.art==='hart'?'hart':'weich')+'">'+x.a+' '+x.typ+' '+x.b+'</span>';}).join('')+
         (r.f.achsnah||[]).map(function(x){return '<span class="vc achs">'+x.p+' auf '+x.zu+'</span>';}).join('')+
       '</div></div></div>'+
-      '<div class="fa-block"><span class="lab">Was dein Chart dazu sagt</span>';
+      '<div class="fa-block"><span class="lab">Und das steht bei dir im Chart</span>';
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
@@ -568,13 +572,13 @@ function bauen(){
       aspekte:r.f.aspekte.slice(0,4).map(function(x){return [x.a,x.typ,x.b,+x.o.toFixed(1),x.art];}),
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
-    if(d.length) h+='<div class="fa-block"><span class="lab">Die Daten dahinter</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
+    if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
 
-    h+='<div class="fa-block"><span class="lab">Deine Übung für diese Woche</span>'+
+    h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
 
     if(r.fc.wozuFrage){
-      h+='<div class="fa-wozu"><span class="lab">Wozu ist das gut?</span>'+
+      h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
         '<p class="fa-wozu-f">'+r.fc.wozuFrage+'</p></div>';
     }
