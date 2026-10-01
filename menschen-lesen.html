@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menschen lesen · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="begriffe.js" defer></script>
+<script src="format.js" defer></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.ml-warn{background:#FBF0E8;border:1px solid #E2C3B4;border-radius:20px;padding:20px 22px;margin-bottom:24px;}
+.ml-warn h3{font-family:var(--serif);font-size:19px;font-weight:400;color:#8A4326;margin:0 0 8px;}
+.ml-warn p{margin:0 0 10px;font-size:15px;line-height:1.65;}
+.ml-warn p:last-child{margin-bottom:0;}
+.ml-schichten{display:grid;gap:11px;margin:18px 0 24px;}
+.ml-s{display:grid;grid-template-columns:66px 1fr;gap:16px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:18px;padding:18px 20px;align-items:start;}
+.ml-s .zeit{width:58px;height:58px;border-radius:17px;background:var(--nacht-bg);flex:none;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;}
+.ml-s .zeit b{font-family:var(--serif);font-size:19px;color:var(--nacht);}
+.ml-s .zeit span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--leise);margin-top:2px;}
+.ml-s .nm{font-family:var(--serif);font-size:20px;color:var(--tinte);margin-bottom:3px;}
+.ml-s p{margin:0;font-size:14.8px;line-height:1.6;}
+.ml-s .frag{background:var(--messing-bg);border-radius:12px;padding:11px 14px;margin-top:10px;
+ font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
+
+/* Schnell-Check */
+.ck{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:22px;padding:24px 26px;margin-bottom:16px;}
+.ck h3{font-family:var(--serif);font-size:21px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.ck .sub6{font-size:14px;color:var(--leise);margin-bottom:18px;line-height:1.55;}
+.ck-f{background:var(--papier);border-radius:16px;padding:16px 18px;margin-bottom:10px;}
+.ck-f .fr{font-family:var(--serif);font-size:17.5px;color:var(--nacht);margin-bottom:11px;line-height:1.35;}
+.ck-w{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+@media(min-width:620px){.ck-w.vier{grid-template-columns:repeat(4,1fr);}
+ .ck-w.drei{grid-template-columns:repeat(3,1fr);}}
+.ck-w button{font-family:var(--sans);font-size:14px;padding:13px 10px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:13px;cursor:pointer;line-height:1.35;text-align:left;}
+.ck-w button:hover{border-color:var(--nacht);}
+.ck-w button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.ck-erg{background:var(--messing-bg);border-radius:18px;padding:20px 22px;margin-top:14px;display:none;}
+.ck-erg.an{display:block;}
+.ck-erg .tipp{font-family:var(--serif);font-size:clamp(22px,4vw,30px);color:var(--nacht);line-height:1.2;}
+.ck-erg .wie{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);margin-top:6px;}
+.ck-erg p{margin:12px 0 0;font-size:15px;line-height:1.65;}
+.ck-zweit{margin-top:12px;padding-top:12px;border-top:1px solid var(--linie);font-size:14.5px;color:var(--leise);line-height:1.6;}
+
+/* Zeichen-Tabellen */
+.zt-wahl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.zt-wahl button{font-family:var(--sans);font-size:13.5px;padding:8px 15px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:17px;cursor:pointer;}
+.zt-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.zt{display:grid;gap:8px;}
+.zz{display:grid;grid-template-columns:118px 1fr;gap:14px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:15px;padding:14px 16px;align-items:start;}
+@media(max-width:560px){.zz{grid-template-columns:1fr;gap:6px;}}
+.zz .zn{display:flex;gap:9px;align-items:center;}
+.zz .gl{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+ font-size:16px;color:#fff;flex:none;}
+.zz .nn{font-family:var(--serif);font-size:16.5px;color:var(--nacht);}
+.zz p{margin:0;font-size:14.6px;line-height:1.6;}
+.zz .el{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--leise);}
+
+.ml-verw{display:grid;gap:9px;margin:16px 0;}
+.vw{background:var(--papier);border:1px solid var(--linie);border-radius:15px;padding:14px 17px;}
+.vw b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
+.vw p{margin:5px 0 0;font-size:14.5px;line-height:1.6;color:var(--leise);}
+.vw p b{color:var(--tinte);font-size:14.5px;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Übung</div>
+<h1>Menschen <em>lesen.</em></h1>
+<p class="lede">Wer jemanden ansieht und denkt „das ist doch ein Löwe-Aszendent" — was genau nimmt man da eigentlich wahr? Diese Seite zerlegt das in beobachtbare Schichten und macht ein Training daraus. Für Reality-TV, für den Alltag, und weil es Spaß macht.</p>
+
+<div class="ml-warn">
+  <h3>Was hier ehrlich dazugehört</h3>
+  <p><b>Das funktioniert nicht zuverlässig, und zwar niemand.</b> Untersuchungen, in denen Astrologinnen Charts zu Personen zuordnen sollten, liefen wiederholt auf Zufallsniveau. Wenn dir jemand erzählt, er erkenne Sternzeichen sicher am Auftreten, ist das nicht belegt — und im Zweifel erinnert er sich nur an die Treffer.</p>
+  <p><b>Was tatsächlich trainiert wird, ist etwas anderes und ziemlich wertvoll:</b> genaues Hinschauen. Tempo, Nähe, Stimme, wie jemand einen Raum betritt, was passiert, wenn es unangenehm wird. Das ist echte Beobachtungsfähigkeit — und die brauchst du in deiner Arbeit ohnehin. Das astrologische Vokabular ist dabei ein Ordnungssystem, kein Nachweis.</p>
+  <p><b>Und die Falle, die ich ernst meine:</b> Menschen einzusortieren, bevor man sie kennt, macht blind für das, was nicht ins Bild passt. Als Spiel vor dem Fernseher ist das harmlos. Bei echten Menschen, mit denen du arbeitest, ist Zuhören immer besser als Raten.</p>
+</div>
+
+<h2>Die vier Schichten</h2>
+<p class="sub">Sie zeigen sich nacheinander — das ist der Schlüssel. Wer das trennt, rät deutlich sortierter.</p>
+
+<div class="ml-schichten">
+  <div class="ml-s"><div class="zeit"><b>10</b><span>Sekunden</span></div><div>
+    <div class="nm">Aszendent — die Verpackung</div>
+    <p>Wie jemand einen Raum betritt, Tempo, Körperhaltung, Kleidung, erster Tonfall. Das ist die <b>am ehesten lesbare</b> Schicht, weil sie unwillkürlich ist. Sie sagt aber nichts über das Innenleben — sie ist die Tür, nicht das Zimmer.</p>
+    <div class="frag">Was denke ich über diese Person, bevor sie den ersten Satz beendet hat?</div></div></div>
+
+  <div class="ml-s"><div class="zeit"><b>1</b><span>Stunde</span></div><div>
+    <div class="nm">Merkur — wie jemand redet</div>
+    <p>Nicht was, sondern wie. Tempo, Satzlänge, ob jemand in Bildern oder in Listen spricht, ob er unterbricht, wie er ein Thema wechselt. Gut zu beobachten, weil Sprache ständig stattfindet.</p>
+    <div class="frag">Erzählt diese Person chronologisch oder springt sie?</div></div></div>
+
+  <div class="ml-s"><div class="zeit"><b>bei</b><span>Druck</span></div><div>
+    <div class="nm">Mond und Mars — was bei Stress kommt</div>
+    <p>Die ehrlichste Schicht. Wenn jemand müde, gekränkt oder überfordert ist, fällt die Verpackung weg. Der <b>Mond</b> zeigt sich darin, was jemand dann braucht; der <b>Mars</b> darin, wie er sich wehrt. Reality-TV ist genau deshalb so ergiebig — dort ist ständig Druck.</p>
+    <div class="frag">Zieht sich diese Person zurück, wird sie laut, oder macht sie einen Witz?</div></div></div>
+
+  <div class="ml-s"><div class="zeit"><b>über</b><span>Monate</span></div><div>
+    <div class="nm">Sonne — wohin es immer wieder geht</div>
+    <p>Die am schwersten zu erratende Schicht, weil sie keine Oberfläche hat. Die Sonne zeigt sich in dem, worauf jemand über Jahre zusteuert, was er wichtig nimmt, wofür er Energie aufbringt, ohne dass es jemand verlangt. <b>In zehn Minuten ist sie nicht zu sehen.</b></p>
+    <div class="frag">Worauf kommt diese Person immer wieder zurück?</div></div></div>
+</div>
+
+<h2>Der Schnell-Check</h2>
+<p class="sub">Die klassische Methode: erst das Element, dann die Qualität — beides zusammen ergibt genau ein Zeichen. Funktioniert am besten für den Aszendenten, also für den ersten Eindruck.</p>
+
+<div class="ck">
+  <h3>Sechs Fragen zu einer Person</h3>
+  <div class="sub6">Denk an jemanden, den du gerade beobachtest. Antworte nach dem ersten Eindruck, nicht nach Nachdenken.</div>
+  <div id="ckfragen"></div>
+  <div style="margin-top:6px;">
+    <button class="wg-b" id="ckgo" style="font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;padding:12px 24px;border-radius:22px;cursor:pointer;">Tipp abgeben</button>
+    <button id="ckneu" style="font-family:var(--sans);font-size:14px;background:none;border:none;color:var(--nacht);text-decoration:underline;cursor:pointer;margin-left:12px;">zurücksetzen</button>
+  </div>
+  <div class="ck-erg" id="ckerg"></div>
+</div>
+
+<h2>Wie die Zeichen wirken</h2>
+<p class="sub">Beobachtbares Verhalten statt Charaktereigenschaften — jeweils für die Schicht, die du gerade lesen willst.</p>
+<div class="zt-wahl" id="ztwahl"></div>
+<div class="zt" id="zt"></div>
+
+<h2>Die vier häufigsten Verwechslungen</h2>
+<div class="ml-verw">
+  <div class="vw"><b>Waage und Fische</b><p>Beide wirken weich, zugewandt und vermeiden Konflikte. <b>Der Unterschied:</b> Waage vermeidet Konflikte, um das Gleichgewicht zu halten — sie hat eine klare Meinung und behält sie für sich. Fische verschwimmt tatsächlich, die Meinung bildet sich erst im Gegenüber.</p></div>
+  <div class="vw"><b>Skorpion und Steinbock</b><p>Beide zurückhaltend, kontrolliert, schwer zu lesen. <b>Der Unterschied:</b> Steinbock ist sachlich zurückhaltend, es gibt schlicht nichts zu zeigen. Skorpion hält aktiv zurück — man spürt, dass etwas da ist.</p></div>
+  <div class="vw"><b>Zwillinge und Schütze</b><p>Beide gesprächig, schnell, begeistert. <b>Der Unterschied:</b> Zwillinge sammelt und verknüpft, springt zwischen Themen. Schütze hat eine These und steuert darauf zu — er redet viel, aber zielgerichtet.</p></div>
+  <div class="vw"><b>Widder und Löwe</b><p>Beide präsent, schnell, raumgreifend. <b>Der Unterschied:</b> Widder will handeln und ist wieder weg. Löwe will gesehen werden und bleibt. Wenn jemand nach dem Auftritt prüft, ob es angekommen ist — Löwe.</p></div>
+</div>
+
+<h2>Training mit Reality-TV</h2>
+<div class="tip"><b>So wird aus Zuschauen tatsächlich Übung:</b>
+<br><br>
+<b>1 · Tippe schriftlich, bevor du es weißt.</b> Notier deinen Tipp für eine Person in den ersten fünf Minuten — Element und Qualität, nicht das Zeichen. Wer nicht aufschreibt, erinnert sich später nur an die Treffer. Das ist der Unterschied zwischen Übung und Selbstbestätigung.
+<br><br>
+<b>2 · Achte auf Szenen mit Druck.</b> Die ersten Minuten zeigen den Aszendenten. Interessant wird es beim ersten Streit — da kommt Mond und Mars.
+<br><br>
+<b>3 · Trenne die Schichten bewusst.</b> Sag dir laut, welche du gerade liest. „Das ist Auftreten" ist etwas anderes als „das ist ihr Kern".
+<br><br>
+<b>4 · Und rechne mit deiner Trefferquote.</b> Bei zwölf Zeichen liegt Zufall bei 8 Prozent, beim Element bei 25. Wenn du über längere Zeit deutlich darüber liegst, hast du etwas gefunden. Wenn nicht, hast du trotzdem besser beobachten gelernt — und das war ohnehin der wertvollere Teil.</div>
+
+<div class="weiter"><a href="asteroiden.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Die Asteroiden</span></a><a href="grenzen.html" class="nx"><span class="lbl">Wichtig &rarr;</span><span class="ttl">Wann du nicht deutest</span></a></div>
+<div class="foot">Menschen lesen &middot; Ein Beobachtungstraining mit astrologischem Vokabular. Die Zuordnung ist nicht &uuml;berpr&uuml;fbar &mdash; die Wahrnehmung, die du dabei &uuml;bst, schon.</div>
+</div>
+<script>
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELN=['Feuer','Erde','Luft','Wasser'];
+var MON=['kardinal','fix','veränderlich'];
+
+/* ── Schnell-Check ── */
+var FRAGEN=[
+ {id:'tempo', f:'Wie bewegt sich die Person?', s:'vier',
+  opt:[['Schnell, raumgreifend','e0'],['Ruhig, bedächtig','e1'],['Beweglich, wechselnd','e2'],['Fließend, weich','e3']]},
+ {id:'stimme', f:'Wie klingt die Stimme?', s:'vier',
+  opt:[['Laut, bestimmt','e0'],['Tief, gleichmäßig','e1'],['Schnell, hell','e2'],['Leise, weich','e3']]},
+ {id:'kontakt', f:'Wie geht sie auf andere zu?', s:'vier',
+  opt:[['Direkt, sofort','e0'],['Abwartend, prüfend','e1'],['Über Gespräch','e2'],['Über Stimmung','e3']]},
+ {id:'start', f:'Was passiert, wenn etwas Neues ansteht?', s:'drei',
+  opt:[['Sie fängt an','m0'],['Sie bleibt bei ihrem Plan','m1'],['Sie passt sich an','m2']]},
+ {id:'druck', f:'Und wenn es unangenehm wird?', s:'drei',
+  opt:[['Sie geht drauf zu','m0'],['Sie hält dagegen','m1'],['Sie weicht aus','m2']]},
+ {id:'meinung', f:'Wie hält sie an einer Meinung fest?', s:'drei',
+  opt:[['Setzt sie durch, wechselt dann','m0'],['Ändert sie fast nie','m1'],['Denkt laut, ändert oft','m2']]}
+];
+var ant={};
+
+function ckZeichnen(){
+  var box=document.getElementById('ckfragen'); box.innerHTML='';
+  FRAGEN.forEach(function(q){
+    var d=document.createElement('div'); d.className='ck-f';
+    d.innerHTML='<div class="fr">'+q.f+'</div><div class="ck-w '+q.s+'"></div>';
+    var w=d.querySelector('.ck-w');
+    q.opt.forEach(function(o){
+      var b=document.createElement('button'); b.type='button'; b.textContent=o[0];
+      b.setAttribute('aria-pressed', ant[q.id]===o[1]);
+      b.addEventListener('click',function(){ ant[q.id]=o[1]; ckZeichnen(); });
+      w.appendChild(b);
+    });
+    box.appendChild(d);
+  });
+}
+
+function ckAuswerten(){
+  var el=[0,0,0,0], mo=[0,0,0], n=0;
+  Object.keys(ant).forEach(function(k){
+    var v=ant[k]; n++;
+    if(v[0]==='e') el[+v[1]]++; else mo[+v[1]]++;
+  });
+  var box=document.getElementById('ckerg');
+  if(n<3){ box.innerHTML='<p>Beantworte mindestens drei Fragen — sonst ist es Raten statt Beobachten.</p>'; box.className='ck-erg an'; return; }
+  var eMax=el.indexOf(Math.max.apply(null,el)), mMax=mo.indexOf(Math.max.apply(null,mo));
+  /* Element + Qualität ergeben genau ein Zeichen */
+  var idx=-1;
+  for(var i=0;i<12;i++){ if(i%4===eMax && i%3===mMax) idx=i; }
+  var eSum=el[0]+el[1]+el[2]+el[3], mSum=mo[0]+mo[1]+mo[2];
+  var klar=(eSum>0 && el[eMax]/eSum>=0.6) && (mSum>0 && mo[mMax]/mSum>=0.6);
+  /* zweitbester Kandidat: gleiches Element, andere Qualität */
+  var zweitM=mo.map(function(v,i){return [v,i];}).sort(function(a,b){return b[0]-a[0];})[1];
+  var idx2=-1;
+  if(zweitM) for(var j=0;j<12;j++){ if(j%4===eMax && j%3===zweitM[1]) idx2=j; }
+
+  var h='<div class="tipp">'+GLZ[idx]+' '+SIGNS[idx]+'</div>'+
+    '<div class="wie">'+ELN[eMax]+' · '+MON[mMax]+'  —  Element '+el[eMax]+' von '+eSum+', Qualität '+mo[mMax]+' von '+mSum+'</div>';
+  h+='<p>'+(klar
+    ? 'Deine Beobachtungen zeigen ziemlich einheitlich in eine Richtung. Das heißt nicht, dass es stimmt — es heißt, dass du konsistent wahrgenommen hast.'
+    : 'Deine Beobachtungen sind gemischt. Das ist häufig und oft richtig so: Menschen sind nicht ein Zeichen. Möglicherweise siehst du gerade Aszendent und Mond gleichzeitig.')+'</p>';
+  if(idx2>=0&&idx2!==idx) h+='<div class="ck-zweit"><b>Zweiter Kandidat:</b> '+GLZ[idx2]+' '+SIGNS[idx2]+
+    ' — gleiches Element, andere Qualität. Wenn dein erster Tipp nicht passt, ist das meistens der nächste.</div>';
+  h+='<div class="ck-zweit"><b>Und zur Einordnung:</b> Ein Treffer bedeutet wenig, zwanzig Treffer über Monate schon etwas. '+
+    'Schreib deinen Tipp auf, bevor du es erfährst — sonst zählt dein Gedächtnis nur die Erfolge.</div>';
+  box.innerHTML=h; box.className='ck-erg an';
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ── Zeichen-Tabellen ── */
+var TAB={
+ asc:['Geht schnell und direkt auf Leute zu, spricht als Erste, wirkt wach und manchmal ungeduldig. Oft markante Stirn, energischer Gang.',
+  'Ruhig, geerdet, langsamer Gang. Angenehme Stimme, wirkt solide und schwer aus der Ruhe zu bringen. Nimmt sich Zeit beim Antworten.',
+  'Beweglich, gestikuliert, redet schnell und viel. Wirkt jünger als sie ist, springt zwischen Themen, hat immer eine Frage.',
+  'Zurückhaltend beim ersten Kontakt, taut auf, wenn es vertrauter wird. Weiche Gesichtszüge, aufmerksam für Stimmungen im Raum.',
+  'Präsent, aufrecht, gepflegt. Nimmt Raum ein, ohne laut zu sein. Man schaut hin, auch wenn sie nichts tut. Achtet auf Wirkung.',
+  'Ordentlich, zurückhaltend, genau. Beobachtet erst, bevor sie spricht. Wirkt kontrolliert und bemerkt Details, die anderen entgehen.',
+  'Freundlich, zugewandt, ästhetisch. Sucht Ausgleich, vermeidet Ecken. Lächelt viel und stimmt zu, auch wenn sie anderer Meinung ist.',
+  'Zurückhaltend, aber intensiv. Wenig Mimik, fester Blick. Man merkt, dass mehr da ist, als gezeigt wird. Wirkt schwer einzuschätzen.',
+  'Offen, laut, begeistert. Lacht viel, erzählt große Bögen, wirkt unkompliziert. Kommt schnell zu Grundsätzlichem.',
+  'Sachlich, reserviert, älter wirkend als sie ist. Wenig Gesten, trockener Humor. Braucht lange, bis sie auftaut.',
+  'Freundlich und trotzdem distanziert. Wirkt eigen, oft ungewöhnlich gekleidet oder frisiert. Höflich, aber schwer greifbar.',
+  'Weich, durchlässig, verschwimmend. Wirkt verträumt oder unkonzentriert. Passt sich der Stimmung des Raumes an, ohne es zu merken.'],
+ mond:['Reagiert sofort und laut, ist aber ebenso schnell wieder in Ordnung. Braucht Bewegung, wenn es eng wird.',
+  'Braucht Ruhe, Essen, Vertrautes. Reagiert langsam, aber wenn sie einmal sauer ist, hält es lange.',
+  'Redet, wenn es ihr schlecht geht — manchmal ohne Punkt. Braucht jemanden zum Sortieren, nicht zum Trösten.',
+  'Zieht sich zurück, wird still, nimmt Stimmungen auf. Braucht Nähe und Sicherheit, fragt aber selten danach.',
+  'Braucht Bestätigung und Sichtbarkeit. Gekränkt wird sie über Nichtbeachtung, nicht über Kritik.',
+  'Wird bei Stress sehr ordentlich oder sehr kritisch. Sortiert und räumt auf, statt zu fühlen.',
+  'Sucht Ausgleich und fragt, ob alles in Ordnung ist. Erträgt Streit schlecht, auch wenn er sie nicht betrifft.',
+  'Zieht sich völlig zurück und sagt nichts. Nachtragend, nicht aus Bosheit, sondern weil es tief geht.',
+  'Macht einen Witz, wechselt das Thema, sucht Weite. Vermeidet Schwere durch Bewegung.',
+  'Wird sachlich und funktional. Kümmert sich um Praktisches, statt über Gefühle zu reden.',
+  'Geht auf Abstand und beobachtet von außen — auch die eigenen Gefühle. Wirkt dann kühl.',
+  'Löst sich auf, weint leicht, nimmt alles auf. Schwer zu trennen, was eigenes Gefühl ist und was fremdes.'],
+ sonne:['Steuert auf Anfänge zu, sucht Herausforderung, langweilt sich bei Wiederholung.',
+  'Steuert auf Beständigkeit zu, baut auf, will besitzen und genießen.',
+  'Steuert auf Vielfalt zu, sammelt Wissen und Kontakte, will verstehen und verknüpfen.',
+  'Steuert auf Zugehörigkeit zu, baut ein Zuhause, kümmert sich um die Eigenen.',
+  'Steuert auf Ausdruck zu, will etwas Eigenes schaffen und dafür gesehen werden.',
+  'Steuert auf Nützlichkeit zu, will etwas richtig machen und gebraucht werden.',
+  'Steuert auf Beziehung und Gerechtigkeit zu, braucht ein Gegenüber, um ganz zu sein.',
+  'Steuert auf Tiefe zu, will hinter die Dinge und verträgt keine Oberfläche.',
+  'Steuert auf Sinn zu, sucht Überblick, Freiheit und Überzeugung.',
+  'Steuert auf Aufbau und Verantwortung zu, will etwas hinterlassen, das trägt.',
+  'Steuert auf Erneuerung zu, will etwas für die Gruppe und gegen die Konvention.',
+  'Steuert auf Auflösung zu, sucht das Größere, Kunst, Mitgefühl oder Spiritualität.'],
+ merkur:['Redet schnell, unterbricht, kommt sofort zum Punkt. Ungeduldig bei langen Erklärungen.',
+  'Redet langsam und bedacht, wiederholt sich, will es konkret. Lässt sich nicht hetzen.',
+  'Springt zwischen Themen, erzählt in Nebensätzen, stellt viele Fragen. Denkt beim Reden.',
+  'Erzählt über Gefühle und Bilder, umkreist das Thema, wird persönlich statt sachlich.',
+  'Erzählt mit Geste und Dramatik, gern im Mittelpunkt. Macht aus jedem Erlebnis eine Geschichte.',
+  'Sehr genau, korrigiert Details, legt Wert auf die richtige Formulierung. Kann kleinlich wirken.',
+  'Formuliert vorsichtig und abwägend, sagt „einerseits, andererseits". Vermeidet klare Positionen.',
+  'Sagt wenig, fragt gezielt, hört mehr als sie spricht. Was sie sagt, sitzt.',
+  'Redet in großen Bögen und Prinzipien, gern belehrend. Verliert Details aus dem Blick.',
+  'Knapp, sachlich, ergebnisorientiert. Kein Smalltalk, keine Ausschmückung.',
+  'Ungewöhnliche Gedanken, plötzliche Themenwechsel, gern gegen die gängige Meinung.',
+  'Spricht assoziativ und ungenau, Zeitangaben stimmen selten. Erzählt in Stimmungen.'],
+ mars:['Setzt sich sofort und direkt durch, wird laut, ist danach schnell wieder gut.',
+  'Setzt sich langsam durch, gibt aber nicht nach. Sturheit statt Ausbruch.',
+  'Wehrt sich mit Worten, argumentiert, wird spitz statt laut.',
+  'Wehrt sich indirekt, über Rückzug oder Schuldgefühle. Selten offen.',
+  'Wehrt sich mit Stolz, große Geste, will recht behalten und Anerkennung.',
+  'Wehrt sich über Kritik im Detail, korrigiert, wird pedantisch.',
+  'Wehrt sich kaum direkt, versucht zu vermitteln — und staut es an.',
+  'Wehrt sich spät und dann gründlich. Keine Eskalation, sondern Konsequenz.',
+  'Wehrt sich mit Empörung und Grundsatz, wird laut und schnell wieder freundlich.',
+  'Wehrt sich durch Ausdauer und Struktur. Lässt den anderen auflaufen.',
+  'Wehrt sich durch Abbruch. Von jetzt auf gleich, ohne Vorwarnung.',
+  'Wehrt sich kaum, weicht aus, verschwindet. Passiver Widerstand.']
+};
+var LAB={asc:'Aszendent · erster Eindruck',mond:'Mond · bei Stress',sonne:'Sonne · über Zeit',
+ merkur:'Merkur · im Gespräch',mars:'Mars · im Konflikt'};
+var ztAktiv='asc';
+
+function ztZeichnen(){
+  var box=document.getElementById('zt'), t=TAB[ztAktiv], h='';
+  for(var i=0;i<12;i++){
+    h+='<div class="zz"><div class="zn"><div class="gl" style="background:'+ELF[i%4]+'">'+GLZ[i]+'</div>'+
+      '<div><div class="nn">'+SIGNS[i]+'</div><div class="el">'+ELN[i%4]+' · '+MON[i%3]+'</div></div></div>'+
+      '<p>'+t[i]+'</p></div>';
+  }
+  box.innerHTML=h;
+}
+function ztWahl(){
+  var w=document.getElementById('ztwahl'); w.innerHTML='';
+  Object.keys(LAB).forEach(function(k){
+    var b=document.createElement('button'); b.type='button'; b.textContent=LAB[k];
+    b.setAttribute('aria-pressed', ztAktiv===k);
+    b.addEventListener('click',function(){ ztAktiv=k; ztWahl(); ztZeichnen(); });
+    w.appendChild(b);
+  });
+}
+
+ckZeichnen(); ztWahl(); ztZeichnen();
+document.getElementById('ckgo').addEventListener('click',ckAuswerten);
+document.getElementById('ckneu').addEventListener('click',function(){
+  ant={}; ckZeichnen();
+  var e=document.getElementById('ckerg'); e.innerHTML=''; e.className='ck-erg';
+});
+
+</script>
+</body></html>

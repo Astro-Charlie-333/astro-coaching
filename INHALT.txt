@@ -1,10 +1,7 @@
-INHALT DES PAKETS astro-coaching.zip
-==============================================
+INHALT DES PAKETS
+========================================
 
-119 Dateien insgesamt
-
-Wenn nach dem Entpacken nicht alle da sind, ist beim Download
-etwas schiefgegangen — dann bitte nochmal laden.
+120 Dateien
 
 NETLIFY-ANLEITUNG.md                       7416 Bytes
 achsen.html                                9917 Bytes
@@ -15,7 +12,7 @@ aspekt-muster.html                        10876 Bytes
 aspekte-daten.js                          15241 Bytes
 aspekte-lesen.html                        16369 Bytes
 aspekte.html                              14602 Bytes
-asteroiden.html                           30293 Bytes
+asteroiden.html                           30291 Bytes
 asteroiden.js                             83142 Bytes
 astrokartographie.html                    15423 Bytes
 audhs-verstehen.html                      20649 Bytes
@@ -60,6 +57,7 @@ lilith-arbeit.html                        29189 Bytes
 linien-lesen.html                         27117 Bytes
 lunationen.html                           72497 Bytes
 mein-chart.html                           26068 Bytes
+menschen-lesen.html                       30500 Bytes
 methoden.html                             33701 Bytes
 mondknoten-coaching.html                  19277 Bytes
 mondknoten.html                            9800 Bytes
@@ -122,6 +120,6 @@ uebungscharts.html                        20550 Bytes
 weg.html                                  29253 Bytes
 werkzeuge.html                            10009 Bytes
 wetter.js                                 13251 Bytes
-wissen.html                               21533 Bytes
+wissen.html                               21707 Bytes
 zeichen.html                              14067 Bytes
 zeitqualitaet.html                        54152 Bytes
