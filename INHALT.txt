@@ -12,7 +12,7 @@ aspekt-muster.html                        10876 Bytes
 aspekte-daten.js                          15241 Bytes
 aspekte-lesen.html                        16369 Bytes
 aspekte.html                              14602 Bytes
-asteroiden.html                           30291 Bytes
+asteroiden.html                           40205 Bytes
 asteroiden.js                             83142 Bytes
 astrokartographie.html                    15423 Bytes
 audhs-verstehen.html                      20649 Bytes

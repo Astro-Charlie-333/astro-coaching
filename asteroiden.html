@@ -147,6 +147,17 @@ a{color:var(--nacht);}
 .as-tab tr:last-child td{border-bottom:none;}
 .as-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:18px;padding:26px;
  text-align:center;color:var(--leise);line-height:1.65;}
+
+.as-asp-d{background:var(--papier);border:1px solid var(--linie);border-radius:14px;
+ padding:14px 16px;margin-top:9px;}
+.as-asp-d.erst{border-color:var(--nacht);}
+.aad-kopf{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:7px;}
+.aad-kopf b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
+.aad-orb{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--leise);margin-left:auto;}
+.as-asp-d p{margin:0 0 7px;font-size:14.7px;line-height:1.62;}
+.as-asp-d p:last-child{margin-bottom:0;}
+.aad-art{color:var(--leise);font-size:14.3px;}
+.aad-gew{background:var(--messing-bg);border-radius:11px;padding:10px 13px;font-size:14.2px;margin-top:9px;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -251,6 +262,75 @@ function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*6
  if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+' '+('0'+m).slice(-2)+"'";}
 function nrm(x){x=x%360;return x<0?x+360:x;}
 
+
+/* ── Aspektdeutungen: was die Verbindung konkret bedeutet ── */
+var PAARE={
+ Ceres:{
+  Sonne:'Fürsorge und Identität hängen bei dir zusammen. Du bist, wer du bist, auch dadurch, dass du für andere sorgst — und fühlst dich seltsam leer, wenn gerade niemand da ist, um den du dich kümmern könntest.',
+  Mond:'Doppelte Besetzung: Beide Punkte beschreiben Versorgung. Du spürst sehr genau, was andere brauchen — und verwechselst das leicht mit dem, was du selbst brauchst.',
+  Merkur:'Du sorgst über Sprache. Nachfragen, zuhören, die richtigen Worte finden — so zeigst du Zuwendung. Umgekehrt brauchst du selbst Gespräch, um dich versorgt zu fühlen; Schweigen reicht dir nicht.',
+  Venus:'Zuwendung und Genuss fallen zusammen. Du zeigst Liebe über Essen, Wärme, schöne Dinge — und das ist keine Ersatzhandlung, sondern deine echte Sprache.',
+  Mars:'Du sorgst tatkräftig: Du machst etwas, statt zu trösten. Das wird manchmal als Übergriffigkeit gelesen, obwohl es Fürsorge ist.',
+  Jupiter:'Deine Fürsorge ist großzügig und manchmal zu groß. Du gibst mehr, als nötig wäre — gern, aber nicht immer zum Nutzen der anderen.',
+  Saturn:'Fürsorge ist bei dir an Pflicht gekoppelt. Du sorgst zuverlässig, auch wenn es dir nicht gut geht, und hältst das für selbstverständlich. Dass du selbst etwas brauchst, kommt spät in den Sinn.',
+  Uranus:'Deine Fürsorge kommt unregelmäßig und unkonventionell. Du bist nicht die, die jeden Tag anruft — aber die, die im Notfall sofort da ist.',
+  Neptun:'Deine Fürsorge kennt keine Grenze. Du merkst spät, wann es zu viel wird, und verwechselst Aufopferung mit Nähe.',
+  Pluto:'Fürsorge und Kontrolle liegen bei dir dicht beieinander. Wer für jemanden sorgt, hat Einfluss — das ist weder böse noch harmlos, sondern etwas, das man kennen sollte.',
+  ASC:'Man sieht dir die Fürsorgliche an. Menschen kommen mit ihren Sorgen zu dir, bevor sie dich richtig kennen.',
+  MC:'Deine Fürsorge ist öffentlich sichtbar und gehört zu deiner Rolle. Das kann beruflich tragen und ist gleichzeitig eine Falle: Man wird schnell darauf festgelegt.'
+ },
+ Pallas:{
+  Sonne:'Dein Verstand gehört zu deiner Identität. Du definierst dich darüber, Dinge zu durchschauen — und es trifft dich stärker als andere, wenn dir jemand Naivität unterstellt.',
+  Mond:'Du erkennst Muster emotional, nicht analytisch. Du weißt etwas, bevor du es begründen kannst, und hast gelernt, dem zu misstrauen. Zu Unrecht.',
+  Merkur:'Denken und Erkennen verstärken sich. Du siehst Strukturen und kannst sie auch erklären — eine seltene Kombination, die sich beruflich nutzen lässt.',
+  Venus:'Du erkennst Muster in Beziehungen — wer wem was schuldet, wo das Gleichgewicht kippt. Das macht dich klug im Umgang und manchmal zu analytisch für den Moment.',
+  Mars:'Du setzt deine Strategie auch durch. Erkennen und Handeln sind verbunden — du bleibst nicht beim Analysieren stehen.',
+  Jupiter:'Du denkst im großen Bogen und erkennst Prinzipien. Die Gefahr: Du überträgst ein Muster auf Fälle, auf die es nicht passt.',
+  Saturn:'Dein Denken ist gründlich und vorsichtig. Du traust deinen Erkenntnissen erst, wenn sie geprüft sind — gut für Verlässlichkeit, schlecht für Tempo.',
+  Uranus:'Deine Lösungen sind ungewöhnlich und oft richtig. Du siehst den Weg, den sonst niemand sieht — und musst ihn anderen mühsam erklären.',
+  Neptun:'Deine Mustererkennung arbeitet unscharf und intuitiv. Du liegst oft richtig und kannst nicht sagen, woher du es weißt. Aufschreiben hilft dir mehr als Nachdenken.',
+  Pluto:'Du durchschaust, was verborgen werden soll. Das ist eine Gabe und eine Last — Menschen merken, dass du mehr siehst, als sie zeigen wollten.',
+  ASC:'Man nimmt dich als klug wahr, bevor du etwas gesagt hast. Das öffnet Türen und erzeugt Abstand.',
+  MC:'Deine Klugheit ist Teil deiner beruflichen Rolle. Du wirst für dein Urteil geholt — und selten für dein Gefühl.'
+ },
+ Juno:{
+  Sonne:'Partnerschaft gehört zu deiner Identität. Du bist nicht ganz, wenn du allein bist — das ist keine Schwäche, aber es macht dich anfällig dafür, zu lange zu bleiben.',
+  Mond:'Verbindlichkeit und Sicherheitsbedürfnis fallen zusammen. Du bleibst, weil du dich dort sicher fühlst — und merkst spät, wenn Sicherheit und Gewohnheit dasselbe geworden sind.',
+  Merkur:'Für dich steht und fällt eine Beziehung mit dem Gespräch. Wenn ihr nicht mehr redet, ist sie vorbei, auch wenn äußerlich alles stimmt.',
+  Venus:'Zuneigung und Verbindlichkeit gehören bei dir zusammen. Was du magst, willst du auch behalten — Unverbindliches reizt dich wenig.',
+  Mars:'Verbindlichkeit und Reibung sind verbunden. Du brauchst Auseinandersetzung in einer Beziehung, sonst schläft sie ein. Harmonie allein hält dich nicht.',
+  Jupiter:'Du brauchst gemeinsame Überzeugungen, nicht nur gemeinsame Zeit. Eine Beziehung muss bei dir irgendwohin führen.',
+  Saturn:'Die klassischste und schwerste Verbindung in diesem Bereich. Verbindlichkeit ist bei dir mit Pflicht verknüpft — du bleibst aus Verantwortung, auch wenn der Grund längst weg ist. Die nützliche Frage: Bleibe ich noch, oder halte ich nur ein Versprechen?',
+  Uranus:'Du brauchst Freiheit in der Verbindlichkeit. Enge löst Fluchtimpulse aus, auch da, wo du bleiben willst. Eine Beziehung mit viel Raum hält bei dir länger als eine enge.',
+  Neptun:'Du idealisierst in Beziehungen. Du siehst, was jemand sein könnte, und bindest dich daran statt an das, was ist. Der Abgleich mit der Wirklichkeit kommt oft spät und schmerzhaft.',
+  Pluto:'Beziehung ist bei dir intensiv und machtbesetzt. Es geht um alles oder nichts — und darum, wer nachgibt. Das kann tief tragen und eng werden.',
+  ASC:'Man sieht dich als Partnerin, auch wenn du allein auftrittst. Beziehungsstatus ist bei dir Teil deiner Außenwirkung.',
+  MC:'Deine Partnerschaft ist öffentlich und beeinflusst deine Rolle. Was dort passiert, wirkt sich auf deine Arbeit aus — stärker als bei anderen.'
+ },
+ Vesta:{
+  Sonne:'Deine Hingabe und deine Identität sind dasselbe. Du bist, wofür du brennst — und ohne diese eine Sache fehlt dir mehr als eine Beschäftigung.',
+  Mond:'Du brauchst deinen Rückzugsort, um bei dir zu sein. Das ist kein Luxus: Ohne regelmäßige Zeit allein wirst du fahrig und reizbar.',
+  Merkur:'Deine Konzentration läuft über Sprache und Denken. Du vertiefst dich in Texte, Gespräche, Konzepte — und blendest dabei alles andere aus.',
+  Venus:'Hingabe und Zuneigung sind verbunden. Du kannst dich einer Person ebenso widmen wie einer Sache — und tust das mit derselben Ausschließlichkeit.',
+  Mars:'Du brennst und setzt es auch um. Deine Hingabe bleibt nicht innerlich, sie wird Arbeit. Die Gefahr: Du überziehst, weil du den Punkt nicht spürst, an dem genug ist.',
+  Jupiter:'Deine Hingabe hat einen Sinnüberbau. Du brauchst das Gefühl, dass es um etwas Größeres geht — sonst erlahmt die Konzentration.',
+  Saturn:'Konzentration und Disziplin verstärken sich. Du kannst arbeiten wie wenige — und vergisst darüber, dass Pausen keine Schwäche sind.',
+  Uranus:'Deine Hingabe gilt dem Ungewöhnlichen. Du brennst für das, was andere nicht verstehen, und hältst es gegen Widerstand durch.',
+  Neptun:'Deine Hingabe ist grenzenlos und verschwimmt. Du verlierst dich in dem, was du tust — das ist deine Gabe und der Grund, warum du Erschöpfung spät bemerkst.',
+  Pluto:'Deine Konzentration hat eine zwanghafte Seite. Was dich packt, lässt dich nicht los. Das ist Kraft und Besessenheit zugleich, je nachdem, wie viel Abstand du findest.',
+  ASC:'Man sieht dir an, dass du für etwas brennst. Das wirkt anziehend und hält manche auf Abstand.',
+  MC:'Deine Hingabe gehört zu deiner beruflichen Rolle. Du wirst als jemand wahrgenommen, der eine Sache ernst nimmt.'
+ }
+};
+
+var ART={
+ Konjunktion:['verschmilzt','Die beiden arbeiten bei dir als eine Einheit — du kannst sie kaum trennen, und das macht das Thema besonders stark.'],
+ Opposition:['steht gegenüber','Zwei Seiten ziehen auseinander. Du erlebst das Thema oft über andere Menschen, die dir das Fehlende spiegeln.'],
+ Quadrat:['reibt an','Es klemmt zwischen beiden. Genau diese Reibung ist aber der Grund, warum du dich damit auseinandersetzt — ungestörte Verbindungen bemerkt man nicht.'],
+ Trigon:['fließt zu','Das läuft bei dir ohne Anstrengung. Der Haken: Was leicht geht, nimmt man selten ernst — hier liegt ungenutztes Potenzial.'],
+ Sextil:['reicht die Hand an','Eine Gelegenheit, die nichts erzwingt. Sie wirkt nur, wenn du sie bewusst nutzt.']
+};
+
 var AST=[
 {k:'Ceres', gl:'⚳', farbe:'#6B7C3F', nm:'Ceres',
  was:'Fürsorge, Nahrung, Loslassen — wie du versorgst und wie du versorgt wirst',
@@ -335,7 +415,7 @@ function aspekte(P,k){
     });
   });
   out.sort(function(a,b){return a.o-b.o;});
-  return out.slice(0,4);
+  return out.slice(0,3);
 }
 
 function zeichnen(){
@@ -357,11 +437,21 @@ function zeichnen(){
         '<p>'+a.haus(hn)+'</p>';
       if(asp.length){
         h+='<div class="as-asp">'+asp.map(function(x){
-          return '<span class="ac '+x.art+'">'+x.typ+' '+x.p+' · '+x.o.toFixed(1)+'°</span>';}).join('')+'</div>'+
-          '<p style="font-size:14.2px;color:var(--leise);margin-top:8px;">'+
-          (asp[0].o<1.5? 'Der engste Kontakt ist '+asp[0].typ+' zu '+asp[0].p+' mit '+asp[0].o.toFixed(1)+'° — '+
-            'das ist eng genug, um tatsächlich etwas auszumachen.'
-            : 'Die Kontakte sind mit über anderthalb Grad eher locker. Nimm sie als Nebenton, nicht als Hauptaussage.')+'</p>';
+          return '<span class="ac '+x.art+'">'+x.typ+' '+x.p+' · '+x.o.toFixed(1)+'°</span>';}).join('')+'</div>';
+        asp.forEach(function(x,i){
+          var kern=(PAARE[a.k]&&PAARE[a.k][x.p])?PAARE[a.k][x.p]:null;
+          var ar=ART[x.typ]||['berührt',''];
+          var stark=(x.o<1.5);
+          h+='<div class="as-asp-d'+(i===0?' erst':'')+'">'+
+            '<div class="aad-kopf">'+a.gl+' <b>'+a.nm.split(' ')[0]+' '+ar[0]+' '+x.p+'</b>'+
+            '<span class="aad-orb">'+x.o.toFixed(1)+'° · '+(stark?'eng':'locker')+'</span></div>'+
+            (kern? '<p>'+kern+'</p>' : '')+
+            '<p class="aad-art">'+ar[1]+'</p>'+
+            (i===0? '<p class="aad-gew">'+(stark
+              ? 'Das ist dein engster Kontakt zu '+a.nm.split(' ')[0]+' und mit unter anderthalb Grad eng genug, um tatsächlich etwas auszumachen. Wenn du von diesem Punkt nur eine Sache mitnimmst, dann diese.'
+              : 'Mit über anderthalb Grad ist auch der engste Kontakt eher locker. Nimm ihn als Nebenton — er färbt, aber er trägt keine Deutung allein.')+'</p>' : '')+
+          '</div>';
+        });
       } else {
         h+='<p style="font-size:14.2px;color:var(--leise);">Keine engen Aspekte zu deinen Hauptpunkten. '+
           'Das Thema ist bei dir vorhanden, aber nicht verdrahtet — es meldet sich eher anlassbezogen.</p>';
