@@ -1,7 +1,7 @@
 INHALT DES PAKETS
 ========================================
 
-120 Dateien
+122 Dateien
 
 NETLIFY-ANLEITUNG.md                       7416 Bytes
 achsen.html                                9917 Bytes
@@ -24,6 +24,7 @@ coaching-verbinden.html                   12476 Bytes
 coaching.html                              9297 Bytes
 dating-muster.html                        30609 Bytes
 diagnose-weg.html                         20832 Bytes
+dossier.html                              43638 Bytes
 element-mix.html                          10561 Bytes
 erinnerung.html                           32954 Bytes
 finsternisse.html                         20029 Bytes
@@ -59,6 +60,7 @@ lunationen.html                           72497 Bytes
 mein-chart.html                           26068 Bytes
 menschen-lesen.html                       30500 Bytes
 methoden.html                             33701 Bytes
+monatsbericht.html                        27364 Bytes
 mondknoten-coaching.html                  19277 Bytes
 mondknoten.html                            9800 Bytes
 mondphasen-rhythmus.html                  25946 Bytes
@@ -85,7 +87,7 @@ planetenzyklen.html                       21964 Bytes
 profektionen.html                         20107 Bytes
 profil-ansicht.html                       61923 Bytes
 profil.js                                  6172 Bytes
-profile.html                              32292 Bytes
+profile.html                              35464 Bytes
 quiz.html                                 14289 Bytes
 rad.js                                    11467 Bytes
 raeume.html                               14570 Bytes
@@ -120,6 +122,6 @@ uebungscharts.html                        20550 Bytes
 weg.html                                  29253 Bytes
 werkzeuge.html                            10009 Bytes
 wetter.js                                 13251 Bytes
-wissen.html                               21707 Bytes
+wissen.html                               31798 Bytes
 zeichen.html                              14067 Bytes
 zeitqualitaet.html                        54152 Bytes

@@ -171,6 +171,21 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.cb{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:22px;padding:22px 24px;margin-bottom:20px;}
+.cb h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
+.cb .sub8{font-size:13.8px;color:var(--leise);margin-bottom:15px;line-height:1.58;}
+.cb-sch{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.cb-sch button{font-family:var(--sans);font-size:14px;padding:10px 18px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:19px;cursor:pointer;}
+.cb-sch button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.cb-werk{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:600px){.cb-werk{grid-template-columns:1fr;}}
+.cb-w{display:block;background:var(--papier);border:1px solid var(--linie);border-radius:16px;
+ padding:16px 18px;text-decoration:none;color:var(--tinte);}
+.cb-w:hover{border-color:var(--nacht);}
+.cb-w b{display:block;font-family:var(--serif);font-size:17.5px;font-weight:400;color:var(--nacht);margin-bottom:4px;}
+.cb-w p{margin:0;font-size:14px;color:var(--leise);line-height:1.5;}
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -181,6 +196,8 @@ a{color:var(--nacht);}
 <nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">Räume</a><a href="uebersicht.html">Ich</a><a href="profile.html" class="ist">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 <div class="wrap">
+<div class="cb" id="coachblock"></div>
+
 
 <div class="eyebrow">Arbeitsfläche</div>
 <h1>Deine <em>Profile.</em></h1>
@@ -549,5 +566,37 @@ function AC_ortFeld2(inputId,listId,statusId){
 
 try{ AC_ortFeld('fort','fortliste','fortok'); }catch(e){ console.error('Ortssuche:',e); }
 try{ AC_ortFeld2('fwort','fwortliste','fwortok'); }catch(e){ console.error('Wohnort:',e); }
+
+/* ── Coach-Modus ── */
+(function(){
+  var box=document.getElementById('coachblock'); if(!box) return;
+  function modus(){ try{ var s=JSON.parse(localStorage.getItem('ac_setup')||'{}'); return s.modus||'selbst'; }catch(e){ return 'selbst'; } }
+  function setzeModus(m){ try{ var s=JSON.parse(localStorage.getItem('ac_setup')||'{}'); s.modus=m;
+    localStorage.setItem('ac_setup',JSON.stringify(s)); }catch(e){} }
+  function zeichne(){
+    var m=modus();
+    var h='<h3>Wie du die Plattform benutzt</h3>'+
+      '<div class="sub8">Der Schalter ändert nur, was dir zusätzlich angeboten wird — deine Daten bleiben dieselben.</div>'+
+      '<div class="cb-sch">'+
+      '<button type="button" data-m="selbst"'+(m==='selbst'?' aria-pressed="true"':'')+'>Für mich selbst</button>'+
+      '<button type="button" data-m="coach"'+(m==='coach'?' aria-pressed="true"':'')+'>Als Coachin</button>'+
+      '</div>';
+    if(m==='coach'){
+      h+='<div class="cb-werk">'+
+        '<a class="cb-w" href="dossier.html"><b>Dossier</b><p>Bestandsbericht pro Person: Kernthemen, was sie braucht, wo es klemmt, Gesprächseinstiege.</p></a>'+
+        '<a class="cb-w" href="monatsbericht.html"><b>Monatsbericht</b><p>Fertiger Text pro Person und Monat — zum Kopieren und Verschicken.</p></a>'+
+        '<a class="cb-w" href="grenzen.html"><b>Wann du nicht deutest</b><p>Die Grenzen der Arbeit und wann abgegeben gehört.</p></a>'+
+        '<a class="cb-w" href="haltung.html"><b>Deine Haltung</b><p>Das methodische Rückgrat hinter allem, was hier steht.</p></a>'+
+        '</div>';
+    } else {
+      h+='<div class="sub8" style="margin:0;">Im Coach-Modus bekommst du zusätzlich ein Dossier pro Person und einen fertigen Monatsbericht zum Verschicken.</div>';
+    }
+    box.innerHTML=h;
+    box.querySelectorAll('button[data-m]').forEach(function(b){
+      b.addEventListener('click',function(){ setzeModus(b.getAttribute('data-m')); zeichne(); });
+    });
+  }
+  zeichne();
+})();
 </script>
 </body></html>

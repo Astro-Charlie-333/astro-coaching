@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wissen · Astro-Charlie</title>
+<title>Bibliothek · Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -73,29 +73,6 @@ a{color:var(--nacht);}
  border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
 .ac-tool:hover{background:var(--nacht-bg);}
 
-.stufe{margin-bottom:34px;}
-.stufekopf{display:flex;gap:13px;align-items:baseline;margin-bottom:5px;}
-.stufenr{font-family:var(--serif);font-size:34px;color:var(--linie-stark);line-height:1;}
-.stufekopf h2{margin:0;font-size:23px;}
-.stufetext{font-size:14.5px;color:var(--leise);margin:0 0 14px 47px;max-width:60ch;}
-@media(max-width:560px){.stufetext{margin-left:0;}}
-.zeilen{display:grid;gap:8px;}
-.zeilen a{display:grid;grid-template-columns:1fr;gap:2px;background:var(--papier);border:1px solid var(--linie);
- border-radius:14px;padding:13px 16px;text-decoration:none;}
-.zeilen a:hover{border-color:var(--nacht);background:var(--nacht-bg);}
-.zeilen b{font-weight:500;color:var(--tinte);font-size:16px;}
-.zeilen span{font-size:13.5px;color:var(--leise);line-height:1.45;}
-.wz{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px;}
-@media(max-width:600px){.wz{grid-template-columns:1fr;}}
-.wz a{display:block;background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:16px;padding:15px 17px;text-decoration:none;}
-.wz a:hover{border-color:var(--nacht);}
-.wz b{display:block;font-family:var(--serif);font-size:17px;color:var(--nacht);margin-bottom:2px;}
-.wz span{font-size:13.5px;color:var(--leise);}
-.springen{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:26px;}
-.springen a{font-family:var(--sans);font-size:13.5px;border:1px solid var(--linie);background:var(--bg);
- color:var(--nacht);padding:7px 14px;border-radius:18px;text-decoration:none;}
-.springen a:hover{background:var(--nacht-bg);}
-
 
 
 
@@ -130,145 +107,121 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
-</style><script src="begriffe.js" defer></script>
-<script src="profil.js"></script>
-<script src="fortschritt.js"></script>
-</head><body>
+
+.bi-kopf{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;margin-bottom:16px;}
+@media(max-width:620px){.bi-kopf{grid-template-columns:1fr;}}
+.bi-suche{position:relative;}
+.bi-suche input{width:100%;padding:14px 16px 14px 42px;border:1px solid var(--linie);border-radius:18px;
+ background:var(--papier);font-family:var(--sans);font-size:15.5px;color:var(--tinte);}
+.bi-suche input:focus{outline:none;border-color:var(--nacht);}
+.bi-suche .lupe{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--leise);font-size:15px;}
+.bi-zahl{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);white-space:nowrap;padding-bottom:4px;}
+.bi-modus{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.bi-modus button{font-family:var(--sans);font-size:13.5px;padding:8px 15px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:17px;cursor:pointer;}
+.bi-modus button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.bi-modus .lab{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+
+.rg{border:1px solid var(--linie);border-radius:22px;margin-bottom:11px;overflow:hidden;background:var(--papier);}
+.rg > summary{cursor:pointer;padding:19px 22px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;}
+.rg > summary::-webkit-details-marker{display:none;}
+.rg .rt{font-family:var(--serif);font-size:21px;color:var(--nacht);line-height:1.2;}
+.rg .ru{font-size:13.8px;color:var(--leise);margin-top:3px;line-height:1.5;}
+.rg .rz{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--leise);
+ background:var(--bg);border-radius:11px;padding:5px 10px;white-space:nowrap;}
+.rg[open] > summary{border-bottom:1px solid var(--linie);}
+.rg-in{padding:14px 16px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:9px;}
+.ke{display:block;background:var(--bg);border:1px solid transparent;border-radius:15px;
+ padding:14px 16px;text-decoration:none;color:var(--tinte);}
+.ke:hover{border-color:var(--nacht);background:var(--papier);}
+.ke b{display:block;font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);
+ margin-bottom:4px;line-height:1.25;}
+.ke span{font-size:13.6px;color:var(--leise);line-height:1.5;display:block;}
+.ks{background:var(--messing-bg);border-radius:15px;padding:14px 16px;grid-column:1/-1;}
+.ks > .kt{font-family:var(--serif);font-size:16.5px;color:var(--nacht);margin-bottom:3px;}
+.ks > .kb{font-size:13.6px;color:var(--leise);line-height:1.5;margin-bottom:10px;}
+.ks-l{display:flex;gap:6px;flex-wrap:wrap;}
+.ks-l a{font-family:var(--sans);font-size:13.3px;background:var(--papier);border:1px solid var(--linie);
+ border-radius:13px;padding:7px 12px;text-decoration:none;color:var(--nacht);}
+.ks-l a:hover{border-color:var(--nacht);}
+.bi-nix{background:var(--papier);border:1px dashed var(--linie);border-radius:18px;padding:26px;
+ text-align:center;color:var(--leise);line-height:1.6;display:none;}
+.bi-nix.an{display:block;}
+.rg.weg{display:none;}
+.ke.weg,.ks.weg{display:none;}
+</style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">Räume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
 </div></div>
 <div class="wrap">
-<div class="eyebrow">Bibliothek</div>
-<h1>Alles zum <em>Nachschlagen.</em></h1>
-<p class="lede">Sechs Stufen, die aufeinander aufbauen. Du musst nicht der Reihe nach vorgehen — aber wenn du bei null anfängst, ist das die Reihenfolge, die am wenigsten frustriert. Ein Modul pro Sitzung reicht völlig.</p>
-<div class="springen"><a href="#s1">1 · Fundament</a><a href="#s2">2 · Chart lesen</a><a href="#s3">3 · Dich verstehen</a><a href="#s4">4 · Timing</a><a href="#s5">5 · Beziehungen</a><a href="#s6">6 · Begleiten</a><a href="#s7">7 · Eigene Praxis</a></div>
-<h2 style="margin-top:0;">Deine Werkzeuge</h2>
-<p class="sub">Rechnen statt lesen — diese vier arbeiten mit echten Daten.</p>
-<div class="wz"><a href="uebersicht.html"><b>Ich — dein Bild</b><span>Dein Chart, deine Positionen, dein Jahr, deine Transite</span></a>
-<a href="profil-ansicht.html"><b>Profil-Ansicht</b><span>Dasselbe Bild für eine ausgewählte Person</span></a>
-<a href="briefing.html"><b>Reading-Briefing</b><span>Gesprächsvorbereitung aus dem aktiven Profil</span></a><a href="chart-rechner.html"><b>Chart-Rechner</b><span>Vollständige Berechnung mit Kettenleser</span></a><a href="tool.html"><b>Fang bei dir an</b><span>Der einfache Einstieg ohne Vorwissen</span></a><a href="profile.html"><b>Profile</b><span>Menschen anlegen, Readings ablegen, anonymisiert arbeiten</span></a></div>
-<div class="stufe" id="s1">
-<div class="stufekopf"><span class="stufenr">1</span><h2>Fundament</h2></div>
-<p class="stufetext">Die Bausteine. Wenn du bei null anfängst, ist das hier die Reihenfolge.</p>
-<div class="zeilen">
-<a href="grundlagen.html"><b>Die Grundlagen</b><span>Was ein Chart überhaupt ist und woraus es besteht</span></a>
-<a href="planeten.html"><b>Die 10 Planeten</b><span>Welche Funktion jeder Planet beschreibt</span></a>
-<a href="zeichen.html"><b>Die 12 Zeichen</b><span>Der Stil, in dem ein Planet arbeitet</span></a>
-<a href="haeuser.html"><b>Die 12 Häuser</b><span>Die Lebensbereiche, auf denen es stattfindet</span></a>
-<a href="aspekte.html"><b>Die Aspekte</b><span>Wie die Planeten miteinander reden</span></a>
-<a href="achsen.html"><b>Die 4 Achsen</b><span>Aszendent, MC, Deszendent, IC</span></a>
-<a href="mondknoten.html"><b>Die Mondknoten</b><span>Herkunft und Richtung</span></a>
-<a href="zeitqualitaet.html"><b>Was gerade leichtfällt</b><span>Wegweiser für Verträge, Technik, Aussehen und Anfänge — mit klarer Grenze bei allem Medizinischen</span></a>
-<a href="retrograde.html"><b>Rückläufige Planeten</b><span>Was Rückläufigkeit wirklich bedeutet</span></a>
-<a href="glossar.html"><b>Das Glossar</b><span>Alle Begriffe zum Nachschlagen</span></a>
-</div></div>
-<div class="stufe" id="s2">
-<div class="stufekopf"><span class="stufenr">2</span><h2>Chart lesen</h2></div>
-<p class="stufetext">Vom Nachschlagen zum Können. Methode statt Auswendiglernen.</p>
-<div class="zeilen">
-<a href="chart-lesen.html"><b>Wie du ein Chart liest</b><span>Die Reihenfolge, in der man vorgeht</span></a>
-<a href="linien-lesen.html"><b>Die Linien im Chart lesen</b><span>Aspektfiguren erkennen</span></a>
-<a href="aspekte-lesen.html"><b>Aspekte lesen</b><span>Alle 45 Planetenpaare in jedem Aspekt — was Mars Opposition Venus wirklich heißt</span></a>
-<a href="grade.html"><b>Grade lesen</b><span>Warum zwei Menschen mit Mars im Stier verschieden sind — Zonen, Dekanate, Grenzen</span></a>
-<a href="orbis-gewichtung.html"><b>Orbis &amp; Gewichtung</b><span>Was laut ist und was Hintergrund</span></a>
-<a href="herrscher.html"><b>Herrscher &amp; Dispositoren</b><span>Wohin ein Thema weiterläuft</span></a>
-<a href="haeusersysteme.html"><b>Whole Sign oder Placidus?</b><span>Die Systemfrage, praktisch beantwortet</span></a>
-<a href="planeten-in-zeichen.html"><b>Planeten in den Zeichen</b><span>Der Stil jedes Planeten</span></a>
-<a href="planet-sonne.html"><b>☉ Sonne in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planet-mond.html"><b>☽ Mond in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planet-merkur.html"><b>☿ Merkur in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planet-venus.html"><b>♀ Venus in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planet-mars.html"><b>♂ Mars in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planet-jupiter.html"><b>♃ Jupiter in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planet-saturn.html"><b>♄ Saturn in den 12 Zeichen</b><span>Alle zwölf Stellungen im Detail</span></a>
-<a href="planeten-in-haeusern.html"><b>Planet, Zeichen, Haus</b><span>Alle drei Ebenen kombiniert, mit vier Blickwinkeln</span></a>
-<a href="kleine-punkte.html"><b>Die kleinen Punkte</b><span>Chiron, Lilith, Glückspunkt und wie eng man sie fasst</span></a>
-<a href="aspekt-muster.html"><b>Die Aspekt-Muster</b><span>T-Quadrat, Großes Trigon, Stellium</span></a>
-<a href="uebungscharts.html"><b>Übungscharts</b><span>Zum Selbertesten</span></a>
-<a href="quiz.html"><b>Teste dein Wissen</b><span>Fragen zu allen Stufen</span></a>
-</div></div>
-<div class="stufe" id="s3">
-<div class="stufekopf"><span class="stufenr">3</span><h2>Dich verstehen</h2></div>
-<p class="stufetext">Die Anwendung auf einen konkreten Menschen — dich oder jemand anderen.</p>
-<div class="zeilen">
-<a href="haeuser-lebensbuehnen.html"><b>Die 12 Lebensbühnen</b><span>Häuser als Erfahrungsräume</span></a>
-<a href="haus-achsen.html"><b>Deine Haus-Achsen</b><span>Gegenüberliegende Häuser gehören zusammen</span></a>
-<a href="element-mix.html"><b>Dein Element-Mix</b><span>Feuer, Erde, Luft, Wasser gewichtet</span></a>
-<a href="mein-chart.html"><b>Dein Chart, Haus für Haus</b><span>Die vollständige Durchsicht</span></a>
-<a href="spannungskarte.html"><b>Die Spannungskarte</b><span>Wo der Druck sitzt — deine Breaking Points</span></a>
-<a href="menschen-lesen.html"><b>Menschen lesen</b><span>Placements am Auftreten erkennen — als Beobachtungstraining, mit Schnell-Check und ehrlicher Einordnung</span></a>
-<a href="asteroiden.html"><b>Die Asteroiden</b><span>Ceres, Pallas, Juno und Vesta — was sie zeigen, wann sie zählen und wo Vorsicht gilt</span></a>
-<a href="lilith-arbeit.html"><b>Die Lilith-Arbeit</b><span>Was du dir nicht erlaubst, in vier Arbeitsfeldern</span></a>
-<a href="lebens-kompass.html"><b>Dein Chart als Lebens-Kompass</b><span>Orientierung statt Vorhersage</span></a>
-<a href="audhs-verstehen.html"><b>ADHS, Autismus und beides</b><span>Was die Begriffe meinen, wo sie sich überschneiden — und warum es bei Frauen spät erkannt wird</span></a>
-<a href="diagnose-weg.html"><b>Der Weg zur Abklärung</b><span>Anlaufstellen, Unterlagen, Wartezeiten, Kosten — praktisch für Deutschland</span></a>
-<a href="organizer.html"><b>Der Organizer</b><span>Aufgaben nach Tageskraft sortiert — ohne Streaks, ohne Fristenwarnungen, ohne Löschen</span></a>
-<a href="methoden.html"><b>Methoden für den Moment</b><span>5-4-3-2-1, 5-Sekunden-Regel, Let Them, Body Doubling — mit Chart-Anschluss</span></a>
-<a href="nd-leitfaden.html"><b>Anders verdrahtet leben</b><span>Struktur, Lernen, Emotionen, Kommunikation, Energie, Reize — plus Hyperfokus-Finder</span></a>
-<a href="neurodivergente-astrologie.html"><b>Für anders verdrahtete Köpfe</b><span>Wie du das hier nutzt, ohne dich zu überfordern</span></a>
-<a href="neurodivergenz-vertiefung.html"><b>Neurodivergentes Erleben im Chart</b><span>Vertiefung</span></a>
-<a href="ruhe-schlaf.html"><b>Ruhe &amp; Zur-Ruhe-Kommen</b><span>Was dein Chart über Erholung sagt</span></a>
-</div></div>
-<div class="stufe" id="s4">
-<div class="stufekopf"><span class="stufenr">4</span><h2>Timing</h2></div>
-<p class="stufetext">Was gerade dran ist — und wann etwas ansteht.</p>
-<div class="zeilen">
-<a href="timing.html"><b>Timing lesen</b><span>Wie Transite überhaupt wirken</span></a>
-<a href="lunationen.html"><b>Neumonde, Vollmonde &amp; Finsternisse</b><span>Alle Termine bis 2028 mit deinen Treffern</span></a>
-<a href="mondphasen-rhythmus.html"><b>Die Mondphasen als Rhythmus</b><span>Der monatliche Takt</span></a>
-<a href="mondzyklen.html"><b>Mondzyklen</b><span>Grundlagen der Lunationen</span></a>
-<a href="finsternisse.html"><b>Finsternisse lesen</b><span>Serien, Achsen, Zeitfenster</span></a>
-<a href="planetenzyklen.html"><b>Planetenzyklen</b><span>Saturn, Jupiter, Uranus und ihre Wiederkehr</span></a>
-<a href="solar-return-light.html"><b>Der Solar Return</b><span>Das Jahreschart, einfach erklärt</span></a>
-<a href="solar-return-vertiefung.html"><b>Solar Return, vertieft</b><span>Für die genaue Arbeit</span></a>
-<a href="profektionen.html"><b>Jahresprofektionen</b><span>Welches Haus dein Jahr regiert</span></a>
-<a href="astrokartographie.html"><b>Orte lesen</b><span>Wie ein Ort das Chart verschiebt</span></a>
-</div></div>
-<div class="stufe" id="s5">
-<div class="stufekopf"><span class="stufenr">5</span><h2>Beziehungen</h2></div>
-<p class="stufetext">Zwei Charts nebeneinander — und was zwischen ihnen passiert.</p>
-<div class="zeilen">
-<a href="synastrie.html"><b>Synastrie — zwei Charts</b><span>Die Grundlagen des Vergleichs</span></a>
-<a href="synastrie-vertiefung.html"><b>Synastrie-Vertiefung</b><span>Häuserüberlagerung, Gewichtung, Fallstricke</span></a>
-<a href="dating-muster.html"><b>Muster im Dating</b><span>Wiederkehrende Dynamiken erkennen</span></a>
-</div></div>
-<div class="stufe" id="s6">
-<div class="stufekopf"><span class="stufenr">6</span><h2>Begleiten</h2></div>
-<p class="stufetext">Für alle, die mit anderen arbeiten. Das ist die Stufe, die aus Wissen einen Beruf macht.</p>
-<div class="zeilen">
-<a href="coaching.html"><b>Coaching &amp; Astrologie</b><span>Die Haltung dahinter</span></a>
-<a href="coaching-verbinden.html"><b>Astrologie &amp; Coaching verbinden</b><span>Wie beides ineinandergreift</span></a>
-<a href="leitfaden.html"><b>Jeden Menschen richtig ansprechen</b><span>Der Einstieg in die Leitfäden</span></a>
-<a href="leitfaden-fundament.html"><b>Was jemand schon mitbringt</b><span>Ressourcen erkennen</span></a>
-<a href="leitfaden-mond.html"><b>Den Mond ansprechen</b><span>Bedürfnisse benennen</span></a>
-<a href="leitfaden-merkur.html"><b>Den Merkur ansprechen</b><span>Passend erklären</span></a>
-<a href="leitfaden-mars.html"><b>Den Mars ansprechen</b><span>Antrieb aktivieren</span></a>
-<a href="reading-ablauf.html"><b>Der Reading-Ablauf</b><span>Struktur für ein Gespräch</span></a>
-<a href="reading-gespraech.html"><b>Ein Reading als Gespräch</b><span>Nicht vortragen, sondern fragen</span></a>
-<a href="fragen-schatzkiste.html"><b>Die Fragen-Schatzkiste</b><span>Gute Fragen für jede Situation</span></a>
-<a href="klientinnen-fragen.html"><b>Häufige Fragen</b><span>Souverän beantwortet</span></a>
-<a href="mondknoten-coaching.html"><b>Die Mondknoten fürs Coaching</b><span>Richtung statt Diagnose</span></a>
-<a href="learning-seite.html"><b>Die Learning-Seite</b><span>Erkenntnisse festhalten</span></a>
-<a href="grenzen.html"><b>Wann du nicht deutest</b><span>Die wichtigste Seite überhaupt</span></a>
-<a href="erinnerung.html"><b>Deine früheste Erinnerung</b><span>Adlers stärkstes Werkzeug — Lebensstil aus einer Kindheitsszene, ohne Chart</span></a>
-<a href="haltung.html"><b>Haltung &amp; Methode</b><span>Woher die Arbeitsweise kommt — Adler, Lebensaufgaben, und was bewusst fehlt</span></a>
-<a href="haltung-ethik.html"><b>Haltung &amp; Ethik</b><span>Verantwortung im Reading</span></a>
-</div></div>
-<div class="stufe" id="s7">
-<div class="stufekopf"><span class="stufenr">7</span><h2>Eigene Praxis</h2></div>
-<p class="stufetext">Wenn du aus dem Können ein Angebot machen willst. Diese Seiten sind Vorlagen und Struktur, kein Astrologiewissen.</p>
-<div class="zeilen">
-<a href="angebote-struktur.html"><b>Deine Angebote</b><span>Wie du Formate und Preise strukturierst</span></a>
-<a href="ueber-mich-vorlage.html"><b>Deine Über-mich-Seite</b><span>Vorlage für die eigene Darstellung</span></a>
-<a href="werkzeuge.html"><b>Deine Werkzeuge</b><span>Was du praktisch brauchst</span></a>
-<a href="konzept-plattform.html"><b>Deine Coaching-Plattform</b><span>Konzept und Aufbau</span></a>
-</div></div>
 
-<div class="tip"><b>Wie du am besten lernst:</b> Nimm ein Modul, wende es sofort auf dein eigenes Chart an, und lass es liegen. Wissen, das man nicht benutzt, verschwindet. Deshalb steht in fast jedem Modul ein Rechner oder eine Übung — nutz die, statt weiterzulesen.</div>
-<div class="foot">Bibliothek &middot; 69 Module in sechs Stufen. Alles im Browser, nichts wird &uuml;bertragen.</div>
+<div class="eyebrow">Bibliothek</div>
+<h1>Alles an <em>einem Ort.</em></h1>
+<p class="lede">89 Seiten, in Regale sortiert. Such etwas Bestimmtes, oder klapp auf, was dich interessiert — zugeklappt bleibt übersichtlich.</p>
+
+<div class="bi-modus" id="bimodus"></div>
+
+<div class="bi-kopf">
+  <div class="bi-suche"><span class="lupe">⌕</span>
+    <input id="bisuche" type="search" placeholder="Suchen — etwa „Saturn", „Mond", „Reading"…" autocomplete="off"></div>
+  <div class="bi-zahl" id="bizahl"></div>
 </div>
+
+<details class="rg" data-regal="start" open><summary><div><div class="rt">Hier anfangen</div><div class="ru">Vier Seiten, die alles andere erschließen.</div></div><span class="rz">4</span></summary><div class="rg-in"><a class="ke" href="grundlagen.html" data-s="die grundlagen was ein chart überhaupt ist und woraus es besteht"><b>Die Grundlagen</b><span>Was ein Chart überhaupt ist und woraus es besteht</span></a><a class="ke" href="chart-lesen.html" data-s="wie du ein chart liest die reihenfolge, in der man vorgeht"><b>Wie du ein Chart liest</b><span>Die Reihenfolge, in der man vorgeht</span></a><a class="ke" href="glossar.html" data-s="das glossar alle begriffe zum nachschlagen"><b>Das Glossar</b><span>Alle Begriffe zum Nachschlagen</span></a><a class="ke" href="uebersicht.html" data-s="ich — dein bild dein chart, deine positionen, dein jahr, deine transite"><b>Ich — dein Bild</b><span>Dein Chart, deine Positionen, dein Jahr, deine Transite</span></a></div></details><details class="rg" data-regal="bau" open><summary><div><div class="rt">Die Bausteine</div><div class="ru">Woraus ein Chart besteht — einmal durchgehen, dann hast du die Sprache.</div></div><span class="rz">8</span></summary><div class="rg-in"><a class="ke" href="planeten.html" data-s="die 10 planeten welche funktion jeder planet beschreibt"><b>Die 10 Planeten</b><span>Welche Funktion jeder Planet beschreibt</span></a><a class="ke" href="zeichen.html" data-s="die 12 zeichen der stil, in dem ein planet arbeitet"><b>Die 12 Zeichen</b><span>Der Stil, in dem ein Planet arbeitet</span></a><a class="ke" href="haeuser.html" data-s="die 12 häuser die lebensbereiche, auf denen es stattfindet"><b>Die 12 Häuser</b><span>Die Lebensbereiche, auf denen es stattfindet</span></a><a class="ke" href="aspekte.html" data-s="die aspekte wie die planeten miteinander reden"><b>Die Aspekte</b><span>Wie die Planeten miteinander reden</span></a><a class="ke" href="achsen.html" data-s="die 4 achsen aszendent, mc, deszendent, ic"><b>Die 4 Achsen</b><span>Aszendent, MC, Deszendent, IC</span></a><a class="ke" href="mondknoten.html" data-s="die mondknoten herkunft und richtung"><b>Die Mondknoten</b><span>Herkunft und Richtung</span></a><a class="ke" href="kleine-punkte.html" data-s="die kleinen punkte chiron, lilith, glückspunkt und wie eng man sie fasst"><b>Die kleinen Punkte</b><span>Chiron, Lilith, Glückspunkt und wie eng man sie fasst</span></a><a class="ke" href="asteroiden.html" data-s="die asteroiden ceres, pallas, juno und vesta — was sie zeigen, wann sie zählen und wo vorsicht gilt"><b>Die Asteroiden</b><span>Ceres, Pallas, Juno und Vesta — was sie zeigen, wann sie zählen und wo Vorsicht gilt</span></a></div></details><details class="rg" data-regal="lesen" open><summary><div><div class="rt">Chart lesen lernen</div><div class="ru">Vom Einzelteil zur Gesamtaussage. Hier liegt das Handwerk.</div></div><span class="rz">18</span></summary><div class="rg-in"><a class="ke" href="linien-lesen.html" data-s="die linien im chart lesen aspektfiguren erkennen"><b>Die Linien im Chart lesen</b><span>Aspektfiguren erkennen</span></a><a class="ke" href="aspekte-lesen.html" data-s="aspekte lesen alle 45 planetenpaare in jedem aspekt — was mars opposition venus wirklich heißt"><b>Aspekte lesen</b><span>Alle 45 Planetenpaare in jedem Aspekt — was Mars Opposition Venus wirklich heißt</span></a><a class="ke" href="aspekt-muster.html" data-s="die aspekt-muster t-quadrat, großes trigon, stellium"><b>Die Aspekt-Muster</b><span>T-Quadrat, Großes Trigon, Stellium</span></a><a class="ke" href="grade.html" data-s="grade lesen warum zwei menschen mit mars im stier verschieden sind — zonen, dekanate, grenzen"><b>Grade lesen</b><span>Warum zwei Menschen mit Mars im Stier verschieden sind — Zonen, Dekanate, Grenzen</span></a><a class="ke" href="orbis-gewichtung.html" data-s="orbis &amp; gewichtung was laut ist und was hintergrund"><b>Orbis &amp; Gewichtung</b><span>Was laut ist und was Hintergrund</span></a><a class="ke" href="herrscher.html" data-s="herrscher &amp; dispositoren wohin ein thema weiterläuft"><b>Herrscher &amp; Dispositoren</b><span>Wohin ein Thema weiterläuft</span></a><a class="ke" href="haeusersysteme.html" data-s="whole sign oder placidus? die systemfrage, praktisch beantwortet"><b>Whole Sign oder Placidus?</b><span>Die Systemfrage, praktisch beantwortet</span></a><div class="ks" data-s="planeten in den zeichen alle zwölf stellungen pro planet, einzeln nachschlagbar planeten in den zeichen ☉ sonne in den 12 zeichen ☽ mond in den 12 zeichen ☿ merkur in den 12 zeichen ♀ venus in den 12 zeichen ♂ mars in den 12 zeichen ♃ jupiter in den 12 zeichen ♄ saturn in den 12 zeichen"><div class="kt">Planeten in den Zeichen</div><div class="kb">Alle zwölf Stellungen pro Planet, einzeln nachschlagbar</div><div class="ks-l"><a href="planeten-in-zeichen.html">Planeten in den Zeichen</a><a href="planet-sonne.html">☉ Sonne in den 12 Zeichen</a><a href="planet-mond.html">☽ Mond in den 12 Zeichen</a><a href="planet-merkur.html">☿ Merkur in den 12 Zeichen</a><a href="planet-venus.html">♀ Venus in den 12 Zeichen</a><a href="planet-mars.html">♂ Mars in den 12 Zeichen</a><a href="planet-jupiter.html">♃ Jupiter in den 12 Zeichen</a><a href="planet-saturn.html">♄ Saturn in den 12 Zeichen</a></div></div><a class="ke" href="planeten-in-haeusern.html" data-s="planeten in haeuser "><b>Planeten In Haeuser</b><span></span></a><a class="ke" href="uebungscharts.html" data-s="übungscharts zum selbertesten"><b>Übungscharts</b><span>Zum Selbertesten</span></a><a class="ke" href="quiz.html" data-s="teste dein wissen fragen zu allen stufen"><b>Teste dein Wissen</b><span>Fragen zu allen Stufen</span></a></div></details><details class="rg" data-regal="ich" open><summary><div><div class="rt">Dein eigenes Chart</div><div class="ru">Dieselben Werkzeuge, angewandt auf dich.</div></div><span class="rz">8</span></summary><div class="rg-in"><a class="ke" href="mein-chart.html" data-s="dein chart, haus für haus die vollständige durchsicht"><b>Dein Chart, Haus für Haus</b><span>Die vollständige Durchsicht</span></a><a class="ke" href="element-mix.html" data-s="dein element-mix feuer, erde, luft, wasser gewichtet"><b>Dein Element-Mix</b><span>Feuer, Erde, Luft, Wasser gewichtet</span></a><a class="ke" href="haus-achsen.html" data-s="deine haus-achsen gegenüberliegende häuser gehören zusammen"><b>Deine Haus-Achsen</b><span>Gegenüberliegende Häuser gehören zusammen</span></a><a class="ke" href="haeuser-lebensbuehnen.html" data-s="die 12 lebensbühnen häuser als erfahrungsräume"><b>Die 12 Lebensbühnen</b><span>Häuser als Erfahrungsräume</span></a><a class="ke" href="spannungskarte.html" data-s="die spannungskarte wo der druck sitzt — deine breaking points"><b>Die Spannungskarte</b><span>Wo der Druck sitzt — deine Breaking Points</span></a><a class="ke" href="lebens-kompass.html" data-s="dein chart als lebens-kompass orientierung statt vorhersage"><b>Dein Chart als Lebens-Kompass</b><span>Orientierung statt Vorhersage</span></a><a class="ke" href="erinnerung.html" data-s="deine früheste erinnerung adlers stärkstes werkzeug — lebensstil aus einer kindheitsszene, ohne chart"><b>Deine früheste Erinnerung</b><span>Adlers stärkstes Werkzeug — Lebensstil aus einer Kindheitsszene, ohne Chart</span></a><a class="ke" href="weg.html" data-s="weg "><b>Weg</b><span></span></a></div></details><details class="rg" data-regal="vertief"><summary><div><div class="rt">Vertiefung</div><div class="ru">Einzelthemen, die über die Grundlagen hinausgehen.</div></div><span class="rz">8</span></summary><div class="rg-in"><a class="ke" href="lilith-arbeit.html" data-s="die lilith-arbeit was du dir nicht erlaubst, in vier arbeitsfeldern"><b>Die Lilith-Arbeit</b><span>Was du dir nicht erlaubst, in vier Arbeitsfeldern</span></a><a class="ke" href="menschen-lesen.html" data-s="menschen lesen placements am auftreten erkennen — als beobachtungstraining, mit schnell-check und ehrlicher einordnung"><b>Menschen lesen</b><span>Placements am Auftreten erkennen — als Beobachtungstraining, mit Schnell-Check und ehrlicher Einordnung</span></a><a class="ke" href="astrokartographie.html" data-s="orte lesen wie ein ort das chart verschiebt"><b>Orte lesen</b><span>Wie ein Ort das Chart verschiebt</span></a><div class="ks" data-s="anders verdrahtete köpfe neurodivergenz im chart, audhs verstehen und der weg zur abklärung für anders verdrahtete köpfe neurodivergentes erleben im chart adhs, autismus und beides der weg zur abklärung"><div class="kt">Anders verdrahtete Köpfe</div><div class="kb">Neurodivergenz im Chart, AuDHS verstehen und der Weg zur Abklärung</div><div class="ks-l"><a href="neurodivergente-astrologie.html">Für anders verdrahtete Köpfe</a><a href="neurodivergenz-vertiefung.html">Neurodivergentes Erleben im Chart</a><a href="audhs-verstehen.html">ADHS, Autismus und beides</a><a href="diagnose-weg.html">Der Weg zur Abklärung</a></div></div><a class="ke" href="ruhe-schlaf.html" data-s="ruhe &amp; zur-ruhe-kommen was dein chart über erholung sagt"><b>Ruhe &amp; Zur-Ruhe-Kommen</b><span>Was dein Chart über Erholung sagt</span></a></div></details><details class="rg" data-regal="zeit" open><summary><div><div class="rt">Zeit und Timing</div><div class="ru">Was gerade läuft und wie du damit planst.</div></div><span class="rz">11</span></summary><div class="rg-in"><a class="ke" href="zeitqualitaet.html" data-s="was gerade leichtfällt wegweiser für verträge, technik, aussehen und anfänge — mit klarer grenze bei allem medizinischen"><b>Was gerade leichtfällt</b><span>Wegweiser für Verträge, Technik, Aussehen und Anfänge — mit klarer Grenze bei allem Medizinischen</span></a><a class="ke" href="timing.html" data-s="timing lesen wie transite überhaupt wirken"><b>Timing lesen</b><span>Wie Transite überhaupt wirken</span></a><a class="ke" href="retrograde.html" data-s="rückläufige planeten was rückläufigkeit wirklich bedeutet"><b>Rückläufige Planeten</b><span>Was Rückläufigkeit wirklich bedeutet</span></a><div class="ks" data-s="mond und lunationen neumonde, vollmonde, finsternisse und der mondrhythmus neumonde, vollmonde &amp; finsternisse die mondphasen als rhythmus mondzyklen finsternisse lesen"><div class="kt">Mond und Lunationen</div><div class="kb">Neumonde, Vollmonde, Finsternisse und der Mondrhythmus</div><div class="ks-l"><a href="lunationen.html">Neumonde, Vollmonde &amp; Finsternisse</a><a href="mondphasen-rhythmus.html">Die Mondphasen als Rhythmus</a><a href="mondzyklen.html">Mondzyklen</a><a href="finsternisse.html">Finsternisse lesen</a></div></div><a class="ke" href="planetenzyklen.html" data-s="planetenzyklen saturn, jupiter, uranus und ihre wiederkehr"><b>Planetenzyklen</b><span>Saturn, Jupiter, Uranus und ihre Wiederkehr</span></a><div class="ks" data-s="das eigene jahr solar return und jahresprofektionen der solar return solar return, vertieft jahresprofektionen"><div class="kt">Das eigene Jahr</div><div class="kb">Solar Return und Jahresprofektionen</div><div class="ks-l"><a href="solar-return-light.html">Der Solar Return</a><a href="solar-return-vertiefung.html">Solar Return, vertieft</a><a href="profektionen.html">Jahresprofektionen</a></div></div></div></details><details class="rg" data-regal="bez"><summary><div><div class="rt">Beziehungen</div><div class="ru">Zwei Charts nebeneinander.</div></div><span class="rz">3</span></summary><div class="rg-in"><div class="ks" data-s="synastrie zwei charts vergleichen — einstieg und vertiefung synastrie — zwei charts synastrie-vertiefung"><div class="kt">Synastrie</div><div class="kb">Zwei Charts vergleichen — Einstieg und Vertiefung</div><div class="ks-l"><a href="synastrie.html">Synastrie — zwei Charts</a><a href="synastrie-vertiefung.html">Synastrie-Vertiefung</a></div></div><a class="ke" href="dating-muster.html" data-s="muster im dating wiederkehrende dynamiken erkennen"><b>Muster im Dating</b><span>Wiederkehrende Dynamiken erkennen</span></a></div></details><details class="rg" data-regal="werk" open><summary><div><div class="rt">Werkzeuge</div><div class="ru">Rechner und praktische Helfer.</div></div><span class="rz">5</span></summary><div class="rg-in"><a class="ke" href="chart-rechner.html" data-s="chart-rechner vollständige berechnung mit kettenleser"><b>Chart-Rechner</b><span>Vollständige Berechnung mit Kettenleser</span></a><a class="ke" href="profile.html" data-s="profile menschen anlegen, readings ablegen, anonymisiert arbeiten"><b>Profile</b><span>Menschen anlegen, Readings ablegen, anonymisiert arbeiten</span></a><a class="ke" href="organizer.html" data-s="der organizer aufgaben nach tageskraft sortiert — ohne streaks, ohne fristenwarnungen, ohne löschen"><b>Der Organizer</b><span>Aufgaben nach Tageskraft sortiert — ohne Streaks, ohne Fristenwarnungen, ohne Löschen</span></a><a class="ke" href="nd-leitfaden.html" data-s="anders verdrahtet leben struktur lernen emotionen kommunikation energie reize hyperfokus-finder"><b>Anders verdrahtet leben</b><span>Sechs Alltagsbereiche mit Hyperfokus-Finder</span></a><a class="ke" href="methoden.html" data-s="methoden für den moment 5-4-3-2-1, 5-sekunden-regel, let them, body doubling — mit chart-anschluss"><b>Methoden für den Moment</b><span>5-4-3-2-1, 5-Sekunden-Regel, Let Them, Body Doubling — mit Chart-Anschluss</span></a><a class="ke" href="tool.html" data-s="fang bei dir an der einfache einstieg ohne vorwissen"><b>Fang bei dir an</b><span>Der einfache Einstieg ohne Vorwissen</span></a></div></details><details class="rg" data-regal="praxis" data-coach="1" open><summary><div><div class="rt">Für deine Praxis</div><div class="ru">Die Coach-Seite der Plattform.</div></div><span class="rz">20</span></summary><div class="rg-in"><a class="ke" href="dossier.html" data-s="das dossier coach-ansicht: bestandsbericht pro person mit kernthemen, gesprächseinstiegen und grenzen"><b>Das Dossier</b><span>Coach-Ansicht: Bestandsbericht pro Person mit Kernthemen, Gesprächseinstiegen und Grenzen</span></a><a class="ke" href="monatsbericht.html" data-s="der monatsbericht fertiger text pro person und monat — zum kopieren und verschicken"><b>Der Monatsbericht</b><span>Fertiger Text pro Person und Monat — zum Kopieren und Verschicken</span></a><a class="ke" href="briefing.html" data-s="reading-briefing gesprächsvorbereitung aus dem aktiven profil"><b>Reading-Briefing</b><span>Gesprächsvorbereitung aus dem aktiven Profil</span></a><a class="ke" href="profil-ansicht.html" data-s="profil-ansicht dasselbe bild für eine ausgewählte person"><b>Profil-Ansicht</b><span>Dasselbe Bild für eine ausgewählte Person</span></a><a class="ke" href="reading-ablauf.html" data-s="der reading-ablauf struktur für ein gespräch"><b>Der Reading-Ablauf</b><span>Struktur für ein Gespräch</span></a><a class="ke" href="reading-gespraech.html" data-s="ein reading als gespräch nicht vortragen, sondern fragen"><b>Ein Reading als Gespräch</b><span>Nicht vortragen, sondern fragen</span></a><a class="ke" href="fragen-schatzkiste.html" data-s="die fragen-schatzkiste gute fragen für jede situation"><b>Die Fragen-Schatzkiste</b><span>Gute Fragen für jede Situation</span></a><a class="ke" href="klientinnen-fragen.html" data-s="häufige fragen souverän beantwortet"><b>Häufige Fragen</b><span>Souverän beantwortet</span></a><a class="ke" href="mondknoten-coaching.html" data-s="die mondknoten fürs coaching richtung statt diagnose"><b>Die Mondknoten fürs Coaching</b><span>Richtung statt Diagnose</span></a><div class="ks" data-s="jeden menschen richtig ansprechen der leitfaden mit vier vertiefungen zu fundament, mond, merkur und mars jeden menschen richtig ansprechen was jemand schon mitbringt den mond ansprechen den merkur ansprechen den mars ansprechen"><div class="kt">Jeden Menschen richtig ansprechen</div><div class="kb">Der Leitfaden mit vier Vertiefungen zu Fundament, Mond, Merkur und Mars</div><div class="ks-l"><a href="leitfaden.html">Jeden Menschen richtig ansprechen</a><a href="leitfaden-fundament.html">Was jemand schon mitbringt</a><a href="leitfaden-mond.html">Den Mond ansprechen</a><a href="leitfaden-merkur.html">Den Merkur ansprechen</a><a href="leitfaden-mars.html">Den Mars ansprechen</a></div></div><div class="ks" data-s="haltung und ethik das methodische rückgrat und die grenzen der arbeit haltung &amp; methode haltung &amp; ethik wann du nicht deutest"><div class="kt">Haltung und Ethik</div><div class="kb">Das methodische Rückgrat und die Grenzen der Arbeit</div><div class="ks-l"><a href="haltung.html">Haltung &amp; Methode</a><a href="haltung-ethik.html">Haltung &amp; Ethik</a><a href="grenzen.html">Wann du nicht deutest</a></div></div><div class="ks" data-s="astrologie und coaching wie beides zusammengeht coaching &amp; astrologie astrologie &amp; coaching verbinden"><div class="kt">Astrologie und Coaching</div><div class="kb">Wie beides zusammengeht</div><div class="ks-l"><a href="coaching.html">Coaching &amp; Astrologie</a><a href="coaching-verbinden.html">Astrologie &amp; Coaching verbinden</a></div></div><a class="ke" href="learning-seite.html" data-s="die learning-seite erkenntnisse festhalten"><b>Die Learning-Seite</b><span>Erkenntnisse festhalten</span></a></div></details><details class="rg" data-regal="eigen" data-coach="1"><summary><div><div class="rt">Dein Angebot</div><div class="ru">Wenn du damit arbeiten willst.</div></div><span class="rz">4</span></summary><div class="rg-in"><a class="ke" href="angebote-struktur.html" data-s="deine angebote wie du formate und preise strukturierst"><b>Deine Angebote</b><span>Wie du Formate und Preise strukturierst</span></a><a class="ke" href="ueber-mich-vorlage.html" data-s="deine über-mich-seite vorlage für die eigene darstellung"><b>Deine Über-mich-Seite</b><span>Vorlage für die eigene Darstellung</span></a><a class="ke" href="werkzeuge.html" data-s="deine werkzeuge was du praktisch brauchst"><b>Deine Werkzeuge</b><span>Was du praktisch brauchst</span></a><a class="ke" href="konzept-plattform.html" data-s="deine coaching-plattform konzept und aufbau"><b>Deine Coaching-Plattform</b><span>Konzept und Aufbau</span></a></div></details>
+
+<div class="bi-nix" id="binix">Nichts gefunden.<br>Versuch einen anderen Begriff — oder schau im <a href="glossar.html">Glossar</a> nach.</div>
+
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Anders arbeiten</span><span class="ttl">Die Themenr&auml;ume</span></a><a href="glossar.html" class="nx"><span class="lbl">Nachschlagen &rarr;</span><span class="ttl">Das Glossar</span></a></div>
+<div class="foot">Bibliothek &middot; Die Regale merken sich nichts &mdash; was zugeklappt ist, ist nicht weg.</div>
+</div>
+<script>
+
+/* ── Modus ── */
+function modus(){ try{ var s=JSON.parse(localStorage.getItem('ac_setup')||'{}'); return s.modus||'selbst'; }catch(e){ return 'selbst'; } }
+function setzeModus(m){ try{ var s=JSON.parse(localStorage.getItem('ac_setup')||'{}'); s.modus=m;
+  localStorage.setItem('ac_setup',JSON.stringify(s)); }catch(e){} }
+
+function modusZeichnen(){
+  var box=document.getElementById('bimodus'), m=modus();
+  box.innerHTML='<span class="lab">Ansicht</span>';
+  [['selbst','Für mich'],['coach','Als Coachin']].forEach(function(o){
+    var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+    b.setAttribute('aria-pressed', m===o[0]);
+    b.addEventListener('click',function(){ setzeModus(o[0]); modusZeichnen(); filtern(); });
+    box.appendChild(b);
+  });
+}
+
+function filtern(){
+  var q=(document.getElementById('bisuche').value||'').trim().toLowerCase();
+  var coach=(modus()==='coach');
+  var sichtbar=0;
+  document.querySelectorAll('details.rg').forEach(function(rg){
+    var nurCoach=rg.getAttribute('data-coach')==='1';
+    if(nurCoach&&!coach){ rg.className='rg weg'; return; }
+    var treffer=0;
+    rg.querySelectorAll('[data-s]').forEach(function(el){
+      var s=el.getAttribute('data-s')||'';
+      var passt=(!q||s.indexOf(q)>=0);
+      el.className=el.className.replace(/ weg/g,'')+(passt?'':' weg');
+      if(passt) treffer+= (el.className.indexOf('ks')>=0 ? el.querySelectorAll('a').length : 1);
+    });
+    rg.className='rg'+(treffer?'':' weg');
+    if(q&&treffer) rg.open=true;
+    sichtbar+=treffer;
+  });
+  document.getElementById('bizahl').textContent=
+    q? sichtbar+' Treffer' : sichtbar+' Seiten';
+  document.getElementById('binix').className='bi-nix'+(sichtbar?'':' an');
+}
+
+document.getElementById('bisuche').addEventListener('input',filtern);
+modusZeichnen(); filtern();
+
+</script>
 </body></html>
