@@ -1,7 +1,7 @@
 INHALT DES PAKETS
 ========================================
 
-122 Dateien
+124 Dateien
 
 NETLIFY-ANLEITUNG.md                       7416 Bytes
 achsen.html                                9917 Bytes
@@ -20,13 +20,15 @@ begriffe.js                                6054 Bytes
 briefing.html                             23485 Bytes
 chart-lesen.html                          12288 Bytes
 chart-rechner.html                        53410 Bytes
+coach.js                                  11643 Bytes
 coaching-verbinden.html                   12476 Bytes
 coaching.html                              9297 Bytes
 dating-muster.html                        30609 Bytes
 diagnose-weg.html                         20832 Bytes
-dossier.html                              43638 Bytes
+dossier.html                              43628 Bytes
 element-mix.html                          10561 Bytes
 erinnerung.html                           32954 Bytes
+faden.html                                28035 Bytes
 finsternisse.html                         20029 Bytes
 format.js                                 11462 Bytes
 fortschritt.js                             5643 Bytes
@@ -85,24 +87,24 @@ planeten-in-zeichen.html                  10961 Bytes
 planeten.html                             12581 Bytes
 planetenzyklen.html                       21964 Bytes
 profektionen.html                         20107 Bytes
-profil-ansicht.html                       61923 Bytes
+profil-ansicht.html                       61962 Bytes
 profil.js                                  6172 Bytes
-profile.html                              35464 Bytes
+profile.html                              35619 Bytes
 quiz.html                                 14289 Bytes
 rad.js                                    11467 Bytes
-raeume.html                               14570 Bytes
-raum-alltag.html                          44027 Bytes
-raum-anders-verdrahtet.html               48375 Bytes
-raum-berufung.html                        46682 Bytes
-raum-herkunft.html                        47774 Bytes
-raum-koerper.html                         45246 Bytes
-raum-naehe.html                           48275 Bytes
-raum-selbstwert.html                      47428 Bytes
-raum-sicherheit.html                      70255 Bytes
-raum-unerlaubte.html                      46192 Bytes
-raum-versorgung.html                      53738 Bytes
-raum-wunder-punkt.html                    45068 Bytes
-raum-zugehoerigkeit.html                  43081 Bytes
+raeume.html                               14609 Bytes
+raum-alltag.html                          44066 Bytes
+raum-anders-verdrahtet.html               48414 Bytes
+raum-berufung.html                        46721 Bytes
+raum-herkunft.html                        47813 Bytes
+raum-koerper.html                         45285 Bytes
+raum-naehe.html                           48314 Bytes
+raum-selbstwert.html                      47467 Bytes
+raum-sicherheit.html                      70294 Bytes
+raum-unerlaubte.html                      46231 Bytes
+raum-versorgung.html                      53777 Bytes
+raum-wunder-punkt.html                    45107 Bytes
+raum-zugehoerigkeit.html                  43120 Bytes
 raum.js                                    9227 Bytes
 reading-ablauf.html                       10986 Bytes
 reading-gespraech.html                    12433 Bytes
@@ -117,7 +119,7 @@ synastrie.html                            12776 Bytes
 timing.html                                9907 Bytes
 tool.html                                 37367 Bytes
 ueber-mich-vorlage.html                   11119 Bytes
-uebersicht.html                           61968 Bytes
+uebersicht.html                           62007 Bytes
 uebungscharts.html                        20550 Bytes
 weg.html                                  29253 Bytes
 werkzeuge.html                            10009 Bytes
