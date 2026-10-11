@@ -1,0 +1,863 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zwischen euch beiden &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="niveau.js"></script>
+<script src="wortwahl.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Beziehung ────────────────────────────────────────── */
+.wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;align-items:center;}
+.wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);flex:none;}
+.bz-zeile{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+@media(max-width:620px){.bz-zeile{flex-direction:column;align-items:flex-start;gap:5px;}
+ .bz-zeile .chips{width:100%;}}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:3px;
+ min-width:0;max-width:100%;flex:1 1 auto;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{flex:0 0 auto;font-family:var(--sans);font-size:13.5px;padding:8px 14px;
+ border:1px solid var(--linie);background:var(--papier);color:var(--tinte);border-radius:17px;
+ cursor:pointer;white-space:nowrap;}
+.chip[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+
+.bz{background:var(--papier);border:1px solid var(--linie);border-radius:22px;padding:28px 32px;margin-top:14px;}
+@media(max-width:620px){.bz{padding:21px 17px;border-radius:18px;}}
+.bz-kopf{border-bottom:1px solid var(--linie);padding-bottom:17px;}
+.bz-k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:7px;}
+.bz h2{font-family:var(--serif);font-size:clamp(24px,5vw,33px);font-weight:300;color:var(--nacht);
+ margin:0 0 9px;line-height:1.15;}
+.bz-ein{font-size:15.2px;line-height:1.7;color:var(--leise);margin:0;}
+.bz-ab{padding:19px 0;border-bottom:1px solid var(--linie);}
+.bz-ab:last-of-type{border-bottom:none;}
+.bz-ab h3{font-family:var(--serif);font-size:19.5px;font-weight:400;color:var(--nacht);margin:0 0 10px;}
+.bz-ab p{font-size:15.4px;line-height:1.74;margin:0 0 10px;}
+.bz-ab p:last-child{margin-bottom:0;}
+.bz-leise{color:var(--leise);font-size:14.3px;}
+.bz-paar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:560px){.bz-paar{grid-template-columns:1fr;}}
+.bzp{background:var(--bg);border-radius:13px;padding:13px 15px;font-size:14px;line-height:1.55;color:var(--leise);}
+.bzp b{display:block;font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);margin-bottom:4px;}
+.bz-kt{border-left:3px solid var(--linie);padding:11px 0 11px 14px;margin-bottom:11px;}
+.bz-kt.hart{border-left-color:var(--rost);}
+.bz-kt.weich{border-left-color:var(--teal);}
+.bz-kt .kt-kopf{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px;
+ font-family:var(--serif);font-size:16.5px;color:var(--nacht);}
+.bz-kt .kt-m{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
+ text-transform:uppercase;border-radius:8px;padding:3px 8px;}
+.bz-kt.hart .kt-m{background:#FBE3DA;color:var(--rost);}
+.bz-kt.weich .kt-m{background:#E8EDDC;color:var(--teal);}
+.bz-kt p{font-size:15px;line-height:1.7;margin:0;}
+.bz-liste{margin:0 0 10px 18px;padding:0;font-size:15.2px;line-height:1.72;}
+.bz-liste li{margin-bottom:5px;}
+.bz-hin{background:var(--messing-bg);border-radius:14px;padding:14px 17px;font-size:14.5px;
+ line-height:1.65;margin:16px 0 0;}
+.bz-fuss{margin-top:18px;padding-top:16px;border-top:1px dashed var(--linie);font-size:13.5px;
+ color:var(--leise);line-height:1.65;}
+.bz-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:28px;
+ text-align:center;color:var(--leise);line-height:1.68;font-size:15px;}
+.bz-aktion{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.bz-aktion button{font-family:var(--sans);font-size:14.3px;padding:11px 20px;border-radius:19px;
+ cursor:pointer;border:1px solid var(--linie);background:none;color:var(--nacht);}
+.bz-echo{font-size:13.6px;color:var(--teal);min-height:19px;margin-top:7px;}
+@media print{.ac-leiste,.wahl,#bzsteuer,.bz-aktion,.bz-echo,.weiter,.niv-leiste{display:none;}
+ .bz{border:none;padding:0;} body{background:#fff;}}
+
+.bz-rolle{font-size:14.8px;line-height:1.7;color:var(--tinte);background:var(--messing-bg);
+ border-radius:13px;padding:13px 16px;margin:13px 0 0;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Zwei Charts</div>
+<h1>Zwischen <em>euch beiden.</em></h1>
+<p class="lede">Zwei Profile nebeneinander &mdash; und zwar f&uuml;r die Beziehung, die ihr wirklich habt. Eine Mutter liest man anders als eine Freundin und eine Kollegin anders als eine Partnerin. Der praktische Teil steht unten: wie du diesen Menschen erreichst, wie ihr redet, was bei Streit hilft.</p>
+
+<div class="wahl" id="bzA"></div>
+<div class="wahl" id="bzB"></div>
+<div id="bzsteuer"></div>
+
+<div id="bzinhalt"></div>
+
+<div class="bz-aktion">
+  <button type="button" id="bzkopie">Text kopieren</button>
+  <button type="button" id="bzdruck">Drucken</button>
+</div>
+<div class="bz-echo" id="bzecho"></div>
+
+<h2>Tiere &mdash; was davon tr&auml;gt</h2>
+<div class="karte" style="background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:20px 22px;">
+<p>Ehrliche Antwort vorweg: <b>F&uuml;r Tiere gibt es keine gewachsene astrologische Tradition.</b> Die klassischen Texte handeln von Menschen, und alles, was heute als Tierastrologie verkauft wird, ist eine &Uuml;bertragung aus dem letzten Jahrhundert. Wer dir etwas anderes erz&auml;hlt, hat es nicht nachgesehen.</p>
+<p>Was trotzdem brauchbar ist, und zwar aus einem schlichten Grund: Ein Tierprofil zwingt dich, das Temperament deines Tiers einmal in Worte zu fassen und zu dir in Beziehung zu setzen. Das Mondzeichen als Temperamentsskizze funktioniert erstaunlich oft &mdash; vermutlich weniger, weil der Mond etwas tut, als weil die zw&ouml;lf Beschreibungen die zw&ouml;lf g&auml;ngigen Tiertypen abdecken.</p>
+<p><b>Praktisch:</b> Bei Tieren fehlt fast immer die Geburtszeit. Dann gibt es keinen Aszendenten und keine H&auml;user &mdash; die Seite sagt das auch. Bleibt der Mond, und wenn er an dem Tag das Zeichen wechselt, zeigt die Seite dir beide Fassungen. Nimm die, die zu dem Tier passt, das vor dir liegt. Das ist kein Mangel an Strenge, das ist der ehrliche Umgang mit einer d&uuml;nnen Datenlage.</p>
+<p style="margin-bottom:0;">Was ein Tierprofil <b>nicht</b> kann: Gesundheit beurteilen, Verhalten erkl&auml;ren, das eine Tier&auml;rztin oder eine Trainerin anschauen sollte, oder eine Entscheidung &uuml;ber ein Tier begr&uuml;nden. Daf&uuml;r gibt es Beobachtung &mdash; und daf&uuml;r hast du ohnehin dein Tagebuch.</p>
+</div>
+
+<div class="tip"><b>Zur Beziehungsart:</b> Die Wahl bleibt beim zweiten Profil gespeichert. Markierst du jemanden einmal als Partnerin, Kind oder Mutter, kommt diese Lesart beim n&auml;chsten Mal automatisch wieder &mdash; und die Startseite wei&szlig; es auch.</div>
+
+<div class="weiter"><a href="synastrie.html"><span class="lbl">&larr; Die Theorie</span><span class="ttl">Synastrie &mdash; wie zwei Charts gelesen werden</span></a><a href="reading.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Reading nach Wissensstand</span></a></div>
+<div class="foot">Zwischen euch beiden &middot; Kontakte bis 7&deg; bei Konjunktion und Opposition, 5&deg; sonst. Gewichtet nach Beziehungsart.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* ── Beziehungen: Rollen, Themen, Umgangshinweise ─────── */
+
+/* Beziehungsarten. gew = welche Kontakte in dieser Beziehung zählen,
+   du/sie = wie die beiden angesprochen werden, art = romantisch oder nicht. */
+var ROLLE={
+ liebe:{n:'Liebe / Partnerschaft', romantisch:true,
+  gew:{'Venus|Mars':2.2,'Mond|Sonne':2.2,'Mond|Mond':1.8,'Venus|Venus':1.6,'Mond|Venus':1.8,
+       'Mars|Mars':1.3,'Saturn|Venus':1.5,'Mond|Saturn':1.5,'Pluto|Venus':1.4,'Sonne|Sonne':1.4},
+  haus:[7,5,8], was:'Nähe, Anziehung und wie ihr euch im Alltag vertragt'},
+ freundschaft:{n:'Freundschaft', romantisch:false,
+  gew:{'Merkur|Merkur':2.0,'Jupiter|Sonne':1.8,'Mond|Mond':1.6,'Merkur|Mond':1.6,
+       'Uranus|Sonne':1.4,'Jupiter|Mond':1.5,'Sonne|Sonne':1.3,'Saturn|Merkur':1.2},
+  haus:[11,3,9], was:'wie leicht ihr miteinander könnt und woran es gelegentlich hängt'},
+ mutter:{n:'Mutter', romantisch:false, eltern:true,
+  gew:{'Mond|Mond':2.2,'Mond|Saturn':2.0,'Mond|Sonne':1.8,'Saturn|Sonne':1.6,
+       'Mond|Pluto':1.6,'Merkur|Mond':1.4,'Saturn|Saturn':1.2},
+  haus:[4,10,12], was:'das Muster zwischen euch — und wo es heute noch greift'},
+ vater:{n:'Vater', romantisch:false, eltern:true,
+  gew:{'Saturn|Sonne':2.2,'Sonne|Sonne':1.8,'Mond|Saturn':1.8,'Mars|Sonne':1.5,
+       'Saturn|Mars':1.5,'Jupiter|Sonne':1.3,'Pluto|Sonne':1.4},
+  haus:[10,4,9], was:'das Muster zwischen euch — und wo es heute noch greift'},
+ kind:{n:'Eigenes Kind', romantisch:false, kind:true,
+  gew:{'Mond|Mond':2.2,'Mond|Sonne':2.0,'Merkur|Mond':1.8,'Saturn|Mond':1.8,
+       'Mars|Mond':1.5,'Venus|Mond':1.5,'Jupiter|Sonne':1.3},
+  haus:[5,4,11], was:'wie du dieses Kind erreichst und wo du ihm im Weg stehst'},
+ geschwister:{n:'Geschwister', romantisch:false,
+  gew:{'Merkur|Merkur':2.0,'Mars|Mars':1.8,'Mond|Mond':1.6,'Sonne|Mars':1.5,
+       'Merkur|Mars':1.5,'Saturn|Sonne':1.3,'Mond|Mars':1.4},
+  haus:[3,11,4], was:'eure alte Rollenverteilung und was davon noch läuft'},
+ kollegin:{n:'Arbeit / Kollegin', romantisch:false,
+  gew:{'Merkur|Merkur':2.0,'Saturn|Sonne':1.8,'Mars|Mars':1.6,'Saturn|Mars':1.6,
+       'Merkur|Saturn':1.5,'Jupiter|Merkur':1.3,'Sonne|Sonne':1.2},
+  haus:[6,10,11], was:'wie ihr zusammen arbeitet, ohne euch gegenseitig aufzuhalten'},
+ tier:{n:'Tier', romantisch:false, tier:true,
+  gew:{'Mond|Mond':2.2,'Mars|Mond':1.8,'Venus|Mond':1.6,'Saturn|Mond':1.8,
+       'Mond|Sonne':1.5,'Mars|Mars':1.4},
+  haus:[6,5,12], was:'das Temperament deines Tiers und wie ihr euch im Alltag vertragt'},
+ sonstige:{n:'Sonstige', romantisch:false,
+  gew:{'Mond|Mond':1.6,'Merkur|Merkur':1.6,'Sonne|Mond':1.5,'Saturn|Sonne':1.3},
+  haus:[7,11,3], was:'was zwischen euch leicht geht und was reibt'}
+};
+
+/* Themen: welche Abschnitte gezeigt werden */
+var THEMA={
+ komplett:   {n:'Komplett',             zeig:['grund','erreichen','reden','kontakte','streit','helfen','haeuser','jetzt']},
+ kommunikation:{n:'Kommunikation',      zeig:['reden','kontakte','streit','jetzt']},
+ naehe:      {n:'Nähe und Zuneigung', zeig:['grund','erreichen','kontakte','jetzt']},
+ reibung:    {n:'Reibung und Konflikt', zeig:['streit','kontakte','jetzt']},
+ alltag:     {n:'Alltag',               zeig:['grund','haeuser','kontakte','jetzt']},
+ helfen:     {n:'Unterstützen',     zeig:['erreichen','helfen','reden','jetzt']}
+};
+
+/* ── Wie du diesen Menschen erreichst — nach seinem Mond ── */
+var ERREICHEN=[
+ ['Direkt und sofort. Lange Vorreden machen es schlimmer — sag es in einem Satz und bleib dann da.','Warten, bis der erste Ärger durch ist. Der geht schnell hoch und genauso schnell wieder weg.'],
+ ['Über etwas Handfestes. Tee, Essen, eine Decke, nebeneinandersitzen. Reden kommt später oder gar nicht.','Drängen. Wer hier schiebt, erreicht das Gegenteil — und das hält dann tagelang.'],
+ ['Über Reden. Fragen stellen, zuhören, weiterfragen. Beim Sprechen sortiert sich bei diesem Menschen das Gefühl erst.','Schweigen als Antwort. Das wird sofort als Strafe gelesen.'],
+ ['Über Zugewandtheit und ein bisschen Zeit. Erst wenn klar ist, dass du bleibst, kommt das Eigentliche.','Sachlichkeit im falschen Moment. Erst das Gefühl ernst nehmen, dann die Lösung.'],
+ ['Über Anerkennung. Sag, was du an der Sache gut findest, bevor du sagst, was fehlt.','Vor anderen korrigieren. Das trifft tiefer, als es aussieht.'],
+ ['Über Hilfe bei etwas Konkretem. Nicht fragen, wie es geht — fragen, was du übernehmen kannst.','Große Gefühlsgespräche. Die machen hier eher Druck als Erleichterung.'],
+ ['Über Ruhe im Raum. Erst Spannung rausnehmen, dann reden.','Ultimaten. Zwischen zwei Lagern zu stehen ist hier der schlimmste Zustand.'],
+ ['Über Verlässlichkeit und Diskretion. Was du erfährst, bleibt bei dir — und das muss spürbar sein.','Bohren. Fragen bringen hier gar nichts, Zeit und Ruhe schon.'],
+ ['Über Bewegung und Perspektive. Rausgehen, laufen, das Große Ganze ansprechen.','Einengen. Trost, der sich wie Festhalten anfühlt, treibt diesen Menschen weg.'],
+ ['Über Zuständigkeit. Sag, was du übernimmst, und mach es dann auch.','Mitleid. Das wird hier als Abwertung gehört, nicht als Wärme.'],
+ ['Über Abstand mit offener Tür. Angebot machen, dann in Ruhe lassen.','Dauerpräsenz. Nähe auf Anordnung löst hier Flucht aus.'],
+ ['Über Stimmung statt über Worte. Musik, Wasser, zusammen schweigen. Dieser Mensch nimmt auf, wie du dich fühlst, nicht nur was du sagst.','Analysieren. Zerlegen hilft hier nicht, Mitschwingen schon.']];
+
+/* ── Wie du mit diesem Menschen redest — nach seinem Merkur ── */
+var REDEN=[
+ ['Kurz und direkt. Komm zum Punkt, der Rest nervt.','Lange Einleitungen.'],
+ ['Langsam und konkret. Ein Gedanke nach dem anderen, gern mit Beispiel.','Tempo und viele Themen auf einmal.'],
+ ['Schnell und in Sprungbewegungen. Hier darf man abschweifen — es kommt zurück.','Darauf bestehen, bei einer Sache zu bleiben.'],
+ ['Behutsam. Pack das Sachliche in etwas Persönliches, sonst kommt es nicht an.','Nüchternheit. Wird als Kälte gehört.'],
+ ['Groß und klar. Bilder, Beispiele, ein bisschen Dramatik — das funktioniert hier wirklich.','Kleinteiligkeit.'],
+ ['Präzise. Wer hier unsauber formuliert, bekommt eine Korrektur statt einer Antwort.','Ungefähre Aussagen.'],
+ ['Höflich und ausgewogen. Nenn beide Seiten, dann deine.','Frontale Ansagen.'],
+ ['Ehrlich und ohne Beschönigen. Dieser Mensch merkt sofort, wenn etwas weggelassen wird.','Halbwahrheiten — die kosten das Vertrauen für Monate.'],
+ ['Offen und mit Begründung. Das Warum ist hier wichtiger als das Was.','Anweisungen ohne Grund.'],
+ ['Sachlich und belegt. Zahlen, Termine, Zuständigkeiten.','Vages. Wird als Unernst gewertet.'],
+ ['Auf Augenhöhe und ohne Konvention. Hier zählt das Argument, nicht die Form.','Hierarchie durchblicken lassen.'],
+ ['Weich und mit Raum. Lass Pausen, dräng nicht auf eine Antwort im selben Moment.','Direkte Fragen mit Antwortzwang.']];
+
+/* ── Wie dieser Mensch streitet — nach seinem Mars ── */
+var STREIT=[
+ ['Laut, sofort und schnell vorbei. Nicht persönlich nehmen, aber auch nicht wegducken.','Warte zehn Minuten, dann ist es meist schon durch.'],
+ ['Gar nicht — bis es zu viel ist. Dann unbeweglich.','Früh ansprechen, bevor sich etwas festsetzt.'],
+ ['Mit Worten und schnell. Diskussionen können hier über das Ziel hinausschießen.','Nicht auf jede Formulierung eingehen. Die Hälfte war Tempo, nicht Absicht.'],
+ ['Indirekt und gekränkt. Rückzug statt Angriff.','Nachgehen, aber ohne Druck. Die Tür offen lassen.'],
+ ['Groß und stolz. Gesichtsverlust ist hier das eigentliche Thema.','Eine Brücke bauen, die niemanden klein macht.'],
+ ['Über Kritik an Details. Der Streit läuft nie über das, worum es geht.','Nach dem eigentlichen Punkt fragen.'],
+ ['Gar nicht gern — und dann irgendwann alles auf einmal.','Früher fragen, ob etwas offen ist. Hier wird viel geschluckt.'],
+ ['Lange leise, dann sehr genau. Hier wird nichts vergessen.','Ehrlich bleiben. Taktik wird durchschaut und nachgetragen.'],
+ ['Laut und grundsätzlich. Aus dem Thema wird schnell eine Weltanschauung.','Auf den konkreten Fall zurückholen.'],
+ ['Kühl und mit Argumenten. Wirkt beherrscht und ist es nicht immer.','Sachlich bleiben. Emotionale Appelle verfehlen hier.'],
+ ['Plötzlich und überraschend — oder mit demonstrativer Distanz.','Nicht festhalten. Der Raum bringt mehr als die Aussprache.'],
+ ['Durch Verschwinden. Direkte Konfrontation wird vermieden.','Konkret werden und klein anfangen. Vorwürfe führen hier nirgendwohin.']];
+
+/* ── Wie du diesem Menschen hilfst — nach seinem Mond ── */
+var HELFEN=[
+ 'Tu etwas, statt zu fragen. Handeln ist hier Trost.',
+ 'Sorg für Versorgung und Ruhe. Essen, Schlaf, nichts Ändern.',
+ 'Hör zu und stell Fragen. Reden ist hier schon die halbe Lösung.',
+ 'Sei verlässlich da. Nicht lösen — bleiben.',
+ 'Sag, was du an diesem Menschen schätzt. Ernst gemeint, nicht als Aufmunterung.',
+ 'Nimm eine konkrete Aufgabe ab. Eine, die du dann auch wirklich machst.',
+ 'Stell Frieden her. Auch wenn der Streit gar nicht dieser Person gehört.',
+ 'Halt es aus, ohne nachzufragen. Deine Ruhe ist hier das Angebot.',
+ 'Geh mit raus. Bewegung und Horizont wirken hier besser als Gespräche.',
+ 'Übernimm Verantwortung für eine Sache. Das entlastet mehr als Zuspruch.',
+ 'Gib Raum und sag, dass du da bist. Beides gleichzeitig.',
+ 'Sei einfach da und sei ruhig dabei. Dieser Mensch nimmt deinen Zustand auf.'];
+
+/* ── Tiere: Temperament nach Mondzeichen ── */
+var TIER_MOND=[
+ 'Schnell hochzufahren und schnell wieder runter. Braucht Auslastung, sonst sucht es sich welche.',
+ 'Gemütlich und futterorientiert. Veränderungen im Ablauf gehen schlecht rein.',
+ 'Neugierig, zappelig, leicht abgelenkt. Reagiert stark auf Stimmen und Geräusche.',
+ 'Anhänglich und stimmungsempfindlich. Merkt sofort, wenn im Haus etwas nicht stimmt.',
+ 'Will gesehen werden. Macht Theater, wenn die Aufmerksamkeit woanders liegt.',
+ 'Pingelig, strukturiert, empfindlicher Magen. Routine ist hier keine Macke, sondern Bedarf.',
+ 'Verträglich und ausgleichend. Streit in der Wohnung belastet dieses Tier sichtbar.',
+ 'Intensiv und misstrauisch gegenüber Fremden. Bindet sich dafür vollständig.',
+ 'Bewegungshungrig und unternehmungslustig. Enge Wohnungen sind das Hauptproblem.',
+ 'Ruhig, ausdauernd, etwas ernst. Braucht klare Regeln und hält sich dann daran.',
+ 'Eigensinnig und schwer zu berechnen. Macht Dinge aus eigenem Antrieb, nicht auf Zuruf.',
+ 'Sensibel, weich, leicht überfordert. Nimmt die Stimmung der Menschen auf wie ein Schwamm.'];
+
+/* ── Kontaktdeutungen. Schlüssel: alphabetisch sortiertes Paar. ──
+   [weich, hart] je Fassung; r = romantische Fassung, falls nötig. */
+var KONTAKT={
+ 'Mond|Sonne':{
+  w:'Ein Grundton, der stimmt. Was der eine will, kann der andere gut aushalten — das merkt man erst, wenn man es mal anders erlebt hat.',
+  h:'Der eine zieht Richtung Ziel, der andere Richtung Sicherheit. Beides ist berechtigt, und genau deshalb wird daraus immer wieder dieselbe Diskussion.',
+  rw:'Die klassische Paar-Verbindung. Ihr passt im Grundrhythmus zusammen, ohne dafür etwas tun zu müssen.',
+  rh:'Ihr wollt dasselbe und braucht Verschiedenes. Das hält zusammen und reibt gleichzeitig — beides gehört zu dieser Verbindung.'},
+ 'Mond|Mond':{
+  w:'Ihr beruhigt euch auf ähnliche Weise. Schweigen zwischen euch ist meistens entspannt und nicht peinlich.',
+  h:'Ihr braucht in denselben Momenten Gegensätzliches — der eine Nähe, der andere Luft. Das ist keine Boshaftigkeit, nur unterschiedlicher Takt.'},
+ 'Mars|Venus':{
+  w:'Es funkt, und zwar ohne Anstrengung.',
+  h:'Anziehung mit Reibung. Spannend und anstrengend in derselben Bewegung.',
+  rw:'Die Anziehung ist da und bleibt es auch. Das ist der Kontakt, den man sucht und selten findet.',
+  rh:'Starke Anziehung, die sich regelmäßig in Streit übersetzt. Das eine lässt sich vom anderen schwer trennen.'},
+ 'Merkur|Merkur':{
+  w:'Ihr versteht euch beim Reden fast von selbst. Halbe Sätze reichen.',
+  h:'Ihr denkt in verschiedenen Geschwindigkeiten. Missverständnisse entstehen hier nicht aus Unwillen, sondern aus Tempo.'},
+ 'Mond|Saturn':{
+  w:'Eine verlässliche Verbindung. Der eine hält, wenn es beim anderen wackelt.',
+  h:'Einer von euch fühlt sich beim anderen regelmäßig zu wenig. Das ist der Kontakt, der am häufigsten unterschätzt wird — und der am längsten nachwirkt.'},
+ 'Saturn|Sonne':{
+  w:'Respekt und Struktur. Einer gibt dem anderen Halt, ohne ihn kleinzumachen.',
+  h:'Einer bremst den anderen — meistens ungewollt. Wer sich hier beweisen muss, merkt es selbst oft erst spät.'},
+ 'Jupiter|Sonne':{
+  w:'Ihr macht euch gegenseitig größer. In dieser Verbindung traut man sich mehr zu.',
+  h:'Einer übertreibt für den Geschmack des anderen. Großzügig und zu viel liegen hier nah beieinander.'},
+ 'Mond|Venus':{
+  w:'Es ist angenehm miteinander. Einfach so.',
+  h:'Zuneigung trifft auf ein anderes Bedürfnis. Gut gemeint kommt nicht immer gut an.'},
+ 'Mars|Mars':{
+  w:'Ihr zieht in dieselbe Richtung, wenn es losgeht.',
+  h:'Zwei Antriebe, die sich in die Quere kommen. Aufgaben teilen hilft mehr als Absprachen.'},
+ 'Mars|Saturn':{
+  w:'Ausdauer trifft auf Schwung. Zusammen bringt ihr Dinge zu Ende.',
+  h:'Der eine will los, der andere bremst. Das hält beide auf, wenn es nicht benannt wird.'},
+ 'Merkur|Mond':{
+  w:'Der eine spricht aus, was der andere fühlt. Das entlastet.',
+  h:'Sachlichkeit trifft auf Stimmung. Was als Information gemeint war, kommt als Kritik an.'},
+ 'Pluto|Venus':{
+  w:'Eine Verbindung mit Tiefe. Oberflächlich wird es zwischen euch selten.',
+  h:'Es wird schnell intensiv — und schnell um Kontrolle. Eifersucht ist hier ein Thema, auch wenn niemand es so nennt.',
+  rh:'Starke Bindung mit Hang zum Klammern. Das Schöne und das Schwierige haben hier dieselbe Wurzel.'},
+ 'Mond|Pluto':{
+  w:'Ihr kommt schnell an das heran, was andere nicht sehen.',
+  h:'Es geht hier sofort tief, auch wenn keiner das wollte. Gefühle werden zwischen euch schnell zum Machtthema.'},
+ 'Sonne|Sonne':{
+  w:'Ähnlicher Grundton. Ihr versteht, warum der andere tut, was er tut.',
+  h:'Zwei Richtungen, die sich kreuzen. Ihr seid euch nicht fremd — ihr wollt nur Verschiedenes.'},
+ 'Merkur|Saturn':{
+  w:'Gespräche mit Substanz. Nichts wird hier leichtfertig gesagt.',
+  h:'Einer fühlt sich beim Reden geprüft. Das legt sich, wenn man es einmal ausspricht.'},
+ 'Sonne|Uranus':{
+  w:'Ihr bringt einander auf Ideen. Langweilig wird es nicht.',
+  h:'Einer ist dem anderen zu unberechenbar. Verlässlichkeit ist hier das Verhandlungsthema.'},
+ 'Mars|Mond':{
+  w:'Schwung trifft Gefühl, und es passt.',
+  h:'Der eine wird laut, bevor der andere sortiert hat. Hier entstehen die meisten unnötigen Streits.'},
+ 'Jupiter|Mond':{
+  w:'In dieser Verbindung geht es einem besser als allein.',
+  h:'Großzügigkeit, die am Bedarf vorbeigeht. Gut gemeint ist hier nicht gleich gut.'},
+ 'Venus|Venus':{
+  w:'Ihr mögt Ähnliches. Das macht vieles einfach.',
+  h:'Verschiedener Geschmack, verschiedene Vorstellung von schön. Harmlos — solange es nicht ums Geld geht.'},
+ 'Saturn|Venus':{
+  w:'Etwas, das hält. Nicht aufregend, dafür verlässlich.',
+  h:'Zuneigung, die sich Bedingungen stellt. Einer wartet auf ein Zeichen, das der andere nicht gibt.'}
+};
+
+/* Was ein Planet des einen im Haus des anderen anfasst */
+var INHAUS=['dein Auftreten und wie du wirkst','dein Geld und deinen Selbstwert','dein Reden und Lernen',
+ 'dein Zuhause und deine Herkunft','deinen Ausdruck und dein Spiel','deinen Alltag und deinen Körper',
+ 'deine Verbindlichkeit','deine Tiefe und dein Loslassen','deinen Sinn und deine Überzeugung',
+ 'deinen Beruf und deine Sichtbarkeit','deine Freundschaften und deine Zukunft','deinen Rückzug und deine Ruhe'];
+
+/* Was in dieser Beziehungsart den Unterschied macht */
+var ROLLENSATZ={
+ liebe:'In einer Liebesbeziehung entscheidet selten der gro\u00DFe Konflikt, sondern der kleine, der sich jeden Dienstag wiederholt. Achte unten weniger auf die harten Kontakte als auf die, die den Alltag betreffen.',
+ freundschaft:'Freundschaften halten \u00FCber Leichtigkeit, nicht \u00FCber Arbeit. Wo zwischen euch etwas anstrengend ist, ist die ehrliche Frage nicht, wie man es l\u00F6st, sondern ob es gel\u00F6st werden muss.',
+ mutter:'Bei einer Mutter liest man zwei Dinge gleichzeitig: wie es fr\u00FCher war und wie es heute ist. Die Kontakte unten beschreiben das Muster von damals \u2014 wie viel davon heute noch l\u00E4uft, entscheidet ihr, nicht das Chart.',
+ vater:'Bei einem Vater geht es fast immer um Ma\u00DFst\u00E4be \u2014 wessen Ma\u00DFstab gilt, und ob du ihn noch brauchst. Lies die Kontakte unten als Beschreibung einer alten Rollenverteilung.',
+ kind:'Bei einem eigenen Kind dreht sich alles um: Was braucht dieses Kind, das ich selbst nicht gebraucht h\u00E4tte? Genau da liegen die blinden Flecken, und genau die stehen unten.',
+ geschwister:'Zwischen Geschwistern l\u00E4uft meistens noch die Rollenverteilung aus der Kindheit mit \u2014 wer vern\u00FCnftig war, wer laut, wer \u00FCbersehen wurde. Das h\u00F6rt nicht von allein auf.',
+ kollegin:'Bei Arbeitsbeziehungen interessiert nicht, ob man sich mag, sondern ob man sich gegenseitig aufh\u00E4lt. Darauf zielen die Abschnitte unten.',
+ tier:'Beim Tier geht es nicht um Verstehen, sondern um Passung: Dein Tempo gegen sein Tempo, deine Reizschwelle gegen seine.',
+ sonstige:'Ohne festgelegte Beziehungsart wird allgemein gelesen. Stell oben die Art ein, die wirklich zutrifft \u2014 dann wird es deutlich genauer.'
+};
+
+/* ── Zwei Charts nebeneinander ─────────────────────────── */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function el(i){ return document.getElementById(i); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function gross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+var W=window.AC_WORT;
+/* „Mandys", „Lukas'" — deutsche Besitzform */
+function bes(n){ return /[sxzß]$/i.test(n) ? n+"'" : n+'s'; }
+/* „dein Wesenskern" → „Wesenskern" */
+function ohneDein(s){ return s.replace(/^(deine|dein|die|der|das)\s+/i,''); }
+var ZN=W.ZEICHEN.map(function(z){return z.n;});
+var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var ASPW=[[0,'Konjunktion','w'],[60,'Sextil','w'],[90,'Quadrat','h'],[120,'Trigon','w'],[180,'Opposition','h']];
+var RKEY='ac_rolle_profile';
+
+var aId=null, bId=null, rolle='sonstige', thema='komplett';
+
+/* ── Rollen je Profil ─────────────────────────────────── */
+function rollen(){ try{ return JSON.parse(localStorage.getItem(RKEY)||'{}')||{}; }catch(e){ return {}; } }
+function rolleVon(id){ var r=rollen(); return r[id]||null; }
+function rolleSetzen(id,v){ var r=rollen(); if(v) r[id]=v; else delete r[id];
+ try{ localStorage.setItem(RKEY,JSON.stringify(r)); }catch(e){} }
+
+/* ── Charts ───────────────────────────────────────────── */
+function hatZeit(p){ return !(p.h===undefined||p.h===null||p.ohneZeit); }
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(!hatZeit(p)){ ut=12-(p.tz||0); }
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525;
+  var C={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),_zeit:hatZeit(p)};
+  if(hatZeit(p)){ var a=angles(jd,p.lat,p.lon); C.ASC=a.asc; C.MC=a.mc; }
+  /* Ohne Zeit: wandert der Mond an diesem Tag über eine Zeichengrenze? */
+  if(!hatZeit(p)){
+    var j0=jdFromUT(p.y,p.mo,p.d,0-(p.tz||0)), j1=j0+1;
+    var z0=Math.floor(nrm(moonLon((j0-2451545)/36525))/30);
+    var z1=Math.floor(nrm(moonLon((j1-2451545)/36525))/30);
+    C._mondUnsicher=(z0!==z1);
+    C._mondZeichen=[z0,z1];
+  }
+  return C;
+}
+function haus(C,l){ return C.ASC===undefined?0:((Math.floor(l/30)-Math.floor(C.ASC/30))%12+12)%12+1; }
+function zi(l){ return Math.floor(nrm(l)/30); }
+function paarKey(a,b){ return [a,b].sort().join('|'); }
+
+/* Kontakte zwischen zwei Charts */
+function kontakte(A,B,R){
+  var out=[];
+  PL.forEach(function(ka){ PL.forEach(function(kb){
+    var d=Math.abs(((A[ka]-B[kb]+540)%360)-180);
+    ASPW.forEach(function(x){
+      var max=(x[0]===0||x[0]===180)?7:5;
+      var orb=Math.abs(d-x[0]);
+      if(orb>max) return;
+      var key=paarKey(ka,kb);
+      var g=(R.gew&&R.gew[key])||0.6;
+      out.push({a:ka,b:kb,typ:x[1],art:x[2],orb:orb,key:key,
+                s:g*((max-orb)/max)*(x[2]==='h'?1.05:1)});
+    });
+  });});
+  /* Je Planetenpaar nur den engsten Kontakt behalten */
+  var best={};
+  out.forEach(function(k){ var id=k.a+'>'+k.b;
+    if(!best[id]||best[id].orb>k.orb) best[id]=k; });
+  var l=Object.keys(best).map(function(k){return best[k];});
+  l.sort(function(x,y){return y.s-x.s;});
+  return l;
+}
+function kontaktText(k,R,nA,nB){
+  var d=KONTAKT[k.key]; if(!d) return null;
+  var weich=(k.art==='w');
+  var t=null;
+  if(R.romantisch) t=weich?(d.rw||d.w):(d.rh||d.h);
+  if(!t) t=weich?d.w:d.h;
+  return t;
+}
+
+/* ── Darstellung ──────────────────────────────────────── */
+function alle(){ try{ return AC_P.alle()||[]; }catch(e){ return []; } }
+function pName(p){ try{ return AC_P.anzeige(p,AC_P.zeigeNamen()); }catch(e){ return p.name||'?'; } }
+function vorname(p){ return (p.name||'').trim().split(/\s+/)[0]||pName(p); }
+
+function wahlBauen(){
+  ['bzA','bzB'].forEach(function(id,i){
+    var box=el(id), l=alle();
+    box.innerHTML='<span class="lab">'+(i?'und':'Zwischen')+'</span>';
+    l.forEach(function(p){
+      var b=document.createElement('button'); b.type='button';
+      b.textContent=pName(p)+(p.eigen?' (ich)':'');
+      b.setAttribute('aria-pressed', (i?bId:aId)===p.id);
+      b.addEventListener('click',function(){
+        if(i){ bId=p.id; var r=rolleVon(p.id); if(r) rolle=r; }
+        else aId=p.id;
+        wahlBauen(); steuerBauen(); zeigen();
+      });
+      box.appendChild(b);
+    });
+  });
+}
+function steuerBauen(){
+  var h='<div class="bz-zeile"><span class="lab">Beziehung</span><div class="chips">';
+  Object.keys(ROLLE).forEach(function(k){
+    h+='<button type="button" class="chip" data-r="'+k+'" aria-pressed="'+(rolle===k)+'">'+ROLLE[k].n+'</button>';
+  });
+  h+='</div></div><div class="bz-zeile"><span class="lab">Thema</span><div class="chips">';
+  Object.keys(THEMA).forEach(function(k){
+    h+='<button type="button" class="chip" data-t="'+k+'" aria-pressed="'+(thema===k)+'">'+THEMA[k].n+'</button>';
+  });
+  h+='</div></div>';
+  el('bzsteuer').innerHTML=h;
+  Array.prototype.forEach.call(el('bzsteuer').querySelectorAll('[data-r]'),function(b){
+    b.addEventListener('click',function(){
+      rolle=b.getAttribute('data-r');
+      if(bId) rolleSetzen(bId, rolle);
+      steuerBauen(); zeigen();
+    });
+  });
+  Array.prototype.forEach.call(el('bzsteuer').querySelectorAll('[data-t]'),function(b){
+    b.addEventListener('click',function(){ thema=b.getAttribute('data-t'); steuerBauen(); zeigen(); });
+  });
+}
+
+function abschnitt(id, titel, inhalt, zeig){
+  if(zeig.indexOf(id)<0 || !inhalt) return '';
+  return '<section class="bz-ab"><h3>'+titel+'</h3>'+inhalt+'</section>';
+}
+
+function bauen(pa,pb){
+  var A=chartVon(pa), B=chartVon(pb), R=ROLLE[rolle], Z=THEMA[thema].zeig;
+  var nA=vorname(pa), nB=vorname(pb);
+  var n=AC_NIV.stufe();
+  var tier=!!R.tier;
+  var h='';
+
+  /* Kopf */
+  h+='<div class="bz-kopf"><div class="bz-k">'+esc(R.n)+' · '+esc(THEMA[thema].n)+'</div>'+
+    '<h2>'+esc(nA)+' und '+esc(nB)+'</h2>'+
+    '<p class="bz-ein">Darum geht es hier: '+esc(R.was)+'. '+
+    'Was hier steht, beschreibt eine Anlage — keine Schuld und keine Prognose.</p>'+
+    (ROLLENSATZ[rolle]?'<p class="bz-rolle">'+ROLLENSATZ[rolle]+'</p>':'')+'</div>';
+
+  if(!B._zeit || !A._zeit){
+    var ohne=[]; if(!A._zeit) ohne.push(nA); if(!B._zeit) ohne.push(nB);
+    h+='<div class="bz-hin"><b>Ohne Geburtszeit bei '+esc(ohne.join(' und '))+'.</b> '+
+      'Die Zeichen der Planeten stimmen trotzdem — Häuser und Aszendent fehlen, '+
+      'weil die sich stündlich ändern.'+
+      ((B._mondUnsicher||A._mondUnsicher)?' Und der Mond wechselt an diesem Tag das Zeichen: '+
+        'er steht entweder in '+ZN[(B._mondUnsicher?B:A)._mondZeichen[0]]+' oder in '+
+        ZN[(B._mondUnsicher?B:A)._mondZeichen[1]]+'. Lies beide Fassungen und nimm die, die passt.':'')+
+      '</div>';
+  }
+
+  /* Grundton */
+  var ga=zi(A.Sonne), gb=zi(B.Sonne), ma=zi(A.Mond), mb=zi(B.Mond);
+  var el4=['Feuer','Erde','Luft','Wasser'];
+  var ea=el4[ga%4], eb=el4[gb%4];
+  var grund='<div class="bz-paar">'+
+    '<div class="bzp"><b>'+esc(nA)+'</b>'+(tier?'':'Sonne in '+ZN[ga]+' · ')+'Mond in '+ZN[ma]+
+      (A.ASC!==undefined?' · '+ZN[zi(A.ASC)]+'-Aszendent':'')+'</div>'+
+    '<div class="bzp"><b>'+esc(nB)+'</b>'+(tier?'':'Sonne in '+ZN[gb]+' · ')+'Mond in '+ZN[mb]+
+      (B.ASC!==undefined?' · '+ZN[zi(B.ASC)]+'-Aszendent':'')+'</div></div>';
+  grund+='<p>'+(ea===eb
+    ? 'Ihr seid vom selben Schlag — beide '+ea+'. Das macht vieles selbstverständlich und sorgt dafür, dass euch dieselben Dinge fehlen.'
+    : 'Du bist '+ea+', '+esc(nB)+' ist '+eb+'. Das ist der Grund für die meisten kleinen Missverständnisse zwischen euch — und auch dafür, dass ihr euch gegenseitig etwas beibringen könnt.')+'</p>';
+  h+=abschnitt('grund','Der Grundton', grund, Z);
+
+  /* Wie du sie erreichst */
+  if(tier){
+    h+=abschnitt('erreichen','Was für ein Typ '+esc(nB)+' ist',
+      '<p>'+TIER_MOND[mb]+'</p>'+
+      '<p class="bz-leise">Beim Tier ist der Mond das Interessanteste — Temperament, Rhythmus, '+
+      'Reizschwelle. Sonne und Aszendent, die bei Menschen so viel tragen, sagen hier wenig.</p>', Z);
+  } else {
+    h+=abschnitt('erreichen','Wie du '+esc(nB)+' erreichst',
+      '<p><b>Was ankommt:</b> '+ERREICHEN[mb][0]+'</p>'+
+      '<p><b>Was danebengeht:</b> '+ERREICHEN[mb][1]+'</p>'+
+      '<p class="bz-leise">Das liest sich am Mond ab — dem Teil, der zuerst reagiert, '+
+      'bevor jemand nachdenkt.</p>', Z);
+  }
+
+  /* Reden */
+  if(!tier){
+    var rb=zi(B.Merkur), ra=zi(A.Merkur);
+    h+=abschnitt('reden','Wie ihr miteinander redet',
+      '<p><b>Bei '+esc(nB)+' funktioniert:</b> '+REDEN[rb][0]+' <b>Nicht:</b> '+REDEN[rb][1]+'</p>'+
+      '<p><b>Du selbst redest so:</b> '+REDEN[ra][0].replace(/^./,function(c){return c.toLowerCase();})+
+      ' — das ist genau dann ein Problem, wenn es nicht zu dem passt, was oben steht.</p>', Z);
+  }
+
+  /* Kontakte */
+  var ks=kontakte(A,B,R).filter(function(k){ return KONTAKT[k.key]; });
+  var gezeigt=[], gesehen={};
+  ks.forEach(function(k){
+    if(gesehen[k.key]) return; gesehen[k.key]=1;
+    var t=kontaktText(k,R); if(!t) return;
+    gezeigt.push({k:k,t:t});
+  });
+  if(thema==='reibung') gezeigt=gezeigt.filter(function(x){return x.k.art==='h';});
+  if(thema==='naehe')   gezeigt=gezeigt.filter(function(x){return x.k.art==='w';});
+  gezeigt=gezeigt.slice(0, n<=1?4:6);
+  if(gezeigt.length){
+    var kt=gezeigt.map(function(x){
+      var kopf = n<=1
+        ? esc(bes(nA))+' '+gross(ohneDein(W.PLANET[x.k.a].kurz(Math.min(n,1))))+' und '+
+          esc(bes(nB))+' '+ohneDein(W.PLANET[x.k.b].kurz(Math.min(n,1)))
+        : esc(bes(nA))+' '+x.k.a+' '+x.k.typ+' '+esc(bes(nB))+' '+x.k.b+
+          (n>=3?' ('+x.k.orb.toFixed(1)+'°)':'');
+      return '<div class="bz-kt '+(x.k.art==='h'?'hart':'weich')+'">'+
+        '<div class="kt-kopf">'+kopf+'<span class="kt-m">'+
+        (x.k.art==='h'?'Reibung':'leicht')+'</span></div><p>'+x.t+'</p></div>';
+    }).join('');
+    h+=abschnitt('kontakte', thema==='reibung'?'Wo es hakt':(thema==='naehe'?'Was leicht geht':'Die stärksten Verbindungen'), kt, Z);
+  }
+
+  /* Streit */
+  if(!tier){
+    var sb=zi(B.Mars);
+    h+=abschnitt('streit','Wenn es Streit gibt',
+      '<p><b>'+esc(nB)+' streitet so:</b> '+STREIT[sb][0]+'</p>'+
+      '<p><b>Was hilft:</b> '+STREIT[sb][1]+'</p>'+
+      (R.eltern?'<p class="bz-leise">Bei Eltern lohnt die Frage, wie alt dieses Muster ist. '+
+        'Vieles davon war mit zwölf richtig und ist mit vierzig nur noch Gewohnheit.</p>':''), Z);
+  }
+
+  /* Helfen */
+  if(!tier){
+    h+=abschnitt('helfen','Wenn du helfen willst',
+      '<p>'+HELFEN[mb]+'</p>'+
+      '<p class="bz-leise">Und der unbequeme Teil: Die meisten Menschen helfen so, '+
+      'wie sie selbst geholfen bekommen wollen. Deins wäre „'+HELFEN[ma]+'“ — '+
+      (ma===mb?'hier passt das ausnahmsweise zusammen.':'das ist nicht dasselbe.')+'</p>', Z);
+  }
+
+  /* Planeten im Haus des anderen */
+  if(B.ASC!==undefined){
+    var ih=[];
+    ['Sonne','Mond','Venus','Mars','Saturn'].forEach(function(k){
+      var hs=haus(B,A[k]);
+      if(hs) ih.push({k:k,h:hs});
+    });
+    if(ih.length){
+      var iht='<p>Wo du bei '+esc(nB)+' landest — welchen Lebensbereich du bei ihr oder ihm '+
+        'berührst, ob du willst oder nicht:</p><ul class="bz-liste">'+
+        ih.slice(0,5).map(function(x){
+          return '<li>'+(n<=1?gross(W.PLANET[x.k].kurz(Math.min(n,1))):'Dein '+x.k)+
+            ' trifft '+INHAUS[x.h-1]+(n>=2?' ('+x.h+'. Haus)':'')+'.</li>';
+        }).join('')+'</ul>';
+      h+=abschnitt('haeuser','Wo du bei '+esc(nB)+' ankommst', iht, Z);
+    }
+  }
+
+  /* Was gerade läuft */
+  h+=abschnitt('jetzt','Was gerade zwischen euch läuft', jetztText(A,B,nA,nB,R,n), Z);
+
+  h+='<div class="bz-fuss">Beziehungsbilder beschreiben, womit zwei Menschen ausgestattet sind — '+
+    'nicht, was sie daraus machen. Ein harter Kontakt ist kein Urteil über eine Beziehung, '+
+    'und ein weicher ist keine Garantie.</div>';
+  return h;
+}
+
+/* Laufende Transite, die beide betreffen */
+function jetztText(A,B,nA,nB,R,n){
+  var d=new Date();
+  var jd=jdFromUT(d.getUTCFullYear(),d.getUTCMonth()+1,d.getUTCDate(),
+    d.getUTCHours()+d.getUTCMinutes()/60);
+  var T=(jd-2451545)/36525;
+  var TR={Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+    Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),Mars:geo('Mars',T),Venus:geo('Venus',T)};
+  var treffer=[];
+  Object.keys(TR).forEach(function(t){
+    ['Sonne','Mond','Venus','Mars','Saturn'].forEach(function(k){
+      [['A',A,nA],['B',B,nB]].forEach(function(seite){
+        var dd=Math.abs(((TR[t]-seite[1][k]+540)%360)-180);
+        ASPW.forEach(function(x){
+          var orb=Math.abs(dd-x[0]);
+          if(orb>2) return;
+          treffer.push({t:t,k:k,typ:x[1],art:x[2],orb:orb,wen:seite[2]});
+        });
+      });
+    });
+  });
+  treffer.sort(function(a,b){return a.orb-b.orb;});
+  if(!treffer.length) return '<p>Gerade berührt kein langsamer Planet eure Charts eng genug, '+
+    'um daraus etwas zu lesen. Das ist der Normalzustand und keine Lücke — '+
+    'die meiste Zeit ist am Himmel nichts Besonderes los.</p>';
+  var l=treffer.slice(0,3).map(function(x){
+    var hart=(x.art==='h');
+    return '<li><b>'+esc(x.wen)+':</b> '+
+      (n<=1? gross(W.PLANET[x.t].kurz(1))+' berührt gerade '+W.PLANET[x.k].kurz(1)
+           : x.t+' '+x.typ+' '+x.k+(n>=3?' ('+x.orb.toFixed(1)+'°)':''))+' — '+
+      (hart?'das ist der Punkt, an dem es zwischen euch gerade schneller eng wird, als es müsste.'
+           :'da geht gerade mehr als sonst, wenn ihr es nutzt.')+'</li>';
+  }).join('');
+  return '<p>Was im Moment von außen dazukommt, eng gerechnet:</p><ul class="bz-liste">'+l+'</ul>'+
+    '<p class="bz-leise">Transite sind Wetter, kein Klima. Sie erklären, warum etwas '+
+    '<i>gerade jetzt</i> hochkommt — nicht, warum es überhaupt da ist.</p>';
+}
+
+function zeigen(){
+  var l=alle(), box=el('bzinhalt');
+  if(l.length<2){
+    box.innerHTML='<div class="bz-leer"><b>Dafür braucht es zwei Profile.</b><br><br>'+
+      'Unter <a href="profile.html">Profile</a> einen zweiten Menschen — oder ein Tier — anlegen, '+
+      'dann entsteht hier die Gegenüberstellung.</div>'; return;
+  }
+  if(!aId) aId=(l.filter(function(p){return p.eigen;})[0]||l[0]).id;
+  if(!bId) bId=(l.filter(function(p){return p.id!==aId;})[0]||l[1]).id;
+  if(aId===bId){ box.innerHTML='<div class="bz-leer">Bitte zwei verschiedene Profile wählen.</div>'; return; }
+  var pa=l.filter(function(p){return p.id===aId;})[0];
+  var pb=l.filter(function(p){return p.id===bId;})[0];
+  if(!pa||!pb){ box.innerHTML=''; return; }
+  box.innerHTML='<article class="bz">'+bauen(pa,pb)+'</article>';
+}
+
+function kopieren(){
+  var a=document.querySelector('.bz'); if(!a) return;
+  var t=a.innerText.replace(/\n{3,}/g,'\n\n').trim();
+  var ta=document.createElement('textarea'); ta.value=t;
+  ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); }catch(e){}
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t);
+  ta.remove();
+  var e=el('bzecho'); e.textContent='Kopiert.';
+  setTimeout(function(){ if(e.textContent==='Kopiert.') e.textContent=''; },3500);
+}
+
+function start(){
+  wahlBauen(); steuerBauen(); zeigen();
+  el('bzkopie').addEventListener('click',kopieren);
+  el('bzdruck').addEventListener('click',function(){ window.print(); });
+  window.addEventListener('ac-niveau',zeigen);
+}
+start();
+
+</script>
+</body></html>

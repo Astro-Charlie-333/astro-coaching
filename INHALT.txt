@@ -1,30 +1,23 @@
 Astro-Charlie — Inhalt des Pakets
 Stand: 11.10.2026
 
-116 Seiten, 17 Skriptdateien.
+118 Seiten, 19 Skriptdateien.
 
 Neu in dieser Fassung:
-  zauber.html   Zimt, Rosen, Steine — Planetenstunden für deinen Ort, Zutaten
-                und Steine nach Planet, fünf Ziele (Geld, Liebe, Erfolg,
-                Gesundheit, Glück und Schutz) mit je drei Ritualen, dazu
-                dein Chartherrscher mit Tag, Metall, Farben und Steinen.
-  himmel.js     Sonnenauf- und -untergang, Planetentag und Planetenstunde
-                nach chaldäischer Ordnung, Mond ohne Lauf.
-  ritual.js     Das Ritualboard der Startseite.
-  index.html    Neues Band ganz oben: was als Nächstes ansteht, die
-                Einkaufsliste dafür, Planetenstunde, Mondstand, Warnung bei
-                Mond ohne Lauf und ein Fakt des Tages.
+  beziehung.html  Zwei Profile gegenübergestellt — nach Beziehungsart
+                  (Liebe, Freundschaft, Mutter, Vater, eigenes Kind, Geschwister,
+                  Kollegin, Tier) und nach Thema (Komplett, Kommunikation, Nähe,
+                  Reibung, Alltag, Unterstützen). Mit konkreten Hinweisen zum
+                  Erreichen, Reden, Streiten und Helfen. Beziehungsart wird je
+                  Profil gespeichert. Tiere ohne Geburtszeit werden sauber
+                  behandelt, inklusive ehrlicher Einordnung.
+  index.html      Neues Band „Bewegung am Himmel": welche Planeten rückläufig
+                  sind, wann sie wieder direkt gehen, in welchem Haus und was
+                  das dort heißt.
 
-Vorher ergänzt:
-  rituale.html  Rituale zu Mondphasen und Transiten.
-
-Nebenbei repariert:
-  Tabellen sprengten auf 23 Seiten am Handy die Seitenbreite — jetzt seitlich
-  schiebbar. Lange deutsche Komposita taten dasselbe in schmalen Rasterspalten
-  (overflow-wrap: anywhere auf allen Seiten). Das Logo in der Kopfleiste war
-  auf acht Seiten von einer globalen svg-Regel auf Bildschirmgröße aufgeblasen.
-  Geprüft: alle 116 Seiten bei 390 und 1200 Pixeln, ohne JS-Fehler und ohne
-  waagerechten Überlauf.
+Geprüft: 15 Richtungswechsel über 260 Tage gegen PyEphem — alle korrekt,
+Abweichung unter zwei Stunden. Alle Seiten bei 390 und 1200 Pixeln sowie auf
+den Wissensstufen 0, 2 und 4, ohne JS-Fehler und ohne waagerechten Überlauf.
 
 Seiten:
   achsen.html
@@ -39,6 +32,7 @@ Seiten:
   bausteine.html
   bazi.html
   berufe.html
+  beziehung.html
   briefing.html
   chart-lesen.html
   chart-rechner.html
@@ -121,6 +115,7 @@ Seiten:
   raum-zugehoerigkeit.html
   reading-ablauf.html
   reading-gespraech.html
+  reading.html
   retrograde.html
   rituale.html
   ruhe-schlaf.html
@@ -155,6 +150,7 @@ Skripte:
   fortschritt.js
   himmel.js
   kleine-punkte.js
+  niveau.js
   profil.js
   rad.js
   raum.js
@@ -162,3 +158,4 @@ Skripte:
   schatten.js
   staedte.js
   wetter.js
+  wortwahl.js

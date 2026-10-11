@@ -156,6 +156,52 @@ function fakten(P,jd,st){
   return f;
 }
 
+/* ── Richtungswechsel: wann wird ein Planet wieder direkt ──
+   Eine Station ist der Punkt, an dem die Tagesbewegung das Vorzeichen
+   wechselt. Davor steht der Planet scheinbar still. */
+var LANGSAM=['Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+function tempo(k,jd){ return ((lon(k,jd+0.5)-lon(k,jd-0.5)+540)%360)-180; }
+function stationen(vonJD, tage){
+  var out=[];
+  LANGSAM.forEach(function(k){
+    var a=vonJD, fa=tempo(k,a);
+    for(var i=0;i<tage;i++){
+      var b=a+1, fb=tempo(k,b);
+      if((fa<0)!==(fb<0)){
+        var lo=a, hi=b;
+        for(var q=0;q<26;q++){ var m=(lo+hi)/2;
+          if((tempo(k,m)<0)===(fa<0)) lo=m; else hi=m; }
+        var t=(lo+hi)/2;
+        out.push({planet:k, jd:t, direkt:(fb>=0), lon:lon(k,t)});
+      }
+      a=b; fa=fb;
+    }
+  });
+  out.sort(function(x,y){ return x.jd-y.jd; });
+  return out;
+}
+/* Welche Planeten laufen gerade rückwärts */
+function jetztRueck(jd){
+  return LANGSAM.filter(function(k){ return tempo(k,jd)<0; });
+}
+var STATIONSATZ={
+ Merkur:['Absprachen, Technik und alles Schriftliche laufen wieder normal.',
+         'Absprachen und Technik werden f\u00FCr drei Wochen z\u00E4her. Zweimal lesen hilft mehr als \u00E4rgern.'],
+ Venus:['Was in Beziehungen und beim Geld h\u00E4ngen geblieben ist, kommt wieder in Bewegung.',
+        'Beziehungen und Geldfragen gehen in die R\u00FCckschau. Jetzt nichts Gro\u00DFes entscheiden.'],
+ Mars:['Die Kraft geht wieder nach au\u00DFen. Was monatelang liegen blieb, l\u00E4sst sich jetzt anfassen.',
+       'Der Antrieb geht nach innen. Konfrontationen treffen in dieser Zeit daneben.'],
+ Jupiter:['Wachstum zeigt sich wieder nach au\u00DFen statt nur innerlich.',
+          'Die gro\u00DFen Pl\u00E4ne gehen in die Pr\u00FCfung. Nicht schlimm, nur langsamer.'],
+ Saturn:['Was festgefahren war, bekommt wieder Richtung.',
+         'Eine Struktur wird noch einmal auf Tragf\u00E4higkeit gepr\u00FCft.'],
+ Uranus:['Eine Ver\u00E4nderung, die lange in der Luft lag, wird konkret.',
+         'Der Ver\u00E4nderungsdruck wird innerlich, bevor er wieder sichtbar wird.'],
+ Neptun:['Etwas kl\u00E4rt sich, das lange unklar war.',
+         'Eine Illusion wird noch einmal von innen angeschaut.'],
+ Pluto:['Ein langer Umbau nimmt wieder Fahrt auf.',
+        'Ein Umbauprozess geht nach innen.']};
+
 /* ── Das Board ──────────────────────────────────────── */
 function board(P, O, knapp){
   var jd, n=new Date();
@@ -230,6 +276,27 @@ function board(P, O, knapp){
   }
   h+='</div>';
 
+  /* Richtungswechsel — was demnächst wieder direkt läuft */
+  if(!knapp){
+    var st2=stationen(jd, 150).slice(0,3);
+    var rueck=jetztRueck(jd);
+    if(st2.length||rueck.length){
+      h+='<div class="rb-fakt"><div class="rb-k">Bewegung am Himmel</div>';
+      if(rueck.length){
+        h+='<p style="margin-bottom:10px;"><b>R\u00FCckl\u00E4ufig gerade:</b> '+rueck.join(', ')+'.</p>';
+      }
+      h+='<ul class="rb-st">'+st2.map(function(x){
+        var tg=Math.round(x.jd-jd);
+        var hs=P?((Math.floor(n360(x.lon)/30)-Math.floor(P.ASC/30))%12+12)%12+1:0;
+        return '<li><span class="w'+(x.direkt?'':' rueck')+'">'+
+          (x.direkt?'wieder direkt':'wird r\u00FCckl\u00E4ufig')+'</span> '+
+          '<b>'+x.planet+'</b> am '+tagKurz(x.jd)+' ('+(tg<=0?'heute':'in '+tg+' Tagen')+')'+
+          (P?' \u2014 in deinem '+hs+'. Haus: '+HFELD[hs-1]:'')+
+          '<span class="s">'+STATIONSATZ[x.planet][x.direkt?0:1]+'</span></li>';
+      }).join('')+'</ul></div>';
+    }
+  }
+
   /* Fakt des Tages — wechselt täglich */
   if(!knapp){
     var f=fakten(P,jd,st);
@@ -241,5 +308,6 @@ function board(P, O, knapp){
   return h;
 }
 
-window.AC_BOARD={board:board, lunationen:lunationen, fenster:fenster, fakten:fakten};
+window.AC_BOARD={board:board, lunationen:lunationen, fenster:fenster, fakten:fakten,
+  stationen:stationen, jetztRueck:jetztRueck};
 })();

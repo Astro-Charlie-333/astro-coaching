@@ -428,13 +428,25 @@ body.fmt-lang .hw-ktxt{font-size:14.5px;}
 .rb-fakt .rb-k{color:var(--messing,#9A7235);}
 .rb-fakt p{margin:0;font-size:15px;line-height:1.72;color:var(--tinte,#231F1A);}
 .rb-fakt b{color:var(--nacht,#2E3A5C);}
+.rb-st{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+.rb-st li{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:13px;
+ padding:12px 14px;font-size:14.6px;line-height:1.6;}
+.rb-st .w{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;
+ text-transform:uppercase;border-radius:8px;padding:3px 8px;margin-right:8px;
+ background:var(--gruen-bg,#EDF3EC);color:var(--gruen,#3F6B4A);vertical-align:1px;}
+.rb-st li:has(.w:not(:empty)) b{color:var(--nacht,#2E3A5C);}
+.rb-st .w.rueck{background:rgba(154,114,53,.16);color:var(--messing,#9A7235);}
+.rb-st .s{display:block;margin-top:5px;font-size:14px;color:var(--leise,#6B6259);}
+
 
 /* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
    Silbentrennung wo möglich, harter Umbruch als Rückfall. */
 @media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
 /* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
    nach der Raster- und Flexspalten ihre Breite berechnen. */
-</style></head><body>
+</style><script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+</head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
