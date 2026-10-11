@@ -158,6 +158,16 @@ a{color:var(--nacht);}
 .as-asp-d p:last-child{margin-bottom:0;}
 .aad-art{color:var(--leise);font-size:14.3px;}
 .aad-gew{background:var(--messing-bg);border-radius:11px;padding:10px 13px;font-size:14.2px;margin-top:9px;}
+
+/* Tabellen passen am Handy nicht in die Breite — dann seitlich schiebbar
+   machen, statt die ganze Seite waagerecht scrollen zu lassen. */
+@media(max-width:560px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">

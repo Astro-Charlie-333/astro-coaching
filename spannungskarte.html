@@ -168,7 +168,7 @@ a{color:var(--nacht);}
  backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
  position:sticky;top:0;z-index:40;}
 .ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
-.ac-leiste-inner svg{flex:none;}
+.ac-leiste-inner svg{flex:none;width:20px;height:20px;}
 .ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
  text-decoration:none;letter-spacing:-.01em;line-height:1;}
 .ac-marke:hover{color:var(--nacht);}
@@ -188,6 +188,12 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="profil.js"></script>
 <script src="fortschritt.js"></script>
 <script src="begriffe.js" defer></script>

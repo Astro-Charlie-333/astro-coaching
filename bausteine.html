@@ -1,0 +1,578 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Bausteine · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="kleine-punkte.js"></script>
+<script src="schatten.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.bs-rad{background:var(--papier);border:1px solid var(--linie);border-radius:24px;padding:22px;margin-bottom:16px;}
+.bs-rad svg{display:block;width:100%;height:auto;max-width:620px;margin:0 auto;cursor:default;}
+.bs-rad svg .seg{cursor:pointer;transition:opacity .12s;}
+.bs-rad svg .seg:hover{opacity:.78;}
+.bs-modus{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;}
+.bs-modus button{font-family:var(--sans);font-size:13.5px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--bg);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.bs-modus button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.bs-info{text-align:center;font-size:14.3px;color:var(--leise);margin-top:12px;line-height:1.55;min-height:40px;}
+.bs-info b{color:var(--nacht);font-family:var(--serif);font-size:17px;font-weight:400;}
+.bs-ebene{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:20px;padding:20px 22px;margin-bottom:20px;}
+.bs-ebene .drei{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+@media(max-width:620px){.bs-ebene .drei{grid-template-columns:1fr;}}
+.bs-e{background:var(--papier);border-radius:15px;padding:14px 16px;}
+.bs-e .w{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.bs-e b{display:block;font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin-bottom:4px;}
+.bs-e p{margin:0;font-size:14.2px;line-height:1.55;color:var(--leise);}
+.bs-grp{margin-bottom:12px;}
+.bs-grp>summary{cursor:pointer;background:var(--nacht);color:#F4EFE6;border-radius:18px;
+ padding:17px 21px;display:flex;gap:13px;align-items:center;flex-wrap:wrap;}
+.bs-grp>summary::-webkit-details-marker{display:none;}
+.bs-grp>summary .t{font-family:var(--serif);font-size:21px;color:#fff;}
+.bs-grp>summary .z{font-family:'JetBrains Mono',monospace;font-size:11px;color:#E8C97A;
+ background:rgba(255,255,255,.1);border-radius:10px;padding:4px 10px;margin-left:auto;}
+.bs-grp>summary .u{font-size:13.5px;color:rgba(244,239,230,.72);width:100%;line-height:1.5;}
+.bs-grp[open]>summary{border-radius:18px 18px 0 0;}
+.bs-in{background:var(--papier);border:1px solid var(--linie);border-top:none;
+ border-radius:0 0 18px 18px;padding:16px 18px;}
+.it{border:1px solid var(--linie);border-radius:14px;margin-bottom:8px;overflow:hidden;background:var(--bg);}
+.it>summary{cursor:pointer;padding:13px 16px;display:grid;grid-template-columns:40px 1fr auto;
+ gap:13px;align-items:center;}
+.it>summary::-webkit-details-marker{display:none;}
+.it-gl{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+ font-size:18px;color:#fff;}
+.it-nm{font-family:var(--serif);font-size:17.5px;color:var(--nacht);line-height:1.2;}
+.it-kz{font-size:13.4px;color:var(--leise);margin-top:2px;line-height:1.45;}
+.it-mein{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--nacht);
+ background:var(--nacht-bg);border-radius:9px;padding:4px 9px;white-space:nowrap;}
+.it-in{padding:0 16px 16px;}
+.it-z{background:var(--papier);border-radius:12px;padding:13px 15px;margin-bottom:8px;}
+.it-z .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.it-z p{margin:0 0 8px;font-size:14.9px;line-height:1.63;}
+.it-z p:last-child{margin-bottom:0;}
+.it-schatten{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:12px;padding:13px 15px;margin-bottom:8px;}
+.it-schatten .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:#8A4326;margin-bottom:5px;}
+.it-schatten p{margin:0 0 8px;font-size:14.9px;line-height:1.63;}
+.it-schatten p:last-child{margin-bottom:0;}
+.it-du{background:var(--nacht-bg);border-radius:12px;padding:13px 15px;}
+.it-du .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.it-du p{margin:0 0 7px;font-size:14.9px;line-height:1.63;}
+.it-du p:last-child{margin-bottom:0;}
+.bs-leg{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:12.5px;
+ color:var(--leise);margin-top:14px;}
+.bs-leg span{display:flex;align-items:center;gap:6px;}
+.bs-leg i{width:13px;height:13px;border-radius:4px;display:inline-block;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Die Bausteine</div>
+<h1>Planeten, Zeichen, <em>Häuser.</em></h1>
+<p class="lede">Alle drei Ebenen auf einer Seite. Oben das Rad zum Antippen, darunter jedes Element einzeln zum Aufklappen — mit Lichtseite, Schattenseite und deiner eigenen Stellung.</p>
+
+<div class="bs-ebene">
+  <div class="drei">
+    <div class="bs-e"><div class="w">Ebene 1</div><b>Planeten</b><p>Das <b>Was</b> — welche Kraft wirkt. Zehn Grundantriebe, von der Sonne bis zum Pluto.</p></div>
+    <div class="bs-e"><div class="w">Ebene 2</div><b>Zeichen</b><p>Das <b>Wie</b> — in welchem Stil sie wirkt. Zwölf Färbungen aus Element und Qualität.</p></div>
+    <div class="bs-e"><div class="w">Ebene 3</div><b>Häuser</b><p>Das <b>Wo</b> — in welchem Lebensbereich. Zwölf Bühnen, die aus der Geburtszeit entstehen.</p></div>
+  </div>
+  <p style="margin:14px 0 0;font-size:14.8px;line-height:1.65;"><b>Ein Satz als Beispiel:</b> Mars (Antrieb) in Stier (langsam und zäh) im 12. Haus (verborgen) heißt — <i>dein Antrieb arbeitet langsam und im Hintergrund, und du merkst oft erst später, dass du etwas gewollt hast.</i></p>
+</div>
+
+<div class="bs-rad">
+  <div class="bs-modus" id="bsmodus"></div>
+  <svg id="bsrad" viewBox="0 0 620 620" role="img" aria-label="Tierkreisrad"></svg>
+  <div class="bs-info" id="bsinfo">Tipp auf ein Segment, dann springt die Seite zum passenden Eintrag.</div>
+  <div class="bs-leg">
+    <span><i style="background:#B5502E"></i> Feuer</span>
+    <span><i style="background:#6B7C3F"></i> Erde</span>
+    <span><i style="background:#3E7C9A"></i> Luft</span>
+    <span><i style="background:#6A4A62"></i> Wasser</span>
+  </div>
+</div>
+
+<div id="bsgruppen"></div>
+
+<div class="tip"><b>Zu den Schattenseiten:</b> Was dort steht, ist kein Urteil über dich und keine Diagnose. Es sind <b>Mechanismen, die jeder Mensch kennt</b> — beschrieben in der Schärfe, in der man sie bei sich selbst erkennt. Der Nutzen liegt genau darin: Was man sieht, läuft seltener unbemerkt. Und: Eine Stellung erzwingt nichts. Wenn du dich in einem Schatten nicht wiedererkennst, stimmt er für dich nicht.</div>
+
+<div class="weiter"><a href="grundlagen.html"><span class="lbl">&larr; Davor</span><span class="ttl">Die Grundlagen</span></a><a href="siderisch.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Dein Chart siderisch</span></a></div>
+<div class="foot">Die Bausteine &middot; Planeten, Zeichen und H&auml;user auf einer Seite. Schattenseiten sind Mechanismen, keine Urteile.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELN=['Feuer','Erde','Luft','Wasser'];
+var MON=['kardinal','fix','veränderlich'];
+var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',Chiron:'⚷',Lilith:'⚸'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*60),dd=Math.floor(d);
+ if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+' '+('0'+m).slice(-2)+"'";}
+
+/* ── Daten ─────────────────────────────────── */
+var PLANET=[
+ ['Sonne','Wer du bist und wohin du steuerst','Die Sonne ist dein Kern — nicht was du zeigst, sondern worauf du über Jahre zusteuerst. Sie beschreibt, wofür du Kraft aufbringst, ohne dass es jemand verlangt, und woran du dich wieder aufrichtest, wenn etwas zusammengebrochen ist.','Sie braucht lange, bis sie sichtbar wird. In zehn Minuten erkennt man sie nicht — erst über Jahre zeigt sich, worauf jemand immer wieder zurückkommt.'],
+ ['Mond','Was du brauchst, um dich sicher zu fühlen','Der Mond ist dein Bedürfnis und dein Frühwarnsystem. Er zeigt, was erfüllt sein muss, damit du zur Ruhe kommst — und wie du reagierst, wenn es nicht erfüllt ist. Im Coaching ist er oft wichtiger als die Sonne, weil nichts anderes greift, solange er wackelt.','Er zeigt sich am ehesten unter Druck: müde, gekränkt, überfordert — dann fällt die Verpackung weg.'],
+ ['Merkur','Wie du denkst und sprichst','Merkur ist dein Verarbeitungsformat. Nicht wie klug du bist, sondern in welcher Form Informationen bei dir ankommen und wie du sie weitergibst. Wer das kennt, hört auf, sich für langsam zu halten, nur weil das Material falsch aufbereitet war.','Gut zu beobachten, weil Sprache ständig stattfindet — Tempo, Satzlänge, ob jemand springt oder chronologisch erzählt.'],
+ ['Venus','Was du magst und wie du bindest','Venus ist Zuneigung, Geschmack und Wert. Sie beschreibt, worüber du genießt, was du schön findest und wie du dich einem Menschen zuwendest — und was du dafür bereit bist aufzugeben.','Sie zeigt sich in den Dingen, die jemand um sich hat, und in der Art, wie jemand Nein sagt oder eben nicht.'],
+ ['Mars','Wie du willst und dich wehrst','Mars ist Antrieb und Abgrenzung. Er zeigt, wie du etwas anfängst, wie du dich durchsetzt und was passiert, wenn dir jemand im Weg steht. Auch die Art deines Begehrens gehört hierher.','Am deutlichsten im Konflikt: Wer laut wird, wer spitz wird, wer verschwindet — das ist Mars.'],
+ ['Jupiter','Wo es dir leichtfällt','Jupiter ist Wachstum, Sinn und Großzügigkeit. Er zeigt, wo du dich verlierst im guten Sinn, wo dir etwas zufällt und wo du mehr siehst als andere. Er ist auch die Stelle, an der du dich überschätzt.','Oft der Bereich, in dem jemand gefragt wird, ohne dafür geworben zu haben.'],
+ ['Saturn','Wo du beweisen willst','Saturn ist Struktur, Pflicht und die Stelle, an der du dir nichts durchgehen lässt. Was du dort tust, machst du gründlich und selten mit dem Gefühl, dass es reicht. Er ist unbequem und die verlässlichste Kraft im Chart.','Erkennbar daran, wo jemand einen Maßstab anlegt, den er an keinen anderen Menschen anlegen würde.'],
+ ['Uranus','Wo du ausbrichst','Uranus ist Freiheit, Plötzlichkeit und Eigensinn. Er zeigt, wo du dich nicht festlegen lässt, wo Routinen abreißen und wo du Dinge anders machst, ohne es zu wollen.','Ein Generationenplanet — nur sein Haus und seine engen Aspekte sind persönlich, das Zeichen teilen alle Gleichaltrigen.'],
+ ['Neptun','Wo die Grenzen verschwimmen','Neptun ist Sehnsucht, Mitgefühl und Auflösung. Er zeigt, wo du durchlässig bist, wo du idealisierst und wo du dich selbst schwer von anderen unterscheiden kannst — eine Gabe und eine Falle.','Auch ein Generationenplanet. Persönlich wird er über Haus und Aspekte, nicht über das Zeichen.'],
+ ['Pluto','Wo umgebaut wird','Pluto ist Tiefe, Macht und Wandlung. Er zeigt, wo du nicht an der Oberfläche bleiben kannst, wo Krisen etwas Grundsätzliches verändern und wo du Kontrolle suchst, ohne es zu merken.','Der langsamste Planet. Was er anfasst, verändert sich über Jahre und ist meist erst im Rückblick erkennbar.']
+];
+
+var ZEICHEN=[
+ ['Widder','Anfangen','Feuer, kardinal. Widder geht voran, bevor der Plan steht. Direkt, schnell, ungeduldig — und wieder weg, sobald die Sache läuft. Was hier steht, braucht Tempo und verträgt keine Verzögerung.','Der Widder-Teil in dir startet gern und bleibt selten. Das ist kein Mangel an Ausdauer, sondern eine andere Funktion: Jemand muss anfangen.'],
+ ['Stier','Halten','Erde, fix. Stier baut und bleibt. Langsam, sinnlich, verlässlich — und schwer zu bewegen, wenn er einmal steht. Was hier steht, braucht Zeit und gibt sie auch.','Der Stier-Teil in dir gibt ungern auf, was ihm gehört. Darin liegt deine Beständigkeit und deine Sturheit.'],
+ ['Zwillinge','Verknüpfen','Luft, veränderlich. Zwillinge sammelt und verbindet. Neugierig, beweglich, gesprächig — und schnell gelangweilt. Was hier steht, läuft über Worte und Abwechslung.','Der Zwillinge-Teil in dir denkt im Sprechen. Was nicht ausgesprochen wird, ist bei dir noch nicht gedacht.'],
+ ['Krebs','Schützen','Wasser, kardinal. Krebs sorgt und bewahrt. Empfindsam, erinnerungsstark, schützend — mit einer harten Schale um einen weichen Kern. Was hier steht, braucht Sicherheit, bevor es sich zeigt.','Der Krebs-Teil in dir nimmt Stimmungen auf, ob du willst oder nicht. Das ist Wahrnehmung, nicht Überempfindlichkeit.'],
+ ['Löwe','Zeigen','Feuer, fix. Löwe gestaltet und strahlt. Großzügig, warm, auf Wirkung bedacht — und gekränkt durch Nichtbeachtung, nicht durch Kritik. Was hier steht, will gesehen werden.','Der Löwe-Teil in dir braucht ein Publikum. Das ist kein Egoismus, sondern die Art, wie dort Energie entsteht.'],
+ ['Jungfrau','Verbessern','Erde, veränderlich. Jungfrau prüft und verfeinert. Genau, dienstbereit, kritisch — und selten zufrieden mit dem Ergebnis. Was hier steht, wird gründlich gemacht.','Der Jungfrau-Teil in dir sieht, was nicht stimmt, bevor es jemand sagt. Das ist nützlich und anstrengend zugleich.'],
+ ['Waage','Ausgleichen','Luft, kardinal. Waage wägt ab und vermittelt. Zugewandt, ästhetisch, konfliktscheu — und oft unentschieden, weil beide Seiten etwas für sich haben. Was hier steht, braucht ein Gegenüber.','Der Waage-Teil in dir hat eine Meinung und behält sie für sich, wenn sie Unfrieden stiften würde.'],
+ ['Skorpion','Durchdringen','Wasser, fix. Skorpion geht in die Tiefe und lässt nicht los. Intensiv, misstrauisch, kompromisslos — und nicht an Oberflächlichem interessiert. Was hier steht, geht ganz oder gar nicht.','Der Skorpion-Teil in dir spürt, was verschwiegen wird. Das macht dich hellsichtig und manchmal unerträglich.'],
+ ['Schütze','Weitergehen','Feuer, veränderlich. Schütze sucht Sinn und Horizont. Optimistisch, direkt, belehrend — und schnell eng, wenn etwas ihn festlegt. Was hier steht, braucht einen größeren Zusammenhang.','Der Schütze-Teil in dir sucht das Prinzip hinter dem Einzelfall — und überspringt dabei gern das Detail.'],
+ ['Steinbock','Aufbauen','Erde, kardinal. Steinbock baut, was trägt. Ernsthaft, ausdauernd, verantwortlich — und härter zu sich als zu anderen. Was hier steht, dauert und hält.','Der Steinbock-Teil in dir wartet auf eine Erlaubnis, die niemand erteilt. Du darfst auch so.'],
+ ['Wassermann','Erneuern','Luft, fix. Wassermann denkt quer und steht daneben. Eigenwillig, prinzipientreu, distanziert — und gegen etwas, bevor er weiß, wofür. Was hier steht, folgt keiner Konvention.','Der Wassermann-Teil in dir beobachtet von außen, auch sich selbst. Das schützt und isoliert.'],
+ ['Fische','Auflösen','Wasser, veränderlich. Fische verbindet alles mit allem. Durchlässig, mitfühlend, grenzenlos — und schwer darin, das Eigene vom Fremden zu trennen. Was hier steht, hat keine klaren Kanten.','Der Fische-Teil in dir nimmt mit, was im Raum liegt. Was du fühlst, ist nicht immer deins.']
+];
+
+var HAUS=[
+ ['Person und Auftreten','Wie du wirkst, bevor du etwas sagst','Das 1. Haus ist die Tür zu dir. Dein Auftreten, dein Tempo, dein Körper, der erste Eindruck. Es sagt nichts über dein Innenleben — es ist die Verpackung, und die ist trotzdem wichtig, weil alle zuerst sie sehen.','Was hier steht, sieht man dir an.'],
+ ['Wert und Besitz','Was dir gehört und was du dir wert bist','Das 2. Haus ist Geld, Besitz und Selbstwert in einem — nicht zufällig. Was du dir zutraust zu verlangen, hängt daran, was du glaubst wert zu sein.','Was hier steht, bestimmt dein Verhältnis zu Verlangen und Bekommen.'],
+ ['Sprache und Nahbereich','Wie du dich mitteilst und was dich umgibt','Das 3. Haus ist Alltagskommunikation, Geschwister, kurze Wege, Lernen im Kleinen. Der Nahbereich, in dem sich das meiste Leben abspielt.','Was hier steht, färbt deine Art zu reden und zu lernen.'],
+ ['Zuhause und Wurzeln','Woher du kommst und wo du zur Ruhe kommst','Das 4. Haus ist Familie, Herkunft, Zuhause und der innerste Rückzugsort. Auch das, was aus der Kindheit mitläuft, ohne dass darüber gesprochen wurde.','Was hier steht, war schon da, bevor du es wählen konntest.'],
+ ['Ausdruck und Romantik','Was du erschaffst und was dir Freude macht','Das 5. Haus ist Spiel, Kreativität, Verliebtsein, Kinder. Alles, was du aus Lust tust und nicht aus Pflicht.','Was hier steht, zeigt sich dort, wo du nicht nützlich sein musst.'],
+ ['Alltag und Arbeit','Wie dein Tag läuft und was er dich kostet','Das 6. Haus ist Routine, Gesundheit, Arbeit im Sinne von täglichem Tun. Der unspektakulärste Bereich und der, der alles andere trägt.','Was hier steht, entscheidet über deine Belastbarkeit.'],
+ ['Partnerschaft','Wie du dich auf ein Gegenüber einlässt','Das 7. Haus ist die enge Beziehung — Partnerschaft, enge Freundschaft, auch offene Gegnerschaft. Alles, was ein Du braucht.','Was hier steht, begegnet dir oft erst über andere Menschen.'],
+ ['Tiefe und Geteiltes','Was ihr teilt und was unter der Oberfläche liegt','Das 8. Haus ist gemeinsames Geld, Sexualität, Krisen, Verlust und Wandlung. Alles, was man nicht allein durchmacht und worüber selten geredet wird.','Was hier steht, geht nicht an der Oberfläche vorbei.'],
+ ['Sinn und Weite','Woran du glaubst und wohin du blickst','Das 9. Haus ist Überzeugung, Reisen, Studium, der große Zusammenhang. Die Frage, wofür das alles gut sein soll.','Was hier steht, treibt dich über dein Gewohntes hinaus.'],
+ ['Beruf und Sichtbarkeit','Wofür man dich kennt','Das 10. Haus ist Berufung, Ansehen, die Rolle in der Öffentlichkeit. Nicht unbedingt dein Job — sondern das, wofür man dich kennt.','Was hier steht, steht über dir und ist für alle sichtbar.'],
+ ['Gruppen und Ziele','Wo du dazugehörst und worauf du hinarbeitest','Das 11. Haus ist Freundeskreis, Netzwerk, Gemeinschaft und die Ziele, die über dich hinausreichen.','Was hier steht, entfaltet sich mit anderen, nicht allein.'],
+ ['Rückzug und Inneres','Was verborgen bleibt, auch vor dir','Das 12. Haus ist Rückzug, Unbewusstes, alles, was im Hintergrund arbeitet. Kein unheimlicher Bereich — aber einer, den man schlecht selbst sieht.','Was hier steht, wirkt, ohne dass du es bemerkst.']
+];
+
+/* ── eigenes Chart ─────────────────────────── */
+var MEIN=null;
+(function(){
+  var p=null; try{ p=AC_P.aktives(); }catch(e){}
+  if(!p) return;
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  var P={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+  if(window.chironLon) P.Chiron=chironLon(T);
+  if(window.lilithLon) P.Lilith=lilithLon(T);
+  P.haus=function(l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; };
+  P.name=AC_P.anzeige(p,AC_P.zeigeNamen());
+  MEIN=P;
+})();
+function inHaus(hn){
+  if(!MEIN) return [];
+  var o=[];
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Chiron','Lilith'].forEach(function(k){
+    if(MEIN[k]!==undefined&&MEIN[k]!==null&&MEIN.haus(MEIN[k])===hn) o.push(k);
+  });
+  return o;
+}
+function inZeichen(zi){
+  if(!MEIN) return [];
+  var o=[];
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Chiron','Lilith'].forEach(function(k){
+    if(MEIN[k]!==undefined&&MEIN[k]!==null&&Math.floor(MEIN[k]/30)===zi) o.push(k);
+  });
+  if(Math.floor(MEIN.ASC/30)===zi) o.push('AC');
+  if(Math.floor(MEIN.MC/30)===zi) o.push('MC');
+  return o;
+}
+
+/* ── Rad ───────────────────────────────────── */
+var radModus='zeichen';
+function radZeichnen(){
+  var s=document.getElementById('bsrad'), C=310, o=[];
+  var rAussen=300, rInnen=232, rH=168, rKern=96;
+
+  /* Zeichenring */
+  for(var i=0;i<12;i++){
+    var a0=(i*30-90-(MEIN&&radModus==='haeuser'?(MEIN.ASC%30):0))*Math.PI/180;
+    var a1=((i+1)*30-90-(MEIN&&radModus==='haeuser'?(MEIN.ASC%30):0))*Math.PI/180;
+    var x0=C+rAussen*Math.cos(a0), y0=C+rAussen*Math.sin(a0);
+    var x1=C+rAussen*Math.cos(a1), y1=C+rAussen*Math.sin(a1);
+    var x2=C+rInnen*Math.cos(a1), y2=C+rInnen*Math.sin(a1);
+    var x3=C+rInnen*Math.cos(a0), y3=C+rInnen*Math.sin(a0);
+    var hell=(radModus==='zeichen');
+    o.push('<path class="seg" data-typ="zeichen" data-i="'+i+'" d="M'+x0.toFixed(1)+','+y0.toFixed(1)+
+      ' A'+rAussen+','+rAussen+' 0 0 1 '+x1.toFixed(1)+','+y1.toFixed(1)+
+      ' L'+x2.toFixed(1)+','+y2.toFixed(1)+' A'+rInnen+','+rInnen+' 0 0 0 '+x3.toFixed(1)+','+y3.toFixed(1)+' Z" '+
+      'fill="'+ELF[i%4]+'" opacity="'+(hell?0.92:0.3)+'"><title>'+SIGNS[i]+'</title></path>');
+    var am=(a0+a1)/2, rm=(rAussen+rInnen)/2;
+    o.push('<text x="'+(C+rm*Math.cos(am)).toFixed(1)+'" y="'+(C+rm*Math.sin(am)+7).toFixed(1)+
+      '" text-anchor="middle" font-size="21" fill="#fff" pointer-events="none">'+GLZ[i]+'</text>');
+  }
+
+  /* Häuserring */
+  for(var k=0;k<12;k++){
+    var b0, b1;
+    if(MEIN&&radModus!=='zeichen'){
+      b0=((Math.floor(MEIN.ASC/30)+k)*30-90)*Math.PI/180;
+      b1=((Math.floor(MEIN.ASC/30)+k+1)*30-90)*Math.PI/180;
+    } else { b0=(k*30-90)*Math.PI/180; b1=((k+1)*30-90)*Math.PI/180; }
+    var p0x=C+rInnen*Math.cos(b0), p0y=C+rInnen*Math.sin(b0);
+    var p1x=C+rInnen*Math.cos(b1), p1y=C+rInnen*Math.sin(b1);
+    var p2x=C+rH*Math.cos(b1), p2y=C+rH*Math.sin(b1);
+    var p3x=C+rH*Math.cos(b0), p3y=C+rH*Math.sin(b0);
+    var akt=(radModus==='haeuser');
+    o.push('<path class="seg" data-typ="haus" data-i="'+k+'" d="M'+p0x.toFixed(1)+','+p0y.toFixed(1)+
+      ' A'+rInnen+','+rInnen+' 0 0 1 '+p1x.toFixed(1)+','+p1y.toFixed(1)+
+      ' L'+p2x.toFixed(1)+','+p2y.toFixed(1)+' A'+rH+','+rH+' 0 0 0 '+p3x.toFixed(1)+','+p3y.toFixed(1)+' Z" '+
+      'fill="'+(akt?'#2E3A5C':'#EDF0F6')+'" opacity="'+(akt?0.9:1)+'" stroke="#D9CDBC" stroke-width="0.8">'+
+      '<title>'+(k+1)+'. Haus · '+HAUS[k][0]+'</title></path>');
+    var bm=(b0+b1)/2, rbm=(rInnen+rH)/2;
+    o.push('<text x="'+(C+rbm*Math.cos(bm)).toFixed(1)+'" y="'+(C+rbm*Math.sin(bm)+6).toFixed(1)+
+      '" text-anchor="middle" font-size="16" font-family="Fraunces,serif" fill="'+(akt?'#fff':'#6B6259')+
+      '" pointer-events="none">'+(k+1)+'</text>');
+  }
+
+  /* Planeten */
+  o.push('<circle cx="'+C+'" cy="'+C+'" r="'+rH+'" fill="#FDFBF7" stroke="#E8E0D4"/>');
+  if(MEIN&&radModus!=='zeichen'){
+    var belegt=[];
+    PL.concat(['Chiron','Lilith']).forEach(function(k){
+      if(MEIN[k]===undefined||MEIN[k]===null) return;
+      var w=MEIN[k]-90;
+      var v=w; var tries=0;
+      while(belegt.some(function(x){return Math.abs(nrm(v-x+180)-180)<9;})&&tries<40){ v+=4; tries++; }
+      belegt.push(v);
+      var r=rKern+34;
+      var ax=C+r*Math.cos(v*Math.PI/180), ay=C+r*Math.sin(v*Math.PI/180);
+      var ex=C+(rH-6)*Math.cos((MEIN[k]-90)*Math.PI/180), ey=C+(rH-6)*Math.sin((MEIN[k]-90)*Math.PI/180);
+      o.push('<line x1="'+ax.toFixed(1)+'" y1="'+ay.toFixed(1)+'" x2="'+ex.toFixed(1)+'" y2="'+ey.toFixed(1)+
+        '" stroke="#D9CDBC" stroke-width="0.8"/>');
+      o.push('<text class="seg" data-typ="planet" data-i="'+PL.indexOf(k)+'" x="'+ax.toFixed(1)+'" y="'+(ay+7).toFixed(1)+
+        '" text-anchor="middle" font-size="20" fill="#2E3A5C"><title>'+k+' · '+fmt(MEIN[k])+'</title>'+PGL[k]+'</text>');
+    });
+    /* Achsen */
+    [['ASC',MEIN.ASC],['MC',MEIN.MC]].forEach(function(x){
+      var w=(x[1]-90)*Math.PI/180;
+      o.push('<line x1="'+(C+rKern*Math.cos(w)).toFixed(1)+'" y1="'+(C+rKern*Math.sin(w)).toFixed(1)+
+        '" x2="'+(C+rAussen*Math.cos(w)).toFixed(1)+'" y2="'+(C+rAussen*Math.sin(w)).toFixed(1)+
+        '" stroke="#9A7235" stroke-width="1.6"/>');
+    });
+    o.push('<circle cx="'+C+'" cy="'+C+'" r="'+rKern+'" fill="#FDFBF7" stroke="#E8E0D4"/>');
+    o.push('<text x="'+C+'" y="'+(C-4)+'" text-anchor="middle" font-size="15" font-family="Fraunces,serif" fill="#2E3A5C">'+MEIN.name+'</text>');
+    o.push('<text x="'+C+'" y="'+(C+16)+'" text-anchor="middle" font-size="11" font-family="JetBrains Mono,monospace" fill="#9AA79B">dein Chart</text>');
+  } else {
+    o.push('<circle cx="'+C+'" cy="'+C+'" r="'+rKern+'" fill="#FDFBF7" stroke="#E8E0D4"/>');
+    var zt=(radModus==='zeichen')?'Zeichen':'Häuser';
+    o.push('<text x="'+C+'" y="'+(C-2)+'" text-anchor="middle" font-size="17" font-family="Fraunces,serif" fill="#2E3A5C">'+zt+'</text>');
+    if(!MEIN) o.push('<text x="'+C+'" y="'+(C+20)+'" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono,monospace" fill="#9AA79B">kein Chart geladen</text>');
+  }
+  s.innerHTML=o.join('');
+
+  [].slice.call(s.querySelectorAll('.seg')).forEach(function(el){
+    el.addEventListener('click',function(){
+      var t=el.getAttribute('data-typ'), i=+el.getAttribute('data-i');
+      var id=(t==='zeichen')?'z'+i:(t==='haus'?'h'+i:'p'+i);
+      var grp=document.getElementById('grp-'+(t==='zeichen'?'zeichen':(t==='haus'?'haeuser':'planeten')));
+      if(grp) grp.open=true;
+      var d=document.getElementById(id);
+      if(d){ d.open=true; d.scrollIntoView({behavior:'smooth',block:'center'}); }
+    });
+    el.addEventListener('mouseenter',function(){
+      var t=el.getAttribute('data-typ'), i=+el.getAttribute('data-i');
+      var box=document.getElementById('bsinfo');
+      if(t==='zeichen') box.innerHTML='<b>'+SIGNS[i]+'</b> · '+ELN[i%4]+', '+MON[i%3]+' — '+ZEICHEN[i][1];
+      else if(t==='haus') box.innerHTML='<b>'+(i+1)+'. Haus</b> · '+HAUS[i][0]+' — '+HAUS[i][1];
+      else box.innerHTML='<b>'+PL[i]+'</b> · '+PLANET[i][1]+(MEIN&&MEIN[PL[i]]!==undefined?' — bei dir '+fmt(MEIN[PL[i]]):'');
+    });
+  });
+}
+
+function modusZeichnen(){
+  var box=document.getElementById('bsmodus'); box.innerHTML='';
+  var M=[['zeichen','Zeichen'],['haeuser','Häuser'],['planeten','Dein Chart']];
+  M.forEach(function(m){
+    if(m[0]!=='zeichen'&&!MEIN&&m[0]==='planeten') return;
+    var b=document.createElement('button'); b.type='button'; b.textContent=m[1];
+    b.setAttribute('aria-pressed', radModus===m[0]);
+    b.addEventListener('click',function(){ radModus=m[0]; modusZeichnen(); radZeichnen(); });
+    box.appendChild(b);
+  });
+}
+
+/* ── Gruppen ───────────────────────────────── */
+function eintrag(id, gl, farbe, nm, kz, bloecke){
+  var h='<details class="it" id="'+id+'"><summary>'+
+    '<div class="it-gl" style="background:'+farbe+'">'+gl+'</div>'+
+    '<div><div class="it-nm">'+nm+'</div><div class="it-kz">'+kz+'</div></div>';
+  h+=(bloecke.marke?'<div class="it-mein">'+bloecke.marke+'</div>':'<div></div>');
+  h+='</summary><div class="it-in">';
+  if(bloecke.licht) h+='<div class="it-z"><span class="lab">'+(bloecke.lichtLab||'Worum es geht')+'</span><p>'+bloecke.licht+'</p></div>';
+  if(bloecke.schatten) h+='<div class="it-schatten"><span class="lab">Die Schattenseite</span>'+bloecke.schatten+'</div>';
+  if(bloecke.du) h+='<div class="it-du"><span class="lab">Bei dir</span>'+bloecke.du+'</div>';
+  h+='</div></details>';
+  return h;
+}
+
+function gruppenZeichnen(){
+  var box=document.getElementById('bsgruppen'), h='';
+
+  /* Planeten */
+  h+='<details class="bs-grp" id="grp-planeten"><summary><span class="t">Die 10 Planeten</span>'+
+    '<span class="z">das Was</span><span class="u">Welche Kraft in dir wirkt — mit Lichtseite, Schattenseite und deiner Stellung.</span></summary><div class="bs-in">';
+  PLANET.forEach(function(p,i){
+    var nm=p[0];
+    var marke=(MEIN&&MEIN[nm]!==undefined)?fmt(MEIN[nm]):'';
+    var sch='';
+    if(window.AC_SCHATTEN&&AC_SCHATTEN.hat(nm)){
+      sch='<p>'+AC_SCHATTEN.kern(nm)+'</p>';
+      if(MEIN&&MEIN[nm]!==undefined){
+        var hn=MEIN.haus(MEIN[nm]);
+        sch+='<p><b>In deinem '+hn+'. Haus:</b> '+AC_SCHATTEN.haus(nm,hn)+'</p>';
+      }
+    }
+    var du='';
+    if(MEIN&&MEIN[nm]!==undefined){
+      var hn2=MEIN.haus(MEIN[nm]), zi=Math.floor(MEIN[nm]/30);
+      du='<p><b>'+fmt(MEIN[nm])+' · '+hn2+'. Haus</b></p>'+
+        '<p>'+nm+' wirkt bei dir im Stil von <b>'+SIGNS[zi]+'</b> ('+ELN[zi%4]+', '+MON[zi%3]+') '+
+        'und im Bereich <b>'+HAUS[hn2-1][0]+'</b>.</p>'+
+        '<p style="font-size:14px;color:var(--leise)">'+p[3]+'</p>';
+    } else du='<p>Leg unter <a href="profile.html">Profile</a> ein Chart an, dann steht hier deine Stellung.</p>';
+    h+=eintrag('p'+i, PGL[nm], '#2E3A5C', nm, p[1],
+      {licht:p[2], schatten:sch, du:du, marke:marke});
+  });
+  h+='</div></details>';
+
+  /* Zeichen */
+  h+='<details class="bs-grp" id="grp-zeichen"><summary><span class="t">Die 12 Zeichen</span>'+
+    '<span class="z">das Wie</span><span class="u">In welchem Stil eine Kraft wirkt — vier Elemente, drei Qualitäten.</span></summary><div class="bs-in">';
+  ZEICHEN.forEach(function(z,i){
+    var dr=inZeichen(i);
+    var du = dr.length
+      ? '<p>Bei dir steht hier: <b>'+dr.join(', ')+'</b>.</p><p>'+z[3]+'</p>'
+      : (MEIN?'<p>Bei dir steht nichts in '+z[0]+'. Diese Qualität ist in deinem Chart nicht vorgegeben — '+
+        'du hast dort mehr Freiheit und musst sie dir bewusster holen.</p>'
+        :'<p>Leg unter <a href="profile.html">Profile</a> ein Chart an.</p>');
+    h+=eintrag('z'+i, GLZ[i], ELF[i%4], z[0], ELN[i%4]+', '+MON[i%3]+' · '+z[1],
+      {licht:z[2], du:du, marke:dr.length?dr.length+' Punkte':''});
+  });
+  h+='</div></details>';
+
+  /* Häuser */
+  h+='<details class="bs-grp" id="grp-haeuser"><summary><span class="t">Die 12 Häuser</span>'+
+    '<span class="z">das Wo</span><span class="u">In welchem Lebensbereich sich etwas abspielt — entsteht aus deiner Geburtszeit.</span></summary><div class="bs-in">';
+  HAUS.forEach(function(x,i){
+    var dr=inHaus(i+1);
+    var du='';
+    if(MEIN){
+      var zi=(Math.floor(MEIN.ASC/30)+i)%12;
+      du='<p>Bei dir liegt das '+(i+1)+'. Haus in <b>'+SIGNS[zi]+'</b> — '+
+        'dieser Lebensbereich hat bei dir also die Färbung '+ELN[zi%4]+', '+MON[zi%3]+'.</p>';
+      if(dr.length){
+        du+='<p>Darin stehen: <b>'+dr.join(', ')+'</b>. '+
+          (dr.length>=3?'Das ist ein Schwerpunkt — hier passiert bei dir überdurchschnittlich viel.'
+           :'Dieser Bereich ist bei dir aktiv besetzt.')+'</p>';
+        var schL=[];
+        dr.forEach(function(k){
+          if(window.AC_SCHATTEN&&AC_SCHATTEN.hat(k)) schL.push('<b>'+k+':</b> '+AC_SCHATTEN.haus(k,i+1));
+        });
+        if(schL.length) du+='<p style="margin-top:9px;font-size:14.2px;color:var(--leise);">'+
+          'Schattenseiten in diesem Haus:<br>'+schL.join('<br>')+'</p>';
+      } else {
+        du+='<p>Kein Planet steht hier. Das heißt nicht, dass der Bereich unwichtig ist — '+
+          'er läuft nur unauffälliger. Wer ihn regiert, sagt dir die <a href="herrscher.html">Herrscherkette</a>.</p>';
+      }
+    } else du='<p>Leg unter <a href="profile.html">Profile</a> ein Chart an.</p>';
+    h+=eintrag('h'+i, (i+1), '#9A7235', (i+1)+'. Haus — '+x[0], x[1],
+      {licht:x[2], du:du, marke:dr.length?dr.length+' Planeten':''});
+  });
+  h+='</div></details>';
+
+  box.innerHTML=h;
+}
+
+modusZeichnen(); radZeichnen(); gruppenZeichnen();
+
+</script>
+</body></html>

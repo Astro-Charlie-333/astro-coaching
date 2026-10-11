@@ -106,6 +106,12 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -121,6 +127,7 @@ a{color:var(--nacht);}
 <div class="eyebrow">Grundlagen · Baustein 2</div>
 <h1>Die 12 <em>Zeichen.</em></h1>
 <p class="lede">Die Zeichen färben jeden Planeten — sie sind das WIE, die Stilrichtung, in der eine Kraft sich zeigt.</p>
+<div class="tip"><b>Alles auf einer Seite:</b> Unter <a href="bausteine.html">Die Bausteine</a> stehen Planeten, Zeichen und Häuser zusammen — mit Rad zum Antippen, Schattenseiten und deiner eigenen Stellung zu jedem Eintrag. Diese Seite hier bleibt als ausführliche Einzeldarstellung.</div>
 <div class="tip"><b>Die Zeichen sind das WIE</b> — die Art und Weise, wie ein Planet sich ausdrückt. Ein Planet "in" einem Zeichen wird von dessen Farbe gefärbt.</div>
 <h2>Die 4 Elemente</h2>
 <div class="card"><b>Feuer</b> (Widder, Löwe, Schütze): Begeisterung, Tat, Lebendigkeit, Intuition.<br>

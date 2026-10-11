@@ -192,6 +192,12 @@ body.fmt-visuell .fa-frage{display:none;}
 
 .fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
  font-size:15.3px;line-height:1.62;color:var(--tinte);}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -213,7 +219,7 @@ body.fmt-visuell .fa-frage{display:none;}
 <div class="rm-adler"><b>Zu den Wozu-Fragen:</b> Sie kommen von Alfred Adler. Seine Idee: Verhalten hat kein Warum, sondern ein <b>Wozu</b>. Jedes Muster erfüllt einen Zweck — sonst gäbe es das Muster nicht. In jeder Facette findest du deshalb eine Frage danach, was dich dieses eine Muster kostet <i>und</i> wovor es dich schützt. Die zweite Hälfte ist die wichtigere. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div id="raum"></div>
 
-<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="nd-leitfaden.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Hyperfokus-Finder</span></a></div>
+<div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="berufe.html" class="nx"><span class="lbl">Nachschlagen &rarr;</span><span class="ttl">Berufe im Chart</span></a></div>
 <div class="foot">Themenraum Berufung &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
 </div>
 <script>

@@ -168,6 +168,12 @@ a{color:var(--nacht);}
 .vw b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
 .vw p{margin:5px 0 0;font-size:14.5px;line-height:1.6;color:var(--leise);}
 .vw p b{color:var(--tinte);font-size:14.5px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">

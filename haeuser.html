@@ -106,6 +106,12 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -121,6 +127,7 @@ a{color:var(--nacht);}
 <div class="eyebrow">Grundlagen · Baustein 3</div>
 <h1>Die 12 <em>Häuser.</em></h1>
 <p class="lede">Die Häuser zeigen das WO — die Lebensbereiche, in denen die Planeten wirken. Das Rad des Lebens.</p>
+<div class="tip"><b>Alles auf einer Seite:</b> Unter <a href="bausteine.html">Die Bausteine</a> stehen Planeten, Zeichen und Häuser zusammen — mit Rad zum Antippen, Schattenseiten und deiner eigenen Stellung zu jedem Eintrag. Diese Seite hier bleibt als ausführliche Einzeldarstellung.</div>
 <div class="tip"><b>Die Häuser sind das WO</b> — in welchem Lebensbereich sich ein Planet auswirkt. Sie entstehen aus der genauen Geburtszeit (darum ist die Uhrzeit so wichtig).</div>
 <h2>Die 12 Häuser</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
 <span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">1</span>

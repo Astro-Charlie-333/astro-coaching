@@ -395,6 +395,45 @@ body.fmt-lang .hw-ktxt{font-size:14.5px;}
 .hw-weg b{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);}
 .hw-weg span span{font-size:13.5px;color:var(--leise);line-height:1.5;}
 .hw-weg i{font-style:normal;color:var(--messing);font-size:19px;margin-left:auto;}
+
+/* ── Ritualboard auf der Startseite ───────────────────── */
+.rb{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:24px;padding:26px 28px;margin:0 0 12px;}
+@media(max-width:560px){.rb{padding:21px 18px;border-radius:20px;}}
+.rb-k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:8px;}
+.rb-gr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(23px,5vw,32px);font-weight:300;
+ color:#fff;line-height:1.16;margin-bottom:10px;}
+.rb p{margin:0 0 11px;font-size:15.2px;line-height:1.68;color:rgba(244,239,230,.88);}
+.rb b{color:#fff;font-weight:500;}
+.rb-tu{background:rgba(255,255,255,.09);border-radius:14px;padding:14px 16px;font-size:14.5px;
+ line-height:1.6;margin-bottom:12px;}
+.rb-tu b{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:6px;font-weight:400;}
+.rb-tu span{display:block;margin-top:7px;font-size:13.3px;color:rgba(244,239,230,.6);}
+.rb-link{display:inline-block;font-size:14.3px;color:#E8C97A;text-decoration:none;
+ border-bottom:1px solid rgba(232,201,122,.4);padding-bottom:1px;}
+.rb-link:hover{border-bottom-color:#E8C97A;}
+.rb-reihe{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin-top:16px;}
+@media(max-width:400px){.rb-reihe{grid-template-columns:1fr 1fr;}}
+.rbk{background:rgba(255,255,255,.08);border-radius:13px;padding:11px 13px;font-size:14.5px;line-height:1.4;}
+.rbk b{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.11em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:4px;font-weight:400;}
+.rbk span{display:block;font-size:12.4px;color:rgba(244,239,230,.62);margin-top:2px;}
+.rbk.warn{background:rgba(232,201,122,.2);}
+.rb-warn{margin-top:13px;background:rgba(232,201,122,.16);border-left:3px solid #E8C97A;
+ border-radius:12px;padding:13px 15px;font-size:14.4px;line-height:1.65;}
+.rb-fakt{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);border-radius:20px;
+ padding:19px 22px;margin-bottom:14px;}
+@media(max-width:560px){.rb-fakt{padding:17px 16px;}}
+.rb-fakt .rb-k{color:var(--messing,#9A7235);}
+.rb-fakt p{margin:0;font-size:15px;line-height:1.72;color:var(--tinte,#231F1A);}
+.rb-fakt b{color:var(--nacht,#2E3A5C);}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -409,10 +448,13 @@ body.fmt-lang .hw-ktxt{font-size:14.5px;}
   <div class="st-kopfzeile"><div class="st-datum" id="stdatum"></div><a class="st-einst" href="ankommen.html">Einstellungen</a></div>
   <h1 class="st-gruss" id="stgruss">Guten Tag.</h1>
 
+  <div id="stboard"></div>
   <div class="kap" id="stkap"></div>
   <div id="stinhalt"></div>
 </div>
 
+<script src="himmel.js"></script>
+<script src="ritual.js"></script>
 <script>
 
 var RAD=Math.PI/180;
@@ -741,6 +783,10 @@ function inhaltZeigen(){
     try{ thGew=window.AC_SETUP?AC_SETUP.themen():[]; }catch(e){}
     h+='<div class="ab"><div class="ab-lab">'+(thGew.length?'Deine Themen':'Wo du anfangen könntest')+
       '</div><div class="st-weiter" id="stweiter"></div></div>';
+    h+='<div class="ab"><div class="ab-lab">Weiter schauen</div><div class="st-weiter">'+
+      '<a href="vorschau.html"><span><b>Woche &amp; Monat</b><br>'+
+      '<span style="font-size:13.5px;color:var(--leise)">Sieben Tage mit Dos und Don\'ts, dazu die Höhepunkte des Monats</span></span><i>→</i></a>'+
+      '</div></div>';
   }
 
   /* 5 · Bei Wenig: sichtbarer Ausstieg nach oben */
@@ -846,6 +892,22 @@ function raeumeVorschlag(b){
   }).join('')+'<a href="raeume.html"><span><b>Alle zehn Räume</b><br><span>Übersicht</span></span><i>→</i></a>';
 }
 
+/* Ritualboard: was ansteht, was man dafür dahaben muss, ein Fakt des Tages */
+function ortVon(p){
+  if(!p) return {lat:52.52,lon:13.405};
+  var la=(p.wlat!==undefined&&p.wlat!==null)?p.wlat:p.lat;
+  var lo=(p.wlon!==undefined&&p.wlon!==null)?p.wlon:p.lon;
+  return {lat:la,lon:lo};
+}
+function boardZeigen(){
+  var box=document.getElementById('stboard'); if(!box) return;
+  if(!window.AC_BOARD||!window.AC_HIMMEL){ box.innerHTML=''; return; }
+  var p=eigen(), P=p?chartVon(p):null;
+  var knapp=false;
+  try{ knapp=(kapLesen()==='wenig'); }catch(e){}
+  try{ box.innerHTML=AC_BOARD.board(P, ortVon(p), knapp); }
+  catch(e){ box.innerHTML=''; }
+}
 function normalZeigen(){
   document.getElementById('stankommen').innerHTML='';
   document.getElementById('stnormal').style.display='';
@@ -858,6 +920,7 @@ function normalZeigen(){
       localStorage.setItem('ac_format', f);
     }
   }catch(e){}
+  boardZeigen();
   datumZeigen();
   himmelZeichnen();
   unterZeigen();

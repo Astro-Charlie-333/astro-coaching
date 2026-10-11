@@ -106,6 +106,12 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -121,6 +127,7 @@ a{color:var(--nacht);}
 <div class="eyebrow">Grundlagen · Baustein 1</div>
 <h1>Die 10 <em>Planeten.</em></h1>
 <p class="lede">Die Planeten sind die Schauspieler deines Charts — jeder eine Grundkraft, ein Antrieb, eine Funktion deiner Psyche.</p>
+<div class="tip"><b>Alles auf einer Seite:</b> Unter <a href="bausteine.html">Die Bausteine</a> stehen Planeten, Zeichen und Häuser zusammen — mit Rad zum Antippen, Schattenseiten und deiner eigenen Stellung zu jedem Eintrag. Diese Seite hier bleibt als ausführliche Einzeldarstellung.</div>
 <div class="tip"><b>Die Planeten sind das WAS</b> — welche Kraft in dir wirkt. Die ersten sieben (Sonne bis Saturn) sind die persönlichen und sozialen Planeten, die dich individuell prägen. Die letzten drei (Uranus, Neptun, Pluto) bewegen sich so langsam, dass sie ganze Generationen prägen — bei ihnen zählt vor allem das <i>Haus</i>, in dem sie stehen.</div>
 <h2>Die 10 Planeten</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
 <span style="font-size:24px;color:var(--ind);flex-shrink:0;">☉</span>

@@ -1,0 +1,1013 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rituale &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Rituale ─────────────────────────────────────────── */
+
+/* Jetzt-Kasten */
+.jetzt{background:var(--nacht);color:#F4EFE6;border-radius:24px;padding:28px 30px;margin:22px 0 16px;}
+@media(max-width:560px){.jetzt{padding:22px 19px;border-radius:20px;}}
+.jetzt .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:10px;}
+.jetzt .gr{font-family:var(--serif);font-size:clamp(23px,5vw,33px);font-weight:300;color:#fff;
+ line-height:1.16;margin-bottom:12px;}
+.jetzt p{margin:0 0 11px;font-size:15.3px;line-height:1.68;color:rgba(244,239,230,.9);}
+.jetzt p:last-child{margin-bottom:0;}
+.jetzt b{color:#fff;font-weight:500;}
+.jetzt-kopf{display:flex;gap:20px;align-items:center;margin-bottom:16px;}
+@media(max-width:480px){.jetzt-kopf{gap:15px;}}
+.jetzt-kopf svg{flex:none;}
+.jetzt-zahl{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:17px;}
+@media(max-width:480px){.jetzt-zahl{grid-template-columns:1fr;}}
+.jz{background:rgba(255,255,255,.08);border-radius:14px;padding:13px 15px;font-size:14.2px;line-height:1.55;}
+.jz b{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:5px;font-weight:400;}
+
+/* Rad der acht Phasen */
+.rad-box{background:var(--papier);border:1px solid var(--linie);border-radius:22px;
+ padding:22px 20px 16px;margin-bottom:14px;}
+.rad-box svg{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;}
+.rad-box .pf{cursor:pointer;}
+.rad-box .pf circle.treffer{fill:transparent;}
+.rad-box .pf:hover circle.ring{stroke:var(--nacht);}
+.rad-box .pf text{font-family:'DM Sans',system-ui,sans-serif;font-size:11px;fill:var(--leise);
+ pointer-events:none;}  /* text-anchor NICHT hier setzen — CSS schlägt das Attribut */
+.rad-box .pf.an circle.ring{stroke:var(--messing);stroke-width:2;}
+.rad-box .pf.an text{fill:var(--nacht);font-weight:600;}
+.rad-hinweis{text-align:center;font-size:13px;color:var(--leise);margin-top:4px;}
+
+/* Phasentext unter dem Rad */
+.ph-text{background:var(--messing-bg);border-radius:18px;padding:21px 23px;margin-bottom:26px;}
+@media(max-width:560px){.ph-text{padding:18px 17px;}}
+.ph-text .nr{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:6px;}
+.ph-text h3{margin:0 0 3px;font-size:21px;}
+.ph-text .wort{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--messing);margin-bottom:11px;}
+.ph-text p{font-size:15px;line-height:1.7;margin-bottom:10px;}
+.ph-text p:last-child{margin-bottom:0;}
+.ph-text .tu{background:var(--papier);border-radius:12px;padding:13px 16px;margin-top:13px;font-size:14.4px;
+ line-height:1.65;}
+.ph-text .tu b{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);display:block;margin-bottom:5px;font-weight:400;}
+
+/* Schritt-für-Schritt */
+.schritte{counter-reset:s;margin:18px 0;}
+.sch{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--linie);}
+.sch:last-child{border-bottom:none;}
+@media(max-width:480px){.sch{grid-template-columns:30px 1fr;gap:12px;}}
+.sch .n{width:30px;height:30px;border-radius:50%;background:var(--nacht);color:#fff;display:flex;
+ align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;flex:none;}
+.sch .n.leise{background:var(--linie);color:var(--leise);}
+.sch h4{font-family:var(--serif);font-size:17.5px;font-weight:400;color:var(--nacht);margin:3px 0 5px;}
+.sch p{font-size:14.9px;line-height:1.68;margin-bottom:8px;}
+.sch p:last-child{margin-bottom:0;}
+.sch .zitat{background:var(--messing-bg);border-radius:11px;padding:12px 15px;font-size:14.2px;
+ line-height:1.6;margin:9px 0 0;}
+.sch .zitat .m{color:var(--rost);} .sch .zitat .g{color:var(--teal);}
+.sch .zitat b{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.11em;
+ text-transform:uppercase;font-weight:400;}
+
+/* Zeichen-Raster */
+.zr{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px;margin:16px 0;}
+@media(max-width:480px){.zr{grid-template-columns:1fr;}}
+.zk{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:16px 18px;}
+.zk .kopf{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+.zk .gl{font-size:18px;line-height:1;}
+.zk .nm{font-family:var(--serif);font-size:17px;color:var(--nacht);}
+.zk .th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:7px;}
+.zk p{font-size:14.3px;line-height:1.62;margin-bottom:9px;}
+.zk .satz{font-family:var(--serif);font-size:14.8px;font-style:italic;color:var(--nacht);
+ border-left:2px solid var(--messing);padding-left:11px;margin:0;}
+.zk.feuer{border-left:3px solid var(--rost);} .zk.erde{border-left:3px solid var(--teal);}
+.zk.luft{border-left:3px solid var(--nacht);} .zk.wasser{border-left:3px solid var(--pflaume);}
+.zk.ist{background:var(--messing-bg);border-color:var(--messing);}
+
+/* Aufklappbare Transit-Rituale */
+details.tr{background:var(--papier);border:1px solid var(--linie);border-radius:16px;margin-bottom:9px;}
+details.tr>summary{cursor:pointer;padding:16px 19px;list-style:none;display:flex;gap:12px;align-items:baseline;}
+details.tr>summary::-webkit-details-marker{display:none;}
+details.tr>summary::before{content:'+';font-family:'JetBrains Mono',monospace;color:var(--messing);flex:none;}
+details.tr[open]>summary::before{content:'–';}
+details.tr>summary .t{font-family:var(--serif);font-size:17.5px;color:var(--nacht);}
+details.tr>summary .w{font-size:13.5px;color:var(--leise);margin-left:auto;text-align:right;flex:none;}
+@media(max-width:560px){
+ details.tr>summary{flex-wrap:wrap;padding:15px 16px;}
+ details.tr>summary .w{margin-left:0;width:100%;text-align:left;padding-left:19px;}
+}
+details.tr .in{padding:0 19px 19px 43px;font-size:14.8px;line-height:1.7;}
+@media(max-width:560px){details.tr .in{padding:0 16px 17px 35px;}}
+details.tr .in p{margin-bottom:11px;}
+details.tr .in p:last-child{margin-bottom:0;}
+details.tr .in .rit{background:var(--messing-bg);border-radius:12px;padding:14px 16px;margin:12px 0;}
+details.tr .in .rit b{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);display:block;margin-bottom:6px;font-weight:400;}
+details.tr .in .nicht{background:#FBF0E8;border-left:3px solid var(--rost);border-radius:12px;
+ padding:14px 16px;margin:12px 0;}
+details.tr .in .nicht b{color:var(--rost);}
+
+/* Ritualkalender */
+.kal{display:grid;gap:8px;margin:16px 0;}
+.kz{display:grid;grid-template-columns:52px 104px 1fr;gap:15px;align-items:start;background:var(--papier);
+ border:1px solid var(--linie);border-radius:15px;padding:14px 17px;}
+@media(max-width:620px){
+ .kz{grid-template-columns:44px 1fr;grid-template-areas:"mo dat" "mo txt";gap:5px 13px;padding:13px 15px;}
+ .kz .mo{grid-area:mo;} .kz .dat{grid-area:dat;} .kz .txt{grid-area:txt;}
+}
+.kz.naechste{border-color:var(--messing);background:var(--messing-bg);}
+.kz .mo{display:flex;align-items:center;justify-content:center;padding-top:2px;}
+.kz .dat{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);line-height:1.5;}
+.kz .dat b{display:block;color:var(--nacht);font-size:13px;}
+.kz .txt{min-width:0;}
+.kz .txt b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
+.kz .txt p{margin:3px 0 0;font-size:14.4px;line-height:1.6;}
+.kz .haus{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
+ background:var(--nacht-bg);color:var(--nacht);border-radius:8px;padding:2px 7px;margin-left:5px;
+ letter-spacing:.05em;vertical-align:1px;}
+
+/* Ritual-Wegweiser */
+.weg-box{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;margin:16px 0;}
+@media(max-width:560px){.weg-box{padding:19px 17px;}}
+.weg-f{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;}
+.weg-f button{font-family:var(--sans);font-size:14.5px;padding:11px 18px;border:1px solid var(--linie);
+ background:var(--creme);color:var(--tinte);border-radius:20px;cursor:pointer;text-align:left;}
+.weg-f button:hover{border-color:var(--nacht);}
+.weg-f button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.weg-a{margin-top:17px;padding-top:17px;border-top:1px solid var(--linie);font-size:15px;line-height:1.72;}
+.weg-a:empty{display:none;}
+.weg-a b{color:var(--nacht);}
+.weg-a .spring{display:inline-block;margin-top:10px;font-size:14px;}
+
+/* Material */
+.mat{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:16px 0;}
+@media(max-width:620px){.mat{grid-template-columns:1fr;}}
+.mk{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:17px 19px;}
+.mk h4{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);margin:0 0 7px;}
+.mk p{font-size:14.3px;line-height:1.64;margin-bottom:9px;}
+.mk p:last-child{margin-bottom:0;}
+.mk .mark{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ border-radius:8px;padding:3px 8px;display:inline-block;margin-bottom:8px;}
+.mk .mark.gut{background:#E8EDDC;color:var(--teal);}
+.mk .mark.acht{background:#FBE3DA;color:var(--rost);}
+.mk .mark.frei{background:var(--nacht-bg);color:var(--nacht);}
+
+.leer-hinweis{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:26px;
+ text-align:center;color:var(--leise);line-height:1.68;font-size:15px;}
+.wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.wahl .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+.quellen{font-size:13px;color:var(--leise);line-height:1.7;margin-top:10px;}
+.quellen a{color:var(--nacht);}
+
+/* Schmale Darstellung des Rads: Ziffern statt Namen */
+.rad-box .pf text.zif{font-family:'JetBrains Mono',monospace;font-size:13px;fill:var(--messing);}
+.rad-box .pf.an text.zif{fill:var(--nacht);font-weight:500;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Praxis</div>
+<h1>Rituale &mdash; <em>und was sie wirklich tun.</em></h1>
+<p class="lede">Ein Ritual ver&auml;ndert nichts da drau&szlig;en. Es ver&auml;ndert, ob du etwas tust &mdash; weil es eine feste Zeit hat, einen K&ouml;rper braucht und eine Spur hinterl&auml;sst, an der du sp&auml;ter nachsehen kannst. Das ist wenig und sehr viel zugleich. Diese Seite nimmt beides ernst.</p>
+
+<div class="wahl" id="rtwahl"></div>
+<div id="jetztbox"></div>
+
+<h2>Welches Ritual gerade passt</h2>
+<p class="sub">Drei Angaben reichen: wo der Mond steht, und wie es dir damit geht.</p>
+<div class="weg-box">
+  <div style="font-size:15.3px;line-height:1.7;">Was ist gerade los bei dir?</div>
+  <div class="weg-f" id="wegf"></div>
+  <div class="weg-a" id="wega"></div>
+</div>
+
+<h2>Der Zyklus als Ritualjahr im Kleinen</h2>
+<p class="sub">Acht Phasen, 29 1/2 Tage. Tipp eine an &mdash; darunter steht, wof&uuml;r sie da ist. Die hervorgehobene ist die, in der wir gerade sind.</p>
+<div class="rad-box">
+  <div id="radsvg"></div>
+  <div class="rad-hinweis">Antippen zum Lesen</div>
+</div>
+<div class="ph-text" id="phtext"></div>
+
+<h2>Das Neumond-Ritual</h2>
+<p class="sub">Zwanzig Minuten. Einmal im Monat. Mehr braucht es nicht &mdash; und mehr h&auml;lt auch niemand durch.</p>
+<div id="nmfenster"></div>
+<div class="schritte" id="nmschritte"></div>
+
+<h2>Das Vollmond-Ritual</h2>
+<p class="sub">Zwei Wochen sp&auml;ter. Derselbe Zettel, andere Frage.</p>
+<div id="vmfenster"></div>
+<div class="schritte" id="vmschritte"></div>
+
+<h2>Je nach Zeichen etwas anderes</h2>
+<p class="sub">Ein Neumond im Widder will etwas anderes von dir als einer in den Fischen. Hier steht, was &mdash; mit einer konkreten Handlung und einem Satz, den du schreiben kannst. Das Zeichen der n&auml;chsten Lunation ist hervorgehoben.</p>
+<div class="zr" id="zeichenraster"></div>
+
+<h2>Dein Ritualkalender</h2>
+<p class="sub">Die n&auml;chsten Monate, gerechnet. Mit Haus hei&szlig;t: in welchem Lebensbereich deines Charts die Lunation landet &mdash; dort geh&ouml;rt das Thema hin.</p>
+<div class="kal" id="kalender"></div>
+
+<h2>Rituale zu Transiten</h2>
+<p class="sub">Nicht alles ist Mond. Manches kommt alle paar Jahre, manches einmal im Leben &mdash; und bei einem davon ist das richtige Ritual, keines zu machen.</p>
+<div id="transite"></div>
+
+<h2>Material &mdash; was du brauchst und was nicht</h2>
+<p class="sub">Du hast Palo Santo und Salbei. Dazu geh&ouml;rt etwas Wissen, das in den meisten Shops nicht dabeisteht.</p>
+<div class="mat" id="material"></div>
+<div class="quellen" id="quellen"></div>
+
+<h2>Was ein Ritual kann &mdash; und was nicht</h2>
+<div class="card">
+<p>Es gibt drei Dinge, die ein Ritual tats&auml;chlich leistet, und sie haben nichts mit Magie zu tun.</p>
+<p><b>Eine feste Zeit.</b> Du musst nicht entscheiden, wann du &uuml;ber dein Leben nachdenkst. Der Mond entscheidet das, zw&ouml;lf- bis dreizehnmal im Jahr. Das ist f&uuml;r einen Kopf, der schlecht mit selbstgesetzten Terminen umgeht, kein kleiner Vorteil &mdash; es ist der ganze Punkt.</p>
+<p><b>Einen K&ouml;rper.</b> Anz&uuml;nden, schreiben, falten, verbrennen. Was die H&auml;nde getan haben, erinnert man anders als das, was man sich vorgenommen hat. Der Rauch wirkt nicht; der Griff zum Feuerzeug schon, weil er den Bruch markiert zwischen vorher und jetzt.</p>
+<p><b>Eine Spur.</b> Ein Zettel mit Datum ist das ehrlichste Werkzeug, das es gibt. In vier Wochen liest du nach, was du wolltest, und siehst, ob es passiert ist. Keine Erinnerung ist so unbestechlich.</p>
+<p>Und was es nicht kann: Es ersetzt keine Entscheidung, kein Gespr&auml;ch, keine &Auml;rztin und kein Geld. Wenn eine Sache nicht vorangeht, liegt das fast nie daran, dass die Intention falsch formuliert war. Ein Ritual, das etwas verspricht, was es nicht halten kann, macht am Ende nur das Gef&uuml;hl gr&ouml;&szlig;er, selbst schuld zu sein.</p>
+</div>
+<div class="tip"><b>Wenn du damit arbeitest:</b> Verspricht nie ein Ergebnis. Kein &bdquo;Neumond im 2. Haus bringt dir Geld.&ldquo; Was du anbieten kannst, ist ein Rahmen f&uuml;r die Aufmerksamkeit von jemandem &mdash; eine Zeit, eine Frage, eine Form. Das ist ehrlich, und es ist genug. Der Unterschied f&auml;llt in dem Moment auf, in dem bei einer Klientin nichts passiert: Hat sie ein Ritual falsch gemacht, oder hatte sie einen Monat, in dem nichts passiert ist? Die zweite Antwort ist meistens die richtige und immer die hilfreichere.</div>
+
+<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Dahinter</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="lunationen.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Neumonde, Vollmonde &amp; Finsternisse</span></a><a href="zauber.html" class="end"><span class="lbl">Und das Handwerk &rarr;</span><span class="ttl">Zimt, Rosen, Steine — Planetenstunden, Zutaten und Kristalle</span></a></div>
+<div class="foot">Rituale &middot; Alle Zeiten gerechnet f&uuml;r deine Zeitzone. Die H&auml;user kommen aus dem gew&auml;hlten Profil &mdash; ohne Profil zeigt die Seite den allgemeinen Teil.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* ── Inhalte: Phasen, Zeichen, Transite, Material ──────── */
+
+var ZEI=[['Widder','♈','feuer'],['Stier','♉','erde'],['Zwillinge','♊','luft'],
+ ['Krebs','♋','wasser'],['Löwe','♌','feuer'],['Jungfrau','♍','erde'],
+ ['Waage','♎','luft'],['Skorpion','♏','wasser'],['Schütze','♐','feuer'],
+ ['Steinbock','♑','erde'],['Wassermann','♒','luft'],['Fische','♓','wasser']];
+
+var HAUSTHEMA=['Auftreten und Selbstbild','Geld, Besitz und Selbstwert','Reden, Lernen, nähere Umgebung',
+ 'Zuhause und Herkunft','Ausdruck, Spiel, Verliebtsein','Alltag, Arbeit, Körper',
+ 'Gegenüber und Verbindlichkeit','Geteiltes, Tiefe, Loslassen','Sinn, Ferne, Überzeugung',
+ 'Beruf und Sichtbarkeit','Freundschaft und Zukunft','Rückzug, Unbewusstes, Ruhe'];
+
+/* Die acht Phasen. Winkel = Mond minus Sonne. */
+var PHASEN=[
+ {a:0,  n:'Neumond',                   w:'Setzen',
+  t:['Kein Mondlicht. Die einzige Nacht im Monat, in der nichts zu sehen ist — und genau deshalb die, in der du etwas formulieren kannst, ohne es sofort rechtfertigen zu müssen. Es gibt noch keine Zeugen.',
+     'Astrologisch steht der Mond exakt auf der Sonne: Wille und Bedürfnis zeigen in dieselbe Richtung. Das ist selten, und es hält etwa drei Tage.'],
+  tu:'Eine Intention schreiben. Eine, nicht fünf. Und einen ersten Schritt dazu, den du in 48 Stunden tust.'},
+ {a:45, n:'Zunehmende Sichel',         w:'Zeigen',
+  t:['Die erste sichtbare Sichel, drei bis vier Tage nach dem Neumond. Jetzt weiß zum ersten Mal jemand anders davon — und das ist der Punkt, an dem die meisten Vorhaben sterben, weil man sie noch einen Tag für sich behalten will.',
+     'Hier geht es nicht um Fortschritt, sondern um Bezeugung. Etwas wird real, wenn es außerhalb deines Kopfes existiert.'],
+  tu:'Einen Menschen einweihen oder einen Schritt nach außen tun: eine Nachricht abschicken, einen Termin machen, eine Anmeldung ausfüllen. Klein genug, dass es heute passiert.'},
+ {a:90, n:'Erstes Viertel',            w:'Entscheiden',
+  t:['Halbmond, und der erste echte Widerstand. Eine Woche nach dem Neumond zeigt sich, was der Sache im Weg steht — Zeit, Geld, ein Mensch, eine Gewohnheit.',
+     'Die Versuchung ist, die Intention umzuformulieren, bis sie wieder bequem ist. Das ist der Fehler. Die Spannung ist nicht das Zeichen, dass es die falsche Sache war. Sie ist das Zeichen, dass du angefangen hast.'],
+  tu:'Eine Entscheidung treffen, die den Widerstand auflöst statt ihn zu umgehen. Aufschreiben, was sie kostet — und sie trotzdem treffen.'},
+ {a:135,n:'Zunehmender Dreiviertelmond',w:'Nachjustieren',
+  t:['Fast voll. Die Sache läuft, aber nicht so, wie du dachtest. Das ist normal und kein Grund umzukehren.',
+     'Diese Phase wird fast nie beachtet, weil nichts Dramatisches passiert. Dabei ist sie die, in der aus einem Vorsatz ein Ergebnis wird oder eben nicht.'],
+  tu:'Nicht neu anfangen, nachschärfen. Was genau funktioniert nicht — und was ist die kleinste Änderung, die das behebt? Aufschreiben, umsetzen, weiter.'},
+ {a:180,n:'Vollmond',                  w:'Sehen',
+  t:['Maximales Licht, und zwar auf alles. Mond und Sonne stehen sich gegenüber: Was du willst und was du brauchst, ziehen in verschiedene Richtungen, und du spürst beides gleichzeitig.',
+     'Deshalb sind Vollmonde unruhig. Es ist nicht der Mond, der dich wach hält — es ist, dass hier sichtbar wird, was zwei Wochen lang unter dem Tempo lag.'],
+  tu:'Den Neumondzettel rausholen. Drei Fragen: Was ist passiert? Was hat mich aufgehalten? Was davon war ich selbst? Und dann: eine Sache benennen, mit der du fertig bist.'},
+ {a:225,n:'Abnehmender Dreiviertelmond',w:'Weitergeben',
+  t:['Das Licht nimmt ab, aber noch ist viel da. Die Phase, in der aus einer Erfahrung etwas wird, das anderen nützt.',
+     'In der traditionellen Einteilung heißt sie die verbreitende Phase. Was du gelernt hast, bleibt Privatbesitz, bis du es jemandem erzählst.'],
+  tu:'Erzählen, posten, beibringen, beantworten. Eine Sache, die du im letzten Monat verstanden hast, in eigene Worte fassen — für jemanden, nicht für dich.'},
+ {a:270,n:'Letztes Viertel',           w:'Abschneiden',
+  t:['Der zweite Halbmond, die zweite Spannung — nur diesmal nach innen. Hier zeigt sich, was im nächsten Zyklus nicht mehr mitkommen darf.',
+     'Dies ist die ehrlichste Phase des Monats und die unbeliebteste, weil sie etwas kostet.'],
+  tu:'Eine Sache tatsächlich beenden. Nicht vornehmen — tun. Kündigen, löschen, absagen, wegwerfen, aufräumen. Eine Sache, heute.'},
+ {a:315,n:'Abnehmende Sichel',         w:'Leer werden',
+  t:['Die letzten drei Tage vor dem Neumond. Fast kein Licht mehr, und spürbar wenig Kraft. Das ist keine Schwäche, das ist der Zyklus.',
+     'Wenn du dir in diesen Tagen regelmäßig vorwirfst, nichts zu schaffen, lohnt es sich, einen Monat lang nachzuschauen, ob es immer dieselben Tage sind.'],
+  tu:'Nichts. Das ist das Ritual. Keine Termine, die dich kosten, keine neuen Vorhaben. Schlafen, lesen, aufräumen, still sein. Was du jetzt nicht tust, musst du nicht nachholen.'}
+];
+
+/* Je Zeichen: Thema, Handlung, Satz */
+var ZTEXT=[
+ ['Anfangen ohne Erlaubnis','Tu etwas, bevor du es zu Ende gedacht hast. Die Nachricht abschicken, die Anmeldung ausfüllen, den Anruf machen. Widder-Lunationen belohnen nicht die beste Entscheidung, sondern die getroffene.','Ich fange an, bevor ich mich bereit fühle.'],
+ ['Halten und genießen','Iss etwas Gutes, langsam, ohne Bildschirm — oder streich eine Ausgabe, die dich ärgert. Stier fragt nicht, was du erreichen willst, sondern was du behalten willst.','Ich darf etwas behalten, ohne es zu verdienen.'],
+ ['Fragen und sagen','Schreib die Frage auf, die du dich nicht zu stellen traust. Und dann stell sie — heute, nicht irgendwann. Zwillinge-Lunationen lösen sich über Worte, nicht über Einsicht.','Ich darf nachfragen, auch wenn es dumm klingt.'],
+ ['Zuhause und Herkunft','Richte eine Ecke der Wohnung her, die nur dir gehört — keine Ablage, kein Durchgang. Oder ruf jemanden an, bei dem du dich als Kind sicher gefühlt hast.','Ich sorge für mich wie für jemanden, den ich mag.'],
+ ['Gesehen werden','Zeig etwas Eigenes, bevor es fertig ist. Posten, vorlesen, schicken. Löwe-Lunationen verlangen ein Publikum, und sei es eins.','Ich zeige es, bevor es perfekt ist.'],
+ ['Ordnen und fertig machen','Nimm die eine Sache, die seit Wochen halbfertig herumliegt, und mach sie zu Ende. Nur die eine. Jungfrau-Lunationen gehen schief, wenn man ein System baut statt eine Aufgabe zu erledigen.','Gut genug ist fertig.'],
+ ['Ausgleich und Nein','Nimm eine Zusage zurück, die du aus Höflichkeit gegeben hast. Waage-Lunationen handeln nicht von Harmonie, sondern davon, dass du im Gleichgewicht mit vorkommst.','Ich darf absagen, ohne es zu erklären.'],
+ ['Wahrheit und Tiefe','Schreib etwas auf, das du noch niemandem gesagt hast — und behalte es. Nicht verschicken. Skorpion-Lunationen wollen, dass du es weißt, nicht dass du es beichtest.','Ich schaue hin, auch wenn es unangenehm ist.'],
+ ['Weite und Sinn','Such dir einen Ort, an dem du weit sehen kannst, und bleib zwanzig Minuten. Oder lies etwas, das nichts mit deinem Alltag zu tun hat.','Es gibt mehr als das hier, und ich darf es wissen wollen.'],
+ ['Struktur und Grenze','Schreib eine Regel auf, die ab heute gilt — für dich, nicht für andere. Eine, die du auch einhältst, wenn jemand ungehalten wird. Steinbock-Lunationen prüfen, ob eine Grenze nur eine Ankündigung war.','Das ist meine Grenze, und sie gilt auch, wenn jemand sauer wird.'],
+ ['Freiheit und Eigenart','Lass etwas, das du nur machst, weil man es so macht. Eine Gewohnheit, eine Gruppe, eine Erwartung. Wassermann-Lunationen bringen nichts Neues, sie räumen Platz.','Ich muss nicht so sein, wie es naheliegt.'],
+ ['Auflösen und Ruhe','Eine Stunde ohne Plan. Wasser hilft — Bad, Dusche, See, auch nur die Hände unter den Hahn. Fische-Lunationen sind die einzigen, bei denen Nichtstun die Handlung ist.','Ich muss das nicht lösen. Ich muss es nur aushalten, bis es sich sortiert.']
+];
+
+/* Transit-Rituale */
+var TRANSITE=[
+ {t:'Merkur rückläufig', w:'dreimal im Jahr, je gut drei Wochen',
+  h:'<p>Der berühmteste Transit, und der am stärksten übertriebene. Was sich wirklich zeigt: Dinge, die du für erledigt hieltest, kommen zurück. Alte Nachrichten, alte Namen, alte Entwürfe. Das ist kein Unglück, das ist ein Angebot.</p>'+
+    '<div class="rit"><b>Zum Beginn — Rückschau</b>Schreib drei Dinge auf, die du angefangen und nicht beendet hast. Nicht bewerten, nur auflisten. Leg den Zettel weg.</div>'+
+    '<div class="rit"><b>Zum Ende — Wiederaufnahme</b>Nimm den Zettel, wähle eine der drei, und mach den nächsten Schritt. Die anderen zwei streichst du durch. Auch das ist ein Ergebnis.</div>'+
+    '<p>Zu der Regel, man solle nichts unterschreiben: In der Sache überbewertet. Was stimmt, ist, dass man in diesen Wochen genauer liest, und genauer lesen ist immer gut. Wenn ein Vertrag jetzt nicht standhält, hätte er es auch im Juli nicht getan.</p>'},
+ {t:'Venus rückläufig', w:'alle rund 18 Monate, etwa sechs Wochen',
+  h:'<p>Seltener und spürbarer als Merkur. Menschen tauchen wieder auf. Und das, was du an Zuneigung, Zeit und Geld in andere steckst, wird unangenehm gut sichtbar.</p>'+
+    '<div class="rit"><b>Das Ritual — Inventur</b>Schreib eine Liste: Wen bezahle ich — mit Geld, Zeit oder Aufmerksamkeit — ohne dass etwas zurückkommt? Vollständig, auch die unbequemen Namen. Dann leg sie weg und tu <b>nichts</b> damit.</div>'+
+    '<div class="nicht"><b>Nicht jetzt</b>Keine Trennung aussprechen, keine Versöhnung einleiten, keine große Anschaffung. Was während der Rückläufigkeit entschieden wird, sieht danach oft anders aus. Warte, bis Venus direkt läuft, nimm die Liste wieder raus — und dann handle.</div>'},
+ {t:'Mars rückläufig', w:'alle rund zwei Jahre, etwa zehn Wochen',
+  h:'<p>Die Kraft geht nach innen. Was sonst nach außen gehen würde — Wut, Antrieb, Durchsetzung — staut sich und richtet sich gegen einen selbst. Typisch: Erschöpfung ohne erkennbaren Grund, und eine Gereiztheit, die niemanden trifft außer dich.</p>'+
+    '<div class="rit"><b>Das Ritual — wo geht die Kraft hin</b>Drei Spalten auf ein Blatt: <i>Wofür arbeite ich?</i> — <i>Wer hat es verlangt?</i> — <i>Will ich es?</i> Zeile für Zeile durchgehen. Die Zeilen, in denen Spalte drei leer bleibt, sind die Antwort.</div>'+
+    '<div class="nicht"><b>Nicht jetzt</b>Keine Konfrontation, die du gewinnen willst. Mars rückläufig trifft daneben — du bist nicht schwächer, aber du zielst schlechter.</div>'},
+ {t:'Finsternisse', w:'zweimal im Jahr, paarweise',
+  h:'<p>Hier steht bewusst kein Ritual, und das ist die Empfehlung.</p>'+
+    '<div class="nicht"><b>Kein Manifestieren</b>Die Tradition ist sich an dieser Stelle ungewöhnlich einig: Zu Finsternissen setzt man keine Intentionen. Der Grund ist weniger mystisch als er klingt — was an Finsternissen in Bewegung gerät, hast du nicht ausgesucht. Ein Ritual, das so tut, als könntest du es lenken, baut dir vier Wochen später ein Gefühl von Versagen, für etwas, das nie in deiner Hand lag.</div>'+
+    '<div class="rit"><b>Was stattdessen geht — Protokoll</b>Schreib auf, was gerade passiert. Nicht was du willst, sondern was ist. Datum dazu, Zettel weg, Erinnerung in sechs Monaten. Finsternisse zeigen ihre Bedeutung rückwärts, fast nie im Moment.</div>'+
+    '<p>Richtig relevant wird eine Finsternis ohnehin nur, wenn sie nah an einem Punkt in deinem eigenen Chart steht — ein paar Grad, nicht irgendwo im selben Zeichen. Alles andere ist Hintergrund.</p>'},
+ {t:'Saturn — Return oder Quadrat', w:'mit 29, 58 — dazwischen alle sieben Jahre ein Winkel',
+  h:'<p>Kein Monatsthema, sondern ein Thema von zwei, drei Jahren. Saturn fragt nicht, was du willst, sondern was trägt. Alles, was auf einer zu dünnen Grundlage stand, wird in dieser Zeit spürbar unbequem — Beruf, Wohnort, Beziehung, der eigene Umgang mit Geld.</p>'+
+    '<div class="rit"><b>Das Ritual — Grenzstein setzen</b>Einmal, am Anfang. Zwei Listen auf einem Blatt: <i>Was mache ich in drei Jahren noch?</i> und <i>Was habe ich bis dahin beendet?</i> Datieren, unterschreiben, an einen Ort legen, den du wiederfindest. Dann ein Jahr nicht anschauen.</div>'+
+    '<p>Die zweite Liste ist die wichtige. Saturn-Zeiten gehen selten daran vorbei, dass man etwas aufgibt; die Frage ist nur, ob man es aussucht.</p>'},
+ {t:'Jupiter durch ein Haus', w:'rund ein Jahr pro Lebensbereich',
+  h:'<p>Jupiter macht größer, was er berührt — die Möglichkeiten und den Aufwand. Er bringt nichts von allein; er öffnet eine Tür und wartet, ob jemand durchgeht.</p>'+
+    '<div class="rit"><b>Am Anfang</b>Ein Satz: Wenn in diesem Bereich nichts im Weg stünde, was würde ich größer machen? Aufschreiben, datieren.</div>'+
+    '<div class="rit"><b>Am Ende</b>Denselben Zettel rausholen. Was ist tatsächlich gewachsen — und war es das, was du aufgeschrieben hattest?</div>'},
+ {t:'Pluto-Transit', w:'Jahre, manchmal ein Jahrzehnt',
+  h:'<p>Der einzige Transit, bei dem ein Ritual nichts beschleunigt. Pluto nimmt sich die Zeit, die er braucht, und was er umbaut, baut sich nicht zurück.</p>'+
+    '<div class="rit"><b>Was ein Ritual hier leisten kann</b>Es markiert, dass du drinsteckst. Das klingt klein und ist es nicht: Der größte Schaden in solchen Jahren entsteht dadurch, dass man sich an der Person misst, die man vorher war, und sich für träge hält. Schreib einen Brief an dich selbst für danach. Keine Ziele — beschreib nur, wie es jetzt ist. Verschlossen weglegen.</div>'+
+    '<p>Und der ehrliche Teil: Wenn ein Pluto-Transit mit einer Krise zusammenfällt, die dich wirklich übersteigt, ist die richtige Adresse eine Therapeutin und nicht ein Chart. Beides geht gleichzeitig, aber nicht statt.</p>'},
+ {t:'Solar Return — dein Geburtstag', w:'einmal im Jahr, auf die Minute genau',
+  h:'<p>Der Moment, in dem die Sonne wieder exakt dort steht wie bei deiner Geburt — meist einen Tag vor oder nach dem Kalendergeburtstag, zu einer krummen Uhrzeit. Das ist der eigentliche Jahreswechsel.</p>'+
+    '<div class="rit"><b>Das Ritual — zwölf Sätze</b>Nimm dir eine Stunde möglichst nah am exakten Zeitpunkt. Ein Satz pro Lebensbereich, zwölf insgesamt: Körper, Geld, Reden, Zuhause, Ausdruck, Alltag, Gegenüber, Tiefe, Sinn, Beruf, Freundschaft, Ruhe. Je Bereich ein Satz darüber, wie es gerade ist. Im nächsten Jahr schreibst du die zwölf neu und legst sie daneben.</div>'+
+    '<p>Nach drei Jahren ist das die aufschlussreichste Sammlung, die du über dich besitzt — und zwar deshalb, weil du beim Schreiben nicht wusstest, was wichtig werden würde.</p>'},
+ {t:'Mondknoten-Transit', w:'Knotenrückkehr mit 18, 37, 56',
+  h:'<p>Die Knoten laufen rückwärts durch den Tierkreis und brauchen gut 18 1/2 Jahre für eine Runde. Bei der Rückkehr stehen sie wieder, wo sie bei deiner Geburt standen — dieselbe Abzweigung, anderes Alter.</p>'+
+    '<div class="rit"><b>Das Ritual — zurück zur Abzweigung</b>Rechne nach, was mit 18 beziehungsweise 37 bei dir los war. Schreib auf, welche Entscheidung damals fiel — und ob du sie heute wieder so träfst. Es geht nicht ums Bereuen. Es geht darum, dass dieselbe Frage noch einmal vorbeikommt und du diesmal mehr weißt.</div>'}
+];
+
+/* Material */
+var MATERIAL=[
+ {n:'Palo Santo', m:['acht','Herkunft prüfen'],
+  t:['<i>Bursera graveolens</i> steht auf der Roten Liste der IUCN als <b>nicht gefährdet</b> — die weit verbreitete Behauptung, die Art sei vom Aussterben bedroht, verwechselt sie meist mit <i>Bulnesia sarmientoi</i>, einem anderen Baum, der tatsächlich geschützt ist.',
+     'Das Problem liegt woanders: In Nordwestperu wird illegal geschlagen, weil die Nachfrage hoch ist. Traditionell wird nur Holz verwendet, das von selbst gefallen ist und mehrere Jahre gelegen hat — daher kommt der Duft überhaupt erst. Peru hatte den Baum 2006 unter Schutz gestellt, genau mit dieser Regel.',
+     'Praktisch heißt das: Es spricht nichts dagegen, deins aufzubrauchen. Beim Nachkaufen auf die Angabe achten, dass es Fallholz aus zertifiziertem Anbau ist.']},
+ {n:'Weißer Salbei', m:['acht','Heikler als gedacht'],
+  t:['<i>Salvia apiana</i> ist nicht offiziell geschützt, aber die kalifornische Native Plant Society gibt an, dass rund die Hälfte der Bestände durch Bebauung verlorengegangen ist. Dazu kommt Wilderei auf öffentlichem Land, die dort verboten ist und trotzdem stattfindet.',
+     'Der zweite Punkt wiegt schwerer: Das Räuchern mit weißem Salbei stammt aus Zeremonien indigener Nationen Nordamerikas. Mehrere von ihnen haben sich ausdrücklich dagegen ausgesprochen, dass die Praxis übernommen und verkauft wird — in einem Land, in dem sie ihnen über Jahrzehnte gesetzlich verboten war.',
+     'Das heißt nicht, dass du deins wegwerfen musst. Es heißt, dass es dafür europäische Pflanzen gibt, die dasselbe tun — und die hier wachsen.']},
+ {n:'Was stattdessen geht', m:['gut','Nebenan gewachsen'],
+  t:['<b>Beifuß</b> ist das klassische Räucherkraut Mitteleuropas, die Pflanze der Rauhnächte. Wächst an jedem Bahndamm, lässt sich im Spätsommer schneiden und trocknen.',
+     '<b>Wacholder</b>, <b>Lorbeer</b>, <b>Rosmarin</b>, <b>Lavendel</b>, <b>Fichtenharz</b> — alle seit Jahrhunderten hier in Gebrauch, alle problemlos zu bekommen. Harze brauchen ein Sieb oder eine Kohle, Kräuter brennen direkt.',
+     'Und falls Rauch für dich reiztechnisch ohnehin schwierig ist: Eine Kerze tut dasselbe. Der Zweck ist ein körperliches Signal, kein bestimmter Geruch.']},
+ {n:'Feuer, aber sicher', m:['acht','Kurz und wichtig'],
+  t:['Verbrennen gehört in eine Metallschüssel, ein Waschbecken oder nach draußen. Papier in kleine Stücke reißen, eins nach dem anderen. Fenster auf, und nichts brennen lassen, während du den Raum verlässt.',
+     'Rauchmelder reagieren auf Räucherwerk zuverlässig. Das ist kein Scherz, sondern der häufigste Grund, warum ein Vollmondritual mit einem Schreck endet.',
+     'Und zur Ehrlichkeit: Verbrennen wirkt nicht besser als Zerreißen. Es fühlt sich endgültiger an, und das ist der ganze Unterschied — aber der ist echt.']},
+ {n:'Mondwasser', m:['frei','Was dran ist'],
+  t:['Ein Glas Wasser über Nacht auf die Fensterbank, am Morgen trinken. Chemisch passiert daran nichts. Das Wasser ist am Morgen dasselbe Wasser.',
+     'Was passiert: Du trinkst es bewusst, mit einem Gedanken dabei, und zwar als erstes an diesem Tag. Dass der Mond nichts tut, hebt diesen Teil nicht auf.',
+     'Nur bitte abgedeckt und drinnen am Fenster, nicht offen draußen über Nacht.']},
+ {n:'Was du nicht brauchst', m:['frei','Entlastung'],
+  t:['Keine Kristalle, keine bestimmten Karten, kein Set für 60 Euro, keine spezielle Uhrzeit auf die Minute, keine Himmelsrichtung, kein Kreis aus Salz.',
+     'Nicht weil nichts davon schön wäre — sondern weil jedes zusätzliche Teil die Schwelle höher legt. Ein Ritual, das Vorbereitung braucht, findet beim dritten Mal nicht mehr statt.',
+     'Unverzichtbar sind genau drei Dinge: zwanzig Minuten, Papier, und dass das Handy in einem anderen Raum liegt.']}
+];
+
+var QUELLEN='Zu den Pflanzenangaben: '+
+ '<a href="https://en.wikipedia.org/wiki/Bursera_graveolens" target="_blank" rel="noopener">IUCN-Einstufung und Lage in Peru</a> &middot; '+
+ '<a href="https://www.csulb.edu/college-of-business/legal-resource-center/article/ecological-damage-white-sage" target="_blank" rel="noopener">Bestandsverluste und Stimmen indigener Nationen zum weißen Salbei</a>. '+
+ 'Alles Astrologische auf dieser Seite ist Tradition und Deutung, keine Naturwissenschaft — die Rechnung dahinter stimmt, die Bedeutung ist eine Vereinbarung.';
+
+/* ── Rituale: Rechnung und Darstellung ─────────────────── */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),
+   n.getUTCHours()+n.getUTCMinutes()/60);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+
+/* Phasenwinkel: Mond minus Sonne, 0 = Neumond, 180 = Vollmond */
+function phase(jd){ var T=(jd-2451545)/36525; return nrm(moonLon(T)-sunLon(T)); }
+function phDiff(jd,ziel){ var d=nrm(phase(jd)-ziel); return d>180?d-360:d; }
+
+/* Alle Neu- und Vollmonde in einem Zeitraum, exakt per Intervallhalbierung */
+function lunationen(vonJD,bisJD){
+  var out=[];
+  [[0,'neu'],[180,'voll']].forEach(function(z){
+    var a=vonJD, fa=phDiff(a,z[0]);
+    while(a<bisJD){
+      var b=a+0.5, fb=phDiff(b,z[0]);
+      if(fa<0 && fb>=0){
+        var lo=a, hi=b;
+        for(var k=0;k<44;k++){ var m=(lo+hi)/2; if(phDiff(m,z[0])<0) lo=m; else hi=m; }
+        out.push({jd:(lo+hi)/2, art:z[1]});
+      }
+      a=b; fa=fb;
+    }
+  });
+  out.sort(function(x,y){ return x.jd-y.jd; });
+  return out;
+}
+
+/* Mondsichel als SVG-Pfad. a = Phasenwinkel, Licht auf der Nordhalbkugel rechts beim Zunehmen. */
+function mondPfad(cx,cy,r,a){
+  a=nrm(a);
+  var c=Math.cos(a*Math.PI/180);
+  var rx=Math.abs(c)*r;
+  var rechts = a<180;
+  var limb = rechts?1:0;
+  var term = (c>0) ? (rechts?0:1) : (rechts?1:0);
+  return 'M '+cx+' '+(cy-r)+
+    ' A '+r+' '+r+' 0 0 '+limb+' '+cx+' '+(cy+r)+
+    ' A '+(rx||0.001)+' '+r+' 0 0 '+term+' '+cx+' '+(cy-r)+' Z';
+}
+function mondSvg(gr,a,hell,dunkel){
+  var r=gr/2-1;
+  return '<svg width="'+gr+'" height="'+gr+'" viewBox="0 0 '+gr+' '+gr+'" aria-hidden="true">'+
+    '<circle cx="'+(gr/2)+'" cy="'+(gr/2)+'" r="'+r+'" fill="'+(dunkel||'rgba(255,255,255,.10)')+'"/>'+
+    '<path d="'+mondPfad(gr/2,gr/2,r,a)+'" fill="'+(hell||'#E8C97A')+'"/>'+
+    '<circle cx="'+(gr/2)+'" cy="'+(gr/2)+'" r="'+r+'" fill="none" stroke="rgba(154,114,53,.45)" stroke-width="1"/></svg>';
+}
+/* Achtteilung nach Rudhyar: jede Phase beginnt bei ihrem Namensgeber und
+   dauert 45 Grad, also gut 3 1/2 Tage. Der Neumond-Abschnitt läuft damit
+   von 0 bis 45 Grad — dieselben drei Tage, die auch das Ritualfenster hat. */
+function phIndex(a){ return Math.floor(nrm(a)/45); }
+function beleuchtung(a){ return (1-Math.cos(a*Math.PI/180))/2; }
+
+/* Datum und Uhrzeit in der Zeitzone des Geräts */
+function dtZeit(jd){
+  var d=datVon(jd);
+  return d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+', '+
+         d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr';
+}
+function dtKurz(jd){
+  return datVon(jd).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+}
+function dtTag(jd){
+  return datVon(jd).toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'});
+}
+function tageBis(jd){ return Math.round(jd-heuteJD()); }
+function tageWort(n){
+  if(n<=0) return 'heute';
+  if(n===1) return 'morgen';
+  return 'in '+n+' Tagen';
+}
+
+/* ── Profil ───────────────────────────────────────────── */
+var gewaehlt=null, phWahl=null, wegWahl=null;
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function hausVon(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+function aktivesChart(){
+  var alle=[]; try{ alle=AC_P.alle()||[]; }catch(e){}
+  if(!alle.length) return null;
+  if(!gewaehlt){ var e=alle.filter(function(p){return p.eigen;})[0]||alle[0]; gewaehlt=e.id; }
+  var p=alle.filter(function(x){return x.id===gewaehlt;})[0];
+  return p?chartVon(p):null;
+}
+
+/* ── Jetzt-Kasten ─────────────────────────────────────── */
+function jetztBauen(){
+  var jd=heuteJD(), a=phase(jd), i=phIndex(a), ph=PHASEN[i];
+  var b=Math.round(beleuchtung(a)*100);
+  var kommend=lunationen(jd-1,jd+70);
+  var nNeu=kommend.filter(function(x){return x.art==='neu'&&x.jd>jd;})[0];
+  var nVoll=kommend.filter(function(x){return x.art==='voll'&&x.jd>jd;})[0];
+  var letzte=lunationen(jd-40,jd).filter(function(x){return x.jd<=jd;}).pop();
+  var P=aktivesChart();
+
+  var h='<div class="jetzt"><div class="jetzt-kopf">'+mondSvg(74,a)+'<div>'+
+    '<div class="k">Gerade</div>'+
+    '<div class="gr" style="margin-bottom:4px;">'+ph.n+'</div>'+
+    '<div style="font-size:14.3px;color:rgba(244,239,230,.75);">'+b+' % beleuchtet · '+
+      ph.w+' · Mond in '+ZEI[Math.floor(nrm(lon('Mond',jd))/30)][0]+'</div></div></div>';
+
+  /* Steht gerade ein Ritualfenster offen? */
+  var offen=null;
+  if(letzte){
+    var seit=jd-letzte.jd;
+    if(letzte.art==='neu' && seit<=3) offen={art:'neu',seit:seit,jd:letzte.jd};
+    if(letzte.art==='voll' && seit<=1.5) offen={art:'voll',seit:seit,jd:letzte.jd};
+  }
+  if(offen && offen.art==='neu'){
+    h+='<p><b>Das Neumondfenster ist offen.</b> Der Neumond war am '+dtZeit(offen.jd)+
+      ', das sind '+(offen.seit<1?'noch keine 24 Stunden':Math.floor(offen.seit)+' Tage')+'. '+
+      'Du hast noch bis '+dtZeit(offen.jd+3)+' — danach ist der Zyklus zu weit, dann wartest du auf den nächsten.</p>';
+  } else if(offen && offen.art==='voll'){
+    h+='<p><b>Vollmond — das Fenster ist offen.</b> Exakt war er am '+dtZeit(offen.jd)+
+      '. Für das Vollmondritual hast du etwa einen Tag davor und danach.</p>';
+  } else {
+    h+='<p>'+ph.t[0]+'</p>';
+  }
+  /* Steht ein Fenster offen, gilt dessen Ritual — nicht das des Abschnitts,
+     in den der Winkel gerade rutscht. Betrifft vor allem den Vollmond, dessen
+     Fenster schon vor dem exakten Zeitpunkt aufgeht. */
+  var ritPh = offen ? (offen.art==='neu'?PHASEN[0]:PHASEN[4]) : ph;
+  h+='<div class="jz" style="margin-top:4px;"><b>Was jetzt dran ist</b>'+ritPh.tu+'</div>';
+
+  function eintrag(l,titel){
+    if(!l) return '';
+    var zi=Math.floor(nrm(lon('Mond',l.jd))/30);
+    var hz=P?(' · dein '+hausVon(P,lon('Mond',l.jd))+'. Haus'):'';
+    return '<div class="jz"><b>'+titel+'</b>'+dtZeit(l.jd)+'<br>'+
+      ZEI[zi][1]+' '+ZEI[zi][0]+hz+' · '+tageWort(tageBis(l.jd))+'</div>';
+  }
+  h+='<div class="jetzt-zahl">'+eintrag(nNeu,'Nächster Neumond')+eintrag(nVoll,'Nächster Vollmond')+'</div>';
+  h+='</div>';
+  document.getElementById('jetztbox').innerHTML=h;
+  if(phWahl===null) phWahl=i;
+}
+
+/* ── Rad der acht Phasen ──────────────────────────────── */
+/* Das beleuchtete Stück ist hell, der Rest dunkel — sonst sieht ein Neumond
+   aus wie ein Vollmond. Auf dem cremefarbenen Papier heißt das:
+   Scheibe navy, Licht gold. */
+var UNBELEUCHTET='#2E3A5C', BELEUCHTET='#E8C97A';
+
+function radBauen(){
+  var jd=heuteJD(), a=phase(jd), ist=phIndex(a);
+  /* Schmal: Ziffern statt Namen, sonst wird die Schrift beim Skalieren unlesbar */
+  var schmal = (typeof window!=='undefined' && window.innerWidth && window.innerWidth<640);
+  var W = schmal?430:620, H=430, cx=W/2, cy=H/2;
+  var R = schmal?142:140, mr = schmal?30:25;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" '+
+    'aria-label="Die acht Mondphasen im Kreis, von Neumond oben im Uhrzeigersinn">';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#EBE1D2" stroke-width="1.5"/>';
+  /* Der laufende Abschnitt als Bogen — jede Phase reicht von ihrem Mond bis zum nächsten */
+  function pkt(g,rad){ return [cx+rad*Math.sin(g*Math.PI/180), cy-rad*Math.cos(g*Math.PI/180)]; }
+  var b1=pkt(ist*45,R), b2=pkt(ist*45+45,R);
+  s+='<path d="M '+b1[0].toFixed(1)+' '+b1[1].toFixed(1)+' A '+R+' '+R+' 0 0 1 '+
+     b2[0].toFixed(1)+' '+b2[1].toFixed(1)+'" fill="none" stroke="#9A7235" stroke-width="4" '+
+     'stroke-linecap="round" opacity=".38"/>';
+  /* aktueller Stand auf der Bahn */
+  var pp=pkt(a,R);
+  s+='<circle cx="'+pp[0].toFixed(1)+'" cy="'+pp[1].toFixed(1)+'" r="4.5" fill="#9A7235"/>';
+  /* Mitte */
+  s+='<text x="'+cx+'" y="'+(cy-7)+'" text-anchor="middle" style="font-family:Fraunces,serif;'+
+     'font-size:16px;fill:#6B6259;">29 1/2 Tage</text>';
+  s+='<text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" style="font-family:Fraunces,serif;'+
+     'font-size:16px;fill:#6B6259;">ein Zyklus</text>';
+  PHASEN.forEach(function(p,i){
+    var q=pkt(p.a,R), x=q[0], y=q[1];
+    var sin=Math.sin(p.a*Math.PI/180);
+    s+='<g class="pf'+(phWahl===i?' an':'')+'" data-ph="'+i+'" role="button" tabindex="0" '+
+       'aria-label="'+p.n+'">';
+    s+='<circle class="treffer" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(mr+14)+'"/>';
+    s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(mr-1)+'" fill="'+UNBELEUCHTET+'"/>';
+    s+='<path d="'+mondPfad(x,y,mr-1,p.a)+'" fill="'+BELEUCHTET+'"/>';
+    s+='<circle class="ring" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+mr+'" fill="none" '+
+       'stroke="'+(i===ist?'#9A7235':'#DDD0BC')+'" stroke-width="'+(i===ist?2.5:1)+'"/>';
+    if(schmal){
+      /* Nummer direkt daneben, passend zu „Phase N von 8" im Text darunter */
+      var n=pkt(p.a,R+mr+13);
+      s+='<text class="zif" text-anchor="middle" x="'+n[0].toFixed(1)+'" y="'+(n[1]+4).toFixed(1)+'">'+(i+1)+'</text>';
+    } else if(p.a===0 || p.a===180){
+      var vy = (p.a===0) ? y-mr-11 : y+mr+19;
+      s+='<text text-anchor="middle" x="'+x.toFixed(1)+'" y="'+vy.toFixed(1)+'">'+p.n+'</text>';
+    } else {
+      var rechts = sin>0;
+      var lx = x + (rechts? (mr+9) : -(mr+9));
+      s+='<text x="'+lx.toFixed(1)+'" y="'+(y+4).toFixed(1)+'" '+
+         'text-anchor="'+(rechts?'start':'end')+'">'+p.n+'</text>';
+    }
+    s+='</g>';
+  });
+  s+='</svg>';
+  document.getElementById('radsvg').innerHTML=s;
+  [].slice.call(document.querySelectorAll('.pf')).forEach(function(g){
+    function waehle(){ phWahl=+g.getAttribute('data-ph'); radBauen(); phTextBauen(); }
+    g.addEventListener('click',waehle);
+    g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); waehle(); } });
+  });
+}
+function phTextBauen(){
+  var i=(phWahl===null?phIndex(phase(heuteJD())):phWahl), p=PHASEN[i];
+  var ist=phIndex(phase(heuteJD()))===i;
+  document.getElementById('phtext').innerHTML=
+    '<div class="nr">Phase '+(i+1)+' von 8'+(ist?' · hier sind wir gerade':'')+'</div>'+
+    '<h3>'+p.n+'</h3><div class="wort">'+p.w+'</div>'+
+    p.t.map(function(x){return '<p>'+x+'</p>';}).join('')+
+    '<div class="tu"><b>Das Ritual</b>'+p.tu+'</div>';
+}
+
+/* ── Neumond- und Vollmondritual ──────────────────────── */
+var NM=[
+ ['Das Fenster abwarten','Innerhalb von drei Tagen nach dem exakten Neumond, nicht davor. Vorher läuft noch der alte Zyklus aus, und was du da formulierst, gehört zur letzten Runde.'],
+ ['Den Tisch leer machen','Handy in einen anderen Raum. Eine Kerze, Stift, Papier — richtiges Papier, nicht das Telefon. Zwanzig Minuten reichen, und sie sollten auch nicht viel länger werden.'],
+ ['Anzünden','Kerze an, Räucherwerk wenn du magst, Fenster auf Kipp. Das ist kein magischer Akt, sondern ein Signal: ab jetzt läuft etwas anderes als vorher. Ein Körper merkt sich so einen Bruch besser als ein Vorsatz.'],
+ ['Zwei Minuten zurückschauen','Was ist im letzten Zyklus passiert? Nicht bewerten, nur durchgehen. Es sind vier Wochen, man erinnert sich an weniger, als man denkt.'],
+ ['Eine Intention formulieren','<b>Eine.</b> Im Präsens, in der Ich-Form, und konkret genug, dass du in vier Wochen zweifelsfrei sagen kannst, ob sie eingetreten ist. Und erreichbar in einem Mondzyklus — 29 1/2 Tage, nicht ein Jahr.',
+  '<div class="zitat"><b class="m">So nicht</b><br><span class="m">&bdquo;Ich will mehr Geld verdienen und endlich an mich glauben.&ldquo;</span><br>'+
+  'Nicht überprüfbar, nicht in vier Wochen entscheidbar, und zwei Dinge in einem Satz.'+
+  '<br><br><b class="g">So eher</b><br><span class="g">&bdquo;Ich habe bis zum Vollmond drei Reading-Anfragen beantwortet und meinen Preis genannt, ohne ihn zu senken.&ldquo;</span><br>'+
+  'Präsens, konkret, abhakbar — und das Eigentliche steckt im Nebensatz.</div>'],
+ ['Den ersten Schritt dazuschreiben','Bevor die Kerze ausgeht: eine Sache, die du in den nächsten 48 Stunden tust. Klein. Eine Mail, ein Anruf, ein Termin. Das ist der Teil, an dem sich entscheidet, ob der Zettel ein Plan war oder ein Wunsch.'],
+ ['Falten und hinlegen','An einen Ort, an dem du ihn im Alltag siehst — Spiegel, Geldbeutel, Kühlschrank. Nicht in eine Schublade. Ein Zettel, den man nicht sieht, arbeitet nicht.'],
+ ['Aufhören','Kerze aus, Fenster auf, fertig. Nicht ausdehnen. Ein Ritual, das jedes Mal eine Stunde dauert, findet beim dritten Mal nicht mehr statt — und darauf kommt es an, nicht auf die Tiefe eines einzelnen Abends.']
+];
+var VM=[
+ ['Den Zettel rausholen','Den vom Neumond, ungelesen seit zwei Wochen. Erst jetzt lesen.'],
+ ['Drei Fragen','Was ist passiert? Was hat mich aufgehalten? Was davon war ich selbst? Die dritte Frage ist die, um die es geht, und die einzige, bei der du etwas ändern kannst.'],
+ ['Das Gelungene benennen','<b>Vor</b> dem Loslassen, nicht danach. Ein Satz darüber, was tatsächlich funktioniert hat — und wenn es nur war, dass du den Zettel geschrieben hast. Die meisten überspringen das und machen aus einem Monatsrückblick eine Mängelliste.'],
+ ['Präzise loslassen','Zweites Blatt. Nicht &bdquo;Selbstzweifel&ldquo; — das ist zu groß und zu vage. Sondern der genaue Satz, den du dir selbst sagst, wenn es schwierig wird. Den aufschreiben. Erst wenn er dasteht, kannst du ihn loswerden.'],
+ ['Verbrennen oder zerreißen','Metallschüssel oder Waschbecken, kleine Stücke, Fenster auf. Oder zerreißen und wegwerfen, oder unter den Wasserhahn halten. Verbrennen wirkt nicht besser — es fühlt sich endgültiger an, und das reicht als Grund.'],
+ ['Den Neumondzettel aufheben','Den nicht verbrennen. Sammle sie in einem Umschlag. Nach einem Jahr hast du zwölf Stück und siehst etwas, das dir sonst niemand zeigen kann: wie oft dasselbe draufsteht.']
+];
+function schritteBauen(ziel,daten){
+  document.getElementById(ziel).innerHTML=daten.map(function(s,i){
+    return '<div class="sch"><div class="n">'+(i+1)+'</div><div><h4>'+s[0]+'</h4>'+
+      '<p>'+s[1]+'</p>'+(s[2]||'')+'</div></div>';
+  }).join('');
+}
+function fensterBauen(){
+  var jd=heuteJD();
+  var k=lunationen(jd-5,jd+45);
+  var nNeu=k.filter(function(x){return x.art==='neu'&&x.jd>jd-3;})[0];
+  var nVoll=k.filter(function(x){return x.art==='voll'&&x.jd>jd-1.5;})[0];
+  if(nNeu){
+    var auf=nNeu.jd<jd;
+    document.getElementById('nmfenster').innerHTML='<div class="tip" style="margin-top:0;">'+
+      (auf?'<b>Jetzt gerade möglich.</b> Der Neumond war am ':'<b>Das nächste Fenster:</b> Neumond am ')+
+      dtZeit(nNeu.jd)+' — das Ritual passt bis '+dtZeit(nNeu.jd+3)+'.'+
+      (auf?'':' Das ist '+tageWort(tageBis(nNeu.jd))+'.')+'</div>';
+  }
+  if(nVoll){
+    var aufV=nVoll.jd<jd;
+    document.getElementById('vmfenster').innerHTML='<div class="tip" style="margin-top:0;">'+
+      (aufV?'<b>Jetzt gerade möglich.</b> Vollmond war am ':'<b>Das nächste Fenster:</b> Vollmond am ')+
+      dtZeit(nVoll.jd)+' — einen Tag davor bis einen Tag danach.'+
+      (aufV?'':' Das ist '+tageWort(tageBis(nVoll.jd))+'.')+'</div>';
+  }
+}
+
+/* ── Zeichen ──────────────────────────────────────────── */
+function zeichenBauen(){
+  var jd=heuteJD();
+  var naechste=lunationen(jd,jd+40)[0];
+  var zIst=naechste?Math.floor(nrm(lon('Mond',naechste.jd))/30):-1;
+  document.getElementById('zeichenraster').innerHTML=ZEI.map(function(z,i){
+    var t=ZTEXT[i];
+    return '<div class="zk '+z[2]+(i===zIst?' ist':'')+'">'+
+      '<div class="kopf"><span class="gl">'+z[1]+'</span><span class="nm">'+z[0]+'</span></div>'+
+      '<div class="th">'+t[0]+(i===zIst?' · als Nächstes':'')+'</div>'+
+      '<p>'+t[1]+'</p><p class="satz">'+t[2]+'</p></div>';
+  }).join('');
+}
+
+/* ── Ritualkalender ───────────────────────────────────── */
+function kalenderBauen(){
+  var jd=heuteJD(), P=aktivesChart();
+  var l=lunationen(jd,jd+200);
+  if(!l.length){ document.getElementById('kalender').innerHTML=''; return; }
+  document.getElementById('kalender').innerHTML=l.slice(0,12).map(function(x,idx){
+    var ml=lon('Mond',x.jd), zi=Math.floor(nrm(ml)/30), neu=(x.art==='neu');
+    var t=ZTEXT[zi];
+    var hs=P?hausVon(P,ml):0;
+    var titel=(neu?'Neumond':'Vollmond')+' in '+ZEI[zi][0];
+    var text;
+    if(neu){
+      text=t[1]+(P?' <b>Im '+hs+'. Haus:</b> '+HAUSTHEMA[hs-1]+'.':'');
+    } else {
+      /* Der Zettel stammt vom Neumond davor — und der stand in einem anderen
+         Zeichen. Beides nennen, sonst stimmt der Rückbezug nicht. */
+      var vorher=lunationen(x.jd-33,x.jd).filter(function(y){return y.art==='neu';}).pop();
+      var vz=vorher?Math.floor(nrm(lon('Mond',vorher.jd))/30):-1;
+      text='Was jetzt ans Licht kommt, gehört zum Thema <b>'+t[0]+'</b>. '+
+        'Vollmonde fragen nicht, was du anfangen willst, sondern was du nicht länger trägst.'+
+        (vorher?' Dazu gehört der Zettel vom Neumond in '+ZEI[vz][0]+' am '+dtKurz(vorher.jd):'')+
+        (P?' <b>Im '+hs+'. Haus:</b> '+HAUSTHEMA[hs-1]+'.':'');
+    }
+    return '<div class="kz'+(idx===0?' naechste':'')+'">'+
+      '<div class="mo">'+mondSvg(34,neu?0:180,BELEUCHTET,UNBELEUCHTET)+'</div>'+
+      '<div class="dat"><b>'+dtTag(x.jd)+'</b>'+
+        datVon(x.jd).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr</div>'+
+      '<div class="txt"><b>'+titel+'</b>'+
+        (P?'<span class="haus">'+hs+'. Haus</span>':'')+
+        '<p>'+text+'</p></div></div>';
+  }).join('');
+}
+
+/* ── Wegweiser ────────────────────────────────────────── */
+var WEGE=[['anfangen','Ich will etwas anfangen'],['fest','Ich komme nicht weiter'],
+          ['beenden','Ich muss etwas beenden'],['leer','Ich habe keine Kraft']];
+function wegBauen(){
+  var f=document.getElementById('wegf'); f.innerHTML='';
+  WEGE.forEach(function(w){
+    var b=document.createElement('button'); b.type='button'; b.textContent=w[1];
+    b.setAttribute('aria-pressed', wegWahl===w[0]);
+    b.addEventListener('click',function(){ wegWahl=w[0]; wegBauen(); });
+    f.appendChild(b);
+  });
+  var out=document.getElementById('wega');
+  if(!wegWahl){ out.innerHTML=''; return; }
+  var jd=heuteJD(), a=phase(jd), i=phIndex(a), zu=(a<180);
+  var k=lunationen(jd,jd+45);
+  var nNeu=k.filter(function(x){return x.art==='neu';})[0];
+  var nVoll=k.filter(function(x){return x.art==='voll';})[0];
+  var t='';
+  if(wegWahl==='anfangen'){
+    t = zu
+      ? '<b>Guter Zeitpunkt.</b> Der Mond nimmt zu — das ist die Hälfte des Zyklus, in der Aufbauen mit dem Strom geht. '+
+        'Du musst nicht bis zum nächsten Neumond warten. Nimm das Ritual der Phase, in der wir gerade sind: <b>'+
+        PHASEN[i].n+' — '+PHASEN[i].w+'.</b> '+PHASEN[i].tu
+      : '<b>Gegen den Strom, aber machbar.</b> Der Mond nimmt ab, und das ist die Hälfte, in der sich Abschließen leichter anfühlt als Anfangen. '+
+        'Zwei Möglichkeiten: Du wartest bis zum Neumond am <b>'+(nNeu?dtZeit(nNeu.jd):'—')+'</b> ('+
+        (nNeu?tageWort(tageBis(nNeu.jd)):'')+') und machst es mit Anlauf. Oder du fängst heute an und weißt, '+
+        'dass der Schwung diesmal von dir kommen muss. Beides ist in Ordnung — nur nicht anfangen und dann dem Mond die Schuld geben.';
+  } else if(wegWahl==='fest'){
+    t = '<b>Das ist eine eigene Phase, und zwar eine normale.</b> Widerstand nach dem Anfangen ist kein Zeichen dafür, dass es die falsche Sache war. '+
+      'Das Ritual dazu steht beim <b>Ersten Viertel — Entscheiden</b>: '+PHASEN[2].tu+
+      '<br><br>Die Versuchung ist, die Sache umzuformulieren, bis sie wieder bequem ist. Das ist der Moment, in dem die meisten Vorhaben leise sterben — '+
+      'nicht an einem Scheitern, sondern an einer Neuformulierung.';
+  } else if(wegWahl==='beenden'){
+    t = !zu
+      ? '<b>Jetzt passt es.</b> Der Mond nimmt ab — die Hälfte des Zyklus, die dafür gemacht ist. Das Ritual steht beim '+
+        '<b>Letzten Viertel — Abschneiden</b>: '+PHASEN[6].tu
+      : '<b>Du kannst jederzeit beenden.</b> Wenn es dringend ist, mach es heute — kein Mondstand ist ein Grund, etwas Schädliches länger laufen zu lassen. '+
+        'Wenn es Zeit hat: Der Vollmond am <b>'+(nVoll?dtZeit(nVoll.jd):'—')+'</b> ('+
+        (nVoll?tageWort(tageBis(nVoll.jd)):'')+') leitet die abnehmende Hälfte ein. Danach fühlt sich Beenden weniger nach Verlust an und mehr nach Aufräumen.';
+  } else if(wegWahl==='leer'){
+    t = (i===7)
+      ? '<b>Du bist in der balsamischen Phase.</b> Die letzten drei Tage vor dem Neumond — die Phase, in der wenig Kraft da ist, und zwar nach Plan. '+
+        'Der Neumond ist am <b>'+(nNeu?dtZeit(nNeu.jd):'—')+'</b>. Bis dahin ist das Ritual: nichts. '+
+        'Keine neuen Vorhaben, keine Termine, die dich kosten. Was du jetzt nicht tust, musst du nicht nachholen.'
+      : '<b>Dann ist das jetzt die Lage, und der Mond ist nicht der Grund.</b> Wir sind in der Phase <b>'+PHASEN[i].n+'</b>, '+
+        'die nächste ausdrückliche Ruhephase beginnt kurz vor dem Neumond am <b>'+(nNeu?dtZeit(nNeu.jd):'—')+'</b>.'+
+        '<br><br>Das heißt nicht, dass du bis dahin durchhalten musst. Es heißt nur: Such die Ursache nicht im Himmel. '+
+        'Wenn die Leere länger als ein paar Tage anhält oder sich jeden Monat wiederholt, gehört sie zu einem Menschen, nicht zu einem Chart.';
+  }
+  out.innerHTML=t;
+}
+
+/* ── Transite und Material ────────────────────────────── */
+function transiteBauen(){
+  document.getElementById('transite').innerHTML=TRANSITE.map(function(x){
+    return '<details class="tr"><summary><span class="t">'+x.t+'</span><span class="w">'+x.w+'</span></summary>'+
+      '<div class="in">'+x.h+'</div></details>';
+  }).join('');
+}
+function materialBauen(){
+  document.getElementById('material').innerHTML=MATERIAL.map(function(m){
+    return '<div class="mk"><span class="mark '+m.m[0]+'">'+m.m[1]+'</span>'+
+      '<h4>'+m.n+'</h4>'+m.t.map(function(p){return '<p>'+p+'</p>';}).join('')+'</div>';
+  }).join('');
+  document.getElementById('quellen').innerHTML=QUELLEN;
+}
+
+/* ── Profilwahl ───────────────────────────────────────── */
+function wahlBauen(){
+  var box=document.getElementById('rtwahl'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  box.innerHTML='';
+  if(alle.length<2) return;
+  var l=document.createElement('span'); l.className='lab'; l.textContent='Profil'; box.appendChild(l);
+  alle.forEach(function(p){
+    var b=document.createElement('button'); b.type='button';
+    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
+    b.setAttribute('aria-pressed', gewaehlt===p.id);
+    b.addEventListener('click',function(){ gewaehlt=p.id; wahlBauen(); jetztBauen(); kalenderBauen(); });
+    box.appendChild(b);
+  });
+}
+
+function start(){
+  wahlBauen();
+  jetztBauen(); radBauen(); phTextBauen();
+  fensterBauen();
+  schritteBauen('nmschritte',NM); schritteBauen('vmschritte',VM);
+  zeichenBauen(); kalenderBauen(); wegBauen();
+  transiteBauen(); materialBauen();
+  var P=aktivesChart();
+  if(!P){
+    var k=document.getElementById('kalender');
+    k.insertAdjacentHTML('afterend','<div class="leer-hinweis" style="margin-top:12px;">'+
+      '<b>Ohne Profil fehlen die Häuser.</b><br><br>Die Termine oben stimmen — aber in welchem Lebensbereich '+
+      'eine Lunation bei dir landet, braucht deine Geburtsdaten. Leg sie unter '+
+      '<a href="profile.html">Profile</a> an, dann wird der Kalender persönlich.</div>');
+  }
+}
+start();
+
+/* Bei Breitenwechsel neu zeichnen — schmal bekommt Ziffern, breit die Namen */
+var letzteBreite=(typeof window!=='undefined'?window.innerWidth:0), zeitgeber=null;
+if(typeof window!=='undefined' && window.addEventListener){
+  window.addEventListener('resize',function(){
+    var schmalVorher=letzteBreite<640, schmalJetzt=window.innerWidth<640;
+    letzteBreite=window.innerWidth;
+    if(schmalVorher!==schmalJetzt){
+      clearTimeout(zeitgeber);
+      zeitgeber=setTimeout(function(){ radBauen(); },150);
+    }
+  });
+}
+
+</script>
+</body></html>

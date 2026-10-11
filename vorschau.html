@@ -1,0 +1,508 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Woche &amp; Monat · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;width:20px;height:20px;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.vs-tage{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:18px 0 14px;}
+@media(max-width:700px){.vs-tage{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:440px){.vs-tage{grid-template-columns:repeat(2,1fr);}}
+.vt{background:var(--papier);border:1px solid var(--linie);border-radius:15px;padding:12px 9px;
+ text-align:center;cursor:pointer;transition:border-color .12s;}
+.vt:hover{border-color:var(--nacht);}
+.vt.heute{border-color:var(--nacht);background:var(--nacht-bg);}
+.vt[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);}
+.vt[aria-pressed="true"] *{color:#fff !important;}
+.vt .wd{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--messing);}
+.vt .dt{font-family:var(--serif);font-size:21px;color:var(--tinte);line-height:1.1;margin:3px 0;}
+.vt .mo{font-size:17px;line-height:1;}
+.vt .zn{font-size:10.5px;color:var(--leise);margin-top:3px;line-height:1.3;}
+.vt .pkt{display:flex;gap:3px;justify-content:center;margin-top:5px;min-height:7px;}
+.vt .pkt i{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.vs-tag{background:var(--nacht);color:#F4EFE6;border-radius:22px;padding:24px 26px;margin-bottom:16px;}
+.vs-tag .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:8px;}
+.vs-tag .gr{font-family:var(--serif);font-size:clamp(22px,4.4vw,30px);font-weight:300;color:#fff;
+ line-height:1.18;margin-bottom:10px;}
+.vs-tag p{margin:0 0 10px;font-size:15.3px;line-height:1.68;color:rgba(244,239,230,.9);}
+.vs-tag p:last-child{margin-bottom:0;}
+.vs-dd{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px;}
+@media(max-width:560px){.vs-dd{grid-template-columns:1fr;}}
+.vs-d{border-radius:14px;padding:13px 15px;font-size:14.3px;line-height:1.6;}
+.vs-d.go{background:rgba(111,168,106,.18);}
+.vs-d.no{background:rgba(194,65,58,.18);}
+.vs-d b{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;margin-bottom:5px;}
+.vs-d.go b{color:#A8D4A0;} .vs-d.no b{color:#F0A89F;}
+.vs-hl{display:grid;gap:9px;margin:16px 0;}
+.hl{display:grid;grid-template-columns:86px 1fr;gap:14px;background:var(--papier);
+ border:1px solid var(--linie);border-radius:16px;padding:14px 17px;align-items:start;}
+@media(max-width:520px){.hl{grid-template-columns:1fr;gap:5px;}}
+.hl.stark{border-left:3px solid var(--nacht);}
+.hl .dt{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);line-height:1.5;}
+.hl b{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);}
+.hl p{margin:3px 0 0;font-size:14.6px;line-height:1.6;}
+.vs-bogen{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:20px 22px;margin-bottom:14px;}
+.vs-bogen svg{display:block;width:100%;height:auto;}
+.vs-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:28px;
+ text-align:center;color:var(--leise);line-height:1.65;}
+.vs-wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.vs-wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.vs-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.vs-wahl .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Vorausschauen</div>
+<h1>Woche und <em>Monat.</em></h1>
+<p class="lede">Nicht nur heute. Sieben Tage im Blick, dazu die Höhepunkte des Monats — damit du planen kannst statt nur zu reagieren.</p>
+
+<div class="vs-wahl" id="vswahl"></div>
+<div id="vsinhalt"></div>
+
+<div class="tip"><b>Wie du das benutzt:</b> Nicht als Fahrplan. Die meisten Tage sind gewöhnliche Tage, und das steht auch so da. Der Nutzen liegt in den paar Tagen, an denen tatsächlich etwas zusammenkommt — <b>die kann man um ein, zwei Tage verschieben oder bewusst dafür nutzen</b>. Alles andere ist Hintergrundrauschen, und so ist es hier auch gewichtet.</div>
+
+<div class="weiter"><a href="index.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Heute</span></a><a href="zeitqualitaet.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Was gerade leichtf&auml;llt</span></a></div>
+<div class="foot">Woche &amp; Monat &middot; Die meisten Tage sind gew&ouml;hnliche Tage. Der Nutzen liegt in den wenigen, an denen etwas zusammenkommt.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+/* Treffer des Transitmondes auf Radixpunkte an einem Tag */
+function tagTreffer(P,jd){
+  var out=[];
+  var m=lon('Mond',jd);
+  ['Sonne','Mond','ASC','MC','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
+    if(P[k]===undefined) return;
+    var s=Math.abs(nrm(m-P[k]+180)-180);
+    [[0,'trifft','hart'],[90,'reibt an','hart'],[180,'steht gegenüber','hart'],[120,'stützt','weich'],[60,'reicht die Hand an','weich']].forEach(function(A){
+      var o=Math.abs(s-A[0]);
+      if(o<=5) out.push({t:'Mond',r:k,typ:A[1],art:A[2],o:o});
+    });
+  });
+  out.sort(function(a,b){return a.o-b.o;});
+  return out.slice(0,2);
+}
+
+var TON={
+ 'Sonne':['Selbstgefühl','Heute geht es um dich — wie du dastehst und ob das stimmt.'],
+ 'Mond':['Stimmung','Der Mond kommt auf seinen Geburtsort zurück. Gefühle sind heute deutlicher als sonst, auch alte.'],
+ 'ASC':['Auftreten','Wie du wirkst, steht heute im Vordergrund. Gute Tage für Begegnungen, anstrengende fürs Unsichtbarbleiben.'],
+ 'MC':['Rolle','Dein Beruf oder deine Außenwirkung meldet sich.'],
+ 'Merkur':['Denken','Gespräche, Entscheidungen, Papierkram — heute läuft viel über den Kopf.'],
+ 'Venus':['Zuwendung','Beziehung, Genuss, Geschmack. Ein Tag für Nähe oder für etwas Schönes.'],
+ 'Mars':['Antrieb','Energie und Reibung. Gut für Anpacken, heikel für Geduld.'],
+ 'Jupiter':['Weite','Etwas öffnet sich oder fühlt sich großzügiger an als sonst.'],
+ 'Saturn':['Ernst','Ein Tag mit mehr Gewicht. Pflichten melden sich, Leichtigkeit fehlt.'],
+ 'Uranus':['Unruhe','Etwas kommt dazwischen oder reißt ab. Plan Lücken ein.'],
+ 'Neptun':['Nebel','Unscharf. Entscheidungen fallen heute schwerer, als sie aussehen.'],
+ 'Pluto':['Tiefe','Etwas geht unter die Oberfläche. Nicht unbedingt angenehm, oft nützlich.']
+};
+
+function tagText(P,jd){
+  var m=lon('Mond',jd), s=lon('Sonne',jd);
+  var zi=Math.floor(m/30), hm=haus(P,m);
+  var ph=nrm(m-s);
+  var tr=tagTreffer(P,jd);
+  var phV=nrm(lon('Mond',jd-1)-lon('Sonne',jd-1));
+  var neu=(phV>330&&ph<30), voll=(phV<180&&ph>=180);
+  var zunehmend=(ph<180);
+  return {zi:zi, haus:hm, ph:ph, voll:voll, neu:neu, zunehmend:zunehmend, tr:tr, m:m};
+}
+
+/* Dos und Don'ts für einen Tag */
+function dosDonts(P,jd,T){
+  var go=[], no=[];
+  var rlM=rueck('Merkur',jd), rlV=rueck('Venus',jd), rlMa=rueck('Mars',jd);
+  var EL=['Feuer','Erde','Luft','Wasser'][T.zi%4];
+  if(EL==='Feuer'){ go.push('Anfangen, ansprechen, sichtbar werden'); no.push('Geduldsarbeit und Feinabstimmung'); }
+  if(EL==='Erde'){ go.push('Handfestes erledigen, aufräumen, kochen'); no.push('Spontane Richtungswechsel'); }
+  if(EL==='Luft'){ go.push('Reden, schreiben, sortieren, Kontakte'); no.push('Tiefe Gespräche, die Ruhe bräuchten'); }
+  if(EL==='Wasser'){ go.push('Nähe, Rückzug, Kreatives, Zuhören'); no.push('Nüchterne Zahlenarbeit'); }
+  if(T.voll){ go.push('Abschließen und Sichtbarmachen'); no.push('Neues anfangen — es ist Erntezeit, nicht Saatzeit'); }
+  if(T.neu){ go.push('Etwas Neues ansetzen, auch klein'); no.push('Große Auftritte — die Energie ist noch nach innen'); }
+  if(!T.zunehmend&&!T.voll&&!T.neu) go.push('Loslassen, wegräumen, beenden');
+  if(rlM) no.push('Verträge endgültig unterschreiben, ohne zweimal zu lesen');
+  if(rlV) no.push('Dauerhafte Entscheidungen über Aussehen oder große Anschaffungen');
+  if(rlMa) no.push('Mit Schwung starten — Mars rückläufig, es verpufft leichter');
+  if(T.tr.length){
+    var x=T.tr[0];
+    if(x.art==='hart'&&(x.r==='Saturn'||x.r==='Pluto'||x.r==='Mars')) no.push('Schwierige Gespräche, wenn sie sich verschieben lassen');
+    if(x.art==='weich'&&(x.r==='Venus'||x.r==='Jupiter')) go.push('Um etwas bitten — heute wird eher zugestimmt');
+  }
+  if(!go.length) go.push('Ganz normal weitermachen');
+  if(!no.length) no.push('Nichts Besonderes — ein unauffälliger Tag');
+  return {go:go.slice(0,3), no:no.slice(0,3)};
+}
+
+/* ── Woche ── */
+function woche(P){
+  var J0=heuteJD(), h='';
+  h+='<h2>Die nächsten sieben Tage</h2><p class="sub">Tipp auf einen Tag für die Einzelheiten.</p>';
+  h+='<div class="vs-tage">';
+  for(var i=0;i<7;i++){
+    var jd=J0+i, d=datVon(jd), T=tagText(P,jd);
+    var pk='';
+    if(T.voll) pk+='<i style="background:#E8C97A"></i>';
+    if(T.neu) pk+='<i style="background:#2E3A5C"></i>';
+    T.tr.forEach(function(x){ pk+='<i style="background:'+(x.art==='hart'?'#C2413A':'#6FA86A')+'"></i>'; });
+    h+='<div class="vt'+(i===0?' heute':'')+'" data-i="'+i+'" role="button" tabindex="0"'+
+      (tagOffset===i?' aria-pressed="true"':'')+'>'+
+      '<div class="wd">'+WD[d.getUTCDay()]+'</div>'+
+      '<div class="dt">'+d.getUTCDate()+'</div>'+
+      '<div class="mo" style="color:'+ELF[T.zi%4]+'">'+GLZ[T.zi]+'</div>'+
+      '<div class="zn">'+(T.voll?'Vollmond':(T.neu?'Neumond':SIGNS[T.zi]))+'</div>'+
+      '<div class="pkt">'+pk+'</div></div>';
+  }
+  h+='</div>';
+
+  /* Detailkarte */
+  var jd=J0+tagOffset, d=datVon(jd), T=tagText(P,jd);
+  var dd=dosDonts(P,jd,T);
+  var titel = T.voll?'Vollmond in '+SIGNS[T.zi] : (T.neu?'Neumond in '+SIGNS[T.zi] : 'Mond in '+SIGNS[T.zi]);
+  var wann=['Heute','Morgen','Übermorgen'][tagOffset]||('in '+tagOffset+' Tagen');
+  h+='<div class="vs-tag"><div class="k">'+wann+
+    ' · '+WD[d.getUTCDay()]+', '+d.getUTCDate()+'. '+MN[d.getUTCMonth()]+'</div>'+
+    '<div class="gr">'+titel+'</div>'+
+    '<p>Der Mond läuft durch dein <b>'+T.haus+'. Haus</b> — '+HT[T.haus-1]+'. '+
+    'Dort bleibt heute mehr Aufmerksamkeit hängen als sonst.</p>';
+  if(T.tr.length){
+    var x=T.tr[0], t=TON[x.r]||['',''];
+    h+='<p><b>'+t[0]+':</b> Der Mond '+x.typ+' deinen '+(x.r==='ASC'?'Aszendenten':(x.r==='MC'?'MC':x.r))+
+      ' ('+x.o.toFixed(1)+'°). '+t[1]+'</p>';
+  } else {
+    h+='<p>Kein enger Kontakt zu deinen Hauptpunkten. Ein ruhiger Tag — die gibt es auch.</p>';
+  }
+  h+='<div class="vs-dd">'+
+    '<div class="vs-d go"><b>Dafür gut</b>'+dd.go.join('<br>')+'</div>'+
+    '<div class="vs-d no"><b>Lieber nicht</b>'+dd.no.join('<br>')+'</div>'+
+    '</div></div>';
+  return h;
+}
+
+/* ── Monat ── */
+function monat(P){
+  var n=new Date(), J0=heuteJD();
+  var jahr=n.getUTCFullYear(), mon=n.getUTCMonth();
+  var tage=new Date(Date.UTC(jahr,mon+1,0)).getUTCDate();
+  var jdA=jdFromUT(jahr,mon+1,1,12);
+  var hl=[];
+
+  /* Lunationen */
+  for(var i=0;i<tage;i++){
+    var jd=jdA+i;
+    var p1=nrm(lon('Mond',jd)-lon('Sonne',jd));
+    var p0=nrm(lon('Mond',jd-1)-lon('Sonne',jd-1));
+    if(p0>330&&p1<30) hl.push({jd:jd,stark:true,t:'Neumond in '+SIGNS[Math.floor(lon('Sonne',jd)/30)],
+      p:'In deinem '+haus(P,lon('Mond',jd))+'. Haus ('+HT[haus(P,lon('Mond',jd))-1]+'). '+
+      'Gute Gelegenheit, dort etwas anzusetzen — ohne Druck, es ist nur ein günstiger Moment.'});
+    if(p0<180&&p1>=180) hl.push({jd:jd,stark:true,t:'Vollmond in '+SIGNS[Math.floor(lon('Mond',jd)/30)],
+      p:'In deinem '+haus(P,lon('Mond',jd))+'. Haus ('+HT[haus(P,lon('Mond',jd))-1]+'). '+
+      'Da wird oft etwas sichtbar oder kommt zum Abschluss. Wenn in diesen Tagen etwas hochkommt, ist das kein Zufall.'});
+  }
+  /* Zeichenwechsel schneller Planeten */
+  ['Merkur','Venus','Mars','Sonne'].forEach(function(k){
+    for(var i=1;i<tage;i++){
+      var a=Math.floor(lon(k,jdA+i-1)/30), b=Math.floor(lon(k,jdA+i)/30);
+      if(a!==b){
+        var stabil=true;
+        for(var t=1;t<4&&i+t<tage;t++) if(Math.floor(lon(k,jdA+i+t)/30)!==b) stabil=false;
+        if(stabil) hl.push({jd:jdA+i,stark:(k==='Sonne'),t:k+' wechselt nach '+SIGNS[b],
+          p:(k==='Sonne'?'Der Monatsschwerpunkt verschiebt sich':'Der '+k+'-Ton wechselt')+
+            ' in dein '+haus(P,lon(k,jdA+i))+'. Haus — '+HT[haus(P,lon(k,jdA+i))-1]+'.'});
+      }
+    }
+  });
+  /* Rückläufigkeitswechsel */
+  ['Merkur','Venus','Mars','Jupiter','Saturn'].forEach(function(k){
+    for(var i=1;i<tage;i++){
+      var a=rueck(k,jdA+i-1), b=rueck(k,jdA+i);
+      if(a!==b) hl.push({jd:jdA+i,stark:true,t:k+(b?' wird rückläufig':' wird wieder direkt'),
+        p:b?'Ab jetzt wird in diesem Bereich überarbeitet statt neu gestartet.'
+            :'Die Überarbeitungsphase endet — was liegengeblieben ist, kommt jetzt in Bewegung.'});
+    }
+  });
+
+  hl.sort(function(a,b){return a.jd-b.jd;});
+
+  var h='<h2>Höhepunkte im '+MN[mon]+'</h2>'+
+    '<p class="sub">Die Tage, an denen tatsächlich etwas zusammenkommt. Alles andere ist ruhiger Hintergrund.</p>';
+
+  /* Monatsbogen */
+  var W=620,Hh=92;
+  var g='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Monatsübersicht">';
+  for(var i=0;i<tage;i++){
+    var x=22+(i/(tage-1))*(W-44);
+    var jd=jdA+i;
+    var ph=nrm(lon('Mond',jd)-lon('Sonne',jd));
+    var f=(1-Math.cos(ph*Math.PI/180))/2;
+    g+='<circle cx="'+x.toFixed(1)+'" cy="44" r="'+(2.5+f*3).toFixed(1)+'" fill="#C9BCA8" opacity="'+(0.35+f*0.5).toFixed(2)+'"/>';
+    if(jd===J0) g+='<rect x="'+(x-1).toFixed(1)+'" y="18" width="2" height="52" fill="#2E3A5C"/>';
+  }
+  hl.filter(function(x){return x.stark;}).forEach(function(x){
+    var i=Math.round(x.jd-jdA);
+    var xx=22+(i/(tage-1))*(W-44);
+    g+='<circle cx="'+xx.toFixed(1)+'" cy="44" r="6" fill="none" stroke="#9A7235" stroke-width="1.6"/>';
+    g+='<text x="'+xx.toFixed(1)+'" y="70" text-anchor="middle" font-size="9.5" font-family="JetBrains Mono,monospace" fill="#9A7235">'+(i+1)+'</text>';
+  });
+  g+='<text x="22" y="86" font-size="9.5" font-family="JetBrains Mono,monospace" fill="#B5A996">1.</text>';
+  g+='<text x="'+(W-22)+'" y="86" text-anchor="end" font-size="9.5" font-family="JetBrains Mono,monospace" fill="#B5A996">'+tage+'.</text>';
+  g+='</svg>';
+  h+='<div class="vs-bogen">'+g+'<p style="text-align:center;font-size:13.3px;color:var(--leise);margin:6px 0 0;">'+
+    'Die Punkte zeigen den Mondlauf — klein bei Neumond, groß bei Vollmond. Der dunkle Strich ist heute.</p></div>';
+
+  h+='<div class="vs-hl">';
+  if(!hl.length) h+='<div class="vs-leer">Ein ruhiger Monat ohne markante Termine. '+
+    'Solche Monate eignen sich für das, was in bewegten Zeiten liegen bleibt.</div>';
+  hl.forEach(function(x){
+    var d=datVon(x.jd);
+    h+='<div class="hl'+(x.stark?' stark':'')+'"><div class="dt">'+d.getUTCDate()+'. '+MK[d.getUTCMonth()]+'<br>'+
+      '<span style="color:var(--leise)">'+WD[d.getUTCDay()]+'</span></div>'+
+      '<div><b>'+x.t+'</b><p>'+x.p+'</p></div></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+function zeichnen(p){
+  var P=chartVon(p);
+  return woche(P)+monat(P);
+}
+
+function binden(){
+  [].slice.call(document.querySelectorAll('.vt')).forEach(function(el){
+    el.addEventListener('click',function(){ tagOffset=+el.getAttribute('data-i'); zeigen(); });
+  });
+}
+function wahlZeichnen(){
+  var box=document.getElementById('vswahl'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  box.innerHTML=''; if(alle.length<2) return;
+  var l=document.createElement('span'); l.className='lab'; l.textContent='Profil'; box.appendChild(l);
+  alle.forEach(function(p){
+    var b=document.createElement('button'); b.type='button';
+    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
+    b.setAttribute('aria-pressed', gewaehlt===p.id);
+    b.addEventListener('click',function(){ gewaehlt=p.id; tagOffset=0; wahlZeichnen(); zeigen(); });
+    box.appendChild(b);
+  });
+}
+function zeigen(){
+  var box=document.getElementById('vsinhalt'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  if(!alle.length){
+    box.innerHTML='<div class="vs-leer"><b>Noch kein Chart angelegt.</b><br><br>'+
+      'Leg unter <a href="profile.html">Profile</a> deine Geburtsdaten an — dann wird die Vorschau persönlich.</div>'; return;
+  }
+  if(!gewaehlt){ gewaehlt=(alle.filter(function(p){return p.eigen;})[0]||alle[0]).id; wahlZeichnen(); }
+  var p=alle.filter(function(x){return x.id===gewaehlt;})[0];
+  if(p){ box.innerHTML=zeichnen(p); binden(); }
+}
+wahlZeichnen(); zeigen();
+
+</script>
+</body></html>

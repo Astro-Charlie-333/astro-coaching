@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dein Chart siderisch · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.sd-wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.sd-wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.sd-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.sd-wahl .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+.sd-tab{width:100%;border-collapse:collapse;font-size:14.8px;margin:14px 0;}
+.sd-tab th,.sd-tab td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--linie);vertical-align:middle;}
+.sd-tab th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--messing);font-weight:400;}
+.sd-tab td:first-child{font-size:19px;color:var(--nacht);width:34px;}
+.sd-tab tr:last-child td{border-bottom:none;}
+.sd-tab tr.wechsel{background:var(--messing-bg);}
+.sd-nm{font-family:var(--serif);font-size:16px;color:var(--tinte);}
+.sd-pos{font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+.sd-pos.trop{color:var(--nacht);} .sd-pos.sid{color:#7A5B8A;}
+.sd-pfeil{color:var(--messing);font-size:13px;}
+.sd-gleich{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--leise);}
+.sd-bilanz{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:11px;margin:18px 0;}
+.sd-b{background:var(--papier);border:1px solid var(--linie);border-radius:17px;padding:17px 19px;text-align:center;}
+.sd-b .z{font-family:var(--serif);font-size:32px;color:var(--nacht);line-height:1;}
+.sd-b .t{font-size:13.6px;color:var(--leise);line-height:1.5;margin-top:8px;}
+.sd-zwei{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0;}
+@media(max-width:640px){.sd-zwei{grid-template-columns:1fr;}}
+.sd-k{border-radius:20px;padding:20px 22px;}
+.sd-k.trop{background:var(--nacht-bg);border:1px solid #D3D9E6;}
+.sd-k.sid{background:#F1EBF3;border:1px solid #D8C9DE;}
+.sd-k .w{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;margin-bottom:7px;}
+.sd-k.trop .w{color:var(--nacht);} .sd-k.sid .w{color:#7A5B8A;}
+.sd-k .gr{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--tinte);line-height:1.15;margin-bottom:9px;}
+.sd-k p{margin:0 0 9px;font-size:14.8px;line-height:1.63;}
+.sd-k p:last-child{margin-bottom:0;}
+.sd-drift{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;margin-bottom:14px;}
+.sd-drift svg{display:block;width:100%;height:auto;max-width:560px;margin:10px auto 0;}
+.sd-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:30px;
+ text-align:center;color:var(--leise);line-height:1.65;}
+
+/* Tabellen passen am Handy nicht in die Breite — dann seitlich schiebbar
+   machen, statt die ganze Seite waagerecht scrollen zu lassen. */
+@media(max-width:560px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Zwei Messarten</div>
+<h1>Dein Chart <em>siderisch.</em></h1>
+<p class="lede">Dieselben Planeten, zwei Nullpunkte. Die westliche Astrologie misst an den Jahreszeiten, die vedische am tatsächlichen Sternhimmel. Dazwischen liegen derzeit rund 24 Grad — fast ein ganzes Zeichen. Hier steht beides nebeneinander.</p>
+
+<div class="tip"><b>Warum das kein Fehler ist:</b> Vor etwa 1700 Jahren lagen beide Systeme gleichauf. Seither verschiebt sich der Frühlingspunkt langsam gegen den Sternhintergrund — ein Grad in etwa 72 Jahren. Das ist Astronomie, kein Streit. <b>Die Frage ist nur, woran man misst.</b> Tropisch an der Beziehung zwischen Erde und Sonne, siderisch an den Sternbildern. Beide Systeme haben jahrhundertelange Praxis hinter sich und widersprechen sich permanent — das ist eine der ehrlichsten Stellen der ganzen Astrologie.</div>
+
+<div class="sd-wahl" id="sdwahl"></div>
+<div id="sdinhalt"></div>
+
+<div class="weiter"><a href="bausteine.html"><span class="lbl">&larr; Davor</span><span class="ttl">Die Bausteine</span></a><a href="bazi.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Vier S&auml;ulen &amp; andere Systeme</span></a></div>
+<div class="foot">Siderisch &middot; Ayanamsa nach Lahiri. Zwei Messarten, zwei Ergebnisse &mdash; das ist eine der ehrlichsten Stellen der Astrologie.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC'};
+var ORD=['Sonne','Mond','ASC','MC','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*60),dd=Math.floor(d);
+ if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+' '+('0'+m).slice(-2)+"'";}
+function ayan(T){ return 23.85300+1.396042*T+0.0003086*T*T; }
+var gewaehlt=null;
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {T:T,Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+
+var SID_D=['die Kraft des Anfangs, aber ohne das Drängen','Beständigkeit und Sinnlichkeit als Grundton',
+ 'Vielseitigkeit und ein wacher, sammelnder Geist','Schutz, Erinnerung und ein starkes Innenleben',
+ 'Würde und der Wunsch, etwas Eigenes zu schaffen','Genauigkeit, Dienst und ein prüfender Blick',
+ 'Ausgleich, Ästhetik und das Gegenüber','Tiefe, Verwandlung und wenig Geduld für Oberfläche',
+ 'Sinnsuche, Weite und eine lehrende Ader','Aufbau, Verantwortung und langer Atem',
+ 'Eigensinn, Abstand und der Blick aufs Ganze','Hingabe, Durchlässigkeit und Grenzenlosigkeit'];
+
+function zeichnen(p){
+  var P=chartVon(p), nm=AC_P.anzeige(p,AC_P.zeigeNamen());
+  var ay=ayan(P.T);
+  var h='';
+
+  /* Kernvergleich Sonne */
+  var tS=Math.floor(P.Sonne/30), sS=Math.floor(nrm(P.Sonne-ay)/30);
+  var tA=Math.floor(P.ASC/30), sA=Math.floor(nrm(P.ASC-ay)/30);
+  var tM=Math.floor(P.Mond/30), sM=Math.floor(nrm(P.Mond-ay)/30);
+
+  h+='<div class="sd-zwei">'+
+   '<div class="sd-k trop"><div class="w">Tropisch · westlich</div>'+
+    '<div class="gr">'+GLZ[tS]+' '+SIGNS[tS]+'</div>'+
+    '<p>Mond in <b>'+SIGNS[tM]+'</b>, Aszendent in <b>'+SIGNS[tA]+'</b>.</p>'+
+    '<p style="font-size:14px;color:var(--leise);">Gemessen am Frühlingspunkt — also an der Beziehung zwischen Erde und Sonne. '+
+    'Das ist die Grundlage aller anderen Seiten hier.</p></div>'+
+   '<div class="sd-k sid"><div class="w">Siderisch · vedisch (Lahiri)</div>'+
+    '<div class="gr">'+GLZ[sS]+' '+SIGNS[sS]+'</div>'+
+    '<p>Mond in <b>'+SIGNS[sM]+'</b>, Aszendent in <b>'+SIGNS[sA]+'</b>.</p>'+
+    '<p style="font-size:14px;color:var(--leise);">Gemessen am Sternhintergrund. Die Differenz beträgt bei deinem '+
+    'Geburtsdatum <b>'+ay.toFixed(2)+'°</b>.</p></div></div>';
+
+  /* Tabelle */
+  var wechsel=0;
+  var zeilen='';
+  ORD.forEach(function(k){
+    if(P[k]===undefined) return;
+    var t=P[k], s=nrm(t-ay);
+    var zt=Math.floor(t/30), zs=Math.floor(s/30);
+    var w=(zt!==zs);
+    if(w) wechsel++;
+    zeilen+='<tr'+(w?' class="wechsel"':'')+'><td>'+PGL[k]+'</td>'+
+      '<td class="sd-nm">'+k+'</td>'+
+      '<td class="sd-pos trop">'+fmt(t)+'</td>'+
+      '<td class="sd-pfeil">'+(w?'→':'=')+'</td>'+
+      '<td class="sd-pos sid">'+fmt(s)+'</td>'+
+      '<td class="sd-gleich">'+(w?'wechselt':'bleibt')+'</td></tr>';
+  });
+  h+='<h2>Punkt für Punkt</h2>'+
+    '<p class="sub">Links tropisch, rechts siderisch. Hervorgehoben sind die Punkte, die ins vorherige Zeichen rutschen.</p>'+
+    '<table class="sd-tab"><tr><th></th><th>Punkt</th><th>Tropisch</th><th></th><th>Siderisch</th><th></th></tr>'+
+    zeilen+'</table>';
+
+  var gesamt=ORD.filter(function(k){return P[k]!==undefined;}).length;
+  h+='<div class="sd-bilanz">'+
+    '<div class="sd-b"><div class="z">'+wechsel+'</div><div class="t">von '+gesamt+' Punkten wechseln das Zeichen</div></div>'+
+    '<div class="sd-b"><div class="z">'+(gesamt-wechsel)+'</div><div class="t">bleiben, wo sie sind</div></div>'+
+    '<div class="sd-b"><div class="z">'+ay.toFixed(1)+'°</div><div class="t">Differenz zu deinem Geburtszeitpunkt</div></div>'+
+    '</div>';
+
+  /* Deutung */
+  h+='<div class="sd-drift"><h3 style="font-family:var(--serif);font-size:20px;font-weight:400;color:var(--nacht);margin:0 0 8px;">'+
+    'Was das praktisch heißt</h3>';
+  if(tS!==sS){
+    h+='<p style="margin:0 0 11px;font-size:15.3px;line-height:1.68;">Deine Sonne steht tropisch in <b>'+SIGNS[tS]+'</b> '+
+      'und siderisch in <b>'+SIGNS[sS]+'</b>. In einem vedischen Reading wärst du also '+SIGNS[sS]+'.</p>'+
+      '<p style="margin:0 0 11px;font-size:15.3px;line-height:1.68;">Vedisch gelesen käme als Grundton dazu: '+SID_D[sS]+'. '+
+      'Das ist nicht „die Wahrheit hinter" deinem westlichen Zeichen — es ist eine andere Messung, die andere Bilder erzeugt.</p>';
+  } else {
+    h+='<p style="margin:0 0 11px;font-size:15.3px;line-height:1.68;">Deine Sonne bleibt in beiden Systemen in <b>'+SIGNS[tS]+'</b>. '+
+      'Das heißt, sie steht tropisch weit genug im Zeichen, dass die 24 Grad sie nicht herausschieben.</p>';
+  }
+  if(tA!==sA) h+='<p style="margin:0 0 11px;font-size:15.3px;line-height:1.68;">Auch dein <b>Aszendent</b> wechselt — '+
+    'von '+SIGNS[tA]+' nach '+SIGNS[sA]+'. Im vedischen System ist der Aszendent noch wichtiger als bei uns, '+
+    'weil die gesamte Häuserdeutung daran hängt.</p>';
+  h+='<p style="margin:0;font-size:15.3px;line-height:1.68;"><b>Die ehrliche Antwort auf die Frage, welches stimmt:</b> '+
+    'Beide Systeme behaupten, Charaktere und Lebensläufe zu beschreiben, und kommen bei derselben Person zu '+
+    'verschiedenen Ergebnissen. Mindestens eines muss also falsch liegen — wahrscheinlich beschreiben beide eher, '+
+    'wie gut ein Bild auf einen Menschen passt, als was objektiv der Fall ist. Wer in beiden Systemen etwas wiedererkennt, '+
+    'sollte sich das merken: Es sagt mehr über die Deutungsbilder aus als über den Himmel.</p></div>';
+
+  /* Drift-Grafik */
+  var jahre=[-500,0,500,1000,1500,2000,2500];
+  var pts=jahre.map(function(y){
+    var T=(y-2000)/100;
+    return {y:y, a:ayan(T)};
+  });
+  var W=560,Hh=200,L=48,R=W-16,Tp=18,Bt=Hh-30;
+  var minA=-10, maxA=40;
+  function px(y){ return L+(y+500)/3000*(R-L); }
+  function py(a){ return Bt-(a-minA)/(maxA-minA)*(Bt-Tp); }
+  var pfad=pts.map(function(p,i){ return (i?'L':'M')+px(p.y).toFixed(1)+','+py(p.a).toFixed(1); }).join(' ');
+  var g='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Drift der beiden Systeme">';
+  g+='<line x1="'+L+'" y1="'+py(0).toFixed(1)+'" x2="'+R+'" y2="'+py(0).toFixed(1)+'" stroke="#D9CDBC" stroke-dasharray="3 3"/>';
+  g+='<text x="'+(L-6)+'" y="'+(py(0)+4).toFixed(1)+'" text-anchor="end" font-size="10" fill="#9AA79B">0°</text>';
+  g+='<text x="'+(L-6)+'" y="'+(py(30)+4).toFixed(1)+'" text-anchor="end" font-size="10" fill="#9AA79B">30°</text>';
+  g+='<line x1="'+L+'" y1="'+py(30).toFixed(1)+'" x2="'+R+'" y2="'+py(30).toFixed(1)+'" stroke="#E8E0D4"/>';
+  g+='<path d="'+pfad+'" fill="none" stroke="#7A5B8A" stroke-width="2"/>';
+  /* Nullpunkt der Systeme */
+  var jahr0=-500+ (0-pts[0].a)/(pts[6].a-pts[0].a)*3000;
+  g+='<circle cx="'+px(285).toFixed(1)+'" cy="'+py(ayan((285-2000)/100)).toFixed(1)+'" r="4" fill="#9A7235"/>';
+  g+='<text x="'+px(285).toFixed(1)+'" y="'+(py(ayan((285-2000)/100))-10).toFixed(1)+'" text-anchor="middle" font-size="10" fill="#9A7235">gleichauf</text>';
+  var jg=p.y;
+  g+='<circle cx="'+px(jg).toFixed(1)+'" cy="'+py(ay).toFixed(1)+'" r="5" fill="#2E3A5C"/>';
+  g+='<text x="'+px(jg).toFixed(1)+'" y="'+(py(ay)-11).toFixed(1)+'" text-anchor="middle" font-size="10.5" fill="#2E3A5C">du: '+ay.toFixed(1)+'°</text>';
+  [[-500,'500 v.'],[0,'Jahr 0'],[1000,'1000'],[2000,'2000'],[2500,'2500']].forEach(function(x){
+    g+='<text x="'+px(x[0]).toFixed(1)+'" y="'+(Hh-10)+'" text-anchor="middle" font-size="10" fill="#9AA79B">'+x[1]+'</text>';
+  });
+  g+='</svg>';
+  h+='<div class="sd-drift"><h3 style="font-family:var(--serif);font-size:20px;font-weight:400;color:var(--nacht);margin:0 0 4px;">'+
+    'Wie die beiden auseinanderlaufen</h3>'+
+    '<p style="font-size:14.3px;color:var(--leise);margin:0;">Um etwa 285 n. Chr. lagen beide Systeme gleichauf. '+
+    'Seither wächst die Differenz um ein Grad in rund 72 Jahren — in etwa 2000 Jahren beträgt sie ein ganzes Zeichen.</p>'+
+    g+'</div>';
+
+  return h;
+}
+
+function wahlZeichnen(){
+  var box=document.getElementById('sdwahl'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  box.innerHTML=''; if(!alle.length) return;
+  var l=document.createElement('span'); l.className='lab'; l.textContent='Profil'; box.appendChild(l);
+  alle.forEach(function(p){
+    var b=document.createElement('button'); b.type='button';
+    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
+    b.setAttribute('aria-pressed', gewaehlt===p.id);
+    b.addEventListener('click',function(){ gewaehlt=p.id; wahlZeichnen(); zeigen(); });
+    box.appendChild(b);
+  });
+}
+function zeigen(){
+  var box=document.getElementById('sdinhalt'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  if(!alle.length){
+    box.innerHTML='<div class="sd-leer"><b>Noch kein Chart angelegt.</b><br><br>'+
+      'Leg unter <a href="profile.html">Profile</a> deine Geburtsdaten an, dann steht hier der Vergleich.</div>'; return;
+  }
+  if(!gewaehlt){ gewaehlt=(alle.filter(function(p){return p.eigen;})[0]||alle[0]).id; wahlZeichnen(); }
+  var p=alle.filter(function(x){return x.id===gewaehlt;})[0];
+  if(p) box.innerHTML=zeichnen(p);
+}
+wahlZeichnen(); zeigen();
+
+</script>
+</body></html>

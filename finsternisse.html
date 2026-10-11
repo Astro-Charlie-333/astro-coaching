@@ -43,6 +43,10 @@ li{margin-bottom:6px;}
 .pill.water{background:#E6E1F0;color:var(--water);}
 a{color:var(--ind);}
 table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
+/* Auf dem Handy passt die Tabelle nicht in die Breite — dann lieber seitlich
+   schiebbar machen, als die ganze Seite waagerecht scrollen zu lassen. */
+@media(max-width:560px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+ table td,table th{white-space:nowrap;}}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
 th{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
 td.mono{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
@@ -143,6 +147,12 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -221,7 +231,7 @@ a{color:var(--nacht);}
 <div id="quiz"></div>
 
 
-<div class="weiter"><a href="lunationen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Neumonde, Vollmonde & Finsternisse</span></a><a href="astrokartographie.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Astrokartographie</span></a></div>
+<div class="weiter"><a href="lunationen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Neumonde, Vollmonde & Finsternisse</span></a><a href="astrokartographie.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Astrokartographie</span></a><a href="rituale.html" class="end"><span class="lbl">Praxis &rarr;</span><span class="ttl">Rituale — und was sie wirklich tun</span></a></div>
 <div class="foot">Finsternisse &middot; Daten mit Swiss Ephemeris gerechnet, Zeitangaben nach mitteleuropäischer Zeit. Finsternisse markieren Wendepunkte, keine Katastrophen.</div>
 </div>
 <script>

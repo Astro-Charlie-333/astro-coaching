@@ -216,6 +216,16 @@ a{color:var(--nacht);}
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Tabellen passen am Handy nicht in die Breite — dann seitlich schiebbar
+   machen, statt die ganze Seite waagerecht scrollen zu lassen. */
+@media(max-width:560px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="begriffe.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -287,7 +297,7 @@ a{color:var(--nacht);}
 <div class="tip"><b>Für den Alltag:</b> Du musst nicht jeden Neumond nutzen. Zwei Fragen reichen: Was will bei mir gerade anfangen? Und was ist inzwischen daraus geworden? Mehr dazu unter <a href="mondphasen-rhythmus.html">Die Mondphasen als Rhythmus</a>.</div>
 
 
-<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a></div>
+<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a><a href="rituale.html" class="end"><span class="lbl">Praxis &rarr;</span><span class="ttl">Rituale — und was sie wirklich tun</span></a></div>
 <div class="foot">Neumonde, Vollmonde und Finsternisse &middot; 576 Kombinationen, Kalender mit Swiss Ephemeris gerechnet, Whole Sign. Lunationen beschreiben Zeitqualität, keine Ereignisse — und nur ein Gradtreffer macht sie persönlich.</div>
 </div>
 <script>

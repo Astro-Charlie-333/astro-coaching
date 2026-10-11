@@ -250,6 +250,16 @@ tr.detail td{background:var(--papier);border-bottom:2px solid var(--linie);paddi
  .ac-nav a::after{left:9px;right:9px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+/* Tabellen passen am Handy nicht in die Breite — dann seitlich schiebbar
+   machen, statt die ganze Seite waagerecht scrollen zu lassen. */
+@media(max-width:560px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style><script src="staedte.js"></script>
 <script src="profil.js"></script>
 <script src="begriffe.js" defer></script>
@@ -363,7 +373,7 @@ tr.detail td{background:var(--papier);border-bottom:2px solid var(--linie);paddi
   <div class="tunbox" id="tun"></div>
 </div>
 
-<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a></div>
+<div class="weiter"><a href="mondphasen-rhythmus.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Mondphasen als Rhythmus</span></a><a href="finsternisse.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Finsternisse lesen</span></a><a href="rituale.html" class="end"><span class="lbl">Praxis &rarr;</span><span class="ttl">Rituale — und was sie wirklich tun</span></a></div>
 <div class="foot">Lunationen &middot; Finsternisdaten mit Swiss Ephemeris gerechnet, Grade auf die Bogenminute. Häuser in Whole Sign. Eine Lunation beschreibt eine Art von Bewegung, niemals ein Ereignis.</div>
 </div>
 <script>

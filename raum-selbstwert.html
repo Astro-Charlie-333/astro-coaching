@@ -193,6 +193,12 @@ body.fmt-visuell .fa-frage{display:none;}
 
 .fa-worum{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:14px;
  font-size:15.3px;line-height:1.62;color:var(--tinte);}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">

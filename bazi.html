@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vier Säulen &amp; andere Systeme · Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="bazi.js"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+.bz-wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.bz-wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.bz-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.bz-wahl .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+.bz-tafel{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:18px 0;}
+@media(max-width:620px){.bz-tafel{grid-template-columns:repeat(2,1fr);}}
+.bz-s{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:16px 14px;text-align:center;}
+.bz-s.tag{border-color:var(--nacht);box-shadow:0 2px 14px rgba(46,58,92,.08);}
+.bz-s .wo{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:9px;}
+.bz-z{font-size:40px;line-height:1.08;font-family:'Noto Serif SC',var(--serif),serif;}
+.bz-z.oben{color:var(--nacht);} .bz-z.unten{color:var(--tinte);}
+.bz-lat{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--leise);margin-top:2px;}
+.bz-el{font-size:12px;color:var(--leise);margin-top:7px;line-height:1.4;}
+.bz-tier{font-family:var(--serif);font-size:14px;color:var(--messing);margin-top:5px;}
+.bz-bal{display:grid;grid-template-columns:72px 1fr 44px;gap:11px;align-items:center;margin-bottom:7px;font-size:14.5px;}
+.bz-bal .bar{height:13px;background:var(--linie);border-radius:7px;overflow:hidden;}
+.bz-bal .bar i{display:block;height:100%;border-radius:7px;}
+.bz-bal .pz{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);text-align:right;}
+.bz-deut{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;margin-bottom:13px;}
+.bz-deut h3{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--nacht);margin:0 0 8px;}
+.bz-deut p{margin:0 0 11px;font-size:15.3px;line-height:1.68;}
+.bz-deut p:last-child{margin-bottom:0;}
+.bz-gross{background:var(--nacht);color:#F4EFE6;border-radius:20px;padding:24px 26px;margin-bottom:14px;}
+.bz-gross .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:8px;}
+.bz-gross .gr{font-family:var(--serif);font-size:clamp(26px,5vw,36px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:8px;}
+.bz-gross p{margin:0;font-size:15.3px;line-height:1.68;color:rgba(244,239,230,.88);}
+.bz-sys{display:grid;gap:10px;margin:16px 0;}
+.sy{background:var(--papier);border:1px solid var(--linie);border-radius:17px;padding:17px 19px;}
+.sy b{display:block;font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin-bottom:5px;}
+.sy p{margin:0 0 8px;font-size:14.6px;line-height:1.62;}
+.sy p:last-child{margin-bottom:0;}
+.sy .urteil{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.07em;
+ border-radius:10px;padding:4px 10px;display:inline-block;margin-top:6px;}
+.sy .urteil.gut{background:#EDF3EC;color:#3F6B4A;}
+.sy .urteil.mittel{background:var(--messing-bg);color:#8A6A20;}
+.sy .urteil.vorsicht{background:#FBF0E8;color:#8A4326;}
+.bz-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:30px;
+ text-align:center;color:var(--leise);line-height:1.65;}
+.bz-hin{background:var(--messing-bg);border-radius:14px;padding:14px 17px;font-size:14.3px;
+ line-height:1.6;color:var(--leise);margin-top:12px;}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Weitere Systeme</div>
+<h1>Vier Säulen <em>und andere Linsen.</em></h1>
+<p class="lede">Die westliche Astrologie ist eine Art, sich zu beschreiben — nicht die einzige. Hier steht dein chinesisches BaZi-Chart, dein vedisches Mondhaus, und eine ehrliche Einordnung, was die anderen Systeme taugen.</p>
+
+<div class="tip"><b>Wichtig vorweg:</b> Diese Systeme lassen sich <b>nicht vermischen</b>. BaZi hat eine eigene Logik, eigene Elemente und eine eigene Zeitrechnung — ein Löwe-Aszendent hat damit nichts zu tun. Wer die Aussagen übereinanderlegt, bekommt Brei. Der Nutzen liegt woanders: <b>Wenn zwei unabhängige Systeme auf dasselbe zeigen, lohnt das Hinschauen.</b> Und wenn sie sich widersprechen, ist das auch eine Information — nämlich darüber, wie viel ein einzelnes System überhaupt sagen kann.</div>
+
+<div class="bz-wahl" id="bzwahl"></div>
+<div id="bzinhalt"></div>
+
+<h2>Was es sonst noch gibt</h2>
+<p class="sub">Kurz eingeordnet — was das System ist, was es kann, und wie belastbar es ist.</p>
+<div class="bz-sys">
+
+  <div class="sy"><b>Vedische Astrologie (Jyotish)</b>
+  <p>Dieselben Planeten, aber am <b>tatsächlichen Sternhimmel</b> gemessen statt an den Jahreszeiten. Der Unterschied beträgt derzeit etwa 24 Grad — fast ein ganzes Zeichen. Wer westlich Widder ist, ist vedisch meistens Fische.</p>
+  <p>Eigenständig, sehr alt, mit eigenem Handwerk: Nakshatras (27 Mondhäuser), Dashas (Zeitperioden) und einem anderen Häuserverständnis. <b>Dein Nakshatra steht oben mit dabei</b> — das ist der Teil, der sich am leichtesten übertragen lässt.</p>
+  <span class="urteil gut">eigenständig und tief</span></div>
+
+  <div class="sy"><b>BaZi — die vier Säulen</b>
+  <p>Chinesisch, auf dem Sonnenkalender aufgebaut, und mathematisch streng. Keine Planeten, keine Häuser — nur Zeit, übersetzt in zehn Stämme und zwölf Zweige, dazu fünf Elemente, die sich nähren oder kontrollieren.</p>
+  <p>Besonders brauchbar: <b>die Elementbilanz.</b> Was fehlt, was zu viel ist, was ausgleicht. Das ist konkreter als vieles im Westlichen und lässt sich gut mit jemandem besprechen.</p>
+  <span class="urteil gut">präzise gerechnet, eigene Logik</span></div>
+
+  <div class="sy"><b>Human Design</b>
+  <p>Entstanden 1987, mischt Astrologie, I Ging, Kabbala und Chakren zu einem neuen System. Rechnerisch basiert es auf Planetenständen zur Geburt und 88 Tage davor.</p>
+  <p>Ehrlich gesagt: Es ist <b>das jüngste und am wenigsten geprüfte</b> der hier genannten, und seine Entstehungsgeschichte ist ungewöhnlich — der Gründer berichtete von einer achttägigen Eingebung. Viele finden die Typologie trotzdem hilfreich. Wenn du damit arbeitest, nenn es ein Ordnungssystem, keine Überlieferung.</p>
+  <span class="urteil vorsicht">neu, umstritten, beliebt</span></div>
+
+  <div class="sy"><b>Enneagramm</b>
+  <p>Kein astrologisches System, sondern eine Typologie mit neun Mustern — und zwar eine, die mit <b>Motiven</b> arbeitet statt mit Verhalten. Genau das macht sie fürs Coaching nützlich: Zwei Menschen können dasselbe tun und völlig verschiedene Gründe haben.</p>
+  <p>Wissenschaftlich ist es nicht abgesichert, aber es wird breit in der Beratung eingesetzt und lässt sich gut mit Adlers Finalität verbinden — beide fragen nach dem Wozu.</p>
+  <span class="urteil mittel">praxisnah, nicht belegt</span></div>
+
+  <div class="sy"><b>Ayurveda-Konstitution (Dosha)</b>
+  <p>Aus derselben Kultur wie Jyotish und oft damit kombiniert: drei Grundtypen, die Körper und Temperament beschreiben. Praktisch vor allem für Alltagsfragen — Rhythmus, Essen, Belastbarkeit.</p>
+  <p><b>Grenze:</b> Es ist ein Medizinsystem. Was Ernährung und Behandlung betrifft, gehört es zu Fachleuten, nicht ins Coaching.</p>
+  <span class="urteil mittel">alltagsnah, medizinisch Grenze</span></div>
+
+  <div class="sy"><b>Maya-Kalender und Tzolkin</b>
+  <p>Ein 260-Tage-Zyklus mit zwanzig Zeichen und dreizehn Tönen. Die heute verbreitete Deutung stammt allerdings überwiegend aus dem 20. Jahrhundert und hat mit der historischen Maya-Praxis wenig zu tun.</p>
+  <p>Wenn du es nutzt: als Bild, nicht als Überlieferung.</p>
+  <span class="urteil vorsicht">modern überformt</span></div>
+
+</div>
+
+<div class="tip"><b>Und die Frage, die wirklich zählt:</b> Mehr Systeme heißt nicht mehr Wahrheit. Es heißt mehr Sprachen für dasselbe. Der Nutzen entsteht dort, wo eine Sprache etwas fassbar macht, was in der anderen vage blieb — <b>nicht dort, wo man vier Systeme nebeneinanderlegt und sich die passenden Stellen heraussucht</b>. Letzteres fühlt sich nach Tiefe an und ist das Gegenteil.</div>
+
+<div class="weiter"><a href="sekte.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Tag- und Nachtchart</span></a><a href="wissen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Zur Bibliothek</span></a></div>
+<div class="foot">Vier S&auml;ulen &middot; Die Rechnung ist gegen eine etablierte Bibliothek gepr&uuml;ft. Die Systeme bleiben getrennt &mdash; sie sprechen verschiedene Sprachen.</div>
+</div>
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var B=window.AC_BAZI;
+var EL_F={Holz:'#6B7C3F',Feuer:'#B5502E',Erde:'#9A7235',Metall:'#8A8D96',Wasser:'#3E6B8A'};
+var gewaehlt=null;
+
+var TAGESMEISTER={
+ 'Holz-Yang':['Der Baum','Du wächst geradeaus und nach oben. Verlässlich, prinzipientreu, manchmal unbeweglich. Du brauchst Raum und ein Ziel, auf das du zuwächst — ohne das wirst du unruhig.'],
+ 'Holz-Yin':['Die Ranke','Du wächst um Hindernisse herum statt dagegen. Anpassungsfähig, zäh, gesellig. Deine Stärke ist, dass du dich nicht brechen lässt — du gibst nach und bist trotzdem noch da.'],
+ 'Feuer-Yang':['Die Sonne','Du strahlst nach außen, ob du willst oder nicht. Großzügig, sichtbar, schwer zu übersehen. Dir fällt schwer, dich zurückzunehmen — und du merkst spät, wenn du andere überstrahlst.'],
+ 'Feuer-Yin':['Die Kerze','Du wärmst im Kleinen und Nahen. Aufmerksam, feinfühlig, mit innerer Glut. Deine Wirkung entsteht in der Nähe, nicht auf der Bühne — und du brauchst Schutz vor Zugluft.'],
+ 'Erde-Yang':['Der Berg','Du stehst, wo du stehst. Verlässlich, geduldig, schwer zu bewegen. Menschen lehnen sich an dich an. Die Kehrseite: Veränderung kostet dich mehr als andere.'],
+ 'Erde-Yin':['Das Feld','Du nährst und trägst. Fürsorglich, praktisch, ausgleichend. Du machst anderes möglich — und vergisst dabei regelmäßig, was du selbst brauchst.'],
+ 'Metall-Yang':['Die Klinge','Du schneidest durch und machst klar. Direkt, gerecht, kompromisslos. Du bringst Ordnung in Unklares — und wirkst dabei härter, als du bist.'],
+ 'Metall-Yin':['Der Schmuck','Du verfeinerst und veredelst. Genau, ästhetisch, mit Sinn fürs Detail. Du siehst, was nicht stimmt, bevor es jemand sagt — und leidest unter Pfusch mehr als andere.'],
+ 'Wasser-Yang':['Der Strom','Du bewegst dich in Masse und Richtung. Kraftvoll, mitreißend, schwer aufzuhalten. Du trägst viel mit dir — auch das, was du nicht brauchst.'],
+ 'Wasser-Yin':['Der Tau','Du dringst ein, wo nichts anderes hinkommt. Still, durchdringend, aufmerksam. Deine Wirkung ist leise und tiefgreifend — man merkt sie oft erst später.']
+};
+
+var EL_ZUVIEL={
+ Holz:'Zu viel Holz: Du nimmst dir zu viel vor und wächst in alle Richtungen gleichzeitig. Was hilft, ist Metall — Begrenzung, Entscheidung, etwas abschneiden.',
+ Feuer:'Zu viel Feuer: Du verbrennst dich an deiner eigenen Begeisterung. Was hilft, ist Wasser — Ruhe, Abstand, Nichtstun ohne schlechtes Gewissen.',
+ Erde:'Zu viel Erde: Du bleibst stehen, wo Bewegung nötig wäre, und sorgst für alle außer dich. Was hilft, ist Holz — Aufbruch, ein eigenes Vorhaben.',
+ Metall:'Zu viel Metall: Du wirst scharf, wo Milde besser wäre, und setzt Maßstäbe, die niemand erfüllt. Was hilft, ist Feuer — Wärme, Spiel, Unvernunft.',
+ Wasser:'Zu viel Wasser: Du denkst, statt zu handeln, und löst dich in Möglichkeiten auf. Was hilft, ist Erde — Struktur, ein Rahmen, etwas Konkretes.'
+};
+var EL_FEHLT={
+ Holz:'Holz fehlt: Anfangen und Wachsen kommen bei dir nicht von allein. Du musst dir Aufbruch bewusst organisieren — über Menschen, Termine, äußere Anlässe.',
+ Feuer:'Feuer fehlt: Sichtbarkeit und Begeisterung sind nicht eingebaut. Das heißt nicht, dass du sie nicht hast — nur, dass du sie dir holen musst, statt auf sie zu warten.',
+ Erde:'Erde fehlt: Dir fehlt der natürliche Boden. Struktur, Routine und Verlässlichkeit musst du von außen dazubauen — sie entstehen bei dir nicht von selbst.',
+ Metall:'Metall fehlt: Abgrenzen und Entscheiden fallen schwer. Du lässt zu viel offen und zu viel herein. Klare Regeln, die du dir vorher setzt, ersetzen das fehlende Element.',
+ Wasser:'Wasser fehlt: Reflexion und Ruhe kommen nicht von allein. Du machst weiter, wo Innehalten klüger wäre — Pausen gehören bei dir in den Kalender, nicht ins Gefühl.'
+};
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525;
+  return {Mond:moonLon(T), Sonne:sunLon(T), T:T};
+}
+
+function zeichnen(p){
+  var s=B.saeulen({y:p.y,mo:p.mo,d:p.d,h:p.h,mi:p.mi,tz:p.tz});
+  var nm=AC_P.anzeige(p,AC_P.zeigeNamen());
+  var W=chartVon(p);
+  var nak=B.nakshatra(W.Mond, W.T);
+
+  var h='';
+  /* Tafel */
+  h+='<div class="bz-tafel">';
+  [['stunde','Stunde'],['tag','Tag'],['monat','Monat'],['jahr','Jahr']].forEach(function(x){
+    var k=x[0], q=s[k];
+    h+='<div class="bz-s'+(k==='tag'?' tag':'')+'"><div class="wo">'+x[1]+(k==='tag'?' · du selbst':'')+'</div>'+
+      '<div class="bz-z oben">'+B.STAMM[q.s]+'</div><div class="bz-lat">'+B.STAMM_D[q.s]+'</div>'+
+      '<div class="bz-z unten">'+B.ZWEIG[q.z]+'</div><div class="bz-lat">'+B.ZWEIG_D[q.z]+'</div>'+
+      '<div class="bz-el">'+B.ST_YY[q.s]+' '+B.ST_EL[q.s]+'<br>über '+B.ZW_EL[q.z]+'</div>'+
+      '<div class="bz-tier">'+B.TIER[q.z]+'</div></div>';
+  });
+  h+='</div>';
+
+  /* Tagesmeister */
+  var tm=B.ST_EL[s.tag.s]+'-'+B.ST_YY[s.tag.s];
+  var d=TAGESMEISTER[tm];
+  h+='<div class="bz-gross"><div class="k">Dein Tagesmeister — der Kern im BaZi</div>'+
+    '<div class="gr">'+B.STAMM[s.tag.s]+' '+d[0]+'</div>'+
+    '<p>'+B.ST_YY[s.tag.s]+'-'+B.ST_EL[s.tag.s]+'. '+d[1]+'</p></div>';
+
+  /* Elementbilanz */
+  var z=B.elementBilanz(s);
+  var summe=0; Object.keys(z).forEach(function(k){ summe+=z[k]; });
+  h+='<div class="bz-deut"><h3>Deine Elementbilanz</h3>'+
+    '<p style="color:var(--leise);font-size:14.3px;">Aus allen acht Zeichen plus den verborgenen Stämmen. '+
+    'Was fehlt und was überwiegt, ist im BaZi die praktisch nützlichste Information.</p>';
+  var max=0, min=99, maxE='', minE='';
+  ['Holz','Feuer','Erde','Metall','Wasser'].forEach(function(k){
+    if(z[k]>max){max=z[k];maxE=k;} if(z[k]<min){min=z[k];minE=k;}
+  });
+  ['Holz','Feuer','Erde','Metall','Wasser'].forEach(function(k){
+    var pz=Math.round(z[k]/summe*100);
+    h+='<div class="bz-bal"><div>'+k+'</div><div class="bar"><i style="width:'+Math.max(2,pz)+'%;background:'+EL_F[k]+'"></i></div>'+
+      '<div class="pz">'+z[k]+'</div></div>';
+  });
+  h+='<p style="margin-top:14px;"><b>'+(min===0?EL_FEHLT[minE]:'Am schwächsten ist '+minE+' mit '+min+'. '+EL_FEHLT[minE])+'</b></p>'+
+    '<p>'+EL_ZUVIEL[maxE]+'</p>'+
+    '<div class="bz-hin"><b>Wie man das im BaZi liest:</b> Die fünf Elemente nähren sich im Kreis '+
+    '(Holz nährt Feuer, Feuer nährt Erde, Erde nährt Metall, Metall nährt Wasser, Wasser nährt Holz) '+
+    'und kontrollieren sich über Kreuz (Holz zieht Erde aus, Erde staut Wasser, Wasser löscht Feuer, '+
+    'Feuer schmilzt Metall, Metall schneidet Holz). Ein ausgeglichenes Chart ist selten — die Frage ist nicht, '+
+    'ob etwas fehlt, sondern was man damit anfängt.</div></div>';
+
+  /* Nakshatra */
+  h+='<div class="bz-deut"><h3>Dein Nakshatra — das vedische Mondhaus</h3>'+
+    '<p>Der Mond stand bei deiner Geburt siderisch auf <b>'+nak.sid.toFixed(2)+'°</b>, '+
+    'also im <b>'+nak.nr+'. Mondhaus: '+nak.name+'</b>, Pada '+nak.pada+' von 4.</p>'+
+    '<p style="color:var(--leise);font-size:14.5px;">In der vedischen Astrologie ist das Nakshatra oft wichtiger als das Sonnenzeichen. '+
+    'Die 27 Mondhäuser teilen den Tierkreis feiner auf — jedes umfasst 13°20\' und hat eigene Bilder und Qualitäten. '+
+    'Für eine ernsthafte Deutung brauchst du eine vedische Quelle; hier steht nur die Rechnung.</p>'+
+    '<div class="bz-hin"><b>Der Unterschied zum Westlichen:</b> Siderisch wird am tatsächlichen Sternhimmel gemessen, '+
+    'tropisch an den Jahreszeiten. Die beiden lagen vor etwa 1700 Jahren gleichauf und driften seither auseinander — '+
+    'derzeit um rund '+B.ayanamsa(W.T).toFixed(1)+' Grad. Keines ist richtiger; sie messen Verschiedenes.</div></div>';
+
+  if(s.grenznah) h+='<div class="tip"><b>Hinweis zu deinem Chart:</b> Deine Geburt liegt nah an einem Solarterm-Wechsel — '+
+    'also an der Grenze zwischen zwei BaZi-Monaten. Dort entscheiden Minuten. Wenn deine Geburtszeit nicht genau feststeht, '+
+    'lass die Monatssäule von einer BaZi-Praktikerin prüfen.</div>';
+
+  return h;
+}
+
+function wahlZeichnen(){
+  var box=document.getElementById('bzwahl'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  box.innerHTML=''; if(!alle.length) return;
+  var l=document.createElement('span'); l.className='lab'; l.textContent='Profil'; box.appendChild(l);
+  alle.forEach(function(p){
+    var b=document.createElement('button'); b.type='button';
+    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
+    b.setAttribute('aria-pressed', gewaehlt===p.id);
+    b.addEventListener('click',function(){ gewaehlt=p.id; wahlZeichnen(); zeigen(); });
+    box.appendChild(b);
+  });
+}
+function zeigen(){
+  var box=document.getElementById('bzinhalt'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  if(!alle.length){
+    box.innerHTML='<div class="bz-leer"><b>Noch kein Chart angelegt.</b><br><br>'+
+      'Leg unter <a href="profile.html">Profile</a> deine Geburtsdaten an — dann steht hier dein BaZi-Chart '+
+      'und dein Nakshatra.</div>'; return;
+  }
+  if(!gewaehlt){ gewaehlt=(alle.filter(function(p){return p.eigen;})[0]||alle[0]).id; wahlZeichnen(); }
+  var p=alle.filter(function(x){return x.id===gewaehlt;})[0];
+  if(p) box.innerHTML=zeichnen(p);
+}
+wahlZeichnen(); zeigen();
+
+</script>
+</body></html>

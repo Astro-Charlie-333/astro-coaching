@@ -1,129 +1,164 @@
-INHALT DES PAKETS
-========================================
+Astro-Charlie — Inhalt des Pakets
+Stand: 11.10.2026
 
-124 Dateien
+116 Seiten, 17 Skriptdateien.
 
-NETLIFY-ANLEITUNG.md                       7416 Bytes
-achsen.html                                9917 Bytes
-angebote-struktur.html                    10562 Bytes
-ankommen.html                             29730 Bytes
-ankommen.js                               16414 Bytes
-aspekt-muster.html                        10876 Bytes
-aspekte-daten.js                          15241 Bytes
-aspekte-lesen.html                        16369 Bytes
-aspekte.html                              14602 Bytes
-asteroiden.html                           40205 Bytes
-asteroiden.js                             83142 Bytes
-astrokartographie.html                    15423 Bytes
-audhs-verstehen.html                      20649 Bytes
-begriffe.js                                6054 Bytes
-briefing.html                             23485 Bytes
-chart-lesen.html                          12288 Bytes
-chart-rechner.html                        53410 Bytes
-coach.js                                  11643 Bytes
-coaching-verbinden.html                   12476 Bytes
-coaching.html                              9297 Bytes
-dating-muster.html                        30609 Bytes
-diagnose-weg.html                         20832 Bytes
-dossier.html                              43628 Bytes
-element-mix.html                          10561 Bytes
-erinnerung.html                           32954 Bytes
-faden.html                                28035 Bytes
-finsternisse.html                         20029 Bytes
-format.js                                 11462 Bytes
-fortschritt.js                             5643 Bytes
-fragen-schatzkiste.html                   13963 Bytes
-glossar.html                              13896 Bytes
-grade.html                                40075 Bytes
-grenzen.html                              16043 Bytes
-grundlagen.html                           10765 Bytes
-haeuser-lebensbuehnen.html                18089 Bytes
-haeuser.html                              14894 Bytes
-haeusersysteme.html                       16564 Bytes
-haltung-ethik.html                        12084 Bytes
-haltung.html                              19984 Bytes
-haus-achsen.html                          17250 Bytes
-herrscher.html                            19403 Bytes
-index.html                                52004 Bytes
-kleine-punkte.html                        15437 Bytes
-kleine-punkte.js                          18582 Bytes
-klientinnen-fragen.html                   12156 Bytes
-konzept-plattform.html                    15030 Bytes
-learning-seite.html                       17595 Bytes
-lebens-kompass.html                       17488 Bytes
-leitfaden-fundament.html                  17543 Bytes
-leitfaden-mars.html                       19186 Bytes
-leitfaden-merkur.html                     19261 Bytes
-leitfaden-mond.html                       19714 Bytes
-leitfaden.html                            11490 Bytes
-lilith-arbeit.html                        29189 Bytes
-linien-lesen.html                         27117 Bytes
-lunationen.html                           72497 Bytes
-mein-chart.html                           26068 Bytes
-menschen-lesen.html                       30500 Bytes
-methoden.html                             33701 Bytes
-monatsbericht.html                        27364 Bytes
-mondknoten-coaching.html                  19277 Bytes
-mondknoten.html                            9800 Bytes
-mondphasen-rhythmus.html                  25946 Bytes
-mondzyklen.html                           36795 Bytes
-nd-leitfaden.html                         32531 Bytes
-netlify.toml                                174 Bytes
-netlify/functions/briefing.mjs             4225 Bytes
-neurodivergente-astrologie.html           11416 Bytes
-neurodivergenz-vertiefung.html            13879 Bytes
-niko-reading.html                         30291 Bytes
-orbis-gewichtung.html                     21368 Bytes
-organizer.html                            25424 Bytes
-planet-jupiter.html                       16191 Bytes
-planet-mars.html                          16417 Bytes
-planet-merkur.html                        16268 Bytes
-planet-mond.html                          16490 Bytes
-planet-saturn.html                        16171 Bytes
-planet-sonne.html                         15905 Bytes
-planet-venus.html                         16385 Bytes
-planeten-in-haeusern.html                 93762 Bytes
-planeten-in-zeichen.html                  10961 Bytes
-planeten.html                             12581 Bytes
-planetenzyklen.html                       21964 Bytes
-profektionen.html                         20107 Bytes
-profil-ansicht.html                       61962 Bytes
-profil.js                                  6172 Bytes
-profile.html                              35619 Bytes
-quiz.html                                 14289 Bytes
-rad.js                                    11467 Bytes
-raeume.html                               14609 Bytes
-raum-alltag.html                          44066 Bytes
-raum-anders-verdrahtet.html               48414 Bytes
-raum-berufung.html                        46721 Bytes
-raum-herkunft.html                        47813 Bytes
-raum-koerper.html                         45285 Bytes
-raum-naehe.html                           48314 Bytes
-raum-selbstwert.html                      47467 Bytes
-raum-sicherheit.html                      70294 Bytes
-raum-unerlaubte.html                      46231 Bytes
-raum-versorgung.html                      53777 Bytes
-raum-wunder-punkt.html                    45107 Bytes
-raum-zugehoerigkeit.html                  43120 Bytes
-raum.js                                    9227 Bytes
-reading-ablauf.html                       10986 Bytes
-reading-gespraech.html                    12433 Bytes
-retrograde.html                           41995 Bytes
-ruhe-schlaf.html                          13701 Bytes
-solar-return-light.html                   11317 Bytes
-solar-return-vertiefung.html              16075 Bytes
-spannungskarte.html                       29598 Bytes
-staedte.js                              1002779 Bytes
-synastrie-vertiefung.html                 11345 Bytes
-synastrie.html                            12776 Bytes
-timing.html                                9907 Bytes
-tool.html                                 37367 Bytes
-ueber-mich-vorlage.html                   11119 Bytes
-uebersicht.html                           62007 Bytes
-uebungscharts.html                        20550 Bytes
-weg.html                                  29253 Bytes
-werkzeuge.html                            10009 Bytes
-wetter.js                                 13251 Bytes
-wissen.html                               31798 Bytes
-zeichen.html                              14067 Bytes
-zeitqualitaet.html                        54152 Bytes
+Neu in dieser Fassung:
+  zauber.html   Zimt, Rosen, Steine — Planetenstunden für deinen Ort, Zutaten
+                und Steine nach Planet, fünf Ziele (Geld, Liebe, Erfolg,
+                Gesundheit, Glück und Schutz) mit je drei Ritualen, dazu
+                dein Chartherrscher mit Tag, Metall, Farben und Steinen.
+  himmel.js     Sonnenauf- und -untergang, Planetentag und Planetenstunde
+                nach chaldäischer Ordnung, Mond ohne Lauf.
+  ritual.js     Das Ritualboard der Startseite.
+  index.html    Neues Band ganz oben: was als Nächstes ansteht, die
+                Einkaufsliste dafür, Planetenstunde, Mondstand, Warnung bei
+                Mond ohne Lauf und ein Fakt des Tages.
+
+Vorher ergänzt:
+  rituale.html  Rituale zu Mondphasen und Transiten.
+
+Nebenbei repariert:
+  Tabellen sprengten auf 23 Seiten am Handy die Seitenbreite — jetzt seitlich
+  schiebbar. Lange deutsche Komposita taten dasselbe in schmalen Rasterspalten
+  (overflow-wrap: anywhere auf allen Seiten). Das Logo in der Kopfleiste war
+  auf acht Seiten von einer globalen svg-Regel auf Bildschirmgröße aufgeblasen.
+  Geprüft: alle 116 Seiten bei 390 und 1200 Pixeln, ohne JS-Fehler und ohne
+  waagerechten Überlauf.
+
+Seiten:
+  achsen.html
+  angebote-struktur.html
+  ankommen.html
+  aspekt-muster.html
+  aspekte-lesen.html
+  aspekte.html
+  asteroiden.html
+  astrokartographie.html
+  audhs-verstehen.html
+  bausteine.html
+  bazi.html
+  berufe.html
+  briefing.html
+  chart-lesen.html
+  chart-rechner.html
+  coaching-verbinden.html
+  coaching.html
+  dating-muster.html
+  diagnose-weg.html
+  dossier.html
+  element-mix.html
+  erinnerung.html
+  faden.html
+  finsternisse.html
+  fragen-schatzkiste.html
+  glossar.html
+  grade.html
+  grenzen.html
+  grundlagen.html
+  haeuser-lebensbuehnen.html
+  haeuser.html
+  haeusersysteme.html
+  haltung-ethik.html
+  haltung.html
+  haus-achsen.html
+  herrscher.html
+  index.html
+  kleine-punkte.html
+  klientinnen-fragen.html
+  konzept-plattform.html
+  learning-seite.html
+  lebens-kompass.html
+  leitfaden-fundament.html
+  leitfaden-mars.html
+  leitfaden-merkur.html
+  leitfaden-mond.html
+  leitfaden.html
+  lilith-arbeit.html
+  linien-lesen.html
+  lunationen.html
+  mein-chart.html
+  menschen-lesen.html
+  methoden.html
+  monatsbericht.html
+  mondknoten-coaching.html
+  mondknoten.html
+  mondphasen-rhythmus.html
+  mondzyklen.html
+  nd-leitfaden.html
+  neurodivergente-astrologie.html
+  neurodivergenz-vertiefung.html
+  niko-reading.html
+  orbis-gewichtung.html
+  organizer.html
+  planet-jupiter.html
+  planet-mars.html
+  planet-merkur.html
+  planet-mond.html
+  planet-saturn.html
+  planet-sonne.html
+  planet-venus.html
+  planeten-in-haeusern.html
+  planeten-in-zeichen.html
+  planeten.html
+  planetenzyklen.html
+  profektionen.html
+  profil-ansicht.html
+  profile.html
+  quiz.html
+  raeume.html
+  raum-alltag.html
+  raum-anders-verdrahtet.html
+  raum-berufung.html
+  raum-herkunft.html
+  raum-koerper.html
+  raum-naehe.html
+  raum-selbstwert.html
+  raum-sicherheit.html
+  raum-unerlaubte.html
+  raum-versorgung.html
+  raum-wunder-punkt.html
+  raum-zugehoerigkeit.html
+  reading-ablauf.html
+  reading-gespraech.html
+  retrograde.html
+  rituale.html
+  ruhe-schlaf.html
+  sekte.html
+  siderisch.html
+  solar-return-light.html
+  solar-return-vertiefung.html
+  spannungskarte.html
+  synastrie-vertiefung.html
+  synastrie.html
+  timing.html
+  tool.html
+  ueber-mich-vorlage.html
+  uebersicht.html
+  uebungscharts.html
+  vorschau.html
+  weg.html
+  werkzeuge.html
+  wissen.html
+  zauber.html
+  zeichen.html
+  zeitqualitaet.html
+
+Skripte:
+  ankommen.js
+  aspekte-daten.js
+  asteroiden.js
+  bazi.js
+  begriffe.js
+  coach.js
+  format.js
+  fortschritt.js
+  himmel.js
+  kleine-punkte.js
+  profil.js
+  rad.js
+  raum.js
+  ritual.js
+  schatten.js
+  staedte.js
+  wetter.js
