@@ -1,0 +1,90 @@
+/* Astro-Charlie · Sternbilder auf der Ekliptik
+   Zwei Datensätze, beide aus den IAU-Grenzen (Delporte 1930) gewonnen:
+   1. GRENZEN — wo auf der Ekliptik ein Sternbild endet (ekliptikale Länge J2000).
+      Gilt streng nur für die Sonne, deren Breite praktisch null ist.
+      Gegen PyEphem geprüft: 2000 von 2000 Stichproben 1930–2040 richtig.
+   2. GITTER — ein Raster von einem Grad über das Band von -20 bis +20 Grad Breite.
+      Nötig für die Planeten: Pluto läuft 17 Grad neben der Ekliptik und ist mit
+      einer reinen Längentabelle in jedem fünften Fall falsch eingeordnet. */
+(function(){
+'use strict';
+var RAD=Math.PI/180;
+function n360(x){x=x%360;return x<0?x+360:x;}
+
+var BAND=@BAND@;
+var GRENZEN=@GRENZEN@;
+var GNAMEN=['Fische','Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage',
+ 'Skorpion','Schlangenträger','Schütze','Steinbock','Wassermann'];
+var GLAT=@GLAT@;
+var GITTER=@GITTER@;
+var DEUTSCH=@DEUTSCH@;
+var ZEICH='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+function prec(T){ return 1.3969712*T+0.0003086*T*T; }
+
+/* Sternbild der Sonne — exakt über die Grenztabelle */
+function sonnenSternbild(lon, jd){
+  var T=(jd-2451545)/36525;
+  var l=n360(lon-prec(T));
+  for(var i=0;i<GRENZEN.length;i++) if(l<GRENZEN[i]) return GNAMEN[i];
+  return GNAMEN[0];
+}
+/* Sternbild eines beliebigen Punktes im Band — über das Raster */
+function sternbild(lon, lat, jd){
+  var T=(jd-2451545)/36525;
+  var l=Math.floor(n360(lon-prec(T)));
+  var b=Math.round(lat||0);
+  if(b<GLAT) b=GLAT;
+  if(b>-GLAT) b=-GLAT;
+  var zeile=GITTER[b-GLAT];
+  if(!zeile) return null;
+  var i=ZEICH.indexOf(zeile.charAt(l));
+  return (i>=0&&BAND[i])?(DEUTSCH[BAND[i]]||BAND[i]):null;
+}
+
+/* Heliozentrisch MIT z — die Engine der Plattform rechnet nur in der Ebene */
+var EL={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function h3(n,T){
+  var e=EL[n], a=e[0]+e[6]*T, ec=e[1]+e[7]*T, I=(e[2]+e[8]*T)*RAD,
+      L=e[3]+e[9]*T, wb=e[4]+e[10]*T, Om=e[5]+e[11]*T;
+  var M=((n360(L-wb)+180)%360)-180, Mr=M*RAD, E=Mr+ec*Math.sin(Mr);
+  for(var i=0;i<14;i++){ var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E)); E-=dE;
+    if(Math.abs(dE)<1e-12) break; }
+  var xp=a*(Math.cos(E)-ec), yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),
+      w=(wb-Om)*RAD, O=Om*RAD, cw=Math.cos(w), sw=Math.sin(w),
+      cO=Math.cos(O), sO=Math.sin(O), cI=Math.cos(I), sI=Math.sin(I);
+  return [ (cw*cO-sw*sO*cI)*xp + (-sw*cO-cw*sO*cI)*yp,
+           (cw*sO+sw*cO*cI)*xp + (-sw*sO+cw*cO*cI)*yp,
+           (sw*sI)*xp + (cw*sI)*yp ];
+}
+/* Geozentrische Länge UND Breite */
+function geoLB(n,T){
+  var p=h3(n,T), e=h3('Erde',T);
+  var dx=p[0]-e[0], dy=p[1]-e[1], dz=p[2]-e[2];
+  return { lon:n360(Math.atan2(dy,dx)/RAD+prec(T)),
+           lat:Math.atan2(dz,Math.sqrt(dx*dx+dy*dy))/RAD };
+}
+/* Wie viele Grad nimmt jedes der dreizehn auf der Ekliptik ein */
+function spannen(){
+  var out=[];
+  for(var i=0;i<GRENZEN.length;i++){
+    var von=(i===0)?GRENZEN[GRENZEN.length-1]-360:GRENZEN[i-1];
+    out.push({name:GNAMEN[i], grad:GRENZEN[i]-von});
+  }
+  return out;
+}
+
+window.AC_STB={
+  GRENZEN:GRENZEN, GNAMEN:GNAMEN, BAND:BAND, DEUTSCH:DEUTSCH,
+  sonnenSternbild:sonnenSternbild, sternbild:sternbild, geoLB:geoLB,
+  prec:prec, spannen:spannen
+};
+})();

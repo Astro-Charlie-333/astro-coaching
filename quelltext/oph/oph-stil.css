@@ -1,0 +1,61 @@
+/* ── Ophiuchus ────────────────────────────────────────── */
+.wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);flex:none;}
+
+.oph-ehrlich{background:var(--nacht);color:#F4EFE6;border-radius:24px;padding:27px 30px;margin:20px 0 16px;}
+@media(max-width:560px){.oph-ehrlich{padding:21px 18px;border-radius:20px;}}
+.oph-ehrlich .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:11px;}
+.oph-ehrlich p{font-size:15.4px;line-height:1.72;margin:0 0 11px;color:rgba(244,239,230,.9);}
+.oph-ehrlich b{color:#fff;}
+.oph-pruef{display:grid;gap:9px;margin-top:15px;}
+.opr{background:rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;font-size:14.6px;line-height:1.65;}
+.opr .m{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;
+ text-transform:uppercase;border-radius:8px;padding:3px 8px;margin-right:9px;vertical-align:1px;}
+.opr.ja .m{background:rgba(168,212,160,.25);color:#A8D4A0;}
+.opr.nein .m{background:rgba(240,168,159,.22);color:#F0A89F;}
+.opr.halb .m{background:rgba(232,201,122,.25);color:#E8C97A;}
+
+.sp-bal{display:grid;gap:5px;margin:14px 0;}
+.spz{display:grid;grid-template-columns:118px 1fr 74px;gap:10px;align-items:center;font-size:14px;}
+@media(max-width:540px){.spz{grid-template-columns:1fr 60px;grid-template-areas:"n z" "b b";gap:3px 9px;margin-bottom:9px;}
+ .spz .n{grid-area:n;} .spz .bar{grid-area:b;} .spz .z{grid-area:z;}}
+.spz .n{min-width:0;overflow-wrap:anywhere;}
+.spz .bar{height:14px;background:var(--linie);border-radius:7px;overflow:hidden;}
+.spz .bar i{display:block;height:100%;border-radius:7px;background:var(--nacht);}
+.spz.oph .bar i{background:var(--messing);}
+.spz.oph .n{color:var(--messing);font-weight:600;}
+.spz .z{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);text-align:right;}
+
+.vgl{width:100%;border-collapse:collapse;font-size:14.2px;margin:14px 0;}
+.vgl th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--messing);text-align:left;padding:8px 10px;border-bottom:1px solid var(--linie);font-weight:500;}
+.vgl td{padding:9px 10px;border-bottom:1px solid var(--linie);vertical-align:top;}
+.vgl tr:last-child td{border-bottom:none;}
+.vgl td.p{font-family:var(--serif);font-size:15.5px;color:var(--nacht);white-space:nowrap;}
+.vgl td.t{background:var(--nacht-bg);}
+.vgl .oph{color:var(--messing);font-weight:600;}
+.vgl .weit{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--leise);display:block;}
+@media(max-width:620px){.vgl{display:block;overflow-x:auto;}.vgl td,.vgl th{white-space:nowrap;}}
+
+.oph-gross{background:var(--messing-bg);border-radius:20px;padding:24px 26px;margin:16px 0;}
+@media(max-width:560px){.oph-gross{padding:19px 17px;}}
+.oph-gross .z{font-family:var(--serif);font-size:clamp(23px,5vw,31px);font-weight:300;color:var(--nacht);
+ line-height:1.2;margin-bottom:10px;}
+.oph-gross p{font-size:15.3px;line-height:1.72;margin:0 0 10px;}
+.oph-gross p:last-child{margin-bottom:0;}
+.oph-karte{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:20px 22px;margin-bottom:12px;}
+@media(max-width:560px){.oph-karte{padding:17px 16px;}}
+.oph-karte h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 9px;}
+.oph-karte p{font-size:15.2px;line-height:1.72;margin:0 0 10px;}
+.oph-karte p:last-child{margin-bottom:0;}
+.oph-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:26px;
+ text-align:center;color:var(--leise);line-height:1.68;font-size:15px;}
+.oph-zitat{background:var(--bg);border-left:3px solid var(--messing);border-radius:12px;
+ padding:15px 18px;font-size:15.2px;line-height:1.75;margin:14px 0;}
+.oph-zitat b{color:var(--nacht);}
+.quellen{font-size:13px;color:var(--leise);line-height:1.7;margin-top:12px;}

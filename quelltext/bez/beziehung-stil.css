@@ -1,0 +1,63 @@
+/* ── Beziehung ────────────────────────────────────────── */
+.wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;align-items:center;}
+.wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);flex:none;}
+.bz-zeile{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+@media(max-width:620px){.bz-zeile{flex-direction:column;align-items:flex-start;gap:5px;}
+ .bz-zeile .chips{width:100%;}}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:3px;
+ min-width:0;max-width:100%;flex:1 1 auto;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{flex:0 0 auto;font-family:var(--sans);font-size:13.5px;padding:8px 14px;
+ border:1px solid var(--linie);background:var(--papier);color:var(--tinte);border-radius:17px;
+ cursor:pointer;white-space:nowrap;}
+.chip[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+
+.bz{background:var(--papier);border:1px solid var(--linie);border-radius:22px;padding:28px 32px;margin-top:14px;}
+@media(max-width:620px){.bz{padding:21px 17px;border-radius:18px;}}
+.bz-kopf{border-bottom:1px solid var(--linie);padding-bottom:17px;}
+.bz-k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:7px;}
+.bz h2{font-family:var(--serif);font-size:clamp(24px,5vw,33px);font-weight:300;color:var(--nacht);
+ margin:0 0 9px;line-height:1.15;}
+.bz-ein{font-size:15.2px;line-height:1.7;color:var(--leise);margin:0;}
+.bz-ab{padding:19px 0;border-bottom:1px solid var(--linie);}
+.bz-ab:last-of-type{border-bottom:none;}
+.bz-ab h3{font-family:var(--serif);font-size:19.5px;font-weight:400;color:var(--nacht);margin:0 0 10px;}
+.bz-ab p{font-size:15.4px;line-height:1.74;margin:0 0 10px;}
+.bz-ab p:last-child{margin-bottom:0;}
+.bz-leise{color:var(--leise);font-size:14.3px;}
+.bz-paar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:560px){.bz-paar{grid-template-columns:1fr;}}
+.bzp{background:var(--bg);border-radius:13px;padding:13px 15px;font-size:14px;line-height:1.55;color:var(--leise);}
+.bzp b{display:block;font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);margin-bottom:4px;}
+.bz-kt{border-left:3px solid var(--linie);padding:11px 0 11px 14px;margin-bottom:11px;}
+.bz-kt.hart{border-left-color:var(--rost);}
+.bz-kt.weich{border-left-color:var(--teal);}
+.bz-kt .kt-kopf{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px;
+ font-family:var(--serif);font-size:16.5px;color:var(--nacht);}
+.bz-kt .kt-m{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
+ text-transform:uppercase;border-radius:8px;padding:3px 8px;}
+.bz-kt.hart .kt-m{background:#FBE3DA;color:var(--rost);}
+.bz-kt.weich .kt-m{background:#E8EDDC;color:var(--teal);}
+.bz-kt p{font-size:15px;line-height:1.7;margin:0;}
+.bz-liste{margin:0 0 10px 18px;padding:0;font-size:15.2px;line-height:1.72;}
+.bz-liste li{margin-bottom:5px;}
+.bz-hin{background:var(--messing-bg);border-radius:14px;padding:14px 17px;font-size:14.5px;
+ line-height:1.65;margin:16px 0 0;}
+.bz-fuss{margin-top:18px;padding-top:16px;border-top:1px dashed var(--linie);font-size:13.5px;
+ color:var(--leise);line-height:1.65;}
+.bz-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:28px;
+ text-align:center;color:var(--leise);line-height:1.68;font-size:15px;}
+.bz-aktion{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.bz-aktion button{font-family:var(--sans);font-size:14.3px;padding:11px 20px;border-radius:19px;
+ cursor:pointer;border:1px solid var(--linie);background:none;color:var(--nacht);}
+.bz-echo{font-size:13.6px;color:var(--teal);min-height:19px;margin-top:7px;}
+@media print{.ac-leiste,.wahl,#bzsteuer,.bz-aktion,.bz-echo,.weiter,.niv-leiste{display:none;}
+ .bz{border:none;padding:0;} body{background:#fff;}}
+
+.bz-rolle{font-size:14.8px;line-height:1.7;color:var(--tinte);background:var(--messing-bg);
+ border-radius:13px;padding:13px 16px;margin:13px 0 0;}

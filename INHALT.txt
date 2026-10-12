@@ -1,23 +1,18 @@
-Astro-Charlie — Inhalt des Pakets
-Stand: 11.10.2026
+Astro-Charlie — Inhalt
+Stand: 12.10.2026
 
-118 Seiten, 19 Skriptdateien.
+119 Seiten, 19 Skriptdateien.
 
 Neu in dieser Fassung:
-  beziehung.html  Zwei Profile gegenübergestellt — nach Beziehungsart
-                  (Liebe, Freundschaft, Mutter, Vater, eigenes Kind, Geschwister,
-                  Kollegin, Tier) und nach Thema (Komplett, Kommunikation, Nähe,
-                  Reibung, Alltag, Unterstützen). Mit konkreten Hinweisen zum
-                  Erreichen, Reden, Streiten und Helfen. Beziehungsart wird je
-                  Profil gespeichert. Tiere ohne Geburtszeit werden sauber
-                  behandelt, inklusive ehrlicher Einordnung.
-  index.html      Neues Band „Bewegung am Himmel": welche Planeten rückläufig
-                  sind, wann sie wieder direkt gehen, in welchem Haus und was
-                  das dort heißt.
+  geistfuehrung.html  Wie spirituelle Praxis zum Chart passt: Herrscher des
+                      12. Hauses als Zugang, Merkur als Kanal, Neptun als Frage
+                      nach der Form, 9. Haus als Glaube, Sekte, Mondphase bei
+                      der Geburt, Chiron — und daraus sieben Schritte aus den
+                      Stellungen des gewählten Profils. Planetenstunden live.
 
-Geprüft: 15 Richtungswechsel über 260 Tage gegen PyEphem — alle korrekt,
-Abweichung unter zwei Stunden. Alle Seiten bei 390 und 1200 Pixeln sowie auf
-den Wissensstufen 0, 2 und 4, ohne JS-Fehler und ohne waagerechten Überlauf.
+Geprüft: 128 künstliche Charts durch die Seite gerechnet — alle sieben
+Türherrscher, alle acht Mondphasen, alle zwölf Chiron-Häuser, Tag- und
+Nachtchart. Planetenstunden, Neumonde und Sonnenzeiten gegen PyEphem.
 
 Seiten:
   achsen.html
@@ -46,6 +41,7 @@ Seiten:
   faden.html
   finsternisse.html
   fragen-schatzkiste.html
+  geistfuehrung.html
   glossar.html
   grade.html
   grenzen.html
@@ -82,7 +78,7 @@ Seiten:
   nd-leitfaden.html
   neurodivergente-astrologie.html
   neurodivergenz-vertiefung.html
-  niko-reading.html
+  ophiuchus.html
   orbis-gewichtung.html
   organizer.html
   planet-jupiter.html

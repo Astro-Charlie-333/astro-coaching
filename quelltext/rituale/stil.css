@@ -1,0 +1,163 @@
+/* ── Rituale ─────────────────────────────────────────── */
+
+/* Jetzt-Kasten */
+.jetzt{background:var(--nacht);color:#F4EFE6;border-radius:24px;padding:28px 30px;margin:22px 0 16px;}
+@media(max-width:560px){.jetzt{padding:22px 19px;border-radius:20px;}}
+.jetzt .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:10px;}
+.jetzt .gr{font-family:var(--serif);font-size:clamp(23px,5vw,33px);font-weight:300;color:#fff;
+ line-height:1.16;margin-bottom:12px;}
+.jetzt p{margin:0 0 11px;font-size:15.3px;line-height:1.68;color:rgba(244,239,230,.9);}
+.jetzt p:last-child{margin-bottom:0;}
+.jetzt b{color:#fff;font-weight:500;}
+.jetzt-kopf{display:flex;gap:20px;align-items:center;margin-bottom:16px;}
+@media(max-width:480px){.jetzt-kopf{gap:15px;}}
+.jetzt-kopf svg{flex:none;}
+.jetzt-zahl{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:17px;}
+@media(max-width:480px){.jetzt-zahl{grid-template-columns:1fr;}}
+.jz{background:rgba(255,255,255,.08);border-radius:14px;padding:13px 15px;font-size:14.2px;line-height:1.55;}
+.jz b{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:5px;font-weight:400;}
+
+/* Rad der acht Phasen */
+.rad-box{background:var(--papier);border:1px solid var(--linie);border-radius:22px;
+ padding:22px 20px 16px;margin-bottom:14px;}
+.rad-box svg{display:block;width:100%;max-width:600px;height:auto;margin:0 auto;}
+.rad-box .pf{cursor:pointer;}
+.rad-box .pf circle.treffer{fill:transparent;}
+.rad-box .pf:hover circle.ring{stroke:var(--nacht);}
+.rad-box .pf text{font-family:'DM Sans',system-ui,sans-serif;font-size:11px;fill:var(--leise);
+ pointer-events:none;}  /* text-anchor NICHT hier setzen — CSS schlägt das Attribut */
+.rad-box .pf.an circle.ring{stroke:var(--messing);stroke-width:2;}
+.rad-box .pf.an text{fill:var(--nacht);font-weight:600;}
+.rad-hinweis{text-align:center;font-size:13px;color:var(--leise);margin-top:4px;}
+
+/* Phasentext unter dem Rad */
+.ph-text{background:var(--messing-bg);border-radius:18px;padding:21px 23px;margin-bottom:26px;}
+@media(max-width:560px){.ph-text{padding:18px 17px;}}
+.ph-text .nr{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:6px;}
+.ph-text h3{margin:0 0 3px;font-size:21px;}
+.ph-text .wort{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--messing);margin-bottom:11px;}
+.ph-text p{font-size:15px;line-height:1.7;margin-bottom:10px;}
+.ph-text p:last-child{margin-bottom:0;}
+.ph-text .tu{background:var(--papier);border-radius:12px;padding:13px 16px;margin-top:13px;font-size:14.4px;
+ line-height:1.65;}
+.ph-text .tu b{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);display:block;margin-bottom:5px;font-weight:400;}
+
+/* Schritt-für-Schritt */
+.schritte{counter-reset:s;margin:18px 0;}
+.sch{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--linie);}
+.sch:last-child{border-bottom:none;}
+@media(max-width:480px){.sch{grid-template-columns:30px 1fr;gap:12px;}}
+.sch .n{width:30px;height:30px;border-radius:50%;background:var(--nacht);color:#fff;display:flex;
+ align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;flex:none;}
+.sch .n.leise{background:var(--linie);color:var(--leise);}
+.sch h4{font-family:var(--serif);font-size:17.5px;font-weight:400;color:var(--nacht);margin:3px 0 5px;}
+.sch p{font-size:14.9px;line-height:1.68;margin-bottom:8px;}
+.sch p:last-child{margin-bottom:0;}
+.sch .zitat{background:var(--messing-bg);border-radius:11px;padding:12px 15px;font-size:14.2px;
+ line-height:1.6;margin:9px 0 0;}
+.sch .zitat .m{color:var(--rost);} .sch .zitat .g{color:var(--teal);}
+.sch .zitat b{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.11em;
+ text-transform:uppercase;font-weight:400;}
+
+/* Zeichen-Raster */
+.zr{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px;margin:16px 0;}
+@media(max-width:480px){.zr{grid-template-columns:1fr;}}
+.zk{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:16px 18px;}
+.zk .kopf{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+.zk .gl{font-size:18px;line-height:1;}
+.zk .nm{font-family:var(--serif);font-size:17px;color:var(--nacht);}
+.zk .th{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:7px;}
+.zk p{font-size:14.3px;line-height:1.62;margin-bottom:9px;}
+.zk .satz{font-family:var(--serif);font-size:14.8px;font-style:italic;color:var(--nacht);
+ border-left:2px solid var(--messing);padding-left:11px;margin:0;}
+.zk.feuer{border-left:3px solid var(--rost);} .zk.erde{border-left:3px solid var(--teal);}
+.zk.luft{border-left:3px solid var(--nacht);} .zk.wasser{border-left:3px solid var(--pflaume);}
+.zk.ist{background:var(--messing-bg);border-color:var(--messing);}
+
+/* Aufklappbare Transit-Rituale */
+details.tr{background:var(--papier);border:1px solid var(--linie);border-radius:16px;margin-bottom:9px;}
+details.tr>summary{cursor:pointer;padding:16px 19px;list-style:none;display:flex;gap:12px;align-items:baseline;}
+details.tr>summary::-webkit-details-marker{display:none;}
+details.tr>summary::before{content:'+';font-family:'JetBrains Mono',monospace;color:var(--messing);flex:none;}
+details.tr[open]>summary::before{content:'–';}
+details.tr>summary .t{font-family:var(--serif);font-size:17.5px;color:var(--nacht);}
+details.tr>summary .w{font-size:13.5px;color:var(--leise);margin-left:auto;text-align:right;flex:none;}
+@media(max-width:560px){
+ details.tr>summary{flex-wrap:wrap;padding:15px 16px;}
+ details.tr>summary .w{margin-left:0;width:100%;text-align:left;padding-left:19px;}
+}
+details.tr .in{padding:0 19px 19px 43px;font-size:14.8px;line-height:1.7;}
+@media(max-width:560px){details.tr .in{padding:0 16px 17px 35px;}}
+details.tr .in p{margin-bottom:11px;}
+details.tr .in p:last-child{margin-bottom:0;}
+details.tr .in .rit{background:var(--messing-bg);border-radius:12px;padding:14px 16px;margin:12px 0;}
+details.tr .in .rit b{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);display:block;margin-bottom:6px;font-weight:400;}
+details.tr .in .nicht{background:#FBF0E8;border-left:3px solid var(--rost);border-radius:12px;
+ padding:14px 16px;margin:12px 0;}
+details.tr .in .nicht b{color:var(--rost);}
+
+/* Ritualkalender */
+.kal{display:grid;gap:8px;margin:16px 0;}
+.kz{display:grid;grid-template-columns:52px 104px 1fr;gap:15px;align-items:start;background:var(--papier);
+ border:1px solid var(--linie);border-radius:15px;padding:14px 17px;}
+@media(max-width:620px){
+ .kz{grid-template-columns:44px 1fr;grid-template-areas:"mo dat" "mo txt";gap:5px 13px;padding:13px 15px;}
+ .kz .mo{grid-area:mo;} .kz .dat{grid-area:dat;} .kz .txt{grid-area:txt;}
+}
+.kz.naechste{border-color:var(--messing);background:var(--messing-bg);}
+.kz .mo{display:flex;align-items:center;justify-content:center;padding-top:2px;}
+.kz .dat{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);line-height:1.5;}
+.kz .dat b{display:block;color:var(--nacht);font-size:13px;}
+.kz .txt{min-width:0;}
+.kz .txt b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
+.kz .txt p{margin:3px 0 0;font-size:14.4px;line-height:1.6;}
+.kz .haus{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
+ background:var(--nacht-bg);color:var(--nacht);border-radius:8px;padding:2px 7px;margin-left:5px;
+ letter-spacing:.05em;vertical-align:1px;}
+
+/* Ritual-Wegweiser */
+.weg-box{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;margin:16px 0;}
+@media(max-width:560px){.weg-box{padding:19px 17px;}}
+.weg-f{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;}
+.weg-f button{font-family:var(--sans);font-size:14.5px;padding:11px 18px;border:1px solid var(--linie);
+ background:var(--creme);color:var(--tinte);border-radius:20px;cursor:pointer;text-align:left;}
+.weg-f button:hover{border-color:var(--nacht);}
+.weg-f button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.weg-a{margin-top:17px;padding-top:17px;border-top:1px solid var(--linie);font-size:15px;line-height:1.72;}
+.weg-a:empty{display:none;}
+.weg-a b{color:var(--nacht);}
+.weg-a .spring{display:inline-block;margin-top:10px;font-size:14px;}
+
+/* Material */
+.mat{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:16px 0;}
+@media(max-width:620px){.mat{grid-template-columns:1fr;}}
+.mk{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:17px 19px;}
+.mk h4{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);margin:0 0 7px;}
+.mk p{font-size:14.3px;line-height:1.64;margin-bottom:9px;}
+.mk p:last-child{margin-bottom:0;}
+.mk .mark{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ border-radius:8px;padding:3px 8px;display:inline-block;margin-bottom:8px;}
+.mk .mark.gut{background:#E8EDDC;color:var(--teal);}
+.mk .mark.acht{background:#FBE3DA;color:var(--rost);}
+.mk .mark.frei{background:var(--nacht-bg);color:var(--nacht);}
+
+.leer-hinweis{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:26px;
+ text-align:center;color:var(--leise);line-height:1.68;font-size:15px;}
+.wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.wahl .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+.quellen{font-size:13px;color:var(--leise);line-height:1.7;margin-top:10px;}
+.quellen a{color:var(--nacht);}
+
+/* Schmale Darstellung des Rads: Ziffern statt Namen */
+.rad-box .pf text.zif{font-family:'JetBrains Mono',monospace;font-size:13px;fill:var(--messing);}
+.rad-box .pf.an text.zif{fill:var(--nacht);font-weight:500;}

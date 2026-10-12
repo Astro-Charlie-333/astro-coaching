@@ -1,0 +1,1298 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mit wem du arbeitest &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Geistführung ──────────────────────────────────────── */
+.wahl{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 26px;}
+.gw{font-family:var(--sans);font-size:13.8px;padding:8px 15px;border-radius:20px;
+ border:1px solid var(--linie-stark);background:var(--papier);color:var(--tinte);cursor:pointer;
+ max-width:100%;}
+.gw:hover{border-color:var(--nacht);}
+.gw.ist{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.g-leer{font-size:15px;color:var(--leise);background:var(--card);border:1px solid var(--linie);
+ border-radius:16px;padding:18px 20px;}
+
+/* Großer Block */
+.g-gross{background:var(--card);border:1px solid var(--linie);border-radius:20px;
+ padding:22px 24px;margin-bottom:16px;}
+@media(max-width:560px){.g-gross{padding:18px 16px;border-radius:17px;}}
+.g-k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:11px;}
+.g-gross p{margin:0 0 12px;font-size:15.3px;line-height:1.72;}
+.g-gross p:last-child{margin-bottom:0;}
+
+/* Kopfzeile: Zeichen · Planet · Hinweis */
+.g-formel{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 9px;
+ padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--linie-stark);}
+.g-formel .g-z{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--nacht);}
+.g-formel .g-p{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--messing);}
+.g-formel .g-pf{font-size:13.2px;color:var(--leise);}
+.g-leicht .g-z,.g-leicht .g-p{font-size:17.5px;}
+
+.g-stoff{font-family:var(--serif);font-size:20px;font-weight:300;color:var(--nacht);
+ margin-bottom:13px;line-height:1.3;}
+.g-stoff b{font-weight:600;font-style:italic;}
+.g-bei{font-size:14.4px!important;color:var(--leise)!important;}
+.g-orb{font-size:12.6px;color:var(--leise);font-family:'JetBrains Mono',monospace;}
+
+.g-stark,.g-schwach,.g-raus{border-left:3px solid;border-radius:0 11px 11px 0;
+ padding:12px 15px;font-size:14.7px!important;line-height:1.66!important;}
+.g-stark{border-color:var(--gruen,#3F6B4A);background:var(--gruen-bg,#EDF3EC);}
+.g-schwach{border-color:var(--rost);background:#FBEFE6;}
+.g-raus{border-color:var(--nacht);background:var(--nacht-bg);}
+
+/* Drei Karten in einer Reihe */
+.g-reihe{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;margin-top:16px;}
+@media(max-width:470px){.g-reihe{grid-template-columns:1fr;}}
+.gk{background:var(--papier);border:1px solid var(--linie);border-radius:14px;
+ padding:13px 15px;font-size:14.3px;line-height:1.58;min-width:0;}
+.gk>b:first-child{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:6px;font-weight:400;}
+.gk span{display:block;margin-top:6px;font-size:12.7px;color:var(--leise);}
+.gk.warn{background:#FBEFE6;border-color:#E6CDBA;}
+.gk.warn>b:first-child{color:var(--rost);}
+
+.g-bew{margin-top:15px;background:var(--papier);border:1px dashed var(--linie-stark);
+ border-radius:13px;padding:13px 15px;font-size:14.6px;line-height:1.66;}
+
+/* Übung / Hinweiskasten */
+.g-ueb{margin:14px 0 0;background:var(--nacht-bg);border-radius:14px;padding:14px 16px;
+ font-size:14.8px;line-height:1.66;}
+.g-ueb>b:first-child{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;color:var(--nacht);margin-bottom:6px;font-weight:400;}
+.g-ueb.warn{background:#FBEFE6;}
+.g-ueb.warn>b:first-child{color:var(--rost);}
+
+/* Aspektliste */
+.g-li{list-style:none;margin:15px 0 0;padding:0;display:grid;gap:8px;}
+.g-li li{background:var(--papier);border:1px solid var(--linie);border-radius:13px;
+ padding:12px 14px;font-size:14.5px;line-height:1.62;}
+.g-li .w{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;
+ text-transform:uppercase;border-radius:8px;padding:3px 8px;margin-right:8px;vertical-align:1px;}
+.g-li .w.flow{background:var(--gruen-bg,#EDF3EC);color:var(--gruen,#3F6B4A);}
+.g-li .w.spannung{background:#FBE3DA;color:var(--rost);}
+
+/* Mondphase */
+.g-phase,.g-chiron{margin-top:16px;background:var(--nacht);color:#F4EFE6;border-radius:17px;
+ padding:18px 20px;}
+@media(max-width:560px){.g-phase,.g-chiron{padding:16px 15px;}}
+.g-phase .g-k,.g-chiron .g-k{color:#E8C97A;}
+.g-phase p,.g-chiron p{color:rgba(244,239,230,.9)!important;margin-bottom:0;}
+.g-phase b,.g-chiron b{color:#fff;}
+.g-phase .g-bei,.g-chiron .g-bei{color:rgba(244,239,230,.62)!important;margin-top:11px!important;}
+.g-pw{font-family:'JetBrains Mono',monospace;font-size:12.3px;color:rgba(244,239,230,.6);
+ margin-bottom:10px;}
+
+/* Die sieben Schritte */
+.g-schritte{list-style:none;counter-reset:gs;margin:0;padding:0;display:grid;gap:10px;}
+.g-schritte li{counter-increment:gs;position:relative;background:var(--card);
+ border:1px solid var(--linie);border-radius:16px;padding:16px 20px 16px 58px;
+ font-size:15.1px;line-height:1.7;}
+@media(max-width:560px){.g-schritte li{padding:15px 16px 15px 52px;}}
+.g-schritte li::before{content:counter(gs);position:absolute;left:18px;top:15px;
+ width:26px;height:26px;border-radius:50%;background:var(--nacht);color:#fff;
+ font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;
+ justify-content:center;}
+@media(max-width:560px){.g-schritte li::before{left:14px;}}
+.g-schritte li>b:first-child{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;
+ letter-spacing:.13em;text-transform:uppercase;color:var(--messing);margin-bottom:5px;font-weight:400;}
+
+/* Zeiten */
+.g-zeiten{margin-top:0;}
+
+/* Ehrlichkeitsblock */
+.g-ehrlich{background:var(--papier);border:1px solid var(--linie-stark);border-radius:20px;
+ padding:21px 24px;}
+@media(max-width:560px){.g-ehrlich{padding:18px 16px;}}
+.g-ehrlich p{font-size:14.9px;line-height:1.72;margin-bottom:13px;color:var(--leise);}
+.g-ehrlich b{color:var(--tinte);}
+</style><script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+<div class="wrap">
+
+<div class="eyebrow">Praxis</div>
+<h1>Mit wem du <em>arbeitest.</em></h1>
+<p class="lede">Die Frage &bdquo;wie arbeite ich am besten spirituell&ldquo; hat in der alten Lehre eine erstaunlich konkrete Antwort &mdash; nur nicht die erwartete. Sie steht nicht in der Sonne und nicht im Mond, sondern im <b>Herrscher deines zw&ouml;lften Hauses</b>. Der sagt nicht, <i>ob</i> du Zugang hast, sondern <b>&uuml;ber welchen Stoff</b>. Diese Seite rechnet ihn aus &mdash; und alles, was dazugeh&ouml;rt.</p>
+
+<div class="wahl" id="gwahl"></div>
+
+<div id="gleer" style="display:none"></div>
+
+<div id="ginhalt">
+
+<div id="tuer"></div>
+
+<h2>Der Kanal</h2>
+<p class="sub">Nicht ob etwas ankommt, sondern in welcher Form. Daf&uuml;r ist Merkur zust&auml;ndig &mdash; der Bote.</p>
+<div id="kanal"></div>
+
+<h2>Wie viel Form du brauchst</h2>
+<p class="sub">Neptun l&ouml;st Grenzen auf. Wie viel Gef&auml;&szlig; du dagegen brauchst, h&auml;ngt davon ab, wo er steht und was er ber&uuml;hrt.</p>
+<div id="form"></div>
+
+<h2>Woran du glaubst</h2>
+<p class="sub">Das neunte Haus ist in der Tradition das Haus der Lehre. Es sagt, ob du eine Linie &uuml;bernimmst oder dir eine baust.</p>
+<div id="glaube"></div>
+
+<h2>Deine Sekte</h2>
+<p class="sub">Die &auml;lteste Unterscheidung der hellenistischen Astrologie: Tag- oder Nachtchart. Sie entscheidet, welches Licht dich f&uuml;hrt &mdash; und welcher der beiden strengen Planeten bei dir am meisten Schaden anrichtet.</p>
+<div id="sekte"></div>
+
+<h2>Dein Rhythmus</h2>
+<p class="sub">Wie lang, wie oft, und warum bei dir nicht gilt, was im Buch steht.</p>
+<div id="rhythmus"></div>
+
+<h2>Die d&uuml;nne Stelle</h2>
+<p class="sub">Das achte Haus &mdash; und die Stelle, an der das Empfangen wehtut.</p>
+<div id="tief"></div>
+
+<h2>Deine Praxis, zusammengesetzt</h2>
+<p class="sub">Aus allem oben: sieben Schritte, aus deinem Chart gebaut. Nicht aus einem Buch.</p>
+<div id="praxis"></div>
+
+<h2>Deine Zeiten</h2>
+<p class="sub">Jetzt gerechnet, f&uuml;r deinen Ort. Aktualisiert sich jede Minute.</p>
+<div id="zeiten"></div>
+
+<h2>Wie das hier gemeint ist</h2>
+<div class="g-ehrlich">
+  <p><b>Die Rechnung stimmt, die Deutung ist &Uuml;berlieferung.</b> Alles, was diese Seite ausrechnet &mdash; H&auml;user, Herrscher, W&uuml;rden, Sekte, Mondphase, Planetenstunden &mdash; ist nachpr&uuml;fbar und gegen Ephemeriden getestet. Alles, was sie daraus <i>macht</i>, geh&ouml;rt zu einer Deutungstradition, die ein paar tausend Jahre gehalten hat. Das ist zweierlei, und es ist gut, beides auseinanderhalten zu k&ouml;nnen.</p>
+  <p><b>Die Zuordnung des zw&ouml;lften Hauses ist alt.</b> Dass das zw&ouml;lfte Haus das Haus des Verborgenen, des R&uuml;ckzugs und dessen ist, was ohne Zeugen wirkt, steht schon bei den hellenistischen Autoren. Dass man es als Zugang zur F&uuml;hrung liest, ist eine j&uuml;ngere Zuspitzung &mdash; sinnvoll, aber nicht zweitausend Jahre alt. Der Teil, der wirklich alt ist, ist die Lehre von <b>Herrschaft und W&uuml;rde</b>: dass man ein Haus &uuml;ber den Planeten liest, der sein Zeichen regiert, und dass dessen Zustand z&auml;hlt. Das ist das Ger&uuml;st dieser Seite.</p>
+  <p><b>Das Nachlesen ist kein Misstrauen.</b> Der Monatsr&uuml;ckblick, der hier an mehreren Stellen auftaucht, ist keine moderne Skepsis, die man der Praxis von au&szlig;en aufklebt. Die Unterscheidung der Geister ist in jeder gewachsenen Tradition ein eigenes Kapitel, weil jede Tradition wusste, dass nicht alles, was ankommt, auch stimmt. Wer sie weglie&szlig;, galt nicht als besonders glaubensstark, sondern als unvorsichtig.</p>
+  <p style="margin-bottom:0"><b>Und eine Grenze.</b> Was hier steht, ersetzt keine Behandlung und keine Diagnose. Wenn Stimmen, Bilder oder Eindr&uuml;cke dich erschrecken, dir den Schlaf nehmen oder dir sagen, was du tun sollst, dann ist das keine F&uuml;hrung, mit der man arbeitet, sondern ein Grund, mit einem Menschen zu sprechen &mdash; einer &Auml;rztin, einer Therapeutin, jemandem, der zuh&ouml;rt. Diese Linie geh&ouml;rt zur Praxis dazu und nicht dagegen.</p>
+</div>
+
+</div>
+
+<div class="weiter"><a href="zauber.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Zimt, Rosen, Steine &mdash; Planetenstunden und Material</span></a><a href="rituale.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Rituale zu Mondphasen und Transiten</span></a></div>
+<div class="foot">Mit wem du arbeitest &middot; H&auml;user im Whole-Sign-System, klassische Herrscher, W&uuml;rden nach der hellenistischen Lehre.<br>
+Planetenstunden f&uuml;r deinen Wohnort, Mondphasen und Neumonde gegen PyEphem gepr&uuml;ft. Chiron interpoliert, Abweichung unter 0,02&deg;.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Himmelsrechnung für Ritualzeiten
+   Sonnenauf- und -untergang, Planetentag und Planetenstunde nach der
+   chaldäischen Ordnung, Mond ohne Lauf, Zeichenwechsel des Mondes.
+   Setzt die Ephemeriden-Funktionen der Plattform voraus
+   (jdFromUT, sunLon, moonLon, geo). */
+(function(){
+'use strict';
+var RAD=Math.PI/180;
+function n360(x){ x=x%360; return x<0?x+360:x; }
+
+/* ── Sonnenauf- und -untergang (NOAA-Verfahren) ─────────
+   lat/lon in Grad, lon östlich positiv. Liefert Julianische Tage in UT
+   oder null bei Polartag und Polarnacht. */
+var H0=-0.833;   /* Oberrand der Sonne am Horizont, mit mittlerer Refraktion */
+
+function sonnenZeiten(jd, lat, lon){
+  var lw=-lon;
+  var n=Math.round(jd-2451545.0009-lw/360);
+  var Js=2451545.0009+lw/360+n;
+
+  function sonne(J){
+    var M=n360(357.5291+0.98560028*(J-2451545));
+    var C=1.9148*Math.sin(M*RAD)+0.0200*Math.sin(2*M*RAD)+0.0003*Math.sin(3*M*RAD);
+    var lam=n360(M+102.9372+C+180);
+    return {M:M, lam:lam, dek:Math.asin(Math.sin(lam*RAD)*Math.sin(23.4397*RAD))};
+  }
+  /* Wahrer Mittag, einmal nachgezogen */
+  var s=sonne(Js);
+  var Jt=Js+0.0053*Math.sin(s.M*RAD)-0.0069*Math.sin(2*s.lam*RAD);
+  s=sonne(Jt);
+  Jt=Js+0.0053*Math.sin(s.M*RAD)-0.0069*Math.sin(2*s.lam*RAD);
+
+  /* Auf- und Untergang getrennt verfeinern: die Deklination gehört zum
+     Zeitpunkt des Ereignisses, nicht zum Mittag dazwischen. */
+  var polar=null;
+  function ereignis(vz){
+    var J=Jt+vz*0.25;
+    for(var i=0;i<3;i++){
+      var e=sonne(J);
+      var co=(Math.sin(H0*RAD)-Math.sin(lat*RAD)*Math.sin(e.dek))/(Math.cos(lat*RAD)*Math.cos(e.dek));
+      if(co>1){ polar='nacht'; return null; }
+      if(co<-1){ polar='tag'; return null; }
+      J=Jt+vz*(Math.acos(co)/RAD)/360;
+    }
+    return J;
+  }
+  var auf=ereignis(-1), unter=ereignis(1);
+  return {auf:auf, unter:unter, mittag:Jt, polar:polar};
+}
+
+/* ── Planetentag und Planetenstunde ─────────────────────
+   Chaldäische Reihenfolge, absteigend nach scheinbarer Umlaufzeit.
+   Die erste Stunde nach Sonnenaufgang gehört dem Herrscher des
+   Wochentags — der Tag beginnt also mit dem Sonnenaufgang,
+   nicht um Mitternacht. */
+var CHALD=['Saturn','Jupiter','Mars','Sonne','Venus','Merkur','Mond'];
+/* Wochentag 0=Sonntag … 6=Samstag → Herrscher */
+var TAGSHERR=['Sonne','Mond','Mars','Merkur','Jupiter','Venus','Saturn'];
+
+function planetenStunde(jd, lat, lon){
+  var heute=sonnenZeiten(jd,lat,lon);
+  if(heute.polar) return {polar:heute.polar};
+  var gestern=sonnenZeiten(jd-1,lat,lon), morgen=sonnenZeiten(jd+1,lat,lon);
+
+  var aufJD, unterJD, naechsterAuf, istNacht;
+  if(jd < heute.auf){
+    /* noch vor Sonnenaufgang → Nachtstunden des Vortags */
+    aufJD=gestern.auf; unterJD=gestern.unter; naechsterAuf=heute.auf; istNacht=true;
+  } else if(jd < heute.unter){
+    aufJD=heute.auf; unterJD=heute.unter; naechsterAuf=morgen.auf; istNacht=false;
+  } else {
+    aufJD=heute.auf; unterJD=heute.unter; naechsterAuf=morgen.auf; istNacht=true;
+  }
+  if(aufJD===null||unterJD===null||naechsterAuf===null) return {polar:'rand'};
+
+  /* Der Wochentag richtet sich nach dem Sonnenaufgang, der diesen Tag eröffnet */
+  var wt=new Date((aufJD-2440587.5)*86400000).getDay();
+  var herrTag=TAGSHERR[wt];
+  var start=CHALD.indexOf(herrTag);
+
+  var nr, laenge, von;
+  if(!istNacht){
+    laenge=(unterJD-aufJD)/12;
+    nr=Math.floor((jd-aufJD)/laenge);
+    von=aufJD+nr*laenge;
+  } else {
+    laenge=(naechsterAuf-unterJD)/12;
+    nr=12+Math.floor((jd-unterJD)/laenge);
+    von=unterJD+(nr-12)*laenge;
+  }
+  nr=Math.max(0,Math.min(23,nr));
+  return {
+    tagesherr:herrTag, wochentag:wt,
+    herr:CHALD[(start+nr)%7],
+    nr:nr+1, nacht:istNacht,
+    von:von, bis:von+laenge, laengeMin:laenge*1440,
+    auf:aufJD, unter:unterJD, naechsterAuf:naechsterAuf
+  };
+}
+
+/* Alle 24 Stunden eines Sonnentags, beginnend mit dem Sonnenaufgang */
+function stundenTabelle(jd, lat, lon){
+  var p=planetenStunde(jd,lat,lon);
+  if(p.polar) return [];
+  var start=CHALD.indexOf(p.tagesherr);
+  var tagL=(p.unter-p.auf)/12, nachtL=(p.naechsterAuf-p.unter)/12;
+  var out=[];
+  for(var i=0;i<24;i++){
+    var nacht=i>=12;
+    var von=nacht? p.unter+(i-12)*nachtL : p.auf+i*tagL;
+    var bis=nacht? von+nachtL : von+tagL;
+    out.push({nr:i+1,herr:CHALD[(start+i)%7],nacht:nacht,von:von,bis:bis,
+              jetzt:(jd>=von&&jd<bis)});
+  }
+  return out;
+}
+
+/* ── Mond ohne Lauf ─────────────────────────────────────
+   Von seinem letzten klassischen Aspekt an einen der sieben Planeten
+   bis zum Zeichenwechsel „läuft der Mond leer". */
+var ASPEKTE=[0,60,90,120,180];
+var ASP_NAME={0:'Konjunktion',60:'Sextil',90:'Quadrat',120:'Trigon',180:'Opposition'};
+var KLASSISCH=['Sonne','Merkur','Venus','Mars','Jupiter','Saturn'];
+
+function mondLon(jd){ return moonLon((jd-2451545)/36525); }
+function pLon(k,jd){ var T=(jd-2451545)/36525;
+  return k==='Sonne'?sunLon(T):(k==='Mond'?moonLon(T):geo(k,T)); }
+
+/* Nächster Zeichenwechsel des Mondes nach jd */
+function naechsterZeichenwechsel(jd){
+  var ziel=(Math.floor(mondLon(jd)/30)+1)*30;
+  var a=jd, fa=((mondLon(a)-ziel+540)%360)-180;
+  for(var i=0;i<200;i++){
+    var b=a+0.05, fb=((mondLon(b)-ziel+540)%360)-180;
+    if(fa<0&&fb>=0){
+      var lo=a,hi=b;
+      for(var k=0;k<40;k++){ var m=(lo+hi)/2;
+        if(((mondLon(m)-ziel+540)%360)-180<0) lo=m; else hi=m; }
+      return {jd:(lo+hi)/2, zeichen:Math.floor(n360(ziel)/30)};
+    }
+    a=b; fa=fb;
+  }
+  return null;
+}
+
+/* Letzter exakter Aspekt des Mondes vor dem Zeichenwechsel */
+function letzterAspekt(jd, bisJD){
+  var best=null;
+  KLASSISCH.forEach(function(k){
+    ASPEKTE.forEach(function(w){
+      var a=jd-2.2, fa=((mondLon(a)-pLon(k,a)-w+540)%360)-180;
+      while(a<bisJD){
+        var b=Math.min(a+0.04,bisJD), fb=((mondLon(b)-pLon(k,b)-w+540)%360)-180;
+        if(fa<0&&fb>=0){
+          var lo=a,hi=b;
+          for(var i=0;i<34;i++){ var m=(lo+hi)/2;
+            if(((mondLon(m)-pLon(k,m)-w+540)%360)-180<0) lo=m; else hi=m; }
+          var t=(lo+hi)/2;
+          if(t<=bisJD && (!best||t>best.jd)) best={jd:t,planet:k,winkel:w,name:ASP_NAME[w]};
+        }
+        a=b; fa=fb;
+        if(b>=bisJD) break;
+      }
+    });
+  });
+  return best;
+}
+
+function ohneLauf(jd){
+  var zw=naechsterZeichenwechsel(jd);
+  if(!zw) return null;
+  var la=letzterAspekt(jd,zw.jd);
+  return {
+    leer: !!(la && jd>la.jd),
+    seit: la?la.jd:null,
+    letzter: la,
+    bis: zw.jd,
+    naechstesZeichen: zw.zeichen,
+    zeichenJetzt: Math.floor(mondLon(jd)/30)
+  };
+}
+
+window.AC_HIMMEL={
+  CHALD:CHALD, TAGSHERR:TAGSHERR,
+  sonnenZeiten:sonnenZeiten,
+  planetenStunde:planetenStunde,
+  stundenTabelle:stundenTabelle,
+  naechsterZeichenwechsel:naechsterZeichenwechsel,
+  letzterAspekt:letzterAspekt,
+  ohneLauf:ohneLauf
+};
+})();
+
+/* Astro-Charlie · Chiron und Lilith für den Browser
+   Chiron: Stützstellen alle 20 Tage von 1920 bis 2050, kubisch interpoliert (Abweichung unter 0,02°).
+   Lilith: mittlere Lilith über die Standardformel (Abweichung zur wahren Ephemeride unter 0,12°). */
+(function(){
+var CH_START=2422324.5, CH_STEP=20;
+var CH=[2.609,3.092,3.877,4.886,6.026,7.197,8.303,9.253,9.968,10.386,10.469,10.209,9.643,8.852,7.956,7.098,6.421,6.035,6.002,6.333,6.994,7.916,9.009,10.178,11.324,12.353,13.182,13.738,13.973,13.863,13.425,12.718,11.849,10.954,10.18,9.654,9.462,9.637,10.162,10.981,12.013,13.163,14.333,15.428,16.358,17.045,17.429,17.474,17.176,16.576,15.76,14.854,14.006,13.355,13.008,13.023,13.401,14.104,15.058,16.173,17.352,18.497,19.516,20.325,20.855,21.056,20.909,20.433,19.696,18.807,17.909,17.151,16.658,16.51,16.734,17.307,18.167,19.23,20.402,21.583,22.678,23.598,24.267,24.625,24.636,24.302,23.666,22.822,21.902,21.058,20.43,20.122,20.184,20.614,21.364,22.358,23.506,24.706,25.863,26.885,27.686,28.199,28.373,28.193,27.681,26.909,25.996,25.091,24.344,23.88,23.776,24.051,24.675,25.583,26.687,27.891,29.096,30.206,31.131,31.794,32.136,32.12,31.752,31.08,30.203,29.264,28.417,27.807,27.534,27.644,28.126,28.93,29.973,31.163,32.4,33.584,34.623,35.432,35.94,36.099,35.892,35.345,34.536,33.593,32.671,31.928,31.488,31.424,31.749,32.429,33.392,34.548,35.799,37.044,38.185,39.132,39.807,40.145,40.114,39.717,39.008,38.094,37.126,36.268,35.666,35.422,35.576,36.113,36.974,38.077,39.323,40.612,41.842,42.919,43.755,44.278,44.436,44.211,43.632,42.784,41.802,40.854,40.102,39.675,39.645,40.019,40.756,41.783,43.004,44.318,45.623,46.819,47.812,48.52,48.877,48.845,48.427,47.683,46.726,45.717,44.833,44.227,44.0,44.192,44.783,45.708,46.881,48.201,49.563,50.865,52.007,52.899,53.463,53.642,53.415,52.813,51.924,50.893,49.902,49.125,48.696,48.687,49.104,49.903,51.002,52.304,53.704,55.096,56.377,57.45,58.225,58.63,58.623,58.202,57.428,56.422,55.358,54.428,53.795,53.569,53.788,54.428,55.424,56.681,58.096,59.56,60.967,62.214,63.203,63.848,64.085,63.886,63.277,62.349,61.26,60.204,59.375,58.919,58.913,59.363,60.221,61.401,62.804,64.318,65.835,67.245,68.446,69.339,69.844,69.905,69.514,68.727,67.671,66.534,65.527,64.836,64.579,64.803,65.484,66.551,67.907,69.444,71.048,72.609,74.015,75.162,75.953,76.31,76.191,75.613,74.663,73.507,72.36,71.439,70.913,70.874,71.332,72.24,73.508,75.032,76.696,78.386,79.987,81.386,82.477,83.162,83.369,83.073,82.316,81.224,79.997,78.875,78.07,77.731,77.917,78.61,79.739,81.203,82.89,84.68,86.457,88.101,89.498,90.535,91.117,91.179,90.712,89.791,88.578,87.311,86.241,85.575,85.434,85.847,86.771,88.117,89.775,91.625,93.546,95.416,97.114,98.519,99.516,100.006,99.934,99.311,98.242,96.932,95.648,94.65,94.134,94.192,94.829,95.978,97.536,99.387,101.406,103.469,105.448,107.219,108.654,109.631,110.051,109.866,109.107,107.914,106.527,105.241,104.323,103.953,104.203,105.051,106.414,108.18,110.226,112.422,114.641,116.753,118.624,120.119,121.11,121.496,121.232,120.367,119.073,117.625,116.342,115.496,115.256,115.674,116.711,118.271,120.235,122.474,124.855,127.248,129.516,131.52,133.115,134.165,134.564,134.268,133.339,131.973,130.475,129.185,128.386,128.239,128.785,129.973,131.7,133.841,136.261,138.826,141.401,143.844,146.009,147.744,148.902,149.371,149.1,148.158,146.755,145.216,143.902,143.106,142.997,143.61,144.892,146.734,149.008,151.577,154.303,157.046,159.663,161.999,163.895,165.2,165.787,165.601,164.703,163.305,161.738,160.379,159.539,159.397,160.0,161.296,163.178,165.516,168.172,171.005,173.872,176.625,179.106,181.151,182.604,183.331,183.267,182.461,181.11,179.538,178.128,177.204,176.968,177.482,178.705,180.54,182.856,185.514,188.373,191.286,194.102,196.662,198.801,200.359,201.202,201.257,200.559,199.283,197.736,196.288,195.273,194.91,195.283,196.37,198.082,200.295,202.873,205.672,208.543,211.334,213.884,216.031,217.617,218.511,218.639,218.027,216.83,215.329,213.874,212.793,212.314,212.541,213.469,215.023,217.087,219.527,222.199,224.955,227.641,230.098,232.165,233.693,234.558,234.692,234.118,232.979,231.531,230.1,228.996,228.445,228.562,229.354,230.758,232.666,234.948,237.462,240.06,242.587,244.888,246.808,248.206,248.97,249.044,248.456,247.343,245.945,244.561,243.479,242.913,242.976,243.682,244.974,246.75,248.885,251.238,253.661,256.003,258.112,259.842,261.061,261.674,261.639,260.995,259.881,258.526,257.206,256.185,255.657,255.725,256.4,257.627,259.31,261.322,263.526,265.776,267.924,269.824,271.338,272.351,272.782,272.608,271.883,270.753,269.439,268.198,267.268,266.821,266.942,267.635,268.842,270.465,272.381,274.452,276.536,278.489,280.172,281.46,282.252,282.486,282.158,281.343,280.193,278.925,277.779,276.967,276.633,276.844,277.591,278.811,280.402,282.24,284.191,286.114,287.872,289.336,290.392,290.958,290.99,290.509,289.606,288.443,287.235,286.2,285.527,285.332,285.658,286.484,287.737,289.311,291.083,292.919,294.683,296.246,297.488,298.312,298.652,298.488,297.861,296.882,295.723,294.591,293.688,293.172,293.132,293.59,294.507,295.803,297.367,299.074,300.794,302.397,303.762,304.782,305.376,305.495,305.144,304.387,303.353,302.22,301.187,300.434,300.089,300.216,300.812,301.825,303.163,304.714,306.352,307.951,309.387,310.551,311.348,311.714,311.622,311.101,310.237,309.174,308.093,307.182,306.596,306.433,306.731,307.465,308.569,309.942,311.47,313.028,314.496,315.759,316.717,317.291,317.436,317.147,316.477,315.533,314.471,313.472,312.705,312.3,312.326,312.793,313.659,314.842,316.237,317.727,319.193,320.519,321.599,322.348,322.701,322.634,322.166,321.372,320.38,319.353,318.464,317.863,317.65,317.866,318.495,319.479,320.725,322.124,323.56,324.917,326.088,326.978,327.515,327.652,327.386,326.762,325.876,324.871,323.912,323.161,322.742,322.726,323.127,323.906,324.99,326.279,327.662,329.024,330.257,331.261,331.953,332.278,332.207,331.761,331.007,330.063,329.082,328.225,327.636,327.411,327.592,328.167,329.08,330.243,331.552,332.895,334.164,335.256,336.082,336.573,336.687,336.421,335.816,334.964,334.0,333.08,332.357,331.949,331.924,332.297,333.032,334.056,335.274,336.578,337.86,339.016,339.952,340.59,340.876,340.787,340.342,339.606,338.693,337.748,336.926,336.362,336.149,336.325,336.878,337.753,338.864,340.11,341.385,342.584,343.608,344.374,344.817,344.899,344.618,344.015,343.182,342.246,341.36,340.668,340.285,340.273,340.644,341.361,342.352,343.523,344.772,345.992,347.086,347.962,348.547,348.791,348.674,348.216,347.484,346.589,345.672,344.883,344.35,344.162,344.352,344.905,345.764,346.846,348.05,349.275,350.417,351.385,352.097,352.492,352.537,352.231,351.618,350.79,349.874,349.016,348.359,348.008,348.022,348.408,349.125,350.103,351.247,352.457,353.63,354.672,355.496,356.031,356.232,356.081,355.601,354.863,353.975,353.08,352.322,351.826,351.672,351.889,352.457,353.317,354.386,355.564,356.752,357.851,358.77,359.434,359.783,359.788,359.451,358.821,357.989,357.084,356.253,355.63,355.317,355.367,355.779,356.512,357.49,358.622,359.806,0.946,1.946,2.724,3.214,3.372,3.184,2.677,1.924,1.038,0.16,359.432,358.973,358.86,359.113,359.707,0.581,1.65,2.816,3.979,5.044,5.925,6.546,6.852,6.816,6.445,5.791,4.95,4.052,3.242,2.654,2.383,2.475,2.924,3.681,4.671,5.802,6.973,8.089,9.058,9.799,10.248,10.364,10.138,9.601,8.828,7.937,7.072,6.373,5.954,5.885,6.18,6.81,7.707,8.786,9.95,11.101,12.143,12.993,13.578,13.845,13.769,13.363,12.681,11.825,10.929,10.14,9.586,9.359,9.496,9.987,10.778,11.789,12.929,14.099,15.202,16.148,16.86,17.274,17.352,17.088,16.517,15.721,14.821,13.965,13.292,12.913,12.89,13.233,13.903,14.832,15.932,17.105,18.252,19.283,20.112,20.669,20.902,20.789,20.345,19.633,18.757,17.859,17.086,16.565,16.381,16.568,17.105,17.936,18.978,20.138,21.316,22.417,23.353,24.045,24.432,24.476,24.175,23.568,22.744,21.831,20.978,20.328,19.988,20.012,20.404,21.122,22.09,23.219,24.412,25.57,26.6,27.42,27.958,28.163,28.016,27.536,26.789,25.89,24.983,24.22,23.728,23.587,23.824,24.412,25.289,26.371,27.561,28.76,29.873,30.811,31.495,31.863,31.88,31.544,30.9,30.044,29.11,28.255,27.622,27.315,27.386,27.83,28.599,29.615,30.784,32.009,33.191,34.236,35.06,35.591,35.778,35.602,35.086,34.302,33.372,32.449,31.689,31.22,31.119,31.405,32.047,32.978,34.109,35.342,36.577,37.718,38.674,39.364,39.727,39.725,39.358,38.677,37.783,36.82,35.953,35.329,35.052,35.167,35.664,36.49,37.562,38.785,40.058,41.281,42.359,43.205,43.746,43.928,43.732,43.182,42.358,41.39,40.441,39.674,39.22,39.152,39.487,40.186,41.178,42.371,43.663,44.954,46.144,47.139,47.857,48.233,48.225,47.836,47.118,46.181,45.181,44.29,43.663,43.405,43.559,44.109,44.998,46.138,47.43,48.771,50.059,51.195,52.09,52.664,52.862,52.66,52.085,51.22,50.206,49.217,48.427,47.974,47.931,48.31,49.07,50.132,51.401,52.774,54.145,55.412,56.478,57.255,57.671,57.682,57.285,56.536,55.553,54.501,53.568,52.92,52.667,52.85,53.452,54.408,55.629,57.01,58.446,59.831,61.061,62.041,62.687,62.933,62.752,62.166,61.263,60.193,59.146,58.312,57.838,57.803,58.217,59.035,60.177,61.541,63.02,64.505,65.89,67.07,67.952,68.455,68.524,68.149,67.385,66.353,65.234,64.234,63.535,63.26,63.454,64.098,65.125,66.44,67.935,69.5,71.025,72.4,73.522,74.296,74.647,74.534,73.971,73.043,71.911,70.781,69.867,69.334,69.275,69.703,70.573,71.8,73.279,74.898,76.543,78.101,79.461,80.519,81.18,81.376,81.081,80.337,79.268,78.066,76.962,76.166,75.821,75.988,76.651,77.742,79.162,80.799,82.537,84.26,85.851,87.198,88.192,88.74,88.781,88.31,87.4,86.211,84.971,83.923,83.27,83.127,83.523,84.418,85.724,87.333,89.126,90.986,92.792,94.424,95.763,96.701,97.144,97.039,96.402,95.342,94.057,92.805,91.838,91.341,91.404,92.028,93.148,94.666,96.463,98.417,100.407,102.308,103.995,105.345,106.243,106.596,106.36,105.577,104.387,103.027,101.782,100.906,100.569,100.833,101.676,103.015,104.74,106.728,108.852,110.986,113.002,114.768,116.156,117.041,117.332,116.994,116.088,114.79,113.373,112.142,111.356,111.166,111.616,112.662,114.208,116.135,118.315,120.62,122.917,125.073,126.952,128.413,129.327,129.598,129.197,128.203,126.821,125.356,124.135,123.419,123.349,123.953,125.174,126.905,129.022,131.392,133.883,136.359,138.681,140.706,142.284,143.277,143.582,143.171,142.134,140.696,139.188,137.959,137.275,137.277,137.986,139.335,141.212,143.489,146.029,148.698,151.354,153.855,156.049,157.779,158.898,159.295,158.936,157.909,156.45,154.906,153.641,152.939,152.947,153.688,155.096,157.056,159.437,162.102,164.911,167.72,170.382,172.74,174.631,175.902,176.432,176.176,175.214,173.775,172.207,170.886,170.114,170.056,170.747,172.126,174.085,176.491,179.204,182.083,184.981,187.748,190.223,192.241,193.644,194.308,194.177,193.314,191.932,190.365,188.987,188.116,187.937,188.506,189.776,191.647,193.988,196.661,199.521,202.42,205.205,207.714,209.783,211.256,212.006,211.974,211.211,209.904,208.364,206.953,205.99,205.679,206.094,207.209,208.932,211.141,213.698,216.458,219.273,221.986,224.437,226.466,227.921,228.682,228.691,227.991,226.752,225.257,223.848,222.832,222.419,222.698,223.658,225.222,227.272,229.674,232.285,234.955,237.528,239.847,241.756,243.113,243.806,243.788,243.102,241.907,240.463,239.087,238.067,237.607,237.8,238.646,240.075,241.977,244.223,246.669,249.166,251.56,253.699,255.433,256.632,257.198,257.097,256.38,255.201,253.808,252.489,251.511,251.061,251.229,252.015,253.354,255.141,257.249,259.535,261.853,264.053,265.986,267.513,268.517,268.918,268.697,267.918,266.739,265.395,264.153,263.254,262.864,263.06,263.839,265.134,266.841,268.835,270.977,273.12,275.12,276.836,278.14,278.929,279.144,278.784,277.928,276.742,275.451,274.304,273.513,273.222,273.49,274.302,275.59,277.248,279.15,281.159,283.133,284.933,286.427,287.501,288.068,288.088,287.584,286.65,285.461,284.236,283.201,282.542,282.378,282.747,283.622,284.927,286.555,288.379,290.263,292.071,293.671,294.941,295.782,296.126,295.954,295.311,294.31,293.131,291.986,291.082,290.575,290.558,291.047,292.002,293.338,294.945,296.695,298.456,300.098,301.496,302.541,303.15,303.275,302.92,302.151,301.101,299.952,298.908,298.152,297.813,297.955,298.574,299.615,300.986,302.572,304.246,305.88,307.351,308.544,309.364,309.745,309.66,309.136,308.263,307.187,306.093,305.172,304.581,304.421,304.729,305.48,306.605,308.005,309.562,311.152,312.652,313.945,314.93,315.525,315.685,315.403,314.731,313.779,312.706,311.694,310.917,310.506,310.532,311.005,311.882,313.083,314.5,316.017,317.511,318.866,319.974,320.747,321.12,321.067,320.605,319.81,318.811,317.772,316.871,316.257,316.036,316.249,316.882,317.874,319.135,320.554,322.013,323.397,324.595,325.512,326.071,326.227,325.973,325.354,324.466,323.452,322.481,321.716,321.284,321.258,321.654,322.435,323.526,324.829,326.23,327.614,328.872,329.901,330.619,330.964,330.911,330.475,329.724,328.776,327.785,326.914,326.309,326.07,326.241,326.811,327.724,328.893,330.215,331.576,332.867,333.982,334.832,335.346,335.48,335.228,334.632,333.781,332.811,331.879,331.139,330.714,330.674,331.036,331.765,332.79,334.014,335.332,336.631,337.808,338.767,339.428,339.735,339.664,339.231,338.501,337.586,336.632,335.795,335.213,334.981,335.143,335.685,336.554,337.667,338.921,340.209,341.425,342.47,343.258,343.723,343.825,343.559,342.967,342.135,341.195,340.297,339.588,339.185,339.155,339.511,340.218,341.205,342.379,343.637,344.871,345.982,346.878,347.485,347.749,347.65,347.206,346.481,345.585,344.66,343.856,343.305,343.097,343.27,343.809,344.66,345.739,346.948,348.182,349.339,350.324,351.057,351.473,351.536,351.247,350.646,349.821,348.901,348.033,347.359,346.988,346.983,347.352,348.057,349.028,350.172,351.388,352.572,353.629,354.471,355.027,355.247,355.114,354.65,353.92,353.034,352.132,351.36,350.845,350.67,350.868,351.421,352.271,353.335,354.515,355.71,356.821,357.757,358.439,358.808,358.832,358.513,357.895,357.069,356.162,355.321,354.682,354.35,354.379,354.773,355.492,356.461,357.59,358.779,359.927,0.94,1.736,2.245,2.422,2.253,1.762,1.02,0.136,359.253,358.512,358.036,357.901,358.134,358.712,359.574,0.636,1.801,2.97,4.046,4.941,5.579,5.905,5.888,5.536,4.896,4.062,3.164,2.346,1.742,1.451,1.522,1.951,2.693,3.673,4.799,5.972,7.095,8.075,8.832,9.299,9.435,9.229,8.708,7.947,7.061,6.191,5.48,5.043,4.953,5.227,5.838,6.722,7.793,8.954,10.108,11.16,12.022,12.624,12.91,12.854,12.466,11.8,10.952,10.057,9.259,8.69,8.443,8.558,9.028,9.802,10.803,11.936,13.105,14.213,15.17,15.896,16.328,16.425,16.181,15.627,14.843,13.949,13.089,12.404,12.006,11.962,12.282,12.932,13.847,14.936,16.104,17.254,18.291,19.131,19.703,19.954,19.861,19.436,18.739,17.873,16.975,16.193,15.656,15.452,15.616,16.131,16.944,17.973,19.124,20.299,21.404,22.347,23.051,23.454,23.517,23.234,22.645,21.834,20.926,20.069,19.406,19.047,19.048,19.417,20.113,21.065,22.182,23.368,24.525,25.559,26.387,26.938,27.16,27.031,26.569,25.837,24.947,24.041,23.27,22.761,22.6,22.812,23.377,24.235,25.302,26.481,27.675,28.787,29.729,30.422,30.804,30.837,30.519,29.892,29.048,28.12,27.261,26.616,26.291,26.34,26.76,27.507,28.504,29.66,30.875,32.052,33.098,33.926,34.466,34.667,34.508,34.009,33.24,32.32,31.398,30.631,30.147,30.026,30.288,30.907,31.817,32.93,34.15,35.376,36.513,37.469,38.164,38.537,38.549,38.198,37.533,36.653,35.698,34.829,34.194,33.899,33.993,34.466,35.269,36.321,37.527,38.787,40.001,41.074,41.921,42.467,42.659,42.477,41.944,41.136,40.179,39.234,38.462,37.995,37.909,38.221,38.896,39.866,41.038,42.314,43.591,44.77,45.761,46.479,46.86,46.863,46.488,45.787,44.865,43.874,42.985,42.351,42.078,42.212,42.739,43.604,44.721,45.992,47.315,48.588,49.714,50.602,51.176,51.379,51.188,50.628,49.779,48.779,47.799,47.009,46.546,46.487,46.845,47.58,48.617,49.863,51.213,52.564,53.814,54.867,55.637,56.051,56.068,55.683,54.95,53.983,52.945,52.019,51.369,51.104,51.27,51.849,52.78,53.974,55.33,56.741,58.103,59.313,60.278,60.914,61.158,60.982,60.409,59.523,58.47,57.437,56.609,56.131,56.083,56.478,57.272,58.387,59.722,61.172,62.629,63.986,65.144,66.006,66.496,66.561,66.192,65.441,64.426,63.326,62.341,61.647,61.367,61.548,62.171,63.171,64.456,65.92,67.451,68.941,70.284,71.377,72.126,72.461,72.342,71.783,70.87,69.758,68.648,67.749,67.221,67.157,67.571,68.418,69.615,71.06,72.641,74.245,75.762,77.082,78.103,78.733,78.907,78.603,77.863,76.809,75.63,74.549,73.769,73.431,73.593,74.241,75.306,76.693,78.29,79.983,81.657,83.197,84.493,85.439,85.947,85.959,85.475,84.566,83.395,82.181,81.162,80.528,80.395,80.789,81.667,82.945,84.516,86.263,88.068,89.813,91.381,92.656,93.532,93.921,93.776,93.12,92.061,90.796,89.577,88.644,88.175,88.254,88.878,89.982,91.469,93.222,95.121,97.045,98.871,100.478,101.745,102.561,102.843,102.554,101.741,100.55,99.216,98.013,97.183,96.885,97.173,98.022,99.347,101.04,102.977,105.036,107.091,109.015,110.681,111.961,112.742,112.938,112.526,111.577,110.276,108.89,107.716,106.992,106.858,107.346,108.407,109.944,111.84,113.966,116.196,118.4,120.447,122.201,123.527,124.306,124.451,123.949,122.894,121.503,120.078,118.93,118.299,118.309,118.973,120.225,121.959,124.05,126.368,128.779,131.152,133.348,135.225,136.64,137.464,137.606,137.059,135.935,134.477,133.015,131.878,131.31,131.424,132.223,133.63,135.534,137.802,140.3,142.895,145.448,147.815,149.847,151.393,152.312,152.51,151.976,150.831,149.332,147.831,146.678,146.123,146.282,147.154,148.661,150.683,153.087,155.737,158.494,161.216,163.755,165.955,167.657,168.714,169.019,168.558,167.443,165.936,164.4,163.199,162.6,162.731,163.597,165.124,167.19,169.663,172.404,175.27,178.117,180.792,183.136,184.984,186.184,186.623,186.274,185.237,183.759,182.201,180.935,180.245,180.279,181.059,182.517,184.541,186.996,189.743,192.637,195.53,198.268,200.69,202.629,203.933,204.486,204.25,203.31,201.892,200.338,199.014,198.218,198.118,198.756,200.079,201.984,204.34,207.008,209.842,212.692,215.403,217.813,219.758,221.089,221.695,221.533,220.674,219.326,217.801,216.451,215.572,215.347,215.834,216.998,218.746,220.955,223.486,226.193,228.926,231.529,233.841,235.705,236.98,237.561,237.41,236.595,235.304,233.826,232.486,231.572,231.265,231.636,232.661,234.26,236.313,238.685,241.232,243.803,246.243];
+
+function entwirr(a){ /* Sprünge über 0°/360° glätten */
+  var out=a.slice();
+  for(var i=1;i<out.length;i++){
+    while(out[i]-out[i-1]>180) out[i]-=360;
+    while(out[i]-out[i-1]<-180) out[i]+=360;
+  }
+  return out;
+}
+var CHU=entwirr(CH);
+
+window.chironLon=function(T){
+  var jd=T*36525+2451545;
+  var x=(jd-CH_START)/CH_STEP;
+  if(x<1||x>CHU.length-3) return null;
+  var i=Math.floor(x), t=x-i;
+  /* Catmull-Rom */
+  var p0=CHU[i-1],p1=CHU[i],p2=CHU[i+1],p3=CHU[i+2];
+  var v=0.5*((2*p1)+(-p0+p2)*t+(2*p0-5*p1+4*p2-p3)*t*t+(-p0+3*p1-3*p2+p3)*t*t*t);
+  v=v%360; return v<0?v+360:v;
+};
+window.lilithLon=function(T){
+  var P=83.3532465+4069.0137287*T-0.0103200*T*T-Math.pow(T,3)/80053+Math.pow(T,4)/18999000;
+  var v=(P+180)%360; return v<0?v+360:v;
+};
+})();
+
+/* Astro-Charlie · Geistführung — die Inhaltstafeln
+   Alles hier ist Überlieferung und Deutung. Die Rechnung steckt in geist-app.js.
+   Grundgedanke: Das 12. Haus ist in der alten Lehre das Haus des Verborgenen.
+   Wer darüber herrscht und wo dieser Herrscher steht, sagt, über welchen Stoff
+   der Zugang bei diesem Menschen läuft. Nicht ob, sondern womit. */
+
+/* ── Die Tür: der Herrscher des 12. Hauses ───────────────────── */
+var TUER={
+ Sonne:{stoff:'Licht und Stimme',
+  tuer:'Dein Zugang geht über Klarheit, nicht über Dämmerung. Du kommst nicht in Kontakt, indem du dich auflöst, sondern indem du dich hinstellst und etwas aussprichst. Die alte Lehre nennt das Anrufung: Du sagst laut, wer du bist und was du willst.',
+  wie:'Im Licht arbeiten, nicht im Dunkeln. Eine Kerze, ein Fenster nach Osten, der frühe Morgen. Und: laut sprechen. Schon halblaut reicht, aber nicht nur im Kopf.',
+  womit:'Gold, Bernstein, Zitrusduft, Weihrauch, Honig. Die Mittagsstunde.',
+  anker:'ein Stück Bernstein oder eine Messingschale',
+  nicht:'Trance, Dunkelheit, Dämmerzustände, lange Augen-zu-Sitzungen. Da verlierst du den Faden statt ihn zu finden.'},
+ Mond:{stoff:'Wasser und Gefühl',
+  tuer:'Dein Zugang ist der leibhaftigste von allen: Du merkst es zuerst im Körper und an der Stimmung, bevor ein Gedanke da ist. In der Überlieferung ist der Mond die Schwelle — er trägt, was von weiter oben kommt, bis in dein Gefühl.',
+  wie:'Abends, am Wasser oder mit Wasser. Eine Schale, ein Bad, ein Spaziergang am Kanal. Und mit Rückblick: aufschreiben, was der Tag an Stimmung gebracht hat, bevor du fragst.',
+  womit:'Silber, Mondstein, Perlmutt, Jasmin, Milch, Salz. Der Montag, die Mondstunden.',
+  anker:'eine flache Schale mit Wasser',
+  nicht:'Zwang und Takt. Dein Zugang hat Ebbe und Flut — an den Tagen, an denen nichts kommt, kommt nichts, und das ist Teil der Form.'},
+ Merkur:{stoff:'Sprache und Zeichen',
+  tuer:'Bei dir kommt es als <b>Satz</b>. Oder als Bild mit Worten dran, als plötzlich klarer Gedanke, als etwas, das du zufällig liest und das antwortet. Die alte Lehre ordnet Merkur die Boten zu — und die Deutung von Zeichen überhaupt.',
+  wie:'Schreiben, nicht sitzen. Frage oben auf die Seite, Datum daneben, dann schreiben ohne anzuhalten. Karten, Losorakel, aufgeschlagene Bücher sind bei dir keine Spielerei, sondern das passende Werkzeug.',
+  womit:'Papier und Stift. Achat, Kümmel, Minze, Lavendel. Der Mittwoch, die Merkurstunden.',
+  anker:'immer dasselbe Heft und immer derselbe Stift',
+  nicht:'Stillsitzen und Warten. Dein Kanal ist in Bewegung offen, nicht in Ruhe.'},
+ Venus:{stoff:'Schönheit und Hingabe',
+  tuer:'Dein Zugang öffnet sich über Wohlgefühl. Das ist in der Überlieferung kein Luxus, sondern Handwerk: Venus macht weich, und was weich ist, lässt durch. Vor jedem Kontakt steht bei dir etwas Schönes.',
+  wie:'Erst der Körper weich, dann die Frage. Duft, warme Hände, ein Ton, etwas zum Hinschauen. Musik ist bei dir ein Zugang und nicht nur Kulisse. Hingabe statt Konzentration.',
+  womit:'Rosenwasser, Vanille, Kupfer, Rosenquarz, Smaragd, Honigkuchen, Blumen. Der Freitag, die Venusstunden.',
+  anker:'ein Fläschchen Rosenwasser oder ein Stück Rosenquarz',
+  nicht:'Askese und Härte. Fasten, Kälte, Durchhalten, lange unbequeme Sitzungen — das schließt bei dir zu, statt zu öffnen.'},
+ Mars:{stoff:'Hitze und Schnitt',
+  tuer:'Dein Zugang ist kurz und heiß. Er geht über Anstrengung, über die Stelle, an der der Körper warm wird und der Kopf aufhört. Die alte Lehre gibt Mars das Schneiden und das Schützen — Grenze ziehen, Band durchtrennen, Raum freimachen.',
+  wie:'Bewegen, bis es warm ist, und dann still werden. Nicht umgekehrt. Kurze, deutliche Handlungen mit einem klaren Anfang und einem klaren Ende. Schutzarbeit liegt dir.',
+  womit:'Eisen, Rost, Nelke, Pfeffer, Ingwer, Blutstein, rote Kerze. Der Dienstag, die Marsstunden.',
+  anker:'ein Stück Eisen — ein Nagel, ein Schlüssel, eine Klinge',
+  nicht:'Langes Weichwerden. Dir fällt es schwerer, über Hingabe hineinzukommen — aber du kannst dich hineinarbeiten.'},
+ Jupiter:{stoff:'Weite und Segen',
+  tuer:'Dein Zugang ist der freundlichste. Jupiter ist in der alten Lehre der Große Benefik und zugleich der Priesterplanet: Er öffnet über Dank, über Großzügigkeit, über das Gefühl, dass es mehr gibt als das hier. Bei dir kommt der Kontakt leicht — die Arbeit ist, ihn zu begrenzen.',
+  wie:'Mit Dank anfangen, nicht mit der Bitte. Draußen, weit, oben — Hügel, Himmel, hohe Räume. Etwas weggeben, bevor du fragst. Lehren und Weitergeben ist bei dir selbst eine Praxis.',
+  womit:'Weihrauch, Zeder, Salbei, Lapislazuli, Amethyst, Zinn. Der Donnerstag, die Jupiterstunden.',
+  anker:'ein Stück Weihrauch oder ein Zedernholzspan',
+  nicht:'Mehr. Immer mehr Methoden, mehr Lehrer, mehr Bücher. Dein Risiko ist nicht Mangel, es ist Überlauf.'},
+ Saturn:{stoff:'Zeit und Schwelle',
+  tuer:'Dein Zugang ist der strengste und der verlässlichste. Saturn ist in der alten Lehre der Hüter der Schwelle — bei ihm gibt es keinen schnellen Weg, aber einen, der hält. Was du einmal aufgebaut hast, bleibt da.',
+  wie:'Immer gleich, immer zur gleichen Zeit, immer am gleichen Ort. Lieber sieben Minuten täglich über ein Jahr als eine Stunde, wenn dir danach ist. Deine Praxis wird nicht durch Intensität stark, sondern durch Wiederholung.',
+  womit:'Blei, Onyx, Obsidian, Zypresse, Myrrhe, schwarzer Stein, alte Dinge. Der Samstag, die Saturnstunden.',
+  anker:'ein schwarzer Stein, möglichst schwer',
+  nicht:'Spontaneität. Und Ungeduld. Bei dir dauert der Anfang lang und ist dann unerschütterlich — wenn du in den ersten Wochen aufhörst, hast du den ganzen Weg umsonst gegangen.'}
+};
+
+/* Beifarbe: in welchem Zeichen dieser Herrscher steht */
+var TUERZEICHEN={
+ Widder:'Dass {p} in Widder steht, heißt: schnell und am Anfang. Erste Eindrücke, nicht ausgesessene.',
+ Stier:'Dass {p} in Stier steht, heißt: über das Material. Ein Gegenstand, der immer derselbe ist. Berührung, Gewicht, Geruch.',
+ Zwillinge:'Dass {p} in Zwillinge steht, heißt: in Sprache und im Doppelten. Zwei Deutungen gleichzeitig halten können ist bei dir ein Werkzeug, kein Mangel.',
+ Krebs:'Dass {p} in Krebs steht, heißt: über Zuhause, über Wasser, über die Herkunft. Ahnenarbeit liegt nahe.',
+ 'Löwe':'Dass {p} in Löwe steht, heißt: sichtbar und mit Herz. Du brauchst dafür einen Platz, der dir gehört.',
+ Jungfrau:'Dass {p} in Jungfrau steht, heißt: über das Genaue. Kräuter, Reihenfolgen, Listen, Handarbeit. Dienst an etwas.',
+ Waage:'Dass {p} in Waage steht, heißt: über Schönheit und zu zweit. Im Gegenüber wird es bei dir klar.',
+ Skorpion:'Dass {p} in Skorpion steht, heißt: über das Verschwiegene. Was runter geht, nicht was hoch geht. Nicht erschrecken.',
+ 'Schütze':'Dass {p} in Schütze steht, heißt: über Sinn und Ferne. Fremde Traditionen, Reisen, große Fragen.',
+ Steinbock:'Dass {p} in Steinbock steht, heißt: über Form. Ohne Gefäß kommt bei dir nichts an — mit Gefäß alles.',
+ Wassermann:'Dass {p} in Wassermann steht, heißt: über das Eigene. Du wirst keine Linie übernehmen, du wirst eine bauen.',
+ Fische:'Dass {p} in Fische steht, heißt: über Auflösung. Es kommt viel und ohne Rand — die Übung ist nicht Empfangen, sondern Unterscheiden.'
+};
+
+/* ── Der Kanal: Merkur ──────────────────────────────────────── */
+var KANAL={
+ Widder:{wie:'als erster Impuls — der Satz, der sofort da ist, bevor du nachdenkst',ueb:'Den ersten Eindruck aufschreiben und dann <i>nicht</i> gleich handeln. Dein Risiko ist nicht Fehlempfang, es ist Übereilung.'},
+ Stier:{wie:'langsam und körperlich — du weißt es, bevor du es sagen kannst',ueb:'Warte, bis die Worte kommen. Dein Kanal ist langsam und dafür zuverlässig. Nicht hetzen.'},
+ Zwillinge:{wie:'in Worten, Wortspielen, Doppeldeutigkeiten, zufällig Gehörtem',ueb:'Du empfängst viel und schnell. Sortiere danach, nicht währenddessen — sonst verlierst du die Hälfte beim Prüfen.'},
+ Krebs:{wie:'als Bild aus der Erinnerung, als Stimmung, als etwas Familiäres',ueb:'Trenne beim Nachlesen, was Erinnerung ist und was neu war. Beides ist echt, aber es ist nicht dasselbe.'},
+ 'Löwe':{wie:'als ganze Geschichte, dramatisch und mit Bedeutung',ueb:'Frag beim Nachlesen: Steht in der Geschichte etwas, das ich nicht schon wollte? Dein Kanal erzählt gern dich selbst.'},
+ Jungfrau:{wie:'als Detail, als Zahl, als auffälliges Einzelnes — Merkur steht hier in seinem eigenen Haus',ueb:'Du hast einen eingebauten Filter. Dein Risiko ist, zu früh zu verwerfen. Schreib auch das auf, was unsinnig klingt.'},
+ Waage:{wie:'im Vergleich — es wird klar, wenn du zwei Dinge nebeneinander hältst',ueb:'Du brauchst ein Gegenüber, und sei es ein Notizbuch, das antwortet. Allein im Kopf bleibt es unentschieden.'},
+ Skorpion:{wie:'als Ahnung von dem, was nicht gesagt wird',ueb:'Du liest Untertöne sehr genau. Prüf nach, ob der Unterton wirklich da war oder ob du ihn mitgebracht hast.'},
+ 'Schütze':{wie:'als große Linie, als Sinnzusammenhang, als plötzliche Übersicht',ueb:'Die Linie stimmt oft, die Einzelheiten nicht. Notiere die Linie, und lass die Details offen.'},
+ Steinbock:{wie:'trocken und knapp — ein Satz, der eher wie eine Anweisung klingt',ueb:'Du misstraust dem, was kommt, weil es so unspektakulär klingt. Genau das ist bei dir das Echtheitszeichen.'},
+ Wassermann:{wie:'als Einsicht in ein Muster, plötzlich und von außen',ueb:'Es kommt in Sprüngen, nicht im Fluss. Halte es fest, sobald es da ist — es kommt nicht freundlich wieder.'},
+ Fische:{wie:'ganz und ohne Rand — als Bild, als Wissen ohne Quelle, als Satz, von dem du nicht weißt, woher',ueb:'Merkur hat in Fische keine Kanten zum Sortieren. Deine eigentliche Praxis ist deshalb nicht „mehr empfangen", sondern: aufschreiben, <b>datieren</b>, und in vier Wochen nachsehen. Das ist in der Tradition die Unterscheidung der Geister, und bei dir ist sie die Hauptarbeit.'}
+};
+
+/* Merkurs Zustand: wie viel Filter ist eingebaut */
+var KANALZUSTAND={
+ domizil:'Merkur steht in seinem eigenen Zeichen. Du hast einen eingebauten Filter und darfst dich auf deine Einordnung verlassen.',
+ erhoehung:'Merkur ist erhöht. Deine Einordnung ist schärfer als bei den meisten — nutze sie, auch für andere.',
+ exil:'Merkur steht im Exil. Der Empfang ist offen, die Sortierung nicht eingebaut. Du brauchst sie von außen: Heft, Datum, Nachlesen.',
+ exilfall:'Merkur steht <b>im Exil und im Fall</b> — das gibt es nur in diesem einen Zeichen, und es ist die schwächste Stellung, die Merkur überhaupt haben kann. In der alten Lehre heißt das: Er kann hier nicht sortieren. Lies es nicht als Urteil über deinen Verstand, sondern als Angabe über die Bauart: Du empfängst breit und ungefiltert, und der Filter muss von außen kommen — Heft, Datum, Nachlesen. Was dir fehlt, ist kein Vermögen, sondern ein Werkzeug, und Werkzeuge kann man hinlegen.',
+ fall:'Merkur steht im Fall. Du wirst dir selbst am wenigsten glauben. Die Gegenmaßnahme ist nicht mehr Vertrauen, sondern Beleg: aufschreiben und später prüfen, bis du Belege hast.',
+ '':'Merkur ist peregrin — ohne eigene Würde, also beweglich. Er nimmt den Charakter dessen an, womit er verbunden ist.'
+};
+
+/* ── Neptun: wie viel Form du brauchst ─────────────────────── */
+var NEPTUN={
+ Feuer:'Dein Neptun steht in einem Feuerzeichen: Der Kontakt kommt als Begeisterung, als Vision, als etwas, das dich anzündet. Das ist echt und es verfliegt schnell. Schreib es auf, während es brennt.',
+ Erde:'Dein Neptun steht in einem Erdzeichen: Er will Form. Ein Heft, eine Uhrzeit, eine Regel, ein Handwerk. Das ist kein Nebel-Neptun — gib ihm ein Gefäß, und er wird verlässlich. Ohne Gefäß kippt er.',
+ Luft:'Dein Neptun steht in einem Luftzeichen: Der Kontakt kommt als Gedanke, als Muster, als Verstehen. Du wirst ihn zuerst für eine Idee halten. Prüf, ob die Idee von dir war.',
+ Wasser:'Dein Neptun steht in einem Wasserzeichen: Hier ist er zu Hause, und die Grenze zwischen dir und dem, was kommt, ist dünn. Das ist Gabe und Aufgabe gleichzeitig — du brauchst nach jeder Sitzung etwas, das dich zurückholt.'
+};
+var NEPTUNHAUS={
+ 1:'im 1. Haus — am eigenen Körper und Auftritt. Andere spüren das an dir, bevor du etwas sagst.',
+ 2:'im 2. Haus — am eigenen Wert. Das Thema ist, ob du das, was du kannst, auch als deines annimmst.',
+ 3:'im 3. Haus — im Alltäglichen, im Reden, im Nahen. Es kommt in Nebensätzen und auf kurzen Wegen.',
+ 4:'im 4. Haus — zu Hause und bei der Herkunft. Ahnen, Wohnung, der eigene Boden. Hier ist der Ort deiner Praxis selbst wichtig.',
+ 5:'im 5. Haus — im Machen und Spielen. Über Kunst, über Kinder, über das, was du aus Freude tust.',
+ 6:'im 6. Haus — im Tun und im Körper. Über Handarbeit, Pflege, Wiederholung. Dienst ist bei dir ein Zugang.',
+ 7:'im 7. Haus — im Gegenüber. Es wird klar, wenn jemand da ist. Allein bleibt es diffus.',
+ 8:'im 8. Haus — im Verborgenen, in dem, was man erbt, und bei den Toten. Das ist in der alten Lehre die dünnste Stelle zur anderen Seite.',
+ 9:'im 9. Haus — im Glauben und in der Ferne. Lehre, Pilgern, fremde Traditionen. Hier gehört er klassisch hin.',
+ 10:'im 10. Haus — im Sichtbaren und im Beruf. Es gehört nach draußen, nicht in den Keller.',
+ 11:'im 11. Haus — in Gemeinschaft, in Freundschaft, in dem, worauf du hoffst. Mit anderen zusammen geht es leichter.',
+ 12:'im 12. Haus — in seinem eigenen Feld. Rückzug ist bei dir keine Flucht, sondern die Arbeitsform.'
+};
+
+/* ── Glaube: das 9. Haus ───────────────────────────────────── */
+var GLAUBE={
+ Widder:'Du glaubst, was du selbst ausprobiert hast. Fremde Autorität trägt bei dir nicht weit — du musst es einmal am eigenen Leib gehabt haben, dann hält es.',
+ Stier:'Du glaubst, was sich bewährt. Dein Glaube wächst langsam und wirft nichts weg. Alte, einfache, handfeste Formen passen zu dir besser als neue komplizierte.',
+ Zwillinge:'Du glaubst in der Mehrzahl. Du kannst zwei Lehren gleichzeitig ernstnehmen, ohne dass es dich zerreißt — das ist kein Wankelmut, das ist dein Zugang.',
+ Krebs:'Du glaubst, was dich hält. Herkunft, Familie, Ahnen, das Vertraute. Was von weit her kommt, musst du erst nach Hause tragen, bevor es echt wird.',
+ 'Löwe':'Du glaubst, was dich anrührt. Dein Glaube braucht Größe, Feier, Wärme — eine Form, in der etwas gefeiert wird und nicht nur verwaltet.',
+ Jungfrau:'Du glaubst, was funktioniert und sich prüfen lässt. Du willst die Methode genau, die Reihenfolge richtig, die Wirkung nachvollziehbar. Das ist keine Kleinlichkeit, das ist dein Weg zur Hingabe.',
+ Waage:'Du glaubst, was gerecht und schön ist. Eine Lehre, die hässlich oder unfair ist, überzeugt dich nicht, auch wenn sie stimmt.',
+ Skorpion:'Du glaubst, was durch eine Krise gegangen ist. Alles Leichte ist dir verdächtig. Dein Glaube bildet sich an den Stellen, an denen etwas zu Ende gegangen ist.',
+ 'Schütze':'Hier gehört das 9. Haus hin. Du glaubst leicht und gern, und das Risiko ist nicht Zweifel, sondern Weite ohne Boden. Deine Übung ist Auswahl.',
+ Steinbock:'Du glaubst, was Bestand hat. Alt, bewährt, streng, mit Lehrweg. Dir ist eine lange Tradition lieber als eine schöne Idee — und das trägt.',
+ Wassermann:'Du wirst <b>keine Linie übernehmen</b>. Dein Glaube muss selbst gebaut, nachvollziehbar und ausdrücklich dein eigener sein. Guru-Verhältnisse gehen bei dir schief, und das ist keine Schwäche: Du bist auf Eigenbau angelegt.',
+ Fische:'Du glaubst, was du gespürt hast. Dir muss niemand etwas erklären — und du kannst kaum erklären, warum du es weißt. Deine Übung ist, es trotzdem in Worte zu bringen, damit du es teilen kannst.'
+};
+
+/* Wo der Herrscher des 9. Hauses steht — da wird dein Glaube gemacht */
+var GLAUBEHAUS={
+ 1:'Dein Glaube wird an dir selbst gemacht. Du bist die Probe.',
+ 2:'Dein Glaube wird daran gemacht, was er wert ist — was er dir trägt und was er dich kostet.',
+ 3:'Dein Glaube wird im Reden gemacht, im Alltäglichen, auf kurzen Wegen, mit Geschwistern und Nachbarn.',
+ 4:'Dein Glaube wird zu Hause gemacht, bei der Herkunft, bei denen vor dir.',
+ 5:'Dein Glaube wird im Machen gemacht — in Kunst, mit Kindern, im Spiel.',
+ 6:'Dein Glaube wird in der Arbeit gemacht, am Körper, im täglichen Tun.',
+ 7:'Dein Glaube wird <b>im Gegenüber</b> gemacht — eins zu eins, im Gespräch, in der Begegnung. Nicht allein im Studium.',
+ 8:'Dein Glaube wird an Übergängen gemacht — an Verlust, an Erbe, an dem, was zu Ende geht.',
+ 9:'Dein Glaube wird im Glauben selbst gemacht — Lehre, Reise, Studium. Hier sitzt er bei sich.',
+ 10:'Dein Glaube wird in der Öffentlichkeit gemacht. Er gehört in deinen Beruf, nicht daneben.',
+ 11:'Dein Glaube wird in Gemeinschaft gemacht — Freundschaft, Gruppe, gemeinsame Hoffnung.',
+ 12:'Dein Glaube wird im Rückzug gemacht. Allein, still, ohne Zeugen.'
+};
+
+/* ── Sekte: Tag- oder Nachtchart ───────────────────────────── */
+var SEKTE={
+ tag:{titel:'Tagchart',
+  licht:'Die <b>Sonne</b> ist dein führendes Licht. Arbeite bei Tag und mit Absicht: klar sagen, was du willst, im Hellen, mit offenen Augen.',
+  gut:'Jupiter ist bei dir der Benefik der Sekte — der freundliche Planet mit Dienst. Alles, was mit Dank, Weite und Weitergeben zu tun hat, trägt bei dir mehr als bei anderen.',
+  warn:'Mars ist bei dir der Malefik <i>außerhalb</i> der Sekte. Das ist die unruhigste Stelle: Alles, was über Kraft, Zwang, Hitze und Durchhalten gehen will, geht bei dir leicht schief.',
+  wer:'Mars'},
+ nacht:{titel:'Nachtchart',
+  licht:'Der <b>Mond</b> ist dein führendes Licht. Arbeite abends und nachts, mit Gefühl und Körper als erstem Anzeiger — nicht mit Absicht und Ansage.',
+  gut:'Venus ist bei dir der Benefik der Sekte. Schönheit, Duft, Musik, Hingabe, Zärtlichkeit — das ist bei dir nicht Beigabe, das ist der Hauptweg.',
+  warn:'Saturn ist bei dir der Malefik <i>außerhalb</i> der Sekte. Strenge gegen sich selbst, Härte, Verzicht und Schuldgefühl sind die Stelle, an der deine Praxis kalt wird.',
+  wer:'Saturn'}
+};
+
+/* ── Mondphase bei der Geburt: der Rhythmus ───────────────── */
+var PHASEN=[
+ {n:'Neumond',t:'Du bist in den ersten dreieinhalb Tagen nach einem Neumond geboren — in der Phase, in der noch nichts zu sehen ist. Neumond-Menschen fangen von vorn an. Du folgst keiner Karte, du zeichnest eine. Deshalb fühlt sich bei dir kein fremdes System je ganz richtig an, und deshalb <b>musst</b> du dir dein eigenes bauen. Das ist kein Eigensinn, das ist die Anlage.'},
+ {n:'Sichel',t:'Du bist in der zunehmenden Sichel geboren — die Phase, in der etwas aus dem Boden kommt und noch gegen die Schwerkraft kämpft. Bei dir braucht alles Geistige einen Anlauf, und danach läuft es. Die ersten Minuten jeder Praxis sind der schwere Teil. Nicht aufhören, bevor sie vorbei sind.'},
+ {n:'Erstes Viertel',t:'Du bist im ersten Viertel geboren — Halbmond, zunehmend, die Phase der Entscheidung. Du kommst über <b>Handlung</b> hinein, nicht über Stille. Eine Sache tun, die eine Wahl ist. Danach ist der Kanal offen.'},
+ {n:'Vor dem Vollmond',t:'Du bist kurz vor dem Vollmond geboren — alles drängt auf Sichtbarkeit. Du brauchst Zeugen: etwas aussprechen, zeigen, jemandem geben. Allein im Kopf bleibt es unfertig.'},
+ {n:'Vollmond',t:'Du bist im Vollmond geboren — Sonne und Mond sehen sich gegenüber. Bei dir kommt Klarheit im <b>Gegenüber</b>: in der Begegnung, im Gespräch, in der Spiegelung. Allein ist dein schwierigster Zustand und mit einem Menschen dein stärkster.'},
+ {n:'Nach dem Vollmond',t:'Du bist nach dem Vollmond geboren — die Phase des Weitergebens. Was du empfängst, ist nicht nur für dich. Dein Kanal öffnet sich am weitesten, wenn du etwas für jemand anderen fragst.'},
+ {n:'Letztes Viertel',t:'Du bist im letzten Viertel geboren — abnehmender Halbmond, die Phase des Aufräumens. Du kommst über Loslassen hinein. Wegräumen, abschließen, beenden — danach kommt der Kontakt von selbst.'},
+ {n:'Balsamischer Mond',t:'Du bist im balsamischen Mond geboren — den letzten dreieinhalb Tagen vor dem Neumond, der ältesten und dünnsten Phase. In der Überlieferung sind das die Menschen, die von weit her mitbringen. Dein Zugang ist im Rückzug, im Alten, in dem, was zu Ende geht. Du brauchst mehr Alleinsein als andere, und es ist keine Schwermut.'}
+];
+
+/* ── Rhythmus: aus dem Mondzeichen ───────────────────────── */
+var RHYTHMUS={
+ Feuer:{min:'7 bis 10 Minuten',t:'Dein Mond steht in einem Feuerzeichen: Er hält nicht lange, dafür ist er sofort da. Kurz und heiß ist bei dir keine Abkürzung, sondern die richtige Form. Vierzig Minuten sitzen ist bei dir keine tiefere Praxis, sondern eine abgebrochene.'},
+ Erde:{min:'15 bis 20 Minuten',t:'Dein Mond steht in einem Erdzeichen: Er braucht Anlauf und trägt dann lange. Gib dir Zeit zum Ankommen — die ersten fünf Minuten sind noch nichts, danach fängt es an.'},
+ Luft:{min:'10 bis 15 Minuten',t:'Dein Mond steht in einem Luftzeichen: Er arbeitet im Wechsel. Zwei kürzere Einheiten mit etwas dazwischen tragen bei dir weiter als eine lange.'},
+ Wasser:{min:'15 bis 25 Minuten',t:'Dein Mond steht in einem Wasserzeichen: Er geht tief und braucht danach einen Abschluss. Plan das Zurückkommen mit ein — etwas essen, Hände waschen, rausgehen.'}
+};
+var MONDSATURN={
+ flow:'Und dein Mond steht in gutem Winkel zu Saturn: Ein fester kleiner Rahmen fühlt sich bei dir <b>nicht</b> wie Zwang an. Du kannst täglich, wenn es kurz ist. Nutz das — es ist selten.',
+ spannung:'Dein Mond steht in Spannung zu Saturn: Feste Zeiten fühlen sich schnell wie Pflicht an, und dann hörst du auf. Die Lösung ist nicht mehr Disziplin, sondern eine so kleine Form, dass sie nicht wie Pflicht wirkt. Drei Minuten, die du nie auslässt, sind mehr als zwanzig, die du dreimal schaffst.',
+ '':'Dein Mond ist frei von Saturn: Dein Rhythmus kommt von dir, nicht von einer Regel. Du darfst die Form öfter wechseln als andere, solange du sie überhaupt hast.'
+};
+
+/* ── Das 8. Haus: die dünne Stelle ─────────────────────────── */
+var ACHT={
+ Feuer:'Deine achte Stelle ist feurig: Was von der anderen Seite kommt, kommt bei dir plötzlich und deutlich — als Schreck, als Eingebung, als klarer Satz an einem unpassenden Moment.',
+ Erde:'Deine achte Stelle ist erdig: Es kommt über Dinge. Erbstücke, Fotos, Gegenstände von Menschen, die nicht mehr da sind. Ein Gegenstand auf dem Tisch ist bei dir kein Symbol, sondern der Weg.',
+ Luft:'Deine achte Stelle ist luftig: Es kommt als Gedanke und als Zusammenhang, oft beim Lesen oder im Gespräch über jemanden, der gestorben ist.',
+ Wasser:'Deine achte Stelle ist wässrig: Es kommt im Traum und in der Stimmung. Träume sind bei dir Arbeitsmaterial und gehören notiert.'
+};
+
+/* ── Chiron: die Wunde am Empfangen ───────────────────────── */
+var CHIRON={
+ 1:'Chiron im 1. Haus: Die Wunde sitzt an dir selbst — am Auftreten und am Benennen. Das Heilmittel steckt in derselben Stellung: Du wirst nicht sicherer, indem du länger übst, sondern indem du es <b>aussprichst</b> und einem zweiten Menschen gibst.',
+ 2:'Chiron im 2. Haus: Die Wunde sitzt am Wert. „Ich darf das nicht können." Gegenmittel: etwas verschenken, was du empfangen hast.',
+ 3:'Chiron im 3. Haus: Die Wunde sitzt im Sagen. Lernen und Erzählen war einmal gefährlich. Gegenmittel: schreiben, erst nur für dich.',
+ 4:'Chiron im 4. Haus: Die Wunde sitzt in der Herkunft. Zu Hause durfte es das nicht geben. Gegenmittel: einen eigenen Ort einrichten, der nur dafür da ist.',
+ 5:'Chiron im 5. Haus: Die Wunde sitzt an der Freude und am Zeigen. Gegenmittel: etwas machen, das niemand sehen muss.',
+ 6:'Chiron im 6. Haus: Die Wunde sitzt im Körper und im Dienen. Gegenmittel: Praxis als Pflege verstehen, nicht als Leistung.',
+ 7:'Chiron im 7. Haus: Die Wunde sitzt im Gegenüber — einmal hat jemand das Vertrauen gebrochen. Gegenmittel: ein Mensch, der zuhört, ohne zu deuten.',
+ 8:'Chiron im 8. Haus: Die Wunde sitzt am Übergang, am Verlust. Gegenmittel: nichts erzwingen. Hier geht es sehr langsam und dann sehr tief.',
+ 9:'Chiron im 9. Haus: Die Wunde sitzt am Glauben — enttäuschte Lehre, verlorene Religion. Gegenmittel: eigene Formulierung, kein fremdes Bekenntnis.',
+ 10:'Chiron im 10. Haus: Die Wunde sitzt am Ansehen. Die Angst, damit nicht ernstgenommen zu werden. Gegenmittel: genau das zum Beruf machen, aber sauber.',
+ 11:'Chiron im 11. Haus: Die Wunde sitzt in der Gruppe — irgendwann nicht dazugehört. Gegenmittel: ein kleiner Kreis, keine Bühne.',
+ 12:'Chiron im 12. Haus: Die Wunde sitzt im Verborgenen selbst. Oft lange niemandem erzählt. Gegenmittel: einmal aufschreiben, mit Datum, und aufheben.'
+};
+
+/* Astro-Charlie · Geistführung — Rechnung und Darstellung */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function el(i){ return document.getElementById(i); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function jetztJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),
+   n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function uhr(jd){ return datVon(jd).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}); }
+function tagUhr(jd){ var d=datVon(jd);
+ return d.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'})+', '+uhr(jd); }
+function datum(jd){ return datVon(jd).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}); }
+function lonVon(k,jd){var T=(jd-2451545)/36525;
+ return k==='Sonne'?sunLon(T):(k==='Mond'?moonLon(T):geo(k,T));}
+
+var ZEI=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+ 'Schütze','Steinbock','Wassermann','Fische'];
+var GLYPH=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var ELEMENTE=['Feuer','Erde','Luft','Wasser'];
+function elemVon(zi){ return ELEMENTE[zi%4]; }
+/* Klassische Herrscher */
+var HERR=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',
+ 'Jupiter','Saturn','Saturn','Jupiter'];
+/* Moderne Mitherrscher, nur als Hinweis */
+var MITHERR={Skorpion:'Pluto',Wassermann:'Uranus',Fische:'Neptun'};
+var DOMIZIL={Mars:[0,7],Venus:[1,6],Merkur:[2,5],Mond:[3],Sonne:[4],Jupiter:[8,11],Saturn:[9,10]};
+var ERHOEHUNG={Sonne:0,Mond:1,Merkur:5,Venus:11,Mars:9,Jupiter:3,Saturn:6};
+var WOTAG={Sonne:'Sonntag',Mond:'Montag',Mars:'Dienstag',Merkur:'Mittwoch',
+ Jupiter:'Donnerstag',Venus:'Freitag',Saturn:'Samstag'};
+var GEN={Sonne:'der Sonne',Mond:'des Mondes',Merkur:'des Merkur',Venus:'der Venus',
+ Mars:'des Mars',Jupiter:'des Jupiter',Saturn:'des Saturn'};
+
+/* Merkur in Fische ist der einzige Fall, in dem Exil und Fall im gleichen
+   Zeichen zusammenfallen — das gehört beides genannt. */
+function wuerde(pl,zi){
+  var d=DOMIZIL[pl];
+  if(d&&d.indexOf(zi)>=0) return 'domizil';
+  if(ERHOEHUNG[pl]===zi) return 'erhoehung';
+  var exil=!!(d&&d.indexOf((zi+6)%12)>=0), fall=(ERHOEHUNG[pl]===((zi+6)%12));
+  if(exil&&fall) return 'exilfall';
+  if(exil) return 'exil';
+  if(fall) return 'fall';
+  return '';
+}
+var WNAME={domizil:'im eigenen Zeichen',erhoehung:'in Erhöhung',exil:'im Exil',
+ fall:'im Fall',exilfall:'im Exil und im Fall','':'peregrin'};
+
+/* Deutsches Dezimalkomma — 3.6° liest sich im Deutschen falsch */
+function kz(x,n){ return x.toFixed(n===undefined?1:n).replace('.',','); }
+/* Genus der Planeten, damit „Dass sie in Fische steht" richtig wird */
+var PRON={Sonne:'sie',Mond:'er',Merkur:'er',Venus:'sie',Mars:'er',Jupiter:'er',Saturn:'er'};
+var PRON2={Sonne:'ihr',Mond:'ihm',Merkur:'ihm',Venus:'ihr',Mars:'ihm',Jupiter:'ihm',Saturn:'ihm'};
+function pron(s,pl){ return String(s).replace(/\{p\}/g, PRON[pl]||'er')
+  .replace(/\{d\}/g, PRON2[pl]||'ihm'); }
+
+function grad(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r),
+ m=Math.round((r-g)*60); if(m===60){g++;m=0;} return g+'°'+(m<10?'0':'')+m+'′'; }
+function stellung(l){ return grad(l)+' '+ZEI[Math.floor(nrm(l)/30)]; }
+
+/* Kopfzeile eines Blocks: die technische Fassung und daneben eine in Worten.
+   Welche sichtbar ist, entscheidet der Wissensstand (niveau.js). */
+function kopf(voll, leicht){
+  return '<div class="g-formel ac-tech">'+voll+'</div>'+
+         '<div class="g-formel g-leicht" data-bis="1">'+leicht+'</div>';
+}
+function tf(s){ return '<span class="g-pf">'+s+'</span>'; }
+function tp(s){ return '<span class="g-p">'+s+'</span>'; }
+function tz(s){ return '<span class="g-z">'+s+'</span>'; }
+
+/* ── Profil ───────────────────────────────────────────────── */
+var gewaehlt=null;
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  var C={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),
+   Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+  C._jd=jd; C._T=T;
+  if(window.chironLon) C.Chiron=nrm(window.chironLon(T));
+  return C;
+}
+function profil(){
+  var alle=[]; try{ alle=AC_P.alle()||[]; }catch(e){}
+  if(!alle.length) return null;
+  if(!gewaehlt){ var e=alle.filter(function(p){return p.eigen;})[0]||alle[0]; gewaehlt=e.id; }
+  return alle.filter(function(x){return x.id===gewaehlt;})[0]||null;
+}
+function chart(){ var p=profil(); return p?chartVon(p):null; }
+function ort(){
+  var p=profil();
+  if(!p) return {lat:52.52,lon:13.405,name:'Berlin',geraten:true};
+  var la=(p.wlat!==undefined&&p.wlat!==null)?p.wlat:p.lat;
+  var lo=(p.wlon!==undefined&&p.wlon!==null)?p.wlon:p.lon;
+  return {lat:la,lon:lo,name:p.wort||p.ort||'',geraten:false};
+}
+function nameVon(){ var p=profil(); if(!p) return 'dir';
+ try{ return AC_P.anzeige(p,AC_P.zeigeNamen()); }catch(e){ return 'dir'; } }
+
+/* ── Häuser, Aspekte ─────────────────────────────────────── */
+function hausVon(C,l){ return ((Math.floor(nrm(l)/30)-Math.floor(C.ASC/30))%12+12)%12+1; }
+function zeichenDesHauses(C,h){ return (Math.floor(C.ASC/30)+h-1)%12; }
+function bewohner(C,h){
+  var ks=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+  return ks.filter(function(k){ return hausVon(C,C[k])===h; });
+}
+var WINKEL=[[0,'Konjunktion','flow'],[180,'Opposition','spannung'],
+ [90,'Quadrat','spannung'],[120,'Trigon','flow'],[60,'Sextil','flow']];
+function aspekt(C,a,b,orb){
+  if(C[a]===undefined||C[b]===undefined) return null;
+  var d=Math.abs(nrm(C[a]-C[b])); if(d>180) d=360-d;
+  for(var i=0;i<WINKEL.length;i++){
+    var A=WINKEL[i], o=Math.abs(d-A[0]), max=(A[0]===60?Math.min(orb,5):orb);
+    if(o<=max) return {typ:A[1],art:A[2],orb:o};
+  }
+  return null;
+}
+
+/* ── Mondphase bei der Geburt ────────────────────────────── */
+function phaseBeiGeburt(C){
+  var a=nrm(C.Mond-C.Sonne);
+  return {winkel:a, nr:Math.floor(a/45), ph:PHASEN[Math.floor(a/45)]};
+}
+function neumondDavor(jd){
+  function ph(j){ var t=(j-2451545)/36525; return nrm(moonLon(t)-sunLon(t)); }
+  var prev=null, nm=null;
+  for(var j=jd-31;j<jd+0.0001;j+=1/48){ var v=ph(j); if(prev!==null&&v<prev) nm=j; prev=v; }
+  if(nm===null) return null;
+  var a=nm-1/48, b=nm;
+  for(var i=0;i<40;i++){ var m=(a+b)/2; if(ph(m)>180) a=m; else b=m; }
+  return (a+b)/2;
+}
+function neumondDanach(jd){
+  function ph(j){ var t=(j-2451545)/36525; return nrm(moonLon(t)-sunLon(t)); }
+  var prev=ph(jd), nm=null;
+  for(var j=jd+1/48;j<jd+40;j+=1/48){ var v=ph(j); if(v<prev){ nm=j; break; } prev=v; }
+  if(nm===null) return null;
+  var a=nm-1/48, b=nm;
+  for(var i=0;i<40;i++){ var m=(a+b)/2; if(ph(m)>180) a=m; else b=m; }
+  return (a+b)/2;
+}
+
+/* ── Blöcke ──────────────────────────────────────────────── */
+function bauTuer(C){
+  var h12=zeichenDesHauses(C,12), hz=ZEI[h12], pl=HERR[h12];
+  var pz=Math.floor(nrm(C[pl])/30), ph=hausVon(C,C[pl]), w=wuerde(pl,pz);
+  var T=TUER[pl];
+  var bew=bewohner(C,12);
+  var h='<div class="g-gross"><div class="g-k">Die Tür</div>';
+  h+=kopf(
+    tz(GLYPH[h12]+' '+hz)+tf('ist dein 12. Haus · Herrscher')+tp(pl)+tf('steht in')+
+    tz(stellung(C[pl]))+tf('im '+ph+'. Haus · '+WNAME[w]),
+    tf('Der Bereich hinter dem Vorhang gehört bei dir')+tz(hz)+
+    tf('und wird geführt von')+tp(pl));
+  h+='<div class="g-stoff">Dein Stoff: <b>'+T.stoff+'</b></div>';
+  h+='<p>'+T.tuer+'</p>';
+  h+='<p class="g-bei">'+pron(TUERZEICHEN[ZEI[pz]]||'',pl)+'</p>';
+  if(w==='erhoehung'||w==='domizil')
+    h+='<p class="g-stark">Und '+pl+' steht <b>'+WNAME[w]+'</b> — '+PRON[pl]+' kann, was '+PRON[pl]+' soll. '+
+       'Das ist die stärkste Aussage in diesem Abschnitt: Dein Zugang zum Unsichtbaren ist nicht beschädigt, '+
+       'er ist nur vielleicht unbenutzt.</p>';
+  if(w==='exil'||w==='fall')
+    h+='<p class="g-schwach">'+pl+' steht <b>'+WNAME[w]+'</b> — '+PRON[pl]+' arbeitet gegen das Material. '+
+       'Das heißt nicht, dass die Tür zu ist. Es heißt, dass du sie bewusst bauen musst, '+
+       'statt darauf zu warten, dass sie von selbst aufgeht.</p>';
+  if(ph>=10)
+    h+='<p class="g-raus"><b>Und es gehört nach draußen.</b> Der Herrscher deines 12. Hauses steht im '+ph+'. Haus — '+
+       'im sichtbaren Teil des Charts. Deine verborgene Arbeit ist nicht als Privatkeller angelegt, '+
+       'sondern als etwas, das rauskommt.</p>';
+
+  h+='<div class="g-reihe">';
+  h+='<div class="gk"><b>So</b>'+T.wie+'</div>';
+  h+='<div class="gk"><b>Womit</b>'+T.womit+'</div>';
+  h+='<div class="gk warn"><b>Nicht</b>'+T.nicht+'</div>';
+  h+='</div>';
+
+  if(bew.length){
+    h+='<div class="g-bew"><b>Im 12. Haus selbst steht '+(bew.length>1?'':'')+
+       bew.join(' und ')+'.</b> ';
+    h+='In der alten Lehre ist das Haus des Verborgenen kein freundlicher Ort für Planeten — '+
+       'was dort steht, wirkt, ohne gesehen zu werden. '+
+       (bew.length>1?'Diese Planeten sind':'Dieser Planet ist')+
+       ' bei dir Teil der Praxis, aber nicht ihr Eingang. Der Eingang ist '+pl+'.</div>';
+  } else {
+    h+='<div class="g-bew">Dein 12. Haus ist <b>leer</b>. Das ist kein Mangel — es heißt, '+
+       'dass dein Zugang ganz über '+pl+' läuft und über nichts sonst. Einfacher, aber enger: '+
+       'Es gibt bei dir eine Tür, nicht drei.</div>';
+  }
+  h+='</div>';
+  el('tuer').innerHTML=h;
+}
+
+function bauKanal(C){
+  var asz=Math.floor(C.ASC/30), ch=HERR[asz];
+  var mz=Math.floor(nrm(C.Merkur)/30), mh=hausVon(C,C.Merkur), mw=wuerde('Merkur',mz);
+  var K=KANAL[ZEI[mz]];
+  var h='<div class="g-gross"><div class="g-k">Der Kanal</div>';
+  h+=kopf(
+    tp('Merkur')+tf('in')+tz(stellung(C.Merkur))+tf('im '+mh+'. Haus · '+WNAME[mw]),
+    tf('Dein Denken und Empfangen steht in')+tz(ZEI[mz]));
+  h+='<p>Es kommt bei dir <b>'+K.wie+'</b>.</p>';
+  h+='<div class="g-ueb"><b>Deine Übung</b>'+K.ueb+'</div>';
+  h+='<p class="g-bei">'+KANALZUSTAND[mw]+'</p>';
+  if(ch==='Merkur')
+    h+='<p class="g-stark">Und Merkur ist bei dir zugleich <b>Chartherrscher</b> — Herrscher deines Aszendenten. '+
+       'Das heißt: Dieser Kanal ist nicht eine Nebenfähigkeit, er ist die Art, wie du überhaupt in der Welt bist. '+
+       'Was du empfängst, ist bei dir nie nur Information. Es ist Identität.</p>';
+  else
+    h+='<p class="g-bei">Dein Chartherrscher ist <b>'+ch+'</b> ('+stellung(C[ch])+', '+hausVon(C,C[ch])+'. Haus) — '+
+       'der Planet, der dich insgesamt führt. Merkur ist der Empfang; '+ch+' ist die Richtung.</p>';
+
+  var ns=[['Neptun','Neptun'],['Pluto','Pluto'],['Mond','Mond'],['Saturn','Saturn']];
+  var li=[];
+  ns.forEach(function(x){
+    var a=aspekt(C,'Merkur',x[0],6);
+    if(a) li.push('<li><span class="w '+a.art+'">'+(a.art==='flow'?'offen':'eng')+'</span>'+
+      '<b>Merkur '+a.typ+' '+x[1]+'</b> ('+kz(a.orb)+'°) — '+
+      ({Neptun:'die klassische Verbindung zum Unsichtbaren. '+(a.art==='flow'?'Sie ist bei dir offen: Eindrücke kommen leicht und oft.':'Sie ist bei dir unter Spannung: Es kommt viel, aber du traust es dir nicht zu. Das ist der Winkel, der nach Beleg verlangt.'),
+        Pluto:'die Tiefe. '+(a.art==='flow'?'Du liest, was unter der Oberfläche liegt, ohne Mühe.':'Du liest es auch, aber es kostet dich etwas. Dosieren.'),
+        Mond:'Gefühl und Wort liegen bei dir zusammen. '+(a.art==='flow'?'Du kannst sagen, was du spürst — das ist die halbe Arbeit.':'Du spürst früher, als du sagen kannst. Erst Körper, dann Worte.'),
+        Saturn:'Struktur am Denken. '+(a.art==='flow'?'Du kannst ordnen, was kommt. Verlass dich darauf.':'Du prüfst zu hart und verwirfst zu früh. Schreib erst alles auf, urteile später.')})[x[0]]+'</li>');
+  });
+  if(li.length) h+='<ul class="g-li">'+li.join('')+'</ul>';
+  h+='</div>';
+  el('kanal').innerHTML=h;
+}
+
+function bauForm(C){
+  var nz=Math.floor(nrm(C.Neptun)/30), nh=hausVon(C,C.Neptun);
+  var h='<div class="g-gross"><div class="g-k">Wie viel Form du brauchst</div>';
+  h+=kopf(
+    tp('Neptun')+tf('in')+tz(stellung(C.Neptun))+tf('im '+nh+'. Haus'),
+    tf('Dein Planet für alles Unscharfe steht in')+tz(ZEI[nz]));
+  h+='<p>'+NEPTUN[elemVon(nz)]+'</p>';
+  h+='<p>Er steht '+NEPTUNHAUS[nh]+'</p>';
+  var sp=[];
+  ['Sonne','Mond','Merkur','Jupiter'].forEach(function(k){
+    var a=aspekt(C,'Neptun',k,6);
+    if(a&&a.art==='spannung') sp.push({k:k,a:a});
+  });
+  if(sp.length){
+    h+='<div class="g-ueb warn"><b>Das Gefäß ist Pflicht, nicht Kür</b>'+
+      'Neptun steht bei dir in Spannung zu '+sp.map(function(x){return x.k+' ('+x.a.typ+', '+kz(x.a.orb)+'°)';}).join(' und ')+'. '+
+      'Das ist die Stelle, an der es ohne Form kippt — entweder zu viel Glauben oder plötzlich gar keiner, '+
+      (sp.filter(function(x){return x.k==='Sonne';}).length?'und mit der Sonne dabei auch das Gefühl, wer du eigentlich bist. ':'')+
+      'Deshalb: feste Uhrzeit, festes Heft, feste Länge. Nicht aus Strenge — als Schutz.</div>';
+  } else {
+    h+='<div class="g-ueb"><b>Du hast Spielraum</b>Neptun steht bei dir frei von harten Winkeln zu den persönlichen Planeten. '+
+      'Du kannst mit offenen Formen arbeiten, ohne dich zu verlieren. Die Form ist bei dir Komfort, nicht Notwehr.</div>';
+  }
+  h+='</div>';
+  el('form').innerHTML=h;
+}
+
+function bauGlaube(C){
+  var z9=zeichenDesHauses(C,9), pl=HERR[z9], ph=hausVon(C,C[pl]);
+  var bew=bewohner(C,9);
+  var h='<div class="g-gross"><div class="g-k">Woran du glaubst — und wo das gemacht wird</div>';
+  h+=kopf(
+    tz(GLYPH[z9]+' '+ZEI[z9])+tf('ist dein 9. Haus · Herrscher')+tp(pl)+tf('im '+ph+'. Haus'),
+    tf('Dein Glaubensbereich gehört')+tz(ZEI[z9]));
+  h+='<p>'+GLAUBE[ZEI[z9]]+'</p>';
+  h+='<p><b>'+GLAUBEHAUS[ph]+'</b></p>';
+  if(MITHERR[ZEI[z9]])
+    h+='<p class="g-bei">Modern wird '+ZEI[z9]+' auch '+MITHERR[ZEI[z9]]+' zugeordnet ('+
+       stellung(C[MITHERR[ZEI[z9]]])+', '+hausVon(C,C[MITHERR[ZEI[z9]]])+'. Haus). '+
+       'Diese Seite rechnet klassisch, aber beides zusammen gelesen ergibt oft das vollständigere Bild.</p>';
+  if(!bew.length)
+    h+='<p class="g-bei">Dein 9. Haus ist leer. Das heißt nicht, dass du nicht glaubst — es heißt, '+
+       'dass dein Glaube nicht an einem Ort sitzt, sondern dort gemacht wird, wo '+pl+' steht: im '+ph+'. Haus.</p>';
+  else
+    h+='<p class="g-bei">Im 9. Haus selbst steht '+bew.join(' und ')+' — '+
+       'da arbeitet dein Glaube unmittelbar, nicht über einen Umweg.</p>';
+  h+='</div>';
+  el('glaube').innerHTML=h;
+}
+
+function bauSekte(C){
+  var sh=hausVon(C,C.Sonne), tag=(sh>=7);
+  var S=tag?SEKTE.tag:SEKTE.nacht;
+  var mal=S.wer, mh=hausVon(C,C[mal]), mz=Math.floor(nrm(C[mal])/30), mw=wuerde(mal,mz);
+  var h='<div class="g-gross"><div class="g-k">Deine Sekte</div>';
+  h+=kopf(
+    tp(S.titel)+tf('Sonne im '+sh+'. Haus, also '+(tag?'über':'unter')+' dem Horizont'),
+    tp(S.titel)+tf('du bist '+(tag?'bei Tageslicht':'nach Sonnenuntergang')+' geboren'));
+  h+='<p>'+S.licht+'</p><p>'+S.gut+'</p>';
+  h+='<div class="g-ueb warn"><b>Die wacklige Stelle</b>'+S.warn+'<br><br>'+
+     'Bei dir steht '+mal+' in '+stellung(C[mal])+', im '+mh+'. Haus'+(mw?', '+WNAME[mw]:'')+'. ';
+  if(mh===12) h+='<b>Und zwar im 12. Haus selbst</b> — genau in dem Feld, um das es auf dieser Seite geht. '+
+    'Das ist die klarste Warnung, die dein Chart hier ausspricht: Der Weg über '+
+    (mal==='Mars'?'Kraft, Zwang und Durchhalten':'Strenge, Verzicht und Selbstdisziplin bis zur Härte')+
+    ' ist bei dir nicht nur unergiebig, er ist die Stelle, an der es trüb wird.';
+  else if(HERR[zeichenDesHauses(C,12)]===mal) h+='<b>Und er herrscht über dein 12. Haus</b> — '+
+    'das heißt, du kommst nicht um ihn herum, sondern musst ihn mild halten: kurz, dosiert, mit Pause.';
+  else h+='Er ist also nicht direkt am Verborgenen beteiligt. Gut — halte ihn da auch raus.';
+  h+='</div></div>';
+  el('sekte').innerHTML=h;
+}
+
+function bauRhythmus(C){
+  var mz=Math.floor(nrm(C.Mond)/30), R=RHYTHMUS[elemVon(mz)];
+  var a=aspekt(C,'Mond','Saturn',6);
+  var art=a?a.art:'';
+  var P=phaseBeiGeburt(C);
+  var nm=neumondDavor(C._jd);
+  var h='<div class="g-gross"><div class="g-k">Dein Rhythmus</div>';
+  h+=kopf(
+    tp('Mond')+tf('in')+tz(stellung(C.Mond))+tf('·')+tp(R.min),
+    tf('Dein Mond steht in')+tz(ZEI[mz])+tf('· deine Länge:')+tp(R.min));
+  h+='<p>'+R.t+'</p>';
+  h+='<p>'+MONDSATURN[art]+(a?' <span class="g-orb">(Mond '+a.typ+' Saturn, '+kz(a.orb)+'°)</span>':'')+'</p>';
+  h+='<div class="g-phase"><div class="g-k">Mondphase bei der Geburt · '+P.ph.n+'</div>'+
+     '<div class="g-pw">'+kz(P.winkel)+'° zwischen Sonne und Mond — Phase '+(P.nr+1)+' von 8</div>'+
+     '<p>'+P.ph.t+'</p>';
+  if(nm!==null){
+    var std=(C._jd-nm)*24;
+    h+='<p class="g-bei">Der Neumond davor war am '+datum(nm)+' in '+ZEI[Math.floor(nrm(lonVon('Sonne',nm))/30)]+
+       ' — '+(std<48?Math.round(std)+' Stunden':kz(std/24)+' Tage')+' vor deiner Geburt.</p>';
+  }
+  h+='</div></div>';
+  el('rhythmus').innerHTML=h;
+}
+
+function bauTief(C){
+  var z8=zeichenDesHauses(C,8), bew=bewohner(C,8);
+  var h='<div class="g-gross"><div class="g-k">Die dünne Stelle</div>';
+  h+=kopf(
+    tz(GLYPH[z8]+' '+ZEI[z8])+tf('ist dein 8. Haus')+
+      (bew.length?tf('·')+tp(bew.join(', ')):''),
+    tf('Der Bereich der Übergänge gehört bei dir')+tz(ZEI[z8]));
+  h+='<p>In der alten Lehre ist das 8. Haus das Haus dessen, was man nicht sieht und trotzdem erbt: '+
+     'der Toten, des Übergangs, des Verschwiegenen. Wer mit Führung arbeitet, arbeitet hier.</p>';
+  h+='<p>'+ACHT[elemVon(z8)]+'</p>';
+  if(bew.length)
+    h+='<p class="g-bei">Dass '+bew.join(' und ')+' dort '+(bew.length>1?'stehen':'steht')+', '+
+       'macht diese Stelle bei dir aktiv — sie meldet sich, ob du willst oder nicht. '+
+       'Das ist ein Argument für eine feste Form: nicht um es zu unterdrücken, '+
+       'sondern damit es einen Platz hat.</p>';
+  if(C.Chiron!==undefined){
+    var cz=Math.floor(C.Chiron/30), chh=hausVon(C,C.Chiron);
+    h+='<div class="g-chiron"><div class="g-k">Die Wunde am Empfangen · Chiron</div>'+
+      '<div class="g-pw">'+stellung(C.Chiron)+' · '+chh+'. Haus</div><p>'+CHIRON[chh]+'</p>';
+    var ca=aspekt(C,'Chiron','Saturn',7);
+    if(ca&&ca.art==='spannung')
+      h+='<p class="g-bei">Chiron steht dabei in Spannung zu Saturn ('+ca.typ+', '+kz(ca.orb)+'°) — '+
+        'das ist typischerweise die Erfahrung, einmal gesagt bekommen zu haben, dass die eigene '+
+        'Wahrnehmung nicht zählt. Von außen, von jemandem mit Autorität. Es ist nachvollziehbar, '+
+        'dass du dir selbst zuerst nicht glaubst. Es ist aber nicht wahr.</p>';
+    h+='</div>';
+  }
+  h+='</div>';
+  el('tief').innerHTML=h;
+}
+
+/* ── Die Praxis, zusammengesetzt ────────────────────────── */
+function bauPraxis(C){
+  var h12=zeichenDesHauses(C,12), pl=HERR[h12], T=TUER[pl];
+  var mz=Math.floor(nrm(C.Mond)/30), R=RHYTHMUS[elemVon(mz)];
+  var kz=Math.floor(nrm(C.Merkur)/30);
+  var asz=Math.floor(C.ASC/30), ch=HERR[asz];
+  var tag=hausVon(C,C.Sonne)>=7;
+  var schritte=[
+   {k:'Rahmen',t:'<b>'+R.min+'</b>, immer zur gleichen Zeit, immer am gleichen Ort. '+
+     (tag?'Am Tag, im Hellen.':'Abends oder nachts.')+' Nicht länger — Länge ist bei dir kein Qualitätsmerkmal.'},
+   {k:'Öffnen',t:pron(T.wie,pl)},
+   {k:'Anker',t:'Ein Gegenstand, der <b>immer derselbe</b> ist: '+T.anker+'. '+
+     'Nicht wechseln. Der Gegenstand macht die Arbeit der Erinnerung, nicht dein Wille.'},
+   {k:'Fragen',t:'Eine Frage, ausgeschrieben, oben auf die Seite. <b>Mit Datum.</b> '+
+     'Offene Fragen („was braucht X") tragen weiter als Ja-Nein-Fragen.'},
+   {k:'Empfangen',t:'Es kommt bei dir '+KANAL[ZEI[kz]].wie+'. Nimm das erste, nicht das dritte — '+
+     'das dritte hast du gemacht.'},
+   {k:'Schließen',t:'Danken und aufhören. Ein Satz reicht. Dann etwas Körperliches: '+
+     'Hände waschen, etwas essen, rausgehen. Ohne Abschluss bleibt die Tür auf.'},
+   {k:'Nachlesen',t:'Einmal im Monat, zum Neumond: Heft von vorn, mit Datum danebenlegen. '+
+     'Was ist eingetroffen, was nicht. <b>Das ist der Teil, der aus Gefühl Erfahrung macht</b> — '+
+     'und in der Tradition heißt er Unterscheidung der Geister, nicht Skepsis.'}
+  ];
+  var h='<ol class="g-schritte">';
+  schritte.forEach(function(s){ h+='<li><b>'+s.k+'</b>'+s.t+'</li>'; });
+  h+='</ol>';
+  h+='<div class="g-ueb"><b>Und wenn du dafür einen Namen brauchst</b>'+
+    'Ob du das, was antwortet, Führung nennst, Ahnen, höheres Selbst, '+ch+' oder einfach „das, was ich weiß, '+
+    'wenn ich still bin" — die Tradition schreibt dir das nicht vor, und dein Chart auch nicht. '+
+    'Was dein Chart vorschreibt, ist der <b>Stoff</b>: '+T.stoff+'. Daran musst du dich halten, '+
+    'nicht an eine Bezeichnung.</div>';
+  el('praxis').innerHTML=h;
+}
+
+/* ── Deine Zeiten, live ─────────────────────────────────── */
+function bauZeiten(C){
+  var jd=jetztJD(), O=ort();
+  var asz=Math.floor(C.ASC/30), ch=HERR[asz];
+  var h12=zeichenDesHauses(C,12), pl12=HERR[h12];
+  var h='<div class="g-reihe g-zeiten">';
+  var st=null;
+  try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e){}
+  if(st&&!st.polar){
+    h+='<div class="gk"><b>Jetzt</b>Stunde '+GEN[st.herr]+'<span>Tagesherr: '+st.tagesherr+
+       ' · bis '+uhr(st.bis)+'</span></div>';
+    /* nächste Stunde des Chartherrschers und des 12.-Haus-Herrschers */
+    [[ch,'Chartherrscher'],[pl12,'Tür']].forEach(function(x){
+      if(!GEN[x[0]]) return;
+      var tab=null; try{ tab=AC_HIMMEL.stundenTabelle(jd,O.lat,O.lon); }catch(e){}
+      var tr=null;
+      if(tab&&tab.length) for(var i=0;i<tab.length;i++){ if(tab[i].herr===x[0]&&tab[i].bis>jd){ tr=tab[i]; break; } }
+      h+='<div class="gk"><b>'+x[1]+' · '+x[0]+'</b>'+
+        (tr?('Nächste Stunde '+(tr.von<=jd?'läuft jetzt':'ab '+uhr(tr.von))):'heute keine mehr')+
+        '<span>Tag: '+WOTAG[x[0]]+'</span></div>';
+    });
+  } else {
+    h+='<div class="gk"><b>Jetzt</b>Planetenstunden gibt es an diesem Ort gerade nicht — '+
+       'die Sonne geht nicht auf oder nicht unter.</div>';
+  }
+  /* Nächster Neumond */
+  var nm=neumondDanach(jd);
+  if(nm!==null){
+    var nz=Math.floor(nrm(lonVon('Sonne',nm))/30);
+    var eigen=(nz===Math.floor(nrm(C.Sonne)/30))?' — in deinem Sonnenzeichen':
+              (nz===Math.floor(nrm(C.Mond)/30))?' — in deinem Mondzeichen':
+              (nz===h12)?' — in deinem 12. Haus':'';
+    h+='<div class="gk'+(eigen?' warn':'')+'"><b>Nächster Neumond</b>'+datum(nm)+' in '+ZEI[nz]+
+       '<span>'+(eigen?eigen.replace(' — ',''):'Rückblick-Termin')+'</span></div>';
+  }
+  /* Mond durch dein 12. Haus */
+  var ml=lonVon('Mond',jd), mzi=Math.floor(nrm(ml)/30);
+  if(mzi===h12){
+    h+='<div class="gk warn"><b>Mond im 12.</b>jetzt — in '+ZEI[h12]+
+       '<span>die stillste Zeit im Monat, zweieinhalb Tage lang</span></div>';
+  } else {
+    var dz=((h12-mzi)+12)%12;
+    var tage=((dz*30)-(nrm(ml)-mzi*30))/13.18;
+    h+='<div class="gk"><b>Mond im 12.</b>in etwa '+Math.max(0,Math.round(tage))+' Tagen'+
+       '<span>'+ZEI[h12]+' · jeden Monat zweieinhalb Tage</span></div>';
+  }
+  h+='</div>';
+  el('zeiten').innerHTML=h;
+}
+
+/* ── Profilwahl ─────────────────────────────────────────── */
+function wahlBauen(){
+  var box=el('gwahl'), alle=[];
+  try{ alle=AC_P.alle()||[]; }catch(e){}
+  box.innerHTML='';
+  if(!alle.length){
+    box.innerHTML='<p class="g-leer">Noch kein Profil angelegt. '+
+      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und Geburtsort '+
+      'kann diese Seite nichts rechnen, weil alles hier an den Häusern hängt.</p>';
+    return false;
+  }
+  if(!gewaehlt){ var e=alle.filter(function(p){return p.eigen;})[0]||alle[0]; gewaehlt=e.id; }
+  var zn=false; try{ zn=AC_P.zeigeNamen(); }catch(e){}
+  alle.forEach(function(p){
+    var b=document.createElement('button');
+    b.type='button';
+    b.className='gw'+(p.id===gewaehlt?' ist':'');
+    b.textContent=AC_P.anzeige(p,zn);
+    b.addEventListener('click',function(){ gewaehlt=p.id; wahlBauen(); allesNeu(); });
+    box.appendChild(b);
+  });
+  return true;
+}
+
+function allesNeu(){
+  var C=chart();
+  if(!C) return;
+  el('gleer').style.display='none';
+  el('ginhalt').style.display='';
+  bauTuer(C); bauKanal(C); bauForm(C); bauGlaube(C);
+  bauSekte(C); bauRhythmus(C); bauTief(C); bauPraxis(C); bauZeiten(C);
+  /* Die Stufen-Nachbearbeitung über den neu gebauten Text noch einmal laufen lassen */
+  if(window.AC_NIV&&window.AC_NIV.anwenden) try{ window.AC_NIV.anwenden(); }catch(e){}
+}
+
+(function(){
+  if(!wahlBauen()){
+    el('gleer').style.display='';
+    el('ginhalt').style.display='none';
+    return;
+  }
+  allesNeu();
+  setInterval(function(){ var C=chart(); if(C) bauZeiten(C); }, 60000);
+})();
+
+</script>
+</body></html>
