@@ -1,0 +1,42 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+
+<div class="an-wrap">
+<div class="an-kopf">
+  <h1>Die <em>Analyse.</em></h1>
+  <p class="an-lede">Kein Nachschlagewerk &mdash; eine Rechnung. Du w&auml;hlst ein Thema und eine oder zwei Personen, das System sammelt alle Stellungen, die daf&uuml;r z&auml;hlen, erkennt die <b>Kombinationen</b> und baut daraus ein Ergebnis mit Ans&auml;tzen. Den Bericht kannst du ziehen.</p>
+</div>
+
+<div class="an-wahl">
+  <div class="an-feld"><span class="k">Thema</span><div class="an-themen" id="anthema"></div></div>
+  <div class="an-feld"><span class="k">Wer</span><div id="antpersonen"></div></div>
+</div>
+
+<div id="anergebnis"></div>
+<div id="anbefunde"></div>
+
+<div class="an-werk" id="anwerk" hidden>
+  <div class="an-wz">
+    <button type="button" id="ankopie">Bericht kopieren</button>
+    <button type="button" id="andruck">Drucken</button>
+    <span class="an-echo" id="anecho"></span>
+  </div>
+  <p class="an-meta"><span id="anzahl">0</span> Regeln haben gegriffen. <span id="anfehler"></span></p>
+</div>
+
+<div class="an-fuss">
+  <h3>Wie das Ergebnis zustande kommt</h3>
+  <p>Jedes Thema sagt, welche H&auml;user, Planeten und Achsen f&uuml;r diese Frage z&auml;hlen. Ein Regelsatz pr&uuml;ft dann <b>Kombinationen</b> &mdash; nicht einzelne Stellungen, sondern ihr Zusammentreffen: zwei Monde im selben Element, Saturn im siebten Haus der anderen, ein fehlendes Element bei beiden. Jede Regel, die greift, bringt ein Gewicht mit. Das Ergebnis ist die Summe, nicht ein Textbaustein.</p>
+  <p>Was eine Regel nicht findet, steht nicht im Bericht. Das ist Absicht: Lieber ein kurzer Befund, der stimmt, als ein langer, der f&uuml;r jeden passt.</p>
+  <p style="margin-bottom:0"><b>Und die Grenze.</b> Ein Chart sagt nichts dar&uuml;ber, ob zwei Menschen zusammen gl&uuml;cklich werden. Es beschreibt, womit sie ausgestattet sind &mdash; nicht, was sie daraus machen. Was hier steht, gilt nur so weit, wie die Menschen es best&auml;tigen; widersprechen sie, haben sie recht.</p>
+</div>
+
+<div class="weiter"><a href="beziehung.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Zwei Charts nebeneinander</span></a><a href="dossier.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Das Dossier zu einer Person</span></a></div>
+<div class="foot">Analyse &middot; H&auml;user im Whole-Sign-System, klassische Herrscher. Orben: 7&deg; bei Konjunktion und Opposition, 5&deg; sonst.<br>
+Die Regels&auml;tze liegen im Quelltext unter <i>analyse/</i> und sind erweiterbar &mdash; eine Regel ist ein Objekt mit <i>wenn</i> und <i>dann</i>.</div>
+</div>

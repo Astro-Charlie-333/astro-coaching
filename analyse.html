@@ -1,0 +1,1714 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Analyse &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="kleine-punkte.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Die Analyse ────────────────────────────────────────────── */
+.an-wrap{max-width:1060px;margin:0 auto;padding:34px 26px 100px;}
+@media(max-width:620px){.an-wrap{padding:24px 17px 70px;}}
+.an-kopf h1{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(32px,6vw,54px);
+ font-weight:300;line-height:1.02;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 14px;}
+.an-kopf h1 em{font-style:italic;color:var(--messing,#9A7235);}
+.an-lede{font-size:16.5px;line-height:1.7;color:var(--leise,#6B6259);max-width:64ch;margin:0 0 26px;}
+.an-lede b{color:var(--nacht,#2E3A5C);font-weight:500;}
+
+/* Wahl */
+.an-wahl{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:22px;padding:20px 22px;margin-bottom:24px;}
+@media(max-width:620px){.an-wahl{padding:16px 15px;}}
+.an-feld+.an-feld{margin-top:18px;padding-top:18px;border-top:1px solid var(--linie,#EBE1D2);}
+.an-feld>.k{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
+ letter-spacing:.14em;text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:10px;}
+.an-themen{display:grid;grid-template-columns:repeat(auto-fit,minmax(218px,1fr));gap:9px;}
+.th{text-align:left;font-family:inherit;background:var(--creme,#FCF7EF);
+ border:1px solid var(--linie-stark,#DDD0BC);border-radius:16px;padding:13px 15px;cursor:pointer;
+ color:var(--tinte,#231F1A);min-width:0;position:relative;}
+.th:hover{border-color:var(--nacht,#2E3A5C);}
+.th b{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.5px;
+ font-weight:500;color:var(--nacht,#2E3A5C);margin-bottom:4px;}
+.th span{display:block;font-size:13.2px;line-height:1.5;color:var(--leise,#6B6259);
+ text-wrap:pretty;overflow-wrap:normal;}
+.th i{display:inline-block;margin-top:7px;font-style:normal;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--messing,#9A7235);
+ background:var(--messing-bg,#F7EFE1);border-radius:9px;padding:3px 8px;}
+.th.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
+.th.ist b{color:#fff;} .th.ist span{color:rgba(244,239,230,.75);}
+.th.ist i{background:rgba(232,201,122,.2);color:#E8C97A;}
+.an-zeile{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:9px;}
+.an-zeile:last-child{margin-bottom:0;}
+.an-zeile .lab{font-size:13.4px;color:var(--leise,#6B6259);min-width:62px;}
+.an-knoepfe{display:flex;flex-wrap:wrap;gap:5px;min-width:0;}
+.pb,.fb{font-family:inherit;font-size:13.4px;padding:7px 13px;border-radius:17px;
+ border:1px solid var(--linie-stark,#DDD0BC);background:var(--creme,#FCF7EF);
+ color:var(--tinte,#231F1A);cursor:pointer;}
+.pb:hover,.fb:hover{border-color:var(--nacht,#2E3A5C);}
+.pb.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#fff;}
+.fb.ist{background:var(--messing,#9A7235);border-color:var(--messing,#9A7235);color:#fff;}
+
+/* Das Ergebnis */
+.an-erg{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:24px;
+ padding:28px 32px;margin-bottom:26px;}
+@media(max-width:620px){.an-erg{padding:21px 18px;border-radius:19px;}}
+.an-erg .k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.15em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:11px;}
+.an-erg .gr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(23px,4.4vw,34px);
+ font-weight:300;color:#fff;line-height:1.16;letter-spacing:-.015em;margin-bottom:13px;}
+.an-erg p{font-size:15.6px;line-height:1.7;color:rgba(244,239,230,.88);margin:0;max-width:64ch;}
+.an-waage{margin-top:20px;}
+.w-bar{display:flex;height:11px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,.1);}
+.w-bar i{display:block;height:100%;}
+.w-bar .n{background:#8FBF9F;} .w-bar .r{background:#D18F6A;}
+.w-l{display:flex;justify-content:space-between;gap:14px;margin-top:8px;font-size:13px;
+ color:rgba(244,239,230,.62);flex-wrap:wrap;}
+.w-l b{color:#fff;font-weight:500;}
+
+/* Befunde */
+.an-gruppe{margin-bottom:34px;}
+.an-gruppe h2{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(22px,3.3vw,29px);
+ font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:0 0 16px;
+ padding-bottom:9px;border-bottom:1px solid var(--linie-stark,#DDD0BC);}
+.an-gruppe h2 span{display:block;font-family:var(--sans);font-size:13.8px;font-weight:400;
+ color:var(--leise,#6B6259);margin-top:4px;letter-spacing:0;}
+.an-b{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:18px;padding:18px 21px;margin-bottom:11px;border-left-width:4px;}
+@media(max-width:620px){.an-b{padding:15px 15px;}}
+.an-gruppe.nenner .an-b{border-left-color:var(--gruen,#3F6B4A);}
+.an-gruppe.staerke .an-b{border-left-color:var(--teal,#3D6B62);}
+.an-gruppe.reibung .an-b{border-left-color:var(--rost,#A05A3A);}
+.an-gruppe.aufgabe .an-b{border-left-color:var(--messing,#9A7235);}
+.an-gruppe.beratung .an-b{border-left-color:var(--nacht,#2E3A5C);background:var(--nacht-bg,#E9EDF4);}
+.an-gruppe.bild .an-b{border-left-color:var(--pflaume,#6A4A62);}
+.an-b h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.5px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 8px;line-height:1.28;}
+.an-b p{font-size:15.3px;line-height:1.72;margin:0;max-width:68ch;}
+.an-ansatz,.an-tun{margin-top:12px;border-radius:13px;padding:12px 15px;
+ font-size:14.8px;line-height:1.65;}
+.an-ansatz{background:#FBEFE6;}
+.an-tun{background:var(--messing-bg,#F7EFE1);}
+.an-ansatz>b:first-child,.an-tun>b:first-child{display:block;
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;margin-bottom:5px;font-weight:400;}
+.an-ansatz>b:first-child{color:var(--rost,#A05A3A);}
+.an-tun>b:first-child{color:var(--messing,#9A7235);}
+.an-beleg{margin-top:10px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.3px;
+ color:var(--leise,#6B6259);}
+
+.an-hinweis{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
+ border-radius:17px;padding:16px 19px;font-size:15.2px;line-height:1.65;}
+.an-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:17px 19px;font-size:15px;line-height:1.65;color:var(--leise,#6B6259);}
+
+/* Werkzeug */
+.an-werk{margin-top:10px;padding-top:20px;border-top:1px dashed var(--linie-stark,#DDD0BC);}
+.an-wz{display:flex;flex-wrap:wrap;gap:9px;align-items:center;}
+.an-wz button{font-family:inherit;font-size:14px;padding:10px 19px;border-radius:19px;
+ border:1px solid var(--nacht,#2E3A5C);background:var(--nacht,#2E3A5C);color:#fff;cursor:pointer;}
+.an-wz button:last-of-type{background:none;color:var(--nacht,#2E3A5C);}
+.an-echo{font-size:13.6px;color:var(--gruen,#3F6B4A);}
+.an-meta{font-size:12.8px;color:var(--leise,#6B6259);margin:11px 0 0;}
+
+.an-fuss{margin-top:52px;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:22px;padding:24px 28px;}
+@media(max-width:620px){.an-fuss{padding:19px 17px;}}
+.an-fuss h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 11px;}
+.an-fuss p{font-size:15px;line-height:1.72;margin:0 0 12px;max-width:68ch;color:var(--leise,#6B6259);}
+.an-fuss b{color:var(--tinte,#231F1A);}
+
+@media print{
+ .ac-leiste,.an-wahl,.an-werk,.weiter,.niv-leiste,.an-fuss{display:none!important;}
+ body{background:#fff;}
+ .an-erg{background:#fff!important;color:#000!important;border:2px solid #000;}
+ .an-erg .gr,.an-erg p{color:#000!important;} .an-erg .k{color:#555!important;}
+ .an-b,.an-gruppe{break-inside:avoid;}
+}
+</style><script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+
+<div class="an-wrap">
+<div class="an-kopf">
+  <h1>Die <em>Analyse.</em></h1>
+  <p class="an-lede">Kein Nachschlagewerk &mdash; eine Rechnung. Du w&auml;hlst ein Thema und eine oder zwei Personen, das System sammelt alle Stellungen, die daf&uuml;r z&auml;hlen, erkennt die <b>Kombinationen</b> und baut daraus ein Ergebnis mit Ans&auml;tzen. Den Bericht kannst du ziehen.</p>
+</div>
+
+<div class="an-wahl">
+  <div class="an-feld"><span class="k">Thema</span><div class="an-themen" id="anthema"></div></div>
+  <div class="an-feld"><span class="k">Wer</span><div id="antpersonen"></div></div>
+</div>
+
+<div id="anergebnis"></div>
+<div id="anbefunde"></div>
+
+<div class="an-werk" id="anwerk" hidden>
+  <div class="an-wz">
+    <button type="button" id="ankopie">Bericht kopieren</button>
+    <button type="button" id="andruck">Drucken</button>
+    <span class="an-echo" id="anecho"></span>
+  </div>
+  <p class="an-meta"><span id="anzahl">0</span> Regeln haben gegriffen. <span id="anfehler"></span></p>
+</div>
+
+<div class="an-fuss">
+  <h3>Wie das Ergebnis zustande kommt</h3>
+  <p>Jedes Thema sagt, welche H&auml;user, Planeten und Achsen f&uuml;r diese Frage z&auml;hlen. Ein Regelsatz pr&uuml;ft dann <b>Kombinationen</b> &mdash; nicht einzelne Stellungen, sondern ihr Zusammentreffen: zwei Monde im selben Element, Saturn im siebten Haus der anderen, ein fehlendes Element bei beiden. Jede Regel, die greift, bringt ein Gewicht mit. Das Ergebnis ist die Summe, nicht ein Textbaustein.</p>
+  <p>Was eine Regel nicht findet, steht nicht im Bericht. Das ist Absicht: Lieber ein kurzer Befund, der stimmt, als ein langer, der f&uuml;r jeden passt.</p>
+  <p style="margin-bottom:0"><b>Und die Grenze.</b> Ein Chart sagt nichts dar&uuml;ber, ob zwei Menschen zusammen gl&uuml;cklich werden. Es beschreibt, womit sie ausgestattet sind &mdash; nicht, was sie daraus machen. Was hier steht, gilt nur so weit, wie die Menschen es best&auml;tigen; widersprechen sie, haben sie recht.</p>
+</div>
+
+<div class="weiter"><a href="beziehung.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Zwei Charts nebeneinander</span></a><a href="dossier.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Das Dossier zu einer Person</span></a></div>
+<div class="foot">Analyse &middot; H&auml;user im Whole-Sign-System, klassische Herrscher. Orben: 7&deg; bei Konjunktion und Opposition, 5&deg; sonst.<br>
+Die Regels&auml;tze liegen im Quelltext unter <i>analyse/</i> und sind erweiterbar &mdash; eine Regel ist ein Objekt mit <i>wenn</i> und <i>dann</i>.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Die Analyse-Engine
+   ==================================================================
+   Kein Nachschlagewerk, sondern eine Rechnung.
+
+   Ein Thema sagt, welche Häuser, Planeten und Achsen für eine Frage
+   zählen. Ein Regelsatz erkennt Kombinationen — nicht einzelne
+   Stellungen, sondern ihr Zusammentreffen. Die Engine lässt alle
+   Regeln laufen, gewichtet die Treffer und baut daraus ein Ergebnis.
+
+   Regeln arbeiten über ein Chart (modus 'solo') oder über zwei
+   (modus 'paar'). Jede Regel liefert einen Befund mit einer Art:
+
+     bild      was für ein Fall das überhaupt ist
+     nenner    worauf beide sich treffen können
+     staerke   was trägt
+     reibung   wo es hakt — immer mit einem Ansatz
+     aufgabe   was konkret zu tun ist
+     beratung  Hinweise für die Coachin, nicht für die Klientin
+
+   Die Engine entscheidet nichts über Inhalte. Sie zählt, sortiert
+   und stellt zusammen; alles Inhaltliche steht in den Themendateien. */
+(function(){
+'use strict';
+
+function nrm(x){ x=x%360; return x<0?x+360:x; }
+
+var ZEICHEN=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+ 'Schütze','Steinbock','Wassermann','Fische'];
+var ELEMENT=['Feuer','Erde','Luft','Wasser'];
+var MODUS=['kardinal','fix','veränderlich'];
+var HERRSCHER=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',
+ 'Jupiter','Saturn','Saturn','Jupiter'];
+var PLANETEN=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn',
+ 'Uranus','Neptun','Pluto'];
+var PERSOENLICH=['Sonne','Mond','Merkur','Venus','Mars'];
+var DOMIZIL={Mars:[0,7],Venus:[1,6],Merkur:[2,5],Mond:[3],Sonne:[4],Jupiter:[8,11],Saturn:[9,10]};
+var ERHOEHUNG={Sonne:0,Mond:1,Merkur:5,Venus:11,Mars:9,Jupiter:3,Saturn:6};
+var WINKEL=[[0,'Konjunktion','weich'],[60,'Sextil','weich'],[90,'Quadrat','hart'],
+ [120,'Trigon','weich'],[180,'Opposition','hart']];
+
+/* ── Hilfen, die jede Regel bekommt ──────────────────────────── */
+var H={
+  ZEICHEN:ZEICHEN, ELEMENT:ELEMENT, MODUS:MODUS, HERRSCHER:HERRSCHER,
+  PLANETEN:PLANETEN, PERSOENLICH:PERSOENLICH,
+
+  zi:function(l){ return Math.floor(nrm(l)/30); },
+  zeichen:function(l){ return ZEICHEN[H.zi(l)]; },
+  elem:function(l){ return ELEMENT[H.zi(l)%4]; },
+  mod:function(l){ return MODUS[H.zi(l)%3]; },
+  grad:function(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r),
+    m=Math.round((r-g)*60); if(m===60){g++;m=0;} return g+'°'+(m<10?'0':'')+m+'′'; },
+  stellung:function(l){ return H.grad(l)+' '+H.zeichen(l); },
+
+  /* Whole Sign */
+  haus:function(C,l){
+    if(C.ASC===undefined) return 0;
+    return ((Math.floor(nrm(l)/30)-Math.floor(nrm(C.ASC)/30))%12+12)%12+1; },
+  wo:function(C,pl){ return (C[pl]===undefined)?0:H.haus(C,C[pl]); },
+  hausZeichen:function(C,h){
+    if(C.ASC===undefined) return -1;
+    return (Math.floor(nrm(C.ASC)/30)+h-1)%12; },
+  herrVon:function(C,h){ var z=H.hausZeichen(C,h); return z<0?null:HERRSCHER[z]; },
+  /* Wo steht der Herrscher eines Hauses */
+  herrIn:function(C,h){ var p=H.herrVon(C,h); return p?H.wo(C,p):0; },
+
+  /* Wer steht in einem Haus */
+  drin:function(C,h,liste){
+    return (liste||PLANETEN).filter(function(k){
+      return C[k]!==undefined && H.haus(C,C[k])===h; }); },
+
+  /* Aspekt innerhalb eines Charts */
+  asp:function(C,a,b,orb){
+    if(C[a]===undefined||C[b]===undefined) return null;
+    var d=Math.abs(nrm(C[a]-C[b])); if(d>180) d=360-d;
+    for(var i=0;i<WINKEL.length;i++){
+      var W=WINKEL[i], o=Math.abs(d-W[0]);
+      var max=(orb===undefined)?((W[0]===0||W[0]===180)?7:5):orb;
+      if(o<=max) return {typ:W[1], art:W[2], orb:o, naehe:1-(o/max)};
+    }
+    return null; },
+
+  /* Aspekt zwischen zwei Charts — A[pa] zu B[pb] */
+  syn:function(A,B,pa,pb,orb){
+    if(A[pa]===undefined||B[pb]===undefined) return null;
+    var d=Math.abs(nrm(A[pa]-B[pb])); if(d>180) d=360-d;
+    for(var i=0;i<WINKEL.length;i++){
+      var W=WINKEL[i], o=Math.abs(d-W[0]);
+      var max=(orb===undefined)?((W[0]===0||W[0]===180)?7:5):orb;
+      if(o<=max) return {typ:W[1], art:W[2], orb:o, naehe:1-(o/max)};
+    }
+    return null; },
+  /* Derselbe Kontakt, egal in welcher Richtung er auftritt */
+  synBeide:function(A,B,p1,p2,orb){
+    return H.syn(A,B,p1,p2,orb) || H.syn(A,B,p2,p1,orb); },
+
+  /* A's Planet fällt in B's Haus */
+  ueber:function(A,B,pl){
+    if(A[pl]===undefined||B.ASC===undefined) return 0;
+    return H.haus(B,A[pl]); },
+
+  /* Würde */
+  wuerde:function(pl,z){
+    var d=DOMIZIL[pl];
+    if(d&&d.indexOf(z)>=0) return 'domizil';
+    if(ERHOEHUNG[pl]===z) return 'erhoehung';
+    var ex=!!(d&&d.indexOf((z+6)%12)>=0), fa=(ERHOEHUNG[pl]===((z+6)%12));
+    if(ex&&fa) return 'exilfall';
+    return ex?'exil':(fa?'fall':''); },
+
+  /* Element- und Modusbilanz, gewichtet */
+  bilanz:function(C){
+    var g={Sonne:3,Mond:3,ASC:3,MC:2,Merkur:2,Venus:2,Mars:2,
+           Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
+    var e=[0,0,0,0], m=[0,0,0], ges=0;
+    Object.keys(g).forEach(function(k){
+      if(C[k]===undefined) return;
+      var z=H.zi(C[k]); e[z%4]+=g[k]; m[z%3]+=g[k]; ges+=g[k]; });
+    function anteil(a){ return a.map(function(x){ return ges?x/ges:0; }); }
+    var ea=anteil(e), ma=anteil(m);
+    return {elem:e, mod:m, elemAnteil:ea, modAnteil:ma,
+      stark:ELEMENT[e.indexOf(Math.max.apply(null,e))],
+      schwach:ELEMENT[e.indexOf(Math.min.apply(null,e))],
+      modStark:MODUS[m.indexOf(Math.max.apply(null,m))],
+      fehlt:ELEMENT.filter(function(n,i){ return ea[i]<0.1; })}; },
+
+  /* Wie stark ist ein Haus besetzt — Planeten plus Herrscherlage */
+  gewichtHaus:function(C,h){
+    var w=0;
+    H.drin(C,h).forEach(function(k){
+      w += (PERSOENLICH.indexOf(k)>=0?2:1); });
+    if(H.herrIn(C,h)===h) w+=1.5;      /* Herrscher im eigenen Haus */
+    if([1,4,7,10].indexOf(h)>=0) w*=1.15;
+    return w; },
+
+  /* Stellium: drei oder mehr in einem Haus */
+  stellien:function(C){
+    var out=[];
+    for(var h=1;h<=12;h++){
+      var d=H.drin(C,h);
+      if(d.length>=3) out.push({haus:h, planeten:d});
+    }
+    return out; },
+
+  /* Wie viele Planeten über oder unter dem Horizont */
+  oben:function(C){
+    return PLANETEN.filter(function(k){
+      return C[k]!==undefined && H.haus(C,C[k])>=7; }).length; },
+
+  sekte:function(C){ return H.wo(C,'Sonne')>=7 ? 'tag' : 'nacht'; },
+
+  /* Mondphase bei der Geburt, Rudhyar */
+  mondphase:function(C){
+    if(C.Sonne===undefined||C.Mond===undefined) return -1;
+    return Math.floor(nrm(C.Mond-C.Sonne)/45); },
+
+  prozent:function(x){ return Math.round(x*100); },
+  kz:function(x,n){ return Number(x).toFixed(n===undefined?1:n).replace('.',','); }
+};
+
+/* ── Lauf ─────────────────────────────────────────────────────
+   regeln: Array von {id, modus, gewicht, wenn, dann}
+   Eine Regel darf null liefern — dann zählt sie nicht.             */
+function lauf(regeln, A, B, namen, einstellung){
+  var treffer=[], fehler=[];
+  regeln.forEach(function(R){
+    if(R.modus==='paar' && !B) return;
+    if(R.modus==='solo' && B && R.nurOhnePartner) return;
+    var passt=false;
+    try{ passt=!!R.wenn(A,B,H,namen); }
+    catch(e){ fehler.push(R.id+': wenn — '+e.message); return; }
+    if(!passt) return;
+    var erg=null;
+    try{ erg=R.dann(A,B,H,namen); }
+    catch(e){ fehler.push(R.id+': dann — '+e.message); return; }
+    if(!erg) return;
+    erg.id=R.id;
+    erg.gewicht=(erg.gewicht!==undefined?erg.gewicht:(R.gewicht||1));
+    erg.art=erg.art||'staerke';
+    treffer.push(erg);
+  });
+  treffer.sort(function(x,y){ return y.gewicht-x.gewicht; });
+  return {treffer:treffer, fehler:fehler};
+}
+
+/* Treffer nach Art gruppieren, je Gruppe gekappt */
+function gruppen(treffer, grenzen){
+  var g={};
+  treffer.forEach(function(t){ (g[t.art]=g[t.art]||[]).push(t); });
+  Object.keys(g).forEach(function(k){
+    var max=(grenzen&&grenzen[k])||99;
+    g[k]=g[k].slice(0,max);
+  });
+  return g;
+}
+
+window.AC_ENGINE={
+  H:H, lauf:lauf, gruppen:gruppen,
+  ZEICHEN:ZEICHEN, PLANETEN:PLANETEN, HERRSCHER:HERRSCHER
+};
+})();
+
+/* Astro-Charlie · Thema „Zwei Menschen"
+   ==================================================================
+   Geschrieben für die Beratung von zwei Menschen gleichzeitig —
+   nicht dafür, einer Person zu erklären, wie sie mit der anderen
+   umgeht. Deshalb steht „gemeinsamer Nenner" vor „Reibung", und
+   jede Reibung hat einen Ansatz, der für beide gilt.
+
+   {A} und {B} werden durch die Namen ersetzt.                      */
+
+var T_PAAR={
+ schluessel:'paar',
+ n:'Zwei Menschen',
+ modus:'paar',
+ was:'Wo ihr euch trefft, wo es reibt, und was beide tun können.',
+ formen:[
+  {k:'liebe',   n:'Paar',          t:'romantisch, zusammenlebend oder nicht'},
+  {k:'eltern',  n:'Eltern & Kind', t:'erwachsen, mit altem Muster'},
+  {k:'arbeit',  n:'Zusammenarbeit',t:'Team, Führung, Geschäftspartner'},
+  {k:'freund',  n:'Freundschaft',  t:'gewählt, auf Augenhöhe'},
+  {k:'familie', n:'Geschwister',   t:'gemeinsam aufgewachsen'}
+ ],
+ /* Welche Häuser für diese Frage zählen — je Form anders */
+ felder:{
+  liebe:   [7,8,5,4,1], eltern:[4,10,12,8,1], arbeit:[6,10,11,3,1],
+  freund:  [11,3,9,5,1], familie:[3,4,11,8,1]
+ }
+};
+
+/* ══ Die Regeln ═══════════════════════════════════════════════ */
+var R_PAAR=[
+
+/* ───────── Das Bild: was für ein Fall das überhaupt ist ───────── */
+{id:'bild-element', modus:'paar', gewicht:10,
+ wenn:function(A,B,H){ return true; },
+ dann:function(A,B,H,N){
+   var a=H.bilanz(A), b=H.bilanz(B);
+   var gleich=(a.stark===b.stark);
+   var paare={'Feuer|Luft':1,'Luft|Feuer':1,'Erde|Wasser':1,'Wasser|Erde':1};
+   var vertraegt=paare[a.stark+'|'+b.stark];
+   return {art:'bild',
+     titel: gleich ? 'Ihr seid aus demselben Stoff'
+          : vertraegt ? 'Verschieden, aber verträglich'
+          : 'Zwei verschiedene Betriebssysteme',
+     text: gleich
+       ? N.a+' und '+N.b+' haben beide den Schwerpunkt in <b>'+a.stark+'</b>. '+
+         'Ihr versteht euch im Grundton ohne Übersetzung — und ihr habt dieselben blinden Flecken. '+
+         'Was euch beiden fehlt, fehlt eben doppelt, und niemand im Raum merkt es.'
+       : vertraegt
+       ? N.a+' liegt auf <b>'+a.stark+'</b>, '+N.b+' auf <b>'+b.stark+'</b>. '+
+         'Die beiden vertragen sich: Sie reiben nicht, sie ergänzen. Das ist die Mischung, '+
+         'bei der jede von der anderen etwas lernen kann, ohne sich dafür verbiegen zu müssen.'
+       : N.a+' liegt auf <b>'+a.stark+'</b>, '+N.b+' auf <b>'+b.stark+'</b>. '+
+         'Diese beiden Elemente arbeiten verschieden — nicht gegeneinander, aber auch nicht '+
+         'von selbst zusammen. Vieles zwischen euch ist Übersetzungsarbeit und wird mit '+
+         'der Zeit leichter, aber nie ganz selbstverständlich.',
+     beleg:N.a+': '+a.stark+' · '+N.b+': '+b.stark};
+ }},
+
+{id:'bild-modus', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){ return H.bilanz(A).modStark===H.bilanz(B).modStark; },
+ dann:function(A,B,H,N){
+   var m=H.bilanz(A).modStark;
+   var t={kardinal:'Ihr fangt beide gern an. Das heißt auch: Ihr habt beide eine Meinung dazu, '+
+      'wo es langgeht, und keine von euch folgt gern. Rechnet damit, dass Entscheidungen bei '+
+      'euch länger dauern als sie müssten — nicht aus Uneinigkeit über das Ziel, sondern darüber, wer führt.',
+    fix:'Ihr haltet beide. Was ihr aufbaut, bleibt, und ihr seid zusammen ausgesprochen belastbar. '+
+      'Der Preis: Wenn ihr euch festgefahren habt, gibt keine von euch nach — und zwar monatelang nicht.',
+    'veränderlich':'Ihr seid beide beweglich und stellt euch aufeinander ein. Das macht den Alltag '+
+      'leicht. Es heißt aber auch, dass Entscheidungen bei euch offen bleiben, bis sie jemand '+
+      'von außen trifft oder bis es zu spät ist.'};
+   return {art:'bild', titel:'Beide '+m, text:t[m], beleg:'Schwerpunkt '+m+' bei beiden'};
+ }},
+
+{id:'bild-sonnemond', modus:'paar', gewicht:9,
+ wenn:function(A,B,H){ return !!H.synBeide(A,B,'Sonne','Mond',7); },
+ dann:function(A,B,H,N){
+   var k1=H.syn(A,B,'Sonne','Mond',7), k2=H.syn(A,B,'Mond','Sonne',7);
+   var k=k1||k2;
+   var wer = k1 ? [N.a,N.b] : [N.b,N.a];
+   return {art: k.art==='weich'?'nenner':'bild',
+     titel:'Sonne und Mond berühren sich',
+     text:'Der Antrieb von '+wer[0]+' trifft auf das Sicherheitsbedürfnis von '+wer[1]+
+       '. Das ist die klassische Verbindung zwischen zwei Menschen und der Grund, warum man '+
+       'sich bei jemandem zu Hause fühlt, ohne es begründen zu können.'+
+       (k.art==='hart'
+        ? ' Bei euch steht sie unter Spannung: Was '+wer[0]+' will, verunsichert '+wer[1]+
+          ' regelmäßig. Das trennt euch nicht — es ist der Stoff, aus dem eure wiederkehrende Diskussion ist.'
+        : ' Bei euch läuft sie glatt. Ihr müsst dafür nichts tun, und genau deshalb fällt sie '+
+          'erst auf, wenn ihr sie mit anderen Beziehungen vergleicht.'),
+     beleg:'Sonne '+k.typ+' Mond, '+H.kz(k.orb)+'°'};
+ }},
+
+/* ───────── Gemeinsame Nenner ───────── */
+{id:'nenner-mond-element', modus:'paar', gewicht:9,
+ wenn:function(A,B,H){ return H.elem(A.Mond)===H.elem(B.Mond); },
+ dann:function(A,B,H,N){
+   var e=H.elem(A.Mond);
+   var wie={Feuer:'Bewegung und etwas zu tun', Erde:'etwas Handfestes und Ruhe',
+     Luft:'reden dürfen', Wasser:'Nähe und Zeit'};
+   return {art:'nenner', titel:'Ihr beruhigt euch auf dieselbe Art',
+     text:'Beide Monde stehen in <b>'+e+'</b>. Was euch runterbringt, ist dasselbe: '+
+       wie[e]+'. Das ist der verlässlichste gemeinsame Nenner, den zwei Menschen haben können — '+
+       'denn an schlechten Tagen entscheidet nicht, was ihr gemeinsam gut findet, sondern '+
+       'was euch beide beruhigt.',
+     tun:'Legt eine Sache fest, die ihr an schlechten Tagen beide tut, ohne zu verhandeln. '+
+       (e==='Feuer'?'Rausgehen und schnell laufen.':
+        e==='Erde'?'Zusammen kochen oder aufräumen, ohne zu reden.':
+        e==='Luft'?'Zwanzig Minuten reden, ohne dass eine etwas lösen muss.':
+        'Nebeneinander sein, ohne Programm.'),
+     beleg:'Mond in '+H.zeichen(A.Mond)+' und '+H.zeichen(B.Mond)};
+ }},
+
+{id:'nenner-merkur', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   var ea=H.elem(A.Merkur), eb=H.elem(B.Merkur);
+   if(ea===eb) return true;
+   var ok={'Feuer|Luft':1,'Luft|Feuer':1,'Erde|Wasser':1,'Wasser|Erde':1};
+   return !!ok[ea+'|'+eb]; },
+ dann:function(A,B,H,N){
+   var gleich=H.elem(A.Merkur)===H.elem(B.Merkur);
+   return {art:'nenner', titel:'Reden geht leicht',
+     text: gleich
+       ? 'Beide Merkure stehen in <b>'+H.elem(A.Merkur)+'</b> — ihr denkt im selben Tempo und '+
+         'in derselben Art. Halbe Sätze reichen. Nutzt das: Was ihr besprecht, ist meistens geklärt, '+
+         'auch wenn es kurz war.'
+       : 'Eure Merkure stehen in Elementen, die sich vertragen ('+H.elem(A.Merkur)+' und '+
+         H.elem(B.Merkur)+'). Ihr denkt verschieden, aber nicht gegeneinander — '+
+         'die eine bringt, was der anderen fehlt.',
+     tun:'Wichtiges mündlich klären, nicht schriftlich. Bei euch geht im Gespräch weniger verloren als im Text.',
+     beleg:'Merkur in '+H.zeichen(A.Merkur)+' und '+H.zeichen(B.Merkur)};
+ }},
+
+{id:'nenner-venus', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){ var k=H.synBeide(A,B,'Venus','Venus',6); return k&&k.art==='weich'; },
+ dann:function(A,B,H,N){
+   var k=H.synBeide(A,B,'Venus','Venus',6);
+   return {art:'nenner', titel:'Ihr mögt Ähnliches',
+     text:'Eure Venus-Stellungen stehen in gutem Winkel. Geschmack, Umgang mit Geld, '+
+       'was ihr schön findet und was euch ein Abend wert ist — darüber müsst ihr nicht verhandeln. '+
+       'Das klingt klein und ist im Alltag einer der größten Entlastungsfaktoren zwischen zwei Menschen.',
+     tun:'Baut etwas daraus, das euch gehört: ein Ort, ein Essen, eine Gewohnheit. '+
+       'Diese Stellung will etwas Gemeinsames, das keinen Zweck hat.',
+     beleg:'Venus '+k.typ+' Venus, '+H.kz(k.orb)+'°'};
+ }},
+
+{id:'nenner-jupiter', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){
+   return !!(H.synBeide(A,B,'Jupiter','Sonne',6)||H.synBeide(A,B,'Jupiter','Mond',6)); },
+ dann:function(A,B,H,N){
+   var k=H.synBeide(A,B,'Jupiter','Sonne',6)||H.synBeide(A,B,'Jupiter','Mond',6);
+   return {art:'nenner', titel:'Zusammen traut ihr euch mehr',
+     text:'Jupiter einer Person berührt die Lichter der anderen. Ihr macht euch gegenseitig größer — '+
+       'ihr seht beieinander mehr Möglichkeiten als allein. Das ist der Kontakt, der Menschen dazu bringt, '+
+       'gemeinsam Dinge anzufangen, die sie für sich nie angefangen hätten.',
+     tun:'Nutzt es für genau eine Sache, die einer von euch allein nicht angehen würde. '+
+       'Und schlaft vor jeder Zusage eine Nacht — bei diesem Kontakt ist die Begeisterung von beiden echt '+
+       'und die Einschätzung von beiden zu optimistisch.',
+     beleg:'Jupiter '+k.typ+', '+H.kz(k.orb)+'°'};
+ }},
+
+{id:'nenner-saturn-weich', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   var k=H.synBeide(A,B,'Saturn','Sonne',6)||H.synBeide(A,B,'Saturn','Mond',6);
+   return k&&k.art==='weich'; },
+ dann:function(A,B,H,N){
+   return {art:'nenner', titel:'Ihr haltet',
+     text:'Saturn einer Person liegt in gutem Winkel zu den Lichtern der anderen. '+
+       'Das ist unspektakulär und das Wertvollste, was eine Verbindung haben kann: '+
+       'Ihr bleibt, wenn es unangenehm wird. Verbindungen ohne diesen Kontakt sind oft heißer '+
+       'und halten seltener.',
+     tun:'Verlasst euch darauf, aber sprecht es aus. Verlässlichkeit, die nie benannt wird, '+
+       'merkt man erst, wenn sie weg ist.',
+     beleg:'Saturn in gutem Winkel zu den Lichtern'};
+ }},
+
+{id:'nenner-haus-ueberlagerung', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   var z=0;
+   H.PERSOENLICH.forEach(function(k){ if(H.ueber(A,B,k)===H.ueber(B,A,k)) z++; });
+   return z>=2; },
+ dann:function(A,B,H,N){
+   var treff=[];
+   H.PERSOENLICH.forEach(function(k){
+     var ha=H.ueber(A,B,k), hb=H.ueber(B,A,k);
+     if(ha===hb&&ha) treff.push({p:k,h:ha}); });
+   var hn=['Auftreten','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
+     'Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
+   return {art:'nenner', titel:'Ihr trefft euch im selben Lebensbereich',
+     text:'Mehrere Planeten fallen bei euch beiden in dasselbe Haus des anderen: '+
+       treff.map(function(x){ return x.p+' ins '+x.h+'. ('+hn[x.h-1]+')'; }).join(', ')+'. '+
+       'Das heißt praktisch: Ihr beschäftigt euch gegenseitig mit demselben Thema. '+
+       'Was zwischen euch passiert, passiert immer wieder auf derselben Bühne.',
+     tun:'Benennt diese Bühne. Wenn ihr wisst, dass es bei euch immer wieder um '+
+       hn[treff[0].h-1]+' geht, streitet ihr darüber statt über den Anlass.',
+     beleg:treff.map(function(x){return x.p+'→'+x.h+'.';}).join(' · ')};
+ }},
+
+{id:'nenner-ergaenzung', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   var a=H.bilanz(A), b=H.bilanz(B);
+   return a.fehlt.length>0 && a.fehlt.indexOf(b.stark)>=0; },
+ dann:function(A,B,H,N){
+   var a=H.bilanz(A), b=H.bilanz(B);
+   var was={Feuer:'Antrieb und Mut zum Anfangen', Erde:'Bodenhaftung und Umsetzung',
+     Luft:'Überblick und Worte', Wasser:'Gespür und Tiefe'};
+   return {art:'nenner', titel:N.b+' bringt, was '+N.a+' fehlt',
+     text:'Bei '+N.a+' ist <b>'+b.stark+'</b> kaum vertreten — genau das ist bei '+N.b+
+       ' am stärksten. '+N.b+' bringt also '+was[b.stark]+' mit, und zwar ohne Anstrengung. '+
+       'Das ist der Grund, warum sich manche Verbindungen von außen unerklärlich anziehen.',
+     tun:'Macht es ausdrücklich: In Fragen, die '+was[b.stark].split(' und ')[0]+
+       ' brauchen, hat '+N.b+' das letzte Wort. Nicht aus Höflichkeit — weil es stimmt.',
+     beleg:N.a+' ohne '+b.stark+', '+N.b+' stark in '+b.stark};
+ }},
+
+{id:'nenner-blinder-fleck', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){
+   var a=H.bilanz(A), b=H.bilanz(B);
+   return a.fehlt.length>0 && b.fehlt.length>0 &&
+     a.fehlt.some(function(e){ return b.fehlt.indexOf(e)>=0; }); },
+ dann:function(A,B,H,N){
+   var a=H.bilanz(A), b=H.bilanz(B);
+   var ge=a.fehlt.filter(function(e){ return b.fehlt.indexOf(e)>=0; })[0];
+   var folge={Feuer:'Bei euch beiden wartet jemand darauf, dass die andere anfängt.',
+     Erde:'Bei euch beiden bleibt das Praktische liegen — Papierkram, Termine, das Konkrete.',
+     Luft:'Bei euch beiden wird zu wenig ausgesprochen und zu viel angenommen.',
+     Wasser:'Bei euch beiden kommt das Gefühl zu spät zur Sprache, meist erst wenn es laut wird.'};
+   return {art:'nenner', titel:'Euer gemeinsamer blinder Fleck: '+ge,
+     text:'<b>'+ge+'</b> fehlt in beiden Charts. '+folge[ge]+' Das ist ein gemeinsamer Nenner — '+
+       'nur ein unangenehmer. Und er ist wichtiger als die angenehmen, weil niemand von euch beiden '+
+       'merkt, dass er fehlt.',
+     tun:'Holt euch das von außen. Eine dritte Person, ein Termin, ein System. Nicht voneinander — '+
+       'ihr habt es beide nicht.',
+     beleg:ge+' bei beiden unter zehn Prozent'};
+ }},
+
+{id:'nenner-sekte', modus:'paar', gewicht:5,
+ wenn:function(A,B,H){ return H.sekte(A)===H.sekte(B); },
+ dann:function(A,B,H,N){
+   var s=H.sekte(A);
+   return {art:'nenner', titel:s==='tag'?'Beide Tagcharts':'Beide Nachtcharts',
+     text: s==='tag'
+       ? 'Ihr seid beide bei Tageslicht geboren. Ihr geht Dinge über Klarheit und Ansage an, '+
+         'und ihr vertragt beide Direktheit besser als Andeutung.'
+       : 'Ihr seid beide nach Sonnenuntergang geboren. Bei euch läuft mehr über Stimmung als über Ansage — '+
+         'ihr merkt beide, wenn etwas nicht stimmt, lange bevor jemand es sagt.',
+     tun: s==='tag' ? 'Sagt Dinge früher und direkter, als ihr es für nötig haltet. Bei euch kommt das an.'
+          : 'Sprecht Stimmungen aus, bevor sie zum Thema werden. Ihr spürt sie ohnehin beide.',
+     beleg:'Sonne '+(s==='tag'?'über':'unter')+' dem Horizont bei beiden'};
+ }},
+
+/* ───────── Reibung — jede mit Ansatz ───────── */
+{id:'reib-mond-element', modus:'paar', gewicht:10,
+ wenn:function(A,B,H){
+   var p={'Feuer|Wasser':1,'Wasser|Feuer':1,'Erde|Luft':1,'Luft|Erde':1};
+   return !!p[H.elem(A.Mond)+'|'+H.elem(B.Mond)]; },
+ dann:function(A,B,H,N){
+   var ea=H.elem(A.Mond), eb=H.elem(B.Mond);
+   var br={Feuer:'Bewegung und sofortige Reaktion', Erde:'Ruhe und etwas Handfestes',
+     Luft:'Reden und Abstand', Wasser:'Nähe und Zeit'};
+   return {art:'reibung', titel:'Ihr beruhigt euch gegensätzlich',
+     text:N.a+' braucht '+br[ea]+', '+N.b+' braucht '+br[eb]+' — und zwar genau im selben Moment. '+
+       'Das ist der häufigste Dauerkonflikt zwischen zwei Menschen, und er hat nichts mit '+
+       'gutem Willen zu tun: Was die eine beruhigt, reizt die andere.',
+     ansatz:'Nicht gleichzeitig trösten. Wer zuerst dran ist, wird vorher ausgemacht, nicht im Moment '+
+       'verhandelt. Zehn Minuten die eine Art, dann zehn Minuten die andere. Das klingt mechanisch '+
+       'und ist bei dieser Konstellation das Einzige, was zuverlässig funktioniert.',
+     beleg:'Mond '+ea+' gegen Mond '+eb};
+ }},
+
+{id:'reib-mond-saturn', modus:'paar', gewicht:9,
+ wenn:function(A,B,H){ var k=H.synBeide(A,B,'Mond','Saturn',6); return k&&k.art==='hart'; },
+ dann:function(A,B,H,N){
+   var k1=H.syn(A,B,'Saturn','Mond',6);
+   var wer = k1 ? [N.a,N.b] : [N.b,N.a];
+   var k=H.synBeide(A,B,'Mond','Saturn',6);
+   return {art:'reibung', titel:'Gefühl trifft auf Sachlichkeit',
+     text:wer[0]+' reagiert auf Gefühle mit Einwänden, Lösungen oder Schweigen — '+
+       'meist nicht abwertend gemeint, sondern aus Verlegenheit. '+wer[1]+' erlebt das als Kälte '+
+       'und zeigt mit der Zeit weniger, was wiederum auf '+wer[0]+' unnahbar wirkt. '+
+       'So verstärkt es sich von selbst.',
+     ansatz:wer[0]+' sagt zuerst einen Satz, der nichts löst — „das klingt mies" reicht — und erst '+
+       'danach das Praktische. '+wer[1]+' sagt im Gegenzug, was gerade gebraucht wird, statt es '+
+       'erraten zu lassen. Beides ist unangenehm und beides wirkt sofort.',
+     beleg:'Mond '+k.typ+' Saturn, '+H.kz(k.orb)+'°'};
+ }},
+
+{id:'reib-mars', modus:'paar', gewicht:9,
+ wenn:function(A,B,H){ var k=H.synBeide(A,B,'Mars','Mars',6); return k&&k.art==='hart'; },
+ dann:function(A,B,H,N){
+   var k=H.synBeide(A,B,'Mars','Mars',6);
+   return {art:'reibung', titel:'Ihr geht Dinge entgegengesetzt an',
+     text:'Eure Mars-Stellungen stehen in hartem Winkel. Jede hält das Vorgehen der anderen '+
+       'für den Fehler — nicht das Ziel, das Vorgehen. Deshalb wird aus einer Sachfrage bei euch '+
+       'schnell ein Machtkampf, obwohl es um die Sache längst nicht mehr geht.',
+     ansatz:'Aufteilen statt abstimmen. Zwei getrennte Zuständigkeiten funktionieren hier besser '+
+       'als eine gemeinsame Entscheidung. Wo das nicht geht: Jede sagt zuerst, was sie am Vorgehen '+
+       'der anderen <i>versteht</i>, bevor sie den Einwand bringt.',
+     beleg:'Mars '+k.typ+' Mars, '+H.kz(k.orb)+'°'};
+ }},
+
+{id:'reib-merkur', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   var p={'Feuer|Erde':1,'Erde|Feuer':1,'Feuer|Wasser':1,'Wasser|Feuer':1,
+     'Luft|Wasser':1,'Wasser|Luft':1,'Luft|Erde':1,'Erde|Luft':1};
+   return !!p[H.elem(A.Merkur)+'|'+H.elem(B.Merkur)]; },
+ dann:function(A,B,H,N){
+   return {art:'reibung', titel:'Ihr denkt in verschiedenen Tempi',
+     text:'Im Denken ist '+N.a+' <b>'+H.elem(A.Merkur)+'</b>, '+N.b+' <b>'+H.elem(B.Merkur)+
+       '</b>. Missverständnisse entstehen bei euch nicht aus '+
+       'Unwillen, sondern weil die eine schon weiter ist, während die andere noch sortiert — '+
+       'oder weil die eine ein Gefühl meint und die andere ein Argument hört.',
+     ansatz:'Wichtiges schriftlich. Im Geschriebenen verschwindet der Tempounterschied, und übrig '+
+       'bleibt die Sache. Und: einmal wiederholen, was die andere gesagt hat, bevor geantwortet wird. '+
+       'Bei dieser Kombination deckt das die Hälfte der Streits auf, bevor sie entstehen.',
+     beleg:'Merkur in '+H.zeichen(A.Merkur)+' gegen '+H.zeichen(B.Merkur)};
+ }},
+
+{id:'reib-venus-mars', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){ var k=H.synBeide(A,B,'Venus','Mars',6); return k&&k.art==='hart'; },
+ dann:function(A,B,H,N){
+   var k1=H.syn(A,B,'Mars','Venus',6);
+   var wer=k1?[N.a,N.b]:[N.b,N.a];
+   var k=H.synBeide(A,B,'Venus','Mars',6);
+   return {art:'reibung', titel:'Anziehung mit Widerhaken',
+     text:wer[0]+' geht direkt auf '+wer[1]+' zu, '+wer[1]+' will Einvernehmen und zieht sich bei '+
+       'Druck zurück — was '+wer[0]+' als Ablehnung liest und noch mehr drängen lässt. '+
+       'Die Anziehung ist echt und bleibt. Sie übersetzt sich nur regelmäßig in Streit.',
+     ansatz:wer[0]+' macht einen Schritt weniger, '+wer[1]+' sagt einen Satz mehr. '+
+       'Beides fällt beiden schwer. Und: Prüft, ob bei euch jede Nähe über einen Konflikt läuft — '+
+       'wenn ja, ist das ein Muster und kein Temperament, und daran kann man arbeiten.',
+     beleg:'Venus '+k.typ+' Mars, '+H.kz(k.orb)+'°'};
+ }},
+
+{id:'reib-pluto', modus:'paar', gewicht:9,
+ wenn:function(A,B,H){
+   var k=H.synBeide(A,B,'Pluto','Venus',6)||H.synBeide(A,B,'Pluto','Mond',6);
+   return k&&k.art==='hart'; },
+ dann:function(A,B,H,N){
+   var k1=H.syn(A,B,'Pluto','Venus',6)||H.syn(A,B,'Pluto','Mond',6);
+   var wer=k1?[N.a,N.b]:[N.b,N.a];
+   return {art:'reibung', titel:'Es geht hier um Kontrolle, nicht um den Anlass',
+     text:wer[0]+'s Pluto berührt bei '+wer[1]+' etwas Empfindliches. Praktisch sieht das so aus: '+
+       wer[0]+' will alles wissen und hält fest, '+wer[1]+' fängt an, Kleinigkeiten auszulassen — '+
+       'nicht aus Falschheit, sondern um Luft zu haben. Was '+wer[0]+' wiederum bestätigt.',
+     ansatz:wer[0]+' stellt eine Frage weniger und erträgt die Lücke. '+wer[1]+' erzählt eine Sache mehr, '+
+       'unaufgefordert. Beides ist unangenehm und löst den Kreis. Wenn es sich zuspitzt, gehört das '+
+       'in eine begleitete Beratung und nicht in ein Gespräch zu zweit.',
+     beleg:'Pluto in hartem Winkel zu Venus oder Mond'};
+ }},
+
+{id:'reib-uranus', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){
+   var k=H.synBeide(A,B,'Uranus','Sonne',6)||H.synBeide(A,B,'Uranus','Mond',6);
+   return k&&k.art==='hart'; },
+ dann:function(A,B,H,N){
+   var k1=H.syn(A,B,'Uranus','Sonne',6)||H.syn(A,B,'Uranus','Mond',6);
+   var wer=k1?[N.a,N.b]:[N.b,N.a];
+   return {art:'reibung', titel:'Unberechenbarkeit gegen Verlässlichkeit',
+     text:wer[0]+' ändert Pläne, sagt ab, taucht wieder auf — nie persönlich gemeint. '+
+       wer[1]+' kann nicht einschätzen, woran er oder sie ist, und das untergräbt mehr als jeder Streit.',
+     ansatz:'Verlässlichkeit an einer einzigen Stelle vereinbaren: ein fester Termin in der Woche, '+
+       'der nicht verschoben wird. Der ganze Rest darf beweglich bleiben. Diese eine Insel reicht '+
+       'erfahrungsgemäß aus.',
+     beleg:'Uranus in hartem Winkel zu einem Licht'};
+ }},
+
+{id:'reib-fix', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){ return H.bilanz(A).modStark==='fix' && H.bilanz(B).modStark==='fix'; },
+ dann:function(A,B,H,N){
+   return {art:'reibung', titel:'Keine von euch gibt nach',
+     text:'Beide Charts haben den Schwerpunkt auf <b>fix</b>. Ihr seid zusammen außerordentlich '+
+       'belastbar — und wenn ihr euch festgefahren habt, bewegt sich monatelang nichts. '+
+       'Nicht aus Bosheit: Nachgeben fühlt sich bei dieser Anlage wie Selbstaufgabe an.',
+     ansatz:'Verabredet vorher eine Regel für den Fall. Zum Beispiel: Wer das Thema aufbringt, '+
+       'bekommt beim ersten Mal recht; wer es zum zweiten Mal aufbringt, muss einen Vorschlag '+
+       'mitbringen. Eine Regel, die vorher steht, ist bei euch wirksamer als jede Einsicht im Moment.',
+     beleg:'fix bei beiden dominant'};
+ }},
+
+{id:'reib-kardinal', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){ return H.bilanz(A).modStark==='kardinal' && H.bilanz(B).modStark==='kardinal'; },
+ dann:function(A,B,H,N){
+   return {art:'reibung', titel:'Ihr wollt beide führen',
+     text:'Beide Charts liegen auf <b>kardinal</b>. Ihr fangt gern an und habt beide eine Meinung '+
+       'dazu, wo es langgeht. Der Konflikt bei euch dreht sich selten um das Ziel und fast immer '+
+       'darum, wer entscheidet.',
+     ansatz:'Gebiete aufteilen, dauerhaft und ohne Rückfrage. Eine entscheidet beim einen, '+
+       'die andere beim anderen. Alles, was gemeinsam entschieden werden muss, wird bei euch '+
+       'zum Dauerthema — also haltet diese Liste kurz.',
+     beleg:'kardinal bei beiden dominant'};
+ }},
+
+{id:'reib-saturn-7', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   return H.ueber(A,B,'Saturn')===7 || H.ueber(B,A,'Saturn')===7 ||
+          H.ueber(A,B,'Saturn')===4 || H.ueber(B,A,'Saturn')===4; },
+ dann:function(A,B,H,N){
+   var ab=(H.ueber(A,B,'Saturn')===7||H.ueber(A,B,'Saturn')===4);
+   var wer=ab?[N.a,N.b]:[N.b,N.a];
+   var h=ab?H.ueber(A,B,'Saturn'):H.ueber(B,A,'Saturn');
+   return {art:'reibung', titel:'Es wird geprüft, bevor es getragen wird',
+     text:wer[0]+'s Saturn fällt in '+wer[1]+'s '+h+'. Haus — '+(h===7?'Partnerschaft':'Zuhause')+'. '+
+       'Dort wird '+wer[1]+' von '+wer[0]+' geprüft, meist ohne dass es jemandem auffällt: '+
+       'Zusagen werden gewogen, Verlässlichkeit wird gemessen. Das fühlt sich für '+wer[1]+
+       ' nach Misstrauen an und ist in Wahrheit die Art, wie '+wer[0]+' bindet.',
+     ansatz:wer[0]+' sagt einmal ausdrücklich, woran '+wer[1]+' ist. Ein Satz. '+
+       'Diese Prüfung hat ein Ende, aber sie dauert länger, als '+wer[1]+' es für nötig hält — '+
+       'das zu wissen nimmt ihr die Schärfe.',
+     beleg:'Saturn fällt ins '+h+'. Haus der anderen'};
+ }},
+
+/* ───────── Aufgaben für beide ───────── */
+{id:'aufg-rhythmus', modus:'paar', gewicht:6,
+ wenn:function(A,B,H){ return true; },
+ dann:function(A,B,H,N){
+   var ea=H.elem(A.Mond), eb=H.elem(B.Mond);
+   var dauer={Feuer:'zehn Minuten', Erde:'zwanzig Minuten', Luft:'eine Viertelstunde', Wasser:'zwanzig Minuten'};
+   var laenger = ['Feuer','Luft','Erde','Wasser'].indexOf(ea) > ['Feuer','Luft','Erde','Wasser'].indexOf(eb) ? ea : eb;
+   return {art:'aufgabe', titel:'Ein fester Termin, kurz genug für beide',
+     text:'Nehmt '+dauer[laenger]+' in der Woche, immer am selben Tag. Kein Problem lösen — '+
+       'nur zwei Fragen: Was war gut, und was ist offen geblieben? '+
+       'Die Länge richtet sich nach dem ungeduldigeren Mond von euch beiden, sonst hält es nicht.',
+     tun:'Diese Woche einen Tag festlegen und ihn in beide Kalender eintragen.'};
+ }},
+
+{id:'aufg-uebersetzen', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){ return H.elem(A.Mond)!==H.elem(B.Mond); },
+ dann:function(A,B,H,N){
+   var br={Feuer:'in Bewegung', Erde:'mit etwas Handfestem', Luft:'im Reden', Wasser:'in Ruhe und Nähe'};
+   return {art:'aufgabe', titel:'Die Übersetzung einmal aufschreiben',
+     text:'Jede schreibt drei Sätze auf: „Es geht mir gut, wenn …", „Ich brauche dann …", '+
+       '„Du merkst es daran, dass ich …". Dann tauscht ihr die Zettel. '+
+       N.a+' beruhigt sich '+br[H.elem(A.Mond)]+', '+N.b+' '+br[H.elem(B.Mond)]+' — '+
+       'das wisst ihr danach schwarz auf weiß und müsst es nicht mehr im Streit erraten.',
+     tun:'Zettel aufheben. Beim nächsten Konflikt zuerst nachlesen, dann reden.'};
+ }},
+
+{id:'aufg-nenner-nutzen', modus:'paar', gewicht:6,
+ wenn:function(A,B,H){ return H.bilanz(A).stark===H.bilanz(B).stark; },
+ dann:function(A,B,H,N){
+   var e=H.bilanz(A).stark;
+   var vor={Feuer:'etwas Neues zusammen anfangen', Erde:'etwas Konkretes zusammen aufbauen',
+     Luft:'etwas gemeinsam durchdenken oder planen', Wasser:'etwas gemeinsam durchstehen oder pflegen'};
+   return {art:'aufgabe', titel:'Nehmt euch bewusst etwas vor, das zu euch beiden passt',
+     text:'Euer gemeinsames Element ist <b>'+e+'</b>. Das heißt: '+vor[e]+' funktioniert bei euch '+
+       'von selbst und gibt euch Boden für die Stellen, die schwer sind.',
+     tun:'Ein Vorhaben für die nächsten drei Monate, das beide wollen. Klein genug, dass es klappt.'};
+ }},
+
+/* ───────── Für die Beratung ───────── */
+{id:'ber-einstieg', modus:'paar', gewicht:9,
+ wenn:function(A,B,H){ return true; },
+ dann:function(A,B,H,N){
+   var ea=H.elem(A.Mond), eb=H.elem(B.Mond);
+   var gleich=(ea===eb);
+   return {art:'beratung', titel:'Womit du anfängst',
+     text: gleich
+       ? 'Fang beim gemeinsamen Mond an. Dass beide sich auf dieselbe Art beruhigen, ist bei '+
+         'diesem Paar der tragfähigste Boden — und ein guter Einstieg, weil beide sofort nicken.'
+       : 'Fang nicht beim Konflikt an, sondern bei der Frage, wie sich jede von beiden beruhigt. '+
+         'Bei verschiedenen Mondelementen ist das der Punkt, an dem beide sich zum ersten Mal '+
+         'verstanden fühlen — und erst danach lässt sich über den Streit reden.',
+     tun:'Frage an beide, einzeln beantworten lassen: „Woran merkt die andere, dass es dir schlecht geht?"'};
+ }},
+
+{id:'ber-wer-redet', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){ return H.elem(A.Merkur)!==H.elem(B.Merkur); },
+ dann:function(A,B,H,N){
+   var schnell = (H.elem(A.Merkur)==='Luft'||H.elem(A.Merkur)==='Feuer') ? N.a : N.b;
+   var langsam = (schnell===N.a) ? N.b : N.a;
+   return {art:'beratung', titel:'Wer in der Stunde mehr redet',
+     text:schnell+' wird schneller antworten und damit mehr Raum nehmen — nicht aus Dominanz, '+
+       'sondern weil '+langsam+' erst sortiert. Wenn du das laufen lässt, bekommst du am Ende '+
+       'ein Bild von '+schnell+' und wenig von '+langsam+'.',
+     tun:'Reihenfolge umdrehen: '+langsam+' zuerst, und zwar mit angekündigter Redezeit. '+
+       'Oder schriftlich vorbereiten lassen.'};
+ }},
+
+{id:'ber-nicken', modus:'paar', gewicht:7,
+ wenn:function(A,B,H){
+   return H.zi(A.Mond)%4===2 || H.zi(B.Mond)%4===2 ||
+          H.zi(A.Venus)===6 || H.zi(B.Venus)===6; },
+ dann:function(A,B,H,N){
+   var wer = (H.zi(A.Venus)===6||H.zi(A.Mond)%4===2) ? N.a : N.b;
+   return {art:'beratung', titel:'Wer zustimmt, ohne es zu meinen',
+     text:wer+' wird in der Stunde eher ausgleichen als widersprechen. Zustimmung von '+wer+
+       ' ist deshalb kein verlässliches Signal — erst recht nicht, wenn die andere gerade '+
+       'etwas Deutliches gesagt hat.',
+     tun:'Nicht nach Einverständnis fragen, sondern nach Einwänden: „Was daran passt dir nicht?" '+
+       'Und zwar bevor die andere Person antwortet.'};
+ }},
+
+{id:'ber-grenze', modus:'paar', gewicht:8,
+ wenn:function(A,B,H){
+   var k=H.synBeide(A,B,'Pluto','Mond',6)||H.synBeide(A,B,'Pluto','Venus',6);
+   return !!(k&&k.art==='hart'); },
+ dann:function(A,B,H,N){
+   return {art:'beratung', titel:'Wo du nicht weitergehst',
+     text:'Dieses Paar hat einen harten Pluto-Kontakt zu einem persönlichen Punkt. '+
+       'Erwarte, dass unter dem Streitthema etwas Älteres liegt — bei einer von beiden, '+
+       'oft bei beiden. Das kann in einer Coachingstunde auftauchen, und dann ist die Stunde zu Ende, '+
+       'nicht erst das Thema.',
+     tun:'Vorher sagen, wo deine Arbeit aufhört. Und eine Adresse parat haben, an die du abgeben kannst.'};
+ }},
+
+{id:'ber-aufteilung', modus:'paar', gewicht:6,
+ wenn:function(A,B,H){
+   var z=0; for(var h=1;h<=12;h++){ if(H.gewichtHaus(A,h)>=4&&H.gewichtHaus(B,h)>=4) z++; }
+   return z===0; },
+ dann:function(A,B,H,N){
+   var hn=['Auftreten','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
+     'Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
+   function schwer(C){ var b=0,bh=1;
+     for(var h=1;h<=12;h++){ var w=H.gewichtHaus(C,h); if(w>b){b=w;bh=h;} } return bh; }
+   var ha=schwer(A), hb=schwer(B);
+   return {art:'beratung', titel:'Ihr Schwerpunkt liegt woanders',
+     text:'Bei '+N.a+' liegt das meiste Gewicht im '+ha+'. Haus ('+hn[ha-1]+'), bei '+N.b+
+       ' im '+hb+'. ('+hn[hb-1]+'). Kein gemeinsam stark besetztes Haus. Das heißt nicht, dass '+
+       'es nicht passt — es heißt, dass die beiden an verschiedenen Fronten stehen und sich '+
+       'gegenseitig schlecht einschätzen können, was die andere gerade kostet.',
+     tun:'Lass beide beschreiben, womit die eigene Woche voll ist. Ohne Bewertung. '+
+       'Oft ist das schon die halbe Beratung.'};
+ }}
+];
+
+/* ══ Das Ergebnis: eine Rechnung, kein Textbaustein ═══════════ */
+function paarErgebnis(treffer, A, B, H, N){
+  var n=0, r=0, gn=0, gr=0;
+  treffer.forEach(function(t){
+    if(t.art==='nenner'){ n++; gn+=t.gewicht; }
+    if(t.art==='reibung'){ r++; gr+=t.gewicht; }
+  });
+  var ges=gn+gr||1;
+  var anteil=gn/ges;
+  var stufe = anteil>=0.66 ? 'traegt'
+            : anteil>=0.45 ? 'arbeit'
+            : anteil>=0.3  ? 'anstrengend' : 'schwer';
+  var T={
+   traegt:{t:'Diese Verbindung trägt von selbst',
+     x:'Die gemeinsamen Nenner überwiegen deutlich. Das heißt nicht, dass es keine Themen gibt — '+
+       'es heißt, dass genug Boden da ist, um sie zu bearbeiten. Bei so einem Paar ist die Gefahr '+
+       'nicht der Konflikt, sondern dass das Selbstverständliche nicht gepflegt wird.'},
+   arbeit:{t:'Tragfähig, mit zwei, drei echten Baustellen',
+     x:'Nenner und Reibung halten sich ungefähr die Waage. Das ist der häufigste Fall und der, '+
+       'bei dem Beratung am meisten bringt: Es gibt genug Gemeinsames, um daran zu arbeiten, '+
+       'und genug Reibung, dass es sich lohnt.'},
+   anstrengend:{t:'Anstrengender als es aussieht',
+     x:'Die Reibungspunkte wiegen schwerer als die Nenner. Solche Verbindungen funktionieren — '+
+       'aber nicht nebenbei. Sie brauchen ausdrückliche Absprachen an den Stellen, an denen '+
+       'andere Paare sich einfach verstehen.'},
+   schwer:{t:'Viel Reibung, wenige selbstverständliche Berührungspunkte',
+     x:'Die Rechnung fällt deutlich zur Reibung aus. Das ist kein Urteil über die Beziehung — '+
+       'Charts sagen nichts darüber, ob zwei Menschen zusammen glücklich werden. Es sagt nur: '+
+       'Was hier gut läuft, läuft nicht von allein, sondern weil beide es tun.'}
+  };
+  return {stufe:stufe, titel:T[stufe].t, text:T[stufe].x,
+    nenner:n, reibung:r, anteil:anteil,
+    zahl:{nenner:Math.round(gn), reibung:Math.round(gr)}};
+}
+
+T_PAAR.regeln=R_PAAR;
+T_PAAR.ergebnis=paarErgebnis;
+T_PAAR.grenzen={bild:3, nenner:6, reibung:6, aufgabe:4, beratung:5};
+
+/* Astro-Charlie · Weitere Themen
+   Diese drei laufen mit demselben Kern wie „Zwei Menschen", haben aber
+   noch deutlich weniger Regeln. Sie funktionieren und sind ausbaufähig:
+   eine neue Regel ist ein Objekt mit wenn/dann, mehr braucht es nicht. */
+
+/* ═══ Berufung & Beruf ═══════════════════════════════════════ */
+var T_BERUF={
+ schluessel:'beruf', n:'Berufung & Beruf', modus:'solo',
+ was:'Wofür jemand gemacht ist — und was im Weg steht.',
+ grenzen:{bild:2, staerke:5, reibung:4, aufgabe:3, beratung:3},
+ regeln:[
+  {id:'bf-mc', gewicht:10, modus:'solo',
+   wenn:function(A,B,H){ return A.MC!==undefined; },
+   dann:function(A,B,H,N){
+     var z=H.zi(A.MC), herr=H.HERRSCHER[z], wo=H.wo(A,herr);
+     var hn=['Auftreten','Wert und Geld','Sprache','Zuhause','Ausdruck','Alltag und Handwerk',
+       'Partnerschaft','Tiefe','Lehre und Ferne','Beruf','Gruppen','Rückzug'];
+     var mc={Widder:'anfangen, gründen, vorangehen',Stier:'etwas Bleibendes aufbauen, mit Material arbeiten',
+      Zwillinge:'vermitteln, erklären, schreiben',Krebs:'versorgen, halten, einen Ort schaffen',
+      'Löwe':'gestalten und sichtbar sein',Jungfrau:'etwas genau machen, auf das Verlass ist',
+      Waage:'zwischen Menschen vermitteln, gestalten',Skorpion:'in die Tiefe gehen, mit Krisen arbeiten',
+      'Schütze':'lehren, erweitern, über Grenzen hinweg',Steinbock:'Verantwortung tragen, etwas leiten',
+      Wassermann:'etwas anders machen als vorgesehen',Fische:'heilen, begleiten, gestalten'};
+     return {art:'bild', titel:'Die Richtung: '+H.ZEICHEN[z]+' am MC',
+       text:'Der höchste Punkt des Charts steht in <b>'+H.ZEICHEN[z]+'</b>. Dafür ist diese Person '+
+         'nach außen gebaut: '+mc[H.ZEICHEN[z]]+'. Der Herrscher <b>'+herr+'</b> steht im '+wo+
+         '. Haus ('+hn[wo-1]+') — dort wird die Berufung tatsächlich verhandelt, nicht im 10.',
+       beleg:'MC '+H.stellung(A.MC)+' · '+herr+' im '+wo+'.'};
+   }},
+  {id:'bf-zehntes', gewicht:9, modus:'solo',
+   wenn:function(A,B,H){ return H.drin(A,10).length>0; },
+   dann:function(A,B,H,N){
+     var d=H.drin(A,10);
+     var was={Sonne:'Sichtbarkeit ist kein Nebeneffekt, sondern Bedingung — ohne sie trocknet die Arbeit aus',
+      Mond:'der Beruf muss sich sicher anfühlen, sonst hält er nicht, egal wie gut er ist',
+      Merkur:'das Vermitteln ist der Kern, nicht die Verpackung',
+      Venus:'es muss schön sein oder mit Menschen zu tun haben, sonst geht die Luft raus',
+      Mars:'es braucht Widerstand und etwas zu erobern, sonst wird es fad',
+      Jupiter:'hier kommt viel von selbst — und hier wird auch leicht überdehnt',
+      Saturn:'der Aufbau dauert länger als bei anderen und hält dann länger. Der frühe Teil ist zäh',
+      Uranus:'ein normaler Weg wird nicht funktionieren, und das ist keine Phase',
+      Neptun:'die Richtung bleibt lange unscharf. Das ist hier normal und kein Mangel',
+      Pluto:'es geht um Wirkung und Macht. Halbe Sachen hält diese Person im Beruf nicht aus'};
+     return {art:'staerke', titel:'Im 10. Haus steht '+d.join(', '),
+       text:d.map(function(k){ return '<b>'+k+':</b> '+was[k]; }).join(' — '),
+       beleg:d.map(function(k){return k+' '+H.stellung(A[k]);}).join(' · ')};
+   }},
+  {id:'bf-sechstes', gewicht:7, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var z=H.hausZeichen(A,6), herr=H.HERRSCHER[z], wo=H.wo(A,herr);
+     return {art:'staerke', titel:'Wie gearbeitet wird',
+       text:'Das 6. Haus — der Alltag der Arbeit — trägt <b>'+H.ZEICHEN[z]+'</b>. Nicht was jemand '+
+         'tut, sondern wie: '+
+         ({Widder:'schnell und in Schüben',Stier:'langsam und gründlich',Zwillinge:'mehrgleisig und wechselnd',
+           Krebs:'in Beziehung zu den Menschen drumherum',"Löwe":'mit Einsatz und sichtbar',
+           Jungfrau:'genau und mit hohem eigenem Maßstab',Waage:'abgestimmt und zu zweit',
+           Skorpion:'konzentriert, in Phasen hoher Intensität',"Schütze":'frei und mit Überblick',
+           Steinbock:'strukturiert und auf lange Sicht',Wassermann:'eigenständig, nicht in Vorgaben',
+           Fische:'in Wellen, schwer planbar'})[H.ZEICHEN[z]]+
+         '. Der Herrscher '+herr+' steht im '+wo+'. Haus.',
+       beleg:'6. Haus '+H.ZEICHEN[z]+' · '+herr+' im '+wo+'.'};
+   }},
+  {id:'bf-saturn', gewicht:8, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var wo=H.wo(A,'Saturn');
+     var hn=['Auftreten','Wert und Geld','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
+       'Tiefe','Lehre','Beruf','Gruppen','Rückzug'];
+     return {art:'reibung', titel:'Wo der Beweisdruck sitzt',
+       text:'Saturn steht im '+wo+'. Haus ('+hn[wo-1]+'). Dort wird gründlich gearbeitet und nie '+
+         'das Gefühl erreicht, dass es reicht. Beruflich heißt das: Diese Person ist genau dort '+
+         'überdurchschnittlich gut und traut es sich am wenigsten zu.',
+       ansatz:'Nicht an der Einsicht arbeiten, sondern an Belegen. Eine Liste mit dem, was in '+
+         'diesem Bereich schon gelungen ist, datiert. Saturn glaubt keine Zusprüche, aber Daten.',
+       beleg:'Saturn '+H.stellung(A.Saturn)+', '+wo+'. Haus'};
+   }},
+  {id:'bf-jupiter', gewicht:6, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var wo=H.wo(A,'Jupiter');
+     var hn=['Auftreten','Wert und Geld','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
+       'Tiefe','Lehre','Beruf','Gruppen','Rückzug'];
+     return {art:'staerke', titel:'Wo es leicht kommt',
+       text:'Jupiter im '+wo+'. Haus ('+hn[wo-1]+'). Hier öffnen sich Türen, oft ohne dass man '+
+         'sie gesucht hat. Beruflich lohnt es, genau dort zu suchen statt dort, wo man sich '+
+         'durchbeißen muss.',
+       beleg:'Jupiter '+H.stellung(A.Jupiter)+', '+wo+'. Haus'};
+   }},
+  {id:'bf-knoten', gewicht:7, modus:'solo',
+   wenn:function(A,B,H){ return A.Knoten!==undefined; },
+   dann:function(A,B,H,N){
+     var wo=H.haus(A,A.Knoten);
+     var hn=['sich selbst zu zeigen','sich etwas wert zu sein','zu sprechen und zu lernen',
+       'einen eigenen Boden zu bauen','etwas zu machen, das Freude macht','im Konkreten zu dienen',
+       'sich auf ein Gegenüber einzulassen','in die Tiefe zu gehen','zu lehren und weiterzugehen',
+       'Verantwortung nach außen zu übernehmen','in eine Gemeinschaft zu gehen','loszulassen'];
+     return {art:'aufgabe', titel:'Die Richtung, die sich unbequem anfühlt',
+       text:'Der Nordknoten steht im '+wo+'. Haus. Die Überlieferung liest ihn als das, was noch zu '+
+         'lernen ist: '+hn[wo-1]+'. Es fühlt sich ungeübt an, und genau deshalb ist es die Richtung.',
+       tun:'Eine kleine Sache in diesem Bereich pro Woche. Nicht groß — regelmäßig.',
+       beleg:'Nordknoten im '+wo+'. Haus'};
+   }},
+  {id:'bf-leer', gewicht:5, modus:'solo',
+   wenn:function(A,B,H){ return H.drin(A,10).length===0 && H.drin(A,6).length===0; },
+   dann:function(A,B,H,N){
+     return {art:'beratung', titel:'Beide Arbeitshäuser leer',
+       text:'Weder im 10. noch im 6. Haus steht ein Planet. Das ist häufig und wird oft als '+
+         '„keine Berufung" missverstanden. Es heißt nur: Die Frage wird woanders entschieden — '+
+         'nämlich dort, wo die Herrscher dieser Häuser stehen.',
+       tun:'Nicht nach dem Traumberuf fragen, sondern: Wobei vergisst die Person zu essen? '+
+         'Das ist bei leeren Arbeitshäusern die verlässlichere Spur.'};
+   }}
+ ],
+ ergebnis:function(treffer,A,B,H,N){
+   var st=treffer.filter(function(t){return t.art==='staerke';}).length;
+   var re=treffer.filter(function(t){return t.art==='reibung';}).length;
+   return {stufe:st>re?'klar':'offen',
+     titel: st>re ? 'Die Richtung ist im Chart gut ablesbar'
+                  : 'Die Richtung ist da, aber nicht offensichtlich',
+     text: st>re
+       ? 'Mehrere Stellungen zeigen in dieselbe Richtung. Das macht die Arbeit leichter: '+
+         'Es geht eher darum, etwas zu bestätigen als etwas zu finden.'
+       : 'Die berufliche Anlage verteilt sich über mehrere Stellen, ohne dass eine dominiert. '+
+         'Hier hilft die Frage nach dem Hyperfokus mehr als die nach dem Ziel.',
+     zahl:{staerke:st, reibung:re}};
+ }
+};
+
+/* ═══ Alltag, Energie, anders verdrahtet ═════════════════════ */
+var T_ALLTAG={
+ schluessel:'alltag', n:'Alltag & Energie', modus:'solo',
+ was:'Warum Systeme scheitern und was stattdessen trägt.',
+ grenzen:{bild:2, staerke:4, reibung:5, aufgabe:4, beratung:2},
+ regeln:[
+  {id:'al-mond', gewicht:10, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var e=H.elem(A.Mond);
+     var t={Feuer:'Kurze Einheiten, schnelle Wechsel. Lange gleichförmige Blöcke halten hier nicht — '+
+       'das ist keine Disziplinfrage, das ist die Bauart.',
+      Erde:'Lange Anlaufzeit, dann tragfähig. Die ersten fünf Minuten sind der schwere Teil, '+
+       'nicht die Stunde danach.',
+      Luft:'Wechsel und Austausch. Allein am Stück arbeiten ermüdet hier schneller als Unterbrechungen.',
+      Wasser:'In Wellen. Gute und schlechte Tage schwanken hier stärker als bei anderen — '+
+       'ein Plan, der jeden Tag dasselbe verlangt, scheitert zwangsläufig.'};
+     return {art:'bild', titel:'Dein Takt: Mond in '+H.elem(A.Mond),
+       text:t[e], beleg:'Mond '+H.stellung(A.Mond)};
+   }},
+  {id:'al-mars-saturn', gewicht:9, modus:'solo',
+   wenn:function(A,B,H){ var k=H.asp(A,'Mars','Saturn',6); return k&&k.art==='hart'; },
+   dann:function(A,B,H,N){
+     var k=H.asp(A,'Mars','Saturn',6);
+     return {art:'reibung', titel:'Gas und Bremse gleichzeitig',
+       text:'Mars '+k.typ+' Saturn. Ein Teil der Energie geht ins Selbstbremsen — ein normaler Tag '+
+         'kostet hier mehr als bei anderen. Das ist keine Faulheit und auch keine Einstellungsfrage.',
+       ansatz:'Aufgaben halbieren und die Hälfte als ganze Leistung verbuchen. Und: zuerst anfangen, '+
+         'dann entscheiden ob man weitermacht — nicht umgekehrt.',
+       beleg:'Mars '+k.typ+' Saturn, '+H.kz(k.orb)+'°'};
+   }},
+  {id:'al-merkur-uranus', gewicht:8, modus:'solo',
+   wenn:function(A,B,H){ return !!H.asp(A,'Merkur','Uranus',5); },
+   dann:function(A,B,H,N){
+     var k=H.asp(A,'Merkur','Uranus',5);
+     return {art:'reibung', titel:'Sprunghaftes Denken',
+       text:'Merkur '+k.typ+' Uranus. Verknüpft über Ecken, ist oft drei Schritte weiter, '+
+         'ermüdet bei linearem Vorgehen. Listen in Reihenfolge funktionieren hier schlecht.',
+       ansatz:'Mit Übersicht arbeiten statt mit Reihenfolge: alles auf eine Fläche, dann greifen, '+
+         'was gerade geht. Reihenfolgen erzwingen kostet hier mehr, als sie einbringen.',
+       beleg:'Merkur '+k.typ+' Uranus, '+H.kz(k.orb)+'°'};
+   }},
+  {id:'al-merkur-neptun', gewicht:7, modus:'solo',
+   wenn:function(A,B,H){ return !!H.asp(A,'Merkur','Neptun',5); },
+   dann:function(A,B,H,N){
+     var k=H.asp(A,'Merkur','Neptun',5);
+     return {art:'reibung', titel:'Denken in Bildern',
+       text:'Merkur '+k.typ+' Neptun. Listen rutschen durch, Geschichten bleiben. '+
+         'Was nicht sichtbar ist, existiert praktisch nicht.',
+       ansatz:'Struktur von außen statt Motivation von innen: sichtbare Ablagen, Dinge offen liegen lassen, '+
+         'Erinnerungen an Orte koppeln statt an Zeiten.',
+       beleg:'Merkur '+k.typ+' Neptun, '+H.kz(k.orb)+'°'};
+   }},
+  {id:'al-12', gewicht:8, modus:'solo',
+   wenn:function(A,B,H){ return H.drin(A,12).length>=2; },
+   dann:function(A,B,H,N){
+     var d=H.drin(A,12);
+     return {art:'reibung', titel:'Vieles läuft verdeckt',
+       text:'Im 12. Haus stehen '+d.join(', ')+'. Energie wird verbraucht, ohne dass man es bemerkt — '+
+         'Erschöpfung kommt plötzlich statt angekündigt.',
+       ansatz:'Nicht auf das Gefühl warten, sondern messen: eine Woche lang abends eine Zahl von '+
+         'eins bis fünf notieren. Das Muster wird schneller sichtbar als die Erschöpfung.',
+       beleg:d.join(', ')+' im 12. Haus'};
+   }},
+  {id:'al-mars', gewicht:8, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var wo=H.wo(A,'Mars'), z=H.zi(A.Mars);
+     var hn=['dich selbst','Geld und Besitz','Reden und Nahbereich','Zuhause','Ausdruck',
+       'Alltag und Arbeit','Partnerschaft','Tiefe','Lehre','Beruf','Gruppen','Rückzug'];
+     var wie=['sofort und in Schüben','langsam, dann unaufhaltsam','in mehrere Richtungen gleichzeitig',
+       'indirekt, über Umwege','mit vollem Einsatz','genau und in kleinen Schritten',
+       'erst nach Abstimmung','konzentriert und ganz','groß und begeistert','geplant und ausdauernd',
+       'ruckartig und eigenwillig','in Wellen, schwer steuerbar'];
+     return {art:'staerke', titel:'Wohin die Kraft geht',
+       text:'Mars steht im '+wo+'. Haus und arbeitet '+wie[z]+'. Was an Energie da ist, fließt '+
+         'zuerst in '+hn[wo-1]+' — auch dann, wenn man sie woanders bräuchte.',
+       beleg:'Mars '+H.stellung(A.Mars)+', '+wo+'. Haus'};
+   }},
+  {id:'al-saturn-haus', gewicht:7, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var wo=H.wo(A,'Saturn');
+     var hn=['Auftreten','Geld und Wert','Reden','Zuhause','Ausdruck','Alltag','Partnerschaft',
+       'Tiefe','Lehre','Beruf','Gruppen','Rückzug'];
+     return {art:'reibung', titel:'Wo es sich zäh anfühlt',
+       text:'Saturn im '+wo+'. Haus ('+hn[wo-1]+'). Dort braucht alles länger und fühlt sich nie '+
+         'ausreichend an. Im Alltag heißt das: Aufgaben aus diesem Bereich werden aufgeschoben, '+
+         'nicht weil sie schwer sind, sondern weil sie sich schwer anfühlen.',
+       ansatz:'Die kleinste mögliche Einheit festlegen und die nie überschreiten. '+
+         'Zwei Minuten täglich schlägt hier eine Stunde pro Woche, weil die Hürde das Problem ist, '+
+         'nicht die Menge.',
+       beleg:'Saturn '+H.stellung(A.Saturn)+', '+wo+'. Haus'};
+   }},
+  {id:'al-asc', gewicht:6, modus:'solo',
+   wenn:function(A,B,H){ return A.ASC!==undefined; },
+   dann:function(A,B,H,N){
+     var z=H.zi(A.ASC), e=H.elem(A.ASC);
+     var t={Feuer:'Du kommst schnell in Gang und verbrauchst dich ebenso schnell. Pausen vor der '+
+       'Erschöpfung einplanen, nicht danach.',
+      Erde:'Du brauchst eine Anlaufzeit und hältst dann lange. Der Tag sollte nicht mit Entscheidungen anfangen.',
+      Luft:'Du bist schnell im Kopf und vergisst den Körper. Erinnerungen ans Essen und Trinken '+
+       'sind hier keine Spielerei.',
+      Wasser:'Du nimmst die Umgebung mit auf. Wo du arbeitest, entscheidet mehr als wie lange.'};
+     return {art:'bild', titel:'Dein Grundtempo: '+H.ZEICHEN[z]+' am Aszendenten',
+       text:t[e], beleg:'Aszendent '+H.stellung(A.ASC)};
+   }},
+  {id:'al-sechstes-zeichen', gewicht:7, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var z=H.hausZeichen(A,6);
+     var t={Widder:'Struktur muss schnell gehen und darf nicht nach Struktur aussehen.',
+      Stier:'Immer gleiche Abläufe, immer am gleichen Ort. Veränderung ankündigen.',
+      Zwillinge:'Abwechslung einbauen, sonst hält nichts. Zwei Systeme parallel ist hier kein Fehler.',
+      Krebs:'Der Ort entscheidet. Eine Ecke, die nur für eine Sache da ist.',
+      "Löwe":'Es muss Spaß machen und sichtbar sein. Belohnung wirkt hier wirklich.',
+      Jungfrau:'Hier funktionieren Systeme — die Gefahr ist, sie zu fein zu machen.',
+      Waage:'Zu zweit. Gemeinsam anfangen wirkt hier mehr als jede Methode.',
+      Skorpion:'In konzentrierten Blöcken, nicht verteilt. Dazwischen nichts.',
+      "Schütze":'Der Sinn muss sichtbar sein, sonst bricht es ab. Wozu, nicht was.',
+      Steinbock:'Lange Linien, feste Zeiten. Hier hält Struktur am besten.',
+      Wassermann:'Eigenbau. Fremde Systeme funktionieren hier nie, selbst gute.',
+      Fische:'Weich und mit Puffer. Jeder Plan braucht hier dreißig Prozent Luft.'};
+     return {art:'aufgabe', titel:'Welche Struktur hier hält',
+       text:'Das 6. Haus trägt '+H.ZEICHEN[z]+'. '+t[H.ZEICHEN[z]],
+       tun:'Das eine System suchen, das schon mal gehalten hat. Was daran anders war, ist die Antwort.',
+       beleg:'6. Haus in '+H.ZEICHEN[z]};
+   }}
+ ],
+ ergebnis:function(treffer,A,B,H,N){
+   var re=treffer.filter(function(t){return t.art==='reibung';}).length;
+   return {stufe:re>=3?'viel':'wenig',
+     titel: re>=3 ? 'Mehrere Stellen, an denen Kraft verlorengeht'
+                  : 'Der Alltag ist astrologisch unauffällig',
+     text: re>=3
+       ? 'Es sind mehrere Konstellationen beteiligt. Nicht alles davon gleichzeitig angehen — '+
+         'eine Sache, vier Wochen, dann die nächste. Alles auf einmal ist genau der Fehler, '+
+         'der bei dieser Anlage am häufigsten passiert.'
+       : 'Keine auffälligen Konstellationen. Wenn im Alltag trotzdem etwas klemmt, liegt es '+
+         'wahrscheinlich nicht an der Anlage, sondern an den Umständen — und die ändert man anders.',
+     zahl:{reibung:re}};
+ }
+};
+
+/* ═══ Kommunikation & Zusammenarbeit ═════════════════════════ */
+var T_KOMM={
+ schluessel:'komm', n:'Kommunikation', modus:'beides',
+ was:'Wie jemand redet und gehört werden will.',
+ grenzen:{bild:2, staerke:4, reibung:4, aufgabe:3, beratung:3},
+ regeln:[
+  {id:'ko-merkur', gewicht:10, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var z=H.zi(A.Merkur), w=H.wuerde('Merkur',z), wo=H.wo(A,'Merkur');
+     var t=['Direkt und kurz. Unterbricht und meint es nicht böse.',
+      'Langsam und einmal. Nachfassen wirkt wie Drängeln.',
+      'Schnell, assoziativ, mehrgleisig. Reihenfolge ist kein Qualitätsmerkmal.',
+      'Über Beispiele und Erinnerungen. Abstraktes kommt nicht an.',
+      'Mit Zuspitzung. Eine gut erzählte Sache schlägt eine gut begründete.',
+      'Genau. Ungenauigkeit untergräbt alles danach Gesagte.',
+      'Im Vergleich. Gib zwei Möglichkeiten statt einer Empfehlung.',
+      'Knapp, und nicht alles. Merkt, wenn etwas zurückgehalten wird.',
+      'Groß. Zusammenhang zuerst, Einzelheiten danach.',
+      'Sachlich und ergebnisbezogen. Kein Smalltalk vorweg.',
+      'Über Prinzipien. Erst das Muster, dann der Einzelfall.',
+      'In Bildern. Listen rutschen durch, Szenen bleiben.'];
+     return {art:'bild', titel:'So redet diese Person: Merkur in '+H.ZEICHEN[z],
+       text:t[z]+' Merkur steht im '+wo+'. Haus'+(w?', '+({domizil:'im eigenen Zeichen',
+         erhoehung:'erhöht',exil:'im Exil',fall:'im Fall',exilfall:'im Exil und im Fall'})[w]:'')+'.',
+       beleg:'Merkur '+H.stellung(A.Merkur)};
+   }},
+  {id:'ko-merkur-saturn', gewicht:8, modus:'solo',
+   wenn:function(A,B,H){ var k=H.asp(A,'Merkur','Saturn',6); return k&&k.art==='hart'; },
+   dann:function(A,B,H,N){
+     return {art:'reibung', titel:'Sagt spät, was gedacht wurde',
+       text:'Merkur in hartem Winkel zu Saturn. Denkt gründlich und äußert spät. '+
+         'Schweigen heißt hier nicht Ablehnung, sondern dass es noch nicht fertig ist.',
+       ansatz:'Redezeit ankündigen und abwarten. Wer hier nachhakt, bekommt weniger, nicht mehr.',
+       beleg:'Merkur hart zu Saturn'};
+   }},
+  {id:'ko-drittes', gewicht:7, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var z=H.hausZeichen(A,3), d=H.drin(A,3);
+     return {art:'staerke', titel:'Der Nahbereich',
+       text:'Das 3. Haus — Reden, Lernen, kurze Wege — trägt '+H.ZEICHEN[z]+
+         (d.length?' und ist mit '+d.join(', ')+' besetzt. Das macht Austausch zu einem Hauptthema.'
+          :' und ist leer. Reden ist hier kein Hauptthema, sondern Mittel zum Zweck.'),
+       beleg:'3. Haus '+H.ZEICHEN[z]+(d.length?' · '+d.join(', '):'')};
+   }},
+  {id:'ko-merkur-mond', gewicht:8, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var k=H.asp(A,'Merkur','Mond',6);
+     return {art: k&&k.art==='hart'?'reibung':'staerke',
+       titel:'Zwischen Fühlen und Sagen',
+       text: !k
+        ? 'Merkur und Mond stehen in keinem Winkel zueinander. Denken und Fühlen laufen hier '+
+          'getrennt — was praktisch heißt: Diese Person kann sachlich bleiben, wenn es emotional wird, '+
+          'und merkt manchmal erst hinterher, dass sie etwas beschäftigt hat.'
+        : k.art==='weich'
+        ? 'Merkur '+k.typ+' Mond. Diese Person kann sagen, was sie fühlt — das ist seltener, '+
+          'als man denkt, und im Gespräch die halbe Miete.'
+        : 'Merkur '+k.typ+' Mond. Gefühl und Wort kommen hier nicht gleichzeitig: Erst ist das '+
+          'Gefühl da, die Worte dafür deutlich später. Was im Moment gesagt wird, trifft es oft nicht.',
+       ansatz: k&&k.art==='hart'
+        ? 'Nicht im Moment klären. Eine Nacht, dann schriftlich, dann reden. In dieser Reihenfolge.' : null,
+       beleg: k ? 'Merkur '+k.typ+' Mond, '+H.kz(k.orb)+'°' : 'Merkur ohne Winkel zum Mond'};
+   }},
+  {id:'ko-stimme', gewicht:6, modus:'solo',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var wo=H.wo(A,'Merkur');
+     var hn=['über das eigene Auftreten','über Werte und Konkretes','im Austausch, ständig',
+       'im Privaten, nicht öffentlich','im Gestalten und Erzählen','über die Arbeit und das Praktische',
+       'im Gegenüber, nie im Monolog','über das Unausgesprochene','über Sinn und große Linien',
+       'in der Öffentlichkeit und im Beruf','in Gruppen und Netzwerken','im Rückzug und schriftlich'];
+     return {art:'aufgabe', titel:'Wo diese Person am besten zu Wort kommt',
+       text:'Merkur steht im '+wo+'. Haus. Diese Person denkt und spricht '+hn[wo-1]+'. '+
+         'Ein Gespräch, das diesen Rahmen trifft, läuft von allein; eines daneben kostet Kraft.',
+       tun:'Gespräche dorthin legen, statt die Person in ein fremdes Format zu zwingen.',
+       beleg:'Merkur im '+wo+'. Haus'};
+   }},
+  {id:'ko-paar-merkur', gewicht:10, modus:'paar',
+   wenn:function(A,B,H){ return true; },
+   dann:function(A,B,H,N){
+     var k=H.synBeide(A,B,'Merkur','Merkur',6);
+     var gleich=H.elem(A.Merkur)===H.elem(B.Merkur);
+     return {art: (k&&k.art==='weich')||gleich ? 'nenner':'reibung',
+       titel:'Wie ihr miteinander redet',
+       text:(k&&k.art==='weich')||gleich
+        ? 'Eure Merkure vertragen sich. Halbe Sätze reichen, und was besprochen ist, ist meistens geklärt.'
+        : 'Im Denken ist '+N.a+' <b>'+H.elem(A.Merkur)+'</b>, '+N.b+' <b>'+H.elem(B.Merkur)+
+          '</b>. Die eine ist schon weiter, während die andere '+
+          'noch sortiert — daher die meisten Missverständnisse.',
+       ansatz:(k&&k.art==='weich')||gleich ? null
+        : 'Wiederholen, was die andere gesagt hat, bevor geantwortet wird. Und Wichtiges schriftlich.',
+       tun:(k&&k.art==='weich')||gleich
+        ? 'Wichtiges trotzdem einmal ganz aussprechen — gerade weil ihr euch versteht, bleibt sonst '+
+          'etwas unausgesprochen, das beide für geklärt halten.' : null,
+       beleg:'Merkur '+H.zeichen(A.Merkur)+' und '+H.zeichen(B.Merkur)+(k?' · '+k.typ:'')};
+   }},
+  {id:'ko-paar-mars', gewicht:8, modus:'paar',
+   wenn:function(A,B,H){ var k=H.synBeide(A,B,'Mars','Merkur',6); return k&&k.art==='hart'; },
+   dann:function(A,B,H,N){
+     return {art:'reibung', titel:'Im Gespräch wird es schnell scharf',
+       text:'Mars der einen trifft hart auf Merkur der anderen. Was als Sachbeitrag gemeint ist, '+
+         'kommt als Angriff an — und zwar zuverlässig, nicht nur an schlechten Tagen.',
+       ansatz:'Tonfall vor Inhalt. Ein vereinbartes Wort, mit dem jede das Gespräch für zehn Minuten '+
+         'anhalten darf, ohne es begründen zu müssen.',
+       beleg:'Mars hart zu Merkur'};
+   }}
+ ],
+ ergebnis:function(treffer,A,B,H,N){
+   var r=treffer.filter(function(t){return t.art==='reibung';}).length;
+   return {stufe:r?'themen':'glatt',
+     titel: r ? 'Es gibt konkrete Stolperstellen' : 'Kommunikativ unauffällig',
+     text: r ? 'Die gefundenen Stellen sind beschreibbar und damit bearbeitbar — '+
+               'meistens reicht eine Vereinbarung über die Form, nicht über den Inhalt.'
+             : 'Keine auffälligen Konstellationen. Wenn es trotzdem hakt, liegt es eher an der '+
+               'Situation als an der Anlage.',
+     zahl:{reibung:r}};
+ }
+};
+
+var THEMEN=[T_PAAR, T_BERUF, T_ALLTAG, T_KOMM];
+
+/* Astro-Charlie · Analyse — Oberfläche
+   Thema wählen, Person(en) wählen, rechnen lassen, Bericht ziehen. */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function el(i){ return document.getElementById(i); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+
+var E=window.AC_ENGINE, H=E.H;
+var themaK='paar', aId=null, bId=null, form='liebe', letzte=null;
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  var C={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc,_jd:jd};
+  if(typeof nodeLon==='function') C.Knoten=nrm(nodeLon(T));
+  if(window.chironLon) C.Chiron=nrm(window.chironLon(T));
+  return C;
+}
+function alle(){ try{ return AC_P.alle()||[]; }catch(e){ return []; } }
+function pVon(id){ return alle().filter(function(x){return x.id===id;})[0]||null; }
+function nameVon(p){ try{ return AC_P.anzeige(p,AC_P.zeigeNamen()); }catch(e){ return p.name||'?'; } }
+function thema(){ return THEMEN.filter(function(t){return t.schluessel===themaK;})[0]; }
+
+/* ── Wahl ─────────────────────────────────────────────────── */
+function themaBauen(){
+  el('anthema').innerHTML=THEMEN.map(function(t){
+    return '<button type="button" class="th'+(t.schluessel===themaK?' ist':'')+
+      '" data-t="'+t.schluessel+'"><b>'+esc(t.n)+'</b><span>'+esc(t.was)+'</span>'+
+      (t.regeln.length<10?'<i>im Aufbau</i>':'')+'</button>'; }).join('');
+  Array.prototype.forEach.call(el('anthema').querySelectorAll('.th'),function(b){
+    b.addEventListener('click',function(){ themaK=b.getAttribute('data-t');
+      themaBauen(); personenBauen(); rechnen(); });
+  });
+}
+
+function personenBauen(){
+  var T=thema(), l=alle(), zwei=(T.modus==='paar'||T.modus==='beides');
+  if(!l.length){ el('antpersonen').innerHTML=
+    '<p class="an-leer">Noch kein Profil angelegt. <a href="profile.html">Hier legst du eins an</a>.</p>';
+    return; }
+  if(!aId) aId=(l.filter(function(p){return p.eigen;})[0]||l[0]).id;
+  if(zwei && !bId){ var and=l.filter(function(p){return p.id!==aId;})[0]; bId=and?and.id:null; }
+  if(!zwei) bId=null;
+
+  function reihe(welche, akt, lab){
+    return '<div class="an-zeile"><span class="lab">'+lab+'</span><div class="an-knoepfe">'+
+      l.map(function(p){
+        return '<button type="button" class="pb'+(p.id===akt?' ist':'')+'" data-w="'+welche+
+          '" data-id="'+p.id+'">'+esc(nameVon(p))+(p.eigen?' (ich)':'')+'</button>'; }).join('')+
+      '</div></div>';
+  }
+  var h=reihe('a', aId, T.modus==='solo'?'Person':'Zwischen');
+  if(zwei) h+=reihe('b', bId, 'und');
+  if(themaK==='paar'){
+    h+='<div class="an-zeile"><span class="lab">Als</span><div class="an-knoepfe">'+
+      T.formen.map(function(f){
+        return '<button type="button" class="fb'+(f.k===form?' ist':'')+'" data-f="'+f.k+
+          '" title="'+esc(f.t)+'">'+esc(f.n)+'</button>'; }).join('')+'</div></div>';
+  }
+  el('antpersonen').innerHTML=h;
+  Array.prototype.forEach.call(el('antpersonen').querySelectorAll('.pb'),function(b){
+    b.addEventListener('click',function(){
+      var w=b.getAttribute('data-w'), id=b.getAttribute('data-id');
+      if(w==='a'){ if(id===bId) bId=aId; aId=id; } else { if(id===aId) aId=bId; bId=id; }
+      personenBauen(); rechnen(); });
+  });
+  Array.prototype.forEach.call(el('antpersonen').querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ form=b.getAttribute('data-f'); personenBauen(); rechnen(); });
+  });
+}
+
+/* ── Rechnen ──────────────────────────────────────────────── */
+var ARTEN=[
+ {k:'bild',     n:'Das Bild',          u:'Was für ein Fall das überhaupt ist'},
+ {k:'nenner',   n:'Gemeinsame Nenner', u:'Worauf ihr euch treffen könnt — hier fängt die Arbeit an'},
+ {k:'staerke',  n:'Was trägt',         u:'Die Stellen, auf die Verlass ist'},
+ {k:'reibung',  n:'Wo es reibt',       u:'Jede mit einem Ansatz, der für beide gilt'},
+ {k:'aufgabe',  n:'Für beide etwas zu tun', u:'Konkret, klein genug, dass es passiert'},
+ {k:'beratung', n:'Für dich als Coachin', u:'Nicht zum Vorlesen — deine Vorbereitung'}
+];
+
+function rechnen(){
+  var T=thema(), pa=pVon(aId), pb=bId?pVon(bId):null;
+  if(!pa){ el('anergebnis').innerHTML=''; el('anbefunde').innerHTML=''; return; }
+  if((T.modus==='paar') && !pb){
+    el('anergebnis').innerHTML='<div class="an-hinweis">Für dieses Thema brauchst du '+
+      '<b>zwei Profile</b>. <a href="profile.html">Noch eins anlegen</a> — dann rechnet es.</div>';
+    el('anbefunde').innerHTML=''; el('anwerk').hidden=true; return; }
+
+  var A=chartVon(pa), B=pb?chartVon(pb):null;
+  var N={a:nameVon(pa), b:pb?nameVon(pb):''};
+  var r=E.lauf(T.regeln, A, B, N);
+  var g=E.gruppen(r.treffer, T.grenzen||{});
+  var erg=T.ergebnis?T.ergebnis(r.treffer, A, B, H, N):null;
+  letzte={T:T, N:N, g:g, erg:erg, treffer:r.treffer, fehler:r.fehler};
+
+  /* Ergebnis */
+  var h='';
+  if(erg){
+    h='<div class="an-erg '+erg.stufe+'">'+
+      '<div class="k">Das Ergebnis</div>'+
+      '<div class="gr">'+esc(erg.titel)+'</div>'+
+      '<p>'+erg.text+'</p>';
+    if(erg.zahl&&erg.zahl.nenner!==undefined){
+      var ges=erg.zahl.nenner+erg.zahl.reibung||1;
+      h+='<div class="an-waage" role="img" aria-label="'+
+        H.prozent(erg.zahl.nenner/ges)+' Prozent gemeinsame Nenner, '+
+        H.prozent(erg.zahl.reibung/ges)+' Prozent Reibung">'+
+        '<div class="w-bar"><i class="n" style="width:'+H.prozent(erg.zahl.nenner/ges)+'%"></i>'+
+        '<i class="r" style="width:'+H.prozent(erg.zahl.reibung/ges)+'%"></i></div>'+
+        '<div class="w-l"><span><b>'+erg.nenner+'</b> gemeinsame Nenner</span>'+
+        '<span><b>'+erg.reibung+'</b> Reibungspunkte</span></div></div>';
+    }
+    h+='</div>';
+  }
+  el('anergebnis').innerHTML=h;
+
+  /* Befunde */
+  var b='';
+  ARTEN.forEach(function(a){
+    var liste=g[a.k]; if(!liste||!liste.length) return;
+    b+='<section class="an-gruppe '+a.k+'"><h2>'+esc(a.n)+'<span>'+esc(a.u)+'</span></h2>';
+    liste.forEach(function(t){
+      b+='<article class="an-b"><h3>'+esc(t.titel)+'</h3>'+
+        '<p>'+t.text+'</p>'+
+        (t.ansatz?'<div class="an-ansatz"><b>Ansatz</b>'+t.ansatz+'</div>':'')+
+        (t.tun?'<div class="an-tun"><b>Konkret</b>'+t.tun+'</div>':'')+
+        (t.beleg?'<div class="an-beleg ac-tech">'+esc(t.beleg)+'</div>':'')+
+        '</article>';
+    });
+    b+='</section>';
+  });
+  if(!b) b='<p class="an-leer">Für diese Kombination hat keine Regel gegriffen. '+
+    'Das kommt bei den Themen im Aufbau noch vor.</p>';
+  el('anbefunde').innerHTML=b;
+  el('anwerk').hidden=false;
+  el('anzahl').textContent=r.treffer.length;
+  if(r.fehler.length) el('anfehler').textContent='Regelfehler: '+r.fehler.join(' | ');
+  if(window.AC_NIV&&window.AC_NIV.anwenden) try{ window.AC_NIV.anwenden(); }catch(e){}
+}
+
+/* ── Bericht ──────────────────────────────────────────────── */
+function berichtText(){
+  if(!letzte) return '';
+  var L=letzte, z=[];
+  z.push(L.T.n.toUpperCase()+(L.N.b?' — '+L.N.a+' und '+L.N.b:' — '+L.N.a));
+  z.push(new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'}));
+  z.push('');
+  if(L.erg){ z.push('ERGEBNIS: '+L.erg.titel);
+    z.push(L.erg.text.replace(/<[^>]+>/g,'')); z.push(''); }
+  ARTEN.forEach(function(a){
+    var liste=L.g[a.k]; if(!liste||!liste.length) return;
+    z.push('── '+a.n.toUpperCase()+' ──');
+    liste.forEach(function(t){
+      z.push('');
+      z.push(t.titel);
+      z.push(t.text.replace(/<[^>]+>/g,''));
+      if(t.ansatz) z.push('Ansatz: '+t.ansatz.replace(/<[^>]+>/g,''));
+      if(t.tun)    z.push('Konkret: '+t.tun.replace(/<[^>]+>/g,''));
+      if(t.beleg)  z.push('('+t.beleg+')');
+    });
+    z.push('');
+  });
+  z.push('— Astro-Charlie. Hypothesen aus einer Rechnung, gültig nur soweit die Menschen sie bestätigen.');
+  return z.join('\n');
+}
+
+/* ── Start ────────────────────────────────────────────────── */
+(function(){
+  themaBauen(); personenBauen(); rechnen();
+  el('ankopie').addEventListener('click',function(){
+    var t=berichtText();
+    function echo(s){ el('anecho').textContent=s;
+      setTimeout(function(){ el('anecho').textContent=''; }, 2600); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(function(){ echo('Bericht kopiert.'); },
+        function(){ echo('Kopieren ging nicht — markier den Text und nimm Strg+C.'); });
+    } else echo('Dieser Browser kann nicht kopieren — markier den Text und nimm Strg+C.');
+  });
+  el('andruck').addEventListener('click',function(){ window.print(); });
+})();
+
+</script>
+</body></html>

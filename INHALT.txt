@@ -1,7 +1,7 @@
 Astro-Charlie — Inhalt
 Stand: 12.10.2026
 
-120 Seiten, 19 Skriptdateien.
+121 Seiten, 19 Skriptdateien.
 
 Neu in dieser Fassung:
   geistfuehrung.html  Wie spirituelle Praxis zum Chart passt: Herrscher des
@@ -16,6 +16,7 @@ Nachtchart. Planetenstunden, Neumonde und Sonnenzeiten gegen PyEphem.
 
 Seiten:
   achsen.html
+  analyse.html
   angebote-struktur.html
   ankommen.html
   aspekt-muster.html
