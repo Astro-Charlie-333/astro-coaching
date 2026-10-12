@@ -176,6 +176,19 @@ a{color:var(--nacht);}
 
 .bz-rolle{font-size:14.8px;line-height:1.7;color:var(--tinte);background:var(--messing-bg);
  border-radius:13px;padding:13px 16px;margin:13px 0 0;}
+
+/* Kontakte in drei Schritten: was passiert, was ankommt, was hilft */
+.kt-drei{display:grid;gap:9px;margin-top:11px;}
+.kt-s{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);gap:4px 15px;
+ font-size:14.9px;line-height:1.62;align-items:baseline;}
+@media(max-width:620px){.kt-s{grid-template-columns:1fr;gap:2px;}}
+.kt-l{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--leise,#6B6259);padding-top:3px;}
+.kt-s.hilft{background:var(--messing-bg,#F7EFE1);border-radius:12px;padding:11px 14px;
+ margin-top:3px;}
+.kt-s.hilft .kt-l{color:var(--messing,#9A7235);padding-top:1px;}
+.bz-kt.hart .kt-s.hilft{background:#FBEFE6;}
+.bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#A05A3A);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -201,16 +214,6 @@ a{color:var(--nacht);}
   <button type="button" id="bzdruck">Drucken</button>
 </div>
 <div class="bz-echo" id="bzecho"></div>
-
-<h2>Tiere &mdash; was davon tr&auml;gt</h2>
-<div class="karte" style="background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:20px 22px;">
-<p>Ehrliche Antwort vorweg: <b>F&uuml;r Tiere gibt es keine gewachsene astrologische Tradition.</b> Die klassischen Texte handeln von Menschen, und alles, was heute als Tierastrologie verkauft wird, ist eine &Uuml;bertragung aus dem letzten Jahrhundert. Wer dir etwas anderes erz&auml;hlt, hat es nicht nachgesehen.</p>
-<p>Was trotzdem brauchbar ist, und zwar aus einem schlichten Grund: Ein Tierprofil zwingt dich, das Temperament deines Tiers einmal in Worte zu fassen und zu dir in Beziehung zu setzen. Das Mondzeichen als Temperamentsskizze funktioniert erstaunlich oft &mdash; vermutlich weniger, weil der Mond etwas tut, als weil die zw&ouml;lf Beschreibungen die zw&ouml;lf g&auml;ngigen Tiertypen abdecken.</p>
-<p><b>Praktisch:</b> Bei Tieren fehlt fast immer die Geburtszeit. Dann gibt es keinen Aszendenten und keine H&auml;user &mdash; die Seite sagt das auch. Bleibt der Mond, und wenn er an dem Tag das Zeichen wechselt, zeigt die Seite dir beide Fassungen. Nimm die, die zu dem Tier passt, das vor dir liegt. Das ist kein Mangel an Strenge, das ist der ehrliche Umgang mit einer d&uuml;nnen Datenlage.</p>
-<p style="margin-bottom:0;">Was ein Tierprofil <b>nicht</b> kann: Gesundheit beurteilen, Verhalten erkl&auml;ren, das eine Tier&auml;rztin oder eine Trainerin anschauen sollte, oder eine Entscheidung &uuml;ber ein Tier begr&uuml;nden. Daf&uuml;r gibt es Beobachtung &mdash; und daf&uuml;r hast du ohnehin dein Tagebuch.</p>
-</div>
-
-<div class="tip"><b>Zur Beziehungsart:</b> Die Wahl bleibt beim zweiten Profil gespeichert. Markierst du jemanden einmal als Partnerin, Kind oder Mutter, kommt diese Lesart beim n&auml;chsten Mal automatisch wieder &mdash; und die Startseite wei&szlig; es auch.</div>
 
 <div class="weiter"><a href="synastrie.html"><span class="lbl">&larr; Die Theorie</span><span class="ttl">Synastrie &mdash; wie zwei Charts gelesen werden</span></a><a href="reading.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Reading nach Wissensstand</span></a></div>
 <div class="foot">Zwischen euch beiden &middot; Kontakte bis 7&deg; bei Konjunktion und Opposition, 5&deg; sonst. Gewichtet nach Beziehungsart.</div>
@@ -433,78 +436,188 @@ var TIER_MOND=[
 /* ── Kontaktdeutungen. Schlüssel: alphabetisch sortiertes Paar. ──
    [weich, hart] je Fassung; r = romantische Fassung, falls nötig. */
 var KONTAKT={
- 'Mond|Sonne':{
-  w:'Ein Grundton, der stimmt. Was der eine will, kann der andere gut aushalten — das merkt man erst, wenn man es mal anders erlebt hat.',
-  h:'Der eine zieht Richtung Ziel, der andere Richtung Sicherheit. Beides ist berechtigt, und genau deshalb wird daraus immer wieder dieselbe Diskussion.',
-  rw:'Die klassische Paar-Verbindung. Ihr passt im Grundrhythmus zusammen, ohne dafür etwas tun zu müssen.',
-  rh:'Ihr wollt dasselbe und braucht Verschiedenes. Das hält zusammen und reibt gleichzeitig — beides gehört zu dieser Verbindung.'},
+
+ 'Mond|Sonne':{akteur:'Sonne',
+  w:{tut:'{A} geht voran und sagt, wo es langgeht.',
+     an:'{B} fühlt sich dabei nicht überfahren, sondern mitgenommen. Das ist seltener, als es klingt — bei den meisten Menschen erzeugt eine fremde Richtung Widerstand, hier nicht.',
+     hilft:'Nichts. Das ist die Stelle, an der ihr nichts tun müsst. Merkt sie euch für die Tage, an denen anderes hakt.'},
+  h:{tut:'{A} will etwas erreichen und zieht Richtung Ziel.',
+     an:'{B} braucht in dem Moment Sicherheit und zieht Richtung Ruhe. Beides ist berechtigt, und deshalb endet es immer wieder in derselben Diskussion — nur mit wechselndem Anlass.',
+     hilft:'Nicht den Anlass verhandeln, sondern die Reihenfolge: erst zehn Minuten ankommen, dann planen. Wer das umdreht, streitet.'},
+  rw:{tut:'{A} gibt den Takt vor, ohne es zu merken.',
+      an:'{B} kann in diesem Takt leben, ohne sich zu verbiegen. Das ist die klassische Paarverbindung — ihr passt im Grundrhythmus, ohne daran zu arbeiten.',
+      hilft:'Nichts erzwingen. Die Verbindung trägt von selbst, solange ihr sie nicht überschreibt.'},
+  rh:{tut:'{A} zieht nach vorn: Pläne, Aufbruch, das nächste Ding.',
+      an:'{B} braucht zuerst, dass das Jetzige steht. Ihr wollt dasselbe Leben und braucht verschiedene Geschwindigkeiten dorthin.',
+      hilft:'Zwei Termine statt einem Streit: einer für das Nächste, einer nur fürs Dableiben. Beide ernst nehmen.'}},
+
  'Mond|Mond':{
-  w:'Ihr beruhigt euch auf ähnliche Weise. Schweigen zwischen euch ist meistens entspannt und nicht peinlich.',
-  h:'Ihr braucht in denselben Momenten Gegensätzliches — der eine Nähe, der andere Luft. Das ist keine Boshaftigkeit, nur unterschiedlicher Takt.'},
- 'Mars|Venus':{
-  w:'Es funkt, und zwar ohne Anstrengung.',
-  h:'Anziehung mit Reibung. Spannend und anstrengend in derselben Bewegung.',
-  rw:'Die Anziehung ist da und bleibt es auch. Das ist der Kontakt, den man sucht und selten findet.',
-  rh:'Starke Anziehung, die sich regelmäßig in Streit übersetzt. Das eine lässt sich vom anderen schwer trennen.'},
+  w:{tut:'Ihr beruhigt euch auf ähnliche Weise.',
+     an:'Schweigen zwischen euch ist entspannt und nicht peinlich. Ihr müsst einander den eigenen Zustand nicht erklären — er ist dem anderen vertraut.',
+     hilft:'Darauf verlassen. Wenn es einem schlecht geht, ist die andere die naheliegende Adresse, und zwar ohne Vorrede.'},
+  h:{tut:'Ihr braucht in denselben Momenten Gegensätzliches: die eine Nähe, die andere Luft.',
+     an:'Es fühlt sich an, als würde die andere im falschen Moment weggehen oder zu nah kommen. Dabei folgt jede nur ihrem eigenen Takt.',
+     hilft:'Den Takt aussprechen, bevor er kollidiert: „Ich brauche jetzt eine Stunde für mich und komme dann wieder." Der zweite Halbsatz ist der wichtige.'}},
+
+ 'Mars|Venus':{akteur:'Mars',
+  w:{tut:'{A} geht auf {B} zu — direkt, körperlich, ohne lange Vorrede.',
+     an:'{B} mag genau diese Art. Es funkt, und zwar ohne dass einer sich anstrengen müsste.',
+     hilft:'Nichts. Diese Anziehung hält, solange keiner sie zerredet.'},
+  h:{tut:'{A} drängt, fordert, wird ungeduldig.',
+     an:'{B} will Einvernehmen und zieht sich bei Druck zurück — was {A} wiederum als Ablehnung liest und noch mehr drängt.',
+     hilft:'{A} macht einen Schritt weniger, {B} sagt einen Satz mehr. Beides fällt beiden schwer und löst fast immer die Schleife.'},
+  rw:{tut:'{A} begehrt sichtbar und ohne Umweg.',
+      an:'{B} wird gern so begehrt. Das ist der Kontakt, den viele suchen und wenige haben — und er verliert sich nicht nach zwei Jahren.',
+      hilft:'Nichts. Höchstens: nicht für selbstverständlich halten.'},
+  rh:{tut:'{A} will Nähe sofort und ganz.',
+      an:'{B} will sie auch, aber anders getaktet. Die Anziehung bleibt stark und übersetzt sich regelmäßig in Streit — das eine lässt sich hier vom anderen kaum trennen.',
+      hilft:'Den Streit nicht für ein Zeichen halten, dass es nicht passt. Aber auch nicht zur Gewohnheit machen: Wenn jede Nähe über einen Konflikt läuft, ist das ein Muster und kein Temperament.'}},
+
  'Merkur|Merkur':{
-  w:'Ihr versteht euch beim Reden fast von selbst. Halbe Sätze reichen.',
-  h:'Ihr denkt in verschiedenen Geschwindigkeiten. Missverständnisse entstehen hier nicht aus Unwillen, sondern aus Tempo.'},
- 'Mond|Saturn':{
-  w:'Eine verlässliche Verbindung. Der eine hält, wenn es beim anderen wackelt.',
-  h:'Einer von euch fühlt sich beim anderen regelmäßig zu wenig. Das ist der Kontakt, der am häufigsten unterschätzt wird — und der am längsten nachwirkt.'},
- 'Saturn|Sonne':{
-  w:'Respekt und Struktur. Einer gibt dem anderen Halt, ohne ihn kleinzumachen.',
-  h:'Einer bremst den anderen — meistens ungewollt. Wer sich hier beweisen muss, merkt es selbst oft erst spät.'},
- 'Jupiter|Sonne':{
-  w:'Ihr macht euch gegenseitig größer. In dieser Verbindung traut man sich mehr zu.',
-  h:'Einer übertreibt für den Geschmack des anderen. Großzügig und zu viel liegen hier nah beieinander.'},
- 'Mond|Venus':{
-  w:'Es ist angenehm miteinander. Einfach so.',
-  h:'Zuneigung trifft auf ein anderes Bedürfnis. Gut gemeint kommt nicht immer gut an.'},
+  w:{tut:'Ihr denkt in ähnlichem Tempo und ähnlichen Sprüngen.',
+     an:'Halbe Sätze reichen. Ihr müsst euch selten erklären, und Gespräche gehen weiter, wo sie aufgehört haben.',
+     hilft:'Wichtiges trotzdem einmal ganz aussprechen. Gerade weil ihr euch versteht, bleiben Dinge unausgesprochen, die beide für geklärt halten.'},
+  h:{tut:'Die eine denkt schnell und assoziativ, die andere gründlich und der Reihe nach.',
+     an:'Die Schnelle hält die Gründliche für zäh, die Gründliche hält die Schnelle für oberflächlich. Keins von beidem stimmt — es ist nur verschiedenes Tempo.',
+     hilft:'Schriftlich, wenn es wichtig ist. Im Geschriebenen verschwindet der Tempounterschied, und übrig bleibt die Sache.'}},
+
+ 'Mond|Saturn':{akteur:'Saturn',
+  w:{tut:'{A} bleibt ruhig, wenn es bei {B} wackelt, und wird nicht mitgerissen.',
+     an:'{B} erlebt {A} als verlässlich — als jemanden, bei dem ein Gefühl nicht sofort eine Krise wird.',
+     hilft:'{A} darf das ruhig sagen statt nur tun: „Ich bleib da." Bei diesem Kontakt wirkt der Satz länger als die Geste.'},
+  h:{tut:'{A} reagiert auf Gefühle mit Sachlichkeit, Einwänden oder Schweigen — oft gar nicht abwertend gemeint, sondern aus Verlegenheit.',
+     an:'{B} erlebt das als Kälte und zieht sich zurück, meist ohne es zu sagen. Mit der Zeit zeigt {B} immer weniger und wirkt dadurch auf {A} unnahbar, was alles verstärkt.',
+     hilft:'{A} sagt zuerst einen Satz, der nichts löst: „Das klingt mies." Erst danach das Praktische. Diese Reihenfolge ist bei diesem Kontakt der ganze Unterschied.'}},
+
+ 'Saturn|Sonne':{akteur:'Saturn',
+  w:{tut:'{A} nimmt {B} ernst und zeigt Zutrauen, ohne groß darüber zu reden.',
+     an:'{B} erlebt eine Verbindung, die hält — jemanden, der auch dann noch da ist, wenn es gerade nichts zu feiern gibt.',
+     hilft:'Das Zutrauen ab und zu aussprechen. {B} merkt es sonst erst, wenn es weg ist.'},
+  h:{tut:'{A} bremst, prüft, weist auf das hin, was noch fehlt.',
+     an:'{B} fühlt sich klein gemacht, auch wenn {A} nur gründlich sein wollte. Bei diesem Kontakt landet Kritik nicht bei der Sache, sondern bei der Person.',
+     hilft:'{A} sagt zuerst, was schon gut ist, und zwar konkret. Nicht aus Höflichkeit — bei diesem Kontakt kommt sonst nur die Einschränkung an.'}},
+
+ 'Jupiter|Sonne':{akteur:'Jupiter',
+  w:{tut:'{A} findet {B} gut und lässt es merken — Zuspruch, Türen, Gelegenheiten.',
+     an:'{B} wird in {A}s Gegenwart größer, traut sich mehr und wird dabei nicht übermütig.',
+     hilft:'Nichts. Das ist die freundlichste Verbindung im ganzen Repertoire. Nutzt sie für die Sachen, die {B} allein nicht anfangen würde.'},
+  h:{tut:'{A} redet {B} zu, macht größer, sieht Möglichkeiten.',
+     an:'{B} sagt Dinge zu, die sich später nicht halten lassen, und steht hinterher mit dem Problem allein da. {A} merkt das selten, weil es gut gemeint war.',
+     hilft:'Vor jeder Zusage eine Nacht. Bei diesem Kontakt ist die Begeisterung von beiden echt und die Einschätzung von beiden zu optimistisch.'}},
+
+ 'Mond|Venus':{akteur:'Venus',
+  w:{tut:'{A} macht es {B} angenehm — ohne Aufwand, oft ohne Absicht.',
+     an:'{B} fühlt sich in {A}s Nähe wohl und entspannt schneller als sonst. Das ist der Kontakt, der Freundschaften lange hält.',
+     hilft:'Nichts.'},
+  h:{tut:'{A} zeigt Zuneigung in der eigenen Sprache.',
+     an:'{B} braucht sie anders und spürt eine Lücke, die sich schlecht benennen lässt — weil ja offensichtlich etwas Nettes passiert ist. Das macht es schwer anzusprechen.',
+     hilft:'Einmal konkret fragen: „Woran merkst du, dass ich dich mag?" Die Antwort ist bei diesem Kontakt fast immer eine andere, als {A} erwartet.'}},
+
  'Mars|Mars':{
-  w:'Ihr zieht in dieselbe Richtung, wenn es losgeht.',
-  h:'Zwei Antriebe, die sich in die Quere kommen. Aufgaben teilen hilft mehr als Absprachen.'},
- 'Mars|Saturn':{
-  w:'Ausdauer trifft auf Schwung. Zusammen bringt ihr Dinge zu Ende.',
-  h:'Der eine will los, der andere bremst. Das hält beide auf, wenn es nicht benannt wird.'},
- 'Merkur|Mond':{
-  w:'Der eine spricht aus, was der andere fühlt. Das entlastet.',
-  h:'Sachlichkeit trifft auf Stimmung. Was als Information gemeint war, kommt als Kritik an.'},
- 'Pluto|Venus':{
-  w:'Eine Verbindung mit Tiefe. Oberflächlich wird es zwischen euch selten.',
-  h:'Es wird schnell intensiv — und schnell um Kontrolle. Eifersucht ist hier ein Thema, auch wenn niemand es so nennt.',
-  rh:'Starke Bindung mit Hang zum Klammern. Das Schöne und das Schwierige haben hier dieselbe Wurzel.'},
- 'Mond|Pluto':{
-  w:'Ihr kommt schnell an das heran, was andere nicht sehen.',
-  h:'Es geht hier sofort tief, auch wenn keiner das wollte. Gefühle werden zwischen euch schnell zum Machtthema.'},
+  w:{tut:'Ihr geht Dinge ähnlich an und in ähnlichem Tempo.',
+     an:'Zusammen etwas anzufangen geht leicht. Keiner muss den anderen antreiben oder bremsen.',
+     hilft:'Nichts — außer daran denken, dass andere euer gemeinsames Tempo anstrengend finden.'},
+  h:{tut:'Ihr geht Dinge entgegengesetzt an: die eine sofort, die andere erst richtig.',
+     an:'Jede hält das Vorgehen der anderen für den Fehler. Aus einer Sachfrage wird deshalb schnell ein Machtkampf, obwohl es um die Sache gar nicht mehr geht.',
+     hilft:'Aufteilen statt abstimmen. Zwei Zuständigkeiten nebeneinander funktionieren hier besser als eine gemeinsame Entscheidung.'}},
+
+ 'Mars|Saturn':{akteur:'Saturn',
+  w:{tut:'{A} gibt {B}s Kraft eine Form: Plan, Reihenfolge, Ausdauer.',
+     an:'{B} kommt weiter als allein, weil der Schwung nicht gleich wieder versickert.',
+     hilft:'{A} setzt den Rahmen, {B} füllt ihn. Umgekehrt geht es bei diesem Kontakt schief.'},
+  h:{tut:'{A} bremst, {B} drückt. Beide finden sich im Recht.',
+     an:'{B} erlebt {A} als Verhinderung, {A} erlebt {B} als rücksichtslos. Das ist der Kontakt, bei dem am meisten Kraft zwischen zwei Menschen verlorengeht, ohne dass etwas passiert.',
+     hilft:'Einen Probelauf mit Enddatum vereinbaren. {B} darf loslegen, {A} bekommt einen Termin, an dem geprüft wird. Beide bekommen, was sie brauchen.'}},
+
+ 'Merkur|Mond':{akteur:'Merkur',
+  w:{tut:'{A} findet Worte für das, was {B} fühlt.',
+     an:'{B} fühlt sich verstanden, noch bevor klar ist, worum es überhaupt geht. Das ist der Kontakt, über den Freundschaften laufen.',
+     hilft:'Nichts.'},
+  h:{tut:'{A} redet, erklärt, analysiert.',
+     an:'{B} ist noch beim Fühlen und erlebt das Reden als Überrollen. {B} sagt dann nichts mehr, und {A} hält das für Einverständnis.',
+     hilft:'{A} fragt und wartet zehn Sekunden. Nicht fünf — zehn. Bei diesem Kontakt passiert die ganze Arbeit in dieser Pause.'}},
+
+ 'Pluto|Venus':{akteur:'Pluto',
+  w:{tut:'{A} nimmt {B} ganz ernst, ohne Halbheiten.',
+     an:'{B} erlebt eine Intensität, die schmeichelt und trägt. Mit {A} gibt es keine beiläufige Beziehung.',
+     hilft:'Daran denken, dass diese Dichte für Außenstehende schwer auszuhalten ist. Nach außen ruhig etwas kleiner machen.'},
+  h:{tut:'{A} will alles wissen, hält fest, prüft.',
+     an:'{B} empfindet die Nähe als Besitz und fängt an, Dinge auszulassen — nicht aus Falschheit, sondern um Luft zu haben. Was {A} wiederum bestätigt.',
+     hilft:'{A} stellt eine Frage weniger und erträgt die Lücke. {B} erzählt eine Sache mehr, unaufgefordert. Beides ist unangenehm und löst den Kreis.'}},
+
+ 'Mond|Pluto':{akteur:'Pluto',
+  w:{tut:'{A} hält {B}s schwierige Seiten aus, ohne zu erschrecken.',
+     an:'{B} kann bei {A} Dinge sagen, die sonst unausgesprochen bleiben. Das bindet stark.',
+     hilft:'Nichts — aber wissen, dass eine Trennung bei diesem Kontakt überdurchschnittlich lange nachwirkt.'},
+  h:{tut:'{A} berührt bei {B} etwas Altes, meist ungewollt und oft durch Kleinigkeiten.',
+     an:'{B} reagiert unverhältnismäßig heftig und kann hinterher selbst nicht erklären, warum. {A} fühlt sich zu Unrecht beschuldigt.',
+     hilft:'Im Moment nicht klären. Später, ruhig, die Frage: „Woran hat dich das erinnert?" Fast immer nicht an {A}.'}},
+
  'Sonne|Sonne':{
-  w:'Ähnlicher Grundton. Ihr versteht, warum der andere tut, was er tut.',
-  h:'Zwei Richtungen, die sich kreuzen. Ihr seid euch nicht fremd — ihr wollt nur Verschiedenes.'},
- 'Merkur|Saturn':{
-  w:'Gespräche mit Substanz. Nichts wird hier leichtfertig gesagt.',
-  h:'Einer fühlt sich beim Reden geprüft. Das legt sich, wenn man es einmal ausspricht.'},
- 'Sonne|Uranus':{
-  w:'Ihr bringt einander auf Ideen. Langweilig wird es nicht.',
-  h:'Einer ist dem anderen zu unberechenbar. Verlässlichkeit ist hier das Verhandlungsthema.'},
- 'Mars|Mond':{
-  w:'Schwung trifft Gefühl, und es passt.',
-  h:'Der eine wird laut, bevor der andere sortiert hat. Hier entstehen die meisten unnötigen Streits.'},
- 'Jupiter|Mond':{
-  w:'In dieser Verbindung geht es einem besser als allein.',
-  h:'Großzügigkeit, die am Bedarf vorbeigeht. Gut gemeint ist hier nicht gleich gut.'},
+  w:{tut:'Ihr wollt im Kern Ähnliches.',
+     an:'Ihr versteht ohne Erklärung, was der anderen wichtig ist. Das macht gemeinsame Vorhaben leicht.',
+     hilft:'Nichts — außer: Ähnlichkeit heißt nicht Einigkeit. Ihr könnt dasselbe wollen und euch über den Weg streiten.'},
+  h:{tut:'Ihr wollt beide die Richtung bestimmen.',
+     an:'Keine kann hier gut folgen, und das schwelt. Aus kleinen Fragen werden Grundsatzfragen, weil es nicht um die Sache geht, sondern darum, wer entscheidet.',
+     hilft:'Gebiete aufteilen, dauerhaft. Eine entscheidet beim einen, die andere beim anderen, und zwar ohne Rückfrage. Alles andere wird hier zum Dauerkonflikt.'}},
+
+ 'Merkur|Saturn':{akteur:'Saturn',
+  w:{tut:'{A} hört genau zu und hält {B} an der Sache.',
+     an:'{B} denkt in {A}s Gegenwart klarer, weil nichts durchgeht, was nicht stimmt.',
+     hilft:'Nichts. Für alles Schriftliche und alles, was stimmen muss, seid ihr ein gutes Gespann.'},
+  h:{tut:'{A} widerspricht, korrigiert, fragt nach Belegen.',
+     an:'{B} fängt an, sich vorab zu rechtfertigen, und sagt irgendwann die halben Gedanken nicht mehr. Das Gespräch wird dünner, ohne dass einer es merkt.',
+     hilft:'Eine Runde ohne Einwände: {B} redet zu Ende, {A} fragt erst danach. Zehn Minuten reichen, um den Unterschied zu sehen.'}},
+
+ 'Sonne|Uranus':{akteur:'Uranus',
+  w:{tut:'{A} bringt {B} auf Ideen, die allein nicht entstanden wären.',
+     an:'{B} erlebt {A} als befreiend — jemanden, bei dem die eigenen Regeln kurz nicht gelten.',
+     hilft:'Daraus etwas Konkretes machen, solange der Schwung da ist. Bei diesem Kontakt verpufft sonst viel.'},
+  h:{tut:'{A} ist unberechenbar: sagt ab, ändert Pläne, taucht wieder auf.',
+     an:'{B} hat nie Boden unter den Füßen, und das untergräbt mehr als jeder Streit. {A} versteht die Aufregung nicht — gemeint war nie etwas Persönliches.',
+     hilft:'Verlässlichkeit an einer einzigen Stelle vereinbaren — ein fester Termin in der Woche, der nicht verschoben wird. Der Rest darf beweglich bleiben.'}},
+
+ 'Mars|Mond':{akteur:'Mars',
+  w:{tut:'{A} handelt, wo {B} fühlt — macht, besorgt, regelt.',
+     an:'{B} erlebt das als Fürsorge und kommt schneller zur Ruhe, als Reden es schaffen würde.',
+     hilft:'Vorher kurz fragen, ob gerade Handeln oder Dasein gefragt ist. Meist Handeln — aber nicht immer.'},
+  h:{tut:'{A} wird laut oder schnell, bevor {B} sortiert hat.',
+     an:'{B} erschrickt und macht zu. Danach ist das eigentliche Thema nicht mehr erreichbar, und es geht nur noch um den Ton.',
+     hilft:'{A} bleibt leiser als nötig, {B} sagt im Moment selbst „zu schnell" statt es hinterher zu erklären. Hier entstehen die meisten unnötigen Streits zwischen zwei Menschen.'}},
+
+ 'Jupiter|Mond':{akteur:'Jupiter',
+  w:{tut:'{A} ist großzügig mit {B} — mit Zeit, Zuspruch, Einladungen.',
+     an:'{B} geht es in {A}s Nähe besser als allein. Keine große Sache, aber verlässlich.',
+     hilft:'Nichts.'},
+  h:{tut:'{A} gibt groß: der große Rat, das große Angebot, die große Geste. Maßstab ist dabei, was {A} selbst gut fände.',
+     an:'{B} hätte etwas Kleines und Bestimmtes gebraucht und bekommt etwas Großes und Allgemeines. {B} bedankt sich und bleibt hungrig. Weil die Geste freundlich war, lässt sich schlecht sagen, dass sie nicht gepasst hat — und so wiederholt es sich.',
+     hilft:'Ein Satz vorher: „Was hilft dir gerade konkret?" Und dann genau das, auch wenn es kleiner ist, als {A} geben wollte. Das ist bei diesem Kontakt der ganze Unterschied.'}},
+
  'Venus|Venus':{
-  w:'Ihr mögt Ähnliches. Das macht vieles einfach.',
-  h:'Verschiedener Geschmack, verschiedene Vorstellung von schön. Harmlos — solange es nicht ums Geld geht.'},
- 'Saturn|Venus':{
-  w:'Etwas, das hält. Nicht aufregend, dafür verlässlich.',
-  h:'Zuneigung, die sich Bedingungen stellt. Einer wartet auf ein Zeichen, das der andere nicht gibt.'}
+  w:{tut:'Ihr mögt Ähnliches.',
+     an:'Was schön ist, was gemütlich ist, was sich lohnt — darüber müsst ihr nicht verhandeln. Das macht den Alltag leicht.',
+     hilft:'Nichts.'},
+  h:{tut:'Ihr habt verschiedenen Geschmack und eine verschiedene Vorstellung davon, was etwas wert ist.',
+     an:'Im Alltag harmlos. Sobald Geld im Spiel ist, wird daraus ein echter Konflikt, weil jede die Ausgaben der anderen für unvernünftig hält.',
+     hilft:'Getrennte Töpfe für das, was nur eine will. Gemeinsam nur das, was wirklich beide betrifft.'}},
+
+ 'Saturn|Venus':{akteur:'Saturn',
+  w:{tut:'{A} meint es ernst mit {B} und bleibt.',
+     an:'{B} erlebt eine Zuneigung, auf die Verlass ist — unspektakulär und tragfähig.',
+     hilft:'Nichts. Bei diesem Kontakt ist das Unspektakuläre die Qualität.'},
+  h:{tut:'{A} hält sich zurück, prüft, zeigt wenig.',
+     an:'{B} erlebt Zuneigung unter Vorbehalt und fängt an, sich darum zu bemühen. Das ist der Kontakt, bei dem eine wirbt und die andere wartet — und beide unglücklich dabei sind.',
+     hilft:'{A} sagt einmal deutlich, woran {B} ist. Ein Satz. Bei diesem Kontakt ist Zurückhaltung keine Vorsicht, sondern das eigentliche Problem.'}}
 };
 
+
 /* Was ein Planet des einen im Haus des anderen anfasst */
-var INHAUS=['dein Auftreten und wie du wirkst','dein Geld und deinen Selbstwert','dein Reden und Lernen',
- 'dein Zuhause und deine Herkunft','deinen Ausdruck und dein Spiel','deinen Alltag und deinen Körper',
- 'deine Verbindlichkeit','deine Tiefe und dein Loslassen','deinen Sinn und deine Überzeugung',
- 'deinen Beruf und deine Sichtbarkeit','deine Freundschaften und deine Zukunft','deinen Rückzug und deine Ruhe'];
+/* Die Lebensbereiche der ANDEREN Person — deshalb ohne „dein".
+   Den Besitz setzt die App mit dem Namen davor. */
+var INHAUS=['Auftreten und Wirkung','Geld und Selbstwert','Reden und Lernen',
+ 'Zuhause und Herkunft','Ausdruck und Spiel','Alltag und Körper',
+ 'Verbindlichkeit','Tiefe und Loslassen','Sinn und Überzeugung',
+ 'Beruf und Sichtbarkeit','Freundschaften und Zukunft','Rückzug und Ruhe'];
 
 /* Was in dieser Beziehungsart den Unterschied macht */
 var ROLLENSATZ={
@@ -529,6 +642,11 @@ function gross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 var W=window.AC_WORT;
 /* „Mandys", „Lukas'" — deutsche Besitzform */
 function bes(n){ return /[sxzß]$/i.test(n) ? n+"'" : n+'s'; }
+/* Genus der Planeten — „dein Mond", aber „deine Sonne" */
+var PGENUS={Sonne:'deine',Mond:'dein',Merkur:'dein',Venus:'deine',Mars:'dein',
+ Jupiter:'dein',Saturn:'dein',Uranus:'dein',Neptun:'dein',Pluto:'dein',
+ Chiron:'dein',Lilith:'deine'};
+function meinPlanet(k){ return (PGENUS[k]||'dein')+' '+k; }
 /* „dein Wesenskern" → „Wesenskern" */
 function ohneDein(s){ return s.replace(/^(deine|dein|die|der|das)\s+/i,''); }
 var ZN=W.ZEICHEN.map(function(z){return z.n;});
@@ -592,13 +710,29 @@ function kontakte(A,B,R){
   l.sort(function(x,y){return y.s-x.s;});
   return l;
 }
+/* Wer handelt, wer empfängt. k.a liegt in Chart A, k.b in Chart B —
+   diese Richtung ist der Unterschied zwischen „du gibst groß" und
+   „dir wird groß gegeben". */
 function kontaktText(k,R,nA,nB){
   var d=KONTAKT[k.key]; if(!d) return null;
   var weich=(k.art==='w');
   var t=null;
   if(R.romantisch) t=weich?(d.rw||d.w):(d.rh||d.h);
   if(!t) t=weich?d.w:d.h;
-  return t;
+  if(!t||!t.tut) return null;
+  var tuer, empf;
+  if(!d.akteur){ tuer=null; empf=null; }
+  else if(k.a===d.akteur){ tuer=nA; empf=nB; }
+  else { tuer=nB; empf=nA; }
+  /* {A}s / {B}s zuerst — sonst entsteht „Alexs" statt „Alex'". */
+  function fuell(x){
+    var A=tuer||'ihr', B=empf||'ihr';
+    return String(x)
+      .replace(/\{A\}s/g, esc(bes(A))).replace(/\{B\}s/g, esc(bes(B)))
+      .replace(/\{A\}/g, esc(A)).replace(/\{B\}/g, esc(B));
+  }
+  return {tut:fuell(t.tut), an:fuell(t.an), hilft:fuell(t.hilft),
+          tuer:tuer, empf:empf};
 }
 
 /* ── Darstellung ──────────────────────────────────────── */
@@ -695,7 +829,10 @@ function bauen(pa,pb){
     h+=abschnitt('erreichen','Was für ein Typ '+esc(nB)+' ist',
       '<p>'+TIER_MOND[mb]+'</p>'+
       '<p class="bz-leise">Beim Tier ist der Mond das Interessanteste — Temperament, Rhythmus, '+
-      'Reizschwelle. Sonne und Aszendent, die bei Menschen so viel tragen, sagen hier wenig.</p>', Z);
+      'Reizschwelle. Sonne und Aszendent, die bei Menschen so viel tragen, sagen hier wenig. '+
+      '<b>Und dazugesagt:</b> Für Tiere gibt es keine gewachsene astrologische Tradition — '+
+      'die klassischen Texte handeln von Menschen. Was hier steht, ist eine Temperamentsskizze, '+
+      'keine Deutung, und sie ersetzt keine Tierärztin.</p>', Z);
   } else {
     h+=abschnitt('erreichen','Wie du '+esc(nB)+' erreichst',
       '<p><b>Was ankommt:</b> '+ERREICHEN[mb][0]+'</p>'+
@@ -718,7 +855,7 @@ function bauen(pa,pb){
   var gezeigt=[], gesehen={};
   ks.forEach(function(k){
     if(gesehen[k.key]) return; gesehen[k.key]=1;
-    var t=kontaktText(k,R); if(!t) return;
+    var t=kontaktText(k,R,nA,nB); if(!t) return;
     gezeigt.push({k:k,t:t});
   });
   if(thema==='reibung') gezeigt=gezeigt.filter(function(x){return x.k.art==='h';});
@@ -727,13 +864,18 @@ function bauen(pa,pb){
   if(gezeigt.length){
     var kt=gezeigt.map(function(x){
       var kopf = n<=1
-        ? esc(bes(nA))+' '+gross(ohneDein(W.PLANET[x.k.a].kurz(Math.min(n,1))))+' und '+
-          esc(bes(nB))+' '+ohneDein(W.PLANET[x.k.b].kurz(Math.min(n,1)))
+        ? esc(bes(nA))+' '+gross(ohneDein(W.PLANET[x.k.a].kurz(Math.min(n,1))))+
+          ' trifft '+esc(bes(nB))+' '+ohneDein(W.PLANET[x.k.b].kurz(Math.min(n,1)))
         : esc(bes(nA))+' '+x.k.a+' '+x.k.typ+' '+esc(bes(nB))+' '+x.k.b+
           (n>=3?' ('+x.k.orb.toFixed(1)+'°)':'');
       return '<div class="bz-kt '+(x.k.art==='h'?'hart':'weich')+'">'+
         '<div class="kt-kopf">'+kopf+'<span class="kt-m">'+
-        (x.k.art==='h'?'Reibung':'leicht')+'</span></div><p>'+x.t+'</p></div>';
+        (x.k.art==='h'?'Reibung':'leicht')+'</span></div>'+
+        '<div class="kt-drei">'+
+          '<div class="kt-s"><span class="kt-l">Was passiert</span>'+x.t.tut+'</div>'+
+          '<div class="kt-s"><span class="kt-l">Was ankommt</span>'+x.t.an+'</div>'+
+          '<div class="kt-s hilft"><span class="kt-l">Was hilft</span>'+x.t.hilft+'</div>'+
+        '</div></div>';
     }).join('');
     h+=abschnitt('kontakte', thema==='reibung'?'Wo es hakt':(thema==='naehe'?'Was leicht geht':'Die stärksten Verbindungen'), kt, Z);
   }
@@ -765,13 +907,18 @@ function bauen(pa,pb){
       if(hs) ih.push({k:k,h:hs});
     });
     if(ih.length){
-      var iht='<p>Wo du bei '+esc(nB)+' landest — welchen Lebensbereich du bei ihr oder ihm '+
-        'berührst, ob du willst oder nicht:</p><ul class="bz-liste">'+
+      var iht='<p>Deine Planeten fallen in '+esc(bes(nB))+' Lebensbereiche. Das sagt, '+
+        'welches Thema du bei '+esc(nB)+' berührst, ohne etwas dafür zu tun — '+
+        'und zwar immer dasselbe, in jeder Begegnung:</p><ul class="bz-liste">'+
         ih.slice(0,5).map(function(x){
-          return '<li>'+(n<=1?gross(W.PLANET[x.k].kurz(Math.min(n,1))):'Dein '+x.k)+
-            ' trifft '+INHAUS[x.h-1]+(n>=2?' ('+x.h+'. Haus)':'')+'.</li>';
-        }).join('')+'</ul>';
-      h+=abschnitt('haeuser','Wo du bei '+esc(nB)+' ankommst', iht, Z);
+          return '<li><b>'+(n<=1?gross(W.PLANET[x.k].kurz(Math.min(n,1))):gross(meinPlanet(x.k)))+
+            '</b> fällt in '+esc(bes(nB))+' Bereich <b>'+INHAUS[x.h-1]+'</b>'+
+            (n>=2?' ('+x.h+'. Haus)':'')+'.</li>';
+        }).join('')+'</ul>'+
+        '<p class="bz-leise">Gelesen wird das nur in diese Richtung: Es beschreibt, '+
+        'was du bei '+esc(nB)+' auslöst — nicht, was '+esc(nB)+' bei dir auslöst. '+
+        'Dafür müsstest du die beiden Profile oben tauschen.</p>';
+      h+=abschnitt('haeuser','Was du bei '+esc(nB)+' berührst', iht, Z);
     }
   }
 

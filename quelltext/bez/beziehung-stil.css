@@ -61,3 +61,16 @@
 
 .bz-rolle{font-size:14.8px;line-height:1.7;color:var(--tinte);background:var(--messing-bg);
  border-radius:13px;padding:13px 16px;margin:13px 0 0;}
+
+/* Kontakte in drei Schritten: was passiert, was ankommt, was hilft */
+.kt-drei{display:grid;gap:9px;margin-top:11px;}
+.kt-s{display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);gap:4px 15px;
+ font-size:14.9px;line-height:1.62;align-items:baseline;}
+@media(max-width:620px){.kt-s{grid-template-columns:1fr;gap:2px;}}
+.kt-l{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--leise,#6B6259);padding-top:3px;}
+.kt-s.hilft{background:var(--messing-bg,#F7EFE1);border-radius:12px;padding:11px 14px;
+ margin-top:3px;}
+.kt-s.hilft .kt-l{color:var(--messing,#9A7235);padding-top:1px;}
+.bz-kt.hart .kt-s.hilft{background:#FBEFE6;}
+.bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#A05A3A);}

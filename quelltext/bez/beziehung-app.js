@@ -8,6 +8,11 @@ function gross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 var W=window.AC_WORT;
 /* „Mandys", „Lukas'" — deutsche Besitzform */
 function bes(n){ return /[sxzß]$/i.test(n) ? n+"'" : n+'s'; }
+/* Genus der Planeten — „dein Mond", aber „deine Sonne" */
+var PGENUS={Sonne:'deine',Mond:'dein',Merkur:'dein',Venus:'deine',Mars:'dein',
+ Jupiter:'dein',Saturn:'dein',Uranus:'dein',Neptun:'dein',Pluto:'dein',
+ Chiron:'dein',Lilith:'deine'};
+function meinPlanet(k){ return (PGENUS[k]||'dein')+' '+k; }
 /* „dein Wesenskern" → „Wesenskern" */
 function ohneDein(s){ return s.replace(/^(deine|dein|die|der|das)\s+/i,''); }
 var ZN=W.ZEICHEN.map(function(z){return z.n;});
@@ -71,13 +76,29 @@ function kontakte(A,B,R){
   l.sort(function(x,y){return y.s-x.s;});
   return l;
 }
+/* Wer handelt, wer empfängt. k.a liegt in Chart A, k.b in Chart B —
+   diese Richtung ist der Unterschied zwischen „du gibst groß" und
+   „dir wird groß gegeben". */
 function kontaktText(k,R,nA,nB){
   var d=KONTAKT[k.key]; if(!d) return null;
   var weich=(k.art==='w');
   var t=null;
   if(R.romantisch) t=weich?(d.rw||d.w):(d.rh||d.h);
   if(!t) t=weich?d.w:d.h;
-  return t;
+  if(!t||!t.tut) return null;
+  var tuer, empf;
+  if(!d.akteur){ tuer=null; empf=null; }
+  else if(k.a===d.akteur){ tuer=nA; empf=nB; }
+  else { tuer=nB; empf=nA; }
+  /* {A}s / {B}s zuerst — sonst entsteht „Alexs" statt „Alex'". */
+  function fuell(x){
+    var A=tuer||'ihr', B=empf||'ihr';
+    return String(x)
+      .replace(/\{A\}s/g, esc(bes(A))).replace(/\{B\}s/g, esc(bes(B)))
+      .replace(/\{A\}/g, esc(A)).replace(/\{B\}/g, esc(B));
+  }
+  return {tut:fuell(t.tut), an:fuell(t.an), hilft:fuell(t.hilft),
+          tuer:tuer, empf:empf};
 }
 
 /* ── Darstellung ──────────────────────────────────────── */
@@ -174,7 +195,10 @@ function bauen(pa,pb){
     h+=abschnitt('erreichen','Was für ein Typ '+esc(nB)+' ist',
       '<p>'+TIER_MOND[mb]+'</p>'+
       '<p class="bz-leise">Beim Tier ist der Mond das Interessanteste — Temperament, Rhythmus, '+
-      'Reizschwelle. Sonne und Aszendent, die bei Menschen so viel tragen, sagen hier wenig.</p>', Z);
+      'Reizschwelle. Sonne und Aszendent, die bei Menschen so viel tragen, sagen hier wenig. '+
+      '<b>Und dazugesagt:</b> Für Tiere gibt es keine gewachsene astrologische Tradition — '+
+      'die klassischen Texte handeln von Menschen. Was hier steht, ist eine Temperamentsskizze, '+
+      'keine Deutung, und sie ersetzt keine Tierärztin.</p>', Z);
   } else {
     h+=abschnitt('erreichen','Wie du '+esc(nB)+' erreichst',
       '<p><b>Was ankommt:</b> '+ERREICHEN[mb][0]+'</p>'+
@@ -197,7 +221,7 @@ function bauen(pa,pb){
   var gezeigt=[], gesehen={};
   ks.forEach(function(k){
     if(gesehen[k.key]) return; gesehen[k.key]=1;
-    var t=kontaktText(k,R); if(!t) return;
+    var t=kontaktText(k,R,nA,nB); if(!t) return;
     gezeigt.push({k:k,t:t});
   });
   if(thema==='reibung') gezeigt=gezeigt.filter(function(x){return x.k.art==='h';});
@@ -206,13 +230,18 @@ function bauen(pa,pb){
   if(gezeigt.length){
     var kt=gezeigt.map(function(x){
       var kopf = n<=1
-        ? esc(bes(nA))+' '+gross(ohneDein(W.PLANET[x.k.a].kurz(Math.min(n,1))))+' und '+
-          esc(bes(nB))+' '+ohneDein(W.PLANET[x.k.b].kurz(Math.min(n,1)))
+        ? esc(bes(nA))+' '+gross(ohneDein(W.PLANET[x.k.a].kurz(Math.min(n,1))))+
+          ' trifft '+esc(bes(nB))+' '+ohneDein(W.PLANET[x.k.b].kurz(Math.min(n,1)))
         : esc(bes(nA))+' '+x.k.a+' '+x.k.typ+' '+esc(bes(nB))+' '+x.k.b+
           (n>=3?' ('+x.k.orb.toFixed(1)+'°)':'');
       return '<div class="bz-kt '+(x.k.art==='h'?'hart':'weich')+'">'+
         '<div class="kt-kopf">'+kopf+'<span class="kt-m">'+
-        (x.k.art==='h'?'Reibung':'leicht')+'</span></div><p>'+x.t+'</p></div>';
+        (x.k.art==='h'?'Reibung':'leicht')+'</span></div>'+
+        '<div class="kt-drei">'+
+          '<div class="kt-s"><span class="kt-l">Was passiert</span>'+x.t.tut+'</div>'+
+          '<div class="kt-s"><span class="kt-l">Was ankommt</span>'+x.t.an+'</div>'+
+          '<div class="kt-s hilft"><span class="kt-l">Was hilft</span>'+x.t.hilft+'</div>'+
+        '</div></div>';
     }).join('');
     h+=abschnitt('kontakte', thema==='reibung'?'Wo es hakt':(thema==='naehe'?'Was leicht geht':'Die stärksten Verbindungen'), kt, Z);
   }
@@ -244,13 +273,18 @@ function bauen(pa,pb){
       if(hs) ih.push({k:k,h:hs});
     });
     if(ih.length){
-      var iht='<p>Wo du bei '+esc(nB)+' landest — welchen Lebensbereich du bei ihr oder ihm '+
-        'berührst, ob du willst oder nicht:</p><ul class="bz-liste">'+
+      var iht='<p>Deine Planeten fallen in '+esc(bes(nB))+' Lebensbereiche. Das sagt, '+
+        'welches Thema du bei '+esc(nB)+' berührst, ohne etwas dafür zu tun — '+
+        'und zwar immer dasselbe, in jeder Begegnung:</p><ul class="bz-liste">'+
         ih.slice(0,5).map(function(x){
-          return '<li>'+(n<=1?gross(W.PLANET[x.k].kurz(Math.min(n,1))):'Dein '+x.k)+
-            ' trifft '+INHAUS[x.h-1]+(n>=2?' ('+x.h+'. Haus)':'')+'.</li>';
-        }).join('')+'</ul>';
-      h+=abschnitt('haeuser','Wo du bei '+esc(nB)+' ankommst', iht, Z);
+          return '<li><b>'+(n<=1?gross(W.PLANET[x.k].kurz(Math.min(n,1))):gross(meinPlanet(x.k)))+
+            '</b> fällt in '+esc(bes(nB))+' Bereich <b>'+INHAUS[x.h-1]+'</b>'+
+            (n>=2?' ('+x.h+'. Haus)':'')+'.</li>';
+        }).join('')+'</ul>'+
+        '<p class="bz-leise">Gelesen wird das nur in diese Richtung: Es beschreibt, '+
+        'was du bei '+esc(nB)+' auslöst — nicht, was '+esc(nB)+' bei dir auslöst. '+
+        'Dafür müsstest du die beiden Profile oben tauschen.</p>';
+      h+=abschnitt('haeuser','Was du bei '+esc(nB)+' berührst', iht, Z);
     }
   }
 
