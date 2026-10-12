@@ -1,0 +1,128 @@
+/* ── Dossier: Ergänzungen zum übernommenen Grundstil ──────────── */
+
+/* Bezugswahl */
+.do-bezug{margin:0 0 26px;}
+.bz-k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:10px;}
+.bz-reihe{display:flex;flex-wrap:wrap;gap:6px;}
+.bzb{font-family:var(--sans);font-size:13.6px;padding:8px 14px;border-radius:19px;
+ border:1px solid var(--linie-stark,#DDD0BC);background:var(--papier,#FFFDFA);
+ color:var(--tinte,#231F1A);cursor:pointer;max-width:100%;}
+.bzb:hover{border-color:var(--nacht,#2E3A5C);}
+.bzb.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#fff;}
+.bz-kurz{margin-top:9px;font-size:13.8px;color:var(--leise,#6B6259);}
+
+/* Stellung — der erste Abschnitt, bewusst auffällig */
+.do-stellung{border:1px solid var(--messing,#9A7235)!important;
+ background:var(--messing-bg,#F7EFE1)!important;}
+.do-stellung .bist{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.4;margin-bottom:14px;}
+.do-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:10px;}
+.dk{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ padding:13px 15px;font-size:14.4px;line-height:1.62;min-width:0;}
+.dk>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;font-weight:400;
+ color:var(--messing,#9A7235);}
+.dk.gut{background:var(--gruen-bg,#EDF3EC);border-color:#C9DCC8;}
+.dk.gut>b:first-child{color:var(--gruen,#3F6B4A);}
+.dk.warn{background:#FBEFE6;border-color:#E6CDBA;}
+.dk.warn>b:first-child{color:var(--rost,#A05A3A);}
+.dk.voll{grid-column:1/-1;}
+
+/* Zeilen: Stellung links, Deutung rechts */
+.do-zeilen{display:grid;gap:8px;margin:15px 0 0;}
+.dz{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:4px 16px;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:13px;padding:12px 15px;}
+@media(max-width:560px){.dz{grid-template-columns:1fr;}}
+.dz .p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:16.5px;font-weight:500;
+ color:var(--nacht,#2E3A5C);min-width:0;}
+.dz .p i{font-style:normal;font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;
+ color:var(--leise,#6B6259);display:block;margin-top:2px;}
+.dz .t{font-size:14.7px;line-height:1.62;min-width:0;}
+
+/* Der Mond-Block — der Kern der Bezugs-Idee */
+.do-mond{margin-top:16px;background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:18px;
+ padding:20px 23px;}
+@media(max-width:560px){.do-mond{padding:17px 16px;}}
+.do-mond .k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:10px;}
+.do-mond p{color:rgba(244,239,230,.89);font-size:15.1px;line-height:1.7;margin-bottom:11px;}
+.do-mond b{color:#fff;}
+.do-mond .tun{background:rgba(232,201,122,.17);border-radius:13px;padding:13px 15px;
+ font-size:14.6px;line-height:1.62;margin-top:3px;}
+.do-mond .tun>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#E8C97A;
+ margin-bottom:5px;font-weight:400;}
+
+/* Warum umgewichtet wurde */
+.do-warum{background:var(--nacht-bg,#E9EDF4);border-radius:13px;padding:13px 15px;
+ font-size:14.3px;line-height:1.62;margin-bottom:15px;}
+.do-warum>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--nacht,#2E3A5C);
+ margin-bottom:5px;font-weight:400;}
+.do-bal .hoch{font-style:normal;color:var(--messing,#9A7235);font-size:13px;}
+
+/* Häuser des Bezugs */
+.do-haeuser{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.dh{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:15px;padding:14px 16px;min-width:0;}
+.dh .nr{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:4px;}
+.dh .na{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.25;margin-bottom:6px;}
+.dh .ze{font-size:13px;color:var(--leise,#6B6259);margin-bottom:6px;}
+.dh .be{font-size:14.2px;line-height:1.5;}
+.dh .be i{color:var(--leise,#6B6259);font-size:13.4px;}
+
+/* Stellungszeile in „Wo es klemmt" */
+.do-stell{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 11px;margin:16px 0 9px;
+ padding-bottom:9px;border-bottom:1px solid var(--linie,#EBE1D2);}
+.do-stell .p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.do-stell .f{font-size:13.2px;color:var(--leise,#6B6259);}
+.do-stell .o{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;
+ background:var(--nacht-bg,#E9EDF4);border-radius:9px;padding:2px 8px;color:var(--leise,#6B6259);}
+
+/* Listen */
+.do-li{list-style:none;margin:9px 0 0;padding:0;display:grid;gap:7px;}
+.do-li li{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:12px;padding:11px 14px;font-size:14.4px;line-height:1.58;}
+.do-muster{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+.do-muster li{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:14px;padding:13px 16px;font-size:14.6px;line-height:1.62;}
+.do-muster li>b:first-child{display:block;font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:16.5px;font-weight:500;color:var(--nacht,#2E3A5C);margin-bottom:3px;}
+.do-muster .q{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;
+ color:var(--leise,#6B6259);margin-bottom:7px;}
+.do-fragen{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+.do-fragen li{background:var(--messing-bg,#F7EFE1);border-left:3px solid var(--messing,#9A7235);
+ border-radius:0 13px 13px 0;padding:13px 16px;font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:17px;font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.4;}
+
+/* Die Grenze */
+.do-grenze{background:#FBEFE6;border:1px solid #E6CDBA;border-radius:18px;
+ padding:19px 22px;margin-top:16px;}
+@media(max-width:560px){.do-grenze{padding:16px 16px;}}
+.do-grenze .k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--rost,#A05A3A);margin-bottom:9px;}
+.do-grenze p{margin:0;font-size:15px;line-height:1.7;}
+
+.do-hin{font-size:14.4px;color:var(--leise,#6B6259);background:var(--nacht-bg,#E9EDF4);
+ border-radius:12px;padding:12px 15px;}
+.do-leer{font-size:15px;color:var(--leise,#6B6259);background:var(--card,#F7EFE1);
+ border:1px solid var(--linie,#EBE1D2);border-radius:15px;padding:17px 19px;}
+
+/* Drucken */
+.do-druck{margin:26px 0 0;}
+.do-druck button{font-family:var(--sans);font-size:14px;padding:10px 20px;border-radius:19px;
+ border:1px solid var(--nacht,#2E3A5C);background:var(--nacht,#2E3A5C);color:#fff;cursor:pointer;}
+@media print{
+ .ac-leiste,.do-wahl,.do-bezug,.do-druck,.weiter,.niv-leiste{display:none!important;}
+ body{background:#fff;}
+ .do-mond{background:#fff!important;color:#000!important;border:1.5px solid #000;}
+ .do-mond p,.do-mond b{color:#000!important;}
+ .do-mond .k{color:#555!important;}
+ .do-mond .tun{background:#f2f2f2!important;}
+ .do-ab,.dh,.dk,.do-muster li{break-inside:avoid;}
+}

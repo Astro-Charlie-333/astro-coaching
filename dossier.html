@@ -1,11 +1,12 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dossier · Coach-Ansicht · Astro-Charlie</title>
+<title>Das Dossier &middot; Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="raum.js"></script>
-<style>*{box-sizing:border-box;margin:0;padding:0;}
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -179,6 +180,135 @@ a{color:var(--nacht);}
 @media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
 /* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
    nach der Raster- und Flexspalten ihre Breite berechnen. */
+
+/* ── Dossier: Ergänzungen zum übernommenen Grundstil ──────────── */
+
+/* Bezugswahl */
+.do-bezug{margin:0 0 26px;}
+.bz-k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:10px;}
+.bz-reihe{display:flex;flex-wrap:wrap;gap:6px;}
+.bzb{font-family:var(--sans);font-size:13.6px;padding:8px 14px;border-radius:19px;
+ border:1px solid var(--linie-stark,#DDD0BC);background:var(--papier,#FFFDFA);
+ color:var(--tinte,#231F1A);cursor:pointer;max-width:100%;}
+.bzb:hover{border-color:var(--nacht,#2E3A5C);}
+.bzb.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#fff;}
+.bz-kurz{margin-top:9px;font-size:13.8px;color:var(--leise,#6B6259);}
+
+/* Stellung — der erste Abschnitt, bewusst auffällig */
+.do-stellung{border:1px solid var(--messing,#9A7235)!important;
+ background:var(--messing-bg,#F7EFE1)!important;}
+.do-stellung .bist{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.4;margin-bottom:14px;}
+.do-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:10px;}
+.dk{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ padding:13px 15px;font-size:14.4px;line-height:1.62;min-width:0;}
+.dk>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;font-weight:400;
+ color:var(--messing,#9A7235);}
+.dk.gut{background:var(--gruen-bg,#EDF3EC);border-color:#C9DCC8;}
+.dk.gut>b:first-child{color:var(--gruen,#3F6B4A);}
+.dk.warn{background:#FBEFE6;border-color:#E6CDBA;}
+.dk.warn>b:first-child{color:var(--rost,#A05A3A);}
+.dk.voll{grid-column:1/-1;}
+
+/* Zeilen: Stellung links, Deutung rechts */
+.do-zeilen{display:grid;gap:8px;margin:15px 0 0;}
+.dz{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);gap:4px 16px;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:13px;padding:12px 15px;}
+@media(max-width:560px){.dz{grid-template-columns:1fr;}}
+.dz .p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:16.5px;font-weight:500;
+ color:var(--nacht,#2E3A5C);min-width:0;}
+.dz .p i{font-style:normal;font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;
+ color:var(--leise,#6B6259);display:block;margin-top:2px;}
+.dz .t{font-size:14.7px;line-height:1.62;min-width:0;}
+
+/* Der Mond-Block — der Kern der Bezugs-Idee */
+.do-mond{margin-top:16px;background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:18px;
+ padding:20px 23px;}
+@media(max-width:560px){.do-mond{padding:17px 16px;}}
+.do-mond .k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:#E8C97A;margin-bottom:10px;}
+.do-mond p{color:rgba(244,239,230,.89);font-size:15.1px;line-height:1.7;margin-bottom:11px;}
+.do-mond b{color:#fff;}
+.do-mond .tun{background:rgba(232,201,122,.17);border-radius:13px;padding:13px 15px;
+ font-size:14.6px;line-height:1.62;margin-top:3px;}
+.do-mond .tun>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#E8C97A;
+ margin-bottom:5px;font-weight:400;}
+
+/* Warum umgewichtet wurde */
+.do-warum{background:var(--nacht-bg,#E9EDF4);border-radius:13px;padding:13px 15px;
+ font-size:14.3px;line-height:1.62;margin-bottom:15px;}
+.do-warum>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--nacht,#2E3A5C);
+ margin-bottom:5px;font-weight:400;}
+.do-bal .hoch{font-style:normal;color:var(--messing,#9A7235);font-size:13px;}
+
+/* Häuser des Bezugs */
+.do-haeuser{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.dh{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:15px;padding:14px 16px;min-width:0;}
+.dh .nr{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:4px;}
+.dh .na{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.25;margin-bottom:6px;}
+.dh .ze{font-size:13px;color:var(--leise,#6B6259);margin-bottom:6px;}
+.dh .be{font-size:14.2px;line-height:1.5;}
+.dh .be i{color:var(--leise,#6B6259);font-size:13.4px;}
+
+/* Stellungszeile in „Wo es klemmt" */
+.do-stell{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 11px;margin:16px 0 9px;
+ padding-bottom:9px;border-bottom:1px solid var(--linie,#EBE1D2);}
+.do-stell .p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.do-stell .f{font-size:13.2px;color:var(--leise,#6B6259);}
+.do-stell .o{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;
+ background:var(--nacht-bg,#E9EDF4);border-radius:9px;padding:2px 8px;color:var(--leise,#6B6259);}
+
+/* Listen */
+.do-li{list-style:none;margin:9px 0 0;padding:0;display:grid;gap:7px;}
+.do-li li{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:12px;padding:11px 14px;font-size:14.4px;line-height:1.58;}
+.do-muster{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+.do-muster li{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:14px;padding:13px 16px;font-size:14.6px;line-height:1.62;}
+.do-muster li>b:first-child{display:block;font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:16.5px;font-weight:500;color:var(--nacht,#2E3A5C);margin-bottom:3px;}
+.do-muster .q{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;
+ color:var(--leise,#6B6259);margin-bottom:7px;}
+.do-fragen{list-style:none;margin:0;padding:0;display:grid;gap:8px;}
+.do-fragen li{background:var(--messing-bg,#F7EFE1);border-left:3px solid var(--messing,#9A7235);
+ border-radius:0 13px 13px 0;padding:13px 16px;font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:17px;font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.4;}
+
+/* Die Grenze */
+.do-grenze{background:#FBEFE6;border:1px solid #E6CDBA;border-radius:18px;
+ padding:19px 22px;margin-top:16px;}
+@media(max-width:560px){.do-grenze{padding:16px 16px;}}
+.do-grenze .k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--rost,#A05A3A);margin-bottom:9px;}
+.do-grenze p{margin:0;font-size:15px;line-height:1.7;}
+
+.do-hin{font-size:14.4px;color:var(--leise,#6B6259);background:var(--nacht-bg,#E9EDF4);
+ border-radius:12px;padding:12px 15px;}
+.do-leer{font-size:15px;color:var(--leise,#6B6259);background:var(--card,#F7EFE1);
+ border:1px solid var(--linie,#EBE1D2);border-radius:15px;padding:17px 19px;}
+
+/* Drucken */
+.do-druck{margin:26px 0 0;}
+.do-druck button{font-family:var(--sans);font-size:14px;padding:10px 20px;border-radius:19px;
+ border:1px solid var(--nacht,#2E3A5C);background:var(--nacht,#2E3A5C);color:#fff;cursor:pointer;}
+@media print{
+ .ac-leiste,.do-wahl,.do-bezug,.do-druck,.weiter,.niv-leiste{display:none!important;}
+ body{background:#fff;}
+ .do-mond{background:#fff!important;color:#000!important;border:1.5px solid #000;}
+ .do-mond p,.do-mond b{color:#000!important;}
+ .do-mond .k{color:#555!important;}
+ .do-mond .tun{background:#f2f2f2!important;}
+ .do-ab,.dh,.dk,.do-muster li{break-inside:avoid;}
+}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -191,18 +321,23 @@ a{color:var(--nacht);}
 </div></div>
 <div class="wrap">
 
-<div class="eyebrow">Coach-Ansicht</div>
+<div class="eyebrow">Bestandsbericht</div>
 <h1>Das <em>Dossier.</em></h1>
-<p class="lede">Ein Bestandsbericht pro Person: wie sie gebaut ist, was ihre Kernthemen sind, was sie braucht, wo es klemmt — und konkrete Gesprächseinstiege. Für deine Vorbereitung, nicht zum Weitergeben.</p>
+<p class="lede">Ein Bericht pro Person &mdash; und zwar <b>f&uuml;r dein Verh&auml;ltnis zu ihr</b>. Denn ein Chart ist nicht neutral lesbar: Derselbe Mond ist bei einer Klientin eine Arbeitsangabe, bei deiner Mutter deine Kindheit und bei deinem Kind deine Verantwortung. Sag unten, in welchem Bezug du stehst &mdash; dann &auml;ndert sich, was gewichtet wird und wie es gelesen wird.</p>
 
-<div class="do-warn"><b>Für die Arbeit mit Menschen, nicht über sie.</b> Was hier steht, sind Hypothesen aus einer Rechnung — keine Befunde über einen Menschen. Jede Zeile gilt nur so weit, wie die Person sie bestätigt. Wenn Chart und Mensch sich widersprechen, hat immer der Mensch recht. Und: Dieses Dossier ist deine Vorbereitung. <b>Gib es nicht weiter</b> — es ist in einer Sprache geschrieben, die über jemanden spricht, nicht mit ihm.</div>
+<div class="do-warn"><b>F&uuml;r die Arbeit mit Menschen, nicht &uuml;ber sie.</b> Was hier steht, sind Hypothesen aus einer Rechnung &mdash; keine Befunde &uuml;ber einen Menschen. Jede Zeile gilt nur so weit, wie die Person sie best&auml;tigt. Wenn Chart und Mensch sich widersprechen, hat immer der Mensch recht. Und: Dieses Dossier ist deine Vorbereitung. <b>Gib es nicht weiter</b> &mdash; es ist in einer Sprache geschrieben, die &uuml;ber jemanden spricht, nicht mit ihm.</div>
 
 <div class="do-wahl" id="dowahl"></div>
+<div class="do-bezug" id="dobezug"></div>
 <div id="dossier"></div>
 
-<div class="weiter"><a href="profile.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Profile</span></a><a href="faden.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Der rote Faden</span></a></div>
-<div class="foot">Dossier &middot; Coach-Vorbereitung, nicht zum Weitergeben. Hypothesen aus einer Rechnung &mdash; g&uuml;ltig nur, soweit die Person sie best&auml;tigt.</div>
+<div class="do-druck"><button type="button" id="drucken">Dossier drucken</button></div>
+
+<div class="weiter"><a href="profile.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Profile</span></a><a href="beziehung.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Zwei Charts nebeneinander</span></a></div>
+<div class="foot">Dossier &middot; Vorbereitung, nicht zum Weitergeben. Hypothesen aus einer Rechnung &mdash; g&uuml;ltig nur, soweit die Person sie best&auml;tigt.<br>
+H&auml;user im Whole-Sign-System, klassische Herrscher und W&uuml;rden. Die Gewichtung der Kernthemen &auml;ndert sich mit dem gew&auml;hlten Bezug.</div>
 </div>
+
 <script>
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
@@ -261,17 +396,207 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
-var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC',Chiron:'⚷',Lilith:'⚸'};
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
-var HK=['Person','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft','Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
-var HERR={0:'Mars',1:'Venus',2:'Merkur',3:'Mond',4:'Sonne',5:'Merkur',6:'Venus',7:'Pluto',8:'Jupiter',9:'Saturn',10:'Uranus',11:'Neptun'};
-var ELN=['Feuer','Erde','Luft','Wasser'], MON=['kardinal','fix','veränderlich'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
 function nrm(x){x=x%360;return x<0?x+360:x;}
-function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*60),dd=Math.floor(d);
- if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+' '+('0'+m).slice(-2)+"'";}
+var gewaehlt=null, tagOffset=0;
 
-/* Themen entsprechen den Räumen */
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Dossier — die Tafeln
+   Geschrieben als Verhaltensbeschreibung, nicht als Charaktertypen:
+   was man an dieser Person merkt, nicht was sie angeblich ist. */
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+ 'Schütze','Steinbock','Wassermann','Fische'];
+var GLY=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln',
+ 'Ausdruck und Romantik','Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite',
+ 'Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var HK=['Person','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft','Tiefe','Sinn',
+ 'Beruf','Gruppen','Rückzug'];
+var ELN=['Feuer','Erde','Luft','Wasser'];
+var MON=['kardinal','fix','veränderlich'];
+var HERR=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+var MITHERR={Skorpion:'Pluto',Wassermann:'Uranus',Fische:'Neptun'};
+
+/* Würden — klassisch. Merkur in Fische ist der einzige Fall, in dem
+   Exil und Fall zusammenfallen; das gehört beides genannt. */
+var DOMIZIL={Mars:[0,7],Venus:[1,6],Merkur:[2,5],Mond:[3],Sonne:[4],Jupiter:[8,11],Saturn:[9,10]};
+var ERHOEHUNG={Sonne:0,Mond:1,Merkur:5,Venus:11,Mars:9,Jupiter:3,Saturn:6};
+var WNAME={domizil:'im eigenen Zeichen',erhoehung:'in Erhöhung',exil:'im Exil',
+ fall:'im Fall',exilfall:'im Exil und im Fall','':''};
+var WDEUT={
+ domizil:'arbeitet ungehindert — was dieser Planet im Chart zu tun hat, kann er auch',
+ erhoehung:'ist überdurchschnittlich stark; diese Funktion ist eine echte Stärke der Person',
+ exil:'arbeitet gegen das Material. Nicht beschädigt, aber umständlich: Was andere nebenbei können, kostet hier Aufwand',
+ fall:'ist geschwächt. Die Person traut sich an dieser Stelle selbst am wenigsten zu, oft zu Unrecht',
+ exilfall:'ist so schwach, wie dieser Planet stehen kann. Das heißt nicht untauglich — es heißt, dass diese Funktion einen Behelf von außen braucht, um verlässlich zu laufen'};
+
+/* ── Der Mond: wodurch Sicherheit entsteht ───────────────────── */
+var MOND=[
+ 'Bewegung und eigene Entscheidung. Behutsames Vorgehen wirkt hier bremsend, nicht schonend.',
+ 'Zeit, Ruhe und Verlässlichkeit. Zusagen zählen bei diesem Mond mehr als Einfühlung.',
+ 'Reden dürfen. Diese Person sortiert sich im Sprechen — Ausreden lassen ist die halbe Arbeit.',
+ 'Vertrautheit und spürbare Zugewandtheit. Ohne emotionale Stimmigkeit entsteht hier kein Vertrauen.',
+ 'Gesehenwerden. Nicht Lob im Sinne von Bewertung — ernst genommen und gewürdigt werden.',
+ 'Klarheit und Konkretes. Vage Deutungen machen unruhig; diese Person will etwas, das stimmt.',
+ 'Ausgewogenheit und ein echtes Gegenüber. Sie passt sich sonst an — frag gezielt nach Widerspruch.',
+ 'Ehrlichkeit ohne Umweg. Beschönigen wird sofort bemerkt und kostet dauerhaft Vertrauen.',
+ 'Sinn und Weite. Kleinteiliges ermüdet — zeig den größeren Zusammenhang.',
+ 'Struktur und Nachweis. Diese Person will wissen, wohin es geht und dass es wirkt.',
+ 'Freiraum. Zu viel Nähe erzeugt hier Abstand, und zwar wortlos.',
+ 'Behutsamkeit und Zeit. Diese Person nimmt alles auf, auch deine Stimmung.'];
+
+/* ── Merkur: wie man mit dieser Person redet ─────────────────── */
+var MERKUR=[
+ 'Direkt und kurz. Diese Person unterbricht und meint es nicht böse — sie ist schon weiter.',
+ 'Langsam und einmal. Nachfassen wirkt wie Drängeln. Antwort kommt, aber später.',
+ 'Schnell, assoziativ, gern mehrgleisig. Reihenfolge ist hier kein Qualitätsmerkmal.',
+ 'Über Beispiele und Erinnerungen. Abstraktes kommt nicht an, Geschichten schon.',
+ 'Mit Zuspitzung. Diese Person hört eine gut erzählte Sache besser als eine gut begründete.',
+ 'Genau. Ungenauigkeit wird bemerkt und untergräbt alles danach Gesagte.',
+ 'Im Austausch. Diese Person denkt im Vergleich — gib ihr zwei Möglichkeiten statt einer Empfehlung.',
+ 'Knapp, und nicht alles. Diese Person merkt, wenn etwas zurückgehalten wird, und fragt nicht nach.',
+ 'Groß. Zeig den Zusammenhang zuerst, die Einzelheiten danach — sonst steigt sie aus.',
+ 'Sachlich und ergebnisbezogen. Kein Smalltalk vorweg, das wirkt hier wie Zeitverlust.',
+ 'Über Prinzipien. Diese Person will das Muster verstehen, bevor sie den Einzelfall annimmt.',
+ 'In Bildern. Listen rutschen durch, Szenen bleiben. Schriftlich nachreichen hilft.'];
+
+/* ── Venus: woran man merkt, dass diese Person etwas mag ────── */
+var VENUS=[
+ 'Sie wird direkt. Begeisterung ist hier sofort sichtbar und ebenso schnell wieder weg.',
+ 'Sie wird anhänglich und großzügig mit Materiellem. Zuneigung zeigt sich als Versorgung.',
+ 'Sie redet mehr. Wer ihr wichtig ist, bekommt Nachrichten, Links, Gedanken um drei Uhr nachts.',
+ 'Sie kümmert sich. Essen, Fürsorge, Nachfragen. Wird leicht als Mütterlichkeit missverstanden.',
+ 'Sie macht etwas daraus. Geschenke, Gesten, Aufwand. Zurückhaltung wird hier als Ablehnung gelesen.',
+ 'Sie wird hilfreich. Sie ordnet, erinnert, erledigt. Das ist die Zuneigung, nicht die Vorstufe.',
+ 'Sie passt sich an. Angenehm und trügerisch — frag nach, was sie selbst will.',
+ 'Sie wird exklusiv. Halbe Nähe gibt es nicht; es ist entweder ganz oder gar nicht.',
+ 'Sie teilt ihre Welt. Bücher, Orte, Pläne. Mitkommen zählt hier mehr als Komplimente.',
+ 'Sie wird verbindlich. Verabredungen, Verantwortung, langfristig. Das ist bei diesem Zeichen eine Liebeserklärung.',
+ 'Sie bleibt, ohne zu klammern — und erwartet dasselbe. Nähe über Freiraum, nicht trotz.',
+ 'Sie macht keinen Unterschied mehr zwischen sich und dir. Schön und riskant; hier gehen Grenzen verloren.'];
+
+/* ── Mars: wie diese Person handelt und wie sie wütend wird ─── */
+var MARS=[
+ 'Sofort und laut, dann vorbei. Nicht nachtragend, aber in dem Moment schwer zu bremsen.',
+ 'Lange gar nicht, dann endgültig. Wenn diese Person wütend wird, ist es zu spät zum Reden.',
+ 'Als Wortgefecht. Scharf, schnell, und hinterher ist unklar, worum es ging.',
+ 'Indirekt. Rückzug, Schweigen, Kränkung statt Angriff. Du wirst es merken, aber nicht hören.',
+ 'Mit Stolz. Es geht um Würde, nicht um die Sache. Eine Entschuldigung wirkt hier schneller als ein Argument.',
+ 'Als Kritik am Detail. Die eigentliche Wut kommt verkleidet als Sachfrage.',
+ 'Gar nicht, bis es platzt. Diese Person vermeidet Konflikt so lange, dass die Entladung unverhältnismäßig wirkt.',
+ 'Kalt und zielgenau. Diese Person weiß, wo es wehtut, und trifft dort. Danach lange Funkstille.',
+ 'Großzügig und übertrieben. Laut, schnell wieder gut, und erstaunt, dass es jemanden verletzt hat.',
+ 'Kontrolliert und mit Konsequenz. Keine Szene, aber die Sache hat Folgen.',
+ 'Abrupt. Erst normal, dann plötzlich Abstand. Begründung kommt sachlich nach, Gefühl nicht.',
+ 'Diffus. Diese Person weiß selbst nicht genau, worauf sie wütend ist, und richtet es leicht gegen sich.'];
+
+/* ── Die Sonne: worauf diese Person hinauswill ──────────────── */
+var SONNE=[
+ 'Als Erste dort sein und etwas anfangen. Verwaltung zermürbt sie.',
+ 'Etwas aufbauen, das bleibt und ihr gehört.',
+ 'Verstehen und weitergeben. Eine Sache reicht ihr selten.',
+ 'Dazugehören und für jemanden wichtig sein.',
+ 'Etwas Eigenes schaffen und dafür gesehen werden.',
+ 'Es richtig machen und gebraucht werden.',
+ 'Zwischen Menschen etwas in Ordnung bringen.',
+ 'Bis auf den Grund gehen. Oberflächliches hält sie nicht aus.',
+ 'Weiter kommen — geografisch, gedanklich, oder beides.',
+ 'Etwas erreichen, das zählt. Auch gegen Widerstand.',
+ 'Etwas anders machen als vorgesehen.',
+ 'Etwas Größerem dienen, auch ohne Namen daran.'];
+
+/* ── Aszendent: wie diese Person ankommt ───────────────────── */
+var ASZ=[
+ 'schnell, direkt, manchmal schroffer als gemeint',
+ 'ruhig und beständig — wirkt belastbarer, als sie sich fühlt',
+ 'wach, redegewandt, schwer festzulegen',
+ 'zurückhaltend und freundlich, braucht länger, bis sie auftaut',
+ 'präsent und wärmend, nimmt Raum ein, ohne es zu merken',
+ 'genau und zurückgenommen, wirkt kühler als sie ist',
+ 'verbindlich und angenehm — und dadurch schwer einzuschätzen',
+ 'kontrolliert und verschlossen, wirkt intensiver, als sie will',
+ 'offen und direkt, wirkt unbeschwerter, als sie ist',
+ 'ernst und gefasst, wirkt älter und distanzierter als gemeint',
+ 'eigen und freundlich-distanziert, schwer zu vereinnahmen',
+ 'weich, durchlässig, manchmal schwer greifbar'];
+
+/* Wenn Aszendent und Sonne weit auseinander liegen */
+var ASZ_SONNE='Zwischen dem, wie diese Person wirkt, und dem, was sie antreibt, liegt ein deutlicher Unterschied. '+
+ 'Rechne damit, dass dein erster Eindruck in die Irre führt — und dass die Person das von anderen gewohnt ist.';
+
+/* ── Wo das Gewicht liegt: eckig, folgend, fallend ──────────── */
+var LAGE={
+ eckig:{n:'auf den Ecken',t:'Der Schwerpunkt liegt in den Winkelhäusern (1, 4, 7, 10). Diese Person wirkt nach außen und wird bemerkt. Was sie tut, hat Folgen für andere — und sie merkt es nicht immer.'},
+ folgend:{n:'in den folgenden Häusern',t:'Der Schwerpunkt liegt in den Häusern 2, 5, 8 und 11 — den sichernden. Diese Person baut, hält und verteidigt. Sie fängt seltener an und gibt seltener auf.'},
+ fallend:{n:'in den fallenden Häusern',t:'Der Schwerpunkt liegt in den Häusern 3, 6, 9 und 12 — den vermittelnden. Diese Person verarbeitet, lernt, ordnet, gibt weiter. Sie wird oft übersehen und ist meistens diejenige, die es zusammenhält.'}};
+
+/* ── Sekte ──────────────────────────────────────────────────── */
+var SEKTE={
+ tag:{n:'Tagchart',t:'Geboren bei Tageslicht. Jupiter ist der Benefik der Sekte — Weite, Zuversicht und Großzügigkeit tragen bei dieser Person weiter als bei anderen. Mars ist der Malefik außerhalb der Sekte: der ungebremste. Dort, wo Mars steht, wird am ehesten überzogen.',
+  raus:'Mars'},
+ nacht:{n:'Nachtchart',t:'Geboren nach Sonnenuntergang. Venus ist der Benefik der Sekte — über Schönheit, Zuwendung und Behaglichkeit erreicht man diese Person am sichersten. Saturn ist der Malefik außerhalb der Sekte: Härte gegen sich selbst, Verzicht und Schuldgefühl sind die Stelle, an der es kalt wird.',
+  raus:'Saturn'}};
+
+/* ── Mondphase bei der Geburt ───────────────────────────────── */
+var PHASE=[
+ ['Neumond','fängt von vorn an und folgt keiner Vorlage. Wirkt eigensinnig und ist es nicht — es gibt schlicht keine Karte, der diese Person folgen könnte.'],
+ ['Sichel','braucht Anlauf, läuft dann. Die ersten Minuten jeder Sache sind der schwere Teil.'],
+ ['Erstes Viertel','kommt über Handeln weiter, nicht über Nachdenken. Eine Entscheidung löst hier mehr als eine Einsicht.'],
+ ['Vor dem Vollmond','braucht Zeugen. Was nicht ausgesprochen wurde, zählt für diese Person nicht als erledigt.'],
+ ['Vollmond','wird im Gegenüber klar. Allein ist der schwierigste Zustand, zu zweit der stärkste.'],
+ ['Nach dem Vollmond','gibt weiter. Diese Person versteht sich selbst am besten, wenn sie es jemandem erklärt.'],
+ ['Letztes Viertel','kommt über Loslassen weiter. Erst wegräumen, dann Neues.'],
+ ['Balsamischer Mond','braucht mehr Alleinsein als andere, und es ist keine Schwermut. Diese Person bringt etwas mit, das älter ist als sie.']];
+
+/* ── Belastungsmuster ───────────────────────────────────────── */
+var MUSTER=[
+ {a:'Merkur',b:'Uranus',max:5,hart:false,n:'Sprunghaftes Denken',
+  t:'Verknüpft über Ecken, ist oft drei Schritte weiter, ermüdet bei linearem Zuhören. Arbeite mit Übersicht statt mit Reihenfolge.'},
+ {a:'Merkur',b:'Neptun',max:5,hart:false,n:'Denken in Bildern',
+  t:'Listen rutschen durch, Geschichten bleiben. Struktur von außen hilft mehr als Motivation.'},
+ {a:'Mond',b:'Uranus',max:5,hart:false,n:'Reizempfindliches Nervensystem',
+  t:'Fährt spät herunter und sprunghaft hoch. Feste Aufstehzeiten helfen mehr als Abendrituale.'},
+ {a:'Mars',b:'Saturn',max:5,hart:true,n:'Gas und Bremse gleichzeitig',
+  t:'Ein Teil der Energie geht ins Selbstbremsen — ein normaler Tag kostet mehr als bei anderen. Das ist keine Faulheit.'},
+ {a:'Mond',b:'Neptun',max:5,hart:false,n:'Dünne Grenze zwischen eigenem und fremdem Gefühl',
+  t:'Übernimmt Stimmungen aus dem Raum, ohne es zu merken, und hält sie für die eigenen.'},
+ {a:'Mond',b:'Pluto',max:5,hart:true,n:'Gefühl mit Wucht',
+  t:'Nichts bleibt klein. Was andere ärgert, erschüttert hier — und wird selten gezeigt.'},
+ {a:'Sonne',b:'Saturn',max:5,hart:true,n:'Es reicht nie',
+  t:'Leistung wird nicht als Beweis verbucht, sondern als Mindeststandard. Erfolge zählen bei dieser Person nicht.'},
+ {a:'Venus',b:'Saturn',max:5,hart:true,n:'Zuneigung unter Vorbehalt',
+  t:'Rechnet damit, dass Zuwendung an Bedingungen hängt — und prüft deshalb lange, bevor sie sich darauf verlässt.'},
+ {a:'Merkur',b:'Saturn',max:5,hart:true,n:'Vorsicht beim Sagen',
+  t:'Denkt gründlich und äußert spät. Schweigen heißt hier nicht Ablehnung, sondern dass es noch nicht fertig ist.'},
+ {a:'Mars',b:'Pluto',max:5,hart:true,n:'Alles oder nichts',
+  t:'Kein mittleres Tempo. Entweder volle Wucht oder Stillstand — und beides hält lange an.'}];
+
+/* ── Themen: aus der bisherigen Fassung übernommen ─────────── */
 var THEMEN=[
  {n:'Selbstwert', s:'raum-selbstwert.html', anker:{haeuser:[2,1,10], punkte:['Venus','Saturn','Lilith']},
   kern:'Was die Person sich zutraut und zugesteht — in Geld, in Grenzen, im Raum, den sie einnimmt.',
@@ -311,304 +636,681 @@ var THEMEN=[
   hilfe:'An der klemmenden Stufe ansetzen, nicht am Vorsatz. Und keine Mengen, keine Ziele.'}
 ];
 
-function chartVon(p){
-  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
-  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
-  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
-  var P={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
-   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
-   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc,_jd:jd};
-  if(window.chironLon) P.Chiron=chironLon(T);
-  if(window.lilithLon) P.Lilith=lilithLon(T);
-  return P;
+/* Astro-Charlie · Dossier — der Bezug zwischen dir und der Person
+   ----------------------------------------------------------------
+   Der Grundgedanke: Ein Chart ist nicht neutral lesbar. Dieselbe Stellung
+   bedeutet etwas anderes, je nachdem, in welchem Verhältnis du zu dem
+   Menschen stehst — weil sich nicht die Person ändert, sondern was du
+   mit dem Gelesenen anfangen darfst und wofür du zuständig bist.
+
+   Der Mond einer Klientin ist eine Arbeitsangabe.
+   Derselbe Mond bei deiner Mutter ist deine Kindheit.
+   Derselbe Mond bei deinem Kind ist deine Verantwortung.
+
+   Drei Dinge hängen deshalb am Bezug:
+     1. gewicht  — welche Häuser und Planeten stärker zählen
+     2. lesart   — wie dieselbe Stellung gelesen wird
+     3. stellung — was deine Rolle erlaubt und wo sie endet            */
+
+var BEZUG={
+ klientin:{n:'Klient*in', klasse:'klientin', haus:[1,6,12,10],
+   kurz:'Du arbeitest beruflich mit dieser Person.',
+   punkte:['ASC','Saturn','Chiron'], auftrag:true},
+ selbst:{n:'Du selbst', klasse:'selbst', haus:[1,4,10,12],
+   kurz:'Dein eigenes Dossier — dieselbe Methode, auf dich angewendet.',
+   punkte:['ASC','Mond','Saturn']},
+ liebe:{n:'Partner*in', klasse:'liebe', haus:[7,8,5,4],
+   kurz:'Ihr seid zusammen.',
+   punkte:['Venus','Mars','Mond']},
+ ex:{n:'Ex-Partner*in', klasse:'ex', haus:[8,7,12,4],
+   kurz:'Ihr wart zusammen und habt noch miteinander zu tun.',
+   punkte:['Pluto','Saturn','Venus']},
+ mutter:{n:'Mutter', klasse:'eltern', haus:[4,10,12],
+   kurz:'Diese Person hat dich großgezogen oder hätte es sollen.',
+   punkte:['Mond','Saturn','Pluto'], eltern:true},
+ vater:{n:'Vater', klasse:'eltern', haus:[10,4,9],
+   kurz:'Diese Person hat dich großgezogen oder hätte es sollen.',
+   punkte:['Sonne','Saturn','Mars'], eltern:true},
+ kind:{n:'Eigenes Kind', klasse:'kind', haus:[5,4,1,11],
+   kurz:'Du bist für diesen Menschen verantwortlich.',
+   punkte:['Mond','Merkur','Mars'], kind:true},
+ geschwister:{n:'Geschwister', klasse:'peer', haus:[3,4,11],
+   kurz:'Ihr seid zusammen aufgewachsen.',
+   punkte:['Merkur','Mars','Mond']},
+ freundin:{n:'Freund*in', klasse:'peer', haus:[11,3,9],
+   kurz:'Ihr habt euch ausgesucht.',
+   punkte:['Merkur','Jupiter','Mond']},
+ kollegin:{n:'Arbeit', klasse:'arbeit', haus:[6,10,11],
+   kurz:'Ihr arbeitet zusammen oder übereinander.',
+   punkte:['Merkur','Saturn','Mars']}
+};
+var BEZUG_FOLGE=['klientin','selbst','liebe','ex','mutter','vater','kind',
+                 'geschwister','freundin','kollegin'];
+
+/* ── 1 · Deine Stellung ───────────────────────────────────────────
+   Was deine Rolle dir erlaubt — und wo sie aufhört. Das ist der
+   Abschnitt, den man am ehesten überspringt und am teuersten bezahlt. */
+var STELLUNG={
+ klientin:{
+  bist:'Du bist die Coachin. Das ist die einzige Rolle hier, die einen Auftrag hat.',
+  darfst:'Deuten, nachfragen, widersprechen, Hausaufgaben geben. Du darfst auch sagen, dass du etwas nicht kannst — das gehört zur Rolle und schwächt sie nicht.',
+  nicht:'Therapie. Diagnosen. Und: Du bist nicht dafür zuständig, dass es dieser Person gut geht. Du bist dafür zuständig, dass die Stunde etwas taugt. Der Unterschied ist das, was dich über Jahre trägt.',
+  gefahr:'Die typische Entgleisung ist Übernahme — du trägst die Sache zwischen den Terminen weiter, sie nicht. Wenn du mehr arbeitest als die Person selbst, ist etwas gekippt.'},
+ selbst:{
+  bist:'Du liest dein eigenes Chart. Das ist die schwierigste Leserichtung, nicht die leichteste.',
+  darfst:'Alles. Es ist deins.',
+  nicht:'Dir selbst glauben, ohne nachzusehen. Bei einem fremden Chart prüfst du gegen das, was die Person erzählt. Bei dir fällt diese Kontrolle weg, und du bestätigst dir, was du ohnehin schon denkst.',
+  gefahr:'Du liest die Stellen hart, an denen du dich ohnehin kritisierst, und überliest die, an denen du dir etwas zugestehen müsstest. Gegenmittel: Lies dein Dossier einmal so, als wäre es das einer Klientin. Was würdest du ihr sagen?'},
+ liebe:{
+  bist:'Du bist beteiligt. Nicht Beobachterin — Partei.',
+  darfst:'Verstehen, warum etwas regelmäßig an derselben Stelle hakt. Deine eigene Reaktion anders legen. Ein Gespräch besser vorbereiten.',
+  nicht:'Das hier als Beweismittel benutzen. „Dein Mars im Quadrat, deshalb hast du gestern…" ist kein Argument, das ist Astrologie als Waffe. Und das Dossier ersetzt nicht, die Person zu fragen.',
+  gefahr:'Dass du die Deutung behältst statt sie zu teilen. Wenn du etwas Wichtiges hier liest und es nie zur Sprache kommt, hast du eine Beschreibung statt einer Beziehung.'},
+ ex:{
+  bist:'Du hast Abstand und zugleich noch Berührung. Die unübersichtlichste Lage von allen.',
+  darfst:'Dich sortieren. Das Muster sehen, ohne es noch einmal zu durchleben. Auf einen anstehenden Kontakt vorbereiten.',
+  nicht:'Hoffen, dass das Chart dir sagt, ob es doch gehen könnte. Das kann es nicht, und du liest es dann so, wie du es brauchst.',
+  gefahr:'Dass Verstehen zum Ersatz fürs Abschließen wird. Je länger du hier liest, desto mehr Kontakt besteht — innerlich. Wenn du merkst, dass du wiederholt zurückkommst, ist die Frage nicht mehr astrologisch.'},
+ eltern:{
+  bist:'Du bist das Kind. Auch wenn du vierzig bist und die Person Hilfe braucht.',
+  darfst:'Begreifen, woher etwas kam. Das ist das Große: zu sehen, dass ein Satz, der an dir hing, ein Satz von ihnen war — und zwar einer, den sie selbst irgendwo herhatten.',
+  nicht:'Deine Eltern mit diesem Dossier therapieren. Es ist nicht deine Aufgabe, und sie haben nicht darum gebeten. Verstehen ist für dich gedacht, nicht für sie.',
+  gefahr:'Zwei Richtungen. Die eine ist Entschuldigung: „Sie konnte nicht anders" wird zum Grund, nichts mehr zu erwarten. Die andere ist Anklage: endlich der Beweis, dass es an ihnen lag. Beides beendet das Nachdenken an der Stelle, an der es anfangen müsste.'},
+ kind:{
+  bist:'Du bist verantwortlich. Das ist der einzige Bezug hier mit echtem Gefälle.',
+  darfst:'Dein Kind besser erreichen. Verstehen, warum etwas, das bei dir funktioniert hat, bei ihm nicht greift.',
+  nicht:'Festlegen. Ein Chart beschreibt eine Anlage, kein Schicksal, und ein Kind, dem man sagt, wie es ist, richtet sich danach. Das ist bei Kindern kein akademisches Risiko, sondern das wahrscheinlichste Ergebnis.',
+  gefahr:'Dass du Entwicklung als Charakter liest. Vieles, was du in einem Kinderchart findest, zeigt sich erst mit zwanzig oder nie. Lies es als Hinweis auf das, was dein Kind von dir braucht — nicht als Beschreibung dessen, wer es ist.'},
+ peer:{
+  bist:'Ihr seid auf Augenhöhe. Niemand hat hier einen Auftrag.',
+  darfst:'Rücksicht nehmen, ohne zu fragen. Verstehen, warum ein bestimmter Ton bei dieser Person nicht ankommt.',
+  nicht:'Ungefragt deuten. „Ich hab mal dein Chart gemacht" ist für viele Menschen übergriffig, auch wenn es freundlich gemeint ist — und besonders dann, wenn du etwas Treffendes gefunden hast.',
+  gefahr:'Dass du anfängst, Verhalten zu erklären statt es zu erleben. Freundschaft lebt davon, dass die andere dich überrascht. Ein zu gut gelesenes Chart nimmt das weg.'},
+ arbeit:{
+  bist:'Ihr habt eine Aufgabe gemeinsam, keine Beziehung.',
+  darfst:'Zusammenarbeit leichter machen. Wissen, wann du jemandem etwas schriftlich geben solltest statt mündlich.',
+  nicht:'Das Private mitlesen. Was im 8. oder 12. Haus steht, geht dich in einem Arbeitsverhältnis nichts an — auch wenn du es sehen kannst.',
+  gefahr:'Dass du Einschätzung mit Wissen verwechselst und jemanden in eine Rolle schiebst, aus der er nicht mehr rauskommt. Im Beruf wiegt so etwas schwerer, weil Entscheidungen daran hängen.'}
+};
+
+/* ── 2 · Die Umgewichtung ─────────────────────────────────────────
+   Was in diesem Verhältnis stärker zählt. Nicht Geschmack, sondern
+   die Häuser, die den Bezug tragen, plus die Planeten, über die er läuft. */
+var GEWICHT={
+ klientin:{haus:{1:1.5,6:1.4,12:1.4,10:1.3,2:1.2}, punkt:{Saturn:1.4,Chiron:1.4,ASC:1.3},
+  warum:'Im Coaching zählt, was die Person mitbringt (1. Haus), was sie täglich tut (6.), was sie selbst nicht sieht (12.) und wofür sie angetreten ist (10.).'},
+ selbst:{haus:{1:1.4,12:1.4,4:1.3,10:1.3}, punkt:{Mond:1.3,Saturn:1.3,Chiron:1.3},
+  warum:'Bei dir selbst sind die blinden Stellen interessanter als die offensichtlichen — deshalb zählt das 12. Haus so viel wie das erste.'},
+ liebe:{haus:{7:1.7,8:1.5,5:1.4,4:1.3}, punkt:{Venus:1.5,Mars:1.4,Mond:1.4},
+  warum:'Das 7. Haus ist, was die Person in Partnerschaft sucht; das 8. ist, was sie dort nicht zeigt; das 5. ist, wie sie begehrt; das 4., was sie Zuhause nennt.'},
+ ex:{haus:{8:1.7,7:1.4,12:1.4,4:1.3}, punkt:{Pluto:1.5,Saturn:1.4,Lilith:1.3},
+  warum:'Nach einer Trennung läuft fast alles über das 8. Haus — Besitz, Verlust, was geteilt war und wie entwirrt wird. Das 12. kommt dazu, weil vieles unausgesprochen bleibt.'},
+ eltern:{haus:{4:1.6,10:1.4,12:1.4,8:1.3}, punkt:{Mond:1.5,Saturn:1.5,Pluto:1.3},
+  warum:'Bei einem Elternteil liest du das 4. Haus doppelt: Es ist ihr Zuhause und es war deins. Das 12. zählt, weil das, was sie nie ausgesprochen haben, bei dir angekommen ist.'},
+ kind:{haus:{5:1.5,4:1.5,1:1.4,3:1.3}, punkt:{Mond:1.6,Merkur:1.4,Mars:1.3},
+  warum:'Beim eigenen Kind ist der Mond das Wichtigste überhaupt — er sagt, wodurch sich dieses Kind sicher fühlt, und das ist in den ersten Jahren fast die ganze Information.'},
+ peer:{haus:{11:1.5,3:1.4,9:1.3,5:1.2}, punkt:{Merkur:1.4,Jupiter:1.3,Mond:1.2},
+  warum:'Unter Gleichen läuft es über das 11. Haus (worauf ihr gemeinsam zugeht), das 3. (wie geredet wird) und das 9. (ob ihr dieselbe Welt seht).'},
+ arbeit:{haus:{6:1.6,10:1.5,11:1.3,3:1.3}, punkt:{Merkur:1.5,Saturn:1.4,Mars:1.3},
+  warum:'Im Beruf zählt das 6. Haus (wie jemand arbeitet) mehr als das 10. (wohin er will) — und Merkur mehr als alles andere, weil fast jeder Konflikt bei der Arbeit ein Kommunikationskonflikt ist.'}
+};
+
+/* ── 3 · Der Mond, je nach Bezug ──────────────────────────────────
+   Der Mond ist die Stellung, die sich am stärksten verändert, wenn sich
+   das Verhältnis ändert. Bei jedem Bezug steht er für etwas anderes. */
+var MOND_BEZUG={
+ klientin:{ist:'eine Arbeitsangabe',
+  t:'Der Mond sagt dir, wodurch diese Person sich sicher fühlt — und damit, unter welcher Bedingung überhaupt gearbeitet werden kann. Solange der Mond nicht bedient ist, greift keine Einsicht. Das ist die Reihenfolge, die im Coaching am häufigsten übersprungen wird: erst Sicherheit, dann Arbeit.'},
+ selbst:{ist:'deine Betriebsbedingung',
+  t:'Dein Mond ist das, was du brauchst, bevor du überhaupt leistungsfähig bist. Die meisten Menschen behandeln ihn als Luxus und wundern sich, warum die Disziplin nicht hält. Es ist umgekehrt: Der Mond ist die Voraussetzung, nicht die Belohnung.'},
+ liebe:{ist:'die eigentliche Verträglichkeitsfrage',
+  t:'In einer Partnerschaft entscheidet der Mond mehr als Venus. Venus sagt, was jemand schön findet; der Mond sagt, was ihn beruhigt — und zusammen lebt man mit dem Mond, nicht mit dem Geschmack. Die meisten Dauerkonflikte in Beziehungen sind Mondkonflikte: zwei Menschen, die unter verschiedenen Bedingungen zur Ruhe kommen.'},
+ ex:{ist:'der Grund, warum es nicht ging',
+  t:'Im Rückblick ist der Mond fast immer die Stelle. Nicht der Streit, nicht die Umstände — sondern dass eine der beiden Arten, sich sicher zu fühlen, in dieser Konstellation nicht bedient werden konnte. Das ist weder Schuld noch Versagen. Es ist eine Unverträglichkeit, und sie wäre auch mit mehr Mühe nicht verschwunden.'},
+ eltern:{ist:'deine Kindheit, von innen gesehen',
+  t:'Hier wird es ernst: Der Mond deiner Mutter oder deines Vaters beschreibt, wodurch <i>sie</i> sich sicher fühlten — und damit die Atmosphäre, in der du aufgewachsen bist. Was dieser Mond brauchte, hat das Haus bestimmt. Was er nicht konnte, hast du als normal gelernt. Das ist die Stelle, an der ein Elterndossier etwas erklärt, das du sonst dir selbst zuschreibst.'},
+ kind:{ist:'deine wichtigste Information überhaupt',
+  t:'Beim eigenen Kind ist der Mond fast die ganze Nachricht. Er sagt, wodurch dieses Kind sich sicher fühlt — und Kinder lernen, entwickeln und beruhigen sich ausschließlich in Sicherheit. Was bei dir funktioniert hat, muss hier nicht greifen, und wenn es nicht greift, liegt es fast immer daran, dass der Mond eine andere Sprache spricht als deiner.'},
+ peer:{ist:'die Gebrauchsanweisung',
+  t:'Unter Freundinnen ist der Mond das, was du nicht fragen musst: wann jemand Nähe braucht und wann Luft, ob ein Anruf hilft oder stört, ob Mitgefühl erwünscht ist oder praktische Hilfe. Die meisten Freundschaften scheitern nicht an Streit, sondern daran, dass jemand im falschen Modus getröstet wurde.'},
+ arbeit:{ist:'die Reizschwelle',
+  t:'Im Arbeitskontext ist der Mond nicht dein Thema — mit einer Ausnahme: Er sagt, unter welchen Bedingungen jemand unruhig wird. Das ist beruflich brauchbar und privat nicht dein Geschäft. Lies ihn als Reizschwelle, nicht als Charakter.'}
+};
+
+/* Und je nach Element des Mondzeichens die konkrete Anweisung für dieses Verhältnis */
+var MOND_TUN={
+ klientin:{Feuer:'Kurze Einheiten, schnelle Richtungswechsel, früh etwas zu tun geben. Lange Vorreden verlieren diese Person.',
+  Erde:'Konkret werden und Zusagen halten. Diese Person misst dich an Verlässlichkeit, nicht an Einfühlung.',
+  Luft:'Reden lassen. Sie sortiert sich im Sprechen — was aussieht wie Abschweifen, ist die Arbeit selbst.',
+  Wasser:'Langsam. Und achte auf deine eigene Stimmung, bevor du reingehst — diese Person nimmt sie mit.'},
+ selbst:{Feuer:'Du brauchst Bewegung, bevor du nachdenken kannst, nicht danach. Spaziergang zuerst, Entscheidung dann.',
+  Erde:'Du beruhigst dich über Materielles: aufräumen, kochen, etwas in der Hand haben. Das ist keine Vermeidung.',
+  Luft:'Du brauchst jemanden zum Reden, um zu wissen, was du denkst. Ohne Gegenüber drehst du im Kreis.',
+  Wasser:'Du brauchst Rückzug, und zwar mehr als du dir zugestehst. Nicht als Erholung — als Verarbeitung.'},
+ liebe:{Feuer:'Diese Person braucht Reibung und Tempo. Zu viel Rücksicht wirkt hier wie Desinteresse.',
+  Erde:'Verlässlichkeit vor Romantik. Was du ankündigst und tust, zählt mehr als was du fühlst und sagst.',
+  Luft:'Gespräch ist hier Nähe. Schweigsame Abende empfindet diese Person als Distanz, auch wenn du sie als Vertrautheit meinst.',
+  Wasser:'Stimmung vor Inhalt. Diese Person merkt, wie du etwas sagst, lange bevor sie hört, was.'},
+ ex:{Feuer:'Kurz halten. Ausführliche Klärungsgespräche heizen hier auf, statt zu klären.',
+  Erde:'Praktisch bleiben: Sachen, Termine, Geld. Auf dieser Ebene geht es, auf der emotionalen nicht.',
+  Luft:'Schriftlich ist besser als mündlich. Diese Person argumentiert schneller als sie fühlt, und du verlierst mündlich.',
+  Wasser:'Abstand halten, auch freundlichen. Kontakt reicht bei diesem Mond aus, um alles wieder zu öffnen.'},
+ eltern:{Feuer:'Dieses Elternteil brauchte Bewegung und wurde eng, wenn es feststeckte. Du hast vermutlich gelernt, dich schnell zu machen.',
+  Erde:'Hier wurde Sicherheit über Materielles hergestellt — Ordnung, Essen, Geld. Gefühle kamen in Form von Versorgung. Das war Zuwendung, auch wenn es sich nicht so anfühlte.',
+  Luft:'Hier wurde geredet und erklärt. Du hast vermutlich früh gelernt zu argumentieren — und dass Gefühle erst gelten, wenn sie begründet sind.',
+  Wasser:'Die Stimmung dieses Elternteils war im Raum, ob ausgesprochen oder nicht. Du hast gelernt, sie zu lesen, bevor du lesen konntest. Das ist eine Fähigkeit und eine Last.'},
+ kind:{Feuer:'Dein Kind beruhigt sich durch Bewegung, nicht durch Stillsitzen. „Setz dich mal hin" ist hier das Gegenteil von Hilfe.',
+  Erde:'Dein Kind braucht Vorhersehbarkeit: gleiche Abläufe, gleiche Reihenfolge, Ankündigung vor Veränderung. Spontanität ist für dich schön und für dieses Kind anstrengend.',
+  Luft:'Dein Kind braucht Erklärung. Nicht „weil ich es sage" — eine echte Begründung beruhigt hier mehr als Trost.',
+  Wasser:'Dein Kind nimmt deine Stimmung auf, auch die, die du versteckst. Es ist ehrlicher, deine Verstimmung zu benennen, als sie zu verbergen.'},
+ peer:{Feuer:'Direkt sein. Diese Person verträgt Widerspruch besser als Vorsicht.',
+  Erde:'Zuverlässig sein. Abgesagte Treffen wiegen hier schwerer, als du denkst.',
+  Luft:'Ansprechbar sein. Lange Funkstille deutet diese Person als Abkühlung.',
+  Wasser:'Da sein, ohne zu lösen. Diese Person will selten Ratschläge, sie will, dass jemand bleibt.'},
+ arbeit:{Feuer:'Wird unruhig bei Leerlauf und langen Abstimmungen. Gib früh etwas zu tun.',
+  Erde:'Wird unruhig bei kurzfristigen Änderungen. Vorlauf einplanen.',
+  Luft:'Wird unruhig, wenn nicht geredet wird. Kurz einbinden reicht meist.',
+  Wasser:'Wird unruhig bei schlechter Stimmung im Team, auch bei einer, die nichts mit ihr zu tun hat.'}
+};
+
+/* ── 4 · Saturn, je nach Bezug ────────────────────────────────────
+   Saturn ist die zweite Stellung, die kippt. Im Coaching ist er ein
+   Arbeitsthema, bei den Eltern eine Erklärung, beim Kind eine Warnung. */
+var SATURN_BEZUG={
+ klientin:'Bei einer Klientin ist Saturn das, wo sie sich beweisen muss und es nie reicht. Erwarte dort Widerstand gegen Erleichterung — Loslassen fühlt sich an dieser Stelle nach Nachlässigkeit an. Arbeite nicht gegen Saturn, sondern mit ihm: eine kleine, überprüfbare Aufgabe hilft hier mehr als eine Einsicht.',
+ selbst:'Bei dir selbst ist Saturn die Stelle, an der du am strengsten mit dir bist und es für Realismus hältst. Der Test: Würdest du einer Freundin dasselbe sagen? Wenn nein, ist es nicht Realismus.',
+ liebe:'In der Partnerschaft ist Saturn die Stelle, an der diese Person dich prüft — nicht aus Misstrauen, sondern weil sie dort gelernt hat, dass nichts umsonst kommt. Die Prüfung hat ein Ende, aber sie dauert länger, als du es für nötig hältst. Durchhalten wirkt hier stärker als Beteuern.',
+ ex:'Im Rückblick zeigt Saturn, woran sich die Beziehung aufgerieben hat — die Stelle, an der eine Forderung stand, die nie erfüllbar war. Es lohnt zu prüfen, ob sie von der Person kam oder ob du sie dir geliehen hast.',
+ eltern:'Bei einem Elternteil ist Saturn die Stelle, an der sie selbst unter Druck standen — und fast immer die Stelle, an der sie ihn weitergegeben haben. Hier liegt der Satz, den du von zu Hause mitgenommen hast, ohne ihn je geprüft zu haben. Du kannst ihn jetzt lesen und entscheiden, ob er deiner ist.',
+ kind:'Beim eigenen Kind ist Saturn die Stelle, an der es am leichtesten beschädigt wird. Dort sitzt bereits von sich aus ein Mangelgefühl. Druck, Vergleich oder ein beiläufiger kritischer Satz an dieser Stelle wirken länger nach als anderswo — und Lob greift nicht, weil das Kind es nicht glaubt. Was greift, ist Beschreibung: sagen, was du siehst, ohne es zu bewerten.',
+ peer:'Unter Freundinnen ist Saturn die Stelle, an der diese Person keinen Spaß versteht. Nicht aus Humorlosigkeit — dort ist etwas teuer bezahlt worden. Ein Scherz, der anderswo durchgeht, landet hier anders.',
+ arbeit:'Im Beruf ist Saturn tendenziell die Stärke: der Bereich, in dem jemand gründlich ist und nichts durchrutschen lässt. Dafür ist es der Bereich, in dem Kritik unverhältnismäßig ankommt. Rückmeldung dort besonders genau formulieren.'
+};
+
+/* ── 5 · Chiron, je nach Bezug ────────────────────────────────── */
+var CHIRON_BEZUG={
+ klientin:'Dort treffen Kleinigkeiten unverhältnismäßig. Rechne mit Überkompensation — die Person ist in diesem Bereich auffällig gut und lässt es trotzdem nicht gelten. Lob greift nicht, Beschreibung schon.',
+ selbst:'Deine eigene wunde Stelle erkennst du daran, dass du dort entweder sofort abwehrst oder sofort einknickst — beides ohne Zwischenstufe. Die Übertreibung würdigen, bevor du sie hinterfragst.',
+ liebe:'Hier verletzt du diese Person versehentlich. Nicht durch Böses, sondern durch Beiläufiges: ein Nebensatz, ein Blick, ein Vergessen. Es lohnt zu wissen wo, weil du dann unterscheiden kannst zwischen „ich war unachtsam" und „das war nicht mein Thema".',
+ ex:'Wenn ihr euch gegenseitig an dieser Stelle getroffen habt, erklärt das die Heftigkeit. Zwei Menschen, die beide genau dort nichts aushalten, machen einander ohne Absicht sehr weh.',
+ eltern:'Die wunde Stelle deiner Eltern ist oft die, an der sie dich nicht schützen konnten — nicht aus Gleichgültigkeit, sondern weil sie dort selbst nichts hatten. Das ist keine Entschuldigung und es ändert nichts an dem, was gefehlt hat. Es ändert nur, ob du es auf dich beziehst.',
+ kind:'Bei deinem Kind ist diese Stelle die, an der du am ehesten etwas falsch machst, ohne es zu merken — weil dort oft dein eigenes Thema liegt. Wenn eine Reaktion deines Kindes dich unverhältnismäßig trifft, ist das der Punkt.',
+ peer:'Hier ist diese Person dünnhäutiger als sie wirkt. Gut zu wissen, bevor man einen gut gemeinten Rat gibt.',
+ arbeit:'Hier reagiert diese Person empfindlich auf Feedback, auch auf sachliches. Nicht umgehen — aber mit mehr Sorgfalt formulieren als sonst.'
+};
+
+/* ── 6 · Was zwischen euch passiert, wenn es schwierig wird ────── */
+var KONFLIKT={
+ klientin:{t:'Im Coaching zeigt sich Widerstand selten als Widerspruch. Er zeigt sich als Zustimmung ohne Folgen, als abgesagte Termine, als „es war alles gut" ohne Beispiel.',
+  tun:'Nicht nachfassen, sondern benennen: „Mir fällt auf, dass wir seit drei Stunden um dasselbe kreisen. Woran liegt das?" Das ist keine Konfrontation, das ist die Arbeit.'},
+ selbst:{t:'Dein Konfliktmuster mit dir selbst ist das, was du tust, wenn ein Vorsatz scheitert: sofort härter werden oder sofort aufgeben.',
+  tun:'Beides einmal nicht tun und nachsehen, was unter dem Vorsatz lag. Meist war die Form falsch, nicht der Wille.'},
+ liebe:{t:'In Partnerschaften wiederholen sich Streits selten im Inhalt und fast immer in der Form: wer zuerst geht, wer lauter wird, wer schweigt.',
+  tun:'Die Form ändern, nicht das Thema. Ein Streit, der zum ersten Mal anders abläuft, ist mehr wert als zehn, die inhaltlich gelöst werden.'},
+ ex:{t:'Konflikte mit einem Ex sind fast nie der Konflikt, um den es scheinbar geht. Die Sachfrage ist der Träger für etwas, das nicht mehr verhandelbar ist.',
+  tun:'Die Sachfrage sachlich entscheiden und die andere Ebene nicht mit öffnen. Das wirkt kalt und ist das Freundlichste, was geht.'},
+ eltern:{t:'Konflikte mit Eltern laufen in alten Rollen ab, auch wenn alle erwachsen sind. Du wirst im Gespräch jünger, und das merkst du erst hinterher.',
+  tun:'Nicht das Gespräch gewinnen wollen. Vorher entscheiden, was du erreichen willst, und daran festhalten, auch wenn ein alter Satz fällt.'},
+ kind:{t:'Konflikte mit dem eigenen Kind eskalieren fast immer über deinen Zustand, nicht über sein Verhalten.',
+  tun:'Zuerst dich. Ein ruhiger Elternteil löst mehr als ein gerechter.'},
+ peer:{t:'Unter Freundinnen wird selten gestritten und oft vermieden. Der Konflikt zeigt sich als dünner werdender Kontakt.',
+  tun:'Früh ansprechen, solange es noch klein ist. Eine Freundschaft, die über Monate leiser wird, ist schwerer zurückzuholen als eine, in der einmal etwas gesagt wurde.'},
+ arbeit:{t:'Arbeitskonflikte sind meistens Missverständnisse über Zuständigkeit oder Tempo, nicht über Inhalt.',
+  tun:'Schriftlich festhalten, wer was bis wann macht. Das klingt bürokratisch und löst die Mehrzahl dieser Konflikte, bevor sie entstehen.'}
+};
+
+/* ── 7 · Gesprächseinstiege, je nach Bezug ───────────────────────
+   Dieselbe Stellung, andere Frage. */
+var EINSTIEG={
+ klientin:['Wobei vergisst du zu essen?',
+  'Was hast du zuletzt abgesagt, worauf du dich eigentlich gefreut hattest?',
+  'Wenn das nächstes Jahr noch genauso ist — was wäre dann das Schlimmste daran?'],
+ selbst:['Was rate ich anderen regelmäßig und mache es selbst nicht?',
+  'Wovon habe ich zuletzt gesagt, es sei „gerade schlecht möglich"?',
+  'Was würde ich tun, wenn niemand es mitbekäme?'],
+ liebe:['Wann hast du dich zuletzt von mir richtig verstanden gefühlt — und wobei?',
+  'Was tue ich, von dem du annimmst, dass ich weiß, dass es dich stört?',
+  'Was brauchst du nach einem schlechten Tag: reden, Ruhe oder dass ich einfach da bin?'],
+ ex:['Was hätte ich damals gebraucht, das ich nicht gesagt habe?',
+  'Was von dem, was ich ihr/ihm vorwerfe, kam eigentlich von woanders?',
+  'Was ist der kleinste praktische Punkt, den wir klären könnten, ohne alles aufzumachen?'],
+ eltern:['Wie war das bei dir, als du so alt warst wie ich damals?',
+  'Wovor hattest du Angst, als wir klein waren?',
+  'Was hättest du gern anders gemacht und was würdest du wieder so machen?'],
+ kind:['Was war heute das Blödeste?',
+  'Wobei hast du das Gefühl, dass ich dir nicht zuhöre?',
+  'Was soll ich tun, wenn du wütend bist — dableiben oder rausgehen?'],
+ peer:['Wann habe ich zuletzt genervt und du hast nichts gesagt?',
+  'Was brauchst du gerade von mir — zuhören oder helfen?',
+  'Woran merke ich, dass es dir schlecht geht, wenn du es nicht sagst?'],
+ arbeit:['Wie arbeitest du am liebsten — vorher abstimmen oder erst machen und dann zeigen?',
+  'Was brauchst du von mir, um schneller zu sein?',
+  'Was läuft bei uns gerade doppelt?']
+};
+
+/* ── 8 · Die Grenze ───────────────────────────────────────────── */
+var GRENZE={
+ klientin:'Diese Person hat dich beauftragt — du darfst dieses Dossier also haben. Was du damit nicht darfst: es ihr vorlegen wie einen Befund. Ein Dossier ist deine Vorbereitung, nicht ihr Ergebnis.',
+ selbst:'Keine, außer der Ehrlichkeit.',
+ liebe:'Hat diese Person davon gewusst, dass du ihr Chart liest? Wenn nicht, ist das die Frage, nicht die Deutung. Und wenn du etwas Wichtiges findest: Es gehört ins Gespräch, nicht in deine Schublade.',
+ ex:'Diese Person hat dem hier nicht zugestimmt und würde es vermutlich nicht. Das macht es nicht verboten — es macht es zu etwas, das für dich gedacht ist und nicht für den Kontakt mit ihr.',
+ eltern:'Deine Eltern haben nicht darum gebeten, gelesen zu werden. Das Dossier ist dein Werkzeug, um zu verstehen, was war. Es als Gesprächsgrundlage zu benutzen, geht fast immer schief.',
+ kind:'Dein Kind kann nicht zustimmen. Deshalb gilt hier die strengste Regel von allen: Das Dossier ändert, was <b>du</b> tust, nicht wie du über dein Kind sprichst. Sag ihm nie, wie es ist — auch nicht Freundlichkeiten.',
+ peer:'Diese Person hat dich nicht beauftragt. Lies es für dich und erzähl nicht davon, außer sie fragt.',
+ arbeit:'Beruflicher Kontext, private Daten. Alles, was über Arbeitsweise hinausgeht, geht dich hier nichts an — auch wenn du es sehen kannst. Und es gehört unter keinen Umständen in eine Personalentscheidung.'
+};
+
+/* Astro-Charlie · Dossier — Rechnung und Darstellung */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function el(i){ return document.getElementById(i); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function kz(x,n){ return x.toFixed(n===undefined?1:n).replace('.',','); }
+function zi(l){ return Math.floor(nrm(l)/30); }
+function fmt(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r), m=Math.round((r-g)*60);
+ if(m===60){g++;m=0;} return g+'° '+SIGNS[zi(l)]+' '+(m<10?'0':'')+m+'′'; }
+function elemVon(z){ return ELN[z%4]; }
+
+/* Genus, damit „Venus … er" nicht passiert */
+var PRON={Sonne:'sie',Mond:'er',Merkur:'er',Venus:'sie',Mars:'er',Jupiter:'er',
+ Saturn:'er',Uranus:'er',Neptun:'er',Pluto:'er',Chiron:'er',Lilith:'sie'};
+
+function wuerde(pl,z){
+  var d=DOMIZIL[pl];
+  if(d&&d.indexOf(z)>=0) return 'domizil';
+  if(ERHOEHUNG[pl]===z) return 'erhoehung';
+  var ex=!!(d&&d.indexOf((z+6)%12)>=0), fa=(ERHOEHUNG[pl]===((z+6)%12));
+  if(ex&&fa) return 'exilfall';
+  return ex?'exil':(fa?'fall':'');
 }
-function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
-function aspekt(P,a,b){
-  if(P[a]===undefined||P[b]===undefined) return null;
-  var s=Math.abs(nrm(P[a]-P[b]+180)-180);
-  var A=[[0,'Konjunktion','hart'],[60,'Sextil','weich'],[90,'Quadrat','hart'],[120,'Trigon','weich'],[180,'Opposition','hart']];
-  for(var i=0;i<A.length;i++){ var o=Math.abs(s-A[i][0]);
-    if(o<=(A[i][0]===60?3:5)) return {typ:A[i][1],art:A[i][2],o:o}; }
+
+/* ── Chart ────────────────────────────────────────────────── */
+function chartVon(p){ return AC_RAUM.chart(p); }
+function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
+function zeichenDesHauses(P,h){ return (Math.floor(nrm(P.ASC)/30)+h-1)%12; }
+
+var WINKEL=[[0,'Konjunktion','weich'],[180,'Opposition','hart'],[90,'Quadrat','hart'],
+ [120,'Trigon','weich'],[60,'Sextil','weich']];
+function aspekt(P,a,b,orb){
+  if(P[a]===undefined||P[b]===undefined||P[a]===null||P[b]===null) return null;
+  var d=Math.abs(nrm(P[a]-P[b])); if(d>180) d=360-d;
+  for(var i=0;i<WINKEL.length;i++){
+    var W=WINKEL[i], o=Math.abs(d-W[0]), max=(W[0]===60?Math.min(orb||6,5):(orb||6));
+    if(o<=max) return {typ:W[1],art:W[2],o:o};
+  }
   return null;
 }
 
-/* ── Bericht bauen ── */
-function dossier(p){
-  var P=chartVon(p), nm=AC_P.anzeige(p,AC_P.zeigeNamen());
-  var zS=Math.floor(P.Sonne/30), zM=Math.floor(P.Mond/30), zA=Math.floor(P.ASC/30);
-  var hp=HERR[zA], hpHaus=(P[hp]!==undefined)?haus(P,P[hp]):null;
+/* ── Zustand: Profil, Bezug ───────────────────────────────── */
+var gewaehlt=null, bezug='klientin';
+var SCHL='ac_dossier_bezug';           /* {profilId: bezugsschlüssel} */
 
-  /* Element- und Qualitätsbilanz */
-  var gew={Sonne:3,Mond:3,ASC:3,MC:2,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
-  var el=[0,0,0,0], mo=[0,0,0], ges=0;
-  Object.keys(gew).forEach(function(k){ if(P[k]===undefined) return;
-    var zi=Math.floor(P[k]/30); el[zi%4]+=gew[k]; mo[zi%3]+=gew[k]; ges+=gew[k]; });
-  var elMax=el.indexOf(Math.max.apply(null,el)), elMin=el.indexOf(Math.min.apply(null,el));
-  var moMax=mo.indexOf(Math.max.apply(null,mo));
+function bezugLesen(){
+  try{ return JSON.parse(localStorage.getItem(SCHL))||{}; }catch(e){ return {}; }
+}
+function bezugSchreiben(pid,b){
+  try{ var d=bezugLesen(); d[pid]=b; localStorage.setItem(SCHL,JSON.stringify(d)); }catch(e){}
+}
+function profil(){
+  var alle=[]; try{ alle=AC_P.alle()||[]; }catch(e){}
+  if(!alle.length) return null;
+  if(!gewaehlt){ var e=alle.filter(function(p){return p.eigen;})[0]||alle[0]; gewaehlt=e.id; }
+  return alle.filter(function(x){return x.id===gewaehlt;})[0]||null;
+}
+/* Bezug: gespeicherte Wahl, sonst „du selbst" fürs eigene Profil,
+   sonst die Rolle aus beziehung.html, sonst Klientin */
+function bezugFuer(p){
+  if(!p) return 'klientin';
+  var d=bezugLesen();
+  if(d[p.id] && BEZUG[d[p.id]]) return d[p.id];
+  if(p.eigen) return 'selbst';
+  try{
+    var r=JSON.parse(localStorage.getItem('ac_rolle_profile')||'{}')[p.id];
+    if(r && BEZUG[r]) return r;
+    if(r==='freundschaft') return 'freundin';
+    if(r==='kollegin') return 'kollegin';
+  }catch(e){}
+  return 'klientin';
+}
 
-  var h='<div class="do-kopf"><div class="lab">Bestandsbericht</div>'+
-    '<h2>'+nm+'</h2>'+
-    '<div class="dat">'+p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+' · '+(p.ort||'')+'</div>'+
+/* ── Kopf ─────────────────────────────────────────────────── */
+function bauKopf(P,p,B){
+  var nm=AC_P.anzeige(p,AC_P.zeigeNamen());
+  var zS=zi(P.Sonne), zM=zi(P.Mond), zA=zi(P.ASC);
+  var hp=HERR[zA], hpH=(P[hp]!==undefined)?haus(P,P[hp]):null;
+  var h='<div class="do-kopf"><div class="lab">Bestandsbericht · '+esc(B.n)+'</div>'+
+    '<h2>'+esc(nm)+'</h2>'+
+    '<div class="dat">'+p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+
+      ' · '+esc(p.ort||'')+'</div>'+
     '<div class="do-drei">'+
-      '<div class="do-d"><div class="k">Sonne · Antrieb</div><div class="v">'+SIGNS[zS]+'</div>'+
-        '<div class="z">'+haus(P,P.Sonne)+'. Haus · '+HK[haus(P,P.Sonne)-1]+'</div></div>'+
-      '<div class="do-d"><div class="k">Mond · Bedürfnis</div><div class="v">'+SIGNS[zM]+'</div>'+
-        '<div class="z">'+haus(P,P.Mond)+'. Haus · '+HK[haus(P,P.Mond)-1]+'</div></div>'+
-      '<div class="do-d"><div class="k">Aszendent · Wirkung</div><div class="v">'+SIGNS[zA]+'</div>'+
-        '<div class="z">Herrscher '+hp+(hpHaus?' im '+hpHaus+'.':'')+'</div></div>'+
+     '<div class="do-d"><div class="k">Sonne · Antrieb</div><div class="v">'+SIGNS[zS]+'</div>'+
+       '<div class="z">'+haus(P,P.Sonne)+'. Haus · '+HK[haus(P,P.Sonne)-1]+'</div></div>'+
+     '<div class="do-d"><div class="k">Mond · Bedürfnis</div><div class="v">'+SIGNS[zM]+'</div>'+
+       '<div class="z">'+haus(P,P.Mond)+'. Haus · '+HK[haus(P,P.Mond)-1]+'</div></div>'+
+     '<div class="do-d"><div class="k">Aszendent · Wirkung</div><div class="v">'+SIGNS[zA]+'</div>'+
+       '<div class="z">Herrscher '+hp+(hpH?' im '+hpH+'.':'')+'</div></div>'+
     '</div></div>';
+  return h;
+}
 
-  /* 1 · Wie die Person gebaut ist */
+/* ── 0 · Deine Stellung ───────────────────────────────────── */
+function bauStellung(B){
+  var S=STELLUNG[B.klasse];
+  return '<div class="do-ab do-stellung"><h3>Deine Stellung</h3>'+
+   '<div class="sub7">Bevor irgendetwas gedeutet wird: was dein Verhältnis zu dieser Person dir erlaubt — und wo es endet.</div>'+
+   '<p class="bist">'+S.bist+'</p>'+
+   '<div class="do-zwei">'+
+    '<div class="dk gut"><b>Du darfst</b>'+S.darfst+'</div>'+
+    '<div class="dk warn"><b>Du darfst nicht</b>'+S.nicht+'</div>'+
+   '</div>'+
+   '<div class="dk voll"><b>Die typische Entgleisung</b>'+S.gefahr+'</div></div>';
+}
+
+/* ── 1 · Wie die Person gebaut ist ────────────────────────── */
+function bauBau(P,B){
+  var zS=zi(P.Sonne), zM=zi(P.Mond), zA=zi(P.ASC);
+  var hp=HERR[zA], hpH=(P[hp]!==undefined)?haus(P,P[hp]):null;
+  var hpZ=(P[hp]!==undefined)?zi(P[hp]):null, hpW=(hpZ!==null)?wuerde(hp,hpZ):'';
+
+  var gew={Sonne:3,Mond:3,ASC:3,MC:2,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,
+   Uranus:1,Neptun:1,Pluto:1};
+  var e=[0,0,0,0], m=[0,0,0];
+  Object.keys(gew).forEach(function(k){ if(P[k]===undefined||P[k]===null) return;
+    var z=zi(P[k]); e[z%4]+=gew[k]; m[z%3]+=gew[k]; });
+  var eMax=e.indexOf(Math.max.apply(null,e)), eMin=e.indexOf(Math.min.apply(null,e));
+  var mMax=m.indexOf(Math.max.apply(null,m));
+
+  /* Lage: eckig / folgend / fallend */
+  var lz={eckig:0,folgend:0,fallend:0};
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
+    if(P[k]===undefined||P[k]===null) return;
+    var hh=haus(P,P[k]);
+    if([1,4,7,10].indexOf(hh)>=0) lz.eckig++;
+    else if([2,5,8,11].indexOf(hh)>=0) lz.folgend++;
+    else lz.fallend++;
+  });
+  var lMax=Object.keys(lz).sort(function(a,b){return lz[b]-lz[a];})[0];
+
   var ELT=['geht voran, braucht Tempo und verbraucht sich, wenn nichts passiert',
-   'braucht Greifbares und Verlässlichkeit, Ideen ohne Umsetzung machen unruhig',
+   'braucht Greifbares und Verlässlichkeit; Ideen ohne Umsetzung machen unruhig',
    'denkt und redet, bevor gefühlt wird — Austausch ist kein Luxus, sondern Bedarf',
    'nimmt auf, was im Raum ist, auch Unausgesprochenes'];
-  var MOT=['startet gern und verliert schnell die Lust','braucht lange zum Anfangen und ist dann kaum zu stoppen',
+  var MOT=['startet gern und verliert schnell die Lust',
+   'braucht lange zum Anfangen und ist dann kaum zu stoppen',
    'passt sich an und wechselt die Richtung, bevor es eng wird'];
-  h+='<div class="do-ab"><h3>Wie diese Person gebaut ist</h3>'+
-    '<div class="sub7">Die Grundanlage in vier Sätzen — als Einstieg ins Gespräch, nicht als Urteil.</div>'+
-    '<p><b>Grundton '+ELN[elMax]+', '+MON[moMax]+'.</b> Die Person '+ELT[elMax]+'. Und sie '+MOT[moMax]+'. '+
-    'Am wenigsten ausgeprägt ist <b>'+ELN[elMin]+'</b> — das ist die Qualität, die sie sich bewusst holen muss, '+
-    'weil sie nicht von allein kommt.</p>'+
-    '<p><b>Chart-Herrscher '+hp+'</b>'+(hpHaus?' im '+hpHaus+'. Haus ('+HT[hpHaus-1]+')':'')+'. '+
-    'Das ist der Steuermann: Alles im Leben dieser Person läuft praktisch über '+(hpHaus?HK[hpHaus-1]:'diesen Punkt')+'. '+
-    'Wenn du nicht weißt, wo du ansetzen sollst — dort.</p>'+
-    '<p><b>Mond in '+SIGNS[zM]+', '+haus(P,P.Mond)+'. Haus.</b> Sicherheit entsteht bei dieser Person über '+
-    HT[haus(P,P.Mond)-1]+'. Solange es dort wackelt, greift keine Arbeit an anderen Themen — das ist die Reihenfolge, '+
-    'die man im Coaching am häufigsten übersieht.</p></div>';
 
-  /* 2 · Kernthemen */
-  var bew=[];
-  if(window.AC_RAUM){
-    var def={facetten:THEMEN.map(function(t){ return {name:t.n, anker:t.anker}; })};
-    var res=AC_RAUM.auswerten(P, def);
-    res.forEach(function(r){
-      var t=THEMEN.filter(function(x){return x.n===r.fc.name;})[0];
-      bew.push({t:t, rel:r.rel, f:r.f});
-    });
-  }
-  h+='<div class="do-ab"><h3>Kernthemen</h3>'+
-    '<div class="sub7">Gewichtet nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe. Die obersten drei lohnen die Arbeit.</div>';
-  bew.slice(0,6).forEach(function(x){
-    h+='<div class="do-bal"><div>'+x.t.n+'</div><div class="bar"><i class="'+(x.rel<45?'leise':'')+
-      '" style="width:'+Math.max(4,x.rel)+'%"></i></div><div class="pz">'+x.rel+'</div></div>';
+  var h='<div class="do-ab"><h3>Wie diese Person gebaut ist</h3>'+
+   '<div class="sub7">Die Grundanlage — als Einstieg, nicht als Urteil.</div>'+
+   '<p><b>Grundton '+ELN[eMax]+', '+MON[mMax]+'.</b> Die Person '+ELT[eMax]+'. Und sie '+MOT[mMax]+'. '+
+   'Am wenigsten ausgeprägt ist <b>'+ELN[eMin]+'</b> — die Qualität, die sie sich bewusst holen muss, '+
+   'weil sie nicht von allein kommt.</p>'+
+   '<p><b>Gewicht '+LAGE[lMax].n+'.</b> '+LAGE[lMax].t+'</p>';
+
+  /* Chartherrscher, mit Würde */
+  h+='<p><b>Chart-Herrscher '+hp+'</b>'+(hpH?' im '+hpH+'. Haus ('+HT[hpH-1]+')':'')+
+   (hpW?', <span class="ac-tech">'+WNAME[hpW]+'</span>':'')+'. '+
+   'Das ist der Steuermann: Alles läuft praktisch über '+(hpH?HK[hpH-1]:'diesen Punkt')+'. '+
+   'Wenn du nicht weißt, wo du ansetzen sollst — dort.'+
+   (hpW?' Und '+PRON[hp]+' '+WDEUT[hpW]+'.':'')+'</p>';
+
+  /* Sonne, Mond, Aszendent im Klartext */
+  h+='<div class="do-zeilen">'+
+   '<div class="dz"><span class="p">Sonne in '+SIGNS[zS]+'</span><span class="t">Will: '+SONNE[zS]+'</span></div>'+
+   '<div class="dz"><span class="p">Mond in '+SIGNS[zM]+'</span><span class="t">Braucht: '+MOND[zM]+'</span></div>'+
+   '<div class="dz"><span class="p">Aszendent '+SIGNS[zA]+'</span><span class="t">Wirkt '+ASZ[zA]+'</span></div>'+
+   '</div>';
+  var ab=Math.abs(nrm(P.Sonne-P.ASC)); if(ab>180) ab=360-ab;
+  if(ab>100) h+='<p class="do-hin">'+ASZ_SONNE+'</p>';
+
+  /* Sekte */
+  var tag=(haus(P,P.Sonne)>=7), S=tag?SEKTE.tag:SEKTE.nacht;
+  var raus=S.raus, rH=(P[raus]!==undefined)?haus(P,P[raus]):null;
+  h+='<p class="ac-tech"><b>'+S.n+'.</b> '+S.t+
+   (rH?' Bei dieser Person steht '+raus+' im '+rH+'. Haus — '+HT[rH-1]+'.':'')+'</p>';
+
+  /* Mondphase */
+  var ph=PHASE[Math.floor(nrm(P.Mond-P.Sonne)/45)];
+  h+='<p><b>Mondphase bei der Geburt: '+ph[0]+'.</b> Diese Person '+ph[1]+'</p>';
+  h+='</div>';
+  return h;
+}
+
+/* ── 2 · Umgang: Merkur, Venus, Mars ──────────────────────── */
+function bauUmgang(P,B){
+  var h='<div class="do-ab"><h3>Umgang</h3>'+
+   '<div class="sub7">Drei Stellungen, die im Alltag mehr entscheiden als das Sonnenzeichen: '+
+   'wie man redet, woran man Zuneigung erkennt, und wie Wut aussieht.</div><div class="do-zeilen">';
+  [['Merkur','Reden',MERKUR],['Venus','Mag etwas',VENUS],['Mars','Wird wütend',MARS]].forEach(function(x){
+    if(P[x[0]]===undefined) return;
+    var z=zi(P[x[0]]), w=wuerde(x[0],z);
+    h+='<div class="dz"><span class="p">'+x[0]+' in '+SIGNS[z]+
+      (w?' <i class="ac-tech">'+WNAME[w]+'</i>':'')+'</span>'+
+      '<span class="t"><b>'+x[1]+':</b> '+x[2][z]+'</span></div>';
   });
   h+='</div>';
+  /* Mond, im Licht des Bezugs */
+  var MB=MOND_BEZUG[B.klasse], MT=MOND_TUN[B.klasse][elemVon(zi(P.Mond))];
+  h+='<div class="do-mond"><div class="k">Der Mond — in diesem Verhältnis '+MB.ist+'</div>'+
+   '<p>'+MB.t+'</p>'+
+   /* Nicht kleinschreiben — die Tafel beginnt mit Substantiven. */
+   '<p><b>'+SIGNS[zi(P.Mond)]+', '+haus(P,P.Mond)+'. Haus ('+HT[haus(P,P.Mond)-1]+').</b> '+
+   'Was hier Sicherheit schafft: '+MOND[zi(P.Mond)]+'</p>'+
+   '<div class="tun"><b>Also konkret</b>'+MT+'</div></div>';
+  h+='</div>';
+  return h;
+}
 
-  bew.slice(0,3).forEach(function(x,i){
+/* ── 3 · Kernthemen, nach Bezug gewichtet ─────────────────── */
+function bauThemen(P,B){
+  var G=GEWICHT[B.klasse];
+  var def={facetten:THEMEN.map(function(t){ return {name:t.n, anker:t.anker}; })};
+  var res=[];
+  try{ res=AC_RAUM.auswerten(P, def); }catch(e){ return ''; }
+  /* Umgewichten: Häuser und Planeten, die dieser Bezug trägt, zählen mehr */
+  res.forEach(function(r){
+    var t=THEMEN.filter(function(x){return x.n===r.fc.name;})[0];
+    var f=1;
+    (t.anker.haeuser||[]).forEach(function(hh){ if(G.haus[hh]) f=Math.max(f,G.haus[hh]); });
+    (t.anker.punkte||[]).forEach(function(pt){ if(G.punkt[pt]) f=Math.max(f,G.punkt[pt]); });
+    r.sB=r.s*f; r.faktor=f; r.t=t;
+  });
+  res.sort(function(a,b){ return b.sB-a.sB; });
+  var max=res.length?res[0].sB:1;
+  res.forEach(function(r){ r.relB=max?Math.round(r.sB/max*100):0; });
+
+  var h='<div class="do-ab"><h3>Kernthemen</h3>'+
+   '<div class="sub7">Gewichtet nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe — '+
+   'und dann noch einmal danach, in welchem Verhältnis du zu dieser Person stehst.</div>'+
+   '<div class="do-warum"><b>Umgewichtet für „'+esc(B.n)+'"</b>'+G.warum+'</div>';
+  res.slice(0,7).forEach(function(r){
+    h+='<div class="do-bal"><div>'+r.t.n+(r.faktor>1?' <i class="hoch" title="durch den Bezug höher gewichtet">↑</i>':'')+
+      '</div><div class="bar"><i class="'+(r.relB<45?'leise':'')+'" style="width:'+Math.max(4,r.relB)+'%"></i></div>'+
+      '<div class="pz">'+r.relB+'</div></div>';
+  });
+  h+='</div>';
+  res.slice(0,3).forEach(function(r,i){
     var bel=[];
-    (x.f.planeten||[]).slice(0,4).forEach(function(y){ bel.push(y.p+' im '+y.haus+'.'); });
-    (x.f.aspekte||[]).slice(0,2).forEach(function(y){ bel.push(y.a+' '+y.typ+' '+y.b+' '+y.o.toFixed(1)+'°'); });
-    (x.f.achsnah||[]).slice(0,2).forEach(function(y){ bel.push(y.p+' auf '+y.zu); });
-    h+='<div class="do-kern"><div class="nr">Kernthema '+(i+1)+' · Gewicht '+x.rel+'</div>'+
-      '<div class="tt">'+x.t.n+'</div>'+
-      '<p>'+x.t.kern+'</p>'+
-      '<p><b>Wie du hier arbeitest:</b> '+x.t.hilfe+'</p>'+
-      (bel.length?'<div class="bel">'+bel.join(' · ')+'</div>':'')+
-      ' <a href="'+x.t.s+'" style="font-size:14px;">Raum öffnen →</a></div>';
+    (r.f.planeten||[]).slice(0,4).forEach(function(y){ bel.push(y.p+' im '+y.haus+'.'); });
+    (r.f.aspekte||[]).slice(0,2).forEach(function(y){ bel.push(y.a+' '+y.typ+' '+y.b+' '+kz(y.o)+'°'); });
+    (r.f.achsnah||[]).slice(0,2).forEach(function(y){ bel.push(y.p+' auf '+y.zu); });
+    h+='<div class="do-kern"><div class="nr">Kernthema '+(i+1)+' · Gewicht '+r.relB+
+      (r.faktor>1?' · durch den Bezug angehoben':'')+'</div>'+
+      '<div class="tt">'+r.t.n+'</div><p>'+r.t.kern+'</p>'+
+      /* Die Hinweise sind aus der Coaching-Praxis geschrieben. In privaten
+         Bezügen bleiben sie brauchbar, aber sie heißen dann nicht „arbeiten". */
+      '<p><b>'+({klientin:'Wie du hier arbeitest:',selbst:'Dein Hebel:'}[B.klasse]
+        ||'Der Hebel — aus der Coaching-Praxis, auch privat brauchbar:')+'</b> '+r.t.hilfe+'</p>'+
+      (bel.length?'<div class="bel ac-tech">'+bel.join(' · ')+'</div>':'')+
+      ' <a href="'+r.t.s+'">Raum öffnen →</a></div>';
   });
+  return h;
+}
 
-  /* 3 · Was die Person braucht */
-  var MB=['Bewegung, Tempo und das Gefühl, selbst zu entscheiden. Zu behutsames Vorgehen wirkt bei dieser Person bremsend.',
-   'Zeit, Ruhe und Verlässlichkeit. Nichts überstürzen — und Zusagen unbedingt halten, das zählt hier besonders.',
-   'Reden dürfen. Diese Person sortiert sich im Sprechen. Lass sie ausreden, auch wenn es ausufert.',
-   'Sicherheit und spürbare Zugewandtheit. Ohne emotionale Stimmigkeit entsteht hier kein Vertrauen.',
-   'Anerkennung und Gesehenwerden. Nicht loben im Sinne von bewerten — sondern ernst nehmen und würdigen.',
-   'Klarheit und Konkretes. Vage Deutungen machen diese Person unruhig, sie will etwas, das stimmt.',
-   'Ausgewogenheit und ein echtes Gegenüber. Sie passt sich sonst an dich an — frag gezielt nach Widerspruch.',
-   'Ehrlichkeit ohne Umweg. Diese Person merkt sofort, wenn etwas beschönigt wird, und verliert dann Vertrauen.',
-   'Sinn und Weite. Kleinteiliges Arbeiten ermüdet sie — zeig den größeren Zusammenhang.',
-   'Struktur und Ergebnisse. Sie will wissen, wohin es geht, und braucht Nachweis, dass es wirkt.',
-   'Freiraum und keine Vereinnahmung. Zu viel Nähe im Gespräch erzeugt hier Abstand.',
-   'Behutsamkeit und Zeit. Diese Person nimmt alles auf, auch deine Stimmung — achte auf deinen eigenen Zustand.'];
-  h+='<div class="do-ab"><h3>Was diese Person von dir braucht</h3>'+
-    '<div class="sub7">Abgeleitet aus dem Mond — also aus dem, was Sicherheit erzeugt.</div>'+
-    '<p>'+MB[zM]+'</p>';
-  var ms=aspekt(P,'Mond','Saturn');
-  if(ms&&ms.art==='hart') h+='<p><b>Wichtig:</b> Mond '+ms.typ+' Saturn mit '+ms.o.toFixed(1)+'°. '+
-    'Diese Person bittet nicht um etwas und zeigt Bedürftigkeit ungern. Sie wird dir eher sagen, dass es geht, als dass sie etwas braucht. '+
-    '<b>Frag aktiv nach</b> — und werte ein „passt schon" nicht als Antwort.</p>';
-  var mn=aspekt(P,'Mond','Neptun');
-  if(mn) h+='<p><b>Und:</b> Mond '+mn.typ+' Neptun. Die Grenze zwischen eigenem und fremdem Gefühl ist dünn. '+
-    'Diese Person übernimmt leicht deine Stimmung — achte darauf, mit welcher Haltung du ins Gespräch gehst.</p>';
+/* ── 4 · Die Häuser, die euch verbinden ───────────────────── */
+function bauHaeuser(P,B){
+  var h='<div class="do-ab"><h3>Die Häuser, die euer Verhältnis tragen</h3>'+
+   '<div class="sub7">Nicht jedes Haus geht dich etwas an. Diese schon — sie sind es, '+
+   'in denen sich ein Verhältnis dieser Art abspielt.</div><div class="do-haeuser">';
+  B.haus.forEach(function(hh){
+    var z=zeichenDesHauses(P,hh), hr=HERR[z], hrH=(P[hr]!==undefined)?haus(P,P[hr]):null;
+    var drin=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Chiron','Lilith']
+      .filter(function(k){ return P[k]!==undefined&&P[k]!==null&&haus(P,P[k])===hh; });
+    h+='<div class="dh"><div class="nr">'+hh+'. Haus</div>'+
+      '<div class="na">'+HT[hh-1]+'</div>'+
+      '<div class="ze">'+GLY[z]+' '+SIGNS[z]+' · Herrscher '+hr+(hrH?' im '+hrH+'.':'')+'</div>'+
+      '<div class="be">'+(drin.length?drin.join(', '):'<i>leer — läuft über '+hr+' im '+(hrH||'?')+'. Haus</i>')+'</div>'+
+      '</div>';
+  });
   h+='</div>';
+  /* Die Planeten, über die dieser Bezug läuft */
+  var pz=[];
+  B.punkte.forEach(function(k){
+    if(P[k]===undefined||P[k]===null) return;
+    var z=zi(P[k]), w=(k==='ASC')?'':wuerde(k,z);
+    pz.push('<li><b>'+k+' in '+SIGNS[z]+'</b>'+(k!=='ASC'?', '+haus(P,P[k])+'. Haus':'')+
+      (w?' <span class="ac-tech">— '+WNAME[w]+', '+PRON[k]+' '+WDEUT[w]+'</span>':'')+'</li>');
+  });
+  if(pz.length) h+='<p style="margin-top:14px"><b>Über diese Stellungen läuft bei „'+esc(B.n)+
+    '" das Verhältnis:</b></p><ul class="do-li">'+pz.join('')+'</ul>';
+  h+='</div>';
+  return h;
+}
 
-  /* 4 · Wo es klemmt */
-  var hs=haus(P,P.Saturn);
-  h+='<div class="do-ab"><h3>Wo es erfahrungsgemäß klemmt</h3>'+
-    '<div class="sub7">Saturn, Chiron und die engsten harten Aspekte.</div>'+
-    '<p><b>Saturn in '+SIGNS[Math.floor(P.Saturn/30)]+', '+hs+'. Haus.</b> Hier sitzt der Beweisdruck: '+
-    'in '+HT[hs-1]+'. Was diese Person dort tut, macht sie gründlich und selten mit dem Gefühl, dass es reicht. '+
-    'Erwarte an dieser Stelle Widerstand gegen Erleichterung — Loslassen fühlt sich hier nach Nachlässigkeit an.</p>';
+/* ── 5 · Wo es klemmt — Saturn und Chiron, je nach Bezug ──── */
+function bauKlemmt(P,B){
+  var hs=haus(P,P.Saturn), zs=zi(P.Saturn), ws=wuerde('Saturn',zs);
+  var h='<div class="do-ab"><h3>Wo es klemmt</h3>'+
+   '<div class="sub7">Saturn, Chiron und die engsten harten Aspekte — gelesen für dein Verhältnis zu dieser Person.</div>'+
+   '<div class="do-stell"><span class="p">Saturn in '+SIGNS[zs]+'</span>'+
+     '<span class="f">'+hs+'. Haus · '+HT[hs-1]+'</span>'+
+     (ws?'<span class="o ac-tech">'+WNAME[ws]+'</span>':'')+'</div>'+
+   '<p>'+SATURN_BEZUG[B.klasse]+'</p>'+
+   '<p class="ac-tech">Sachlich: Der Beweisdruck sitzt in '+HT[hs-1]+'. Was diese Person dort tut, '+
+   'macht sie gründlich und selten mit dem Gefühl, dass es reicht.</p>';
+
   if(P.Chiron!==undefined&&P.Chiron!==null){
     var hc=haus(P,P.Chiron);
-    h+='<p><b>Chiron im '+hc+'. Haus ('+HT[hc-1]+').</b> Dort treffen Kleinigkeiten unverhältnismäßig. '+
-      'Rechne damit, dass die Person in diesem Bereich überkompensiert — also auffällig gut ist und es trotzdem nicht gelten lässt. '+
-      'Lob greift hier nicht; Beschreibung schon.</p>';
+    h+='<div class="do-stell"><span class="p">Chiron in '+SIGNS[zi(P.Chiron)]+'</span>'+
+      '<span class="f">'+hc+'. Haus · '+HT[hc-1]+'</span></div>'+
+      '<p>'+CHIRON_BEZUG[B.klasse]+'</p>';
   }
   var hart=[];
   ['Sonne','Mond','Merkur','Venus','Mars'].forEach(function(a){
     ['Saturn','Pluto','Uranus','Neptun'].forEach(function(b){
-      var x=aspekt(P,a,b);
-      if(x&&x.art==='hart'&&x.o<3) hart.push({a:a,b:b,x:x});
+      var x=aspekt(P,a,b,6);
+      if(x&&x.art==='hart'&&x.o<3.5) hart.push({a:a,b:b,x:x});
     });
   });
   hart.sort(function(u,v){return u.x.o-v.x.o;});
   if(hart.length){
-    var HD={Saturn:'Druck und Begrenzung',Pluto:'Macht und Intensität',Uranus:'Unruhe und Abbruch',Neptun:'Unschärfe und Auflösung'};
+    var HD={Saturn:'Druck und Begrenzung',Pluto:'Macht und Intensität',
+     Uranus:'Unruhe und Abbruch',Neptun:'Unschärfe und Auflösung'};
     h+='<p><b>Die engsten Spannungen:</b> '+hart.slice(0,3).map(function(y){
-      return y.a+' '+y.x.typ+' '+y.b+' ('+y.x.o.toFixed(1)+'°) — '+HD[y.b]+' trifft auf '+y.a;
-    }).join('; ')+'. Diese Achsen lösen sich nicht auf. Die Arbeit besteht darin, beide Seiten abwechselnd zu bedienen, '+
-    'statt eine gewinnen zu lassen.</p>';
+      return y.a+' '+y.x.typ+' '+y.b+' <span class="ac-grad">('+kz(y.x.o)+'°)</span> — '+HD[y.b]+' trifft auf '+y.a;
+    }).join('; ')+'. Diese Achsen lösen sich nicht auf. Die Arbeit besteht darin, beide Seiten '+
+    'abwechselnd zu bedienen, statt eine gewinnen zu lassen.</p>';
   }
   h+='</div>';
-
-  /* 5 · Hinweise auf Belastungsmuster */
-  var marker=[];
-  var mu=aspekt(P,'Merkur','Uranus');
-  if(mu&&mu.o<5) marker.push(['Sprunghaftes Denken','Merkur '+mu.typ+' Uranus. Verknüpft über Ecken, ist oft drei Schritte weiter, ermüdet bei linearem Zuhören. Arbeite mit Übersicht statt mit Reihenfolge.']);
-  var mn2=aspekt(P,'Merkur','Neptun');
-  if(mn2&&mn2.o<5) marker.push(['Denken in Bildern','Merkur '+mn2.typ+' Neptun. Listen rutschen durch, Geschichten bleiben. Struktur von außen hilft mehr als Motivation.']);
-  var mou=aspekt(P,'Mond','Uranus');
-  if(mou&&mou.o<5) marker.push(['Reizempfindliches Nervensystem','Mond '+mou.typ+' Uranus. Fährt spät herunter und sprunghaft hoch. Feste Aufstehzeiten helfen mehr als Abendrituale.']);
-  var masa=aspekt(P,'Mars','Saturn');
-  if(masa&&masa.art==='hart'&&masa.o<5) marker.push(['Gas und Bremse gleichzeitig','Mars '+masa.typ+' Saturn. Ein Teil der Energie geht ins Selbstbremsen — ein normaler Tag kostet mehr als bei anderen. Das ist keine Faulheit.']);
-  var h12=[]; ['Sonne','Mond','Merkur','Venus','Mars','Saturn','Neptun','Pluto'].forEach(function(k){
-    if(P[k]!==undefined&&haus(P,P[k])===12) h12.push(k); });
-  if(h12.length>=2) marker.push(['Vieles läuft verdeckt','Im 12. Haus steht '+h12.join(', ')+'. Energie wird verbraucht, ohne dass die Person es bemerkt — Erschöpfung kommt plötzlich statt angekündigt.']);
-  var verZ=0; Object.keys(gew).forEach(function(k){ if(P[k]!==undefined&&Math.floor(P[k]/30)%3===2) verZ+=gew[k]; });
-  if(verZ/ges>0.45) marker.push(['Starke Wandelbarkeit','Überdurchschnittlich viel in veränderlichen Zeichen. Richtungswechsel sind hier normal — Durchhalten ist das falsche Ziel, Wiederaufnehmen das richtige.']);
-
-  h+='<div class="do-nd"><h3>Hinweise auf Belastungsmuster</h3>'+
-    '<div class="sub7">Stellungen, die erfahrungsgemäß mit erhöhtem Energieverbrauch einhergehen.</div>';
-  if(!marker.length) h+='<p style="font-size:15px;line-height:1.65;margin:0 0 11px;">Keine auffälligen Marker. '+
-    'Das heißt nicht, dass es keine Belastung gibt — nur, dass sie sich nicht in diesen Stellungen zeigt.</p>';
-  else marker.forEach(function(m){
-    h+='<div class="do-marker"><div class="pt"></div><div><b>'+m[0]+'</b><p>'+m[1]+'</p></div></div>';
-  });
-  h+='<div class="do-warn" style="margin:12px 0 0;"><b>Und jetzt die Grenze, die hier besonders zählt:</b> '+
-    'Das sind <b>keine Hinweise auf ADHS, Autismus oder irgendeine Diagnose</b>. Ein Chart kann nichts Medizinisches feststellen. '+
-    'Was hier steht, sind Beschreibungen von Energieverbrauch — brauchbar für die Arbeit, unabhängig davon, ob eine Diagnose vorliegt. '+
-    '<b>Sprich diese Marker nie als Vermutung über eine Diagnose aus.</b> Wenn die Person das Thema selbst aufbringt, '+
-    'verweise auf <a href="diagnose-weg.html">den Weg zur Abklärung</a>.</div></div>';
-
-  /* 6 · Gesprächseinstiege */
-  var FR=[];
-  bew.slice(0,3).forEach(function(x){
-    var Q={'Selbstwert':'Was müsstest du geleistet haben, damit dir das zusteht?',
-     'Berufung':'Wobei vergisst du die Zeit?',
-     'Nähe':'An welcher Stelle kippt es bei dir regelmäßig?',
-     'Herkunft':'Was war bei euch allen klar und wurde nie ausgesprochen?',
-     'Der wunde Punkt':'Was trifft dich härter, als es objektiv sollte?',
-     'Das Unerlaubte':'Wofür entschuldigst du dich, das keine Entschuldigung braucht?',
-     'Zugehörigkeit':'Bei wem musst du dich nicht zusammenreißen?',
-     'Anders verdrahtet':'Was kostet dich mehr, als es sollte?',
-     'Alltag und Struktur':'Welche Routine hat bei dir mal wirklich gehalten — und was war daran anders?',
-     'Körper':'Woran merkst du, dass du über deiner Grenze bist?',
-     'Sicherheit und Nähe':'Wann hast du dich zuletzt wirklich fallen lassen?',
-     'Versorgung':'An welcher Stelle bleibst du hängen — vor dem Kühlschrank oder vorher?'};
-    if(Q[x.t.n]) FR.push(Q[x.t.n]);
-  });
-  FR.push('Was von dem, was ich gesagt habe, stimmt nicht?');
-  h+='<div class="do-ab"><h3>Gesprächseinstiege</h3>'+
-    '<div class="sub7">Zu den drei Kernthemen, plus die eine Frage, die immer gestellt gehört.</div>';
-  FR.forEach(function(f){ h+='<div class="do-frage">'+f+'</div>'; });
-  h+='<p style="margin-top:12px;color:var(--leise);font-size:14.5px;">Die letzte Frage ist die wichtigste. '+
-    'Sie gibt der Person die Möglichkeit zu widersprechen — und schützt dich davor, eine Deutung durchzuziehen, die nicht passt.</p></div>';
-
-  /* 7 · Was du vermeiden solltest */
-  var verm=[];
-  if(ms&&ms.art==='hart') verm.push('<b>Nicht trösten wollen.</b> Bei Mond-Saturn wirkt Mitleid wie eine Zumutung. Sachliche Anerkennung kommt besser an.');
-  if(mn) verm.push('<b>Nichts im Vagen lassen.</b> Bei Mond-Neptun verschwimmt eine unklare Deutung sofort zu „irgendwie trifft alles zu". Werde konkret.');
-  if(masa&&masa.art==='hart') verm.push('<b>Keine Vorsätze vereinbaren.</b> Bei Mars-Saturn scheitern Vorsätze an der eingebauten Bremse. Mechanismen statt Willenskraft.');
-  if(P.Chiron!==undefined&&P.Chiron!==null) verm.push('<b>Nicht loben.</b> Im Chiron-Bereich kommt Lob nicht an. Beschreib, was du siehst, statt es zu bewerten.');
-  if(mou&&mou.o<5) verm.push('<b>Keine langen Sitzungen.</b> Bei Mond-Uranus kippt die Aufmerksamkeit abrupt. Lieber kürzer und öfter.');
-  verm.push('<b>Keine Deutung gegen den Widerspruch.</b> Wenn die Person sagt, das passt nicht, passt es nicht. Ein Chart ist eine Hypothese, kein Beweis.');
-  h+='<div class="do-ab"><h3>Was du bei dieser Person vermeiden solltest</h3>'+
-    '<div class="sub7">Aus den Stellungen abgeleitet — das sind die häufigsten Fehlgriffe.</div><ul class="do-liste">'+
-    verm.map(function(v){return '<li>'+v+'</li>';}).join('')+'</ul></div>';
-
-  /* 8 · Was gerade läuft */
-  var n=new Date();
-  var jdN=jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);
-  var tr=[];
-  ['Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(t){
-    ['Sonne','Mond','ASC','MC','Merkur','Venus','Mars','Saturn'].forEach(function(r){
-      if(P[r]===undefined) return;
-      for(var d=0;d<400;d+=5){
-        var T2=(jdN+d-2451545)/36525, l=geo(t,T2);
-        var s=Math.abs(nrm(l-P[r]+180)-180);
-        var tref=[0,90,180].filter(function(w){return Math.abs(s-w)<1;})[0];
-        if(tref!==undefined){
-          var da=new Date((jdN+d-2440587.5)*86400000);
-          var M=['Jan','Feb','März','Apr','Mai','Juni','Juli','Aug','Sep','Okt','Nov','Dez'];
-          tr.push({t:t,r:r,jd:jdN+d, txt:M[da.getUTCMonth()]+' '+da.getUTCFullYear(),
-            typ:(tref===0?'Konjunktion':(tref===90?'Quadrat':'Opposition'))});
-          break;
-        }
-      }
-    });
-  });
-  tr.sort(function(a,b){return a.jd-b.jd;});
-  var gesehen={}; var trU=tr.filter(function(x){ var k=x.t+x.r; if(gesehen[k])return false; gesehen[k]=1; return true; });
-  var TD={Jupiter:'Öffnung und Wachstum — eine Phase, in der mehr geht als sonst.',
-   Saturn:'Prüfung und Verdichtung — zäh, aber haltbar. Keine Zeit für neue Vorsätze, gute Zeit zum Vereinfachen.',
-   Uranus:'Bruch und Unruhe — Routinen reißen ab, Entscheidungen fallen plötzlich.',
-   Neptun:'Auflösung und Unschärfe — die Person überschätzt leicht, was sie schafft.',
-   Pluto:'Umbau in der Tiefe — langsam, unumkehrbar, oft erst im Rückblick erkennbar.'};
-  h+='<div class="do-ab"><h3>Was in den nächsten Monaten läuft</h3>'+
-    '<div class="sub7">Die nächsten engen Kontakte langsamer Planeten. Grobe Zeiträume, keine Termine.</div>';
-  if(!trU.length) h+='<p>In den nächsten dreizehn Monaten kein enger Kontakt eines langsamen Planeten. '+
-    'Ruhige Phase — gute Gelegenheit für Aufbauarbeit ohne äußeren Druck.</p>';
-  else trU.slice(0,4).forEach(function(x){
-    h+='<div class="do-tr"><div class="zt">ab '+x.txt+'</div><div>'+
-      '<b>'+x.t+' '+x.typ+' '+x.r+'</b><p>'+TD[x.t]+' Betrifft bei dieser Person '+
-      (x.r==='ASC'?'das Auftreten':(x.r==='MC'?'die berufliche Rolle':'den Bereich '+x.r))+'.</p></div></div>';
-  });
-  h+='</div>';
-
-  /* 9 · Abgeben */
-  h+='<div class="do-warn"><b>Wann du abgibst — unabhängig vom Chart:</b> bei Suizidgedanken, Selbstverletzung, '+
-    'Essstörung, Gewalt in der Gegenwart, Suchtproblemen, anhaltender Antriebslosigkeit über Wochen, '+
-    'Verlust des Realitätsbezugs, oder wenn jemand dissoziiert. Das sind keine Coaching-Themen, und es ist keine Schwäche, '+
-    'das zu sagen — es ist der Unterschied zwischen hilfreich und schädlich. Ausführlich unter '+
-    '<a href="grenzen.html">Wann du nicht deutest</a>.</div>';
-
-  h+='<div class="do-druck"><button type="button" id="drucken">Als PDF speichern oder drucken</button></div>';
   return h;
 }
 
-/* ── Profilauswahl ── */
-var gewaehlt=null;
+/* ── 6 · Belastungsmuster ─────────────────────────────────── */
+function bauMuster(P){
+  var tr=[];
+  MUSTER.forEach(function(M){
+    var x=aspekt(P,M.a,M.b,M.max);
+    if(!x) return;
+    if(M.hart && x.art!=='hart') return;
+    tr.push('<li><b>'+M.n+'</b><span class="q ac-tech">'+M.a+' '+x.typ+' '+M.b+
+      ' <span class="ac-grad">'+kz(x.o)+'°</span></span>'+M.t+'</li>');
+  });
+  var h12=['Sonne','Mond','Merkur','Venus','Mars','Saturn','Neptun','Pluto'].filter(function(k){
+    return P[k]!==undefined&&P[k]!==null&&haus(P,P[k])===12; });
+  if(h12.length>=2) tr.push('<li><b>Vieles läuft verdeckt</b><span class="q ac-tech">'+
+    h12.join(', ')+' im 12. Haus</span>Energie wird verbraucht, ohne dass die Person es bemerkt — '+
+    'Erschöpfung kommt plötzlich statt angekündigt.</li>');
+  if(!tr.length) return '';
+  return '<div class="do-ab"><h3>Hinweise auf Belastungsmuster</h3>'+
+   '<div class="sub7">Keine Diagnosen. Konstellationen, die erfahrungsgemäß mit bestimmten '+
+   'Alltagsschwierigkeiten einhergehen — brauchbar als Frage, nicht als Befund.</div>'+
+   '<ul class="do-muster">'+tr.join('')+'</ul></div>';
+}
+
+/* ── 7 · Konflikt, Einstiege, Grenze ──────────────────────── */
+function bauSchluss(P,B){
+  var K=KONFLIKT[B.klasse];
+  var h='<div class="do-ab"><h3>Wenn es schwierig wird</h3>'+
+   '<p>'+K.t+'</p><div class="dk voll"><b>Was hilft</b>'+K.tun+'</div></div>';
+  h+='<div class="do-ab"><h3>Gesprächseinstiege</h3>'+
+   '<div class="sub7">Drei Fragen, die zu diesem Verhältnis passen — nicht zu jedem.</div>'+
+   '<ul class="do-fragen">'+EINSTIEG[B.klasse].map(function(f){
+     return '<li>'+f+'</li>'; }).join('')+'</ul></div>';
+  h+='<div class="do-grenze"><div class="k">Die Grenze</div><p>'+GRENZE[B.klasse]+'</p></div>';
+  return h;
+}
+
+/* ── Zusammensetzen ───────────────────────────────────────── */
+function zeigen(){
+  var p=profil();
+  if(!p){ el('dossier').innerHTML=''; return; }
+  var B=BEZUG[bezug]||BEZUG.klientin;
+  var P;
+  try{ P=chartVon(p); }catch(e){ el('dossier').innerHTML='<p>Chart ließ sich nicht rechnen.</p>'; return; }
+  el('dossier').innerHTML =
+    bauKopf(P,p,B) + bauStellung(B) + bauBau(P,B) + bauUmgang(P,B) +
+    bauThemen(P,B) + bauHaeuser(P,B) + bauKlemmt(P,B) + bauMuster(P) + bauSchluss(P,B);
+  if(window.AC_NIV&&window.AC_NIV.anwenden) try{ window.AC_NIV.anwenden(); }catch(e){}
+}
+
+/* ── Wahl: Profil und Bezug ───────────────────────────────── */
 function wahlZeichnen(){
-  var w=document.getElementById('dowahl'), alle=[];
+  var box=el('dowahl'), alle=[];
   try{ alle=AC_P.alle()||[]; }catch(e){}
-  w.innerHTML='<span style="font-family:\'JetBrains Mono\',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--messing);">Profil</span>';
-  if(!alle.length){ w.innerHTML=''; return; }
-  alle.forEach(function(p){
-    var b=document.createElement('button'); b.type='button';
-    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
-    b.setAttribute('aria-pressed', gewaehlt===p.id);
-    b.addEventListener('click',function(){ gewaehlt=p.id; wahlZeichnen(); zeigen(); });
-    w.appendChild(b);
+  box.innerHTML='';
+  if(!alle.length){
+    box.innerHTML='<p class="do-leer">Noch kein Profil angelegt. '+
+      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und Geburtsort '+
+      'kann das Dossier nichts rechnen, weil alles an den Häusern hängt.</p>';
+    el('dobezug').innerHTML=''; el('dossier').innerHTML='';
+    return;
+  }
+  if(!gewaehlt){ var e=alle.filter(function(x){return x.eigen;})[0]||alle[0]; gewaehlt=e.id; }
+  var zn=false; try{ zn=AC_P.zeigeNamen(); }catch(e){}
+  alle.forEach(function(x){
+    var b=document.createElement('button');
+    b.type='button'; b.className='dw'+(x.id===gewaehlt?' ist':'');
+    b.textContent=AC_P.anzeige(x,zn);
+    b.addEventListener('click',function(){
+      gewaehlt=x.id; bezug=bezugFuer(x); wahlZeichnen(); bezugZeichnen(); zeigen(); });
+    box.appendChild(b);
   });
 }
-function zeigen(){
-  var box=document.getElementById('dossier'), alle=[];
-  try{ alle=AC_P.alle()||[]; }catch(e){}
-  if(!alle.length){
-    box.innerHTML='<div class="do-leer"><b>Noch keine Profile angelegt.</b><br><br>'+
-      'Das Dossier arbeitet mit den Profilen, die du unter <a href="profile.html">Profile</a> hinterlegst. '+
-      'Leg dort eine Person an, dann steht hier ihr Bestandsbericht.</div>'; return;
-  }
-  if(!gewaehlt){ gewaehlt=(alle.filter(function(p){return !p.eigen;})[0]||alle[0]).id; wahlZeichnen(); }
-  var p=alle.filter(function(x){return x.id===gewaehlt;})[0];
+function bezugZeichnen(){
+  var box=el('dobezug'), p=profil();
   if(!p){ box.innerHTML=''; return; }
-  box.innerHTML=dossier(p);
-  var d=document.getElementById('drucken');
-  if(d) d.addEventListener('click',function(){ window.print(); });
+  var h='<div class="bz-k">In welchem Verhältnis stehst du zu dieser Person?</div><div class="bz-reihe">';
+  BEZUG_FOLGE.forEach(function(k){
+    h+='<button type="button" class="bzb'+(k===bezug?' ist':'')+'" data-b="'+k+'">'+
+      esc(BEZUG[k].n)+'</button>';
+  });
+  h+='</div><div class="bz-kurz">'+esc(BEZUG[bezug].kurz)+'</div>';
+  box.innerHTML=h;
+  Array.prototype.forEach.call(box.querySelectorAll('.bzb'),function(b){
+    b.addEventListener('click',function(){
+      bezug=b.getAttribute('data-b');
+      var pp=profil(); if(pp) bezugSchreiben(pp.id,bezug);
+      bezugZeichnen(); zeigen();
+    });
+  });
 }
-wahlZeichnen(); zeigen();
+
+(function(){
+  wahlZeichnen();
+  var p=profil();
+  if(p){ bezug=bezugFuer(p); bezugZeichnen(); zeigen(); }
+  var d=el('drucken');
+  if(d) d.addEventListener('click',function(){ window.print(); });
+})();
 
 </script>
 </body></html>
