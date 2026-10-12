@@ -1,15 +1,12 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Übersicht · Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Dein Bild &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
-<script src="coach.js" defer></script>
-<script src="format.js" defer></script>
 <script src="kleine-punkte.js"></script>
-<script src="fortschritt.js"></script>
-<script src="rad.js"></script>
 <script src="aspekte-daten.js"></script>
-<style>*{box-sizing:border-box;margin:0;padding:0;}
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -80,184 +77,21 @@ a{color:var(--nacht);}
  border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
 .ac-tool:hover{background:var(--nacht-bg);}
 
-.ub-kopfkarte .kreis{width:54px;height:54px;border-radius:50%;background:var(--nacht);color:#fff;
- display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;flex:none;}
-.ub-kopfkarte .kn{font-family:var(--serif);font-size:23px;line-height:1.15;}
-.ub-kopfkarte .kd{font-size:13.5px;color:var(--leise);margin-top:3px;}
-.ub-kopfkarte .kw{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;}
-.ub-kbtn{font-family:var(--sans);font-size:13px;border:1px solid var(--linie);background:var(--bg);color:var(--nacht);
- padding:7px 14px;border-radius:18px;text-decoration:none;}
-.ub-kbtn:hover{background:var(--nacht-bg);}
-.ub-reiter button{font-family:var(--sans);font-size:14.5px;padding:8px 16px;border:1px solid var(--linie);
- background:var(--bg);color:var(--tinte);border-radius:20px;cursor:pointer;}
-.ub-reiter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
-@media(max-width:700px){.ub-oben{grid-template-columns:1fr;}}
-.ub-tabbox{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.ub-unten{display:grid;grid-template-columns:1fr;gap:0;}
-@media(min-width:900px){.ub-unten{grid-template-columns:1fr 1fr;gap:13px;align-items:start;}
- .ub-unten>.box{margin-bottom:0;}
- .ub-unten>.voll{grid-column:1/-1;}}
-svg.rad{display:block;width:100%;height:auto;}
-table.pl{width:100%;border-collapse:collapse;font-size:14.5px;}
-table.pl th,table.pl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linie);}
-table.pl th{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--messing);font-weight:500;}
-table.pl{table-layout:auto;}
-table.pl td.g{font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap;}
-table.pl td,table.pl th{word-break:normal;}
-table.pl td.gly{font-size:17px;color:var(--nacht);width:26px;}
-table.pl tr.achse td{background:var(--messing-bg);}
-table.pl td.r{color:var(--leise);font-size:12.5px;}
-.ub-box h3{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
-.ub-box .hint{font-size:13px;color:var(--leise);margin-bottom:12px;}
-.ub-kernz b{display:block;font-family:var(--serif);font-size:16px;margin-bottom:2px;}
-.ub-kernz .st{font-size:12px;color:var(--messing);letter-spacing:.04em;margin-bottom:5px;}
-.ub-kernz p{margin:0;font-size:14.8px;line-height:1.55;}
-.ub-spz b{color:var(--tinte);}
-.ub-kette .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
- border:1px solid var(--linie);border-radius:7px;padding:3px 8px;white-space:nowrap;}
-.ub-kette .s{flex:1 1 100%;font-size:13.5px;color:var(--leise);margin-top:2px;}
-.ub-tz2 .k{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:2px;}
-.ub-tz2.eng{background:var(--messing-bg);}
-.ub-lunz .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
-.ub-lunz.treffer{background:var(--nacht-bg);}
-
 
 
 
 
 @media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
 
-/* — Übersicht — */
-
-.ub-kopfkarte{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:20px 22px;margin-bottom:16px;
- display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-.ub-kopfkarte .kreis{width:54px;height:54px;border-radius:50%;background:var(--nacht);color:#fff;
- display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;flex:none;}
-.ub-kopfkarte .kn{font-family:var(--serif);font-size:23px;line-height:1.15;}
-.ub-kopfkarte .kd{font-size:13.5px;color:var(--leise);margin-top:3px;}
-.ub-kopfkarte .kw{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;}
-.ub-kbtn{font-family:var(--sans);font-size:13px;border:1px solid var(--linie);background:var(--bg);color:var(--nacht);
- padding:7px 14px;border-radius:18px;text-decoration:none;}
-.ub-kbtn:hover{background:var(--nacht-bg);}
-.ub-reiter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--linie);padding-bottom:10px;}
-.ub-reiter button{font-family:var(--sans);font-size:14.5px;padding:8px 16px;border:1px solid var(--linie);
- background:var(--bg);color:var(--tinte);border-radius:20px;cursor:pointer;}
-.ub-reiter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
-@media(max-width:760px){}
-svg.rad{display:block;width:100%;height:auto;}
-table.pl{width:100%;border-collapse:collapse;font-size:14.5px;}
-table.pl th,table.pl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linie);}
-table.pl th{font-family:var(--sans);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--messing);font-weight:500;}
-table.pl td.g{font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap;}
-table.pl td.gly{font-size:17px;color:var(--nacht);width:26px;}
-table.pl tr.achse td{background:var(--messing-bg);}
-table.pl td.r{color:var(--leise);font-size:12.5px;}
-.ub-box{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:18px 20px;margin-bottom:13px;}
-.ub-box h3{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);margin:0 0 4px;}
-.ub-box .hint{font-size:13px;color:var(--leise);margin-bottom:12px;}
-.ub-kernz{background:var(--bg);border-radius:13px;padding:13px 15px;margin-bottom:8px;}
-.ub-kernz b{display:block;font-family:var(--serif);font-size:16px;margin-bottom:2px;}
-.ub-kernz .st{font-size:12px;color:var(--messing);letter-spacing:.04em;margin-bottom:5px;}
-.ub-kernz p{margin:0;font-size:14.8px;line-height:1.55;}
-.ub-spz{background:#FBF0E8;border:1px solid #EBD5C4;border-radius:13px;padding:13px 15px;margin-bottom:8px;font-size:14.5px;line-height:1.55;}
-.ub-spz b{color:var(--tinte);}
-.ub-kette{display:flex;gap:6px;flex-wrap:wrap;align-items:center;background:var(--bg);border-radius:11px;
- padding:9px 12px;margin-bottom:6px;font-size:14px;}
-.ub-kette .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--papier);
- border:1px solid var(--linie);border-radius:7px;padding:3px 8px;white-space:nowrap;}
-.ub-kette .s{flex:1 1 100%;font-size:13.5px;color:var(--leise);margin-top:2px;}
-.ub-tz2{background:var(--bg);border-radius:12px;padding:11px 14px;margin-bottom:7px;font-size:14.5px;line-height:1.55;}
-.ub-tz2 .k{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:2px;}
-.ub-tz2.eng{background:var(--messing-bg);}
-.ub-lunz{background:var(--bg);border-radius:12px;padding:12px 14px;margin-bottom:7px;font-size:14.5px;line-height:1.55;}
-.ub-lunz .d{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
-.ub-lunz.treffer{background:var(--nacht-bg);}
-.ub-leerh{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;padding:26px;text-align:center;
- color:var(--leise);line-height:1.6;}
-.ub-notizbox{background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:12px;padding:13px 16px;
- font-size:14.5px;line-height:1.6;margin-bottom:13px;}
-.tabbox{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-
-.rad-huelle{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:12px;margin-bottom:12px;}
-.rad-huelle svg{display:block;width:100%;height:auto;}
-.rad-filter{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 10px;}
-.rad-filter button{font-family:var(--sans);font-size:12.5px;padding:6px 12px;border:1px solid var(--linie);
- background:var(--bg);color:var(--tinte);border-radius:15px;cursor:pointer;}
-.rad-filter button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
-.rad-hinweis{font-size:13.5px;color:var(--leise);text-align:center;padding:12px 8px;line-height:1.5;}
-.rad-info{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:16px 18px;}
-.rad-kopf{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
-.rad-punkt{font-size:22px;line-height:1;}
-.rad-typ{font-family:var(--serif);font-size:17px;color:var(--nacht);flex:1;line-height:1.25;}
-.rad-orb{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);margin-bottom:12px;}
-.rad-thema{font-family:var(--serif);font-style:italic;font-size:16.5px;margin-bottom:10px;}
-.rad-text{margin:0 0 8px;font-size:14.8px;line-height:1.6;}
-.rad-frage{margin:12px 0 0;padding-left:14px;border-left:3px solid var(--nacht);font-family:var(--serif);
- font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
-.rad-mehr{margin:10px 0 0;font-size:13.5px;}
-
 .ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
 .ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
 .ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
-
-.kt-ziel{background:var(--bg);border:1px solid var(--linie);border-radius:14px;padding:14px 16px;margin-bottom:9px;}
-.kt-kopf{display:flex;gap:12px;align-items:center;margin-bottom:9px;}
-.kt-nr{width:34px;height:34px;border-radius:50%;background:var(--nacht);color:#fff;flex:none;
- display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:15px;}
-.kt-kopf b{font-family:var(--serif);font-size:16.5px;}
-.kt-klein{font-size:12.5px;color:var(--leise);}
-.kt-quellen{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
-.kt-q{font-family:var(--sans);font-size:12px;background:var(--papier);border:1px solid var(--linie);
- border-radius:13px;padding:4px 10px;color:var(--leise);}
-.kt-satz{margin:0;font-size:14.5px;line-height:1.55;}
-.kt-details{background:var(--papier);border:1px solid var(--linie);border-radius:14px;padding:13px 15px;margin-bottom:9px;}
-.kt-details summary{cursor:pointer;font-family:var(--serif);font-size:16px;color:var(--nacht);}
-.kt-details[open] summary{margin-bottom:10px;}
-.kt-tab{width:100%;border-collapse:collapse;font-size:13.8px;}
-.kt-tab th,.kt-tab td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--linie);}
-.kt-tab th{font-family:var(--sans);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--messing);font-weight:500;}
-.kt-tab td.kt-m{font-family:'JetBrains Mono',monospace;font-size:12.5px;white-space:nowrap;}
-.kt-tab tr.kt-selbst td{background:var(--messing-bg);}
-.kt-marke{font-family:var(--sans);font-size:9.5px;letter-spacing:.06em;background:var(--messing);color:#fff;
- border-radius:10px;padding:2px 7px;}
-.kt-ende{background:var(--nacht-bg);border-left:3px solid var(--nacht);border-radius:12px;padding:13px 15px;
- font-size:14.5px;line-height:1.6;margin-top:4px;}
-.tab-legende{background:var(--bg);border-radius:12px;padding:13px 15px;margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--leise);}
-.tab-legende b{color:var(--tinte);}
-
-.ch-box{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:18px;padding:20px 22px;margin-bottom:13px;}
-.ch-kopf{display:flex;gap:15px;align-items:center;margin-bottom:13px;}
-.ch-gly{width:52px;height:52px;border-radius:50%;background:var(--nacht);color:#fff;flex:none;
- display:flex;align-items:center;justify-content:center;font-size:25px;}
-.ch-lab{font-family:var(--sans);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--messing);}
-.ch-name{font-family:var(--serif);font-size:23px;line-height:1.1;color:var(--nacht);}
-.ch-pos{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--leise);margin-top:2px;}
-.ch-erkl{margin:0 0 9px;font-size:15px;line-height:1.65;}
-.ch-erkl:last-child{margin-bottom:0;}
-.bf-box{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:19px 21px;margin-bottom:13px;}
-.bf-box h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 12px;}
-.bf-titel{font-family:var(--sans);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
- color:var(--messing);margin:12px 0 7px;}
-.bf-bars{display:grid;gap:5px;margin-bottom:6px;}
-.bf-bar{display:grid;grid-template-columns:84px 1fr 40px;gap:9px;align-items:center;font-size:13.5px;}
-.bf-bt{height:11px;background:var(--linie);border-radius:7px;overflow:hidden;}
-.bf-bt i{display:block;height:100%;border-radius:7px;}
-.bf-bt i.el0{background:#B5502E;} .bf-bt i.el1{background:#6B7C3F;}
-.bf-bt i.el2{background:#3E7C9A;} .bf-bt i.el3{background:#6A4A62;}
-.bf-bt i.mo{background:var(--nacht);}
-.bf-bp{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--leise);text-align:right;}
-.bf-text{margin:11px 0 0;font-size:15px;line-height:1.65;}
-.bf-mehr{margin:13px 0 0;font-size:13.5px;}
-.tab-aus{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:14px 16px;margin-bottom:13px;}
-.tab-aus summary{cursor:pointer;font-family:var(--serif);font-size:17px;color:var(--nacht);}
-.tab-aus[open] summary{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--linie);}
-.th-klein{display:block;font-size:8.5px;letter-spacing:.02em;text-transform:none;color:var(--leise);font-weight:400;margin-top:2px;}
 
 .ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
  backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
  position:sticky;top:0;z-index:40;}
 .ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
-.ac-leiste-inner svg{flex:none;width:20px;height:20px;}
+.ac-leiste-inner svg{flex:none;}
 .ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
  text-decoration:none;letter-spacing:-.01em;line-height:1;}
 .ac-marke:hover{color:var(--nacht);}
@@ -278,17 +112,146 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
-/* Tabellen passen am Handy nicht in die Breite — dann seitlich schiebbar
-   machen, statt die ganze Seite waagerecht scrollen zu lassen. */
-@media(max-width:560px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}}
 
-/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
-   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
-@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
-/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
-   nach der Raster- und Flexspalten ihre Breite berechnen. */
-</style><script src="begriffe.js" defer></script>
-<script src="niveau.js" defer></script>
+/* ── Rad als Bedienfläche ──────────────────────────────────── */
+.kr-huelle{position:relative;}
+.kr-huelle svg{display:block;width:100%;height:auto;}
+.kr-hf{fill:var(--papier,#FFFDFA);stroke:var(--linie,#EBE1D2);stroke-width:1;
+ transition:fill .12s ease;}
+.kr-haus.heut .kr-hf{fill:#F3EADA;}
+.kr-haus.ist .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-haus:hover .kr-hf{fill:#EDE4D4;}
+.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-hz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;fill:var(--leise,#6B6259);}
+.kr-haus.heut .kr-hz{fill:var(--messing,#9A7235);font-weight:600;}
+.kr-haus.ist .kr-hz{fill:#fff;font-weight:600;}
+.kr-haus:focus-visible{outline:none;}
+.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#2E3A5C);stroke-width:2.5;}
+.kr-zg{font-size:22px;fill:#fff;}
+.kr-pg{font-size:27px;fill:var(--nacht,#2E3A5C);}
+.kr-strich{stroke:var(--linie-stark,#DDD0BC);stroke-width:.9;}
+.kr-achse{stroke:var(--messing,#9A7235);stroke-width:2;}
+.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#9A7235);}
+.kr-tring{fill:none;stroke:var(--linie-stark,#DDD0BC);stroke-width:1;stroke-dasharray:2 4;}
+.kr-tk{fill:var(--messing-bg,#F7EFE1);stroke:var(--messing,#9A7235);stroke-width:1.2;}
+.kr-tg{font-size:14px;fill:var(--messing,#9A7235);}
+@media (prefers-reduced-motion:reduce){.kr-hf{transition:none;}}
+
+/* ── Ich: Dein Bild ─────────────────────────────────────────── */
+.ich-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
+@media(max-width:620px){.ich-wrap{padding:0 17px 70px;}}
+
+/* Kopf: Rad links, die drei tragenden Stellungen rechts */
+.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:46px;align-items:start;padding:30px 0 10px;}
+@media(max-width:900px){.ich-kopf{grid-template-columns:1fr;gap:28px;}}
+.ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:26px;padding:16px;position:sticky;top:76px;}
+@media(max-width:900px){.ich-radbox{position:static;}}
+.ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
+ font-size:12.6px;color:var(--leise,#6B6259);}
+.ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
+.ich-radfuss i{width:11px;height:11px;border-radius:3px;display:inline-block;font-style:normal;}
+.ich-radfuss i.a{background:#F3EADA;border:1px solid var(--messing,#9A7235);}
+.ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
+
+.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(34px,5.4vw,56px);
+ font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
+.ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
+ color:var(--leise,#6B6259);margin-bottom:26px;}
+.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
+.ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
+ padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
+.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(20px,2.7vw,27px);
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.18;letter-spacing:-.012em;}
+.ich-drei .wert em{font-style:normal;color:var(--messing,#9A7235);}
+.ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
+ color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
+
+/* Die Brücke zu Heute */
+.ich-heute{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
+ border-radius:17px;padding:16px 19px;}
+.ich-heute .k{font-size:13px;color:var(--messing,#9A7235);margin-bottom:7px;}
+.ich-heute p{margin:0 0 9px;font-size:15px;line-height:1.62;}
+.ich-heute a{color:var(--nacht,#2E3A5C);}
+.ich-heute .nix{color:var(--leise,#6B6259);font-size:14.4px;}
+
+/* Abschnittsköpfe: Größe trägt die Hierarchie, nicht Versalien */
+.ich-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
+ font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:58px 0 5px;}
+.ich-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 20px;max-width:62ch;line-height:1.6;}
+
+/* Die zwölf Häuser als Zeilen, nicht als Karten */
+.ich-haeuser{border-top:1px solid var(--linie-stark,#DDD0BC);}
+.hz{display:grid;grid-template-columns:52px 136px minmax(0,1fr) minmax(0,1.15fr);
+ gap:16px;align-items:baseline;width:100%;text-align:left;
+ padding:15px 12px;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
+ font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;}
+@media(max-width:860px){.hz{grid-template-columns:44px minmax(0,1fr);gap:5px 13px;padding:14px 10px;}
+ .hz .herr,.hz .was{grid-column:2;}}
+.hz:hover{background:var(--papier,#FFFDFA);}
+.hz.ist{background:var(--nacht,#2E3A5C);}
+.hz.ist .nr,.hz.ist .ze,.hz.ist .herr,.hz.ist .was{color:#F4EFE6;}
+.hz.ist .ze b{color:#fff;}
+.hz.ist .bew{color:#E8C97A;}
+.hz:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:-2px;}
+.hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:300;
+ color:var(--leise,#6B6259);line-height:1;}
+.hz.heut .nr{color:var(--messing,#9A7235);}
+.hz .ze{font-size:15.6px;line-height:1.35;min-width:0;}
+.hz .ze b{font-weight:500;color:var(--nacht,#2E3A5C);}
+.hz .bew{display:block;font-size:13.6px;color:var(--messing,#9A7235);margin-top:3px;}
+.hz .herr{font-size:14px;color:var(--leise,#6B6259);line-height:1.45;min-width:0;}
+.hz .was{font-size:14.3px;color:var(--leise,#6B6259);line-height:1.5;min-width:0;}
+.hz .punkt{display:inline-block;width:6px;height:6px;border-radius:50%;
+ background:var(--messing,#9A7235);vertical-align:2px;margin-right:5px;}
+
+/* Aufgeklapptes Haus */
+.hdetail{border-bottom:1px solid var(--linie,#EBE1D2);background:var(--papier,#FFFDFA);
+ padding:20px 24px 24px;}
+@media(max-width:620px){.hdetail{padding:17px 15px 20px;}}
+.hdetail h4{font-family:var(--serif,Fraunces,Georgia,serif);font-size:20px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 10px;}
+.hdetail p{margin:0 0 11px;font-size:15px;line-height:1.7;max-width:66ch;}
+.hdetail p:last-child{margin-bottom:0;}
+.hdetail .stell{display:grid;gap:7px;margin:13px 0;}
+.hdetail .st{display:grid;grid-template-columns:minmax(0,152px) minmax(0,1fr);gap:4px 16px;
+ font-size:14.4px;line-height:1.55;padding:9px 0;border-top:1px solid var(--linie,#EBE1D2);}
+@media(max-width:560px){.hdetail .st{grid-template-columns:1fr;}}
+.hdetail .st b{font-weight:500;color:var(--nacht,#2E3A5C);}
+.hd-weiter{margin-top:15px;font-size:14.2px;display:flex;flex-wrap:wrap;gap:7px 18px;}
+.hd-weiter a{white-space:nowrap;}
+
+/* Aspekte, dicht */
+.ich-asp{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:1px;
+ background:var(--linie,#EBE1D2);border:1px solid var(--linie,#EBE1D2);border-radius:15px;
+ overflow:hidden;}
+.ia{background:var(--papier,#FFFDFA);padding:13px 15px;min-width:0;}
+.ia .f{font-size:15.2px;line-height:1.35;color:var(--nacht,#2E3A5C);}
+.ia .o{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ color:var(--leise,#6B6259);margin-top:3px;}
+.ia .d{font-size:13.8px;color:var(--leise,#6B6259);line-height:1.5;margin-top:6px;}
+.ia.hart{border-left:3px solid var(--rost,#A05A3A);}
+.ia.weich{border-left:3px solid var(--teal,#3D6B62);}
+
+/* Der Index deiner Seiten */
+.ich-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:11px;}
+.ix{display:block;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:16px 18px;text-decoration:none;color:inherit;min-width:0;}
+.ix:hover{border-color:var(--nacht,#2E3A5C);}
+.ix .t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.25;margin-bottom:5px;}
+.ix .w{font-size:13.9px;color:var(--leise,#6B6259);line-height:1.52;}
+.ix.neu{background:var(--messing-bg,#F7EFE1);border-color:var(--messing,#9A7235);}
+.ix .neu-m{font-size:11.6px;color:var(--messing,#9A7235);margin-top:7px;}
+.ich-gruppe{font-size:14px;color:var(--leise,#6B6259);margin:26px 0 11px;
+ padding-bottom:7px;border-bottom:1px solid var(--linie,#EBE1D2);}
+.ich-gruppe:first-of-type{margin-top:0;}
+
+.ich-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
+ border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;}
+</style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -296,18 +259,44 @@ table.pl td.r{color:var(--leise);font-size:12.5px;}
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">Räume</a><a href="uebersicht.html" class="ist">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html" class="ist">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
-<div class="wrap">
-<div class="eyebrow">Übersicht</div>
-<h1 id="h1">Dein <em>Bild.</em></h1>
-<p class="lede">Das vollständige Bild zum aktiven Profil — Chart, alle Positionen mit Haus und Zeichen, die Kernsätze, Spannungen, das Jahreschart und was gerade läuft. Ohne zwischen Seiten zu springen.</p>
 
-<div id="inhalt"></div>
+<div class="ich-wrap" id="ichinhalt">
 
-<div class="weiter"><a href="profile.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Profile</span></a><a href="chart-rechner.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Chart-Rechner</span></a></div>
-<div class="foot">&Uuml;bersicht &middot; Alles im Browser gerechnet, nichts &uuml;bertragen. Whole Sign.</div>
+<div class="ich-kopf">
+  <div>
+    <div class="ich-radbox">
+      <div class="kr-huelle" id="ichrad"></div>
+      <div class="ich-radfuss">
+        <span><i class="b"></i> ausgew&auml;hlt</span>
+        <span><i class="a"></i> heute besetzt</span>
+        <span>au&szlig;en: wo die Planeten gerade stehen</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h1 class="ich-name" id="ichname">&nbsp;</h1>
+    <div class="ich-dat" id="ichdat"></div>
+    <div class="ich-drei" id="ichdrei"></div>
+    <div class="ich-heute" id="ichheute"></div>
+  </div>
 </div>
+
+<h2 class="ich-h">Deine zw&ouml;lf H&auml;user</h2>
+<p class="ich-sub">Jedes Haus ist ein Lebensbereich, und jeder Bereich geh&ouml;rt einem Zeichen und damit einem Herrscher. Tipp eine Zeile an &mdash; oder gleich das Feld im Rad.</p>
+<div class="ich-haeuser" id="ichhaeuser"></div>
+
+<h2 class="ich-h">Was zusammenh&auml;ngt</h2>
+<p class="ich-sub">Die <span id="ichaspzahl">0</span> Aspekte deines Charts, die engsten zuerst. Rot fordert, gr&uuml;n flie&szlig;t &mdash; keins von beidem ist gut oder schlecht.</p>
+<div class="ich-asp" id="ichasp"></div>
+
+<h2 class="ich-h">Alles, was es zu dir gibt</h2>
+<p class="ich-sub">Jede Seite der Plattform, die mit deinem Chart rechnet. Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
+<div id="ichindex"></div>
+
+</div>
+
 <script>
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
@@ -367,576 +356,575 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
 var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
-var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC'};
-var ORD=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
-var HERR={0:'Mars',1:'Venus',2:'Merkur',3:'Mond',4:'Sonne',5:'Merkur',6:'Venus',7:'Pluto',8:'Jupiter',9:'Saturn',10:'Uranus',11:'Neptun'};
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
-var HK=['Person','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft','Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
-var ORB={Sonne:5,Mond:5,ASC:4,MC:4,Merkur:4,Venus:4,Mars:4,Jupiter:3.5,Saturn:3.5,Uranus:2.5,Neptun:2.5,Pluto:2.5};
-var GEW={Sonne:3,Mond:3,ASC:3,MC:2.5,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
-var PERS={Sonne:1,Mond:1,ASC:1,MC:1,Merkur:1,Venus:1,Mars:1};
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
 
-var SONNE=['Will vorangehen und etwas anstoßen.','Will etwas aufbauen, das bleibt.','Will verstehen und verknüpfen.',
-'Will dazugehören und schützen.','Will gesehen werden für das, was gegeben wird.','Will nützlich sein und es richtig machen.',
-'Will Ausgleich und echte Begegnung.','Will wissen, was wirklich dahintersteckt.','Will Sinn und Weite.',
-'Will etwas Bleibendes schaffen.','Will frei bleiben und anders sein dürfen.','Will sich verbinden — mit Menschen und mit etwas Größerem.'];
-var MOND=['Fühlt sofort und heftig, und es ist schnell wieder vorbei.','Braucht Ruhe, Körperlichkeit und Verlässlichkeit.',
-'Verarbeitet über Reden. Unausgesprochenes wird zu Unruhe.','Fühlt tief, braucht Nähe, zieht sich bei Verletzung zurück.',
-'Braucht Wärme und Bestätigung. Übersehen zu werden trifft mehr, als gezeigt wird.','Beruhigt sich über Ordnung. Sorge äußert sich als Kontrolle.',
-'Braucht Harmonie. Konflikt kostet echte Substanz.','Fühlt alles doppelt und behält es für sich. Vertrauen entsteht langsam.',
-'Braucht Bewegungsfreiheit. Enge ohne Luft macht rastlos.','Zeigt Gefühle sparsam und hält viel aus.',
-'Geht emotional auf Distanz, um klar zu bleiben.','Nimmt Stimmungen auf wie ein Schwamm — auch fremde.'];
-var ASZ=['Wirkt direkt und energisch.','Wirkt ruhig und beständig.','Wirkt wach und gesprächig.','Wirkt zugewandt und schützend.',
-'Wirkt warm und präsent.','Wirkt aufmerksam und zurückhaltend.','Wirkt freundlich und ausgleichend.','Wirkt intensiv und schwer einschätzbar.',
-'Wirkt offen und begeisterungsfähig.','Wirkt ernsthaft und verlässlich.','Wirkt eigen und ein wenig distanziert.','Wirkt weich und schwer greifbar.'];
-var POLW={Sonne:'gesehen werden',Mond:'sich sicher fühlen',Merkur:'verstehen und benennen',Venus:'Nähe und Wert',
-Mars:'handeln',Jupiter:'wachsen',Saturn:'Sicherheit durch Struktur',Uranus:'frei sein',Neptun:'sich verbinden',
-Pluto:'in die Tiefe gehen',ASC:'so wirken, wie man ist',MC:'etwas gelten'};
-var TWIRK={Sonne:'macht sichtbar',Mond:'färbt die Stimmung',Merkur:'bringt Worte',Venus:'bringt Wärme',
-Mars:'gibt Antrieb',Jupiter:'macht weit',Saturn:'verlangt Struktur',Uranus:'bringt Unruhe',Neptun:'macht durchlässig',Pluto:'geht in die Tiefe'};
-var NPKT={Sonne:'die Identität',Mond:'das Sicherheitsgefühl',Merkur:'das Denken',Venus:'Zuneigung und Selbstwert',
-Mars:'der Antrieb',Jupiter:'das Wachstum',Saturn:'die Struktur',Uranus:'das Freiheitsbedürfnis',Neptun:'die Sehnsucht',
-Pluto:'die Tiefe',ASC:'das Auftreten',MC:'die Rolle nach außen'};
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
 
-function EL(t,a){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in a)e.setAttribute(k,a[k]);return e;}
-function fmt(l){var s=Math.floor(l/30),d=l-30*s,m=Math.round((d-Math.floor(d))*60),dd=Math.floor(d);
- if(m===60){m=0;dd+=1;} return dd+'° '+SIGNS[s]+' '+('0'+m).slice(-2)+"'";}
-function chartAt(y,mo,d,ut,lat,lon){
-  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,lat,lon);
-  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
-   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
-   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc,_jd:jd};
-}
-function haus(C,l){return ((Math.floor(l/30)-Math.floor(C.ASC/30))%12+12)%12;}
-function solarReturn(natSonne,jahr,lat,lon){
-  function diff(jd){var v=norm(sunLon((jd-2451545)/36525)-natSonne);return v>180?v-360:v;}
-  var jd0=jdFromUT(jahr,1,1,0), prev=diff(jd0);
-  for(var jd=jd0+1;jd<jd0+367;jd+=1){
-    var d=diff(jd);
-    if(prev<0&&d>=0&&Math.abs(prev)<10){
-      var lo=jd-1,hi=jd;
-      for(var i=0;i<45;i++){var m=(lo+hi)/2;(diff(m)<0)?lo=m:hi=m;}
-      var t=(lo+hi)/2,T=(t-2451545)/36525,an=angles(t,lat,lon);
-      return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
-       Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
-       Pluto:geo('Pluto',T),ASC:an.asc,MC:an.mc,_jd:t};
-    }
-    prev=d;
-  }
-  return null;
-}
-function lunationen(n){
-  var jetzt=new Date();
-  var jd0=jdFromUT(jetzt.getUTCFullYear(),jetzt.getUTCMonth()+1,jetzt.getUTCDate(),0);
-  var out=[],prevN=null,prevV=null;
-  for(var t=jd0;t<jd0+200&&out.length<n+2;t+=0.25){
-    var T=(t-2451545)/36525,s=norm(moonLon(T)-sunLon(T));
-    var dn=(s>180?s-360:s), dv=s-180;
-    if(prevN!==null&&prevN<0&&dn>=0){
-      var lo=t-0.25,hi=t;
-      for(var i=0;i<40;i++){var m=(lo+hi)/2,Tm=(m-2451545)/36525,sm=norm(moonLon(Tm)-sunLon(Tm));
-        ((sm>180?sm-360:sm)<0)?lo=m:hi=m;}
-      var jm=(lo+hi)/2; out.push({t:'NM',jd:jm,g:sunLon((jm-2451545)/36525)});
-    }
-    if(prevV!==null&&prevV<0&&dv>=0){
-      var lo2=t-0.25,hi2=t;
-      for(var j=0;j<40;j++){var m2=(lo2+hi2)/2,T2=(m2-2451545)/36525;
-        ((norm(moonLon(T2)-sunLon(T2))-180)<0)?lo2=m2:hi2=m2;}
-      var jv=(lo2+hi2)/2; out.push({t:'VM',jd:jv,g:moonLon((jv-2451545)/36525)});
-    }
-    prevN=dn;prevV=dv;
-  }
-  out.sort(function(a,b){return a.jd-b.jd;});
-  return out.slice(0,n);
-}
-function jdDatum(jd){
-  var d=new Date((jd-2440587.5)*86400000);
-  return ('0'+d.getUTCDate()).slice(-2)+'.'+('0'+(d.getUTCMonth()+1)).slice(-2)+'.'+d.getUTCFullYear();
-}
-function radZeichnen(el,P){
-  el.innerHTML='';
-  var basis=Math.floor(P.ASC/30)*30;
-  function pos(l,r){var d=(180+(l-basis))*Math.PI/180;return [200+r*Math.cos(d),200-r*Math.sin(d)];}
-  el.appendChild(EL('circle',{cx:200,cy:200,r:192,fill:'#FFFDFA',stroke:'#EBE1D2','stroke-width':1.5}));
-  el.appendChild(EL('circle',{cx:200,cy:200,r:154,fill:'#FCF7EF',stroke:'#EBE1D2','stroke-width':1.5}));
-  el.appendChild(EL('circle',{cx:200,cy:200,r:116,fill:'#FFFDFA',stroke:'#EBE1D2','stroke-width':1}));
-  for(var i=0;i<12;i++){
-    var a=basis+i*30,p1=pos(a,154),p2=pos(a,192);
-    el.appendChild(EL('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#EBE1D2','stroke-width':1.2}));
-    var m=pos(a+15,173),t=EL('text',{x:m[0],y:m[1]+6,'text-anchor':'middle','font-size':17,fill:'#9A7235'});
-    t.textContent=GLZ[Math.floor(norm(a)/30)];el.appendChild(t);
-    var q1=pos(a,116),q2=pos(a,154),haupt=(i%3===0);
-    el.appendChild(EL('line',{x1:q1[0],y1:q1[1],x2:q2[0],y2:q2[1],stroke:haupt?'#2E3A5C':'#EBE1D2','stroke-width':haupt?1.8:1}));
-    var hn=pos(a+15,130),ht=EL('text',{x:hn[0],y:hn[1]+4,'text-anchor':'middle','font-size':10,fill:'#6B6259'});
-    ht.textContent=(i+1);el.appendChild(ht);
-  }
-  var belegt=[];
-  ORD.forEach(function(k){
-    var l=P[k],r=98;
-    while(belegt.some(function(b){return Math.abs(norm(b.l-l+180)-180)<9&&Math.abs(b.r-r)<12;})) r-=19;
-    belegt.push({l:l,r:r});
-    var p=pos(l,r),t=EL('text',{x:p[0],y:p[1]+7,'text-anchor':'middle','font-size':19,fill:'#2E3A5C'});
-    t.textContent=GLY[k];el.appendChild(t);
-  });
-  [['AC',P.ASC],['MC',P.MC]].forEach(function(x){
-    var p=pos(x[1],205),t=EL('text',{x:p[0],y:p[1]+4,'text-anchor':'middle','font-size':11,fill:'#9A7235'});
-    t.textContent=x[0];el.appendChild(t);
-  });
-}
-
-/* ── Chart-Herrscher ──────────────────────────────────── */
-var HERRWAS={
- Mars:['Antrieb und Durchsetzung','Du kommst über Handeln zu dir. Erst tun, dann verstehen — nicht umgekehrt.'],
- Venus:['Zuwendung und Wert','Du kommst über Beziehung und Geschmack zu dir. Was dir gefällt, ist bei dir kein Nebenthema.'],
- Merkur:['Denken und Sprache','Du kommst über Verstehen und Benennen zu dir. Unsortiertes bleibt bei dir unruhig, bis es Worte hat.'],
- Mond:['Gefühl und Bedürfnis','Du kommst über dein Empfinden zu dir. Was sich falsch anfühlt, ist für dich falsch — auch wenn die Argumente dagegen sprechen.'],
- Sonne:['Wille und Sichtbarkeit','Du kommst über Gesehenwerden zu dir. Im Verborgenen funktionierst du schlechter, als du denkst.'],
- Jupiter:['Sinn und Weite','Du kommst über Zusammenhänge und Überzeugung zu dir. Ohne Sinn machst du nichts lange.'],
- Saturn:['Struktur und Verantwortung','Du kommst über Verlässlichkeit zu dir. Was du aufgebaut hast, trägt — und du misst dich daran.'],
- Uranus:['Freiheit und Eigensinn','Du kommst über Unabhängigkeit zu dir. Enge macht dich nicht störrisch, sondern unbrauchbar.'],
- Neptun:['Sehnsucht und Durchlässigkeit','Du kommst über etwas Größeres zu dir. Rein Praktisches trägt dich nicht.'],
- Pluto:['Tiefe und Verwandlung','Du kommst über echte Auseinandersetzung zu dir. Oberfläche langweilt dich, auch wenn sie bequemer wäre.']};
-
-function chartHerrscher(P){
-  var zi=Math.floor(P.ASC/30), hp=HERR[zi];
-  if(P[hp]===undefined) return '';
-  var hn=haus(P,P[hp])+1, hzi=Math.floor(P[hp]/30);
-  var w=HERRWAS[hp]||['',''];
-  var h='<div class="ch-box"><div class="ch-kopf">'+
-    '<div class="ch-gly">'+(GLY[hp]||hp)+'</div>'+
-    '<div><div class="ch-lab">Dein Chart-Herrscher</div>'+
-    '<div class="ch-name">'+hp+'</div>'+
-    '<div class="ch-pos">'+fmt(P[hp])+' · '+hn+'. Haus</div></div></div>';
-
-  h+='<p class="ch-erkl"><b>Was das heißt:</b> Dein Aszendent steht in '+SIGNS[zi]+
-    ', und '+SIGNS[zi]+' wird von '+hp+' regiert. Damit ist <b>'+hp+' der Steuermann deines ganzen Charts</b> — '+
-    'nicht der wichtigste Planet, sondern der, über den alles läuft. Wo er steht und wie es ihm geht, '+
-    'färbt jedes andere Thema mit.</p>';
-
-  h+='<p class="ch-erkl"><b>Dein Zugang zur Welt:</b> '+w[0]+'. '+w[1]+'</p>';
-
-  h+='<p class="ch-erkl"><b>Wo er sitzt:</b> '+hp+' steht in <b>'+SIGNS[hzi]+'</b> im <b>'+hn+'. Haus</b> — '+
-    HT[hn-1]+'. Das ist der Lebensbereich, über den bei dir am meisten läuft. '+
-    'Wenn du nicht weißt, wo du ansetzen sollst: dort.</p>';
-
-  /* Zustand des Herrschers */
-  var ks=Object.keys(P).filter(function(k){return k!=='_jd'&&ORB[k];});
-  var eng=[];
-  ks.forEach(function(k){
-    if(k===hp) return;
-    var sp=Math.abs(norm(P[hp]-P[k]+180)-180);
-    [[0,'Konjunktion','neutral'],[60,'Sextil','weich'],[90,'Quadrat','hart'],[120,'Trigon','weich'],[180,'Opposition','hart']].forEach(function(A){
-      var o=Math.abs(sp-A[0]);
-      if(o<=3.5) eng.push({p:k,typ:A[1],art:A[2],o:o});
-    });
-  });
-  eng.sort(function(a,b){return a.o-b.o;});
-  if(eng.length){
-    h+='<p class="ch-erkl"><b>Wie es ihm geht:</b> '+hp+' steht eng mit '+
-      eng.slice(0,3).map(function(x){return '<b>'+x.p+'</b> ('+x.typ+', '+x.o.toFixed(1)+'°)';}).join(', ')+
-      '. Diese Funktionen reden bei dir immer mit — sie sind über den Chart-Herrscher mit allem verbunden.</p>';
-  } else {
-    h+='<p class="ch-erkl"><b>Wie es ihm geht:</b> '+hp+' bildet keinen engen Aspekt. '+
-      'Er arbeitet ungestört und unvermischt — das macht deinen Grundzugang klarer, aber auch weniger vielseitig.</p>';
-  }
-
-  /* Wohin er weiterläuft */
-  var zi2=Math.floor(P[hp]/30), hp2=HERR[zi2];
-  if(P[hp2]!==undefined && hp2!==hp){
-    var hn2=haus(P,P[hp2])+1;
-    h+='<p class="ch-erkl"><b>Und weiter:</b> '+hp+' steht in '+SIGNS[zi2]+', das von <b>'+hp2+'</b> regiert wird — '+
-      'und der steht im '+hn2+'. Haus. Die Kette läuft also von dir über '+HK[hn-1]+' weiter nach <b>'+HK[hn2-1]+'</b>.</p>';
-  } else if(hp2===hp){
-    h+='<p class="ch-erkl"><b>Und weiter:</b> '+hp+' steht im eigenen Zeichen — die Kette endet bei ihm. '+
-      'Das macht ihn ungewöhnlich stark: Es gibt keine Instanz über ihm.</p>';
-  }
-  return h+'</div>';
-}
-
-/* ── Ausführlicher Gesamtbefund ───────────────────────── */
-var ELN=['Feuer','Erde','Luft','Wasser'], MON=['kardinal','fix','veränderlich'];
-var ELTXT=['Du gehst voran, handelst schnell und verbrauchst dich, wenn nichts passiert.',
- 'Du brauchst Greifbares. Ideen ohne Umsetzung machen dich unruhig.',
- 'Du denkst und redest, bevor du fühlst. Austausch ist bei dir kein Luxus.',
- 'Du nimmst auf, was im Raum ist — auch was niemand ausspricht.'];
-var MOTXT=['Du startest gern und verlierst schnell die Lust.',
- 'Du brauchst lange zum Anfangen und bist dann kaum zu stoppen.',
- 'Du passt dich an und wechselst die Richtung, bevor es eng wird.'];
-
-function befund(P){
-  var gewicht={Sonne:3,Mond:3,ASC:3,MC:2,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
-  var el=[0,0,0,0], mo=[0,0,0], haeuser={}, hemN=0,hemS=0,hemO=0,hemW=0, ges=0;
-  Object.keys(P).forEach(function(k){
-    if(k==='_jd'||!gewicht[k]) return;
-    var g=gewicht[k], zi=Math.floor(P[k]/30);
-    el[zi%4]+=g; mo[zi%3]+=g; ges+=g;
-    var hn=haus(P,P[k]);
-    haeuser[hn]=(haeuser[hn]||0)+g;
-    if(hn<6) hemN+=g; else hemS+=g;
-    if(hn<3||hn>=9) hemO+=g; else hemW+=g;
-  });
-  var elMax=el.indexOf(Math.max.apply(null,el)), elMin=el.indexOf(Math.min.apply(null,el));
-  var moMax=mo.indexOf(Math.max.apply(null,mo));
-  var hListe=Object.keys(haeuser).map(function(k){return {h:+k,w:haeuser[k]};}).sort(function(a,b){return b.w-a.w;});
-
-  var h='<div class="bf-box"><h3>Dein Gesamtbefund</h3>';
-
-  /* Balken Elemente */
-  h+='<div class="bf-titel">Elemente</div><div class="bf-bars">';
-  el.forEach(function(v,i){
-    h+='<div class="bf-bar"><div class="bf-bl">'+ELN[i]+'</div>'+
-      '<div class="bf-bt"><i class="el'+i+'" style="width:'+Math.round(v/ges*100)+'%"></i></div>'+
-      '<div class="bf-bp">'+Math.round(v/ges*100)+'%</div></div>';
-  });
-  h+='</div>';
-  h+='<div class="bf-titel">Qualitäten</div><div class="bf-bars">';
-  mo.forEach(function(v,i){
-    h+='<div class="bf-bar"><div class="bf-bl">'+MON[i]+'</div>'+
-      '<div class="bf-bt"><i class="mo" style="width:'+Math.round(v/ges*100)+'%"></i></div>'+
-      '<div class="bf-bp">'+Math.round(v/ges*100)+'%</div></div>';
-  });
-  h+='</div>';
-
-  h+='<p class="bf-text"><b>Dein Grundton:</b> '+ELN[elMax]+' überwiegt bei dir. '+ELTXT[elMax]+' '+
-    'Am wenigsten hast du von <b>'+ELN[elMin]+'</b> — das ist die Qualität, die dir am ehesten fehlt und die du dir '+
-    'bewusst holen musst, weil sie nicht von allein kommt. Dazu ist deine Grundbewegung <b>'+MON[moMax]+'</b>: '+MOTXT[moMax]+'</p>';
-
-  /* Schwerpunkt-Häuser */
-  if(hListe.length){
-    var top=hListe.slice(0,2);
-    h+='<p class="bf-text"><b>Dein Schwerpunkt:</b> Am meisten Gewicht liegt im <b>'+(top[0].h+1)+'. Haus</b> — '+HT[top[0].h]+
-      (top.length>1?' und im '+(top[1].h+1)+'. Haus ('+HT[top[1].h]+')':'')+
-      '. Dort spielt sich dein Leben überdurchschnittlich ab, und dort entscheidet sich am ehesten, ob es rund läuft.</p>';
-  }
-
-  /* Hemisphären */
-  var obenUnten=(hemS>hemN)?'oberen':'unteren';
-  var linksRechts=(hemW>hemO)?'westlichen':'östlichen';
-  h+='<p class="bf-text"><b>Die Verteilung:</b> Der Großteil deiner Punkte steht in der '+obenUnten+' Hälfte '+
-    (hemS>hemN?'— dein Leben spielt sich stärker nach außen ab, in Sichtbarkeit und Kontakt.'
-             :'— dein Leben spielt sich stärker im Privaten ab, in dem, was andere nicht sehen.')+' '+
-    'In der '+linksRechts+' Hälfte '+
-    (hemW>hemO?'— viel läuft bei dir über andere Menschen. Du entwickelst dich im Kontakt, nicht allein.'
-             :'— viel liegt bei dir selbst. Du bestimmst eher, als dass du reagierst.')+'</p>';
-
-  /* Spannungsbilanz */
-  var ks=Object.keys(P).filter(function(k){return k!=='_jd'&&ORB[k];});
-  var hart=0, weich=0, engste=null;
-  for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
-    var a=ks[i],b=ks[j];
-    if((a==='ASC'&&b==='MC')||(a==='MC'&&b==='ASC')) continue;
-    var sp=Math.abs(norm(P[a]-P[b]+180)-180);
-    [[0,'Konjunktion',0],[60,'Sextil',1],[90,'Quadrat',2],[120,'Trigon',1],[180,'Opposition',2]].forEach(function(A){
-      var o=Math.abs(sp-A[0]), max=((ORB[a]+ORB[b])/2)*(A[0]===60?.6:.9);
-      if(o<=max){
-        if(A[2]===2) hart++; else if(A[2]===1) weich++;
-        if(!engste||o<engste.o) engste={a:a,b:b,t:A[1],o:o};
-      }
-    });
-  }
-  h+='<p class="bf-text"><b>Spannung und Fluss:</b> '+hart+' fordernde gegen '+weich+' fließende Aspekte. '+
-    (hart>weich? 'Bei dir überwiegt der Druck. Das ist anstrengender und produktiver — Kompetenz entsteht fast immer an roten Aspekten.'
-      : hart<weich? 'Bei dir überwiegt der Fluss. Vieles fällt dir zu, und genau deshalb bleibt manches ungenutzt: Was leicht geht, nimmt man selten ernst.'
-      : 'Druck und Fluss halten sich bei dir die Waage.')+
-    (engste?' Der engste Aspekt überhaupt ist <b>'+engste.a+' '+engste.t+' '+engste.b+'</b> mit '+engste.o.toFixed(2)+'° — '+
-      'das ist der Satz, der in deinem Chart am lautesten gesprochen wird.':'')+'</p>';
-
-  h+='<p class="bf-mehr"><a href="spannungskarte.html" target="_blank" rel="noopener">Alle Spannungsachsen →</a> · '+
-     '<a href="element-mix.html" target="_blank" rel="noopener">Element-Mix vertiefen →</a> · '+
-     '<a href="grade.html" target="_blank" rel="noopener">Deine Grade →</a></p>';
-  return h+'</div>';
-}
-
-function tabelle(P,titel){
-  var HERRT={0:'Mars',1:'Venus',2:'Merkur',3:'Mond',4:'Sonne',5:'Merkur',6:'Venus',7:'Pluto',8:'Jupiter',9:'Saturn',10:'Uranus',11:'Neptun'};
-  var WAS={Sonne:'Kraft & Identität',Mond:'Bedürfnis & Gefühl',Merkur:'Denken & Sprache',
-   Venus:'Zuneigung & Wert',Mars:'Antrieb & Durchsetzung',Jupiter:'Wachstum & Vertrauen',
-   Saturn:'Struktur & Verantwortung',Uranus:'Freiheit & Eigensinn',Neptun:'Sehnsucht & Auflösung',
-   Pluto:'Tiefe & Verwandlung'};
-  var ELEM=['Feuer','Erde','Luft','Wasser'], MODA=['kardinal','fix','veränderlich'];
-  function rueck(k,jd){
-    if(k==='Sonne'||k==='Mond') return false;
-    try{ var a=geo(k,(jd-1-2451545)/36525), b=geo(k,(jd+1-2451545)/36525);
-      return norm(b-a)>180; }catch(e){ return false; }
-  }
-  var h='<table class="pl"><tr><th></th><th>'+titel+'</th><th>Position</th><th>Element</th>'+
-        '<th>Haus</th><th>Wirkt auf<br><span class="th-klein">Haus, in dem er steht</span></th><th>Verantwortlich für<br><span class="th-klein">Haus, das er regiert</span></th></tr>';
-  ORD.forEach(function(k){
-    var zi=Math.floor(P[k]/30), hh=haus(P,P[k]);
-    var r=(P._jd?rueck(k,P._jd):false);
-    /* Welche Häuser beherrscht dieser Planet? */
-    var beherrscht=[];
-    for(var i=0;i<12;i++){
-      var z=(Math.floor(P.ASC/30)+i)%12;
-      if(HERRT[z]===k) beherrscht.push((i+1)+'.');
-    }
-    h+='<tr><td class="gly">'+GLY[k]+'</td>'+
-       '<td><b>'+k+'</b>'+(r?' <span style="color:var(--messing);font-size:11px;">R</span>':'')+
-       '<br><span class="r">'+(WAS[k]||'')+'</span></td>'+
-       '<td class="g">'+fmt(P[k])+'</td>'+
-       '<td class="r">'+ELEM[zi%4]+'<br>'+MODA[zi%3]+'</td>'+
-       '<td class="g">'+(hh+1)+'.</td>'+
-       '<td class="r">'+HT[hh]+'</td>'+
-       '<td class="r">'+(beherrscht.length?beherrscht.join(' ')+' Haus':'—')+'</td></tr>';
-  });
-  var achsen=[['Aszendent',P.ASC,'wie du wirkst'],['MC',P.MC,'wofür du stehst'],
-    ['Deszendent',norm(P.ASC+180),'was du im Gegenüber suchst'],['IC',norm(P.MC+180),'woher du kommst']];
-  achsen.forEach(function(x){
-    var zi=Math.floor(x[1]/30), hh=haus(P,x[1]);
-    h+='<tr class="achse"><td class="gly"></td><td><b>'+x[0]+'</b><br><span class="r">'+x[2]+'</span></td>'+
-       '<td class="g">'+fmt(x[1])+'</td><td class="r">'+ELEM[zi%4]+'<br>'+MODA[zi%3]+'</td>'+
-       '<td class="g">'+(hh+1)+'.</td><td class="r">'+HT[hh]+'</td>'+
-       '<td class="r">Herrscher '+HERRT[zi]+'</td></tr>';
-  });
-  h+='</table>'+
-   '<div class="tab-legende"><b>Verantwortlich für</b> heißt: Dieser Planet regiert das genannte Haus. '+
-   'Beispiel: Steht Widder an deinem 5. Haus, ist Mars für dein 5. Haus verantwortlich — und wo dein Mars steht, '+
-   'dort spielt sich dein Ausdrucksthema tatsächlich ab. Ein leeres Haus ist deshalb nie ohne Thema; man liest es über seinen Herrscher. '+
-   '<b>Wirkt auf</b> ist dagegen das Haus, in dem der Planet selbst sitzt.</div>';
-  return h;
-}
-var aktiverReiter='radix';
-function bauen(){
-  var box=document.getElementById('inhalt');
-  var p=(window.AC_P?AC_P.eigenes():null);
-  if(!p){
-    box.innerHTML='<div class="ub-leerh"><b>Noch kein eigenes Profil.</b><br><br>Leg unter <a href="profile.html">Profile</a> dein Chart an und setz den Haken „Das bin ich selbst" — danach siehst du hier immer dein eigenes Bild.</div>';
-    return;
-  }
-  var voll=AC_P.zeigeNamen(), name=AC_P.anzeige(p,voll);
-  document.getElementById('h1').innerHTML='Dein <em>Bild.</em>';
+function chartVon(p){
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
-  var P=chartAt(y,mo,d,ut,p.lat,p.lon);
-  var jahr=new Date().getFullYear();
-  var wl=(p.wlat!==undefined&&p.wlat!==null)?p.wlat:p.lat, wo=(p.wlon!==undefined&&p.wlon!==null)?p.wlon:p.lon;
-  var SR=solarReturn(P.Sonne,jahr,wl,wo);
-  var n=new Date();
-  var T=chartAt(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60,p.lat,p.lon);
-  var kurz=name.replace(/[^A-Za-zÄÖÜäöü0-9]/g,'').slice(0,2).toUpperCase();
-  var h='<div class="ub-kopfkarte"><div class="kreis">'+(kurz||'?')+'</div><div><div class="kn">'+name+
-    (p.eigen?' <span style="font-size:11px;background:var(--messing);color:#fff;border-radius:11px;padding:2px 8px;vertical-align:4px;">du</span>':'')+
-    '</div><div class="kd">'+('0'+p.d).slice(-2)+'.'+('0'+p.mo).slice(-2)+'.'+p.y+' · '+
-    ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'')+' · '+
-    SIGNS[Math.floor(P.Sonne/30)]+'-Sonne, '+SIGNS[Math.floor(P.Mond/30)]+'-Mond, '+SIGNS[Math.floor(P.ASC/30)]+'-Aszendent</div></div>'+
-    '<div class="kw"><a class="ub-kbtn" href="profile.html">Profil wechseln</a>'+
-    '<a class="ub-kbtn" href="chart-rechner.html">Chart-Rechner</a>'+
-    '<a class="ub-kbtn" href="briefing.html">Reading-Briefing</a><a class="ub-kbtn" href="spannungskarte.html">Spannungskarte</a></div></div>';
-  if(p.notiz) h+='<div class="ub-notizbox"><b>Notiz:</b> '+p.notiz+'</div>';
-  h+='<div class="ub-reiter">'+[['radix','Geburtschart'],['jahr','Jahreschart '+jahr],['jetzt','Was gerade läuft']].map(function(r){
-      return '<button type="button" data-r="'+r[0]+'" aria-pressed="'+(aktiverReiter===r[0])+'">'+r[1]+'</button>';}).join('')+
-    '</div><div id="tab"></div>';
-  box.innerHTML=h;
-  Array.prototype.forEach.call(box.querySelectorAll('.ub-reiter button'),function(b){
-    b.addEventListener('click',function(){aktiverReiter=b.getAttribute('data-r');bauen();});
-  });
-  var el=document.getElementById('tab');
-  if(aktiverReiter==='radix') el.innerHTML=tabRadix(P);
-  else if(aktiverReiter==='jahr') el.innerHTML=tabJahr(P,SR,jahr,p);
-  else el.innerHTML=tabJetzt(P,T);
-  try{
-    var huelle=document.getElementById('radhuelle');
-    if(huelle && window.AC_rad){
-      var chart=(aktiverReiter==='jahr'&&SR)?SR:P;
-      var trans=(aktiverReiter==='jetzt')?T:null;
-      var steuerung=AC_rad({el:huelle, chart:chart, transit:trans, info:document.getElementById('radinfo')});
-      var fb=document.getElementById('radfilter'), aktivF='alle';
-      var zeichneFilter=function(){
-        fb.innerHTML='';
-        [['alle','Alle'],['hart','Nur rote'],['weich','Nur blaue'],['eng','Nur enge']].forEach(function(o){
-          var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
-          b.setAttribute('aria-pressed', aktivF===o[0]);
-          b.addEventListener('click',function(){ aktivF=o[0]; steuerung.setFilter(o[0]); zeichneFilter(); });
-          fb.appendChild(b);
-        });
-      };
-      if(fb) zeichneFilter();
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Das Rad als Bedienfläche
+   ------------------------------------------------------------------
+   Ein Objekt, zwei Zustände. Auf „Ich" groß: jedes Haus ist anklickbar
+   und schaltet die Seite um. Auf „Heute" klein: ein äußerer Ring trägt
+   die laufenden Planeten, die Häuser, die gerade besetzt sind, leuchten.
+
+   Bewusst eigenständig neben rad.js: rad.js zeichnet Aspekte zum Lesen,
+   dieses hier ist Navigation. Zwei Aufgaben, zwei Zeichnungen.          */
+(function(){
+'use strict';
+var NSU='http://www.w3.org/2000/svg';
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function N(t,a,kind){ var e=document.createElementNS(NSU,t);
+  for(var k in a) e.setAttribute(k,a[k]);
+  if(kind!==undefined) e.textContent=kind;
+  return e; }
+
+var ZGLY=['♈','♉','♊','♋','♌','♍',
+          '♎','♏','♐','♑','♒','♓'];
+var PGLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',
+ Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',
+ Chiron:'⚷',Lilith:'⚸',ASC:'AC',MC:'MC'};
+var PFOLGE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+/* Elementfarben wie im übrigen System */
+var EFARBE=['#A05A3A','#3D6B62','#2E3A5C','#6A4A62'];
+
+function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
+
+/* Glyphen, die zu nah beieinander stünden, auseinanderschieben */
+function spreizen(werte, mindest){
+  var s=werte.map(function(w,i){ return {i:i, a:w, v:w}; });
+  s.sort(function(x,y){ return x.a-y.a; });
+  for(var runde=0; runde<120; runde++){
+    var ruhig=true;
+    for(var k=0;k<s.length;k++){
+      var j=(k+1)%s.length;
+      var d=nrm(s[j].v-s[k].v);
+      if(d<mindest && s.length>1){
+        var schub=(mindest-d)/2;
+        s[k].v=nrm(s[k].v-schub); s[j].v=nrm(s[j].v+schub); ruhig=false;
+      }
     }
-  }catch(e){ console.error('Rad:',e); }
+    if(ruhig) break;
+  }
+  var raus=[]; s.forEach(function(x){ raus[x.i]=x.v; });
+  return raus;
 }
-function tabRadix(P){
-  var sz=Math.floor(P.Sonne/30),mz=Math.floor(P.Mond/30),az=Math.floor(P.ASC/30);
-  var h='<div class="ub-oben">'+
-    '<div class="rad-filter" id="radfilter"></div>'+
-    '<div class="rad-huelle" id="radhuelle"></div>'+
-    '<div id="radinfo"></div>'+
 
-    '<details class="tab-aus"><summary>Alle Positionen im Detail</summary><div class="tabbox">'+
-    tabelle(P,'Radix')+'</div></details></div><div class="ub-unten">'+chartHerrscher(P)+befund(P);
-  h+='<div class="ub-box"><h3>Die drei Kernsätze</h3><div class="hint">Sonne, Mond und Aszendent tragen die Hälfte jedes Charts.</div>'+
-    '<div class="ub-kernz"><b>Antrieb</b><div class="st">Sonne in '+SIGNS[sz]+' · '+(haus(P,P.Sonne)+1)+'. Haus</div><p>'+SONNE[sz]+' Der Schauplatz: '+HT[haus(P,P.Sonne)]+'.</p></div>'+
-    '<div class="ub-kernz"><b>Bedürfnis</b><div class="st">Mond in '+SIGNS[mz]+' · '+(haus(P,P.Mond)+1)+'. Haus</div><p>'+MOND[mz]+'</p></div>'+
-    '<div class="ub-kernz"><b>Wirkung</b><div class="st">Aszendent in '+SIGNS[az]+'</div><p>'+ASZ[az]+'</p></div></div>';
-  var ks=Object.keys(P).filter(function(k){return k!=='_jd';}),sp=[];
-  for(var i=0;i<ks.length;i++)for(var j=i+1;j<ks.length;j++){
-    var a=ks[i],b=ks[j];
-    if((a==='ASC'&&b==='MC')||(a==='MC'&&b==='ASC'))continue;
-    if(!ORB[a]||!ORB[b])continue;
-    var s=Math.abs(norm(P[a]-P[b]+180)-180);
-    [[90,'Quadrat'],[180,'Opposition']].forEach(function(H){
-      var o=Math.abs(s-H[0]),max=((ORB[a]+ORB[b])/2)*1.05;
-      if(o<=max) sp.push({a:a,b:b,t:H[1],o:o,s:(max-o)/max*6+(PERS[a]?3:0)+(PERS[b]?3:0)});
-    });
+/* opt: {el, chart, transit, gross, aufHaus(n), aktiv} */
+window.AC_KERNRAD=function(opt){
+  var host=opt.el; if(!host||!opt.chart) return null;
+  var P=opt.chart, T=opt.transit||null;
+  var gross=opt.gross!==false;
+  var aktiv=(opt.aktiv===undefined||opt.aktiv===null)?0:opt.aktiv;
+
+  var C=310, SEITE=620;
+  /* Außen die Transite, dann Zeichenband, dann Häuser, innen frei */
+  var R_T    = gross?296:300;    /* Transitring            */
+  var R_ZA   = gross?268:276;    /* Zeichenband außen      */
+  var R_ZI   = gross?236:244;    /* Zeichenband innen      */
+  var R_HA   = R_ZI;             /* Hausfeld außen         */
+  var R_HI   = gross?150:168;    /* Hausfeld innen         */
+  var R_PLT  = gross?198:208;    /* Radix-Glyphen          */
+
+  var basis=Math.floor(nrm(P.ASC)/30)*30;
+  function pos(l,r){ var w=(180+(nrm(l)-basis))*Math.PI/180;
+    return [C+r*Math.cos(w), C-r*Math.sin(w)]; }
+  function bogen(r,a1,a2,richtung){
+    var p1=pos(a1,r), p2=pos(a2,r);
+    return 'M'+p1[0].toFixed(1)+','+p1[1].toFixed(1)+
+      ' A'+r+','+r+' 0 0 '+(richtung||0)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
   }
-  sp.sort(function(x,y){return y.s-x.s;});
-  h+='<div class="ub-box"><h3>Wo es zieht</h3><div class="hint">Die stärksten Spannungsachsen. Nicht zum Auflösen — zum Abwechseln.</div>';
-  if(!sp.length) h+='<p style="margin:0;font-size:14.5px;">Keine enge Spannungsachse. Weniger eingebauter Druck, aber auch weniger eingebauter Antrieb.</p>';
-  sp.slice(0,3).forEach(function(x){
-    h+='<div class="ub-spz"><b>'+x.a+' '+x.t+' '+x.b+'</b> · '+x.o.toFixed(1)+'°<br>'+
-      x.a+' will '+(POLW[x.a]||'etwas')+', '+x.b+' will '+(POLW[x.b]||'etwas')+'. Beide gehören dazu.</div>';
+  function feld(rA,rI,a1,a2){
+    var pA1=pos(a1,rA), pA2=pos(a2,rA), pI2=pos(a2,rI), pI1=pos(a1,rI);
+    return 'M'+pA1[0].toFixed(1)+','+pA1[1].toFixed(1)+
+      ' A'+rA+','+rA+' 0 0 0 '+pA2[0].toFixed(1)+','+pA2[1].toFixed(1)+
+      ' L'+pI2[0].toFixed(1)+','+pI2[1].toFixed(1)+
+      ' A'+rI+','+rI+' 0 0 1 '+pI1[0].toFixed(1)+','+pI1[1].toFixed(1)+' Z';
+  }
+
+  /* Welche Häuser sind gerade von laufenden Planeten besetzt */
+  var heute={};
+  if(T) PFOLGE.forEach(function(k){
+    if(T[k]===undefined||T[k]===null) return;
+    heute[haus(P,T[k])]=(heute[haus(P,T[k])]||0)+1;
   });
-  h+='<p class="hint" style="margin:8px 0 0;"><a href="spannungskarte.html">Alle Spannungsachsen ansehen →</a></p></div>';
-  /* Wohin die Lebensbereiche laufen */
-  var ziele={}, ketten=[];
-  for(var kk=0;kk<12;kk++){
-    var zi2=(Math.floor(P.ASC/30)+kk)%12, hp2=HERR[zi2];
-    if(P[hp2]===undefined) continue;
-    var hh2=haus(P,P[hp2]);
-    ketten.push({von:kk,nach:hh2,zeichen:SIGNS[zi2],herr:hp2});
-    (ziele[hh2]=ziele[hh2]||[]).push(kk);
-  }
-  var rang=Object.keys(ziele).map(function(x){return {h:+x,n:ziele[x].length,aus:ziele[x]};})
-    .sort(function(a,b){return b.n-a.n;});
 
-  h+='<div class="ub-box voll"><h3>Wohin deine Lebensbereiche laufen</h3>'+
-    '<div class="hint">Jedes Haus wird von einem Planeten regiert. Wo dieser Planet steht, dort spielt sich das Thema tatsächlich ab — '+
-    'das ist der Unterschied zwischen „wo etwas angelegt ist" und „wo es passiert".</div>';
-
-  var top=rang.filter(function(r){return r.n>=2;}).slice(0,3);
-  if(top.length){
-    var s1='<b>Der Befund:</b> ';
-    if(top[0].n>=4){
-      s1+='Bei dir läuft auffällig viel an einer Stelle zusammen. <b>'+top[0].n+' von 12 Lebensbereichen</b> enden im '+
-        (top[0].h+1)+'. Haus — '+HT[top[0].h]+'. Wenn es dort klemmt, spürst du das überall.';
-    } else {
-      s1+='Deine Themen verteilen sich breit. Die stärkste Konzentration liegt im '+
-        (top[0].h+1)+'. Haus ('+HT[top[0].h]+') mit '+top[0].n+' Zuflüssen.';
+  var svg=null;
+  function zeichnen(){
+    if(!svg){
+      svg=N('svg',{viewBox:'0 0 '+SEITE+' '+SEITE,role:'img',
+        'aria-label':'Dein Chart als Rad'+(T?' mit den laufenden Planeten außen':'')});
+      host.innerHTML=''; host.appendChild(svg);
     }
-    h+='<div class="ub-kernz" style="margin-bottom:12px;"><p style="margin:0;">'+s1+'</p></div>';
-  }
+    svg.innerHTML='';
+    var ascZ=Math.floor(nrm(P.ASC)/30);
 
-  top.forEach(function(r){
-    h+='<div class="kt-ziel"><div class="kt-kopf"><span class="kt-nr">'+(r.h+1)+'</span>'+
-      '<div><b>'+HT[r.h]+'</b><br><span class="kt-klein">bekommt Zufluss aus '+r.n+' Bereichen</span></div></div>'+
-      '<div class="kt-quellen">';
-    r.aus.forEach(function(v){ h+='<span class="kt-q">'+(v+1)+'. '+HK[v]+'</span>'; });
-    h+='</div><p class="kt-satz">Was du in '+r.aus.map(function(v){return HK[v];}).join(', ')+
-      ' anfängst, zeigt seine Wirkung in <b>'+HK[r.h]+'</b>.</p></div>';
-  });
+    /* 1 — Hausfelder; sie sind die Bedienfläche */
+    for(var i=0;i<12;i++){
+      var hNr=i+1, a1=basis+i*30, a2=basis+(i+1)*30;
+      var g=N('g',{class:'kr-haus'+(aktiv===hNr?' ist':'')+(heute[hNr]?' heut':''),
+        'data-h':String(hNr)});
+      g.appendChild(N('path',{d:feld(R_HA,R_HI,a1,a2),class:'kr-hf'}));
+      var m=pos(a1+15,(R_HA+R_HI)/2);
+      g.appendChild(N('text',{x:m[0].toFixed(1),y:(m[1]+6).toFixed(1),
+        'text-anchor':'middle',class:'kr-hz'}, String(hNr)));
+      if(opt.aufHaus){
+        g.setAttribute('tabindex','0');
+        g.setAttribute('role','button');
+        g.setAttribute('aria-label',hNr+'. Haus');
+        g.style.cursor='pointer';
+        g.addEventListener('click',function(ev){
+          var n=+ev.currentTarget.getAttribute('data-h'); setzen(n); opt.aufHaus(n); });
+        g.addEventListener('keydown',function(ev){
+          if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault();
+            var n=+ev.currentTarget.getAttribute('data-h'); setzen(n); opt.aufHaus(n); } });
+      }
+      svg.appendChild(g);
+    }
 
-  h+='<details class="kt-details"><summary>Alle zwölf Ketten im Detail</summary><table class="kt-tab">'+
-     '<tr><th>Lebensbereich</th><th>Zeichen am Haus</th><th>Herrscher</th><th>steht im</th><th>läuft nach</th></tr>';
-  ketten.forEach(function(c){
-    h+='<tr'+(c.von===c.nach?' class="kt-selbst"':'')+'><td><b>'+(c.von+1)+'.</b> '+HK[c.von]+'</td>'+
-       '<td>'+c.zeichen+'</td><td>'+c.herr+'</td><td class="kt-m">'+(c.nach+1)+'. Haus</td>'+
-       '<td>'+HK[c.nach]+(c.von===c.nach?' <span class="kt-marke">bei sich</span>':'')+'</td></tr>';
-  });
-  h+='</table></details>';
+    /* 2 — Zeichenband. Auf kleinem, dunklem Grund weggelassen: Es trägt dort
+       nichts zur Frage bei, wo die Planeten relativ zu den Häusern stehen,
+       und die Elementfarben sind für Creme gemischt. */
+    if(opt.zeichenband!==false) for(var z=0;z<12;z++){
+      var zi=(ascZ+z)%12, b1=basis+z*30, b2=basis+(z+1)*30;
+      svg.appendChild(N('path',{d:feld(R_ZA,R_ZI,b1,b2),
+        fill:EFARBE[zi%4],opacity:'.88'}));
+      var zm=pos(b1+15,(R_ZA+R_ZI)/2);
+      svg.appendChild(N('text',{x:zm[0].toFixed(1),y:(zm[1]+7).toFixed(1),
+        'text-anchor':'middle',class:'kr-zg'}, ZGLY[zi]+'︎'));
+    }
 
-  var enden=[];
-  ORD.forEach(function(pl){
-    if(P[pl]===undefined) return;
-    if(HERR[Math.floor(P[pl]/30)]===pl) enden.push(pl);
-  });
-  if(enden.length){
-    enden.forEach(function(pl){
-      h+='<div class="kt-ende"><b>'+pl+' beherrscht sich selbst.</b> Er steht in '+SIGNS[Math.floor(P[pl]/30)]+
-        ', seinem eigenen Zeichen — bei ihm enden die Ketten. Das macht ihn meistens zum stärksten Punkt im ganzen Chart, '+
-        'und sein Haus ('+(haus(P,P[pl])+1)+'. — '+HT[haus(P,P[pl])]+') verdient besondere Aufmerksamkeit.</div>';
+    /* 3 — Radix-Planeten */
+    var vorhanden=PFOLGE.filter(function(k){ return P[k]!==undefined&&P[k]!==null; });
+    var roh=vorhanden.map(function(k){ return nrm(P[k]); });
+    var breit=spreizen(roh, gross?8:11);
+    vorhanden.forEach(function(k,ix){
+      var echt=nrm(P[k]), zeig=breit[ix];
+      var a=pos(echt,R_HI), b=pos(zeig,R_PLT-13);
+      svg.appendChild(N('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),
+        x2:b[0].toFixed(1),y2:b[1].toFixed(1),class:'kr-strich'}));
+      var g=pos(zeig,R_PLT);
+      svg.appendChild(N('text',{x:g[0].toFixed(1),y:(g[1]+7).toFixed(1),
+        'text-anchor':'middle',class:'kr-pg'}, PGLY[k]));
     });
-  } else {
-    h+='<div class="kt-ende">Kein Planet steht im eigenen Zeichen. Die Ketten laufen im Kreis — es gibt keinen einzelnen Chef, '+
-       'die Themen halten sich gegenseitig. Praktisch: Du kannst an jeder Stelle ansetzen, es wirkt auf die anderen mit.</div>';
-  }
-  h+='<p class="hint" style="margin:10px 0 0;"><a href="chart-rechner.html">Ketten Schritt für Schritt im Chart-Rechner →</a></p></div>';
 
-  return h+'</div></div>';
-}
-function tabJahr(P,SR,jahr,p){
-  if(!SR) return '<div class="ub-leerh">Jahreschart konnte nicht berechnet werden.</div>';
-  var h='<div class="ub-oben">'+
-    '<div class="rad-filter" id="radfilter"></div>'+
-    '<div class="rad-huelle" id="radhuelle"></div>'+
-    '<div id="radinfo"></div>'+
-
-    '<details class="tab-aus"><summary>Alle Jahres-Positionen im Detail</summary><div class="tabbox">'+
-    tabelle(SR,'Solar Return')+'</div></details></div><div class="ub-unten">';
-  h+='<div class="ub-box"><h3>Dein Jahr '+jahr+'</h3><div class="hint">Gilt vom Geburtstag bis zum nächsten.</div>'+
-    '<div class="ub-kernz"><b>Beginn</b><p>'+jdDatum(SR._jd)+' · gerechnet für <b>'+((p&&p.wort)?p.wort:(p&&p.ort?p.ort:'den Geburtsort'))+'</b><br>Jahres-Aszendent in <b>'+SIGNS[Math.floor(SR.ASC/30)]+
-    '</b>, Jahres-MC in <b>'+SIGNS[Math.floor(SR.MC/30)]+'</b></p></div>'+
-    '<div class="ub-kernz"><b>Wo die Jahressonne steht</b><p>'+(haus(SR,SR.Sonne)+1)+'. Haus des Jahrescharts — <b>'+
-    HT[haus(SR,SR.Sonne)]+'</b>. Das ist der Bereich, um den sich dieses Jahr am meisten dreht.</p></div></div>';
-  h+='<div class="ub-box voll"><h3>Wo das Jahr das Geburtschart berührt</h3><div class="hint">Nur solche Kontakte machen ein Jahresthema persönlich.</div>';
-  var tr=[];
-  Object.keys(SR).forEach(function(a){ if(a==='_jd'||!ORB[a])return;
-    Object.keys(P).forEach(function(b){ if(b==='_jd'||!ORB[b])return;
-      var s=Math.abs(norm(SR[a]-P[b]+180)-180);
-      if(s<=3) tr.push({a:a,b:b,art:'auf',o:s});
-      else if(Math.abs(s-180)<=3) tr.push({a:a,b:b,art:'gegenüber',o:Math.abs(s-180)});
+    /* 4 — Achsen */
+    [['AC',P.ASC],['MC',P.MC]].forEach(function(x){
+      if(x[1]===undefined) return;
+      var i1=pos(x[1],R_HI), a1=pos(x[1],R_ZI);
+      svg.appendChild(N('line',{x1:i1[0].toFixed(1),y1:i1[1].toFixed(1),
+        x2:a1[0].toFixed(1),y2:a1[1].toFixed(1),class:'kr-achse'}));
+      var l=pos(x[1],R_HI-16);
+      svg.appendChild(N('text',{x:l[0].toFixed(1),y:(l[1]+4).toFixed(1),
+        'text-anchor':'middle',class:'kr-al'}, x[0]));
     });
-  });
-  tr.sort(function(x,y){return x.o-y.o;});
-  if(!tr.length) h+='<p style="margin:0;font-size:14.5px;">Keine engen Kontakte. Ein Jahr mit eigenen Themen statt verstärkter alter.</p>';
-  tr.slice(0,6).forEach(function(x){
-    h+='<div class="ub-tz2'+(x.o<1?' eng':'')+'"><div class="k">Jahres-'+x.a+' '+x.art+' Radix-'+x.b+' · '+x.o.toFixed(1)+'°</div>'+
-      'Dieses Jahr wird '+(NPKT[x.b]||x.b)+' besonders angesprochen.</div>';
-  });
-  return h+'<p class="hint" style="margin:8px 0 0;"><a href="solar-return-vertiefung.html">Mehr zum Solar Return →</a></p></div></div>';
-}
-function tabJetzt(P,T){
-  var res=[];
-  Object.keys(T).forEach(function(a){ if(a==='_jd'||a==='ASC'||a==='MC'||!ORB[a])return;
-    Object.keys(P).forEach(function(b){ if(b==='_jd'||!ORB[b])return;
-      var s=Math.abs(norm(T[a]-P[b]+180)-180);
-      [[0,'auf'],[60,'im Sextil zu'],[90,'im Quadrat zu'],[120,'im Trigon zu'],[180,'gegenüber']].forEach(function(A){
-        var o=Math.abs(s-A[0]),max=((ORB[a]+ORB[b])/2)*((A[0]===0||A[0]===180)?1:0.85);
-        if(o<=max) res.push({a:a,b:b,art:A[1],o:o,s:(max-o)/max*6+(GEW[a]||1)+(GEW[b]||1)+(o<1?4:0)});
+
+    /* 5 — Transitring außen */
+    if(T){
+      svg.appendChild(N('path',{d:bogen(R_T,basis+0.01,basis+180)+' '+
+        bogen(R_T,basis+180,basis+359.99),class:'kr-tring'}));
+      var th=PFOLGE.filter(function(k){ return T[k]!==undefined&&T[k]!==null; });
+      var tb=spreizen(th.map(function(k){ return nrm(T[k]); }), 11);
+      th.forEach(function(k,ix){
+        var p=pos(tb[ix],R_T);
+        svg.appendChild(N('circle',{cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:'11',class:'kr-tk'}));
+        svg.appendChild(N('text',{x:p[0].toFixed(1),y:(p[1]+5).toFixed(1),
+          'text-anchor':'middle',class:'kr-tg'}, PGLY[k]));
       });
-    });
-  });
-  res.sort(function(x,y){return y.s-x.s;});
-  var w=norm(T.Mond-T.Sonne);
-  var ph=(w<20?'Neumond':w<160?'zunehmender Mond':w<200?'Vollmond':w<340?'abnehmender Mond':'Neumond');
-  var h='<div class="ub-oben"><div>'+
-    '<div class="rad-filter" id="radfilter"></div>'+
-    '<div class="rad-huelle" id="radhuelle"></div>'+
-    '<div id="radinfo"></div>'+
-    '</div><div class="ub-unten">'+
-    '<div class="ub-box"><h3>Heute am Himmel</h3><p style="margin:0;font-size:15px;">Sonne in <b>'+
-    SIGNS[Math.floor(T.Sonne/30)]+'</b>, Mond in <b>'+SIGNS[Math.floor(T.Mond/30)]+'</b> · '+ph+
-    ' · fällt in das <b>'+(haus(P,T.Mond)+1)+'. Haus</b> dieses Charts</p></div>';
-  h+='<div class="ub-box"><h3>Die stärksten Transite</h3><div class="hint">Nach Enge und Gewicht sortiert. Alles unter einem Grad ist deutlich spürbar.</div>';
-  if(!res.length) h+='<p style="margin:0;font-size:14.5px;">Gerade berührt nichts dieses Chart eng genug.</p>';
-  var ARTN={'auf':'Konjunktion','im Sextil zu':'Sextil','im Quadrat zu':'Quadrat','im Trigon zu':'Trigon','gegenüber':'Opposition'};
-  res.slice(0,5).forEach(function(x){
-    var d=(window.AC_ASP?AC_ASP.deutung(x.a,x.b,ARTN[x.art]||'Konjunktion'):null);
-    var nah=x.o<1?'sehr eng — das spürst du':(x.o<2?'eng':'im Hintergrund');
-    var kern=(TWIRK[x.a]||'').replace(/^./,function(c){return c.toUpperCase();})+' — berührt wird '+(NPKT[x.b]||x.b)+'.';
-    var txt='<b>'+kern+'</b>';
-    if(d){
-      txt+='<br><span style="color:var(--leise)">'+d.thema+'</span>'+
-           '<br>'+d.text+
-           '<br><span style="font-family:var(--serif);font-style:italic;color:var(--nacht)">'+d.frage+'</span>';
     }
-    h+='<div class="ub-tz2'+(x.o<1?' eng':'')+'"><div class="k">'+x.a+' '+x.art+' '+x.b+' · '+
-      x.o.toFixed(2)+'° · '+nah+'</div>'+txt+'</div>';
-  });
-  h+='</div><div class="ub-box"><h3>Die nächsten Lunationen</h3><div class="hint">Mit dem Haus, in das sie bei diesem Chart fallen.</div>';
-  lunationen(4).forEach(function(x){
-    var hh=haus(P,x.g),tref=null;
-    Object.keys(P).forEach(function(b){ if(b==='_jd'||!ORB[b])return;
-      var s=Math.abs(norm(x.g-P[b]+180)-180);
-      if(s<=3&&(!tref||s<tref.o)) tref={p:b,o:s,art:'auf'};
-      else if(Math.abs(s-180)<=3&&(!tref||Math.abs(s-180)<tref.o)) tref={p:b,o:Math.abs(s-180),art:'gegenüber'};
-    });
-    h+='<div class="ub-lunz'+(tref?' treffer':'')+'"><span class="d">'+jdDatum(x.jd)+'</span> · <b>'+
-      (x.t==='NM'?'Neumond':'Vollmond')+'</b> auf '+fmt(x.g)+'<br>Fällt in das <b>'+(hh+1)+'. Haus</b> — '+HT[hh]+'.'+
-      (tref?' <b>Trifft '+tref.art+' '+tref.p+'</b> mit '+tref.o.toFixed(1)+'° — das macht den Termin persönlich.':' Kein Gradtreffer, also allgemeines Mondwetter.')+'</div>';
-  });
-  return h+'<p class="hint" style="margin:8px 0 0;"><a href="lunationen.html">Alle Lunationen bis 2028 →</a></p></div></div></div>';
+  }
+
+  function setzen(n){
+    aktiv=n;
+    if(!svg) return;
+    Array.prototype.forEach.call(svg.querySelectorAll('.kr-haus'),function(g){
+      g.classList.toggle('ist', +g.getAttribute('data-h')===n); });
+  }
+
+  zeichnen();
+  return {setzen:setzen, neu:zeichnen, heute:heute,
+    haus:function(l){ return haus(P,l); }};
+};
+})();
+
+/* Astro-Charlie · Ich — Tafeln */
+
+var I_SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+ 'Schütze','Steinbock','Wassermann','Fische'];
+var I_HERR=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',
+ 'Jupiter','Saturn','Saturn','Jupiter'];
+var I_MIT={Skorpion:'Pluto',Wassermann:'Uranus',Fische:'Neptun'};
+
+/* Die zwölf Häuser: Kurzname fürs Raster, dann der Satz, der erklärt,
+   worum es wirklich geht, und die Frage, die das Haus aufmacht. */
+var I_HAUS=[
+ {k:'Person und Auftreten', t:'Wie du ankommst, bevor du etwas sagst — Körper, Tempo, erster Eindruck. Nicht wer du bist, sondern was ankommt.',
+  f:'Wofür hält man mich, bevor man mich kennt?'},
+ {k:'Wert und Besitz', t:'Was dir gehört und was du dir zugestehst. Geld steht hier, aber darunter liegt die Frage, was du dir wert bist.',
+  f:'Was traue ich mich zu verlangen?'},
+ {k:'Sprache und Nahbereich', t:'Reden, lernen, kurze Wege, Geschwister, Nachbarschaft. Das Alltägliche, das man nicht plant.',
+  f:'Wie denke ich, wenn niemand zuhört?'},
+ {k:'Zuhause und Herkunft', t:'Wo du herkommst und wo du landest. Familie, Wohnung, der Boden unter allem.',
+  f:'Was hieß bei uns zu Hause „normal"?'},
+ {k:'Ausdruck und Lust', t:'Was du aus Freude machst — Kunst, Spiel, Kinder, Verliebtsein. Ohne Zweck.',
+  f:'Was mache ich, wenn es niemandem nützt?'},
+ {k:'Alltag und Körper', t:'Das Tägliche: Arbeit, Pflege, Routinen, Gesundheit. Das Unspektakuläre, das alles trägt.',
+  f:'Woran scheitert bei mir der Montag?'},
+ {k:'Partnerschaft', t:'Das Gegenüber — in Liebe, in Verträgen, auch in offener Gegnerschaft. Wer dir aus Augenhöhe begegnet.',
+  f:'Welchen Menschentyp ziehe ich wiederholt an?'},
+ {k:'Tiefe und Geteiltes', t:'Was zwei Menschen teilen und was keiner allein lösen kann. Geld von anderen, Verlust, Übergänge, Sexualität.',
+  f:'Worüber rede ich mit niemandem?'},
+ {k:'Sinn und Weite', t:'Glaube, Lehre, Ferne. Wonach du dich ausrichtest, wenn der Alltag nicht reicht.',
+  f:'Woran glaube ich, ohne es beweisen zu können?'},
+ {k:'Beruf und Sichtbarkeit', t:'Wofür man dich kennt. Nicht der Job, sondern das, was dein Name bedeutet.',
+  f:'Wofür will ich bekannt sein?'},
+ {k:'Gruppen und Ziele', t:'Freundeskreis, Netzwerk, worauf du mit anderen zugehst. Das Haus der Hoffnung.',
+  f:'Mit wem will ich in zehn Jahren noch zu tun haben?'},
+ {k:'Rückzug und Inneres', t:'Was ohne Zeugen passiert. Schlaf, Rückzug, das Unbewusste, die eigenen blinden Flecken.',
+  f:'Was kostet mich Kraft, ohne dass ich es merke?'}
+];
+
+/* Was ein Planet in einem Haus praktisch bedeutet — knapp, verhaltensnah */
+var I_PLANET={
+ Sonne:'richtet dein Leben auf diesen Bereich aus. Hier willst du gesehen werden, hier entscheidet sich, ob es rund läuft.',
+ Mond:'macht diesen Bereich zur Sicherheitsfrage. Wenn es hier wackelt, greift nichts anderes.',
+ Merkur:'lässt dich hier denken und reden. Der Bereich, über den du dich sortierst.',
+ Venus:'macht diesen Bereich angenehm und wichtig. Hier suchst du Schönheit und Einvernehmen.',
+ Mars:'setzt hier Kraft ein. Der Bereich, in dem du anfängst, kämpfst und dich verausgabst.',
+ Jupiter:'weitet diesen Bereich. Hier kommt dir leicht etwas zu — und hier übernimmst du dich.',
+ Saturn:'macht diesen Bereich zur Prüfung. Hier arbeitest du gründlich und hast nie das Gefühl, dass es reicht.',
+ Uranus:'bringt Unruhe und Eigensinn. Hier hältst du dich an keine Vorgabe, auch nicht an deine eigene.',
+ Neptun:'macht diesen Bereich durchlässig. Hier siehst du mehr und zugleich unschärfer als anderswo.',
+ Pluto:'legt Gewicht auf diesen Bereich. Hier geht nichts halb, und hier verändert sich im Leben am meisten.',
+ Chiron:'macht diesen Bereich empfindlich. Hier treffen Kleinigkeiten unverhältnismäßig — und hier kannst du andere verstehen.',
+ Lilith:'markiert, was hier keinen Platz bekommen hat. Der Bereich, in dem du dich am ehesten verbiegst.'};
+
+/* Der Herrscher: wohin das Haus seine Fäden schickt */
+var I_KETTE='Was in diesem Haus passiert, läuft über {h} — und {hs} steht im {n}. Haus. '+
+ 'Praktisch heißt das: Dieses Thema wird dort entschieden.';
+
+/* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
+   Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
+   nicht wieder veralten. */
+var I_INDEX=[
+ {g:'Dein Chart', e:[
+  {s:'chart-rechner.html', t:'Chart-Rechner', w:'Jedes Datum durchrechnen, auch ohne Profil.'},
+  {s:'bausteine.html', t:'Die Bausteine', w:'Planeten, Zeichen, Häuser auf einer Seite, mit Rad zum Antippen.'},
+  {s:'grade.html', t:'Deine Grade', w:'Jede Stellung auf die Bogenminute, mit Würden.'},
+  {s:'aspekt-muster.html', t:'Aspektmuster', w:'Großes Dreieck, T-Quadrat und was sonst in deinem Chart steckt.'},
+  {s:'achsen.html', t:'Deine Achsen', w:'AC, MC und die Knotenachse — die Linien, an denen alles hängt.'},
+  {s:'element-mix.html', t:'Element-Mix', w:'Was dir reichlich zur Verfügung steht und was du dir holen musst.'},
+  {s:'kleine-punkte.html', t:'Chiron und Lilith', w:'Die wunde Stelle und das Unerlaubte.'},
+  {s:'asteroiden.html', t:'Asteroiden', w:'Ceres, Pallas, Juno und Vesta — vier Kleinkörper mit Deutungstradition.'},
+  {s:'sekte.html', t:'Tag oder Nacht', w:'Die älteste Unterscheidung der Astrologie, und eine der nützlichsten.'},
+  {s:'retrograde.html', t:'Rückläufig', w:'Was es heißt, wenn ein Planet bei deiner Geburt rückwärts lief.'},
+  {s:'profil-ansicht.html', t:'Profil-Ansicht', w:'Dasselbe Bild für jede andere Person deiner Liste.'},
+  {s:'bazi.html', t:'Andere Linsen', w:'Vier Säulen, Human Design und was sie anders sehen.'},
+  {s:'haeusersysteme.html', t:'Häusersysteme', w:'Whole Sign oder Placidus — was sich ändert und was nicht.'},
+  {s:'siderisch.html', t:'Siderisch', w:'Dein Chart tropisch und vedisch nebeneinander.'},
+  {s:'ophiuchus.html', t:'Ophiuchus', w:'Das dreizehnte Zeichen, durchgerechnet — in vier Systemen.', neu:1}]},
+ {g:'Was gerade läuft', e:[
+  {s:'index.html', t:'Heute', w:'Was diese Stunde, diese Woche und diesen Monat läuft.'},
+  {s:'solar-return-light.html', t:'Dein Jahr', w:'Das Solar — was die nächsten zwölf Monate ansagen.'},
+  {s:'solar-return-vertiefung.html', t:'Solar vertieft', w:'Dasselbe Jahr genauer, mit Herrschern und Achsen.'},
+  {s:'profektionen.html', t:'Profektionen', w:'Welches Haus dieses Lebensjahr regiert.'},
+  {s:'planetenzyklen.html', t:'Planetenzyklen', w:'Saturn, Jupiter, Uranus und ihre Wiederkehr.'},
+  {s:'lunationen.html', t:'Lunationen', w:'Neumonde, Vollmonde und Finsternisse.'},
+  {s:'zeitqualitaet.html', t:'Zeitqualität', w:'Was gerade leichtfällt und was nicht.'},
+  {s:'vorschau.html', t:'Woche und Monat', w:'Sieben Tage im Blick und die Höhepunkte des Monats.'}]},
+ {g:'Praxis', e:[
+  {s:'geistfuehrung.html', t:'Mit wem du arbeitest', w:'Wie spirituelle Praxis zu deinem Chart passt — Tür, Kanal, Rhythmus.', neu:1},
+  {s:'rituale.html', t:'Rituale', w:'Was man zu Neumond, Vollmond und den großen Transiten tut.'},
+  {s:'zauber.html', t:'Zimt, Rosen, Steine', w:'Planetenstunden für deinen Ort, Zutaten und Steine nach Planet.'},
+  {s:'ankommen.html', t:'Ankommen', w:'Vier Fragen, damit sich die Seite nach dir richtet.'},
+  {s:'erinnerung.html', t:'Erinnerung', w:'Was du dir über dich notiert hast.'},
+  {s:'methoden.html', t:'Methoden für den Moment', w:'Sieben Werkzeuge für Tage, an denen wenig geht.'},
+  {s:'nd-leitfaden.html', t:'Anders verdrahtet leben', w:'Das Leben nach der eigenen Bauweise einrichten, nicht gegen sie.'},
+  {s:'faden.html', t:'Der rote Faden', w:'Welches Thema zuerst, welches später — und warum in dieser Reihenfolge.'},
+  {s:'weg.html', t:'Ein Schritt nach dem anderen', w:'Fünf Stufen, jede für sich abgeschlossen.'}]},
+ {g:'Menschen', e:[
+  {s:'profile.html', t:'Profile', w:'Alle Charts, die du angelegt hast.'},
+  {s:'dossier.html', t:'Dossier', w:'Ein Bericht pro Person — und zwar für dein Verhältnis zu ihr.', neu:1},
+  {s:'beziehung.html', t:'Beziehung', w:'Zwei Charts nebeneinander, nach Beziehungsart ausgewertet.', neu:1},
+  {s:'synastrie.html', t:'Synastrie', w:'Die klassische Paarauswertung.'},
+  {s:'synastrie-vertiefung.html', t:'Synastrie vertieft', w:'Häuserüberlagerung und Komposit.'},
+  {s:'dating-muster.html', t:'Dating-Muster', w:'Was sich bei dir wiederholt und woran es kippt.'}]},
+ {g:'Für deine Arbeit', e:[
+  {s:'reading.html', t:'Reading', w:'Dein Chart als Text — in fünf Wissensständen.', neu:1},
+  {s:'coaching.html', t:'Coaching', w:'Wie eine Stunde aufgebaut ist.'},
+  {s:'klientinnen-fragen.html', t:'Klientinnenfragen', w:'Was oft gefragt wird und was du antworten kannst.'},
+  {s:'haltung-ethik.html', t:'Haltung und Ethik', w:'Die Linien, hinter die du nicht gehst.'},
+  {s:'angebote-struktur.html', t:'Dein Angebot', w:'Wie du es zuschneidest und was es kostet.'},
+  {s:'briefing.html', t:'Briefing', w:'Was du vor einer Stunde parat haben willst.'},
+  {s:'monatsbericht.html', t:'Monatsbericht', w:'Ein fertiger Text pro Person und Monat, in deiner Sprache.'},
+  {s:'berufe.html', t:'Berufe im Chart', w:'Welche Felder zu welchen Stellungen passen.'},
+  {s:'wissen.html', t:'Alle Seiten', w:'Das vollständige Regal — 119 Seiten.'}]}
+];
+
+/* Astro-Charlie · Ich — Rechnung und Darstellung */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function el(i){ return document.getElementById(i); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function kz(x,n){ return x.toFixed(n===undefined?1:n).replace('.',','); }
+function zI(l){ return Math.floor(nrm(l)/30); }
+function gradKurz(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r),
+ m=Math.round((r-g)*60); if(m===60){g++;m=0;} return g+'°'+(m<10?'0':'')+m+'′'; }
+function stellung(l){ return gradKurz(l)+' '+I_SIGNS[zI(l)]; }
+
+var PNAMEN=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var EXTRA=['Chiron','Lilith'];
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  var P={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc,_jd:jd,_T:T};
+  if(window.chironLon) P.Chiron=nrm(window.chironLon(T));
+  if(window.lilithLon) P.Lilith=nrm(window.lilithLon(T));
+  return P;
 }
-bauen();
+function jetztChart(){
+  var n=new Date();
+  var jd=jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),
+    n.getUTCHours()+n.getUTCMinutes()/60);
+  var T=(jd-2451545)/36525;
+  var Q={Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),_jd:jd};
+  return Q;
+}
+function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
+function zeichenDesHauses(P,h){ return (Math.floor(nrm(P.ASC)/30)+h-1)%12; }
+function rueck(k,jd){
+  if(k==='Sonne'||k==='Mond') return false;
+  var a=(jd-1-2451545)/36525, b=(jd+1-2451545)/36525;
+  return nrm(geo(k,b)-geo(k,a))>180;
+}
+
+var WINKEL=[[0,'Konjunktion','weich'],[180,'Opposition','hart'],[90,'Quadrat','hart'],
+ [120,'Trigon','weich'],[60,'Sextil','weich']];
+function aspekte(P){
+  var pts=PNAMEN.concat(['ASC','MC']), raus=[];
+  for(var i=0;i<pts.length;i++) for(var j=i+1;j<pts.length;j++){
+    if(P[pts[i]]===undefined||P[pts[j]]===undefined) continue;
+    var d=Math.abs(nrm(P[pts[i]]-P[pts[j]])); if(d>180) d=360-d;
+    for(var w=0;w<WINKEL.length;w++){
+      var W=WINKEL[w], o=Math.abs(d-W[0]), max=(W[0]===60?4:6);
+      if(o<=max){ raus.push({a:pts[i],b:pts[j],typ:W[1],art:W[2],o:o}); break; }
+    }
+  }
+  raus.sort(function(x,y){ return x.o-y.o; });
+  return raus;
+}
+
+/* ── Zustand ───────────────────────────────────────────────── */
+var P=null, Q=null, rad=null, offen=0;
+
+function profil(){
+  try{ return AC_P.aktives()||AC_P.eigenes(); }catch(e){ return null; }
+}
+
+/* ── Kopf ──────────────────────────────────────────────────── */
+function kopfBauen(p){
+  var nm=AC_P.anzeige(p,true);
+  el('ichname').textContent=nm;
+  el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
+    ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+
+  var drei=[
+   ['Antrieb','Sonne',P.Sonne,'Worauf du hinauswillst'],
+   ['Bedürfnis','Mond',P.Mond,'Was dich beruhigt'],
+   ['Wirkung','Aszendent',P.ASC,'Wie du ankommst']];
+  el('ichdrei').innerHTML=drei.map(function(d){
+    var h=haus(P,d[2]);
+    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+
+      I_SIGNS[zI(d[2])]+' <em>'+gradKurz(d[2])+'</em>'+
+      '<span class="zu">'+(d[1]==='Aszendent'?'Herrscher '+I_HERR[zI(d[2])]+
+        ' im '+haus(P,P[I_HERR[zI(d[2])]])+'. Haus':
+        d[3]+' · '+h+'. Haus, '+I_HAUS[h-1].k)+'</span></div></div>';
+  }).join('');
+}
+
+/* ── Die Brücke zu Heute ───────────────────────────────────── */
+function heuteBauen(){
+  var treffer={};
+  PNAMEN.forEach(function(k){
+    if(Q[k]===undefined) return;
+    var h=haus(P,Q[k]);
+    (treffer[h]=treffer[h]||[]).push(k);
+  });
+  var hs=Object.keys(treffer).map(Number).sort(function(a,b){
+    return treffer[b].length-treffer[a].length; });
+  var box=el('ichheute');
+  if(!hs.length){ box.innerHTML='<p class="nix">Gerade steht nichts in deinen Häusern.</p>'; return; }
+  var oben=hs.slice(0,3);
+  box.innerHTML='<div class="k">Heute auf deinem Chart</div>'+
+    '<p>'+oben.map(function(h){
+      return '<a href="#h'+h+'" data-h="'+h+'">'+h+'. Haus</a> ('+
+        I_HAUS[h-1].k+'): '+treffer[h].join(', ');
+    }).join(' · ')+'</p>'+
+    '<p style="margin-bottom:0"><a href="index.html">Was das heute konkret heißt →</a></p>';
+  Array.prototype.forEach.call(box.querySelectorAll('a[data-h]'),function(a){
+    a.addEventListener('click',function(ev){
+      ev.preventDefault(); hausOeffnen(+a.getAttribute('data-h'), true); });
+  });
+}
+
+/* ── Die zwölf Häuser ──────────────────────────────────────── */
+function haeuserBauen(){
+  var box=el('ichhaeuser'), h='';
+  for(var n=1;n<=12;n++){
+    var z=zeichenDesHauses(P,n), herr=I_HERR[z], hH=haus(P,P[herr]);
+    var bew=PNAMEN.concat(EXTRA).filter(function(k){
+      return P[k]!==undefined&&haus(P,P[k])===n; });
+    var heut=PNAMEN.filter(function(k){
+      return Q[k]!==undefined&&haus(P,Q[k])===n; });
+    h+='<button type="button" class="hz'+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
+      '<span class="nr">'+n+'</span>'+
+      '<span class="ze"><b>'+I_SIGNS[z]+'</b>'+
+        (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
+      '<span class="herr">Herrscher '+herr+'<br>steht im '+hH+'. Haus</span>'+
+      '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
+        I_HAUS[n-1].k+(heut.length?' — heute: '+heut.join(', '):'')+'</span>'+
+      '</button><div class="hdetail" id="d'+n+'" hidden></div>';
+  }
+  box.innerHTML=h;
+  Array.prototype.forEach.call(box.querySelectorAll('.hz'),function(b){
+    b.addEventListener('click',function(){ hausOeffnen(+b.getAttribute('data-h')); });
+  });
+}
+
+function detailBauen(n){
+  var z=zeichenDesHauses(P,n), herr=I_HERR[z], hH=haus(P,P[herr]);
+  var H=I_HAUS[n-1];
+  var bew=PNAMEN.concat(EXTRA).filter(function(k){
+    return P[k]!==undefined&&haus(P,P[k])===n; });
+  var heut=PNAMEN.filter(function(k){ return Q[k]!==undefined&&haus(P,Q[k])===n; });
+
+  var h='<h4>'+n+'. Haus — '+H.k+'</h4><p>'+H.t+'</p>';
+  h+='<p><b>Die Frage, die es aufmacht:</b> '+H.f+'</p>';
+  if(bew.length){
+    h+='<div class="stell">'+bew.map(function(k){
+      var rw=(PNAMEN.indexOf(k)>=0&&rueck(k,P._jd));
+      return '<div class="st"><span><b>'+k+'</b> '+stellung(P[k])+(rw?' ℞':'')+'</span>'+
+        '<span>'+(I_PLANET[k]||'')+'</span></div>';
+    }).join('')+'</div>';
+  } else {
+    h+='<p>Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. '+
+      'Ein leeres Haus heißt nicht, dass das Thema fehlt. Es heißt, dass es anderswo entschieden wird:</p>';
+  }
+  h+='<p>'+I_KETTE.replace('{h}',herr)
+      .replace('{hs}',herr+' ('+stellung(P[herr])+')')
+      .replace('{n}',hH)+'</p>';
+  if(I_MIT[I_SIGNS[z]])
+    h+='<p>Modern wird '+I_SIGNS[z]+' auch '+I_MIT[I_SIGNS[z]]+' zugeordnet — '+
+      stellung(P[I_MIT[I_SIGNS[z]]])+', '+haus(P,P[I_MIT[I_SIGNS[z]]])+'. Haus.</p>';
+  if(heut.length)
+    h+='<p><b>Heute hier:</b> '+heut.map(function(k){
+      return k+' '+stellung(Q[k]); }).join(', ')+'. '+
+      '<a href="index.html">Was das heißt →</a></p>';
+
+  var weiter=[];
+  if(n===10||n===6) weiter.push(['raum-berufung.html','Berufung']);
+  if(n===2||n===1) weiter.push(['raum-selbstwert.html','Selbstwert']);
+  if(n===7||n===5||n===8) weiter.push(['raum-naehe.html','Nähe']);
+  if(n===4||n===3) weiter.push(['raum-herkunft.html','Herkunft']);
+  if(n===12) weiter.push(['geistfuehrung.html','Mit wem du arbeitest']);
+  if(n===11) weiter.push(['raum-zugehoerigkeit.html','Zugehörigkeit']);
+  if(n===9) weiter.push(['geistfuehrung.html','Glaube und Lehre']);
+  weiter.push(['haeuser.html','Alle Häuser']);
+  h+='<div class="hd-weiter">'+weiter.map(function(w){
+    return '<a href="'+w[0]+'">'+w[1]+' →</a>'; }).join('')+'</div>';
+  return h;
+}
+
+function hausOeffnen(n, scrollen){
+  var vorher=offen;
+  offen=(offen===n)?0:n;
+  for(var i=1;i<=12;i++){
+    var b=el('h'+i), d=el('d'+i);
+    if(!b||!d) continue;
+    var auf=(offen===i);
+    b.classList.toggle('ist',auf);
+    d.hidden=!auf;
+    if(auf&&!d.innerHTML) d.innerHTML=detailBauen(i);
+  }
+  if(rad) rad.setzen(offen);
+  if(scrollen&&offen){
+    var ziel=el('h'+offen);
+    if(ziel) ziel.scrollIntoView({block:'center',
+      behavior:(window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
+  }
+}
+
+/* ── Aspekte ───────────────────────────────────────────────── */
+function aspekteBauen(){
+  var a=aspekte(P).slice(0,12);
+  el('ichasp').innerHTML=a.map(function(x){
+    var d=null;
+    try{ d=window.AC_ASP?AC_ASP.deutung(x.a,x.b,x.typ):null; }catch(e){}
+    return '<div class="ia '+x.art+'"><div class="f">'+x.a+' '+x.typ+' '+x.b+'</div>'+
+      '<div class="o">Orbis '+kz(x.o,2)+'° · '+(x.art==='hart'?'fordernd':'fließend')+'</div>'+
+      (d&&d.kurz?'<div class="d">'+esc(d.kurz)+'</div>':'')+'</div>';
+  }).join('');
+  el('ichaspzahl').textContent=aspekte(P).length;
+}
+
+/* ── Index ─────────────────────────────────────────────────── */
+function indexBauen(){
+  el('ichindex').innerHTML=I_INDEX.map(function(g){
+    return '<div class="ich-gruppe">'+esc(g.g)+'</div><div class="ich-index">'+
+      g.e.map(function(e){
+        return '<a class="ix'+(e.neu?' neu':'')+'" href="'+e.s+'">'+
+          '<div class="t">'+esc(e.t)+'</div><div class="w">'+esc(e.w)+'</div>'+
+          (e.neu?'<div class="neu-m">neu</div>':'')+'</a>';
+      }).join('')+'</div>';
+  }).join('');
+}
+
+/* ── Start ─────────────────────────────────────────────────── */
+(function(){
+  var p=profil();
+  if(!p){
+    el('ichinhalt').innerHTML='<div class="ich-leer">Noch kein Profil angelegt. '+
+      '<a href="profile.html">Hier legst du eins an</a> — mit Geburtsdatum, -zeit und -ort. '+
+      'Ohne die Zeit gibt es keine Häuser, und ohne Häuser ist diese Seite leer.</div>';
+    return;
+  }
+  P=chartVon(p); Q=jetztChart();
+  kopfBauen(p);
+  haeuserBauen();
+  heuteBauen();
+  aspekteBauen();
+  indexBauen();
+  rad=window.AC_KERNRAD({el:el('ichrad'), chart:P, transit:Q, gross:true,
+    aufHaus:function(n){ hausOeffnen(n, true); }});
+})();
 
 </script>
 </body></html>

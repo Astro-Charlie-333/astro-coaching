@@ -1,0 +1,23 @@
+/* ── Rad als Bedienfläche ──────────────────────────────────── */
+.kr-huelle{position:relative;}
+.kr-huelle svg{display:block;width:100%;height:auto;}
+.kr-hf{fill:var(--papier,#FFFDFA);stroke:var(--linie,#EBE1D2);stroke-width:1;
+ transition:fill .12s ease;}
+.kr-haus.heut .kr-hf{fill:#F3EADA;}
+.kr-haus.ist .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-haus:hover .kr-hf{fill:#EDE4D4;}
+.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-hz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;fill:var(--leise,#6B6259);}
+.kr-haus.heut .kr-hz{fill:var(--messing,#9A7235);font-weight:600;}
+.kr-haus.ist .kr-hz{fill:#fff;font-weight:600;}
+.kr-haus:focus-visible{outline:none;}
+.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#2E3A5C);stroke-width:2.5;}
+.kr-zg{font-size:22px;fill:#fff;}
+.kr-pg{font-size:27px;fill:var(--nacht,#2E3A5C);}
+.kr-strich{stroke:var(--linie-stark,#DDD0BC);stroke-width:.9;}
+.kr-achse{stroke:var(--messing,#9A7235);stroke-width:2;}
+.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#9A7235);}
+.kr-tring{fill:none;stroke:var(--linie-stark,#DDD0BC);stroke-width:1;stroke-dasharray:2 4;}
+.kr-tk{fill:var(--messing-bg,#F7EFE1);stroke:var(--messing,#9A7235);stroke-width:1.2;}
+.kr-tg{font-size:14px;fill:var(--messing,#9A7235);}
+@media (prefers-reduced-motion:reduce){.kr-hf{transition:none;}}

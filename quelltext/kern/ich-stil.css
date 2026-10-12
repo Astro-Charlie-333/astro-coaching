@@ -1,0 +1,114 @@
+/* ── Ich: Dein Bild ─────────────────────────────────────────── */
+.ich-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
+@media(max-width:620px){.ich-wrap{padding:0 17px 70px;}}
+
+/* Kopf: Rad links, die drei tragenden Stellungen rechts */
+.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:46px;align-items:start;padding:30px 0 10px;}
+@media(max-width:900px){.ich-kopf{grid-template-columns:1fr;gap:28px;}}
+.ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:26px;padding:16px;position:sticky;top:76px;}
+@media(max-width:900px){.ich-radbox{position:static;}}
+.ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
+ font-size:12.6px;color:var(--leise,#6B6259);}
+.ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
+.ich-radfuss i{width:11px;height:11px;border-radius:3px;display:inline-block;font-style:normal;}
+.ich-radfuss i.a{background:#F3EADA;border:1px solid var(--messing,#9A7235);}
+.ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
+
+.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(34px,5.4vw,56px);
+ font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
+.ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
+ color:var(--leise,#6B6259);margin-bottom:26px;}
+.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
+.ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
+ padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
+.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(20px,2.7vw,27px);
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.18;letter-spacing:-.012em;}
+.ich-drei .wert em{font-style:normal;color:var(--messing,#9A7235);}
+.ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
+ color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
+
+/* Die Brücke zu Heute */
+.ich-heute{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
+ border-radius:17px;padding:16px 19px;}
+.ich-heute .k{font-size:13px;color:var(--messing,#9A7235);margin-bottom:7px;}
+.ich-heute p{margin:0 0 9px;font-size:15px;line-height:1.62;}
+.ich-heute a{color:var(--nacht,#2E3A5C);}
+.ich-heute .nix{color:var(--leise,#6B6259);font-size:14.4px;}
+
+/* Abschnittsköpfe: Größe trägt die Hierarchie, nicht Versalien */
+.ich-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
+ font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:58px 0 5px;}
+.ich-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 20px;max-width:62ch;line-height:1.6;}
+
+/* Die zwölf Häuser als Zeilen, nicht als Karten */
+.ich-haeuser{border-top:1px solid var(--linie-stark,#DDD0BC);}
+.hz{display:grid;grid-template-columns:52px 136px minmax(0,1fr) minmax(0,1.15fr);
+ gap:16px;align-items:baseline;width:100%;text-align:left;
+ padding:15px 12px;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
+ font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;}
+@media(max-width:860px){.hz{grid-template-columns:44px minmax(0,1fr);gap:5px 13px;padding:14px 10px;}
+ .hz .herr,.hz .was{grid-column:2;}}
+.hz:hover{background:var(--papier,#FFFDFA);}
+.hz.ist{background:var(--nacht,#2E3A5C);}
+.hz.ist .nr,.hz.ist .ze,.hz.ist .herr,.hz.ist .was{color:#F4EFE6;}
+.hz.ist .ze b{color:#fff;}
+.hz.ist .bew{color:#E8C97A;}
+.hz:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:-2px;}
+.hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:300;
+ color:var(--leise,#6B6259);line-height:1;}
+.hz.heut .nr{color:var(--messing,#9A7235);}
+.hz .ze{font-size:15.6px;line-height:1.35;min-width:0;}
+.hz .ze b{font-weight:500;color:var(--nacht,#2E3A5C);}
+.hz .bew{display:block;font-size:13.6px;color:var(--messing,#9A7235);margin-top:3px;}
+.hz .herr{font-size:14px;color:var(--leise,#6B6259);line-height:1.45;min-width:0;}
+.hz .was{font-size:14.3px;color:var(--leise,#6B6259);line-height:1.5;min-width:0;}
+.hz .punkt{display:inline-block;width:6px;height:6px;border-radius:50%;
+ background:var(--messing,#9A7235);vertical-align:2px;margin-right:5px;}
+
+/* Aufgeklapptes Haus */
+.hdetail{border-bottom:1px solid var(--linie,#EBE1D2);background:var(--papier,#FFFDFA);
+ padding:20px 24px 24px;}
+@media(max-width:620px){.hdetail{padding:17px 15px 20px;}}
+.hdetail h4{font-family:var(--serif,Fraunces,Georgia,serif);font-size:20px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 10px;}
+.hdetail p{margin:0 0 11px;font-size:15px;line-height:1.7;max-width:66ch;}
+.hdetail p:last-child{margin-bottom:0;}
+.hdetail .stell{display:grid;gap:7px;margin:13px 0;}
+.hdetail .st{display:grid;grid-template-columns:minmax(0,152px) minmax(0,1fr);gap:4px 16px;
+ font-size:14.4px;line-height:1.55;padding:9px 0;border-top:1px solid var(--linie,#EBE1D2);}
+@media(max-width:560px){.hdetail .st{grid-template-columns:1fr;}}
+.hdetail .st b{font-weight:500;color:var(--nacht,#2E3A5C);}
+.hd-weiter{margin-top:15px;font-size:14.2px;display:flex;flex-wrap:wrap;gap:7px 18px;}
+.hd-weiter a{white-space:nowrap;}
+
+/* Aspekte, dicht */
+.ich-asp{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:1px;
+ background:var(--linie,#EBE1D2);border:1px solid var(--linie,#EBE1D2);border-radius:15px;
+ overflow:hidden;}
+.ia{background:var(--papier,#FFFDFA);padding:13px 15px;min-width:0;}
+.ia .f{font-size:15.2px;line-height:1.35;color:var(--nacht,#2E3A5C);}
+.ia .o{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ color:var(--leise,#6B6259);margin-top:3px;}
+.ia .d{font-size:13.8px;color:var(--leise,#6B6259);line-height:1.5;margin-top:6px;}
+.ia.hart{border-left:3px solid var(--rost,#A05A3A);}
+.ia.weich{border-left:3px solid var(--teal,#3D6B62);}
+
+/* Der Index deiner Seiten */
+.ich-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:11px;}
+.ix{display:block;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:16px 18px;text-decoration:none;color:inherit;min-width:0;}
+.ix:hover{border-color:var(--nacht,#2E3A5C);}
+.ix .t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.25;margin-bottom:5px;}
+.ix .w{font-size:13.9px;color:var(--leise,#6B6259);line-height:1.52;}
+.ix.neu{background:var(--messing-bg,#F7EFE1);border-color:var(--messing,#9A7235);}
+.ix .neu-m{font-size:11.6px;color:var(--messing,#9A7235);margin-top:7px;}
+.ich-gruppe{font-size:14px;color:var(--leise,#6B6259);margin:26px 0 11px;
+ padding-bottom:7px;border-bottom:1px solid var(--linie,#EBE1D2);}
+.ich-gruppe:first-of-type{margin-top:0;}
+
+.ich-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
+ border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;}

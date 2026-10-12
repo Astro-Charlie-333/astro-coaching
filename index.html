@@ -1,16 +1,10 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Heute · Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400&display=swap" rel="stylesheet">
+<title>Heute &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
-<script src="fortschritt.js"></script>
-<script src="staedte.js"></script>
-<script src="ankommen.js"></script>
-<script src="wetter.js"></script>
-<script src="format.js" defer></script>
 <style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -19,153 +13,67 @@
   --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
   --serif:'Fraunces',Georgia,serif;
-  --sp:clamp(64px,9vw,104px);
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--creme);color:var(--tinte);
-  font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--nacht);outline-offset:3px;border-radius:4px}
-.bahn{max-width:900px;margin:0 auto;padding:0 24px}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
-/* Kopfleiste */
-.leiste{border-bottom:1px solid var(--linie);background:var(--papier);position:sticky;top:0;z-index:20}
-.leiste-inner{max-width:900px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:11px}
-.logo{width:22px;height:22px;flex:0 0 auto}
-.marke{font-family:var(--serif);font-weight:400;font-size:19px;letter-spacing:.01em}
-.sprung{margin-left:auto;display:flex;gap:20px;font-size:14px;color:var(--leise)}
-.sprung a{text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent}
-.sprung a:hover{color:var(--nacht);border-bottom-color:var(--messing)}
-@media(max-width:640px){.sprung{display:none}}
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
 
-/* Held */
-.held{position:relative;overflow:hidden}
-.held-inner{max-width:900px;margin:0 auto;padding:clamp(60px,10vw,104px) 24px clamp(48px,7vw,72px);position:relative;z-index:2}
-.ring{position:absolute;top:50%;right:-200px;transform:translateY(-50%);
-  width:540px;height:540px;opacity:.4;z-index:1;pointer-events:none}
-@media(prefers-reduced-motion:no-preference){.ring{animation:dreh 420s linear infinite}}
-@keyframes dreh{to{transform:translateY(-50%) rotate(360deg)}}
-.augenbraue{font-size:13.5px;color:var(--messing);letter-spacing:.14em;margin:0 0 22px}
-h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7.2vw,68px);
-  line-height:1.06;letter-spacing:-.022em;margin:0 0 24px;max-width:15ch}
-h1 em{font-style:normal;color:var(--nacht)}
-.intro{font-size:18.5px;line-height:1.72;color:var(--leise);margin:0;max-width:46ch}
-.intro b{color:var(--tinte);font-weight:500}
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
 
-/* Abschnittsmarke */
-.marke-zeile{display:flex;align-items:center;gap:14px;margin:var(--sp) 0 8px}
-.marke-zeile h2{font-family:var(--serif);font-weight:400;font-size:clamp(27px,4vw,36px);
-  letter-spacing:-.015em;margin:0;line-height:1.15}
-.marke-zeile .strich{flex:1;height:1px;background:var(--linie-stark)}
-.marke-sub{font-size:16px;color:var(--leise);margin:0 0 28px;max-width:52ch}
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 
-/* Heute */
-.heute-karte{background:var(--papier);border:1px solid var(--linie);border-radius:18px;
-  padding:26px 28px;box-shadow:0 1px 0 var(--linie)}
-.heute-kopf{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
-.heute-kopf h2{font-family:var(--serif);font-weight:400;font-size:30px;color:var(--nacht);margin:0;line-height:1.1}
-.heute-datum{font-size:13px;color:var(--leise)}
-.heute-sub{font-size:15.5px;color:var(--leise);margin:0 0 20px;line-height:1.6;max-width:56ch}
-.heute-form{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end}
-@media(max-width:860px){.heute-form{grid-template-columns:1fr 1fr}}
-@media(max-width:460px){.heute-form{grid-template-columns:1fr}}
-.heute-form label{display:block;font-size:12.5px;color:var(--messing);margin-bottom:6px;font-weight:500}
-.heute-form input,.heute-form select{width:100%;padding:10px 12px;border:1px solid var(--linie-stark);
-  border-radius:10px;background:var(--creme);font-family:var(--sans);font-size:15px;color:var(--tinte)}
-.heute-knopf{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.hbtn{font-family:var(--sans);font-size:15px;font-weight:500;border:1px solid var(--nacht);
-  background:var(--nacht);color:#fff;padding:11px 24px;border-radius:24px;cursor:pointer}
-.hbtn:hover{background:#3A4A70}
-.hbtn.leer{background:none;color:var(--nacht)}
-.hbtn.leer:hover{background:var(--nacht-bg)}
-.heute-hint{font-size:13.5px;color:var(--leise)}
-.mondzeile{display:flex;align-items:center;gap:16px;padding:16px 0 18px;
-  border-bottom:1px solid var(--linie);margin-bottom:18px}
-.mondzeile svg{width:44px;height:44px;flex:none}
-.mondzeile b{font-size:16.5px;font-weight:500;display:block}
-.mondzeile span{font-size:14px;color:var(--leise)}
-.tlist{display:grid;gap:11px}
-.tzeile{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:start;
-  background:var(--creme);border:1px solid var(--linie);border-left:3px solid var(--linie-stark);
-  border-radius:12px;padding:14px 16px}
-.tzeile .tgly{font-size:19px;color:var(--nacht);line-height:1.25;white-space:nowrap}
-.tzeile .tkopf{font-size:14.5px;margin-bottom:3px}
-.tzeile .tkopf b{font-weight:500}
-.tzeile .torb{font-size:12px;color:var(--leise)}
-.tzeile .ttext{font-size:15px;line-height:1.6;margin-top:6px}
-.tzeile.eng{border-color:#E3D2B2;border-left-color:var(--messing);background:var(--messing-bg)}
-.tzeile.eng .torb{color:var(--messing)}
-.tnichts{font-size:15px;color:var(--leise);line-height:1.6;background:var(--creme);
-  border:1px solid var(--linie);border-radius:12px;padding:16px 18px}
-.heute-fuss{margin-top:16px;font-size:13.5px;color:var(--leise);line-height:1.6}
-.heute-fuss a{color:var(--nacht)}
 
-/* Wege */
-.wege{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.weg{display:flex;flex-direction:column;text-decoration:none;background:var(--papier);
-  border:1px solid var(--linie);border-left:3px solid var(--akz,var(--linie-stark));
-  border-radius:14px;padding:24px 26px 22px;transition:border-color .15s,transform .15s}
-.weg:hover{border-color:var(--akz);transform:translateY(-1px)}
-.weg-glyph{font-size:19px;color:var(--akz);line-height:1;margin-bottom:14px}
-.weg-frage{font-size:18.5px;font-weight:500;line-height:1.4;margin:0 0 9px}
-.weg-text{font-size:15px;color:var(--leise);margin:0;line-height:1.6}
-.weg.betont{background:var(--nacht);border-color:var(--nacht);border-left-color:var(--messing);color:#FFFDFA}
-.weg.betont .weg-text{color:#C6CEDF}
-.weg.betont .weg-glyph{color:#D8B77E}
-.weg.betont:hover{background:#3A4A70}
-.weg-marke{align-self:flex-start;background:rgba(216,183,126,.2);color:#EBD9B6;
-  font-size:12.5px;padding:4px 12px;border-radius:20px;margin-bottom:14px;font-weight:500}
 
-/* Regal */
-.regal{display:flex;flex-direction:column;gap:11px}
-details{background:var(--papier);border:1px solid var(--linie);
-  border-left:3px solid var(--akz,var(--linie-stark));border-radius:14px}
-summary{cursor:pointer;list-style:none;padding:20px 24px;display:flex;align-items:flex-start;gap:15px}
-summary::-webkit-details-marker{display:none}
-summary:hover .sum-titel{color:var(--akz)}
-.sum-glyph{font-size:17px;color:var(--akz);line-height:1.55;flex:0 0 20px}
-.sum-body{flex:1;min-width:0}
-.sum-titel{display:block;font-size:17.5px;font-weight:500;line-height:1.4}
-.sum-text{display:block;font-size:14.5px;color:var(--leise);margin-top:5px;line-height:1.5}
-.sum-zahl{flex:0 0 auto;font-size:13px;color:var(--leise);padding-left:10px;line-height:1.9}
-.sum-zeichen{flex:0 0 auto;color:var(--leise);font-size:20px;line-height:1.5;padding-left:6px;transition:transform .15s}
-details[open] .sum-zeichen{transform:rotate(90deg);color:var(--akz)}
-.inhalt{padding:0 24px 10px}
-.inhalt a{display:block;text-decoration:none;padding:15px 0;border-top:1px solid var(--linie)}
-.inhalt a:hover .zeile-titel{color:var(--akz)}
-.zeile-titel{display:block;font-size:16px;font-weight:500;line-height:1.45}
-.zeile-text{display:block;font-size:14.5px;color:var(--leise);margin-top:5px;line-height:1.55}
-.neu{display:inline-block;background:var(--messing-bg);color:var(--messing);font-size:11.5px;
-  font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:2px}
 
-.notiz{background:var(--nacht-bg);border-radius:16px;padding:26px 30px;margin:var(--sp) 0 0}
-.notiz p{margin:0;font-size:16px;color:#46536F;line-height:1.7;max-width:58ch}
-.notiz strong{color:var(--nacht);font-weight:600}
-footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
-  border-top:1px solid var(--linie);font-size:14.5px;color:var(--leise);line-height:1.75}
-@media(max-width:640px){
-  .held-inner{padding:52px 24px 48px}
-  .ring{right:-270px;width:430px;height:430px;opacity:.28}
-  .weg{padding:20px 22px}
-  summary{padding:18px 20px}
-  .inhalt{padding:0 20px 8px}
-  .heute-karte{padding:22px 20px}
-  .sum-zahl{display:none}
-}
-
-.ortfeld{position:relative;}
-.ortfeld input{width:100%;}
-.ortliste{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--papier,#fff);
- border:1px solid var(--linie,#EBE1D2);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
- max-height:270px;overflow-y:auto;display:none;}
-.ortliste.auf{display:block;}
-.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
- padding:10px 13px;cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.35;}
-.ortliste button:last-child{border-bottom:0;}
-.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg,#E9EDF4);}
-.ortok{font-size:12.5px;color:var(--leise,#6B6259);margin-top:5px;line-height:1.45;}
-.ortok b{color:var(--tinte,#231F1A);}
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
 
 
 
@@ -176,149 +84,6 @@ footer{max-width:900px;margin:64px auto 0;padding:28px 24px 80px;
 .ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
 .ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
 .ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
-
-.nx-karte{max-width:940px;margin:0 auto 20px;padding:0 24px;}
-.nx-inner{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:20px;padding:22px 24px;
- display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-.nx-nr{width:44px;height:44px;border-radius:50%;background:var(--nacht);color:#fff;flex:none;
- display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:17px;}
-.nx-txt{flex:1;min-width:220px;}
-.nx-lab{font-family:var(--sans);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--messing);}
-.nx-titel{font-family:var(--serif);font-size:21px;line-height:1.2;margin:2px 0 3px;}
-.nx-was{font-size:14.5px;color:var(--leise);line-height:1.55;}
-.nx-b{font-family:var(--sans);font-size:15px;border:1px solid var(--nacht);background:var(--nacht);color:#fff;
- padding:12px 24px;border-radius:24px;text-decoration:none;white-space:nowrap;}
-.nx-b:hover{background:#3B4970;}
-.nx-fort{font-size:12.5px;color:var(--leise);margin-top:10px;padding:0 4px;}
-
-.hw{max-width:940px;margin:0 auto 24px;padding:0 24px;}
-.hw-kopf{font-family:var(--serif);font-size:clamp(23px,4vw,31px);font-weight:300;color:var(--tinte);
- margin:0 0 4px;letter-spacing:-.01em;}
-.hw-unter{font-size:14.5px;color:var(--leise);margin-bottom:16px;line-height:1.55;}
-.hw-buehne{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
-@media(max-width:640px){.hw-buehne{grid-template-columns:1fr;}}
-.hw-gross{display:flex;gap:16px;align-items:center;border:1px solid;border-radius:20px;padding:20px 22px;}
-.hw-gl{font-size:46px;line-height:1;flex:none;}
-.hw-lab{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--leise);}
-.hw-name{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--tinte);margin:2px 0 4px;}
-.hw-txt{font-size:14.3px;line-height:1.5;color:var(--tinte);}
-.hw-mein{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nacht);margin-top:7px;
- background:rgba(255,255,255,.6);border-radius:9px;padding:4px 9px;display:inline-block;}
-.hw-titel{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
- color:var(--messing);margin:22px 0 9px;}
-.hw-streifen{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
-@media(max-width:640px){.hw-streifen{grid-template-columns:1fr;}}
-.hw-kachel{background:var(--papier);border:1px solid;border-radius:16px;padding:15px 17px;}
-.hw-kgl{font-size:26px;line-height:1;margin-bottom:6px;}
-.hw-kname{font-family:var(--serif);font-size:17px;color:var(--tinte);margin-bottom:5px;}
-.hw-r{font-family:var(--sans);font-size:11px;color:#A05A3A;}
-.hw-ktxt{font-size:13.8px;line-height:1.55;color:var(--leise);margin-bottom:8px;}
-.hw-kwech{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--messing);}
-.hw-kmein{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--nacht);margin-top:3px;}
-.hw-lang{display:flex;gap:7px;flex-wrap:wrap;}
-.hw-lp{font-size:13px;background:var(--papier);border:1px solid var(--linie);border-radius:14px;
- padding:6px 12px;color:var(--leise);}
-.hw-lp b{font-size:15px;}
-.hw-lp i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--nacht);}
-.hw-rl{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:13px;padding:13px 16px;
- margin-top:16px;font-size:14px;line-height:1.6;}
-.hw-lun{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
-@media(max-width:640px){.hw-lun{grid-template-columns:1fr;}}
-.hw-lk{background:var(--nacht-bg);border:1px solid #D3D9E6;border-radius:16px;padding:15px 17px;}
-.hw-lk.voll{background:var(--messing-bg);border-color:var(--linie);}
-.hw-ldat{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--messing);}
-.hw-lname{font-family:var(--serif);font-size:19px;color:var(--nacht);margin:2px 0 3px;}
-.hw-lzeichen{font-size:14px;color:var(--tinte);margin-bottom:8px;}
-.hw-lmein{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nacht);line-height:1.5;}
-.hw-lmein span{color:var(--leise);}
-.hw-fuss{font-size:13.5px;color:var(--leise);margin-top:16px;line-height:1.6;}
-
-.st-wrap{max-width:660px;margin:0 auto;padding:34px 24px 60px;}
-.st-datum{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.09em;
- text-transform:uppercase;color:var(--messing);margin-bottom:7px;}
-.st-gruss{font-family:var(--serif);font-size:clamp(27px,5.6vw,38px);font-weight:300;
- color:var(--tinte);line-height:1.12;letter-spacing:-.015em;margin:0 0 30px;}
-.st-gruss em{font-style:italic;color:var(--nacht);}
-
-.kap{background:var(--papier);border:1px solid var(--linie);border-radius:22px;padding:24px 26px;margin-bottom:34px;}
-.kap-f{font-family:var(--serif);font-size:21px;color:var(--nacht);margin-bottom:5px;}
-.kap-h{font-size:14px;color:var(--leise);line-height:1.55;margin-bottom:16px;}
-.kap-w{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
-.kap-w button{font-family:var(--sans);font-size:16px;padding:18px 10px;border:1px solid var(--linie);
- background:var(--bg);color:var(--tinte);border-radius:16px;cursor:pointer;line-height:1.25;}
-.kap-w button:hover{border-color:var(--nacht);}
-.kap-w button span{display:block;font-size:12px;color:var(--leise);margin-top:4px;}
-.kap-w button:hover span{color:var(--tinte);}
-.kap-w button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
-.kap-w button[aria-pressed="true"] span{color:rgba(255,255,255,.72);}
-.kap-zurueck{margin-top:14px;font-size:13.5px;color:var(--leise);}
-.kap-zurueck button{font-family:var(--sans);font-size:13.5px;background:none;border:none;
- color:var(--nacht);text-decoration:underline;cursor:pointer;padding:0;}
-
-/* Abschnitte — immer dieselbe Reihenfolge, einer pro Block */
-.ab{margin-bottom:34px;}
-.ab-lab{font-family:var(--sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
- color:var(--messing);margin-bottom:10px;}
-.ab-satz{font-family:var(--serif);font-size:clamp(20px,4.1vw,26px);line-height:1.38;color:var(--tinte);margin:0;}
-.ab-satz b{color:var(--nacht);font-weight:400;}
-.ab-dazu{font-size:15px;line-height:1.65;color:var(--leise);margin:12px 0 0;}
-.ab-karte{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:22px 24px;}
-.ab-karte.ruhig{background:var(--nacht-bg);border-color:#D3D9E6;}
-.ab-karte h3{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:0 0 8px;}
-.ab-karte p{margin:0 0 9px;font-size:15px;line-height:1.65;}
-.ab-karte p:last-child{margin-bottom:0;}
-.ab-mehr{margin-top:14px;}
-.ab-mehr button{font-family:var(--sans);font-size:14.5px;background:none;border:1px solid var(--linie);
- color:var(--nacht);border-radius:20px;padding:10px 20px;cursor:pointer;}
-.ab-mehr button:hover{border-color:var(--nacht);background:var(--papier);}
-
-.st-log{background:var(--messing-bg);border-radius:20px;padding:22px 24px;}
-.st-log .frg{font-family:var(--serif);font-size:19px;color:var(--nacht);line-height:1.35;margin-bottom:13px;}
-.st-wahl{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
-@media(max-width:520px){.st-wahl{grid-template-columns:1fr 1fr;}}
-.st-wahl button{font-family:var(--sans);font-size:14px;padding:13px 6px;border:1px solid var(--linie);
- background:var(--papier);color:var(--tinte);border-radius:13px;cursor:pointer;}
-.st-wahl button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
-.st-dank{font-size:14.5px;color:var(--leise);margin-top:11px;line-height:1.55;}
-
-.st-schluss{text-align:center;padding:32px 0 12px;border-top:1px solid var(--linie);margin-top:12px;}
-.st-schluss p{font-family:var(--serif);font-size:19px;color:var(--nacht);margin:0 0 6px;}
-.st-schluss .kl{font-size:13.5px;color:var(--leise);line-height:1.6;}
-.st-weiter{display:grid;gap:8px;margin-top:20px;}
-.st-weiter a{display:flex;justify-content:space-between;align-items:center;gap:12px;
- background:var(--papier);border:1px solid var(--linie);border-radius:15px;padding:15px 18px;
- text-decoration:none;color:var(--tinte);}
-.st-weiter a:hover{border-color:var(--nacht);background:var(--nacht-bg);}
-.st-weiter b{font-family:var(--serif);font-size:17px;font-weight:400;}
-.st-weiter span{font-size:13px;color:var(--leise);}
-.st-weiter i{font-style:normal;color:var(--messing);font-size:17px;}
-
-.st-kopfzeile{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px;}
-.st-kopfzeile .st-datum{margin-bottom:0;}
-.st-einst{font-family:var(--sans);font-size:13px;color:var(--leise);text-decoration:none;
- border:1px solid var(--linie);border-radius:14px;padding:5px 12px;white-space:nowrap;}
-.st-einst:hover{color:var(--nacht);border-color:var(--nacht);}
-.st-banner{display:flex;gap:15px;align-items:center;background:var(--messing-bg);border:1px solid var(--linie);
- border-radius:20px;padding:18px 20px;margin-bottom:18px;text-decoration:none;color:var(--tinte);}
-.st-banner:hover{border-color:var(--messing);}
-.st-bi{width:42px;height:42px;border-radius:50%;background:var(--messing);color:#fff;flex:none;
- display:flex;align-items:center;justify-content:center;font-size:18px;}
-.st-banner b{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--nacht);}
-.st-banner span span{font-size:14px;color:var(--leise);line-height:1.5;}
-.st-banner i{font-style:normal;color:var(--messing);font-size:20px;margin-left:auto;}
-
-/* Darstellung wirkt jetzt auch hier */
-body.fmt-kurz .ab-dazu{display:none;}
-body.fmt-kurz .hw-txt,body.fmt-kurz .hw-ktxt,body.fmt-kurz .hw-fuss,body.fmt-kurz .hw-lang,body.fmt-kurz .hw-rl{display:none;}
-body.fmt-kurz .hw-gross{padding:14px 16px;}
-body.fmt-kurz .hw-gl{font-size:34px;}
-body.fmt-visuell .hw-gl{font-size:62px;}
-body.fmt-visuell .hw-kgl{font-size:38px;}
-body.fmt-visuell .hw-gross{padding:26px 24px;}
-body.fmt-visuell .hw-ktxt{display:none;}
-body.fmt-visuell .hw-lname{font-size:22px;}
-body.fmt-visuell .ab-satz{font-size:clamp(22px,4.6vw,30px);}
-body.fmt-lang .hw-ktxt{font-size:14.5px;}
 
 .ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
  backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
@@ -345,105 +110,142 @@ body.fmt-lang .hw-ktxt{font-size:14.5px;}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
-.st-wrap{max-width:820px;margin:0 auto;padding:0 26px 90px;}
-.st-hero{padding:56px 0 44px;display:grid;grid-template-columns:1fr 168px;gap:34px;align-items:center;}
-@media(max-width:700px){.st-hero{grid-template-columns:1fr;gap:26px;padding:38px 0 32px;}
- .st-himmel{justify-self:start;}}
-.st-kopfzeile{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;}
-.st-datum{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;
- text-transform:uppercase;color:var(--messing);margin-bottom:0;}
-.st-einst{font-family:var(--sans);font-size:13px;color:var(--leise);text-decoration:none;
- border:1px solid var(--linie);border-radius:15px;padding:6px 13px;white-space:nowrap;}
-.st-einst:hover{color:var(--nacht);border-color:var(--nacht);background:var(--papier);}
-.st-gruss{font-family:var(--serif);font-size:clamp(38px,7.4vw,60px);font-weight:300;
- color:var(--tinte);line-height:1.04;letter-spacing:-.025em;margin:0 0 14px;}
-.st-gruss em{font-style:italic;color:var(--nacht);}
-.st-unter{font-size:16px;line-height:1.6;color:var(--leise);max-width:46ch;margin:0;}
-.st-himmel{width:168px;height:168px;position:relative;justify-self:end;}
-.st-himmel svg{display:block;width:100%;height:100%;}
-.st-himmel .hm-lab{position:absolute;left:0;right:0;bottom:-4px;text-align:center;
- font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.09em;color:var(--leise);}
-.kap{background:var(--papier);border:1px solid var(--linie);border-radius:24px;padding:28px 30px;margin-bottom:44px;}
-.kap-f{font-family:var(--serif);font-size:23px;color:var(--nacht);margin-bottom:6px;}
-.kap-h{font-size:14.5px;color:var(--leise);line-height:1.6;margin-bottom:20px;}
-.kap-w button{padding:22px 12px;font-size:17px;border-radius:18px;}
-.ab{margin-bottom:46px;}
-.ab-lab{font-size:10.5px;letter-spacing:.17em;margin-bottom:13px;}
-.ab-satz{font-size:clamp(21px,4.3vw,29px);line-height:1.34;}
-.st-schluss{padding:44px 0 12px;margin-top:22px;}
-.st-schluss p{font-size:21px;}
 
-.hw-details{background:var(--papier);border:1px solid var(--linie);border-radius:18px;margin-top:14px;overflow:hidden;}
-.hw-details summary{cursor:pointer;padding:15px 18px;font-size:15px;color:var(--tinte);}
-.hw-details summary::-webkit-details-marker{display:none;}
-.hw-details summary span{color:var(--leise);font-size:13.5px;}
-.hw-details[open] summary{border-bottom:1px solid var(--linie);}
-.hw-dbox{padding:16px 18px;}
-.hw-dz{display:grid;grid-template-columns:44px 1fr;gap:13px;margin-bottom:14px;align-items:start;}
-.hw-dz:last-of-type{margin-bottom:8px;}
-.hw-dgl{font-size:21px;color:var(--nacht);text-align:center;line-height:1.2;}
-.hw-dz b{font-family:var(--serif);font-size:16.5px;font-weight:400;color:var(--nacht);}
-.hw-dz p{margin:3px 0 0;font-size:14.3px;line-height:1.58;color:var(--leise);}
-.hw-dmein{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--nacht);margin-top:5px;
- background:var(--nacht-bg);border-radius:9px;padding:4px 9px;display:inline-block;}
-.hw-dfuss{font-size:13.3px;color:var(--leise);line-height:1.6;padding-top:11px;border-top:1px solid var(--linie);}
-.hw-weg{display:flex;gap:14px;align-items:center;background:var(--messing-bg);border:1px solid var(--linie);
- border-radius:18px;padding:16px 18px;margin-top:16px;text-decoration:none;color:var(--tinte);}
-.hw-weg:hover{border-color:var(--messing);}
-.hw-wgl{width:40px;height:40px;border-radius:50%;background:var(--messing);color:#fff;flex:none;
- display:flex;align-items:center;justify-content:center;font-size:18px;}
-.hw-weg b{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--nacht);}
-.hw-weg span span{font-size:13.5px;color:var(--leise);line-height:1.5;}
-.hw-weg i{font-style:normal;color:var(--messing);font-size:19px;margin-left:auto;}
+/* ── Rad als Bedienfläche ──────────────────────────────────── */
+.kr-huelle{position:relative;}
+.kr-huelle svg{display:block;width:100%;height:auto;}
+.kr-hf{fill:var(--papier,#FFFDFA);stroke:var(--linie,#EBE1D2);stroke-width:1;
+ transition:fill .12s ease;}
+.kr-haus.heut .kr-hf{fill:#F3EADA;}
+.kr-haus.ist .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-haus:hover .kr-hf{fill:#EDE4D4;}
+.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-hz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;fill:var(--leise,#6B6259);}
+.kr-haus.heut .kr-hz{fill:var(--messing,#9A7235);font-weight:600;}
+.kr-haus.ist .kr-hz{fill:#fff;font-weight:600;}
+.kr-haus:focus-visible{outline:none;}
+.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#2E3A5C);stroke-width:2.5;}
+.kr-zg{font-size:22px;fill:#fff;}
+.kr-pg{font-size:27px;fill:var(--nacht,#2E3A5C);}
+.kr-strich{stroke:var(--linie-stark,#DDD0BC);stroke-width:.9;}
+.kr-achse{stroke:var(--messing,#9A7235);stroke-width:2;}
+.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#9A7235);}
+.kr-tring{fill:none;stroke:var(--linie-stark,#DDD0BC);stroke-width:1;stroke-dasharray:2 4;}
+.kr-tk{fill:var(--messing-bg,#F7EFE1);stroke:var(--messing,#9A7235);stroke-width:1.2;}
+.kr-tg{font-size:14px;fill:var(--messing,#9A7235);}
+@media (prefers-reduced-motion:reduce){.kr-hf{transition:none;}}
 
-/* ── Ritualboard auf der Startseite ───────────────────── */
-.rb{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:24px;padding:26px 28px;margin:0 0 12px;}
-@media(max-width:560px){.rb{padding:21px 18px;border-radius:20px;}}
-.rb-k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
- text-transform:uppercase;color:#E8C97A;margin-bottom:8px;}
-.rb-gr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(23px,5vw,32px);font-weight:300;
- color:#fff;line-height:1.16;margin-bottom:10px;}
-.rb p{margin:0 0 11px;font-size:15.2px;line-height:1.68;color:rgba(244,239,230,.88);}
-.rb b{color:#fff;font-weight:500;}
-.rb-tu{background:rgba(255,255,255,.09);border-radius:14px;padding:14px 16px;font-size:14.5px;
- line-height:1.6;margin-bottom:12px;}
-.rb-tu b{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;
- text-transform:uppercase;color:#E8C97A;margin-bottom:6px;font-weight:400;}
-.rb-tu span{display:block;margin-top:7px;font-size:13.3px;color:rgba(244,239,230,.6);}
-.rb-link{display:inline-block;font-size:14.3px;color:#E8C97A;text-decoration:none;
- border-bottom:1px solid rgba(232,201,122,.4);padding-bottom:1px;}
-.rb-link:hover{border-bottom-color:#E8C97A;}
-.rb-reihe{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px;margin-top:16px;}
-@media(max-width:400px){.rb-reihe{grid-template-columns:1fr 1fr;}}
-.rbk{background:rgba(255,255,255,.08);border-radius:13px;padding:11px 13px;font-size:14.5px;line-height:1.4;}
-.rbk b{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.11em;
- text-transform:uppercase;color:#E8C97A;margin-bottom:4px;font-weight:400;}
-.rbk span{display:block;font-size:12.4px;color:rgba(244,239,230,.62);margin-top:2px;}
-.rbk.warn{background:rgba(232,201,122,.2);}
-.rb-warn{margin-top:13px;background:rgba(232,201,122,.16);border-left:3px solid #E8C97A;
- border-radius:12px;padding:13px 15px;font-size:14.4px;line-height:1.65;}
-.rb-fakt{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);border-radius:20px;
- padding:19px 22px;margin-bottom:14px;}
-@media(max-width:560px){.rb-fakt{padding:17px 16px;}}
-.rb-fakt .rb-k{color:var(--messing,#9A7235);}
-.rb-fakt p{margin:0;font-size:15px;line-height:1.72;color:var(--tinte,#231F1A);}
-.rb-fakt b{color:var(--nacht,#2E3A5C);}
-.rb-st{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
-.rb-st li{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:13px;
- padding:12px 14px;font-size:14.6px;line-height:1.6;}
-.rb-st .w{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;
- text-transform:uppercase;border-radius:8px;padding:3px 8px;margin-right:8px;
- background:var(--gruen-bg,#EDF3EC);color:var(--gruen,#3F6B4A);vertical-align:1px;}
-.rb-st li:has(.w:not(:empty)) b{color:var(--nacht,#2E3A5C);}
-.rb-st .w.rueck{background:rgba(154,114,53,.16);color:var(--messing,#9A7235);}
-.rb-st .s{display:block;margin-top:5px;font-size:14px;color:var(--leise,#6B6259);}
+/* ── Heute: nach Zeitdruck geordnet ─────────────────────────── */
+.ht-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
+@media(max-width:620px){.ht-wrap{padding:0 17px 70px;}}
 
+/* Band 1 — Jetzt. Dunkel, randlos, das Einzige mit Gewicht. */
+.ht-jetzt{background:var(--nacht,#2E3A5C);color:#F4EFE6;margin:0 0 4px;}
+.ht-jetzt-in{max-width:1180px;margin:0 auto;padding:40px 26px 36px;
+ display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,300px);gap:44px;align-items:center;}
+@media(max-width:900px){.ht-jetzt-in{grid-template-columns:1fr;gap:26px;padding:30px 20px 28px;}}
+@media(max-width:620px){.ht-jetzt-in{padding:26px 17px 24px;}}
+.ht-tag{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
+ color:rgba(244,239,230,.55);margin-bottom:14px;}
+.ht-gruss{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,5.4vw,52px);
+ font-weight:300;line-height:1.04;letter-spacing:-.025em;color:#fff;margin:0 0 16px;}
+.ht-gruss em{font-style:italic;color:#E8C97A;}
+.ht-satz{font-size:clamp(16px,2vw,19px);line-height:1.6;color:rgba(244,239,230,.9);
+ max-width:52ch;margin:0 0 22px;}
+.ht-satz b{color:#fff;font-weight:500;}
+.ht-fakten{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
+ background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:14px;
+ overflow:hidden;}
+.ht-f{background:var(--nacht,#2E3A5C);padding:12px 14px;min-width:0;}
+.ht-f .l{font-size:12px;color:rgba(244,239,230,.55);margin-bottom:3px;}
+.ht-f .v{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;color:#fff;
+ line-height:1.15;}
+.ht-f .z{font-size:12.3px;color:rgba(244,239,230,.55);margin-top:3px;}
+.ht-radmini{background:rgba(255,255,255,.055);border-radius:20px;padding:12px;}
 
-/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
-   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
-@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
-/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
-   nach der Raster- und Flexspalten ihre Breite berechnen. */
+.ht-radmini .kr-hz{fill:rgba(244,239,230,.55);font-size:18px;}
+.ht-radmini .kr-haus.heut .kr-hz{fill:#E8C97A;}
+.ht-radmini .kr-pg{fill:#F4EFE6;font-size:25px;}
+.ht-radmini .kr-strich{stroke:rgba(255,255,255,.16);}
+.ht-radmini .kr-achse{stroke:#E8C97A;}
+.ht-radmini .kr-al{fill:#E8C97A;}
+.ht-radmini .kr-tring{stroke:rgba(255,255,255,.2);}
+.ht-radmini .kr-tk{fill:#E8C97A;stroke:none;}
+.ht-radmini .kr-tg{fill:var(--nacht,#2E3A5C);font-size:13px;}
+.ht-radmini .kr-zg{font-size:16px;fill:rgba(244,239,230,.82);}
+/* Ohne Zeichenband trägt der Kontrast zwischen besetzt und leer die Aussage.
+   Leere Häuser nur angedeutet, besetzte deutlich in Gold. */
+.ht-radmini .kr-hf{fill:rgba(255,255,255,.03);stroke:rgba(255,255,255,.1);}
+.ht-radmini .kr-haus.heut .kr-hf{fill:rgba(232,201,122,.46);stroke:rgba(232,201,122,.75);}
+.ht-radmini .kr-haus.heut .kr-hz{fill:#2E3A5C;font-weight:600;}
+.ht-radu{font-size:12.4px;color:rgba(244,239,230,.55);text-align:center;padding-top:9px;}
+.ht-radu a{color:#E8C97A;}
+
+/* Abschnittsköpfe */
+.ht-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
+ font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:52px 0 4px;}
+.ht-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 22px;max-width:62ch;line-height:1.6;}
+
+/* Band 2 — Diese Woche. Eine echte Folge, also eine Zeitachse. */
+.ht-woche{position:relative;padding-left:124px;}
+@media(max-width:700px){.ht-woche{padding-left:0;}}
+.ht-woche::before{content:'';position:absolute;left:97px;top:6px;bottom:18px;width:1px;
+ background:var(--linie-stark,#DDD0BC);}
+@media(max-width:700px){.ht-woche::before{display:none;}}
+.we{position:relative;padding:0 0 26px;}
+.we .wann{position:absolute;left:-124px;top:1px;width:92px;text-align:right;
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;color:var(--leise,#6B6259);
+ line-height:1.4;}
+.we .wann b{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
+ font-weight:500;color:var(--nacht,#2E3A5C);}
+@media(max-width:700px){.we .wann{position:static;width:auto;text-align:left;margin-bottom:5px;}
+ .we .wann b{display:inline;margin-right:8px;}}
+.we::after{content:'';position:absolute;left:-28px;top:7px;width:9px;height:9px;border-radius:50%;
+ background:var(--papier,#FFFDFA);border:2px solid var(--linie-stark,#DDD0BC);}
+@media(max-width:700px){.we::after{display:none;}}
+.we.jetzt::after{background:var(--messing,#9A7235);border-color:var(--messing,#9A7235);}
+.we .tt{font-family:var(--serif,Fraunces,Georgia,serif);font-size:20px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.3;margin-bottom:5px;}
+.we .tx{font-size:15.1px;line-height:1.66;color:var(--tinte,#231F1A);max-width:64ch;}
+.we .tx b{font-weight:500;}
+.we .wo{display:inline-block;margin-top:7px;font-size:13.6px;color:var(--messing,#9A7235);}
+.we .wo a{color:var(--messing,#9A7235);}
+.we .mit{margin-top:10px;background:var(--messing-bg,#F7EFE1);border-radius:12px;
+ padding:11px 14px;font-size:14.3px;line-height:1.58;max-width:64ch;}
+.we .mit b{display:block;font-size:12.6px;color:var(--messing,#9A7235);
+ margin-bottom:4px;font-weight:400;}
+
+/* Band 3 — Läuft. Dicht und ruhig. */
+.ht-laeuft{border-top:1px solid var(--linie-stark,#DDD0BC);}
+.lf{display:grid;grid-template-columns:128px minmax(0,1fr) minmax(0,1.25fr);gap:18px;
+ padding:13px 2px;border-bottom:1px solid var(--linie,#EBE1D2);align-items:baseline;}
+@media(max-width:760px){.lf{grid-template-columns:1fr;gap:4px;padding:12px 2px;}}
+.lf .p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.5px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.lf .p i{font-style:normal;color:var(--rost,#A05A3A);font-size:14px;}
+.lf .w{font-size:14.2px;color:var(--leise,#6B6259);line-height:1.5;}
+.lf .d{font-size:14.4px;line-height:1.55;}
+.lf .d a{color:var(--nacht,#2E3A5C);}
+
+/* Kapazität */
+.ht-kap{margin-top:52px;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:20px;padding:22px 25px;}
+@media(max-width:620px){.ht-kap{padding:18px 17px;}}
+.ht-kap h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 5px;}
+.ht-kap p{font-size:14.6px;color:var(--leise,#6B6259);line-height:1.6;margin:0 0 15px;max-width:60ch;}
+.ht-kapr{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.kb{padding:14px 10px;border-radius:14px;border:1px solid var(--linie-stark,#DDD0BC);
+ background:var(--creme,#FCF7EF);cursor:pointer;font-family:inherit;text-align:center;}
+.kb:hover{border-color:var(--nacht,#2E3A5C);}
+.kb.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
+.kb .n{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;color:var(--nacht,#2E3A5C);line-height:1.2;}
+.kb .u{display:block;font-size:12.6px;color:var(--leise,#6B6259);margin-top:3px;}
+.kb.ist .n{color:#fff;} .kb.ist .u{color:rgba(244,239,230,.62);}
+
+.ht-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
+ border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;margin-top:30px;}
+.ht-nix{font-size:15px;color:var(--leise,#6B6259);padding:14px 2px;}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -455,20 +257,45 @@ body.fmt-lang .hw-ktxt{font-size:14.5px;}
 <nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
-<div id="stankommen"></div>
-<div class="st-wrap" id="stnormal" style="display:none">
-  <div class="st-kopfzeile"><div class="st-datum" id="stdatum"></div><a class="st-einst" href="ankommen.html">Einstellungen</a></div>
-  <h1 class="st-gruss" id="stgruss">Guten Tag.</h1>
+<div class="ht-jetzt" id="htjetzt"><div class="ht-jetzt-in">
+  <div>
+    <div class="ht-tag" id="httag"></div>
+    <h1 class="ht-gruss" id="htgruss">&nbsp;</h1>
+    <p class="ht-satz" id="htsatz"></p>
+    <div class="ht-fakten" id="htfakten"></div>
+  </div>
+  <div>
+    <div class="ht-radmini"><div class="kr-huelle" id="htrad"></div></div>
+    <div class="ht-radu">Dein Chart, au&szlig;en wo die Planeten gerade stehen.<br>
+      <a href="uebersicht.html">Ganz ansehen &rarr;</a></div>
+  </div>
+</div></div>
 
-  <div id="stboard"></div>
-  <div class="kap" id="stkap"></div>
-  <div id="stinhalt"></div>
+<div class="ht-wrap" id="htinhalt">
+
+<div id="htwocheteil">
+  <h2 class="ht-h">Diese Woche</h2>
+  <p class="ht-sub">Alles, was in den n&auml;chsten zehn Tagen ein Datum hat &mdash; in der Reihenfolge, in der es kommt. Was eine Vorbereitung braucht, sagt es dazu.</p>
+  <div class="ht-woche" id="htwoche"></div>
 </div>
 
-<script src="himmel.js"></script>
-<script src="ritual.js"></script>
-<script>
+<div id="htlaeuftteil">
+  <h2 class="ht-h">L&auml;uft</h2>
+  <p class="ht-sub">Die langsamen Planeten. Monate bis Jahre, nichts davon verlangt heute etwas von dir &mdash; aber es erkl&auml;rt, warum ein Bereich sich gerade anders anf&uuml;hlt.</p>
+  <div class="ht-laeuft" id="htlaeuft"></div>
+</div>
 
+<div class="ht-kap">
+  <h3>Wie viel geht heute?</h3>
+  <p>Danach richtet sich, wie viel diese Seite zeigt. Es wird nichts mitgeschrieben und nichts gez&auml;hlt &mdash; morgen fragt sie wieder neu.</p>
+  <div class="ht-kapr" id="htkapr"></div>
+</div>
+
+<div class="foot">Heute &middot; Planetenstunden f&uuml;r deinen Wohnort, H&auml;user aus deinem Profil.<br>
+Mondphasen, Stationen und Sonnenzeiten gegen PyEphem gepr&uuml;ft.</div>
+</div>
+
+<script>
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
@@ -525,71 +352,25 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
  return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
 
 
-/* ── Heute-Band ──────────────────────────────────────────── */
-var HSIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
-var HGLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC'};
-var HORB={Sonne:5,Mond:5,ASC:4,MC:4,Merkur:4,Venus:4,Mars:4,Jupiter:3.5,Saturn:3.5,Uranus:2.5,Neptun:2.5,Pluto:2.5};
-var HGEW={Sonne:3,Mond:3,ASC:3,MC:2.5,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5,Uranus:1,Neptun:1,Pluto:1};
-var HASP=[[0,'trifft',1],[60,'unterstützt',0.6],[90,'reibt an',0.9],[120,'fließt zu',0.9],[180,'steht gegenüber',1]];
-var HWEICH={'unterstützt':1,'fließt zu':1};
-
-var TWIRK={
- Sonne:'macht sichtbar', Mond:'färbt die Stimmung', Merkur:'bringt Worte und Gedanken',
- Venus:'bringt Wärme und Geschmack ins Spiel', Mars:'gibt Antrieb und kurze Zündschnur',
- Jupiter:'macht weit und großzügig', Saturn:'verlangt Struktur und Geduld',
- Uranus:'bringt Unruhe und Unerwartetes', Neptun:'macht durchlässig und unscharf',
- Pluto:'geht in die Tiefe'};
-var NPUNKT={
- Sonne:'deine Identität', Mond:'dein Sicherheitsgefühl', Merkur:'dein Denken und Reden',
- Venus:'deine Zuneigung und deinen Selbstwert', Mars:'deinen Antrieb', Jupiter:'dein Wachstum',
- Saturn:'deine Struktur', Uranus:'dein Freiheitsbedürfnis', Neptun:'deine Sehnsucht',
- Pluto:'deine Tiefe', ASC:'dein Auftreten', MC:'deine Rolle nach außen'};
-var NDAT={
- Sonne:'deiner Identität', Mond:'deinem Sicherheitsgefühl', Merkur:'deinem Denken',
- Venus:'deiner Zuneigung', Mars:'deinem Antrieb', Jupiter:'deinem Wachstum',
- Saturn:'deiner Struktur', Uranus:'deinem Freiheitsbedürfnis', Neptun:'deiner Sehnsucht',
- Pluto:'deiner Tiefe', ASC:'deinem Auftreten', MC:'deiner Rolle nach außen'};
-
-function hPos(y,mo,d,ut,lat,lon){
-  var jd=jdFromUT(y,mo,d,ut), T=(jd-2451545)/36525;
-  var a=angles(jd,lat,lon);
-  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
-    Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
-    Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
-}
-function hMondSVG(w){
-  var cx=60,cy=60,r=46,k=Math.cos(w*Math.PI/180),rechts=w<180;
-  var d='M '+cx+' '+(cy-r)+' A '+r+' '+r+' 0 0 '+(rechts?1:0)+' '+cx+' '+(cy+r)+
-        ' A '+(r*Math.abs(k)).toFixed(2)+' '+r+' 0 0 '+(rechts?(k>0?0:1):(k>0?1:0))+' '+cx+' '+(cy-r)+' Z';
-  return '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" fill="#2E3A5C"/>'+
-    '<path d="'+d+'" fill="#F5E6C8"/><circle cx="60" cy="60" r="46" fill="none" stroke="#E9DECF" stroke-width="2"/></svg>';
-}
-function hPhase(w){
-  if(w<20)return 'Neumond'; if(w<70)return 'zunehmende Sichel'; if(w<110)return 'erstes Viertel';
-  if(w<160)return 'zunehmender Mond'; if(w<200)return 'Vollmond'; if(w<250)return 'abnehmender Mond';
-  if(w<290)return 'letztes Viertel'; if(w<340)return 'abnehmende Sichel'; return 'Neumond';
-}
-
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
-var TAGE=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-var MONATE=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
 
-/* Stufe gilt nur für heute und wird nicht mitgeschrieben */
-var KAPKEY='ac_kap_heute';
-function heuteStr(){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
-function kapLesen(){
-  try{ var r=JSON.parse(localStorage.getItem(KAPKEY)||'null');
-    return (r&&r.d===heuteStr())?r.s:null; }catch(e){ return null; }
-}
-function kapSchreiben(s){
-  try{ localStorage.setItem(KAPKEY, JSON.stringify({d:heuteStr(), s:s})); }catch(e){}
-}
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
 
-function eigen(){
-  try{ return window.AC_P?AC_P.eigenes():null; }catch(e){ return null; }
-}
 function chartVon(p){
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
@@ -598,366 +379,934 @@ function chartVon(p){
    Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
    Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
 }
-function jetztChart(){
-  var n=new Date();
-  var jd=jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),n.getUTCHours()+n.getUTCMinutes()/60);
-  var T=(jd-2451545)/36525;
-  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
-   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),Pluto:geo('Pluto',T)};
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Himmelsrechnung für Ritualzeiten
+   Sonnenauf- und -untergang, Planetentag und Planetenstunde nach der
+   chaldäischen Ordnung, Mond ohne Lauf, Zeichenwechsel des Mondes.
+   Setzt die Ephemeriden-Funktionen der Plattform voraus
+   (jdFromUT, sunLon, moonLon, geo). */
+(function(){
+'use strict';
+var RAD=Math.PI/180;
+function n360(x){ x=x%360; return x<0?x+360:x; }
+
+/* ── Sonnenauf- und -untergang (NOAA-Verfahren) ─────────
+   lat/lon in Grad, lon östlich positiv. Liefert Julianische Tage in UT
+   oder null bei Polartag und Polarnacht. */
+var H0=-0.833;   /* Oberrand der Sonne am Horizont, mit mittlerer Refraktion */
+
+function sonnenZeiten(jd, lat, lon){
+  var lw=-lon;
+  var n=Math.round(jd-2451545.0009-lw/360);
+  var Js=2451545.0009+lw/360+n;
+
+  function sonne(J){
+    var M=n360(357.5291+0.98560028*(J-2451545));
+    var C=1.9148*Math.sin(M*RAD)+0.0200*Math.sin(2*M*RAD)+0.0003*Math.sin(3*M*RAD);
+    var lam=n360(M+102.9372+C+180);
+    return {M:M, lam:lam, dek:Math.asin(Math.sin(lam*RAD)*Math.sin(23.4397*RAD))};
+  }
+  /* Wahrer Mittag, einmal nachgezogen */
+  var s=sonne(Js);
+  var Jt=Js+0.0053*Math.sin(s.M*RAD)-0.0069*Math.sin(2*s.lam*RAD);
+  s=sonne(Jt);
+  Jt=Js+0.0053*Math.sin(s.M*RAD)-0.0069*Math.sin(2*s.lam*RAD);
+
+  /* Auf- und Untergang getrennt verfeinern: die Deklination gehört zum
+     Zeitpunkt des Ereignisses, nicht zum Mittag dazwischen. */
+  var polar=null;
+  function ereignis(vz){
+    var J=Jt+vz*0.25;
+    for(var i=0;i<3;i++){
+      var e=sonne(J);
+      var co=(Math.sin(H0*RAD)-Math.sin(lat*RAD)*Math.sin(e.dek))/(Math.cos(lat*RAD)*Math.cos(e.dek));
+      if(co>1){ polar='nacht'; return null; }
+      if(co<-1){ polar='tag'; return null; }
+      J=Jt+vz*(Math.acos(co)/RAD)/360;
+    }
+    return J;
+  }
+  var auf=ereignis(-1), unter=ereignis(1);
+  return {auf:auf, unter:unter, mittag:Jt, polar:polar};
 }
-function nrm(x){x=x%360;return x<0?x+360:x;}
 
-/* Stärkster Transit, in Alltagssprache */
-var TTXT={
- 'Sonne':'Sichtbarkeit','Mond':'Stimmung','Merkur':'Gespräche','Venus':'Zuneigung und Wert',
- 'Mars':'Antrieb','Jupiter':'Zuversicht','Saturn':'Verantwortung','Uranus':'Unruhe',
- 'Neptun':'Sehnsucht','Pluto':'Umbau'};
-var TART={
- 'Konjunktion':['trifft direkt auf','Das verstärkt und macht das Thema unübersehbar.'],
- 'Opposition':['steht gegenüber','Zwei Seiten ziehen. Beide haben recht, nur nicht gleichzeitig.'],
- 'Quadrat':['reibt an','Es klemmt. Genau dort entsteht aber auch Bewegung.'],
- 'Trigon':['fließt zu','Es geht leichter als sonst. Nutzbar, wenn du es bemerkst.'],
- 'Sextil':['reicht die Hand an','Eine Gelegenheit, die nichts erzwingt.']};
-var GEW={Sonne:3,Mond:2,ASC:3,MC:2.5,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:2,Uranus:1.5,Neptun:1.5,Pluto:1.5};
+/* ── Planetentag und Planetenstunde ─────────────────────
+   Chaldäische Reihenfolge, absteigend nach scheinbarer Umlaufzeit.
+   Die erste Stunde nach Sonnenaufgang gehört dem Herrscher des
+   Wochentags — der Tag beginnt also mit dem Sonnenaufgang,
+   nicht um Mitternacht. */
+var CHALD=['Saturn','Jupiter','Mars','Sonne','Venus','Merkur','Mond'];
+/* Wochentag 0=Sonntag … 6=Samstag → Herrscher */
+var TAGSHERR=['Sonne','Mond','Mars','Merkur','Jupiter','Venus','Saturn'];
 
-function stärksterTransit(){
-  var p=eigen(); if(!p) return null;
-  var R=chartVon(p), T=jetztChart();
-  var beste=null;
-  var TEMPO={Jupiter:2,Saturn:3,Uranus:3,Neptun:3,Pluto:3,Mars:1,Sonne:.5,Merkur:.3,Venus:.5};
-  var AGEW={Konjunktion:3,Opposition:2.6,Quadrat:2.6,Trigon:1.8,Sextil:.8};
-  Object.keys(T).forEach(function(t){
-    if(t==='Mond') return;
-    Object.keys(R).forEach(function(r){
-      if(!GEW[r]) return;
-      var sep=Math.abs(nrm(T[t]-R[r]+180)-180);
-      [[0,'Konjunktion'],[60,'Sextil'],[90,'Quadrat'],[120,'Trigon'],[180,'Opposition']].forEach(function(A){
-        var o=Math.abs(sep-A[0]);
-        var max=(A[0]===60)?2:3;
-        if(o>max) return;
-        var sc=(max-o)/max*3 + (GEW[r]||1) + (TEMPO[t]||0) + (AGEW[A[1]]||1);
-        if(t===r&&A[1]==='Sextil') sc-=2;
-        if(!beste||sc>beste.sc) beste={t:t,r:r,typ:A[1],o:o,sc:sc,
-          haus:(((Math.floor(T[t]/30)-Math.floor(R.ASC/30))%12+12)%12)+1};
-      });
-    });
-  });
-  return beste;
-}
+function planetenStunde(jd, lat, lon){
+  var heute=sonnenZeiten(jd,lat,lon);
+  if(heute.polar) return {polar:heute.polar};
+  var gestern=sonnenZeiten(jd-1,lat,lon), morgen=sonnenZeiten(jd+1,lat,lon);
 
-function satzBauen(b){
-  if(!b) return null;
-  var a=TART[b.typ]||['berührt',''];
+  var aufJD, unterJD, naechsterAuf, istNacht;
+  if(jd < heute.auf){
+    /* noch vor Sonnenaufgang → Nachtstunden des Vortags */
+    aufJD=gestern.auf; unterJD=gestern.unter; naechsterAuf=heute.auf; istNacht=true;
+  } else if(jd < heute.unter){
+    aufJD=heute.auf; unterJD=heute.unter; naechsterAuf=morgen.auf; istNacht=false;
+  } else {
+    aufJD=heute.auf; unterJD=heute.unter; naechsterAuf=morgen.auf; istNacht=true;
+  }
+  if(aufJD===null||unterJD===null||naechsterAuf===null) return {polar:'rand'};
+
+  /* Der Wochentag richtet sich nach dem Sonnenaufgang, der diesen Tag eröffnet */
+  var wt=new Date((aufJD-2440587.5)*86400000).getDay();
+  var herrTag=TAGSHERR[wt];
+  var start=CHALD.indexOf(herrTag);
+
+  var nr, laenge, von;
+  if(!istNacht){
+    laenge=(unterJD-aufJD)/12;
+    nr=Math.floor((jd-aufJD)/laenge);
+    von=aufJD+nr*laenge;
+  } else {
+    laenge=(naechsterAuf-unterJD)/12;
+    nr=12+Math.floor((jd-unterJD)/laenge);
+    von=unterJD+(nr-12)*laenge;
+  }
+  nr=Math.max(0,Math.min(23,nr));
   return {
-    kurz:'<b>'+b.t+'</b> '+a[0]+' deinen <b>'+b.r+'</b> — es geht um <b>'+(TTXT[b.t]||'')+'</b>, '+
-      'in deinem '+b.haus+'. Haus.',
-    dazu: a[1]+' Der Bereich ist <b>'+HT[b.haus-1]+'</b>. Orbis '+b.o.toFixed(1)+'° — '+
-      (b.o<1?'sehr eng, das spürt man.':(b.o<2?'eng.':'noch im Rahmen.'))
+    tagesherr:herrTag, wochentag:wt,
+    herr:CHALD[(start+nr)%7],
+    nr:nr+1, nacht:istNacht,
+    von:von, bis:von+laenge, laengeMin:laenge*1440,
+    auf:aufJD, unter:unterJD, naechsterAuf:naechsterAuf
   };
 }
 
-/* ── Aufbau ── */
-
-/* ── Auftakt: Mondscheibe und Sonnenstand ── */
-function himmelZeichnen(){
-  var box=document.getElementById('sthimmel'); if(!box) return;
-  var SIG=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
-  var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
-  var T=jetztChart();
-  var w=nrm(T.Mond-T.Sonne);
-  var f=(1-Math.cos(w*Math.PI/180))/2;             /* 0 neu … 1 voll */
-  var zi=Math.floor(T.Sonne/30), mz=Math.floor(T.Mond/30);
-  var R=62, C=84;
-  /* Terminator als Ellipse */
-  var k=Math.abs(1-2*f)*R, links=(w<180);
-  var o=['<svg viewBox="0 0 168 168" role="img" aria-label="Mondphase">'];
-  o.push('<defs><radialGradient id="gl" cx="50%" cy="50%" r="50%">'+
-    '<stop offset="60%" stop-color="#EFE3CC" stop-opacity=".0"/>'+
-    '<stop offset="100%" stop-color="#EFE3CC" stop-opacity=".55"/></radialGradient></defs>');
-  o.push('<circle cx="84" cy="84" r="80" fill="url(#gl)"/>');
-  /* Tierkreisring */
-  for(var i=0;i<12;i++){
-    var a=(i*30-90)*Math.PI/180;
-    var x=84+74*Math.cos(a), y=84+74*Math.sin(a);
-    var ist=(i===zi);
-    o.push('<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(ist?3.4:1.5)+
-      '" fill="'+(ist?'#9A7235':'#D9CDBC')+'"/>');
+/* Alle 24 Stunden eines Sonnentags, beginnend mit dem Sonnenaufgang */
+function stundenTabelle(jd, lat, lon){
+  var p=planetenStunde(jd,lat,lon);
+  if(p.polar) return [];
+  var start=CHALD.indexOf(p.tagesherr);
+  var tagL=(p.unter-p.auf)/12, nachtL=(p.naechsterAuf-p.unter)/12;
+  var out=[];
+  for(var i=0;i<24;i++){
+    var nacht=i>=12;
+    var von=nacht? p.unter+(i-12)*nachtL : p.auf+i*tagL;
+    var bis=nacht? von+nachtL : von+tagL;
+    out.push({nr:i+1,herr:CHALD[(start+i)%7],nacht:nacht,von:von,bis:bis,
+              jetzt:(jd>=von&&jd<bis)});
   }
-  /* Mondscheibe */
-  o.push('<circle cx="84" cy="84" r="'+R+'" fill="#2E3A5C"/>');
-  var hell='#F5EEDF';
-  if(f>0.985){ o.push('<circle cx="84" cy="84" r="'+R+'" fill="'+hell+'"/>'); }
-  else if(f>0.015){
-    var gross=(f>0.5)?1:0;
-    var sweep1=links?1:0, sweep2=(f>0.5)?(links?1:0):(links?0:1);
-    o.push('<path d="M84,'+(C-R)+' A'+R+','+R+' 0 0 '+sweep1+' 84,'+(C+R)+
-      ' A'+k.toFixed(1)+','+R+' 0 0 '+sweep2+' 84,'+(C-R)+'" fill="'+hell+'"/>');
+  return out;
+}
+
+/* ── Mond ohne Lauf ─────────────────────────────────────
+   Von seinem letzten klassischen Aspekt an einen der sieben Planeten
+   bis zum Zeichenwechsel „läuft der Mond leer". */
+var ASPEKTE=[0,60,90,120,180];
+var ASP_NAME={0:'Konjunktion',60:'Sextil',90:'Quadrat',120:'Trigon',180:'Opposition'};
+var KLASSISCH=['Sonne','Merkur','Venus','Mars','Jupiter','Saturn'];
+
+function mondLon(jd){ return moonLon((jd-2451545)/36525); }
+function pLon(k,jd){ var T=(jd-2451545)/36525;
+  return k==='Sonne'?sunLon(T):(k==='Mond'?moonLon(T):geo(k,T)); }
+
+/* Nächster Zeichenwechsel des Mondes nach jd */
+function naechsterZeichenwechsel(jd){
+  var ziel=(Math.floor(mondLon(jd)/30)+1)*30;
+  var a=jd, fa=((mondLon(a)-ziel+540)%360)-180;
+  for(var i=0;i<200;i++){
+    var b=a+0.05, fb=((mondLon(b)-ziel+540)%360)-180;
+    if(fa<0&&fb>=0){
+      var lo=a,hi=b;
+      for(var k=0;k<40;k++){ var m=(lo+hi)/2;
+        if(((mondLon(m)-ziel+540)%360)-180<0) lo=m; else hi=m; }
+      return {jd:(lo+hi)/2, zeichen:Math.floor(n360(ziel)/30)};
+    }
+    a=b; fa=fb;
   }
-  o.push('<circle cx="84" cy="84" r="'+R+'" fill="none" stroke="#C9BCA8" stroke-width="1"/>');
-  /* Sonnenzeichen in der Mitte unten */
-  o.push('<text x="84" y="128" text-anchor="middle" font-size="17" fill="'+(f>0.5?'#2E3A5C':'#EFE3CC')+
-    '" opacity=".85">'+GLZ[zi]+'</text>');
-  o.push('</svg>');
-  box.innerHTML=o.join('');
-  var ph=(f<0.03)?'Neumond':(f>0.97)?'Vollmond':(w<180?'zunehmend':'abnehmend');
-  var lb=document.getElementById('sthlab');
-  if(lb) lb.textContent=ph+' · '+Math.round(f*100)+'%';
+  return null;
 }
 
-function unterZeigen(){
-  var el=document.getElementById('stunter'); if(!el) return;
-  var SIG=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
-  var T=jetztChart();
-  el.innerHTML='Die Sonne steht in <b>'+SIG[Math.floor(T.Sonne/30)]+'</b>, der Mond in <b>'+
-    SIG[Math.floor(T.Mond/30)]+'</b>. Was davon dich betrifft, steht gleich darunter.';
-}
-
-function datumZeigen(){
-  var d=new Date();
-  document.getElementById('stdatum').textContent=
-    TAGE[d.getDay()]+', '+d.getDate()+'. '+MONATE[d.getMonth()]+' '+d.getFullYear();
-  var st=d.getHours();
-  var g=(st<5)?'Noch wach':(st<11)?'Guten Morgen':(st<18)?'Guten Tag':'Guten Abend';
-  var p=eigen(), nm='';
-  try{ if(p&&window.AC_P) nm=AC_P.anzeige(p,AC_P.zeigeNamen()); }catch(e){}
-  document.getElementById('stgruss').innerHTML=g+(nm?', <em>'+nm+'</em>':'')+'.';
-}
-
-function kapZeigen(){
-  var box=document.getElementById('stkap'), s=kapLesen();
-  if(s){
-    var NAM={wenig:'Wenig',mittel:'Mittel',viel:'Viel'};
-    box.innerHTML='<div class="kap-f">Heute: '+NAM[s]+'</div>'+
-      '<div class="kap-zurueck">Passt nicht? <button type="button" id="kapneu">Anders wählen</button></div>';
-    document.getElementById('kapneu').addEventListener('click',function(){
-      try{ localStorage.removeItem(KAPKEY); }catch(e){}
-      kapZeigen(); inhaltZeigen();
+/* Letzter exakter Aspekt des Mondes vor dem Zeichenwechsel */
+function letzterAspekt(jd, bisJD){
+  var best=null;
+  KLASSISCH.forEach(function(k){
+    ASPEKTE.forEach(function(w){
+      var a=jd-2.2, fa=((mondLon(a)-pLon(k,a)-w+540)%360)-180;
+      while(a<bisJD){
+        var b=Math.min(a+0.04,bisJD), fb=((mondLon(b)-pLon(k,b)-w+540)%360)-180;
+        if(fa<0&&fb>=0){
+          var lo=a,hi=b;
+          for(var i=0;i<34;i++){ var m=(lo+hi)/2;
+            if(((mondLon(m)-pLon(k,m)-w+540)%360)-180<0) lo=m; else hi=m; }
+          var t=(lo+hi)/2;
+          if(t<=bisJD && (!best||t>best.jd)) best={jd:t,planet:k,winkel:w,name:ASP_NAME[w]};
+        }
+        a=b; fa=fb;
+        if(b>=bisJD) break;
+      }
     });
-    return;
-  }
-  box.innerHTML='<div class="kap-f">Wie viel geht heute?</div>'+
-    '<div class="kap-h">Danach richtet sich, was du hier siehst. Es wird nichts mitgeschrieben und nichts gezählt — '+
-    'morgen fragt die Seite wieder neu.</div>'+
-    '<div class="kap-w" id="kapw"></div>';
-  var w=document.getElementById('kapw');
-  [['wenig','Wenig','ein Satz'],['mittel','Mittel','das Wichtigste'],['viel','Viel','alles']].forEach(function(o){
-    var b=document.createElement('button'); b.type='button';
-    b.innerHTML=o[1]+'<span>'+o[2]+'</span>';
-    b.setAttribute('aria-pressed','false');
-    b.addEventListener('click',function(){ kapSchreiben(o[0]); kapZeigen(); inhaltZeigen(); });
-    w.appendChild(b);
   });
+  return best;
 }
 
-function inhaltZeigen(){
-  var box=document.getElementById('stinhalt');
-  var stufe=kapLesen();
-  if(!stufe){ box.innerHTML=''; return; }
+function ohneLauf(jd){
+  var zw=naechsterZeichenwechsel(jd);
+  if(!zw) return null;
+  var la=letzterAspekt(jd,zw.jd);
+  return {
+    leer: !!(la && jd>la.jd),
+    seit: la?la.jd:null,
+    letzter: la,
+    bis: zw.jd,
+    naechstesZeichen: zw.zeichen,
+    zeichenJetzt: Math.floor(mondLon(jd)/30)
+  };
+}
 
-  var p=eigen(), h='';
+window.AC_HIMMEL={
+  CHALD:CHALD, TAGSHERR:TAGSHERR,
+  sonnenZeiten:sonnenZeiten,
+  planetenStunde:planetenStunde,
+  stundenTabelle:stundenTabelle,
+  naechsterZeichenwechsel:naechsterZeichenwechsel,
+  letzterAspekt:letzterAspekt,
+  ohneLauf:ohneLauf
+};
+})();
 
-  /* 1 · Immer: der eine Satz */
-  var b=stärksterTransit(), sz=satzBauen(b);
-  h+='<div class="ab"><div class="ab-lab">Heute bei dir</div>';
-  if(sz){
-    h+='<p class="ab-satz">'+sz.kurz+'</p>';
-    if(stufe!=='wenig') h+='<p class="ab-dazu">'+sz.dazu+'</p>';
-  } else if(!p){
-    h+='<p class="ab-satz">Noch kein Chart hinterlegt.</p>'+
-      '<p class="ab-dazu">Damit hier dein eigener Tag steht, brauche ich einmal deine Geburtsdaten. '+
-      '<a href="profile.html">Chart anlegen</a></p>';
-  } else {
-    h+='<p class="ab-satz">Heute berührt nichts dein Chart eng.</p>'+
-      '<p class="ab-dazu">Ruhige Tage gehören dazu und sind keine Lücke.</p>';
+/* Astro-Charlie · Ritualboard für die Startseite
+   Was als Nächstes ansteht, was man dafür da haben muss, und ein Fakt
+   des Tages. Setzt die Ephemeriden der Seite und AC_HIMMEL voraus. */
+(function(){
+'use strict';
+function n360(x){x=x%360;return x<0?x+360:x;}
+function lon(k,jd){var T=(jd-2451545)/36525;
+ return k==='Sonne'?sunLon(T):(k==='Mond'?moonLon(T):geo(k,T));}
+function dat(jd){ return new Date((jd-2440587.5)*86400000); }
+function uhr(jd){ return dat(jd).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}); }
+function tagLang(jd){ return dat(jd).toLocaleDateString('de-DE',
+ {weekday:'short',day:'2-digit',month:'2-digit'})+', '+uhr(jd); }
+function tagKurz(jd){ return dat(jd).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+
+var ZEI=[['Widder','♈'],['Stier','♉'],['Zwillinge','♊'],['Krebs','♋'],
+ ['Löwe','♌'],['Jungfrau','♍'],['Waage','♎'],['Skorpion','♏'],
+ ['Schütze','♐'],['Steinbock','♑'],['Wassermann','♒'],['Fische','♓']];
+var HFELD=['Auftreten und Selbstbild','Geld, Besitz, Selbstwert','Reden, Lernen, Umgebung',
+ 'Zuhause und Herkunft','Ausdruck, Spiel, Verliebtsein','Alltag, Arbeit, Körper',
+ 'Gegenüber und Verbindlichkeit','Geteiltes, Tiefe, Loslassen','Sinn, Ferne, Überzeugung',
+ 'Beruf und Sichtbarkeit','Freundschaft und Zukunft','Rückzug, Unbewusstes, Ruhe'];
+
+/* Was man je Zeichen dahaben sollte — zwei Dinge, mehr nicht */
+var BESORGEN=[
+ ['frischer Ingwer','ein roter Faden'],
+ ['Honig','ein paar Rosenblüten'],
+ ['Lavendel','Sternanis'],
+ ['eine Schale für Wasser','Jasmin oder Jasmintee'],
+ ['ein getrocknetes Lorbeerblatt','eine Orange'],
+ ['ein Zweig Rosmarin','Kamille'],
+ ['Rosenwasser oder Rosenblüten','Vanille'],
+ ['Gewürznelken','Mohnsamen'],
+ ['eine ganze Muskatnuss','Salbei'],
+ ['grobes Meersalz','Mohnsamen'],
+ ['Wacholderbeeren','Sternanis'],
+ ['Beifuß oder Lavendel','eine Kerze extra']];
+var IMMER=['eine Kerze','Zettel und Stift','Streichhölzer'];
+
+/* ── Lunationen ─────────────────────────────────────── */
+function ph(jd){ var T=(jd-2451545)/36525; return n360(moonLon(T)-sunLon(T)); }
+function phDiff(jd,z){ var d=n360(ph(jd)-z); return d>180?d-360:d; }
+function lunationen(von,bis){
+  var out=[];
+  [[0,'neu'],[180,'voll']].forEach(function(z){
+    var a=von, fa=phDiff(a,z[0]);
+    while(a<bis){
+      var b=a+0.5, fb=phDiff(b,z[0]);
+      if(fa<0&&fb>=0){
+        var lo=a,hi=b;
+        for(var k=0;k<42;k++){ var m=(lo+hi)/2; if(phDiff(m,z[0])<0) lo=m; else hi=m; }
+        out.push({jd:(lo+hi)/2,art:z[1]});
+      }
+      a=b; fa=fb;
+    }
+  });
+  out.sort(function(x,y){return x.jd-y.jd;});
+  return out;
+}
+
+/* Offenes Ritualfenster: Neumond bis +3 Tage, Vollmond ±1,5 Tage */
+function fenster(jd){
+  var l=lunationen(jd-5,jd+2);
+  for(var i=l.length-1;i>=0;i--){
+    var d=jd-l[i].jd;
+    if(l[i].art==='neu'  && d>=0 && d<=3)   return {art:'neu', jd:l[i].jd, bis:l[i].jd+3};
+    if(l[i].art==='voll' && d>=-1.5 && d<=1.5) return {art:'voll', jd:l[i].jd, bis:l[i].jd+1.5};
+  }
+  /* Vollmondfenster beginnt schon vorher */
+  var k=lunationen(jd,jd+2).filter(function(x){return x.art==='voll';})[0];
+  if(k && k.jd-jd<=1.5) return {art:'voll', jd:k.jd, bis:k.jd+1.5, vorher:true};
+  return null;
+}
+
+/* ── Fakt des Tages ─────────────────────────────────── */
+var PLANETEN=['Merkur','Venus','Mars','Jupiter','Saturn'];
+/* Wann verlässt ein Planet sein jetziges Zeichen — in BEIDE Richtungen.
+   Rückläufige Planeten gehen rückwärts wieder heraus und kommen später
+   noch einmal; das darf der Text nicht unterschlagen. */
+function zeichenVerlassen(k,jd){
+  var z0=Math.floor(n360(lon(k,jd))/30), a=jd;
+  for(var i=0;i<900;i++){
+    var b=a+1;
+    if(Math.floor(n360(lon(k,b))/30)!==z0){
+      var lo=a,hi=b;
+      for(var q=0;q<32;q++){ var m=(lo+hi)/2;
+        if(Math.floor(n360(lon(k,m))/30)===z0) lo=m; else hi=m; }
+      var t=(lo+hi)/2, neu=Math.floor(n360(lon(k,t+0.02))/30);
+      return {jd:t, neu:neu, rueckwaerts:((neu-z0+12)%12===11)};
+    }
+    a=b;
+  }
+  return null;
+}
+function ruecklaeufig(k,jd){
+  var d=((lon(k,jd+1)-lon(k,jd)+540)%360)-180;
+  return d<0;
+}
+function fakten(P,jd,st){
+  var f=[];
+  /* Der eine Fakt, der immer sitzt — und den die Seite selbst nachrechnet */
+  if(st&&!st.polar){
+    f.push('<b>Warum die Woche so heißt, wie sie heißt.</b> Zähl die Planetenstunden in der '+
+      'chaldäischen Reihenfolge — Saturn, Jupiter, Mars, Sonne, Venus, Merkur, Mond — vierundzwanzig '+
+      'Stunden weiter, und du landest beim übernächsten Planeten der Reihe. Aus Saturntag wird Sonntag, '+
+      'aus Sonntag Montag, dann Mars (mardi), Merkur (mercredi), Jupiter (jeudi), Venus (vendredi). '+
+      'Unsere Wochentage sind nichts anderes als dieser Abzählreim, seit rund zweitausend Jahren.');
+  }
+  var mz=Math.floor(n360(lon('Mond',jd))/30);
+  f.push('<b>Der Mond steht in '+ZEI[mz][0]+'.</b> Er bleibt in jedem Zeichen rund zweieinhalb Tage '+
+    'und ist damit der schnellste Zeiger am Himmel — was er anrührt, ist übermorgen vorbei. '+
+    'Deshalb taugt er fürs Timing und nichts für Prognosen.');
+  var p=ph(jd), bel=Math.round((1-Math.cos(p*Math.PI/180))/2*100);
+  var tag=Math.round(p/360*29.53);
+  f.push('<b>Tag '+tag+' von 29 im Mondzyklus</b>, '+bel+' % beleuchtet. Ein voller Zyklus dauert '+
+    '29 Tage, 12 Stunden und 44 Minuten — deshalb wandert der Neumond jedes Jahr durch den Kalender '+
+    'und fällt nie zweimal auf dasselbe Datum.');
+  if(P){
+    PLANETEN.forEach(function(k){
+      var l=lon(k,jd), hs=((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1;
+      var e=zeichenVerlassen(k,jd);
+      if(!e||e.jd-jd<=2||e.jd-jd>=900) return;
+      var dauer=(e.jd-jd>60? Math.round((e.jd-jd)/30.4)+' Monate' : Math.round(e.jd-jd)+' Tage');
+      var rl=ruecklaeufig(k,jd);
+      var kopf='<b>'+k+' läuft'+(rl?' rückläufig':'')+' durch dein '+hs+'. Haus</b> — '+HFELD[hs-1];
+      if(e.rueckwaerts){
+        f.push(kopf+'. Am '+tagKurz(e.jd)+' verlässt '+k+' das Haus wieder — aber '+
+          '<b>rückwärts</b>, in dein '+(hs===1?12:hs-1)+'. Haus zurück. '+
+          'Das Thema ist damit nicht durch: '+k+' dreht später wieder und kommt noch einmal her. '+
+          'Was jetzt offenbleibt, kommt also wieder auf den Tisch.');
+      } else {
+        f.push(kopf+' — und bleibt dort noch bis zum '+tagKurz(e.jd)+' ('+dauer+'). '+
+          'Danach ist dieses Thema für eine Weile durch.');
+      }
+    });
+    var sz=Math.floor(n360(P.Sonne)/30), ascz=Math.floor(n360(P.ASC)/30);
+    var gr=Math.round(n360(P.ASC)%30);
+    f.push('<b>Dein Aszendent steht auf '+gr+' Grad '+ZEI[ascz][0]+'.</b> Der Aszendent wandert '+
+      'rund ein Grad in vier Minuten — hättest du vier Minuten später angefangen zu atmen, '+
+      'stünde er anders. Nichts in einem Chart hängt so genau an der Uhrzeit wie er.');
+    /* Rückkehr der Sonne */
+    var srjd=jd, zielL=P.Sonne;
+    for(var i=0;i<400;i++){
+      var d1=((lon('Sonne',srjd)-zielL+540)%360)-180, d2=((lon('Sonne',srjd+1)-zielL+540)%360)-180;
+      if(d1<0&&d2>=0){ break; }
+      srjd+=1;
+    }
+    var tage=Math.round(srjd-jd);
+    if(tage>0&&tage<400){
+      f.push('<b>Noch '+tage+' Tage bis zu deinem Solar Return.</b> Das ist der Moment, in dem die '+
+        'Sonne wieder exakt auf ihrem Geburtsgrad steht — meist einen Tag neben dem Kalendergeburtstag '+
+        'und zu einer krummen Uhrzeit. Das ist der eigentliche Jahreswechsel.');
+    }
+  }
+  return f;
+}
+
+/* ── Richtungswechsel: wann wird ein Planet wieder direkt ──
+   Eine Station ist der Punkt, an dem die Tagesbewegung das Vorzeichen
+   wechselt. Davor steht der Planet scheinbar still. */
+var LANGSAM=['Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+function tempo(k,jd){ return ((lon(k,jd+0.5)-lon(k,jd-0.5)+540)%360)-180; }
+function stationen(vonJD, tage){
+  var out=[];
+  LANGSAM.forEach(function(k){
+    var a=vonJD, fa=tempo(k,a);
+    for(var i=0;i<tage;i++){
+      var b=a+1, fb=tempo(k,b);
+      if((fa<0)!==(fb<0)){
+        var lo=a, hi=b;
+        for(var q=0;q<26;q++){ var m=(lo+hi)/2;
+          if((tempo(k,m)<0)===(fa<0)) lo=m; else hi=m; }
+        var t=(lo+hi)/2;
+        out.push({planet:k, jd:t, direkt:(fb>=0), lon:lon(k,t)});
+      }
+      a=b; fa=fb;
+    }
+  });
+  out.sort(function(x,y){ return x.jd-y.jd; });
+  return out;
+}
+/* Welche Planeten laufen gerade rückwärts */
+function jetztRueck(jd){
+  return LANGSAM.filter(function(k){ return tempo(k,jd)<0; });
+}
+var STATIONSATZ={
+ Merkur:['Absprachen, Technik und alles Schriftliche laufen wieder normal.',
+         'Absprachen und Technik werden f\u00FCr drei Wochen z\u00E4her. Zweimal lesen hilft mehr als \u00E4rgern.'],
+ Venus:['Was in Beziehungen und beim Geld h\u00E4ngen geblieben ist, kommt wieder in Bewegung.',
+        'Beziehungen und Geldfragen gehen in die R\u00FCckschau. Jetzt nichts Gro\u00DFes entscheiden.'],
+ Mars:['Die Kraft geht wieder nach au\u00DFen. Was monatelang liegen blieb, l\u00E4sst sich jetzt anfassen.',
+       'Der Antrieb geht nach innen. Konfrontationen treffen in dieser Zeit daneben.'],
+ Jupiter:['Wachstum zeigt sich wieder nach au\u00DFen statt nur innerlich.',
+          'Die gro\u00DFen Pl\u00E4ne gehen in die Pr\u00FCfung. Nicht schlimm, nur langsamer.'],
+ Saturn:['Was festgefahren war, bekommt wieder Richtung.',
+         'Eine Struktur wird noch einmal auf Tragf\u00E4higkeit gepr\u00FCft.'],
+ Uranus:['Eine Ver\u00E4nderung, die lange in der Luft lag, wird konkret.',
+         'Der Ver\u00E4nderungsdruck wird innerlich, bevor er wieder sichtbar wird.'],
+ Neptun:['Etwas kl\u00E4rt sich, das lange unklar war.',
+         'Eine Illusion wird noch einmal von innen angeschaut.'],
+ Pluto:['Ein langer Umbau nimmt wieder Fahrt auf.',
+        'Ein Umbauprozess geht nach innen.']};
+
+/* ── Das Board ──────────────────────────────────────── */
+function board(P, O, knapp){
+  var jd, n=new Date();
+  jd=jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),
+     n.getUTCHours()+n.getUTCMinutes()/60);
+  var st=null;
+  try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e){}
+  var ol=null; try{ ol=AC_HIMMEL.ohneLauf(jd); }catch(e){}
+  var offen=fenster(jd);
+  var kommend=lunationen(jd,jd+70);
+  var naechste=kommend[0];
+
+  var h='<div class="rb">';
+
+  if(offen){
+    var zi=Math.floor(n360(lon('Mond',offen.jd))/30);
+    var rest=Math.max(0,offen.bis-jd);
+    h+='<div class="rb-k">Jetzt offen</div>'+
+      '<div class="rb-gr">'+(offen.art==='neu'?'Neumond':'Vollmond')+' in '+ZEI[zi][0]+'</div>'+
+      '<p>'+(offen.vorher?'Exakt ist er ':'Exakt war er ')+tagLang(offen.jd)+'. '+
+      'Das Ritualfenster ist offen und schließt '+tagLang(offen.bis)+' — '+
+      (rest<1? 'das sind noch '+Math.round(rest*24)+' Stunden.' : 'du hast noch '+Math.round(rest)+' Tage.')+'</p>'+
+      '<div class="rb-tu"><b>Kurzform, falls heute wenig geht</b>'+
+      (offen.art==='neu'
+        ? 'Kerze an, einen Satz aufschreiben, was bis zum Vollmond passiert sein soll, Zettel an den Spiegel. Fertig.'
+        : 'Den Neumondzettel rausholen, lesen, einen Satz drunter: was tatsächlich passiert ist. Fertig.')+
+      '</div>'+
+      '<a class="rb-link" href="rituale.html">Die lange Fassung →</a>';
+    /* Auch bei offenem Fenster: was als Nächstes kommt und was dafür da sein muss */
+    var naech=kommend.filter(function(x){return x.jd>offen.bis;})[0];
+    if(naech&&!knapp){
+      var nzi=Math.floor(n360(lon('Mond',naech.jd))/30);
+      h+='<div class="rb-tu" style="margin-top:13px;"><b>Danach — '+
+        (naech.art==='neu'?'Neumond':'Vollmond')+' in '+ZEI[nzi][0]+' am '+tagKurz(naech.jd)+'</b>'+
+        IMMER.concat(BESORGEN[nzi]).join(' · ')+
+        '<span>Das ist die Einkaufsliste dafür. Lieber jetzt als an dem Abend, an dem du es brauchst.</span></div>';
+    }
+  } else if(naechste){
+    var nz=Math.floor(n360(lon('Mond',naechste.jd))/30);
+    var tage=Math.max(0,Math.round(naechste.jd-jd));
+    var hs=P?((Math.floor(lon('Mond',naechste.jd)/30)-Math.floor(P.ASC/30))%12+12)%12+1:0;
+    h+='<div class="rb-k">Das steht an</div>'+
+      '<div class="rb-gr">'+(naechste.art==='neu'?'Neumond':'Vollmond')+' in '+ZEI[nz][0]+'</div>'+
+      '<p>'+tagLang(naechste.jd)+' — '+(tage===0?'heute':(tage===1?'morgen':'in '+tage+' Tagen'))+'.'+
+      (P?' Bei dir im '+hs+'. Haus: '+HFELD[hs-1]+'.':'')+'</p>';
+    if(!knapp){
+      h+='<div class="rb-tu"><b>Bis dahin dahaben</b>'+
+        IMMER.concat(BESORGEN[nz]).join(' · ')+
+        '<span>Lieber jetzt besorgen als an dem Abend, an dem du es brauchst.</span></div>';
+    }
+    h+='<a class="rb-link" href="rituale.html">Was dann zu tun ist →</a>';
+  }
+
+  /* Zeile mit den Kurzwerten */
+  var k=[];
+  if(st&&!st.polar){
+    k.push({l:'Stunde',w:st.herr,u:'bis '+uhr(st.bis)});
+    k.push({l:'Tag',w:st.tagesherr,u:dat(jd).toLocaleDateString('de-DE',{weekday:'long'})});
+  }
+  var mz2=Math.floor(n360(lon('Mond',jd))/30);
+  k.push({l:'Mond',w:ZEI[mz2][0],u:P?('dein '+(((Math.floor(lon('Mond',jd)/30)-Math.floor(P.ASC/30))%12+12)%12+1)+'. Haus'):''});
+  if(ol&&ol.leer) k.push({l:'Mond ohne Lauf',w:'ja',u:'bis '+uhr(ol.bis),warn:true});
+  if(k.length){
+    h+='<div class="rb-reihe">'+k.map(function(x){
+      return '<div class="rbk'+(x.warn?' warn':'')+'"><b>'+x.l+'</b>'+esc(x.w)+
+        (x.u?'<span>'+esc(x.u)+'</span>':'')+'</div>';
+    }).join('')+'</div>';
+  }
+  if(ol&&ol.leer&&!knapp){
+    h+='<div class="rb-warn"><b>Der Mond läuft leer</b> — bis '+tagLang(ol.bis)+
+      ' berührt er nichts mehr. Alte Regel: nichts Neues anfangen, Angefangenes gern zu Ende bringen.</div>';
   }
   h+='</div>';
 
-  /* 2 · Ab Mittel: Himmelswetter */
-  if(stufe==='mittel'||stufe==='viel'){
-    h+='<div class="ab"><div class="ab-lab">Der Himmel allgemein</div>'+
-      '<div id="stwetter"></div></div>';
-  }
-
-  /* 3 · Ab Mittel: eine Frage ans Log */
-  if((stufe==='mittel'||stufe==='viel')&&sz){
-    h+='<div class="ab"><div class="st-log">'+
-      '<div class="frg">Merkst du heute etwas davon?</div>'+
-      '<div class="st-wahl" id="stlog"></div>'+
-      '<div class="st-dank" id="stdank"></div></div></div>';
-  }
-
-  /* 4 · Nur Viel: ein Schritt und die Räume */
-  if(stufe==='viel'){
-    h+='<div class="ab"><div class="ab-lab">Falls du magst</div>'+
-      '<div class="ab-karte ruhig"><h3>Ein Schritt für heute</h3>'+
-      '<p id="stvorschlag">—</p></div></div>';
-    var thGew=[];
-    try{ thGew=window.AC_SETUP?AC_SETUP.themen():[]; }catch(e){}
-    h+='<div class="ab"><div class="ab-lab">'+(thGew.length?'Deine Themen':'Wo du anfangen könntest')+
-      '</div><div class="st-weiter" id="stweiter"></div></div>';
-    h+='<div class="ab"><div class="ab-lab">Weiter schauen</div><div class="st-weiter">'+
-      '<a href="vorschau.html"><span><b>Woche &amp; Monat</b><br>'+
-      '<span style="font-size:13.5px;color:var(--leise)">Sieben Tage mit Dos und Don\'ts, dazu die Höhepunkte des Monats</span></span><i>→</i></a>'+
-      '</div></div>';
-  }
-
-  /* 5 · Bei Wenig: sichtbarer Ausstieg nach oben */
-  if(stufe==='wenig'){
-    h+='<div class="ab-mehr"><button type="button" id="stmehr">Doch mehr zeigen</button></div>';
-  }
-
-  /* 6 · Immer: ruhiger Abschluss */
-  h+='<div class="st-schluss"><p>Das war’s für heute.</p>'+
-    '<div class="kl">'+(stufe==='wenig'
-      ? 'Mehr braucht es nicht. Morgen ist wieder Gelegenheit.'
-      : 'Alles andere liegt da, wenn du es suchst — es läuft dir nicht weg.')+
-    '<div class="kl" style="margin-top:14px;"><button type="button" id="stsetup" style="font-family:var(--sans);'+
-    'font-size:13px;background:none;border:none;color:var(--leise);text-decoration:underline;cursor:pointer;padding:0;">'+
-    'Einstellungen ändern</button></div></div>';
-
-  box.innerHTML=h;
-
-  /* Nachträge */
-  if(document.getElementById('stwetter')&&window.AC_wetter){
-    try{ AC_wetter(document.getElementById('stwetter')); }catch(e){}
-  }
-  var mehr=document.getElementById('stmehr');
-  if(mehr) mehr.addEventListener('click',function(){ kapSchreiben('mittel'); kapZeigen(); inhaltZeigen(); });
-
-  var lg=document.getElementById('stlog');
-  if(lg){
-    [['ja','Ja'],['teils','Ein bisschen'],['nein','Nein'],['weiss','Weiß nicht']].forEach(function(o){
-      var bt=document.createElement('button'); bt.type='button'; bt.textContent=o[1];
-      bt.setAttribute('aria-pressed','false');
-      bt.addEventListener('click',function(){
-        Array.prototype.forEach.call(lg.children,function(c){c.setAttribute('aria-pressed','false');});
-        bt.setAttribute('aria-pressed','true');
-        document.getElementById('stdank').textContent='Notiert. Mehr ist nicht nötig.';
-        try{
-          if(window.AC_WEG&&b) AC_WEG.notieren({schluessel:'heute-'+b.t+'-'+b.r,
-            titel:b.t+' '+b.typ+' '+b.r, planet:b.t, punkt:b.r, art:'transit', antwort:o[0], chips:[]});
-        }catch(e){}
-      });
-      lg.appendChild(bt);
-    });
-  }
-
-  var vs=document.getElementById('stvorschlag');
-  if(vs) vs.innerHTML=vorschlag(b);
-
-  var wt=document.getElementById('stweiter');
-  if(wt) wt.innerHTML=raeumeVorschlag(b);
-
-  var su=document.getElementById('stsetup');
-  if(su) su.addEventListener('click',function(){ location.href='ankommen.html'; });
-}
-
-function vorschlag(b){
-  if(!b) return 'Nimm dir heute nichts vor. Das ist auch eine Entscheidung.';
-  var V={Saturn:'Schau dir eine Sache an, die du aufgeschoben hast. Nur anschauen, nicht erledigen.',
-   Jupiter:'Sag heute einmal Ja zu etwas, das du sonst abwägen würdest.',
-   Uranus:'Mach eine Kleinigkeit anders als sonst. Anderer Weg, andere Reihenfolge.',
-   Neptun:'Lass heute eine Stunde ungeplant. Nichts hineinschreiben.',
-   Pluto:'Benenne eine Sache, die du sonst umschiffst. Nur für dich, nur ein Satz.',
-   Mars:'Fang etwas an, das fünf Minuten dauert.',
-   Venus:'Gönn dir eine Kleinigkeit ohne Anlass.',
-   Merkur:'Schreib einen Gedanken auf, statt ihn weiterzudenken.',
-   Sonne:'Zeig heute einmal etwas Eigenes, ohne es kleinzureden.'};
-  return (V[b.t]||'Beobachte heute nur, ohne etwas zu ändern.')+
-    ' <span style="color:var(--leise);font-size:14px;">Muss nicht sein. Es steht hier, falls du magst.</span>';
-}
-
-function raeumeVorschlag(b){
-  var ich=null; try{ ich={themen:(window.AC_SETUP?AC_SETUP.themen():[])}; }catch(e){}
-  var ALLE={'selbstwert':['Selbstwert','Warum nehme ich zu wenig?'],'berufung':['Berufung','Wofür bin ich hier?'],
-   'naehe':['Nähe','Warum wiederholt sich das?'],'unerlaubte':['Das Unerlaubte','Was traue ich mir nicht zu?'],
-   'wunder-punkt':['Der wunde Punkt','Was tut immer wieder weh?'],'herkunft':['Herkunft','Was läuft aus der Familie mit?'],
-   'anders-verdrahtet':['Anders verdrahtet','Warum ist Alltag so anstrengend?'],'zugehoerigkeit':['Zugehörigkeit','Warum fühle ich mich außen?'],
-   'alltag':['Alltag','Struktur, die hält'],'koerper':['Körper','Was braucht mein Körper?']};
-  if(ich&&ich.themen&&ich.themen.length){
-    return ich.themen.slice(0,3).map(function(t){ var r=ALLE[t]; if(!r) return '';
-      return '<a href="raum-'+t+'.html"><span><b>'+r[0]+'</b><br><span>'+r[1]+'</span></span><i>→</i></a>'; }).join('')+
-      '<a href="raeume.html"><span><b>Alle zehn Räume</b><br><span>Übersicht</span></span><i>→</i></a>';
-  }
-  var ALLE={};
-  try{ if(window.AC_SETUP) AC_SETUP.RAEUME.forEach(function(r){ ALLE[r[0]]=r; }); }catch(e){}
-  var gewaehlt=[];
-  try{ gewaehlt=window.AC_SETUP?AC_SETUP.themen():[]; }catch(e){}
-  var w=[];
-  if(gewaehlt.length){
-    gewaehlt.slice(0,3).forEach(function(k){
-      var r=ALLE[k]; if(r) w.push(['raum-'+r[0]+'.html', r[1], r[2]]);
-    });
-  } else {
-    var R=[['raum-selbstwert.html','Selbstwert','Warum nehme ich zu wenig?'],
-     ['raum-berufung.html','Berufung','Wofür bin ich hier?'],
-     ['raum-naehe.html','Nähe','Warum wiederholt sich das?'],
-     ['raum-anders-verdrahtet.html','Anders verdrahtet','Warum ist der Alltag so anstrengend?'],
-     ['raum-alltag.html','Alltag','Struktur, die hält'],
-     ['raum-herkunft.html','Herkunft','Was läuft aus der Familie mit?']];
-    var ZU={Saturn:0,Venus:0,Jupiter:1,Sonne:1,Mars:4,Merkur:3,Uranus:3,Mond:2,Pluto:5,Neptun:5};
-    var i=(b&&ZU[b.t]!==undefined)?ZU[b.t]:0;
-    w=[R[i], R[(i+3)%R.length]];
-  }
-  return w.map(function(x){
-    return '<a href="'+x[0]+'"><span><b>'+x[1]+'</b><br><span>'+x[2]+'</span></span><i>→</i></a>';
-  }).join('')+'<a href="raeume.html"><span><b>Alle zehn Räume</b><br><span>Übersicht</span></span><i>→</i></a>';
-}
-
-/* Ritualboard: was ansteht, was man dafür dahaben muss, ein Fakt des Tages */
-function ortVon(p){
-  if(!p) return {lat:52.52,lon:13.405};
-  var la=(p.wlat!==undefined&&p.wlat!==null)?p.wlat:p.lat;
-  var lo=(p.wlon!==undefined&&p.wlon!==null)?p.wlon:p.lon;
-  return {lat:la,lon:lo};
-}
-function boardZeigen(){
-  var box=document.getElementById('stboard'); if(!box) return;
-  if(!window.AC_BOARD||!window.AC_HIMMEL){ box.innerHTML=''; return; }
-  var p=eigen(), P=p?chartVon(p):null;
-  var knapp=false;
-  try{ knapp=(kapLesen()==='wenig'); }catch(e){}
-  try{ box.innerHTML=AC_BOARD.board(P, ortVon(p), knapp); }
-  catch(e){ box.innerHTML=''; }
-}
-function normalZeigen(){
-  document.getElementById('stankommen').innerHTML='';
-  document.getElementById('stnormal').style.display='';
-  /* Leseformat aus dem Ankommen anwenden */
-  try{
-    if(window.AC_SETUP){
-      var f=AC_SETUP.format()||'lang';
-      document.body.classList.remove('fmt-kurz','fmt-lang','fmt-visuell');
-      document.body.classList.add('fmt-'+f);
-      localStorage.setItem('ac_format', f);
+  /* Richtungswechsel — was demnächst wieder direkt läuft */
+  if(!knapp){
+    var st2=stationen(jd, 150).slice(0,3);
+    var rueck=jetztRueck(jd);
+    if(st2.length||rueck.length){
+      h+='<div class="rb-fakt"><div class="rb-k">Bewegung am Himmel</div>';
+      if(rueck.length){
+        h+='<p style="margin-bottom:10px;"><b>R\u00FCckl\u00E4ufig gerade:</b> '+rueck.join(', ')+'.</p>';
+      }
+      h+='<ul class="rb-st">'+st2.map(function(x){
+        var tg=Math.round(x.jd-jd);
+        var hs=P?((Math.floor(n360(x.lon)/30)-Math.floor(P.ASC/30))%12+12)%12+1:0;
+        return '<li><span class="w'+(x.direkt?'':' rueck')+'">'+
+          (x.direkt?'wieder direkt':'wird r\u00FCckl\u00E4ufig')+'</span> '+
+          '<b>'+x.planet+'</b> am '+tagKurz(x.jd)+' ('+(tg<=0?'heute':'in '+tg+' Tagen')+')'+
+          (P?' \u2014 in deinem '+hs+'. Haus: '+HFELD[hs-1]:'')+
+          '<span class="s">'+STATIONSATZ[x.planet][x.direkt?0:1]+'</span></li>';
+      }).join('')+'</ul></div>';
     }
-  }catch(e){}
-  boardZeigen();
-  datumZeigen();
-  himmelZeichnen();
-  unterZeigen();
-  kapZeigen();
-  inhaltZeigen();
+  }
+
+  /* Fakt des Tages — wechselt täglich */
+  if(!knapp){
+    var f=fakten(P,jd,st);
+    if(f.length){
+      var i=Math.floor(jd-0.5)%f.length;
+      h+='<div class="rb-fakt"><div class="rb-k">Gut zu wissen</div><p>'+f[i]+'</p></div>';
+    }
+  }
+  return h;
 }
 
-function start(){
-  var fertig=false, hatChart=false;
-  try{ fertig=window.AC_SETUP?AC_SETUP.fertig():false; }catch(e){}
-  try{ hatChart=!!(window.AC_P&&AC_P.eigenes()); }catch(e){}
-  if(!fertig&&!hatChart){ location.replace('ankommen.html'); return; }
-  normalZeigen();
-  bannerZeigen(fertig);
+window.AC_BOARD={board:board, lunationen:lunationen, fenster:fenster, fakten:fakten,
+  stationen:stationen, jetztRueck:jetztRueck};
+})();
+
+/* Astro-Charlie · Das Rad als Bedienfläche
+   ------------------------------------------------------------------
+   Ein Objekt, zwei Zustände. Auf „Ich" groß: jedes Haus ist anklickbar
+   und schaltet die Seite um. Auf „Heute" klein: ein äußerer Ring trägt
+   die laufenden Planeten, die Häuser, die gerade besetzt sind, leuchten.
+
+   Bewusst eigenständig neben rad.js: rad.js zeichnet Aspekte zum Lesen,
+   dieses hier ist Navigation. Zwei Aufgaben, zwei Zeichnungen.          */
+(function(){
+'use strict';
+var NSU='http://www.w3.org/2000/svg';
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function N(t,a,kind){ var e=document.createElementNS(NSU,t);
+  for(var k in a) e.setAttribute(k,a[k]);
+  if(kind!==undefined) e.textContent=kind;
+  return e; }
+
+var ZGLY=['♈','♉','♊','♋','♌','♍',
+          '♎','♏','♐','♑','♒','♓'];
+var PGLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',
+ Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',
+ Chiron:'⚷',Lilith:'⚸',ASC:'AC',MC:'MC'};
+var PFOLGE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+/* Elementfarben wie im übrigen System */
+var EFARBE=['#A05A3A','#3D6B62','#2E3A5C','#6A4A62'];
+
+function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
+
+/* Glyphen, die zu nah beieinander stünden, auseinanderschieben */
+function spreizen(werte, mindest){
+  var s=werte.map(function(w,i){ return {i:i, a:w, v:w}; });
+  s.sort(function(x,y){ return x.a-y.a; });
+  for(var runde=0; runde<120; runde++){
+    var ruhig=true;
+    for(var k=0;k<s.length;k++){
+      var j=(k+1)%s.length;
+      var d=nrm(s[j].v-s[k].v);
+      if(d<mindest && s.length>1){
+        var schub=(mindest-d)/2;
+        s[k].v=nrm(s[k].v-schub); s[j].v=nrm(s[j].v+schub); ruhig=false;
+      }
+    }
+    if(ruhig) break;
+  }
+  var raus=[]; s.forEach(function(x){ raus[x.i]=x.v; });
+  return raus;
 }
-function bannerZeigen(fertig){
-  var box=document.getElementById('stankommen'); if(!box) return;
-  if(fertig){ box.innerHTML=''; return; }
-  box.innerHTML='<a class="st-banner" href="ankommen.html">'+
-    '<span class="st-bi">✦</span>'+
-    '<span><b>Einmal kurz ankommen?</b><br>'+
-    '<span>Vier Fragen, damit sich die Seite nach dir richtet — wie du liest, wie viel Erklärung du brauchst, was dich beschäftigt.</span></span>'+
-    '<i>→</i></a>';
+
+/* opt: {el, chart, transit, gross, aufHaus(n), aktiv} */
+window.AC_KERNRAD=function(opt){
+  var host=opt.el; if(!host||!opt.chart) return null;
+  var P=opt.chart, T=opt.transit||null;
+  var gross=opt.gross!==false;
+  var aktiv=(opt.aktiv===undefined||opt.aktiv===null)?0:opt.aktiv;
+
+  var C=310, SEITE=620;
+  /* Außen die Transite, dann Zeichenband, dann Häuser, innen frei */
+  var R_T    = gross?296:300;    /* Transitring            */
+  var R_ZA   = gross?268:276;    /* Zeichenband außen      */
+  var R_ZI   = gross?236:244;    /* Zeichenband innen      */
+  var R_HA   = R_ZI;             /* Hausfeld außen         */
+  var R_HI   = gross?150:168;    /* Hausfeld innen         */
+  var R_PLT  = gross?198:208;    /* Radix-Glyphen          */
+
+  var basis=Math.floor(nrm(P.ASC)/30)*30;
+  function pos(l,r){ var w=(180+(nrm(l)-basis))*Math.PI/180;
+    return [C+r*Math.cos(w), C-r*Math.sin(w)]; }
+  function bogen(r,a1,a2,richtung){
+    var p1=pos(a1,r), p2=pos(a2,r);
+    return 'M'+p1[0].toFixed(1)+','+p1[1].toFixed(1)+
+      ' A'+r+','+r+' 0 0 '+(richtung||0)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+  }
+  function feld(rA,rI,a1,a2){
+    var pA1=pos(a1,rA), pA2=pos(a2,rA), pI2=pos(a2,rI), pI1=pos(a1,rI);
+    return 'M'+pA1[0].toFixed(1)+','+pA1[1].toFixed(1)+
+      ' A'+rA+','+rA+' 0 0 0 '+pA2[0].toFixed(1)+','+pA2[1].toFixed(1)+
+      ' L'+pI2[0].toFixed(1)+','+pI2[1].toFixed(1)+
+      ' A'+rI+','+rI+' 0 0 1 '+pI1[0].toFixed(1)+','+pI1[1].toFixed(1)+' Z';
+  }
+
+  /* Welche Häuser sind gerade von laufenden Planeten besetzt */
+  var heute={};
+  if(T) PFOLGE.forEach(function(k){
+    if(T[k]===undefined||T[k]===null) return;
+    heute[haus(P,T[k])]=(heute[haus(P,T[k])]||0)+1;
+  });
+
+  var svg=null;
+  function zeichnen(){
+    if(!svg){
+      svg=N('svg',{viewBox:'0 0 '+SEITE+' '+SEITE,role:'img',
+        'aria-label':'Dein Chart als Rad'+(T?' mit den laufenden Planeten außen':'')});
+      host.innerHTML=''; host.appendChild(svg);
+    }
+    svg.innerHTML='';
+    var ascZ=Math.floor(nrm(P.ASC)/30);
+
+    /* 1 — Hausfelder; sie sind die Bedienfläche */
+    for(var i=0;i<12;i++){
+      var hNr=i+1, a1=basis+i*30, a2=basis+(i+1)*30;
+      var g=N('g',{class:'kr-haus'+(aktiv===hNr?' ist':'')+(heute[hNr]?' heut':''),
+        'data-h':String(hNr)});
+      g.appendChild(N('path',{d:feld(R_HA,R_HI,a1,a2),class:'kr-hf'}));
+      var m=pos(a1+15,(R_HA+R_HI)/2);
+      g.appendChild(N('text',{x:m[0].toFixed(1),y:(m[1]+6).toFixed(1),
+        'text-anchor':'middle',class:'kr-hz'}, String(hNr)));
+      if(opt.aufHaus){
+        g.setAttribute('tabindex','0');
+        g.setAttribute('role','button');
+        g.setAttribute('aria-label',hNr+'. Haus');
+        g.style.cursor='pointer';
+        g.addEventListener('click',function(ev){
+          var n=+ev.currentTarget.getAttribute('data-h'); setzen(n); opt.aufHaus(n); });
+        g.addEventListener('keydown',function(ev){
+          if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault();
+            var n=+ev.currentTarget.getAttribute('data-h'); setzen(n); opt.aufHaus(n); } });
+      }
+      svg.appendChild(g);
+    }
+
+    /* 2 — Zeichenband. Auf kleinem, dunklem Grund weggelassen: Es trägt dort
+       nichts zur Frage bei, wo die Planeten relativ zu den Häusern stehen,
+       und die Elementfarben sind für Creme gemischt. */
+    if(opt.zeichenband!==false) for(var z=0;z<12;z++){
+      var zi=(ascZ+z)%12, b1=basis+z*30, b2=basis+(z+1)*30;
+      svg.appendChild(N('path',{d:feld(R_ZA,R_ZI,b1,b2),
+        fill:EFARBE[zi%4],opacity:'.88'}));
+      var zm=pos(b1+15,(R_ZA+R_ZI)/2);
+      svg.appendChild(N('text',{x:zm[0].toFixed(1),y:(zm[1]+7).toFixed(1),
+        'text-anchor':'middle',class:'kr-zg'}, ZGLY[zi]+'︎'));
+    }
+
+    /* 3 — Radix-Planeten */
+    var vorhanden=PFOLGE.filter(function(k){ return P[k]!==undefined&&P[k]!==null; });
+    var roh=vorhanden.map(function(k){ return nrm(P[k]); });
+    var breit=spreizen(roh, gross?8:11);
+    vorhanden.forEach(function(k,ix){
+      var echt=nrm(P[k]), zeig=breit[ix];
+      var a=pos(echt,R_HI), b=pos(zeig,R_PLT-13);
+      svg.appendChild(N('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),
+        x2:b[0].toFixed(1),y2:b[1].toFixed(1),class:'kr-strich'}));
+      var g=pos(zeig,R_PLT);
+      svg.appendChild(N('text',{x:g[0].toFixed(1),y:(g[1]+7).toFixed(1),
+        'text-anchor':'middle',class:'kr-pg'}, PGLY[k]));
+    });
+
+    /* 4 — Achsen */
+    [['AC',P.ASC],['MC',P.MC]].forEach(function(x){
+      if(x[1]===undefined) return;
+      var i1=pos(x[1],R_HI), a1=pos(x[1],R_ZI);
+      svg.appendChild(N('line',{x1:i1[0].toFixed(1),y1:i1[1].toFixed(1),
+        x2:a1[0].toFixed(1),y2:a1[1].toFixed(1),class:'kr-achse'}));
+      var l=pos(x[1],R_HI-16);
+      svg.appendChild(N('text',{x:l[0].toFixed(1),y:(l[1]+4).toFixed(1),
+        'text-anchor':'middle',class:'kr-al'}, x[0]));
+    });
+
+    /* 5 — Transitring außen */
+    if(T){
+      svg.appendChild(N('path',{d:bogen(R_T,basis+0.01,basis+180)+' '+
+        bogen(R_T,basis+180,basis+359.99),class:'kr-tring'}));
+      var th=PFOLGE.filter(function(k){ return T[k]!==undefined&&T[k]!==null; });
+      var tb=spreizen(th.map(function(k){ return nrm(T[k]); }), 11);
+      th.forEach(function(k,ix){
+        var p=pos(tb[ix],R_T);
+        svg.appendChild(N('circle',{cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:'11',class:'kr-tk'}));
+        svg.appendChild(N('text',{x:p[0].toFixed(1),y:(p[1]+5).toFixed(1),
+          'text-anchor':'middle',class:'kr-tg'}, PGLY[k]));
+      });
+    }
+  }
+
+  function setzen(n){
+    aktiv=n;
+    if(!svg) return;
+    Array.prototype.forEach.call(svg.querySelectorAll('.kr-haus'),function(g){
+      g.classList.toggle('ist', +g.getAttribute('data-h')===n); });
+  }
+
+  zeichnen();
+  return {setzen:setzen, neu:zeichnen, heute:heute,
+    haus:function(l){ return haus(P,l); }};
+};
+})();
+
+/* Astro-Charlie · Heute — nach Zeitdruck geordnet
+   Drei Bänder: was diese Stunde gilt, was diese Woche ein Datum hat,
+   und was monatelang läuft und nichts von dir will.                 */
+function nrm(x){x=x%360;return x<0?x+360:x;}
+function el(i){ return document.getElementById(i); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+ return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function zI(l){ return Math.floor(nrm(l)/30); }
+function gradKurz(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r),
+ m=Math.round((r-g)*60); if(m===60){g++;m=0;} return g+'°'+(m<10?'0':'')+m+'′'; }
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function uhr(jd){ return datVon(jd).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}); }
+function tagKurz(jd){ return datVon(jd).toLocaleDateString('de-DE',
+ {weekday:'short',day:'2-digit',month:'2-digit'}); }
+function jetztJD(){ var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),
+   n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600); }
+function tageBis(jd){ return Math.round(jd-jetztJD()); }
+
+var H_SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+ 'Schütze','Steinbock','Wassermann','Fische'];
+var H_HAUS=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Herkunft',
+ 'Ausdruck und Lust','Alltag und Körper','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite',
+ 'Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var H_GEN={Sonne:'der Sonne',Mond:'des Mondes',Merkur:'des Merkur',Venus:'der Venus',
+ Mars:'des Mars',Jupiter:'des Jupiter',Saturn:'des Saturn'};
+var PN=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc,_jd:jd};
 }
-start();
+function chartZu(jd){
+  var T=(jd-2451545)/36525;
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
+   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
+   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),_jd:jd};
+}
+function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
+
+var P=null, Q=null, O=null;
+
+function profil(){ try{ return AC_P.aktives()||AC_P.eigenes(); }catch(e){ return null; } }
+function ort(){
+  var p=profil();
+  if(!p) return {lat:52.52,lon:13.405,name:'Berlin'};
+  return {lat:(p.wlat!=null?p.wlat:p.lat), lon:(p.wlon!=null?p.wlon:p.lon),
+          name:p.wort||p.ort||''};
+}
+
+/* ── Band 1 · Jetzt ───────────────────────────────────────── */
+function jetztBauen(p){
+  var jd=jetztJD(), n=new Date();
+  el('httag').textContent=n.toLocaleDateString('de-DE',
+    {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var std=n.getHours();
+  var gruss=std<5?'Noch wach':(std<11?'Guten Morgen':(std<18?'Guten Tag':'Guten Abend'));
+  el('htgruss').innerHTML=gruss+', <em>'+esc(AC_P.anzeige(p,true))+'</em>.';
+
+  var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e){}
+  var mz=zI(Q.Mond), mh=haus(P,Q.Mond);
+  var ol=null; try{ ol=AC_HIMMEL.ohneLauf(jd); }catch(e){}
+
+  /* Der eine Satz, der jetzt gilt */
+  var satz='Der Mond steht in <b>'+H_SIGNS[mz]+'</b> und läuft damit durch dein <b>'+
+    mh+'. Haus</b> — '+H_HAUS[mh-1]+'. Das ist für die nächsten zwei Tage der Bereich, '+
+    'in dem du am ehesten etwas merkst.';
+  if(ol&&ol.leer) satz+=' Der Mond ist gerade <b>ohne Lauf</b> — bis '+
+    uhr(ol.bis)+' lohnt sich nichts, was ein Ergebnis haben soll.';
+  el('htsatz').innerHTML=satz;
+
+  var f=[];
+  if(st&&!st.polar) f.push(['Stunde',st.herr,'bis '+uhr(st.bis)]);
+  if(st&&!st.polar) f.push(['Tag',st.tagesherr,n.toLocaleDateString('de-DE',{weekday:'long'})]);
+  f.push(['Mond',H_SIGNS[mz],gradKurz(Q.Mond)]);
+  f.push(['Dein Haus',mh+'. Haus',H_HAUS[mh-1]]);
+  el('htfakten').innerHTML=f.map(function(x){
+    return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
+      '</div><div class="z">'+esc(x[2])+'</div></div>'; }).join('');
+}
+
+/* ── Band 2 · Diese Woche ─────────────────────────────────── */
+function wocheBauen(){
+  var jd=jetztJD(), e=[];
+
+  /* Planetenstunde endet */
+  var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e2){}
+  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute',
+    tt:'Die Stunde '+(H_GEN[st.herr]||st.herr)+' endet',
+    tx:'Planetenstunden sind der kleinste Taktgeber, den die Überlieferung kennt. '+
+       'Wenn du etwas unter '+st.herr+' stellen willst, ist jetzt das Fenster.',
+    wo:'zauber.html|Planetenstunden heute'});
+
+  /* Mond wechselt das Zeichen und damit dein Haus */
+  var zw=null; try{ zw=AC_HIMMEL.naechsterZeichenwechsel(jd); }catch(e2){}
+  if(zw){
+    var neuH=haus(P, zw.zeichen*30+1);
+    e.push({jd:zw.jd, wann:uhr(zw.jd), tag:tagKurz(zw.jd),
+      tt:'Der Mond wechselt in '+H_SIGNS[zw.zeichen],
+      tx:'Damit wandert er in dein <b>'+neuH+'. Haus</b> — '+H_HAUS[neuH-1]+'. '+
+         'Zweieinhalb Tage lang liegt dort die Aufmerksamkeit.',
+      wo:'uebersicht.html#h'+neuH+'|Das '+neuH+'. Haus ansehen'});
+  }
+
+  /* Lunationen mit Ritualfenster */
+  var lun=[]; try{ lun=AC_BOARD.lunationen(jd, jd+40)||[]; }catch(e2){}
+  lun.slice(0,3).forEach(function(l){
+    /* Die Lunation steht dort, wo der Mond steht: beim Neumond = Sonne,
+       beim Vollmond gegenüber. */
+    var ml=moonLon((l.jd-2451545)/36525);
+    var h=haus(P,ml);
+    e.push({jd:l.jd, wann:uhr(l.jd), tag:tagKurz(l.jd),
+      tt:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)],
+      tx:(l.art==='neu'
+        ? 'Der Anfang eines Zyklus, in deinem <b>'+h+'. Haus</b> — '+H_HAUS[h-1]+'. '+
+          'Dort lohnt es, jetzt etwas zu beginnen statt abzuschließen.'
+        : 'Hier wird sichtbar, was zum letzten Neumond angelegt wurde — in deinem <b>'+
+          h+'. Haus</b>, '+H_HAUS[h-1]+'.'),
+      mit:(l.art==='neu'
+        ? 'Kerze, Zettel und Stift. Einen Satz aufschreiben, was bis zum Vollmond passiert sein soll.'
+        : 'Eine Kerze, und etwas, das weg darf. Nicht mehr.'),
+      wo:'rituale.html|Das ganze Ritual'});
+  });
+
+  /* Stationen: Planeten, die drehen */
+  var stn=[]; try{ stn=AC_BOARD.stationen(jd, 21)||[]; }catch(e2){}
+  stn.forEach(function(s){
+    var h=haus(P,s.lon);
+    e.push({jd:s.jd, wann:tageBis(s.jd)<=0?'heute':'in '+tageBis(s.jd)+' T.', tag:tagKurz(s.jd),
+      tt:s.planet+(s.direkt?' läuft wieder direkt':' wird rückläufig'),
+      tx:'In deinem <b>'+h+'. Haus</b> — '+H_HAUS[h-1]+'. '+
+        (s.direkt
+         ? 'Was dort seit Wochen zäh war, nimmt wieder Fahrt auf. Nicht sofort, aber merklich.'
+         : 'Dort wird es für eine Weile zäher. Nichts Neues anfangen, was dort hängt — überarbeiten ja.'),
+      wo:'uebersicht.html#h'+h+'|Das '+h+'. Haus ansehen'});
+  });
+
+  e.sort(function(a,b){ return a.jd-b.jd; });
+  e=e.filter(function(x){ return x.jd>=jd-0.02 && x.jd<=jd+10; }).slice(0,7);
+  if(!e.length){ el('htwoche').innerHTML='<p class="ht-nix">In den nächsten zehn Tagen '+
+    'steht nichts Datiertes an. Das kommt vor und ist eine gute Nachricht.</p>'; return; }
+  el('htwoche').innerHTML=e.map(function(x){
+    var wo='';
+    if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
+    return '<div class="we'+(x.jetzt?' jetzt':'')+'">'+
+      '<div class="wann"><b>'+esc(x.wann)+'</b>'+esc(x.tag)+'</div>'+
+      '<div class="tt">'+esc(x.tt)+'</div><div class="tx">'+x.tx+'</div>'+
+      (x.mit?'<div class="mit"><b>Dafür brauchst du</b>'+esc(x.mit)+'</div>':'')+wo+'</div>';
+  }).join('');
+}
+
+/* ── Band 3 · Läuft ───────────────────────────────────────── */
+function laeuftBauen(){
+  var jd=jetztJD(), zeilen=[];
+  ['Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
+    if(Q[k]===undefined) return;
+    var h=haus(P,Q[k]);
+    var a=(jd-30-2451545)/36525, b=(jd+30-2451545)/36525;
+    var rw=nrm(geo(k,b)-geo(k,a))>180;
+    /* Wie lange bleibt er noch in diesem Zeichen — Neptun und Pluto
+       brauchen mehr als zehn Jahre Vorlauf, deshalb der weite Rahmen. */
+    var ende=null;
+    for(var t=jd; t<jd+7300; t+=5){
+      if(zI(geo(k,(t-2451545)/36525))!==zI(Q[k])){ ende=t; break; }
+    }
+    var mon=ende?Math.round((ende-jd)/30.44):null;
+    var bleibt = mon===null ? 'noch über 20 Jahre'
+      : mon<1  ? 'wechselt in Kürze'
+      : mon<24 ? 'noch gut '+(mon<2?'einen Monat':mon+' Monate')
+      : 'noch gut '+Math.round(mon/12)+' Jahre';
+    zeilen.push('<div class="lf"><div class="p">'+k+(rw?' <i>℞</i>':'')+'</div>'+
+      '<div class="w">'+H_SIGNS[zI(Q[k])]+' '+gradKurz(Q[k])+'<br>'+bleibt+
+        (rw?', rückläufig':'')+'</div>'+
+      '<div class="d"><a href="uebersicht.html#h'+h+'">'+h+'. Haus</a> — '+H_HAUS[h-1]+
+        '.</div></div>');
+  });
+  el('htlaeuft').innerHTML=zeilen.join('');
+}
+
+/* ── Rad ──────────────────────────────────────────────────── */
+function radBauen(){
+  window.AC_KERNRAD({el:el('htrad'), chart:P, transit:Q, gross:false, zeichenband:false});
+}
+
+/* ── Kapazität ────────────────────────────────────────────── */
+var KAP='ac_kap_heute';
+function kapHeute(){
+  try{ var d=JSON.parse(localStorage.getItem(KAP)||'null'), n=new Date();
+    if(d&&d.d===n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate()) return d.s;
+  }catch(e){} return null;
+}
+function kapSetzen(s){
+  try{ var n=new Date();
+    localStorage.setItem(KAP,JSON.stringify({d:n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate(),s:s}));
+  }catch(e){}
+  kapBauen(); anwenden();
+}
+function kapBauen(){
+  var a=kapHeute();
+  el('htkapr').innerHTML=[['wenig','ein Satz'],['mittel','das Wichtigste'],['viel','alles']]
+    .map(function(x){
+      return '<button type="button" class="kb'+(a===x[0]?' ist':'')+'" data-k="'+x[0]+'">'+
+        '<span class="n">'+x[0].charAt(0).toUpperCase()+x[0].slice(1)+'</span>'+
+        '<span class="u">'+x[1]+'</span></button>'; }).join('');
+  Array.prototype.forEach.call(el('htkapr').querySelectorAll('.kb'),function(b){
+    b.addEventListener('click',function(){ kapSetzen(b.getAttribute('data-k')); });
+  });
+}
+/* Bei „wenig" bleibt nur das erste Band stehen */
+function anwenden(){
+  var a=kapHeute(), knapp=(a==='wenig');
+  ['htwocheteil','htlaeuftteil'].forEach(function(i){
+    var e=el(i); if(e) e.hidden=knapp; });
+}
+
+/* ── Start ────────────────────────────────────────────────── */
+(function(){
+  var p=profil();
+  if(!p){
+    el('htinhalt').innerHTML='<div class="ht-leer">Noch kein Profil angelegt. '+
+      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und Geburtsort '+
+      'kann diese Seite den Himmel nicht auf dich beziehen.</div>';
+    var j=el('htjetzt'); if(j) j.hidden=true;
+    return;
+  }
+  P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
+  jetztBauen(p); radBauen(); wocheBauen(); laeuftBauen(); kapBauen(); anwenden();
+  setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p); }, 60000);
+})();
 
 </script>
 </body></html>
