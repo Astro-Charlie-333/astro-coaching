@@ -1,0 +1,109 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+
+<div class="zt-wrap">
+<div class="zt-kopf">
+  <h1>Die <em>Hochphasen.</em></h1>
+  <p class="zt-lede">Wann kommt etwas, und wann ist Ruhe? Diese Seite rechnet die <b>zodiakale Freilassung</b> &mdash; ein hellenistisches Verfahren, das ein Leben in Kapitel teilt und sagt, welche davon betriebsam sind. Einmal f&uuml;r die <b>Arbeit</b>, gerechnet vom Los des Geistes, und einmal f&uuml;r die <b>Liebe</b>, gerechnet vom Los des Eros.</p>
+  <p class="zt-lede">Dazu zwei weitere Verfahren, die dasselbe Jahr aus anderer Richtung ansehen: die <b>Jahresprofektion</b> und die <b>Firdaria</b>. Wo sie sich decken, lohnt das Hinsehen. Wo nicht, auch &mdash; dann ist das Jahr nicht eindeutig.</p>
+</div>
+
+<div id="nivleiste"></div>
+
+<nav class="zt-sprung" aria-label="Zu den Abschnitten">
+  <a href="#jetzt">Jetzt gerade</a>
+  <a href="#linie">Deine Lebenslinie</a>
+  <a href="#gipfel">N&auml;chste Hochphasen</a>
+  <a href="#schnitte">Die Einschnitte</a>
+  <a href="#alle">Alle Abschnitte</a>
+  <a href="#rechnung">Wie das gerechnet wird</a>
+</nav>
+
+<div class="zt-einst">
+  <div class="zt-reihe"><span class="k">Wer</span><div class="zt-knoepfe" id="ztpersonen"></div></div>
+  <div class="zt-reihe"><span class="k">Stichtag</span>
+    <input class="zt-feld" id="ztdatum" type="date">
+    <button type="button" class="zt-knopf" id="ztheute">Heute</button>
+    <p class="zt-hint">Du kannst jeden Tag einstellen &mdash; r&uuml;ckw&auml;rts, um zu pr&uuml;fen, ob die Rechnung zu dem passt, was wirklich war, und vorw&auml;rts, um zu planen.</p>
+  </div>
+  <div class="zt-reihe" data-ab="3"><span class="k">Eros</span>
+    <div class="zt-knoepfe" id="ztvariante"></div>
+    <p class="zt-hint">F&uuml;r das Los des Eros gibt es zwei &Uuml;berlieferungen, die sich genau spiegeln. Die Seite rechnet nach Paulus und Olympiodor; die andere Fassung kannst du dagegenhalten.</p>
+  </div>
+</div>
+
+<!-- 1 ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="jetzt">
+  <h2>Jetzt gerade</h2>
+  <p class="u">Vier Verfahren auf denselben Tag gelegt.</p>
+  <div id="ztjetzt"></div>
+</section>
+
+<!-- 2 ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="linie">
+  <h2>Deine Lebenslinie</h2>
+  <p class="u">Oben die Arbeit, unten die Liebe. Breite Balken sind die gro&szlig;en Kapitel, der schmale Streifen darunter ihre Unterabschnitte. <b>Gold</b> hei&szlig;t Hochphase, <b>gr&uuml;n</b> mittlere Phase, <b>grau</b> ruhige Phase. Im Streifen sind nur die Hochphasen eingef&auml;rbt &mdash; so siehst du, wann es <i>innerhalb</i> eines Kapitels betriebsam wird. Die Rauten sind die Einschnitte, die Linie ist dein Stichtag.</p>
+  <div class="zt-linie-box" id="ztlinie"></div>
+  <div class="zt-legende" id="ztlegende"></div>
+  <p class="zt-hint" id="ztlinie-hint"></p>
+  <div id="ztdetail"></div>
+</section>
+
+<!-- 3 ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="gipfel">
+  <h2>Die n&auml;chsten Hochphasen</h2>
+  <p class="u">Abschnitte, deren Zeichen im Winkel zum Los des Gl&uuml;cks steht. Das sind die betriebsamen Zeiten &mdash; nicht automatisch die sch&ouml;nen, aber die mit Folgen.</p>
+  <div id="ztgipfel"></div>
+</section>
+
+<!-- 4 ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="schnitte">
+  <h2>Die Einschnitte</h2>
+  <p class="u">Die <i>L&ouml;sung der Bindung</i>: Stellen, an denen die Reihe ins Gegenzeichen springt, statt von vorn zu beginnen. In der &Uuml;berlieferung die gro&szlig;en Wendepunkte eines Lebens.</p>
+  <div id="ztschnitte"></div>
+</section>
+
+<!-- 5 ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="alle">
+  <h2>Alle Abschnitte</h2>
+  <p class="u">Die vollst&auml;ndige Reihe zum Nachlesen und Gegenpr&uuml;fen.</p>
+  <div class="zt-filter" id="ztwelche"></div>
+  <div id="zttabelle"></div>
+</section>
+
+<!-- 6 ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="rechnung">
+  <div class="zt-ehrlich">
+    <h2>Wie das gerechnet wird &mdash; und was es wert ist</h2>
+    <p>Die zodiakale Freilassung steht bei <b>Vettius Valens</b> im zweiten Jahrhundert. Sie wurde mit der hellenistischen Astrologie vergessen und erst in den letzten Jahrzehnten aus den Handschriften zur&uuml;ckgeholt. Was hier gerechnet wird, ist also eine Rekonstruktion &mdash; gut belegt, aber nicht ununterbrochen &uuml;berliefert.</p>
+
+    <h4>Der Rechenweg</h4>
+    <p>Vom Zeichen des Loses aus bekommt jedes Zeichen in Zeichenfolge eine feste Zahl von Jahren: Widder 15, Stier 8, Zwillinge 20, Krebs 25, L&ouml;we 19, Jungfrau 20, Waage 8, Skorpion 15, Sch&uuml;tze 12, Steinbock 27, Wassermann 30, Fische 12. Das sind die kleinen Jahre der Zeichenherren. Gerechnet wird in Jahren zu 360 Tagen. Auf der zweiten Ebene stehen dieselben Zahlen, nur als Monate &mdash; ein voller Umlauf dauert dort <b>211 Monate</b>, also gut siebzehneinhalb Jahre. Nur Abschnitte, die l&auml;nger sind, kommen &uuml;berhaupt zu einer L&ouml;sung der Bindung.</p>
+
+    <h4>Warum das Los des Gl&uuml;cks den Ausschlag gibt</h4>
+    <p>Freigelassen wird vom Los des Geistes oder vom Los des Eros, aber ob ein Abschnitt betriebsam ist, entscheidet seine Stellung zum <b>Los des Gl&uuml;cks</b>. Vier der zw&ouml;lf Zeichen stehen im Winkel dazu, vier folgend, vier fallend. Ein Drittel eines Lebens f&auml;llt also rechnerisch in Hochphasen &mdash; das ist kein seltener Zustand, und so sollte es auch gelesen werden.</p>
+
+    <h4>Was die Seite nicht behauptet</h4>
+    <p>Eine Hochphase sagt, dass viel passiert, nicht dass es gut wird. Valens selbst beschreibt diese Abschnitte als die ereignisreichen, und darunter fallen Aufstieg und Zusammenbruch gleicherma&szlig;en. Wer eine Hochphase als Versprechen liest, liest sie falsch.</p>
+    <p>Und: Es gibt keinen Beleg daf&uuml;r, dass dieses Verfahren Ereignisse vorhersagt. Es ist auch nicht &uuml;berpr&uuml;ft worden. Was f&uuml;r die Arbeit mit Menschen trotzdem brauchbar ist: Es gibt einem Leben eine <b>Gliederung</b> &mdash; und die Frage „was war in diesen Jahren bei dir los" &ouml;ffnet ein Gespr&auml;ch zuverl&auml;ssiger als jede Deutung. Pr&uuml;f es r&uuml;ckw&auml;rts an deinem eigenen Leben, bevor du es vorw&auml;rts benutzt. Der Stichtag oben l&auml;sst sich auf jedes Datum stellen.</p>
+
+    <h4>Die Geburtszeit entscheidet mit</h4>
+    <p id="ztzeitwarnung">Alle drei Lose h&auml;ngen am Aszendenten, und der wandert in vier Minuten um ein Grad. Eine ungenaue Geburtszeit verschiebt die Lose und damit die ganze Reihe &mdash; bei einer Stunde Unsicherheit um bis zu ein halbes Zeichen.</p>
+  </div>
+</section>
+
+<div class="zt-werk">
+  <button type="button" id="ztkopie">Zeitplan kopieren</button>
+  <button type="button" class="leicht" id="ztdruck">Drucken</button>
+  <span class="zt-echo" id="ztecho"></span>
+</div>
+
+<div class="weiter"><a href="analyse.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Die Analyse &mdash; Themen statt Zeiten</span></a><a href="timing.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Timing &mdash; die kurzen Zyklen daneben</span></a></div>
+<div class="foot">Zeiten &middot; Zodiakale Freilassung nach Vettius Valens, H&auml;user im Whole-Sign-System, Jahre zu 360 Tagen.<br>
+Die Rechnung liegt im Quelltext unter <i>zeit/zeit-rechner.js</i> und ist einzeln gepr&uuml;ft &mdash; Lose, Perioden, L&ouml;sung der Bindung, Profektion und Firdaria.</div>
+</div>

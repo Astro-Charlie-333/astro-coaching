@@ -28,6 +28,8 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'analyse-stil.css')
         + lies(rit / 'engine.js') + "\n"
         + lies(hier / 'engine.js') + "\n"
         + lies(hier / 'thema-paar.js') + "\n"
+        + lies(hier / 'thema-zusammen.js') + "\n"
+        + lies(hier / 'thema-beruf.js') + "\n"
         + lies(hier / 'thema-rest.js') + "\n"
         + lies(hier / 'analyse-app.js')
         + "\n</script>\n</body></html>\n")
@@ -39,7 +41,12 @@ fehler, hinweise = [], []
 koerper = lies(hier / 'analyse-koerper.html')
 app = lies(hier / 'analyse-app.js')
 paar = lies(hier / 'thema-paar.js')
+zus  = lies(hier / 'thema-zusammen.js')
+bruf = lies(hier / 'thema-beruf.js')
 rest = lies(hier / 'thema-rest.js')
+THEMENDATEIEN = ((paar, 'thema-paar'), (zus, 'thema-zusammen'),
+                 (bruf, 'thema-beruf'), (rest, 'thema-rest'))
+alletexte = paar + zus + bruf + rest
 kern = lies(hier / 'engine.js')
 
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
@@ -59,30 +66,66 @@ def oben(t):
     return set(re.findall(r'^(?:var|function)\s+([A-Za-z_$][\w$]*)', t, re.M))
 
 
-koll = (oben(app) | oben(paar) | oben(rest) | oben(kern)) & oben(lies(rit / 'engine.js')) - ERLAUBT
+koll = (oben(app) | oben(paar) | oben(zus) | oben(bruf) | oben(rest) | oben(kern)) \
+       & oben(lies(rit / 'engine.js')) - ERLAUBT
 if koll:
     fehler.append('Namenskollision mit der Rechen-Engine: ' + ', '.join(sorted(koll)))
 
 # Jede Regel braucht id, wenn, dann — und eine id darf nur einmal vorkommen
-alle_ids = re.findall(r"\{id:'([\w-]+)'", paar + rest)
+alle_ids = re.findall(r"\{id:'([\w-]+)'", alletexte)
 dopp = {i for i in alle_ids if alle_ids.count(i) > 1}
 if dopp:
     fehler.append('doppelte Regel-ids: ' + ', '.join(sorted(dopp)))
-for block, name in ((paar, 'thema-paar'), (rest, 'thema-rest')):
+for block, name in THEMENDATEIEN:
     for m in re.finditer(r"\{id:'([\w-]+)'([^\n]*)", block):
         if 'modus:' not in m.group(2):
             fehler.append(f'{name}: Regel {m.group(1)} ohne modus')
 n_regeln = len(alle_ids)
-if n_regeln < 25:
+if n_regeln < 95:
     fehler.append(f'nur {n_regeln} Regeln insgesamt')
 
 # Kleinschreibung in Regeltexten erzeugt im Deutschen fast immer einen Fehler
 # („immer wieder um zuhause geht") — jeder bisherige Fall war einer.
-for block, name in ((paar, 'thema-paar'), (rest, 'thema-rest')):
+for block, name in THEMENDATEIEN:
     for m in re.finditer(r'\.toLowerCase\(\)', block):
         zeile = block[:m.start()].count('\n') + 1
         fehler.append(f'{name}.js Zeile {zeile}: toLowerCase im Regeltext — '
                       'deutsche Substantive bleiben groß')
+
+# Formen und Felder müssen zusammenpassen — eine Form ohne Felder
+# würde still auf den Vorgabewert zurückfallen.
+for block, name in THEMENDATEIEN:
+    for m in re.finditer(r'var\s+(T_\w+)\s*=\s*\{', block):
+        tname = m.group(1)
+        kopfblock = block[m.end(): m.end() + 2600]
+        formen = re.findall(r"\{k:'(\w+)',\s*n:'", kopfblock.split('felder:')[0])
+        if not formen:
+            continue
+        fmatch = re.search(r'felder:\s*\{(.*?)\}', kopfblock, re.S)
+        if not fmatch:
+            fehler.append(f'{tname}: hat Formen, aber kein felder')
+            continue
+        felder = set(re.findall(r'(\w+)\s*:\s*\[', fmatch.group(1)))
+        fehlend = [f for f in formen if f not in felder]
+        if fehlend:
+            fehler.append(f'{tname}: Formen ohne Felder — ' + ', '.join(fehlend))
+        ueberzaehlig = [f for f in felder if f not in formen]
+        if ueberzaehlig:
+            fehler.append(f'{tname}: Felder ohne Form — ' + ', '.join(ueberzaehlig))
+        # nurForm / ohneForm dürfen nur bekannte Formen nennen
+        for mm in re.finditer(r"(nurForm|ohneForm):\s*\[([^\]]*)\]", block):
+            genannt = re.findall(r"'(\w+)'", mm.group(2))
+            unbekannt = [g for g in genannt if g not in felder and g not in formen]
+            if unbekannt and tname in ('T_PAAR', 'T_ZUSAMMEN', 'T_BERUF'):
+                pass   # je Datei geprüft, s.u.
+
+for block, name in THEMENDATEIEN:
+    alleformen = set(re.findall(r"\{k:'(\w+)',\s*n:'", block))
+    for mm in re.finditer(r"(nurForm|ohneForm):\s*\[([^\]]*)\]", block):
+        for g in re.findall(r"'(\w+)'", mm.group(2)):
+            if g not in alleformen:
+                fehler.append(f'{name}: {mm.group(1)} nennt die Form "{g}", '
+                              'die es in dieser Datei nicht gibt')
 
 for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper))):
     if not (wiki / href).exists():
@@ -114,39 +157,63 @@ const start=await p.evaluate(()=>({
   befunde:document.querySelectorAll('.an-b').length,
   breit:document.body.scrollWidth}));
 
-/* Alle Themen × mehrere Paarungen */
-let min=99, max=0, leer=0, laeufe=0, regelFehler='';
-const gesehen=new Set();
+async function lage(){
+  return p.evaluate(()=>({
+    n:document.querySelectorAll('.an-b').length,
+    erg:(document.querySelector('.an-erg .gr')||{}).textContent||'',
+    titel:[...document.querySelectorAll('.an-b h3')].map(x=>x.textContent).join('|'),
+    fehler:(document.getElementById('anfehler')||{}).textContent||'',
+    schlecht:/undefined|NaN|\[object|\{A\}|\{B\}|ihr ihr/.test(document.body.innerText),
+    waage:!!document.querySelector('.w-bar'),
+    breit:document.body.scrollWidth}));
+}
+
+/* Alle Themen × mehrere Paarungen × alle Formen */
+let min=1e9, max=0, leer=0, laeufe=0, regelFehler='';
+const gesehen=new Set(); const formWirkt={}; const formZahl={};
 for(const t of themen){
   await p.evaluate(t=>document.querySelector('.th[data-t="'+t+'"]').click(), t);
-  await p.waitForTimeout(160);
-  for(let k=1;k<Math.min(liste.length,9);k++){
-    const hatB=await p.evaluate(k=>{
-      const bs=[...document.querySelectorAll('.pb[data-w="b"]')];
-      if(!bs.length) return false; bs[k%bs.length].click(); return true; }, k);
-    if(!hatB){
-      await p.evaluate(k=>{const as=[...document.querySelectorAll('.pb[data-w="a"]')];
-        as[k%as.length].click();}, k);
+  await p.waitForTimeout(170);
+  const formen=await p.evaluate(()=>[...document.querySelectorAll('.fb')].map(x=>x.dataset.f));
+  formZahl[t]=formen.length;
+  const proForm={};
+  for(const fm of (formen.length?formen:[null])){
+    if(fm) await p.evaluate(fm=>document.querySelector('.fb[data-f="'+fm+'"]').click(), fm);
+    await p.waitForTimeout(140);
+    for(let k=1;k<Math.min(liste.length,7);k++){
+      const hatB=await p.evaluate(k=>{
+        const bs=[...document.querySelectorAll('.pb[data-w="b"]')];
+        if(!bs.length) return false; bs[k%bs.length].click(); return true; }, k);
+      if(!hatB){
+        await p.evaluate(k=>{const as=[...document.querySelectorAll('.pb[data-w="a"]')];
+          as[k%as.length].click();}, k);
+      }
+      await p.waitForTimeout(140); laeufe++;
+      const r=await lage();
+      if(r.fehler) regelFehler=r.fehler;
+      if(r.schlecht) f.push('undefined/NaN bei '+t+'/'+fm+'/'+k);
+      if(r.breit>390) f.push('Überlauf '+r.breit+' bei '+t+'/'+fm);
+      if(r.n===0) leer++;
+      if(r.n<min) min=r.n; if(r.n>max) max=r.n;
+      if(r.erg) gesehen.add(t+'::'+r.erg);
+      if(fm&&k===1) proForm[fm]=r.titel;
     }
-    await p.waitForTimeout(150); laeufe++;
-    const r=await p.evaluate(()=>({
-      n:document.querySelectorAll('.an-b').length,
-      erg:(document.querySelector('.an-erg .gr')||{}).textContent||'',
-      fehler:(document.getElementById('anfehler')||{}).textContent||'',
-      schlecht:/undefined|NaN|\[object|\{A\}|\{B\}/.test(document.body.innerText),
-      breit:document.body.scrollWidth}));
-    if(r.fehler) regelFehler=r.fehler;
-    if(r.schlecht) f.push('undefined/NaN bei '+t+'/'+k);
-    if(r.breit>390) f.push('Überlauf '+r.breit+' bei '+t+'/'+k);
-    if(r.n===0) leer++;
-    if(r.n<min) min=r.n; if(r.n>max) max=r.n;
-    if(r.erg) gesehen.add(t+'::'+r.erg);
+  }
+  /* Die Form muss die Befunde wirklich verändern, nicht nur den Knopf */
+  if(formen.length){
+    const werte=Object.values(proForm);
+    formWirkt[t]=new Set(werte).size;
   }
 }
-/* Bericht ziehen */
+/* Bericht ziehen — mit einem Thema, das Formen hat, sonst steht keine drin */
+await p.evaluate(()=>document.querySelector('.th[data-t="zusammen"]').click());
+await p.waitForTimeout(260);
+await p.evaluate(()=>{const b=document.querySelector('.pb[data-w="b"]'); if(b) b.click();});
+await p.waitForTimeout(260);
 const bericht=await p.evaluate(()=>typeof berichtText==='function'?berichtText():'');
-console.log(JSON.stringify({themen,start,min,max,leer,laeufe,
+console.log(JSON.stringify({themen,start,min,max,leer,laeufe,formWirkt,formZahl,
   ergebnisse:[...gesehen].length, regelFehler, berichtLaenge:bericht.length,
+  berichtForm:/·/.test(bericht.split('\n')[0]),
   fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
@@ -165,8 +232,18 @@ if pr:
         fehler.append(f_)
     if pr['regelFehler']:
         fehler.append('Regel wirft Fehler — ' + pr['regelFehler'][:180])
-    if len(pr['themen']) != 4:
-        fehler.append(f'{len(pr["themen"])} statt 4 Themen')
+    if len(pr['themen']) != 5:
+        fehler.append(f'{len(pr["themen"])} statt 5 Themen')
+    # Die gewählte Form muss die Befunde ändern, sonst ist sie Zierde
+    for th, verschieden in pr['formWirkt'].items():
+        if pr['formZahl'].get(th, 0) > 1 and verschieden < 2:
+            fehler.append(f'Thema {th}: die Form ändert an den Befunden nichts '
+                          f'({pr["formZahl"][th]} Formen, {verschieden} verschiedene Ergebnisse)')
+    for th, z in pr['formZahl'].items():
+        if th in ('paar', 'zusammen', 'beruf') and z < 4:
+            fehler.append(f'Thema {th} hat nur {z} Formen')
+    if not pr['berichtForm']:
+        fehler.append('der Bericht nennt die gewählte Form nicht')
     if not pr['start']['erg']:
         fehler.append('beim Start kommt kein Ergebnis')
     if pr['start']['befunde'] < 6:
@@ -175,7 +252,7 @@ if pr:
         fehler.append(f'{pr["leer"]} von {pr["laeufe"]} Läufen ohne einen einzigen Befund')
     if pr['min'] < 3:
         fehler.append(f'ein Lauf brachte nur {pr["min"]} Befunde')
-    if pr['ergebnisse'] < 5:
+    if pr['ergebnisse'] < 9:
         fehler.append(f'nur {pr["ergebnisse"]} verschiedene Ergebnisse über alle Läufe — '
                       'die Rechnung unterscheidet zu wenig')
     if pr['berichtLaenge'] < 800:
@@ -184,6 +261,8 @@ if pr:
           '%d verschiedene Ergebnisse, Bericht %d Zeichen'
           % (pr['laeufe'], len(pr['themen']), pr['min'], pr['max'],
              pr['ergebnisse'], pr['berichtLaenge']))
+    print('    Formen je Thema: %s' % pr['formZahl'])
+    print('    davon wirksam (verschiedene Befunde): %s' % pr['formWirkt'])
 
 print(f'analyse.html  {ziel.stat().st_size:,} Bytes  →  {ziel}')
 print(f'  {n_regeln} Regeln')

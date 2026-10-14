@@ -73,10 +73,12 @@ var I_INDEX=[
   {s:'retrograde.html', t:'Rückläufig', w:'Was es heißt, wenn ein Planet bei deiner Geburt rückwärts lief.'},
   {s:'profil-ansicht.html', t:'Profil-Ansicht', w:'Dasselbe Bild für jede andere Person deiner Liste.'},
   {s:'bazi.html', t:'Andere Linsen', w:'Vier Säulen, Human Design und was sie anders sehen.'},
+  {s:'zahlen.html', t:'Deine Zahlen', w:'Lebenszahl, Namenszahlen und was die Hausnummer macht — mit dem, was die Schulen trennt.', neu:1},
   {s:'haeusersysteme.html', t:'Häusersysteme', w:'Whole Sign oder Placidus — was sich ändert und was nicht.'},
   {s:'siderisch.html', t:'Siderisch', w:'Dein Chart tropisch und vedisch nebeneinander.'},
   {s:'ophiuchus.html', t:'Ophiuchus', w:'Das dreizehnte Zeichen, durchgerechnet — in vier Systemen.', neu:1}]},
  {g:'Was gerade läuft', e:[
+  {s:'zeiten.html', t:'Deine Hochphasen', w:'Zodiakale Freilassung: wann im Leben viel los ist — für Arbeit und für Liebe getrennt.', neu:1},
   {s:'index.html', t:'Heute', w:'Was diese Stunde, diese Woche und diesen Monat läuft.'},
   {s:'solar-return-light.html', t:'Dein Jahr', w:'Das Solar — was die nächsten zwölf Monate ansagen.'},
   {s:'solar-return-vertiefung.html', t:'Solar vertieft', w:'Dasselbe Jahr genauer, mit Herrschern und Achsen.'},

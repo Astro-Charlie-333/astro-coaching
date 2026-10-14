@@ -6,7 +6,17 @@ function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,f
  return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
 
 var E=window.AC_ENGINE, H=E.H;
-var themaK='paar', aId=null, bId=null, form='liebe', letzte=null;
+var themaK='paar', aId=null, bId=null, letzte=null;
+/* Die gewählte Form wird je Thema gemerkt — wer bei Paaren „Geschwister"
+   eingestellt hat, soll sie beim Zurückwechseln wiederfinden. */
+var formen={};
+function formVon(T){
+  if(!T.formen||!T.formen.length) return null;
+  var f=formen[T.schluessel];
+  var gibts=T.formen.filter(function(x){ return x.k===f; }).length>0;
+  if(!gibts){ f=T.formen[0].k; formen[T.schluessel]=f; }
+  return f;
+}
 
 function chartVon(p){
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
@@ -54,11 +64,15 @@ function personenBauen(){
   }
   var h=reihe('a', aId, T.modus==='solo'?'Person':'Zwischen');
   if(zwei) h+=reihe('b', bId, 'und');
-  if(themaK==='paar'){
-    h+='<div class="an-zeile"><span class="lab">Als</span><div class="an-knoepfe">'+
+  if(T.formen&&T.formen.length){
+    var f0=formVon(T);
+    h+='<div class="an-zeile"><span class="lab">'+esc(T.formLabel||'Als')+'</span>'+
+      '<div class="an-knoepfe">'+
       T.formen.map(function(f){
-        return '<button type="button" class="fb'+(f.k===form?' ist':'')+'" data-f="'+f.k+
-          '" title="'+esc(f.t)+'">'+esc(f.n)+'</button>'; }).join('')+'</div></div>';
+        return '<button type="button" class="fb'+(f.k===f0?' ist':'')+'" data-f="'+f.k+
+          '" title="'+esc(f.t)+'">'+esc(f.n)+'</button>'; }).join('')+'</div>'+
+      '<p class="an-hint">'+esc((T.formen.filter(function(x){return x.k===f0;})[0]||{}).t||'')+
+      '</p></div>';
   }
   el('antpersonen').innerHTML=h;
   Array.prototype.forEach.call(el('antpersonen').querySelectorAll('.pb'),function(b){
@@ -68,7 +82,8 @@ function personenBauen(){
       personenBauen(); rechnen(); });
   });
   Array.prototype.forEach.call(el('antpersonen').querySelectorAll('.fb'),function(b){
-    b.addEventListener('click',function(){ form=b.getAttribute('data-f'); personenBauen(); rechnen(); });
+    b.addEventListener('click',function(){ formen[themaK]=b.getAttribute('data-f');
+      personenBauen(); rechnen(); });
   });
 }
 
@@ -91,7 +106,11 @@ function rechnen(){
     el('anbefunde').innerHTML=''; el('anwerk').hidden=true; return; }
 
   var A=chartVon(pa), B=pb?chartVon(pb):null;
-  var N={a:nameVon(pa), b:pb?nameVon(pb):''};
+  var f=formVon(T);
+  var fObj=f?(T.formen.filter(function(x){return x.k===f;})[0]||null):null;
+  var N={a:nameVon(pa), b:pb?nameVon(pb):'',
+         form:f, formName:fObj?fObj.n:'', formText:fObj?fObj.t:'',
+         felder:(T.felder&&f&&T.felder[f])||T.felder||[]};
   var r=E.lauf(T.regeln, A, B, N);
   var g=E.gruppen(r.treffer, T.grenzen||{});
   var erg=T.ergebnis?T.ergebnis(r.treffer, A, B, H, N):null;
@@ -104,15 +123,18 @@ function rechnen(){
       '<div class="k">Das Ergebnis</div>'+
       '<div class="gr">'+esc(erg.titel)+'</div>'+
       '<p>'+erg.text+'</p>';
-    if(erg.zahl&&erg.zahl.nenner!==undefined){
-      var ges=erg.zahl.nenner+erg.zahl.reibung||1;
-      h+='<div class="an-waage" role="img" aria-label="'+
-        H.prozent(erg.zahl.nenner/ges)+' Prozent gemeinsame Nenner, '+
-        H.prozent(erg.zahl.reibung/ges)+' Prozent Reibung">'+
-        '<div class="w-bar"><i class="n" style="width:'+H.prozent(erg.zahl.nenner/ges)+'%"></i>'+
-        '<i class="r" style="width:'+H.prozent(erg.zahl.reibung/ges)+'%"></i></div>'+
-        '<div class="w-l"><span><b>'+erg.nenner+'</b> gemeinsame Nenner</span>'+
-        '<span><b>'+erg.reibung+'</b> Reibungspunkte</span></div></div>';
+    var W=erg.waage || (erg.zahl&&erg.zahl.nenner!==undefined
+      ? {links:erg.zahl.nenner, rechts:erg.zahl.reibung,
+         llab:erg.nenner+' gemeinsame Nenner', rlab:erg.reibung+' Reibungspunkte'}
+      : null);
+    if(W){
+      var ges=W.links+W.rechts||1, pl=H.prozent(W.links/ges), pr=100-pl;
+      h+='<div class="an-waage" role="img" aria-label="'+pl+' Prozent '+esc(W.llab)+
+        ', '+pr+' Prozent '+esc(W.rlab)+'">'+
+        '<div class="w-bar"><i class="n" style="width:'+pl+'%"></i>'+
+        '<i class="r" style="width:'+pr+'%"></i></div>'+
+        '<div class="w-l"><span><b>'+esc(W.llab)+'</b></span>'+
+        '<span><b>'+esc(W.rlab)+'</b></span></div></div>';
     }
     h+='</div>';
   }
@@ -146,7 +168,8 @@ function rechnen(){
 function berichtText(){
   if(!letzte) return '';
   var L=letzte, z=[];
-  z.push(L.T.n.toUpperCase()+(L.N.b?' — '+L.N.a+' und '+L.N.b:' — '+L.N.a));
+  z.push(L.T.n.toUpperCase()+(L.N.b?' — '+L.N.a+' und '+L.N.b:' — '+L.N.a)+
+    (L.N.formName?' · '+L.N.formName:''));
   z.push(new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'}));
   z.push('');
   if(L.erg){ z.push('ERGEBNIS: '+L.erg.titel);

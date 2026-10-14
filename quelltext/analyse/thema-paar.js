@@ -15,19 +15,74 @@ var T_PAAR={
  formen:[
   {k:'liebe',   n:'Paar',          t:'romantisch, zusammenlebend oder nicht'},
   {k:'eltern',  n:'Eltern & Kind', t:'erwachsen, mit altem Muster'},
-  {k:'arbeit',  n:'Zusammenarbeit',t:'Team, Führung, Geschäftspartner'},
   {k:'freund',  n:'Freundschaft',  t:'gewählt, auf Augenhöhe'},
   {k:'familie', n:'Geschwister',   t:'gemeinsam aufgewachsen'}
  ],
  /* Welche Häuser für diese Frage zählen — je Form anders */
+ formLabel:'Als',
  felder:{
-  liebe:   [7,8,5,4,1], eltern:[4,10,12,8,1], arbeit:[6,10,11,3,1],
-  freund:  [11,3,9,5,1], familie:[3,4,11,8,1]
+  liebe:  [7,8,5,4,1], eltern:[4,10,12,8,1],
+  freund: [11,3,9,5,1], familie:[3,4,11,8,1]
  }
 };
 
 /* ══ Die Regeln ═══════════════════════════════════════════════ */
 var R_PAAR=[
+
+/* ───────── Was die gewählte Form ändert ───────── */
+{id:'bild-feld', modus:'paar', gewicht:9,
+ wenn:function(A,B,H,N){ return !!(N&&N.felder&&N.felder.length); },
+ dann:function(A,B,H,N){
+   var hn=['Auftreten','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
+     'Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
+   var f=N.felder, FA=H.feld(A,f), FB=H.feld(B,f);
+   var da=FA.anteil/(f.length/12), db=FB.anteil/(f.length/12);
+   var beide=(da>=1.05&&db>=1.05), keiner=(da<1&&db<1);
+   return {art:'bild',
+     titel: beide ? 'Für beide ist das ein Hauptschauplatz'
+          : keiner ? 'Für beide läuft das nebenher'
+          : 'Für eine wiegt das schwerer als für die andere',
+     text:'Als <b>'+(N.formName||'Verbindung')+'</b> gelesen zählen die Häuser '+f.join(', ')+
+       ' — '+f.map(function(h){ return hn[h-1]; }).join(', ')+'. '+
+       (beide
+         ? 'Beide haben dort überdurchschnittlich viel Gewicht. Deshalb geht es zwischen diesen '+
+           'zweien schnell um etwas: Was hier passiert, trifft bei beiden einen besetzten Bereich.'
+         : keiner
+         ? 'Beide haben dort weniger Gewicht als im Schnitt zu erwarten wäre. Diese Verbindung '+
+           'läuft für beide nebenher, und das ist keine schlechte Nachricht — es heißt nur, dass '+
+           'Erwartungen an große Nähe hier an der Anlage vorbeigehen.'
+         : 'Bei '+(da>=db?N.a:N.b)+' liegt dort deutlich mehr Gewicht als bei '+(da>=db?N.b:N.a)+
+           '. Das ist der häufigste Grund für den Vorwurf, eine investiere mehr: Für die eine ist '+
+           'das hier ein Hauptschauplatz, für die andere einer von mehreren. Beide haben recht.'),
+     beleg:'Felddichte '+N.a+' '+H.kz(da,2)+' · '+N.b+' '+H.kz(db,2)};
+ }},
+
+{id:'aufg-feld', modus:'paar', gewicht:7,
+ wenn:function(A,B,H,N){ return !!(N&&N.felder&&N.felder.length); },
+ dann:function(A,B,H,N){
+   var hn=['Auftreten','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
+     'Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
+   var f=N.felder, best=-1, bh=f[0];
+   f.forEach(function(h){
+     var d=Math.abs(H.gewichtHaus(A,h)-H.gewichtHaus(B,h));
+     if(d>best){ best=d; bh=h; } });
+   var mehr=(H.gewichtHaus(A,bh)>=H.gewichtHaus(B,bh))?N.a:N.b;
+   var weniger=(mehr===N.a)?N.b:N.a;
+   var frage={1:'wie viel Raum jede für sich braucht',2:'was beiden etwas wert ist, auch in Geld',
+     3:'wie viel geredet wird und worüber',4:'was Zuhause heißen soll',
+     5:'wie viel Spiel und Zeigen dazugehört',6:'wer den Alltag trägt',
+     7:'was eine Verbindung verbindlich macht',8:'was geteilt wird und was nicht',
+     9:'wohin das Ganze auf lange Sicht soll',10:'welche Rolle jede nach außen hat',
+     11:'wie viel andere Leute dazugehören',12:'wie viel Rückzug erlaubt ist'};
+   return {art:'aufgabe', titel:'Der Punkt, an dem ihr am weitesten auseinanderliegt',
+     text:'Von den Häusern, die für „'+(N.formName||'diese Verbindung')+'" zählen, ist das '+bh+
+       '. ('+hn[bh-1]+') das mit dem größten Unterschied: '+mehr+' bringt dort deutlich mehr '+
+       'Gewicht mit als '+weniger+'. Daraus entstehen Erwartungen, die nie ausgesprochen wurden, '+
+       'weil sie für '+mehr+' selbstverständlich sind.',
+     tun:'Setzt euch einmal zusammen und beantwortet beide getrennt dieselbe Frage: '+
+       frage[bh]+'. Erst aufschreiben, dann vergleichen — nicht gleich besprechen.',
+     beleg:bh+'. Haus: '+H.kz(H.gewichtHaus(A,bh))+' zu '+H.kz(H.gewichtHaus(B,bh))};
+ }},
 
 /* ───────── Das Bild: was für ein Fall das überhaupt ist ───────── */
 {id:'bild-element', modus:'paar', gewicht:10,
@@ -130,7 +185,7 @@ var R_PAAR=[
      beleg:'Merkur in '+H.zeichen(A.Merkur)+' und '+H.zeichen(B.Merkur)};
  }},
 
-{id:'nenner-venus', modus:'paar', gewicht:7,
+{id:'nenner-venus', modus:'paar', ohneForm:['eltern','familie'], gewicht:7,
  wenn:function(A,B,H){ var k=H.synBeide(A,B,'Venus','Venus',6); return k&&k.art==='weich'; },
  dann:function(A,B,H,N){
    var k=H.synBeide(A,B,'Venus','Venus',6);
@@ -315,7 +370,7 @@ var R_PAAR=[
      beleg:'Merkur in '+H.zeichen(A.Merkur)+' gegen '+H.zeichen(B.Merkur)};
  }},
 
-{id:'reib-venus-mars', modus:'paar', gewicht:8,
+{id:'reib-venus-mars', modus:'paar', nurForm:['liebe','freund'], gewicht:8,
  wenn:function(A,B,H){ var k=H.synBeide(A,B,'Venus','Mars',6); return k&&k.art==='hart'; },
  dann:function(A,B,H,N){
    var k1=H.syn(A,B,'Mars','Venus',6);

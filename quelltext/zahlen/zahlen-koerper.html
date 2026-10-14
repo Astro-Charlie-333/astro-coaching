@@ -1,0 +1,142 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+
+<div class="z-wrap">
+<div class="z-kopf">
+  <h1>Die <em>Zahlen.</em></h1>
+  <p class="z-lede">Numerologie rechnet aus Geburtsdatum und Namen eine Handvoll Zahlen und liest daraus Themen. Diese Seite rechnet sie dir aus, zeigt jede Zahl durch <b>acht Lebensbereiche</b> hindurch, nimmt die <b>Wohnungs&shy;nummer</b> als eigene Kategorie dazu und stellt die <b>neun Schulen</b> nebeneinander, die es dazu gibt &mdash; samt der Stellen, an denen sie sich widersprechen.</p>
+  <p class="z-lede">Und weil das hier eine astrologische Seite ist: Am Ende steht, was die Zahlen leisten k&ouml;nnen und was nicht. Eine Lebenszahl teilt die Menschheit in neun fast gleich gro&szlig;e Gruppen. Ein Chart tut etwas anderes.</p>
+</div>
+
+<div id="nivleiste"></div>
+
+<nav class="z-sprung" aria-label="Zu den Abschnitten">
+  <a href="#blatt">Dein Blatt</a>
+  <a href="#ring">Die zw&ouml;lf Zahlen</a>
+  <a href="#matrix">Zahl &times; Bereich</a>
+  <a href="#wohnen">Wohnung &amp; Hausnummer</a>
+  <a href="#schulen">Die Schulen</a>
+  <a href="#chart">Zahl &amp; Chart</a>
+  <a href="#ehrlich">Was es taugt</a>
+</nav>
+
+<!-- 1 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="blatt">
+  <h2>Dein Blatt</h2>
+  <p class="u">Aus dem Datum des aktiven Profils, und aus dem Namen, wenn du einen eintr&auml;gst. Alles wird im Browser gerechnet und nichts gespeichert au&szlig;er dem Namen, den du selbst eintippst.</p>
+
+  <div class="z-einst">
+    <div class="z-reihe"><span class="k">Wer</span><div class="z-knoepfe" id="zpersonen"></div></div>
+    <div class="z-reihe"><span class="k">Name</span>
+      <input class="z-feld" id="zname" type="text" autocomplete="off" spellcheck="false"
+        placeholder="Vollst&auml;ndiger Geburtsname, mit allen Vornamen">
+      <button type="button" class="z-knopf" id="znamever">Buchstaben verdecken</button>
+      <p class="z-hint">Die Numerologie rechnet mit dem Namen auf der Geburtsurkunde &mdash; alle Vornamen, Geburtsnachname. Die ch&auml;ld&auml;ische Schule nimmt stattdessen den Rufnamen. Bleibt das Feld leer, rechnet die Seite nur mit dem Datum.</p>
+    </div>
+    <div class="z-reihe"><span class="k">Tafel</span>
+      <div class="z-knoepfe" id="zsystem"></div>
+      <p class="z-hint" id="zsyshint"></p>
+    </div>
+  </div>
+
+  <div class="z-karten" id="zkarten"></div>
+  <div id="zkette"></div>
+  <div id="zgitter"></div>
+  <div id="zstreit"></div>
+</section>
+
+<!-- 2 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="ring">
+  <h2>Die zw&ouml;lf Zahlen</h2>
+  <p class="u">Neun Ziffern im Kreis, die drei Meisterzahlen in der Mitte. Tippe eine an &mdash; darunter klappt alles auf, was zu ihr geh&ouml;rt. Deine eigenen Zahlen sind markiert.</p>
+  <div id="zringbox"></div>
+  <div class="z-ringleg" id="zringleg"></div>
+  <div id="zdetail"></div>
+</section>
+
+<!-- 3 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="matrix">
+  <h2>Zahl &times; Bereich</h2>
+  <p class="u">Dieselben zw&ouml;lf Zahlen, einmal quer durch acht Lebensbereiche gelegt. Eine Zahl bedeutet in der Arbeit etwas anderes als in der Beziehung und im Schlafzimmer wieder etwas anderes. Tippe ein Feld an f&uuml;r das Ganze.</p>
+  <div class="z-filter" id="zthemen"></div>
+  <div class="z-mtab" id="zmatrix"></div>
+  <div class="z-liste" id="zmliste"></div>
+</section>
+
+<!-- 4 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="wohnen">
+  <h2>Wohnung und Hausnummer</h2>
+  <p class="u">Die eine Kategorie, in der Numerologie auch Leute benutzen, die sonst nichts davon halten: Hausnummern. Gerechnet wird die Nummer selbst, nicht der Stra&szlig;enname &mdash; Buchstaben z&auml;hlen mit, „47a" ist also 4&nbsp;+&nbsp;7&nbsp;+&nbsp;1.</p>
+
+  <div class="z-einst">
+    <div class="z-reihe"><span class="k">Nummer</span>
+      <input class="z-feld" id="zadr" type="text" autocomplete="off"
+        placeholder="z.&nbsp;B. 47a &nbsp;oder&nbsp; 12/3 &nbsp;oder&nbsp; Hauptstra&szlig;e 29">
+      <p class="z-hint">Haus und Wohnung durch Schr&auml;gstrich oder Komma trennen, dann wird beides einzeln ausgewiesen. Welche Nummer mehr z&auml;hlt, darin sind die Schulen uneins: die meisten nehmen die Wohnungs&shy;nummer, weil das die Einheit ist, in der man wirklich wohnt.</p>
+    </div>
+  </div>
+  <div id="zwohnerg"></div>
+
+  <h2 style="font-size:21px;margin:30px 0 6px">F&uuml;r wen welche Nummer passt</h2>
+  <p class="u">Dieselbe Rechnung von der anderen Seite aus. Keine Tabelle, die jemand aufgeschrieben hat, sondern eine Ableitung: Jede Zahl hat etwas, wovon sie schon zu viel mitbringt, und etwas, was ihr von au&szlig;en fehlt. Eine Nummer, die das Fehlende liefert, tr&auml;gt. Eine, die das Zuviel verdoppelt, reibt.</p>
+  <div class="z-mtab" id="zpasst"></div>
+</section>
+
+<!-- 5 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="schulen">
+  <h2>Die Schulen</h2>
+  <p class="u">Neun verschiedene Ans&auml;tze, und sie sind nicht Varianten derselben Sache. Zwei davon sind wirklich alt, weil dort die Buchstaben <i>selbst</i> Ziffern sind. Die bekannteste ist gut hundert Jahre alt. Eine ist &uuml;berpr&uuml;ft und widerlegt. Bei jeder steht, was belegt ist und was nur behauptet wird.</p>
+  <div id="zschulen"></div>
+</section>
+
+<!-- 6 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="chart">
+  <h2>Zahl und Chart</h2>
+  <p class="u">Die indische Zahlenlehre h&auml;ngt jede Ziffer an einen Planeten, und damit l&auml;sst sich beides nebeneinanderlegen. An zwei Stellen widersprechen sich indische und westliche Zuordnung &mdash; genau bei den zwei Zahlen, denen auch kein Wochentag zugeordnet ist.</p>
+  <div class="z-ptab" id="zplanet"></div>
+  <div id="zbruecke"></div>
+</section>
+
+<!-- 7 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="ehrlich">
+  <div class="z-ehrlich">
+    <h2>Was die Zahlen taugen</h2>
+    <p>Alles oben ist sauber gerechnet. Was man daraus lesen kann, ist eine andere Frage, und darauf geh&ouml;rt eine ehrliche Antwort &mdash; vor allem, wenn du mit Menschen arbeitest.</p>
+
+    <h4>Die Lebenszahl ist grob</h4>
+    <p>Ein Geburtsdatum l&auml;sst sich auf neun Ziffern zusammenziehen, also gibt es neun Lebenszahlen. &Uuml;ber hundert Jahrg&auml;nge gerechnet f&auml;llt jede Restklasse auf <b>genau ein Neuntel</b> aller Geburtstage &mdash; die Meisterzahlen schneiden nur Scheiben aus der Zwei, der Vier und der Sechs heraus:</p>
+    <div id="zvert"></div>
+    <p>Rund jeder neunte Mensch hat also deine Lebenszahl. Ein Chart dagegen wiederholt sich praktisch nie. Das macht die Zahl nicht wertlos, aber es sagt, welchen Platz sie haben kann: als kurzer Griff, nicht als Beschreibung eines Menschen.</p>
+
+    <h4>Die Methode entscheidet mit</h4>
+    <p>Es gibt drei &uuml;bliche Wege, aus einem Datum die Lebenszahl zu rechnen. Auf die <b>eine Ziffer</b> kommen alle drei immer gleich, und das ist kein Zufall: Eine Ziffernsumme &auml;ndert den Wert modulo neun nicht. Unterschiedlich wird es nur dort, wo ein Weg auf 11, 22 oder 33 landet und ein anderer daran vorbeil&auml;uft. Nachgerechnet &uuml;ber alle Daten von 1900 bis 2030 passiert das bei <b id="zabw">&mdash;</b> von ihnen. Wer also eine Meisterzahl hat, hat sie <i>in einer bestimmten Schule</i>.</p>
+
+    <h4>Die Tafeln widersprechen sich</h4>
+    <p>Derselbe Name gibt pythagor&auml;isch und ch&auml;ld&auml;isch verschiedene Zahlen. Ob das Y als Vokal z&auml;hlt, ist ungekl&auml;rt. Wie Umlaute behandelt werden, hat nie jemand festgelegt &mdash; ob Ä als A oder als AE z&auml;hlt, &auml;ndert das Ergebnis, und beide Varianten werden unterrichtet. Oben kannst du umschalten und es sehen. Es gibt keinen Schiedsrichter zwischen den Tafeln.</p>
+
+    <h4>Es ist nicht gepr&uuml;ft</h4>
+    <p>Dass eine aus Name oder Datum gewonnene Zahl irgendetwas vorhersagt, ist nicht belegt. Es gibt dazu auch kaum Untersuchungen &mdash; die einzige Schule, die wirklich gro&szlig;fl&auml;chig gepr&uuml;ft wurde, sind die Biorhythmen, und die sind durchgefallen. Juno Jordan hat in Kalifornien f&uuml;nfundzwanzig Jahre lang w&ouml;chentlich ein Institut zusammenkommen lassen, um Numerologie zu pr&uuml;fen; nachpr&uuml;fbare Daten daraus gibt es nicht. Was gut untersucht ist, ist etwas anderes: Menschen m&ouml;gen die Ziffern ihres eigenen Geburtsdatums ein wenig lieber als andere. Das ist eine Vorliebe, keine Bestimmung.</p>
+
+    <h4>Eine Zahl sagt nichts &uuml;ber einen Neurotyp</h4>
+    <p>Die Elf wird oft als „empfindliches Nervensystem" beschrieben, und das klingt nach Diagnose. Es ist keine. Aus einem Geburtsdatum l&auml;sst sich weder AuDHS noch irgendetwas anderes ablesen, und niemandem ist geholfen, wenn eine Zahl das nahelegt. Wenn in der Arbeit mit Menschen eine Reiz&shy;frage auftaucht, geh&ouml;rt sie in das Gespr&auml;ch und nicht in die Rechnung.</p>
+
+    <h4>Wof&uuml;r es dann gut ist</h4>
+    <p>F&uuml;r den Einstieg. Eine Lebenszahl braucht keine Geburtszeit, keinen Ort und keine Software &mdash; Menschen k&ouml;nnen sie selbst ausrechnen, und das macht sie zu einem niedrigen Einstieg in ein Gespr&auml;ch, das sonst mit zwanzig Minuten Erkl&auml;rung anf&auml;ngt. Als Merkhilfe: „Du bist eine Vier" bleibt h&auml;ngen, wo „Saturn am MC im Steinbock" nicht h&auml;ngenbleibt. Und als Frageanlass, nicht als Befund: Was hier steht, gilt nur so weit, wie die Person es best&auml;tigt. Widerspricht sie, hat sie recht.</p>
+  </div>
+</section>
+
+<div class="z-werk">
+  <button type="button" id="zkopie">Blatt kopieren</button>
+  <button type="button" class="leicht" id="zdruck">Drucken</button>
+  <span class="z-echo" id="zecho"></span>
+</div>
+
+<div class="weiter"><a href="bazi.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Vier S&auml;ulen &amp; andere Systeme</span></a><a href="analyse.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Analyse &mdash; eine Rechnung statt eines Nachschlagewerks</span></a></div>
+<div class="foot">Zahlen &middot; Pythagor&auml;ische und ch&auml;ld&auml;ische Tafel, Lebenszahl nach der Ziffernsummen-Methode, Meisterzahlen 11, 22 und 33 bleiben stehen.<br>
+Die Rechnung liegt im Quelltext unter <i>zahlen/zahlen-rechner.js</i> und ist einzeln gepr&uuml;ft &mdash; jede Tafel, jeder Weg, jede Namenszahl.</div>
+</div>

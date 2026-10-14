@@ -1,131 +1,11 @@
 /* Astro-Charlie · Weitere Themen
-   Diese drei laufen mit demselben Kern wie „Zwei Menschen", haben aber
-   noch deutlich weniger Regeln. Sie funktionieren und sind ausbaufähig:
-   eine neue Regel ist ein Objekt mit wenn/dann, mehr braucht es nicht. */
+   Alltag und Kommunikation laufen mit demselben Kern wie „Zwei Menschen",
+   haben aber noch deutlich weniger Regeln. Sie funktionieren und sind
+   ausbaufähig: eine neue Regel ist ein Objekt mit wenn/dann, mehr
+   braucht es nicht. Berufung steht in thema-beruf.js, Zusammenarbeit
+   in thema-zusammen.js — beide auf der Tiefe von „Zwei Menschen".
 
-/* ═══ Berufung & Beruf ═══════════════════════════════════════ */
-var T_BERUF={
- schluessel:'beruf', n:'Berufung & Beruf', modus:'solo',
- was:'Wofür jemand gemacht ist — und was im Weg steht.',
- grenzen:{bild:2, staerke:5, reibung:4, aufgabe:3, beratung:3},
- regeln:[
-  {id:'bf-mc', gewicht:10, modus:'solo',
-   wenn:function(A,B,H){ return A.MC!==undefined; },
-   dann:function(A,B,H,N){
-     var z=H.zi(A.MC), herr=H.HERRSCHER[z], wo=H.wo(A,herr);
-     var hn=['Auftreten','Wert und Geld','Sprache','Zuhause','Ausdruck','Alltag und Handwerk',
-       'Partnerschaft','Tiefe','Lehre und Ferne','Beruf','Gruppen','Rückzug'];
-     var mc={Widder:'anfangen, gründen, vorangehen',Stier:'etwas Bleibendes aufbauen, mit Material arbeiten',
-      Zwillinge:'vermitteln, erklären, schreiben',Krebs:'versorgen, halten, einen Ort schaffen',
-      'Löwe':'gestalten und sichtbar sein',Jungfrau:'etwas genau machen, auf das Verlass ist',
-      Waage:'zwischen Menschen vermitteln, gestalten',Skorpion:'in die Tiefe gehen, mit Krisen arbeiten',
-      'Schütze':'lehren, erweitern, über Grenzen hinweg',Steinbock:'Verantwortung tragen, etwas leiten',
-      Wassermann:'etwas anders machen als vorgesehen',Fische:'heilen, begleiten, gestalten'};
-     return {art:'bild', titel:'Die Richtung: '+H.ZEICHEN[z]+' am MC',
-       text:'Der höchste Punkt des Charts steht in <b>'+H.ZEICHEN[z]+'</b>. Dafür ist diese Person '+
-         'nach außen gebaut: '+mc[H.ZEICHEN[z]]+'. Der Herrscher <b>'+herr+'</b> steht im '+wo+
-         '. Haus ('+hn[wo-1]+') — dort wird die Berufung tatsächlich verhandelt, nicht im 10.',
-       beleg:'MC '+H.stellung(A.MC)+' · '+herr+' im '+wo+'.'};
-   }},
-  {id:'bf-zehntes', gewicht:9, modus:'solo',
-   wenn:function(A,B,H){ return H.drin(A,10).length>0; },
-   dann:function(A,B,H,N){
-     var d=H.drin(A,10);
-     var was={Sonne:'Sichtbarkeit ist kein Nebeneffekt, sondern Bedingung — ohne sie trocknet die Arbeit aus',
-      Mond:'der Beruf muss sich sicher anfühlen, sonst hält er nicht, egal wie gut er ist',
-      Merkur:'das Vermitteln ist der Kern, nicht die Verpackung',
-      Venus:'es muss schön sein oder mit Menschen zu tun haben, sonst geht die Luft raus',
-      Mars:'es braucht Widerstand und etwas zu erobern, sonst wird es fad',
-      Jupiter:'hier kommt viel von selbst — und hier wird auch leicht überdehnt',
-      Saturn:'der Aufbau dauert länger als bei anderen und hält dann länger. Der frühe Teil ist zäh',
-      Uranus:'ein normaler Weg wird nicht funktionieren, und das ist keine Phase',
-      Neptun:'die Richtung bleibt lange unscharf. Das ist hier normal und kein Mangel',
-      Pluto:'es geht um Wirkung und Macht. Halbe Sachen hält diese Person im Beruf nicht aus'};
-     return {art:'staerke', titel:'Im 10. Haus steht '+d.join(', '),
-       text:d.map(function(k){ return '<b>'+k+':</b> '+was[k]; }).join(' — '),
-       beleg:d.map(function(k){return k+' '+H.stellung(A[k]);}).join(' · ')};
-   }},
-  {id:'bf-sechstes', gewicht:7, modus:'solo',
-   wenn:function(A,B,H){ return true; },
-   dann:function(A,B,H,N){
-     var z=H.hausZeichen(A,6), herr=H.HERRSCHER[z], wo=H.wo(A,herr);
-     return {art:'staerke', titel:'Wie gearbeitet wird',
-       text:'Das 6. Haus — der Alltag der Arbeit — trägt <b>'+H.ZEICHEN[z]+'</b>. Nicht was jemand '+
-         'tut, sondern wie: '+
-         ({Widder:'schnell und in Schüben',Stier:'langsam und gründlich',Zwillinge:'mehrgleisig und wechselnd',
-           Krebs:'in Beziehung zu den Menschen drumherum',"Löwe":'mit Einsatz und sichtbar',
-           Jungfrau:'genau und mit hohem eigenem Maßstab',Waage:'abgestimmt und zu zweit',
-           Skorpion:'konzentriert, in Phasen hoher Intensität',"Schütze":'frei und mit Überblick',
-           Steinbock:'strukturiert und auf lange Sicht',Wassermann:'eigenständig, nicht in Vorgaben',
-           Fische:'in Wellen, schwer planbar'})[H.ZEICHEN[z]]+
-         '. Der Herrscher '+herr+' steht im '+wo+'. Haus.',
-       beleg:'6. Haus '+H.ZEICHEN[z]+' · '+herr+' im '+wo+'.'};
-   }},
-  {id:'bf-saturn', gewicht:8, modus:'solo',
-   wenn:function(A,B,H){ return true; },
-   dann:function(A,B,H,N){
-     var wo=H.wo(A,'Saturn');
-     var hn=['Auftreten','Wert und Geld','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
-       'Tiefe','Lehre','Beruf','Gruppen','Rückzug'];
-     return {art:'reibung', titel:'Wo der Beweisdruck sitzt',
-       text:'Saturn steht im '+wo+'. Haus ('+hn[wo-1]+'). Dort wird gründlich gearbeitet und nie '+
-         'das Gefühl erreicht, dass es reicht. Beruflich heißt das: Diese Person ist genau dort '+
-         'überdurchschnittlich gut und traut es sich am wenigsten zu.',
-       ansatz:'Nicht an der Einsicht arbeiten, sondern an Belegen. Eine Liste mit dem, was in '+
-         'diesem Bereich schon gelungen ist, datiert. Saturn glaubt keine Zusprüche, aber Daten.',
-       beleg:'Saturn '+H.stellung(A.Saturn)+', '+wo+'. Haus'};
-   }},
-  {id:'bf-jupiter', gewicht:6, modus:'solo',
-   wenn:function(A,B,H){ return true; },
-   dann:function(A,B,H,N){
-     var wo=H.wo(A,'Jupiter');
-     var hn=['Auftreten','Wert und Geld','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft',
-       'Tiefe','Lehre','Beruf','Gruppen','Rückzug'];
-     return {art:'staerke', titel:'Wo es leicht kommt',
-       text:'Jupiter im '+wo+'. Haus ('+hn[wo-1]+'). Hier öffnen sich Türen, oft ohne dass man '+
-         'sie gesucht hat. Beruflich lohnt es, genau dort zu suchen statt dort, wo man sich '+
-         'durchbeißen muss.',
-       beleg:'Jupiter '+H.stellung(A.Jupiter)+', '+wo+'. Haus'};
-   }},
-  {id:'bf-knoten', gewicht:7, modus:'solo',
-   wenn:function(A,B,H){ return A.Knoten!==undefined; },
-   dann:function(A,B,H,N){
-     var wo=H.haus(A,A.Knoten);
-     var hn=['sich selbst zu zeigen','sich etwas wert zu sein','zu sprechen und zu lernen',
-       'einen eigenen Boden zu bauen','etwas zu machen, das Freude macht','im Konkreten zu dienen',
-       'sich auf ein Gegenüber einzulassen','in die Tiefe zu gehen','zu lehren und weiterzugehen',
-       'Verantwortung nach außen zu übernehmen','in eine Gemeinschaft zu gehen','loszulassen'];
-     return {art:'aufgabe', titel:'Die Richtung, die sich unbequem anfühlt',
-       text:'Der Nordknoten steht im '+wo+'. Haus. Die Überlieferung liest ihn als das, was noch zu '+
-         'lernen ist: '+hn[wo-1]+'. Es fühlt sich ungeübt an, und genau deshalb ist es die Richtung.',
-       tun:'Eine kleine Sache in diesem Bereich pro Woche. Nicht groß — regelmäßig.',
-       beleg:'Nordknoten im '+wo+'. Haus'};
-   }},
-  {id:'bf-leer', gewicht:5, modus:'solo',
-   wenn:function(A,B,H){ return H.drin(A,10).length===0 && H.drin(A,6).length===0; },
-   dann:function(A,B,H,N){
-     return {art:'beratung', titel:'Beide Arbeitshäuser leer',
-       text:'Weder im 10. noch im 6. Haus steht ein Planet. Das ist häufig und wird oft als '+
-         '„keine Berufung" missverstanden. Es heißt nur: Die Frage wird woanders entschieden — '+
-         'nämlich dort, wo die Herrscher dieser Häuser stehen.',
-       tun:'Nicht nach dem Traumberuf fragen, sondern: Wobei vergisst die Person zu essen? '+
-         'Das ist bei leeren Arbeitshäusern die verlässlichere Spur.'};
-   }}
- ],
- ergebnis:function(treffer,A,B,H,N){
-   var st=treffer.filter(function(t){return t.art==='staerke';}).length;
-   var re=treffer.filter(function(t){return t.art==='reibung';}).length;
-   return {stufe:st>re?'klar':'offen',
-     titel: st>re ? 'Die Richtung ist im Chart gut ablesbar'
-                  : 'Die Richtung ist da, aber nicht offensichtlich',
-     text: st>re
-       ? 'Mehrere Stellungen zeigen in dieselbe Richtung. Das macht die Arbeit leichter: '+
-         'Es geht eher darum, etwas zu bestätigen als etwas zu finden.'
-       : 'Die berufliche Anlage verteilt sich über mehrere Stellen, ohne dass eine dominiert. '+
-         'Hier hilft die Frage nach dem Hyperfokus mehr als die nach dem Ziel.',
-     zahl:{staerke:st, reibung:re}};
- }
-};
+   Am Ende dieser Datei steht die Liste aller Themen.                */
 
 /* ═══ Alltag, Energie, anders verdrahtet ═════════════════════ */
 var T_ALLTAG={
@@ -392,4 +272,4 @@ var T_KOMM={
  }
 };
 
-var THEMEN=[T_PAAR, T_BERUF, T_ALLTAG, T_KOMM];
+var THEMEN=[T_PAAR, T_ZUSAMMEN, T_BERUF, T_ALLTAG, T_KOMM];

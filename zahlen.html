@@ -1,0 +1,2017 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Zahlen &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="kleine-punkte.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Zahlen ──────────────────────────────────────────────────── */
+.z-wrap{max-width:1140px;margin:0 auto;padding:34px 26px 100px;}
+@media(max-width:620px){.z-wrap{padding:24px 17px 70px;}}
+.z-kopf h1{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(32px,6vw,54px);
+ font-weight:300;line-height:1.02;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 14px;}
+.z-kopf h1 em{font-style:italic;color:var(--messing,#9A7235);}
+.z-lede{font-size:16.5px;line-height:1.7;color:var(--leise,#6B6259);max-width:66ch;margin:0 0 22px;}
+.z-lede b{color:var(--nacht,#2E3A5C);font-weight:500;}
+
+/* Sprungmarken, damit man sich nicht verliert */
+.z-sprung{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 26px;}
+.z-sprung a{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;
+ letter-spacing:.09em;text-transform:uppercase;text-decoration:none;
+ color:var(--nacht,#2E3A5C);background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie,#EBE1D2);border-radius:14px;padding:7px 12px;}
+.z-sprung a:hover{border-color:var(--nacht,#2E3A5C);background:var(--nacht-bg,#E9EDF4);}
+
+.z-abschnitt{margin:0 0 44px;scroll-margin-top:72px;}
+.z-abschnitt>h2{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(23px,3.5vw,31px);
+ font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
+.z-abschnitt>.u{font-size:14.8px;line-height:1.6;color:var(--leise,#6B6259);
+ max-width:68ch;margin:0 0 18px;}
+
+/* ── Dein Blatt ─────────────────────────────────────────────── */
+.z-einst{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:20px;padding:17px 19px;margin-bottom:18px;}
+.z-reihe{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;}
+.z-reihe+.z-reihe{margin-top:13px;padding-top:13px;border-top:1px solid var(--linie,#EBE1D2);}
+.z-reihe>.k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
+ letter-spacing:.13em;text-transform:uppercase;color:var(--messing,#9A7235);flex:none;min-width:84px;}
+.z-knopf{font-family:inherit;font-size:13.4px;padding:7px 13px;border-radius:17px;
+ border:1px solid var(--linie-stark,#DDD0BC);background:var(--creme,#FCF7EF);
+ color:var(--tinte,#231F1A);cursor:pointer;}
+.z-knopf:hover{border-color:var(--nacht,#2E3A5C);}
+.z-knopf.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#fff;}
+.z-feld{font-family:inherit;font-size:14.6px;padding:9px 13px;border-radius:14px;
+ border:1px solid var(--linie-stark,#DDD0BC);background:var(--creme,#FCF7EF);
+ color:var(--tinte,#231F1A);min-width:0;flex:1 1 220px;}
+.z-feld:focus{outline:2px solid var(--messing,#9A7235);outline-offset:1px;}
+.z-hint{font-size:12.8px;line-height:1.5;color:var(--leise,#6B6259);flex:1 1 100%;margin:0;}
+
+.z-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));gap:11px;}
+.z-k{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:19px;padding:15px 17px;border-top:4px solid var(--messing,#9A7235);min-width:0;}
+.z-k .lab{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;color:var(--messing,#9A7235);display:block;
+ margin-bottom:5px;}
+.z-k .wert{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.z-k .zif{font-family:var(--serif,Fraunces,Georgia,serif);font-size:40px;font-weight:300;
+ line-height:1;color:var(--nacht,#2E3A5C);}
+.z-k .nm{font-size:14px;color:var(--tinte,#231F1A);}
+.z-k .wie{font-size:12.6px;line-height:1.5;color:var(--leise,#6B6259);margin:8px 0 0;}
+.z-k button{margin-top:9px;font-family:inherit;font-size:12.6px;padding:5px 11px;
+ border-radius:13px;border:1px solid var(--linie-stark,#DDD0BC);background:none;
+ color:var(--nacht,#2E3A5C);cursor:pointer;}
+.z-k button:hover{border-color:var(--nacht,#2E3A5C);background:var(--nacht-bg,#E9EDF4);}
+.z-k.leer{border-top-color:var(--linie-stark,#DDD0BC);}
+.z-k.leer .zif{color:var(--linie-stark,#DDD0BC);}
+
+/* Die Kette: 3+0+0+3+1+9+8+7 = 31 → 4 */
+.z-kette{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:19px;
+ padding:19px 22px;margin:14px 0 0;overflow-x:auto;}
+.z-kette .lab{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.13em;text-transform:uppercase;color:#E8C97A;display:block;margin-bottom:10px;}
+.z-rechn{display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:15px;color:#fff;}
+.z-rechn .zf{display:inline-flex;align-items:center;justify-content:center;
+ min-width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.12);padding:0 5px;}
+.z-rechn .op{color:rgba(244,239,230,.5);}
+.z-rechn .pf{color:#E8C97A;}
+.z-rechn .end{background:#E8C97A;color:#2E3A5C;font-weight:500;min-width:32px;height:32px;
+ border-radius:10px;font-size:17px;}
+.z-kette p{font-size:13.4px;line-height:1.6;color:rgba(244,239,230,.75);margin:11px 0 0;max-width:66ch;}
+
+/* Buchstabengitter */
+.z-gitter{display:flex;flex-wrap:wrap;gap:4px;margin:12px 0 0;}
+.z-gitter .lk{display:flex;flex-direction:column;align-items:center;gap:1px;
+ border:1px solid var(--linie,#EBE1D2);border-radius:9px;padding:5px 4px;min-width:27px;
+ background:var(--papier,#FFFDFA);}
+.z-gitter .lk b{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.5px;
+ font-weight:500;color:var(--tinte,#231F1A);}
+.z-gitter .lk i{font-style:normal;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11px;color:var(--leise,#6B6259);}
+.z-gitter .lk.vokal{background:var(--messing-bg,#F7EFE1);border-color:var(--messing,#9A7235);}
+.z-gitter .lk.vokal i{color:var(--messing,#9A7235);}
+.z-gitter .lk.y{background:var(--nacht-bg,#E9EDF4);border-color:var(--nacht,#2E3A5C);}
+.z-gitter .lk.luecke{border:none;background:none;min-width:11px;}
+.z-leg{display:flex;flex-wrap:wrap;gap:10px 16px;margin:10px 0 0;font-size:12.5px;
+ color:var(--leise,#6B6259);}
+.z-leg span{display:inline-flex;align-items:center;gap:5px;}
+.z-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;
+ border:1px solid var(--linie-stark,#DDD0BC);font-style:normal;flex:none;}
+
+.z-streit{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
+ border-radius:16px;padding:14px 17px;margin:14px 0 0;font-size:14.5px;line-height:1.65;}
+.z-streit b{color:var(--nacht,#2E3A5C);}
+.z-streit .t{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;color:var(--messing,#9A7235);display:block;margin-bottom:5px;}
+
+/* ── Der Ring ───────────────────────────────────────────────── */
+.z-ring{display:block;width:100%;max-width:560px;margin:0 auto;height:auto;}
+.z-seg{cursor:pointer;}
+.z-seg .fl{transition:opacity .13s;}
+.z-seg:hover .fl{opacity:.95;}
+.z-seg:focus{outline:none;}
+.z-seg:focus .rd{stroke:var(--nacht,#2E3A5C);stroke-width:3;}
+.z-seg .zif{font-family:var(--serif,Fraunces,Georgia,serif);font-size:37px;font-weight:300;
+ fill:#fff;pointer-events:none;}
+.z-seg .nm{font-family:var(--sans,system-ui);font-size:13px;fill:rgba(255,255,255,.82);
+ pointer-events:none;letter-spacing:.01em;}
+.z-seg.ist .zif{font-weight:500;}
+.z-seg.aus .fl{opacity:.58;}
+.z-seg.ist .fl{opacity:1;}
+.z-mz{cursor:pointer;}
+.z-mz .zif{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:300;
+ fill:#fff;pointer-events:none;}
+.z-mitte{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;
+ letter-spacing:.1em;fill:var(--leise,#6B6259);text-transform:uppercase;}
+.z-marke{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;
+ fill:#fff;pointer-events:none;}
+.z-ringleg{display:flex;flex-wrap:wrap;gap:8px 15px;justify-content:center;
+ margin:12px 0 0;font-size:12.8px;color:var(--leise,#6B6259);}
+.z-ringleg span{display:inline-flex;align-items:center;gap:5px;}
+.z-ringleg em{font-style:normal;display:inline-flex;align-items:center;justify-content:center;
+ width:18px;height:18px;border-radius:50%;background:var(--nacht,#2E3A5C);color:#fff;
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;}
+
+/* ── Detail einer Zahl ──────────────────────────────────────── */
+.z-detail{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:22px;padding:24px 27px;margin-top:18px;border-left:5px solid var(--messing,#9A7235);}
+@media(max-width:620px){.z-detail{padding:19px 17px;}}
+.z-dkopf{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
+.z-dzif{font-family:var(--serif,Fraunces,Georgia,serif);font-size:62px;font-weight:300;
+ line-height:.85;color:var(--nacht,#2E3A5C);flex:none;}
+.z-dtit{min-width:0;flex:1 1 220px;}
+.z-dtit h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 3px;line-height:1.2;}
+.z-dtit .kz{font-size:14px;color:var(--leise,#6B6259);}
+.z-dmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.z-dmeta span{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.09em;text-transform:uppercase;background:var(--messing-bg,#F7EFE1);
+ color:var(--messing,#9A7235);border-radius:9px;padding:3px 8px;}
+.z-detail>p{font-size:15.4px;line-height:1.72;margin:0 0 13px;max-width:68ch;}
+.z-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:11px;margin:0 0 15px;}
+.z-sp{border-radius:14px;padding:13px 16px;font-size:14.6px;line-height:1.65;}
+.z-sp.gut{background:#EDF3EE;}
+.z-sp.schat{background:#FBEFE6;}
+.z-sp>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;font-weight:400;}
+.z-sp.gut>b:first-child{color:var(--gruen,#3F6B4A);}
+.z-sp.schat>b:first-child{color:var(--rost,#A05A3A);}
+
+.z-bereiche{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:10px;}
+.z-b{background:var(--creme,#FCF7EF);border:1px solid var(--linie,#EBE1D2);
+ border-radius:15px;padding:13px 16px;min-width:0;}
+.z-b .bk{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.11em;text-transform:uppercase;color:var(--messing,#9A7235);display:block;
+ margin-bottom:6px;}
+.z-b p{font-size:14.6px;line-height:1.66;margin:0;}
+.z-b .tun{margin-top:9px;background:var(--messing-bg,#F7EFE1);border-radius:11px;
+ padding:9px 12px;font-size:13.8px;line-height:1.56;}
+.z-b .tun b{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;
+ letter-spacing:.11em;text-transform:uppercase;color:var(--messing,#9A7235);
+ display:block;margin-bottom:4px;font-weight:400;}
+
+/* ── Die Matrix ─────────────────────────────────────────────── */
+.z-filter{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+.z-mtab{overflow-x:auto;border:1px solid var(--linie,#EBE1D2);border-radius:18px;
+ background:var(--papier,#FFFDFA);}
+.z-mtab table{border-collapse:collapse;width:100%;min-width:760px;}
+.z-mtab th,.z-mtab td{text-align:left;vertical-align:top;padding:9px 11px;
+ border-bottom:1px solid var(--linie,#EBE1D2);font-size:13px;line-height:1.5;}
+.z-mtab thead th{position:sticky;top:0;background:var(--papier,#FFFDFA);
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--messing,#9A7235);font-weight:400;z-index:1;
+ border-bottom:1px solid var(--linie-stark,#DDD0BC);}
+.z-mtab tbody th{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+ font-weight:400;color:var(--nacht,#2E3A5C);white-space:nowrap;}
+.z-mtab tbody th small{display:block;font-family:var(--sans,system-ui);font-size:11.5px;
+ color:var(--leise,#6B6259);font-weight:400;}
+.z-mtab tbody tr:hover{background:var(--creme,#FCF7EF);}
+.z-mtab tbody tr.ist{background:var(--nacht-bg,#E9EDF4);}
+.z-mtab tbody tr.mein th{box-shadow:inset 4px 0 0 var(--messing,#9A7235);}
+.z-liste .zl.mein{box-shadow:inset 0 0 0 1px var(--messing,#9A7235);}
+.z-liste .zl b i{font-style:normal;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--messing,#9A7235);
+ background:var(--messing-bg,#F7EFE1);border-radius:8px;padding:2px 7px;margin-left:6px;
+ vertical-align:middle;}
+.z-zelle{cursor:pointer;}
+.z-zelle:hover{text-decoration:underline;text-decoration-color:var(--messing,#9A7235);}
+.z-liste{display:grid;gap:9px;}
+.z-liste .zl{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:15px;padding:13px 16px;border-left:4px solid var(--messing,#9A7235);cursor:pointer;}
+.z-liste .zl.ist{background:var(--nacht-bg,#E9EDF4);}
+.z-liste .zl b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:var(--nacht,#2E3A5C);display:block;margin-bottom:4px;}
+.z-liste .zl p{font-size:14.2px;line-height:1.62;margin:0;}
+@media(min-width:900px){.z-liste{display:none;} }
+@media(max-width:899px){.z-mtab{display:none;} }
+
+/* ── Wohnen ─────────────────────────────────────────────────── */
+.z-wohnerg{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:21px;padding:21px 24px;margin-top:16px;border-left:5px solid var(--messing,#9A7235);}
+@media(max-width:620px){.z-wohnerg{padding:17px 16px;}}
+.z-wk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+.z-wzif{font-family:var(--serif,Fraunces,Georgia,serif);font-size:48px;font-weight:300;
+ line-height:.9;color:var(--nacht,#2E3A5C);flex:none;}
+.z-wurteil{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
+ letter-spacing:.13em;text-transform:uppercase;color:#fff;border-radius:11px;padding:5px 11px;}
+.z-wohnerg h4{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:16px 0 7px;}
+.z-wohnerg p{font-size:15.2px;line-height:1.7;margin:0 0 11px;max-width:68ch;}
+.z-wpaar{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:0 0 13px;}
+.z-wkniff{background:var(--messing-bg,#F7EFE1);border-radius:13px;padding:12px 15px;
+ font-size:14.6px;line-height:1.62;}
+.z-wkniff b{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;color:var(--messing,#9A7235);
+ display:block;margin-bottom:5px;font-weight:400;}
+.z-passt{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
+.z-passt b{display:inline-flex;align-items:center;justify-content:center;min-width:27px;
+ height:27px;border-radius:9px;background:var(--gruen,#3F6B4A);color:#fff;
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.5px;font-weight:400;padding:0 6px;}
+.z-passt b.r{background:var(--rost,#A05A3A);}
+.z-passt b.n{background:var(--linie-stark,#DDD0BC);color:var(--tinte,#231F1A);}
+
+/* ── Die Schulen ────────────────────────────────────────────── */
+.z-sys{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:17px;margin-bottom:9px;overflow:hidden;}
+.z-sys summary{cursor:pointer;padding:15px 18px;display:flex;align-items:baseline;
+ gap:10px;flex-wrap:wrap;list-style:none;}
+.z-sys summary::-webkit-details-marker{display:none;}
+.z-sys summary::after{content:'+';margin-left:auto;font-family:var(--mono,'JetBrains Mono',monospace);
+ color:var(--messing,#9A7235);font-size:17px;flex:none;}
+.z-sys[open] summary::after{content:'–';}
+.z-sys summary b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+ font-weight:500;color:var(--nacht,#2E3A5C);}
+.z-sys summary span{font-size:13.4px;color:var(--leise,#6B6259);}
+.z-sys summary i{font-style:normal;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--nacht-bg,#E9EDF4);
+ color:var(--nacht,#2E3A5C);border-radius:9px;padding:3px 8px;}
+.z-sys-in{padding:0 18px 17px;}
+.z-sys-in dl{margin:0;display:grid;gap:11px;}
+.z-sys-in dt{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;}
+.z-sys-in dd{margin:0;font-size:14.8px;line-height:1.68;max-width:72ch;}
+.z-sys-in dd.warn{background:#FBEFE6;border-radius:12px;padding:11px 14px;}
+
+/* ── Zahl und Chart ─────────────────────────────────────────── */
+.z-ptab{overflow-x:auto;border:1px solid var(--linie,#EBE1D2);border-radius:17px;
+ background:var(--papier,#FFFDFA);}
+.z-ptab table{border-collapse:collapse;width:100%;min-width:430px;}
+.z-ptab th,.z-ptab td{padding:9px 13px;text-align:left;font-size:14px;
+ border-bottom:1px solid var(--linie,#EBE1D2);}
+.z-ptab thead th{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.1em;text-transform:uppercase;color:var(--messing,#9A7235);font-weight:400;}
+.z-ptab td.ab{color:var(--rost,#A05A3A);}
+.z-ptab tbody tr.ist{background:var(--nacht-bg,#E9EDF4);}
+.z-ptab tbody td:first-child{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;
+ color:var(--nacht,#2E3A5C);}
+
+/* ── Ehrlichkeit ────────────────────────────────────────────── */
+.z-ehrlich{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:24px;padding:28px 32px;
+ max-width:830px;margin:0 auto;}
+@media(max-width:620px){.z-ehrlich{padding:21px 18px;border-radius:19px;}}
+.z-ehrlich h2{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(22px,3.4vw,30px);
+ font-weight:300;color:#fff;margin:0 0 14px;letter-spacing:-.015em;}
+.z-ehrlich h4{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:#E8C97A;margin:19px 0 7px;}
+.z-ehrlich p{font-size:15.3px;line-height:1.72;color:rgba(244,239,230,.86);margin:0 0 11px;max-width:74ch;}
+.z-ehrlich p:last-child{margin-bottom:0;}
+.z-ehrlich b{color:#fff;font-weight:500;}
+.z-bal{display:flex;gap:2px;margin:13px 0 7px;height:30px;border-radius:8px;overflow:hidden;}
+.z-bal i{display:flex;align-items:center;justify-content:center;background:rgba(232,201,122,.26);
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;color:#fff;font-style:normal;
+ min-width:0;overflow:hidden;}
+.z-bal i.gr{background:rgba(232,201,122,.62);color:#2E3A5C;}
+.z-balu{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;
+ color:rgba(244,239,230,.6);margin:0 0 4px;}
+
+/* ── Werkzeug ───────────────────────────────────────────────── */
+.z-werk{margin-top:34px;padding-top:20px;border-top:1px dashed var(--linie-stark,#DDD0BC);
+ display:flex;flex-wrap:wrap;gap:9px;align-items:center;}
+.z-werk button{font-family:inherit;font-size:14px;padding:10px 19px;border-radius:19px;
+ border:1px solid var(--nacht,#2E3A5C);background:var(--nacht,#2E3A5C);color:#fff;cursor:pointer;}
+.z-werk button.leicht{background:none;color:var(--nacht,#2E3A5C);}
+.z-echo{font-size:13.6px;color:var(--gruen,#3F6B4A);}
+.z-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:17px 19px;font-size:15px;line-height:1.65;color:var(--leise,#6B6259);}
+.z-leer a{color:var(--nacht,#2E3A5C);}
+
+@media print{
+ .ac-leiste,.z-sprung,.z-einst,.z-filter,.z-werk,.weiter,.niv-leiste{display:none!important;}
+ body{background:#fff;}
+ .z-kette,.z-ehrlich{background:#fff!important;color:#000!important;border:2px solid #000;}
+ .z-kette .lab,.z-ehrlich h2,.z-ehrlich h4,.z-ehrlich p,.z-kette p,.z-rechn{color:#000!important;}
+ .z-detail,.z-sys,.z-abschnitt{break-inside:avoid;}
+ .z-sys-in{display:block!important;}
+}
+</style><script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+
+<div class="z-wrap">
+<div class="z-kopf">
+  <h1>Die <em>Zahlen.</em></h1>
+  <p class="z-lede">Numerologie rechnet aus Geburtsdatum und Namen eine Handvoll Zahlen und liest daraus Themen. Diese Seite rechnet sie dir aus, zeigt jede Zahl durch <b>acht Lebensbereiche</b> hindurch, nimmt die <b>Wohnungs&shy;nummer</b> als eigene Kategorie dazu und stellt die <b>neun Schulen</b> nebeneinander, die es dazu gibt &mdash; samt der Stellen, an denen sie sich widersprechen.</p>
+  <p class="z-lede">Und weil das hier eine astrologische Seite ist: Am Ende steht, was die Zahlen leisten k&ouml;nnen und was nicht. Eine Lebenszahl teilt die Menschheit in neun fast gleich gro&szlig;e Gruppen. Ein Chart tut etwas anderes.</p>
+</div>
+
+<div id="nivleiste"></div>
+
+<nav class="z-sprung" aria-label="Zu den Abschnitten">
+  <a href="#blatt">Dein Blatt</a>
+  <a href="#ring">Die zw&ouml;lf Zahlen</a>
+  <a href="#matrix">Zahl &times; Bereich</a>
+  <a href="#wohnen">Wohnung &amp; Hausnummer</a>
+  <a href="#schulen">Die Schulen</a>
+  <a href="#chart">Zahl &amp; Chart</a>
+  <a href="#ehrlich">Was es taugt</a>
+</nav>
+
+<!-- 1 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="blatt">
+  <h2>Dein Blatt</h2>
+  <p class="u">Aus dem Datum des aktiven Profils, und aus dem Namen, wenn du einen eintr&auml;gst. Alles wird im Browser gerechnet und nichts gespeichert au&szlig;er dem Namen, den du selbst eintippst.</p>
+
+  <div class="z-einst">
+    <div class="z-reihe"><span class="k">Wer</span><div class="z-knoepfe" id="zpersonen"></div></div>
+    <div class="z-reihe"><span class="k">Name</span>
+      <input class="z-feld" id="zname" type="text" autocomplete="off" spellcheck="false"
+        placeholder="Vollst&auml;ndiger Geburtsname, mit allen Vornamen">
+      <button type="button" class="z-knopf" id="znamever">Buchstaben verdecken</button>
+      <p class="z-hint">Die Numerologie rechnet mit dem Namen auf der Geburtsurkunde &mdash; alle Vornamen, Geburtsnachname. Die ch&auml;ld&auml;ische Schule nimmt stattdessen den Rufnamen. Bleibt das Feld leer, rechnet die Seite nur mit dem Datum.</p>
+    </div>
+    <div class="z-reihe"><span class="k">Tafel</span>
+      <div class="z-knoepfe" id="zsystem"></div>
+      <p class="z-hint" id="zsyshint"></p>
+    </div>
+  </div>
+
+  <div class="z-karten" id="zkarten"></div>
+  <div id="zkette"></div>
+  <div id="zgitter"></div>
+  <div id="zstreit"></div>
+</section>
+
+<!-- 2 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="ring">
+  <h2>Die zw&ouml;lf Zahlen</h2>
+  <p class="u">Neun Ziffern im Kreis, die drei Meisterzahlen in der Mitte. Tippe eine an &mdash; darunter klappt alles auf, was zu ihr geh&ouml;rt. Deine eigenen Zahlen sind markiert.</p>
+  <div id="zringbox"></div>
+  <div class="z-ringleg" id="zringleg"></div>
+  <div id="zdetail"></div>
+</section>
+
+<!-- 3 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="matrix">
+  <h2>Zahl &times; Bereich</h2>
+  <p class="u">Dieselben zw&ouml;lf Zahlen, einmal quer durch acht Lebensbereiche gelegt. Eine Zahl bedeutet in der Arbeit etwas anderes als in der Beziehung und im Schlafzimmer wieder etwas anderes. Tippe ein Feld an f&uuml;r das Ganze.</p>
+  <div class="z-filter" id="zthemen"></div>
+  <div class="z-mtab" id="zmatrix"></div>
+  <div class="z-liste" id="zmliste"></div>
+</section>
+
+<!-- 4 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="wohnen">
+  <h2>Wohnung und Hausnummer</h2>
+  <p class="u">Die eine Kategorie, in der Numerologie auch Leute benutzen, die sonst nichts davon halten: Hausnummern. Gerechnet wird die Nummer selbst, nicht der Stra&szlig;enname &mdash; Buchstaben z&auml;hlen mit, „47a" ist also 4&nbsp;+&nbsp;7&nbsp;+&nbsp;1.</p>
+
+  <div class="z-einst">
+    <div class="z-reihe"><span class="k">Nummer</span>
+      <input class="z-feld" id="zadr" type="text" autocomplete="off"
+        placeholder="z.&nbsp;B. 47a &nbsp;oder&nbsp; 12/3 &nbsp;oder&nbsp; Hauptstra&szlig;e 29">
+      <p class="z-hint">Haus und Wohnung durch Schr&auml;gstrich oder Komma trennen, dann wird beides einzeln ausgewiesen. Welche Nummer mehr z&auml;hlt, darin sind die Schulen uneins: die meisten nehmen die Wohnungs&shy;nummer, weil das die Einheit ist, in der man wirklich wohnt.</p>
+    </div>
+  </div>
+  <div id="zwohnerg"></div>
+
+  <h2 style="font-size:21px;margin:30px 0 6px">F&uuml;r wen welche Nummer passt</h2>
+  <p class="u">Dieselbe Rechnung von der anderen Seite aus. Keine Tabelle, die jemand aufgeschrieben hat, sondern eine Ableitung: Jede Zahl hat etwas, wovon sie schon zu viel mitbringt, und etwas, was ihr von au&szlig;en fehlt. Eine Nummer, die das Fehlende liefert, tr&auml;gt. Eine, die das Zuviel verdoppelt, reibt.</p>
+  <div class="z-mtab" id="zpasst"></div>
+</section>
+
+<!-- 5 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="schulen">
+  <h2>Die Schulen</h2>
+  <p class="u">Neun verschiedene Ans&auml;tze, und sie sind nicht Varianten derselben Sache. Zwei davon sind wirklich alt, weil dort die Buchstaben <i>selbst</i> Ziffern sind. Die bekannteste ist gut hundert Jahre alt. Eine ist &uuml;berpr&uuml;ft und widerlegt. Bei jeder steht, was belegt ist und was nur behauptet wird.</p>
+  <div id="zschulen"></div>
+</section>
+
+<!-- 6 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="chart">
+  <h2>Zahl und Chart</h2>
+  <p class="u">Die indische Zahlenlehre h&auml;ngt jede Ziffer an einen Planeten, und damit l&auml;sst sich beides nebeneinanderlegen. An zwei Stellen widersprechen sich indische und westliche Zuordnung &mdash; genau bei den zwei Zahlen, denen auch kein Wochentag zugeordnet ist.</p>
+  <div class="z-ptab" id="zplanet"></div>
+  <div id="zbruecke"></div>
+</section>
+
+<!-- 7 ───────────────────────────────────────────────── -->
+<section class="z-abschnitt" id="ehrlich">
+  <div class="z-ehrlich">
+    <h2>Was die Zahlen taugen</h2>
+    <p>Alles oben ist sauber gerechnet. Was man daraus lesen kann, ist eine andere Frage, und darauf geh&ouml;rt eine ehrliche Antwort &mdash; vor allem, wenn du mit Menschen arbeitest.</p>
+
+    <h4>Die Lebenszahl ist grob</h4>
+    <p>Ein Geburtsdatum l&auml;sst sich auf neun Ziffern zusammenziehen, also gibt es neun Lebenszahlen. &Uuml;ber hundert Jahrg&auml;nge gerechnet f&auml;llt jede Restklasse auf <b>genau ein Neuntel</b> aller Geburtstage &mdash; die Meisterzahlen schneiden nur Scheiben aus der Zwei, der Vier und der Sechs heraus:</p>
+    <div id="zvert"></div>
+    <p>Rund jeder neunte Mensch hat also deine Lebenszahl. Ein Chart dagegen wiederholt sich praktisch nie. Das macht die Zahl nicht wertlos, aber es sagt, welchen Platz sie haben kann: als kurzer Griff, nicht als Beschreibung eines Menschen.</p>
+
+    <h4>Die Methode entscheidet mit</h4>
+    <p>Es gibt drei &uuml;bliche Wege, aus einem Datum die Lebenszahl zu rechnen. Auf die <b>eine Ziffer</b> kommen alle drei immer gleich, und das ist kein Zufall: Eine Ziffernsumme &auml;ndert den Wert modulo neun nicht. Unterschiedlich wird es nur dort, wo ein Weg auf 11, 22 oder 33 landet und ein anderer daran vorbeil&auml;uft. Nachgerechnet &uuml;ber alle Daten von 1900 bis 2030 passiert das bei <b id="zabw">&mdash;</b> von ihnen. Wer also eine Meisterzahl hat, hat sie <i>in einer bestimmten Schule</i>.</p>
+
+    <h4>Die Tafeln widersprechen sich</h4>
+    <p>Derselbe Name gibt pythagor&auml;isch und ch&auml;ld&auml;isch verschiedene Zahlen. Ob das Y als Vokal z&auml;hlt, ist ungekl&auml;rt. Wie Umlaute behandelt werden, hat nie jemand festgelegt &mdash; ob Ä als A oder als AE z&auml;hlt, &auml;ndert das Ergebnis, und beide Varianten werden unterrichtet. Oben kannst du umschalten und es sehen. Es gibt keinen Schiedsrichter zwischen den Tafeln.</p>
+
+    <h4>Es ist nicht gepr&uuml;ft</h4>
+    <p>Dass eine aus Name oder Datum gewonnene Zahl irgendetwas vorhersagt, ist nicht belegt. Es gibt dazu auch kaum Untersuchungen &mdash; die einzige Schule, die wirklich gro&szlig;fl&auml;chig gepr&uuml;ft wurde, sind die Biorhythmen, und die sind durchgefallen. Juno Jordan hat in Kalifornien f&uuml;nfundzwanzig Jahre lang w&ouml;chentlich ein Institut zusammenkommen lassen, um Numerologie zu pr&uuml;fen; nachpr&uuml;fbare Daten daraus gibt es nicht. Was gut untersucht ist, ist etwas anderes: Menschen m&ouml;gen die Ziffern ihres eigenen Geburtsdatums ein wenig lieber als andere. Das ist eine Vorliebe, keine Bestimmung.</p>
+
+    <h4>Eine Zahl sagt nichts &uuml;ber einen Neurotyp</h4>
+    <p>Die Elf wird oft als „empfindliches Nervensystem" beschrieben, und das klingt nach Diagnose. Es ist keine. Aus einem Geburtsdatum l&auml;sst sich weder AuDHS noch irgendetwas anderes ablesen, und niemandem ist geholfen, wenn eine Zahl das nahelegt. Wenn in der Arbeit mit Menschen eine Reiz&shy;frage auftaucht, geh&ouml;rt sie in das Gespr&auml;ch und nicht in die Rechnung.</p>
+
+    <h4>Wof&uuml;r es dann gut ist</h4>
+    <p>F&uuml;r den Einstieg. Eine Lebenszahl braucht keine Geburtszeit, keinen Ort und keine Software &mdash; Menschen k&ouml;nnen sie selbst ausrechnen, und das macht sie zu einem niedrigen Einstieg in ein Gespr&auml;ch, das sonst mit zwanzig Minuten Erkl&auml;rung anf&auml;ngt. Als Merkhilfe: „Du bist eine Vier" bleibt h&auml;ngen, wo „Saturn am MC im Steinbock" nicht h&auml;ngenbleibt. Und als Frageanlass, nicht als Befund: Was hier steht, gilt nur so weit, wie die Person es best&auml;tigt. Widerspricht sie, hat sie recht.</p>
+  </div>
+</section>
+
+<div class="z-werk">
+  <button type="button" id="zkopie">Blatt kopieren</button>
+  <button type="button" class="leicht" id="zdruck">Drucken</button>
+  <span class="z-echo" id="zecho"></span>
+</div>
+
+<div class="weiter"><a href="bazi.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Vier S&auml;ulen &amp; andere Systeme</span></a><a href="analyse.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Die Analyse &mdash; eine Rechnung statt eines Nachschlagewerks</span></a></div>
+<div class="foot">Zahlen &middot; Pythagor&auml;ische und ch&auml;ld&auml;ische Tafel, Lebenszahl nach der Ziffernsummen-Methode, Meisterzahlen 11, 22 und 33 bleiben stehen.<br>
+Die Rechnung liegt im Quelltext unter <i>zahlen/zahlen-rechner.js</i> und ist einzeln gepr&uuml;ft &mdash; jede Tafel, jeder Weg, jede Namenszahl.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Zahlen — die Rechnung
+   Alles, was auf dieser Seite gerechnet wird, steht hier. Getrennt von den
+   Texten, damit man es nachrechnen und prüfen kann.
+
+   Zwei Buchstabentafeln (pythagoräisch und chaldäisch), drei Wege zur
+   Lebenszahl, Namenszahlen, persönliches Jahr, Hausnummern.
+   Namen mit Z_ davor, damit nichts mit der astronomischen Engine kollidiert. */
+(function(){
+'use strict';
+
+/* ── Buchstabentafeln ────────────────────────────────────────
+   Pythagoräisch: A–Z laufen glatt durch 1–9 und fangen wieder bei 1 an.
+   Chaldäisch: nach Klanggruppen verteilt, die 9 bleibt frei — sie gilt
+   in dieser Schule als heilig und wird keinem Buchstaben zugeordnet. */
+var Z_PYTH = {};
+'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function(c,i){ Z_PYTH[c]=(i%9)+1; });
+
+var Z_CHALD = {A:1,I:1,J:1,Q:1,Y:1, B:2,K:2,R:2, C:3,G:3,L:3,S:3,
+               D:4,M:4,T:4, E:5,H:5,N:5,X:5, U:6,V:6,W:6, O:7,Z:7, F:8,P:8};
+
+var Z_VOKALE = 'AEIOU';
+
+/* ── Umlaute: hier sind die Schulen sich nicht einig ─────────
+   „direkt"  — Ä wird wie A gezählt (im deutschsprachigen Raum üblich)
+   „umschrift" — Ä wird zu AE, also zwei Buchstaben, zwei Zahlen
+   Beides wird gerechnet; die Seite zeigt, wenn es einen Unterschied macht. */
+function zNorm(s, art){
+  s = String(s||'').toUpperCase();
+  if(art==='umschrift'){
+    s = s.replace(/Ä/g,'AE').replace(/Ö/g,'OE').replace(/Ü/g,'UE').replace(/ß/g,'SS');
+  }else{
+    s = s.replace(/Ä/g,'A').replace(/Ö/g,'O').replace(/Ü/g,'U').replace(/ß/g,'S');
+  }
+  s = s.replace(/[ÀÁÂÃÅĀĂ]/g,'A').replace(/[ÈÉÊË]/g,'E').replace(/[ÌÍÎÏ]/g,'I')
+       .replace(/[ÒÓÔÕØ]/g,'O').replace(/[ÙÚÛ]/g,'U').replace(/[ÝŸ]/g,'Y')
+       .replace(/Ç/g,'C').replace(/Ñ/g,'N').replace(/Ł/g,'L').replace(/Đ/g,'D');
+  return s.replace(/[^A-Z ]/g,'');
+}
+function zHatUmlaut(s){ return /[ÄÖÜäöüß]/.test(String(s||'')); }
+
+/* ── Reduzieren ──────────────────────────────────────────────
+   Auf eine Stelle zusammenziehen. Mit meister=true bleiben 11, 22 und 33
+   stehen, statt weiter zu 2, 4 und 6 zu werden. */
+function zRed(n, meister){
+  n = Math.abs(Math.round(n||0));
+  while(n > 9){
+    if(meister && (n===11 || n===22 || n===33)) return n;
+    n = zZiffernsumme(n);
+  }
+  return n;
+}
+function zZiffernsumme(n){
+  var s=0; n=Math.abs(Math.round(n||0));
+  while(n>0){ s += n%10; n = Math.floor(n/10); }
+  return s;
+}
+/* Der ganze Weg, nicht nur das Ergebnis — für die Darstellung der Kette */
+function zKette(n, meister){
+  var k=[Math.abs(Math.round(n||0))], w=k[0], schutz=0;
+  while(w > 9 && schutz++ < 12){
+    if(meister && (w===11 || w===22 || w===33)) break;
+    w = zZiffernsumme(w); k.push(w);
+  }
+  return k;
+}
+function zIstMeister(n){ return n===11 || n===22 || n===33; }
+
+/* ── Lebenszahl: drei Wege ───────────────────────────────────
+   summe  — alle Ziffern des Datums in einen Topf
+   teile  — Tag, Monat, Jahr je einzeln zusammenziehen, dann addieren,
+            Meisterzahlen in den Teilen bleiben stehen
+   streng — wie teile, aber die Teile werden bis auf eine Stelle reduziert
+
+   Das Ergebnis auf eine Stelle ist bei allen drei immer dasselbe: eine
+   Ziffernsumme ändert den Wert modulo 9 nicht. Unterschiede gibt es nur
+   dort, wo ein Weg auf 11, 22 oder 33 landet und ein anderer daran
+   vorbeiläuft. zLebenszahl gibt deshalb alle drei zurück. */
+function zLebenszahl(d, mo, y){
+  var alle = zZiffernsumme(d) + zZiffernsumme(mo) + zZiffernsumme(y);
+  var summe = zRed(alle, true);
+
+  var tT = zRed(d, true), tM = zRed(mo, true), tJ = zRed(y, true);
+  var teile = zRed(tT + tM + tJ, true);
+
+  var sT = zRed(d, false), sM = zRed(mo, false), sJ = zRed(y, false);
+  var streng = zRed(sT + sM + sJ, true);
+
+  var werte = [summe, teile, streng];
+  return {
+    summe: summe, teile: teile, streng: streng,
+    einig: (summe===teile && teile===streng),
+    stelle: zRed(alle, false),          /* die eine Ziffer — immer eindeutig */
+    kette: zKette(alle, true),
+    rohsumme: alle,
+    teilwerte: {tag:tT, monat:tM, jahr:tJ},
+    strengwerte: {tag:sT, monat:sM, jahr:sJ},
+    meisterGesehen: werte.filter(zIstMeister).length > 0
+  };
+}
+
+/* ── Namenszahlen ────────────────────────────────────────────
+   ausdruck       alle Buchstaben
+   seele          nur die Vokale
+   persoenlichkeit nur die Konsonanten
+   Das Y zählt je nach Schule als Vokal oder als Konsonant. Beides wird
+   gerechnet; wo es den Wert ändert, sagt die Seite es.                  */
+function zTafel(sys){ return sys==='chald' ? Z_CHALD : Z_PYTH; }
+
+function zBuchstaben(name, sys, art){
+  var T = zTafel(sys), out = [];
+  zNorm(name, art).split('').forEach(function(c){
+    if(c===' '){ out.push({c:' ', n:0, luecke:true, art:'luecke'}); return; }
+    var n = T[c];
+    out.push({c:c, n:(n===undefined?0:n), ohne:(n===undefined),
+              vokal: Z_VOKALE.indexOf(c)>=0, y:(c==='Y'),
+              art: (Z_VOKALE.indexOf(c)>=0 ? 'vokal' : (c==='Y' ? 'y' : 'konsonant'))});
+  });
+  return out;
+}
+
+function zNamenszahlen(name, sys, art){
+  var g = zBuchstaben(name, sys, art);
+  function summe(filter){
+    var s=0; g.forEach(function(b){ if(!b.luecke && filter(b)) s += b.n; }); return s;
+  }
+  var alles  = summe(function(){ return true; });
+  var vok    = summe(function(b){ return b.vokal; });
+  var vokY   = summe(function(b){ return b.vokal || b.y; });
+  var kon    = summe(function(b){ return !b.vokal && !b.y; });
+  var konY   = summe(function(b){ return !b.vokal; });
+
+  /* welche Ziffern im Namen gar nicht auftauchen */
+  var da = {};
+  g.forEach(function(b){ if(!b.luecke && b.n) da[b.n]=(da[b.n]||0)+1; });
+  var fehlt=[], viel=[], max=0;
+  for(var i=1;i<=9;i++){ if(!da[i]) fehlt.push(i); if((da[i]||0)>max) max=da[i]||0; }
+  if(max>=3) for(var j=1;j<=9;j++) if(da[j]===max) viel.push(j);
+
+  return {
+    gitter: g,
+    buchstaben: g.filter(function(b){ return !b.luecke; }).length,
+    ausdruck: zRed(alles, true), ausdruckRoh: alles, ausdruckKette: zKette(alles,true),
+    seele: zRed(vok, true), seeleRoh: vok,
+    seeleMitY: zRed(vokY, true), seeleMitYRoh: vokY,
+    person: zRed(konY, true), personRoh: konY,
+    personOhneY: zRed(kon, true), personOhneYRoh: kon,
+    yStoert: (zRed(vok,true) !== zRed(vokY,true)) && /Y/.test(zNorm(name,art)),
+    fehlt: fehlt, haeufig: viel, zaehlung: da
+  };
+}
+
+/* ── Zeit: das persönliche Jahr ──────────────────────────────
+   Tag + Monat + laufendes Jahr, auf eine Stelle. Meisterzahlen werden
+   hier nicht geführt — ein Jahr läuft in einem Neuner-Takt.            */
+function zPersJahr(d, mo, jahr){
+  var roh = zRed(d,false) + zRed(mo,false) + zRed(jahr,false);
+  return {zahl: zRed(roh,false), roh: roh, kette: zKette(roh,false), jahr: jahr};
+}
+function zPersMonat(d, mo, jahr, monat){
+  var pj = zPersJahr(d, mo, jahr).zahl;
+  return zRed(pj + zRed(monat,false), false);
+}
+
+/* ── Herausforderungszahlen ──────────────────────────────────
+   Differenzen der Datumsteile. Die 0 ist hier ein eigener Wert und heißt:
+   alle Zahlen stehen zur Verfügung, keine davon drängt sich vor.        */
+function zHerausforderung(d, mo, y){
+  var T=zRed(d,false), M=zRed(mo,false), J=zRed(y,false);
+  var e=Math.abs(M-T), z=Math.abs(T-J), h=Math.abs(e-z), v=Math.abs(M-J);
+  return {erste:e, zweite:z, haupt:h, vierte:v};
+}
+
+/* ── Reife ───────────────────────────────────────────────────
+   Lebenszahl plus Ausdruckszahl. Gilt als das, worauf beides zuläuft. */
+function zReife(lz, az){ return zRed((lz||0)+(az||0), true); }
+
+/* ── Hausnummern und Wohnungsnummern ─────────────────────────
+   „47a" → 4+7+1. Buchstaben zählen mit, nach derselben Tafel wie Namen.
+   Ein Schrägstrich oder Bindestrich trennt Haus und Wohnung; ist beides
+   da, wird beides einzeln ausgewiesen.                                  */
+function zAdresse(text, sys){
+  var roh = String(text||'').toUpperCase().replace(/[ÄÖÜ]/g,function(m){
+    return {'Ä':'A','Ö':'O','Ü':'U'}[m]; });
+  /* Nur die Nummer selbst zählt, nicht der Straßenname. Gezählt wird
+     jede Ziffernfolge mit dem Buchstaben, der direkt dranhängt:
+     aus „Hauptstraße 47a, 3. OG" wird also 47a und 3.                 */
+  var teile = roh.match(/\d+\s*[A-Z]?(?![A-Z])/g) || [];
+  teile = teile.map(function(t){ return t.replace(/\s+/g,''); });
+  var T = zTafel(sys);
+
+  function stueck(t){
+    var s=0, ziffern=[], buchst=[];
+    t.replace(/[^0-9A-Z]/g,'').split('').forEach(function(c){
+      if(/[0-9]/.test(c)){ s += +c; ziffern.push(c); }
+      else if(T[c]!==undefined){ s += T[c]; buchst.push({c:c, n:T[c]}); }
+    });
+    if(!ziffern.length && !buchst.length) return null;
+    return {text:t, summe:s, zahl:zRed(s,true), stelle:zRed(s,false),
+            kette:zKette(s,true), ziffern:ziffern, buchstaben:buchst};
+  }
+
+  var liste = teile.map(stueck).filter(Boolean);
+  if(!liste.length) return null;
+  var ganz = stueck(teile.join(''));
+
+  /* Was an einer Nummer sonst noch hängt: die chinesische Homophonie ist
+     keine Deutung, sondern eine Tatsache über Sprache und Immobilienmarkt. */
+  var ziffernAlle = teile.join('').replace(/[^0-9]/g,'');
+  return {
+    teile: liste,
+    haupt: liste[0],
+    ganz: ganz,
+    mehrteilig: liste.length > 1,
+    hatVier: ziffernAlle.indexOf('4') >= 0,
+    hatAcht: ziffernAlle.indexOf('8') >= 0,
+    endetVier: /4$/.test(ziffernAlle),
+    endetAcht: /8$/.test(ziffernAlle)
+  };
+}
+
+/* ── Alles auf einmal ────────────────────────────────────────
+   Nimmt ein Profil (y, mo, d) und optional einen Namen und liefert das
+   vollständige Blatt in beiden Systemen.                               */
+function zBlatt(p, name, jahr, sys, art){
+  if(!p || !p.y) return null;
+  sys = sys || 'pyth'; art = art || 'direkt';
+  jahr = jahr || new Date().getFullYear();
+
+  var lz = zLebenszahl(p.d, p.mo, p.y);
+  var nz = name ? zNamenszahlen(name, sys, art) : null;
+  var nzAnder = name ? zNamenszahlen(name, sys==='pyth'?'chald':'pyth', art) : null;
+  var nzUml = (name && zHatUmlaut(name))
+              ? zNamenszahlen(name, sys, art==='direkt'?'umschrift':'direkt') : null;
+
+  var lebenszahl = lz.summe;
+  return {
+    datum: {d:p.d, mo:p.mo, y:p.y},
+    system: sys, umlautArt: art,
+    lebenszahl: lebenszahl,
+    lz: lz,
+    geburtstag: {zahl: zRed(p.d, true), roh: p.d, kette: zKette(p.d, true)},
+    name: nz,
+    nameAnderesSystem: nzAnder,
+    nameAndereUmlaute: nzUml,
+    systemStreit: !!(nz && nzAnder && nz.ausdruck !== nzAnder.ausdruck),
+    umlautStreit: !!(nz && nzUml && nz.ausdruck !== nzUml.ausdruck),
+    reife: nz ? zReife(lebenszahl, nz.ausdruck) : null,
+    jahr: zPersJahr(p.d, p.mo, jahr),
+    monat: zPersMonat(p.d, p.mo, jahr, new Date().getMonth()+1),
+    herausforderung: zHerausforderung(p.d, p.mo, p.y),
+    /* Wie viele Menschen dieselbe Lebenszahl haben — das Maß für die
+       Körnung dieses Werkzeugs. Wird in zSeltenheit ausgerechnet. */
+    anteil: zAnteil(lebenszahl)
+  };
+}
+
+/* ── Wie fein ist das überhaupt? ─────────────────────────────
+   Über alle Daten eines vollen Zyklus gerechnet, wie häufig jede
+   Lebenszahl vorkommt. Steht auf der Seite, damit niemand die Zahl für
+   eine persönliche Kennung hält.                                       */
+var Z_VERTEILUNG = null;
+function zVerteilung(){
+  if(Z_VERTEILUNG) return Z_VERTEILUNG;
+  var z={}, n=0, tage=[31,28,31,30,31,30,31,31,30,31,30,31];
+  for(var y=1940; y<=2039; y++){
+    var schalt = (y%4===0 && (y%100!==0 || y%400===0));
+    for(var m=1; m<=12; m++){
+      var max = tage[m-1] + ((m===2 && schalt)?1:0);
+      for(var d=1; d<=max; d++){
+        var k = zLebenszahl(d,m,y).summe;
+        z[k]=(z[k]||0)+1; n++;
+      }
+    }
+  }
+  Z_VERTEILUNG={zaehlung:z, gesamt:n};
+  return Z_VERTEILUNG;
+}
+function zAnteil(zahl){
+  var v = zVerteilung();
+  return (v.zaehlung[zahl]||0) / v.gesamt;
+}
+
+window.AC_ZAHL = {
+  PYTH: Z_PYTH, CHALD: Z_CHALD, VOKALE: Z_VOKALE,
+  norm: zNorm, hatUmlaut: zHatUmlaut,
+  red: zRed, ziffernsumme: zZiffernsumme, kette: zKette, istMeister: zIstMeister,
+  lebenszahl: zLebenszahl, buchstaben: zBuchstaben, namenszahlen: zNamenszahlen,
+  persJahr: zPersJahr, persMonat: zPersMonat,
+  herausforderung: zHerausforderung, reife: zReife,
+  adresse: zAdresse, blatt: zBlatt,
+  verteilung: zVerteilung, anteil: zAnteil
+};
+})();
+
+/* Astro-Charlie · Zahlen — die Texte
+   Zwölf Zahlen (1–9 und die drei Meisterzahlen), jede durch acht
+   Lebensbereiche hindurch. Dazu die Wohnungs- und Hausnummern und die
+   Schulen, die es zu dem Thema gibt.
+
+   Regel für alle Texte hier: nichts Rätselhaftes. Jeder Satz muss sagen,
+   was er meint, und zwar so, dass man am Abend etwas davon hat. */
+
+var Z_NUM = [1,2,3,4,5,6,7,8,9,11,22,33];
+
+/* ── Die Zahlen selbst ───────────────────────────────────────
+   braucht / zuviel steuern die Wohnungsrechnung weiter unten:
+   braucht = was dieser Zahl von außen fehlt,
+   zuviel  = wovon sie selbst schon reichlich hat.
+   hat / gibt sind die Satzbausteine, aus denen die Wohnungstexte
+   zusammengesetzt werden. */
+var Z_ZAHL = {
+1:{n:'Eins', titel:'Der Anfang', kurz:'anfangen, vorangehen, allein entscheiden',
+  wesen:'Die Eins fängt an. Sie braucht keine Erlaubnis und wartet nicht, bis sich jemand mitbewegt — das ist ihre Stärke und gleichzeitig der Grund, warum sie oft allein dasteht.',
+  stark:'Entscheidet schnell. Hält eine Richtung auch dann, wenn alle anderen zweifeln. Fängt Dinge an, die sonst niemand anfängt.',
+  schatten:'Kann schlecht abgeben und noch schlechter um Hilfe bitten. Verwechselt Widerspruch mit Angriff. Wird einsam, ohne zu merken, dass sie es selbst eingerichtet hat.',
+  pInd:'Sonne', pWest:'Sonne', tag:'Sonntag', farbe:'#A2593F',
+  hat:'machst Dinge am liebsten selbst und fragst spät', gibt:'lässt dich allein machen und mischt sich nicht ein',
+  satt:'Eigenantrieb und Alleingang',
+  braucht:[2,6], zuviel:[1,8]},
+2:{n:'Zwei', titel:'Die Verbindung', kurz:'anschließen, vermitteln, mitbekommen',
+  wesen:'Die Zwei denkt in Paaren. Sie merkt sofort, wie es dem anderen geht, und richtet sich danach — manchmal so weit, dass ihre eigene Meinung erst auftaucht, wenn niemand mehr im Raum ist.',
+  stark:'Hört wirklich zu. Stellt zwischen Streitenden eine Verbindung her, die vorher keiner gesehen hat. Hält Zweierbeziehungen über Jahre.',
+  schatten:'Entscheidet nicht, solange die Möglichkeit besteht, dass sich jemand ärgert. Sagt ja und meint nein. Wartet darauf, gefragt zu werden.',
+  pInd:'Mond', pWest:'Mond', tag:'Montag', farbe:'#887F35',
+  hat:'richtest dich stark nach anderen', gibt:'dreht alles um Nähe, Rücksicht und zwei Menschen',
+  satt:'Rücksicht und Anpassung',
+  braucht:[1,8], zuviel:[2,6,11]},
+3:{n:'Drei', titel:'Der Ausdruck', kurz:'sprechen, zeigen, vieles gleichzeitig',
+  wesen:'Die Drei muss raus mit dem, was in ihr ist — reden, schreiben, zeigen, bauen. Sie hat mehr Ideen als Tage und fängt deshalb mehr an, als sie zu Ende bringt.',
+  stark:'Bringt Dinge in Worte, die andere nur fühlen. Macht Stimmung. Findet zu allem drei Wege.',
+  schatten:'Bricht ab, sobald es mühsam wird. Redet über das Problem, statt es anzufassen. Streut sich so weit, dass nichts fertig wird.',
+  pInd:'Jupiter', pWest:'Jupiter', tag:'Donnerstag', farbe:'#71A540',
+  hat:'fängst viel an und bringst wenig zu Ende', gibt:'macht es leicht, hier zu reden, zu spielen und Leute reinzulassen',
+  satt:'Ideen und Anfänge',
+  braucht:[4,7], zuviel:[3,5]},
+4:{n:'Vier', titel:'Die Struktur', kurz:'ordnen, bauen, dranbleiben',
+  wesen:'Die Vier will, dass etwas hält. Sie baut langsam, prüft zweimal und findet Ordnung nicht langweilig, sondern erholsam — bis die Ordnung sie selbst einschnürt.',
+  stark:'Bringt zu Ende. Baut Dinge, die auch noch in zehn Jahren stehen. Ist die, auf die man sich verlassen kann.',
+  schatten:'Hält an einem Plan fest, der nicht mehr stimmt. Macht aus allem eine Pflicht. Hat kein Konzept für Pause.',
+  pInd:'Rahu', pWest:'Uranus', tag:'—', farbe:'#33843F',
+  hat:'hast schon genug Pflicht und Plan im Leben', gibt:'verlangt Ordnung und gibt Verlässlichkeit zurück',
+  satt:'Pflicht und Plan',
+  braucht:[5,3], zuviel:[4,8,22]},
+5:{n:'Fünf', titel:'Die Bewegung', kurz:'ausprobieren, wechseln, frei bleiben',
+  wesen:'Die Fünf lernt durch Ausprobieren und hält es schwer aus, wenn etwas festgelegt ist, bevor sie es erlebt hat. Sie sammelt Erfahrungen so, wie andere Besitz sammeln.',
+  stark:'Kommt mit allem Neuen zurecht. Wechselt schnell die Richtung, ohne zu verzweifeln. Kennt die Welt von mehr Seiten als die meisten.',
+  schatten:'Geht, sobald es verbindlich wird. Verwechselt Reiz mit Richtung. Verbrennt sich an fünf Dingen gleichzeitig.',
+  pInd:'Merkur', pWest:'Merkur', tag:'Mittwoch', farbe:'#3FA28B',
+  hat:'bist ohnehin viel in Bewegung', gibt:'bleibt unruhig: viel Kommen und Gehen, viel Reiz, wenig Festes',
+  satt:'Bewegung und Reiz',
+  braucht:[4,2], zuviel:[5,3]},
+6:{n:'Sechs', titel:'Die Fürsorge', kurz:'sorgen, halten, schön machen',
+  wesen:'Die Sechs übernimmt. Sie sieht, was fehlt, und füllt es auf, bevor jemand fragt — bei allen, nur bei sich selbst meistens nicht.',
+  stark:'Hält eine Gruppe zusammen. Macht Räume und Beziehungen bewohnbar. Bleibt, wenn es unangenehm wird.',
+  schatten:'Sorgt so viel, dass sie Macht darüber bekommt, und merkt es nicht. Wird bitter, weil keiner fragt, wie es ihr geht. Sagt nie, was sie braucht.',
+  pInd:'Venus', pWest:'Venus', tag:'Freitag', farbe:'#356788',
+  hat:'sorgst ohnehin schon für zu viele Leute', gibt:'zieht Menschen, Verantwortung und Fürsorge an',
+  satt:'Fürsorge und Verantwortung',
+  braucht:[7,1], zuviel:[6,2,33]},
+7:{n:'Sieben', titel:'Der Rückzug', kurz:'verstehen, prüfen, allein sein',
+  wesen:'Die Sieben will wissen, wie etwas wirklich funktioniert, und braucht dafür Ruhe. Sie glaubt nichts, weil es alle sagen, und das macht sie gründlich und einsam zugleich.',
+  stark:'Sieht, was unter der Oberfläche läuft. Lässt sich nicht beschwatzen. Hält Alleinsein nicht nur aus, sondern braucht es.',
+  schatten:'Denkt über das Leben nachher statt mittendrin. Hält Abstand und nennt es Urteilskraft. Misstraut auch dem, was gut gemeint ist.',
+  pInd:'Ketu', pWest:'Neptun', tag:'—', farbe:'#4240A5',
+  hat:'ziehst dich ohnehin schnell zurück', gibt:'ist still, nach innen gedreht und braucht wenig Publikum',
+  satt:'Abstand und Grübeln',
+  braucht:[6,3], zuviel:[7,11]},
+8:{n:'Acht', titel:'Die Konsequenz', kurz:'leisten, tragen, durchsetzen',
+  wesen:'Die Acht denkt in Ergebnissen. Sie will nicht nur verstehen, sondern etwas bewegen — und messen, ob es sich bewegt hat. Material, Geld und Verantwortung sind für sie dasselbe Thema.',
+  stark:'Hält Druck. Organisiert Große. Bringt Projekte durch, an denen andere verzweifeln.',
+  schatten:'Macht den eigenen Wert an Leistung fest. Fährt über Menschen, wenn es eng wird. Hört erst auf, wenn der Körper aufhört.',
+  pInd:'Saturn', pWest:'Saturn', tag:'Samstag', farbe:'#673384',
+  hat:'arbeitest ohnehin mehr, als gut ist', gibt:'ist auf Leistung und Status gebaut und fordert beides ein',
+  satt:'Leistung und Druck',
+  braucht:[9,2], zuviel:[8,1,4]},
+9:{n:'Neun', titel:'Der Abschluss', kurz:'loslassen, weiten, abschließen',
+  wesen:'Die Neun ist die letzte Ziffer: bei ihr geht es ums Beenden und ums Größere. Sie nimmt viel mit — fremdes Leid eingeschlossen — und weiß oft nicht, wo sie aufhört und der andere anfängt.',
+  stark:'Lässt los, wenn es Zeit ist. Denkt über den eigenen Zaun hinaus. Tröstet, ohne zu bewerten.',
+  schatten:'Hängt an Abgeschlossenem. Hilft, um nicht bei sich hinzusehen. Hat keine Grenze und wundert sich über die Erschöpfung.',
+  pInd:'Mars', pWest:'Mars', tag:'Dienstag', farbe:'#9E3D84',
+  hat:'nimmst fremde Lasten mit, als wären sie deine', gibt:'ist offen, weit und wenig abgegrenzt — es geht hier immer um mehr als dich',
+  satt:'fremde Lasten und Weite',
+  braucht:[1,4], zuviel:[9,7]},
+11:{n:'Elf', titel:'Die Zwei unter Spannung', kurz:'viel mitbekommen, wenig filtern', meister:2,
+  wesen:'Die Elf gilt als Zwei mit hochgedrehtem Regler: dieselbe Feinfühligkeit, nur ohne Dämpfer. Was in der Zwei Rücksicht ist, ist hier Durchlässigkeit — man bekommt mehr mit, als man verarbeiten kann.',
+  stark:'Nimmt Stimmungen wahr, bevor sie ausgesprochen sind. Trifft bei Menschen oft ins Mark. Steht für etwas ein, auch wenn es sie Kraft kostet.',
+  schatten:'Das Nervensystem ist zuerst voll. Verwechselt fremde Anspannung mit eigener. Rutscht zwischen Hochgefühl und Erschöpfung hin und her.',
+  pInd:'—', pWest:'—', tag:'—', farbe:'#5E5826',
+  hat:'bekommst schon mehr mit, als du sortieren kannst', gibt:'ist offen und dünnwandig — hier kommt alles rein',
+  satt:'Wahrnehmung und Reizlast',
+  braucht:[4,6], zuviel:[11,7,5]},
+22:{n:'Zweiundzwanzig', titel:'Die Vier im Großformat', kurz:'etwas bauen, das bleibt', meister:4,
+  wesen:'Die Zweiundzwanzig gilt als Vier mit größerem Maßstab: nicht ein Haus, sondern eine Siedlung. Das Können ist dasselbe, die Last ist größer — und die Lähmung, die daraus entstehen kann, auch.',
+  stark:'Denkt in Jahrzehnten und fängt trotzdem heute an. Übersetzt eine Idee in einen Plan, den andere ausführen können.',
+  schatten:'Wartet auf das große Projekt und macht deshalb das kleine nicht. Nimmt sich mehr auf die Schultern als zwei Menschen tragen können.',
+  pInd:'—', pWest:'—', tag:'—', farbe:'#265E2E',
+  hat:'trägst ohnehin zu viel auf einmal', gibt:'ist auf Dauer und große Vorhaben gebaut und verlangt Durchhalten',
+  satt:'Last und Maßstab',
+  braucht:[3,5], zuviel:[22,4,8]},
+33:{n:'Dreiunddreißig', titel:'Die Sechs im Großformat', kurz:'lehren, hingeben, viele halten', meister:6,
+  wesen:'Die Dreiunddreißig gilt als Sechs, die über die eigene Familie hinausgeht: lehren, begleiten, viele versorgen. Die Grenze, die der Sechs schon schwerfällt, fällt hier ganz weg.',
+  stark:'Kann vielen gleichzeitig etwas geben, ohne herablassend zu werden. Bleibt bei Menschen, die andere aufgeben.',
+  schatten:'Gibt sich selbst auf und nennt es Berufung. Macht aus Helfen eine Rolle, aus der man nicht mehr rauskommt.',
+  pInd:'—', pWest:'—', tag:'—', farbe:'#26485E',
+  hat:'gibst ohnehin mehr, als zurückkommt', gibt:'zieht Menschen an, die etwas brauchen — und das hört nicht von selbst auf',
+  satt:'Hingabe und Verantwortung für viele',
+  braucht:[1,7], zuviel:[33,6,2]}
+};
+
+/* ── Die acht Bereiche ───────────────────────────────────────  */
+var Z_THEMA = [
+ {k:'beruf',    n:'Arbeit & Berufung', u:'Wo die Zahl bei der Arbeit sichtbar wird'},
+ {k:'liebe',    n:'Beziehung',         u:'Was die Zahl in Nähe tut'},
+ {k:'geld',     n:'Geld',              u:'Wie die Zahl mit Geld umgeht'},
+ {k:'koerper',  n:'Körper & Nerven',   u:'Wo es sich im Körper zeigt, wenn es zu viel wird'},
+ {k:'lernen',   n:'Lernen & Fokus',    u:'Wie die Zahl lernt und was sie überlädt'},
+ {k:'wohnen',   n:'Wohnen',            u:'Was ein Raum mit dieser Zahl tut'},
+ {k:'zeit',     n:'Als Jahr',          u:'Wie sich ein Jahr mit dieser Zahl anlässt'},
+ {k:'konflikt', n:'Streit',            u:'Wie die Zahl streitet und was hilft'}
+];
+
+/* ── Zahl × Bereich ──────────────────────────────────────────
+   t = was los ist, tun = ein Handgriff, der heute geht. */
+var Z_ZT = {
+1:{
+ beruf:{t:'Du arbeitest am besten, wenn du entscheiden darfst. In einer Rolle, in der jede Idee erst durch drei Abstimmungen muss, gehst du kaputt — nicht weil du nicht kannst, sondern weil dich das Warten auffrisst.', tun:'Nimm dir in deiner Arbeit einen Bereich, in dem du allein entscheidest. Und sei es ein kleiner.'},
+ liebe:{t:'Du bist leicht zu verlieben und schwer zu erreichen. Nähe entsteht bei dir nicht durch Reden über Gefühle, sondern dadurch, dass jemand neben dir bleibt, während du etwas machst.', tun:'Sag einmal in der Woche einen Satz, der mit „Ich bräuchte" anfängt. Nicht mehr.'},
+ geld:{t:'Du verdienst am liebsten selbst und ungern über andere. Geld ist für dich Beweglichkeit, nicht Sicherheit — deshalb legst du zu wenig zurück und wunderst dich in Flauten.', tun:'Ein fester Betrag am Monatsanfang auf ein Konto, auf das du nicht täglich schaust.'},
+ koerper:{t:'Bei dir landet Überlast im Kopf und im Nacken. Du merkst Erschöpfung spät, weil du bis dahin funktioniert hast, und dann liegt sie quer.', tun:'Einmal am Tag zehn Minuten etwas, das kein Ziel hat. Nicht Sport, nicht Erledigen.'},
+ lernen:{t:'Du lernst am schnellsten, indem du es selbst versuchst und scheiterst. Kurse, in denen jemand dir von vorne erklärt, was du gerade selbst herausfinden könntest, sind bei dir verlorene Zeit.', tun:'Fang bei Neuem mit dem Machen an und lies die Anleitung erst, wenn du hängst.'},
+ wohnen:{t:'Du brauchst einen Platz, der nur dir gehört, und wäre es ein Sessel. Wohngemeinschaften funktionieren bei dir nur mit abschließbarer Tür.', tun:'Ein Quadratmeter in der Wohnung, an dem niemand etwas hinlegen darf.'},
+ zeit:{t:'Ein Einser-Jahr ist der Start einer neuen Runde: Was du jetzt anfängst, prägt die nächsten neun Jahre. Es fühlt sich oft unfertig und einsam an, weil noch nichts davon sichtbar ist.', tun:'Schreib auf, was bis nächstes Jahr stehen soll. Ein Satz, kein Plan.'},
+ konflikt:{t:'Du gehst direkt drauf zu und bist überrascht, wenn das als Angriff ankommt. Danach ist bei dir die Sache erledigt — beim anderen nicht, und das verstehst du nicht.', tun:'Frag am Tag nach dem Streit, ob für die andere Person noch etwas offen ist.'}},
+2:{
+ beruf:{t:'Du bist gut in Rollen, in denen zwischen Menschen vermittelt werden muss, und schlecht in Rollen, in denen du allein die Richtung ansagst. Das ist keine Schwäche, aber du musst Aufgaben finden, die das nicht dauernd verlangen.', tun:'Sag einmal in einer Besprechung deine Meinung, bevor du weißt, wie die anderen stehen.'},
+ liebe:{t:'Du gehst in Beziehungen tief hinein und verlierst dabei den Überblick darüber, was du selbst willst. Oft merkst du erst beim Alleinsein, wie viel davon gar nicht deins war.', tun:'Einen Abend in der Woche etwas, das die andere Person nicht mag und du schon.'},
+ geld:{t:'Du verhandelst für andere besser als für dich. Bei deinem eigenen Preis kommt immer ein Grund dazwischen, warum weniger auch geht.', tun:'Schreib deinen Preis auf, bevor das Gespräch anfängt, und sag genau den.'},
+ koerper:{t:'Bei dir setzt sich Spannung im Bauch und im Schlaf fest. Du nimmst fremde Anspannung mit nach Hause und merkst nicht, dass sie nicht deine ist.', tun:'Nach Gesprächen zwei Minuten draußen stehen, bevor du in die Wohnung gehst.'},
+ lernen:{t:'Du lernst am besten mit einem Gegenüber — jemandem, dem du es erzählst. Allein vor einem Buch driftest du weg, in einem Gespräch sitzt es nach zehn Minuten.', tun:'Such für jedes größere Thema einen Menschen, dem du es wöchentlich erklärst.'},
+ wohnen:{t:'Du brauchst eine Wohnung, in die andere kommen können, und einen Raum, in dem niemand ist. Beides, nicht eins davon.', tun:'Einen Platz einrichten, an dem du nicht zu erreichen bist, auch für Mitwohnende.'},
+ zeit:{t:'Ein Zweier-Jahr geht langsam und über Beziehungen: warten, abstimmen, reifen lassen. Wer hier Tempo erzwingt, zerreißt die Fäden, die gerade entstehen.', tun:'Eine Sache bewusst liegen lassen, statt sie zu entscheiden.'},
+ konflikt:{t:'Du gehst Streit aus dem Weg, bis es dir zu viel wird, und dann kommt alles auf einmal. Für die andere Person kommt das aus dem Nichts, weil du vorher nichts gesagt hast.', tun:'Sag kleine Ärgernisse am selben Tag. Ein Satz, kein Gespräch.'}},
+3:{
+ beruf:{t:'Du brauchst Arbeit, in der gesprochen, geschrieben oder gezeigt wird. Reine Verwaltung macht dich stumpf, aber du brauchst jemanden oder etwas, das dich an das Fertigwerden erinnert.', tun:'Jede Woche eine Sache abschließen, auch wenn sie nicht gut ist.'},
+ liebe:{t:'Du bist leicht im Kontakt und schwer im Bleiben. Wenn es ernst wird, redest du mehr und fühlst weniger — und das merkt die andere Person.', tun:'Bei einem schweren Thema nichts sagen und zuhören, bis die andere Person fertig ist.'},
+ geld:{t:'Geld kommt bei dir in Schüben und geht in kleinen Beträgen. Nicht die große Ausgabe ist dein Problem, sondern die fünfzig kleinen, die du nicht mitzählst.', tun:'Zwei Wochen jede Ausgabe notieren. Nur notieren, nichts ändern.'},
+ koerper:{t:'Bei dir zeigt sich Überlast in Hals, Stimme und Schlaf — du redest dich leer und liegst dann wach. Nervöser Hunger gehört oft dazu.', tun:'Eine Stunde am Tag ohne Sprechen und ohne Bildschirm.'},
+ lernen:{t:'Du lernst schnell und oberflächlich. Fünf Themen gleichzeitig anzufangen fühlt sich bei dir produktiv an, bringt aber in keinem davon Tiefe.', tun:'Höchstens zwei Themen gleichzeitig. Die anderen auf eine Liste, die wartet.'},
+ wohnen:{t:'Du brauchst eine Wohnung, in der etwas los sein darf, mit Platz für Material und Unordnung. Was du nicht brauchst, ist ein weiterer Raum, der dich ablenkt.', tun:'Ein Regal, auf dem nur Angefangenes liegt. Sichtbar.'},
+ zeit:{t:'Ein Dreier-Jahr ist laut und voll: Kontakte, Auftritte, Angebote. Es fühlt sich nach Fülle an, aber am Jahresende ist oft nichts fertig, wenn du nicht aufpasst.', tun:'Zum Jahresanfang eine Sache benennen, die Ende Dezember fertig sein muss.'},
+ konflikt:{t:'Du machst aus dem Streit eine Erzählung — gut formuliert, schnell, und für die andere Person nicht zu gewinnen. Hinterher hast du recht und nichts geklärt.', tun:'Im Streit höchstens drei Sätze am Stück, dann eine Frage.'}},
+4:{
+ beruf:{t:'Du bist die, bei der Dinge ankommen und fertig werden. Die Gefahr ist nicht, dass du zu wenig schaffst, sondern dass dir die Arbeit alles andere wegnimmt, weil du nicht aufhören kannst, solange etwas offen ist.', tun:'Eine feste Uhrzeit, ab der nicht mehr gearbeitet wird, auch wenn etwas offen ist.'},
+ liebe:{t:'Du zeigst Liebe durch Tun: du reparierst, organisierst, erinnerst. Was dir schwerfällt, ist Nähe ohne Aufgabe — einfach dasitzen und nichts regeln.', tun:'Einmal in der Woche eine Stunde mit der anderen Person, in der nichts erledigt wird.'},
+ geld:{t:'Du wirtschaftest vorsichtig und kommst damit gut durch. Der Preis ist, dass du Geld selten für etwas ausgibst, das nur schön ist, und dich dann freudlos fühlst.', tun:'Ein kleiner Betrag im Monat, der ohne Begründung ausgegeben wird.'},
+ koerper:{t:'Bei dir setzt sich Überlast in Rücken, Kiefer und Gelenken fest. Du hältst lange durch, und wenn es kippt, dann in den Körper hinein, nicht in die Stimmung.', tun:'Zweimal am Tag zwei Minuten bewusst die Schultern und den Kiefer lockern.'},
+ lernen:{t:'Du lernst gründlich, in Schritten, mit Wiederholung — und brauchst länger als andere, behältst es aber auch. Was dich blockiert, ist Stoff ohne erkennbare Struktur.', tun:'Bei Neuem zuerst das Inhaltsverzeichnis lesen und selbst eine Reihenfolge bauen.'},
+ wohnen:{t:'Du brauchst eine Wohnung mit festen Plätzen und wenig Durchzug. In ständig wechselnden Wohnverhältnissen verlierst du mehr Kraft als du denkst.', tun:'Einen Raum oder eine Ecke komplett fertig einrichten, bevor du den nächsten anfängst.'},
+ zeit:{t:'Ein Vierer-Jahr ist Arbeitsjahr: wenig Glanz, viel Fundament. Es fühlt sich zäh an und zahlt sich meistens erst im Jahr danach aus.', tun:'Eine Sache aufräumen, die seit Jahren offen ist. Versicherung, Steuer, Keller.'},
+ konflikt:{t:'Du streitest um Fakten und Abläufe, während es der anderen Person um das Gefühl geht. Du hast dann in der Sache recht und bist trotzdem der Grund, warum es nicht besser wird.', tun:'Erst sagen, was du verstanden hast, dann was du richtigstellen willst.'}},
+5:{
+ beruf:{t:'Du brauchst Abwechslung, Menschen und wechselnde Orte. Eine Stelle mit immer gleichem Ablauf hältst du länger aus, als gut ist, und wirst dabei zynisch.', tun:'Alle drei Monate eine Sache in deiner Arbeit bewusst anders machen.'},
+ liebe:{t:'Du verliebst dich in Möglichkeiten und ziehst dich zurück, sobald etwas verbindlich wird. Nicht weil du nicht liebst, sondern weil Festlegung bei dir wie Verlust riecht.', tun:'Bei Fluchtimpuls eine Woche warten, bevor du etwas beendest.'},
+ geld:{t:'Dein Geld kommt unregelmäßig und geht in Erlebnisse. Du kannst mit wenig leben, aber nicht mit Planung — und genau die fehlt dir in schlechten Monaten.', tun:'Einen Monatsbedarf als Puffer aufbauen, in kleinen Schritten.'},
+ koerper:{t:'Bei dir läuft Überlast über das Nervensystem: zu viele Reize, zu wenig Schlaf, zu viel Koffein, und dann Herzrasen oder Magen. Ruhe fühlt sich für dich erst falsch und dann gut an.', tun:'Einen Tag in der Woche ohne Verabredung. Fest im Kalender, nicht nach Gefühl.'},
+ lernen:{t:'Du lernst in kurzen, intensiven Schüben und verlierst Interesse, wenn es Wiederholung braucht. Was du vor sechs Wochen angefangen hast, erkennst du heute kaum wieder.', tun:'In kurzen Einheiten lernen, aber jede begonnene Sache einmal bis zum ersten Ergebnis treiben.'},
+ wohnen:{t:'Du brauchst eine Wohnung, aus der du leicht rauskommst, und eine, die nicht alles von dir verlangt. Große Räume mit viel Pflege binden dich an einen Ort, an dem du nicht bleiben willst.', tun:'So einrichten, dass du in zwanzig Minuten rausgehen kannst, ohne etwas zu suchen.'},
+ zeit:{t:'Ein Fünfer-Jahr bringt Bewegung: Umzug, Wechsel, neue Leute, oft ungeplant. Es ist kein Jahr, um etwas Langfristiges zu gründen — eher eines, um zu schauen, was alles geht.', tun:'Nichts auf fünf Jahre festlegen. Verträge kurz halten.'},
+ konflikt:{t:'Du gehst aus dem Raum, bevor es eng wird, und das kommt als Gleichgültigkeit an. Für dich war es Selbstschutz, für die andere Person Verlassenwerden.', tun:'Sagen, dass du eine Pause brauchst, und wann du zurückkommst. Dann zurückkommen.'}},
+6:{
+ beruf:{t:'Du landest überall da, wo sich jemand kümmern muss, und zwar auch dann, wenn das nicht deine Aufgabe ist. Deine Arbeit wächst nicht durch Ehrgeiz, sondern dadurch, dass du nicht nein sagst.', tun:'Eine Aufgabe zurückgeben, die du übernommen hast, ohne gefragt worden zu sein.'},
+ liebe:{t:'Du sorgst — und bekommst dadurch Macht in der Beziehung, die du nicht wolltest. Irgendwann ist die andere Person das Kind und du die Müde, und keiner hat das verabredet.', tun:'Eine Sache, die du immer machst, zwei Wochen nicht machen. Ohne Ankündigung erklären, nicht vorwerfen.'},
+ geld:{t:'Du gibst Geld für andere leichter aus als für dich. Bei dir selbst wird gerechnet, bei den anderen nicht, und das verschiebt sich über Jahre.', tun:'Einmal im Monat prüfen, wie viel von deinem Geld bei anderen gelandet ist.'},
+ koerper:{t:'Bei dir zeigt sich Überlast in Hals, Schultern und Hormonhaushalt — du trägst, bis es sich körperlich meldet. Oft merkst du es erst, wenn jemand anderes dich darauf anspricht.', tun:'Einmal am Tag fragen: Was bräuchte ich jetzt? Und eine von drei Antworten umsetzen.'},
+ lernen:{t:'Du lernst gut, wenn es für jemanden ist. Ohne Nutzen für andere findest du schwer den Anfang — und eigene Interessen rutschen hinter alle Termine.', tun:'Eine Lernzeit in der Woche, die ausdrücklich nichts für andere bringt.'},
+ wohnen:{t:'Deine Wohnung wird automatisch zum Anlaufpunkt für andere. Das ist schön und wird zur Last, wenn es keinen Raum gibt, in dem du für niemanden erreichbar bist.', tun:'Eine Tür, die zugeht, und eine Zeit, in der sie zu ist.'},
+ zeit:{t:'Ein Sechser-Jahr dreht sich um Zuhause, Familie und Verpflichtung: Umzug, Pflege, Kinder, Beziehung, Renovierung. Es ist ein warmes Jahr und ein voll besetztes.', tun:'Bei jeder neuen Verpflichtung in diesem Jahr eine alte abgeben.'},
+ konflikt:{t:'Du streitest nicht, du bist enttäuscht — und das ist schwerer auszuhalten als Wut, weil sich niemand dagegen wehren kann. Dein Vorwurf heißt oft: Ich mache so viel.', tun:'Statt „ich mache so viel" sagen, was du konkret von der anderen Person willst.'}},
+7:{
+ beruf:{t:'Du brauchst Arbeit mit Tiefe und Alleinzeit. Offene Büros, Dauergespräch und Teamarbeit ohne Pause kosten dich mehr Kraft als die Arbeit selbst.', tun:'Zwei Stunden am Tag ohne Erreichbarkeit. Im Kalender als Termin, nicht als Vorhaben.'},
+ liebe:{t:'Du brauchst Nähe und Abstand im Wechsel, und der Abstand kommt bei dir ohne Vorwarnung. Für die andere Person sieht das aus wie Rückzug aus Ablehnung, obwohl es Erholung ist.', tun:'Vorher sagen, dass du Rückzug brauchst, und wie lange. Nicht erst, wenn du schon weg bist.'},
+ geld:{t:'Du brauchst wenig und verlangst zu wenig. Über Geld zu reden kommt dir unangenehm vor, und deshalb arbeitest du oft unter deinem Wert.', tun:'Deinen Satz einmal um zehn Prozent erhöhen, ohne es zu erklären.'},
+ koerper:{t:'Bei dir läuft Überlast nach innen: Grübeln, Einschlafprobleme, Verdauung. Du merkst Stress im Kopf, nicht im Körper, und bemerkst den Körper erst, wenn er laut wird.', tun:'Einmal am Tag etwas rein Körperliches ohne Nachdenken. Gehen, Wasser, Hände im Teig.'},
+ lernen:{t:'Du lernst am besten allein, langsam und in die Tiefe — und du gehst gern so tief, dass du die Anwendung vergisst. Kurse zu Themen, die du schon kennst, machen dich ungeduldig.', tun:'Zu jedem Thema, das du durchgearbeitet hast, eine Sache praktisch ausprobieren.'},
+ wohnen:{t:'Du brauchst Stille und wenige Menschen in der Wohnung. Hellhörige Häuser und Durchgangsräume kosten dich dauerhaft Energie, auch wenn du dich daran gewöhnst.', tun:'Lärmquellen zählen und eine davon lösen — Teppich, Dichtung, Kopfhörer.'},
+ zeit:{t:'Ein Siebener-Jahr dreht nach innen: weniger passiert außen, mehr sortiert sich innen. Von außen sieht es nach Stillstand aus, und das macht es anstrengend, wenn du Ergebnisse erwartest.', tun:'In diesem Jahr etwas lernen, von dem niemand etwas hat außer dir.'},
+ konflikt:{t:'Du ziehst dich zurück und analysierst, statt zu streiten. Die andere Person steht dann allein im Raum und hält dein Schweigen für Verachtung.', tun:'Im Streit den Satz „Ich brauche Zeit zum Denken" sagen, statt still zu werden.'}},
+8:{
+ beruf:{t:'Du kannst Verantwortung tragen, die andere umhaut, und du suchst sie auch. Die Gefahr ist, dass dein Wert sich ganz an Ergebnissen festmacht und du in Flauten nicht weißt, wer du bist.', tun:'Eine Sache in der Woche, in der du nichts leistest und trotzdem anwesend bist.'},
+ liebe:{t:'Du führst auch in der Beziehung und wunderst dich, dass sich das nicht gleich anfühlt. Nähe entsteht bei dir, wenn du etwas nicht kannst und es zeigst.', tun:'Einmal in der Woche etwas erzählen, bei dem du schlecht wegkommst.'},
+ geld:{t:'Du verdienst gut und bindest viel Identität daran. Geld ist bei dir eine Frage von Sicherheit und Würde gleichzeitig, und deshalb sitzen Verluste tiefer als bei anderen.', tun:'Einen Betrag festlegen, ab dem genug ist, und das aufschreiben.'},
+ koerper:{t:'Bei dir läuft Überlast über Blutdruck, Zähne und Erschöpfung. Du fährst auf Reserve, bis nichts mehr geht, und nennst das Disziplin.', tun:'Einen freien Tag in die Woche legen, bevor du ihn brauchst.'},
+ lernen:{t:'Du lernst zielgerichtet und ungern ohne Zweck. Was dir nützt, sitzt schnell; was nur interessant ist, legst du weg — und verlierst damit die Hälfte dessen, was dich entspannen würde.', tun:'Eine Sache lernen, die dir beruflich nichts bringt.'},
+ wohnen:{t:'Du brauchst eine Wohnung, die etwas darstellt, und merkst erst später, dass du sie dafür ständig im Griff haben musst. Groß und repräsentativ ist bei dir auch eine Verpflichtung.', tun:'Einen Raum bewusst unfertig lassen und nicht erklären.'},
+ zeit:{t:'Ein Achter-Jahr ist Erntejahr: Geld, Verantwortung, Sichtbarkeit, manchmal auch Abrechnung. Was du in den Jahren davor gebaut hast, wird jetzt bewertet.', tun:'Verträge, Preise und Zuständigkeiten in diesem Jahr neu verhandeln.'},
+ konflikt:{t:'Du gewinnst Streit und verlierst dabei Beziehungen. Dein Tempo und deine Klarheit wirken im Konflikt überlegen, und das macht Versöhnung schwer.', tun:'Zuerst sagen, woran du Anteil hast. Vor allem anderen.'}},
+9:{
+ beruf:{t:'Du brauchst Arbeit mit Sinn über dich hinaus, sonst wird alles schal. Was dich erschöpft, ist nicht die Menge, sondern dass du die Nöte der anderen mit nach Hause nimmst.', tun:'Nach der Arbeit eine kurze Handlung, die Schluss markiert. Jacke weg, Hände waschen, Musik an.'},
+ liebe:{t:'Du siehst in Menschen, was aus ihnen werden könnte, und liebst manchmal das, statt sie. Du bleibst länger, als gut ist, weil Beenden für dich wie Aufgeben aussieht.', tun:'Einmal fragen: Wäre das gut, wenn es für immer so bliebe wie jetzt?'},
+ geld:{t:'Du gibst leicht und rechnest ungern. Geld bedeutet dir nicht viel, bis es fehlt, und dann fehlt es grundsätzlich.', tun:'Einmal im Quartal den Kontostand ansehen, auch wenn es unangenehm ist.'},
+ koerper:{t:'Bei dir zeigt sich Überlast als Schwere und Erschöpfung ohne klaren Grund. Du nimmst Stimmungen auf wie ein Schwamm und spürst sie als eigene Müdigkeit.', tun:'Nach Kontakt mit belasteten Menschen zehn Minuten allein, bevor der nächste Termin kommt.'},
+ lernen:{t:'Du lernst über das große Bild und verlierst die Details. Zusammenhänge begreifst du schnell, die genaue Durchführung bleibt vage — und daran scheitert es dann.', tun:'Zu jedem verstandenen Zusammenhang drei konkrete Schritte aufschreiben.'},
+ wohnen:{t:'Deine Wohnung wird leicht offen für alle, und Grenzen fallen dir schwer. Ohne klare Regel wohnen am Ende mehr Leute bei dir als eingezogen sind.', tun:'Eine Regel festlegen, ab wann Besuch geht, und sie einmal aussprechen.'},
+ zeit:{t:'Ein Neuner-Jahr beendet: Beziehungen, Jobs, Wohnungen, Gewohnheiten. Es fühlt sich nach Abschied und Leerlauf an, und es macht Platz für das Einser-Jahr danach.', tun:'Nichts Großes neu anfangen. Stattdessen drei Dinge zu Ende bringen.'},
+ konflikt:{t:'Du verstehst die andere Seite so gut, dass dein eigener Standpunkt verschwindet, und bist danach verbittert. Dein Großmut im Streit ist manchmal nur Vermeidung.', tun:'Im Streit einen Satz sagen, der nur deine Sicht enthält, ohne Verständnis für die andere.'}},
+11:{
+ beruf:{t:'Du arbeitest gut mit Menschen und ihren Zuständen, und du hältst weniger Betrieb aus, als die Rolle meistens verlangt. Was dich erschöpft, ist nicht die Aufgabe, sondern die Reizmenge drumherum.', tun:'Nach jedem Menschen-Termin fünfzehn Minuten Puffer. Fest eingetragen.'},
+ liebe:{t:'Du spürst bei deinem Gegenüber mehr, als gesagt wird, und reagierst auf Dinge, die noch niemand ausgesprochen hat. Das kann unheimlich genau sein und für beide erschöpfend.', tun:'Nachfragen, statt vorauszusetzen: „Ich habe den Eindruck, dass… stimmt das?"'},
+ geld:{t:'Dein Einkommen schwankt mit deiner Verfassung, und das ist bei dir ein größerer Faktor als bei anderen. Gute Wochen überschätzt du, schlechte unterschätzt du.', tun:'Monatsbudget am schlechtesten Monat der letzten sechs ausrichten, nicht am besten.'},
+ koerper:{t:'Bei dir landet Überlast direkt im Nervensystem: Schlaf, Licht, Lärm, Haut, Magen. Du bist früher voll als andere, und das ist eine Mengenfrage, keine Charakterfrage.', tun:'Eine Reizquelle am Tag wegnehmen, nicht eine Erholung dazu.'},
+ lernen:{t:'Du nimmst viel gleichzeitig auf und kommst beim Sortieren nicht mit. Lernen funktioniert bei dir in kurzen Einheiten mit viel Pause, nicht in langen Blöcken.', tun:'Fünfundzwanzig Minuten lernen, zehn Minuten nichts. Wirklich nichts.'},
+ wohnen:{t:'Du brauchst eine ruhige, nicht hellhörige Wohnung mehr als eine große. Lärm, Durchgangsverkehr und viele Mitbewohnende kosten dich dauerhaft Substanz.', tun:'Vor einer Wohnungsentscheidung einmal abends dort stehen und zuhören.'},
+ zeit:{t:'Ein Elfer-Jahr ist ein Zweier-Jahr mit mehr Druck: Beziehungen entscheiden sich, und du bekommst mehr mit, als du verarbeiten kannst. Es ist kein Jahr für Tempo.', tun:'Weniger Termine als im Vorjahr. Ganz konkret: zehn Prozent weniger.'},
+ konflikt:{t:'Du nimmst die Anspannung der anderen Person auf und kannst dann nicht mehr unterscheiden, wessen Aufregung das ist. Danach bist du tagelang dünn.', tun:'Im Streit laut benennen, was gerade passiert, statt mitzuschwingen: „Wir sind beide hoch."'}},
+22:{
+ beruf:{t:'Du kannst etwas aufbauen, das länger steht als du dabei bist, und du wartest zu lange auf die richtige Gelegenheit dafür. Der Maßstab, in dem du denkst, hindert dich am Anfangen.', tun:'Den kleinsten Teil deines großen Vorhabens heraussuchen und diesen Monat machen.'},
+ liebe:{t:'Du gehst Beziehungen auf lange Sicht an und übernimmst dabei mehr Verantwortung, als geteilt ist. Das wirkt verlässlich und macht aus Partnerschaft Projektleitung.', tun:'Eine Zuständigkeit in der Beziehung komplett abgeben. Auch wenn es schlechter läuft.'},
+ geld:{t:'Du denkst in Jahren, nicht in Monaten, und planst entsprechend gut. Was dir fehlt, ist Geld für jetzt — du sparst auf etwas, das noch nicht existiert.', tun:'Einen Teil des Langfristgeldes bewusst für dieses Jahr freigeben.'},
+ koerper:{t:'Bei dir zeigt sich Überlast als Rücken, Nacken und plötzliche Erschöpfung nach langen Phasen des Durchhaltens. Du trägst, bis es nicht mehr geht, und dann liegt es tagelang.', tun:'Jede sechste Woche zwei Tage komplett frei. Vorher eintragen, nicht nach Bedarf.'},
+ lernen:{t:'Du lernst gründlich und mit Blick auf Anwendung, aber du nimmst dir zu viel auf einmal vor. Lehrpläne, die du selbst schreibst, sind doppelt so lang wie jedes Semester.', tun:'Jedes Lernvorhaben halbieren, bevor du anfängst.'},
+ wohnen:{t:'Du richtest auf Dauer ein und renovierst gründlich. Die Gefahr ist, dass das Zuhause ein weiteres Projekt wird und kein Ort, an dem du sitzt.', tun:'Einen Raum für fertig erklären und dort nichts mehr verbessern.'},
+ zeit:{t:'Ein Zweiundzwanziger-Jahr ist ein Vierer-Jahr in groß: viel Bau, wenig Glanz, große Hebel. Es ist das Jahr für das Fundament einer Sache, die Jahre laufen soll.', tun:'Eine Struktur bauen, die auch ohne dich funktioniert — eine Liste, ein Ablauf, eine Vertretung.'},
+ konflikt:{t:'Du führst im Streit ins Sachliche und lässt die Beziehung dabei unversorgt. Du hast dann eine Lösung und die andere Person das Gefühl, verwaltet worden zu sein.', tun:'Zuerst das Gefühl benennen, dann den Vorschlag. In dieser Reihenfolge.'}},
+33:{
+ beruf:{t:'Du landest in Arbeit, in der du viele Menschen begleitest, und gibst dabei mehr, als abgerechnet wird. Die Rolle der Lehrenden kommt bei dir leicht, das Aufhören schwer.', tun:'Eine Zahl festlegen: wie viele Menschen du höchstens gleichzeitig begleitest.'},
+ liebe:{t:'Du bist in Beziehungen die Gebende und wunderst dich, dass dich keiner fragt. Dein Gegenüber bekommt irgendwann ein schlechtes Gewissen statt Nähe.', tun:'Einmal in der Woche etwas annehmen, ohne es zurückzugeben.'},
+ geld:{t:'Du arbeitest unter Preis, weil es um Menschen geht und Geld sich dann falsch anfühlt. Über Jahre wird das zu einem Problem, das nicht mehr allein deins ist.', tun:'Deinen Satz an der Arbeit ausrichten, nicht an der Lage der Klientin.'},
+ koerper:{t:'Bei dir zeigt sich Überlast als Erschöpfung, die nicht mit Schlaf weggeht, und als Enge in Hals und Brust. Du merkst deine Grenze meist erst, wenn sie überschritten ist.', tun:'Eine feste Zeit in der Woche, in der du für niemanden erreichbar bist.'},
+ lernen:{t:'Du lernst am liebsten, um es weiterzugeben, und überspringst dabei, was nur dich angeht. Deine eigenen Interessen stehen hinter allen Terminen.', tun:'Ein Thema lernen, das du niemandem erzählst.'},
+ wohnen:{t:'Deine Wohnung wird zur Anlaufstelle — für Familie, Klientel, Freundeskreis. Ohne klaren Schnitt zwischen Arbeit und Zuhause gibt es irgendwann keinen Ort mehr, an dem du frei hast.', tun:'Arbeit und Wohnen räumlich trennen, und sei es durch einen Vorhang.'},
+ zeit:{t:'Ein Dreiunddreißiger-Jahr ist ein Sechser-Jahr in groß: Verantwortung für viele, Lehre, Familie. Es gibt viel her und nimmt mehr.', tun:'Für dieses Jahr eine Obergrenze an Verpflichtungen festlegen und sie aufschreiben.'},
+ konflikt:{t:'Du gehst in den Streit mit Verständnis und kommst als die Enttäuschte heraus. Weil du nie etwas verlangt hast, kann dir auch niemand etwas geben.', tun:'Eine klare Forderung formulieren. Ein Satz, der mit „Ich will" anfängt.'}}
+};
+
+/* ── Wohnungen und Häuser ────────────────────────────────────
+   Was eine Nummer mit einem Zuhause macht, für wen sie gut ist und
+   was man tun kann, wenn man schon drin wohnt. */
+var Z_WOHN = {
+1:{tut:'In einer Eins fängt etwas an. Solche Wohnungen werden oft nach einer Trennung, einem Umzug in eine neue Stadt oder einem Neustart bezogen, und sie bleiben selten lange Familienwohnungen.',
+  gut:'Für Alleinwohnende, für den ersten eigenen Haushalt, für alle, die gerade eigene Entscheidungen üben.',
+  schwer:'Für Paare und Familien, die zusammenwachsen wollen. Hier bleibt jeder leicht bei sich.',
+  kniff:'Einen Ort schaffen, an dem alle zusammenkommen müssen — ein Tisch ohne Bildschirm.'},
+2:{tut:'Eine Zwei ist auf zwei Menschen gebaut. Es geht hier viel um Rücksicht, Absprache und wer wann das Bad hat, und das ist angenehm, solange man zu zweit ist.',
+  gut:'Für Paare, für Wohnen mit einem festen Gegenüber, für alle, die gerade Nähe lernen wollen.',
+  schwer:'Für Alleinwohnende, die sowieso zu wenig Kontakt haben — die Wohnung verstärkt die Lücke, statt sie zu füllen.',
+  kniff:'Zwei Plätze einrichten, an denen man allein sitzen kann, ohne den Raum zu verlassen.'},
+3:{tut:'In einer Drei ist etwas los. Es sammeln sich Leute, Material und angefangene Sachen, und es wird mehr geredet als aufgeräumt.',
+  gut:'Für Leute, die arbeiten, indem sie reden oder machen. Für Gastfreundliche, für Familien mit Kindern.',
+  schwer:'Für alle, die Stille brauchen oder zu Hause konzentriert arbeiten müssen.',
+  kniff:'Einen Raum zur Ruhezone erklären, in dem nichts gelagert und nicht gesprochen wird.'},
+4:{tut:'In einer Vier läuft der Haushalt nach Plan: feste Plätze, feste Zeiten, alles hat eine Schublade. Es wird in solchen Wohnungen mehr geregelt und weniger improvisiert.',
+  gut:'Für Leute, die Halt brauchen, nach unruhigen Jahren, oder die zu Hause wirklich arbeiten müssen.',
+  schwer:'Für alle, die schon genug Pflicht im Leben haben. Hier kommt noch mehr dazu.',
+  kniff:'Einen Raum ohne Zweck. Keine Ablage, kein Plan, nichts, was dort erledigt werden muss.'},
+5:{tut:'In einer Fünf ist Durchzug. Menschen kommen und gehen, Pläne ändern sich, die Wohnung wird selten die letzte. Es ist belebt und schwer zur Ruhe zu bringen.',
+  gut:'Für Leute, die viel unterwegs sind, für Übergangszeiten, für Jüngere und Wohngemeinschaften.',
+  schwer:'Für alle, die zur Ruhe kommen, ein Kind großziehen oder zu Hause konzentriert arbeiten wollen.',
+  kniff:'Ein Zimmer gegen Lärm und Besuch abdichten und wirklich freihalten.'},
+6:{tut:'Eine Sechs wird zum Zuhause für mehr Leute, als eingezogen sind. Es wird hier gekocht, gepflegt und geholfen, und die Wohnung sieht meistens schöner aus als nötig.',
+  gut:'Für Familien, Paare, Pflegende, für alle, die ein Zuhause für andere sein wollen.',
+  schwer:'Für Menschen, die sowieso schon für zu viele sorgen. Die Wohnung legt noch etwas drauf.',
+  kniff:'Eine Tür, die zugeht, und eine Zeit am Tag, in der sie zu ist.'},
+7:{tut:'In einer Sieben ist es still, auch wenn es laut ist. Solche Wohnungen ziehen sich nach innen, und man ist dort schneller allein mit sich als geplant.',
+  gut:'Für Lernende, Schreibende, Forschende. Für Erholungsphasen und für alle, die zu viel Betrieb hinter sich haben.',
+  schwer:'Für Einsame, für Menschen in einer schweren Phase, für alle, die Gesellschaft brauchen, um aufzustehen.',
+  kniff:'Eine feste Verabredung pro Woche, die in der Wohnung stattfindet. Nicht draußen.'},
+8:{tut:'Eine Acht ist auf Leistung gebaut. Hier geht es um Arbeit, Geld und darum, wie es von außen aussieht — und die Wohnung fordert das auch ein, in Miete, Pflege oder Repräsentation.',
+  gut:'Für Selbstständige, für alle, die beruflich etwas aufbauen, und für die, die mit Geld klarkommen.',
+  schwer:'Für Erschöpfte und für alle, die gerade weniger leisten wollen oder müssen.',
+  kniff:'Einen Raum bewusst unfertig und nicht vorzeigbar lassen.'},
+9:{tut:'Eine Neun ist offen und weit, mit wenig Grenze nach außen. Hier endet oft ein Lebensabschnitt, und es wohnen mit der Zeit mehr Leute mit, als abgesprochen war.',
+  gut:'Für Abschiede und Übergänge, für Menschen mit viel Besuch, für Gemeinschaftsprojekte.',
+  schwer:'Für alle, denen Abgrenzung schwerfällt — hier fällt sie noch schwerer.',
+  kniff:'Eine Regel aufstellen, bis wann Besuch bleibt, und sie einmal laut sagen.'},
+11:{tut:'Eine Elf ist eine Zwei mit dünneren Wänden. Alles, was im Haus passiert, kommt hier an: Geräusche, Stimmungen, Nachbarschaftsthemen.',
+  gut:'Für Menschen, die mit Wahrnehmung arbeiten und sie auch abschalten können.',
+  schwer:'Für reizoffene Menschen, die ohnehin schon zu viel mitbekommen.',
+  kniff:'Zuerst in Dämmung, Vorhänge und Teppich investieren, nicht in Möbel.'},
+22:{tut:'Eine Zweiundzwanzig ist eine Vier mit großem Maßstab. Solche Adressen werden gekauft, nicht gemietet, und sie werden zum Projekt für Jahre.',
+  gut:'Für alle, die wirklich etwas aufbauen wollen — Haus, Praxis, Familiensitz.',
+  schwer:'Für Übergangszeiten und für alle, die schon genug tragen.',
+  kniff:'Einen Teil der Wohnung für fertig erklären und dort nichts mehr anfassen.'},
+33:{tut:'Eine Dreiunddreißig ist eine Sechs, die über die eigene Familie hinausgeht: Hier wird gelehrt, begleitet, versorgt — oft in Verbindung von Wohnen und Arbeiten.',
+  gut:'Für Praxen, Beratung und Unterricht in den eigenen Räumen.',
+  schwer:'Für alle, die Arbeit und Zuhause nicht trennen können und deshalb nie Schluss haben.',
+  kniff:'Eine sichtbare Grenze zwischen Arbeits- und Wohnteil. Eine Tür, ein Vorhang, eine andere Bodenfarbe.'}
+};
+
+/* ── Die Verträglichkeit von Mensch und Nummer ───────────────
+   Keine Tabelle, sondern eine Rechnung: Jede Zahl hat etwas, wovon sie
+   schon zu viel hat, und etwas, was ihr von außen fehlt. Eine Nummer,
+   die das Fehlende liefert, trägt. Eine, die das Zuviel verdoppelt, reibt.
+   Dieselbe Rechnung gilt in beide Richtungen — deshalb kann die Seite
+   auch sagen, für wen eine bestimmte Nummer passt. */
+function zWohnReso(lz, hz){
+  if(!Z_ZAHL[lz] || !Z_ZAHL[hz]) return null;
+  if(hz === lz) return 'doppelt';
+  var mL = Z_ZAHL[lz].meister, mH = Z_ZAHL[hz].meister;
+  if(mL === hz || mH === lz) return 'verwandt';
+  if(Z_ZAHL[lz].braucht.indexOf(hz) >= 0) return 'traegt';
+  if(Z_ZAHL[lz].zuviel.indexOf(hz) >= 0) return 'reibt';
+  return 'neutral';
+}
+
+var Z_RESO = {
+ traegt:{n:'Trägt dich', rang:3, farbe:'#3F6B4A',
+   satz:function(L,H){ return 'Du '+L.hat+'. Eine '+H.n+' '+H.gibt+' — das ist genau das Gegengewicht, das dir fehlt.'; },
+   folge:'Diese Wohnung nimmt dir etwas ab, statt noch etwas draufzulegen.'},
+ verwandt:{n:'Verwandt', rang:2, farbe:'#9A7235',
+   satz:function(L,H){ return 'Deine Zahl und die Nummer gehören zusammen: dasselbe Thema, nur in anderer Lautstärke. Die '+H.n+' '+H.gibt+'.'; },
+   folge:'Vertraut und eng. Du kennst alles davon schon, im Guten wie im Anstrengenden.'},
+ doppelt:{n:'Doppelt', rang:1, farbe:'#2E3A5C',
+   satz:function(L,H){ return 'Deine Zahl noch einmal in der Hausnummer. Die '+H.n+' '+H.gibt+' — also genau das, was du selbst mitbringst.'; },
+   folge:'Alles, was du gut kannst, wird hier größer. Alles, was dir fehlt, fehlt doppelt.'},
+ reibt:{n:'Reibt', rang:0, farbe:'#A05A3A',
+   satz:function(L,H){ return 'Du '+L.hat+'. Eine '+H.n+' '+H.gibt+' — dasselbe also noch einmal, jetzt in den Wänden.'; },
+   folge:'Machbar, aber du musst gegensteuern. Der Kniff unten ist hier keine Idee, sondern Pflicht.'},
+ neutral:{n:'Unauffällig', rang:2, farbe:'#6B6259',
+   satz:function(L,H){ return 'Zwischen deiner Zahl und dieser Nummer liegt kein besonderer Zug. Die '+H.n+' '+H.gibt+', und das trifft bei dir weder einen Nerv noch eine Lücke.'; },
+   folge:'Die Nummer macht hier wenig. Entscheide nach Grundriss, Lärm und Miete.'}
+};
+
+/* ── Die Schulen ─────────────────────────────────────────────
+   Jede mit dem, was sie wirklich ist, und mit dem, was sich über ihr
+   Alter belegen lässt. „alt" steht für: so weit zurück reicht es
+   nachweisbar, nicht so weit, wie behauptet wird. */
+var Z_SYSTEM = [
+{k:'pyth', n:'Pythagoräische Numerologie', ruf:'Der Standard im Westen', neu:0,
+ wie:'A bis Z laufen glatt durch 1 bis 9 und fangen wieder bei 1 an. Aus Name und Geburtsdatum werden Lebenszahl, Ausdruckszahl, Seelenzahl und Persönlichkeitszahl gebildet.',
+ her:'Der Name verweist auf Pythagoras, die Methode nicht. Als Urheberin des Systems auf dem englischen Alphabet gilt <b>L. Dow Balliett</b>, deren erstes Buch 1905 erschien; von ihr kommt auch, dass 11 und 22 als Meisterzahlen stehen bleiben. Ausgebaut hat es ihre Schülerin <b>Juno Jordan</b> (1884–1984) in Büchern von 1936 und 1965. Aus der Antike ist keine Zuordnung lateinischer Buchstaben zu 1 bis 9 bekannt — das lateinische Alphabet hatte schlicht keine Zahlwerte.',
+ gut:'Verbreitet, überall gleich erklärt, leicht zu lernen. Wenn jemand „meine Lebenszahl" sagt, ist fast immer diese gemeint.',
+ vor:'Das Alter wird regelmäßig überschätzt. Es ist ein System aus dem frühen zwanzigsten Jahrhundert, keines aus der Antike.'},
+{k:'chald', n:'Chaldäische Numerologie', ruf:'Nach Klang, ohne Neun', neu:0,
+ wie:'Die Buchstaben werden nicht alphabetisch, sondern nach Klanggruppen auf 1 bis 8 verteilt. Die 9 bleibt frei: Sie gilt als heilig und wird keinem Buchstaben zugeordnet. Gezählt wird der Rufname, nicht der Name auf der Geburtsurkunde.',
+ her:'Benannt nach Babylonien, in den Westen gebracht von <b>Cheiro</b> (Louis Hamon) mit <i>The Book of Numbers</i>, London 1926. Eine Verbindung zu babylonischen Quellen ist nicht belegt; die Tafel selbst ist bei Cheiro und seinen Nachfolgern gut dokumentiert.',
+ gut:'Nimmt ernst, wie ein Name wirklich gesprochen und benutzt wird. Für Menschen mit Spitznamen oder geänderten Namen oft treffender.',
+ vor:'Gibt für denselben Namen andere Zahlen als die pythagoräische Tafel. Wer beide nebeneinander rechnet, bekommt zwei verschiedene Antworten — und keine von beiden ist die richtige.'},
+{k:'gematria', n:'Gematria und Isopsephie', ruf:'Hier kommen die Zahlen aus der Schrift', neu:0,
+ wie:'Im Hebräischen und im Griechischen sind die Buchstaben gleichzeitig die Ziffern. Alef ist eins, Bet ist zwei, und so weiter. Ein Wort hat also einen Zahlenwert, ohne dass jemand ihn zuweisen musste.',
+ her:'Wirklich alt und gut belegt: griechische Isopsephie seit der Antike, hebräische Gematria seit der rabbinischen Zeit, ausgebaut in der Kabbala. In Pompeji steht ein Graffito, das statt eines Namens nur dessen Zahlenwert nennt — „ich liebe die, deren Zahl 545 ist".',
+ gut:'Der historisch einzige Fall, in dem die Zahl nicht gesetzt, sondern mitgeliefert wird. Deshalb kann man hier Texte wirklich vergleichen.',
+ vor:'Gilt nur für diese Schriften. Einen deutschen Namen in Gematria zu rechnen heißt, ihn erst in hebräische Buchstaben zu übertragen — und an dieser Übertragung hängt dann das Ergebnis.'},
+{k:'abjad', n:'Abjad', ruf:'Die arabische Variante', neu:0,
+ wie:'Dieselbe Idee wie Gematria, mit den arabischen Buchstaben in ihrer alten, nicht in der heutigen Reihenfolge. Jeder Buchstabe hat einen festen Wert von 1 bis 1000.',
+ her:'Belegt seit dem Mittelalter, bis heute in Gebrauch für Jahresangaben in Chronogrammen und für Inschriften.',
+ gut:'Gut dokumentiert, mit klaren Regeln, und bis heute lebendig.',
+ vor:'Wie bei Gematria: an Schrift und Sprache gebunden, nicht übertragbar.'},
+{k:'ank', n:'Ank Jyotish', ruf:'Indische Zahlenlehre', neu:0,
+ wie:'Arbeitet mit drei Zahlen: Mulank (der Geburtstag), Bhagyank (die Summe des ganzen Datums) und Namank (der Name). Jede Ziffer gehört zu einem Planeten, und die Deutung läuft über diesen Planeten.',
+ her:'Eng mit der vedischen Astrologie verwoben, in der heutigen Form seit dem zwanzigsten Jahrhundert populär, mit älteren Wurzeln in der indischen Astrologie.',
+ gut:'Die einzige Schule, die Zahlen systematisch an ein vorhandenes astrologisches Gerüst anbindet. Wenn du mit Charts arbeitest, ist das die anschlussfähigste.',
+ vor:'Die Planetenzuordnung weicht bei der 4 und der 7 von der westlichen ab: indisch Rahu und Ketu, westlich Uranus und Neptun. Das ändert die Deutung dieser beiden Zahlen erheblich.'},
+{k:'kabb', n:'Kabbalistische Numerologie', ruf:'Nur der Name, zweiundzwanzig Wege', neu:0,
+ wie:'Rechnet allein mit dem Namen, nicht mit dem Geburtsdatum, und reduziert auf 1 bis 22 statt auf 1 bis 9 — passend zu den zweiundzwanzig Buchstaben des hebräischen Alphabets und den Pfaden im Lebensbaum.',
+ her:'Beruft sich auf die Kabbala; was heute unter diesem Namen als Numerologie verkauft wird, ist überwiegend eine Zusammenstellung des zwanzigsten Jahrhunderts. Die kabbalistische Tradition selbst arbeitet mit Gematria, nicht mit Lebenszahlen.',
+ gut:'Weil das Geburtsdatum herausfällt, ist das die Schule für Namenswechsel — Heirat, Künstlername, Transition.',
+ vor:'Die Bezeichnung verspricht mehr Tradition, als in der Methode steckt.'},
+{k:'chin', n:'Chinesische Zahlen', ruf:'Keine Deutung, sondern Sprache', neu:0,
+ wie:'Hier geht es nicht um Zahlenbedeutung, sondern um Gleichklang: Die Vier klingt wie das Wort für sterben, die Acht wie das Wort für reich werden, die Neun wie das Wort für dauerhaft.',
+ her:'Tatsache über Sprache und Markt, nicht über Mystik. In Hongkong und Teilen Chinas werden Etagen mit 4 und 14 in Hochhäusern übersprungen, und Nummern mit vielen Achten erzielen auf Auktionen reale Aufpreise.',
+ gut:'Hier ist der Effekt nachweisbar — nur wirkt er über Menschen und Preise, nicht über die Zahl.',
+ vor:'Lässt sich nicht auf deutsche Verhältnisse übertragen. In Berlin bedeutet eine Hausnummer 4 nichts, weil hier niemand den Gleichklang hört.'},
+{k:'engel', n:'Engelszahlen', ruf:'111, 222, 11:11', neu:1,
+ wie:'Wiederholende Ziffernfolgen auf Uhren, Nummernschildern und Rechnungen werden als Botschaft gelesen, mit einer festen Bedeutung je Folge.',
+ her:'Jung: Die heutige Form entsteht in den 1990er Jahren mit Doreen Virtue und verbreitet sich in den 2010er Jahren über soziale Netzwerke. Eine ältere Tradition dafür gibt es nicht.',
+ gut:'Niedrige Schwelle und starke Wirkung als Erinnerung — eine wiederkehrende Zahl kann ein brauchbarer Anker für eine Absicht sein.',
+ vor:'Was hier passiert, ist gut beschrieben und heißt <b>Frequenzillusion</b>: Sobald du auf 11:11 achtest, siehst du es überall, weil du die anderen Minuten nicht mitzählst. Das ist kein Gegenargument gegen die Praxis, aber es erklärt sie vollständig.'},
+{k:'bio', n:'Biorhythmik', ruf:'Widerlegt, aber zählt dazu', neu:0,
+ wie:'Behauptet drei feste Zyklen ab dem Geburtstag: 23 Tage körperlich, 28 Tage seelisch, 33 Tage geistig, und berechnet daraus gute und kritische Tage.',
+ her:'Die 23 und die 28 stammen von dem Berliner Arzt <b>Wilhelm Fließ</b> Ende des neunzehnten Jahrhunderts, Hermann Swoboda kam 1904 auf Ähnliches, die 33 fügte Alfred Teltscher hinzu. Populär wurde das Ganze in den 1970er Jahren.',
+ gut:'Nichts, außer als Beispiel. Diese Schule ist als einzige wirklich großflächig überprüft worden — und deshalb die einzige, über die man etwas Belastbares sagen kann.',
+ vor:'Die Überprüfungen sind durchgefallen. Terence Hines hat über hundert Studien dazu durchgesehen: Sie bestätigten entweder, dass es keinen Zusammenhang gibt, oder sie hatten Fehler, die ihre Ergebnisse unbrauchbar machen. Wer Biorhythmen trotzdem verkauft, verkauft etwas, das überprüft und widerlegt ist.'}
+];
+
+/* ── Zahl und Chart ──────────────────────────────────────────
+   Welcher Planet zu welcher Ziffer gehört — und wo die beiden großen
+   Schulen sich widersprechen. */
+var Z_PLANET = {
+1:{ind:'Sonne', west:'Sonne'}, 2:{ind:'Mond', west:'Mond'},
+3:{ind:'Jupiter', west:'Jupiter'}, 4:{ind:'Rahu', west:'Uranus'},
+5:{ind:'Merkur', west:'Merkur'}, 6:{ind:'Venus', west:'Venus'},
+7:{ind:'Ketu', west:'Neptun'}, 8:{ind:'Saturn', west:'Saturn'},
+9:{ind:'Mars', west:'Mars'}
+};
+
+/* Astro-Charlie · Zahlen — die Seite
+   Setzt die Rechnung aus zahlen-rechner.js und die Texte aus
+   zahlen-daten.js zusammen. */
+function zEl(i){ return document.getElementById(i); }
+function zEsc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
+  return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+function zPz(x,n){ return (100*x).toFixed(n===undefined?1:n).replace('.',','); }
+var Z_NSU='http://www.w3.org/2000/svg';
+
+var Z_NAMEKEY='ac_zahlen_name';
+var zPerson=null, zSys='pyth', zOffen=null, zThema='beruf', zVerdeckt=false, zBlatt=null;
+
+function zProfile(){ try{ return AC_P.alle()||[]; }catch(e){ return []; } }
+function zAktiv(){
+  var a=zProfile();
+  if(zPerson) for(var i=0;i<a.length;i++) if(a[i].id===zPerson) return a[i];
+  try{ return AC_P.aktives()||AC_P.eigenes()||a[0]||null; }catch(e){ return a[0]||null; }
+}
+function zAnzeige(p){ try{ return AC_P.anzeige(p, AC_P.zeigeNamen()); }catch(e){ return (p&&p.name)||'?'; } }
+
+/* Der Name wird je Profil gemerkt — getrennt vom Profil selbst, damit das
+   Profilsystem nichts von dieser Seite wissen muss. */
+function zNamenKarte(){
+  try{ return JSON.parse(localStorage.getItem(Z_NAMEKEY)||'{}')||{}; }catch(e){ return {}; }
+}
+function zNameVon(p){ if(!p) return ''; var k=zNamenKarte();
+  return (k[p.id]!==undefined) ? k[p.id] : (p.name||''); }
+function zNameSetzen(p,v){ if(!p) return; var k=zNamenKarte(); k[p.id]=v;
+  try{ localStorage.setItem(Z_NAMEKEY, JSON.stringify(k)); }catch(e){} }
+
+/* ── Kopfzeilen: wer, welche Tafel ──────────────────────────── */
+function zPersonenBauen(){
+  var box=zEl('zpersonen'), a=zProfile(), p=zAktiv();
+  if(!a.length){ box.innerHTML='<span class="z-hint" style="flex:1 1 100%">Noch kein Profil angelegt. '+
+    '<a href="profile.html">Hier anlegen</a> &mdash; danach rechnet die Seite mit deinem Datum. '+
+    'Die Zahlen, der Ring und die Hausnummern funktionieren auch ohne.</span>'; return; }
+  box.innerHTML = a.map(function(x){
+    return '<button type="button" class="z-knopf'+((p&&x.id===p.id)?' ist':'')+'" data-p="'+zEsc(x.id)+'">'+
+      zEsc(zAnzeige(x))+'</button>'; }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-p]'),function(b){
+    b.addEventListener('click',function(){ zPerson=b.getAttribute('data-p');
+      var np=zAktiv(); zEl('zname').value=zNameVon(np); zAlles(); });
+  });
+}
+var Z_SYSNAME={pyth:'Pythagor&auml;isch', chald:'Ch&auml;ld&auml;isch'};
+function zSystemBauen(){
+  var box=zEl('zsystem');
+  box.innerHTML = ['pyth','chald'].map(function(s){
+    return '<button type="button" class="z-knopf'+(s===zSys?' ist':'')+'" data-s="'+s+'">'+
+      Z_SYSNAME[s]+'</button>'; }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-s]'),function(b){
+    b.addEventListener('click',function(){ zSys=b.getAttribute('data-s'); zAlles(); });
+  });
+  zEl('zsyshint').innerHTML = (zSys==='pyth')
+    ? 'A bis Z laufen glatt durch 1 bis 9. Die verbreitete Tafel &mdash; wenn jemand eine Zahl nennt, ist meist diese gemeint.'
+    : 'Nach Klanggruppen verteilt, die 9 bleibt unbesetzt. Diese Schule rechnet den Rufnamen, nicht den Namen auf der Urkunde.';
+}
+
+/* ── 1 · Dein Blatt ─────────────────────────────────────────── */
+var Z_KARTEN=[
+ {k:'lebenszahl', n:'Lebenszahl',   w:'Aus dem ganzen Geburtsdatum. Die Zahl, die gemeint ist, wenn jemand nach „deiner Zahl" fragt.'},
+ {k:'geburtstag', n:'Geburtstagszahl', w:'Nur der Tag im Monat. Gilt als das, was dir ohne M&uuml;he zur Verf&uuml;gung steht.'},
+ {k:'ausdruck',   n:'Ausdruckszahl', w:'Alle Buchstaben des Namens. Gilt als das, was andere von dir sehen und was du kannst.'},
+ {k:'seele',      n:'Seelenzahl',    w:'Nur die Vokale. Gilt als das, was du willst, ohne es zu sagen.'},
+ {k:'person',     n:'Pers&ouml;nlichkeit', w:'Nur die Konsonanten. Gilt als die Oberfl&auml;che, der erste Eindruck.'},
+ {k:'reife',      n:'Reifezahl',     w:'Lebenszahl plus Ausdruckszahl. Gilt als das, worauf beides zul&auml;uft.'},
+ {k:'jahr',       n:'Dein Jahr',     w:'Tag plus Monat plus laufendes Jahr. L&auml;uft in einem Neuner-Takt, jedes Jahr eine weiter.'},
+ {k:'herausf',    n:'Herausforderung', w:'Die Differenz der Datumsteile. Gilt als die wiederkehrende Aufgabe. Eine 0 hei&szlig;t: keine dr&auml;ngt sich vor.'}
+];
+function zKartenBauen(){
+  var B=zBlatt, box=zEl('zkarten');
+  if(!B){ box.innerHTML='<div class="z-leer">Ohne Profil gibt es kein Blatt. '+
+    '<a href="profile.html">Profil anlegen</a> &mdash; es braucht nur das Geburtsdatum, keine Uhrzeit.</div>'; return; }
+  box.innerHTML = Z_KARTEN.map(function(K){
+    var w=null, roh=null;
+    if(K.k==='lebenszahl'){ w=B.lebenszahl; roh=B.lz.rohsumme; }
+    else if(K.k==='geburtstag'){ w=B.geburtstag.zahl; roh=B.geburtstag.roh; }
+    else if(K.k==='ausdruck'){ w=B.name&&B.name.ausdruck; roh=B.name&&B.name.ausdruckRoh; }
+    else if(K.k==='seele'){ w=B.name&&B.name.seele; roh=B.name&&B.name.seeleRoh; }
+    else if(K.k==='person'){ w=B.name&&B.name.person; roh=B.name&&B.name.personRoh; }
+    else if(K.k==='reife'){ w=B.reife; }
+    else if(K.k==='jahr'){ w=B.jahr.zahl; roh=B.jahr.roh; }
+    else if(K.k==='herausf'){ w=B.herausforderung.haupt; }
+    var leer=(w===null||w===undefined||w===false);
+    var Z=(!leer && Z_ZAHL[w]) ? Z_ZAHL[w] : null;
+    var farbe=Z?Z.farbe:'#DDD0BC';
+    return '<div class="z-k'+(leer?' leer':'')+'" style="border-top-color:'+farbe+'">'+
+      '<span class="lab">'+K.n+'</span>'+
+      '<div class="wert"><span class="zif">'+(leer?'–':w)+'</span>'+
+      (Z?'<span class="nm">'+Z.titel+'</span>':'')+
+      ((!leer && roh!==null && roh!==undefined && roh!==w)
+        ? '<span class="nm ac-tech" data-ab="2">aus '+roh+'</span>' : '')+'</div>'+
+      '<p class="wie">'+(leer?'Daf&uuml;r braucht die Seite einen Namen im Feld oben.':K.w)+'</p>'+
+      (Z?'<button type="button" data-z="'+w+'">Was die '+Z.n+' hei&szlig;t</button>':'')+
+      '</div>';
+  }).join('');
+  box.insertAdjacentHTML('afterend',
+    '<p class="z-hint" data-ab="1" style="margin:12px 0 0;max-width:68ch">Die ersten beiden '+
+    'Zahlen kommen allein aus dem Datum und stehen deshalb fest. Ausdruck, Seele und '+
+    'Pers&ouml;nlichkeit kommen aus dem Namen und &auml;ndern sich, wenn der Name sich '+
+    '&auml;ndert &mdash; bei Heirat, K&uuml;nstlernamen oder Transition. Genau das ist der '+
+    'Grund, warum manche Schulen nur mit dem Namen rechnen und andere nur mit dem Datum.</p>');
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-z]'),function(b){
+    b.addEventListener('click',function(){ zZeigeZahl(+b.getAttribute('data-z'), true); });
+  });
+}
+
+function zKetteBauen(){
+  var B=zBlatt, box=zEl('zkette');
+  if(!B){ box.innerHTML=''; return; }
+  var d=B.datum, ziffern=String(d.d)+String(d.mo)+String(d.y);
+  var h='<div class="z-kette"><span class="lab">So kommt die Lebenszahl zustande</span><div class="z-rechn">';
+  ziffern.split('').forEach(function(c,i){
+    if(i) h+='<span class="op">+</span>';
+    h+='<span class="zf">'+c+'</span>';
+  });
+  h+='<span class="op">=</span>';
+  B.lz.kette.forEach(function(w,i){
+    if(i) h+='<span class="pf">&rarr;</span>';
+    var letzte=(i===B.lz.kette.length-1);
+    h+='<span class="zf'+(letzte?' end':'')+'">'+w+'</span>';
+  });
+  h+='</div><p>Jede Ziffer des Datums '+zEsc(zTag(d))+' einmal addiert, dann zusammengezogen.'+
+     (AC_ZAHL.istMeister(B.lebenszahl)
+       ? ' Bei '+B.lebenszahl+' wird angehalten: 11, 22 und 33 gelten als Meisterzahlen und werden nicht weiter reduziert.'
+       : '')+'</p>';
+  if(!B.lz.einig){
+    h+='<p data-ab="2">Dieses Datum ist eines der strittigen. Zieht man Tag, Monat und Jahr '+
+       'erst einzeln zusammen und addiert dann, kommt <b>'+B.lz.teile+'</b> heraus statt <b>'+
+       B.lz.summe+'</b>. Auf die eine Ziffer laufen beide Wege gleich ('+B.lz.stelle+') &mdash; '+
+       'der Streit geht nur um die Meisterzahl.</p>';
+  }
+  h+='<p data-ab="3">Die drei &uuml;blichen Wege im Vergleich &mdash; '+
+     'Ziffernsumme <b>'+B.lz.summe+'</b>, blockweise (Tag '+B.lz.teilwerte.tag+
+     ' + Monat '+B.lz.teilwerte.monat+' + Jahr '+B.lz.teilwerte.jahr+') <b>'+B.lz.teile+
+     '</b>, streng reduziert (Tag '+B.lz.strengwerte.tag+' + Monat '+B.lz.strengwerte.monat+
+     ' + Jahr '+B.lz.strengwerte.jahr+') <b>'+B.lz.streng+'</b>.</p>'+
+     '<p data-ab="4">Alle vier Herausforderungszahlen: erste '+B.herausforderung.erste+
+     ', zweite '+B.herausforderung.zweite+', Haupt '+B.herausforderung.haupt+
+     ', vierte '+B.herausforderung.vierte+'. Geburtstagszahl unreduziert '+B.geburtstag.roh+
+     ', Rohsumme des Datums '+B.lz.rohsumme+', Anteil dieser Lebenszahl an allen '+
+     'Geburtstagen '+zPz(B.anteil)+'&nbsp;%.</p>';
+  h+='</div>';
+  box.innerHTML=h;
+}
+function zTag(d){ return ('0'+d.d).slice(-2)+'.'+('0'+d.mo).slice(-2)+'.'+d.y; }
+
+function zGitterBauen(){
+  var B=zBlatt, box=zEl('zgitter');
+  if(!B||!B.name||!B.name.gitter.length){ box.innerHTML=''; return; }
+  var h='<div class="z-gitter">';
+  B.name.gitter.forEach(function(b){
+    if(b.luecke){ h+='<span class="lk luecke"></span>'; return; }
+    h+='<span class="lk '+b.art+'"><b>'+(zVerdeckt?'•':zEsc(b.c))+'</b><i>'+
+       (b.ohne?'–':b.n)+'</i></span>';
+  });
+  h+='</div><div class="z-leg">'+
+     '<span><i style="background:#F7EFE1;border-color:#9A7235"></i>Vokal &mdash; z&auml;hlt zur Seelenzahl</span>'+
+     '<span><i style="background:#FFFDFA;border-color:#EBE1D2"></i>Konsonant &mdash; z&auml;hlt zur Pers&ouml;nlichkeit</span>'+
+     (/Y/.test(AC_ZAHL.norm(zEl('zname').value||'', B.umlautArt))
+       ? '<span><i style="background:#E9EDF4;border-color:#2E3A5C"></i>Y &mdash; je nach Schule beides</span>' : '')+
+     '<span class="ac-tech" data-ab="2">'+B.name.buchstaben+' Buchstaben, Summe '+B.name.ausdruckRoh+'</span>'+
+     '</div>';
+  box.innerHTML=h;
+}
+
+function zStreitBauen(){
+  var B=zBlatt, box=zEl('zstreit'), h='';
+  if(!B){ box.innerHTML=''; return; }
+  if(B.systemStreit){
+    h+='<div class="z-streit"><span class="t">Die Tafeln sind uneins</span>'+
+       'Derselbe Name gibt in der <b>'+Z_SYSNAME[zSys].replace(/&auml;/g,'ä')+'en</b> Tafel die Ausdruckszahl <b>'+
+       B.name.ausdruck+'</b>, in der anderen <b>'+B.nameAnderesSystem.ausdruck+'</b>. '+
+       'Beide Schulen unterrichten ihre Tafel als die richtige. Es gibt keinen Schiedsrichter &mdash; '+
+       'du entscheidest, mit welcher du arbeitest, und bleibst dann dabei.</div>';
+  }
+  if(B.umlautStreit){
+    h+='<div class="z-streit"><span class="t">Der Umlaut entscheidet mit</span>'+
+       'In dem Namen steckt ein Umlaut, und daf&uuml;r hat niemand eine Regel festgelegt. '+
+       'Z&auml;hlt das Ä wie ein A, kommt <b>'+B.name.ausdruck+'</b> heraus; schreibt man es als AE, '+
+       '<b>'+B.nameAndereUmlaute.ausdruck+'</b>. Beide Varianten werden so unterrichtet.</div>';
+  }
+  if(B.name && B.name.yStoert){
+    h+='<div class="z-streit"><span class="t">Das Y h&auml;ngt dazwischen</span>'+
+       'Das Y gilt mancherorts als Vokal und mancherorts als Konsonant. Z&auml;hlt es als Konsonant, '+
+       'ist deine Seelenzahl <b>'+B.name.seele+'</b>, als Vokal <b>'+B.name.seeleMitY+'</b>. '+
+       'Die &uuml;bliche Faustregel: Vokal nur dort, wo das Y wie ein Vokal gesprochen wird.</div>';
+  }
+  if(B.name && B.nameAnderesSystem){
+    var AN=B.nameAnderesSystem, and=(zSys==='pyth'?'Ch&auml;ld&auml;isch':'Pythagor&auml;isch');
+    h+='<div class="z-streit" data-ab="4"><span class="t">Die andere Tafel, vollst&auml;ndig</span>'+
+       and+': Ausdruck <b>'+AN.ausdruck+'</b> (aus '+AN.ausdruckRoh+'), Seele <b>'+AN.seele+
+       '</b> (aus '+AN.seeleRoh+'), Pers&ouml;nlichkeit <b>'+AN.person+'</b> (aus '+AN.personRoh+
+       ')'+(AN.fehlt.length?', fehlende Ziffern '+AN.fehlt.join(', '):', keine fehlenden Ziffern')+
+       '.</div>';
+  }
+  if(B.name && B.name.fehlt.length){
+    h+='<div class="z-streit" data-ab="2"><span class="t">Fehlende Ziffern im Namen</span>'+
+       'Im Namen kommen die Ziffern <b>'+B.name.fehlt.join(', ')+'</b> nicht vor. In der '+
+       'pythagor&auml;ischen Schule hei&szlig;t das „karmische Lektion": das, was nicht mitgeliefert '+
+       'wird und deshalb gelernt werden muss. Was daran auff&auml;llt: Bei kurzen Namen fehlt '+
+       'fast immer viel und bei langen fast nichts. Die Zahl sagt also auch etwas &uuml;ber die '+
+       'L&auml;nge des Namens aus.</div>';
+  }
+  box.innerHTML=h;
+}
+
+/* ── 2 · Der Ring ───────────────────────────────────────────── */
+function zEigeneZahlen(){
+  var B=zBlatt; if(!B) return {};
+  var m={};
+  function setz(w,lab){ if(w===null||w===undefined||w===false) return;
+    if(!m[w]) m[w]=[]; if(m[w].indexOf(lab)<0) m[w].push(lab); }
+  setz(B.lebenszahl,'Lebenszahl'); setz(B.geburtstag.zahl,'Geburtstag');
+  if(B.name){ setz(B.name.ausdruck,'Ausdruck'); setz(B.name.seele,'Seele');
+              setz(B.name.person,'Pers&ouml;nlichkeit'); }
+  setz(B.reife,'Reife'); setz(B.jahr.zahl,'Jahr');
+  return m;
+}
+function zRingBauen(){
+  var mein=zEigeneZahlen();
+  function N(t,a,txt){ var e=document.createElementNS(Z_NSU,t);
+    for(var k in a) e.setAttribute(k,a[k]);
+    if(txt!==undefined) e.textContent=txt; return e; }
+  var C=310, RA=300, RI=176;
+  function pos(gr,r){ var w=(gr-90)*Math.PI/180; return [C+r*Math.cos(w), C+r*Math.sin(w)]; }
+  function wedge(a1,a2){
+    var p1=pos(a1,RA), p2=pos(a2,RA), p3=pos(a2,RI), p4=pos(a1,RI);
+    return 'M'+p1[0].toFixed(1)+','+p1[1].toFixed(1)+' A'+RA+','+RA+' 0 0 1 '+
+      p2[0].toFixed(1)+','+p2[1].toFixed(1)+' L'+p3[0].toFixed(1)+','+p3[1].toFixed(1)+
+      ' A'+RI+','+RI+' 0 0 0 '+p4[0].toFixed(1)+','+p4[1].toFixed(1)+' Z';
+  }
+  var svg=N('svg',{viewBox:'0 0 620 620',class:'z-ring',role:'img',
+    'aria-label':'Die Ziffern eins bis neun im Kreis, die drei Meisterzahlen in der Mitte'});
+
+  var lz=zBlatt?zBlatt.lebenszahl:null;
+  for(var i=0;i<9;i++){
+    var n=i+1, a1=i*40-90+0.6, a2=(i+1)*40-90-0.6;
+    var Z=Z_ZAHL[n], hat=(n===lz);
+    var g=N('g',{class:'z-seg'+(zOffen===n?' ist':'')+((zOffen&&zOffen!==n)?' aus':''),
+      'data-z':String(n), tabindex:'0', role:'button',
+      'aria-label':n+' — '+Z.titel+(hat?', deine Lebenszahl':
+        (mein[n]?', deine '+mein[n][0].replace(/&ouml;/g,'ö'):''))});
+    g.appendChild(N('path',{d:wedge(a1,a2), fill:Z.farbe, class:'fl',
+      opacity:(zOffen===n?'1':'.9')}));
+    g.appendChild(N('path',{d:wedge(a1,a2), fill:'none', class:'rd',
+      stroke:(hat?'#E8C97A':'none'), 'stroke-width':(hat?'3':'0')}));
+    var m=pos(i*40+20-90,(RA+RI)/2);
+    g.appendChild(N('text',{x:m[0].toFixed(1),y:(m[1]-2).toFixed(1),'text-anchor':'middle',
+      class:'zif'}, String(n)));
+    g.appendChild(N('text',{x:m[0].toFixed(1),y:(m[1]+21).toFixed(1),'text-anchor':'middle',
+      class:'nm'}, Z.titel.replace(/^Der |^Die /,'')));
+    svg.appendChild(g);
+  }
+  /* Die drei Meisterzahlen in der Mitte */
+  var mz=[11,22,33];
+  mz.forEach(function(n,k){
+    var Z=Z_ZAHL[n];
+    var w=(k*120-90)*Math.PI/180, cx=C+78*Math.cos(w), cy=C+78*Math.sin(w);
+    var g=N('g',{class:'z-mz'+(zOffen===n?' ist':''),'data-z':String(n), tabindex:'0',
+      role:'button','aria-label':'Meisterzahl '+n+(hat?', deine Zahl':'')});
+    g.appendChild(N('circle',{cx:cx.toFixed(1),cy:cy.toFixed(1),r:'37',fill:Z.farbe,
+      opacity:(zOffen===n?'1':'.9'),
+      stroke:((lz===n)?'#E8C97A':'none'),'stroke-width':'3'}));
+    g.appendChild(N('text',{x:cx.toFixed(1),y:(cy+9).toFixed(1),'text-anchor':'middle',
+      class:'zif'}, String(n)));
+    svg.appendChild(g);
+  });
+  svg.appendChild(N('text',{x:String(C),y:String(C+128),'text-anchor':'middle',
+    class:'z-mitte'},'Meisterzahlen'));
+
+  var box=zEl('zringbox'); box.innerHTML=''; box.appendChild(svg);
+  Array.prototype.forEach.call(svg.querySelectorAll('[data-z]'),function(g){
+    var n=+g.getAttribute('data-z');
+    g.addEventListener('click',function(){ zZeigeZahl(n); });
+    g.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); zZeigeZahl(n); } });
+  });
+
+  /* Legende */
+  var leg=zEl('zringleg'), L=[];
+  Z_NUM.forEach(function(q){ if(mein[q])
+    L.push('<span><em style="background:'+Z_ZAHL[q].farbe+'">'+q+'</em>'+
+      mein[q].join(' + ')+'</span>'); });
+  leg.innerHTML = L.length
+    ? L.join('')
+    : '<span>Mit einem Profil werden hier deine eigenen Zahlen markiert.</span>';
+}
+
+/* ── Detail einer Zahl ──────────────────────────────────────── */
+function zZeigeZahl(n, springen){
+  zOffen = (zOffen===n && !springen) ? null : n;
+  zRingBauen(); zMatrixBauen(); zDetailBauen();
+  if(zOffen && springen){
+    var d=zEl('zdetail'); if(d && d.scrollIntoView) d.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+function zDetailBauen(){
+  var box=zEl('zdetail');
+  if(!zOffen){ box.innerHTML='<div class="z-leer">Noch keine Zahl ausgew&auml;hlt. '+
+    'Tippe im Ring eine an &mdash; oder in der Tabelle weiter unten ein Feld.</div>'; return; }
+  var n=zOffen, Z=Z_ZAHL[n], T=Z_ZT[n], mein=zEigeneZahlen();
+  var h='<div class="z-detail" style="border-left-color:'+Z.farbe+'">'+
+    '<div class="z-dkopf"><div class="z-dzif" style="color:'+Z.farbe+'">'+n+'</div>'+
+    '<div class="z-dtit"><h3>'+Z.n+' &mdash; '+Z.titel+'</h3>'+
+    '<span class="kz">'+Z.kurz+'</span><div class="z-dmeta">'+
+    (mein[n]?'<span style="background:#E9EDF4;color:#2E3A5C">Deine '+mein[n].join(' &amp; ')+'</span>':'')+
+    (Z.meister?'<span>Meisterzahl &mdash; Grundzahl '+Z.meister+'</span>':'')+
+    (Z.pInd!=='—'?'<span class="ac-tech" data-ab="2">indisch '+Z.pInd+'</span>':'')+
+    (Z.pWest!=='—'&&Z.pWest!==Z.pInd?'<span class="ac-tech" data-ab="2">westlich '+Z.pWest+'</span>':'')+
+    (Z.tag!=='—'?'<span class="ac-tech" data-ab="3">Tag: '+Z.tag+'</span>':'')+
+    '</div></div></div>'+
+    '<p>'+Z.wesen+'</p>'+
+    (Z.meister
+      ? '<p data-ab="1" style="background:#F7EFE1;border-radius:13px;padding:12px 15px;'+
+        'font-size:14.6px">Die '+n+' ist eine <b>Meisterzahl</b>. Das hei&szlig;t nur: Sie wird '+
+        'beim Zusammenziehen nicht weiter verkleinert, obwohl man es k&ouml;nnte. Wer damit '+
+        'nichts anfangen kann, rechnet einfach mit der Grundzahl '+Z.meister+' weiter &mdash; '+
+        'das ist keine schlechtere Antwort, nur eine andere Schule.</p>'
+      : '')+
+    (mein[n]
+      ? '<p data-ab="1" style="background:#E9EDF4;border-radius:13px;padding:12px 15px;'+
+        'font-size:14.6px">Bei dir kommt diese Zahl als <b>'+mein[n].join(' und ')+
+        '</b> vor. Steht sie mehrfach, hei&szlig;t das in jeder Schule dasselbe: Das Thema '+
+        'wiederholt sich bei dir, statt sich auf mehrere zu verteilen.</p>'
+      : '')+
+    '<div class="z-zwei"><div class="z-sp gut"><b>Was sie kann</b>'+Z.stark+'</div>'+
+    '<div class="z-sp schat"><b>Wo sie kippt</b>'+Z.schatten+'</div></div>'+
+    '<div class="z-bereiche">';
+  Z_THEMA.forEach(function(TH){
+    var c=T[TH.k]; if(!c) return;
+    h+='<div class="z-b"><span class="bk">'+TH.n+'</span><p>'+c.t+'</p>'+
+       '<div class="tun"><b>Ein Handgriff</b>'+c.tun+'</div></div>';
+  });
+  h+='</div></div>';
+  box.innerHTML=h;
+}
+
+/* ── 3 · Die Matrix ────────────────────────────────────────── */
+function zThemenBauen(){
+  var box=zEl('zthemen');
+  box.innerHTML = Z_THEMA.map(function(T){
+    return '<button type="button" class="z-knopf'+(T.k===zThema?' ist':'')+'" data-t="'+T.k+'">'+
+      T.n+'</button>'; }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-t]'),function(b){
+    b.addEventListener('click',function(){ zThema=b.getAttribute('data-t');
+      zThemenBauen(); zMatrixBauen(); });
+  });
+}
+function zKurz(s,max){
+  s=String(s||''); if(s.length<=max) return s;
+  var i=s.lastIndexOf(' ',max); return s.slice(0,i>40?i:max)+'…';
+}
+function zMatrixBauen(){
+  var mein=zEigeneZahlen();
+  /* breit: alle acht Bereiche */
+  var h='<table><thead><tr><th>Zahl</th>';
+  Z_THEMA.forEach(function(T){ h+='<th>'+T.n+'</th>'; });
+  h+='</tr></thead><tbody>';
+  Z_NUM.forEach(function(n){
+    var Z=Z_ZAHL[n];
+    h+='<tr class="'+(zOffen===n?'ist':'')+(mein[n]?' mein':'')+'"><th>'+n+
+       '<small>'+Z.titel.replace(/^Der |^Die /,'')+'</small></th>';
+    Z_THEMA.forEach(function(T){
+      var c=Z_ZT[n][T.k];
+      h+='<td class="z-zelle" data-z="'+n+'" data-t="'+T.k+'" tabindex="0">'+
+         zEsc(zKurz(c?c.t:'', 118))+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  zEl('zmatrix').innerHTML=h;
+
+  /* schmal: ein Bereich, zwölf Zeilen */
+  var TH=null; Z_THEMA.forEach(function(T){ if(T.k===zThema) TH=T; });
+  var l='';
+  Z_NUM.forEach(function(n){
+    var Z=Z_ZAHL[n], c=Z_ZT[n][zThema];
+    l+='<div class="zl'+(zOffen===n?' ist':'')+(mein[n]?' mein':'')+'" data-z="'+n+'" data-t="'+zThema+
+       '" tabindex="0" style="border-left-color:'+Z.farbe+'">'+
+       '<b>'+n+' &mdash; '+Z.titel+(mein[n]?' <i>deine '+mein[n][0]+'</i>':'')+
+       '</b><p>'+zEsc(c?c.t:'')+'</p></div>';
+  });
+  zEl('zmliste').innerHTML=l;
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('.z-zelle[data-z], .zl[data-z]'), function(c){
+    var n=+c.getAttribute('data-z');
+    c.addEventListener('click',function(){ zThema=c.getAttribute('data-t')||zThema;
+      zThemenBauen(); zZeigeZahl(n, true); });
+    c.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault();
+        zThema=c.getAttribute('data-t')||zThema; zThemenBauen(); zZeigeZahl(n, true); } });
+  });
+}
+
+/* ── 4 · Wohnen ────────────────────────────────────────────── */
+function zWohnBauen(){
+  var box=zEl('zwohnerg'), txt=zEl('zadr').value;
+  var A=AC_ZAHL.adresse(txt, zSys);
+  if(!A){ box.innerHTML = txt.trim()
+    ? '<div class="z-leer">Darin steckt keine Nummer. Tippe die Hausnummer ein, zum Beispiel <b>47a</b> &mdash; Stra&szlig;ennamen z&auml;hlen nicht mit.</div>'
+    : '<div class="z-leer">Trag eine Nummer ein. Du bekommst dann, was diese Nummer mit einem Zuhause macht, f&uuml;r wen sie taugt und &mdash; wenn ein Profil aktiv ist &mdash; wie sie zu deiner eigenen Zahl steht.</div>';
+    return; }
+
+  var B=zBlatt, lz=B?B.lebenszahl:null;
+  var h='';
+  A.teile.forEach(function(S,i){
+    var n=S.zahl, W=Z_WOHN[n], Z=Z_ZAHL[n];
+    var rolle = A.mehrteilig ? (i===0?'Hausnummer':(i===1?'Wohnung oder Etage':'Weitere Nummer')) : 'Die Nummer';
+    var reso = lz ? zWohnReso(lz, n) : null;
+    var R = reso ? Z_RESO[reso] : null;
+    h+='<div class="z-wohnerg" style="border-left-color:'+Z.farbe+'">'+
+      '<div class="z-wk"><div class="z-wzif" style="color:'+Z.farbe+'">'+n+'</div>'+
+      '<div><span class="lab" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;'+
+      'text-transform:uppercase;color:#9A7235;display:block;margin-bottom:3px">'+rolle+' '+
+      zEsc(S.text)+'</span><b style="font-family:var(--serif);font-size:20px;font-weight:500;'+
+      'color:#2E3A5C">'+Z.n+' &mdash; '+Z.titel+'</b></div>'+
+      (R?'<span class="z-wurteil" style="background:'+R.farbe+'">'+R.n+'</span>':'')+'</div>'+
+      '<p class="ac-tech" data-ab="2">'+zEsc(S.text)+': '+
+        S.ziffern.join(' + ')+(S.buchstaben.length?(S.ziffern.length?' + ':'')+
+        S.buchstaben.map(function(b){ return b.c+' ('+b.n+')'; }).join(' + '):'')+
+        ' = '+S.summe+(S.kette.length>1?' &rarr; '+S.kette.slice(1).join(' &rarr; '):'')+'</p>'+
+      '<p>'+W.tut+'</p>'+
+      '<div class="z-wpaar"><div class="z-sp gut"><b>Gut f&uuml;r</b>'+W.gut+'</div>'+
+      '<div class="z-sp schat"><b>Schwer f&uuml;r</b>'+W.schwer+'</div></div>';
+    if(R){
+      var L=Z_ZAHL[lz];
+      h+='<h4>Und f&uuml;r dich?</h4><p>'+R.satz(L,Z)+' '+R.folge+'</p>';
+    }
+    h+='<div class="z-wkniff"><b>Wenn du schon drin wohnst</b>'+W.kniff+'</div>';
+    h+='<h4>Wem diese Nummer gut t&auml;te</h4><div class="z-passt">'+zPasstZu(n)+'</div>'+
+      '<p class="z-hint" style="margin-top:7px">Gr&uuml;n: Die Nummer liefert, was dieser Lebenszahl fehlt. '+
+      'Rot: Sie verdoppelt, wovon sie schon zu viel hat. Grau: kein besonderer Zug.</p>';
+    h+='</div>';
+  });
+
+  if(A.hatVier||A.hatAcht){
+    h+='<div class="z-streit"><span class="t">Nebenbei, und keine Deutung</span>'+
+      'In dieser Nummer steckt eine '+(A.hatVier?'4':'8')+'. '+
+      (A.hatVier?'Im chinesischen Sprachraum klingt die Vier wie das Wort f&uuml;r sterben, und deshalb werden in Hochh&auml;usern dort Etagen mit 4 und 14 &uuml;bersprungen. ':'')+
+      (A.hatAcht?'Die Acht klingt dort wie das Wort f&uuml;r reich werden, und Nummern mit vielen Achten erzielen auf Auktionen reale Aufpreise. ':'')+
+      'Das ist eine Tatsache &uuml;ber Sprache und Immobilienmarkt, nicht &uuml;ber die Zahl. In Berlin h&ouml;rt niemand diesen Gleichklang, also wirkt er hier auch nicht.</div>';
+  }
+  box.innerHTML=h;
+}
+function zPasstZu(hz){
+  var gut=[], schlecht=[], neutral=[];
+  Z_NUM.forEach(function(lz){
+    var r=zWohnReso(lz,hz);
+    if(r==='traegt') gut.push(lz);
+    else if(r==='reibt'||r==='doppelt') schlecht.push(lz);
+    else neutral.push(lz);
+  });
+  return gut.map(function(x){ return '<b>'+x+'</b>'; }).join('')+
+    schlecht.map(function(x){ return '<b class="r">'+x+'</b>'; }).join('')+
+    neutral.map(function(x){ return '<b class="n">'+x+'</b>'; }).join('');
+}
+function zPasstTabelle(){
+  var h='<table><thead><tr><th>Lebenszahl</th><th>Tr&auml;gt dich</th><th>Reibt</th>'+
+    '<th>Hat selbst schon genug</th></tr></thead><tbody>';
+  var mein=zBlatt?zBlatt.lebenszahl:null;
+  Z_NUM.forEach(function(lz){
+    var Z=Z_ZAHL[lz], gut=[], schlecht=[];
+    Z_NUM.forEach(function(hz){
+      var r=zWohnReso(lz,hz);
+      if(r==='traegt') gut.push(hz);
+      if(r==='reibt'||r==='doppelt') schlecht.push(hz);
+    });
+    h+='<tr'+(lz===mein?' class="ist"':'')+'><th style="font-family:var(--serif);font-size:18px;'+
+      'font-weight:400;color:#2E3A5C;white-space:nowrap">'+lz+
+      '<small style="display:block;font-family:var(--sans);font-size:11.5px;color:#6B6259">'+
+      Z.titel.replace(/^Der |^Die /,'')+'</small></th>'+
+      '<td><b style="color:#3F6B4A">'+gut.join(', ')+'</b></td>'+
+      '<td class="ab">'+schlecht.join(', ')+'</td>'+
+      '<td>'+Z.satt.charAt(0).toUpperCase()+Z.satt.slice(1)+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  zEl('zpasst').innerHTML=h+
+    '<p class="z-hint" style="padding:11px 13px 1px">Die letzte Spalte ist der Grund f&uuml;r '+
+    'die beiden davor: Eine Nummer, die liefert, wovon die Zahl ohnehin genug hat, steht '+
+    'unter „Reibt" &mdash; eine, die das Gegenst&uuml;ck liefert, unter „Tr&auml;gt dich".</p>';
+}
+
+/* ── 5 · Die Schulen ───────────────────────────────────────── */
+function zSchulenBauen(){
+  zEl('zschulen').innerHTML = Z_SYSTEM.map(function(S,i){
+    return '<details class="z-sys"'+(i===0?' open':'')+'><summary><b>'+S.n+'</b>'+
+      '<span>'+S.ruf+'</span>'+(S.neu?'<i>jung</i>':'')+'</summary><div class="z-sys-in"><dl>'+
+      '<div><dt>Wie gerechnet wird</dt><dd>'+S.wie+'</dd></div>'+
+      '<div><dt>Woher es kommt</dt><dd>'+S.her+'</dd></div>'+
+      '<div><dt>Wof&uuml;r es gut ist</dt><dd>'+S.gut+'</dd></div>'+
+      '<div><dt>Was dagegen spricht</dt><dd class="warn">'+S.vor+'</dd></div>'+
+      '</dl></div></details>';
+  }).join('');
+}
+
+/* ── 6 · Zahl und Chart ────────────────────────────────────── */
+function zPlanetBauen(){
+  var mein=zBlatt?zBlatt.lebenszahl:null;
+  var h='<table><thead><tr><th>Zahl</th><th>Indisch</th><th>Westlich</th>'+
+    '<th>Wochentag</th></tr></thead><tbody>';
+  for(var n=1;n<=9;n++){
+    var P=Z_PLANET[n], Z=Z_ZAHL[n], ab=(P.ind!==P.west);
+    h+='<tr'+((n===mein||(Z_ZAHL[mein]&&Z_ZAHL[mein].meister===n))?' class="ist"':'')+'>'+
+      '<td>'+n+'</td><td>'+P.ind+'</td><td'+(ab?' class="ab"':'')+'>'+P.west+'</td>'+
+      '<td>'+(Z.tag==='—'?'<span style="color:#A05A3A">keiner</span>':Z.tag)+'</td></tr>';
+  }
+  h+='</tbody></table>';
+  zEl('zplanet').innerHTML=h;
+}
+function zBrueckeBauen(){
+  var box=zEl('zbruecke'), p=zAktiv();
+  var h='<div class="z-streit" style="margin-top:14px"><span class="t">Woran die Zuordnung h&auml;ngt</span>'+
+    'Die 4 und die 7 sind die beiden Zahlen, bei denen die Schulen auseinandergehen: indisch '+
+    'Rahu und Ketu, westlich Uranus und Neptun. Das sind nicht nur andere Namen &mdash; Rahu und Ketu '+
+    'sind die Mondknoten, also rechnerische Punkte, Uranus und Neptun sind Planeten. '+
+    'Es sind au&szlig;erdem genau die zwei Zahlen ohne klassischen Wochentag, weil es in der '+
+    'Siebentagewoche nur sieben Planeten gibt. Wer mit Zahlen und Chart zusammen arbeitet, '+
+    'muss sich hier entscheiden.</div>';
+
+  if(p && p.h!==undefined && p.lat!==undefined && typeof chartVon==='function'){
+    try{
+      var C=chartVon(p), B=zBlatt;
+      var grund = B ? (Z_ZAHL[B.lebenszahl].meister || B.lebenszahl) : null;
+      var pl = grund && grund<=9 ? Z_PLANET[grund] : null;
+      if(pl && C[pl.ind]!==undefined){
+        var ZN=['Widder','Stier','Zwillinge','Krebs','L&ouml;we','Jungfrau','Waage','Skorpion',
+                'Sch&uuml;tze','Steinbock','Wassermann','Fische'];
+        var lon=C[pl.ind], zi=Math.floor(((lon%360)+360)%360/30), hs=haus(C,lon);
+        h+='<div class="z-streit" style="border-color:#2E3A5C;background:#E9EDF4">'+
+          '<span class="t" style="color:#2E3A5C">Bei dir nebeneinandergelegt</span>'+
+          'Deine Lebenszahl ist <b>'+B.lebenszahl+'</b>'+
+          (B.lebenszahl!==grund?' (Grundzahl '+grund+')':'')+
+          ', und die indische Zuordnung h&auml;ngt sie an <b>'+pl.ind+'</b>. '+
+          'In deinem Chart steht '+pl.ind+' in <b>'+ZN[zi]+'</b>, im <b>'+hs+'. Haus</b>. '+
+          'Wenn du beides zusammen benutzen willst, ist das der Anschluss: Die Zahl nennt das '+
+          'Thema, das Chart sagt, wo und wie es bei dir vorkommt. Widersprechen sich die beiden, '+
+          'gilt das Chart &mdash; es ist das feinere Werkzeug.</div>';
+      }
+    }catch(e){}
+  }
+  box.innerHTML=h;
+}
+
+/* ── 7 · Ehrlichkeit mit Zahlen ────────────────────────────── */
+function zVerteilungBauen(){
+  var V=AC_ZAHL.verteilung(), h='<p class="z-balu">Anteil aller Geburtstage 1940 bis 2039</p><div class="z-bal">';
+  var ganz=[1,3,5,7,8,9];
+  Z_NUM.forEach(function(n){
+    var a=(V.zaehlung[n]||0)/V.gesamt;
+    h+='<i class="'+(ganz.indexOf(n)>=0?'gr':'')+'" style="flex:'+a.toFixed(4)+
+       ' 1 0" title="'+n+': '+zPz(a)+'&nbsp;%">'+n+'</i>';
+  });
+  h+='</div><p>Jede Ziffer 1, 3, 5, 7, 8 und 9 hat genau '+
+     zPz(1/9)+'&nbsp;%. Die 2 hat nur '+zPz((V.zaehlung[2]||0)/V.gesamt)+
+     '&nbsp;%, weil fast alles, was auf 2 hinausl&auml;uft, vorher auf der 11 anh&auml;lt &mdash; '+
+     'und 2&nbsp;+&nbsp;11 ergibt wieder '+zPz(((V.zaehlung[2]||0)+(V.zaehlung[11]||0))/V.gesamt)+
+     '&nbsp;%. Dasselbe gilt f&uuml;r 4 und 22 und f&uuml;r 6 und 33.</p>';
+  zEl('zvert').innerHTML=h;
+}
+/* Wie oft die drei Rechenwege auseinandergehen — hier ausgerechnet,
+   nicht abgeschrieben. */
+function zAbweichung(){
+  var ab=0, n=0, tage=[31,28,31,30,31,30,31,31,30,31,30,31];
+  for(var y=1900;y<=2030;y++){
+    var s=(y%4===0&&(y%100!==0||y%400===0));
+    for(var m=1;m<=12;m++){
+      var mx=tage[m-1]+((m===2&&s)?1:0);
+      for(var d=1;d<=mx;d++){ n++; if(!AC_ZAHL.lebenszahl(d,m,y).einig) ab++; }
+    }
+  }
+  zEl('zabw').innerHTML = zPz(ab/n) + '&nbsp;%';
+}
+
+/* ── Bericht ───────────────────────────────────────────────── */
+function zBerichtText(){
+  var B=zBlatt, p=zAktiv(), L=[];
+  L.push('ZAHLEN — '+(p?zAnzeige(p):'ohne Profil'));
+  if(!B) return L.join('\n')+'\nKein Profil aktiv, deshalb kein Blatt.\n';
+  L.push('Geburtsdatum '+zTag(B.datum)+' · Tafel '+Z_SYSNAME[zSys].replace(/&auml;/g,'ä'));
+  L.push('');
+  L.push('DAS BLATT');
+  function z(lab,w){ if(w===null||w===undefined||w===false) return;
+    var Z=Z_ZAHL[w]; L.push('  '+lab+': '+w+(Z?' — '+Z.titel:'')); }
+  z('Lebenszahl', B.lebenszahl);
+  L.push('    '+B.lz.rohsumme+' → '+B.lz.kette.slice(1).join(' → '));
+  if(!B.lz.einig) L.push('    strittig: der blockweise Weg gibt '+B.lz.teile);
+  z('Geburtstagszahl', B.geburtstag.zahl);
+  if(B.name){ z('Ausdruckszahl', B.name.ausdruck); z('Seelenzahl', B.name.seele);
+              z('Persönlichkeit', B.name.person); }
+  z('Reifezahl', B.reife);
+  z('Persönliches Jahr '+B.jahr.jahr, B.jahr.zahl);
+  L.push('  Herausforderung: '+B.herausforderung.haupt);
+  if(B.systemStreit) L.push('  Hinweis: andere Tafel gibt Ausdruckszahl '+B.nameAnderesSystem.ausdruck);
+  if(B.umlautStreit) L.push('  Hinweis: Umlaut als AE gibt Ausdruckszahl '+B.nameAndereUmlaute.ausdruck);
+
+  var Z=Z_ZAHL[B.lebenszahl];
+  L.push(''); L.push('ZUR LEBENSZAHL '+B.lebenszahl+' — '+Z.titel.toUpperCase());
+  L.push(Z.wesen);
+  L.push(''); L.push('  Was sie kann: '+Z.stark);
+  L.push('  Wo sie kippt: '+Z.schatten);
+  L.push('');
+  Z_THEMA.forEach(function(T){
+    var c=Z_ZT[B.lebenszahl][T.k]; if(!c) return;
+    L.push(T.n.toUpperCase()); L.push('  '+c.t); L.push('  Handgriff: '+c.tun); L.push('');
+  });
+  var A=AC_ZAHL.adresse(zEl('zadr').value, zSys);
+  if(A){
+    var hn=A.haupt.zahl, W=Z_WOHN[hn], R=Z_RESO[zWohnReso(B.lebenszahl,hn)];
+    L.push('NUMMER '+A.haupt.text+' → '+hn);
+    L.push('  '+W.tut);
+    L.push('  Gut für: '+W.gut);
+    L.push('  Schwer für: '+W.schwer);
+    if(R){ L.push('  Für dich: '+R.n+'. '+R.satz(Z,Z_ZAHL[hn]).replace(/<[^>]+>/g,'')+' '+R.folge); }
+    L.push('  Kniff: '+W.kniff);
+    L.push('');
+  }
+  L.push('GRENZEN');
+  L.push('  Rund jeder neunte Mensch hat dieselbe Lebenszahl ('+zPz(B.anteil)+' % aller Geburtstage).');
+  L.push('  Die Tafeln der Schulen widersprechen sich; es gibt keinen Schiedsrichter.');
+  L.push('  Dass diese Zahlen etwas vorhersagen, ist nicht belegt.');
+  L.push('  Aus einem Geburtsdatum lässt sich kein Neurotyp und keine Diagnose ablesen.');
+  return L.join('\n').replace(/&auml;/g,'ä').replace(/&ouml;/g,'ö').replace(/&uuml;/g,'ü')
+          .replace(/&szlig;/g,'ß').replace(/&shy;/g,'').replace(/&mdash;/g,'—')
+          .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/<[^>]+>/g,'');
+}
+
+/* ── Zusammensetzen ───────────────────────────────────────── */
+function zAlles(){
+  var p=zAktiv();
+  var nm=zEl('zname').value;
+  zBlatt = p ? AC_ZAHL.blatt(p, nm, new Date().getFullYear(), zSys, 'direkt') : null;
+  zPersonenBauen(); zSystemBauen();
+  zKartenBauen(); zKetteBauen(); zGitterBauen(); zStreitBauen();
+  zRingBauen(); zDetailBauen();
+  zMatrixBauen(); zWohnBauen(); zPasstTabelle();
+  zPlanetBauen(); zBrueckeBauen();
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+}
+
+function zStart(){
+  var p=zAktiv();
+  zEl('zname').value = zNameVon(p);
+  try{ zVerdeckt = !AC_P.zeigeNamen(); }catch(e){ zVerdeckt=false; }
+  zEl('znamever').textContent = zVerdeckt ? 'Buchstaben zeigen' : 'Buchstaben verdecken';
+  zEl('znamever').classList.toggle('ist', zVerdeckt);
+
+  zThemenBauen(); zSchulenBauen(); zVerteilungBauen(); zAbweichung();
+  zAlles();
+
+  var t=null;
+  zEl('zname').addEventListener('input',function(){
+    clearTimeout(t); t=setTimeout(function(){
+      zNameSetzen(zAktiv(), zEl('zname').value); zAlles(); }, 260);
+  });
+  zEl('znamever').addEventListener('click',function(){
+    zVerdeckt=!zVerdeckt;
+    zEl('znamever').textContent = zVerdeckt ? 'Buchstaben zeigen' : 'Buchstaben verdecken';
+    zEl('znamever').classList.toggle('ist', zVerdeckt);
+    zGitterBauen();
+  });
+  var ta=null;
+  zEl('zadr').addEventListener('input',function(){
+    clearTimeout(ta); ta=setTimeout(function(){ zWohnBauen(); }, 230);
+  });
+  zEl('zkopie').addEventListener('click',function(){
+    var s=zBerichtText();
+    function fertig(){ zEl('zecho').textContent='Blatt kopiert, '+s.length+' Zeichen.';
+      setTimeout(function(){ zEl('zecho').textContent=''; }, 3600); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(s).then(fertig,function(){ zNotfall(s); fertig(); });
+    } else { zNotfall(s); fertig(); }
+  });
+  zEl('zdruck').addEventListener('click',function(){ window.print(); });
+  window.addEventListener('ac-niveau',function(){ /* Stufe wirkt über CSS */ });
+}
+function zNotfall(s){
+  var a=document.createElement('textarea'); a.value=s; document.body.appendChild(a);
+  a.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(a);
+}
+
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', zStart);
+else zStart();
+
+</script>
+</body></html>

@@ -132,6 +132,26 @@ var H={
     if([1,4,7,10].indexOf(h)>=0) w*=1.15;
     return w; },
 
+  /* ── Das Feld einer Frage ───────────────────────────────────
+     Jedes Thema sagt über felder, welche Häuser für diese Frage
+     zählen. Damit lässt sich fragen: Wie viel vom Chart liegt
+     überhaupt in dem Bereich, um den es gerade geht?            */
+  feld:function(C, felder){
+    felder=felder||[];
+    var w=0, pl=[], bestH=0, best=-1;
+    felder.forEach(function(h){
+      var g=H.gewichtHaus(C,h);
+      w+=g; if(g>best){ best=g; bestH=h; }
+      H.drin(C,h).forEach(function(k){ if(pl.indexOf(k)<0) pl.push(k); });
+    });
+    var ges=0; for(var i=1;i<=12;i++) ges+=H.gewichtHaus(C,i);
+    return {gewicht:w, anteil:(ges?w/ges:0), planeten:pl,
+            schwerstes:bestH, leer:(pl.length===0)};
+  },
+  /* Steht dieser Planet in einem der Häuser, um die es geht? */
+  imFeld:function(C, felder, pl){
+    return (felder||[]).indexOf(H.wo(C,pl))>=0; },
+
   /* Stellium: drei oder mehr in einem Haus */
   stellien:function(C){
     var out=[];
@@ -165,6 +185,11 @@ function lauf(regeln, A, B, namen, einstellung){
   regeln.forEach(function(R){
     if(R.modus==='paar' && !B) return;
     if(R.modus==='solo' && B && R.nurOhnePartner) return;
+    /* Eine Regel kann sagen, für welche Formen der Frage sie gilt —
+       „wie gehen wir mit Geld um" gehört zur Geschäftspartnerschaft,
+       nicht zur Einarbeitung. */
+    if(R.nurForm && namen && namen.form && R.nurForm.indexOf(namen.form)<0) return;
+    if(R.ohneForm && namen && namen.form && R.ohneForm.indexOf(namen.form)>=0) return;
     var passt=false;
     try{ passt=!!R.wenn(A,B,H,namen); }
     catch(e){ fehler.push(R.id+': wenn — '+e.message); return; }

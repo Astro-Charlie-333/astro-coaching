@@ -146,6 +146,6 @@ window.AC_profilLeiste=function(){
   bar.innerHTML='<span class="ac-pb-lab">Arbeitsfl&auml;che</span>'+
     '<b>'+AC_P.anzeige(p,voll)+'</b>'+
     (p.eigen?'<span class="ac-pb-eigen">dein Profil</span>':'')+
-    '<a class="ac-pb-w" href="menschen.html">wechseln</a>';
+    '<a class="ac-pb-w" href="profile.html">wechseln</a>';
   wrap.insertBefore(bar, wrap.firstChild);
 };
