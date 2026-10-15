@@ -9,106 +9,91 @@
 <div class="zt-wrap">
 <div class="zt-kopf">
   <h1>Wann bei dir <em>was los ist.</em></h1>
-  <p class="zt-lede">Es gibt ein altes Verfahren, das ein Leben in <b>Kapitel</b> teilt und sagt, welche davon laut sind und welche leise. Es rechnet f&uuml;nf Lebensbereiche getrennt &mdash; Arbeit, Liebe, Umst&auml;nde, R&uuml;ckenwind und Druck laufen n&auml;mlich nicht gleichzeitig.</p>
-  <p class="zt-lede">Du musst daf&uuml;r nichts wissen. Oben steht die Antwort, darunter steht in vier Schritten, wie sie zustande kommt, und ganz unten steht, was das Verfahren taugt und was nicht.</p>
+  <p class="zt-lede">Ein altes Verfahren teilt ein Leben in <b>Kapitel</b> und sagt, welche davon laut sind und welche leise. F&uuml;nf Lebensbereiche werden getrennt gerechnet &mdash; sie laufen n&auml;mlich nicht gleichzeitig.</p>
+  <p class="zt-lede">Drei Dinge stehen auf dieser Seite: <b>wo du gerade stehst</b>, <b>was als N&auml;chstes kommt</b>, und <b>warum</b>. Alles andere ist weggeklappt.</p>
 </div>
 
 <div id="nivleiste"></div>
 
 <!-- A ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="antwort">
-  <div id="ztantwort"></div>
+<section class="zt-abschnitt" id="jetzt">
+  <h2>Wo du gerade stehst</h2>
+  <p class="u" id="ztjetzt-u"></p>
+  <div id="ztjetzt"></div>
+  <div id="ztdetail"></div>
   <div class="zt-einst">
     <div class="zt-reihe"><span class="k">Wer</span><div class="zt-knoepfe" id="ztpersonen"></div></div>
     <div class="zt-reihe"><span class="k">Stichtag</span>
       <input class="zt-feld" id="ztdatum" type="date">
       <button type="button" class="zt-knopf" id="ztheute">Heute</button>
-      <p class="zt-hint"><b>Der beste Test:</b> Stell den Tag auf ein Jahr, von dem du wei&szlig;t, was los war. Wenn die Seite dort Hochphase sagt und bei dir war wirklich viel los, dann hast du einen Grund, ihr auch nach vorn zu glauben. Wenn nicht, dann nicht.</p>
+      <p class="zt-hint"><b>Der beste Test:</b> Stell den Tag auf ein Jahr, von dem du wei&szlig;t, was los war. Stimmt es dort, hast du einen Grund, der Seite auch nach vorn zu glauben. Stimmt es nicht, dann nicht.</p>
     </div>
+    <div class="zt-reihe"><span class="k">Gerechnet mit</span><div id="ztdaten"></div></div>
     <div class="zt-reihe" data-ab="3"><span class="k">Eros</span>
       <div class="zt-knoepfe" id="ztvariante"></div>
-      <p class="zt-hint">F&uuml;r den Startpunkt der Liebesspur gibt es zwei &Uuml;berlieferungen, die sich genau spiegeln. Gerechnet wird nach Paulus und Olympiodor; die andere Fassung kannst du dagegenhalten.</p>
+      <p class="zt-hint">F&uuml;r den Startpunkt der Liebesspur gibt es zwei &Uuml;berlieferungen, die sich genau spiegeln. Gerechnet wird nach Paulus und Olympiodor.</p>
     </div>
   </div>
 </section>
 
 <!-- B ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="wie">
-  <h2>So funktioniert das</h2>
-  <p class="u">Vier Schritte. Danach kannst du jede Zahl auf dieser Seite selbst nachvollziehen.</p>
-  <div id="ztschritte"></div>
+<section class="zt-abschnitt" id="naechst">
+  <h2>Was als N&auml;chstes kommt</h2>
+  <p class="u" id="ztnaechst-u"></p>
+  <div id="ztnaechst"></div>
 </section>
 
 <!-- C ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="bereich">
-  <h2>Welcher Bereich?</h2>
-  <p class="u">F&uuml;nfmal dieselbe Rechnung von einem anderen Startpunkt aus. W&auml;hl einen &mdash; alles darunter rechnet dann f&uuml;r diesen Bereich.</p>
-  <div class="zt-bwahl" id="ztbereiche"></div>
-  <div id="ztbfrage"></div>
-</section>
-
-<!-- D ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="linie">
-  <h2>Deine Lebenslinie</h2>
+  <h2>Dein ganzes Leben auf einen Blick</h2>
   <p class="u" id="ztlinie-u"></p>
   <div class="zt-linie-box" id="ztlinie"></div>
   <div class="zt-legende" id="ztlegende"></div>
-  <p class="zt-hint" id="ztlinie-hint"></p>
-  <div id="ztdetail"></div>
-
-  <h3 class="zt-h3">Alle f&uuml;nf Bereiche nebeneinander</h3>
-  <p class="u">Dieselben hundert Jahre, f&uuml;nfmal. Hier siehst du auf einen Blick, ob gerade &uuml;berall gleichzeitig etwas los ist oder nur in einem Bereich. Antippen wechselt oben den Bereich.</p>
-  <div class="zt-linie-box" id="ztalle"></div>
+  <p class="zt-hint">Tipp einen Balken an. Auf dem Telefon l&auml;sst sich die Linie seitlich schieben.</p>
 </section>
+
+<!-- D ───────────────────────────────────────────────── -->
+<details class="zt-klapp" id="wie">
+  <summary><b>So funktioniert das</b><span>Vier Schritte, mit Bildern aus deinem Chart</span></summary>
+  <div class="zt-klapp-in"><div id="ztschritte"></div></div>
+</details>
 
 <!-- E ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="gipfel">
-  <h2>Deine n&auml;chsten Hochphasen</h2>
-  <p class="u" id="ztgipfel-u"></p>
-  <div id="ztgipfel"></div>
-</section>
+<details class="zt-klapp" id="mehr">
+  <summary><b>Mehr dazu</b><span>Alle Abschnitte zum Nachlesen und zwei weitere Verfahren</span></summary>
+  <div class="zt-klapp-in">
+    <h3 class="zt-h3">Alle Abschnitte</h3>
+    <div class="zt-filter" id="ztwelche"></div>
+    <div id="zttabelle"></div>
+    <h3 class="zt-h3">Zwei weitere Verfahren</h3>
+    <p class="u">Die rechnen nicht dasselbe noch einmal, sondern sehen dasselbe Jahr aus einer anderen Richtung an. Wo sie sich mit der Lebenslinie decken, lohnt das Hinsehen.</p>
+    <div id="ztweitere"></div>
+  </div>
+</details>
 
 <!-- F ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="schnitte">
-  <h2>Die gro&szlig;en Schnitte</h2>
-  <p class="u" id="ztschnitte-u"></p>
-  <div id="ztschnitte"></div>
-</section>
-
-<!-- G ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="alle">
-  <h2>Alle Abschnitte zum Nachlesen</h2>
-  <p class="u">Die vollst&auml;ndige Reihe f&uuml;r den gew&auml;hlten Bereich. Die einger&uuml;ckten Zeilen sind die Unterabschnitte innerhalb eines Kapitels.</p>
-  <div id="zttabelle"></div>
-</section>
-
-<!-- H ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="weitere">
-  <h2>Zwei weitere Verfahren</h2>
-  <p class="u">Die rechnen nicht dasselbe noch einmal, sondern sehen dasselbe Jahr aus einer anderen Richtung an. Wo sie sich mit der Lebenslinie decken, lohnt das Hinsehen. Wo nicht, auch &mdash; dann ist das Jahr eben nicht eindeutig.</p>
-  <div id="ztweitere"></div>
-</section>
-
-<!-- I ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="rechnung">
   <div class="zt-ehrlich">
     <h2>Was das taugt &mdash; und was nicht</h2>
     <p>Alles oben ist sauber gerechnet. Was man daraus lesen kann, ist eine andere Frage, und darauf geh&ouml;rt eine ehrliche Antwort &mdash; besonders, wenn du damit mit Menschen arbeitest.</p>
 
     <h4>Eine Hochphase ist kein Versprechen</h4>
-    <p>Sie sagt: Es passiert viel. Sie sagt nicht: Es wird gut. Valens selbst beschreibt diese Abschnitte als die ereignisreichen, und darunter f&auml;llt der Aufstieg genauso wie der Zusammenbruch. Wer eine Hochphase als gute Nachricht liest, liest sie falsch.</p>
+    <p>Sie sagt: Es passiert viel. Sie sagt nicht: Es wird gut. Valens selbst beschreibt diese Abschnitte als die ereignisreichen, und darunter f&auml;llt der Aufstieg genauso wie der Zusammenbruch.</p>
 
     <h4>Ein Drittel von allem ist Hochphase</h4>
-    <p>Vier von zw&ouml;lf Zeichen stehen im rechten Winkel zum Gl&uuml;ckspunkt. Rechnerisch ist also <b>ein Drittel</b> aller Abschnitte eine Hochphase. Das ist nichts Seltenes und nichts Besonderes &mdash; und so geh&ouml;rt es auch gelesen.</p>
+    <p>Vier von zw&ouml;lf Zeichen stehen im rechten Winkel zum Gl&uuml;ckspunkt. Rechnerisch ist also <b>ein Drittel</b> aller Abschnitte laut. Das ist nichts Seltenes &mdash; und so geh&ouml;rt es gelesen.</p>
+
+    <h4>Das Kapitel und der Abschnitt darin k&ouml;nnen sich widersprechen</h4>
+    <p>Ein zwanzig Jahre langes Kapitel kann laut sein, w&auml;hrend der Abschnitt gerade darin leise ist &mdash; und umgekehrt. Beides gilt gleichzeitig. Deshalb steht oben immer <b>beides</b>: das Kapitel gro&szlig;, der Abschnitt darunter.</p>
 
     <h4>Es ist nicht &uuml;berpr&uuml;ft</h4>
-    <p>Es gibt keinen Beleg daf&uuml;r, dass dieses Verfahren Ereignisse vorhersagt, und es ist auch nie ernsthaft untersucht worden. Was es kann, ist etwas anderes: Es gibt einem Leben eine <b>Gliederung</b>. Die Frage „was war in diesen Jahren bei dir los" &ouml;ffnet ein Gespr&auml;ch zuverl&auml;ssiger als jede Deutung. Deshalb steht oben der Stichtag: <b>Pr&uuml;f es r&uuml;ckw&auml;rts</b>, bevor du es vorw&auml;rts benutzt.</p>
+    <p>Es gibt keinen Beleg daf&uuml;r, dass dieses Verfahren Ereignisse vorhersagt, und es ist nie ernsthaft untersucht worden. Was es kann, ist etwas anderes: Es gibt einem Leben eine <b>Gliederung</b>. Die Frage „was war in diesen Jahren bei dir los" &ouml;ffnet ein Gespr&auml;ch zuverl&auml;ssiger als jede Deutung.</p>
 
     <h4>Es ist eine Rekonstruktion</h4>
-    <p>Das Verfahren steht bei <b>Vettius Valens</b> im zweiten Jahrhundert. Es wurde mit der hellenistischen Astrologie vergessen und erst in den letzten Jahrzehnten aus den Handschriften zur&uuml;ckgeholt. Gut belegt, aber nicht ununterbrochen &uuml;berliefert &mdash; an einigen Stellen ist strittig, wie es gemeint war.</p>
+    <p>Das Verfahren steht bei <b>Vettius Valens</b> im zweiten Jahrhundert. Es wurde mit der hellenistischen Astrologie vergessen und erst in den letzten Jahrzehnten aus den Handschriften zur&uuml;ckgeholt.</p>
 
     <h4>Die Geburtszeit entscheidet mit</h4>
-    <p id="ztzeitwarnung">Alle Startpunkte h&auml;ngen am Aszendenten, und der wandert in vier Minuten um ein Grad. Eine ungenaue Geburtszeit verschiebt die Punkte und damit die ganze Reihe.</p>
+    <p id="ztzeitwarnung">Alle Startpunkte h&auml;ngen am Aszendenten, und der wandert in vier Minuten um ein Grad.</p>
   </div>
 </section>
 
@@ -119,6 +104,6 @@
 </div>
 
 <div class="weiter"><a href="analyse.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Die Analyse &mdash; Themen statt Zeiten</span></a><a href="timing.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Timing &mdash; die kurzen Zyklen daneben</span></a></div>
-<div class="foot">Zeiten &middot; Zodiakale Freilassung nach Vettius Valens, H&auml;user im Whole-Sign-System, Jahre zu 360 Tagen.<br>
-Die Rechnung liegt im Quelltext unter <i>zeit/zeit-rechner.js</i> und ist einzeln gepr&uuml;ft &mdash; sieben Lose, Perioden, Schnitte, Jahresthema und Planetenabschnitte.</div>
+<div class="foot">Zeiten &middot; Zodiakale Freilassung nach Vettius Valens, H&auml;user im Whole-Sign-System, Kapitell&auml;ngen in Jahren zu 360 Tagen, Altersangaben in echten Jahren.<br>
+Die Rechnung liegt im Quelltext unter <i>zeit/zeit-rechner.js</i> und ist einzeln gepr&uuml;ft.</div>
 </div>

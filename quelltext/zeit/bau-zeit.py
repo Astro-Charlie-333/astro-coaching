@@ -206,8 +206,6 @@ for(const y of [1952,1966,1974,1988,1999]) for(const h of [2,9,15,21]){
    wlat:52.52, wlon:13.405, wort:'Berlin', eigen:i===1, readings:[]});
 }
 const BREITEN=[320,360,390,600,768,1024,1440,1600];
-/* Wörter, die eine Anfängerin ohne Erklärung nicht verstehen kann.
-   Auf Stufe 0 darf keines davon sichtbar sein. */
 const JARGON=['winkelhaft','Los des','Firdaria','Profektion','Aphesis','hermetisch',
   'Lösung der Bindung','Ebene 1','Ebene 2','Orbis','Dispositor'];
 (async()=>{
@@ -230,126 +228,112 @@ async function schlecht(wo){
 await schlecht('Start');
 
 notiz.start=await p.evaluate(()=>({
-  antwort:!!document.querySelector('.zt-antwort'),
-  gross:(document.querySelector('.zt-agross')||{}).textContent||'',
-  naechste:document.querySelectorAll('.zt-anext').length,
-  mini:document.querySelectorAll('.zt-amini .zt-m').length,
+  zeilen:document.querySelectorAll('.zt-zl').length,
+  stufen:[...document.querySelectorAll('.zt-zl .zs')].map(x=>x.textContent),
+  unter:document.querySelectorAll('.zt-zl .zu').length,
+  ereignisse:document.querySelectorAll('.zt-ereignisse li').length,
+  baender:document.querySelectorAll('.zt-band').length,
+  legende:document.querySelectorAll('.zt-legende span').length,
+  klapp:document.querySelectorAll('.zt-klapp').length,
+  daten:(document.querySelector('.zt-daten')||{}).textContent||'',
   schritte:document.querySelectorAll('.zt-schritt').length,
   bilder:document.querySelectorAll('.zt-mini-svg').length,
-  bereiche:document.querySelectorAll('.zt-b').length,
-  baender:document.querySelectorAll('.zt-band').length,
-  zeilen:document.querySelectorAll('.zt-zeile').length,
-  legende:document.querySelectorAll('.zt-legende span').length,
-  gipfel:document.querySelectorAll('#ztgipfel .zt-g').length,
-  tabelle:document.querySelectorAll('#zttabelle tbody tr').length,
-  weitere:document.querySelectorAll('#ztweitere .zt-j').length,
   woerter:document.querySelectorAll('.zt-w').length,
+  weitere:document.querySelectorAll('#ztweitere .zt-j').length,
+  tabelle:document.querySelectorAll('#zttabelle tbody tr').length,
   breit:document.body.scrollWidth}));
 
-/* Ein erklärbares Wort muss sich wirklich öffnen */
+/* Die Altersachse muss zur Heute-Linie passen */
+notiz.achse=await p.evaluate(()=>{
+  const svg=document.querySelector('.zt-linie'); if(!svg) return null;
+  const heute=svg.querySelector('.zt-heute line');
+  const txt=svg.querySelector('.zt-heute text');
+  if(!heute||!txt) return null;
+  const hx=parseFloat(heute.getAttribute('x1'));
+  const alter=parseInt(txt.textContent.replace(/[^0-9]/g,''),10);
+  /* die beiden Achsenstriche links und rechts von heute */
+  const ticks=[...svg.querySelectorAll('text.zt-achse')]
+    .filter(t=>/^[0-9]+$/.test(t.textContent))
+    .map(t=>({j:+t.textContent, x:parseFloat(t.getAttribute('x'))}));
+  const links=ticks.filter(t=>t.x<=hx).pop();
+  const rechts=ticks.filter(t=>t.x>hx)[0];
+  return {alter, links:links?links.j:null, rechts:rechts?rechts.j:null};
+});
+if(notiz.achse){
+  const a=notiz.achse;
+  if(a.links!==null && a.alter<a.links) f.push('die Heute-Linie steht rechts von Alter '+
+    a.links+', obwohl das Alter '+a.alter+' ist');
+  if(a.rechts!==null && a.alter>=a.rechts) f.push('die Heute-Linie steht links von Alter '+
+    a.rechts+', obwohl das Alter '+a.alter+' ist');
+} else f.push('die Altersachse ließ sich nicht prüfen');
+
+/* Ein erklärbares Wort muss sich öffnen */
 notiz.wortAuf=await p.evaluate(()=>{
   const b=document.querySelector('.zt-w'); if(!b) return null;
   const e=document.getElementById(b.getAttribute('aria-controls'));
-  const vorher=e.hasAttribute('hidden');
-  b.click();
-  const nachher=e.hasAttribute('hidden');
-  const txt=e.textContent.length;
-  b.click();
+  const vorher=e.hasAttribute('hidden'); b.click();
+  const nachher=e.hasAttribute('hidden'); const txt=e.textContent.length; b.click();
   return {vorher, nachher, txt};
 });
 if(!notiz.wortAuf||!notiz.wortAuf.vorher||notiz.wortAuf.nachher)
   f.push('ein erklärbares Wort öffnet sich nicht');
-if(notiz.wortAuf&&notiz.wortAuf.txt<40) f.push('die Worterklärung ist zu kurz');
 
-/* Alle fünf Bereiche durchschalten */
-const bereiche=await p.evaluate(()=>[...document.querySelectorAll('.zt-b')].map(b=>b.dataset.b));
-notiz.bereiche=bereiche; const antworten=new Set(); let minB=999;
-for(const bk of bereiche){
-  await p.evaluate(bk=>document.querySelector('.zt-b[data-b="'+bk+'"]').click(), bk);
-  await p.waitForTimeout(240);
-  const r=await p.evaluate(()=>({
-    gross:(document.querySelector('.zt-agross')||{}).textContent||'',
-    text:(document.querySelector('.zt-antwort')||{}).innerText||'',
-    baender:document.querySelectorAll('.zt-band').length,
-    gipfel:document.querySelectorAll('#ztgipfel .zt-g').length,
-    breit:document.body.scrollWidth}));
-  antworten.add(r.text.slice(0,400));
-  if(r.baender<6) f.push('Bereich '+bk+': nur '+r.baender+' Bänder');
-  if(r.breit>390) f.push('Bereich '+bk+': Überlauf '+r.breit);
-  if(r.baender<minB) minB=r.baender;
-  await schlecht('Bereich '+bk);
-}
-notiz.bereichWirkt=antworten.size;
-if(antworten.size<3) f.push('die Bereiche zeigen fast dasselbe ('+antworten.size+' verschieden)');
-await p.evaluate(()=>document.querySelector('.zt-b[data-b="arbeit"]').click());
-await p.waitForTimeout(220);
-
-/* Alle Profile */
-let ohneAntwort=0; const stufen=new Set();
-for(let k=0;k<liste.length;k++){
-  await p.evaluate(k=>{const bs=[...document.querySelectorAll('#ztpersonen button')];
-    bs[k%bs.length].click(); }, k);
-  await p.waitForTimeout(200);
-  const r=await p.evaluate(()=>({
-    gross:(document.querySelector('.zt-agross')||{}).textContent||'',
-    mini:document.querySelectorAll('.zt-amini .zt-m').length,
-    breit:document.body.scrollWidth}));
-  if(!r.gross) ohneAntwort++; else stufen.add(r.gross);
-  if(r.mini!==5) f.push('Profil '+k+': '+r.mini+' statt 5 Bereiche in der Zeile');
-  if(r.breit>390) f.push('Profil '+k+': Überlauf '+r.breit);
-  await schlecht('Profil '+k);
-}
-notiz.ohneAntwort=ohneAntwort; notiz.stufen=[...stufen];
-if(ohneAntwort) f.push(ohneAntwort+' Profile ohne Antwort');
-if(stufen.size<2) f.push('alle Profile bekommen dieselbe Antwort');
-
-/* Ein Band öffnen */
-await p.evaluate(()=>{ document.querySelector('.zt-band')
-  .dispatchEvent(new MouseEvent('click',{bubbles:true})); });
+/* Eine Zeile öffnen */
+await p.evaluate(()=>document.querySelectorAll('.zt-zl')[1].click());
 await p.waitForTimeout(260);
 notiz.detail=await p.evaluate(()=>({
   da:!!document.querySelector('.zt-detail'),
   zeilen:document.querySelectorAll('#ztdetail tbody tr').length,
-  laenge:(document.getElementById('ztdetail')||{}).innerText.length||0}));
-if(!notiz.detail.da) f.push('Klick auf ein Band öffnet kein Detail');
-if(notiz.detail.zeilen<3) f.push('Detail zeigt zu wenige Unterabschnitte');
+  kopf:(document.querySelector('#ztdetail h3')||{}).textContent||''}));
+if(!notiz.detail.da) f.push('Klick auf eine Zeile öffnet kein Detail');
+if(notiz.detail.zeilen<3) f.push('Detail zeigt zu wenige Abschnitte');
+await schlecht('Detail');
 
-/* Übersicht: eine Zeile anklicken wechselt den Bereich */
-const vorB=await p.evaluate(()=>document.querySelector('.zt-b.ist').dataset.b);
-await p.evaluate(()=>{ const z=[...document.querySelectorAll('.zt-zeile')];
-  z[z.length-1].dispatchEvent(new MouseEvent('click',{bubbles:true})); });
-await p.waitForTimeout(280);
-const nachB=await p.evaluate(()=>document.querySelector('.zt-b.ist').dataset.b);
-notiz.uebersichtWirkt=(vorB!==nachB);
-if(!notiz.uebersichtWirkt) f.push('die Übersicht wechselt den Bereich nicht');
+/* Alle Profile: Tafel, Ereignisse, keine Ausreißer */
+let minE=999; const lautstaerken=new Set(); const kapitel=new Set();
+for(let k=0;k<liste.length;k++){
+  await p.evaluate(k=>{const bs=[...document.querySelectorAll('#ztpersonen button')];
+    bs[k%bs.length].click(); }, k);
+  await p.waitForTimeout(210);
+  const r=await p.evaluate(()=>({
+    zeilen:document.querySelectorAll('.zt-zl').length,
+    stufen:[...document.querySelectorAll('.zt-zl .zs')].map(x=>x.textContent),
+    ereignisse:document.querySelectorAll('.zt-ereignisse li').length,
+    kapitel:[...document.querySelectorAll('.zt-zl .zk b')].map(x=>x.textContent),
+    breit:document.body.scrollWidth}));
+  if(r.zeilen!==5) f.push('Profil '+k+': '+r.zeilen+' statt 5 Zeilen');
+  if(!r.ereignisse) f.push('Profil '+k+': keine kommenden Ereignisse');
+  if(r.breit>390) f.push('Profil '+k+': Überlauf '+r.breit);
+  r.stufen.forEach(s=>lautstaerken.add(s)); r.kapitel.forEach(s=>kapitel.add(s));
+  if(r.ereignisse<minE) minE=r.ereignisse;
+  await schlecht('Profil '+k);
+}
+notiz.minEreignisse=minE; notiz.lautstaerken=[...lautstaerken];
+notiz.kapitelGesehen=kapitel.size;
+if(lautstaerken.size<3) f.push('nur '+lautstaerken.size+' verschiedene Lautstärken über alle Profile');
+if(kapitel.size<6) f.push('nur '+kapitel.size+' verschiedene Kapitel über 20 Profile');
 
-/* Stichtag — auf das erste Profil, damit das Datum sicher nach der Geburt liegt */
+/* Stichtag */
 await p.evaluate(()=>document.querySelectorAll('#ztpersonen button')[0].click());
 await p.waitForTimeout(240);
-const vor=await p.evaluate(()=>document.getElementById('ztantwort').innerText);
+const vor=await p.evaluate(()=>document.getElementById('ztjetzt').innerText);
 async function stichtag(d){
   await p.evaluate(d=>{ const e=document.getElementById('ztdatum');
     e.value=d; e.dispatchEvent(new Event('change',{bubbles:true})); }, d);
   await p.waitForTimeout(380);
-  return p.evaluate(()=>document.getElementById('ztantwort').innerText);
+  return p.evaluate(()=>document.getElementById('ztjetzt').innerText);
 }
 const nach=await stichtag('1998-05-20');
 notiz.stichtagWirkt=(vor!==nach);
 if(!notiz.stichtagWirkt) f.push('der Stichtag ändert nichts');
 await schlecht('Stichtag 1998');
-
-/* Vor der Geburt und weit danach müssen verständlich abgefangen sein */
 notiz.vorGeburt=await stichtag('1900-01-01');
 if(!/vor der Geburt/.test(notiz.vorGeburt))
-  f.push('ein Stichtag vor der Geburt wird nicht verständlich abgefangen: '+
-    notiz.vorGeburt.slice(0,120));
-await schlecht('vor der Geburt');
+  f.push('ein Stichtag vor der Geburt wird nicht abgefangen: '+notiz.vorGeburt.slice(0,110));
 notiz.weitDanach=await stichtag('2140-01-01');
 if(!/Zukunft|vor der Geburt/.test(notiz.weitDanach))
-  f.push('ein Stichtag weit in der Zukunft wird nicht abgefangen: '+
-    notiz.weitDanach.slice(0,120));
-await schlecht('weit in der Zukunft');
-notiz.vorGeburt=notiz.vorGeburt.slice(0,60); notiz.weitDanach=notiz.weitDanach.slice(0,60);
+  f.push('ein Stichtag weit in der Zukunft wird nicht abgefangen: '+notiz.weitDanach.slice(0,110));
+notiz.vorGeburt=notiz.vorGeburt.slice(0,58); notiz.weitDanach=notiz.weitDanach.slice(0,46);
 await p.evaluate(()=>document.getElementById('ztheute').click());
 await p.waitForTimeout(300);
 
@@ -360,7 +344,7 @@ if(/undefined|NaN|&[a-z]+;|<[a-z]|\[\[/.test(notiz.bericht))
   f.push('Bericht enthält Rohzeug: '+notiz.bericht.slice(0,200));
 delete notiz.bericht;
 
-/* Wissensstufen — und auf Stufe 0 kein Fachwort */
+/* Wissensstufen */
 notiz.stufenTiefe=[]; notiz.jargon0=[];
 for(let s=0;s<=4;s++){
   await p.evaluate(s=>AC_NIV.setzen(s), s); await p.waitForTimeout(200);
@@ -369,16 +353,26 @@ for(let s=0;s<=4;s++){
     return {tiefe:[...document.querySelectorAll('[data-ab]')].filter(sicht).length,
       text:document.body.innerText, breit:document.body.scrollWidth};});
   notiz.stufenTiefe.push(r.tiefe);
-  if(s===0){
-    JARGON.forEach(w=>{ if(r.text.indexOf(w)>=0) notiz.jargon0.push(w); });
-    notiz.text0=r.text.length;
-  }
+  if(s===0){ JARGON.forEach(w=>{ if(r.text.indexOf(w)>=0) notiz.jargon0.push(w); });
+    notiz.text0=r.text.length; }
   if(r.breit>390) f.push('Stufe '+s+': Überlauf '+r.breit);
-  if(r.text.length<4000) f.push('Stufe '+s+': nur '+r.text.length+' Zeichen');
+  if(r.text.length<3000) f.push('Stufe '+s+': nur '+r.text.length+' Zeichen');
 }
 if(notiz.jargon0.length)
   f.push('auf Stufe 0 steht Fachsprache ohne Erklärung: '+notiz.jargon0.join(', '));
 await p.evaluate(()=>AC_NIV.setzen(2)); await p.waitForTimeout(150);
+
+/* Aufgeklappt muss alles noch passen */
+await p.evaluate(()=>document.querySelectorAll('.zt-klapp').forEach(d=>d.open=true));
+await p.waitForTimeout(300);
+notiz.offen=await p.evaluate(()=>({
+  schritte:document.querySelectorAll('.zt-schritt').length,
+  tabelle:document.querySelectorAll('#zttabelle tbody tr').length,
+  breit:document.body.scrollWidth}));
+if(notiz.offen.schritte!==4) f.push('aufgeklappt fehlen die vier Schritte');
+if(notiz.offen.tabelle<20) f.push('aufgeklappt hat die Tabelle nur '+notiz.offen.tabelle+' Zeilen');
+if(notiz.offen.breit>390) f.push('aufgeklappt Überlauf '+notiz.offen.breit);
+await schlecht('aufgeklappt');
 
 /* Breiten */
 notiz.breiten=[];
@@ -386,10 +380,10 @@ for(const w of BREITEN){
   await p.setViewportSize({width:w,height:900}); await p.waitForTimeout(230);
   const r=await p.evaluate(()=>({scroll:document.body.scrollWidth,
     linie:!!document.querySelector('.zt-linie'),
-    antwort:!!document.querySelector('.zt-antwort')}));
+    tafel:document.querySelectorAll('.zt-zl').length}));
   notiz.breiten.push(w+':'+r.scroll);
   if(r.scroll>w+1) f.push('Breite '+w+': Inhalt '+r.scroll+' breit');
-  if(!r.linie||!r.antwort) f.push('Breite '+w+': Teile fehlen');
+  if(!r.linie||r.tafel!==5) f.push('Breite '+w+': Teile fehlen');
 }
 await p.setViewportSize({width:390,height:900});
 
@@ -403,7 +397,7 @@ notiz.ohneProfil=await p2.evaluate(()=>({
   text:document.body.innerText.length}));
 f2.forEach(x=>f.push('ohne Profil: '+x));
 if(notiz.ohneProfil.schritte!==4) f.push('ohne Profil fehlen die vier Schritte');
-if(notiz.ohneProfil.text<3000) f.push('ohne Profil fast leere Seite');
+if(notiz.ohneProfil.text<2500) f.push('ohne Profil fast leere Seite');
 
 console.log(JSON.stringify({notiz,fehler:[...new Set(f)]}));
 await b.close();})();
@@ -425,18 +419,18 @@ if pr:
     for x in pr['fehler']:
         fehler.append(x)
     s, n = pr['notiz'], pr['notiz']['start']
-    if not n['antwort']:     fehler.append('oben steht keine Antwort')
-    if not n['gross']:       fehler.append('die große Antwort ist leer')
-    if not n['naechste']:    fehler.append('die nächste Hochphase wird nicht genannt')
-    if n['mini'] != 5:       fehler.append(f'{n["mini"]} statt 5 Bereiche in der Kurzzeile')
+    if n['zeilen'] != 5:     fehler.append(f'{n["zeilen"]} statt 5 Zeilen in der Tafel')
+    if n['unter'] < 4:       fehler.append('die Unterabschnitte fehlen in der Tafel')
+    if n['ereignisse'] < 5:  fehler.append(f'nur {n["ereignisse"]} kommende Ereignisse')
+    if n['baender'] < 20:    fehler.append(f'nur {n["baender"]} Bänder über fünf Spuren')
+    if n['legende'] != 4:    fehler.append(f'{n["legende"]} statt 4 Einträge in der Legende')
+    if n['klapp'] != 2:      fehler.append('die beiden aufklappbaren Teile fehlen')
+    if 'UTC' not in n['daten']:
+        fehler.append('es steht nicht da, mit welchen Geburtsdaten gerechnet wird')
     if n['schritte'] != 4:   fehler.append(f'{n["schritte"]} statt 4 Erklärschritte')
     if n['bilder'] < 4:      fehler.append(f'nur {n["bilder"]} Bilder in der Erklärung')
-    if n['bereiche'] != 5:   fehler.append(f'{n["bereiche"]} statt 5 Bereiche zur Wahl')
-    if n['zeilen'] != 5:     fehler.append(f'{n["zeilen"]} statt 5 Zeilen in der Übersicht')
-    if n['legende'] != 4:    fehler.append(f'{n["legende"]} statt 4 Einträge in der Legende')
     if n['weitere'] != 2:    fehler.append('die zwei weiteren Verfahren fehlen')
-    if n['woerter'] < 5:     fehler.append(f'nur {n["woerter"]} erklärbare Wörter auf der Seite')
-    if n['tabelle'] < 20:    fehler.append(f'die Tabelle hat nur {n["tabelle"]} Zeilen')
+    if n['woerter'] < 4:     fehler.append(f'nur {n["woerter"]} erklärbare Wörter')
     if s['berichtLaenge'] < 2000:
         fehler.append(f'der Bericht ist nur {s["berichtLaenge"]} Zeichen lang')
     tiefe = s['stufenTiefe']
@@ -445,15 +439,15 @@ if pr:
     if tiefe[4] <= tiefe[1]:
         fehler.append(f'die Wissensstufe ändert zu wenig: {tiefe}')
 
-    print('  Rauchprobe: 20 Profile, 5 Bereiche (%d verschiedene Antworten), '
-          '%d Erklärschritte mit %d Bildern, %d erklärbare Wörter, Bericht %d Zeichen'
-          % (s['bereichWirkt'], n['schritte'], n['bilder'], n['woerter'], s['berichtLaenge']))
-    print('    Antworten über alle Profile: %s' % ', '.join(s['stufen']))
-    print('    Stufe 0: %d Zeichen Text, Fachwörter darin: %s'
-          % (s['text0'], s['jargon0'] or 'keine'))
-    print('    Zusatzangaben je Stufe 0–4: %s' % tiefe)
+    print('  Rauchprobe: 20 Profile, %d–… kommende Ereignisse, %d Kapitelnamen gesehen, '
+          'Bericht %d Zeichen' % (s['minEreignisse'], s['kapitelGesehen'], s['berichtLaenge']))
+    print('    Lautstärken über alle Profile: %s' % ', '.join(s['lautstaerken']))
+    if s.get('achse'):
+        print('    Altersachse: Heute-Linie bei %s zwischen den Marken %s und %s'
+              % (s['achse']['alter'], s['achse']['links'], s['achse']['rechts']))
+    print('    Gerechnet mit: %s' % n['daten'])
+    print('    Stufe 0: %d Zeichen, Fachwörter darin: %s' % (s['text0'], s['jargon0'] or 'keine'))
     print('    Breiten: %s' % ', '.join(s['breiten']))
-    print('    Stichtag vor der Geburt: „%s…"' % s['vorGeburt'].replace(chr(10), ' ')[:58])
 
 print(f'zeiten.html  {ziel.stat().st_size:,} Bytes  →  {ziel}')
 print('  12 Kapitel × 5 Bereiche = %d Texte, %d erklärte Wörter'

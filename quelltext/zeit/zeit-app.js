@@ -34,8 +34,8 @@ function ztSatz1(s, max){
 /* Eine Dauer so ausdrücken, wie man sie sagen würde */
 function ztDauer(jahre){
   if(jahre < 1/12) return Math.max(1, Math.round(jahre*360)) + ' Tagen';
-  if(jahre < 1.5){
-    var m=Math.round(jahre*12);
+  if(jahre < 1){
+    var m=Math.max(1, Math.round(jahre*12));
     return (m<=1?'einem Monat':m+' Monaten');
   }
   return ztKZ(jahre)+' Jahren';
@@ -111,95 +111,22 @@ function ztVarianteBauen(){
   });
 }
 
-/* ── A · Die Antwort ────────────────────────────────────────── */
-function ztLage(k){
-  var f=ztSpur(k); if(!f) return null;
-  var J=AC_ZEIT.jetzt(f, ztB.tageSeitGeburt);
-  if(!J.l1) return null;
-  var st=ztStufe(J.l2?J.l2.vonGlueck:J.l1.vonGlueck);
-  return {l1:J.l1, l2:J.l2, stufe:st, S:ZT_STUFE[st],
-          k1:ZT_KAPITEL[J.l1.zeichen], k2:J.l2?ZT_KAPITEL[J.l2.zeichen]:null};
-}
-function ztAntwortBauen(){
-  var box=ztEl('ztantwort');
-  if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil mit Geburtszeit l&auml;sst sich '+
-    'nichts rechnen. <a href="profile.html">Profil anlegen</a> &mdash; danach steht hier deine '+
-    'Antwort, und alles andere auf der Seite f&uuml;llt sich mit.</div>'; return; }
-  var B=ztBer(), L=ztLage();
-  if(ztB.tageSeitGeburt < 0){
-    box.innerHTML='<div class="zt-leer"><b>Der Stichtag liegt vor der Geburt.</b> '+
-      'Die Reihe f&auml;ngt mit dem ersten Lebenstag an &mdash; davor gibt es nichts zu '+
-      'rechnen. Stell den Tag weiter nach hinten.</div>'; return; }
-  if(!L){
-    box.innerHTML='<div class="zt-leer">'+(ztSpur()
-      ? '<b>Der Stichtag liegt zu weit in der Zukunft.</b> Die Seite rechnet hundert Jahre ab '+
-        'Geburt. Stell den Tag weiter nach vorn.'
-      : 'F&uuml;r diesen Bereich fehlt im Chart ein Planet, den die Rechnung braucht.')+
-      '</div>'; return; }
-  var f=ztSpur(), G=AC_ZEIT.naechsteGipfel(f, ztB.tageSeitGeburt, 4);
-  var kommend=G.filter(function(g){ return !g.laeuft; })[0];
-  var laufend=G.filter(function(g){ return g.laeuft; })[0];
-
-  var h='<div class="zt-antwort" style="--farbe:'+L.S.farbe+'">'+
-    '<div class="zt-ak">Jetzt gerade &middot; '+B.n+'</div>'+
-    '<div class="zt-agross">'+L.S.n+'</div>'+
-    '<p class="zt-asatz">'+L.S.satz+' '+ztWorte(L.S.was)+'</p>';
-
-  h+='<p class="zt-awo">Du bist im Kapitel <b>'+L.k1.n+'</b> &mdash; '+L.k1.bild+' &mdash; '+
-    'seit '+ztJahrMon(ztTagVon(L.l1.von))+', noch '+
-    ztLang((L.l1.bis-ztB.tageSeitGeburt)/360)+'.'+
-    (L.k2 && L.k2!==L.k1 ? ' Darin l&auml;uft gerade der Unterabschnitt <b>'+L.k2.n+'</b> '+
-      'bis '+ztKurz(ztTagVon(L.l2.bis))+'.' : '')+'</p>';
-
-  if(laufend){
-    h+='<div class="zt-anext jetzt"><b>Du bist gerade mittendrin.</b> Diese Hochphase l&auml;uft '+
-      'noch bis '+ztDatumText(ztTagVon(laufend.bis))+'.</div>';
-  }
-  if(kommend){
-    var tage=kommend.von-ztB.tageSeitGeburt;
-    h+='<div class="zt-anext"><b>Deine n&auml;chste Hochphase</b> beginnt am '+
-      ztDatumText(ztTagVon(kommend.von))+' &mdash; in '+ztDauer(tage/365.2422)+' &mdash; '+
-      'und dauert '+ztLang((kommend.bis-kommend.von)/360)+'. Es ist ein '+
-      (kommend.ebene===1?'ganzes Kapitel':'Unterabschnitt')+' in <b>'+
-      ZT_KAPITEL[kommend.zeichen].n+'</b>.</div>';
-  } else {
-    h+='<div class="zt-anext">In den n&auml;chsten Jahrzehnten kommt in diesem Bereich keine '+
-      'weitere Hochphase.</div>';
-  }
-
-  /* Die vier anderen Bereiche in einer Zeile */
-  h+='<div class="zt-amini">';
-  ZT_BEREICH.forEach(function(x){
-    var l=ztLage(x.k);
-    h+='<button type="button" class="zt-m'+(x.k===ztBereich?' ist':'')+'" data-b="'+x.k+'">'+
-      '<span class="mn">'+x.kurz+'</span>'+
-      (l?'<span class="ms" style="background:'+l.S.farbe+'">'+l.S.kurz+'</span>'
-        :'<span class="ms" style="background:#DDD0BC;color:#231F1A">–</span>')+'</button>';
-  });
-  h+='</div></div>';
-  box.innerHTML=h;
-  Array.prototype.forEach.call(box.querySelectorAll('button[data-b]'),function(b){
-    b.addEventListener('click',function(){ ztBereich=b.getAttribute('data-b');
-      ztOffen=null; ztAlles();
-      var z=ztEl('antwort'); if(z&&z.scrollIntoView) z.scrollIntoView({block:'start'}); });
-  });
-  ztWortWirken(box);
-}
-
-/* ── B · Die vier Schritte ──────────────────────────────────── */
+/* ── Zeichnen ───────────────────────────────────────────────── */
 function ztN(t,a,txt){ var e=document.createElementNS(ZT_NSU,t);
   for(var k in a) e.setAttribute(k,a[k]);
   if(txt!==undefined) e.textContent=txt; return e; }
 
-function ztBildKapitel(){        /* Schritt 1 */
+/* ── Die vier Schritte, mit Bildern aus dem eigenen Chart ───── */
+var ZT_JAHR=365.2422;
+function ztBildKapitel(){
   var f=ztSpur('arbeit'); if(!f) return '';
-  var W=1000, H=58, maxJ=90, L=0;
+  var W=1000, H=58, maxJ=90;
   var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
     'aria-label':'Ein Lebensstrahl, in Kapitel geteilt'});
   f.abschnitte.forEach(function(a){
-    if(a.von>maxJ*360) return;
-    var x0=L+(a.von/(maxJ*360))*W, x1=L+(Math.min(a.bis,maxJ*360)/(maxJ*360))*W;
-    svg.appendChild(ztN('rect',{x:x0.toFixed(1), y:'8', width:(x1-x0-2).toFixed(1),
+    if(ztAlterBei(a.von)>maxJ) return;
+    var x0=(ztAlterBei(a.von)/maxJ)*W, x1=(Math.min(ztAlterBei(a.bis),maxJ)/maxJ)*W;
+    svg.appendChild(ztN('rect',{x:x0.toFixed(1), y:'8', width:Math.max(1,x1-x0-2).toFixed(1),
       height:'30', rx:'4', fill:'#DDD0BC'}));
     if(x1-x0>86) svg.appendChild(ztN('text',{x:(x0+8).toFixed(1), y:'28',
       class:'zt-mini-t'}, ZT_KAPITEL[a.zeichen].n));
@@ -208,7 +135,7 @@ function ztBildKapitel(){        /* Schritt 1 */
   });
   return svg.outerHTML;
 }
-function ztBildLaengen(){        /* Schritt 2 */
+function ztBildLaengen(){
   var W=1000, H=50, ges=0;
   AC_ZEIT.JAHRE.forEach(function(j){ ges+=j; });
   var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
@@ -226,10 +153,9 @@ function ztBildLaengen(){        /* Schritt 2 */
   });
   return svg.outerHTML;
 }
-function ztBildPunkt(){          /* Schritt 3 */
+function ztBildPunkt(){
   if(!ztB) return '';
-  var gz=AC_ZEIT.zi(ztB.lose.glueck);
-  var W=1000, H=66;
+  var gz=AC_ZEIT.zi(ztB.lose.glueck), W=1000, H=66;
   var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
     'aria-label':'Die zwölf Zeichen, vier davon laut'});
   for(var i=0;i<12;i++){
@@ -246,9 +172,9 @@ function ztBildPunkt(){          /* Schritt 3 */
   }
   return svg.outerHTML;
 }
-function ztBildFuenf(){          /* Schritt 4 */
+function ztBildFuenf(){
   if(!ztB) return '';
-  var W=1000, zeile=22, H=ZT_BEREICH.length*zeile+16, maxJ=90, L=120;
+  var W=1000, zeile=22, maxJ=90, L=120, H=ZT_BEREICH.length*zeile+16;
   var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
     'aria-label':'Fünf Bereiche mit verschiedenen lauten Zeiten'});
   ZT_BEREICH.forEach(function(B,n){
@@ -256,13 +182,15 @@ function ztBildFuenf(){          /* Schritt 4 */
     svg.appendChild(ztN('text',{x:'0', y:String(y+13), class:'zt-mini-t'}, B.kurz));
     if(!f) return;
     f.abschnitte.forEach(function(a){
-      if(a.von>maxJ*360) return;
-      var x0=L+(a.von/(maxJ*360))*(W-L), x1=L+(Math.min(a.bis,maxJ*360)/(maxJ*360))*(W-L);
-      svg.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y), width:Math.max(1,x1-x0-1).toFixed(1),
-        height:'15', rx:'3', fill:ZT_STUFE[ztStufe(a.vonGlueck)].farbe}));
+      if(ztAlterBei(a.von)>maxJ) return;
+      var x0=L+(ztAlterBei(a.von)/maxJ)*(W-L),
+          x1=L+(Math.min(ztAlterBei(a.bis),maxJ)/maxJ)*(W-L);
+      svg.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y),
+        width:Math.max(1,x1-x0-1).toFixed(1), height:'15', rx:'3',
+        fill:ZT_STUFE[ztStufe(a.vonGlueck)].farbe}));
     });
   });
-  var alter=ztB.tageSeitGeburt/360;
+  var alter=ztAlterBei(ztB.tageSeitGeburt);
   if(alter<=maxJ && alter>=0){
     var hx=L+(alter/maxJ)*(W-L);
     svg.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'0', x2:hx.toFixed(1),
@@ -272,7 +200,6 @@ function ztBildFuenf(){          /* Schritt 4 */
   }
   return svg.outerHTML;
 }
-
 function ztSchritteBauen(){
   var bilder=[ztBildKapitel(), ztBildLaengen(), ztBildPunkt(), ztBildFuenf()];
   var h='';
@@ -287,192 +214,265 @@ function ztSchritteBauen(){
   ztWortWirken(ztEl('ztschritte'));
 }
 
-/* ── C · Bereich wählen ─────────────────────────────────────── */
-function ztBereicheBauen(){
-  var box=ztEl('ztbereiche');
-  box.innerHTML=ZT_BEREICH.map(function(B){
-    var l=ztLage(B.k);
-    return '<button type="button" class="zt-b'+(B.k===ztBereich?' ist':'')+'" data-b="'+B.k+'">'+
-      '<b>'+B.n+'</b><span>'+B.worum+'</span>'+
-      (l?'<i style="background:'+l.S.farbe+'">gerade '+l.S.kurz+'</i>':'')+'</button>'; }).join('');
-  Array.prototype.forEach.call(box.querySelectorAll('button[data-b]'),function(b){
-    b.addEventListener('click',function(){ ztBereich=b.getAttribute('data-b');
-      ztOffen=null; ztAlles(); });
-  });
-  var B=ztBer();
-  ztEl('ztbfrage').innerHTML='<div class="zt-bfrage"><b>'+B.frage+'</b>'+
-    '<p data-ab="2">Startpunkt dieser Spur ist das <b>'+B.los+'</b>. '+B.losErkl+'</p></div>';
+/* ── A · Wo du gerade stehst ────────────────────────────────
+   Das Kapitel steht vorn. Der Unterabschnitt darin kann eine andere
+   Lautstärke haben — beides gilt, und beides wird gezeigt. Vorher
+   stand hier nur der Unterabschnitt, und ein zwanzig Jahre langes
+   lautes Kapitel fiel damit unter den Tisch.                       */
+function ztLage(k){
+  var f=ztSpur(k); if(!f) return null;
+  if(!ztB || ztB.tageSeitGeburt<0) return null;
+  var J=AC_ZEIT.jetzt(f, ztB.tageSeitGeburt);
+  if(!J.l1) return null;
+  var s1=ztStufe(J.l1.vonGlueck), s2=J.l2?ztStufe(J.l2.vonGlueck):s1;
+  return {l1:J.l1, l2:J.l2, stufe:s1, S:ZT_STUFE[s1],
+          stufe2:s2, S2:ZT_STUFE[s2], anders:(s1!==s2),
+          k1:ZT_KAPITEL[J.l1.zeichen], k2:J.l2?ZT_KAPITEL[J.l2.zeichen]:null};
 }
 
-/* ── D · Die Lebenslinie ────────────────────────────────────── */
-function ztLinieBauen(){
-  var box=ztEl('ztlinie'), B=ztBer();
-  ztEl('ztlinie-u').innerHTML='Die Kapitel deines Lebens f&uuml;r <b>'+B.n+'</b>. '+
-    'Breite Balken sind die '+ztW('Kapitel')+', der Streifen darunter zeigt die '+
-    ztW('Unterabschnitt','Unterabschnitte')+' &mdash; eingef&auml;rbt sind dort nur die lauten. '+
-    'Die Rauten sind die gro&szlig;en Schnitte, die senkrechte Linie ist dein Stichtag.';
-  var f=ztSpur();
-  if(!ztB || !f){ box.innerHTML='<div class="zt-leer">Keine Linie ohne Profil.</div>';
-    ztEl('ztlinie-hint').textContent=''; ztEl('ztlegende').innerHTML=''; return; }
+function ztJetztBauen(){
+  var box=ztEl('ztjetzt');
+  if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil mit Geburtszeit l&auml;sst sich '+
+    'nichts rechnen. <a href="profile.html">Profil anlegen</a>.</div>'; return; }
+  if(ztB.tageSeitGeburt < 0){
+    box.innerHTML='<div class="zt-leer"><b>Der Stichtag liegt vor der Geburt.</b> '+
+      'Die Reihe f&auml;ngt mit dem ersten Lebenstag an. Stell den Tag weiter nach hinten.</div>';
+    return; }
+  if(ztB.tageSeitGeburt > 100*360){
+    box.innerHTML='<div class="zt-leer"><b>Der Stichtag liegt zu weit in der Zukunft.</b> '+
+      'Die Seite rechnet hundert Jahre ab Geburt.</div>'; return; }
 
-  var alterJetzt=ztB.tageSeitGeburt/360;
-  var maxJ=Math.max(90, Math.ceil((alterJetzt+25)/10)*10);
-  var W=1000, L=12, R=12, oben=28, hBand=40, hStreif=13, ay=118, H=142;
-  function x(tage){ return L+(tage/(maxJ*360))*(W-L-R); }
-  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-linie', role:'img',
-    'aria-label':'Zeitstrahl der Lebensabschnitte für '+B.n});
+  var h='<div class="zt-tafel">';
+  ZT_BEREICH.forEach(function(B){
+    var L=ztLage(B.k);
+    if(!L){ h+='<div class="zt-zl"><span class="zb">'+B.n+'</span>'+
+      '<span class="zs" style="background:#DDD0BC;color:#231F1A">–</span>'+
+      '<span class="zk">F&uuml;r diesen Bereich fehlt ein Planet im Chart.</span></div>'; return; }
+    var offen=(ztOffen && ztOffen.b===B.k);
+    h+='<button type="button" class="zt-zl'+(offen?' ist':'')+'" data-b="'+B.k+
+      '" data-von="'+L.l1.von+'">'+
+      '<span class="zb">'+B.n+'</span>'+
+      '<span class="zs" style="background:'+L.S.farbe+'">'+L.S.kurz+'</span>'+
+      '<span class="zk"><b>'+L.k1.n+'</b> &mdash; '+L.k1.bild+
+        '<i>noch '+ztLang((L.l1.bis-ztB.tageSeitGeburt)/360)+
+        ' &middot; bis '+ztJahrMon(ztTagVon(L.l1.bis))+'</i></span>'+
+      (L.k2?'<span class="zu">darin gerade <b>'+L.k2.n+'</b>, '+
+        '<em style="color:'+L.S2.farbe+'">'+L.S2.kurz+'</em>, bis '+
+        ztJahrMon(ztTagVon(L.l2.bis))+
 
-  f.abschnitte.forEach(function(a){
-    if(a.von>maxJ*360) return;
-    var x0=x(a.von), x1=x(Math.min(a.bis,maxJ*360)), br=x1-x0;
-    if(br<=0.4) return;
-    var st=ZT_STUFE[ztStufe(a.vonGlueck)];
-    var g=ztN('g',{class:'zt-band'+((ztOffen===a.von)?' ist':''), tabindex:'0', role:'button',
-      'aria-label':ZT_KAPITEL[a.zeichen].n+', '+st.n+', ab Alter '+
-        Math.round(ztAlterBei(a.von))});
-    g.setAttribute('data-von', String(a.von));
-    g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(oben), width:br.toFixed(1),
-      height:String(hBand), rx:'5', fill:st.farbe, class:'haupt'}));
-    var nm=ZT_KAPITEL[a.zeichen].n;
-    if(br>=95){
-      g.appendChild(ztN('text',{x:(x0+9).toFixed(1), y:String(oben+18), class:'zt-bt'}, nm));
-      g.appendChild(ztN('text',{x:(x0+9).toFixed(1), y:String(oben+33), class:'zt-bt klein'},
-        st.n));
-    } else if(br>=14)
-      g.appendChild(ztN('text',{x:(x0+br/2).toFixed(1), y:String(oben+26),
-        'text-anchor':'middle', class:'zt-bt zt-gly'}, ZT_GLYPHE[a.zeichen]));
-    /* Streifen: nur die lauten Unterabschnitte */
-    g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(oben+hBand+3), width:br.toFixed(1),
-      height:String(hStreif), rx:'2', fill:'#EBE1D2'}));
-    a.unter.forEach(function(u){
-      if(u.von>maxJ*360) return;
-      var u0=x(u.von), u1=x(Math.min(u.bis,maxJ*360));
-      if(u1-u0<=0.3) return;
-      if(ztStufe(u.vonGlueck)==='winkel')
-        g.appendChild(ztN('rect',{x:u0.toFixed(1), y:String(oben+hBand+3),
-          width:Math.max(0.8,u1-u0).toFixed(1), height:String(hStreif),
-          fill:ZT_STUFE.winkel.farbe}));
-      if(u.bindung)
-        g.appendChild(ztN('path',{d:'M'+u0.toFixed(1)+','+(oben+hBand-4)+
-          ' l5,6 l-5,6 l-5,-6 Z', fill:'#A05A3A'}));
+        '</span>':'')+
+      '</button>';
+  });
+  h+='</div>';
+  box.innerHTML=h;
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-b]'),function(b){
+    b.addEventListener('click',function(){
+      ztOeffnen(b.getAttribute('data-b'), +b.getAttribute('data-von')); });
+  });
+}
+
+/* Womit gerechnet wird — damit ein falsches Profil auffällt */
+function ztDatenBauen(){
+  var box=ztEl('ztdaten'), p=ztAktiv();
+  if(!p){ box.innerHTML=''; return; }
+  var vz=(p.tz>=0?'+':'')+ztKZ(p.tz);
+  var sommer=(p.mo>3 && p.mo<10) || (p.mo===3 && p.d>=25) || (p.mo===10 && p.d<=25);
+  box.innerHTML='<span class="zt-daten">'+
+    ('0'+p.d).slice(-2)+'.'+('0'+p.mo).slice(-2)+'.'+p.y+' &middot; '+
+    ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+' Uhr &middot; '+
+    ztEsc(p.ort||'Ort nicht hinterlegt')+' &middot; UTC'+vz+'</span>'+
+    '<p class="zt-hint" style="margin-top:6px"><b>Stimmt das?</b> Die ganze Seite h&auml;ngt '+
+    'daran. '+(sommer
+      ? 'Dieses Datum liegt in der Sommerzeit &mdash; dann muss hier bei Mitteleuropa '+
+        '<b>UTC+2</b> stehen, nicht +1. '
+      : '')+
+    'Wenn etwas nicht stimmt, &auml;nder es bei den <a href="profile.html">Profilen</a> &mdash; '+
+    'eine Stunde Unterschied verschiebt alle Jahreszahlen hier erheblich.</p>';
+}
+
+/* ── B · Was als Nächstes kommt ─────────────────────────────
+   Alle fünf Bereiche in einer Liste. Ein Ereignis ist: ein neues
+   Kapitel, ein Wechsel der Lautstärke, oder ein großer Schnitt.   */
+function ztEreignisse(abTagen, anzahl){
+  var out=[];
+  ZT_BEREICH.forEach(function(B){
+    var f=ztB.spuren[B.k]; if(!f) return;
+    var vor=null, kapitelAb={};
+    f.abschnitte.forEach(function(a){
+      if(ztAlterBei(a.von)>95) return;
+      if(a.von>abTagen){
+        kapitelAb[a.von]=true;
+        out.push({t:a.von, b:B, art:'kapitel', zeichen:a.zeichen,
+                  stufe:ztStufe(a.vonGlueck), abschnitt:a});
+      }
+      a.unter.forEach(function(u){
+        var st=ztStufe(u.vonGlueck);
+        if(u.von>abTagen && vor!==null && st!==vor && !kapitelAb[u.von])
+          out.push({t:u.von, b:B, art:'wechsel', zeichen:u.zeichen, stufe:st,
+                    vorher:vor, abschnitt:a, unter:u});
+        vor=st;
+        if(u.bindung && u.von>abTagen)
+          out.push({t:u.von, b:B, art:'schnitt', zeichen:u.zeichen, stufe:st, abschnitt:a});
+      });
     });
-    svg.appendChild(g);
+  });
+  out.sort(function(x,y){ return x.t-y.t; });
+  return anzahl?out.slice(0,anzahl):out;
+}
+function ztEreignisText(e){
+  var S=ZT_STUFE[e.stufe], Z=ZT_KAPITEL[e.zeichen];
+  if(e.art==='schnitt')
+    return {t:'<b>Gro&szlig;er Schnitt bei '+e.b.kurz+'</b>',
+            u:ZT_SCHNITT.beispiele[e.b.k], farbe:'#A05A3A'};
+  if(e.art==='kapitel')
+    return {t:'<b>'+e.b.kurz+':</b> neues Kapitel <b>'+Z.n+'</b> &mdash; '+
+              (e.stufe==='winkel'?'und es wird <b>laut</b>':
+               e.stufe==='folgend'?'mittlere Lautst&auml;rke':'und es wird <b>leise</b>'),
+            u:'F&uuml;r die n&auml;chsten '+e.abschnitt.jahre+' Jahre. '+
+              ztSatz1(Z[e.b.k].t, 120), farbe:S.farbe};
+  var rauf=(ZT_STUFE[e.stufe].rang > ZT_STUFE[e.vorher].rang);
+  var bis=e.unter?(' und h&auml;lt bis '+ztJahrMon(ztTagVon(e.unter.bis))):'';
+  var folge={winkel:'Ab hier passiert hier wieder mehr',
+             folgend:'Ab hier l&auml;uft es ruhiger weiter',
+             fallend:'Ab hier wird es still'}[e.stufe];
+  return {t:'<b>'+e.b.kurz+'</b> wird '+(rauf?'<b>lauter</b>':'<b>ruhiger</b>')+
+            ' &mdash; dann '+S.kurz,
+          u:folge+bis+'. Der Abschnitt tr&auml;gt das Zeichen '+Z.n+'.',
+          farbe:S.farbe};
+}
+function ztNaechstBauen(){
+  var box=ztEl('ztnaechst');
+  if(!ztB || ztB.tageSeitGeburt<0){ box.innerHTML=
+    '<div class="zt-leer">Erst ein Profil und ein Stichtag.</div>'; return; }
+  var E=ztEreignisse(ztB.tageSeitGeburt, 9);
+  if(!E.length){ box.innerHTML='<div class="zt-leer">In den n&auml;chsten Jahrzehnten '+
+    '&auml;ndert sich in keinem Bereich etwas.</div>'; return; }
+  var h='<ol class="zt-ereignisse">';
+  E.forEach(function(e){
+    var T=ztEreignisText(e), d=ztTagVon(e.t);
+    h+='<li style="--farbe:'+T.farbe+'">'+
+      '<span class="ed"><b>'+ztJahrMon(d)+'</b><i>in '+
+        ztDauer((e.t-ztB.tageSeitGeburt)/365.2422)+'</i></span>'+
+      '<span class="et">'+T.t+'<i>'+T.u+'</i></span></li>';
+  });
+  box.innerHTML=h+'</ol>';
+}
+
+/* ── C · Die Lebenslinie: alle fünf Bereiche in einem Bild ─── */
+function ztLinieBauen(){
+  var box=ztEl('ztlinie');
+  if(!ztB){ box.innerHTML='<div class="zt-leer">Keine Linie ohne Profil.</div>';
+    ztEl('ztlegende').innerHTML=''; return; }
+  var JAHR=365.2422;
+  var alterJetzt=Math.max(0, ztB.tageSeitGeburt/JAHR);
+  var maxJ=Math.max(90, Math.ceil((alterJetzt+20)/10)*10);
+  var W=1000, L=128, R=14, zeile=40, oben=22, ay=ZT_BEREICH.length*zeile+oben+8;
+  var H=ay+24;
+  /* Gezeichnet wird über echte Jahre, damit die Achse stimmt */
+  function x(tage){ return L+((tage/JAHR)/maxJ)*(W-L-R); }
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-linie', role:'img',
+    'aria-label':'Alle fünf Lebensbereiche über das ganze Leben'});
+
+  ZT_BEREICH.forEach(function(B,n){
+    var f=ztSpur(B.k), y=n*zeile+oben;
+    svg.appendChild(ztN('text',{x:'4', y:String(y+19), class:'zt-zt'}, B.kurz));
+    if(!f) return;
+    f.abschnitte.forEach(function(a){
+      if(ztAlterBei(a.von)>maxJ) return;
+      var x0=x(a.von), x1=x(Math.min(a.bis, maxJ*JAHR)), br=x1-x0;
+      if(br<=0.5) return;
+      var st=ZT_STUFE[ztStufe(a.vonGlueck)];
+      var g=ztN('g',{class:'zt-band'+((ztOffen&&ztOffen.b===B.k&&ztOffen.von===a.von)?' ist':''),
+        tabindex:'0', role:'button',
+        'aria-label':B.n+': '+ZT_KAPITEL[a.zeichen].n+', '+st.n});
+      g.setAttribute('data-b', B.k); g.setAttribute('data-von', String(a.von));
+      g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y), width:br.toFixed(1),
+        height:'26', rx:'4', fill:st.farbe, class:'haupt'}));
+      if(br>=78) g.appendChild(ztN('text',{x:(x0+7).toFixed(1), y:String(y+18),
+        class:'zt-bt'}, ZT_KAPITEL[a.zeichen].n));
+      else if(br>=14) g.appendChild(ztN('text',{x:(x0+br/2).toFixed(1), y:String(y+19),
+        'text-anchor':'middle', class:'zt-bt zt-gly'}, ZT_GLYPHE[a.zeichen]));
+      /* laute Unterabschnitte als Streifen darunter */
+      g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y+27), width:br.toFixed(1),
+        height:'6', rx:'2', fill:'#EBE1D2'}));
+      a.unter.forEach(function(u){
+        if(ztAlterBei(u.von)>maxJ) return;
+        if(ztStufe(u.vonGlueck)==='winkel'){
+          var u0=x(u.von), u1=x(Math.min(u.bis, maxJ*JAHR));
+          g.appendChild(ztN('rect',{x:u0.toFixed(1), y:String(y+27),
+            width:Math.max(0.8,u1-u0).toFixed(1), height:'6', fill:ZT_STUFE.winkel.farbe}));
+        }
+        if(u.bindung && ztAlterBei(u.von)<=maxJ)
+          g.appendChild(ztN('path',{d:'M'+x(u.von).toFixed(1)+','+(y-3)+
+            ' l4,5 l-4,5 l-4,-5 Z', fill:'#A05A3A'}));
+      });
+      svg.appendChild(g);
+    });
   });
 
+  /* Achse in echten Lebensjahren */
   svg.appendChild(ztN('line',{x1:String(L), y1:String(ay), x2:String(W-R), y2:String(ay),
     stroke:'#DDD0BC','stroke-width':'1'}));
   for(var j=0;j<=maxJ;j+=10){
-    var px=x(j*360);
+    var px=x(j*JAHR);
     svg.appendChild(ztN('line',{x1:px.toFixed(1), y1:String(ay), x2:px.toFixed(1),
       y2:String(ay+4), stroke:'#DDD0BC','stroke-width':'1'}));
     svg.appendChild(ztN('text',{x:px.toFixed(1), y:String(ay+17), 'text-anchor':'middle',
-      class:'zt-achse'}, j===0?'Geburt':(j+' J.')));
+      class:'zt-achse'}, j===0?'Geburt':String(j)));
   }
-  if(alterJetzt<=maxJ){
+  svg.appendChild(ztN('text',{x:'4', y:String(ay+17), class:'zt-achse'}, 'Alter'));
+
+  if(alterJetzt<=maxJ && ztB.tageSeitGeburt>=0){
     var hx=x(ztB.tageSeitGeburt);
     var gh=ztN('g',{class:'zt-heute'});
-    gh.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'20', x2:hx.toFixed(1), y2:String(ay)}));
-    gh.appendChild(ztN('text',{x:(hx+5).toFixed(1), y:'15'},
-      'du bist hier · '+Math.floor(ztB.alter)));
+    gh.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'14', x2:hx.toFixed(1), y2:String(ay)}));
+    gh.appendChild(ztN('text',{x:(hx+5).toFixed(1), y:'10'},
+      'du bist hier · ' + Math.floor(ztB.alter)));
     svg.appendChild(gh);
   }
   box.innerHTML=''; box.appendChild(svg);
   Array.prototype.forEach.call(svg.querySelectorAll('.zt-band'),function(g){
-    function auf(){ ztOeffnen(+g.getAttribute('data-von')); }
+    function auf(){ ztOeffnen(g.getAttribute('data-b'), +g.getAttribute('data-von')); }
     g.addEventListener('click',auf);
     g.addEventListener('keydown',function(e){
       if(e.key==='Enter'||e.key===' '){ e.preventDefault(); auf(); } });
   });
-
   ztEl('ztlegende').innerHTML=['winkel','folgend','fallend'].map(function(k){
     return '<span><i style="background:'+ZT_STUFE[k].farbe+'"></i><b>'+ZT_STUFE[k].n+
       '</b> &mdash; '+ZT_STUFE[k].satz+'</span>'; }).join('')+
     '<span><i class="raute"></i><b>Gro&szlig;er Schnitt</b></span>';
-  ztEl('ztlinie-hint').innerHTML='Tippe einen Balken an, dann steht darunter, was dieses '+
-    'Kapitel bedeutet. Auf dem Telefon l&auml;sst sich die Linie seitlich schieben.';
 }
 
-function ztAlleBauen(){
-  var box=ztEl('ztalle');
-  if(!ztB){ box.innerHTML=''; return; }
-  var maxJ=90, W=1000, L=132, zeile=34, H=ZT_BEREICH.length*zeile+26;
-  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-linie', role:'img',
-    'aria-label':'Alle fünf Bereiche nebeneinander'});
-  ZT_BEREICH.forEach(function(B,n){
-    var f=ztSpur(B.k), y=n*zeile+4;
-    var g=ztN('g',{class:'zt-zeile'+(B.k===ztBereich?' ist':''), tabindex:'0', role:'button',
-      'aria-label':B.n});
-    g.setAttribute('data-b', B.k);
-    g.appendChild(ztN('rect',{x:'0', y:String(y-2), width:String(W), height:String(zeile-4),
-      fill:(B.k===ztBereich?'#F7EFE1':'transparent'), rx:'4'}));
-    g.appendChild(ztN('text',{x:'6', y:String(y+17), class:'zt-zt'}, B.kurz));
-    if(f) f.abschnitte.forEach(function(a){
-      if(a.von>maxJ*360) return;
-      var x0=L+(a.von/(maxJ*360))*(W-L-10),
-          x1=L+(Math.min(a.bis,maxJ*360)/(maxJ*360))*(W-L-10);
-      g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y+3), width:Math.max(1,x1-x0-1).toFixed(1),
-        height:'20', rx:'3', fill:ZT_STUFE[ztStufe(a.vonGlueck)].farbe}));
-      a.unter.forEach(function(u){
-        if(u.bindung && u.von<=maxJ*360){
-          var ux=L+(u.von/(maxJ*360))*(W-L-10);
-          g.appendChild(ztN('path',{d:'M'+ux.toFixed(1)+','+(y+1)+' l4,5 l-4,5 l-4,-5 Z',
-            fill:'#A05A3A'}));
-        }
-      });
-    });
-    svg.appendChild(g);
-  });
-  var ay=ZT_BEREICH.length*zeile+8;
-  for(var j=0;j<=maxJ;j+=10){
-    var px=L+(j/maxJ)*(W-L-10);
-    svg.appendChild(ztN('text',{x:px.toFixed(1), y:String(ay+10), 'text-anchor':'middle',
-      class:'zt-achse'}, j===0?'Geburt':(j+' J.')));
-  }
-  if(ztB.tageSeitGeburt/360<=maxJ){
-    var hx=L+((ztB.tageSeitGeburt/360)/maxJ)*(W-L-10);
-    svg.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'2', x2:hx.toFixed(1),
-      y2:String(ay-6), stroke:'#A05A3A','stroke-width':'2'}));
-  }
-  box.innerHTML=''; box.appendChild(svg);
-  Array.prototype.forEach.call(svg.querySelectorAll('.zt-zeile'),function(g){
-    function auf(){ ztBereich=g.getAttribute('data-b'); ztOffen=null; ztAlles(); }
-    g.addEventListener('click',auf);
-    g.addEventListener('keydown',function(e){
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); auf(); } });
-  });
-}
-
-function ztOeffnen(von){
-  var f=ztSpur(); if(!f) return;
-  var a=null; f.abschnitte.forEach(function(x){ if(x.von===von) a=x; });
-  if(!a) return;
-  ztOffen=(ztOffen===von)?null:von;
-  ztLinieBauen(); ztDetailBauen();
+function ztOeffnen(bereich, von){
+  if(ztOffen && ztOffen.b===bereich && ztOffen.von===von) ztOffen=null;
+  else ztOffen={b:bereich, von:von};
+  ztJetztBauen(); ztLinieBauen(); ztDetailBauen();
   var d=ztEl('ztdetail');
   if(ztOffen && d && d.scrollIntoView) d.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function ztDetailBauen(){
   var box=ztEl('ztdetail');
-  if(ztOffen===null || !ztB){ box.innerHTML=''; return; }
-  var f=ztSpur(), a=null;
-  f.abschnitte.forEach(function(x){ if(x.von===ztOffen) a=x; });
+  if(!ztOffen || !ztB){ box.innerHTML=''; return; }
+  var f=ztB.spuren[ztOffen.b], a=null;
+  if(f) f.abschnitte.forEach(function(x){ if(x.von===ztOffen.von) a=x; });
   if(!a){ box.innerHTML=''; return; }
-  var B=ztBer(), K=ZT_KAPITEL[a.zeichen], S=ZT_STUFE[ztStufe(a.vonGlueck)];
+  var B=null; ZT_BEREICH.forEach(function(x){ if(x.k===ztOffen.b) B=x; });
+  var K=ZT_KAPITEL[a.zeichen], S=ZT_STUFE[ztStufe(a.vonGlueck)];
   var laeuft=(ztB.tageSeitGeburt>=a.von && ztB.tageSeitGeburt<a.bis);
   var h='<div class="zt-detail" style="border-left-color:'+S.farbe+'">'+
-    '<div class="zt-dkopf"><h3>'+K.n+' &mdash; '+K.bild+'</h3>'+
+    '<div class="zt-dkopf"><h3>'+B.kurz+' &middot; '+K.n+'</h3>'+
     '<span class="zt-stufe" style="background:'+S.farbe+'">'+S.n+'</span>'+
     (laeuft?'<span class="zt-stufe" style="background:#A05A3A">l&auml;uft gerade</span>':'')+'</div>'+
     '<div class="wann">'+ztDatumText(ztTagVon(a.von))+' bis '+ztDatumText(ztTagVon(a.bis))+
-      ' &middot; Alter '+Math.floor(ztAlterBei(a.von))+' bis '+Math.floor(ztAlterBei(a.bis))+
-      ' &middot; '+a.jahre+' Jahre</div>'+
-    '<p><b>F&uuml;r '+B.kurz+':</b> '+K[ztBereich].t+'</p>'+
-    '<div class="tun"><b>Ein Handgriff</b>'+K[ztBereich].tun+'</div>'+
+      ' &middot; dein Alter '+Math.floor(ztAlterBei(a.von))+' bis '+
+      Math.floor(ztAlterBei(a.bis))+' &middot; '+a.jahre+' Kapiteljahre</div>'+
+    '<p>'+K[ztOffen.b].t+'</p>'+
+    '<div class="tun"><b>Ein Handgriff</b>'+K[ztOffen.b].tun+'</div>'+
     '<p style="margin-top:12px">'+ztWorte(S.was)+'</p>'+
-    '<p class="ac-tech" data-ab="2" style="font-size:13px;color:#6B6259">'+S.woher+'</p>';
-  h+='<div class="zt-tab" style="margin-top:14px"><table><thead><tr>'+
-     '<th>Unterabschnitt</th><th>Von</th><th>Bis</th><th>Lautst&auml;rke</th>'+
-     '</tr></thead><tbody>';
+    '<p class="ac-tech" data-ab="2" style="font-size:13px;color:#6B6259">'+S.woher+'</p>'+
+    '<div class="zt-tab" style="margin-top:14px"><table><thead><tr>'+
+    '<th>Abschnitt darin</th><th>Von</th><th>Bis</th><th>Lautst&auml;rke</th>'+
+    '</tr></thead><tbody>';
   a.unter.forEach(function(u){
     var us=ZT_STUFE[ztStufe(u.vonGlueck)];
     var jetzt=(ztB.tageSeitGeburt>=u.von && ztB.tageSeitGeburt<u.bis);
@@ -482,71 +482,26 @@ function ztDetailBauen(){
       '<td>'+ztKurz(ztTagVon(u.von))+'</td><td>'+ztKurz(ztTagVon(u.bis))+'</td>'+
       '<td>'+us.n+'</td></tr>';
   });
-  h+='</tbody></table></div>';
-  h+='<p class="ac-tech" data-ab="3" style="margin-top:12px;font-size:12.5px;color:#6B6259">'+
-     'Zeichen '+ZT_KAPITEL[a.zeichen].n+', '+a.jahre+' allgemeine Jahre, Herr '+a.herr+
-     ' &middot; '+a.vonGlueck+'. Zeichen vom Gl&uuml;ckspunkt aus gez&auml;hlt.</p></div>';
+  h+='</tbody></table></div>'+
+     '<p class="ac-tech" data-ab="3" style="margin-top:12px;font-size:12.5px;color:#6B6259">'+
+     'Zeichen '+K.n+', '+a.jahre+' allgemeine Jahre, Herr '+a.herr+' &middot; '+
+     a.vonGlueck+'. Zeichen vom Gl&uuml;ckspunkt aus.</p></div>';
   box.innerHTML=h;
   ztWortWirken(box);
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
 }
 
-/* ── E · Hochphasen ─────────────────────────────────────────── */
-function ztAusserhalb(){
-  return ztB && (ztB.tageSeitGeburt<0 || ztB.tageSeitGeburt>100*360);
-}
-function ztGipfelBauen(){
-  var box=ztEl('ztgipfel'), B=ztBer();
-  ztEl('ztgipfel-u').innerHTML='Die lauten Zeiten in <b>'+B.n+'</b> &mdash; die kommenden '+
-    'zuerst. Laut hei&szlig;t: Es passiert viel. Ob es gut wird, steht hier nicht.';
-  var f=ztSpur();
-  if(!ztB||!f){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Hochphasen.</div>'; return; }
-  var G=AC_ZEIT.naechsteGipfel(f, ztB.tageSeitGeburt, 6);
-  if(!G.length){ box.innerHTML='<div class="zt-leer">In diesem Bereich kommt in den '+
-    'n&auml;chsten Jahrzehnten keine Hochphase.</div>'; return; }
-  var h='<div class="zt-liste">';
-  G.forEach(function(g){
-    var K=ZT_KAPITEL[g.zeichen];
-    var inJahren=(g.von-ztB.tageSeitGeburt)/365.2422;
-    h+='<div class="zt-g'+(g.laeuft?' laeuft':'')+'">'+
-      '<span class="wann">'+ztKurz(ztTagVon(g.von))+'<br><i>bis '+ztKurz(ztTagVon(g.bis))+'</i></span>'+
-      '<span class="was"><b>'+K.n+'</b><span>'+ztSatz1(K[ztBereich].t)+'</span></span>'+
-      '<span class="mk'+(g.laeuft?' jetzt':'')+'">'+
-        (g.laeuft?'läuft jetzt':('in '+ztDauer(inJahren)))+'</span></div>';
+/* ── Mehr dazu: Tabelle je Bereich ──────────────────────────── */
+function ztWelcheBauen(){
+  var box=ztEl('ztwelche');
+  box.innerHTML=ZT_BEREICH.map(function(B){
+    return '<button type="button" class="zt-knopf'+(B.k===ztBereich?' ist':'')+
+      '" data-w="'+B.k+'">'+B.kurz+'</button>'; }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-w]'),function(b){
+    b.addEventListener('click',function(){ ztBereich=b.getAttribute('data-w');
+      ztWelcheBauen(); ztTabelleBauen(); });
   });
-  box.innerHTML=h+'</div>';
 }
-
-/* ── F · Die großen Schnitte ────────────────────────────────── */
-function ztSchnitteBauen(){
-  var box=ztEl('ztschnitte'), B=ztBer();
-  ztEl('ztschnitte-u').innerHTML=ztWorte('Ein [[Der große Schnitt|großer Schnitt]] ist die '+
-    'Stelle, an der die Reihe aus ihrer Ordnung springt. ')+
-    '<b>F&uuml;r '+B.kurz+' hei&szlig;t das:</b> '+ZT_SCHNITT.beispiele[ztBereich];
-  var f=ztSpur();
-  if(!ztB||!f){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Schnitte.</div>'; return; }
-  var BI=AC_ZEIT.bindungen(f).filter(function(x){ return ztAlterBei(x.von)<=95; });
-  if(!BI.length){ box.innerHTML='<div class="zt-leer">In diesem Bereich gibt es keinen '+
-    'gro&szlig;en Schnitt. Das kommt vor, wenn alle Kapitel kurz sind.</div>'; return; }
-  var h='<div class="zt-liste">';
-  BI.forEach(function(b){
-    var vorbei=(ztB.tageSeitGeburt>b.bis);
-    h+='<div class="zt-g" style="border-left-color:#A05A3A">'+
-      '<span class="wann">'+ztKurz(ztTagVon(b.von))+'<br><i>Alter '+
-        Math.floor(ztAlterBei(b.von))+'</i></span>'+
-      '<span class="was"><b>in '+ZT_KAPITEL[b.zeichen].n+'</b>'+
-      '<span>'+ZT_SCHNITT.beispiele[ztBereich]+'</span></span>'+
-      '<span class="mk'+(vorbei?'':' jetzt')+'">'+(vorbei?'war':'kommt')+'</span></div>';
-  });
-  h+='</div><div class="zt-detail" style="border-left-color:#A05A3A;margin-top:14px">'+
-     '<p style="margin:0">'+ZT_SCHNITT.was+'</p>'+
-     '<div class="tun" style="margin-top:11px"><b>Dazu</b>'+ZT_SCHNITT.tun+'</div>'+
-     '<p class="ac-tech" data-ab="2" style="margin:10px 0 0;font-size:13px;color:#6B6259">'+
-     'Klassisch hei&szlig;t das die <i>'+ZT_SCHNITT.klassisch+'</i>.</p></div>';
-  box.innerHTML=h;
-}
-
-/* ── G · Tabelle ────────────────────────────────────────────── */
 function ztTabelleBauen(){
   var box=ztEl('zttabelle'), f=ztSpur();
   if(!ztB||!f){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Tabelle.</div>'; return; }
@@ -681,17 +636,25 @@ function ztAlles(){
                         ztVariante==='alt'?'alt':'paulus');
     }catch(e){ ztB=null; }
   }
-  ztPersonenBauen(); ztVarianteBauen();
-  ztAntwortBauen(); ztSchritteBauen(); ztBereicheBauen();
-  ztLinieBauen(); ztAlleBauen(); ztDetailBauen();
-  ztGipfelBauen(); ztSchnitteBauen(); ztTabelleBauen(); ztWeitereBauen();
+  ztEl('ztjetzt-u').innerHTML=ztWorte('Fünf Bereiche, fünf Zeilen. Jede zeigt dein '+
+    'gerade laufendes [[Kapitel]] und darunter den [[Unterabschnitt]], der gerade darin '+
+    'läuft. [[Hochphase|Laut]] heißt: Da passiert viel — nicht automatisch Gutes. '+
+    'Tipp eine Zeile an für das Ganze.');
+  ztEl('ztnaechst-u').innerHTML=ztWorte('Alle fünf Bereiche in einer Liste, nach Datum '+
+    'sortiert. Das hier ist die Antwort auf „wann kommen die [[Hochphase|Hochphasen]]".');
+  ztEl('ztlinie-u').innerHTML=ztWorte('Jede Zeile ein Bereich, jeder Balken ein [[Kapitel]]. '+
+    '<b>Gold</b> ist laut, <b>grün</b> mittel, <b>grau</b> leise. Der schmale Streifen unter '+
+    'jedem Balken zeigt die lauten [[Unterabschnitt|Unterabschnitte]] darin, die Rauten den '+
+    '[[Der große Schnitt|großen Schnitt]]. Die senkrechte Linie bist du heute.');
+  ztPersonenBauen(); ztVarianteBauen(); ztDatenBauen();
+  ztJetztBauen(); ztDetailBauen(); ztNaechstBauen(); ztLinieBauen();
+  ztSchritteBauen(); ztWelcheBauen(); ztTabelleBauen(); ztWeitereBauen();
   var w=ztEl('ztzeitwarnung');
   if(w && p){
     w.innerHTML='Alle Startpunkte h&auml;ngen am '+ztW('Aszendent','Aszendenten')+', und der '+
-      'wandert in vier Minuten um ein Grad. F&uuml;r dieses Profil ist '+
-      ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+' hinterlegt. Ist die Zeit gesch&auml;tzt, '+
-      'lies die Jahreszahlen als ungef&auml;hr und pr&uuml;f sie an Ereignissen nach, die du kennst.';
-    ztWortWirken(w.parentNode);
+      'wandert in vier Minuten um ein Grad. Eine Stunde Unterschied verschiebt die Punkte um '+
+      'bis zu ein halbes Zeichen &mdash; und damit die ganze Reihe. Was oben unter '+
+      '„Gerechnet mit" steht, sollte stimmen.';
   }
   /* Einmal am Ende über die ganze Seite — sonst wird ein Block vergessen */
   ztWortWirken(document);
