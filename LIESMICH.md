@@ -4,7 +4,7 @@ Statische Seite. Kein Build, kein Server, keine Datenbank — alles rechnet im
 Browser, auch die Planetenstellungen. Profile liegen im localStorage, also auf
 dem Gerät und nirgends sonst.
 
-123 Seiten, 19 Skripte. Stand 14.10.2026.
+123 Seiten, 19 Skripte. Stand 15.10.2026.
 
 ## Ansehen
 

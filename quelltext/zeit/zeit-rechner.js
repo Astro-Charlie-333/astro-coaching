@@ -32,17 +32,24 @@ var Z_HERRSCHER=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',
    Überlieferung. Tag heißt: die Sonne stand über dem Horizont.   */
 function zLose(C){
   var tag = (((Math.floor(znrm(C.Sonne)/30) - Math.floor(znrm(C.ASC)/30))%12+12)%12+1) >= 7;
-  var glueck = tag ? znrm(C.ASC + C.Mond - C.Sonne) : znrm(C.ASC + C.Sonne - C.Mond);
-  var geist  = tag ? znrm(C.ASC + C.Sonne - C.Mond) : znrm(C.ASC + C.Mond - C.Sonne);
-  var eros   = null, erosAlt = null;
-  if(C.Venus!==undefined){
-    /* Paulus und Olympiodor: bei Tag AC + Venus − Geist.
-       Eine zweite Überlieferung dreht das um; beide werden gerechnet. */
-    eros    = tag ? znrm(C.ASC + C.Venus - geist) : znrm(C.ASC + geist - C.Venus);
-    erosAlt = tag ? znrm(C.ASC + geist - C.Venus) : znrm(C.ASC + C.Venus - geist);
-  }
-  return {tag:tag, sekte:(tag?'Tag':'Nacht'),
-          glueck:glueck, geist:geist, eros:eros, erosAlt:erosAlt};
+  /* Bei Tag nimmt man den Bogen vom einen zum anderen Lichtpunkt, bei
+     Nacht umgekehrt. Alle sieben Lose folgen diesem Muster.          */
+  function los(a, b){ return tag ? znrm(C.ASC + a - b) : znrm(C.ASC + b - a); }
+
+  var glueck = los(C.Mond, C.Sonne);
+  var geist  = los(C.Sonne, C.Mond);
+  var L={tag:tag, sekte:(tag?'Tag':'Nacht'), glueck:glueck, geist:geist};
+
+  /* Paulus und Olympiodor: bei Tag AC + Venus − Geist.
+     Eine zweite Überlieferung dreht das um; beide werden gerechnet. */
+  L.eros    = (C.Venus!==undefined) ? los(C.Venus, geist) : null;
+  L.erosAlt = (C.Venus!==undefined) ? los(geist, C.Venus) : null;
+  /* Die übrigen der sieben hermetischen Lose */
+  L.sieg    = (C.Jupiter!==undefined) ? los(C.Jupiter, geist) : null;
+  L.not     = (C.Merkur!==undefined)  ? los(glueck, C.Merkur) : null;
+  L.mut     = (C.Mars!==undefined)    ? los(glueck, C.Mars)   : null;
+  L.nemesis = (C.Saturn!==undefined)  ? los(glueck, C.Saturn) : null;
+  return L;
 }
 
 /* ── Zodiakale Freilassung ───────────────────────────────────
@@ -187,18 +194,30 @@ function zAlterVollendet(geb, jetzt){
 }
 
 /* ── Alles zusammen ──────────────────────────────────────────  */
+/* Welches Los zu welchem Lebensbereich gehört */
+var Z_BEREICHE=[
+ {k:'arbeit',  los:'geist'},
+ {k:'liebe',   los:'eros'},
+ {k:'koerper', los:'glueck'},
+ {k:'erfolg',  los:'sieg'},
+ {k:'druck',   los:'not'}
+];
+
 function zBlatt(C, jdGeburt, geb, jetzt, erosVariante){
   if(!C || C.ASC===undefined) return null;
   jetzt = jetzt || new Date();
   var L=zLose(C);
-  var erosLon = (erosVariante==='alt') ? L.erosAlt : L.eros;
+  if(erosVariante==='alt') L.eros=L.erosAlt;
   var bis = 100*Z_TAG_JAHR;                   /* hundert Jahre weit rechnen */
 
   var jdJetzt = jetzt.getTime()/86400000 + 2440587.5;
   var tageSeitGeburt = jdJetzt - jdGeburt;
 
-  var beruf = zFreilassung(L.geist, L.glueck, bis);
-  var liebe = erosLon!==null ? zFreilassung(erosLon, L.glueck, bis) : null;
+  var spuren={};
+  Z_BEREICHE.forEach(function(B){
+    var lon=L[B.los];
+    spuren[B.k] = (lon===null||lon===undefined) ? null : zFreilassung(lon, L.glueck, bis);
+  });
 
   var alter = zAlterVollendet(geb, jetzt);
   var prof = zProfektion(C, alter);
@@ -206,8 +225,9 @@ function zBlatt(C, jdGeburt, geb, jetzt, erosVariante){
   var firdJetzt = zFirdariaJetzt(fird, zAlterJahre(jdGeburt, jdJetzt));
 
   return {
-    lose:L, erosLon:erosLon,
-    beruf:beruf, liebe:liebe,
+    lose:L, spuren:spuren,
+    /* die beiden Hauptspuren auch unter ihrem alten Namen */
+    beruf:spuren.arbeit, liebe:spuren.liebe, erosLon:L.eros,
     profektion:prof, firdaria:fird, firdariaJetzt:firdJetzt,
     alter:alter, tageSeitGeburt:tageSeitGeburt, jdGeburt:jdGeburt,
     jetzt:jetzt
@@ -253,7 +273,7 @@ function zBindungen(freilassung){
 }
 
 window.AC_ZEIT={
-  ZEICHEN:Z_ZEICHEN, HERRSCHER:Z_HERRSCHER, JAHRE:Z_JAHRE,
+  ZEICHEN:Z_ZEICHEN, HERRSCHER:Z_HERRSCHER, JAHRE:Z_JAHRE, BEREICHE:Z_BEREICHE,
   TAG_JAHR:Z_TAG_JAHR, TAG_MONAT:Z_TAG_MONAT, UMLAUF:Z_UMLAUF,
   zi:zzi, nrm:znrm,
   lose:zLose, freilassung:zFreilassung, vonGlueck:zVonGlueck, istGipfel:zIstGipfel,

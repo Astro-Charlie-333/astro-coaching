@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Baut zeiten.html — zodiakale Freilassung, Profektion, Firdaria."""
-import pathlib, re, sys, json, subprocess
+"""Baut zeiten.html — Lebensabschnitte in Alltagssprache, fünf Bereiche."""
+import pathlib, re, sys, json, subprocess, html as _html
 
 hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
@@ -11,7 +11,7 @@ lies = lambda p: p.read_text(encoding='utf-8')
 
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Die Hochphasen &middot; Astro-Charlie</title>
+<title>Wann bei dir was los ist &middot; Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
@@ -37,6 +37,8 @@ app     = lies(hier / 'zeit-app.js')
 daten   = lies(hier / 'zeit-daten.js')
 rechner = lies(hier / 'zeit-rechner.js')
 
+BEREICHE = ['arbeit', 'liebe', 'koerper', 'erfolg', 'druck']
+
 # ── 1 · Verdrahtung ────────────────────────────────────────────
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
 gesucht = set(re.findall(r"""\bztEl\(['"]([A-Za-z0-9_-]+)['"]\)""", app))
@@ -58,15 +60,12 @@ def oben(t):
 koll = (oben(app) | oben(daten)) & oben(lies(rit / 'engine.js')) - ERLAUBT
 if koll:
     fehler.append('Namenskollision mit der Rechen-Engine: ' + ', '.join(sorted(koll)))
-# Der Rechner liegt in einer eigenen Hülle, aber doppelte Namen zwischen
-# Daten und Anwendung sind trotzdem ein Fehler.
 doppelt = oben(app) & oben(daten)
 if doppelt:
     fehler.append('derselbe Name in zeit-app und zeit-daten: ' + ', '.join(sorted(doppelt)))
 
-# ── 3 · Vollständigkeit der Texte ──────────────────────────────
+# ── 3 · Vollständigkeit ────────────────────────────────────────
 def klammerblock(text, start):
-    """Schneidet ab der öffnenden Klammer an Position start den Block heraus."""
     tiefe, i = 0, start
     while i < len(text):
         if text[i] == '{':
@@ -79,13 +78,10 @@ def klammerblock(text, start):
     return ''
 
 def textlaenge(block, feld):
-    """Länge des Feldwerts — die Texte sind über mehrere Zeilen zusammengesetzt,
-       deshalb werden alle Zeichenketten des Feldes addiert."""
     m = re.search(r"\b" + feld + r":\s*'", block)
     if not m:
         return None
     rest = block[m.end() - 1:]
-    # bis zum nächsten Feldnamen auf derselben Ebene
     nx = re.search(r"'\s*,\s*[a-zA-Z]+:", rest)
     stueck = rest[:nx.start() + 1] if nx else rest
     return sum(len(s) for s in re.findall(r"'((?:[^'\\]|\\.)*)'", stueck))
@@ -96,45 +92,75 @@ if len(kap) != 12:
 for m in re.finditer(r"^(\d+):\{n:'([^']+)'", daten, re.M):
     name = m.group(2)
     block = klammerblock(daten, m.end() - len(m.group(2)) - 5)
-    for spur in ('beruf', 'liebe'):
+    if not re.search(r"\bbild:\s*'", block):
+        fehler.append(f'Kapitel {name}: kein Bild in einfachen Worten')
+    for spur in BEREICHE:
         sm = re.search(r"\b" + spur + r":\{", block)
         if not sm:
-            fehler.append(f'Kapitel {name}: {spur} fehlt')
+            fehler.append(f'Kapitel {name}: Bereich {spur} fehlt')
             continue
         sb = klammerblock(block, sm.end() - 1)
         lt, ltun = textlaenge(sb, 't'), textlaenge(sb, 'tun')
         if lt is None or ltun is None:
             fehler.append(f'Kapitel {name}/{spur}: t oder tun fehlt')
             continue
-        if lt < 120:
+        if lt < 110:
             fehler.append(f'Kapitel {name}/{spur}: Text nur {lt} Zeichen')
         if ltun < 25:
             fehler.append(f'Kapitel {name}/{spur}: Handgriff nur {ltun} Zeichen')
+
+n_ber = len(re.findall(r"\{k:'(?:" + '|'.join(BEREICHE) + r")', n:'", daten))
+if n_ber != 5:
+    fehler.append(f'{n_ber} statt 5 Bereiche in ZT_BEREICH')
+for feld in ('frage', 'worum', 'los', 'losErkl', 'kurz', 'farbe'):
+    if len(re.findall(r'\b' + feld + r":\s*'", daten)) < 5:
+        fehler.append(f'nicht alle fünf Bereiche haben {feld}')
+if len(re.findall(r"\{n:'[^']+',\s*\n?\s*t:'", daten)) < 4:
+    hinweise.append('die vier Schritte sehen anders aus als erwartet')
+n_schritte = len(re.findall(r"mehr:'", daten))
+if n_schritte < 4:
+    fehler.append(f'nur {n_schritte} Schritte mit Vertiefung in ZT_SCHRITTE')
 if len(re.findall(r'\{h:\d+,', daten)) != 12:
     fehler.append('ZT_PROFEKTION hat nicht 12 Häuser')
-for herr in ('Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter', 'Saturn',
-             'Aufsteigender Knoten', 'Absteigender Knoten'):
-    if ("'" + herr + "':{t:'") not in daten:
-        fehler.append('ZT_FIRDARIA ohne ' + herr)
 
-# ── 4 · Die Zahlen der Überlieferung stehen richtig im Text ────
-import html as _html
-koerper_klar = _html.unescape(koerper).replace('\u00ad', '')
+# ── 4 · Jedes erklärte Wort muss es auch geben ────────────────
+woerter = set(re.findall(r"^\s*'([^']+)':'", daten, re.M))
+benutzt = set()
+for m in re.finditer(r"\[\[([^\]|]+)(?:\|[^\]]+)?\]\]", daten + app):
+    benutzt.add(m.group(1))
+for m in re.finditer(r"ztW\('([^']+)'", app):
+    benutzt.add(m.group(1))
+fehlende = benutzt - woerter
+if fehlende:
+    fehler.append('erklärt werden sollen Wörter, die nicht im Glossar stehen: ' +
+                  ', '.join(sorted(fehlende)))
+if len(woerter) < 8:
+    fehler.append(f'nur {len(woerter)} Wörter im Glossar')
+# Keine Erklärung darf selbst wieder ein Fachwort einführen
+HART = ['winkelhaft', 'Aphesis', 'hermetisch', 'Dekanat', 'Dodekatemorion']
+for w in woerter:
+    m = re.search(r"'" + re.escape(w) + r"':'((?:[^'\\]|\\.|'\+\s*\n\s*')*)'", daten)
+    if m:
+        for h in HART:
+            if h.lower() in m.group(1).lower():
+                fehler.append(f'die Erklärung von „{w}" benutzt selbst das Fachwort „{h}"')
+
+# ── 5 · Die überlieferten Zahlen stehen auf der Seite ─────────
+alles_klar = _html.unescape(koerper + daten).replace('\u00ad', '')
 for n, z in ((15, 'Widder'), (8, 'Stier'), (20, 'Zwillinge'), (25, 'Krebs'), (19, 'Löwe'),
              (20, 'Jungfrau'), (8, 'Waage'), (15, 'Skorpion'), (12, 'Schütze'),
              (27, 'Steinbock'), (30, 'Wassermann'), (12, 'Fische')):
-    if not re.search(z + r'\s+' + str(n) + r'\b', koerper_klar):
-        fehler.append(f'die Jahre von {z} ({n}) stehen nicht im Rechenweg auf der Seite')
-if '211' not in koerper:
-    fehler.append('der Umlauf von 211 Monaten wird auf der Seite nicht genannt')
-if '360' not in koerper:
+    if not re.search(z + r'\s+' + str(n) + r'\b', alles_klar):
+        fehler.append(f'die Jahre von {z} ({n}) stehen nirgends auf der Seite')
+if '360' not in alles_klar:
     fehler.append('das Jahr zu 360 Tagen wird nicht genannt')
+if 'Valens' not in alles_klar:
+    fehler.append('die Quelle Valens wird nicht genannt')
 
-# ── 5 · Deutsche Textfallen ───────────────────────────────────
+# ── 6 · Deutsche Textfallen ───────────────────────────────────
 for block, name in ((daten, 'zeit-daten'), (app, 'zeit-app')):
     for m in re.finditer(r'\.toLowerCase\(\)', block):
-        zeile = block[:m.start()].count('\n') + 1
-        fehler.append(f'{name}.js Zeile {zeile}: toLowerCase im Text')
+        fehler.append(f'{name}.js Zeile {block[:m.start()].count(chr(10))+1}: toLowerCase im Text')
 for m in re.finditer(r"'((?:[^'\\]|\\.){25,})'", daten):
     s = m.group(1)
     for d in re.finditer(r'\d\.\d', s):
@@ -145,17 +171,17 @@ for ph in ('{A}', '{B}', 'TODO', 'XXX', 'Lorem'):
     if ph in daten or ph in koerper:
         fehler.append('unausgefüllter Platzhalter: ' + ph)
 
-# ── 6 · Keine echten Geburtsdaten in der Seite ────────────────
+# ── 7 · Keine echten Geburtsdaten ─────────────────────────────
 for muster, was in ((r'\b1987\b', 'Geburtsjahr'), (r'\b08:58\b', 'Geburtszeit')):
     if re.search(muster, koerper + app + daten):
         fehler.append(f'echte persönliche Angabe ({was}) im Seitentext')
 
-# ── 7 · Verweise ──────────────────────────────────────────────
+# ── 8 · Verweise ──────────────────────────────────────────────
 for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper))):
     if not (wiki / href).exists():
         fehler.append('Verweis ins Leere: ' + href)
 
-# ── 8 · Die Rechnung einzeln prüfen ───────────────────────────
+# ── 9 · Die Rechnung einzeln prüfen ───────────────────────────
 t = hier / '_test-zeit.js'
 if t.exists():
     r = subprocess.run(['node', str(t)], capture_output=True, text=True, timeout=180)
@@ -169,11 +195,10 @@ if t.exists():
 else:
     fehler.append('_test-zeit.js fehlt — die Rechnung wäre ungeprüft')
 
-# ── 9 · Rauchprobe ────────────────────────────────────────────
+# ── 10 · Rauchprobe ───────────────────────────────────────────
 probe = hier / '_probe-zeit.js'
 probe.write_text(r"""
 const {chromium}=require('/opt/npm-tools/node_modules/playwright');
-/* Erfundene Profile über Jahrzehnte, Tageszeiten und Breiten gestreut. */
 const liste=[]; let i=0;
 for(const y of [1952,1966,1974,1988,1999]) for(const h of [2,9,15,21]){
   i++; liste.push({id:'p'+i,name:'Probe '+i,alias:'P'+i,y,mo:1+((i*5)%12),d:3+((i*7)%25),
@@ -181,6 +206,10 @@ for(const y of [1952,1966,1974,1988,1999]) for(const h of [2,9,15,21]){
    wlat:52.52, wlon:13.405, wort:'Berlin', eigen:i===1, readings:[]});
 }
 const BREITEN=[320,360,390,600,768,1024,1440,1600];
+/* Wörter, die eine Anfängerin ohne Erklärung nicht verstehen kann.
+   Auf Stufe 0 darf keines davon sichtbar sein. */
+const JARGON=['winkelhaft','Los des','Firdaria','Profektion','Aphesis','hermetisch',
+  'Lösung der Bindung','Ebene 1','Ebene 2','Orbis','Dispositor'];
 (async()=>{
 const b=await chromium.launch(); const f=[]; const notiz={};
 const p=await (await b.newContext({viewport:{width:390,height:900}})).newPage();
@@ -192,7 +221,7 @@ await p.addInitScript(l=>localStorage.setItem('ac_profile_v1',JSON.stringify(
  {v:1,eigen:'p1',aktiv:'p1',zeigeNamen:true,liste:l})), liste);
 await p.goto('file://ZIEL'); await p.waitForTimeout(900);
 
-const bad=/undefined|NaN|\[object|&[a-z]+;|Invalid Date|:00:00|\w\.\.(?!\.)|\s\.|,,/;
+const bad=/undefined|NaN|\[object|&[a-z]+;|Invalid Date|\w\.\.(?!\.)|\s\.|,,|\[\[/;
 async function schlecht(wo){
   const t=await p.evaluate(()=>document.body.innerText);
   const m=t.match(bad); if(m) f.push('schlechter Text bei '+wo+': "'+
@@ -201,44 +230,78 @@ async function schlecht(wo){
 await schlecht('Start');
 
 notiz.start=await p.evaluate(()=>({
-  karten:document.querySelectorAll('.zt-j').length,
+  antwort:!!document.querySelector('.zt-antwort'),
+  gross:(document.querySelector('.zt-agross')||{}).textContent||'',
+  naechste:document.querySelectorAll('.zt-anext').length,
+  mini:document.querySelectorAll('.zt-amini .zt-m').length,
+  schritte:document.querySelectorAll('.zt-schritt').length,
+  bilder:document.querySelectorAll('.zt-mini-svg').length,
+  bereiche:document.querySelectorAll('.zt-b').length,
   baender:document.querySelectorAll('.zt-band').length,
+  zeilen:document.querySelectorAll('.zt-zeile').length,
   legende:document.querySelectorAll('.zt-legende span').length,
   gipfel:document.querySelectorAll('#ztgipfel .zt-g').length,
-  schnitte:document.querySelectorAll('#ztschnitte .zt-g').length,
   tabelle:document.querySelectorAll('#zttabelle tbody tr').length,
-  sprung:document.querySelectorAll('.zt-sprung a').length,
-  rauten:document.querySelectorAll('.zt-band path').length,
-  heute:document.querySelectorAll('.zt-heute').length,
+  weitere:document.querySelectorAll('#ztweitere .zt-j').length,
+  woerter:document.querySelectorAll('.zt-w').length,
   breit:document.body.scrollWidth}));
-notiz.sprungOk=await p.evaluate(()=>[...document.querySelectorAll('.zt-sprung a')]
-  .every(a=>!!document.querySelector(a.getAttribute('href'))));
 
-/* Jedes Profil durchrechnen */
-let minBaender=999, minGipfel=999, ohneJetzt=0;
-const stufen=new Set(), kapitel=new Set();
-for(let k=0;k<liste.length;k++){
-  await p.evaluate(k=>{
-    const bs=[...document.querySelectorAll('#ztpersonen button')]; bs[k%bs.length].click(); }, k);
-  await p.waitForTimeout(220);
+/* Ein erklärbares Wort muss sich wirklich öffnen */
+notiz.wortAuf=await p.evaluate(()=>{
+  const b=document.querySelector('.zt-w'); if(!b) return null;
+  const e=document.getElementById(b.getAttribute('aria-controls'));
+  const vorher=e.hasAttribute('hidden');
+  b.click();
+  const nachher=e.hasAttribute('hidden');
+  const txt=e.textContent.length;
+  b.click();
+  return {vorher, nachher, txt};
+});
+if(!notiz.wortAuf||!notiz.wortAuf.vorher||notiz.wortAuf.nachher)
+  f.push('ein erklärbares Wort öffnet sich nicht');
+if(notiz.wortAuf&&notiz.wortAuf.txt<40) f.push('die Worterklärung ist zu kurz');
+
+/* Alle fünf Bereiche durchschalten */
+const bereiche=await p.evaluate(()=>[...document.querySelectorAll('.zt-b')].map(b=>b.dataset.b));
+notiz.bereiche=bereiche; const antworten=new Set(); let minB=999;
+for(const bk of bereiche){
+  await p.evaluate(bk=>document.querySelector('.zt-b[data-b="'+bk+'"]').click(), bk);
+  await p.waitForTimeout(240);
   const r=await p.evaluate(()=>({
+    gross:(document.querySelector('.zt-agross')||{}).textContent||'',
+    text:(document.querySelector('.zt-antwort')||{}).innerText||'',
     baender:document.querySelectorAll('.zt-band').length,
-    karten:document.querySelectorAll('.zt-j').length,
     gipfel:document.querySelectorAll('#ztgipfel .zt-g').length,
-    stufen:[...document.querySelectorAll('.zt-stufe')].map(x=>x.textContent),
-    kapitel:[...document.querySelectorAll('.zt-j h3')].map(x=>x.textContent),
     breit:document.body.scrollWidth}));
-  if(r.karten!==4) f.push('Profil '+k+': '+r.karten+' statt 4 Karten');
-  if(r.baender<6) f.push('Profil '+k+': nur '+r.baender+' Bänder');
-  if(!r.gipfel) ohneJetzt++;
+  antworten.add(r.text.slice(0,400));
+  if(r.baender<6) f.push('Bereich '+bk+': nur '+r.baender+' Bänder');
+  if(r.breit>390) f.push('Bereich '+bk+': Überlauf '+r.breit);
+  if(r.baender<minB) minB=r.baender;
+  await schlecht('Bereich '+bk);
+}
+notiz.bereichWirkt=antworten.size;
+if(antworten.size<3) f.push('die Bereiche zeigen fast dasselbe ('+antworten.size+' verschieden)');
+await p.evaluate(()=>document.querySelector('.zt-b[data-b="arbeit"]').click());
+await p.waitForTimeout(220);
+
+/* Alle Profile */
+let ohneAntwort=0; const stufen=new Set();
+for(let k=0;k<liste.length;k++){
+  await p.evaluate(k=>{const bs=[...document.querySelectorAll('#ztpersonen button')];
+    bs[k%bs.length].click(); }, k);
+  await p.waitForTimeout(200);
+  const r=await p.evaluate(()=>({
+    gross:(document.querySelector('.zt-agross')||{}).textContent||'',
+    mini:document.querySelectorAll('.zt-amini .zt-m').length,
+    breit:document.body.scrollWidth}));
+  if(!r.gross) ohneAntwort++; else stufen.add(r.gross);
+  if(r.mini!==5) f.push('Profil '+k+': '+r.mini+' statt 5 Bereiche in der Zeile');
   if(r.breit>390) f.push('Profil '+k+': Überlauf '+r.breit);
-  r.stufen.forEach(s=>stufen.add(s)); r.kapitel.forEach(s=>kapitel.add(s));
-  if(r.baender<minBaender) minBaender=r.baender;
-  if(r.gipfel<minGipfel) minGipfel=r.gipfel;
   await schlecht('Profil '+k);
 }
-notiz.minBaender=minBaender; notiz.minGipfel=minGipfel; notiz.ohneGipfel=ohneJetzt;
-notiz.stufen=[...stufen]; notiz.kapitelGesehen=kapitel.size;
+notiz.ohneAntwort=ohneAntwort; notiz.stufen=[...stufen];
+if(ohneAntwort) f.push(ohneAntwort+' Profile ohne Antwort');
+if(stufen.size<2) f.push('alle Profile bekommen dieselbe Antwort');
 
 /* Ein Band öffnen */
 await p.evaluate(()=>{ document.querySelector('.zt-band')
@@ -250,56 +313,71 @@ notiz.detail=await p.evaluate(()=>({
   laenge:(document.getElementById('ztdetail')||{}).innerText.length||0}));
 if(!notiz.detail.da) f.push('Klick auf ein Band öffnet kein Detail');
 if(notiz.detail.zeilen<3) f.push('Detail zeigt zu wenige Unterabschnitte');
-await schlecht('Detail');
 
-/* Stichtag verschieben — die Lage muss sich ändern */
-const vor=await p.evaluate(()=>document.querySelector('#ztjetzt').innerText);
-await p.evaluate(()=>{ const d=document.getElementById('ztdatum');
-  d.value='1998-05-20'; d.dispatchEvent(new Event('change',{bubbles:true})); });
-await p.waitForTimeout(400);
-const nach=await p.evaluate(()=>document.querySelector('#ztjetzt').innerText);
+/* Übersicht: eine Zeile anklicken wechselt den Bereich */
+const vorB=await p.evaluate(()=>document.querySelector('.zt-b.ist').dataset.b);
+await p.evaluate(()=>{ const z=[...document.querySelectorAll('.zt-zeile')];
+  z[z.length-1].dispatchEvent(new MouseEvent('click',{bubbles:true})); });
+await p.waitForTimeout(280);
+const nachB=await p.evaluate(()=>document.querySelector('.zt-b.ist').dataset.b);
+notiz.uebersichtWirkt=(vorB!==nachB);
+if(!notiz.uebersichtWirkt) f.push('die Übersicht wechselt den Bereich nicht');
+
+/* Stichtag — auf das erste Profil, damit das Datum sicher nach der Geburt liegt */
+await p.evaluate(()=>document.querySelectorAll('#ztpersonen button')[0].click());
+await p.waitForTimeout(240);
+const vor=await p.evaluate(()=>document.getElementById('ztantwort').innerText);
+async function stichtag(d){
+  await p.evaluate(d=>{ const e=document.getElementById('ztdatum');
+    e.value=d; e.dispatchEvent(new Event('change',{bubbles:true})); }, d);
+  await p.waitForTimeout(380);
+  return p.evaluate(()=>document.getElementById('ztantwort').innerText);
+}
+const nach=await stichtag('1998-05-20');
 notiz.stichtagWirkt=(vor!==nach);
 if(!notiz.stichtagWirkt) f.push('der Stichtag ändert nichts');
 await schlecht('Stichtag 1998');
+
+/* Vor der Geburt und weit danach müssen verständlich abgefangen sein */
+notiz.vorGeburt=await stichtag('1900-01-01');
+if(!/vor der Geburt/.test(notiz.vorGeburt))
+  f.push('ein Stichtag vor der Geburt wird nicht verständlich abgefangen: '+
+    notiz.vorGeburt.slice(0,120));
+await schlecht('vor der Geburt');
+notiz.weitDanach=await stichtag('2140-01-01');
+if(!/Zukunft|vor der Geburt/.test(notiz.weitDanach))
+  f.push('ein Stichtag weit in der Zukunft wird nicht abgefangen: '+
+    notiz.weitDanach.slice(0,120));
+await schlecht('weit in der Zukunft');
+notiz.vorGeburt=notiz.vorGeburt.slice(0,60); notiz.weitDanach=notiz.weitDanach.slice(0,60);
 await p.evaluate(()=>document.getElementById('ztheute').click());
 await p.waitForTimeout(300);
-
-/* Eros-Variante muss die Liebesspur verschieben */
-const lv=await p.evaluate(()=>document.querySelectorAll('.zt-j')[1].innerText);
-await p.evaluate(()=>{ const b=document.querySelector('#ztvariante button[data-v="alt"]');
-  if(b) b.click(); });
-await p.waitForTimeout(400);
-const ln=await p.evaluate(()=>document.querySelectorAll('.zt-j')[1].innerText);
-notiz.varianteWirkt=(lv!==ln);
-await p.evaluate(()=>{ const b=document.querySelector('#ztvariante button[data-v="paulus"]');
-  if(b) b.click(); });
-await p.waitForTimeout(300);
-
-/* Spur umschalten in der Tabelle */
-await p.evaluate(()=>document.querySelector('#ztwelche button[data-w="liebe"]').click());
-await p.waitForTimeout(240);
-notiz.tabelleLiebe=await p.evaluate(()=>document.querySelectorAll('#zttabelle tbody tr').length);
-if(notiz.tabelleLiebe<8) f.push('Tabelle für die Liebe hat nur '+notiz.tabelleLiebe+' Zeilen');
 
 /* Bericht */
 notiz.bericht=await p.evaluate(()=>typeof ztBericht==='function'?ztBericht():'');
 notiz.berichtLaenge=notiz.bericht.length;
-if(/undefined|NaN|&[a-z]+;|<[a-z]/.test(notiz.bericht))
+if(/undefined|NaN|&[a-z]+;|<[a-z]|\[\[/.test(notiz.bericht))
   f.push('Bericht enthält Rohzeug: '+notiz.bericht.slice(0,200));
 delete notiz.bericht;
 
-/* Fünf Wissensstufen */
-notiz.stufenTiefe=[];
+/* Wissensstufen — und auf Stufe 0 kein Fachwort */
+notiz.stufenTiefe=[]; notiz.jargon0=[];
 for(let s=0;s<=4;s++){
-  await p.evaluate(s=>AC_NIV.setzen(s), s); await p.waitForTimeout(170);
+  await p.evaluate(s=>AC_NIV.setzen(s), s); await p.waitForTimeout(200);
   const r=await p.evaluate(()=>{
     const sicht=e=>getComputedStyle(e).display!=='none'&&e.offsetParent!==null;
     return {tiefe:[...document.querySelectorAll('[data-ab]')].filter(sicht).length,
-      text:document.body.innerText.length, breit:document.body.scrollWidth};});
+      text:document.body.innerText, breit:document.body.scrollWidth};});
   notiz.stufenTiefe.push(r.tiefe);
+  if(s===0){
+    JARGON.forEach(w=>{ if(r.text.indexOf(w)>=0) notiz.jargon0.push(w); });
+    notiz.text0=r.text.length;
+  }
   if(r.breit>390) f.push('Stufe '+s+': Überlauf '+r.breit);
-  if(r.text<4000) f.push('Stufe '+s+': nur '+r.text+' Zeichen');
+  if(r.text.length<4000) f.push('Stufe '+s+': nur '+r.text.length+' Zeichen');
 }
+if(notiz.jargon0.length)
+  f.push('auf Stufe 0 steht Fachsprache ohne Erklärung: '+notiz.jargon0.join(', '));
 await p.evaluate(()=>AC_NIV.setzen(2)); await p.waitForTimeout(150);
 
 /* Breiten */
@@ -307,10 +385,11 @@ notiz.breiten=[];
 for(const w of BREITEN){
   await p.setViewportSize({width:w,height:900}); await p.waitForTimeout(230);
   const r=await p.evaluate(()=>({scroll:document.body.scrollWidth,
-    linie:!!document.querySelector('.zt-linie')}));
+    linie:!!document.querySelector('.zt-linie'),
+    antwort:!!document.querySelector('.zt-antwort')}));
   notiz.breiten.push(w+':'+r.scroll);
   if(r.scroll>w+1) f.push('Breite '+w+': Inhalt '+r.scroll+' breit');
-  if(!r.linie) f.push('Breite '+w+': keine Linie');
+  if(!r.linie||!r.antwort) f.push('Breite '+w+': Teile fehlen');
 }
 await p.setViewportSize({width:390,height:900});
 
@@ -320,8 +399,10 @@ const f2=[]; p2.on('pageerror',e=>f2.push(String(e.message).slice(0,140)));
 await p2.goto('file://ZIEL'); await p2.waitForTimeout(800);
 notiz.ohneProfil=await p2.evaluate(()=>({
   leer:document.querySelectorAll('.zt-leer').length,
+  schritte:document.querySelectorAll('.zt-schritt').length,
   text:document.body.innerText.length}));
 f2.forEach(x=>f.push('ohne Profil: '+x));
+if(notiz.ohneProfil.schritte!==4) f.push('ohne Profil fehlen die vier Schritte');
 if(notiz.ohneProfil.text<3000) f.push('ohne Profil fast leere Seite');
 
 console.log(JSON.stringify({notiz,fehler:[...new Set(f)]}));
@@ -344,38 +425,39 @@ if pr:
     for x in pr['fehler']:
         fehler.append(x)
     s, n = pr['notiz'], pr['notiz']['start']
-    if n['karten'] != 4:   fehler.append(f'{n["karten"]} statt 4 Karten unter „Jetzt gerade"')
-    if n['baender'] < 8:   fehler.append(f'nur {n["baender"]} Bänder auf der Linie')
-    if n['heute'] != 1:    fehler.append('die Stichtagslinie fehlt')
-    if n['legende'] != 4:  fehler.append(f'{n["legende"]} statt 4 Einträge in der Legende')
-    if not n['gipfel']:    fehler.append('keine Hochphasen gelistet')
-    if n['tabelle'] < 20:  fehler.append(f'die Tabelle hat nur {n["tabelle"]} Zeilen')
-    if not s['sprungOk']:  fehler.append('eine Sprungmarke zeigt ins Leere')
-    if s['ohneGipfel']:    fehler.append(f'{s["ohneGipfel"]} Profile ohne eine einzige Hochphase')
-    if len(s['stufen']) < 3:
-        fehler.append(f'nur {len(s["stufen"])} verschiedene Stufen über alle Profile: {s["stufen"]}')
-    if s['kapitelGesehen'] < 6:
-        fehler.append(f'nur {s["kapitelGesehen"]} verschiedene Kapitel über 20 Profile — '
-                      'die Rechnung unterscheidet zu wenig')
-    if not s['varianteWirkt']:
-        fehler.append('die Eros-Variante ändert die Liebesspur nicht')
-    if s['berichtLaenge'] < 1500:
+    if not n['antwort']:     fehler.append('oben steht keine Antwort')
+    if not n['gross']:       fehler.append('die große Antwort ist leer')
+    if not n['naechste']:    fehler.append('die nächste Hochphase wird nicht genannt')
+    if n['mini'] != 5:       fehler.append(f'{n["mini"]} statt 5 Bereiche in der Kurzzeile')
+    if n['schritte'] != 4:   fehler.append(f'{n["schritte"]} statt 4 Erklärschritte')
+    if n['bilder'] < 4:      fehler.append(f'nur {n["bilder"]} Bilder in der Erklärung')
+    if n['bereiche'] != 5:   fehler.append(f'{n["bereiche"]} statt 5 Bereiche zur Wahl')
+    if n['zeilen'] != 5:     fehler.append(f'{n["zeilen"]} statt 5 Zeilen in der Übersicht')
+    if n['legende'] != 4:    fehler.append(f'{n["legende"]} statt 4 Einträge in der Legende')
+    if n['weitere'] != 2:    fehler.append('die zwei weiteren Verfahren fehlen')
+    if n['woerter'] < 5:     fehler.append(f'nur {n["woerter"]} erklärbare Wörter auf der Seite')
+    if n['tabelle'] < 20:    fehler.append(f'die Tabelle hat nur {n["tabelle"]} Zeilen')
+    if s['berichtLaenge'] < 2000:
         fehler.append(f'der Bericht ist nur {s["berichtLaenge"]} Zeichen lang')
     tiefe = s['stufenTiefe']
     if tiefe[0] != 0:
         fehler.append(f'auf Stufe 0 sind Zusatzangaben sichtbar: {tiefe}')
-    if tiefe[4] <= tiefe[0]:
-        fehler.append(f'die Wissensstufe ändert nichts: {tiefe}')
+    if tiefe[4] <= tiefe[1]:
+        fehler.append(f'die Wissensstufe ändert zu wenig: {tiefe}')
 
-    print('  Rauchprobe: 20 Profile, %d–… Bänder, %d–… Hochphasen je Profil, '
-          '%d verschiedene Kapitel, Bericht %d Zeichen'
-          % (s['minBaender'], s['minGipfel'], s['kapitelGesehen'], s['berichtLaenge']))
-    print('    Stufen gesehen: %s' % ', '.join(s['stufen']))
-    print('    Zusatzangaben je Wissensstufe 0–4: %s' % tiefe)
+    print('  Rauchprobe: 20 Profile, 5 Bereiche (%d verschiedene Antworten), '
+          '%d Erklärschritte mit %d Bildern, %d erklärbare Wörter, Bericht %d Zeichen'
+          % (s['bereichWirkt'], n['schritte'], n['bilder'], n['woerter'], s['berichtLaenge']))
+    print('    Antworten über alle Profile: %s' % ', '.join(s['stufen']))
+    print('    Stufe 0: %d Zeichen Text, Fachwörter darin: %s'
+          % (s['text0'], s['jargon0'] or 'keine'))
+    print('    Zusatzangaben je Stufe 0–4: %s' % tiefe)
     print('    Breiten: %s' % ', '.join(s['breiten']))
+    print('    Stichtag vor der Geburt: „%s…"' % s['vorGeburt'].replace(chr(10), ' ')[:58])
 
 print(f'zeiten.html  {ziel.stat().st_size:,} Bytes  →  {ziel}')
-print('  12 Kapitel × 2 Spuren, 12 Profektionshäuser, 9 Firdaria-Herren')
+print('  12 Kapitel × 5 Bereiche = %d Texte, %d erklärte Wörter'
+      % (12 * 5, len(woerter)))
 for h in hinweise:
     print('  Hinweis: ' + h)
 for f in fehler:

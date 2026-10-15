@@ -50,6 +50,35 @@ nah('Eros-Variante spiegelt am AC', Z.nrm(Lt.eros + Lt.erosAlt), Z.nrm(2 * tagC.
 /* Ohne Venus kein Eros */
 gl('kein Eros ohne Venus', Z.lose({ASC:0, Sonne:200, Mond:100}).eros, null);
 
+/* ── Die übrigen vier hermetischen Lose ─────────────────────── */
+var vollC = {ASC:0, Sonne:200, Mond:100, Venus:230, Merkur:190, Mars:310,
+             Jupiter:45, Saturn:280};
+var Lv = Z.lose(vollC);                    /* Sonne im 7. Haus → Tag */
+gl('volles Chart ist Tag', Lv.tag, true);
+nah('Sieg Tag (AC + Jupiter − Geist)',  Lv.sieg,    Z.nrm(0 + 45 - Lv.geist));
+nah('Not Tag (AC + Glück − Merkur)',    Lv.not,     Z.nrm(0 + Lv.glueck - 190));
+nah('Mut Tag (AC + Glück − Mars)',      Lv.mut,     Z.nrm(0 + Lv.glueck - 310));
+nah('Nemesis Tag (AC + Glück − Saturn)',Lv.nemesis, Z.nrm(0 + Lv.glueck - 280));
+/* In der Nacht kehren sich alle sieben um */
+var nachtC = {ASC:0, Sonne:40, Mond:100, Venus:70, Merkur:30, Mars:120,
+              Jupiter:300, Saturn:200};
+var Ln2 = Z.lose(nachtC);
+gl('zweites Chart ist Nacht', Ln2.tag, false);
+nah('Sieg Nacht',   Ln2.sieg,    Z.nrm(0 + Ln2.geist - 300));
+nah('Not Nacht',    Ln2.not,     Z.nrm(0 + 30 - Ln2.glueck));
+nah('Mut Nacht',    Ln2.mut,     Z.nrm(0 + 120 - Ln2.glueck));
+nah('Nemesis Nacht',Ln2.nemesis, Z.nrm(0 + 200 - Ln2.glueck));
+/* Fehlt ein Planet, fehlt das Los — statt still falsch zu rechnen */
+var ohne = Z.lose({ASC:0, Sonne:200, Mond:100});
+gl('kein Sieg ohne Jupiter', ohne.sieg, null);
+gl('keine Not ohne Merkur', ohne.not, null);
+gl('kein Mut ohne Mars', ohne.mut, null);
+gl('keine Nemesis ohne Saturn', ohne.nemesis, null);
+/* Fünf Bereiche, jeder an ein Los gehängt */
+gl('fünf Bereiche', Z.BEREICHE.length, 5);
+gl('Bereichsschlüssel', Z.BEREICHE.map(function(b){ return b.k; }),
+   ['arbeit','liebe','koerper','erfolg','druck']);
+
 /* ── Freilassung: Aufbau und Lückenlosigkeit ────────────────── */
 function pruefeFreilassung(losLon, glueckLon, name){
   var F = Z.freilassung(losLon, glueckLon, 100 * 360);

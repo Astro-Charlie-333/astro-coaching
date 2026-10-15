@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Die Hochphasen &middot; Astro-Charlie</title>
+<title>Wann bei dir was los ist &middot; Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
@@ -113,35 +113,70 @@ a{color:var(--nacht);}
 
 
 /* ── Zeiten ──────────────────────────────────────────────────── */
-.zt-wrap{max-width:1140px;margin:0 auto;padding:34px 26px 100px;}
+.zt-wrap{max-width:1060px;margin:0 auto;padding:34px 26px 100px;}
 @media(max-width:620px){.zt-wrap{padding:24px 17px 70px;}}
 .zt-kopf h1{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(32px,6vw,54px);
  font-weight:300;line-height:1.02;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 14px;}
 .zt-kopf h1 em{font-style:italic;color:var(--messing,#9A7235);}
-.zt-lede{font-size:16.5px;line-height:1.7;color:var(--leise,#6B6259);max-width:66ch;margin:0 0 14px;}
+.zt-lede{font-size:16.5px;line-height:1.7;color:var(--leise,#6B6259);max-width:64ch;margin:0 0 13px;}
 .zt-lede b{color:var(--nacht,#2E3A5C);font-weight:500;}
 
-.zt-sprung{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 26px;}
-.zt-sprung a{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;
- letter-spacing:.09em;text-transform:uppercase;text-decoration:none;
- color:var(--nacht,#2E3A5C);background:var(--papier,#FFFDFA);
- border:1px solid var(--linie,#EBE1D2);border-radius:14px;padding:7px 12px;}
-.zt-sprung a:hover{border-color:var(--nacht,#2E3A5C);background:var(--nacht-bg,#E9EDF4);}
-
-.zt-abschnitt{margin:0 0 44px;scroll-margin-top:72px;}
+.zt-abschnitt{margin:0 0 48px;scroll-margin-top:72px;}
 .zt-abschnitt>h2{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(23px,3.5vw,31px);
  font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
-.zt-abschnitt>.u{font-size:14.8px;line-height:1.6;color:var(--leise,#6B6259);
- max-width:70ch;margin:0 0 18px;}
+.zt-abschnitt>.u{font-size:14.8px;line-height:1.62;color:var(--leise,#6B6259);
+ max-width:72ch;margin:0 0 18px;}
 .zt-abschnitt>.u b{color:var(--tinte,#231F1A);}
+.zt-h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:36px 0 6px;}
 
-/* Einstellungen */
+/* ── Wörter, die sich erklären ──────────────────────────────── */
+.zt-wp{display:inline;}
+.zt-w{font:inherit;background:none;border:none;padding:0;cursor:pointer;color:inherit;
+ border-bottom:1px dashed var(--messing,#9A7235);}
+.zt-w::after{content:'?';font-family:var(--mono,'JetBrains Mono',monospace);font-size:.68em;
+ vertical-align:super;color:var(--messing,#9A7235);margin-left:1px;}
+.zt-w:hover{border-bottom-style:solid;}
+.zt-w.auf{background:var(--messing-bg,#F7EFE1);}
+.zt-we{display:block;margin:8px 0;background:var(--messing-bg,#F7EFE1);
+ border-left:3px solid var(--messing,#9A7235);border-radius:0 11px 11px 0;
+ padding:10px 14px;font-size:14px;line-height:1.6;color:var(--tinte,#231F1A);}
+.zt-we[hidden]{display:none;}
+
+/* ── A · Die Antwort ────────────────────────────────────────── */
+.zt-antwort{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:24px;padding:28px 32px;margin-bottom:18px;border-top:6px solid var(--farbe,#9A7235);}
+@media(max-width:620px){.zt-antwort{padding:21px 18px;border-radius:19px;}}
+.zt-ak{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:10px;}
+.zt-agross{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(34px,6.5vw,56px);
+ font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--farbe,#9A7235);margin-bottom:12px;}
+.zt-asatz{font-size:16px;line-height:1.68;color:var(--tinte,#231F1A);margin:0 0 14px;max-width:66ch;}
+.zt-asatz b{color:var(--nacht,#2E3A5C);}
+.zt-awo{font-size:15.2px;line-height:1.68;color:var(--leise,#6B6259);margin:0 0 14px;max-width:66ch;}
+.zt-awo b{color:var(--nacht,#2E3A5C);font-weight:500;}
+.zt-anext{background:var(--nacht-bg,#E9EDF4);border-radius:14px;padding:14px 17px;
+ font-size:15.4px;line-height:1.62;margin-bottom:9px;}
+.zt-anext b{color:var(--nacht,#2E3A5C);}
+.zt-anext.jetzt{background:var(--messing-bg,#F7EFE1);}
+.zt-amini{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px;padding-top:15px;
+ border-top:1px solid var(--linie,#EBE1D2);}
+.zt-m{font-family:inherit;background:var(--creme,#FCF7EF);border:1px solid var(--linie-stark,#DDD0BC);
+ border-radius:14px;padding:8px 11px;cursor:pointer;display:flex;flex-direction:column;
+ gap:5px;align-items:flex-start;min-width:0;}
+.zt-m:hover{border-color:var(--nacht,#2E3A5C);}
+.zt-m.ist{border-color:var(--nacht,#2E3A5C);background:var(--nacht-bg,#E9EDF4);}
+.zt-m .mn{font-size:13px;color:var(--tinte,#231F1A);}
+.zt-m .ms{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;letter-spacing:.1em;
+ text-transform:uppercase;color:#fff;border-radius:8px;padding:3px 7px;}
+
+/* ── Einstellungen ──────────────────────────────────────────── */
 .zt-einst{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:20px;padding:17px 19px;margin-bottom:30px;}
+ border-radius:20px;padding:17px 19px;}
 .zt-reihe{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;}
 .zt-reihe+.zt-reihe{margin-top:13px;padding-top:13px;border-top:1px solid var(--linie,#EBE1D2);}
 .zt-reihe>.k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
- letter-spacing:.13em;text-transform:uppercase;color:var(--messing,#9A7235);flex:none;min-width:76px;}
+ letter-spacing:.13em;text-transform:uppercase;color:var(--messing,#9A7235);flex:none;min-width:70px;}
 .zt-knoepfe{display:flex;flex-wrap:wrap;gap:5px;min-width:0;}
 .zt-knopf{font-family:inherit;font-size:13.4px;padding:7px 13px;border-radius:17px;
  border:1px solid var(--linie-stark,#DDD0BC);background:var(--creme,#FCF7EF);
@@ -151,71 +186,93 @@ a{color:var(--nacht);}
 .zt-feld{font-family:inherit;font-size:14.6px;padding:8px 12px;border-radius:14px;
  border:1px solid var(--linie-stark,#DDD0BC);background:var(--creme,#FCF7EF);
  color:var(--tinte,#231F1A);}
-.zt-hint{flex:1 1 100%;margin:3px 0 0;font-size:12.8px;line-height:1.5;color:var(--leise,#6B6259);}
+.zt-hint{flex:1 1 100%;margin:3px 0 0;font-size:12.9px;line-height:1.55;color:var(--leise,#6B6259);}
+.zt-hint b{color:var(--tinte,#231F1A);}
 
-/* ── Jetzt gerade ───────────────────────────────────────────── */
-.zt-jetzt{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:12px;}
-@media(max-width:940px){.zt-jetzt{grid-template-columns:1fr;}}
-.zt-j{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:20px;padding:19px 21px;border-top:5px solid var(--messing,#9A7235);min-width:0;}
-@media(max-width:620px){.zt-j{padding:16px 16px;}}
-.zt-j>.lab{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
- font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;letter-spacing:.12em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:9px;}
-.zt-stufe{border-radius:10px;padding:3px 9px;color:#fff;font-size:9px;letter-spacing:.1em;}
-.zt-j h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:23px;font-weight:500;
- color:var(--nacht,#2E3A5C);margin:0 0 3px;line-height:1.2;}
-.zt-j .wann{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;
- color:var(--leise,#6B6259);margin-bottom:11px;}
-.zt-j p{font-size:14.8px;line-height:1.68;margin:0 0 10px;}
-.zt-j .unter{margin-top:12px;padding-top:12px;border-top:1px dashed var(--linie-stark,#DDD0BC);}
-.zt-j .unter b{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;
- letter-spacing:.11em;text-transform:uppercase;color:var(--messing,#9A7235);
+/* ── B · Die Schritte ───────────────────────────────────────── */
+.zt-schritt{display:flex;gap:17px;background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie,#EBE1D2);border-radius:20px;padding:21px 24px;margin-bottom:11px;}
+@media(max-width:620px){.zt-schritt{padding:17px 16px;gap:12px;}}
+.zt-snr{flex:none;width:36px;height:36px;border-radius:50%;background:var(--nacht,#2E3A5C);
+ color:#fff;display:flex;align-items:center;justify-content:center;
+ font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;}
+.zt-sin{min-width:0;flex:1 1 auto;}
+.zt-sin h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:20px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:4px 0 7px;line-height:1.25;}
+.zt-sin>p{font-size:15.3px;line-height:1.7;margin:0 0 12px;max-width:68ch;}
+.zt-sin>p b{color:var(--nacht,#2E3A5C);}
+.zt-mini{overflow-x:auto;background:var(--creme,#FCF7EF);border-radius:13px;padding:11px 13px;}
+.zt-mini-svg{display:block;min-width:460px;width:100%;height:auto;}
+.zt-mini-t{font-family:var(--sans,system-ui);font-size:12px;fill:var(--tinte,#231F1A);}
+.zt-mini-a{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
+ fill:var(--leise,#6B6259);}
+.zt-mini-g{font-family:var(--sans,system-ui);font-size:15px;fill:var(--tinte,#231F1A);}
+.zt-mini-g.hell{fill:#fff;}
+.zt-mini-p{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;
+ fill:var(--rost,#A05A3A);letter-spacing:.06em;}
+.zt-genau{margin-top:12px;background:var(--nacht-bg,#E9EDF4);border-radius:12px;
+ padding:11px 14px;font-size:14px;line-height:1.62;}
+.zt-genau>b:first-child{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--nacht,#2E3A5C);
  margin-bottom:4px;font-weight:400;}
-.zt-j .tun{margin-top:11px;background:var(--messing-bg,#F7EFE1);border-radius:12px;
- padding:10px 13px;font-size:13.9px;line-height:1.58;}
-.zt-j .tun b{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;
- letter-spacing:.11em;text-transform:uppercase;color:var(--messing,#9A7235);
- margin-bottom:4px;font-weight:400;}
-.zt-balken{display:flex;height:7px;border-radius:5px;overflow:hidden;
- background:var(--linie,#EBE1D2);margin:9px 0 4px;}
-.zt-balken i{display:block;height:100%;background:var(--messing,#9A7235);}
-.zt-rest{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.5px;
- color:var(--leise,#6B6259);}
 
-/* ── Die Lebenslinie ────────────────────────────────────────── */
+/* ── C · Bereiche ───────────────────────────────────────────── */
+.zt-bwahl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(196px,100%),1fr));gap:9px;}
+.zt-b{font-family:inherit;text-align:left;background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie-stark,#DDD0BC);border-radius:17px;padding:13px 15px;
+ cursor:pointer;color:var(--tinte,#231F1A);min-width:0;}
+.zt-b:hover{border-color:var(--nacht,#2E3A5C);}
+.zt-b b{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
+ font-weight:500;color:var(--nacht,#2E3A5C);margin-bottom:4px;line-height:1.25;}
+.zt-b span{display:block;font-size:12.9px;line-height:1.5;color:var(--leise,#6B6259);}
+.zt-b i{display:inline-block;margin-top:8px;font-style:normal;
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;letter-spacing:.1em;
+ text-transform:uppercase;color:#fff;border-radius:9px;padding:3px 8px;}
+.zt-b.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
+.zt-b.ist b{color:#fff;} .zt-b.ist span{color:rgba(244,239,230,.76);}
+.zt-bfrage{margin-top:14px;background:var(--messing-bg,#F7EFE1);border-radius:15px;
+ padding:14px 17px;font-size:15.4px;line-height:1.6;}
+.zt-bfrage b{color:var(--nacht,#2E3A5C);}
+.zt-bfrage p{margin:9px 0 0;font-size:13.8px;color:var(--leise,#6B6259);line-height:1.6;}
+
+/* ── D · Die Lebenslinie ────────────────────────────────────── */
 .zt-linie-box{overflow-x:auto;background:var(--papier,#FFFDFA);
  border:1px solid var(--linie,#EBE1D2);border-radius:20px;padding:18px 20px;}
-.zt-linie{display:block;min-width:720px;width:100%;height:auto;}
+.zt-linie{display:block;min-width:660px;width:100%;height:auto;}
 .zt-band{cursor:pointer;}
 .zt-band rect{transition:opacity .12s;}
-.zt-band:hover rect{opacity:.85;}
-.zt-band.ist rect.haupt{stroke:var(--nacht,#2E3A5C);stroke-width:2;}
-.zt-bt{font-family:var(--sans,system-ui);font-size:12px;fill:#fff;pointer-events:none;}
-.zt-bt.dunkel{fill:var(--tinte,#231F1A);}
-.zt-bt.zt-gly{font-size:15px;}
+.zt-band:hover rect.haupt{opacity:.86;}
+.zt-band.ist rect.haupt{stroke:var(--nacht,#2E3A5C);stroke-width:2.5;}
+.zt-bt{font-family:var(--sans,system-ui);font-size:13px;fill:#fff;pointer-events:none;}
+.zt-bt.klein{font-size:10.5px;fill:rgba(255,255,255,.8);}
+.zt-bt.zt-gly{font-size:16px;}
 .zt-achse{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
  fill:var(--leise,#6B6259);}
-.zt-spur{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
- letter-spacing:.11em;fill:var(--messing,#9A7235);text-transform:uppercase;}
+.zt-zeile{cursor:pointer;}
+.zt-zeile:hover rect:first-child{fill:#F3EADB;}
+.zt-zt{font-family:var(--sans,system-ui);font-size:12.5px;fill:var(--tinte,#231F1A);}
 .zt-heute line{stroke:var(--rost,#A05A3A);stroke-width:2;}
 .zt-heute text{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;
  fill:var(--rost,#A05A3A);}
 
-.zt-legende{display:flex;flex-wrap:wrap;gap:9px 16px;margin:12px 0 0;font-size:12.6px;
+.zt-legende{display:flex;flex-wrap:wrap;gap:9px 18px;margin:12px 0 0;font-size:12.9px;
  color:var(--leise,#6B6259);}
 .zt-legende span{display:inline-flex;align-items:center;gap:6px;}
+.zt-legende b{color:var(--tinte,#231F1A);font-weight:500;}
 .zt-legende i{display:inline-block;width:14px;height:11px;border-radius:3px;flex:none;}
+.zt-legende i.raute{width:11px;height:11px;background:var(--rost,#A05A3A);
+ transform:rotate(45deg);border-radius:2px;}
 
-/* Detail eines Abschnitts */
 .zt-detail{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
  border-radius:20px;padding:21px 24px;margin-top:16px;border-left:5px solid var(--messing,#9A7235);}
 @media(max-width:620px){.zt-detail{padding:17px 16px;}}
-.zt-dkopf{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:5px;}
-.zt-dkopf h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:24px;font-weight:500;
- color:var(--nacht,#2E3A5C);margin:0;line-height:1.2;}
+.zt-dkopf{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:5px;}
+.zt-dkopf h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:23px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0;line-height:1.22;}
+.zt-stufe{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;letter-spacing:.11em;
+ text-transform:uppercase;color:#fff;border-radius:10px;padding:4px 9px;}
 .zt-detail .wann{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;
- color:var(--leise,#6B6259);margin-bottom:12px;}
+ color:var(--leise,#6B6259);margin-bottom:13px;}
 .zt-detail p{font-size:15.2px;line-height:1.7;margin:0 0 11px;max-width:70ch;}
 .zt-detail .tun{background:var(--messing-bg,#F7EFE1);border-radius:12px;padding:11px 14px;
  font-size:14.4px;line-height:1.6;}
@@ -227,40 +284,56 @@ a{color:var(--nacht);}
 .zt-liste{display:grid;gap:9px;}
 .zt-g{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
  border-radius:16px;padding:14px 17px;border-left:4px solid var(--messing,#9A7235);
- display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;}
+ display:flex;gap:15px;align-items:baseline;flex-wrap:wrap;}
 .zt-g.laeuft{background:var(--messing-bg,#F7EFE1);}
 .zt-g .wann{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
- color:var(--nacht,#2E3A5C);flex:none;min-width:168px;}
-.zt-g .was{min-width:0;flex:1 1 220px;}
+ color:var(--nacht,#2E3A5C);flex:none;min-width:104px;line-height:1.5;}
+.zt-g .wann i{font-style:normal;color:var(--leise,#6B6259);font-size:10.5px;}
+.zt-g .was{min-width:0;flex:1 1 210px;}
 .zt-g .was b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.5px;font-weight:500;
  color:var(--nacht,#2E3A5C);display:block;}
 .zt-g .was span{font-size:13.6px;line-height:1.55;color:var(--leise,#6B6259);}
-.zt-g .mk{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;letter-spacing:.1em;
+.zt-g .mk{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;letter-spacing:.09em;
  text-transform:uppercase;background:var(--nacht,#2E3A5C);color:#fff;border-radius:9px;
- padding:3px 8px;flex:none;}
+ padding:4px 9px;flex:none;}
 .zt-g .mk.jetzt{background:var(--rost,#A05A3A);}
 
-.zt-filter{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
 .zt-tab{overflow-x:auto;border:1px solid var(--linie,#EBE1D2);border-radius:18px;
  background:var(--papier,#FFFDFA);}
-.zt-tab table{border-collapse:collapse;width:100%;min-width:620px;}
+.zt-tab table{border-collapse:collapse;width:100%;min-width:600px;}
 .zt-tab th,.zt-tab td{text-align:left;padding:9px 12px;font-size:13.2px;
  border-bottom:1px solid var(--linie,#EBE1D2);vertical-align:top;}
 .zt-tab thead th{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
  letter-spacing:.1em;text-transform:uppercase;color:var(--messing,#9A7235);font-weight:400;}
-.zt-tab tbody tr.l2 td{font-size:12.4px;color:var(--leise,#6B6259);
- background:var(--creme,#FCF7EF);}
-.zt-tab tbody tr.l2 td:first-child{padding-left:28px;}
+.zt-tab tbody tr.l2 td{font-size:12.4px;color:var(--leise,#6B6259);background:var(--creme,#FCF7EF);}
+.zt-tab tbody tr.l2 td:first-child{padding-left:26px;}
 .zt-tab tbody tr.ist{background:var(--nacht-bg,#E9EDF4);}
 .zt-tab .pz{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;}
 .zt-tab .bd{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;
- letter-spacing:.1em;text-transform:uppercase;color:var(--rost,#A05A3A);}
+ letter-spacing:.09em;text-transform:uppercase;color:var(--rost,#A05A3A);}
+
+/* ── H · Weitere Verfahren ──────────────────────────────────── */
+.zt-jetzt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));gap:12px;}
+.zt-j{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:20px;padding:19px 21px;border-top:5px solid var(--messing,#9A7235);min-width:0;}
+@media(max-width:620px){.zt-j{padding:16px 16px;}}
+.zt-j>.lab{font-family:var(--sans,system-ui);font-size:13px;color:var(--messing,#9A7235);
+ margin-bottom:8px;}
+.zt-j h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:22px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 3px;line-height:1.2;}
+.zt-j .wann{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;
+ color:var(--leise,#6B6259);margin-bottom:11px;}
+.zt-j p{font-size:14.9px;line-height:1.68;margin:0 0 10px;}
+.zt-j .unter{margin-top:12px;padding-top:12px;border-top:1px dashed var(--linie-stark,#DDD0BC);}
+.zt-j .unter b{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:9px;
+ letter-spacing:.11em;text-transform:uppercase;color:var(--messing,#9A7235);
+ margin-bottom:4px;font-weight:400;}
 
 .zt-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
  border-radius:16px;padding:17px 19px;font-size:15px;line-height:1.65;color:var(--leise,#6B6259);}
 .zt-leer a{color:var(--nacht,#2E3A5C);}
 
-/* ── Ehrlichkeit ────────────────────────────────────────────── */
+/* ── I · Ehrlichkeit ────────────────────────────────────────── */
 .zt-ehrlich{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:24px;padding:28px 32px;
  max-width:830px;margin:0 auto;}
 @media(max-width:620px){.zt-ehrlich{padding:21px 18px;border-radius:19px;}}
@@ -271,6 +344,9 @@ a{color:var(--nacht);}
 .zt-ehrlich p{font-size:15.3px;line-height:1.72;color:rgba(244,239,230,.86);margin:0 0 11px;max-width:74ch;}
 .zt-ehrlich p:last-child{margin-bottom:0;}
 .zt-ehrlich b{color:#fff;font-weight:500;}
+.zt-ehrlich .zt-w{color:#E8C97A;border-bottom-color:#E8C97A;}
+.zt-ehrlich .zt-w::after{color:#E8C97A;}
+.zt-ehrlich .zt-we{background:rgba(255,255,255,.1);border-left-color:#E8C97A;color:#F4EFE6;}
 
 .zt-werk{margin-top:34px;padding-top:20px;border-top:1px dashed var(--linie-stark,#DDD0BC);
  display:flex;flex-wrap:wrap;gap:9px;align-items:center;}
@@ -280,12 +356,13 @@ a{color:var(--nacht);}
 .zt-echo{font-size:13.6px;color:var(--gruen,#3F6B4A);}
 
 @media print{
- .ac-leiste,.zt-sprung,.zt-einst,.zt-filter,.zt-werk,.weiter,.niv-leiste{display:none!important;}
+ .ac-leiste,.zt-einst,.zt-werk,.weiter,.niv-leiste,.zt-bwahl{display:none!important;}
  body{background:#fff;}
  .zt-ehrlich{background:#fff!important;color:#000!important;border:2px solid #000;}
  .zt-ehrlich h2,.zt-ehrlich h4,.zt-ehrlich p{color:#000!important;}
- .zt-j,.zt-detail,.zt-abschnitt,.zt-g{break-inside:avoid;}
- .zt-linie{min-width:0;}
+ .zt-we{display:block!important;}
+ .zt-j,.zt-detail,.zt-abschnitt,.zt-g,.zt-schritt{break-inside:avoid;}
+ .zt-linie,.zt-mini-svg{min-width:0;}
 }
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
@@ -300,92 +377,107 @@ a{color:var(--nacht);}
 
 <div class="zt-wrap">
 <div class="zt-kopf">
-  <h1>Die <em>Hochphasen.</em></h1>
-  <p class="zt-lede">Wann kommt etwas, und wann ist Ruhe? Diese Seite rechnet die <b>zodiakale Freilassung</b> &mdash; ein hellenistisches Verfahren, das ein Leben in Kapitel teilt und sagt, welche davon betriebsam sind. Einmal f&uuml;r die <b>Arbeit</b>, gerechnet vom Los des Geistes, und einmal f&uuml;r die <b>Liebe</b>, gerechnet vom Los des Eros.</p>
-  <p class="zt-lede">Dazu zwei weitere Verfahren, die dasselbe Jahr aus anderer Richtung ansehen: die <b>Jahresprofektion</b> und die <b>Firdaria</b>. Wo sie sich decken, lohnt das Hinsehen. Wo nicht, auch &mdash; dann ist das Jahr nicht eindeutig.</p>
+  <h1>Wann bei dir <em>was los ist.</em></h1>
+  <p class="zt-lede">Es gibt ein altes Verfahren, das ein Leben in <b>Kapitel</b> teilt und sagt, welche davon laut sind und welche leise. Es rechnet f&uuml;nf Lebensbereiche getrennt &mdash; Arbeit, Liebe, Umst&auml;nde, R&uuml;ckenwind und Druck laufen n&auml;mlich nicht gleichzeitig.</p>
+  <p class="zt-lede">Du musst daf&uuml;r nichts wissen. Oben steht die Antwort, darunter steht in vier Schritten, wie sie zustande kommt, und ganz unten steht, was das Verfahren taugt und was nicht.</p>
 </div>
 
 <div id="nivleiste"></div>
 
-<nav class="zt-sprung" aria-label="Zu den Abschnitten">
-  <a href="#jetzt">Jetzt gerade</a>
-  <a href="#linie">Deine Lebenslinie</a>
-  <a href="#gipfel">N&auml;chste Hochphasen</a>
-  <a href="#schnitte">Die Einschnitte</a>
-  <a href="#alle">Alle Abschnitte</a>
-  <a href="#rechnung">Wie das gerechnet wird</a>
-</nav>
-
-<div class="zt-einst">
-  <div class="zt-reihe"><span class="k">Wer</span><div class="zt-knoepfe" id="ztpersonen"></div></div>
-  <div class="zt-reihe"><span class="k">Stichtag</span>
-    <input class="zt-feld" id="ztdatum" type="date">
-    <button type="button" class="zt-knopf" id="ztheute">Heute</button>
-    <p class="zt-hint">Du kannst jeden Tag einstellen &mdash; r&uuml;ckw&auml;rts, um zu pr&uuml;fen, ob die Rechnung zu dem passt, was wirklich war, und vorw&auml;rts, um zu planen.</p>
+<!-- A ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="antwort">
+  <div id="ztantwort"></div>
+  <div class="zt-einst">
+    <div class="zt-reihe"><span class="k">Wer</span><div class="zt-knoepfe" id="ztpersonen"></div></div>
+    <div class="zt-reihe"><span class="k">Stichtag</span>
+      <input class="zt-feld" id="ztdatum" type="date">
+      <button type="button" class="zt-knopf" id="ztheute">Heute</button>
+      <p class="zt-hint"><b>Der beste Test:</b> Stell den Tag auf ein Jahr, von dem du wei&szlig;t, was los war. Wenn die Seite dort Hochphase sagt und bei dir war wirklich viel los, dann hast du einen Grund, ihr auch nach vorn zu glauben. Wenn nicht, dann nicht.</p>
+    </div>
+    <div class="zt-reihe" data-ab="3"><span class="k">Eros</span>
+      <div class="zt-knoepfe" id="ztvariante"></div>
+      <p class="zt-hint">F&uuml;r den Startpunkt der Liebesspur gibt es zwei &Uuml;berlieferungen, die sich genau spiegeln. Gerechnet wird nach Paulus und Olympiodor; die andere Fassung kannst du dagegenhalten.</p>
+    </div>
   </div>
-  <div class="zt-reihe" data-ab="3"><span class="k">Eros</span>
-    <div class="zt-knoepfe" id="ztvariante"></div>
-    <p class="zt-hint">F&uuml;r das Los des Eros gibt es zwei &Uuml;berlieferungen, die sich genau spiegeln. Die Seite rechnet nach Paulus und Olympiodor; die andere Fassung kannst du dagegenhalten.</p>
-  </div>
-</div>
-
-<!-- 1 ───────────────────────────────────────────────── -->
-<section class="zt-abschnitt" id="jetzt">
-  <h2>Jetzt gerade</h2>
-  <p class="u">Vier Verfahren auf denselben Tag gelegt.</p>
-  <div id="ztjetzt"></div>
 </section>
 
-<!-- 2 ───────────────────────────────────────────────── -->
+<!-- B ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="wie">
+  <h2>So funktioniert das</h2>
+  <p class="u">Vier Schritte. Danach kannst du jede Zahl auf dieser Seite selbst nachvollziehen.</p>
+  <div id="ztschritte"></div>
+</section>
+
+<!-- C ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="bereich">
+  <h2>Welcher Bereich?</h2>
+  <p class="u">F&uuml;nfmal dieselbe Rechnung von einem anderen Startpunkt aus. W&auml;hl einen &mdash; alles darunter rechnet dann f&uuml;r diesen Bereich.</p>
+  <div class="zt-bwahl" id="ztbereiche"></div>
+  <div id="ztbfrage"></div>
+</section>
+
+<!-- D ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="linie">
   <h2>Deine Lebenslinie</h2>
-  <p class="u">Oben die Arbeit, unten die Liebe. Breite Balken sind die gro&szlig;en Kapitel, der schmale Streifen darunter ihre Unterabschnitte. <b>Gold</b> hei&szlig;t Hochphase, <b>gr&uuml;n</b> mittlere Phase, <b>grau</b> ruhige Phase. Im Streifen sind nur die Hochphasen eingef&auml;rbt &mdash; so siehst du, wann es <i>innerhalb</i> eines Kapitels betriebsam wird. Die Rauten sind die Einschnitte, die Linie ist dein Stichtag.</p>
+  <p class="u" id="ztlinie-u"></p>
   <div class="zt-linie-box" id="ztlinie"></div>
   <div class="zt-legende" id="ztlegende"></div>
   <p class="zt-hint" id="ztlinie-hint"></p>
   <div id="ztdetail"></div>
+
+  <h3 class="zt-h3">Alle f&uuml;nf Bereiche nebeneinander</h3>
+  <p class="u">Dieselben hundert Jahre, f&uuml;nfmal. Hier siehst du auf einen Blick, ob gerade &uuml;berall gleichzeitig etwas los ist oder nur in einem Bereich. Antippen wechselt oben den Bereich.</p>
+  <div class="zt-linie-box" id="ztalle"></div>
 </section>
 
-<!-- 3 ───────────────────────────────────────────────── -->
+<!-- E ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="gipfel">
-  <h2>Die n&auml;chsten Hochphasen</h2>
-  <p class="u">Abschnitte, deren Zeichen im Winkel zum Los des Gl&uuml;cks steht. Das sind die betriebsamen Zeiten &mdash; nicht automatisch die sch&ouml;nen, aber die mit Folgen.</p>
+  <h2>Deine n&auml;chsten Hochphasen</h2>
+  <p class="u" id="ztgipfel-u"></p>
   <div id="ztgipfel"></div>
 </section>
 
-<!-- 4 ───────────────────────────────────────────────── -->
+<!-- F ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="schnitte">
-  <h2>Die Einschnitte</h2>
-  <p class="u">Die <i>L&ouml;sung der Bindung</i>: Stellen, an denen die Reihe ins Gegenzeichen springt, statt von vorn zu beginnen. In der &Uuml;berlieferung die gro&szlig;en Wendepunkte eines Lebens.</p>
+  <h2>Die gro&szlig;en Schnitte</h2>
+  <p class="u" id="ztschnitte-u"></p>
   <div id="ztschnitte"></div>
 </section>
 
-<!-- 5 ───────────────────────────────────────────────── -->
+<!-- G ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="alle">
-  <h2>Alle Abschnitte</h2>
-  <p class="u">Die vollst&auml;ndige Reihe zum Nachlesen und Gegenpr&uuml;fen.</p>
-  <div class="zt-filter" id="ztwelche"></div>
+  <h2>Alle Abschnitte zum Nachlesen</h2>
+  <p class="u">Die vollst&auml;ndige Reihe f&uuml;r den gew&auml;hlten Bereich. Die einger&uuml;ckten Zeilen sind die Unterabschnitte innerhalb eines Kapitels.</p>
   <div id="zttabelle"></div>
 </section>
 
-<!-- 6 ───────────────────────────────────────────────── -->
+<!-- H ───────────────────────────────────────────────── -->
+<section class="zt-abschnitt" id="weitere">
+  <h2>Zwei weitere Verfahren</h2>
+  <p class="u">Die rechnen nicht dasselbe noch einmal, sondern sehen dasselbe Jahr aus einer anderen Richtung an. Wo sie sich mit der Lebenslinie decken, lohnt das Hinsehen. Wo nicht, auch &mdash; dann ist das Jahr eben nicht eindeutig.</p>
+  <div id="ztweitere"></div>
+</section>
+
+<!-- I ───────────────────────────────────────────────── -->
 <section class="zt-abschnitt" id="rechnung">
   <div class="zt-ehrlich">
-    <h2>Wie das gerechnet wird &mdash; und was es wert ist</h2>
-    <p>Die zodiakale Freilassung steht bei <b>Vettius Valens</b> im zweiten Jahrhundert. Sie wurde mit der hellenistischen Astrologie vergessen und erst in den letzten Jahrzehnten aus den Handschriften zur&uuml;ckgeholt. Was hier gerechnet wird, ist also eine Rekonstruktion &mdash; gut belegt, aber nicht ununterbrochen &uuml;berliefert.</p>
+    <h2>Was das taugt &mdash; und was nicht</h2>
+    <p>Alles oben ist sauber gerechnet. Was man daraus lesen kann, ist eine andere Frage, und darauf geh&ouml;rt eine ehrliche Antwort &mdash; besonders, wenn du damit mit Menschen arbeitest.</p>
 
-    <h4>Der Rechenweg</h4>
-    <p>Vom Zeichen des Loses aus bekommt jedes Zeichen in Zeichenfolge eine feste Zahl von Jahren: Widder 15, Stier 8, Zwillinge 20, Krebs 25, L&ouml;we 19, Jungfrau 20, Waage 8, Skorpion 15, Sch&uuml;tze 12, Steinbock 27, Wassermann 30, Fische 12. Das sind die kleinen Jahre der Zeichenherren. Gerechnet wird in Jahren zu 360 Tagen. Auf der zweiten Ebene stehen dieselben Zahlen, nur als Monate &mdash; ein voller Umlauf dauert dort <b>211 Monate</b>, also gut siebzehneinhalb Jahre. Nur Abschnitte, die l&auml;nger sind, kommen &uuml;berhaupt zu einer L&ouml;sung der Bindung.</p>
+    <h4>Eine Hochphase ist kein Versprechen</h4>
+    <p>Sie sagt: Es passiert viel. Sie sagt nicht: Es wird gut. Valens selbst beschreibt diese Abschnitte als die ereignisreichen, und darunter f&auml;llt der Aufstieg genauso wie der Zusammenbruch. Wer eine Hochphase als gute Nachricht liest, liest sie falsch.</p>
 
-    <h4>Warum das Los des Gl&uuml;cks den Ausschlag gibt</h4>
-    <p>Freigelassen wird vom Los des Geistes oder vom Los des Eros, aber ob ein Abschnitt betriebsam ist, entscheidet seine Stellung zum <b>Los des Gl&uuml;cks</b>. Vier der zw&ouml;lf Zeichen stehen im Winkel dazu, vier folgend, vier fallend. Ein Drittel eines Lebens f&auml;llt also rechnerisch in Hochphasen &mdash; das ist kein seltener Zustand, und so sollte es auch gelesen werden.</p>
+    <h4>Ein Drittel von allem ist Hochphase</h4>
+    <p>Vier von zw&ouml;lf Zeichen stehen im rechten Winkel zum Gl&uuml;ckspunkt. Rechnerisch ist also <b>ein Drittel</b> aller Abschnitte eine Hochphase. Das ist nichts Seltenes und nichts Besonderes &mdash; und so geh&ouml;rt es auch gelesen.</p>
 
-    <h4>Was die Seite nicht behauptet</h4>
-    <p>Eine Hochphase sagt, dass viel passiert, nicht dass es gut wird. Valens selbst beschreibt diese Abschnitte als die ereignisreichen, und darunter fallen Aufstieg und Zusammenbruch gleicherma&szlig;en. Wer eine Hochphase als Versprechen liest, liest sie falsch.</p>
-    <p>Und: Es gibt keinen Beleg daf&uuml;r, dass dieses Verfahren Ereignisse vorhersagt. Es ist auch nicht &uuml;berpr&uuml;ft worden. Was f&uuml;r die Arbeit mit Menschen trotzdem brauchbar ist: Es gibt einem Leben eine <b>Gliederung</b> &mdash; und die Frage „was war in diesen Jahren bei dir los" &ouml;ffnet ein Gespr&auml;ch zuverl&auml;ssiger als jede Deutung. Pr&uuml;f es r&uuml;ckw&auml;rts an deinem eigenen Leben, bevor du es vorw&auml;rts benutzt. Der Stichtag oben l&auml;sst sich auf jedes Datum stellen.</p>
+    <h4>Es ist nicht &uuml;berpr&uuml;ft</h4>
+    <p>Es gibt keinen Beleg daf&uuml;r, dass dieses Verfahren Ereignisse vorhersagt, und es ist auch nie ernsthaft untersucht worden. Was es kann, ist etwas anderes: Es gibt einem Leben eine <b>Gliederung</b>. Die Frage „was war in diesen Jahren bei dir los" &ouml;ffnet ein Gespr&auml;ch zuverl&auml;ssiger als jede Deutung. Deshalb steht oben der Stichtag: <b>Pr&uuml;f es r&uuml;ckw&auml;rts</b>, bevor du es vorw&auml;rts benutzt.</p>
+
+    <h4>Es ist eine Rekonstruktion</h4>
+    <p>Das Verfahren steht bei <b>Vettius Valens</b> im zweiten Jahrhundert. Es wurde mit der hellenistischen Astrologie vergessen und erst in den letzten Jahrzehnten aus den Handschriften zur&uuml;ckgeholt. Gut belegt, aber nicht ununterbrochen &uuml;berliefert &mdash; an einigen Stellen ist strittig, wie es gemeint war.</p>
 
     <h4>Die Geburtszeit entscheidet mit</h4>
-    <p id="ztzeitwarnung">Alle drei Lose h&auml;ngen am Aszendenten, und der wandert in vier Minuten um ein Grad. Eine ungenaue Geburtszeit verschiebt die Lose und damit die ganze Reihe &mdash; bei einer Stunde Unsicherheit um bis zu ein halbes Zeichen.</p>
+    <p id="ztzeitwarnung">Alle Startpunkte h&auml;ngen am Aszendenten, und der wandert in vier Minuten um ein Grad. Eine ungenaue Geburtszeit verschiebt die Punkte und damit die ganze Reihe.</p>
   </div>
 </section>
 
@@ -397,7 +489,7 @@ a{color:var(--nacht);}
 
 <div class="weiter"><a href="analyse.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Die Analyse &mdash; Themen statt Zeiten</span></a><a href="timing.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Timing &mdash; die kurzen Zyklen daneben</span></a></div>
 <div class="foot">Zeiten &middot; Zodiakale Freilassung nach Vettius Valens, H&auml;user im Whole-Sign-System, Jahre zu 360 Tagen.<br>
-Die Rechnung liegt im Quelltext unter <i>zeit/zeit-rechner.js</i> und ist einzeln gepr&uuml;ft &mdash; Lose, Perioden, L&ouml;sung der Bindung, Profektion und Firdaria.</div>
+Die Rechnung liegt im Quelltext unter <i>zeit/zeit-rechner.js</i> und ist einzeln gepr&uuml;ft &mdash; sieben Lose, Perioden, Schnitte, Jahresthema und Planetenabschnitte.</div>
 </div>
 
 <script>
@@ -521,17 +613,24 @@ var Z_HERRSCHER=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',
    Überlieferung. Tag heißt: die Sonne stand über dem Horizont.   */
 function zLose(C){
   var tag = (((Math.floor(znrm(C.Sonne)/30) - Math.floor(znrm(C.ASC)/30))%12+12)%12+1) >= 7;
-  var glueck = tag ? znrm(C.ASC + C.Mond - C.Sonne) : znrm(C.ASC + C.Sonne - C.Mond);
-  var geist  = tag ? znrm(C.ASC + C.Sonne - C.Mond) : znrm(C.ASC + C.Mond - C.Sonne);
-  var eros   = null, erosAlt = null;
-  if(C.Venus!==undefined){
-    /* Paulus und Olympiodor: bei Tag AC + Venus − Geist.
-       Eine zweite Überlieferung dreht das um; beide werden gerechnet. */
-    eros    = tag ? znrm(C.ASC + C.Venus - geist) : znrm(C.ASC + geist - C.Venus);
-    erosAlt = tag ? znrm(C.ASC + geist - C.Venus) : znrm(C.ASC + C.Venus - geist);
-  }
-  return {tag:tag, sekte:(tag?'Tag':'Nacht'),
-          glueck:glueck, geist:geist, eros:eros, erosAlt:erosAlt};
+  /* Bei Tag nimmt man den Bogen vom einen zum anderen Lichtpunkt, bei
+     Nacht umgekehrt. Alle sieben Lose folgen diesem Muster.          */
+  function los(a, b){ return tag ? znrm(C.ASC + a - b) : znrm(C.ASC + b - a); }
+
+  var glueck = los(C.Mond, C.Sonne);
+  var geist  = los(C.Sonne, C.Mond);
+  var L={tag:tag, sekte:(tag?'Tag':'Nacht'), glueck:glueck, geist:geist};
+
+  /* Paulus und Olympiodor: bei Tag AC + Venus − Geist.
+     Eine zweite Überlieferung dreht das um; beide werden gerechnet. */
+  L.eros    = (C.Venus!==undefined) ? los(C.Venus, geist) : null;
+  L.erosAlt = (C.Venus!==undefined) ? los(geist, C.Venus) : null;
+  /* Die übrigen der sieben hermetischen Lose */
+  L.sieg    = (C.Jupiter!==undefined) ? los(C.Jupiter, geist) : null;
+  L.not     = (C.Merkur!==undefined)  ? los(glueck, C.Merkur) : null;
+  L.mut     = (C.Mars!==undefined)    ? los(glueck, C.Mars)   : null;
+  L.nemesis = (C.Saturn!==undefined)  ? los(glueck, C.Saturn) : null;
+  return L;
 }
 
 /* ── Zodiakale Freilassung ───────────────────────────────────
@@ -676,18 +775,30 @@ function zAlterVollendet(geb, jetzt){
 }
 
 /* ── Alles zusammen ──────────────────────────────────────────  */
+/* Welches Los zu welchem Lebensbereich gehört */
+var Z_BEREICHE=[
+ {k:'arbeit',  los:'geist'},
+ {k:'liebe',   los:'eros'},
+ {k:'koerper', los:'glueck'},
+ {k:'erfolg',  los:'sieg'},
+ {k:'druck',   los:'not'}
+];
+
 function zBlatt(C, jdGeburt, geb, jetzt, erosVariante){
   if(!C || C.ASC===undefined) return null;
   jetzt = jetzt || new Date();
   var L=zLose(C);
-  var erosLon = (erosVariante==='alt') ? L.erosAlt : L.eros;
+  if(erosVariante==='alt') L.eros=L.erosAlt;
   var bis = 100*Z_TAG_JAHR;                   /* hundert Jahre weit rechnen */
 
   var jdJetzt = jetzt.getTime()/86400000 + 2440587.5;
   var tageSeitGeburt = jdJetzt - jdGeburt;
 
-  var beruf = zFreilassung(L.geist, L.glueck, bis);
-  var liebe = erosLon!==null ? zFreilassung(erosLon, L.glueck, bis) : null;
+  var spuren={};
+  Z_BEREICHE.forEach(function(B){
+    var lon=L[B.los];
+    spuren[B.k] = (lon===null||lon===undefined) ? null : zFreilassung(lon, L.glueck, bis);
+  });
 
   var alter = zAlterVollendet(geb, jetzt);
   var prof = zProfektion(C, alter);
@@ -695,8 +806,9 @@ function zBlatt(C, jdGeburt, geb, jetzt, erosVariante){
   var firdJetzt = zFirdariaJetzt(fird, zAlterJahre(jdGeburt, jdJetzt));
 
   return {
-    lose:L, erosLon:erosLon,
-    beruf:beruf, liebe:liebe,
+    lose:L, spuren:spuren,
+    /* die beiden Hauptspuren auch unter ihrem alten Namen */
+    beruf:spuren.arbeit, liebe:spuren.liebe, erosLon:L.eros,
     profektion:prof, firdaria:fird, firdariaJetzt:firdJetzt,
     alter:alter, tageSeitGeburt:tageSeitGeburt, jdGeburt:jdGeburt,
     jetzt:jetzt
@@ -742,7 +854,7 @@ function zBindungen(freilassung){
 }
 
 window.AC_ZEIT={
-  ZEICHEN:Z_ZEICHEN, HERRSCHER:Z_HERRSCHER, JAHRE:Z_JAHRE,
+  ZEICHEN:Z_ZEICHEN, HERRSCHER:Z_HERRSCHER, JAHRE:Z_JAHRE, BEREICHE:Z_BEREICHE,
   TAG_JAHR:Z_TAG_JAHR, TAG_MONAT:Z_TAG_MONAT, UMLAUF:Z_UMLAUF,
   zi:zzi, nrm:znrm,
   lose:zLose, freilassung:zFreilassung, vonGlueck:zVonGlueck, istGipfel:zIstGipfel,
@@ -754,28 +866,70 @@ window.AC_ZEIT={
 })();
 
 /* Astro-Charlie · Zeiten — die Texte
-   Zwölf Zeichen als Kapitel des Berufslebens und als Kapitel des
-   Liebeslebens, die Stufen der Betriebsamkeit, die Profektionshäuser
-   und die Firdaria-Herren.
+   ==================================================================
+   Regel für diese Datei: Kein Fachwort ohne Erklärung an Ort und
+   Stelle, und kein Satz, den man zweimal lesen muss. Die klassischen
+   Namen stehen dabei — aber in Klammern und erst, wenn der Sinn
+   schon da ist.                                                      */
 
-   Regel wie überall: Kein Satz, der nicht sagt, was er meint. */
+/* ── Die fünf Bereiche ───────────────────────────────────────
+   Dieselbe Rechnung, fünfmal von einem anderen Punkt aus gestartet.
+   Jeder Punkt gehört zu einem Lebensbereich.                       */
+var ZT_BEREICH=[
+ {k:'arbeit', n:'Arbeit & Berufung', kurz:'Arbeit', farbe:'#9A7235',
+  frage:'Wann geht beruflich etwas voran, und wann ist Ruhe?',
+  worum:'Was du tust, wie du dein Geld verdienst, wohin dein Weg geht.',
+  los:'Los des Geistes',
+  losErkl:'Der Startpunkt dieser Spur. Er wird aus dem Abstand zwischen Sonne und Mond '+
+    'gebildet und steht in der Überlieferung für das, was ein Mensch von sich aus tut.'},
+ {k:'liebe', n:'Liebe & Nähe', kurz:'Liebe', farbe:'#A05A3A',
+  frage:'Wann passiert in Beziehungen etwas, und wann ist es still?',
+  worum:'Verliebtheit, Partnerschaft, Nähe, auch Trennungen.',
+  los:'Los des Eros',
+  losErkl:'Der Startpunkt dieser Spur. Er wird aus Venus und dem Los des Geistes gebildet '+
+    'und steht für Begehren und Zuneigung.'},
+ {k:'koerper', n:'Körper, Geld & Umstände', kurz:'Umstände', farbe:'#3D6B62',
+  frage:'Wann sind die äußeren Umstände günstig, und wann sperrig?',
+  worum:'Körper, Wohnort, Einkommen — das, was dir zustößt, statt dass du es machst.',
+  los:'Los des Glücks',
+  losErkl:'Der wichtigste Punkt des ganzen Verfahrens. Er wird aus dem Abstand zwischen '+
+    'Mond und Sonne gebildet und steht für die Umstände, in denen jemand lebt. '+
+    'Von ihm aus wird auch gemessen, welche Abschnitte laut sind.'},
+ {k:'erfolg', n:'Rückenwind & Zuspruch', kurz:'Rückenwind', farbe:'#3F6B4A',
+  frage:'Wann kommt Unterstützung von außen, und wann musst du allein ran?',
+  worum:'Förderung, Glücksfälle, Leute, die dir etwas zutrauen.',
+  los:'Los des Sieges',
+  losErkl:'Der Startpunkt dieser Spur, aus Jupiter und dem Los des Geistes gebildet. '+
+    'Er steht für Zuversicht und für das, was von außen hilft.'},
+ {k:'druck', n:'Druck & Pflicht', kurz:'Druck', farbe:'#6A4A62',
+  frage:'Wann wird es eng, und wann lässt der Druck nach?',
+  worum:'Verpflichtungen, Zwänge, Dinge, die erledigt werden müssen.',
+  los:'Los der Notwendigkeit',
+  losErkl:'Der Startpunkt dieser Spur, aus Merkur und dem Los des Glücks gebildet. '+
+    'Er steht für das, was man tun muss, statt es zu wollen.'}
+];
 
-/* ── Die drei Stufen der Betriebsamkeit ──────────────────────
-   Nicht gut oder schlecht, sondern wie viel gleichzeitig läuft.
-   Gemessen an der Stellung zum Los des Glücks.                  */
+/* ── Die drei Lautstärken ────────────────────────────────────  */
 var ZT_STUFE={
- winkel:{n:'Hochphase', kurz:'viel los', rang:3, farbe:'#9A7235',
-   was:'Das Zeichen dieses Abschnitts steht im Winkel zum Los des Glücks. In der Überlieferung '+
-     'sind das die betriebsamsten Zeiten eines Lebens: Es passiert viel, es wird sichtbar, und '+
-     'Entscheidungen haben größere Folgen als sonst. Betriebsam heißt nicht angenehm — auch ein '+
-     'schwerer Umbruch ist eine Hochphase.'},
- folgend:{n:'Mittlere Phase', kurz:'es läuft', rang:2, farbe:'#3D6B62',
-   was:'Das Zeichen steht dem Winkel nach. Solche Abschnitte bauen aus, was in einer Hochphase '+
-     'angefangen wurde, und sie sind meistens die stabileren.'},
- fallend:{n:'Ruhige Phase', kurz:'im Hintergrund', rang:1, farbe:'#6B6259',
-   was:'Das Zeichen steht fallend zum Los des Glücks. Von außen passiert wenig. Solche Abschnitte '+
-     'sind die, in denen vorbereitet, gelernt und sortiert wird — und sie fühlen sich oft nach '+
-     'Stillstand an, obwohl sie keiner sind.'}
+ winkel:{n:'Hochphase', kurz:'laut', rang:3, farbe:'#9A7235',
+   satz:'Hier ist viel los.',
+   was:'In so einem Abschnitt passiert mehr als sonst, es wird sichtbarer, und '+
+     'Entscheidungen haben größere Folgen. <b>Laut heißt nicht schön.</b> Ein harter '+
+     'Umbruch ist genauso eine Hochphase wie ein Aufstieg — gemeint ist die Menge, '+
+     'nicht die Richtung.',
+   woher:'Das Zeichen dieses Abschnitts steht im rechten Winkel zum Glückspunkt oder '+
+     'genau auf ihm. Vier von zwölf Zeichen tun das.'},
+ folgend:{n:'Mittlere Phase', kurz:'normal', rang:2, farbe:'#3D6B62',
+   satz:'Es läuft, ohne dass es dich umwirft.',
+   was:'Diese Abschnitte bauen aus, was in einer Hochphase angefangen wurde. Sie sind '+
+     'die stabileren und meistens die angenehmeren.',
+   woher:'Das Zeichen steht dem rechten Winkel nach. Vier von zwölf Zeichen tun das.'},
+ fallend:{n:'Ruhige Phase', kurz:'leise', rang:1, farbe:'#857B70',
+   satz:'Von außen passiert wenig.',
+   was:'Hier wird vorbereitet, gelernt und sortiert. Solche Abschnitte fühlen sich oft '+
+     'nach Stillstand an und sind keiner — aber wer in einer ruhigen Phase auf den großen '+
+     'Durchbruch wartet, wartet die ganze Zeit.',
+   woher:'Das Zeichen steht fallend zum Glückspunkt. Vier von zwölf Zeichen tun das.'}
 };
 function ztStufe(vonGlueck){
   if([1,4,7,10].indexOf(vonGlueck)>=0) return 'winkel';
@@ -783,155 +937,311 @@ function ztStufe(vonGlueck){
   return 'fallend';
 }
 
-/* ── Die zwölf Zeichen als Kapitel ───────────────────────────
-   beruf: wie dieser Lebensabschnitt im Arbeitsleben aussieht
-   liebe: wie er im Liebesleben aussieht                        */
-var ZT_KAPITEL={
-0:{n:'Widder', herr:'Mars',
-  beruf:{t:'Ein Anfangskapitel. In Widder-Abschnitten wird etwas begonnen, oft überstürzt und '+
-     'allein: eigene Selbstständigkeit, ein Wechsel ohne Netz, ein Streit, nach dem man geht. '+
-     'Das Tempo ist hoch und die Richtung noch nicht fertig.',
-   tun:'Anfangen und die Sache erst im Laufen sortieren. Auf Klarheit zu warten, kostet hier den Abschnitt.'},
-  liebe:{t:'Eine Zeit, in der etwas beginnt und schnell geht. Verliebtheit kommt plötzlich, '+
-     'Entscheidungen fallen früh, und es wird eher gehandelt als besprochen. Auch Trennungen '+
-     'passieren in solchen Abschnitten schnell und ohne langes Vorspiel.',
-   tun:'Nichts Großes in den ersten drei Monaten festlegen. Das Tempo ist hier nicht die Wahrheit.'}},
-1:{n:'Stier', herr:'Venus',
-  beruf:{t:'Ein Kapitel des Festigens. Es geht um Geld, Besitz und darum, dass die Arbeit '+
-     'etwas abwirft, das bleibt. Spektakulär ist das selten; wer hier auf Aufregung wartet, '+
-     'verpasst, dass gerade das Fundament gegossen wird.',
-   tun:'Preise, Verträge und Rücklagen anfassen. In einem Stier-Abschnitt zahlt sich das aus.'},
-  liebe:{t:'Eine Zeit der Beständigkeit und der Sinnlichkeit. Beziehungen, die hier anfangen, '+
-     'haben eine lange Anlaufzeit und halten dann. Es geht viel um Alltag, Zuhause und darum, '+
-     'wie Nähe sich körperlich anfühlt.',
-   tun:'Etwas Gemeinsames einrichten, das Bestand hat — eine Wohnung, eine Gewohnheit, ein Ritual.'}},
-2:{n:'Zwillinge', herr:'Merkur',
-  beruf:{t:'Ein langes Kapitel mit vielen Fäden. Hier laufen mehrere Sachen nebeneinander, '+
-     'es wird viel geredet, geschrieben und vermittelt, und der Beruf ist eher eine Reihe von '+
-     'Gelegenheiten als ein Weg. Zwanzig Jahre sind das — man merkt es nicht als Abschnitt, '+
-     'sondern als Lebensgefühl.',
-   tun:'Nicht auf die eine große Sache warten. In diesem Kapitel entsteht sie aus vielen kleinen.'},
-  liebe:{t:'Eine Zeit mit Bewegung und Kontakt. Es gibt mehr Begegnungen als in anderen '+
-     'Abschnitten, und Verbindungen entstehen über Gespräche. Festlegung fällt hier schwerer; '+
-     'oft läuft mehr als eine Sache gleichzeitig.',
-   tun:'Aussprechen, was gerade gilt. In diesem Kapitel entstehen Missverständnisse aus Unausgesprochenem.'}},
-3:{n:'Krebs', herr:'Mond',
-  beruf:{t:'Das längste Kapitel von allen, fünfundzwanzig Jahre. Die Arbeit hängt hier eng am '+
-     'Privatleben: Zuhause, Familie, Sicherheit und Beruf lassen sich nicht trennen. Oft wird '+
-     'von zu Hause gearbeitet, für die Familie, oder der Beruf richtet sich nach ihr.',
-   tun:'Die Frage ernst nehmen, wie viel Sicherheit du brauchst — in Euro, nicht im Gefühl.'},
-  liebe:{t:'Eine Zeit, in der Beziehung und Zuhause dasselbe Thema werden. Zusammenziehen, '+
-     'Kinder, Familie, Pflege. Nähe wird hier über Fürsorge hergestellt und nicht über Worte, '+
-     'und alte Familienmuster melden sich deutlich.',
-   tun:'Einmal benennen, was du aus deiner Herkunftsfamilie mitbringst. In diesem Kapitel wirkt es.'}},
-4:{n:'Löwe', herr:'Sonne',
-  beruf:{t:'Ein Kapitel der Sichtbarkeit. Hier tritt jemand nach vorn, mit eigenem Namen und '+
-     'eigenem Gesicht. Das ist der Abschnitt, in dem aus einer Arbeit ein Ruf wird — und in dem '+
-     'es anstrengend wird, wenn man nicht gesehen werden will.',
-   tun:'Etwas unter eigenem Namen machen. Nicht größer, sondern sichtbarer.'},
-  liebe:{t:'Eine Zeit, in der Liebe etwas Gezeigtes ist. Es geht um Begehrtwerden, um Romantik '+
-     'im großen Format und oft auch um Kinder. Wer sich hier versteckt, fühlt sich ungeliebt, '+
-     'auch wenn es nicht stimmt.',
-   tun:'Die Beziehung sichtbar machen — vorstellen, zusammen auftreten, zugeben, dass es dir wichtig ist.'}},
-5:{n:'Jungfrau', herr:'Merkur',
-  beruf:{t:'Ein langes Arbeitskapitel. Hier geht es um Können, Handwerk und tägliche Routine, '+
-     'nicht um Glanz. Zwanzig Jahre, in denen jemand gut wird in etwas — und oft das Gefühl hat, '+
-     'dass nichts vorangeht, weil der Fortschritt in Details steckt.',
-   tun:'Eine Fertigkeit wirklich zu Ende lernen. In diesem Kapitel ist das die beste Investition.'},
-  liebe:{t:'Eine Zeit, in der Liebe im Alltäglichen stattfindet: wer einkauft, wer sich kümmert, '+
-     'wie der Alltag läuft. Das klingt nüchtern und ist es auch. Beziehungen werden hier geprüft '+
-     'an der Frage, ob sie im Werktag funktionieren.',
-   tun:'Die Arbeitsteilung einmal offen besprechen, bevor sie zum Vorwurf wird.'}},
-6:{n:'Waage', herr:'Venus',
-  beruf:{t:'Ein kurzes Kapitel, in dem Partnerschaften zählen: Mitgründerinnen, Kundschaft, '+
-     'Verträge, Verhandlungen. Allein geht hier wenig voran, zu zweit viel.',
-   tun:'Die eine Verbindung suchen, die dich weiterbringt. Acht Jahre sind kurz.'},
-  liebe:{t:'Das Beziehungskapitel im engeren Sinn. Hier werden Partnerschaften eingegangen, '+
-     'formalisiert oder beendet. Es geht um Augenhöhe, um Fairness und um die Frage, was eine '+
-     'Verbindung verbindlich macht.',
-   tun:'Aussprechen, was du willst — verbindlich oder offen. In diesem Kapitel entscheidet sich das.'}},
-7:{n:'Skorpion', herr:'Mars',
-  beruf:{t:'Ein Kapitel der Tiefe und der Krisen. Hier wird mit Dingen gearbeitet, über die '+
-     'sonst nicht geredet wird, oder es geht ums Geld anderer Leute: Beteiligungen, Kredite, '+
-     'Erbschaften, Investoren. Es ist selten gemütlich und selten langweilig.',
-   tun:'Die Zahlen anderer Leute verstehen lernen. Hier hängt vieles daran.'},
-  liebe:{t:'Eine intensive Zeit. Bindungen werden tiefer und verwickelter, oft auch abhängiger. '+
-     'Es geht um Sexualität, um Gemeinsames, um Macht und darum, was wirklich geteilt wird. '+
-     'Trennungen in diesem Abschnitt sind einschneidend.',
-   tun:'Das aussprechen, was du am wenigsten aussprechen willst. Genau darum geht es hier.'}},
-8:{n:'Schütze', herr:'Jupiter',
-  beruf:{t:'Ein Kapitel der Weite. Ausbildung, Lehre, Ausland, Veröffentlichung — der Beruf '+
-     'bekommt hier einen größeren Rahmen, und oft kommt eine Gelegenheit von weit her.',
-   tun:'Etwas lernen oder lehren, das über deinen bisherigen Rahmen hinausgeht.'},
-  liebe:{t:'Eine Zeit, in der Liebe mit Weite zu tun hat: Fernbeziehungen, andere Länder, '+
-     'andere Herkunft, gemeinsames Reisen oder gemeinsames Lernen. Es geht weniger um Alltag '+
-     'als um die Frage, ob ihr in dieselbe Richtung schaut.',
-   tun:'Gemeinsam etwas Neues anfangen, das keine von euch allein gemacht hätte.'}},
-9:{n:'Steinbock', herr:'Saturn',
-  beruf:{t:'Ein sehr langes und ernstes Kapitel, siebenundzwanzig Jahre. Hier wird aufgebaut, '+
-     'Verantwortung übernommen und ausgehalten. Der Anfang ist zäh und undankbar, das Ende '+
-     'trägt. Wer in diesem Abschnitt auf schnelle Erfolge wartet, wartet die ganze Zeit.',
-   tun:'In Jahren rechnen, nicht in Monaten. Und früh eine Struktur bauen, die ohne dich läuft.'},
-  liebe:{t:'Eine Zeit, in der Beziehungen Gewicht bekommen: Verbindlichkeit, Verantwortung, '+
-     'manchmal Altersunterschied oder Pflege. Es wird weniger geschwärmt und mehr getragen. '+
-     'Was hier hält, hält wirklich.',
-   tun:'Prüfen, ob du bleibst, weil du willst, oder weil du dich verpflichtet fühlst.'}},
-10:{n:'Wassermann', herr:'Saturn',
-  beruf:{t:'Das längste Kapitel überhaupt, dreißig Jahre. Es geht um Gruppen, Netzwerke und '+
-     'darum, etwas anders zu machen als vorgesehen. Der Beruf läuft hier über Leute, nicht über '+
-     'Bewerbungen, und er passt selten in eine vorhandene Schublade.',
-   tun:'In Gruppen gehen, in denen das schon gemacht wird, was du machen willst.'},
-  liebe:{t:'Eine Zeit, in der Beziehungen eigene Formen annehmen: Freundschaft und Liebe gehen '+
-     'ineinander über, Abstand gehört dazu, und was andere für richtig halten, trifft hier nicht zu.',
-   tun:'Die eigene Form aushandeln, statt eine zu übernehmen, die nicht passt.'}},
-11:{n:'Fische', herr:'Jupiter',
-  beruf:{t:'Ein Kapitel im Hintergrund. Hier wird oft unbezahlt, unsichtbar oder im Dienst '+
-     'einer Sache gearbeitet, und die Richtung ist unscharf. Es ist der Abschnitt vor einem '+
-     'Neuanfang — und das merkt man erst hinterher.',
-   tun:'Nichts erzwingen. Festhalten, was von selbst wiederkommt, und das als Hinweis nehmen.'},
-  liebe:{t:'Eine Zeit mit weichen Rändern. Verbindungen sind hier eher ungeklärt als eindeutig: '+
-     'Nähe ohne Festlegung, Sehnsucht, manchmal auch Täuschung. Es wird viel gefühlt und wenig geklärt.',
-   tun:'Einmal konkret nachfragen, was gerade gilt. In diesem Kapitel bleibt das sonst offen.'}}
-};
-
-/* ── Die Lösung der Bindung ──────────────────────────────────  */
-var ZT_BINDUNG={
- beruf:{n:'Lösung der Bindung',
-   was:'An dieser Stelle springt die Reihe ins Gegenzeichen, statt von vorn zu beginnen. In der '+
-     'Überlieferung ist das der große Einschnitt eines Kapitels: ein Bruch mit dem, was bis '+
-     'dahin galt, und ein Wechsel der Richtung — Branchenwechsel, Kündigung, Gründung, Umzug '+
-     'in ein anderes Leben.',
-   tun:'Solche Zeitpunkte lohnt es, vorher zu kennen. Nicht um sie zu vermeiden, sondern um '+
-     'nicht überrascht zu sein, wenn eine Sache zu Ende geht, die man für dauerhaft hielt.'},
- liebe:{n:'Lösung der Bindung',
-   was:'Derselbe Einschnitt, auf das Liebesleben gelesen: Hier endet eine Form von Beziehung '+
-     'und eine andere fängt an. Das muss keine Trennung sein — es kann auch eine Beziehung '+
-     'sein, die sich grundlegend ändert.',
-   tun:'In solchen Jahren keine Entscheidung aus Gewohnheit treffen. Was hier weitergeführt '+
-     'wird, muss neu begründet werden.'}
-};
-
-/* ── Die Profektionshäuser ───────────────────────────────────  */
-var ZT_PROFEKTION=[
- {h:1,  n:'Du selbst',       t:'Ein Jahr über dich: Auftreten, Körper, Richtung. Was du dieses Jahr anfängst, trägt deine Handschrift.'},
- {h:2,  n:'Geld und Wert',   t:'Ein Jahr über Einkommen, Besitz und den eigenen Wert. Preise, Gehalt und Rücklagen sind dieses Jahr das Thema.'},
- {h:3,  n:'Nahbereich',      t:'Ein Jahr über Geschwister, Nachbarschaft, kurze Wege und das Schreiben. Viel Bewegung, wenig Grundsätzliches.'},
- {h:4,  n:'Zuhause',         t:'Ein Jahr über Wohnung, Familie und Herkunft. Umzüge, Eltern, und die Frage, wo du eigentlich hingehörst.'},
- {h:5,  n:'Ausdruck',        t:'Ein Jahr über das, was von dir ausgeht: Kinder, Kunst, Verliebtheit, Spiel. Mehr zeigen als zurückhalten.'},
- {h:6,  n:'Alltag',          t:'Ein Jahr über Arbeit, Routine und Körper. Unspektakulär und arbeitsreich — und das Jahr, in dem Gewohnheiten umgestellt werden können.'},
- {h:7,  n:'Die anderen',     t:'Ein Jahr über Partnerschaft, Kundschaft und Verträge. Was dieses Jahr wichtig wird, kommt über andere Menschen.'},
- {h:8,  n:'Das Geteilte',    t:'Ein Jahr über gemeinsames Geld, Abhängigkeit und Dinge, über die nicht geredet wird. Oft unbequem, selten folgenlos.'},
- {h:9,  n:'Weite',           t:'Ein Jahr über Lehre, Ausland, Veröffentlichung und Überzeugungen. Der Rahmen wird größer.'},
- {h:10, n:'Beruf',           t:'Ein Jahr über Position und Außenwirkung. Von allen zwölf das sichtbarste — hier wird bewertet, was du aufgebaut hast.'},
- {h:11, n:'Gruppen',         t:'Ein Jahr über Netzwerke, Freundeskreis und Zukunftspläne. Vieles kommt dieses Jahr über Leute, die du kennst.'},
- {h:12, n:'Rückzug',         t:'Ein Jahr im Hintergrund: abschließen, loslassen, erholen. Das Jahr vor einem neuen Zwölferlauf, und das zum Aufräumen.'}
+/* ── Die vier Schritte, wie das überhaupt funktioniert ───────  */
+var ZT_SCHRITTE=[
+ {n:'Dein Leben bekommt Kapitel',
+  t:'Nicht Jahre, sondern Abschnitte von ganz verschiedener Länge — manche acht Jahre, '+
+    'manche dreißig. Sie folgen aufeinander wie Kapitel in einem Buch, und man merkt den '+
+    'Wechsel meistens erst hinterher.',
+  mehr:'Das Verfahren heißt zodiakale Freilassung und steht bei Vettius Valens im zweiten '+
+    'Jahrhundert. Es wurde über Jahrhunderte nicht benutzt und erst in den letzten '+
+    'Jahrzehnten aus den Handschriften zurückgeholt.'},
+ {n:'Wie lang ein Kapitel ist, steht fest',
+  t:'Jedes Tierkreiszeichen hat eine feste Zahl von Jahren. Die Zahlen sind überliefert '+
+    'und werden nicht berechnet oder geschätzt — sie sind für alle Menschen gleich. '+
+    'Was sich unterscheidet, ist nur, bei welchem Zeichen du anfängst.',
+  mehr:'Es sind die kleinen Jahre der Zeichenherren: Widder 15, Stier 8, Zwillinge 20, '+
+    'Krebs 25, Löwe 19, Jungfrau 20, Waage 8, Skorpion 15, Schütze 12, Steinbock 27, '+
+    'Wassermann 30, Fische 12. Gerechnet wird in Jahren zu 360 Tagen.'},
+ {n:'Ein Punkt entscheidet, welche Kapitel laut sind',
+  t:'In deinem Chart gibt es einen Punkt, den <b>Glückspunkt</b>. Von ihm aus gezählt sind '+
+    'vier der zwölf Zeichen „laut". Fällt ein Kapitel auf eines davon, ist es eine Hochphase. '+
+    'Deshalb hat jeder Mensch andere laute Jahre, obwohl die Kapitellängen gleich sind.',
+  mehr:'Der Glückspunkt ist das Los des Glücks: bei Tag Aszendent plus Mond minus Sonne, '+
+    'bei Nacht umgekehrt. Laut sind die Zeichen, die winkelhaft dazu stehen — das Zeichen '+
+    'selbst, das vierte, das siebte und das zehnte davon.'},
+ {n:'Dieselbe Rechnung, fünfmal',
+  t:'Je nachdem, von welchem Punkt du startest, bekommst du die Kapitel für einen anderen '+
+    'Lebensbereich. Arbeit, Liebe, Umstände, Rückenwind und Druck laufen deshalb <b>nicht '+
+    'gleichzeitig</b> — in der Arbeit kann Hochphase sein, während es in der Liebe still ist.',
+  mehr:'Jeder Bereich hat seinen eigenen Startpunkt, eines der sieben hermetischen Lose. '+
+    'Was sich zwischen den Bereichen nie ändert, ist der Glückspunkt: Er bleibt der Maßstab '+
+    'für laut und leise, egal welche Spur gerechnet wird.'}
 ];
 
-/* ── Die Firdaria-Herren ─────────────────────────────────────  */
+/* ── Die Wörter, die auf der Seite vorkommen ─────────────────
+   Jedes in einem Satz, ohne ein weiteres Fachwort darin.       */
+var ZT_WORT={
+ 'Kapitel':'Ein Lebensabschnitt in diesem Verfahren. Er dauert zwischen 8 und 30 Jahren, '+
+   'je nachdem, welches Tierkreiszeichen ihn trägt.',
+ 'Unterabschnitt':'Ein kürzerer Abschnitt innerhalb eines Kapitels — Monate bis wenige Jahre. '+
+   'Auch er kann laut oder leise sein, unabhängig vom Kapitel darum herum.',
+ 'Hochphase':'Ein Abschnitt, in dem viel gleichzeitig passiert. Nicht automatisch etwas Gutes: '+
+   'gemeint ist die Menge an Ereignissen, nicht ihre Richtung.',
+ 'Glückspunkt':'Ein rechnerischer Punkt in deinem Chart, der aus Sonne, Mond und Aszendent '+
+   'gebildet wird. Von ihm aus wird gemessen, welche Abschnitte laut sind.',
+ 'Der große Schnitt':'Eine Stelle, an der die Reihe aus der normalen Ordnung springt. In der '+
+   'Überlieferung der größte Einschnitt eines Kapitels: etwas endet, das man für dauerhaft hielt.',
+ 'Jahresthema':'Ein Verfahren, das jedem Lebensjahr eines der zwölf Häuser zuordnet. Mit 0 das '+
+   'erste, mit 1 das zweite, und nach zwölf Jahren fängt es von vorn an.',
+ 'Planetenabschnitt':'Ein weiteres altes Verfahren, das ein Leben in neun Abschnitte teilt und '+
+   'jedem einen Planeten zuordnet. Zusammen decken sie 75 Jahre ab.',
+ 'Aszendent':'Das Tierkreiszeichen, das bei deiner Geburt am östlichen Horizont aufging. Es '+
+   'wechselt etwa alle zwei Stunden — deshalb braucht dieses Verfahren die Geburtszeit.',
+ 'Tag oder Nacht':'Stand die Sonne bei deiner Geburt über dem Horizont, ist es eine Taggeburt, '+
+   'sonst eine Nachtgeburt. Bei Nachtgeburten werden mehrere Punkte spiegelverkehrt gerechnet.'
+};
+
+/* ── Die zwölf Zeichen als Kapitel, durch fünf Bereiche ──────  */
+var ZT_KAPITEL={
+0:{n:'Widder', herr:'Mars', bild:'anfangen und allein losgehen',
+ arbeit:{t:'Ein Anfangskapitel. Es wird etwas begonnen, oft überstürzt und ohne Absicherung: '+
+   'Selbstständigkeit, ein Wechsel ohne Netz, ein Streit, nach dem man geht.',
+  tun:'Anfangen und die Sache im Laufen sortieren. Auf Klarheit zu warten kostet hier den Abschnitt.'},
+ liebe:{t:'Hier geht etwas schnell los. Verliebtheit kommt plötzlich, Entscheidungen fallen '+
+   'früh. Auch Trennungen passieren in solchen Abschnitten ohne langes Vorspiel.',
+  tun:'In den ersten drei Monaten nichts Großes festlegen. Das Tempo ist hier nicht die Wahrheit.'},
+ koerper:{t:'Die Umstände ändern sich ruckartig und oft von außen angestoßen. Umzüge, '+
+   'Unfälle, plötzliche Ausgaben — aber auch ein neuer Ort, der plötzlich frei wird.',
+  tun:'Einen Puffer anlegen. In so einem Abschnitt kommt die Überraschung, nicht der Plan.'},
+ erfolg:{t:'Unterstützung kommt hier, wenn du selbst losgehst, nicht wenn du wartest. '+
+   'Wer fragt, bekommt; wer hofft, dass jemand von selbst merkt, bekommt nichts.',
+  tun:'Drei Leute direkt fragen. Nicht andeuten — fragen.'},
+ druck:{t:'Der Druck kommt plötzlich und als Konflikt: etwas muss sofort entschieden werden, '+
+   'meistens gegen jemanden. Er baut sich nicht auf, er ist von einem Tag auf den anderen da.',
+  tun:'Die Auseinandersetzung früh führen, solange sie noch klein ist.'}},
+
+1:{n:'Stier', herr:'Venus', bild:'festhalten, sichern, genießen',
+ arbeit:{t:'Ein Kapitel des Festigens. Es geht um Geld, Besitz und darum, dass die Arbeit '+
+   'etwas abwirft, das bleibt. Spektakulär ist das selten — hier wird das Fundament gegossen.',
+  tun:'Preise, Verträge und Rücklagen anfassen. Das zahlt sich in diesem Abschnitt wirklich aus.'},
+ liebe:{t:'Beständigkeit und Sinnlichkeit. Was hier anfängt, braucht eine lange Anlaufzeit und '+
+   'hält dann. Es geht um Alltag, Zuhause und darum, wie Nähe sich körperlich anfühlt.',
+  tun:'Etwas gemeinsam einrichten, das Bestand hat — eine Wohnung, eine feste Gewohnheit.'},
+ koerper:{t:'Die Umstände werden ruhiger und verlässlicher. Einkommen stabilisiert sich, der '+
+   'Körper will mehr Genuss und weniger Tempo. Es setzt sich auch leicht etwas an.',
+  tun:'Eine Gewohnheit einführen, die acht Jahre durchhält. Keine Kur, eine Gewohnheit.'},
+ erfolg:{t:'Hilfe kommt in Form von Geld und Material, nicht in Form von Türen. Jemand '+
+   'bezahlt, leiht, überlässt dir etwas.',
+  tun:'Konkret um das Materielle bitten, nicht um Rat.'},
+ druck:{t:'Der Druck ist zäh und finanziell: laufende Kosten, Verpflichtungen, die man nicht '+
+   'einfach kündigt. Er kommt langsam und geht langsam.',
+  tun:'Einmal alle Dauerkosten aufschreiben. In diesem Abschnitt lohnt genau das.'}},
+
+2:{n:'Zwillinge', herr:'Merkur', bild:'verbinden, reden, vieles gleichzeitig',
+ arbeit:{t:'Ein langes Kapitel mit vielen Fäden. Mehrere Sachen nebeneinander, viel Reden und '+
+   'Schreiben, und der Beruf ist eher eine Reihe von Gelegenheiten als ein Weg.',
+  tun:'Nicht auf die eine große Sache warten. Hier entsteht sie aus vielen kleinen.'},
+ liebe:{t:'Viel Bewegung und Kontakt. Mehr Begegnungen als sonst, Verbindungen entstehen über '+
+   'Gespräche. Festlegung fällt schwer, oft läuft mehr als eine Sache gleichzeitig.',
+  tun:'Aussprechen, was gerade gilt. Hier entstehen Missverständnisse aus Unausgesprochenem.'},
+ koerper:{t:'Die Umstände sind unruhig und wechselhaft: viele kurze Wege, wechselnde Orte, '+
+   'ein Nervensystem, das mehr abbekommt als der Körper.',
+  tun:'Reize reduzieren statt Erholung dazulegen. Weniger Bildschirm bringt hier mehr als Sport.'},
+ erfolg:{t:'Hilfe kommt über Information und Kontakte — jemand nennt dir einen Namen, schickt '+
+   'dir etwas weiter, erwähnt dich im richtigen Moment.',
+  tun:'Dich in Erinnerung bringen. Eine kurze Nachricht an zehn Leute, die dich kennen.'},
+ druck:{t:'Der Druck besteht aus vielen Kleinigkeiten gleichzeitig, nicht aus einer großen '+
+   'Sache. Erschöpfend wird es durch die Menge.',
+  tun:'Zusammenfassen statt abarbeiten: drei Sachen streichen, nicht schneller erledigen.'}},
+
+3:{n:'Krebs', herr:'Mond', bild:'versorgen und zu Hause sein',
+ arbeit:{t:'Das längste Kapitel überhaupt, fünfundzwanzig Jahre. Arbeit und Privatleben lassen '+
+   'sich hier nicht trennen: von zu Hause arbeiten, für die Familie, oder nach ihr richten.',
+  tun:'Ernst nehmen, wie viel Sicherheit du brauchst — in Euro, nicht im Gefühl.'},
+ liebe:{t:'Beziehung und Zuhause werden dasselbe Thema: zusammenziehen, Kinder, Pflege. Nähe '+
+   'entsteht über Fürsorge, nicht über Worte, und alte Familienmuster melden sich deutlich.',
+  tun:'Einmal benennen, was du aus deiner Herkunftsfamilie mitbringst. Hier wirkt es.'},
+ koerper:{t:'Die Umstände drehen sich um Wohnen und Familie. Der Körper reagiert stark auf '+
+   'Stimmung und auf das, was zu Hause los ist.',
+  tun:'Die Wohnung in Ordnung bringen. Das ist in diesem Abschnitt keine Nebensache.'},
+ erfolg:{t:'Hilfe kommt von Menschen, die dir nahe sind, nicht aus dem Netzwerk. Familie, '+
+   'alte Freundschaften, Leute, die dich lange kennen.',
+  tun:'Bei jemandem fragen, der dich seit zehn Jahren kennt.'},
+ druck:{t:'Der Druck ist häuslich: Pflege, Familie, Wohnsituation. Er ist schwer abzugeben, '+
+   'weil er persönlich ist — und weil niemand sonst ihn so selbstverständlich übernimmt.',
+  tun:'Eine Aufgabe konkret an jemanden übergeben. Mit Namen und Termin.'}},
+
+4:{n:'Löwe', herr:'Sonne', bild:'zeigen und gesehen werden',
+ arbeit:{t:'Ein Kapitel der Sichtbarkeit. Hier tritt jemand nach vorn, mit eigenem Namen und '+
+   'eigenem Gesicht. Aus einer Arbeit wird ein Ruf.',
+  tun:'Etwas unter eigenem Namen machen. Nicht größer, sondern sichtbarer.'},
+ liebe:{t:'Liebe ist hier etwas Gezeigtes: Begehrtwerden, Romantik im großen Format, oft auch '+
+   'Kinder. Wer sich versteckt, fühlt sich ungeliebt, auch wenn es nicht stimmt.',
+  tun:'Die Beziehung sichtbar machen — vorstellen, zusammen auftreten.'},
+ koerper:{t:'Die Umstände werden großzügiger und auch teurer. Mehr Raum, mehr Ausgaben, mehr '+
+   'Aufmerksamkeit. Herz und Rücken wollen Bewegung.',
+  tun:'Einmal prüfen, ob der Lebensstandard zum Einkommen passt.'},
+ erfolg:{t:'Hier kommt Rückenwind von Leuten mit Einfluss. Jemand stellt sich hin und sagt, '+
+   'dass du gut bist — und das wirkt.',
+  tun:'Dich jemandem zeigen, der etwas entscheiden kann.'},
+ druck:{t:'Der Druck kommt über Erwartungen: Du sollst liefern, weil man dich kennt. Das '+
+   'drückt anders als Arbeit, nämlich auf den Stolz.',
+  tun:'Einmal etwas absagen, von dem alle annehmen, dass du es machst.'}},
+
+5:{n:'Jungfrau', herr:'Merkur', bild:'verbessern und genau machen',
+ arbeit:{t:'Ein langes Arbeitskapitel: Können, Handwerk, tägliche Routine, kein Glanz. Zwanzig '+
+   'Jahre, in denen jemand gut wird — und oft denkt, es gehe nichts voran, weil der Fortschritt '+
+   'in Details steckt.',
+  tun:'Eine Fertigkeit wirklich zu Ende lernen. Das ist hier die beste Investition.'},
+ liebe:{t:'Liebe findet im Alltäglichen statt: wer einkauft, wer sich kümmert, wie der Alltag '+
+   'läuft. Beziehungen werden daran geprüft, ob sie im Werktag funktionieren.',
+  tun:'Die Arbeitsteilung offen besprechen, bevor sie zum Vorwurf wird.'},
+ koerper:{t:'Der Körper meldet sich in diesem Abschnitt deutlicher als sonst — nicht dramatisch, '+
+   'sondern als Kleinkram, der nicht weggeht. Es ist die Zeit, Gewohnheiten umzustellen.',
+  tun:'Eine Sache ärztlich abklären, die du seit Jahren mitschleppst.'},
+ erfolg:{t:'Hilfe kommt für gute Arbeit, nicht für gute Auftritte. Wer hier unterstützt wird, '+
+   'wurde vorher beobachtet — oft über Monate, ohne es zu merken.',
+  tun:'Die eigene Arbeit sichtbar machen, ohne sie zu bewerben.'},
+ druck:{t:'Der Druck ist Alltagsdruck: zu viele Aufgaben, zu wenig Zeit, und ein hoher eigener '+
+   'Anspruch, der nichts leichter macht.',
+  tun:'Eine Sache bewusst schlechter machen als möglich. Und es so lassen.'}},
+
+6:{n:'Waage', herr:'Venus', bild:'abstimmen und zu zweit',
+ arbeit:{t:'Ein kurzes Kapitel, in dem Partnerschaften zählen: Mitgründerinnen, Kundschaft, '+
+   'Verträge. Allein geht wenig voran, zu zweit viel.',
+  tun:'Die eine Verbindung suchen, die dich weiterbringt. Acht Jahre sind kurz.'},
+ liebe:{t:'Das Beziehungskapitel im engeren Sinn. Partnerschaften werden eingegangen, '+
+   'formalisiert oder beendet. Es geht um Augenhöhe und um Verbindlichkeit.',
+  tun:'Aussprechen, was du willst — verbindlich oder offen. Hier entscheidet sich das.'},
+ koerper:{t:'Die Umstände hängen an anderen Menschen: gemeinsame Wohnung, gemeinsames Geld, '+
+   'Absprachen. Vieles ist angenehm und wenig allein entschieden.',
+  tun:'Schriftlich festhalten, was gemeinsam ist und was nicht.'},
+ erfolg:{t:'Rückenwind kommt durch eine einzelne Person, die sich für dich einsetzt. Nicht '+
+   'durch viele, durch eine. Dafür trägt diese eine Verbindung weit.',
+  tun:'Diese eine Person benennen — und sie fragen.'},
+ druck:{t:'Der Druck kommt aus Rücksicht: Du machst Dinge, weil sonst jemand enttäuscht wäre. '+
+   'Das summiert sich leise und fällt erst auf, wenn kaum noch eigene Zeit übrig ist.',
+  tun:'Einmal nein sagen, ohne eine Begründung mitzuliefern.'}},
+
+7:{n:'Skorpion', herr:'Mars', bild:'in die Tiefe gehen',
+ arbeit:{t:'Ein Kapitel der Tiefe und der Krisen. Arbeit mit Dingen, über die sonst nicht '+
+   'geredet wird, oder mit dem Geld anderer Leute: Beteiligungen, Kredite, Erbschaften.',
+  tun:'Die Zahlen anderer Leute verstehen lernen. Hier hängt vieles daran.'},
+ liebe:{t:'Eine intensive Zeit. Bindungen werden tiefer und verwickelter, oft auch abhängiger. '+
+   'Es geht um Sexualität, um Gemeinsames und um Macht. Trennungen sind hier einschneidend.',
+  tun:'Das aussprechen, was du am wenigsten aussprechen willst. Darum geht es hier.'},
+ koerper:{t:'Die Umstände werden ernster und oft fremdbestimmt: Schulden, Erbschaften, Dinge, '+
+   'die andere entscheiden. Der Körper reagiert auf das, was nicht gesagt wird.',
+  tun:'Die unangenehmste finanzielle Zahl einmal ansehen. Nur ansehen.'},
+ erfolg:{t:'Hilfe kommt über wenige, sehr enge Kontakte — und oft in Form von Geld oder Zugang, '+
+   'nicht in Form von Zuspruch.',
+  tun:'Eine Person wirklich einweihen, statt vielen die Hälfte zu erzählen.'},
+ druck:{t:'Der Druck ist der schwerste der zwölf: Abhängigkeit, Geld, Dinge, die man nicht '+
+   'allein lösen kann. Er wird selten ausgesprochen.',
+  tun:'Hilfe holen, die etwas kostet. Beratung, Anwältin, Schuldnerberatung.'}},
+
+8:{n:'Schütze', herr:'Jupiter', bild:'weiter weg, lernen, lehren',
+ arbeit:{t:'Ein Kapitel der Weite. Ausbildung, Lehre, Ausland, Veröffentlichung — der Beruf '+
+   'bekommt einen größeren Rahmen, und oft kommt eine Gelegenheit von weit her.',
+  tun:'Etwas lernen oder lehren, das über deinen bisherigen Rahmen hinausgeht.'},
+ liebe:{t:'Liebe hat mit Weite zu tun: Fernbeziehungen, andere Länder, andere Herkunft, '+
+   'gemeinsames Reisen. Weniger Alltag, mehr die Frage, ob ihr in dieselbe Richtung schaut.',
+  tun:'Gemeinsam etwas anfangen, das keine von euch allein gemacht hätte.'},
+ koerper:{t:'Die Umstände werden weiter und großzügiger. Mehr Bewegungsfreiheit, mehr '+
+   'Gelegenheiten — und leicht auch mehr, als gut tut.',
+  tun:'Eine Gelegenheit annehmen, die räumlich unbequem ist.'},
+ erfolg:{t:'Der günstigste Abschnitt für Rückenwind überhaupt. Es kommt Förderung, Zuspruch '+
+   'und Zutrauen, oft von jemandem, der mehr Erfahrung hat.',
+  tun:'Dir jemanden suchen, der weiter ist als du, und ihn um Begleitung bitten.'},
+ druck:{t:'Der Druck kommt aus Überdehnung: zu viel zugesagt, zu weit ausgeholt. Nicht Enge, '+
+   'sondern Weite ist hier das Problem.',
+  tun:'Eine Zusage zurücknehmen, bevor sie fällig wird.'}},
+
+9:{n:'Steinbock', herr:'Saturn', bild:'aufbauen und tragen',
+ arbeit:{t:'Ein sehr langes und ernstes Kapitel, siebenundzwanzig Jahre. Aufbauen, Verantwortung '+
+   'tragen, aushalten. Der Anfang ist zäh, das Ende trägt. Wer auf schnelle Erfolge wartet, '+
+   'wartet die ganze Zeit.',
+  tun:'In Jahren rechnen, nicht in Monaten. Und früh etwas bauen, das ohne dich läuft.'},
+ liebe:{t:'Beziehungen bekommen Gewicht: Verbindlichkeit, Verantwortung, manchmal Pflege oder '+
+   'Altersunterschied. Weniger Schwärmen, mehr Tragen. Was hier hält, hält wirklich.',
+  tun:'Prüfen, ob du bleibst, weil du willst, oder weil du dich verpflichtet fühlst.'},
+ koerper:{t:'Die Umstände sind eng und verlangen Disziplin. Knochen, Zähne, Haut und Gelenke '+
+   'wollen Aufmerksamkeit. Es ist der Abschnitt, in dem Vernachlässigtes sich meldet.',
+  tun:'Die eine Vorsorge machen, die du seit Jahren schiebst.'},
+ erfolg:{t:'Unterstützung kommt spät und dafür verlässlich. Sie muss verdient werden und wird '+
+   'dann nicht zurückgenommen. Wer hier zu früh aufgibt, verpasst sie knapp.',
+  tun:'Dranbleiben, auch wenn drei Anfragen ins Leere laufen.'},
+ druck:{t:'Der klassische Druckabschnitt: Verantwortung, die man nicht abgeben kann, und '+
+   'wenig Spielraum. Er ist real und nicht eingebildet.',
+  tun:'Eine Pflicht abgeben, die niemand verlangt hat außer dir selbst.'}},
+
+10:{n:'Wassermann', herr:'Saturn', bild:'anders machen, in Gruppen',
+ arbeit:{t:'Das längste Kapitel, dreißig Jahre. Gruppen, Netzwerke und etwas anders machen als '+
+   'vorgesehen. Der Beruf läuft über Leute, nicht über Bewerbungen, und passt selten in eine '+
+   'vorhandene Schublade.',
+  tun:'In Gruppen gehen, in denen das schon gemacht wird, was du machen willst.'},
+ liebe:{t:'Beziehungen nehmen eigene Formen an: Freundschaft und Liebe gehen ineinander über, '+
+   'Abstand gehört dazu, und was andere für richtig halten, trifft hier nicht zu.',
+  tun:'Die eigene Form aushandeln, statt eine zu übernehmen, die nicht passt.'},
+ koerper:{t:'Die Umstände sind unkonventionell und wenig planbar. Wohnformen und Einkommen '+
+   'sehen anders aus als bei den meisten, und das ist nicht das Problem, sondern die Anlage.',
+  tun:'Aufhören, die eigene Lage mit der Norm zu vergleichen.'},
+ erfolg:{t:'Hilfe kommt aus der Gruppe und oft von Fremden — jemand aus einem Netzwerk, der '+
+   'dich kaum kennt, macht eine Tür auf.',
+  tun:'An einem Ort auftauchen, an dem dich niemand kennt.'},
+ druck:{t:'Der Druck kommt daraus, dass die üblichen Wege für dich nicht funktionieren und du '+
+   'jeden selbst bauen musst. Das kostet Kraft, die andere für die Sache selbst haben.',
+  tun:'Einen fertigen Weg ausprobieren, bevor du einen eigenen baust.'}},
+
+11:{n:'Fische', herr:'Jupiter', bild:'auflösen und loslassen',
+ arbeit:{t:'Ein Kapitel im Hintergrund. Oft unbezahlt, unsichtbar oder im Dienst einer Sache, '+
+   'und die Richtung ist unscharf. Es ist der Abschnitt vor einem Neuanfang — und das merkt '+
+   'man erst hinterher.',
+  tun:'Nichts erzwingen. Festhalten, was von selbst wiederkommt, und das als Hinweis nehmen.'},
+ liebe:{t:'Weiche Ränder. Verbindungen sind eher ungeklärt als eindeutig: Nähe ohne Festlegung, '+
+   'Sehnsucht, manchmal auch Täuschung. Viel gefühlt, wenig geklärt.',
+  tun:'Einmal konkret nachfragen, was gerade gilt. Sonst bleibt es offen.'},
+ koerper:{t:'Die Umstände sind diffus und schwer zu greifen. Erschöpfung ohne klaren Grund, '+
+   'Geld, das zerrinnt, Zuständigkeiten, die niemand hat.',
+  tun:'Ein Konto und einen Kalender führen. Gerade hier, gerade jetzt.'},
+ erfolg:{t:'Hilfe kommt, aber unauffällig und ohne dass jemand darüber redet. Oft merkst du '+
+   'erst später, wer etwas für dich getan hat.',
+  tun:'Dich bei jemandem bedanken, von dem du vermutest, dass er geholfen hat.'},
+ druck:{t:'Der Druck ist nicht greifbar: Unklarheit, offene Enden, Dinge, die niemand entscheidet. '+
+   'Das zehrt mehr als klare Last.',
+  tun:'Eine offene Sache abschließen, egal wie. Abschließen ist hier wichtiger als richtig.'}}
+};
+
+/* ── Der große Schnitt ───────────────────────────────────────  */
+var ZT_SCHNITT={
+ n:'Der große Schnitt',
+ klassisch:'Lösung der Bindung',
+ was:'An dieser Stelle springt die Reihe aus ihrer Ordnung: Statt wie bisher weiterzuzählen, '+
+   'setzt sie auf der gegenüberliegenden Seite neu an. In der Überlieferung ist das der größte '+
+   'Einschnitt, den ein Kapitel kennt — etwas endet, das man für dauerhaft gehalten hat.',
+ beispiele:{
+  arbeit:'Branchenwechsel, Kündigung, Gründung, Aufhören mit etwas, das zehn Jahre lief.',
+  liebe:'Eine Beziehung endet oder ändert sich grundlegend — das muss keine Trennung sein.',
+  koerper:'Umzug, Wechsel der Lebensumstände, manchmal auch etwas Körperliches.',
+  erfolg:'Die Leute, die dich bisher gestützt haben, sind nicht mehr dieselben.',
+  druck:'Eine Verpflichtung fällt weg — und oft fehlt sie erst einmal.'},
+ tun:'Solche Zeitpunkte lohnt es vorher zu kennen. Nicht um sie zu vermeiden, sondern um nicht '+
+   'überrascht zu sein. Und: In so einem Jahr nichts aus Gewohnheit weiterlaufen lassen — was '+
+   'bleiben soll, muss neu begründet werden.'
+};
+
+/* ── Die Jahresthemen (Profektion) ──────────────────────────  */
+var ZT_PROFEKTION=[
+ {h:1,  n:'Du selbst',    t:'Ein Jahr über dich: Auftreten, Körper, Richtung. Was du dieses Jahr anfängst, trägt deine Handschrift.'},
+ {h:2,  n:'Geld und Wert',t:'Ein Jahr über Einkommen, Besitz und den eigenen Wert. Preise, Gehalt und Rücklagen sind dran.'},
+ {h:3,  n:'Nahbereich',   t:'Ein Jahr über Geschwister, Nachbarschaft, kurze Wege und das Schreiben. Viel Bewegung, wenig Grundsätzliches.'},
+ {h:4,  n:'Zuhause',      t:'Ein Jahr über Wohnung, Familie und Herkunft. Umzüge, Eltern, und die Frage, wo du hingehörst.'},
+ {h:5,  n:'Ausdruck',     t:'Ein Jahr über das, was von dir ausgeht: Kinder, Kunst, Verliebtheit, Spiel. Mehr zeigen als zurückhalten.'},
+ {h:6,  n:'Alltag',       t:'Ein Jahr über Arbeit, Routine und Körper. Unspektakulär und arbeitsreich — und gut, um Gewohnheiten umzustellen.'},
+ {h:7,  n:'Die anderen',  t:'Ein Jahr über Partnerschaft, Kundschaft und Verträge. Was wichtig wird, kommt über andere Menschen.'},
+ {h:8,  n:'Das Geteilte', t:'Ein Jahr über gemeinsames Geld, Abhängigkeit und Dinge, über die nicht geredet wird. Oft unbequem, selten folgenlos.'},
+ {h:9,  n:'Weite',        t:'Ein Jahr über Lehre, Ausland, Veröffentlichung und Überzeugungen. Der Rahmen wird größer.'},
+ {h:10, n:'Beruf',        t:'Ein Jahr über Position und Außenwirkung. Das sichtbarste von zwölf — hier wird bewertet, was du aufgebaut hast.'},
+ {h:11, n:'Gruppen',      t:'Ein Jahr über Netzwerke, Freundeskreis und Zukunftspläne. Vieles kommt über Leute, die du kennst.'},
+ {h:12, n:'Rückzug',      t:'Ein Jahr im Hintergrund: abschließen, loslassen, erholen. Das Jahr zum Aufräumen, bevor es von vorn losgeht.'}
+];
+
+/* ── Die Planetenabschnitte (Firdaria) ──────────────────────  */
 var ZT_FIRDARIA={
- 'Sonne':{t:'Zehn Jahre, in denen es um Sichtbarkeit, Position und den eigenen Namen geht. Gute Zeit, nach vorn zu treten.'},
+ 'Sonne':{t:'Zehn Jahre über Sichtbarkeit, Position und den eigenen Namen. Gute Zeit, nach vorn zu treten.'},
  'Mond':{t:'Neun Jahre mit viel Bewegung im Privaten: Zuhause, Familie, Stimmung, Gesundheit. Weniger planbar als andere Abschnitte.'},
- 'Merkur':{t:'Dreizehn Jahre über Reden, Schreiben, Lernen und Handel. Der längste Abschnitt der Reihe — viele Fäden, viel Austausch.'},
+ 'Merkur':{t:'Dreizehn Jahre über Reden, Schreiben, Lernen und Handel. Der längste Abschnitt — viele Fäden, viel Austausch.'},
  'Venus':{t:'Acht Jahre über Beziehung, Geschmack und Geld. Oft die angenehmste Strecke, und die, in der sich etwas verbindet.'},
  'Mars':{t:'Sieben Jahre mit Reibung und Tempo. Konflikte, Durchsetzung, Trennungen und Neuanfänge aus eigener Kraft.'},
  'Jupiter':{t:'Zwölf Jahre mit Spielraum: Ausbildung, Weite, Gelegenheiten. Es wird mehr, und gelegentlich zu viel.'},
@@ -941,18 +1251,82 @@ var ZT_FIRDARIA={
 };
 
 /* Astro-Charlie · Zeiten — die Seite
-   Setzt die Rechnung aus zeit-rechner.js und die Texte aus
-   zeit-daten.js zusammen. */
+   Antwort zuerst, Erklärung danach, Tiefe zuletzt. */
 function ztEl(i){ return document.getElementById(i); }
 function ztEsc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
   return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
 var ZT_NSU='http://www.w3.org/2000/svg';
 var ZT_MON=['Januar','Februar','März','April','Mai','Juni','Juli','August',
  'September','Oktober','November','Dezember'];
+/* U+FE0E: sonst stellt Chromium die Tierkreiszeichen als Farb-Emoji dar */
+var ZT_GLYPHE=['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
 
-var ztPerson=null, ztVariante='paulus', ztStichtag=null, ztOffen=null, ztWelche='beruf';
-var ztB=null, ztJD=0;
+var ztPerson=null, ztVariante='paulus', ztStichtag=null, ztOffen=null;
+var ztBereich='arbeit', ztB=null, ztJD=0, ztWortNr=0;
 
+/* ── Kleinkram ──────────────────────────────────────────────── */
+function ztKZ(x){ var r=Math.round(x*10)/10;
+  return (r%1===0)?String(r):r.toFixed(1).replace('.',','); }
+function ztDatumText(d){ return d.getDate()+'. '+ZT_MON[d.getMonth()]+' '+d.getFullYear(); }
+function ztKurz(d){ return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+
+  '.'+d.getFullYear(); }
+function ztJahrMon(d){ return ZT_MON[d.getMonth()].slice(0,3)+' '+d.getFullYear(); }
+function ztISO(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+
+  ('0'+d.getDate()).slice(-2); }
+function ztTagVon(tage){ return AC_ZEIT.datum(ztJD, tage); }
+function ztAlterBei(tage){ return tage/365.2422; }
+function ztSatz1(s, max){
+  s=String(s||'').replace(/<[^>]+>/g,'').trim(); max=max||105;
+  var p=s.indexOf('. ');
+  if(p>0 && p<max) return s.slice(0,p+1);
+  if(s.length<=max) return s;
+  var i=s.lastIndexOf(' ', max);
+  return s.slice(0, i>40?i:max).replace(/[,;:·\s]+$/,'')+'…';
+}
+/* Eine Dauer so ausdrücken, wie man sie sagen würde */
+function ztDauer(jahre){
+  if(jahre < 1/12) return Math.max(1, Math.round(jahre*360)) + ' Tagen';
+  if(jahre < 1.5){
+    var m=Math.round(jahre*12);
+    return (m<=1?'einem Monat':m+' Monaten');
+  }
+  return ztKZ(jahre)+' Jahren';
+}
+function ztLang(jahre){ return ztDauer(jahre).replace(/n$/,'').replace(/einem Monat/,'einen Monat')
+  .replace(/Tage$/,'Tage').replace(/Monate$/,'Monate').replace(/Jahre$/,'Jahre'); }
+function ztBer(){ var o=null;
+  ZT_BEREICH.forEach(function(b){ if(b.k===ztBereich) o=b; });
+  return o||ZT_BEREICH[0]; }
+function ztSpur(k){ return ztB ? ztB.spuren[k||ztBereich] : null; }
+
+/* ── Wörter, die sich selbst erklären ───────────────────────── */
+function ztW(wort, text){
+  if(!ZT_WORT[wort]) return ztEsc(text||wort);
+  var id='zw'+(++ztWortNr);
+  return '<span class="zt-wp"><button type="button" class="zt-w" data-w="'+ztEsc(wort)+
+    '" aria-expanded="false" aria-controls="'+id+'">'+ztEsc(text||wort)+'</button>'+
+    '<span class="zt-we" id="'+id+'" hidden>'+ZT_WORT[wort]+'</span></span>';
+}
+/* Doppelte eckige Klammern im Text werden zu einem erklärbaren Wort */
+function ztWorte(s){
+  return String(s||'').replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, function(m,w,t){
+    return ztW(w, t||w); });
+}
+function ztWortWirken(wo){
+  Array.prototype.forEach.call((wo||document).querySelectorAll('.zt-w'),function(b){
+    if(b.dataset.an) return; b.dataset.an='1';
+    b.addEventListener('click',function(){
+      var e=document.getElementById(b.getAttribute('aria-controls'));
+      if(!e) return;
+      var auf=e.hasAttribute('hidden');
+      if(auf) e.removeAttribute('hidden'); else e.setAttribute('hidden','');
+      b.setAttribute('aria-expanded', String(auf));
+      b.classList.toggle('auf', auf);
+    });
+  });
+}
+
+/* ── Profile ────────────────────────────────────────────────── */
 function ztProfile(){ try{ return AC_P.alle()||[]; }catch(e){ return []; } }
 function ztAktiv(){
   var a=ztProfile();
@@ -960,31 +1334,16 @@ function ztAktiv(){
   try{ return AC_P.aktives()||AC_P.eigenes()||a[0]||null; }catch(e){ return a[0]||null; }
 }
 function ztName(p){ try{ return AC_P.anzeige(p, AC_P.zeigeNamen()); }catch(e){ return (p&&p.name)||'?'; } }
-
 function ztJDVon(p){
   var ut=p.h+p.mi/60-p.tz, y=p.y, mo=p.mo, d=p.d;
   if(ut<0){ ut+=24; d-=1; } if(ut>=24){ ut-=24; d+=1; }
   return jdFromUT(y,mo,d,ut);
 }
-function ztDatumText(d){
-  return d.getDate()+'. '+ZT_MON[d.getMonth()]+' '+d.getFullYear();
-}
-function ztKurz(d){
-  return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear();
-}
-function ztJahrMon(d){ return ZT_MON[d.getMonth()].slice(0,3)+' '+d.getFullYear(); }
-function ztISO(d){
-  return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
-}
-function ztTagVon(tage){ return AC_ZEIT.datum(ztJD, tage); }
-function ztAlterBei(tage){ return (tage/365.2422); }
-
-/* ── Kopfzeile ──────────────────────────────────────────────── */
 function ztPersonenBauen(){
   var box=ztEl('ztpersonen'), a=ztProfile(), p=ztAktiv();
   if(!a.length){ box.innerHTML='<span class="zt-hint" style="flex:1 1 100%">Noch kein Profil '+
-    'angelegt. <a href="profile.html">Hier anlegen</a> &mdash; f&uuml;r diese Seite braucht es '+
-    'unbedingt die <b>Geburtszeit</b>, weil alle drei Lose am Aszendenten h&auml;ngen.</span>'; return; }
+    'angelegt. <a href="profile.html">Hier anlegen</a> &mdash; diese Seite braucht unbedingt '+
+    'die <b>Geburtszeit</b>.</span>'; return; }
   box.innerHTML=a.map(function(x){
     return '<button type="button" class="zt-knopf'+((p&&x.id===p.id)?' ist':'')+
       '" data-p="'+ztEsc(x.id)+'">'+ztEsc(ztName(x))+(x.eigen?' (ich)':'')+'</button>'; }).join('');
@@ -996,342 +1355,461 @@ function ztPersonenBauen(){
 function ztVarianteBauen(){
   var box=ztEl('ztvariante');
   box.innerHTML=[['paulus','Paulus / Olympiodor'],['alt','Die andere &Uuml;berlieferung']]
-    .map(function(v){
-      return '<button type="button" class="zt-knopf'+(v[0]===ztVariante?' ist':'')+
-        '" data-v="'+v[0]+'">'+v[1]+'</button>'; }).join('');
+    .map(function(v){ return '<button type="button" class="zt-knopf'+
+      (v[0]===ztVariante?' ist':'')+'" data-v="'+v[0]+'">'+v[1]+'</button>'; }).join('');
   Array.prototype.forEach.call(box.querySelectorAll('button[data-v]'),function(b){
     b.addEventListener('click',function(){ ztVariante=b.getAttribute('data-v');
       ztOffen=null; ztAlles(); });
   });
 }
 
-/* ── Jetzt gerade ───────────────────────────────────────────── */
-function ztSpurKarte(freilassung, welche, titel, lab){
-  if(!freilassung) return '';
-  var J=AC_ZEIT.jetzt(freilassung, ztB.tageSeitGeburt);
-  if(!J.l1) return '<div class="zt-j"><div class="lab">'+lab+'</div>'+
-    '<h3>Au&szlig;erhalb der Reihe</h3><p>F&uuml;r diesen Stichtag liegt kein Abschnitt vor. '+
-    'Die Reihe wird ab Geburt &uuml;ber hundert Jahre gerechnet.</p></div>';
-  var K=ZT_KAPITEL[J.l1.zeichen], S=ZT_STUFE[ztStufe(J.l1.vonGlueck)];
-  var K2=J.l2?ZT_KAPITEL[J.l2.zeichen]:null, S2=J.l2?ZT_STUFE[ztStufe(J.l2.vonGlueck)]:null;
-  var anteil=(ztB.tageSeitGeburt-J.l1.von)/(J.l1.bis-J.l1.von);
-  var rest=(J.l1.bis-ztB.tageSeitGeburt)/360;
-  return '<div class="zt-j" style="border-top-color:'+S.farbe+'">'+
-    '<div class="lab">'+lab+'<span class="zt-stufe" style="background:'+S.farbe+'">'+
-      S.n+'</span></div>'+
-    '<h3>'+K.n+'</h3>'+
-    '<div class="wann">'+ztJahrMon(ztTagVon(J.l1.von))+' &ndash; '+ztJahrMon(ztTagVon(J.l1.bis))+
-      ' &middot; '+J.l1.jahre+' Jahre</div>'+
-    '<p>'+K[welche].t+'</p>'+
-    '<div class="zt-balken"><i style="width:'+Math.round(anteil*100)+'%"></i></div>'+
-    '<div class="zt-rest">'+Math.round(anteil*100)+' Prozent durch &middot; noch '+
-      ztKZ(rest)+' Jahre</div>'+
-    (K2?'<div class="unter"><b>Darin gerade: '+K2.n+
-      '<span class="zt-stufe" style="background:'+S2.farbe+';margin-left:7px">'+S2.kurz+'</span></b>'+
-      '<p style="margin:0">'+K2[welche].t+'</p>'+
-      '<div class="zt-rest" style="margin-top:6px">bis '+ztKurz(ztTagVon(J.l2.bis))+
-      (J.l2.bindung?' &middot; <span style="color:#A05A3A">nach der L&ouml;sung der Bindung</span>':'')+
-      '</div></div>':'')+
-    '<div class="tun"><b>Dazu</b>'+(K2?K2[welche].tun:K[welche].tun)+'</div>'+
-    '<p class="ac-tech" data-ab="3" style="margin:10px 0 0;font-size:12.5px;color:#6B6259">'+
-      titel+': '+AC_ZEIT.ZEICHEN[freilassung.start]+' &middot; '+
-      J.l1.vonGlueck+'. vom Los des Gl&uuml;cks'+
-      (J.l2?' &middot; Unterperiode '+J.l2.vonGlueck+'.':'')+'</p>'+
-    '</div>';
+/* ── A · Die Antwort ────────────────────────────────────────── */
+function ztLage(k){
+  var f=ztSpur(k); if(!f) return null;
+  var J=AC_ZEIT.jetzt(f, ztB.tageSeitGeburt);
+  if(!J.l1) return null;
+  var st=ztStufe(J.l2?J.l2.vonGlueck:J.l1.vonGlueck);
+  return {l1:J.l1, l2:J.l2, stufe:st, S:ZT_STUFE[st],
+          k1:ZT_KAPITEL[J.l1.zeichen], k2:J.l2?ZT_KAPITEL[J.l2.zeichen]:null};
 }
-function ztKZ(x){
-  var r=Math.round(x*10)/10;
-  return (r%1===0) ? String(r) : r.toFixed(1).replace('.',',');
-}
-
-function ztJetztBauen(){
-  var box=ztEl('ztjetzt');
+function ztAntwortBauen(){
+  var box=ztEl('ztantwort');
   if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil mit Geburtszeit l&auml;sst sich '+
-    'das nicht rechnen. <a href="profile.html">Profil anlegen</a>.</div>'; return; }
-  var h='<div class="zt-jetzt">';
-  h+=ztSpurKarte(ztB.beruf,'beruf','Los des Geistes','Arbeit');
-  h+=ztSpurKarte(ztB.liebe,'liebe','Los des Eros','Liebe');
+    'nichts rechnen. <a href="profile.html">Profil anlegen</a> &mdash; danach steht hier deine '+
+    'Antwort, und alles andere auf der Seite f&uuml;llt sich mit.</div>'; return; }
+  var B=ztBer(), L=ztLage();
+  if(ztB.tageSeitGeburt < 0){
+    box.innerHTML='<div class="zt-leer"><b>Der Stichtag liegt vor der Geburt.</b> '+
+      'Die Reihe f&auml;ngt mit dem ersten Lebenstag an &mdash; davor gibt es nichts zu '+
+      'rechnen. Stell den Tag weiter nach hinten.</div>'; return; }
+  if(!L){
+    box.innerHTML='<div class="zt-leer">'+(ztSpur()
+      ? '<b>Der Stichtag liegt zu weit in der Zukunft.</b> Die Seite rechnet hundert Jahre ab '+
+        'Geburt. Stell den Tag weiter nach vorn.'
+      : 'F&uuml;r diesen Bereich fehlt im Chart ein Planet, den die Rechnung braucht.')+
+      '</div>'; return; }
+  var f=ztSpur(), G=AC_ZEIT.naechsteGipfel(f, ztB.tageSeitGeburt, 4);
+  var kommend=G.filter(function(g){ return !g.laeuft; })[0];
+  var laufend=G.filter(function(g){ return g.laeuft; })[0];
 
-  /* Profektion */
-  var P=ztB.profektion, PT=ZT_PROFEKTION[P.haus-1];
-  h+='<div class="zt-j" style="border-top-color:#3D6B62">'+
-    '<div class="lab">Das Jahr &middot; Profektion</div>'+
-    '<h3>'+P.haus+'. Haus &mdash; '+PT.n+'</h3>'+
-    '<div class="wann">Lebensjahr '+(P.alter+1)+' &middot; '+P.zeichenName+
-      ' &middot; Jahresherr '+P.herr+'</div>'+
-    '<p>'+PT.t+'</p>'+
-    '<p style="font-size:13.8px;color:#6B6259;margin:0">Der Jahresherr <b>'+P.herr+'</b> f&uuml;hrt '+
-      'dieses Jahr. Wo er in deinem Chart steht und wie es ihm dort geht, f&auml;rbt das ganze Jahr '+
-      'ein &mdash; das ist der eigentliche Hinweis, nicht das Haus allein.</p>'+
-    '</div>';
+  var h='<div class="zt-antwort" style="--farbe:'+L.S.farbe+'">'+
+    '<div class="zt-ak">Jetzt gerade &middot; '+B.n+'</div>'+
+    '<div class="zt-agross">'+L.S.n+'</div>'+
+    '<p class="zt-asatz">'+L.S.satz+' '+ztWorte(L.S.was)+'</p>';
 
-  /* Firdaria */
-  var F=ztB.firdariaJetzt;
-  h+='<div class="zt-j" style="border-top-color:#6A4A62">'+
-    '<div class="lab">Firdaria</div>'+
-    (F
-      ? '<h3>'+F.haupt.herr+'</h3>'+
-        '<div class="wann">Alter '+ztKZ(F.haupt.von)+' bis '+ztKZ(F.haupt.bis)+
-          (F.unter?' &middot; Unterperiode '+F.unter.herr:'')+'</div>'+
-        '<p>'+(ZT_FIRDARIA[F.haupt.herr]||{t:''}).t+'</p>'+
-        (F.unter&&F.unter.herr!==F.haupt.herr
-          ? '<div class="unter"><b>Darin: '+F.unter.herr+'</b><p style="margin:0">'+
-            (ZT_FIRDARIA[F.unter.herr]||{t:''}).t+'</p></div>'
-          : '')
-      : '<h3>Reihe durchlaufen</h3><p>Die Firdaria decken 75 Jahre ab. Danach beginnt die '+
-        'Reihe nach manchen Quellen von vorn, nach anderen endet sie &mdash; die Seite rechnet '+
-        'sie nicht weiter, statt sich auf eine der beiden Lesarten festzulegen.</p>')+
-    '<p class="ac-tech" data-ab="2" style="margin:10px 0 0;font-size:12.5px;color:#6B6259">'+
-      'Reihenfolge nach '+(ztB.lose.tag?'Tag':'Nacht')+'geburt, Fassung nach Bonatti.</p>'+
-    '</div>';
-  h+='</div>';
+  h+='<p class="zt-awo">Du bist im Kapitel <b>'+L.k1.n+'</b> &mdash; '+L.k1.bild+' &mdash; '+
+    'seit '+ztJahrMon(ztTagVon(L.l1.von))+', noch '+
+    ztLang((L.l1.bis-ztB.tageSeitGeburt)/360)+'.'+
+    (L.k2 && L.k2!==L.k1 ? ' Darin l&auml;uft gerade der Unterabschnitt <b>'+L.k2.n+'</b> '+
+      'bis '+ztKurz(ztTagVon(L.l2.bis))+'.' : '')+'</p>';
+
+  if(laufend){
+    h+='<div class="zt-anext jetzt"><b>Du bist gerade mittendrin.</b> Diese Hochphase l&auml;uft '+
+      'noch bis '+ztDatumText(ztTagVon(laufend.bis))+'.</div>';
+  }
+  if(kommend){
+    var tage=kommend.von-ztB.tageSeitGeburt;
+    h+='<div class="zt-anext"><b>Deine n&auml;chste Hochphase</b> beginnt am '+
+      ztDatumText(ztTagVon(kommend.von))+' &mdash; in '+ztDauer(tage/365.2422)+' &mdash; '+
+      'und dauert '+ztLang((kommend.bis-kommend.von)/360)+'. Es ist ein '+
+      (kommend.ebene===1?'ganzes Kapitel':'Unterabschnitt')+' in <b>'+
+      ZT_KAPITEL[kommend.zeichen].n+'</b>.</div>';
+  } else {
+    h+='<div class="zt-anext">In den n&auml;chsten Jahrzehnten kommt in diesem Bereich keine '+
+      'weitere Hochphase.</div>';
+  }
+
+  /* Die vier anderen Bereiche in einer Zeile */
+  h+='<div class="zt-amini">';
+  ZT_BEREICH.forEach(function(x){
+    var l=ztLage(x.k);
+    h+='<button type="button" class="zt-m'+(x.k===ztBereich?' ist':'')+'" data-b="'+x.k+'">'+
+      '<span class="mn">'+x.kurz+'</span>'+
+      (l?'<span class="ms" style="background:'+l.S.farbe+'">'+l.S.kurz+'</span>'
+        :'<span class="ms" style="background:#DDD0BC;color:#231F1A">–</span>')+'</button>';
+  });
+  h+='</div></div>';
   box.innerHTML=h;
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-b]'),function(b){
+    b.addEventListener('click',function(){ ztBereich=b.getAttribute('data-b');
+      ztOffen=null; ztAlles();
+      var z=ztEl('antwort'); if(z&&z.scrollIntoView) z.scrollIntoView({block:'start'}); });
+  });
+  ztWortWirken(box);
 }
 
-/* ── Die Lebenslinie ────────────────────────────────────────── */
-/* Der erste Satz, gekappt — ein Satz kann länger sein als die Zeile hergibt */
-function ztSatz1(s, max){
-  s=String(s||'').trim(); max=max||105;
-  var p=s.indexOf('. ');
-  if(p>0 && p<max) return s.slice(0,p+1);
-  if(s.length<=max) return s;
-  var i=s.lastIndexOf(' ', max);
-  return s.slice(0, i>40?i:max).replace(/[,;:·\s]+$/,'')+'…';
+/* ── B · Die vier Schritte ──────────────────────────────────── */
+function ztN(t,a,txt){ var e=document.createElementNS(ZT_NSU,t);
+  for(var k in a) e.setAttribute(k,a[k]);
+  if(txt!==undefined) e.textContent=txt; return e; }
+
+function ztBildKapitel(){        /* Schritt 1 */
+  var f=ztSpur('arbeit'); if(!f) return '';
+  var W=1000, H=58, maxJ=90, L=0;
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
+    'aria-label':'Ein Lebensstrahl, in Kapitel geteilt'});
+  f.abschnitte.forEach(function(a){
+    if(a.von>maxJ*360) return;
+    var x0=L+(a.von/(maxJ*360))*W, x1=L+(Math.min(a.bis,maxJ*360)/(maxJ*360))*W;
+    svg.appendChild(ztN('rect',{x:x0.toFixed(1), y:'8', width:(x1-x0-2).toFixed(1),
+      height:'30', rx:'4', fill:'#DDD0BC'}));
+    if(x1-x0>86) svg.appendChild(ztN('text',{x:(x0+8).toFixed(1), y:'28',
+      class:'zt-mini-t'}, ZT_KAPITEL[a.zeichen].n));
+    svg.appendChild(ztN('text',{x:x0.toFixed(1), y:'52', class:'zt-mini-a'},
+      String(Math.round(ztAlterBei(a.von)))));
+  });
+  return svg.outerHTML;
+}
+function ztBildLaengen(){        /* Schritt 2 */
+  var W=1000, H=50, ges=0;
+  AC_ZEIT.JAHRE.forEach(function(j){ ges+=j; });
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
+    'aria-label':'Die festen Jahreszahlen der zwölf Zeichen'});
+  var x=0;
+  AC_ZEIT.JAHRE.forEach(function(j,i){
+    var br=(j/ges)*W;
+    svg.appendChild(ztN('rect',{x:x.toFixed(1), y:'6', width:(br-2).toFixed(1), height:'26',
+      rx:'4', fill:(i%2?'#EBE1D2':'#DDD0BC')}));
+    svg.appendChild(ztN('text',{x:(x+br/2-1).toFixed(1), y:'24', 'text-anchor':'middle',
+      class:'zt-mini-g'}, ZT_GLYPHE[i]));
+    svg.appendChild(ztN('text',{x:(x+br/2-1).toFixed(1), y:'45', 'text-anchor':'middle',
+      class:'zt-mini-a'}, String(j)));
+    x+=br;
+  });
+  return svg.outerHTML;
+}
+function ztBildPunkt(){          /* Schritt 3 */
+  if(!ztB) return '';
+  var gz=AC_ZEIT.zi(ztB.lose.glueck);
+  var W=1000, H=66;
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
+    'aria-label':'Die zwölf Zeichen, vier davon laut'});
+  for(var i=0;i<12;i++){
+    var v=AC_ZEIT.vonGlueck(i,gz), laut=(ztStufe(v)==='winkel');
+    var br=W/12, x=i*br;
+    svg.appendChild(ztN('rect',{x:(x+2).toFixed(1), y:'14', width:(br-4).toFixed(1),
+      height:'30', rx:'5', fill:laut?ZT_STUFE.winkel.farbe:'#EBE1D2'}));
+    svg.appendChild(ztN('text',{x:(x+br/2).toFixed(1), y:'35', 'text-anchor':'middle',
+      class:'zt-mini-g'+(laut?' hell':'')}, ZT_GLYPHE[i]));
+    if(i===gz) svg.appendChild(ztN('text',{x:(x+br/2).toFixed(1), y:'10',
+      'text-anchor':'middle', class:'zt-mini-p'}, '▼ dein Punkt'));
+    svg.appendChild(ztN('text',{x:(x+br/2).toFixed(1), y:'58', 'text-anchor':'middle',
+      class:'zt-mini-a'}, laut?'laut':''));
+  }
+  return svg.outerHTML;
+}
+function ztBildFuenf(){          /* Schritt 4 */
+  if(!ztB) return '';
+  var W=1000, zeile=22, H=ZT_BEREICH.length*zeile+16, maxJ=90, L=120;
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-mini-svg', role:'img',
+    'aria-label':'Fünf Bereiche mit verschiedenen lauten Zeiten'});
+  ZT_BEREICH.forEach(function(B,n){
+    var f=ztSpur(B.k), y=n*zeile+4;
+    svg.appendChild(ztN('text',{x:'0', y:String(y+13), class:'zt-mini-t'}, B.kurz));
+    if(!f) return;
+    f.abschnitte.forEach(function(a){
+      if(a.von>maxJ*360) return;
+      var x0=L+(a.von/(maxJ*360))*(W-L), x1=L+(Math.min(a.bis,maxJ*360)/(maxJ*360))*(W-L);
+      svg.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y), width:Math.max(1,x1-x0-1).toFixed(1),
+        height:'15', rx:'3', fill:ZT_STUFE[ztStufe(a.vonGlueck)].farbe}));
+    });
+  });
+  var alter=ztB.tageSeitGeburt/360;
+  if(alter<=maxJ && alter>=0){
+    var hx=L+(alter/maxJ)*(W-L);
+    svg.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'0', x2:hx.toFixed(1),
+      y2:String(ZT_BEREICH.length*zeile), stroke:'#A05A3A','stroke-width':'2'}));
+    svg.appendChild(ztN('text',{x:(hx+5).toFixed(1), y:String(ZT_BEREICH.length*zeile+9),
+      class:'zt-mini-p'}, 'du bist hier'));
+  }
+  return svg.outerHTML;
 }
 
-/* U+FE0E: sonst stellt Chromium die Tierkreiszeichen als Farb-Emoji dar */
-var ZT_GLYPHE=['♈︎','♉︎','♊︎','♋︎','♌︎','♍︎','♎︎','♏︎','♐︎','♑︎','♒︎','♓︎'];
+function ztSchritteBauen(){
+  var bilder=[ztBildKapitel(), ztBildLaengen(), ztBildPunkt(), ztBildFuenf()];
+  var h='';
+  ZT_SCHRITTE.forEach(function(S,i){
+    h+='<div class="zt-schritt"><div class="zt-snr">'+(i+1)+'</div>'+
+      '<div class="zt-sin"><h3>'+S.n+'</h3><p>'+ztWorte(S.t)+'</p>'+
+      (bilder[i]?'<div class="zt-mini">'+bilder[i]+'</div>':'')+
+      '<div class="zt-genau" data-ab="2"><b>Genauer</b>'+ztWorte(S.mehr)+'</div>'+
+      '</div></div>';
+  });
+  ztEl('ztschritte').innerHTML=h;
+  ztWortWirken(ztEl('ztschritte'));
+}
 
+/* ── C · Bereich wählen ─────────────────────────────────────── */
+function ztBereicheBauen(){
+  var box=ztEl('ztbereiche');
+  box.innerHTML=ZT_BEREICH.map(function(B){
+    var l=ztLage(B.k);
+    return '<button type="button" class="zt-b'+(B.k===ztBereich?' ist':'')+'" data-b="'+B.k+'">'+
+      '<b>'+B.n+'</b><span>'+B.worum+'</span>'+
+      (l?'<i style="background:'+l.S.farbe+'">gerade '+l.S.kurz+'</i>':'')+'</button>'; }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-b]'),function(b){
+    b.addEventListener('click',function(){ ztBereich=b.getAttribute('data-b');
+      ztOffen=null; ztAlles(); });
+  });
+  var B=ztBer();
+  ztEl('ztbfrage').innerHTML='<div class="zt-bfrage"><b>'+B.frage+'</b>'+
+    '<p data-ab="2">Startpunkt dieser Spur ist das <b>'+B.los+'</b>. '+B.losErkl+'</p></div>';
+}
+
+/* ── D · Die Lebenslinie ────────────────────────────────────── */
 function ztLinieBauen(){
-  var box=ztEl('ztlinie');
-  if(!ztB){ box.innerHTML='<div class="zt-leer">Keine Linie ohne Profil.</div>';
-    ztEl('ztlinie-hint').textContent=''; return; }
-  function N(t,a,txt){ var e=document.createElementNS(ZT_NSU,t);
-    for(var k in a) e.setAttribute(k,a[k]);
-    if(txt!==undefined) e.textContent=txt; return e; }
+  var box=ztEl('ztlinie'), B=ztBer();
+  ztEl('ztlinie-u').innerHTML='Die Kapitel deines Lebens f&uuml;r <b>'+B.n+'</b>. '+
+    'Breite Balken sind die '+ztW('Kapitel')+', der Streifen darunter zeigt die '+
+    ztW('Unterabschnitt','Unterabschnitte')+' &mdash; eingef&auml;rbt sind dort nur die lauten. '+
+    'Die Rauten sind die gro&szlig;en Schnitte, die senkrechte Linie ist dein Stichtag.';
+  var f=ztSpur();
+  if(!ztB || !f){ box.innerHTML='<div class="zt-leer">Keine Linie ohne Profil.</div>';
+    ztEl('ztlinie-hint').textContent=''; ztEl('ztlegende').innerHTML=''; return; }
 
   var alterJetzt=ztB.tageSeitGeburt/360;
   var maxJ=Math.max(90, Math.ceil((alterJetzt+25)/10)*10);
-  var W=1000, L=56, R=12, H=200;
-  function x(tage){ return L + (tage/(maxJ*360))*(W-L-R); }
+  var W=1000, L=12, R=12, oben=28, hBand=40, hStreif=13, ay=118, H=142;
+  function x(tage){ return L+(tage/(maxJ*360))*(W-L-R); }
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-linie', role:'img',
+    'aria-label':'Zeitstrahl der Lebensabschnitte für '+B.n});
 
-  var svg=N('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-linie', role:'img',
-    'aria-label':'Zeitstrahl der Lebensabschnitte für Arbeit und Liebe'});
-
-  var spuren=[{f:ztB.beruf, lab:'Arbeit', welche:'beruf', y:26},
-              {f:ztB.liebe, lab:'Liebe',  welche:'liebe', y:110}];
-
-  spuren.forEach(function(S){
-    if(!S.f) return;
-    svg.appendChild(N('text',{x:'2', y:String(S.y-6), class:'zt-spur'}, S.lab));
-    S.f.abschnitte.forEach(function(a){
-      if(a.von > maxJ*360) return;
-      var x0=x(a.von), x1=x(Math.min(a.bis, maxJ*360)), br=x1-x0;
-      if(br<=0.4) return;
-      var st=ZT_STUFE[ztStufe(a.vonGlueck)];
-      var g=N('g',{class:'zt-band'+((ztOffen&&ztOffen.k===S.welche+a.von)?' ist':''),
-        tabindex:'0', role:'button',
-        'aria-label':S.lab+': '+AC_ZEIT.ZEICHEN[a.zeichen]+', '+st.n});
-      g.setAttribute('data-spur',S.welche); g.setAttribute('data-von',String(a.von));
-      g.appendChild(N('rect',{x:x0.toFixed(1), y:String(S.y), width:br.toFixed(1), height:'34',
-        rx:'5', fill:st.farbe, class:'haupt'}));
-      var nm=AC_ZEIT.ZEICHEN[a.zeichen];
-      if(br>=95) g.appendChild(N('text',{x:(x0+8).toFixed(1), y:String(S.y+21),
-        class:'zt-bt'+(st.rang===1?' dunkel':'')}, nm));
-      else if(br>=14) g.appendChild(N('text',{x:(x0+br/2).toFixed(1), y:String(S.y+22),
-        'text-anchor':'middle', class:'zt-bt zt-gly'+(st.rang===1?' dunkel':'')},
-        ZT_GLYPHE[a.zeichen]));
-      /* Der Streifen darunter zeigt nur die Hochphasen innerhalb des
-         Kapitels. Alle drei Stufen einzufärben ergibt bei siebzig
-         Abschnitten ein Muster, aus dem niemand etwas abliest.        */
-      g.appendChild(N('rect',{x:x0.toFixed(1), y:String(S.y+36), width:br.toFixed(1),
-        height:'11', fill:'#EBE1D2'}));
-      a.unter.forEach(function(u){
-        if(u.von > maxJ*360) return;
-        var u0=x(u.von), u1=x(Math.min(u.bis, maxJ*360));
-        if(u1-u0<=0.3) return;
-        if(ztStufe(u.vonGlueck)==='winkel')
-          g.appendChild(N('rect',{x:u0.toFixed(1), y:String(S.y+36),
-            width:Math.max(0.8,u1-u0).toFixed(1), height:'11',
-            fill:ZT_STUFE.winkel.farbe}));
-        if(u.bindung)
-          g.appendChild(N('path',{d:'M'+u0.toFixed(1)+','+(S.y+30)+' l5,6 l-5,6 l-5,-6 Z',
-            fill:'#A05A3A'}));
-      });
-      svg.appendChild(g);
+  f.abschnitte.forEach(function(a){
+    if(a.von>maxJ*360) return;
+    var x0=x(a.von), x1=x(Math.min(a.bis,maxJ*360)), br=x1-x0;
+    if(br<=0.4) return;
+    var st=ZT_STUFE[ztStufe(a.vonGlueck)];
+    var g=ztN('g',{class:'zt-band'+((ztOffen===a.von)?' ist':''), tabindex:'0', role:'button',
+      'aria-label':ZT_KAPITEL[a.zeichen].n+', '+st.n+', ab Alter '+
+        Math.round(ztAlterBei(a.von))});
+    g.setAttribute('data-von', String(a.von));
+    g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(oben), width:br.toFixed(1),
+      height:String(hBand), rx:'5', fill:st.farbe, class:'haupt'}));
+    var nm=ZT_KAPITEL[a.zeichen].n;
+    if(br>=95){
+      g.appendChild(ztN('text',{x:(x0+9).toFixed(1), y:String(oben+18), class:'zt-bt'}, nm));
+      g.appendChild(ztN('text',{x:(x0+9).toFixed(1), y:String(oben+33), class:'zt-bt klein'},
+        st.n));
+    } else if(br>=14)
+      g.appendChild(ztN('text',{x:(x0+br/2).toFixed(1), y:String(oben+26),
+        'text-anchor':'middle', class:'zt-bt zt-gly'}, ZT_GLYPHE[a.zeichen]));
+    /* Streifen: nur die lauten Unterabschnitte */
+    g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(oben+hBand+3), width:br.toFixed(1),
+      height:String(hStreif), rx:'2', fill:'#EBE1D2'}));
+    a.unter.forEach(function(u){
+      if(u.von>maxJ*360) return;
+      var u0=x(u.von), u1=x(Math.min(u.bis,maxJ*360));
+      if(u1-u0<=0.3) return;
+      if(ztStufe(u.vonGlueck)==='winkel')
+        g.appendChild(ztN('rect',{x:u0.toFixed(1), y:String(oben+hBand+3),
+          width:Math.max(0.8,u1-u0).toFixed(1), height:String(hStreif),
+          fill:ZT_STUFE.winkel.farbe}));
+      if(u.bindung)
+        g.appendChild(ztN('path',{d:'M'+u0.toFixed(1)+','+(oben+hBand-4)+
+          ' l5,6 l-5,6 l-5,-6 Z', fill:'#A05A3A'}));
     });
+    svg.appendChild(g);
   });
 
-  /* Achse */
-  var ay=176;
-  svg.appendChild(N('line',{x1:String(L), y1:String(ay), x2:String(W-R), y2:String(ay),
+  svg.appendChild(ztN('line',{x1:String(L), y1:String(ay), x2:String(W-R), y2:String(ay),
     stroke:'#DDD0BC','stroke-width':'1'}));
   for(var j=0;j<=maxJ;j+=10){
     var px=x(j*360);
-    svg.appendChild(N('line',{x1:px.toFixed(1), y1:String(ay), x2:px.toFixed(1),
+    svg.appendChild(ztN('line',{x1:px.toFixed(1), y1:String(ay), x2:px.toFixed(1),
       y2:String(ay+4), stroke:'#DDD0BC','stroke-width':'1'}));
-    svg.appendChild(N('text',{x:px.toFixed(1), y:String(ay+16), 'text-anchor':'middle',
-      class:'zt-achse'}, String(j)));
+    svg.appendChild(ztN('text',{x:px.toFixed(1), y:String(ay+17), 'text-anchor':'middle',
+      class:'zt-achse'}, j===0?'Geburt':(j+' J.')));
   }
-  svg.appendChild(N('text',{x:'2', y:String(ay+16), class:'zt-achse'}, 'Alter'));
-
-  /* Stichtag */
   if(alterJetzt<=maxJ){
     var hx=x(ztB.tageSeitGeburt);
-    var gh=N('g',{class:'zt-heute'});
-    gh.appendChild(N('line',{x1:hx.toFixed(1), y1:'20', x2:hx.toFixed(1), y2:String(ay)}));
-    gh.appendChild(N('text',{x:(hx+4).toFixed(1), y:'15'},
-      'Stichtag · ' + Math.floor(ztB.alter)));
+    var gh=ztN('g',{class:'zt-heute'});
+    gh.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'20', x2:hx.toFixed(1), y2:String(ay)}));
+    gh.appendChild(ztN('text',{x:(hx+5).toFixed(1), y:'15'},
+      'du bist hier · '+Math.floor(ztB.alter)));
     svg.appendChild(gh);
   }
-
   box.innerHTML=''; box.appendChild(svg);
   Array.prototype.forEach.call(svg.querySelectorAll('.zt-band'),function(g){
-    function auf(){ ztOeffnen(g.getAttribute('data-spur'), +g.getAttribute('data-von')); }
+    function auf(){ ztOeffnen(+g.getAttribute('data-von')); }
     g.addEventListener('click',auf);
     g.addEventListener('keydown',function(e){
       if(e.key==='Enter'||e.key===' '){ e.preventDefault(); auf(); } });
   });
 
-  ztEl('ztlinie-hint').innerHTML='Ein Balken ist ein Kapitel, der Streifen darunter sind seine '+
-    'Unterabschnitte. Tippe einen Balken an. Auf dem Telefon l&auml;sst sich die Linie seitlich schieben.';
-
   ztEl('ztlegende').innerHTML=['winkel','folgend','fallend'].map(function(k){
-    return '<span><i style="background:'+ZT_STUFE[k].farbe+'"></i>'+ZT_STUFE[k].n+
-      ' &mdash; '+ZT_STUFE[k].kurz+'</span>'; }).join('')+
-    '<span><i style="background:#A05A3A;transform:rotate(45deg)"></i>'+
-    'L&ouml;sung der Bindung</span>';
+    return '<span><i style="background:'+ZT_STUFE[k].farbe+'"></i><b>'+ZT_STUFE[k].n+
+      '</b> &mdash; '+ZT_STUFE[k].satz+'</span>'; }).join('')+
+    '<span><i class="raute"></i><b>Gro&szlig;er Schnitt</b></span>';
+  ztEl('ztlinie-hint').innerHTML='Tippe einen Balken an, dann steht darunter, was dieses '+
+    'Kapitel bedeutet. Auf dem Telefon l&auml;sst sich die Linie seitlich schieben.';
 }
 
-function ztOeffnen(spur, von){
-  var f=(spur==='beruf')?ztB.beruf:ztB.liebe;
-  var a=null;
-  f.abschnitte.forEach(function(x){ if(x.von===von) a=x; });
+function ztAlleBauen(){
+  var box=ztEl('ztalle');
+  if(!ztB){ box.innerHTML=''; return; }
+  var maxJ=90, W=1000, L=132, zeile=34, H=ZT_BEREICH.length*zeile+26;
+  var svg=ztN('svg',{viewBox:'0 0 '+W+' '+H, class:'zt-linie', role:'img',
+    'aria-label':'Alle fünf Bereiche nebeneinander'});
+  ZT_BEREICH.forEach(function(B,n){
+    var f=ztSpur(B.k), y=n*zeile+4;
+    var g=ztN('g',{class:'zt-zeile'+(B.k===ztBereich?' ist':''), tabindex:'0', role:'button',
+      'aria-label':B.n});
+    g.setAttribute('data-b', B.k);
+    g.appendChild(ztN('rect',{x:'0', y:String(y-2), width:String(W), height:String(zeile-4),
+      fill:(B.k===ztBereich?'#F7EFE1':'transparent'), rx:'4'}));
+    g.appendChild(ztN('text',{x:'6', y:String(y+17), class:'zt-zt'}, B.kurz));
+    if(f) f.abschnitte.forEach(function(a){
+      if(a.von>maxJ*360) return;
+      var x0=L+(a.von/(maxJ*360))*(W-L-10),
+          x1=L+(Math.min(a.bis,maxJ*360)/(maxJ*360))*(W-L-10);
+      g.appendChild(ztN('rect',{x:x0.toFixed(1), y:String(y+3), width:Math.max(1,x1-x0-1).toFixed(1),
+        height:'20', rx:'3', fill:ZT_STUFE[ztStufe(a.vonGlueck)].farbe}));
+      a.unter.forEach(function(u){
+        if(u.bindung && u.von<=maxJ*360){
+          var ux=L+(u.von/(maxJ*360))*(W-L-10);
+          g.appendChild(ztN('path',{d:'M'+ux.toFixed(1)+','+(y+1)+' l4,5 l-4,5 l-4,-5 Z',
+            fill:'#A05A3A'}));
+        }
+      });
+    });
+    svg.appendChild(g);
+  });
+  var ay=ZT_BEREICH.length*zeile+8;
+  for(var j=0;j<=maxJ;j+=10){
+    var px=L+(j/maxJ)*(W-L-10);
+    svg.appendChild(ztN('text',{x:px.toFixed(1), y:String(ay+10), 'text-anchor':'middle',
+      class:'zt-achse'}, j===0?'Geburt':(j+' J.')));
+  }
+  if(ztB.tageSeitGeburt/360<=maxJ){
+    var hx=L+((ztB.tageSeitGeburt/360)/maxJ)*(W-L-10);
+    svg.appendChild(ztN('line',{x1:hx.toFixed(1), y1:'2', x2:hx.toFixed(1),
+      y2:String(ay-6), stroke:'#A05A3A','stroke-width':'2'}));
+  }
+  box.innerHTML=''; box.appendChild(svg);
+  Array.prototype.forEach.call(svg.querySelectorAll('.zt-zeile'),function(g){
+    function auf(){ ztBereich=g.getAttribute('data-b'); ztOffen=null; ztAlles(); }
+    g.addEventListener('click',auf);
+    g.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); auf(); } });
+  });
+}
+
+function ztOeffnen(von){
+  var f=ztSpur(); if(!f) return;
+  var a=null; f.abschnitte.forEach(function(x){ if(x.von===von) a=x; });
   if(!a) return;
-  ztOffen={k:spur+von, spur:spur, a:a};
+  ztOffen=(ztOffen===von)?null:von;
   ztLinieBauen(); ztDetailBauen();
   var d=ztEl('ztdetail');
-  if(d&&d.scrollIntoView) d.scrollIntoView({behavior:'smooth', block:'nearest'});
+  if(ztOffen && d && d.scrollIntoView) d.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
-
 function ztDetailBauen(){
   var box=ztEl('ztdetail');
-  if(!ztOffen){ box.innerHTML=''; return; }
-  var a=ztOffen.a, welche=ztOffen.spur, K=ZT_KAPITEL[a.zeichen];
-  var S=ZT_STUFE[ztStufe(a.vonGlueck)];
+  if(ztOffen===null || !ztB){ box.innerHTML=''; return; }
+  var f=ztSpur(), a=null;
+  f.abschnitte.forEach(function(x){ if(x.von===ztOffen) a=x; });
+  if(!a){ box.innerHTML=''; return; }
+  var B=ztBer(), K=ZT_KAPITEL[a.zeichen], S=ZT_STUFE[ztStufe(a.vonGlueck)];
   var laeuft=(ztB.tageSeitGeburt>=a.von && ztB.tageSeitGeburt<a.bis);
   var h='<div class="zt-detail" style="border-left-color:'+S.farbe+'">'+
-    '<div class="zt-dkopf"><h3>'+K.n+'</h3>'+
+    '<div class="zt-dkopf"><h3>'+K.n+' &mdash; '+K.bild+'</h3>'+
     '<span class="zt-stufe" style="background:'+S.farbe+'">'+S.n+'</span>'+
     (laeuft?'<span class="zt-stufe" style="background:#A05A3A">l&auml;uft gerade</span>':'')+'</div>'+
     '<div class="wann">'+ztDatumText(ztTagVon(a.von))+' bis '+ztDatumText(ztTagVon(a.bis))+
       ' &middot; Alter '+Math.floor(ztAlterBei(a.von))+' bis '+Math.floor(ztAlterBei(a.bis))+
-      ' &middot; '+a.jahre+' Jahre &middot; '+(welche==='beruf'?'Arbeit':'Liebe')+'</div>'+
-    '<p>'+K[welche].t+'</p>'+
-    '<p>'+S.was+'</p>'+
-    '<div class="tun"><b>Dazu</b>'+K[welche].tun+'</div>';
-  /* Unterperioden dieses Kapitels */
-  h+='<div class="zt-tab" style="margin-top:15px"><table><thead><tr><th>Unterabschnitt</th>'+
-     '<th>Von</th><th>Bis</th><th>Stufe</th></tr></thead><tbody>';
+      ' &middot; '+a.jahre+' Jahre</div>'+
+    '<p><b>F&uuml;r '+B.kurz+':</b> '+K[ztBereich].t+'</p>'+
+    '<div class="tun"><b>Ein Handgriff</b>'+K[ztBereich].tun+'</div>'+
+    '<p style="margin-top:12px">'+ztWorte(S.was)+'</p>'+
+    '<p class="ac-tech" data-ab="2" style="font-size:13px;color:#6B6259">'+S.woher+'</p>';
+  h+='<div class="zt-tab" style="margin-top:14px"><table><thead><tr>'+
+     '<th>Unterabschnitt</th><th>Von</th><th>Bis</th><th>Lautst&auml;rke</th>'+
+     '</tr></thead><tbody>';
   a.unter.forEach(function(u){
     var us=ZT_STUFE[ztStufe(u.vonGlueck)];
     var jetzt=(ztB.tageSeitGeburt>=u.von && ztB.tageSeitGeburt<u.bis);
     h+='<tr class="'+(jetzt?'ist':'')+'"><td><span class="pz" style="background:'+us.farbe+
-      '"></span>'+AC_ZEIT.ZEICHEN[u.zeichen]+
-      (u.bindung?' <span class="bd">Einschnitt</span>':'')+'</td>'+
+      '"></span>'+ZT_KAPITEL[u.zeichen].n+
+      (u.bindung?' <span class="bd">gro&szlig;er Schnitt</span>':'')+'</td>'+
       '<td>'+ztKurz(ztTagVon(u.von))+'</td><td>'+ztKurz(ztTagVon(u.bis))+'</td>'+
       '<td>'+us.n+'</td></tr>';
   });
   h+='</tbody></table></div>';
   h+='<p class="ac-tech" data-ab="3" style="margin-top:12px;font-size:12.5px;color:#6B6259">'+
-     'Zeichen '+AC_ZEIT.ZEICHEN[a.zeichen]+', '+a.jahre+' allgemeine Jahre, Herr '+a.herr+
-     ' &middot; '+a.vonGlueck+'. Zeichen vom Los des Gl&uuml;cks aus.</p>';
-  h+='</div>';
+     'Zeichen '+ZT_KAPITEL[a.zeichen].n+', '+a.jahre+' allgemeine Jahre, Herr '+a.herr+
+     ' &middot; '+a.vonGlueck+'. Zeichen vom Gl&uuml;ckspunkt aus gez&auml;hlt.</p></div>';
   box.innerHTML=h;
+  ztWortWirken(box);
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
 }
 
-/* ── Nächste Hochphasen ─────────────────────────────────────── */
+/* ── E · Hochphasen ─────────────────────────────────────────── */
+function ztAusserhalb(){
+  return ztB && (ztB.tageSeitGeburt<0 || ztB.tageSeitGeburt>100*360);
+}
 function ztGipfelBauen(){
-  var box=ztEl('ztgipfel');
-  if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Hochphasen.</div>'; return; }
-  var h='';
-  [['beruf','Arbeit',ztB.beruf],['liebe','Liebe',ztB.liebe]].forEach(function(S){
-    if(!S[2]) return;
-    var G=AC_ZEIT.naechsteGipfel(S[2], ztB.tageSeitGeburt, 5);
-    h+='<h3 style="font-family:var(--serif);font-size:19px;font-weight:500;color:#2E3A5C;'+
-       'margin:18px 0 10px">'+S[1]+'</h3>';
-    if(!G.length){ h+='<div class="zt-leer">In den n&auml;chsten Jahrzehnten keine Hochphase '+
-      'in dieser Spur.</div>'; return; }
-    h+='<div class="zt-liste">';
-    G.forEach(function(g){
-      var K=ZT_KAPITEL[g.zeichen];
-      h+='<div class="zt-g'+(g.laeuft?' laeuft':'')+'">'+
-        '<span class="wann">'+ztKurz(ztTagVon(g.von))+' &ndash; '+ztKurz(ztTagVon(g.bis))+'</span>'+
-        '<span class="was"><b>'+K.n+'</b><span>'+ztSatz1(K[S[0]].t)+'</span></span>'+
-        '<span class="mk'+(g.laeuft?' jetzt':'')+'">'+
-          (g.laeuft?'läuft':(g.ebene===1?'Kapitel':'Abschnitt'))+'</span>'+
-        '</div>';
-    });
-    h+='</div>';
+  var box=ztEl('ztgipfel'), B=ztBer();
+  ztEl('ztgipfel-u').innerHTML='Die lauten Zeiten in <b>'+B.n+'</b> &mdash; die kommenden '+
+    'zuerst. Laut hei&szlig;t: Es passiert viel. Ob es gut wird, steht hier nicht.';
+  var f=ztSpur();
+  if(!ztB||!f){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Hochphasen.</div>'; return; }
+  var G=AC_ZEIT.naechsteGipfel(f, ztB.tageSeitGeburt, 6);
+  if(!G.length){ box.innerHTML='<div class="zt-leer">In diesem Bereich kommt in den '+
+    'n&auml;chsten Jahrzehnten keine Hochphase.</div>'; return; }
+  var h='<div class="zt-liste">';
+  G.forEach(function(g){
+    var K=ZT_KAPITEL[g.zeichen];
+    var inJahren=(g.von-ztB.tageSeitGeburt)/365.2422;
+    h+='<div class="zt-g'+(g.laeuft?' laeuft':'')+'">'+
+      '<span class="wann">'+ztKurz(ztTagVon(g.von))+'<br><i>bis '+ztKurz(ztTagVon(g.bis))+'</i></span>'+
+      '<span class="was"><b>'+K.n+'</b><span>'+ztSatz1(K[ztBereich].t)+'</span></span>'+
+      '<span class="mk'+(g.laeuft?' jetzt':'')+'">'+
+        (g.laeuft?'läuft jetzt':('in '+ztDauer(inJahren)))+'</span></div>';
   });
-  box.innerHTML=h;
+  box.innerHTML=h+'</div>';
 }
 
-/* ── Einschnitte ────────────────────────────────────────────── */
+/* ── F · Die großen Schnitte ────────────────────────────────── */
 function ztSchnitteBauen(){
-  var box=ztEl('ztschnitte');
-  if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Einschnitte.</div>'; return; }
-  var h='';
-  [['beruf','Arbeit',ztB.beruf],['liebe','Liebe',ztB.liebe]].forEach(function(S){
-    if(!S[2]) return;
-    var BI=AC_ZEIT.bindungen(S[2]).filter(function(x){ return ztAlterBei(x.von)<=95; });
-    h+='<h3 style="font-family:var(--serif);font-size:19px;font-weight:500;color:#2E3A5C;'+
-       'margin:18px 0 10px">'+S[1]+'</h3>';
-    if(!BI.length){ h+='<div class="zt-leer">In dieser Spur l&ouml;st sich die Bindung nicht &mdash; '+
-      'das kommt vor, wenn alle Kapitel k&uuml;rzer sind als ein voller Umlauf.</div>'; return; }
-    h+='<div class="zt-liste">';
-    BI.forEach(function(b){
-      var vorbei=(ztB.tageSeitGeburt>b.bis);
-      h+='<div class="zt-g" style="border-left-color:#A05A3A">'+
-        '<span class="wann">'+ztKurz(ztTagVon(b.von))+' &middot; Alter '+
-          Math.floor(ztAlterBei(b.von))+'</span>'+
-        '<span class="was"><b>'+ZT_BINDUNG[S[0]].n+' in '+AC_ZEIT.ZEICHEN[b.zeichen]+'</b>'+
-        '<span>'+ZT_BINDUNG[S[0]].was+'</span></span>'+
-        '<span class="mk'+(vorbei?'':' jetzt')+'">'+(vorbei?'war':'kommt')+'</span>'+
-        '</div>';
-    });
-    h+='</div>';
+  var box=ztEl('ztschnitte'), B=ztBer();
+  ztEl('ztschnitte-u').innerHTML=ztWorte('Ein [[Der große Schnitt|großer Schnitt]] ist die '+
+    'Stelle, an der die Reihe aus ihrer Ordnung springt. ')+
+    '<b>F&uuml;r '+B.kurz+' hei&szlig;t das:</b> '+ZT_SCHNITT.beispiele[ztBereich];
+  var f=ztSpur();
+  if(!ztB||!f){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Schnitte.</div>'; return; }
+  var BI=AC_ZEIT.bindungen(f).filter(function(x){ return ztAlterBei(x.von)<=95; });
+  if(!BI.length){ box.innerHTML='<div class="zt-leer">In diesem Bereich gibt es keinen '+
+    'gro&szlig;en Schnitt. Das kommt vor, wenn alle Kapitel kurz sind.</div>'; return; }
+  var h='<div class="zt-liste">';
+  BI.forEach(function(b){
+    var vorbei=(ztB.tageSeitGeburt>b.bis);
+    h+='<div class="zt-g" style="border-left-color:#A05A3A">'+
+      '<span class="wann">'+ztKurz(ztTagVon(b.von))+'<br><i>Alter '+
+        Math.floor(ztAlterBei(b.von))+'</i></span>'+
+      '<span class="was"><b>in '+ZT_KAPITEL[b.zeichen].n+'</b>'+
+      '<span>'+ZT_SCHNITT.beispiele[ztBereich]+'</span></span>'+
+      '<span class="mk'+(vorbei?'':' jetzt')+'">'+(vorbei?'war':'kommt')+'</span></div>';
   });
-  h+='<div class="zt-detail" style="border-left-color:#A05A3A;margin-top:18px">'+
-     '<p style="margin:0">'+ZT_BINDUNG.beruf.tun+'</p></div>';
+  h+='</div><div class="zt-detail" style="border-left-color:#A05A3A;margin-top:14px">'+
+     '<p style="margin:0">'+ZT_SCHNITT.was+'</p>'+
+     '<div class="tun" style="margin-top:11px"><b>Dazu</b>'+ZT_SCHNITT.tun+'</div>'+
+     '<p class="ac-tech" data-ab="2" style="margin:10px 0 0;font-size:13px;color:#6B6259">'+
+     'Klassisch hei&szlig;t das die <i>'+ZT_SCHNITT.klassisch+'</i>.</p></div>';
   box.innerHTML=h;
 }
 
-/* ── Alle Abschnitte ────────────────────────────────────────── */
-function ztWelcheBauen(){
-  var box=ztEl('ztwelche');
-  box.innerHTML=[['beruf','Arbeit'],['liebe','Liebe']].map(function(w){
-    return '<button type="button" class="zt-knopf'+(w[0]===ztWelche?' ist':'')+
-      '" data-w="'+w[0]+'">'+w[1]+'</button>'; }).join('');
-  Array.prototype.forEach.call(box.querySelectorAll('button[data-w]'),function(b){
-    b.addEventListener('click',function(){ ztWelche=b.getAttribute('data-w');
-      ztWelcheBauen(); ztTabelleBauen(); });
-  });
-}
+/* ── G · Tabelle ────────────────────────────────────────────── */
 function ztTabelleBauen(){
-  var box=ztEl('zttabelle');
-  if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Tabelle.</div>'; return; }
-  var f=(ztWelche==='beruf')?ztB.beruf:ztB.liebe;
-  if(!f){ box.innerHTML='<div class="zt-leer">F&uuml;r diese Spur fehlt die Venus im Chart.</div>'; return; }
+  var box=ztEl('zttabelle'), f=ztSpur();
+  if(!ztB||!f){ box.innerHTML='<div class="zt-leer">Ohne Profil keine Tabelle.</div>'; return; }
   var h='<table><thead><tr><th>Abschnitt</th><th>Von</th><th>Bis</th><th>Alter</th>'+
-    '<th>Stufe</th></tr></thead><tbody>';
+    '<th>Lautst&auml;rke</th></tr></thead><tbody>';
   f.abschnitte.forEach(function(a){
     if(ztAlterBei(a.von)>95) return;
     var st=ZT_STUFE[ztStufe(a.vonGlueck)];
     var jetzt=(ztB.tageSeitGeburt>=a.von && ztB.tageSeitGeburt<a.bis);
     h+='<tr class="'+(jetzt?'ist':'')+'"><td><span class="pz" style="background:'+st.farbe+
-      '"></span><b>'+AC_ZEIT.ZEICHEN[a.zeichen]+'</b></td>'+
+      '"></span><b>'+ZT_KAPITEL[a.zeichen].n+'</b></td>'+
       '<td>'+ztKurz(ztTagVon(a.von))+'</td><td>'+ztKurz(ztTagVon(a.bis))+'</td>'+
       '<td>'+Math.floor(ztAlterBei(a.von))+'&ndash;'+Math.floor(ztAlterBei(a.bis))+'</td>'+
       '<td>'+st.n+'</td></tr>';
@@ -1340,84 +1818,113 @@ function ztTabelleBauen(){
       var us=ZT_STUFE[ztStufe(u.vonGlueck)];
       var j2=(ztB.tageSeitGeburt>=u.von && ztB.tageSeitGeburt<u.bis);
       h+='<tr class="l2'+(j2?' ist':'')+'"><td><span class="pz" style="background:'+us.farbe+
-        '"></span>'+AC_ZEIT.ZEICHEN[u.zeichen]+
-        (u.bindung?' <span class="bd">Einschnitt</span>':'')+'</td>'+
+        '"></span>'+ZT_KAPITEL[u.zeichen].n+
+        (u.bindung?' <span class="bd">gro&szlig;er Schnitt</span>':'')+'</td>'+
         '<td>'+ztKurz(ztTagVon(u.von))+'</td><td>'+ztKurz(ztTagVon(u.bis))+'</td>'+
         '<td>'+Math.floor(ztAlterBei(u.von))+'</td><td>'+us.kurz+'</td></tr>';
     });
   });
-  h+='</tbody></table>';
-  box.innerHTML='<div class="zt-tab">'+h+'</div>';
+  box.innerHTML='<div class="zt-tab">'+h+'</tbody></table></div>';
+}
+
+/* ── H · Jahresthema und Planetenabschnitte ─────────────────── */
+function ztWeitereBauen(){
+  var box=ztEl('ztweitere');
+  if(!ztB){ box.innerHTML='<div class="zt-leer">Ohne Profil nicht zu rechnen.</div>'; return; }
+  var P=ztB.profektion, PT=ZT_PROFEKTION[P.haus-1], F=ztB.firdariaJetzt;
+  var h='<div class="zt-jetzt">';
+  h+='<div class="zt-j" style="border-top-color:#3D6B62">'+
+    '<div class="lab">'+ztWorte('Das [[Jahresthema]]')+'</div>'+
+    '<h3>'+PT.n+'</h3>'+
+    '<div class="wann">Dein '+(P.alter+1)+'. Lebensjahr &middot; '+P.haus+'. Haus'+
+      '<span class="ac-tech" data-ab="2"> &middot; '+P.zeichenName+' &middot; Jahresherr '+
+      P.herr+'</span></div>'+
+    '<p>'+PT.t+'</p>'+
+    '<p class="ac-tech" data-ab="2" style="font-size:13.6px;color:#6B6259;margin:0">Der '+
+      'Jahresherr <b>'+P.herr+'</b> f&uuml;hrt dieses Jahr. Wo er in deinem Chart steht und wie '+
+      'es ihm dort geht, f&auml;rbt das ganze Jahr ein.</p></div>';
+  h+='<div class="zt-j" style="border-top-color:#6A4A62">'+
+    '<div class="lab">'+ztWorte('Dein [[Planetenabschnitt]]')+'</div>'+
+    (F?'<h3>'+F.haupt.herr+'</h3>'+
+       '<div class="wann">Alter '+ztKZ(F.haupt.von)+' bis '+ztKZ(F.haupt.bis)+
+       (F.unter?' &middot; darin '+F.unter.herr:'')+'</div>'+
+       '<p>'+(ZT_FIRDARIA[F.haupt.herr]||{t:''}).t+'</p>'+
+       (F.unter&&F.unter.herr!==F.haupt.herr
+         ? '<div class="unter"><b>Darin: '+F.unter.herr+'</b><p style="margin:0">'+
+           (ZT_FIRDARIA[F.unter.herr]||{t:''}).t+'</p></div>' : '')
+      :'<h3>Reihe durchlaufen</h3><p>Dieses Verfahren deckt 75 Jahre ab. Danach sind sich die '+
+       'Quellen uneins, ob es von vorn beginnt oder endet &mdash; die Seite rechnet es nicht '+
+       'weiter, statt sich auf eine Lesart festzulegen.</p>')+
+    '<p class="ac-tech" data-ab="2" style="margin:10px 0 0;font-size:13px;color:#6B6259">'+
+      'Klassisch: Firdaria, Reihenfolge nach '+(ztB.lose.tag?'Tag':'Nacht')+'geburt.</p></div>';
+  box.innerHTML=h+'</div>';
+  ztWortWirken(box);
 }
 
 /* ── Bericht ────────────────────────────────────────────────── */
 function ztBericht(){
   if(!ztB) return 'Kein Profil aktiv.';
   var p=ztAktiv(), L=[];
-  L.push('HOCHPHASEN — ' + ztName(p));
-  L.push('Stichtag ' + ztKurz(ztB.jetzt) + ' · Alter ' + ztB.alter + ' · ' + ztB.lose.sekte + 'geburt');
-  L.push('Lose: Glück ' + AC_ZEIT.ZEICHEN[AC_ZEIT.zi(ztB.lose.glueck)] +
-         ', Geist ' + AC_ZEIT.ZEICHEN[AC_ZEIT.zi(ztB.lose.geist)] +
-         (ztB.erosLon!==null?', Eros ' + AC_ZEIT.ZEICHEN[AC_ZEIT.zi(ztB.erosLon)]:''));
+  function roh(s){ return String(s).replace(/<[^>]+>/g,'').replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,
+    function(m,w,t){ return t||w; }); }
+  L.push('WANN BEI DIR WAS LOS IST — ' + ztName(p));
+  L.push('Stichtag ' + ztKurz(ztB.jetzt) + ' · Alter ' + ztB.alter);
   L.push('');
-  [['beruf','ARBEIT',ztB.beruf],['liebe','LIEBE',ztB.liebe]].forEach(function(S){
-    if(!S[2]) return;
-    var J=AC_ZEIT.jetzt(S[2], ztB.tageSeitGeburt);
-    L.push(S[1]);
+  ZT_BEREICH.forEach(function(B){
+    var f=ztB.spuren[B.k]; if(!f) return;
+    var J=AC_ZEIT.jetzt(f, ztB.tageSeitGeburt);
+    L.push(B.n.toUpperCase());
     if(J.l1){
       var K=ZT_KAPITEL[J.l1.zeichen], st=ZT_STUFE[ztStufe(J.l1.vonGlueck)];
-      L.push('  Kapitel: ' + K.n + ' (' + st.n + '), ' +
+      L.push('  Jetzt: ' + st.n + ' — ' + st.satz);
+      L.push('  Kapitel ' + K.n + ' (' + K.bild + '), ' +
              ztKurz(ztTagVon(J.l1.von)) + ' bis ' + ztKurz(ztTagVon(J.l1.bis)));
-      L.push('  ' + K[S[0]].t);
-      if(J.l2){
-        var K2=ZT_KAPITEL[J.l2.zeichen], s2=ZT_STUFE[ztStufe(J.l2.vonGlueck)];
-        L.push('  Darin: ' + K2.n + ' (' + s2.n + ') bis ' + ztKurz(ztTagVon(J.l2.bis)));
-        L.push('  ' + K2[S[0]].t);
-        L.push('  Dazu: ' + K2[S[0]].tun);
-      }
+      L.push('  ' + roh(K[B.k].t));
+      L.push('  Handgriff: ' + roh(K[B.k].tun));
     }
-    L.push('');
-    L.push('  Nächste Hochphasen:');
-    AC_ZEIT.naechsteGipfel(S[2], ztB.tageSeitGeburt, 5).forEach(function(g){
-      L.push('    ' + ztKurz(ztTagVon(g.von)) + ' – ' + ztKurz(ztTagVon(g.bis)) + '  ' +
-             ZT_KAPITEL[g.zeichen].n + (g.laeuft?'  (läuft)':''));
-    });
-    var BI=AC_ZEIT.bindungen(S[2]).filter(function(x){ return ztAlterBei(x.von)<=95; });
+    var G=AC_ZEIT.naechsteGipfel(f, ztB.tageSeitGeburt, 4);
+    if(G.length){
+      L.push('  Nächste laute Zeiten:');
+      G.forEach(function(g){
+        L.push('    ' + ztKurz(ztTagVon(g.von)) + ' – ' + ztKurz(ztTagVon(g.bis)) + '  ' +
+               ZT_KAPITEL[g.zeichen].n + (g.laeuft?'  (läuft jetzt)':''));
+      });
+    }
+    var BI=AC_ZEIT.bindungen(f).filter(function(x){ return ztAlterBei(x.von)<=95; });
     if(BI.length){
-      L.push('  Einschnitte (Lösung der Bindung):');
+      L.push('  Große Schnitte:');
       BI.forEach(function(b){
-        L.push('    ' + ztKurz(ztTagVon(b.von)) + '  Alter ' + Math.floor(ztAlterBei(b.von)) +
-               '  in ' + AC_ZEIT.ZEICHEN[b.zeichen]);
+        L.push('    ' + ztKurz(ztTagVon(b.von)) + '  Alter ' + Math.floor(ztAlterBei(b.von)));
       });
     }
     L.push('');
   });
   var P=ztB.profektion, PT=ZT_PROFEKTION[P.haus-1];
-  L.push('DAS JAHR (Profektion)');
-  L.push('  ' + P.haus + '. Haus — ' + PT.n + ' · ' + P.zeichenName + ' · Jahresherr ' + P.herr);
+  L.push('JAHRESTHEMA');
+  L.push('  ' + PT.n + ' (' + P.haus + '. Haus) · Jahresherr ' + P.herr);
   L.push('  ' + PT.t);
   L.push('');
   if(ztB.firdariaJetzt){
-    L.push('FIRDARIA');
+    L.push('PLANETENABSCHNITT');
     L.push('  ' + ztB.firdariaJetzt.haupt.herr +
            (ztB.firdariaJetzt.unter?' / ' + ztB.firdariaJetzt.unter.herr:''));
     L.push('  ' + (ZT_FIRDARIA[ztB.firdariaJetzt.haupt.herr]||{t:''}).t);
     L.push('');
   }
   L.push('GRENZEN');
-  L.push('  Eine Hochphase heißt: es passiert viel. Nicht: es wird gut.');
-  L.push('  Ein Drittel aller Abschnitte ist rechnerisch eine Hochphase.');
+  L.push('  Laut heißt: es passiert viel. Nicht: es wird gut.');
+  L.push('  Ein Drittel aller Abschnitte ist rechnerisch laut.');
   L.push('  Das Verfahren ist nicht überprüft. Prüf es rückwärts am eigenen Leben.');
-  L.push('  Alle Lose hängen am Aszendenten — eine ungenaue Geburtszeit verschiebt alles.');
-  return L.join('\n').replace(/<[^>]+>/g,'').replace(/&auml;/g,'ä').replace(/&ouml;/g,'ö')
-          .replace(/&uuml;/g,'ü').replace(/&szlig;/g,'ß').replace(/&middot;/g,'·')
-          .replace(/&ndash;/g,'–').replace(/&mdash;/g,'—').replace(/&nbsp;/g,' ');
+  L.push('  Alles hängt am Aszendenten — eine ungenaue Geburtszeit verschiebt alles.');
+  return L.join('\n').replace(/&auml;/g,'ä').replace(/&ouml;/g,'ö').replace(/&uuml;/g,'ü')
+          .replace(/&szlig;/g,'ß').replace(/&middot;/g,'·').replace(/&ndash;/g,'–')
+          .replace(/&mdash;/g,'—').replace(/&nbsp;/g,' ').replace(/&shy;/g,'');
 }
 
 /* ── Zusammensetzen ─────────────────────────────────────────── */
 function ztAlles(){
   var p=ztAktiv();
-  ztB=null;
+  ztB=null; ztWortNr=0;
   if(p && p.h!==undefined && p.lat!==undefined){
     try{
       var C=chartVon(p);
@@ -1427,16 +1934,19 @@ function ztAlles(){
     }catch(e){ ztB=null; }
   }
   ztPersonenBauen(); ztVarianteBauen();
-  ztJetztBauen(); ztLinieBauen(); ztDetailBauen();
-  ztGipfelBauen(); ztSchnitteBauen(); ztWelcheBauen(); ztTabelleBauen();
+  ztAntwortBauen(); ztSchritteBauen(); ztBereicheBauen();
+  ztLinieBauen(); ztAlleBauen(); ztDetailBauen();
+  ztGipfelBauen(); ztSchnitteBauen(); ztTabelleBauen(); ztWeitereBauen();
   var w=ztEl('ztzeitwarnung');
   if(w && p){
-    w.innerHTML='Alle drei Lose h&auml;ngen am Aszendenten, und der wandert in vier Minuten um '+
-      'ein Grad. Eine ungenaue Geburtszeit verschiebt die Lose und damit die ganze Reihe &mdash; '+
-      'bei einer Stunde Unsicherheit um bis zu ein halbes Zeichen. F&uuml;r dieses Profil ist '+
-      ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+' hinterlegt. Wenn die Zeit gesch&auml;tzt ist, '+
-      'lies die Jahreszahlen hier als ungef&auml;hr und pr&uuml;f sie an Ereignissen nach, die du kennst.';
+    w.innerHTML='Alle Startpunkte h&auml;ngen am '+ztW('Aszendent','Aszendenten')+', und der '+
+      'wandert in vier Minuten um ein Grad. F&uuml;r dieses Profil ist '+
+      ('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+' hinterlegt. Ist die Zeit gesch&auml;tzt, '+
+      'lies die Jahreszahlen als ungef&auml;hr und pr&uuml;f sie an Ereignissen nach, die du kennst.';
+    ztWortWirken(w.parentNode);
   }
+  /* Einmal am Ende über die ganze Seite — sonst wird ein Block vergessen */
+  ztWortWirken(document);
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
 }
 
@@ -1444,13 +1954,10 @@ function ztStart(){
   ztStichtag=new Date();
   ztEl('ztdatum').value=ztISO(ztStichtag);
   ztAlles();
-
   ztEl('ztdatum').addEventListener('change',function(){
-    var v=ztEl('ztdatum').value;
-    if(!v) return;
+    var v=ztEl('ztdatum').value; if(!v) return;
     var t=v.split('-');
-    ztStichtag=new Date(+t[0], +t[1]-1, +t[2]);
-    ztOffen=null; ztAlles();
+    ztStichtag=new Date(+t[0], +t[1]-1, +t[2]); ztOffen=null; ztAlles();
   });
   ztEl('ztheute').addEventListener('click',function(){
     ztStichtag=new Date(); ztEl('ztdatum').value=ztISO(ztStichtag);
