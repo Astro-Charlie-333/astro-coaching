@@ -65,31 +65,53 @@ function jetztBauen(p){
   var mz=zI(Q.Mond), mh=haus(P,Q.Mond);
   var ol=null; try{ ol=AC_HIMMEL.ohneLauf(jd); }catch(e){}
 
-  /* Der eine Satz, der jetzt gilt */
-  var satz='Der Mond steht in <b>'+H_SIGNS[mz]+'</b> und läuft damit durch dein <b>'+
-    mh+'. Haus</b> — '+H_HAUS[mh-1]+'. Das ist für die nächsten zwei Tage der Bereich, '+
-    'in dem du am ehesten etwas merkst.';
-  if(ol&&ol.leer) satz+=' Der Mond ist gerade <b>ohne Lauf</b> — bis '+
-    uhr(ol.bis)+' lohnt sich nichts, was ein Ergebnis haben soll.';
+  /* Der eine Satz, der jetzt gilt — in Alltagssprache.
+     Welcher Lebensbereich gerade dran ist, nicht welcher Planet
+     wo steht. Die Mechanik steht darunter und erst ab Stufe 2. */
+  var B=bereichZuHaus(mh);
+  var satz='Die nächsten zwei Tage liegt deine Aufmerksamkeit vor allem bei einem Thema: <b>'+
+    esc(B?B.name:H_HAUS[mh-1])+'</b>.';
+  /* Kein toLowerCase: im Deutschen sind das Substantive und
+     bleiben groß. Stattdessen ein Doppelpunkt davor. */
+  if(B&&window.AC_BDAT&&AC_BDAT.BER[B.k])
+    satz+=' Also: '+esc(AC_BDAT.BER[B.k].worum);
+  if(ol&&ol.leer) satz+=' Dazu kommt: bis '+uhr(ol.bis)+
+    ' lohnt sich nichts, was ein Ergebnis haben soll — Angefangenes bleibt heute eher liegen.';
   el('htsatz').innerHTML=satz;
+  el('httech').innerHTML='<div class="ac-tech ht-techzeile" data-ab="2">Der Mond steht in '+
+    H_SIGNS[mz]+' '+gradKurz(Q.Mond)+
+    ' und läuft durch das '+mh+'. Haus — '+H_HAUS[mh-1]+
+    (ol&&ol.leer?'. Mond ohne Lauf bis '+uhr(ol.bis):'')+'.</div>';
 
+  /* Die Kacheln sind der Maschinenraum und bleiben bis Stufe 2 zu. */
   var f=[];
   if(st&&!st.polar) f.push(['Stunde',st.herr,'bis '+uhr(st.bis)]);
   if(st&&!st.polar) f.push(['Tag',st.tagesherr,n.toLocaleDateString('de-DE',{weekday:'long'})]);
   f.push(['Mond',H_SIGNS[mz],gradKurz(Q.Mond)]);
   f.push(['Dein Haus',mh+'. Haus',H_HAUS[mh-1]]);
-  el('htfakten').innerHTML=f.map(function(x){
-    return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
-      '</div><div class="z">'+esc(x[2])+'</div></div>'; }).join('');
+  el('htfakten').innerHTML='<div class="ac-tech" data-ab="2"><div class="ht-fin">'+
+    f.map(function(x){
+      return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
+        '</div><div class="z">'+esc(x[2])+'</div></div>'; }).join('')+'</div></div>';
+}
+
+/* Welcher Lebensbereich gehört zu einem Haus?
+   Erst der, dessen Kernhaus es ist, sonst der erste, der es führt. */
+function bereichZuHaus(h){
+  if(!window.AC_BER) return null;
+  var L=AC_BER.BEREICHE, i;
+  for(i=0;i<L.length;i++) if(L[i].haeuser[0]===h) return L[i];
+  for(i=0;i<L.length;i++) if(L[i].haeuser.indexOf(h)>=0) return L[i];
+  return null;
 }
 
 /* ── Band 2 · Diese Woche ─────────────────────────────────── */
 function wocheBauen(){
   var jd=jetztJD(), e=[];
 
-  /* Planetenstunde endet */
+  /* Planetenstunde endet — reine Mechanik, erst ab Stufe 2 */
   var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e2){}
-  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute',
+  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute', ab:2,
     tt:'Die Stunde '+(H_GEN[st.herr]||st.herr)+' endet',
     tx:'Planetenstunden sind der kleinste Taktgeber, den die Überlieferung kennt. '+
        'Wenn du etwas unter '+st.herr+' stellen willst, ist jetzt das Fenster.',
@@ -98,12 +120,14 @@ function wocheBauen(){
   /* Mond wechselt das Zeichen und damit dein Haus */
   var zw=null; try{ zw=AC_HIMMEL.naechsterZeichenwechsel(jd); }catch(e2){}
   if(zw){
-    var neuH=haus(P, zw.zeichen*30+1);
+    var neuH=haus(P, zw.zeichen*30+1), nB=bereichZuHaus(neuH);
     e.push({jd:zw.jd, wann:uhr(zw.jd), tag:tagKurz(zw.jd),
-      tt:'Der Mond wechselt in '+H_SIGNS[zw.zeichen],
-      tx:'Damit wandert er in dein <b>'+neuH+'. Haus</b> — '+H_HAUS[neuH-1]+'. '+
-         'Zweieinhalb Tage lang liegt dort die Aufmerksamkeit.',
-      wo:'uebersicht.html#h'+neuH+'|Das '+neuH+'. Haus ansehen'});
+      tt:'Die Aufmerksamkeit wandert zu: '+(nB?nB.name:H_HAUS[neuH-1]),
+      tx:'Für die nächsten zweieinhalb Tage ist das der Bereich, in dem du am ehesten '+
+         'etwas merkst. Kein großer Einschnitt — eher eine Tönung.',
+      tech:'Der Mond wechselt in '+H_SIGNS[zw.zeichen]+' und damit in dein '+
+           neuH+'. Haus, '+H_HAUS[neuH-1]+'.',
+      wo:'bereiche.html|Den Bereich ansehen'});
   }
 
   /* Lunationen mit Ritualfenster */
@@ -112,14 +136,17 @@ function wocheBauen(){
     /* Die Lunation steht dort, wo der Mond steht: beim Neumond = Sonne,
        beim Vollmond gegenüber. */
     var ml=moonLon((l.jd-2451545)/36525);
-    var h=haus(P,ml);
+    var h=haus(P,ml), lB=bereichZuHaus(h);
+    var lN=lB?lB.name:H_HAUS[h-1];
     e.push({jd:l.jd, wann:uhr(l.jd), tag:tagKurz(l.jd),
-      tt:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)],
+      tt:(l.art==='neu'?'Neumond':'Vollmond')+' — bei dir im Bereich '+lN,
+      tech:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)]+
+           ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
       tx:(l.art==='neu'
-        ? 'Der Anfang eines Zyklus, in deinem <b>'+h+'. Haus</b> — '+H_HAUS[h-1]+'. '+
-          'Dort lohnt es, jetzt etwas zu beginnen statt abzuschließen.'
-        : 'Hier wird sichtbar, was zum letzten Neumond angelegt wurde — in deinem <b>'+
-          h+'. Haus</b>, '+H_HAUS[h-1]+'.'),
+        ? 'Ein guter Zeitpunkt, in diesem Bereich etwas zu <b>beginnen</b> statt abzuschließen. '+
+          'Was jetzt anfängt, hat bis zum Vollmond Zeit, sich zu zeigen.'
+        : 'Hier wird sichtbar, was vor zwei Wochen angelegt wurde. Ein guter Zeitpunkt, '+
+          'in diesem Bereich etwas <b>abzuschließen</b> statt Neues anzufangen.'),
       mit:(l.art==='neu'
         ? 'Kerze, Zettel und Stift. Einen Satz aufschreiben, was bis zum Vollmond passiert sein soll.'
         : 'Eine Kerze, und etwas, das weg darf. Nicht mehr.'),
@@ -129,14 +156,17 @@ function wocheBauen(){
   /* Stationen: Planeten, die drehen */
   var stn=[]; try{ stn=AC_BOARD.stationen(jd, 21)||[]; }catch(e2){}
   stn.forEach(function(s){
-    var h=haus(P,s.lon);
+    var h=haus(P,s.lon), sB=bereichZuHaus(h), sN=sB?sB.name:H_HAUS[h-1];
     e.push({jd:s.jd, wann:tageBis(s.jd)<=0?'heute':'in '+tageBis(s.jd)+' T.', tag:tagKurz(s.jd),
-      tt:s.planet+(s.direkt?' läuft wieder direkt':' wird rückläufig'),
-      tx:'In deinem <b>'+h+'. Haus</b> — '+H_HAUS[h-1]+'. '+
-        (s.direkt
-         ? 'Was dort seit Wochen zäh war, nimmt wieder Fahrt auf. Nicht sofort, aber merklich.'
-         : 'Dort wird es für eine Weile zäher. Nichts Neues anfangen, was dort hängt — überarbeiten ja.'),
-      wo:'uebersicht.html#h'+h+'|Das '+h+'. Haus ansehen'});
+      tt:(s.direkt?'Es geht wieder voran: ':'Es wird zäher: ')+sN,
+      tech:s.planet+(s.direkt?' läuft wieder direkt':' wird rückläufig')+
+           ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
+      tx:(s.direkt
+         ? 'Was in diesem Bereich seit Wochen zäh war, nimmt wieder Fahrt auf. '+
+           'Nicht sofort, aber merklich.'
+         : 'In diesem Bereich wird es für eine Weile mühsamer. Nichts Neues anfangen, '+
+           'was dort ohnehin hängt — überarbeiten ja.'),
+      wo:'bereiche.html#ber-'+(sB?sB.k:'')+'|Den Bereich ansehen'});
   });
 
   e.sort(function(a,b){ return a.jd-b.jd; });
@@ -146,39 +176,70 @@ function wocheBauen(){
   el('htwoche').innerHTML=e.map(function(x){
     var wo='';
     if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
-    return '<div class="we'+(x.jetzt?' jetzt':'')+'">'+
+    /* ab: ganze Einträge, die nur Mechanik sind, erscheinen erst
+       ab der genannten Wissensstufe. tech: die Mechanik zu einem
+       Eintrag, der auch ohne sie verständlich ist. */
+    return '<div class="we'+(x.jetzt?' jetzt':'')+(x.ab?' ac-tech':'')+'"'+
+      (x.ab?' data-ab="'+x.ab+'"':'')+'>'+
       '<div class="wann"><b>'+esc(x.wann)+'</b>'+esc(x.tag)+'</div>'+
       '<div class="tt">'+esc(x.tt)+'</div><div class="tx">'+x.tx+'</div>'+
+      (x.tech?'<div class="ac-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
       (x.mit?'<div class="mit"><b>Dafür brauchst du</b>'+esc(x.mit)+'</div>':'')+wo+'</div>';
   }).join('');
 }
 
-/* ── Band 3 · Läuft ───────────────────────────────────────── */
-function laeuftBauen(){
-  var jd=jetztJD(), zeilen=[];
-  ['Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
-    if(Q[k]===undefined) return;
-    var h=haus(P,Q[k]);
-    var a=(jd-30-2451545)/36525, b=(jd+30-2451545)/36525;
-    var rw=nrm(geo(k,b)-geo(k,a))>180;
-    /* Wie lange bleibt er noch in diesem Zeichen — Neptun und Pluto
-       brauchen mehr als zehn Jahre Vorlauf, deshalb der weite Rahmen. */
-    var ende=null;
-    for(var t=jd; t<jd+7300; t+=5){
-      if(zI(geo(k,(t-2451545)/36525))!==zI(Q[k])){ ende=t; break; }
-    }
-    var mon=ende?Math.round((ende-jd)/30.44):null;
-    var bleibt = mon===null ? 'noch über 20 Jahre'
-      : mon<1  ? 'wechselt in Kürze'
-      : mon<24 ? 'noch gut '+(mon<2?'einen Monat':mon+' Monate')
-      : 'noch gut '+Math.round(mon/12)+' Jahre';
-    zeilen.push('<div class="lf"><div class="p">'+k+(rw?' <i>℞</i>':'')+'</div>'+
-      '<div class="w">'+H_SIGNS[zI(Q[k])]+' '+gradKurz(Q[k])+'<br>'+bleibt+
-        (rw?', rückläufig':'')+'</div>'+
-      '<div class="d"><a href="uebersicht.html#h'+h+'">'+h+'. Haus</a> — '+H_HAUS[h-1]+
-        '.</div></div>');
+/* ── Band 3 · Die lautesten Bereiche ──────────────────────────
+   Dasselbe Wissen wie die alte Planetentabelle, nur als das, was
+   es für einen Menschen bedeutet. Die Tiefe steht auf bereiche.html;
+   hier stehen nur die drei lautesten und einer, der still ist. */
+function bereicheBauen(p){
+  var ziel=el('htber');
+  if(!ziel) return;
+  if(!window.AC_BER||!window.AC_BDAT){ ziel.innerHTML=''; return; }
+
+  var jd=jetztJD();
+  var jdGeb=jdFromUT(p.y,p.mo,p.d,p.h+p.mi/60-p.tz);
+  var gebDat=new Date(Date.UTC(p.y,p.mo-1,p.d,p.h-p.tz,p.mi));
+  var Z=null;
+  try{ if(window.AC_ZEIT) Z=AC_ZEIT.blatt(P,jdGeb,gebDat,new Date()); }catch(e){}
+
+  var Bl=AC_BER.blatt(P,jd,Z,jd-jdGeb);
+  var bs=Bl.bereiche.slice().sort(function(a,b){
+    if(b.laut!==a.laut) return b.laut-a.laut;
+    return b.laeuft.length-a.laeuft.length;
   });
-  el('htlaeuft').innerHTML=zeilen.join('');
+
+  var zeigen=bs.slice(0,3), schon={};
+  /* Ein stiller Bereich am Ende: das ist die nützlichste Zeile
+     der Liste, weil dort gerade nichts gegen einen arbeitet. */
+  var still=bs[bs.length-1];
+  if(still && zeigen.indexOf(still)<0 && still.laut<=1) zeigen.push(still);
+
+  ziel.innerHTML=zeigen.map(function(b){
+    var T=AC_BDAT.BER[b.k], L=AC_BDAT.LAUT[b.laut];
+    if(!T) return '';
+    /* Bei einem stillen Bereich ist die Stille die Nachricht.
+       Sonst der Handgriff des stärksten Vorgangs — aber keiner
+       zweimal: drei gleiche Sätze untereinander sagen nichts. */
+    var erst='';
+    if(b.laut===0 || !b.laeuft.length){
+      erst='Hier arbeitet gerade nichts gegen dich. Wenn du in diesem Bereich etwas '+
+           'vorhast, ist jetzt der Moment, es selbst anzufangen.';
+    } else {
+      for(var i=0;i<b.laeuft.length && !erst;i++){
+        var W=AC_BDAT.WAND[b.laeuft[i].wanderer];
+        if(W && !schon[W.tun]){ erst=W.tun; schon[W.tun]=true; }
+      }
+      if(!erst) erst='Was hier läuft, läuft wie in den Bereichen darüber — '+
+                     'auf der Bereichsseite steht, was es hier bedeutet.';
+    }
+    return '<a class="ht-b" href="bereiche.html#ber-'+esc(b.k)+'">'+
+      '<span class="ht-bp" style="background:'+L.farbe+'"></span>'+
+      '<span class="ht-bn">'+esc(b.name)+'</span>'+
+      '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
+      '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
+      '<span class="ht-bt">'+esc(erst)+'</span></a>';
+  }).join('');
 }
 
 /* ── Rad ──────────────────────────────────────────────────── */
@@ -210,10 +271,11 @@ function kapBauen(){
     b.addEventListener('click',function(){ kapSetzen(b.getAttribute('data-k')); });
   });
 }
-/* Bei „wenig" bleibt nur das erste Band stehen */
+/* Bei „wenig" bleiben der Kopf und die Bereiche stehen —
+   die Terminliste ist das, was sich am ehesten weglassen lässt. */
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
-  ['htwocheteil','htlaeuftteil'].forEach(function(i){
+  ['htwocheteil'].forEach(function(i){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
@@ -228,6 +290,10 @@ function anwenden(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  jetztBauen(p); radBauen(); wocheBauen(); laeuftBauen(); kapBauen(); anwenden();
-  setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p); }, 60000);
+  jetztBauen(p); radBauen(); bereicheBauen(p); wocheBauen(); kapBauen(); anwenden();
+  try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
+    jetztBauen(p); bereicheBauen(p); wocheBauen(); }); }catch(e){}
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+  setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p);
+    try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);
 })();

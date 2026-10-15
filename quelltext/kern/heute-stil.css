@@ -3,28 +3,38 @@
 @media(max-width:620px){.ht-wrap{padding:0 17px 70px;}}
 
 /* Band 1 — Jetzt. Dunkel, randlos, das Einzige mit Gewicht. */
-.ht-jetzt{background:var(--nacht,#2E3A5C);color:#F4EFE6;margin:0 0 4px;}
+/* Der Kopf war ein dunkler Block und hat die Seite schwer gemacht.
+   Jetzt trägt er dieselbe warme Farbe wie alles andere, nur eine
+   Spur dichter, mit einer Messinglinie als Abschluss. */
+.ht-jetzt{background:linear-gradient(180deg,#FFFDFA 0%,#F7EFE1 100%);
+  color:var(--tinte,#231F1A);margin:0 0 4px;border-bottom:1px solid var(--linie-stark,#DDD0BC);}
 .ht-jetzt-in{max-width:1180px;margin:0 auto;padding:40px 26px 36px;
  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,300px);gap:44px;align-items:center;}
 @media(max-width:900px){.ht-jetzt-in{grid-template-columns:1fr;gap:26px;padding:30px 20px 28px;}}
 @media(max-width:620px){.ht-jetzt-in{padding:26px 17px 24px;}}
 .ht-tag{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
- color:rgba(244,239,230,.55);margin-bottom:14px;}
+ letter-spacing:.06em;color:var(--messing,#9A7235);margin-bottom:14px;}
 .ht-gruss{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,5.4vw,52px);
- font-weight:300;line-height:1.04;letter-spacing:-.025em;color:#fff;margin:0 0 16px;}
-.ht-gruss em{font-style:italic;color:#E8C97A;}
-.ht-satz{font-size:clamp(16px,2vw,19px);line-height:1.6;color:rgba(244,239,230,.9);
+ font-weight:300;line-height:1.04;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 16px;}
+.ht-gruss em{font-style:italic;color:var(--messing,#9A7235);}
+.ht-satz{font-size:clamp(16.5px,2vw,19.5px);line-height:1.62;color:var(--tinte,#231F1A);
  max-width:52ch;margin:0 0 22px;}
-.ht-satz b{color:#fff;font-weight:500;}
-.ht-fakten{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
- background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:14px;
+.ht-satz b{color:var(--nacht,#2E3A5C);font-weight:600;}
+.ht-techzeile{margin:-8px 0 20px;max-width:52ch;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:12.5px;line-height:1.6;color:var(--leise,#6B6259);
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:9px;padding:8px 11px;}
+.ht-fakten{margin:0;}
+.ht-fin{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
+ background:var(--linie,#EBE1D2);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
  overflow:hidden;}
-.ht-f{background:var(--nacht,#2E3A5C);padding:12px 14px;min-width:0;}
-.ht-f .l{font-size:12px;color:rgba(244,239,230,.55);margin-bottom:3px;}
-.ht-f .v{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;color:#fff;
- line-height:1.15;}
-.ht-f .z{font-size:12.3px;color:rgba(244,239,230,.55);margin-top:3px;}
-.ht-radmini{background:rgba(255,255,255,.055);border-radius:20px;padding:12px;}
+.ht-f{background:var(--papier,#FFFDFA);padding:12px 14px;min-width:0;}
+.ht-f .l{font-size:12px;color:var(--leise,#6B6259);margin-bottom:3px;}
+.ht-f .v{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+ color:var(--nacht,#2E3A5C);line-height:1.15;}
+.ht-f .z{font-size:12.3px;color:var(--leise,#6B6259);margin-top:3px;}
+.ht-radmini{background:var(--nacht,#2E3A5C);border-radius:20px;padding:14px;
+ box-shadow:0 10px 30px rgba(46,58,92,.16);}
 
 .ht-radmini .kr-hz{fill:rgba(244,239,230,.55);font-size:18px;}
 .ht-radmini .kr-haus.heut .kr-hz{fill:#E8C97A;}
@@ -41,8 +51,30 @@
 .ht-radmini .kr-hf{fill:rgba(255,255,255,.03);stroke:rgba(255,255,255,.1);}
 .ht-radmini .kr-haus.heut .kr-hf{fill:rgba(232,201,122,.46);stroke:rgba(232,201,122,.75);}
 .ht-radmini .kr-haus.heut .kr-hz{fill:#2E3A5C;font-weight:600;}
-.ht-radu{font-size:12.4px;color:rgba(244,239,230,.55);text-align:center;padding-top:9px;}
-.ht-radu a{color:#E8C97A;}
+.ht-radu{font-size:12.4px;color:var(--leise,#6B6259);text-align:center;padding-top:9px;}
+.ht-radu a{color:var(--messing,#9A7235);}
+
+/* ── Die lautesten Bereiche ───────────────────────────────── */
+.ht-ber{display:grid;gap:9px;margin-bottom:14px;}
+.ht-b{display:grid;grid-template-columns:11px 1fr auto;gap:12px;align-items:baseline;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ padding:15px 18px;text-decoration:none;color:var(--tinte,#231F1A);
+ transition:transform .14s ease,box-shadow .14s ease;}
+.ht-b:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(46,58,92,.09);}
+.ht-bp{width:9px;height:9px;border-radius:50%;display:block;margin-top:6px;}
+.ht-bn{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.5px;
+ color:var(--nacht,#2E3A5C);line-height:1.2;}
+.ht-bl{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.1em;
+ text-transform:uppercase;white-space:nowrap;}
+.ht-bs{grid-column:2/-1;font-size:14.5px;color:var(--leise,#6B6259);line-height:1.55;margin-top:3px;}
+.ht-bt{grid-column:2/-1;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;
+ margin-top:8px;padding-top:9px;border-top:1px dashed var(--linie,#EBE1D2);}
+.ht-mehr{display:inline-block;font-size:14.5px;color:var(--messing,#9A7235);text-decoration:none;}
+.ht-mehr:hover{text-decoration:underline;}
+@media(max-width:620px){
+ .ht-b{grid-template-columns:9px 1fr auto;gap:9px;padding:13px 14px;}
+ .ht-bn{font-size:17.5px;}
+}
 
 /* Abschnittsköpfe */
 .ht-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);

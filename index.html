@@ -140,28 +140,38 @@ a{color:var(--nacht);}
 @media(max-width:620px){.ht-wrap{padding:0 17px 70px;}}
 
 /* Band 1 — Jetzt. Dunkel, randlos, das Einzige mit Gewicht. */
-.ht-jetzt{background:var(--nacht,#2E3A5C);color:#F4EFE6;margin:0 0 4px;}
+/* Der Kopf war ein dunkler Block und hat die Seite schwer gemacht.
+   Jetzt trägt er dieselbe warme Farbe wie alles andere, nur eine
+   Spur dichter, mit einer Messinglinie als Abschluss. */
+.ht-jetzt{background:linear-gradient(180deg,#FFFDFA 0%,#F7EFE1 100%);
+  color:var(--tinte,#231F1A);margin:0 0 4px;border-bottom:1px solid var(--linie-stark,#DDD0BC);}
 .ht-jetzt-in{max-width:1180px;margin:0 auto;padding:40px 26px 36px;
  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,300px);gap:44px;align-items:center;}
 @media(max-width:900px){.ht-jetzt-in{grid-template-columns:1fr;gap:26px;padding:30px 20px 28px;}}
 @media(max-width:620px){.ht-jetzt-in{padding:26px 17px 24px;}}
 .ht-tag{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
- color:rgba(244,239,230,.55);margin-bottom:14px;}
+ letter-spacing:.06em;color:var(--messing,#9A7235);margin-bottom:14px;}
 .ht-gruss{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,5.4vw,52px);
- font-weight:300;line-height:1.04;letter-spacing:-.025em;color:#fff;margin:0 0 16px;}
-.ht-gruss em{font-style:italic;color:#E8C97A;}
-.ht-satz{font-size:clamp(16px,2vw,19px);line-height:1.6;color:rgba(244,239,230,.9);
+ font-weight:300;line-height:1.04;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 16px;}
+.ht-gruss em{font-style:italic;color:var(--messing,#9A7235);}
+.ht-satz{font-size:clamp(16.5px,2vw,19.5px);line-height:1.62;color:var(--tinte,#231F1A);
  max-width:52ch;margin:0 0 22px;}
-.ht-satz b{color:#fff;font-weight:500;}
-.ht-fakten{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
- background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:14px;
+.ht-satz b{color:var(--nacht,#2E3A5C);font-weight:600;}
+.ht-techzeile{margin:-8px 0 20px;max-width:52ch;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:12.5px;line-height:1.6;color:var(--leise,#6B6259);
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:9px;padding:8px 11px;}
+.ht-fakten{margin:0;}
+.ht-fin{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
+ background:var(--linie,#EBE1D2);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
  overflow:hidden;}
-.ht-f{background:var(--nacht,#2E3A5C);padding:12px 14px;min-width:0;}
-.ht-f .l{font-size:12px;color:rgba(244,239,230,.55);margin-bottom:3px;}
-.ht-f .v{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;color:#fff;
- line-height:1.15;}
-.ht-f .z{font-size:12.3px;color:rgba(244,239,230,.55);margin-top:3px;}
-.ht-radmini{background:rgba(255,255,255,.055);border-radius:20px;padding:12px;}
+.ht-f{background:var(--papier,#FFFDFA);padding:12px 14px;min-width:0;}
+.ht-f .l{font-size:12px;color:var(--leise,#6B6259);margin-bottom:3px;}
+.ht-f .v{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+ color:var(--nacht,#2E3A5C);line-height:1.15;}
+.ht-f .z{font-size:12.3px;color:var(--leise,#6B6259);margin-top:3px;}
+.ht-radmini{background:var(--nacht,#2E3A5C);border-radius:20px;padding:14px;
+ box-shadow:0 10px 30px rgba(46,58,92,.16);}
 
 .ht-radmini .kr-hz{fill:rgba(244,239,230,.55);font-size:18px;}
 .ht-radmini .kr-haus.heut .kr-hz{fill:#E8C97A;}
@@ -178,8 +188,30 @@ a{color:var(--nacht);}
 .ht-radmini .kr-hf{fill:rgba(255,255,255,.03);stroke:rgba(255,255,255,.1);}
 .ht-radmini .kr-haus.heut .kr-hf{fill:rgba(232,201,122,.46);stroke:rgba(232,201,122,.75);}
 .ht-radmini .kr-haus.heut .kr-hz{fill:#2E3A5C;font-weight:600;}
-.ht-radu{font-size:12.4px;color:rgba(244,239,230,.55);text-align:center;padding-top:9px;}
-.ht-radu a{color:#E8C97A;}
+.ht-radu{font-size:12.4px;color:var(--leise,#6B6259);text-align:center;padding-top:9px;}
+.ht-radu a{color:var(--messing,#9A7235);}
+
+/* ── Die lautesten Bereiche ───────────────────────────────── */
+.ht-ber{display:grid;gap:9px;margin-bottom:14px;}
+.ht-b{display:grid;grid-template-columns:11px 1fr auto;gap:12px;align-items:baseline;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ padding:15px 18px;text-decoration:none;color:var(--tinte,#231F1A);
+ transition:transform .14s ease,box-shadow .14s ease;}
+.ht-b:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(46,58,92,.09);}
+.ht-bp{width:9px;height:9px;border-radius:50%;display:block;margin-top:6px;}
+.ht-bn{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.5px;
+ color:var(--nacht,#2E3A5C);line-height:1.2;}
+.ht-bl{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.1em;
+ text-transform:uppercase;white-space:nowrap;}
+.ht-bs{grid-column:2/-1;font-size:14.5px;color:var(--leise,#6B6259);line-height:1.55;margin-top:3px;}
+.ht-bt{grid-column:2/-1;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;
+ margin-top:8px;padding-top:9px;border-top:1px dashed var(--linie,#EBE1D2);}
+.ht-mehr{display:inline-block;font-size:14.5px;color:var(--messing,#9A7235);text-decoration:none;}
+.ht-mehr:hover{text-decoration:underline;}
+@media(max-width:620px){
+ .ht-b{grid-template-columns:9px 1fr auto;gap:9px;padding:13px 14px;}
+ .ht-bn{font-size:17.5px;}
+}
 
 /* Abschnittsköpfe */
 .ht-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
@@ -254,7 +286,7 @@ a{color:var(--nacht);}
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="raeume.html">R&auml;ume</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
 <div class="ht-jetzt" id="htjetzt"><div class="ht-jetzt-in">
@@ -262,6 +294,7 @@ a{color:var(--nacht);}
     <div class="ht-tag" id="httag"></div>
     <h1 class="ht-gruss" id="htgruss">&nbsp;</h1>
     <p class="ht-satz" id="htsatz"></p>
+    <div id="httech"></div>
     <div class="ht-fakten" id="htfakten"></div>
   </div>
   <div>
@@ -273,16 +306,19 @@ a{color:var(--nacht);}
 
 <div class="ht-wrap" id="htinhalt">
 
-<div id="htwocheteil">
-  <h2 class="ht-h">Diese Woche</h2>
-  <p class="ht-sub">Alles, was in den n&auml;chsten zehn Tagen ein Datum hat &mdash; in der Reihenfolge, in der es kommt. Was eine Vorbereitung braucht, sagt es dazu.</p>
-  <div class="ht-woche" id="htwoche"></div>
+<div id="nivleiste"></div>
+
+<div id="htbereicheteil">
+  <h2 class="ht-h">Wo gerade am meisten los ist</h2>
+  <p class="ht-sub">Deine Lebensbereiche, nach Lautst&auml;rke sortiert. Das hier ist der Kurzblick &mdash; auf der Bereichsseite steht zu jedem, was los ist, was du tun kannst und wie lange es l&auml;uft.</p>
+  <div class="ht-ber" id="htber"></div>
+  <a class="ht-mehr" href="bereiche.html">Alle zehn Bereiche ansehen &rarr;</a>
 </div>
 
-<div id="htlaeuftteil">
-  <h2 class="ht-h">L&auml;uft</h2>
-  <p class="ht-sub">Die langsamen Planeten. Monate bis Jahre, nichts davon verlangt heute etwas von dir &mdash; aber es erkl&auml;rt, warum ein Bereich sich gerade anders anf&uuml;hlt.</p>
-  <div class="ht-laeuft" id="htlaeuft"></div>
+<div id="htwocheteil">
+  <h2 class="ht-h">Diese Woche</h2>
+  <p class="ht-sub">Alles, was in den n&auml;chsten zehn Tagen einen festen Termin hat &mdash; in der Reihenfolge, in der es kommt. Was eine Vorbereitung braucht, sagt es dazu.</p>
+  <div class="ht-woche" id="htwoche"></div>
 </div>
 
 <div class="ht-kap">
@@ -291,8 +327,9 @@ a{color:var(--nacht);}
   <div class="ht-kapr" id="htkapr"></div>
 </div>
 
-<div class="foot">Heute &middot; Planetenstunden f&uuml;r deinen Wohnort, H&auml;user aus deinem Profil.<br>
-Mondphasen, Stationen und Sonnenzeiten gegen PyEphem gepr&uuml;ft.</div>
+<div class="foot">Heute &middot; Gerechnet f&uuml;r deinen Wohnort und dein Geburtsbild.<br>
+Mondphasen, Wendepunkte und Sonnenzeiten gegen PyEphem gepr&uuml;ft.
+<span class="ac-tech" data-ab="2">Planetenstunden nach chald&auml;ischer Ordnung, H&auml;user im Whole-Sign-System aus dem Profil.</span></div>
 </div>
 
 <script>
@@ -1074,6 +1111,934 @@ window.AC_KERNRAD=function(opt){
 };
 })();
 
+/* Astro-Charlie · Zeiten — die Rechnung
+   ==================================================================
+   Wann kommen die Hochphasen? Drei Verfahren, die genau das
+   beantworten, sauber getrennt von den Texten:
+
+     Zodiakale Freilassung (Zodiacal Releasing, Valens)
+       Lebensabschnitte aus dem Los des Geistes (Beruf) und dem
+       Los des Eros (Liebe). Hochphasen sind die Abschnitte, deren
+       Zeichen zum Los des Glücks im Winkel steht.
+
+     Jahresprofektion
+       Ein Haus je Lebensjahr, sein Herrscher führt das Jahr.
+
+     Firdaria
+       Mittelalterliche Planetenperioden, Tag- und Nachtreihenfolge.
+
+   Alle Namen mit Z_ davor, damit nichts mit der astronomischen
+   Engine kollidiert.                                               */
+(function(){
+'use strict';
+
+function znrm(x){ x=x%360; return x<0?x+360:x; }
+function zzi(l){ return Math.floor(znrm(l)/30); }
+
+var Z_ZEICHEN=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+ 'Schütze','Steinbock','Wassermann','Fische'];
+var Z_HERRSCHER=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',
+ 'Jupiter','Saturn','Saturn','Jupiter'];
+
+/* ── Die Lose ────────────────────────────────────────────────
+   Bei Tag und bei Nacht vertauscht, wie in der hellenistischen
+   Überlieferung. Tag heißt: die Sonne stand über dem Horizont.   */
+function zLose(C){
+  var tag = (((Math.floor(znrm(C.Sonne)/30) - Math.floor(znrm(C.ASC)/30))%12+12)%12+1) >= 7;
+  /* Bei Tag nimmt man den Bogen vom einen zum anderen Lichtpunkt, bei
+     Nacht umgekehrt. Alle sieben Lose folgen diesem Muster.          */
+  function los(a, b){ return tag ? znrm(C.ASC + a - b) : znrm(C.ASC + b - a); }
+
+  var glueck = los(C.Mond, C.Sonne);
+  var geist  = los(C.Sonne, C.Mond);
+  var L={tag:tag, sekte:(tag?'Tag':'Nacht'), glueck:glueck, geist:geist};
+
+  /* Paulus und Olympiodor: bei Tag AC + Venus − Geist.
+     Eine zweite Überlieferung dreht das um; beide werden gerechnet. */
+  L.eros    = (C.Venus!==undefined) ? los(C.Venus, geist) : null;
+  L.erosAlt = (C.Venus!==undefined) ? los(geist, C.Venus) : null;
+  /* Die übrigen der sieben hermetischen Lose */
+  L.sieg    = (C.Jupiter!==undefined) ? los(C.Jupiter, geist) : null;
+  L.not     = (C.Merkur!==undefined)  ? los(glueck, C.Merkur) : null;
+  L.mut     = (C.Mars!==undefined)    ? los(glueck, C.Mars)   : null;
+  L.nemesis = (C.Saturn!==undefined)  ? los(glueck, C.Saturn) : null;
+  return L;
+}
+
+/* ── Zodiakale Freilassung ───────────────────────────────────
+   Die allgemeinen Jahre je Zeichen nach Valens. Gerechnet wird in
+   Jahren zu 360 Tagen und Monaten zu 30 Tagen.                   */
+var Z_JAHRE=[15,8,20,25,19,20,8,15,12,27,30,12];
+var Z_TAG_JAHR=360, Z_TAG_MONAT=30;
+/* Ein voller Umlauf auf der zweiten Ebene: 211 Monate */
+var Z_UMLAUF=Z_JAHRE.reduce(function(a,b){ return a+b; }, 0);
+
+/* Stellung eines Zeichens zum Los des Glücks, als Haus 1 bis 12 */
+function zVonGlueck(zeichen, glueckZeichen){
+  return ((zeichen - glueckZeichen)%12+12)%12 + 1;
+}
+function zIstGipfel(zeichen, glueckZeichen){
+  return [1,4,7,10].indexOf(zVonGlueck(zeichen, glueckZeichen))>=0;
+}
+
+/* Die erste Ebene: Lebensabschnitte ab Geburt.
+   losLon  Länge des Loses, von dem freigelassen wird
+   glueck  Länge des Loses des Glücks (für die Hochphasen)
+   tage    wie weit gerechnet werden soll, in Tagen ab Geburt      */
+function zFreilassung(losLon, glueckLon, tage){
+  var startZ=zzi(losLon), gz=zzi(glueckLon);
+  var l1=[], t=0, z=startZ, schutz=0;
+  while(t < tage && schutz++ < 40){
+    var laenge=Z_JAHRE[z]*Z_TAG_JAHR;
+    var abschnitt={ebene:1, zeichen:z, von:t, bis:t+laenge,
+      jahre:Z_JAHRE[z], herr:Z_HERRSCHER[z],
+      vonGlueck:zVonGlueck(z,gz), gipfel:zIstGipfel(z,gz),
+      unter:zUnterperioden(z, t, laenge, gz)};
+    l1.push(abschnitt);
+    t+=laenge; z=(z+1)%12;
+  }
+  return {start:startZ, glueckZeichen:gz, abschnitte:l1};
+}
+
+/* Die zweite Ebene innerhalb eines Abschnitts.
+   Sie beginnt im selben Zeichen wie der Abschnitt und läuft in
+   Zeichenfolge weiter, jedes Zeichen so viele Monate, wie es Jahre
+   bekommt. Ist der Umlauf einmal herum, wird nicht wiederholt,
+   sondern ins Gegenzeichen gesprungen — die Lösung der Bindung.   */
+function zUnterperioden(startZ, t0, laenge, gz){
+  var out=[], t=t0, z=startZ, ende=t0+laenge, schutz=0;
+  var naechsteIstBindung=false, bindungGeschehen=false;
+  while(t < ende && schutz++ < 40){
+    var voll=Z_JAHRE[z]*Z_TAG_MONAT;
+    var bis=Math.min(t+voll, ende);
+    out.push({ebene:2, zeichen:z, von:t, bis:bis,
+      monate:Z_JAHRE[z], gekappt:(bis < t+voll), herr:Z_HERRSCHER[z],
+      vonGlueck:zVonGlueck(z,gz), gipfel:zIstGipfel(z,gz),
+      bindung:naechsteIstBindung});
+    naechsteIstBindung=false;
+    t=bis;
+    var naechstes=(z+1)%12;
+    if(naechstes===startZ && !bindungGeschehen){
+      /* Der Umlauf ist herum. Statt das Startzeichen zu wiederholen,
+         springt die Reihe ins Gegenzeichen — die Lösung der Bindung.
+         Das geschieht je Abschnitt nur einmal: Vom Gegenzeichen aus
+         trifft die Reihe das Startzeichen schon nach sechs Schritten
+         wieder, und das ist kein neuer Umlauf.                       */
+      z=(startZ+6)%12;
+      naechsteIstBindung=true;
+      bindungGeschehen=true;
+      out[out.length-1].bindungDanach=true;
+    } else z=naechstes;
+  }
+  return out;
+}
+
+/* ── Jahresprofektion ────────────────────────────────────────
+   Ein Haus je vollendetem Lebensjahr, beginnend beim ersten.     */
+function zProfektion(C, alter){
+  var h=((alter%12)+12)%12;                 /* 0 = erstes Haus */
+  var z=(zzi(C.ASC)+h)%12;
+  return {alter:alter, haus:h+1, zeichen:z, zeichenName:Z_ZEICHEN[z],
+          herr:Z_HERRSCHER[z]};
+}
+/* Monatsprofektion: ein Zeichen je Monat ab dem Geburtstag */
+function zProfektionMonat(C, alter, monatNr){
+  var basis=(zzi(C.ASC)+(((alter%12)+12)%12))%12;
+  var z=(basis+monatNr)%12;
+  return {haus:((z - zzi(C.ASC))%12+12)%12+1, zeichen:z,
+          zeichenName:Z_ZEICHEN[z], herr:Z_HERRSCHER[z]};
+}
+
+/* ── Firdaria ────────────────────────────────────────────────
+   Reihenfolge nach Bonatti in der Fassung von Dykes. Die Längen
+   sind bei Tag und Nacht gleich, nur die Reihenfolge wechselt.   */
+var Z_FIRD_TAG=[['Sonne',10],['Venus',8],['Merkur',13],['Mond',9],['Saturn',11],
+ ['Jupiter',12],['Mars',7],['Aufsteigender Knoten',3],['Absteigender Knoten',2]];
+var Z_FIRD_NACHT=[['Mond',9],['Saturn',11],['Jupiter',12],['Mars',7],
+ ['Aufsteigender Knoten',3],['Absteigender Knoten',2],['Sonne',10],['Venus',8],['Merkur',13]];
+/* Chaldäische Reihenfolge für die Unterperioden */
+var Z_CHALD=['Saturn','Jupiter','Mars','Sonne','Venus','Merkur','Mond'];
+
+function zFirdaria(tag){
+  var reihe=tag?Z_FIRD_TAG:Z_FIRD_NACHT, out=[], a=0;
+  reihe.forEach(function(p){
+    var name=p[0], jahre=p[1];
+    var e={herr:name, von:a, bis:a+jahre, jahre:jahre, unter:[]};
+    var i=Z_CHALD.indexOf(name);
+    if(i>=0){
+      var teil=jahre/7, b=a;
+      for(var k=0;k<7;k++){
+        var u=Z_CHALD[(i+k)%7];
+        e.unter.push({herr:u, von:b, bis:b+teil, jahre:teil});
+        b+=teil;
+      }
+    }
+    out.push(e); a+=jahre;
+  });
+  return out;
+}
+function zFirdariaJetzt(liste, alter){
+  for(var i=0;i<liste.length;i++){
+    var p=liste[i];
+    if(alter>=p.von && alter<p.bis){
+      var u=null;
+      p.unter.forEach(function(x){ if(alter>=x.von && alter<x.bis) u=x; });
+      return {haupt:p, unter:u};
+    }
+  }
+  return null;   /* über 75 Jahre beginnt die Reihe von vorn */
+}
+
+/* ── Zeitrechnung ────────────────────────────────────────────
+   Die Freilassung zählt in Tagen ab Geburt. Umrechnung in echte
+   Daten über das Julianische Datum.                              */
+function zDatum(jdGeburt, tage){
+  return new Date((jdGeburt + tage - 2440587.5)*86400000);
+}
+function zAlterJahre(jdGeburt, jdJetzt){
+  return (jdJetzt - jdGeburt)/365.2422;
+}
+/* Vollendete Lebensjahre am Stichtag — maßgeblich für die Profektion */
+function zAlterVollendet(geb, jetzt){
+  var a=jetzt.getFullYear()-geb.y;
+  var m=jetzt.getMonth()+1, d=jetzt.getDate();
+  if(m<geb.mo || (m===geb.mo && d<geb.d)) a--;
+  return a;
+}
+
+/* ── Alles zusammen ──────────────────────────────────────────  */
+/* Welches Los zu welchem Lebensbereich gehört */
+var Z_BEREICHE=[
+ {k:'arbeit',  los:'geist'},
+ {k:'liebe',   los:'eros'},
+ {k:'koerper', los:'glueck'},
+ {k:'erfolg',  los:'sieg'},
+ {k:'druck',   los:'not'}
+];
+
+function zBlatt(C, jdGeburt, geb, jetzt, erosVariante){
+  if(!C || C.ASC===undefined) return null;
+  jetzt = jetzt || new Date();
+  var L=zLose(C);
+  if(erosVariante==='alt') L.eros=L.erosAlt;
+  var bis = 100*Z_TAG_JAHR;                   /* hundert Jahre weit rechnen */
+
+  var jdJetzt = jetzt.getTime()/86400000 + 2440587.5;
+  var tageSeitGeburt = jdJetzt - jdGeburt;
+
+  var spuren={};
+  Z_BEREICHE.forEach(function(B){
+    var lon=L[B.los];
+    spuren[B.k] = (lon===null||lon===undefined) ? null : zFreilassung(lon, L.glueck, bis);
+  });
+
+  var alter = zAlterVollendet(geb, jetzt);
+  var prof = zProfektion(C, alter);
+  var fird = zFirdaria(L.tag);
+  var firdJetzt = zFirdariaJetzt(fird, zAlterJahre(jdGeburt, jdJetzt));
+
+  return {
+    lose:L, spuren:spuren,
+    /* die beiden Hauptspuren auch unter ihrem alten Namen */
+    beruf:spuren.arbeit, liebe:spuren.liebe, erosLon:L.eros,
+    profektion:prof, firdaria:fird, firdariaJetzt:firdJetzt,
+    alter:alter, tageSeitGeburt:tageSeitGeburt, jdGeburt:jdGeburt,
+    jetzt:jetzt
+  };
+}
+
+/* Welcher Abschnitt läuft zu einem Zeitpunkt — erste und zweite Ebene */
+function zJetzt(freilassung, tage){
+  var out={l1:null, l2:null};
+  freilassung.abschnitte.forEach(function(a){
+    if(tage>=a.von && tage<a.bis){
+      out.l1=a;
+      a.unter.forEach(function(u){ if(tage>=u.von && tage<u.bis) out.l2=u; });
+    }
+  });
+  return out;
+}
+
+/* Die nächsten Hochphasen ab einem Zeitpunkt — über beide Ebenen */
+function zNaechsteGipfel(freilassung, abTagen, anzahl){
+  var out=[];
+  freilassung.abschnitte.forEach(function(a){
+    if(a.gipfel && a.bis>abTagen)
+      out.push({ebene:1, zeichen:a.zeichen, von:a.von, bis:a.bis,
+                vonGlueck:a.vonGlueck, laeuft:(abTagen>=a.von)});
+    a.unter.forEach(function(u){
+      if(u.gipfel && u.bis>abTagen && !(a.gipfel && u.zeichen===a.zeichen))
+        out.push({ebene:2, zeichen:u.zeichen, von:u.von, bis:u.bis,
+                  vonGlueck:u.vonGlueck, laeuft:(abTagen>=u.von)});
+    });
+  });
+  out.sort(function(x,y){ return x.von-y.von; });
+  return anzahl?out.slice(0,anzahl):out;
+}
+
+/* Die Lösungen der Bindung — die großen Einschnitte */
+function zBindungen(freilassung){
+  var out=[];
+  freilassung.abschnitte.forEach(function(a){
+    a.unter.forEach(function(u){ if(u.bindung) out.push(u); });
+  });
+  return out;
+}
+
+window.AC_ZEIT={
+  ZEICHEN:Z_ZEICHEN, HERRSCHER:Z_HERRSCHER, JAHRE:Z_JAHRE, BEREICHE:Z_BEREICHE,
+  TAG_JAHR:Z_TAG_JAHR, TAG_MONAT:Z_TAG_MONAT, UMLAUF:Z_UMLAUF,
+  zi:zzi, nrm:znrm,
+  lose:zLose, freilassung:zFreilassung, vonGlueck:zVonGlueck, istGipfel:zIstGipfel,
+  profektion:zProfektion, profektionMonat:zProfektionMonat,
+  firdaria:zFirdaria, firdariaJetzt:zFirdariaJetzt,
+  datum:zDatum, alterJahre:zAlterJahre, alterVollendet:zAlterVollendet,
+  blatt:zBlatt, jetzt:zJetzt, naechsteGipfel:zNaechsteGipfel, bindungen:zBindungen
+};
+})();
+
+/* ───────────────────────────────────────────────────────────────
+   bereich-rechner.js — Lebensbereiche: was läuft gerade, wie lange.
+   Baut auf rituale/engine.js auf (lon, chartVon, haus, jdFromUT, datVon).
+   Rechnet nichts Neues am Himmel, sondern sortiert das Vorhandene
+   nach Lebensbereich und misst, wie lange es noch dauert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+
+  var TAG = 86400000;
+
+  /* ── Bereiche ───────────────────────────────────────────────
+     haeuser: Whole-Sign-Häuser, die zu diesem Bereich gehören.
+              Das erste ist das Kernhaus — es wiegt doppelt.
+     Die Reihenfolge der Bereiche ist die Anzeigereihenfolge.
+     zrk: der Bereich auf der Zeitenseite, der dasselbe Thema über
+          Jahrzehnte beschreibt. Nur gesetzt, wo die Zuordnung ehrlich
+          ist — sonst null, dann steht hier eben kein Kapitel. */
+  var B_BEREICHE = [
+    { k:'liebe',       name:'Liebe',              haeuser:[7,5,8],  zrk:'liebe'   },
+    { k:'beruf',       name:'Beruf',              haeuser:[10,6,2], zrk:'arbeit'  },
+    { k:'gesundheit',  name:'Gesundheit',         haeuser:[6,1,12], zrk:'koerper' },
+    { k:'geld',        name:'Geld',               haeuser:[2,8,11], zrk:null      },
+    { k:'familie',     name:'Zuhause und Familie',haeuser:[4,3,10], zrk:null      },
+    { k:'freunde',     name:'Freunde',            haeuser:[11,7,3], zrk:null      },
+    { k:'freude',      name:'Freude und Kreativität', haeuser:[5,11,9], zrk:null  },
+    { k:'selbstwert',  name:'Selbstwert',         haeuser:[1,2,10], zrk:'erfolg'  },
+    { k:'sinn',        name:'Sinn und Richtung',  haeuser:[9,5,12], zrk:null      },
+    { k:'umbruch',     name:'Umbruch',            haeuser:[8,12,4], zrk:'druck'   }
+  ];
+
+  /* ── Wanderer ───────────────────────────────────────────────
+     g  = Gewicht: wie viel ein Durchgang dieses Planeten bedeutet.
+     orb = Grad, bis zu dem ein Aspekt noch zählt.
+     schritt = Tage pro Schritt bei der Fenstersuche (grob, dann feiner). */
+  var WANDERER = [
+    { k:'Pluto',   g:1.00, orb:2.5, schritt:30 },
+    { k:'Neptun',  g:0.92, orb:2.5, schritt:30 },
+    { k:'Uranus',  g:0.92, orb:2.5, schritt:20 },
+    { k:'Saturn',  g:1.00, orb:3.0, schritt:10 },
+    { k:'Jupiter', g:0.80, orb:3.0, schritt:5  },
+    { k:'Mars',    g:0.55, orb:3.0, schritt:2  },
+    { k:'Venus',   g:0.34, orb:2.0, schritt:1  },
+    { k:'Merkur',  g:0.30, orb:2.0, schritt:1  },
+    { k:'Sonne',   g:0.38, orb:2.0, schritt:1  }
+  ];
+  var WGEW = {}; (function(){ for(var i=0;i<WANDERER.length;i++) WGEW[WANDERER[i].k]=WANDERER[i]; })();
+
+  /* ── Aspekte ────────────────────────────────────────────────
+     art: 'zusammen' | 'leicht' | 'spannung' | 'gegenueber'
+     g:   Gewicht des Aspekts */
+  var ASPEKTE = [
+    { w:0,   k:'konjunktion', art:'zusammen',   g:1.00 },
+    { w:180, k:'opposition',  art:'gegenueber', g:0.90 },
+    { w:90,  k:'quadrat',     art:'spannung',   g:0.85 },
+    { w:120, k:'trigon',      art:'leicht',     g:0.62 },
+    { w:60,  k:'sextil',      art:'leicht',     g:0.42 }
+  ];
+
+  /* Natale Punkte, die angesprochen werden können. */
+  var ZIELE = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+
+  function nrm(x){ x=x%360; return x<0?x+360:x; }
+
+  /* Winkelabstand 0…180 */
+  function dist(a,b){ var d=Math.abs(nrm(a-b)); return d>180?360-d:d; }
+
+  /* Welcher Aspekt steht zwischen zwei Längen — und wie weit daneben?
+     Gibt null, wenn kein Aspekt innerhalb von orb liegt. */
+  function aspektVon(a, b, orb){
+    var d = dist(a,b), beste=null;
+    for(var i=0;i<ASPEKTE.length;i++){
+      var ab = Math.abs(d - ASPEKTE[i].w);
+      if(ab <= orb && (!beste || ab < beste.ab)) beste = { A:ASPEKTE[i], ab:ab };
+    }
+    if(!beste) return null;
+    return { aspekt:beste.A.k, art:beste.A.art, grad:beste.A.w,
+             ab:beste.ab, ag:beste.A.g };
+  }
+
+  /* Ist der Aspekt im Zulaufen oder im Weggehen?
+     Zulaufend heißt: der Abstand wird kleiner. */
+  function laufendZu(wk, natL, grad, jd){
+    var d0 = Math.abs(dist(lon(wk, jd),   natL) - grad);
+    var d1 = Math.abs(dist(lon(wk, jd+2), natL) - grad);
+    return d1 < d0;
+  }
+
+  /* ── Fenster eines Aspekts ──────────────────────────────────
+     Sucht vorwärts und rückwärts den Tag, an dem der Aspekt die
+     Orb-Grenze verlässt. Erst grob in Schritten, dann auf den Tag
+     genau durch Halbieren. Deckel bei 14 Jahren, damit Pluto die
+     Suche nicht sprengt. */
+  var DECKEL = 365.2422 * 14;
+
+  function imOrb(wk, natL, grad, orb, jd){
+    return Math.abs(dist(lon(wk, jd), natL) - grad) <= orb;
+  }
+
+  function kante(wk, natL, grad, orb, jd, richtung){
+    var w = WGEW[wk], s = (w?w.schritt:5) * richtung, t = jd, letzte = jd, i = 0;
+    /* grob laufen, bis der Orb verlassen ist */
+    while(i++ < 4000){
+      var n = t + s;
+      if(Math.abs(n - jd) > DECKEL) return { jd:null, offen:true };
+      if(!imOrb(wk, natL, grad, orb, n)){ letzte = t; t = n; break; }
+      t = n;
+      if(i === 4000) return { jd:null, offen:true };
+    }
+    /* fein halbieren zwischen letzte (drin) und t (draußen) */
+    var a = letzte, b = t;
+    for(var j=0;j<40;j++){
+      var m = (a+b)/2;
+      if(imOrb(wk, natL, grad, orb, m)) a = m; else b = m;
+      if(Math.abs(b-a) < 0.5) break;
+    }
+    return { jd:a, offen:false };
+  }
+
+  function fenster(wk, natL, grad, orb, jd){
+    if(!imOrb(wk, natL, grad, orb, jd)) return null;
+    var v = kante(wk, natL, grad, orb, jd, -1);
+    var n = kante(wk, natL, grad, orb, jd, +1);
+    return { von:v.jd, bis:n.jd, vonOffen:v.offen, bisOffen:n.offen,
+             tageNoch: (n.offen ? null : Math.round(n.jd - jd)),
+             tageSchon:(v.offen ? null : Math.round(jd - v.jd)) };
+  }
+
+  /* ── Hausdurchgang ──────────────────────────────────────────
+     Welches Haus läuft ein Planet gerade durch, und wie lange noch?
+     Whole Sign: die Hausgrenze ist die Zeichengrenze. */
+  function hausDurchgang(C, wk, jd){
+    var l = lon(wk, jd), h = haus(C, l);
+    var zEnde = (Math.floor(l/30)+1)*30;      /* nächste Zeichengrenze */
+    var w = WGEW[wk], s = (w?w.schritt:5), t = jd, i=0;
+    while(i++ < 4000){
+      var n = t + s;
+      if(n - jd > DECKEL) return { haus:h, bis:null, offen:true };
+      if(haus(C, lon(wk, n)) !== h){ break; }
+      t = n;
+    }
+    var a = t, b = t + s;
+    for(var j=0;j<40;j++){
+      var m=(a+b)/2;
+      if(haus(C, lon(wk, m)) === h) a = m; else b = m;
+      if(b-a < 0.5) break;
+    }
+    return { haus:h, bis:a, offen:false, rueck:rueck(wk, jd) };
+  }
+
+  /* ── Alles, was gerade läuft ────────────────────────────────
+     Gibt eine flache Liste von Vorgängen. Jeder Vorgang weiß,
+     welche Häuser er betrifft — darüber werden die Bereiche bedient. */
+  function vorgaenge(C, jd){
+    var out = [], i, j, k;
+
+    /* 1) Aspekte auf natale Punkte */
+    for(i=0;i<WANDERER.length;i++){
+      var W = WANDERER[i], wl = lon(W.k, jd);
+      for(j=0;j<ZIELE.length;j++){
+        var zk = ZIELE[j], zl = C[zk];
+        if(zl === undefined || zl === null) continue;
+        /* ein Planet aspektiert sich selbst nicht sinnvoll bei 0° */
+        var A = aspektVon(wl, zl, W.orb);
+        if(!A) continue;
+        if(W.k === zk && A.aspekt === 'konjunktion') continue;   /* Rückkehr, eigene Kategorie */
+        var F = fenster(W.k, zl, A.grad, W.orb, jd);
+        if(!F) continue;
+        var naehe = 1 - (A.ab / W.orb);                          /* 0…1, 1 = exakt */
+        out.push({
+          form:'aspekt', wanderer:W.k, ziel:zk, zielArt:'planet',
+          aspekt:A.aspekt, art:A.art, grad:A.grad, ab:A.ab,
+          zu:laufendZu(W.k, zl, A.grad, jd),
+          rueck:rueck(W.k, jd),
+          haeuser:[ haus(C, zl) ],                               /* das Haus des berührten Punktes */
+          gewicht: W.g * A.ag * (0.45 + 0.55*naehe),
+          f:F
+        });
+      }
+      /* 2) Aspekte auf die Achsen */
+      var achsen = [['ASC',1],['MC',10]];
+      for(k=0;k<achsen.length;k++){
+        var ak = achsen[k][0], ah = achsen[k][1], al = C[ak];
+        if(al === undefined || al === null) continue;
+        var A2 = aspektVon(wl, al, W.orb);
+        if(!A2) continue;
+        var F2 = fenster(W.k, al, A2.grad, W.orb, jd);
+        if(!F2) continue;
+        var n2 = 1 - (A2.ab / W.orb);
+        out.push({
+          form:'aspekt', wanderer:W.k, ziel:ak, zielArt:'achse',
+          aspekt:A2.aspekt, art:A2.art, grad:A2.grad, ab:A2.ab,
+          zu:laufendZu(W.k, al, A2.grad, jd),
+          rueck:rueck(W.k, jd),
+          haeuser:[ ah ],
+          gewicht: W.g * A2.ag * (0.45 + 0.55*n2) * 1.1,         /* Achsen wiegen etwas mehr */
+          f:F2
+        });
+      }
+      /* 3) Hausdurchgang — nur die langsamen, sonst Rauschen */
+      if(W.g >= 0.75){
+        var D = hausDurchgang(C, W.k, jd);
+        out.push({
+          form:'durchgang', wanderer:W.k, haus:D.haus,
+          haeuser:[ D.haus ], rueck:D.rueck,
+          gewicht: W.g * 0.72,
+          f:{ von:null, bis:D.bis, vonOffen:true, bisOffen:!!D.offen,
+              tageNoch: (D.bis ? Math.round(D.bis - jd) : null), tageSchon:null }
+        });
+      }
+    }
+    return out;
+  }
+
+  /* ── Vorgänge je Bereich ────────────────────────────────────
+     Ein Vorgang gehört zu einem Bereich, wenn er eines seiner
+     Häuser berührt. Das Kernhaus (erstes) zählt doppelt. */
+  function fuerBereich(V, B){
+    var out = [];
+    for(var i=0;i<V.length;i++){
+      var v = V[i], best = -1;
+      for(var j=0;j<v.haeuser.length;j++){
+        var p = B.haeuser.indexOf(v.haeuser[j]);
+        if(p >= 0 && (best < 0 || p < best)) best = p;
+      }
+      if(best < 0) continue;
+      var faktor = (best === 0) ? 1.0 : (best === 1 ? 0.72 : 0.52);
+      var c = {}; for(var s in v) if(v.hasOwnProperty(s)) c[s]=v[s];
+      c.bGewicht = v.gewicht * faktor;
+      c.kern = (best === 0);
+      out.push(c);
+    }
+    out.sort(function(a,b){ return b.bGewicht - a.bGewicht; });
+    /* Pro Bereich kommt jeder Wanderer nur einmal vor, mit seinem
+       stärksten Auftritt. Sonst steht dieselbe Beschreibung zweimal
+       untereinander — einmal als Durchgang, einmal als Aspekt. Die
+       schwächeren Auftritte bleiben in blatt().alle erhalten. */
+    var gesehen = {}, knapp = [];
+    for(var n=0;n<out.length;n++){
+      var wk = out[n].wanderer;
+      if(gesehen[wk]){ out[n].verdeckt = true; continue; }
+      gesehen[wk] = true;
+      knapp.push(out[n]);
+    }
+    return knapp;
+  }
+
+  /* ── Lautstärke eines Bereichs ──────────────────────────────
+     Summe der drei stärksten Vorgänge, in eine Stufe übersetzt.
+     0 = still, 1 = leise, 2 = in Bewegung, 3 = viel los
+
+     K ist das laufende Kapitel aus der Zeitenseite, falls bekannt.
+     Es darf die Stufe anheben, aber nie senken: ein lautes Kapitel
+     über zwanzig Jahre ist kein Grund, einen Bereich still zu nennen,
+     nur weil diese Woche kein langsamer Planet daran rührt. */
+  function lautstaerke(L, K){
+    var s = 0;
+    for(var i=0;i<Math.min(3,L.length);i++) s += L[i].bGewicht;
+    /* Die Schwellen sind an der echten Verteilung geeicht — über vier
+       Charts und zwanzig Jahre abgetastet — damit die vier Stufen
+       auch wirklich vier verschiedene Dinge heißen und nicht die
+       Hälfte aller Bereiche dasselbe sagt. Geprüft in _test-bereich.js. */
+    var stufe = (s >= 1.72) ? 3 : (s >= 1.30) ? 2 : (s >= 0.68) ? 1 : 0;
+    if(K && K.laut) stufe = Math.max(stufe, 2);
+    return stufe;
+  }
+
+  /* ── Das laufende Kapitel eines Bereichs ────────────────────
+     Z ist das Blatt von AC_ZEIT, tage die Tage seit der Geburt.
+     Gibt null, wenn der Bereich kein Gegenstück dort hat oder die
+     Zeitenseite nicht geladen ist. */
+  function kapitel(Z, bk, tage){
+    if(!Z || !Z.spuren) return null;
+    var B = null;
+    for(var i=0;i<B_BEREICHE.length;i++) if(B_BEREICHE[i].k === bk) B = B_BEREICHE[i];
+    if(!B || !B.zrk) return null;
+    var spur = Z.spuren[B.zrk];
+    if(!spur || !spur.abschnitte) return null;
+    var l1 = null, l2 = null;
+    for(var j=0;j<spur.abschnitte.length;j++){
+      var a = spur.abschnitte[j];
+      if(tage >= a.von && tage < a.bis){
+        l1 = a;
+        for(var u=0;u<a.unter.length;u++){
+          var x = a.unter[u];
+          if(tage >= x.von && tage < x.bis) l2 = x;
+        }
+      }
+    }
+    if(!l1) return null;
+    return { l1:l1, l2:l2, laut:!!l1.gipfel, lautJetzt:!!(l2 && l2.gipfel),
+             anders: !!(l2 && (!!l1.gipfel !== !!l2.gipfel)) };
+  }
+
+  /* ── Natale Lage eines Bereichs ─────────────────────────────
+     Welche natalen Planeten stehen in den Häusern des Bereichs,
+     und wie voll ist er. Das ist das Dauerthema, nicht der Transit. */
+  function natal(C, B){
+    var drin = [], i, h;
+    for(i=0;i<ZIELE.length;i++){
+      var l = C[ZIELE[i]];
+      if(l === undefined || l === null) continue;
+      h = haus(C, l);
+      if(B.haeuser.indexOf(h) >= 0) drin.push({ p:ZIELE[i], haus:h, kern:(h===B.haeuser[0]) });
+    }
+    drin.sort(function(a,b){ return (b.kern?1:0)-(a.kern?1:0); });
+    /* Zeichen auf dem Kernhaus */
+    var kh = B.haeuser[0];
+    var kz = (Math.floor(C.ASC/30) + (kh-1)) % 12;
+    return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz };
+  }
+
+  /* ── Ein Blatt für alle Bereiche ──────────────────────────────
+     Z und tage sind freiwillig: ohne sie rechnet die Seite nur mit
+     Transiten, mit ihnen kommt das Kapitel dazu. */
+  function blatt(C, jd, Z, tage){
+    var V = vorgaenge(C, jd), out = [];
+    for(var i=0;i<B_BEREICHE.length;i++){
+      var B = B_BEREICHE[i], L = fuerBereich(V, B);
+      var K = kapitel(Z, B.k, tage);
+      out.push({ k:B.k, name:B.name, haeuser:B.haeuser, zrk:B.zrk,
+                 laeuft:L, kapitel:K, laut:lautstaerke(L, K),
+                 nurKapitel: !!(K && K.laut && lautstaerke(L, null) < 2),
+                 natal:natal(C, B) });
+    }
+    return { jd:jd, bereiche:out, alle:V };
+  }
+
+  window.AC_BER = {
+    BEREICHE: B_BEREICHE,
+    WANDERER: WANDERER,
+    ASPEKTE: ASPEKTE,
+    nrm: nrm, dist: dist, aspektVon: aspektVon,
+    fenster: fenster, hausDurchgang: hausDurchgang,
+    vorgaenge: vorgaenge, fuerBereich: fuerBereich,
+    lautstaerke: lautstaerke, kapitel: kapitel, natal: natal, blatt: blatt
+  };
+
+})();
+
+/* ───────────────────────────────────────────────────────────────
+   bereich-daten.js — alle Texte der Bereichsseite.
+
+   Grundregel dieser Datei: Auf der sichtbaren Ebene steht, WAS
+   passiert. Nicht, woran man es abliest. Kein Planetenname, kein
+   Hausname, kein Aspektname in den Sätzen, die ein Laie zuerst
+   liest. Die Mechanik steht getrennt in den Feldern mit dem
+   Vorsatz "tech" und erscheint erst ab Wissensstufe 2.
+   Das wird beim Bauen geprüft — bau-bereiche.py bricht ab, wenn
+   sich Fachsprache in einen Laientext schleicht.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+
+  /* ── Die vier Lautstärken ───────────────────────────────────── */
+  var B_LAUT = [
+    { k:'still',   n:'Still',        farbe:'#A8AEBE',
+      satz:'Hier passiert gerade wenig. Das ist keine Vernachlässigung, sondern eine Pause.' },
+    { k:'leise',   n:'Leise',        farbe:'#7E95A8',
+      satz:'Etwas bewegt sich, aber ohne Druck. Gut für Dinge, die Zeit brauchen.' },
+    { k:'bewegt',  n:'In Bewegung',  farbe:'#9A7235',
+      satz:'Hier ist etwas im Gang. Entscheidungen, die du jetzt triffst, haben Gewicht.' },
+    { k:'viel',    n:'Viel los',     farbe:'#B5502E',
+      satz:'Das ist gerade dein lautester Bereich. Hierhin geht die Energie, ob du willst oder nicht.' }
+  ];
+
+  /* ── Die Bereiche ───────────────────────────────────────────── */
+  var B_BER = {
+    liebe: {
+      frage: 'Was ist bei mir gerade in der Liebe los?',
+      worum: 'Verliebtsein, Beziehungen, Nähe und das, was du dich traust zu wollen.',
+      nomen: 'in der Liebe',
+      lautSatz: [
+        'In der Liebe ist es gerade ruhig. Nichts drängt, nichts entscheidet sich.',
+        'In der Liebe bewegt sich etwas langsam. Eher ein Tasten als ein Sprung.',
+        'In der Liebe ist etwas im Gang, das Folgen hat.',
+        'Die Liebe ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Die Aufgabe hier ist fast immer dieselbe: etwas wollen und es auch sagen. Nicht andeuten, nicht testen, nicht abwarten, wer zuerst springt.',
+      techFeld: 'Siebtes, fünftes und achtes Haus'
+    },
+    beruf: {
+      frage: 'Wo stehe ich beruflich?',
+      worum: 'Arbeit, Aufgabe und Sichtbarkeit — also auch die Frage, wofür du gelten willst und wofür man dich bisher kennt.',
+      nomen: 'im Beruf',
+      lautSatz: [
+        'Beruflich ist gerade Ruhe. Keine Weichen werden gestellt.',
+        'Beruflich bewegt sich etwas im Hintergrund.',
+        'Beruflich ist etwas im Gang, das deine Richtung verändert.',
+        'Der Beruf ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Hier geht es darum, eine Sache zu Ende zu bringen, die man dir ansieht. Nicht zehn angefangene, sondern eine fertige.',
+      techFeld: 'Zehntes, sechstes und zweites Haus'
+    },
+    gesundheit: {
+      frage: 'Wie geht es mir körperlich?',
+      worum: 'Kraft, Schlaf, Belastbarkeit und die Routinen, die dich tragen oder aufbrauchen.',
+      nomen: 'mit deinem Körper',
+      lautSatz: [
+        'Körperlich ist gerade nichts Besonderes im Gang.',
+        'Dein Körper meldet sich leise. Hinhören reicht, Alarm ist keiner.',
+        'Dein Körper ist gerade ein Thema, das Aufmerksamkeit verlangt.',
+        'Der Körper ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Die Aufgabe hier heißt Maß: aufhören, bevor es weh tut, nicht erst danach.',
+      techFeld: 'Sechstes, erstes und zwölftes Haus'
+    },
+    geld: {
+      frage: 'Wie steht es ums Geld?',
+      worum: 'Verdienen, Ausgeben, Sicherheit und was du dir zutraust zu verlangen.',
+      nomen: 'beim Geld',
+      lautSatz: [
+        'Beim Geld ist gerade Ruhe.',
+        'Beim Geld verschiebt sich etwas langsam.',
+        'Beim Geld ist etwas im Gang, das eine Entscheidung braucht.',
+        'Geld ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Hier geht es ums Verlangen eines Preises, nicht ums Sparen. Die Zahl aussprechen, ohne sie vorher kleiner zu machen.',
+      techFeld: 'Zweites, achtes und elftes Haus'
+    },
+    familie: {
+      frage: 'Was ist mit Zuhause und Familie?',
+      worum: 'Herkunft, Wohnen, die Menschen, die man nicht gewählt hat, und der Ort, an dem du landest.',
+      nomen: 'zu Hause',
+      lautSatz: [
+        'Zu Hause und in der Familie ist gerade Ruhe.',
+        'Zu Hause bewegt sich etwas, ohne zu drängen.',
+        'Zu Hause oder in der Familie ist etwas im Gang.',
+        'Zuhause und Familie sind gerade dein lautester Bereich.'
+      ],
+      meistern: 'Die Aufgabe hier ist, erwachsen in alten Rollen zu bleiben — also nicht wieder zu werden, wer man mit sechzehn war.',
+      techFeld: 'Viertes, drittes und zehntes Haus'
+    },
+    freunde: {
+      frage: 'Wie ist es mit den Menschen um mich?',
+      worum: 'Freundschaften, Gruppen, Zugehörigkeit und wo du dazugehörst, ohne dich zu verbiegen.',
+      nomen: 'bei den Menschen um dich',
+      lautSatz: [
+        'Im Umfeld ist gerade Ruhe.',
+        'Im Umfeld verschiebt sich etwas leise.',
+        'Bei den Menschen um dich ist etwas im Gang.',
+        'Dein Umfeld ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Hier geht es darum, zu bleiben, wenn es unbequem wird — und zu gehen, wenn es nicht mehr stimmt. Beides rechtzeitig.',
+      techFeld: 'Elftes, siebtes und drittes Haus'
+    },
+    freude: {
+      frage: 'Wo ist bei mir gerade Freude?',
+      worum: 'Spiel, Lust, Machen ohne Zweck, und das, was du tust, wenn niemand zusieht.',
+      nomen: 'bei dem, was dir Freude macht',
+      lautSatz: [
+        'Hier ist gerade wenig los. Freude kommt derzeit nicht von außen.',
+        'Etwas Spielerisches regt sich leise.',
+        'Hier ist etwas im Gang, das dir gehört und sonst niemandem.',
+        'Freude und Kreativität sind gerade dein lautester Bereich.'
+      ],
+      meistern: 'Die Aufgabe hier ist, etwas zu tun, das keinen Nutzen hat, und es nicht nachträglich zu rechtfertigen.',
+      techFeld: 'Fünftes, elftes und neuntes Haus'
+    },
+    selbstwert: {
+      frage: 'Wie stehe ich zu mir?',
+      worum: 'Was du von dir hältst, was du dir zugestehst, und wie du auftrittst.',
+      nomen: 'in deinem Verhältnis zu dir',
+      lautSatz: [
+        'Hier ist gerade Ruhe. Dein Bild von dir wackelt nicht.',
+        'An deinem Selbstbild rückt sich etwas leise zurecht.',
+        'Dein Verhältnis zu dir selbst ist gerade in Bewegung.',
+        'Der Selbstwert ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Hier geht es darum, den eigenen Wert nicht an der letzten Rückmeldung zu messen.',
+      techFeld: 'Erstes, zweites und zehntes Haus'
+    },
+    sinn: {
+      frage: 'Wohin soll das alles?',
+      worum: 'Richtung, Überzeugungen, Lernen und die Frage, wofür du das alles machst.',
+      nomen: 'bei der Frage nach der Richtung',
+      lautSatz: [
+        'Die großen Fragen sind gerade leise.',
+        'Eine Richtungsfrage klopft leise an.',
+        'Die Frage nach der Richtung ist gerade offen.',
+        'Sinn und Richtung sind gerade dein lautester Bereich.'
+      ],
+      meistern: 'Die Aufgabe hier ist, eine Überzeugung zu haben, die man auch wieder ändern kann.',
+      techFeld: 'Neuntes, fünftes und zwölftes Haus'
+    },
+    umbruch: {
+      frage: 'Steht bei mir etwas zum Abschluss?',
+      worum: 'Loslassen, Krisen, Abhängigkeiten und das, was zu Ende geht, damit etwas anderes anfangen kann.',
+      nomen: 'bei dem, was zu Ende geht',
+      lautSatz: [
+        'Nichts drängt zum Abschluss. Du kannst Dinge stehen lassen.',
+        'Etwas löst sich leise, ohne Bruch.',
+        'Etwas geht gerade zu Ende, und das braucht Platz.',
+        'Umbruch ist gerade dein lautester Bereich.'
+      ],
+      meistern: 'Hier geht es darum, loszulassen, bevor es weggenommen wird. Das ist der ganze Unterschied.',
+      techFeld: 'Achtes, zwölftes und viertes Haus'
+    }
+  };
+
+  /* ── Die Wanderer, ohne ihren Namen ──────────────────────────
+     was    — was dieser Durchgang mit einem macht
+     tempo  — wie er sich anfühlt: als Ruck oder als Drift
+     tun    — was jetzt sinnvoll ist
+     nutzen — wofür das Fenster gut ist
+     tech   — die Mechanik, erst ab Stufe 2 sichtbar */
+  var B_WAND = {
+    Pluto: {
+      was:'Etwas verwandelt sich von Grund auf. Nicht ein Teil davon — das Ganze. Am Anfang merkt man nur, dass das Alte nicht mehr geht; was stattdessen kommt, zeigt sich erst später.',
+      tempo:'Das arbeitet über Jahre und kommt meist in zwei oder drei Wellen.',
+      tun:'Nicht gegenhalten. Was jetzt zerfällt, lässt sich nicht retten, und das Festhalten kostet die Kraft, die du nachher brauchst.',
+      nutzen:'Das ist das Fenster für eine Sache, die du schon lange ändern willst und bisher nie durchgezogen hast. Der Widerstand dagegen ist jetzt am schwächsten.',
+      tech:'Pluto'
+    },
+    Neptun: {
+      was:'Die Konturen werden weich. Sehnsucht und Wirklichkeit lassen sich schwerer unterscheiden als sonst — in beide Richtungen: man idealisiert, und man übersieht.',
+      tempo:'Das zieht sich über Jahre und hat keinen scharfen Anfang.',
+      tun:'Keine Verträge auf Gefühl unterschreiben. Alles, was wichtig ist, von jemandem nachsehen lassen, der nicht beteiligt ist.',
+      nutzen:'Gut für alles, was Vorstellungskraft braucht: gestalten, schreiben, heilen, verzeihen. Schlecht für alles, was Genauigkeit braucht.',
+      tech:'Neptun'
+    },
+    Uranus: {
+      was:'Etwas bricht aus der Ordnung aus. Es kommt plötzlich, auch wenn es sich lange angekündigt hat, und es kommt selten so, wie man es erwartet hat.',
+      tempo:'Der Zeitraum ist lang, die Ereignisse darin sind kurz und unvermittelt.',
+      tun:'Luft lassen. Wer alles festbindet, erlebt den Ruck als Bruch; wer Spiel im System hat, erlebt ihn als Wendung.',
+      nutzen:'Das Fenster für das Unkonventionelle. Was du jetzt anders machst als alle, hat eine bessere Chance als sonst.',
+      tech:'Uranus'
+    },
+    Saturn: {
+      was:'Etwas wird ernst. Es verlangt eine Entscheidung, eine Grenze oder eine Rechnung, die offen ist. Es fühlt sich schwer an, und was dabei herauskommt, hält.',
+      tempo:'Rund ein halbes bis ein ganzes Jahr, in zwei oder drei Anläufen.',
+      tun:'Die Sache anschauen, die du aufschiebst. Was jetzt wegbricht, war ohnehin nicht tragfähig — es hat nur so ausgesehen.',
+      nutzen:'Das beste Fenster für etwas Verbindliches: eine Zusage, ein Vertrag, eine Struktur, eine Absage. Gerade weil es schwerfällt, hält es nachher.',
+      tech:'Saturn'
+    },
+    Jupiter: {
+      was:'Etwas wird größer und leichter. Türen gehen auf, Menschen sagen ja, und es kostet weniger Überredung als üblich.',
+      tempo:'Rund ein Jahr, mit einer deutlichen Spitze darin.',
+      tun:'Fragen. Jetzt. Was du in diesem Fenster nicht fragst, musst du später teurer verhandeln.',
+      nutzen:'Das Fenster zum Ausweiten: anbieten, bewerben, veröffentlichen, vorstellen, mehr verlangen.',
+      tech:'Jupiter'
+    },
+    Mars: {
+      was:'Es wird heiß. Energie, Ungeduld und Reibung — man will handeln, auch wenn es noch nicht Zeit ist.',
+      tempo:'Einige Tage bis zwei Wochen.',
+      tun:'Die Energie in etwas Körperliches stecken, bevor sie in ein Gespräch gerät. Dann das Gespräch führen.',
+      nutzen:'Gut für Anfänge, Konfrontationen, die lange fällig sind, und alles, was Mut braucht. Schlecht für Geduldsarbeit.',
+      tech:'Mars'
+    },
+    Venus: {
+      was:'Es wird angenehm. Begegnungen gehen leichter, Geschmack und Zuneigung sind nah an der Oberfläche.',
+      tempo:'Wenige Tage.',
+      tun:'Das Treffen ansetzen, das Schöne kaufen, den Frieden anbieten. Kleine Fenster, kleine Dinge.',
+      nutzen:'Gut für Versöhnung, Verhandlung und alles, was von Sympathie lebt.',
+      tech:'Venus'
+    },
+    Merkur: {
+      was:'Es wird gesprächig. Gedanken sortieren sich, Nachrichten kommen, und Dinge, die lange nur gefühlt wurden, finden plötzlich Worte.',
+      tempo:'Wenige Tage.',
+      tun:'Das Gespräch führen, das Schreiben schreiben, die Frage stellen, die du dir schon lange selbst beantwortest.',
+      nutzen:'Gut für Klärung, Absprachen und Papiere — also für alles, was danach schriftlich vorliegen soll.',
+      tech:'Merkur'
+    },
+    Sonne: {
+      was:'Etwas kommt ins Licht. Für ein paar Tage steht dieser Bereich mehr im Vordergrund als die anderen.',
+      tempo:'Rund drei bis vier Tage.',
+      tun:'Nutzen, dass man dich hier gerade sieht.',
+      nutzen:'Gut für Sichtbarkeit, schlecht als Grundlage für große Schlüsse — es geht so schnell vorbei, wie es kam.',
+      tech:'Sonne'
+    }
+  };
+
+  /* ── Wie es ankommt ─────────────────────────────────────────── */
+  var B_ART = {
+    zusammen:   { wie:'Es trifft einen Punkt bei dir direkt und mit voller Wucht.',   ton:'direkt',  tech:'Konjunktion' },
+    gegenueber: { wie:'Es kommt von außen, über andere Menschen oder Umstände.',       ton:'von außen', tech:'Opposition' },
+    spannung:   { wie:'Es reibt. Zwei Dinge wollen gleichzeitig und schließen sich aus — das ist der Druck, den du spürst.', ton:'reibend', tech:'Quadrat' },
+    leicht:     { wie:'Es geht glatt. So glatt, dass es leicht ungenutzt vorbeigeht.', ton:'leicht',  tech:'Trigon oder Sextil' }
+  };
+
+  /* ── Hausdurchgang: eine lange Passage, kein Ereignis ───────── */
+  var B_DURCH = {
+    einl:'Über einen längeren Zeitraum liegt der Schwerpunkt überhaupt erst in diesem Bereich. Das ist kein Ereignis, sondern ein Hintergrund: Alles, was hier passiert, passiert gerade mit mehr Gewicht als sonst.',
+    rueck:'Gerade läuft das rückwärts. Was in diesem Bereich schon einmal dran war, kommt noch einmal vorbei — meist, weil beim ersten Mal etwas offen geblieben ist.'
+  };
+
+  /* ── Die zwölf Felder, für den natalen Teil ──────────────────
+     kurz     — worum es in diesem Feld geht, ohne Fachwort
+     meistern — was man daran lernen kann */
+  var B_HAUS = {
+    1:  { kurz:'wie du auftrittst und wie man dich zuerst wahrnimmt',
+          meistern:'Auftreten und Absicht zur Deckung bringen, damit man nicht mit jemandem spricht, der du nicht bist.' },
+    2:  { kurz:'was du hast, verdienst und wert bist',
+          meistern:'Einen Preis nennen, ohne ihn vorher zu drücken.' },
+    3:  { kurz:'wie du redest, lernst und mit dem Nahbereich umgehst',
+          meistern:'Zuhören, ohne schon die Antwort zu bauen.' },
+    4:  { kurz:'wo du herkommst und wo du landest',
+          meistern:'Ein Zuhause bauen, das nicht das deiner Eltern ist — weder Kopie noch Gegenentwurf.' },
+    5:  { kurz:'was du machst, weil es Freude macht',
+          meistern:'Etwas zeigen, bevor es fertig ist — und aushalten, dass es dann schon beurteilt wird.' },
+    6:  { kurz:'dein Alltag, deine Arbeit, dein Körper im Betrieb',
+          meistern:'Routinen bauen, die auch an schlechten Tagen halten — also kleinere, als du gern hättest.' },
+    7:  { kurz:'wie du dich mit einem anderen Menschen verbindest',
+          meistern:'Nah sein und dabei bleiben, wer du bist. Beides gleichzeitig, nicht abwechselnd.' },
+    8:  { kurz:'Verbindlichkeit, Loslassen, geteilte Dinge',
+          meistern:'Abhängigkeit aushalten, ohne sich zu verlieren, und loslassen, bevor man gezwungen wird.' },
+    9:  { kurz:'deine Überzeugungen und wohin du willst',
+          meistern:'Eine Haltung haben, die neue Tatsachen überlebt.' },
+    10: { kurz:'wofür man dich kennt',
+          meistern:'Etwas fertig machen, das deinen Namen trägt.' },
+    11: { kurz:'deine Leute und wo du dazugehörst',
+          meistern:'Dazugehören, ohne sich anzupassen, bis nichts mehr übrig ist.' },
+    12: { kurz:'was im Verborgenen liegt, Rückzug und Erschöpfung',
+          meistern:'Rückzug planen, bevor der Körper ihn erzwingt.' }
+  };
+
+  /* ── Das lange Kapitel, falls die Zeitenseite mitrechnet ───── */
+  var B_KAP = {
+    laut:'Über Jahre hinweg ist dieser Bereich bei dir ein Hauptthema. Das heißt nicht, dass jede Woche etwas passiert — es heißt, dass hier mehr geschieht als in den stillen Bereichen.',
+    leise:'Über Jahre hinweg läuft dieser Bereich bei dir im Hintergrund. Was hier geschieht, geschieht ohne großen Einschnitt.',
+    nurKapitel:'Gerade rührt kein langsamer Vorgang daran. Was in diesem Bereich passiert, passiert deshalb im Alltäglichen und nicht als Einschnitt — und es passiert trotzdem.',
+    widerspruch:'Das große Kapitel und der Abschnitt darin sagen Verschiedenes. Beides gilt gleichzeitig: das Kapitel ist der Rahmen, der Abschnitt die aktuelle Tonlage.',
+    tech:'Zodiakale Freilassung, erste und zweite Ebene'
+  };
+
+  /* ── Was die Seite nicht kann ───────────────────────────────── */
+  var B_EHRLICH = [
+    { f:'Sagt das, was passieren wird?',
+      a:'Nein. Es sagt, worauf gerade Druck liegt und wie lange noch. Was du daraus machst, steht nicht darin.' },
+    { f:'Warum ist bei mir fast überall etwas los?',
+      a:'Weil immer etwas läuft. Deshalb werden die Bereiche hier gegeneinander sortiert: Interessant ist nicht, ob etwas läuft, sondern wo am meisten.' },
+    { f:'Ist das überprüft?',
+      a:'Die Rechnung ja, die Deutung nicht. Es gibt keinen Beleg dafür, dass daraus Ereignisse folgen. Was es kann, ist einem Jahr eine Gliederung geben — und das ist für ein Gespräch schon viel.' },
+    { f:'Was, wenn ein Bereich still ist und sich trotzdem alles dreht?',
+      a:'Dann stimmt dein Erleben und nicht die Seite. Deine Lage hat immer Vorrang. Die Seite kennt nur die Uhr, nicht dein Leben.' }
+  ];
+
+  window.AC_BDAT = {
+    LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
+    DURCH:B_DURCH, HAUS:B_HAUS, KAP:B_KAP, EHRLICH:B_EHRLICH
+  };
+
+})();
+
 /* Astro-Charlie · Heute — nach Zeitdruck geordnet
    Drei Bänder: was diese Stunde gilt, was diese Woche ein Datum hat,
    und was monatelang läuft und nichts von dir will.                 */
@@ -1141,31 +2106,53 @@ function jetztBauen(p){
   var mz=zI(Q.Mond), mh=haus(P,Q.Mond);
   var ol=null; try{ ol=AC_HIMMEL.ohneLauf(jd); }catch(e){}
 
-  /* Der eine Satz, der jetzt gilt */
-  var satz='Der Mond steht in <b>'+H_SIGNS[mz]+'</b> und läuft damit durch dein <b>'+
-    mh+'. Haus</b> — '+H_HAUS[mh-1]+'. Das ist für die nächsten zwei Tage der Bereich, '+
-    'in dem du am ehesten etwas merkst.';
-  if(ol&&ol.leer) satz+=' Der Mond ist gerade <b>ohne Lauf</b> — bis '+
-    uhr(ol.bis)+' lohnt sich nichts, was ein Ergebnis haben soll.';
+  /* Der eine Satz, der jetzt gilt — in Alltagssprache.
+     Welcher Lebensbereich gerade dran ist, nicht welcher Planet
+     wo steht. Die Mechanik steht darunter und erst ab Stufe 2. */
+  var B=bereichZuHaus(mh);
+  var satz='Die nächsten zwei Tage liegt deine Aufmerksamkeit vor allem bei einem Thema: <b>'+
+    esc(B?B.name:H_HAUS[mh-1])+'</b>.';
+  /* Kein toLowerCase: im Deutschen sind das Substantive und
+     bleiben groß. Stattdessen ein Doppelpunkt davor. */
+  if(B&&window.AC_BDAT&&AC_BDAT.BER[B.k])
+    satz+=' Also: '+esc(AC_BDAT.BER[B.k].worum);
+  if(ol&&ol.leer) satz+=' Dazu kommt: bis '+uhr(ol.bis)+
+    ' lohnt sich nichts, was ein Ergebnis haben soll — Angefangenes bleibt heute eher liegen.';
   el('htsatz').innerHTML=satz;
+  el('httech').innerHTML='<div class="ac-tech ht-techzeile" data-ab="2">Der Mond steht in '+
+    H_SIGNS[mz]+' '+gradKurz(Q.Mond)+
+    ' und läuft durch das '+mh+'. Haus — '+H_HAUS[mh-1]+
+    (ol&&ol.leer?'. Mond ohne Lauf bis '+uhr(ol.bis):'')+'.</div>';
 
+  /* Die Kacheln sind der Maschinenraum und bleiben bis Stufe 2 zu. */
   var f=[];
   if(st&&!st.polar) f.push(['Stunde',st.herr,'bis '+uhr(st.bis)]);
   if(st&&!st.polar) f.push(['Tag',st.tagesherr,n.toLocaleDateString('de-DE',{weekday:'long'})]);
   f.push(['Mond',H_SIGNS[mz],gradKurz(Q.Mond)]);
   f.push(['Dein Haus',mh+'. Haus',H_HAUS[mh-1]]);
-  el('htfakten').innerHTML=f.map(function(x){
-    return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
-      '</div><div class="z">'+esc(x[2])+'</div></div>'; }).join('');
+  el('htfakten').innerHTML='<div class="ac-tech" data-ab="2"><div class="ht-fin">'+
+    f.map(function(x){
+      return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
+        '</div><div class="z">'+esc(x[2])+'</div></div>'; }).join('')+'</div></div>';
+}
+
+/* Welcher Lebensbereich gehört zu einem Haus?
+   Erst der, dessen Kernhaus es ist, sonst der erste, der es führt. */
+function bereichZuHaus(h){
+  if(!window.AC_BER) return null;
+  var L=AC_BER.BEREICHE, i;
+  for(i=0;i<L.length;i++) if(L[i].haeuser[0]===h) return L[i];
+  for(i=0;i<L.length;i++) if(L[i].haeuser.indexOf(h)>=0) return L[i];
+  return null;
 }
 
 /* ── Band 2 · Diese Woche ─────────────────────────────────── */
 function wocheBauen(){
   var jd=jetztJD(), e=[];
 
-  /* Planetenstunde endet */
+  /* Planetenstunde endet — reine Mechanik, erst ab Stufe 2 */
   var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e2){}
-  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute',
+  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute', ab:2,
     tt:'Die Stunde '+(H_GEN[st.herr]||st.herr)+' endet',
     tx:'Planetenstunden sind der kleinste Taktgeber, den die Überlieferung kennt. '+
        'Wenn du etwas unter '+st.herr+' stellen willst, ist jetzt das Fenster.',
@@ -1174,12 +2161,14 @@ function wocheBauen(){
   /* Mond wechselt das Zeichen und damit dein Haus */
   var zw=null; try{ zw=AC_HIMMEL.naechsterZeichenwechsel(jd); }catch(e2){}
   if(zw){
-    var neuH=haus(P, zw.zeichen*30+1);
+    var neuH=haus(P, zw.zeichen*30+1), nB=bereichZuHaus(neuH);
     e.push({jd:zw.jd, wann:uhr(zw.jd), tag:tagKurz(zw.jd),
-      tt:'Der Mond wechselt in '+H_SIGNS[zw.zeichen],
-      tx:'Damit wandert er in dein <b>'+neuH+'. Haus</b> — '+H_HAUS[neuH-1]+'. '+
-         'Zweieinhalb Tage lang liegt dort die Aufmerksamkeit.',
-      wo:'uebersicht.html#h'+neuH+'|Das '+neuH+'. Haus ansehen'});
+      tt:'Die Aufmerksamkeit wandert zu: '+(nB?nB.name:H_HAUS[neuH-1]),
+      tx:'Für die nächsten zweieinhalb Tage ist das der Bereich, in dem du am ehesten '+
+         'etwas merkst. Kein großer Einschnitt — eher eine Tönung.',
+      tech:'Der Mond wechselt in '+H_SIGNS[zw.zeichen]+' und damit in dein '+
+           neuH+'. Haus, '+H_HAUS[neuH-1]+'.',
+      wo:'bereiche.html|Den Bereich ansehen'});
   }
 
   /* Lunationen mit Ritualfenster */
@@ -1188,14 +2177,17 @@ function wocheBauen(){
     /* Die Lunation steht dort, wo der Mond steht: beim Neumond = Sonne,
        beim Vollmond gegenüber. */
     var ml=moonLon((l.jd-2451545)/36525);
-    var h=haus(P,ml);
+    var h=haus(P,ml), lB=bereichZuHaus(h);
+    var lN=lB?lB.name:H_HAUS[h-1];
     e.push({jd:l.jd, wann:uhr(l.jd), tag:tagKurz(l.jd),
-      tt:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)],
+      tt:(l.art==='neu'?'Neumond':'Vollmond')+' — bei dir im Bereich '+lN,
+      tech:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)]+
+           ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
       tx:(l.art==='neu'
-        ? 'Der Anfang eines Zyklus, in deinem <b>'+h+'. Haus</b> — '+H_HAUS[h-1]+'. '+
-          'Dort lohnt es, jetzt etwas zu beginnen statt abzuschließen.'
-        : 'Hier wird sichtbar, was zum letzten Neumond angelegt wurde — in deinem <b>'+
-          h+'. Haus</b>, '+H_HAUS[h-1]+'.'),
+        ? 'Ein guter Zeitpunkt, in diesem Bereich etwas zu <b>beginnen</b> statt abzuschließen. '+
+          'Was jetzt anfängt, hat bis zum Vollmond Zeit, sich zu zeigen.'
+        : 'Hier wird sichtbar, was vor zwei Wochen angelegt wurde. Ein guter Zeitpunkt, '+
+          'in diesem Bereich etwas <b>abzuschließen</b> statt Neues anzufangen.'),
       mit:(l.art==='neu'
         ? 'Kerze, Zettel und Stift. Einen Satz aufschreiben, was bis zum Vollmond passiert sein soll.'
         : 'Eine Kerze, und etwas, das weg darf. Nicht mehr.'),
@@ -1205,14 +2197,17 @@ function wocheBauen(){
   /* Stationen: Planeten, die drehen */
   var stn=[]; try{ stn=AC_BOARD.stationen(jd, 21)||[]; }catch(e2){}
   stn.forEach(function(s){
-    var h=haus(P,s.lon);
+    var h=haus(P,s.lon), sB=bereichZuHaus(h), sN=sB?sB.name:H_HAUS[h-1];
     e.push({jd:s.jd, wann:tageBis(s.jd)<=0?'heute':'in '+tageBis(s.jd)+' T.', tag:tagKurz(s.jd),
-      tt:s.planet+(s.direkt?' läuft wieder direkt':' wird rückläufig'),
-      tx:'In deinem <b>'+h+'. Haus</b> — '+H_HAUS[h-1]+'. '+
-        (s.direkt
-         ? 'Was dort seit Wochen zäh war, nimmt wieder Fahrt auf. Nicht sofort, aber merklich.'
-         : 'Dort wird es für eine Weile zäher. Nichts Neues anfangen, was dort hängt — überarbeiten ja.'),
-      wo:'uebersicht.html#h'+h+'|Das '+h+'. Haus ansehen'});
+      tt:(s.direkt?'Es geht wieder voran: ':'Es wird zäher: ')+sN,
+      tech:s.planet+(s.direkt?' läuft wieder direkt':' wird rückläufig')+
+           ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
+      tx:(s.direkt
+         ? 'Was in diesem Bereich seit Wochen zäh war, nimmt wieder Fahrt auf. '+
+           'Nicht sofort, aber merklich.'
+         : 'In diesem Bereich wird es für eine Weile mühsamer. Nichts Neues anfangen, '+
+           'was dort ohnehin hängt — überarbeiten ja.'),
+      wo:'bereiche.html#ber-'+(sB?sB.k:'')+'|Den Bereich ansehen'});
   });
 
   e.sort(function(a,b){ return a.jd-b.jd; });
@@ -1222,39 +2217,70 @@ function wocheBauen(){
   el('htwoche').innerHTML=e.map(function(x){
     var wo='';
     if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
-    return '<div class="we'+(x.jetzt?' jetzt':'')+'">'+
+    /* ab: ganze Einträge, die nur Mechanik sind, erscheinen erst
+       ab der genannten Wissensstufe. tech: die Mechanik zu einem
+       Eintrag, der auch ohne sie verständlich ist. */
+    return '<div class="we'+(x.jetzt?' jetzt':'')+(x.ab?' ac-tech':'')+'"'+
+      (x.ab?' data-ab="'+x.ab+'"':'')+'>'+
       '<div class="wann"><b>'+esc(x.wann)+'</b>'+esc(x.tag)+'</div>'+
       '<div class="tt">'+esc(x.tt)+'</div><div class="tx">'+x.tx+'</div>'+
+      (x.tech?'<div class="ac-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
       (x.mit?'<div class="mit"><b>Dafür brauchst du</b>'+esc(x.mit)+'</div>':'')+wo+'</div>';
   }).join('');
 }
 
-/* ── Band 3 · Läuft ───────────────────────────────────────── */
-function laeuftBauen(){
-  var jd=jetztJD(), zeilen=[];
-  ['Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){
-    if(Q[k]===undefined) return;
-    var h=haus(P,Q[k]);
-    var a=(jd-30-2451545)/36525, b=(jd+30-2451545)/36525;
-    var rw=nrm(geo(k,b)-geo(k,a))>180;
-    /* Wie lange bleibt er noch in diesem Zeichen — Neptun und Pluto
-       brauchen mehr als zehn Jahre Vorlauf, deshalb der weite Rahmen. */
-    var ende=null;
-    for(var t=jd; t<jd+7300; t+=5){
-      if(zI(geo(k,(t-2451545)/36525))!==zI(Q[k])){ ende=t; break; }
-    }
-    var mon=ende?Math.round((ende-jd)/30.44):null;
-    var bleibt = mon===null ? 'noch über 20 Jahre'
-      : mon<1  ? 'wechselt in Kürze'
-      : mon<24 ? 'noch gut '+(mon<2?'einen Monat':mon+' Monate')
-      : 'noch gut '+Math.round(mon/12)+' Jahre';
-    zeilen.push('<div class="lf"><div class="p">'+k+(rw?' <i>℞</i>':'')+'</div>'+
-      '<div class="w">'+H_SIGNS[zI(Q[k])]+' '+gradKurz(Q[k])+'<br>'+bleibt+
-        (rw?', rückläufig':'')+'</div>'+
-      '<div class="d"><a href="uebersicht.html#h'+h+'">'+h+'. Haus</a> — '+H_HAUS[h-1]+
-        '.</div></div>');
+/* ── Band 3 · Die lautesten Bereiche ──────────────────────────
+   Dasselbe Wissen wie die alte Planetentabelle, nur als das, was
+   es für einen Menschen bedeutet. Die Tiefe steht auf bereiche.html;
+   hier stehen nur die drei lautesten und einer, der still ist. */
+function bereicheBauen(p){
+  var ziel=el('htber');
+  if(!ziel) return;
+  if(!window.AC_BER||!window.AC_BDAT){ ziel.innerHTML=''; return; }
+
+  var jd=jetztJD();
+  var jdGeb=jdFromUT(p.y,p.mo,p.d,p.h+p.mi/60-p.tz);
+  var gebDat=new Date(Date.UTC(p.y,p.mo-1,p.d,p.h-p.tz,p.mi));
+  var Z=null;
+  try{ if(window.AC_ZEIT) Z=AC_ZEIT.blatt(P,jdGeb,gebDat,new Date()); }catch(e){}
+
+  var Bl=AC_BER.blatt(P,jd,Z,jd-jdGeb);
+  var bs=Bl.bereiche.slice().sort(function(a,b){
+    if(b.laut!==a.laut) return b.laut-a.laut;
+    return b.laeuft.length-a.laeuft.length;
   });
-  el('htlaeuft').innerHTML=zeilen.join('');
+
+  var zeigen=bs.slice(0,3), schon={};
+  /* Ein stiller Bereich am Ende: das ist die nützlichste Zeile
+     der Liste, weil dort gerade nichts gegen einen arbeitet. */
+  var still=bs[bs.length-1];
+  if(still && zeigen.indexOf(still)<0 && still.laut<=1) zeigen.push(still);
+
+  ziel.innerHTML=zeigen.map(function(b){
+    var T=AC_BDAT.BER[b.k], L=AC_BDAT.LAUT[b.laut];
+    if(!T) return '';
+    /* Bei einem stillen Bereich ist die Stille die Nachricht.
+       Sonst der Handgriff des stärksten Vorgangs — aber keiner
+       zweimal: drei gleiche Sätze untereinander sagen nichts. */
+    var erst='';
+    if(b.laut===0 || !b.laeuft.length){
+      erst='Hier arbeitet gerade nichts gegen dich. Wenn du in diesem Bereich etwas '+
+           'vorhast, ist jetzt der Moment, es selbst anzufangen.';
+    } else {
+      for(var i=0;i<b.laeuft.length && !erst;i++){
+        var W=AC_BDAT.WAND[b.laeuft[i].wanderer];
+        if(W && !schon[W.tun]){ erst=W.tun; schon[W.tun]=true; }
+      }
+      if(!erst) erst='Was hier läuft, läuft wie in den Bereichen darüber — '+
+                     'auf der Bereichsseite steht, was es hier bedeutet.';
+    }
+    return '<a class="ht-b" href="bereiche.html#ber-'+esc(b.k)+'">'+
+      '<span class="ht-bp" style="background:'+L.farbe+'"></span>'+
+      '<span class="ht-bn">'+esc(b.name)+'</span>'+
+      '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
+      '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
+      '<span class="ht-bt">'+esc(erst)+'</span></a>';
+  }).join('');
 }
 
 /* ── Rad ──────────────────────────────────────────────────── */
@@ -1286,10 +2312,11 @@ function kapBauen(){
     b.addEventListener('click',function(){ kapSetzen(b.getAttribute('data-k')); });
   });
 }
-/* Bei „wenig" bleibt nur das erste Band stehen */
+/* Bei „wenig" bleiben der Kopf und die Bereiche stehen —
+   die Terminliste ist das, was sich am ehesten weglassen lässt. */
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
-  ['htwocheteil','htlaeuftteil'].forEach(function(i){
+  ['htwocheteil'].forEach(function(i){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
@@ -1304,8 +2331,12 @@ function anwenden(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  jetztBauen(p); radBauen(); wocheBauen(); laeuftBauen(); kapBauen(); anwenden();
-  setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p); }, 60000);
+  jetztBauen(p); radBauen(); bereicheBauen(p); wocheBauen(); kapBauen(); anwenden();
+  try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
+    jetztBauen(p); bereicheBauen(p); wocheBauen(); }); }catch(e){}
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+  setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p);
+    try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);
 })();
 
 </script>

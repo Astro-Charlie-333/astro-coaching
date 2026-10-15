@@ -1,7 +1,7 @@
 Astro-Charlie — Inhalt
 Stand: 15.10.2026
 
-123 Seiten, 19 Skriptdateien.
+124 Seiten, 19 Skriptdateien.
 
 Neu in dieser Fassung:
   geistfuehrung.html  Wie spirituelle Praxis zum Chart passt: Herrscher des
@@ -27,6 +27,7 @@ Seiten:
   audhs-verstehen.html
   bausteine.html
   bazi.html
+  bereiche.html
   berufe.html
   beziehung.html
   briefing.html

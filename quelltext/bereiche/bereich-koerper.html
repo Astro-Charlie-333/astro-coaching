@@ -1,0 +1,58 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="bereiche.html" class="ist">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="b-wrap">
+
+<div class="b-kopf">
+  <h1>Was bei dir gerade <em>los ist.</em></h1>
+  <p class="b-lede">Zehn Lebensbereiche, sortiert nach dem, wo gerade am meisten passiert. Der lauteste steht oben.</p>
+  <div id="bkopf"></div>
+</div>
+
+<div id="nivleiste"></div>
+
+<!-- Überblick ──────────────────────────────────────────── -->
+<section class="b-abschnitt" id="ueberblick">
+  <h2>Auf einen Blick</h2>
+  <p class="u">Tipp einen Bereich an, um nach unten zu springen.</p>
+  <div id="bueber"></div>
+</section>
+
+<!-- Die Bereiche ───────────────────────────────────────── -->
+<section class="b-abschnitt" id="bereiche">
+  <h2>Die Bereiche</h2>
+  <p class="u">Die drei lautesten sind offen. In jedem Bereich steht immer dasselbe in derselben Reihenfolge: was los ist, was du tun kannst, wie lange es läuft, wie du es nutzt, und was dein Dauerthema darin ist.</p>
+  <div id="bliste"></div>
+</section>
+
+<!-- Einstellungen ──────────────────────────────────────── -->
+<section class="b-abschnitt" id="einstellen">
+  <h2>Einstellen</h2>
+  <div class="b-einst">
+    <div class="b-reihe"><span class="k">Wer</span><div class="b-knoepfe" id="bpersonen"></div></div>
+    <div class="b-reihe"><span class="k">Stichtag</span>
+      <input class="b-feld" id="bdatum" type="date">
+      <button type="button" class="b-knopf" id="bheute">Heute</button>
+      <p class="b-hint"><b>Der beste Test:</b> Stell den Tag auf einen Zeitraum, von dem du weißt, was los war. Stimmt die Verteilung dort, hast du einen Grund, der Seite auch nach vorn zu glauben.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Ehrlich ────────────────────────────────────────────── -->
+<section class="b-abschnitt" id="ehrlich">
+  <div class="b-ehrlich">
+    <h2>Was das taugt &mdash; und was nicht</h2>
+    <div id="behrlich"></div>
+  </div>
+</section>
+
+<div class="weiter"><a href="index.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Heute &mdash; der Tag von heute</span></a><a href="zeiten.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Zeiten &mdash; die langen Kapitel dahinter</span></a></div>
+<div class="foot">Bereiche &middot; Gerechnet wird, wo die Gestirne heute im Verh&auml;ltnis zu deinem Geburtsbild stehen, und wie lange das noch so bleibt.<br>
+Die Rechnung liegt im Quelltext unter <i>bereiche/bereich-rechner.js</i> und ist einzeln gepr&uuml;ft.
+<span class="ac-tech" data-ab="2">Laufende Transite gegen das Radix, H&auml;user im Whole-Sign-System, Kapitel aus der zodiakalen Freilassung nach Valens. Orben: 2,5&deg; bis 3&deg; nach Planet.</span></div>
+</div>
