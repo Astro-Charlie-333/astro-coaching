@@ -60,6 +60,16 @@ Adresse weiterleitet.
 
 ---
 
+### 7 · Zweite Stimme für die Reibung zwischen zwei Menschen
+Die Analyse rechnet schon Paare und Zusammenarbeit, aber die Beiträge
+schöpfen das nicht ab — dabei ist genau das der Unterschied zu allem
+anderen in diesem Feld: nicht „du", sondern „ihr beide".
+**Fertig, wenn:** `content/mach-content.py` einen vierten Beitragstyp
+erzeugt, der aus `analyse/thema-paar.js` eine Reibung erklärt, ohne eine
+konkrete Person erkennbar zu machen — und der Bau das prüft.
+
+---
+
 ## Erledigt
 
 * **2026-10-15** · Lebensbereiche statt Räume: `bereiche.html` mit zehn
@@ -72,3 +82,8 @@ Adresse weiterleitet.
   sichtbar — und das wird beim Bauen geprüft, nicht gehofft.
 * **2026-10-15** · Navigation überall auf „Bereiche" umgestellt (122 Seiten).
 * **2026-10-15** · `REGELN.md` und `pruefe-alles.py` angelegt.
+* **2026-10-15** · Beiträge: `content/` mit eigenen Regeln, einem Rechner
+  für die Wochenlage und einem Generator, der drei Entwürfe pro Woche
+  schreibt — Karussell nach Aszendent, Reel als Bildschirmaufnahme,
+  ein ehrliches Einzelbild. Alles aus denselben Dateien wie die Seite,
+  damit Beiträge und Plattform sich nie widersprechen können.
