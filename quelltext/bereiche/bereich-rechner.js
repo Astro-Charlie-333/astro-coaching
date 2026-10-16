@@ -309,6 +309,58 @@
     return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz };
   }
 
+  /* ── Facetten nach Geburtsbild gewichten ────────────────────
+     Ein Bereich hat mehrere Seiten. Welche davon bei diesem
+     Menschen vorn steht, entscheidet das Geburtsbild — nicht die
+     Reihenfolge in der Textdatei.
+
+     Gewichtet wird nur mit dem, was ohnehin schon gerechnet ist:
+       · an welchem Feld des Bereichs die Facette hängt
+         (Kernfeld schwerer als die beiden Nebenfelder),
+       · welche der natalen Punkte, die zu dieser Facette gehören,
+         im Feld der Facette stehen,
+       · und welche von ihnen wenigstens irgendwo im Bereich stehen.
+     Eine Facette ohne jede Besetzung behält ihr Grundgewicht; sie
+     fällt also nach unten, verschwindet aber nicht. Deshalb hat
+     jeder Bereich immer genug Facetten zum Anzeigen.
+
+     facetten(N, B, liste) nimmt die schon gerechnete natale Lage
+     (natal(C, B)) und gibt die Liste in neuer Reihenfolge zurück;
+     jeder Eintrag bekommt g (Gewicht) und wo (an welchem Feld des
+     Bereichs die Facette hängt) dazu. Texte kommen hier keine vor
+     — die stehen in bereich-daten.js. */
+  function facetten(N, B, liste){
+    if(!liste || !liste.length || !N) return [];
+    var imFeld = {}, imBereich = {}, i;
+    for(i=0;i<N.planeten.length;i++){
+      var x = N.planeten[i];
+      imBereich[x.p] = true;
+      (imFeld[x.haus] || (imFeld[x.haus] = {}))[x.p] = true;
+    }
+    var out = [];
+    for(i=0;i<liste.length;i++){
+      var F = liste[i], rang = B.haeuser.indexOf(F.haus);
+      /* Kernfeld 3, zweites Feld 2, drittes Feld 1. Hängt eine
+         Facette an einem Feld, das nicht zum Bereich gehört, wäre
+         das ein Datenfehler — dann zählt sie als Nebenfeld. */
+      var g = (rang === 0 ? 3 : rang === 1 ? 2 : 1);
+      var treffer = [], auch = [];
+      for(var j=0;j<(F.wer||[]).length;j++){
+        var w = F.wer[j];
+        if(imFeld[F.haus] && imFeld[F.haus][w]){ g += 2.5; treffer.push(w); }
+        else if(imBereich[w]){ g += 1.2; auch.push(w); }
+      }
+      var besetzt = !!imFeld[F.haus];
+      if(besetzt) g += 0.8;
+      out.push({ f:F, g:Math.round(g*100)/100, wo:F.haus, besetzt:besetzt,
+                 treffer:treffer, auch:auch, rang:i });
+    }
+    /* Gleiches Gewicht behält die Reihenfolge der Datei — damit
+       dieselbe Person zweimal dasselbe Blatt sieht. */
+    out.sort(function(a,b){ return (b.g - a.g) || (a.rang - b.rang); });
+    return out;
+  }
+
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
      Z und tage sind freiwillig: ohne sie rechnet die Seite nur mit
      Transiten, mit ihnen kommt das Kapitel dazu. */
@@ -332,7 +384,8 @@
     nrm: nrm, dist: dist, aspektVon: aspektVon,
     fenster: fenster, hausDurchgang: hausDurchgang,
     vorgaenge: vorgaenge, fuerBereich: fuerBereich,
-    lautstaerke: lautstaerke, kapitel: kapitel, natal: natal, blatt: blatt
+    lautstaerke: lautstaerke, kapitel: kapitel, natal: natal,
+    facetten: facetten, blatt: blatt
   };
 
 })();

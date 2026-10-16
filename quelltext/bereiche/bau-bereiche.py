@@ -173,6 +173,78 @@ for nr, kurz in haeuser:
             fehler.append(f'Feld {nr}: meistern nur {len(mt)} Zeichen')
         lay_texte.append((f'B_HAUS.{nr}.meistern', mt))
 
+# die Facetten je Bereich
+# Fehlerklasse: ein Bereich, der im Dauerthema nur einen Satz hergibt,
+# ist keine Tiefe, sondern eine Behauptung. Geprüft wird deshalb die
+# Zahl der Facetten, ihre Mindestlänge und dass jede an einem Feld
+# hängt, das wirklich zu diesem Bereich gehört.
+FACET_MIND = 3            # so viele zeigt die Seite
+FACET_VORRAT = 1          # so viele müssen darüber hinaus bereitstehen,
+                          # sonst kann das Chart nichts umsortieren
+m_fac = re.search(r"var B_FACET = \{", daten)
+if not m_fac:
+    fehler.append('B_FACET fehlt — die Bereiche haben keine Facetten')
+else:
+    fac_block = klammerblock(daten, m_fac.end() - 1)
+    # welche Felder gehören zu welchem Bereich — aus dem Rechner, nicht doppelt gepflegt
+    HAEUSER = {}
+    for mb in re.finditer(r"k:'(\w+)',\s*name:'[^']*',\s*haeuser:\[([\d,\s]+)\]", rechner):
+        HAEUSER[mb.group(1)] = [int(x) for x in mb.group(2).split(',')]
+    if set(HAEUSER) != set(BEREICHE):
+        fehler.append('die Felder der Bereiche sind im Rechner nicht lesbar: '
+                      + str(sorted(HAEUSER)))
+    for b in BEREICHE:
+        mb = re.search(r"^\s{4}" + b + r":\s*\[", fac_block, re.M)
+        if not mb:
+            fehler.append(f'Bereich {b}: keine Facetten in B_FACET')
+            continue
+        # bis zur schließenden Klammer dieses Bereichs
+        rest = fac_block[mb.end():]
+        tiefe, ende = 1, len(rest)
+        for i, c in enumerate(rest):
+            if c == '[':
+                tiefe += 1
+            elif c == ']':
+                tiefe -= 1
+                if tiefe == 0:
+                    ende = i
+                    break
+        liste = rest[:ende]
+        eintraege = []
+        for me in re.finditer(r"\{\s*k:'(\w+)',\s*haus:(\d+),\s*wer:\[([^\]]*)\],", liste):
+            blk = klammerblock(liste, me.start())
+            eintraege.append((me.group(1), int(me.group(2)),
+                              re.findall(r"'(\w+)'", me.group(3)), blk))
+        if len(eintraege) < FACET_MIND + FACET_VORRAT:
+            fehler.append(f'Bereich {b}: {len(eintraege)} Facetten — '
+                          f'mindestens {FACET_MIND + FACET_VORRAT} nötig '
+                          f'({FACET_MIND} werden gezeigt, der Rest ist der Vorrat, '
+                          f'aus dem das Chart umsortiert)')
+        if len({e[0] for e in eintraege}) != len(eintraege):
+            fehler.append(f'Bereich {b}: zwei Facetten haben denselben Schlüssel')
+        for k_, haus_, wer_, blk in eintraege:
+            if b in HAEUSER and haus_ not in HAEUSER[b]:
+                fehler.append(f'Facette {b}/{k_} hängt an Feld {haus_}, '
+                              f'das gehört nicht zu diesem Bereich {HAEUSER[b]}')
+            if not wer_:
+                fehler.append(f'Facette {b}/{k_}: wer ist leer — '
+                              'dann kann das Chart sie nicht gewichten')
+            for w in wer_:
+                if w not in ('Sonne', 'Mond') and w not in WANDERER:
+                    fehler.append(f'Facette {b}/{k_}: "{w}" ist kein natal '
+                                  'gerechneter Punkt')
+            for f_, mind in (('titel', 8), ('was', 120), ('meistern', 35)):
+                v = feld(blk, f_)
+                if not v:
+                    fehler.append(f'Facette {b}/{k_}: {f_} fehlt')
+                    continue
+                if len(v) < mind:
+                    fehler.append(f'Facette {b}/{k_}: {f_} nur {len(v)} Zeichen — '
+                                  f'mindestens {mind}')
+                if f_ != 'titel' and not v.rstrip().endswith(('.', '?')):
+                    fehler.append(f'Facette {b}/{k_}: {f_} endet ohne Punkt')
+                lay_texte.append((f'B_FACET.{b}.{k_}.{f_}', v))
+
 # die vier Lautstärken
 lauts = re.findall(r"\{\s*k:'(\w+)',\s*n:'([^']+)',\s*farbe:'(#[0-9A-Fa-f]{6})',\s*\n?\s*satz:'((?:[^'\\]|\\.)*)'", daten)
 if len(lauts) != 4:
@@ -302,6 +374,8 @@ async function schlecht(wo){
 await schlecht('Start');
 
 notiz.start=await p.evaluate(()=>({
+  facs:[...document.querySelectorAll('.b-ber[open] .b-facs')]
+        .map(e=>e.querySelectorAll('.b-fac').length),
   bereiche:document.querySelectorAll('.b-ber').length,
   offen:document.querySelectorAll('.b-ber[open]').length,
   ueber:document.querySelectorAll('.b-u').length,
@@ -332,6 +406,38 @@ notiz.doppelt=await p.evaluate(()=>{
   });
   return raus;
 });
+
+/* Die Facetten müssen vom Chart sortiert sein, nicht von der
+   Textdatei. Prüfung: zwei verschiedene Geburtsbilder dürfen nicht
+   überall dieselbe Reihenfolge zeigen — sonst ist die Sortierung
+   Behauptung. */
+async function facFolge(){
+  await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
+  await p.waitForTimeout(250);
+  return p.evaluate(()=>{
+    const o={};
+    document.querySelectorAll('.b-ber').forEach(d=>{
+      o[d.id]=[...d.querySelectorAll('.b-fac h5')].map(x=>x.textContent.trim());
+    });
+    return o;
+  });
+}
+const facA=await facFolge();
+await p.evaluate(()=>{const bs=[...document.querySelectorAll('#bpersonen button')];
+  if(bs[7]) bs[7].click();});
+await p.waitForTimeout(700);
+const facB=await facFolge();
+notiz.facAnzahl=Object.values(facA).map(v=>v.length);
+notiz.facAlleDrei=Object.values(facA).every(v=>v.length>=3)
+               && Object.values(facB).every(v=>v.length>=3);
+notiz.facAnders=Object.keys(facA).filter(k=>
+  facB[k] && JSON.stringify(facA[k])!==JSON.stringify(facB[k])).length;
+/* Und innerhalb eines Bereichs darf keine Facette zweimal dastehen. */
+notiz.facDoppelt=Object.keys(facA).filter(k=>
+  new Set(facA[k]).size!==facA[k].length);
+await p.evaluate(()=>{const bs=[...document.querySelectorAll('#bpersonen button')];
+  if(bs[0]) bs[0].click();});
+await p.waitForTimeout(700);
 
 /* Die Reihenfolge muss nach Lautstärke fallen. */
 notiz.folge=await p.evaluate(()=>{
@@ -437,6 +543,9 @@ else:
             fehler.append(f"{s['ueber']} statt 10 Zeilen im Überblick")
         if s['bloecke'] != 15:
             fehler.append(f"{s['bloecke']} statt 15 Blöcke in den drei offenen Bereichen")
+        if len(s['facs']) != 3 or any(x < 3 for x in s['facs']):
+            fehler.append('die drei offenen Bereiche zeigen nicht je drei '
+                          f"Facetten im Dauerthema: {s['facs']}")
         if s['haupt'] < 1:
             fehler.append('kein Bereich hebt seinen stärksten Vorgang hervor')
         if s['ehrlich'] < 4:
@@ -461,6 +570,16 @@ else:
             fehler.append('derselbe Satz steht zweimal in einem Bereich: '
                           + ' | '.join(n['doppelt'][:4]))
 
+        if not n['facAlleDrei']:
+            fehler.append('nicht jeder Bereich zeigt drei Facetten: '
+                          + str(n['facAnzahl']))
+        if n['facDoppelt']:
+            fehler.append('eine Facette steht zweimal im selben Bereich: '
+                          + ', '.join(n['facDoppelt'][:4]))
+        if n['facAnders'] < 3:
+            fehler.append(f"die Facetten sind bei zwei verschiedenen Geburtsbildern "
+                          f"in nur {n['facAnders']} von 10 Bereichen anders sortiert "
+                          '— dann sortiert nicht das Chart, sondern die Textdatei')
         if n['stufe0']:
             fehler.append('Fachsprache auf Stufe 0 sichtbar: ' + ', '.join(n['stufe0']))
         if n['techSichtbar0'] != 0:

@@ -120,6 +120,29 @@
     return s;
   }
 
+  /* ── Facetten eines Bereichs ─────────────────────────────────
+     Die Reihenfolge kommt aus dem Rechner, die Texte aus den
+     Daten. Hier wird nur zusammengesteckt und gezeigt. Drei
+     Facetten sind das Versprechen der Seite — weniger wäre keine
+     Tiefe, mehr liest niemand. */
+  var FAC_ZEIGE = 3;
+
+  function fac(b){
+    var liste = (bD().FACET || {})[b.k];
+    if(!liste || !liste.length) return [];
+    try{ return bB().facetten(b.natal, b, liste) || []; }catch(e){ return []; }
+  }
+
+  /* Die Mechanik einer Facette — erst ab Stufe 2 sichtbar. */
+  function facTech(E){
+    var s = E.wo + '. Haus';
+    if(E.treffer && E.treffer.length) s += ', natal darin: ' + E.treffer.join(', ');
+    else if(E.auch && E.auch.length) s += ', im Bereich, aber anderes Haus: ' + E.auch.join(', ');
+    else if(E.besetzt) s += ', natal besetzt, aber nicht von den Punkten dieser Facette';
+    else s += ', natal unbesetzt';
+    return s + ' (Gewicht ' + String(E.g).replace('.', ',') + ')';
+  }
+
   /* ── Ein Bereich ────────────────────────────────────────────── */
   function bereichBlock(b, offen){
     var T = bD().BER[b.k], L = bD().LAUT[b.laut], n = stufe();
@@ -223,6 +246,27 @@
       var kernH = b.natal.kernHaus, HH = bD().HAUS[kernH];
       h.push('<p>Dein Schwerpunkt liegt hier bei dem, was man so beschreiben kann: ' +
              esc(HH ? HH.kurz : '') + '. ' + esc(HH ? HH.meistern : '') + '</p>');
+    }
+    /* Die Facetten. Ein Bereich hat mehrere Seiten; welche davon
+       hier oben steht, entscheidet das Geburtsbild. Der Rechner
+       sortiert, diese Stelle zeigt nur die vorderen drei. Die
+       hinteren bleiben in den Daten — bei einem anderen Menschen
+       stehen sie vorn. */
+    var FA = fac(b);
+    if(FA.length){
+      h.push('<div class="b-facs">');
+      h.push('<p class="b-facvor">Dieser Bereich hat bei dir drei Seiten. ' +
+             'Die erste wiegt am meisten.</p>');
+      for(var fi=0; fi<FAC_ZEIGE && fi<FA.length; fi++){
+        var E = FA[fi], F = E.f;
+        h.push('<div class="b-fac">');
+        h.push('<h5>' + esc(F.titel) + '</h5>');
+        h.push('<p>' + esc(F.was) + '</p>');
+        h.push('<p class="b-facm">' + esc(F.meistern) + '</p>');
+        if(n >= 2) h.push('<p class="ac-tech">' + esc(facTech(E)) + '</p>');
+        h.push('</div>');
+      }
+      h.push('</div>');
     }
     if(n >= 2){
       var tp = b.natal.planeten.map(function(x){ return x.p + ' im ' + x.haus + '.'; }).join(', ');
