@@ -1,7 +1,8 @@
 /* Prüft die Zeitrechnung gegen die überlieferten Regeln und gegen
    Invarianten, die sich aus ihnen zwingend ergeben. */
 global.window = {};
-require('/home/claude/zeit/zeit-rechner.js');
+const path = require('path');
+require(path.join(__dirname, 'zeit-rechner.js'));
 var Z = global.window.AC_ZEIT;
 var f = [], ok = 0;
 function gl(was, ist, soll){

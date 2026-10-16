@@ -139,6 +139,42 @@ if durchgesickert:
 else:
     print('  nichts Privates in wiki/')
 
+# 4 · keine festverdrahteten Pfade in den Quellen
+#     Fehlerklasse: ein Skript, das den Ort der Arbeitskopie kennt, läuft
+#     nur auf dem Rechner, auf dem es geschrieben wurde. Verschiebt jemand
+#     die Kopie oder klont sie neu, bricht die Prüfung — und sie bricht an
+#     einer Stelle, die nichts mit der Änderung zu tun hat.
+#     Erlaubt bleiben Orte, die zur Maschine und nicht zur Arbeitskopie
+#     gehören: /opt (das mitgelieferte Werkzeug), /tmp, /usr.
+#     Die Namen werden zusammengesetzt, damit diese Prüfung nicht sich
+#     selbst meldet.
+#     Nur die Orte, an denen eine Arbeitskopie wirklich liegt. Nach
+#     Laufwerksbuchstaben wird nicht gesucht: "r:\s" ist in einem
+#     Python-Muster alltäglich, und ein Wächter, der grundlos
+#     anschlägt, wird nach einer Woche ignoriert.
+HEIMATORTE = ['home', 'Users', 'root', 'mnt', 'media', 'var/folders']
+HEIMATPFAD = re.compile('|'.join('/' + o + '/' for o in HEIMATORTE))
+ENDUNGEN = ('.py', '.js', '.html', '.css')
+verdrahtet = []
+for q in sorted(hier.rglob('*')):
+    if q.is_symlink() or not q.is_file() or q.suffix not in ENDUNGEN:
+        continue
+    if wiki in q.parents or q.name.startswith('_probe-'):
+        continue
+    for nr, zeile in enumerate(q.read_text(encoding='utf-8', errors='replace').splitlines(), 1):
+        m = HEIMATPFAD.search(zeile)
+        if m:
+            verdrahtet.append(f'{q.relative_to(hier)}:{nr}  {m.group(0)}…')
+if verdrahtet:
+    print('  FESTVERDRAHTETE PFADE IM QUELLTEXT:')
+    for d in verdrahtet[:8]:
+        print(f'      {d}')
+    print('      (ein Pfad zur Arbeitskopie gehört nicht in den Quelltext —')
+    print('       stattdessen __dirname bzw. pathlib.Path(__file__).parent)')
+    fehlgeschlagen.append('festverdrahtete Pfade')
+else:
+    print('  keine festverdrahteten Pfade')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:

@@ -273,6 +273,196 @@
           meistern:'Rückzug planen, bevor der Körper ihn erzwingt.' }
   };
 
+  /* ── Die Facetten eines Bereichs ────────────────────────────
+     Jeder Bereich hat mehrere Seiten. Welche davon bei einem
+     Menschen oben steht, entscheidet das Geburtsbild, nicht diese
+     Datei: haus und wer sagen dem Rechner, woran eine Facette
+     hängt — er gewichtet und sortiert, die Datei liefert nur Text.
+     titel/was/meistern sind Laientext und bleiben ohne Fachwort.
+     wer ist Maschinenraum und erscheint erst ab Stufe 2. */
+  var B_FACET = {
+    liebe: [
+      { k:'binden', haus:7, wer:['Venus','Mond'],
+        titel:'Wie du dich bindest',
+        was:'Wie du dich an einen anderen Menschen bindest: wie schnell, wie fest, und was du dabei von dir abgibst. Hier zeigt sich, ob Nähe für dich eine Erweiterung ist oder eine Verkleinerung.',
+        meistern:'Nah sein und ansprechbar bleiben für das, was du selbst willst.' },
+      { k:'verliebt', haus:5, wer:['Venus','Mars','Sonne'],
+        titel:'Verliebtsein und Begehren',
+        was:'Das Verliebtsein selbst: Anziehung, Spiel, der Reiz am Anfang. Hier entscheidet sich, ob du dich traust, Interesse zu zeigen, bevor du weißt, wie es ausgeht.',
+        meistern:'Interesse zeigen, ohne vorher zu wissen, ob es erwidert wird.' },
+      { k:'ernst', haus:8, wer:['Pluto','Mars','Saturn'],
+        titel:'Wenn es ernst wird',
+        was:'Was passiert, wenn aus Verliebtsein Verbindlichkeit wird: Vertrauen, Eifersucht, Geld, Abhängigkeit. Das ist der Teil, der am Anfang nicht vorkommt und später alles entscheidet.',
+        meistern:'Abhängigkeit aussprechen, statt sie zu verstecken.' },
+      { k:'muster', haus:7, wer:['Saturn','Uranus'],
+        titel:'Dein Muster bei der Wahl',
+        was:'Wen du immer wieder wählst, und woran du merkst, dass es wieder dieselbe Sorte Mensch ist. Muster sind kein Schicksal, aber sie wiederholen sich, solange niemand sie benennt.',
+        meistern:'Das eigene Muster benennen, ohne dich dafür zu verurteilen.' }
+    ],
+    beruf: [
+      { k:'ruf', haus:10, wer:['Sonne','Saturn','Jupiter'],
+        titel:'Wofür man dich kennt',
+        was:'Das Bild, das andere von deiner Arbeit haben. Es entsteht aus dem, was fertig geworden ist, nicht aus dem, was du könntest. In diesem Abstand liegt der Unterschied zwischen Begabung und Ruf.',
+        meistern:'Zeigen, was fertig ist, nicht, was du könntest.' },
+      { k:'alltag', haus:6, wer:['Merkur','Mars','Saturn'],
+        titel:'Der Alltag der Arbeit',
+        was:'Wie deine Arbeitstage wirklich aussehen: Abläufe, Kollegen, die kleinen Reibungen. Hier entscheidet sich, ob eine Stelle trägt, lange bevor die große Frage nach der Richtung kommt.',
+        meistern:'Reibung ansprechen, solange sie noch klein ist.' },
+      { k:'lohn', haus:2, wer:['Venus','Jupiter'],
+        titel:'Was es dir einbringt',
+        was:'Was du für die Arbeit bekommst, und ob es dem entspricht, was du hineinsteckst. Das ist keine Nebenfrage: eine Aufgabe, die dich nicht trägt, verbraucht dich auch dann, wenn sie dir liegt.',
+        meistern:'Den Preis nennen, bevor man dich danach fragt.' },
+      { k:'wechsel', haus:10, wer:['Uranus','Neptun','Pluto'],
+        titel:'Bleiben oder gehen',
+        was:'Die Frage, ob du bleibst. Sie kommt selten als Entschluss, sondern als langsames Nachlassen von Interesse. Wer sie zu lange vertagt, trifft sie am Ende nicht mehr selbst.',
+        meistern:'Gehen, solange es noch deine Entscheidung ist.' }
+    ],
+    gesundheit: [
+      { k:'taeglich', haus:6, wer:['Merkur','Mars','Saturn'],
+        titel:'Was du täglich machst',
+        was:'Schlaf, Essen, Bewegung, Pausen. Nichts davon ist interessant, und alles davon entscheidet, wie viel du aushältst. Der Körper rechnet in Wochen, nicht in guten Vorsätzen.',
+        meistern:'Etwas Kleines jeden Tag, statt etwas Großes selten.' },
+      { k:'kraft', haus:1, wer:['Sonne','Mars'],
+        titel:'Deine Kraft und ihr Maß',
+        was:'Wie viel Kraft du hast und wie du mit ihr umgehst. Manche merken zu spät, dass sie am Ende sind, andere schon beim ersten Widerstand. Beides ist ein Problem mit dem Maß, nicht mit der Kraft.',
+        meistern:'Das eigene Maß kennen und es nicht täglich neu verhandeln.' },
+      { k:'leer', haus:12, wer:['Neptun','Saturn','Mond'],
+        titel:'Erschöpfung und Rückzug',
+        was:'Das Thema, das sich nicht ankündigt: Müdigkeit, die bleibt, und das Bedürfnis, eine Weile niemanden zu sehen. Rückzug ist keine Schwäche, sondern ein Posten im Haushalt.',
+        meistern:'Leere Tage einplanen, statt sie erzwingen zu lassen.' },
+      { k:'hilfe', haus:6, wer:['Venus','Jupiter','Mond'],
+        titel:'Wer dir dabei hilft',
+        was:'Die Menschen, die mit deinem Körper zu tun haben: Behandlung, Beratung, Begleitung. Wie leicht du dir helfen lässt, gehört zur Gesundheit genauso wie das, was du selbst tust.',
+        meistern:'Hilfe holen, bevor es dringend wird.' }
+    ],
+    geld: [
+      { k:'rein', haus:2, wer:['Venus','Jupiter','Saturn'],
+        titel:'Was hereinkommt',
+        was:'Was du verdienst, und wofür. Hier geht es weniger um die Höhe als um die Frage, ob du den Betrag selbst gesetzt hast oder ob er dir gesetzt wurde.',
+        meistern:'Den Betrag selbst setzen, statt ihn abzuwarten.' },
+      { k:'umgang', haus:2, wer:['Mond','Mars','Merkur'],
+        titel:'Wie du damit umgehst',
+        was:'Ausgeben, aufschieben, nicht hinsehen. Der Umgang mit Geld hat selten mit Rechnen zu tun und meist mit dem Gefühl, das eine Zahl auslöst, bevor man sie einordnet.',
+        meistern:'Hinsehen, während es unangenehm ist, nicht danach.' },
+      { k:'geteilt', haus:8, wer:['Pluto','Saturn','Mars'],
+        titel:'Geteiltes Geld und Verpflichtungen',
+        was:'Alles, was nicht allein dir gehört: gemeinsame Kassen, Verträge, Rückzahlungen, Erbschaften. Das ist der Teil, über den am seltensten gesprochen wird und der am stärksten bindet.',
+        meistern:'Über gemeinsames Geld reden, bevor es knapp wird.' },
+      { k:'gelegenheit', haus:11, wer:['Jupiter','Uranus','Venus'],
+        titel:'Woher Gelegenheiten kommen',
+        was:'Geld kommt selten aus dem Nichts, sondern über Menschen: Empfehlungen, Netze, Zufälle, die keine sind. Wer das unterschätzt, arbeitet mehr für dasselbe Ergebnis.',
+        meistern:'Sagen, was du suchst, bevor jemand danach fragt.' }
+    ],
+    familie: [
+      { k:'herkunft', haus:4, wer:['Mond','Saturn'],
+        titel:'Woher du kommst',
+        was:'Die Familie, in der du angefangen hast, und was von dort mitgekommen ist. Manches davon trägt, manches ist nur alt. Das auseinanderzuhalten ist die halbe Arbeit.',
+        meistern:'Behalten, was trägt, und zurücklassen, was nur alt ist.' },
+      { k:'wohnen', haus:4, wer:['Venus','Jupiter','Sonne'],
+        titel:'Wo du jetzt wohnst',
+        was:'Der Ort, an dem du abends ankommst. Ob er dich beruhigt, ob du dort bleiben willst, und ob du ihn eingerichtet hast oder nur bezogen.',
+        meistern:'Den Ort einrichten, statt nur in ihm zu wohnen.' },
+      { k:'geschwister', haus:3, wer:['Merkur','Mars','Mond'],
+        titel:'Geschwister und Nahbereich',
+        was:'Die Menschen, mit denen du aufgewachsen bist oder täglich zu tun hast. Alte Rollen halten sich dort besonders lange, weil sie nie jemand ausgesprochen hat.',
+        meistern:'Mit Geschwistern reden wie mit Erwachsenen.' },
+      { k:'eltern', haus:10, wer:['Saturn','Pluto','Sonne'],
+        titel:'Die Eltern heute',
+        was:'Was aus dem Verhältnis zu den Eltern geworden ist, jetzt, wo alle älter sind. Verantwortung dreht sich in diesen Jahren oft um, und das kommt für beide Seiten zu früh.',
+        meistern:'Verantwortung übernehmen, ohne wieder Kind zu werden.' }
+    ],
+    freunde: [
+      { k:'leute', haus:11, wer:['Jupiter','Venus','Uranus'],
+        titel:'Deine Leute',
+        was:'Die Menschen, die du dir ausgesucht hast. Wie viele es sind, sagt wenig. Ob du dort anrufen würdest, wenn es schlecht läuft, sagt fast alles.',
+        meistern:'Anrufen, während es schlecht läuft, nicht hinterher.' },
+      { k:'dazu', haus:11, wer:['Saturn','Pluto','Mond'],
+        titel:'Dazugehören',
+        was:'Gruppen, Vereine, Teams, Milieus. Die Frage ist immer dieselbe: Wie viel von dir legst du ab, um dabei zu sein, und merkst du es noch, während du es tust.',
+        meistern:'Merken, was du ablegst, um dabei zu sein.' },
+      { k:'streit', haus:7, wer:['Venus','Mars','Saturn'],
+        titel:'Streit und Versöhnung',
+        was:'Was passiert, wenn es zwischen dir und jemandem kippt. Manche gehen zu früh, manche bleiben zu lang. Das Thema ist nicht der Streit, sondern wie er endet.',
+        meistern:'Einen Streit beenden, ohne dass einer verliert.' },
+      { k:'locker', haus:3, wer:['Merkur','Mond','Jupiter'],
+        titel:'Der lockere Kreis',
+        was:'Nachbarn, Kollegen, Bekannte vom Sehen. Dieser Kreis wird unterschätzt: er kostet wenig und trägt im Alltag oft mehr als die wenigen engen Bindungen.',
+        meistern:'Lose Verbindungen pflegen, bevor du sie brauchst.' }
+    ],
+    freude: [
+      { k:'zwecklos', haus:5, wer:['Venus','Sonne','Mars'],
+        titel:'Was du ohne Zweck tust',
+        was:'Das, was du tust, wenn niemand zusieht und es zu nichts führt. Erwachsene streichen es als Erstes, weil es sich am leichtesten streichen lässt und niemandem auffällt.',
+        meistern:'Zeit für etwas freihalten, das niemandem nützt.' },
+      { k:'herstellen', haus:5, wer:['Merkur','Mond','Neptun'],
+        titel:'Etwas herstellen',
+        was:'Schreiben, bauen, kochen, gestalten. Es geht nicht um Begabung, sondern um die Bereitschaft, etwas weiterzugeben, das noch nicht gut genug ist.',
+        meistern:'Etwas aus der Hand geben, das noch nicht gut ist.' },
+      { k:'weite', haus:9, wer:['Jupiter','Uranus','Sonne'],
+        titel:'Neugier und Weite',
+        was:'Reisen, Lernen, Dinge, die du noch nie gemacht hast. Freude kommt bei vielen Menschen weniger aus Ruhe als aus Neuem, und das geht mit den Jahren leicht verloren.',
+        meistern:'Etwas anfangen, in dem du noch schlecht bist.' },
+      { k:'zusammen', haus:11, wer:['Venus','Jupiter','Mond'],
+        titel:'Freude mit anderen',
+        was:'Das, was nur zusammen etwas hergibt: spielen, feiern, singen, gemeinsam albern sein. Allein lässt sich das nicht nachholen, und verabreden muss es jemand.',
+        meistern:'Einladen, auch wenn der Anlass dünn ist.' }
+    ],
+    selbstwert: [
+      { k:'auftritt', haus:1, wer:['Sonne','Mars','Saturn'],
+        titel:'Wie du auftrittst',
+        was:'Der erste Eindruck, den du machst, und wie weit er von dem entfernt ist, was du meinst. Viele Missverständnisse über einen Menschen fangen in diesem Abstand an.',
+        meistern:'Dich so zeigen, wie du dich selbst meinst.' },
+      { k:'zugestehen', haus:2, wer:['Venus','Jupiter','Mond'],
+        titel:'Was du dir zugestehst',
+        was:'Wie viel dir zusteht, in deinen eigenen Augen: Zeit, Geld, Platz, Aufmerksamkeit. Das ist eine Entscheidung, wird aber meist wie eine Tatsache behandelt.',
+        meistern:'Dir etwas zugestehen, ohne es vorher zu verdienen.' },
+      { k:'aussen', haus:1, wer:['Mond','Neptun','Pluto'],
+        titel:'Der Blick von außen',
+        was:'Wie stark eine Rückmeldung dein Bild von dir verschiebt. Wer sich an fremden Augen misst, hat jeden Tag einen anderen Wert und weiß nie, woran er ist.',
+        meistern:'Eine Rückmeldung einordnen, statt sie zu übernehmen.' },
+      { k:'geltung', haus:10, wer:['Saturn','Sonne','Uranus'],
+        titel:'Geltung und Anerkennung',
+        was:'Der Wunsch, dass zählt, was du tust. Er ist nicht peinlich. Er wird erst dort zum Problem, wo er die Richtung bestimmt, statt sie zu begleiten.',
+        meistern:'Anerkennung wollen und trotzdem selbst entscheiden.' }
+    ],
+    sinn: [
+      { k:'halten', haus:9, wer:['Jupiter','Sonne','Merkur'],
+        titel:'Woran du dich hältst',
+        was:'Die Sätze, nach denen du entscheidest, auch wenn du sie nie aufgeschrieben hast. Die meisten Menschen entdecken sie erst, wenn jemand ernsthaft widerspricht.',
+        meistern:'Sagen können, woran du dich hältst, in drei Sätzen.' },
+      { k:'richtung', haus:9, wer:['Saturn','Uranus','Pluto'],
+        titel:'Wohin es gehen soll',
+        was:'Die Richtung für die nächsten Jahre. Kein Ziel, sondern eine Richtung: genug, um zu entscheiden, was nicht mehr dazugehört, und wenig genug, um sich zu irren.',
+        meistern:'Eine Richtung wählen und dadurch etwas streichen.' },
+      { k:'zieht', haus:5, wer:['Venus','Mars','Mond'],
+        titel:'Was dich zieht',
+        was:'Sinn kommt bei vielen Menschen nicht aus Nachdenken, sondern aus dem, was sie ohnehin nicht lassen. Das ist ein brauchbarer Hinweis und wird regelmäßig übergangen.',
+        meistern:'Dem nachgehen, was du ohnehin nicht lässt.' },
+      { k:'leere', haus:12, wer:['Neptun','Saturn','Mond'],
+        titel:'Wenn nichts trägt',
+        was:'Die Zeit, in der nichts trägt und alles gleichgültig wirkt. Sie gehört dazu und ist kein Fehler. Sie ist aber der schlechteste Moment für große Entschlüsse.',
+        meistern:'Keine großen Entschlüsse in leeren Wochen treffen.' }
+    ],
+    umbruch: [
+      { k:'ende', haus:8, wer:['Pluto','Saturn','Mars'],
+        titel:'Was zu Ende geht',
+        was:'Etwas, das lange getragen hat, trägt nicht mehr. Meist weiß man es früher, als man es zugibt, und die Zeit zwischen Wissen und Zugeben ist die anstrengendste.',
+        meistern:'Aussprechen, was du längst weißt, auch ungefragt.' },
+      { k:'lassen', haus:8, wer:['Venus','Mond','Neptun'],
+        titel:'Loslassen',
+        was:'Die Frage, wie man etwas aus der Hand gibt, ohne es zu zerschlagen. Wer zu lange hält, verliert es trotzdem, nur unfreundlicher und mit mehr Schaden.',
+        meistern:'Aus der Hand geben, bevor es genommen wird.' },
+      { k:'dazwischen', haus:12, wer:['Neptun','Pluto','Saturn'],
+        titel:'Die Zeit dazwischen',
+        was:'Zwischen dem Ende und dem Anfang liegt eine Strecke ohne Form. Sie fühlt sich an wie Stillstand und ist keiner, aber sie lässt sich nicht abkürzen.',
+        meistern:'Die Strecke ohne Form aushalten, statt sie zu füllen.' },
+      { k:'danach', haus:4, wer:['Mond','Saturn','Uranus'],
+        titel:'Was danach bleibt',
+        was:'Nach einem Bruch stellt sich die Frage, wohin du gehst und wer dann noch da ist. Das entscheidet über die nächsten Jahre oft mehr als der Bruch selbst.',
+        meistern:'Vorher wissen, wohin du gehst, nicht erst danach.' }
+    ]
+  };
+
   /* ── Das lange Kapitel, falls die Zeitenseite mitrechnet ───── */
   var B_KAP = {
     laut:'Über Jahre hinweg ist dieser Bereich bei dir ein Hauptthema. Das heißt nicht, dass jede Woche etwas passiert — es heißt, dass hier mehr geschieht als in den stillen Bereichen.',
@@ -296,7 +486,8 @@
 
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
-    DURCH:B_DURCH, HAUS:B_HAUS, KAP:B_KAP, EHRLICH:B_EHRLICH
+    DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
+    KAP:B_KAP, EHRLICH:B_EHRLICH
   };
 
 })();

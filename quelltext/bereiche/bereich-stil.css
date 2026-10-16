@@ -92,6 +92,19 @@
 .b-dauer p{color:var(--tinte);}
 .b-leise{color:var(--leise);}
 
+/* ── Facetten im Dauerthema ────────────────────────────────── */
+/* Bestehende Farben und Schriften, keine neuen. Die Facetten sind
+   eine Staffelung innerhalb von Block 5, keine zweite Gestaltung. */
+.b-facvor{font-size:13.5px!important;color:var(--leise);margin-top:14px;}
+.b-facs{margin-top:4px;}
+.b-fac{padding:12px 0 2px;border-top:1px solid var(--linie);}
+.b-fac:first-child{border-top:none;}
+.b-fac h5{font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:600;
+  color:var(--nacht);margin:0 0 6px;line-height:1.35;}
+.b-fac p{font-size:14.5px;line-height:1.68;margin-bottom:8px;max-width:640px;}
+.b-facm{font-family:var(--sans);font-size:14px!important;color:var(--messing);
+  padding-left:12px;border-left:2px solid var(--messing-bg);}
+
 /* ── Einstellen ────────────────────────────────────────────── */
 .b-einst{background:var(--papier);border:1px solid var(--linie);border-radius:14px;
   padding:6px 18px;}

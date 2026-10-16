@@ -1,6 +1,7 @@
 /* Prüft die Rechnung gegen Werte, die von Hand nachgerechnet sind. */
 global.window = {};
-require('/home/claude/zahlen/zahlen-rechner.js');
+const path = require('path');
+require(path.join(__dirname, 'zahlen-rechner.js'));
 var Z = global.window.AC_ZAHL;
 var f = [], ok = 0;
 function gl(was, ist, soll){
