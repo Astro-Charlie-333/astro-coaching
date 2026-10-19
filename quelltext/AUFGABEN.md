@@ -47,35 +47,44 @@ erzeugen kann, der die natale Herkunft, die Facetten, die Widersprüche und
 Gesprächsfragen enthält — und der Tiefgang als Datei herausgeht, statt im
 Quelltext zu stehen. **Kein Schalter, der Freischalten vortäuscht.**
 
-### 5 · Die zwölf alten Raumseiten in die Bereiche überführen
+### 5 · Die App-Ansicht
+Siehe `PRODUKT.md` Abschnitt 7, Stufe 2. Die Seite soll sich auf dem
+Telefon installieren lassen: eigenes Symbol, Vollbild ohne Browserleiste,
+und die zuletzt besuchten Seiten funktionieren auch ohne Netz.
+**Fertig, wenn:** eine `manifest.webmanifest` mit Symbolen in den
+Markenfarben existiert, jede gebaute Seite sie einbindet, ein Service
+Worker die Seiten zwischenspeichert, und `pruefe-alles.py` prüft, dass
+keine Seite das Einbinden vergisst. Kein Framework, kein Bauwerkzeug.
+
+### 6 · Die zwölf alten Raumseiten in die Bereiche überführen
 `raum-selbstwert.html` und die anderen elf enthalten gute Texte, aber in der
 alten Form (Frage als Titel, Maschinenraum darunter).
 **Fertig, wenn:** jeder Bereich auf `bereiche.html` unten auf die passende
 alte Seite verweist, und keine alte Seite mehr den Maschinenraum im Titel
 führt („2. Haus, Venus, Saturn, Lilith" gehört in `ac-tech`).
 
-### 6 · Die Coachin-Sicht als zweite Schublade
+### 7 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.
 **Fertig, wenn:** zehn Bereiche je drei Fragen und eine Grenze haben und der
 Bau prüft, dass keine davon eine Diagnose stellt.
 
-### 7 · Doppelte Seiten zusammenlegen
+### 8 · Doppelte Seiten zusammenlegen
 Es gibt Seitenpaare, die fast dasselbe sagen (`aspekte.html` /
 `aspekte-lesen.html`, `chart-lesen.html` / `bausteine.html`).
 **Fertig, wenn:** jedes Paar entweder zusammengelegt ist oder in einem Satz
 begründet, warum es zwei bleiben.
 
-### 8 · Die Tierkreiszeichen auf `strategie/umgang-kristi.html`
+### 9 · Die Tierkreiszeichen auf `strategie/umgang-kristi.html`
 Die Glyphen rendern als Emoji statt als Schriftzeichen; es fehlt `︎`.
 **Fertig, wenn:** die Seite die Zeichen einfarbig zeigt.
 
-### 9 · Netlify statt GitHub Pages
+### 10 · Netlify statt GitHub Pages
 Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 10 · Facetten auch in unbesetzten Bereichen gewichten
+### 11 · Facetten auch in unbesetzten Bereichen gewichten
 Die Facetten in Block 5 werden danach sortiert, was natal in den Feldern
 des Bereichs steht. Ist dort nichts, entscheidet nur noch die Reihenfolge
 der Textdatei — dann behauptet die Seite eine Gewichtung, die keine ist.
@@ -94,7 +103,7 @@ zeigt, die von der Reihenfolge in `bereich-daten.js` abweicht, und
 
 ---
 
-### 11 · Zweite Stimme für die Reibung zwischen zwei Menschen
+### 12 · Zweite Stimme für die Reibung zwischen zwei Menschen
 Die Analyse rechnet schon Paare und Zusammenarbeit, aber die Beiträge
 schöpfen das nicht ab — dabei ist genau das der Unterschied zu allem
 anderen in diesem Feld: nicht „du", sondern „ihr beide".
