@@ -90,6 +90,16 @@
 .b-zeit li b{color:var(--nacht);font-weight:500;}
 .b-kapzeit{font-size:13.5px!important;color:var(--leise);margin-top:10px;}
 .b-dauer p{color:var(--tinte);}
+
+/* ── Die Facetten eines Dauerthemas ────────────────────────── */
+.b-fac{margin-top:14px;}
+.b-fa{padding:12px 0;border-top:1px dashed var(--linie);}
+.b-fa:first-child{border-top:none;}
+.b-fa1{background:var(--creme);border-top:none;border-left:3px solid var(--messing);
+  border-radius:0 10px 10px 0;padding:13px 16px;}
+.b-fa h5{font-family:'Fraunces',Georgia,serif;font-size:15.5px;font-weight:600;
+  color:var(--nacht);margin-bottom:5px;line-height:1.4;}
+.b-fa p{font-size:14.5px!important;line-height:1.65;margin-bottom:0;}
 .b-leise{color:var(--leise);}
 
 /* ── Einstellen ────────────────────────────────────────────── */

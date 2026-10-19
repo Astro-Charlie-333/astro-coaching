@@ -229,6 +229,43 @@ AC.BEREICHE.forEach(B => {
   p('natal: alle Planeten liegen in Bereichshaeusern bei ' + B.k,
     N.planeten.every(x => B.haeuser.indexOf(x.haus) >= 0));
 });
+/* Die Reihenfolge der Facetten kommt aus dem Bild, nicht aus der
+   Reihenfolge, in der die Felder aufgeschrieben sind. */
+AC.BEREICHE.forEach(B => {
+  const N = AC.natal(C, B);
+  p('Reihenfolge nennt jedes Feld genau einmal bei ' + B.k,
+    N.reihenfolge.length === B.haeuser.length &&
+    N.reihenfolge.slice().sort().join(',') === B.haeuser.slice().sort().join(','),
+    JSON.stringify(N.reihenfolge));
+  p('Reihenfolge faellt nach Gewicht bei ' + B.k,
+    N.reihenfolge.every((h, i) =>
+      i === 0 || N.gewicht[N.reihenfolge[i-1]] >= N.gewicht[h]),
+    JSON.stringify(N.gewicht));
+});
+
+/* Ein unbesetzter Bereich behaelt die erklaerte Reihenfolge — sonst
+   sieht eine Sortierung nach nichts wie eine Sortierung nach etwas aus. */
+(function(){
+  const B = AC.BEREICHE[0];
+  const R = AC.gewichte(B, []);
+  p('leerer Bereich behaelt die erklaerte Reihenfolge',
+    R.folge.join(',') === B.haeuser.join(','), JSON.stringify(R.folge));
+  const R2 = AC.gewichte(B, [{p:'Pluto', haus:B.haeuser[2]}, {p:'Mars', haus:B.haeuser[2]}]);
+  p('zwei Punkte heben ein Nebenfeld nach oben',
+    R2.folge[0] === B.haeuser[2], JSON.stringify(R2.folge));
+  const R3 = AC.gewichte(B, [{p:'Sonne', haus:B.haeuser[1]},
+                             {p:'Merkur', haus:B.haeuser[0]}]);
+  p('ein Licht wiegt schwerer als ein gewoehnlicher Punkt im Kernfeld',
+    R3.folge[0] === B.haeuser[1], JSON.stringify(R3.folge));
+  const R4 = AC.gewichte(B, [{p:'Merkur', haus:B.haeuser[0]},
+                             {p:'Mars', haus:B.haeuser[1]}]);
+  p('bei gleicher Besetzung bleibt das Kernfeld vorn',
+    R4.folge[0] === B.haeuser[0], JSON.stringify(R4.folge));
+  const R5 = AC.gewichte(B, [{p:'Mond', haus:99}]);
+  p('ein Punkt ausserhalb des Bereichs wiegt nichts',
+    R5.folge.join(',') === B.haeuser.join(','), JSON.stringify(R5.folge));
+})();
+
 /* Alle zehn Planeten müssen über alle Bereiche hinweg irgendwo auftauchen */
 let gesehen = {};
 AC.BEREICHE.forEach(B => AC.natal(C, B).planeten.forEach(x => gesehen[x.p] = 1));

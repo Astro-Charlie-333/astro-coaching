@@ -78,6 +78,26 @@ for pfad, name in BAUTEN:
 
 print('-' * 62)
 
+# ── Querprüfung über die Quellen ──────────────────────────────
+# Ein fester Pfad auf einen bestimmten Rechner lässt den Bau überall
+# sonst scheitern — und zwar erst beim Bauen, nicht beim Schreiben.
+# Quellen sagen, wo sie selbst liegen, und rechnen von dort aus.
+FEST = re.compile(r'''['\"](/home/|/Users/|[A-Za-z]:\\\\)''')
+fest = []
+for q in sorted(hier.rglob('*.js')) + sorted(hier.rglob('*.py')):
+    if 'wiki' in q.parts or q.name == 'pruefe-alles.py':
+        continue
+    for nr, zeile in enumerate(q.read_text(encoding='utf-8', errors='replace').splitlines(), 1):
+        if FEST.search(zeile) and 'npm-tools' not in zeile:
+            fest.append(f'{q.relative_to(hier)}:{nr}')
+if fest:
+    print(f'  {len(fest)} feste Pfade in den Quellen:')
+    for f_ in fest[:8]:
+        print(f'      {f_}')
+    fehlgeschlagen.append('feste Pfade in den Quellen')
+else:
+    print('  keine festen Pfade in den Quellen')
+
 # ── Querprüfungen über alle fertigen Seiten ───────────────────
 seiten = sorted(wiki.glob('*.html'))
 print(f'  {len(seiten)} Seiten in wiki/')

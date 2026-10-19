@@ -92,8 +92,17 @@ def feld(block, name):
     m = re.search(r"\b" + name + r":\s*'((?:[^'\\]|\\.)*)'", block)
     return m.group(1) if m else None
 
+# Welche Felder zu welchem Bereich gehören, steht im Rechner und
+# nirgends sonst. Die Texte müssen sich danach richten, nicht umgekehrt.
+HAEUSER = {}
+for _k, _hs in re.findall(r"k:'(\w+)',\s*name:'[^']*',\s*haeuser:\[([\d, ]+)\]", rechner):
+    HAEUSER[_k] = [int(x) for x in _hs.split(',')]
+if len(HAEUSER) != 10:
+    fehler.append(f'{len(HAEUSER)} statt 10 Bereiche im Rechner gefunden')
+
 # die zehn Bereiche
 lay_texte = []          # alles, was ein Laie auf Stufe 0 sieht
+facetten_alle = []      # jede Facette der Plattform, für die Dublettenprobe
 for b in BEREICHE:
     m = re.search(r"^\s{4}" + b + r":\s*\{", daten, re.M)
     if not m:
@@ -108,6 +117,34 @@ for b in BEREICHE:
             fehler.append(f'Bereich {b}: {f_} nur {len(v)} Zeichen — zu dünn')
         if v and f_ != 'techFeld':
             lay_texte.append((f'B_BER.{b}.{f_}', v))
+    # Die Facetten von Block 5. Ein Bereich hat drei Seiten, nicht eine.
+    # Welche oben steht, entscheidet der Rechner — dass es drei sind und
+    # dass sie zu den Feldern des Bereichs gehören, entscheidet sich hier.
+    fm = re.search(r"facetten:\s*\{", blk)
+    if not fm:
+        fehler.append(f'Bereich {b}: facetten fehlen — Block 5 hätte nur einen Satz')
+    else:
+        fblk = klammerblock(blk, fm.end() - 1)
+        eintraege = re.findall(
+            r"(\d+):\s*\{\s*t:'((?:[^'\\]|\\.)*)',\s*\n?\s*s:'((?:[^'\\]|\\.)*)'", fblk)
+        if len(eintraege) < 3:
+            fehler.append(f'Bereich {b}: nur {len(eintraege)} Facetten — mindestens 3')
+        soll = set(HAEUSER.get(b, []))
+        ist = {int(e[0]) for e in eintraege}
+        if soll and ist != soll:
+            fehler.append(f'Bereich {b}: Facetten {sorted(ist)} passen nicht zu den '
+                          f'Feldern {sorted(soll)} des Bereichs')
+        for nr, titel, satz in eintraege:
+            if not (8 <= len(titel) <= 45):
+                fehler.append(f'Bereich {b}, Facette {nr}: Überschrift {len(titel)} Zeichen '
+                              f'— gewollt sind 8 bis 45')
+            if len(satz) < 100:
+                fehler.append(f'Bereich {b}, Facette {nr}: nur {len(satz)} Zeichen — zu dünn')
+            if satz.rstrip()[-1:] not in '.!?':
+                fehler.append(f'Bereich {b}, Facette {nr}: der Text hört ohne Satzzeichen auf')
+            lay_texte.append((f'B_BER.{b}.facetten[{nr}].t', titel))
+            lay_texte.append((f'B_BER.{b}.facetten[{nr}].s', satz))
+            facetten_alle.append((f'{b}/{nr}', satz))
     saetze = re.findall(r"'((?:[^'\\]|\\.)*)'", (feld_block := re.search(
         r"lautSatz:\s*\[(.*?)\]", blk, re.S).group(1) if re.search(r"lautSatz:\s*\[", blk) else ''))
     if len(saetze) != 4:
@@ -200,6 +237,23 @@ for f_ in ('einl', 'rueck'):
     v = re.search(r"\b" + f_ + r":\s*'((?:[^'\\]|\\.)*)'", daten)
     if v:
         lay_texte.append((f'B_DURCH.{f_}', v.group(1)))
+
+# Derselbe Facettentext darf nicht in zwei Bereichen stehen. Die
+# Rauchprobe sieht nur innerhalb eines Bereichs nach — eine Kopie von
+# Bereich zu Bereich würde ihr entgehen und dem Leser auffallen.
+gesehen_fac = {}
+for wo, satz in facetten_alle:
+    schluessel = re.sub(r'\s+', ' ', satz).strip()
+    if schluessel in gesehen_fac:
+        fehler.append(f'dieselbe Facette steht in {gesehen_fac[schluessel]} und {wo}')
+    gesehen_fac[schluessel] = wo
+
+# Der Rechner muss die Reihenfolge der Facetten überhaupt bestimmen,
+# sonst steht die erste nur zufällig oben.
+if 'reihenfolge' not in rechner:
+    fehler.append('der Rechner liefert keine Reihenfolge für die Facetten')
+if 'natal.reihenfolge' not in app:
+    fehler.append('die Anzeige nimmt die Reihenfolge des Rechners nicht an')
 
 # ── 4 · Die Grundregel: kein Maschinenraum im Laientext ────────
 # Diese Wörter dürfen in keinem Text stehen, den ein Laie auf
@@ -358,12 +412,50 @@ notiz.stufe0=await p.evaluate(J=>{
 notiz.techSichtbar0=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
   .filter(e=>e.offsetParent!==null).length);
 
+/* Jeder Bereich zeigt in Block 5 drei Facetten mit eigener Überschrift. */
+notiz.facetten=await p.evaluate(()=>{
+  const raus=[];
+  document.querySelectorAll('.b-ber').forEach(d=>{
+    const name=(d.querySelector('.b-name')||{}).textContent||'?';
+    const fa=d.querySelectorAll('.b-dauer .b-fa');
+    if(fa.length<3){ raus.push(name+': '+fa.length+' Facetten'); return; }
+    fa.forEach(e=>{
+      const k=e.querySelector('h5'), s=e.querySelector('p');
+      if(!k||!k.innerText.trim()) raus.push(name+': eine Facette ohne Überschrift');
+      if(!s||s.innerText.trim().length<80) raus.push(name+': eine Facette ohne Text');
+    });
+  });
+  return raus;
+});
+/* Höchstens eine Facette je Bereich ist hervorgehoben. */
+notiz.facMarke=await p.evaluate(()=>[...document.querySelectorAll('.b-ber')]
+  .map(d=>d.querySelectorAll('.b-dauer .b-marke').length)
+  .filter(x=>x>1).length);
+
 /* Stufe 3: jetzt darf die Mechanik da sein. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(300);
 await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
 await p.waitForTimeout(200);
 notiz.techSichtbar3=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
   .filter(e=>e.offsetParent!==null).length);
+
+/* Die Reihenfolge der Facetten muss die des Rechners sein — sonst
+   steht die erste nur zufällig oben und die Sortierung ist gelogen. */
+notiz.facFolge=await p.evaluate(()=>{
+  const raus=[];
+  const pr=AC_P.aktives()||AC_P.eigenes();
+  const C=chartVon(pr);
+  AC_BER.BEREICHE.forEach(B=>{
+    const soll=AC_BER.natal(C,B).reihenfolge;
+    const d=document.getElementById('ber-'+B.k);
+    if(!d){ raus.push(B.k+': fehlt'); return; }
+    const ist=[...d.querySelectorAll('.b-dauer .b-fa .ac-tech')]
+      .map(e=>parseInt(e.innerText,10));
+    if(JSON.stringify(ist)!==JSON.stringify(soll))
+      raus.push(B.k+': '+ist.join('/')+' statt '+soll.join('/'));
+  });
+  return raus;
+});
 await schlecht('Stufe 3');
 
 /* Stichtag wirkt wirklich. */
@@ -460,6 +552,15 @@ else:
         if n['doppelt']:
             fehler.append('derselbe Satz steht zweimal in einem Bereich: '
                           + ' | '.join(n['doppelt'][:4]))
+
+        if n['facetten']:
+            fehler.append('Block 5 zeigt nicht überall drei volle Facetten: '
+                          + ' | '.join(n['facetten'][:4]))
+        if n['facMarke']:
+            fehler.append(f"{n['facMarke']} Bereiche heben mehr als eine Facette hervor")
+        if n['facFolge']:
+            fehler.append('die Facetten stehen nicht in der Reihenfolge des Rechners: '
+                          + ' | '.join(n['facFolge'][:4]))
 
         if n['stufe0']:
             fehler.append('Fachsprache auf Stufe 0 sichtbar: ' + ', '.join(n['stufe0']))

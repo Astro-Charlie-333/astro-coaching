@@ -14,40 +14,41 @@ Vor jeder Arbeit: `REGELN.md` lesen. Nach jeder Arbeit:
 
 ## Als Nächstes
 
-### 1 · Die restlichen Bereichstexte vertiefen
-Die zehn Bereiche haben je einen Satz pro Lautstärke und ein Dauerthema.
-Was fehlt, ist die Tiefe, die die alten Raumseiten hatten: mehrere Facetten
-je Bereich, nach dem Chart gewichtet.
-**Fertig, wenn:** jeder Bereich in Block 5 mindestens drei Facetten zeigt,
-nach Chart sortiert, und `bau-bereiche.py` eine Mindestlänge dafür prüft.
-
-### 2 · Die zwölf alten Raumseiten in die Bereiche überführen
+### 1 · Die zwölf alten Raumseiten in die Bereiche überführen
 `raum-selbstwert.html` und die anderen elf enthalten gute Texte, aber in der
 alten Form (Frage als Titel, Maschinenraum darunter).
 **Fertig, wenn:** jeder Bereich auf `bereiche.html` unten auf die passende
 alte Seite verweist, und keine alte Seite mehr den Maschinenraum im Titel
 führt („2. Haus, Venus, Saturn, Lilith" gehört in `ac-tech`).
 
-### 3 · Die Coachin-Sicht als zweite Schublade
+### 2 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.
 **Fertig, wenn:** zehn Bereiche je drei Fragen und eine Grenze haben und der
 Bau prüft, dass keine davon eine Diagnose stellt.
 
-### 4 · Doppelte Seiten zusammenlegen
+### 3 · Doppelte Seiten zusammenlegen
 Es gibt Seitenpaare, die fast dasselbe sagen (`aspekte.html` /
 `aspekte-lesen.html`, `chart-lesen.html` / `bausteine.html`).
 **Fertig, wenn:** jedes Paar entweder zusammengelegt ist oder in einem Satz
 begründet, warum es zwei bleiben.
 
-### 5 · Die Tierkreiszeichen auf `strategie/umgang-kristi.html`
+### 4 · Die Tierkreiszeichen auf `strategie/umgang-kristi.html`
 Die Glyphen rendern als Emoji statt als Schriftzeichen; es fehlt `︎`.
 **Fertig, wenn:** die Seite die Zeichen einfarbig zeigt.
 
-### 6 · Netlify statt GitHub Pages
+### 5 · Netlify statt GitHub Pages
 Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
+
+### 6 · Block 5 sagt seinen Schwerpunkt zweimal
+Seit die Facetten da sind, beschreibt der Satz „Dein Schwerpunkt liegt hier
+bei dem, was man so beschreiben kann …" dasselbe Feld wie die oberste
+Facette, nur allgemeiner. Zwei Anläufe für denselben Gedanken.
+**Fertig, wenn:** Block 5 den Schwerpunkt genau einmal benennt — in der
+obersten Facette — und `bau-bereiche.py` prüft, dass kein Bereich zwei
+Absätze zum selben Feld führt.
 
 ---
 
@@ -71,6 +72,15 @@ konkrete Person erkennbar zu machen — und der Bau das prüft.
 ---
 
 ## Erledigt
+
+* **2026-10-19** · Jeder Bereich zeigt in Block 5 jetzt drei Facetten statt
+  eines Satzes, und welche davon oben steht, entscheidet das Geburtsbild:
+  das Feld mit dem meisten Gewicht zuerst, die Lichter zählen doppelt, bei
+  gleicher Besetzung bleibt das Kernfeld vorn. Der Bau prüft Anzahl,
+  Mindestlänge und Reihenfolge; eine Kopie desselben Textes in zwei
+  Bereichen bricht ab. Dabei zwei Prüfdateien repariert, die auf feste
+  Pfade eines fremden Rechners zeigten — `pruefe-alles.py` lässt solche
+  Pfade jetzt nicht mehr durch.
 
 * **2026-10-15** · Lebensbereiche statt Räume: `bereiche.html` mit zehn
   Bereichen, nach Lautstärke sortiert, je fünf feste Blöcke (was ist los,

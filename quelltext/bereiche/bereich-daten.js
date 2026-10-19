@@ -36,6 +36,17 @@
         'Die Liebe ist gerade dein lautester Bereich.'
       ],
       meistern: 'Die Aufgabe hier ist fast immer dieselbe: etwas wollen und es auch sagen. Nicht andeuten, nicht testen, nicht abwarten, wer zuerst springt.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        7: { t:'Nähe und Eigenständigkeit',
+             s:'In Verbindungen rutschst du leicht in die Form, die die andere Person vorgibt. Anpassen fällt dir leichter, als zu sagen, dass du etwas anders siehst.' },
+        5: { t:'Zeigen, was du willst',
+             s:'Zuneigung zu zeigen, bevor klar ist, ob sie erwidert wird, kostet dich mehr als fast jeder andere Schritt in der Liebe.' },
+        8: { t:'Was ihr euch zumutet',
+             s:'Ernst wird es bei dir dort, wo etwas geteilt wird: Geld, Geheimnisse, Abhängigkeit. Oberflächliches langweilt dich schnell, Tiefe macht dir Angst.' }
+      },
       techFeld: 'Siebtes, fünftes und achtes Haus'
     },
     beruf: {
@@ -49,6 +60,17 @@
         'Der Beruf ist gerade dein lautester Bereich.'
       ],
       meistern: 'Hier geht es darum, eine Sache zu Ende zu bringen, die man dir ansieht. Nicht zehn angefangene, sondern eine fertige.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        10: { t:'Wofür man dich kennt',
+             s:'Es ist dir nicht gleich, wofür dein Name steht. Unsichtbar gute Arbeit nagt an dir mehr, als du dir eingestehst.' },
+        6: { t:'Der Alltag, der es trägt',
+             s:'Deine Arbeit entscheidet sich weniger am großen Tag als in dem, was sich täglich wiederholt. Dort entsteht die Güte, und dort geht auch die Kraft verloren.' },
+        2: { t:'Was die Arbeit einbringt',
+             s:'Zwischen dem, was du leistest, und dem, was du dafür nimmst, klafft bei dir eine Lücke. Über Geld zu reden fühlt sich an, als beschmutze es die Sache.' }
+      },
       techFeld: 'Zehntes, sechstes und zweites Haus'
     },
     gesundheit: {
@@ -62,6 +84,17 @@
         'Der Körper ist gerade dein lautester Bereich.'
       ],
       meistern: 'Die Aufgabe hier heißt Maß: aufhören, bevor es weh tut, nicht erst danach.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        6: { t:'Was dich täglich trägt',
+             s:'Dein Zustand hängt an dem, was sich jeden Tag wiederholt: Schlaf, Essen, Bewegung, Pausen. Kleine Verschiebungen darin merkst du erst nach Wochen.' },
+        1: { t:'Dein Maß',
+             s:'Du merkst spät, dass es zu viel war. Die Grenze zeigt sich dir nicht als Gefühl, sondern als Tatsache, wenn sie schon überschritten ist.' },
+        12: { t:'Der Teil, der allein sein muss',
+             s:'Ein Teil deiner Kraft kommt aus Zeiten, in denen niemand etwas von dir will. Fehlen sie, meldet sich das nicht als Wunsch, sondern als Erschöpfung.' }
+      },
       techFeld: 'Sechstes, erstes und zwölftes Haus'
     },
     geld: {
@@ -75,6 +108,17 @@
         'Geld ist gerade dein lautester Bereich.'
       ],
       meistern: 'Hier geht es ums Verlangen eines Preises, nicht ums Sparen. Die Zahl aussprechen, ohne sie vorher kleiner zu machen.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        2: { t:'Was du verlangst',
+             s:'Die schwierige Stelle ist nicht das Ausgeben, sondern das Fordern. Du rechnest dir deinen Preis klein, bevor ihn überhaupt jemand gehört hat.' },
+        8: { t:'Geld, das nicht allein dir gehört',
+             s:'Gemeinsame Kassen, Schulden, Verträge, Erbschaften: an diesen Stellen hängt dein Geld an anderen Menschen, und genau dort schaust du am ungernsten hin.' },
+        11: { t:'Was über andere hereinkommt',
+             s:'Ein spürbarer Teil deiner Möglichkeiten kommt über Leute, die an dich denken. Das bricht weg, wenn Kontakt nur entsteht, sobald du etwas brauchst.' }
+      },
       techFeld: 'Zweites, achtes und elftes Haus'
     },
     familie: {
@@ -88,6 +132,17 @@
         'Zuhause und Familie sind gerade dein lautester Bereich.'
       ],
       meistern: 'Die Aufgabe hier ist, erwachsen in alten Rollen zu bleiben — also nicht wieder zu werden, wer man mit sechzehn war.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        4: { t:'Ein eigenes Zuhause',
+             s:'Was für dich ein Zuhause ist, steht noch nicht fest. Jede Wohnung wird daran gemessen, ob sie mehr Kopie oder mehr Gegenentwurf von früher ist.' },
+        3: { t:'Der Ton zwischen euch',
+             s:'Vieles entscheidet sich bei euch nicht im Streit, sondern im Alltagston: wer wen unterbricht, was ungesagt bleibt, wie schnell ihr wieder beim Alten seid.' },
+        10: { t:'Was die Herkunft erwartet',
+             s:'In dir sitzt eine Vorstellung davon, was aus dir werden sollte. Sie ist älter als deine eigenen Pläne und meldet sich, wenn du von ihnen abweichst.' }
+      },
       techFeld: 'Viertes, drittes und zehntes Haus'
     },
     freunde: {
@@ -101,6 +156,17 @@
         'Dein Umfeld ist gerade dein lautester Bereich.'
       ],
       meistern: 'Hier geht es darum, zu bleiben, wenn es unbequem wird — und zu gehen, wenn es nicht mehr stimmt. Beides rechtzeitig.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        11: { t:'Dazugehören, ohne zu verschwinden',
+             s:'Du gehörst gern zu etwas Größerem, und du zahlst dafür bereitwillig mit Anpassung. Erst spät merkst du, wie viel von dir dabei unter den Tisch fällt.' },
+        7: { t:'Die Einzelnen in der Menge',
+             s:'Getragen wirst du nicht von der Gruppe, sondern von zwei oder drei Menschen darin. Die Größe deines Umfelds sagt über deine Lage wenig aus.' },
+        3: { t:'Den Kontakt halten',
+             s:'Deine Freundschaften leben vom Kleinen: der Nachricht ohne Anlass, dem kurzen Anruf. Fällt das weg, lösen sie sich leise auf, ohne dass jemand kündigt.' }
+      },
       techFeld: 'Elftes, siebtes und drittes Haus'
     },
     freude: {
@@ -114,6 +180,17 @@
         'Freude und Kreativität sind gerade dein lautester Bereich.'
       ],
       meistern: 'Die Aufgabe hier ist, etwas zu tun, das keinen Nutzen hat, und es nicht nachträglich zu rechtfertigen.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        5: { t:'Machen ohne Zweck',
+             s:'Es geht um das, was du tust, wenn niemand zusieht und nichts dabei herauskommt. Genau das streichst du als Erstes, wenn es eng wird.' },
+        11: { t:'Mit anderen spielen',
+             s:'Ein Teil deiner Freude braucht Gesellschaft: gemeinsam machen, gemeinsam lachen, gemeinsam scheitern. Allein wird aus demselben Vorhaben schnell Pflicht.' },
+        9: { t:'Neugier als Antrieb',
+             s:'Freude kommt bei dir oft daher, dass etwas neu ist: eine Sprache, ein Weg, ein Gedanke. Der Reiz hält selten bis zu dem Punkt, an dem du gut darin wärst.' }
+      },
       techFeld: 'Fünftes, elftes und neuntes Haus'
     },
     selbstwert: {
@@ -127,6 +204,17 @@
         'Der Selbstwert ist gerade dein lautester Bereich.'
       ],
       meistern: 'Hier geht es darum, den eigenen Wert nicht an der letzten Rückmeldung zu messen.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        1: { t:'Wie du auftrittst',
+             s:'Zwischen dem, was du meinst, und dem, was ankommt, liegt bei dir eine Lücke. Du erklärst sie lieber nachträglich, als den Auftritt zu ändern.' },
+        2: { t:'Was du dir zugestehst',
+             s:'Dein Wert hängt hier daran, was du dir ohne Gegenleistung erlaubst. Annehmen fällt dir schwerer als Geben, und von außen sieht das nach Bescheidenheit aus.' },
+        10: { t:'Das Urteil von außen',
+             s:'Du misst dich an der letzten Rückmeldung. Eine gute trägt dich einen Tag, eine schlechte hält länger an, als sie verdient hat.' }
+      },
       techFeld: 'Erstes, zweites und zehntes Haus'
     },
     sinn: {
@@ -140,6 +228,17 @@
         'Sinn und Richtung sind gerade dein lautester Bereich.'
       ],
       meistern: 'Die Aufgabe hier ist, eine Überzeugung zu haben, die man auch wieder ändern kann.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        9: { t:'Eine Haltung, die sich ändern darf',
+             s:'Du brauchst etwas, woran du dich ausrichtest. Schwierig wird es, wenn neue Tatsachen nicht zu der Überzeugung passen, mit der du angefangen hast.' },
+        5: { t:'Sinn im Tun',
+             s:'Die Richtung zeigt sich bei dir eher im Machen als im Nachdenken. Langes Überlegen führt bei dir seltener zu einer Antwort als ein begonnener Versuch.' },
+        12: { t:'Die Stille, in der es sich klärt',
+             s:'Die großen Fragen beantworten sich bei dir nicht im Gespräch, sondern im Alleinsein. Im vollen Kalender bleiben sie jahrelang unbeantwortet liegen.' }
+      },
       techFeld: 'Neuntes, fünftes und zwölftes Haus'
     },
     umbruch: {
@@ -153,6 +252,17 @@
         'Umbruch ist gerade dein lautester Bereich.'
       ],
       meistern: 'Hier geht es darum, loszulassen, bevor es weggenommen wird. Das ist der ganze Unterschied.',
+      /* Die drei Facetten dieses Bereichs. Der Schlüssel ist das
+         Feld, aus dem die Facette kommt — der Rechner entscheidet,
+         welche davon bei dieser Person oben steht. */
+      facetten: {
+        8: { t:'Loslassen, bevor es genommen wird',
+             s:'Du hältst lange fest, auch wenn längst klar ist, dass es vorbei ist. Das Ende kommt dann nicht von dir, sondern es passiert dir.' },
+        12: { t:'Was du nicht ansiehst',
+             s:'Vieles arbeitet bei dir im Verborgenen weiter: alte Kränkungen, alte Gewohnheiten, alte Treueverhältnisse. Es meldet sich zu Zeitpunkten, die du nicht wählst.' },
+        4: { t:'Was aus der Herkunft nachwirkt',
+             s:'Umbrüche greifen bei dir bis an die Wurzel: Wohnort, Familie, Zugehörigkeit. Was anderswo ein Wechsel ist, ist bei dir ein Bodenwechsel.' }
+      },
       techFeld: 'Achtes, zwölftes und viertes Haus'
     }
   };

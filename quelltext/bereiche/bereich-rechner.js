@@ -306,7 +306,36 @@
     /* Zeichen auf dem Kernhaus */
     var kh = B.haeuser[0];
     var kz = (Math.floor(C.ASC/30) + (kh-1)) % 12;
-    return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz };
+    var R = gewichte(B, drin);
+    return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz,
+             reihenfolge:R.folge, gewicht:R.gewicht };
+  }
+
+  /* ── Welcher Teil eines Bereichs bei dieser Person wiegt ─────
+     Ein Bereich hat drei Felder. Welches davon das Dauerthema
+     trägt, steht im Geburtsbild und nicht in der Reihenfolge, in
+     der die Felder hier aufgeschrieben sind.
+     Gewicht: jeder natale Punkt zählt einfach, die beiden Lichter
+     doppelt. Das Kernfeld bekommt einen halben Punkt Vorsprung —
+     damit ein unbesetzter Bereich die erklärte Reihenfolge behält
+     und nicht zufällig sortiert aussieht.
+     Gleichstand bricht die erklärte Reihenfolge, nie der Zufall. */
+  var LICHT = { Sonne:2, Mond:2 };
+  function gewichte(B, drin){
+    var g = {}, i;
+    for(i=0;i<B.haeuser.length;i++) g[B.haeuser[i]] = (i === 0 ? 0.5 : 0);
+    for(i=0;i<drin.length;i++){
+      var d = drin[i];
+      if(g[d.haus] === undefined) continue;
+      g[d.haus] += (LICHT[d.p] || 1);
+    }
+    var folge = B.haeuser.slice();
+    folge.sort(function(a, b){
+      var u = g[b] - g[a];
+      if(u) return u;
+      return B.haeuser.indexOf(a) - B.haeuser.indexOf(b);
+    });
+    return { folge:folge, gewicht:g };
   }
 
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
@@ -332,7 +361,8 @@
     nrm: nrm, dist: dist, aspektVon: aspektVon,
     fenster: fenster, hausDurchgang: hausDurchgang,
     vorgaenge: vorgaenge, fuerBereich: fuerBereich,
-    lautstaerke: lautstaerke, kapitel: kapitel, natal: natal, blatt: blatt
+    lautstaerke: lautstaerke, kapitel: kapitel, natal: natal,
+    gewichte: gewichte, blatt: blatt
   };
 
 })();

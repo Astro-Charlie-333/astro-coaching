@@ -215,15 +215,40 @@
     /* ── 5. Dein Dauerthema hier ────────────────────────── */
     h.push('<div class="b-blk b-dauer"><h4>5 &middot; Dein Dauerthema hier</h4>');
     h.push('<p>' + esc(T.meistern) + '</p>');
+    /* Reihenfolge der Felder nach dem Geburtsbild, nicht nach der
+       Reihenfolge, in der sie aufgeschrieben sind. */
+    var folge = (b.natal.reihenfolge && b.natal.reihenfolge.length)
+                  ? b.natal.reihenfolge : b.haeuser;
     if(b.natal.leer){
       h.push('<p class="b-leise">Dieser Bereich ist bei dir von Geburt an unbesetzt. ' +
              'Das heißt nicht, dass er leer bleibt &mdash; nur, dass du ihn selbst füllen musst, ' +
              'statt von einer Veranlagung hineingeschoben zu werden.</p>');
     } else {
-      var kernH = b.natal.kernHaus, HH = bD().HAUS[kernH];
+      var kernH = folge[0], HH = bD().HAUS[kernH];
       h.push('<p>Dein Schwerpunkt liegt hier bei dem, was man so beschreiben kann: ' +
              esc(HH ? HH.kurz : '') + '. ' + esc(HH ? HH.meistern : '') + '</p>');
     }
+    /* Die Facetten: jeder Bereich hat mehrere Seiten, und welche
+       davon bei dieser Person oben steht, entscheidet das
+       Geburtsbild — nicht die Reihenfolge in der Textdatei. */
+    h.push('<div class="b-fac">');
+    for(var fi=0; fi<folge.length; fi++){
+      var fh = folge[fi], F = T.facetten ? T.facetten[fh] : null;
+      if(!F) continue;
+      h.push('<div class="b-fa' + (fi === 0 && !b.natal.leer ? ' b-fa1' : '') + '">');
+      if(fi === 0 && !b.natal.leer)
+        h.push('<span class="b-marke">Davon bei dir am meisten</span>');
+      h.push('<h5>' + esc(F.t) + '</h5>');
+      h.push('<p>' + esc(F.s) + '</p>');
+      if(n >= 2){
+        var dr = b.natal.planeten.filter(function(x){ return x.haus === fh; })
+                  .map(function(x){ return x.p; });
+        h.push('<p class="ac-tech">' + fh + '. Haus &mdash; ' +
+               esc(dr.length ? dr.join(', ') : 'unbesetzt') + '</p>');
+      }
+      h.push('</div>');
+    }
+    h.push('</div>');
     if(n >= 2){
       var tp = b.natal.planeten.map(function(x){ return x.p + ' im ' + x.haus + '.'; }).join(', ');
       h.push('<p class="ac-tech">' + esc(T.techFeld) + '. ' +
