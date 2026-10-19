@@ -176,7 +176,7 @@ else:
 # ── 8 · Rauchprobe: die Seite wirklich bedienen ───────────────
 probe = hier / '_probe-zahlen.js'
 probe.write_text(r"""
-const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright nicht gefunden. AC_PLAYWRIGHT setzen oder playwright installieren.');})();
 /* Erfundene Profile. Kein echtes Geburtsdatum in einer Probe. */
 const liste=[
  {id:'p1',name:'Probe Person',alias:'PP',y:1980,mo:7,d:15,h:11,mi:20,tz:1,

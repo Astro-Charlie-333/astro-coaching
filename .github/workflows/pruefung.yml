@@ -1,0 +1,68 @@
+# Prüft jeden Pull Request, bevor er auf die Seite darf.
+#
+# Bis hierher liefen die Prüfungen nur im Kopf der Agentin: Sie sagte
+# "alles grün", und GitHub konnte das weder sehen noch erzwingen.
+# Diese Datei macht daraus einen sichtbaren Haken am Pull Request —
+# und damit erst die Grundlage dafür, dass ein Pull Request sich selbst
+# übernehmen darf, wenn er grün ist.
+name: Prüfung
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Ein neuer Push auf denselben Branch bricht den vorherigen Lauf ab.
+concurrency:
+  group: pruefung-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  alles:
+    name: Alles bauen und prüfen
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Quelltext holen
+        uses: actions/checkout@v4
+
+      - name: Python bereitstellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Node bereitstellen
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Playwright einmal pro Woche neu laden, sonst aus dem Zwischenspeicher.
+      - name: Browser aus dem Zwischenspeicher
+        id: browsercache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-v1
+
+      - name: Playwright installieren
+        run: |
+          npm install --no-save playwright@1.47.2
+          npx playwright install --with-deps chromium
+
+      - name: Prüfen
+        env:
+          # Die Bauskripte suchen Playwright zuerst hier. Ohne das finden
+          # sie es nicht, weil die Rauchproben aus wechselnden Ordnern starten.
+          AC_PLAYWRIGHT: ${{ github.workspace }}/node_modules/playwright
+        run: python3 quelltext/pruefe-alles.py
+
+      # Schlägt etwas fehl, sind die neu gebauten Seiten das Beweisstück.
+      - name: Gebaute Seiten sichern, wenn es schiefging
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gebaute-seiten
+          path: '*.html'
+          retention-days: 5
+          if-no-files-found: ignore

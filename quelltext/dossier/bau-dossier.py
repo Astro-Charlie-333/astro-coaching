@@ -116,7 +116,7 @@ for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)"', koerper + daten
 import subprocess, json, shutil
 probe = hier / '_probe.js'
 probe.write_text(r"""
-const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright nicht gefunden. AC_PLAYWRIGHT setzen oder playwright installieren.');})();
 (async()=>{
 const b=await chromium.launch();
 const p=await (await b.newContext({viewport:{width:390,height:900}})).newPage();

@@ -198,7 +198,7 @@ else:
 # ── 10 · Rauchprobe ───────────────────────────────────────────
 probe = hier / '_probe-zeit.js'
 probe.write_text(r"""
-const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright nicht gefunden. AC_PLAYWRIGHT setzen oder playwright installieren.');})();
 const liste=[]; let i=0;
 for(const y of [1952,1966,1974,1988,1999]) for(const h of [2,9,15,21]){
   i++; liste.push({id:'p'+i,name:'Probe '+i,alias:'P'+i,y,mo:1+((i*5)%12),d:3+((i*7)%25),

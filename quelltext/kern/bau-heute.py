@@ -71,7 +71,7 @@ for name, muster in [('ohneLauf liefert .leer', r'leer:\s*!!'),
 # Rauchprobe
 probe = hier / '_probe-heute.js'
 probe.write_text(r"""
-const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright nicht gefunden. AC_PLAYWRIGHT setzen oder playwright installieren.');})();
 (async()=>{
 const b=await chromium.launch(); const f=[];
 const p=await (await b.newContext({viewport:{width:390,height:900}})).newPage();
