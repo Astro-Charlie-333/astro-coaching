@@ -150,7 +150,64 @@ Zweite Frage, für alles Neue:
 
 ---
 
-## 7 · Woher der Anspruch kommt
+## 7 · Wohin das geht
+
+Die Seite, wie sie heute ist, ist **der Prototyp für den Inhalt** — nicht
+das fertige Produkt. Das Ziel ist eine richtige Website mit zwei
+Perspektiven, bei der niemand lesen kann, was ihm nicht gehört, und später
+eine App.
+
+Vier Stufen, in dieser Reihenfolge. Jede ist für sich brauchbar; keine
+wird übersprungen.
+
+### Stufe 1 — jetzt: der Inhalt wird richtig
+Statische Seiten, alles öffentlich, alles im Quelltext lesbar. Das ist
+kein Mangel, sondern die billigste Art herauszufinden, ob die Texte
+tragen. **Solange der Inhalt noch wackelt, wäre jede teurere Technik an
+der falschen Stelle gebaut.**
+
+### Stufe 2 — die App-Ansicht
+Die Seite wird installierbar: eigenes Symbol auf dem Startbildschirm,
+Vollbild ohne Browserleiste, funktioniert auch ohne Netz. Das ist keine
+echte App, sieht aber auf dem Telefon aus wie eine — und kostet keine
+Serverarbeit. Der nächste sinnvolle Schritt nach Stufe 1.
+
+### Stufe 3 — Konten und ein Server
+Erst hier gibt es die zwei Perspektiven wirklich: Die Coachin sieht den
+Tiefgang, die Besucherin den Überblick, und niemand kann das eine im
+Quelltext des anderen nachlesen. Erst hier lässt sich etwas verkaufen.
+
+Was das mit sich bringt, ehrlich: Anmeldung und Passwörter. Laufende
+Kosten statt null. Verantwortung für fremde Geburtsdaten — Geburtszeit
+und -ort sind persönliche Daten, mit allem, was datenschutzrechtlich
+daran hängt. Ein Zahlungsdienstleister. Und ein Stück Software, das
+gepflegt werden muss, auch wenn gerade niemand daran arbeitet.
+
+Das ist zu schaffen, aber es ist ein anderes Projekt als dieses hier —
+und es lohnt sich erst, wenn Menschen den Tiefgang wirklich wollen.
+
+### Stufe 4 — eine echte App
+Nur, wenn Stufe 2 nachweislich nicht reicht.
+
+---
+
+### Die Regel, die den Weg offen hält
+
+Alles, was in `*-rechner.js` und `*-daten.js` steht, muss **ohne eine
+einzige Änderung** in eine andere Umgebung umziehen können. Rechnen weiß
+nichts von Anzeige, Texte wissen nichts vom Himmel.
+
+Das ist nicht Ordnungsliebe, sondern der Grund, warum Stufe 3 später
+bezahlbar bleibt: Beim Umzug wandern die Engine, die Texte und die
+Prüfungen unverändert mit. Nur die Anzeige wird neu gebaut.
+
+Deshalb: **Keine Rechnung und kein Text wandert jemals in eine
+HTML-Datei.** Wer das aufweicht, spart heute eine Stunde und kostet
+später eine Neuentwicklung.
+
+---
+
+## 8 · Woher der Anspruch kommt
 
 Diese Plattform ist nicht beliebig gebaut. Sie ist der Versuch einer
 bestimmten Person, eine bestimmte Sache nach draußen zu bringen — und das
@@ -175,7 +232,7 @@ etwas sei so, weil ein Planet irgendwo steht.
 
 ---
 
-## 8 · Der Anspruch
+## 9 · Der Anspruch
 
 Das hier soll nicht eine weitere Astrologie-Seite sein, sondern das
 Werkzeug, mit dem Menschen sich und einander verstehen lernen. Das ist ein
