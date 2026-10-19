@@ -150,7 +150,32 @@ Zweite Frage, für alles Neue:
 
 ---
 
-## 7 · Der Anspruch
+## 7 · Woher der Anspruch kommt
+
+Diese Plattform ist nicht beliebig gebaut. Sie ist der Versuch einer
+bestimmten Person, eine bestimmte Sache nach draußen zu bringen — und das
+soll man ihr ansehen. Mandys eigene Lesart ihres Charts, als Kompass für
+Gestaltungsfragen, nicht als Begründung für Inhalte:
+
+| | |
+|---|---|
+| **MC Wassermann** | Was sie öffentlich tut, soll neu sein und dem Ganzen dienen, nicht einer Nische gefallen. Systemisch gedacht, gegen die Norm gebaut. |
+| **Nordknoten Widder** | Vorangehen und selbst anfangen, statt zu warten, bis jemand erlaubt. |
+| **Venus und Merkur in Fischen, zehntes Haus** | Die öffentliche Arbeit ist sprachlich und mitfühlend. Das Werkzeug muss schön und weich klingen, nicht technisch. |
+| **Neptun in Steinbock, achtes Haus** | Dem Tiefen und Geteilten eine Struktur geben. Genau das tut die Plattform: sie macht Unaussprechliches besprechbar. |
+| **Stier im zwölften Haus** | Die Arbeit im Stillen, gründlich, körpernah. Kein Lärm. |
+
+Praktisch heißt das für Gestaltungsentscheidungen im Zweifel: **lieber
+ungewöhnlich als angepasst, lieber warm als technisch, lieber gründlich im
+Stillen als laut.**
+
+Das ist eine Lesart und kein Beweis. Sie steht hier, damit Entscheidungen
+eine gemeinsame Richtung haben — nicht, damit irgendwo auf der Seite steht,
+etwas sei so, weil ein Planet irgendwo steht.
+
+---
+
+## 8 · Der Anspruch
 
 Das hier soll nicht eine weitere Astrologie-Seite sein, sondern das
 Werkzeug, mit dem Menschen sich und einander verstehen lernen. Das ist ein
