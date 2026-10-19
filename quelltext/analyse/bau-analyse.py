@@ -134,7 +134,7 @@ for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper))):
 # ── Rauchprobe: viele Paare durchrechnen ────────────────────
 probe = hier / '_probe-analyse.js'
 probe.write_text(r"""
-const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright nicht gefunden. AC_PLAYWRIGHT setzen oder playwright installieren.');})();
 /* Zwanzig erfundene Charts, über Jahrzehnte und Tageszeiten gestreut. */
 const liste=[]; let i=0;
 for(const y of [1955,1968,1979,1988,1997]) for(const mo of [2,6,9,12]){
