@@ -1,5 +1,8 @@
 # Regeln für Astro-Charlie
 
+> **Zuerst `PRODUKT.md` lesen.** Dort steht, *was* gebaut wird und
+> *für wen*. Hier steht nur, *wie*. Bei Widerspruch gilt `PRODUKT.md`.
+
 Diese Datei ist die einzige Quelle dafür, wie die Plattform klingt und wie
 sie gebaut ist. Wer hier etwas ändert, ändert die Plattform. Wer eine Seite
 baut, ohne hier gelesen zu haben, baut sie falsch.
