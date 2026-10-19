@@ -5,12 +5,20 @@
 # Diese Datei macht daraus einen sichtbaren Haken am Pull Request —
 # und damit erst die Grundlage dafür, dass ein Pull Request sich selbst
 # übernehmen darf, wenn er grün ist.
+#
+# Geht etwas schief, schreibt die Prüfung den Grund als Kommentar an
+# den Pull Request. Ein Fehler, den man nur im Protokoll findet, wird
+# nicht gelesen.
 name: Prüfung
 
 on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
 
 # Ein neuer Push auf denselben Branch bricht den vorherigen Lauf ab.
 concurrency:
@@ -21,7 +29,7 @@ jobs:
   alles:
     name: Alles bauen und prüfen
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - name: Quelltext holen
@@ -39,7 +47,6 @@ jobs:
 
       # Playwright einmal pro Woche neu laden, sonst aus dem Zwischenspeicher.
       - name: Browser aus dem Zwischenspeicher
-        id: browsercache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
@@ -50,19 +57,62 @@ jobs:
           npm install --no-save playwright@1.47.2
           npx playwright install --with-deps chromium
 
+      - name: Umgebung festhalten
+        run: |
+          {
+            echo "Python  $(python3 -V 2>&1)"
+            echo "Node    $(node -v)"
+            echo "Ordner  $(pwd)"
+            echo "Oben    $(ls -1 *.html 2>/dev/null | wc -l) Seiten"
+          } | tee umgebung.txt
+
       - name: Prüfen
+        id: pruefen
         env:
           # Die Bauskripte suchen Playwright zuerst hier. Ohne das finden
           # sie es nicht, weil die Rauchproben aus wechselnden Ordnern starten.
           AC_PLAYWRIGHT: ${{ github.workspace }}/node_modules/playwright
-        run: python3 quelltext/pruefe-alles.py
+        run: |
+          set -o pipefail
+          python3 quelltext/pruefe-alles.py 2>&1 | tee pruefung.log
 
-      # Schlägt etwas fehl, sind die neu gebauten Seiten das Beweisstück.
+      # Ab hier nur noch, wenn die Prüfung fehlgeschlagen ist.
+      - name: Grund an den Pull Request schreiben
+        if: failure() && steps.pruefen.outcome == 'failure' && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          LAUF: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "## Die Prüfung ist fehlgeschlagen"
+            echo
+            echo "Das hier wird **nicht** ausgeliefert. Was schiefging:"
+            echo
+            echo '```'
+            tail -n 60 pruefung.log
+            echo '```'
+            echo
+            echo "<details><summary>Umgebung</summary>"
+            echo
+            echo '```'
+            cat umgebung.txt
+            echo '```'
+            echo
+            echo "</details>"
+            echo
+            echo "[Ganzes Protokoll ansehen]($LAUF)"
+          } > kommentar.md
+          gh pr comment "$PR" --repo "$REPO" --body-file kommentar.md
+
       - name: Gebaute Seiten sichern, wenn es schiefging
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: gebaute-seiten
-          path: '*.html'
+          name: gebaute-seiten-und-protokoll
+          path: |
+            pruefung.log
+            umgebung.txt
           retention-days: 5
           if-no-files-found: ignore
