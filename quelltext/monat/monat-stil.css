@@ -1,0 +1,51 @@
+/* ───────────────────────────────────────────────────────────────
+   monat-stil.css — die Anzeige des Monatsberichts.
+
+   Nur Aussehen. Kein Text, keine Rechnung. Die gemeinsamen
+   Grundregeln (Farben, Schrift, Leiste, Fuß) stehen in
+   rituale/basis.css und werden davor geladen.
+   ─────────────────────────────────────────────────────────────── */
+.mb-steuer{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.mb-steuer button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
+ background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
+.mb-steuer button[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.mb-steuer .lab{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);}
+.mb-brief{background:var(--papier);border:1px solid var(--linie);border-radius:22px;padding:30px 32px;margin-bottom:14px;}
+@media(max-width:620px){.mb-brief{padding:22px 20px;}}
+.mb-brief .anrede{font-family:var(--serif);font-size:clamp(23px,4.4vw,30px);font-weight:300;
+ color:var(--tinte);margin-bottom:5px;line-height:1.15;}
+.mb-brief .zeit{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:20px;}
+.mb-brief p{margin:0 0 14px;font-size:16px;line-height:1.72;}
+.mb-brief h4{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--nacht);margin:26px 0 8px;}
+.mb-brief .kasten{background:var(--messing-bg);border-radius:15px;padding:16px 19px;margin:16px 0;}
+.mb-brief .kasten p{margin:0 0 9px;font-size:15.3px;}
+.mb-brief .kasten p:last-child{margin-bottom:0;}
+/* Die Mechanik-Zeile: leiser als der Text, der sie erklärt. */
+.mb-brief .hintergrund{font-size:14px;color:var(--leise);}
+.mb-brief .frage{background:var(--bg);border-left:3px solid var(--messing);border-radius:12px;
+ padding:13px 16px;margin:14px 0;font-family:var(--serif);font-style:italic;font-size:17px;
+ color:var(--nacht);line-height:1.45;}
+.mb-brief .gruss{margin-top:26px;padding-top:18px;border-top:1px solid var(--linie);font-size:15.5px;line-height:1.7;}
+.mb-knoepfe{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px;}
+.mb-knoepfe button{font-family:var(--sans);font-size:14.5px;border:1px solid var(--nacht);
+ background:var(--nacht);color:#fff;padding:12px 22px;border-radius:21px;cursor:pointer;}
+.mb-knoepfe button.leer{background:none;color:var(--nacht);}
+.mb-knoepfe button:hover{opacity:.88;}
+#mbhinweis{font-size:14px;color:var(--gruen,#3F6B4A);margin-bottom:12px;display:none;}
+#mbhinweis.an{display:block;}
+.mb-roh{width:100%;min-height:300px;padding:16px 18px;border:1px solid var(--linie);border-radius:16px;
+ background:var(--bg);font-family:var(--sans);font-size:14.5px;line-height:1.65;color:var(--tinte);
+ resize:vertical;display:none;}
+.mb-roh.an{display:block;}
+.mb-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:20px;padding:30px;
+ text-align:center;color:var(--leise);line-height:1.65;}
+@media print{.ac-leiste,.mb-steuer,.mb-knoepfe,.weiter,.foot,.eyebrow,h1,.lede,.mb-roh{display:none;}
+ .mb-brief{border:none;padding:0;} body{background:#fff;}}
+
+/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
+   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
+@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
+/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
+   nach der Raster- und Flexspalten ihre Breite berechnen. */

@@ -1,9 +1,10 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monatsbericht · Coach-Ansicht · Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Monatsbericht &middot; Coach-Ansicht &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
-<style>*{box-sizing:border-box;margin:0;padding:0;}
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -109,6 +110,14 @@ a{color:var(--nacht);}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
+
+/* ───────────────────────────────────────────────────────────────
+   monat-stil.css — die Anzeige des Monatsberichts.
+
+   Nur Aussehen. Kein Text, keine Rechnung. Die gemeinsamen
+   Grundregeln (Farben, Schrift, Leiste, Fuß) stehen in
+   rituale/basis.css und werden davor geladen.
+   ─────────────────────────────────────────────────────────────── */
 .mb-steuer{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
 .mb-steuer button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
  background:var(--papier);color:var(--tinte);border-radius:18px;cursor:pointer;}
@@ -126,6 +135,8 @@ a{color:var(--nacht);}
 .mb-brief .kasten{background:var(--messing-bg);border-radius:15px;padding:16px 19px;margin:16px 0;}
 .mb-brief .kasten p{margin:0 0 9px;font-size:15.3px;}
 .mb-brief .kasten p:last-child{margin-bottom:0;}
+/* Die Mechanik-Zeile: leiser als der Text, der sie erklärt. */
+.mb-brief .hintergrund{font-size:14px;color:var(--leise);}
 .mb-brief .frage{background:var(--bg);border-left:3px solid var(--messing);border-radius:12px;
  padding:13px 16px;margin:14px 0;font-family:var(--serif);font-style:italic;font-size:17px;
  color:var(--nacht);line-height:1.45;}
@@ -165,23 +176,28 @@ a{color:var(--nacht);}
 
 <div class="eyebrow">Coach-Ansicht</div>
 <h1>Der <em>Monatsbericht.</em></h1>
-<p class="lede">Ein fertiger Text pro Person und Monat — in der Sprache, in der du mit jemandem sprichst, nicht über ihn. Zum Kopieren, Verschicken oder Ausdrucken. Du kannst alles überschreiben, bevor es rausgeht.</p>
+<p class="lede">Ein fertiger Text pro Person und Monat &mdash; in der Sprache, in der du mit jemandem sprichst, nicht &uuml;ber ihn. Zum Kopieren, Verschicken oder Ausdrucken. Du kannst alles &uuml;berschreiben, bevor es rausgeht.</p>
+
+<div id="nivleiste"></div>
 
 <div class="mb-steuer" id="mbsteuer"></div>
 <div class="mb-knoepfe" id="mbknoepfe" style="display:none;">
   <button type="button" id="mbkopie">Text kopieren</button>
-  <button type="button" class="leer" id="mbroh">Zum Bearbeiten öffnen</button>
+  <button type="button" class="leer" id="mbroh">Zum Bearbeiten &ouml;ffnen</button>
   <button type="button" class="leer" id="mbdruck">Drucken</button>
 </div>
 <div id="mbhinweis"></div>
 <textarea class="mb-roh" id="mbtext"></textarea>
 <div id="mbbericht"></div>
 
-<div class="tip"><b>Wofür das gedacht ist:</b> Ein kurzer Kontakt zwischen den Terminen. Menschen melden sich selten von allein, wenn es gerade schwierig ist — ein Bericht, der ohne Anlass kommt, senkt die Hürde. <b>Und was er nicht ist:</b> eine Prognose. Jeder Satz darin ist eine Möglichkeit, keine Ansage. Wenn du merkst, dass jemand Vorhersagen daraus macht, hör damit auf.</div>
+<div class="tip"><b>Wof&uuml;r das gedacht ist:</b> Ein kurzer Kontakt zwischen den Terminen. Menschen melden sich selten von allein, wenn es gerade schwierig ist &mdash; ein Bericht, der ohne Anlass kommt, senkt die H&uuml;rde. <b>Und was er nicht ist:</b> eine Prognose. Jeder Satz darin ist eine M&ouml;glichkeit, keine Ansage. Wenn du merkst, dass jemand Vorhersagen daraus macht, h&ouml;r damit auf.</div>
 
 <div class="weiter"><a href="dossier.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Das Dossier</span></a><a href="profile.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Profile</span></a></div>
-<div class="foot">Monatsbericht &middot; Angebot zum Abgleichen, keine Vorhersage. Vor dem Verschicken lesen und anpassen.</div>
+<div class="foot">Monatsbericht &middot; Angebot zum Abgleichen, keine Vorhersage. Vor dem Verschicken lesen und anpassen.<br>
+Die Rechnung liegt im Quelltext unter <i>monat/monat-rechner.js</i>, die S&auml;tze unter <i>monat/monat-daten.js</i>.
+<span class="ac-tech" data-ab="2">Laufende Transite der langsamen Planeten gegen das Radix, H&auml;user im Whole-Sign-System, Orbis 1,5 Grad. Je Paar aus Transit und Radixpunkt nur der engste Winkel des Monats.</span></div>
 </div>
+
 <script>
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
@@ -240,14 +256,23 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
-var HF=['dich selbst und wie du auftrittst','deinen Wert und das, was dir gehört','Austausch, Lernen und deinen Nahbereich',
- 'dein Zuhause und deine Wurzeln','deinen Ausdruck und das, was dir Freude macht','deinen Alltag und deine Arbeit',
- 'deine Beziehungen','Tiefe, Geteiltes und das, was nicht an der Oberfläche liegt','Sinn, Weite und Überzeugung',
- 'deine berufliche Rolle und wie du gesehen wirst','Gruppen, Freundschaften und Ziele','Rückzug und dein Innenleben'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
 function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
 
 function chartVon(p){
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
@@ -258,186 +283,574 @@ function chartVon(p){
    Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
 }
 function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
-function jdVon(y,m,d){ return jdFromUT(y,m,d,12); }
 
-var monatOffset=0, gewaehlt=null;
 
-function bericht(p, off){
-  var P=chartVon(p), nm=(p.name||AC_P.anzeige(p,true)||'').trim();
-  var n=new Date();
-  var mz=new Date(n.getUTCFullYear(), n.getUTCMonth()+off, 1);
-  var jahr=mz.getFullYear(), mon=mz.getMonth();
-  var jdA=jdVon(jahr,mon+1,1), jdE=jdVon(jahr,mon+1,28);
-  var mitte=(jdA+jdE)/2, T=(mitte-2451545)/36525;
+/* ───────────────────────────────────────────────────────────────
+   monat-rechner.js — der Monatsbericht: was in einem Monat läuft.
 
-  /* Sonnenstand im Monat → betroffenes Haus */
-  var sonneM=sunLon(T), hS=haus(P,sonneM);
+   Baut auf rituale/engine.js auf (jdFromUT, lon, haus). Es gibt
+   genau eine Himmelsrechnung, und die steht dort. Hier wird
+   nichts am Himmel neu gerechnet, sondern das Vorhandene auf
+   einen Kalendermonat bezogen.
 
-  /* Treffer langsamer Planeten in diesem Monat */
-  var treffer=[];
-  ['Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(t){
-    ['Sonne','Mond','ASC','MC','Venus','Mars','Merkur'].forEach(function(r){
-      if(P[r]===undefined) return;
-      var eng=99;
-      for(var d=0;d<30;d+=3){
-        var l=geo(t,(jdA+d-2451545)/36525);
-        var s=Math.abs(nrm(l-P[r]+180)-180);
-        [0,90,180,120,60].forEach(function(w){
-          var o=Math.abs(s-w);
-          if(o<eng&&o<1.5) { eng=o; treffer.push({t:t,r:r,o:o,
-            typ:(w===0?'trifft':(w===90?'fordert':(w===180?'steht gegenüber':'unterstützt'))),
-            art:(w===0||w===90||w===180)?'hart':'weich'}); }
+   Diese Datei kennt keinen einzigen Satz. Sie liefert Zahlen und
+   Schlüssel; die Sätze stehen in monat-daten.js, die Anzeige in
+   monat-app.js.
+
+   Alle Namen mit m bzw. M_ davor, damit nichts mit der Engine
+   kollidiert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+
+function mnrm(x){ x=x%360; return x<0?x+360:x; }
+function mdist(a,b){ var d=Math.abs(mnrm(a-b)); return d>180?360-d:d; }
+
+/* Die langsamen Bewegungen. Nur sie prägen einen ganzen Monat —
+   was in drei Tagen vorbei ist, gehört auf die Bereichsseite. */
+var M_WANDERER = ['Jupiter','Saturn','Uranus','Neptun','Pluto'];
+
+/* Die natalen Punkte, die ein Monatsbericht überhaupt anfasst. */
+var M_PUNKTE = ['Sonne','Mond','ASC','MC','Venus','Mars','Merkur'];
+
+/* Die Winkel, in der Reihenfolge ihrer Deutlichkeit. */
+var M_WINKEL = [
+  { k:'trifft',     grad:0,   art:'hart'  },
+  { k:'fordert',    grad:90,  art:'hart'  },
+  { k:'gegenueber', grad:180, art:'hart'  },
+  { k:'traegt',     grad:120, art:'weich' },
+  { k:'hilft',      grad:60,  art:'weich' }
+];
+
+/* Enger Orbis: ein Monatsbericht soll wenig und Deutliches nennen. */
+var M_ORBIS   = 1.5;
+var M_SCHRITT = 2;        /* Tage je Abtastung */
+
+/* ── Der Kalender ───────────────────────────────────────────── */
+
+/* Tage im Monat. mon ist 0 bis 11, wie bei Date. Tag 0 des
+   Folgemonats ist der letzte Tag dieses Monats. */
+function mTageImMonat(jahr, mon){
+  return new Date(Date.UTC(jahr, mon + 1, 0)).getUTCDate();
+}
+
+/* Julianisches Datum zur Mittagsstunde eines Tages im Monat. */
+function mMonatJD(jahr, mon, tag){
+  return jdFromUT(jahr, mon + 1, tag, 12);
+}
+
+/* Welcher Monat liegt um versatz Monate nach dem Stichtag. */
+function mMonatVon(jetzt, versatz){
+  var d = new Date(Date.UTC(jetzt.getUTCFullYear(),
+                            jetzt.getUTCMonth() + versatz, 1));
+  return { jahr:d.getUTCFullYear(), mon:d.getUTCMonth() };
+}
+
+/* ── Der Schwerpunkt ────────────────────────────────────────── */
+
+/* Das natale Haus, durch das die Sonne in der Monatsmitte läuft.
+   Ein Haus, nicht zwei: der Bericht nennt einen Schwerpunkt. */
+function mSchwerpunkt(P, jahr, mon){
+  var mitte = mMonatJD(jahr, mon, Math.ceil(mTageImMonat(jahr, mon) / 2));
+  return haus(P, lon('Sonne', mitte));
+}
+
+/* ── Die Treffer ────────────────────────────────────────────── */
+
+/* Höchstens ein Eintrag je Paar aus Wanderer und natalem Punkt:
+   der engste Winkel, den das Paar im Monat erreicht. Dadurch kann
+   derselbe Vorgang nicht mehrfach im Bericht stehen.
+   Sortiert nach Enge — der deutlichste zuerst. */
+function mTreffer(P, jahr, mon){
+  var tage = mTageImMonat(jahr, mon), jdA = mMonatJD(jahr, mon, 1), out = [];
+  M_WANDERER.forEach(function(w){
+    M_PUNKTE.forEach(function(r){
+      if(P[r] === undefined) return;
+      var best = null;
+      for(var d = 0; d < tage; d += M_SCHRITT){
+        var s = mdist(lon(w, jdA + d), P[r]);
+        M_WINKEL.forEach(function(k){
+          var o = Math.abs(s - k.grad);
+          if(o <= M_ORBIS && (best === null || o < best.orbis))
+            best = { wanderer:w, punkt:r, winkel:k.grad, k:k.k,
+                     art:k.art, orbis:o, tag:d + 1 };
         });
       }
+      if(best) out.push(best);
     });
   });
-  var gesehen={}, tr=treffer.sort(function(a,b){return a.o-b.o;}).filter(function(x){
-    var k=x.t+x.r; if(gesehen[k]) return false; gesehen[k]=1; return true; });
+  return out.sort(function(a,b){
+    if(a.orbis !== b.orbis) return a.orbis - b.orbis;
+    /* Gleich eng: feste Reihenfolge, damit derselbe Monat beim
+       zweiten Aufruf denselben Bericht ergibt. */
+    return (a.wanderer + a.punkt < b.wanderer + b.punkt) ? -1 : 1;
+  });
+}
 
-  /* Lunationen */
-  var lun=[];
-  for(var d=0;d<31;d++){
-    var T2=(jdA+d-2451545)/36525;
-    var ph=nrm(moonLon(T2)-sunLon(T2));
-    var ph0=nrm(moonLon((jdA+d-1-2451545)/36525)-sunLon((jdA+d-1-2451545)/36525));
-    if(ph0>330&&ph<30) lun.push({art:'Neumond',d:d+1,h:haus(P,moonLon(T2))});
-    if(ph0<180&&ph>=180) lun.push({art:'Vollmond',d:d+1,h:haus(P,moonLon(T2))});
+/* ── Neu- und Vollmond ──────────────────────────────────────── */
+
+/* Der Abstand zwischen Mond und Sonne, 0 bis 360 Grad. */
+function mPhase(jd){ return mnrm(lon('Mond', jd) - lon('Sonne', jd)); }
+
+/* Der Augenblick, in dem der Abstand genau durch ziel geht —
+   zwischen zwei Mittagsstunden halbiert.
+
+   Ohne diese Verfeinerung nennt der Bericht den Tag, an dem der
+   Durchgang schon vorbei war: bis zu einen Tag zu spät. Ein Datum,
+   das an einen Menschen geht, darf nicht um einen Tag danebenliegen. */
+function mGenau(jdVor, jdNach, ziel){
+  function f(jd){ return mnrm(mPhase(jd) - ziel + 180) - 180; }
+  var a = jdVor, b = jdNach, fa = f(a);
+  for(var i = 0; i < 40; i++){
+    var m = (a + b) / 2, fm = f(m);
+    if(fa * fm <= 0){ b = m; } else { a = m; fa = fm; }
   }
+  return (a + b) / 2;
+}
 
-  var TD={Jupiter:['Es geht gerade leichter als sonst','In diesem Monat öffnet sich etwas. Dinge, die sonst Überwindung kosten, gehen leichter von der Hand — und es lohnt sich, das zu nutzen, statt es für selbstverständlich zu halten.'],
-   Saturn:['Es ist gerade zäh — und das hat einen Grund','Dieser Monat verlangt mehr Aufwand für dasselbe Ergebnis. Das ist kein Zeichen, dass du etwas falsch machst. Es ist eine Phase, in der sich zeigt, was trägt. Was du jetzt aufbaust, hält lange — es fühlt sich beim Bauen nur nicht gut an.'],
-   Uranus:['Rechne mit Unruhe','In diesem Monat reißen Routinen leichter ab als sonst, und Entscheidungen kommen plötzlich. Nimm dir weniger vor und plan Lücken ein — das ist keine Nachlässigkeit, sondern Anpassung.'],
-   Neptun:['Die Konturen sind gerade weicher','In diesem Monat verschwimmt manches. Du überschätzt leicht, was du schaffst, und Gefühle lassen sich schwerer zuordnen. Schreib Dinge auf, statt dich auf dein Gespür zu verlassen.'],
-   Pluto:['Im Hintergrund wird umgebaut','Dieser Monat gehört zu einer längeren Bewegung, die man selten mittendrin erkennt. Du musst nichts erzwingen — das Meiste passiert ohnehin, auch ohne dass du nachhilfst.']};
+/* Neu- und Vollmonde im Monat, mit dem natalen Haus, in dem sie
+   stehen. Zwei Dinge sind hier wichtig:
 
-  var h='<div class="mb-brief">'+
-    '<div class="anrede">Hallo '+(nm.split(' ')[0]||'du')+',</div>'+
-    '<div class="zeit">'+MN[mon]+' '+jahr+'</div>';
+   · Die Schleife läuft über die wirklichen Tage des Monats und einen
+     darüber hinaus — sonst fällt ein Durchgang am Abend des letzten
+     Tages durch jedes Raster.
+   · Gezählt wird der Tag des genauen Augenblicks, und nur, wenn er
+     wirklich in diesem Monat liegt. */
+function mLunationen(P, jahr, mon){
+  var tage = mTageImMonat(jahr, mon), jdA = mMonatJD(jahr, mon, 1);
+  var out = [], gesehen = {};
+  for(var d = 0; d <= tage; d++){
+    var jd = jdA + d, vor = mPhase(jd - 1), ph = mPhase(jd), art = null, ziel = 0;
+    if(vor > 270 && ph < 90){ art = 'neumond'; ziel = 0; }
+    else if(vor < 180 && ph >= 180){ art = 'vollmond'; ziel = 180; }
+    if(!art) continue;
+    var genau = mGenau(jd - 1, jd, ziel), dt = datVon(genau);
+    if(dt.getUTCFullYear() !== jahr || dt.getUTCMonth() !== mon) continue;
+    var k = art + dt.getUTCDate();
+    if(gesehen[k]) continue;
+    gesehen[k] = 1;
+    out.push({ art:art, tag:dt.getUTCDate(), stunde:dt.getUTCHours(),
+               haus:haus(P, lon('Mond', genau)) });
+  }
+  return out.sort(function(a, b){ return a.tag - b.tag; });
+}
 
-  h+='<p>hier ist dein Überblick für '+MN[mon]+'. Alles darin ist ein <b>Angebot zum Abgleichen</b>, keine Vorhersage — '+
-    'nimm mit, was dir entspricht, und lass liegen, was nicht passt.</p>';
+/* ── Der ganze Monat ────────────────────────────────────────── */
 
-  h+='<h4>Worauf dieser Monat zeigt</h4>'+
-    '<p>Der Schwerpunkt liegt auf <b>'+HF[hS-1]+'</b>. Das ist der Bereich, in dem in diesen Wochen '+
-    'mehr Aufmerksamkeit hängenbleibt als sonst — manchmal weil etwas ansteht, manchmal einfach, weil es dir auffällt.</p>';
+function mBericht(P, jahr, mon){
+  return {
+    jahr: jahr,
+    mon: mon,
+    tage: mTageImMonat(jahr, mon),
+    schwerpunkt: mSchwerpunkt(P, jahr, mon),
+    treffer: mTreffer(P, jahr, mon),
+    lunationen: mLunationen(P, jahr, mon)
+  };
+}
 
-  if(tr.length){
-    var x=tr[0], d=TD[x.t];
-    h+='<div class="kasten"><p><b>'+d[0]+'.</b></p><p>'+d[1]+'</p>'+
-      '<p style="font-size:14px;color:var(--leise);">Hintergrund: '+x.t+' '+x.typ+' '+
-      (x.r==='ASC'?'deinen Aszendenten':(x.r==='MC'?'deinen MC':'deinen '+x.r))+'.</p></div>';
-    var zweit=tr.filter(function(z){return z.t!==x.t;})[0];
-    if(zweit){
-      var d2=TD[zweit.t];
-      h+='<p><b>Daneben läuft noch etwas Zweites.</b> '+d2[1]+'</p>';
+window.AC_MONAT = {
+  WANDERER:M_WANDERER, PUNKTE:M_PUNKTE, WINKEL:M_WINKEL,
+  ORBIS:M_ORBIS, SCHRITT:M_SCHRITT,
+  nrm:mnrm, dist:mdist,
+  tageImMonat:mTageImMonat, monatJD:mMonatJD, monatVon:mMonatVon,
+  phase:mPhase, genau:mGenau,
+  schwerpunkt:mSchwerpunkt, treffer:mTreffer, lunationen:mLunationen,
+  bericht:mBericht
+};
+
+})();
+
+/* ───────────────────────────────────────────────────────────────
+   monat-daten.js — alle Sätze des Monatsberichts.
+
+   Zwei Regeln, die hier beim Bauen geprüft werden:
+
+   1 · Jeder Satz steht hier vollständig. Nichts wird in
+       monat-app.js aus Bruchstücken zusammengeklebt — genau daraus
+       entstehen Sätze wie „Der Schwerpunkt liegt auf deinen
+       Ausdruck". Lücken heißen {name} und werden nur gefüllt,
+       nie erweitert.
+   2 · Was ein Laie liest, enthält kein Fachwort. Die Mechanik
+       steht getrennt unter TECH und erscheint erst ab Stufe 2.
+
+   *So* markierter Text wird hervorgehoben. HTML steht hier nicht:
+   die Anzeige maskiert jeden Wert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+
+  /* ── Rahmen des Briefes ───────────────────────────────────── */
+  var M_ANREDE = 'Hallo {vorname},';
+  var M_DU     = 'du';
+
+  var M_EINL = 'hier ist dein Überblick für {monat}. Alles darin ist ein '
+             + '*Angebot zum Abgleichen*, keine Vorhersage — nimm mit, was '
+             + 'dir entspricht, und lass liegen, was nicht passt.';
+
+  var M_H = {
+    monat: 'Worauf dieser Monat zeigt',
+    daten: 'Zwei Daten zum Merken',
+    frage: 'Eine Frage für diesen Monat'
+  };
+
+  /* ── Der Schwerpunkt, zwölf ganze Sätze ───────────────────── */
+  /* Ganze Sätze, weil der Rahmen sonst nicht zur Fügung passt.
+     Reihenfolge: erstes bis zwölftes natales Haus. */
+  var M_SCHWERPUNKT = [
+    'Dieser Monat zeigt auf *dich selbst und darauf, wie du auftrittst*.',
+    'Dieser Monat zeigt auf *deinen Wert und auf das, was dir gehört*.',
+    'Dieser Monat zeigt auf *Austausch, Lernen und deinen Nahbereich*.',
+    'Dieser Monat zeigt auf *dein Zuhause und deine Wurzeln*.',
+    'Dieser Monat zeigt auf *deinen Ausdruck und auf das, was dir Freude macht*.',
+    'Dieser Monat zeigt auf *deinen Alltag und deine Arbeit*.',
+    'Dieser Monat zeigt auf *deine Beziehungen und dein Gegenüber*.',
+    'Dieser Monat zeigt auf *Tiefe, Geteiltes und auf das, was nicht an der Oberfläche liegt*.',
+    'Dieser Monat zeigt auf *Sinn, Weite und darauf, wovon du überzeugt bist*.',
+    'Dieser Monat zeigt auf *deine berufliche Rolle und darauf, wie du gesehen wirst*.',
+    'Dieser Monat zeigt auf *Gruppen, Freundschaften und Ziele*.',
+    'Dieser Monat zeigt auf *Rückzug und auf dein Innenleben*.'
+  ];
+
+  var M_SCHWERPUNKT_NACH =
+      'Das ist der Bereich, in dem in diesen Wochen mehr Aufmerksamkeit '
+    + 'hängenbleibt als sonst — manchmal weil etwas ansteht, manchmal '
+    + 'einfach, weil es dir auffällt.';
+
+  /* ── Was gerade läuft, in Alltagssprache ──────────────────── */
+  var M_LAUF = {
+    Jupiter: {
+      titel: 'Es geht gerade leichter als sonst.',
+      text:  'In diesem Monat öffnet sich etwas. Dinge, die sonst '
+           + 'Überwindung kosten, gehen leichter von der Hand — und es '
+           + 'lohnt sich, das zu nutzen, statt es für selbstverständlich '
+           + 'zu halten.'
+    },
+    Saturn: {
+      titel: 'Es ist gerade zäh — und das hat einen Grund.',
+      text:  'Dieser Monat verlangt mehr Aufwand für dasselbe Ergebnis. '
+           + 'Das ist kein Zeichen, dass du etwas falsch machst. Es ist '
+           + 'eine Phase, in der sich zeigt, was trägt. Was du jetzt '
+           + 'aufbaust, hält lange — es fühlt sich beim Bauen nur nicht '
+           + 'gut an.'
+    },
+    Uranus: {
+      titel: 'Rechne mit Unruhe.',
+      text:  'In diesem Monat reißen Routinen leichter ab als sonst, und '
+           + 'Entscheidungen kommen plötzlich. Nimm dir weniger vor und '
+           + 'plan Lücken ein — das ist keine Nachlässigkeit, sondern '
+           + 'Anpassung.'
+    },
+    Neptun: {
+      titel: 'Die Konturen sind gerade weicher.',
+      text:  'In diesem Monat verschwimmt manches. Du überschätzt leicht, '
+           + 'was du schaffst, und Gefühle lassen sich schwerer zuordnen. '
+           + 'Schreib Dinge auf, statt dich auf dein Gespür zu verlassen.'
+    },
+    Pluto: {
+      titel: 'Im Hintergrund wird umgebaut.',
+      text:  'Dieser Monat gehört zu einer längeren Bewegung, die man '
+           + 'selten mittendrin erkennt. Du musst nichts erzwingen — das '
+           + 'Meiste passiert ohnehin, auch ohne dass du nachhilfst.'
     }
+  };
+
+  var M_ZWEITES = 'Daneben läuft noch etwas Zweites.';
+
+  var M_RUHIG = {
+    titel: 'Ein ruhiger Monat.',
+    text:  'In diesem Monat berührt keine der langsamen Bewegungen deine '
+         + 'Hauptpunkte. Solche Monate sind unterschätzt: Sie eignen sich '
+         + 'für das, was in bewegten Zeiten liegen bleibt — nachholen, '
+         + 'aufräumen, etwas zu Ende bringen.'
+  };
+
+  /* ── Die zwei Daten ───────────────────────────────────────── */
+  var M_MOND = {
+    neumond:  '*Neumond am {tag}. {monat}* in deinem Bereich *{bereich}*. '
+            + 'Gute Gelegenheit, dort etwas anzufangen oder neu anzusetzen '
+            + '— ohne Druck, es ist nur ein günstiger Moment.',
+    vollmond: '*Vollmond am {tag}. {monat}* in deinem Bereich *{bereich}*. '
+            + 'Da wird oft etwas sichtbar oder kommt zu einem Abschluss. '
+            + 'Wenn in diesen Tagen etwas hochkommt, ist das kein Zufall.'
+  };
+
+  /* ── Die Frage, zwölf ganze Fragen ────────────────────────── */
+  var M_FRAGE = [
+    'Wie zeigst du dich gerade — und stimmt das mit dem überein, wie du dich fühlst?',
+    'Was ist dir gerade wirklich etwas wert?',
+    'Mit wem müsstest du mal wieder reden?',
+    'Was bräuchte dein Zuhause, damit du dort zur Ruhe kommst?',
+    'Was machst du gerade nur zum Vergnügen?',
+    'Welche Kleinigkeit im Alltag kostet dich mehr, als sie sollte?',
+    'Was gibst du gerade mehr, als du bekommst?',
+    'Worüber redest du gerade mit niemandem?',
+    'Woran glaubst du gerade — und seit wann?',
+    'Wofür willst du gesehen werden?',
+    'Wo gehörst du gerade dazu, ohne dich zu verbiegen?',
+    'Was brauchst du gerade an Rückzug, und nimmst du ihn dir?'
+  ];
+
+  var M_FRAGE_NACH = 'Du musst sie nicht beantworten. Manchmal reicht es, '
+                   + 'sie im Hinterkopf zu haben.';
+
+  var M_GRUSS = {
+    text: 'Wenn etwas davon ins Schwarze trifft oder gar nicht passt — '
+        + 'schreib mir gern. Beides ist nützlich.',
+    formel: 'Herzlich',
+    name: 'Mandy'
+  };
+
+  /* ── Die Mechanik, erst ab Stufe 2 ────────────────────────── */
+  /* Hier und nur hier stehen Fachwörter. Jeder Schlüssel aus
+     AC_MONAT.WINKEL und AC_MONAT.PUNKTE braucht einen Eintrag —
+     bau-monat.py prüft das, damit ein neuer Winkel im Rechner
+     nicht ohne sein Wort bleibt. */
+  var M_TECH = {
+    satz: 'Hintergrund: {wanderer} {winkel} {punkt}, Orbis {orbis} Grad.',
+    winkel: {
+      trifft:     'in Konjunktion mit',
+      fordert:    'im Quadrat zu',
+      gegenueber: 'in Opposition zu',
+      traegt:     'im Trigon zu',
+      hilft:      'im Sextil zu'
+    },
+    /* Dativ, weil der Satz ihn verlangt. Vollständige Formen,
+       nicht „deinen " plus Name. */
+    punkt: {
+      Sonne:  'deiner Sonne',
+      Mond:   'deinem Mond',
+      Merkur: 'deinem Merkur',
+      Venus:  'deiner Venus',
+      Mars:   'deinem Mars',
+      ASC:    'deinem Aszendenten',
+      MC:     'deinem Medium Coeli'
+    }
+  };
+
+  /* ── Bedienung ────────────────────────────────────────────── */
+  var M_BEDIENUNG = {
+    leer: '*Noch keine Profile angelegt.* Der Monatsbericht arbeitet mit '
+        + 'den Profilen, die du dort anlegst:',
+    profilseite: 'Profile',
+    kopiert: 'Text kopiert — du kannst ihn jetzt in eine Mail oder '
+           + 'Nachricht einfügen.',
+    kopieFehler: 'Kopieren hat nicht geklappt — öffne den Text zum '
+               + 'Bearbeiten und markiere ihn von Hand.',
+    profil: 'Profil',
+    monat: 'Monat',
+    ich: ' (ich)',
+    monate: ['dieser', 'nächster', 'übernächster']
+  };
+
+  window.AC_MONAT_TEXT = {
+    ANREDE:M_ANREDE, DU:M_DU, EINL:M_EINL, H:M_H,
+    SCHWERPUNKT:M_SCHWERPUNKT, SCHWERPUNKT_NACH:M_SCHWERPUNKT_NACH,
+    LAUF:M_LAUF, ZWEITES:M_ZWEITES, RUHIG:M_RUHIG,
+    MOND:M_MOND, FRAGE:M_FRAGE, FRAGE_NACH:M_FRAGE_NACH,
+    GRUSS:M_GRUSS, TECH:M_TECH, BEDIENUNG:M_BEDIENUNG
+  };
+
+})();
+
+/* ───────────────────────────────────────────────────────────────
+   monat-app.js — die Anzeige des Monatsberichts.
+
+   Diese Datei enthält keinen Satz und keine Rechnung. Sie holt
+   Zahlen aus AC_MONAT, Sätze aus AC_MONAT_TEXT und setzt beides
+   zusammen. Lücken in den Sätzen heißen {name} und werden
+   gefüllt, nie erweitert — bau-monat.py bricht ab, sobald hier
+   ein ganzer Satz auftaucht.
+
+   Alle eigenen Namen mit mb bzw. MB_ davor, damit nichts mit der
+   Engine kollidiert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+
+var T = window.AC_MONAT_TEXT, R = window.AC_MONAT;
+
+var MB_profil = null, MB_versatz = 0;
+
+function mbEl(id){ return document.getElementById(id); }
+
+function mbEsc(s){
+  return String(s === undefined || s === null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* Erst die Lücken füllen, dann maskieren, dann hervorheben.
+   In dieser Reihenfolge kann kein Wert HTML einschmuggeln, und
+   die Sternchen aus den Daten wirken trotzdem. */
+function mbSatz(vorlage, werte){
+  var t = String(vorlage).replace(/\{([a-zA-Z]+)\}/g, function(_, k){
+    return (werte && werte[k] !== undefined) ? String(werte[k]) : '';
+  });
+  return mbEsc(t).replace(/\*([^*]+)\*/g, '<b>$1</b>');
+}
+
+function mbZahl(x){ return String(x.toFixed(1)).replace('.', ','); }
+
+/* ── Der Brief ──────────────────────────────────────────────── */
+function mbBrief(p, versatz){
+  var P  = chartVon(p);
+  var mv = R.monatVon(new Date(), versatz);
+  var b  = R.bericht(P, mv.jahr, mv.mon);
+  var monat = MN[b.mon];
+  var name  = (p.name || AC_P.anzeige(p, true) || '').trim();
+
+  var h = '<div class="mb-brief">';
+  h += '<div class="anrede">'
+     + mbSatz(T.ANREDE, { vorname: name.split(' ')[0] || T.DU }) + '</div>';
+  h += '<div class="zeit">' + mbEsc(monat) + ' ' + mbEsc(b.jahr) + '</div>';
+  h += '<p>' + mbSatz(T.EINL, { monat: monat }) + '</p>';
+
+  h += '<h4>' + mbEsc(T.H.monat) + '</h4>';
+  h += '<p>' + mbSatz(T.SCHWERPUNKT[b.schwerpunkt - 1]) + ' '
+     + mbSatz(T.SCHWERPUNKT_NACH) + '</p>';
+
+  if(b.treffer.length){
+    var x = b.treffer[0], d = T.LAUF[x.wanderer];
+    h += '<div class="kasten">';
+    h += '<p><b>' + mbSatz(d.titel) + '</b></p>';
+    h += '<p>' + mbSatz(d.text) + '</p>';
+    h += '<p class="hintergrund ac-tech" data-ab="2">'
+       + mbSatz(T.TECH.satz, { wanderer: x.wanderer,
+                               winkel: T.TECH.winkel[x.k],
+                               punkt: T.TECH.punkt[x.punkt],
+                               orbis: mbZahl(x.orbis) }) + '</p>';
+    h += '</div>';
+    var zweit = b.treffer.filter(function(z){
+      return z.wanderer !== x.wanderer; })[0];
+    if(zweit)
+      h += '<p><b>' + mbSatz(T.ZWEITES) + '</b> '
+         + mbSatz(T.LAUF[zweit.wanderer].text) + '</p>';
   } else {
-    h+='<div class="kasten"><p><b>Ein ruhiger Monat.</b></p>'+
-      '<p>Kein großer Transit berührt deine Hauptpunkte. Solche Monate sind unterschätzt: Sie eignen sich für das, '+
-      'was in bewegten Zeiten liegen bleibt — nachholen, aufräumen, etwas zu Ende bringen.</p></div>';
+    h += '<div class="kasten">';
+    h += '<p><b>' + mbSatz(T.RUHIG.titel) + '</b></p>';
+    h += '<p>' + mbSatz(T.RUHIG.text) + '</p>';
+    h += '</div>';
   }
 
-  if(lun.length){
-    h+='<h4>Zwei Daten zum Merken</h4>';
-    lun.slice(0,2).forEach(function(l){
-      h+='<p><b>'+l.art+' am '+l.d+'. '+MN[mon]+'</b> in deinem Bereich <b>'+HT[l.h-1]+'</b>. '+
-        (l.art==='Neumond'
-          ? 'Gute Gelegenheit, dort etwas anzufangen oder neu anzusetzen — ohne Druck, es ist nur ein günstiger Moment.'
-          : 'Da wird oft etwas sichtbar oder kommt zu einem Abschluss. Wenn in diesen Tagen etwas hochkommt, ist das kein Zufall.')+'</p>';
+  if(b.lunationen.length){
+    h += '<h4>' + mbEsc(T.H.daten) + '</h4>';
+    b.lunationen.slice(0, 2).forEach(function(l){
+      h += '<p>' + mbSatz(T.MOND[l.art], { tag: l.tag, monat: monat,
+                                           bereich: HT[l.haus - 1] }) + '</p>';
     });
   }
 
-  /* Eine Frage, abgeleitet aus dem Schwerpunkthaus */
-  var FQ=['Wie zeigst du dich gerade — und stimmt das mit dem überein, wie du dich fühlst?',
-   'Was ist dir gerade wirklich etwas wert?','Mit wem müsstest du mal wieder reden?',
-   'Was bräuchte dein Zuhause, damit du dort zur Ruhe kommst?','Was machst du gerade nur zum Vergnügen?',
-   'Welche Kleinigkeit im Alltag kostet dich mehr, als sie sollte?','Was gibst du gerade mehr, als du bekommst?',
-   'Worüber redest du gerade mit niemandem?','Woran glaubst du gerade — und seit wann?',
-   'Wofür willst du gesehen werden?','Wo gehörst du gerade dazu, ohne dich zu verbiegen?',
-   'Was brauchst du gerade an Rückzug, und nimmst du ihn dir?'];
-  h+='<h4>Eine Frage für diesen Monat</h4>'+
-    '<div class="frage">'+FQ[hS-1]+'</div>'+
-    '<p>Du musst sie nicht beantworten. Manchmal reicht es, sie im Hinterkopf zu haben.</p>';
+  h += '<h4>' + mbEsc(T.H.frage) + '</h4>';
+  h += '<div class="frage">' + mbSatz(T.FRAGE[b.schwerpunkt - 1]) + '</div>';
+  h += '<p>' + mbSatz(T.FRAGE_NACH) + '</p>';
 
-  h+='<div class="gruss"><p>Wenn etwas davon ins Schwarze trifft oder gar nicht passt — schreib mir gern. '+
-    'Beides ist nützlich.</p><p>Herzlich<br>Mandy</p></div>';
+  h += '<div class="gruss"><p>' + mbSatz(T.GRUSS.text) + '</p><p>'
+     + mbEsc(T.GRUSS.formel) + '<br>' + mbEsc(T.GRUSS.name) + '</p></div>';
 
-  h+='</div>';
+  h += '</div>';
   return h;
 }
 
-function nurText(){
-  var el=document.getElementById('mbbericht');
-  var t=el.innerHTML
-    .replace(/<\/p>|<\/div>|<\/h4>/g,'\n')
-    .replace(/<br\s*\/?>/g,'\n')
-    .replace(/<[^>]+>/g,'')
-    .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&')
-    .replace(/\n{3,}/g,'\n\n').trim();
-  return t;
+/* ── Zum Kopieren ───────────────────────────────────────────── */
+function mbNurText(){
+  return mbEl('mbbericht').innerHTML
+    .replace(/<\/p>|<\/div>|<\/h4>/g, '\n')
+    .replace(/<br\s*\/?>/g, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+    .replace(/\n{3,}/g, '\n\n').trim();
 }
 
-function steuerZeichnen(){
-  var box=document.getElementById('mbsteuer'), alle=[];
-  try{ alle=AC_P.alle()||[]; }catch(e){}
-  if(!alle.length){ box.innerHTML=''; return; }
-  var h='<span class="lab">Profil</span>';
-  box.innerHTML=h;
+/* ── Bedienung ──────────────────────────────────────────────── */
+function mbSteuer(){
+  var box = mbEl('mbsteuer'), alle = [];
+  try { alle = AC_P.alle() || []; } catch(e){}
+  if(!alle.length){ box.innerHTML = ''; return; }
+  var marke = document.createElement('span');
+  marke.className = 'lab';
+  marke.textContent = T.BEDIENUNG.profil;
+  box.innerHTML = '';
+  box.appendChild(marke);
   alle.forEach(function(p){
-    var b=document.createElement('button'); b.type='button';
-    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
-    b.setAttribute('aria-pressed', gewaehlt===p.id);
-    b.addEventListener('click',function(){ gewaehlt=p.id; steuerZeichnen(); zeigen(); });
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = AC_P.anzeige(p, AC_P.zeigeNamen())
+                  + (p.eigen ? T.BEDIENUNG.ich : '');
+    b.setAttribute('aria-pressed', MB_profil === p.id);
+    b.addEventListener('click', function(){
+      MB_profil = p.id; mbSteuer(); mbZeigen(); });
     box.appendChild(b);
   });
-  var sp=document.createElement('span'); sp.className='lab'; sp.textContent='Monat';
-  sp.style.marginLeft='10px'; box.appendChild(sp);
-  [[0,'dieser'],[1,'nächster'],[2,'übernächster']].forEach(function(o){
-    var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
-    b.setAttribute('aria-pressed', monatOffset===o[0]);
-    b.addEventListener('click',function(){ monatOffset=o[0]; steuerZeichnen(); zeigen(); });
+  var mk = document.createElement('span');
+  mk.className = 'lab';
+  mk.textContent = T.BEDIENUNG.monat;
+  mk.style.marginLeft = '10px';
+  box.appendChild(mk);
+  T.BEDIENUNG.monate.forEach(function(wort, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = wort;
+    b.setAttribute('aria-pressed', MB_versatz === i);
+    b.addEventListener('click', function(){
+      MB_versatz = i; mbSteuer(); mbZeigen(); });
     box.appendChild(b);
   });
 }
 
-function zeigen(){
-  var box=document.getElementById('mbbericht'), alle=[];
-  try{ alle=AC_P.alle()||[]; }catch(e){}
+function mbZeigen(){
+  var box = mbEl('mbbericht'), alle = [];
+  try { alle = AC_P.alle() || []; } catch(e){}
   if(!alle.length){
-    box.innerHTML='<div class="mb-leer"><b>Noch keine Profile angelegt.</b><br><br>'+
-      'Der Monatsbericht arbeitet mit den Profilen unter <a href="profile.html">Profile</a>.</div>';
-    document.getElementById('mbknoepfe').style.display='none';
+    box.innerHTML = '<div class="mb-leer">'
+      + mbSatz(T.BEDIENUNG.leer) + '<br><a href="profile.html">'
+      + mbEsc(T.BEDIENUNG.profilseite) + '</a></div>';
+    mbEl('mbknoepfe').style.display = 'none';
     return;
   }
-  if(!gewaehlt){ gewaehlt=alle[0].id; steuerZeichnen(); }
-  var p=alle.filter(function(x){return x.id===gewaehlt;})[0];
+  if(!MB_profil){ MB_profil = alle[0].id; mbSteuer(); }
+  var p = alle.filter(function(x){ return x.id === MB_profil; })[0];
   if(!p) return;
-  box.innerHTML=bericht(p, monatOffset);
-  document.getElementById('mbknoepfe').style.display='flex';
+  box.innerHTML = mbBrief(p, MB_versatz);
+  mbEl('mbknoepfe').style.display = 'flex';
+  if(window.AC_NIV && AC_NIV.anwenden) AC_NIV.anwenden();
 }
 
-steuerZeichnen(); zeigen();
+function mbHinweis(text){
+  var hin = mbEl('mbhinweis');
+  hin.textContent = text;
+  hin.className = 'an';
+  setTimeout(function(){ hin.className = ''; }, 4000);
+}
 
-document.getElementById('mbkopie').addEventListener('click',function(){
-  var t=nurText(), hin=document.getElementById('mbhinweis');
-  function fertig(){ hin.textContent='Text kopiert — du kannst ihn jetzt in eine Mail oder Nachricht einfügen.';
-    hin.className='an'; setTimeout(function(){ hin.className=''; },4000); }
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(t).then(fertig,function(){
-      hin.textContent='Kopieren hat nicht geklappt — öffne den Text zum Bearbeiten und markiere ihn von Hand.';
-      hin.className='an';
-    });
+mbSteuer();
+mbZeigen();
+
+mbEl('mbkopie').addEventListener('click', function(){
+  var t = mbNurText();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(
+      function(){ mbHinweis(T.BEDIENUNG.kopiert); },
+      function(){ mbHinweis(T.BEDIENUNG.kopieFehler); });
   } else {
-    var ta=document.getElementById('mbtext'); ta.value=t; ta.className='mb-roh an'; ta.select();
-    try{ document.execCommand('copy'); fertig(); }catch(e){}
+    var ta = mbEl('mbtext');
+    ta.value = t; ta.className = 'mb-roh an'; ta.select();
+    try { document.execCommand('copy'); mbHinweis(T.BEDIENUNG.kopiert); }
+    catch(e){ mbHinweis(T.BEDIENUNG.kopieFehler); }
   }
 });
-document.getElementById('mbroh').addEventListener('click',function(){
-  var ta=document.getElementById('mbtext');
-  if(ta.className.indexOf('an')<0){ ta.value=nurText(); ta.className='mb-roh an'; }
-  else ta.className='mb-roh';
+
+mbEl('mbroh').addEventListener('click', function(){
+  var ta = mbEl('mbtext');
+  if(ta.className.indexOf('an') < 0){
+    ta.value = mbNurText(); ta.className = 'mb-roh an';
+  } else {
+    ta.className = 'mb-roh';
+  }
 });
-document.getElementById('mbdruck').addEventListener('click',function(){ window.print(); });
+
+mbEl('mbdruck').addEventListener('click', function(){ window.print(); });
+
+})();
 
 </script>
 </body></html>
