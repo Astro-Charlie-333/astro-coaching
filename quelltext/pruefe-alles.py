@@ -48,6 +48,7 @@ BAUTEN = [
     ('zahlen/bau-zahlen.py',  'Zahlen'),
     ('zeit/bau-zeit.py',      'Zeiten'),
     ('bereiche/bau-bereiche.py', 'Bereiche'),
+    ('monat/bau-monat.py',     'Monat'),
     ('kern/bau-ich.py',       'Ich'),
     ('kern/bau-heute.py',     'Heute'),
 ]
@@ -57,6 +58,18 @@ print('=' * 62)
 
 fehlgeschlagen = []
 t0 = time.time()
+# Woran sich später erkennen lässt, welche Seite aus dem Bausystem
+# kommt: Vor dem Bauen wird die Änderungszeit aller fertigen Seiten
+# zurückgestellt. Was ein bau-*.py danach schreibt, ist frisch; was
+# von Hand neben dem System liegt, bleibt alt. Nur die Zeitangabe
+# wird angefasst, kein Inhalt.
+gebaut_ab = t0 - 1.0
+zeitstempel_gesetzt = True
+for s in (hier / 'wiki').glob('*.html'):
+    try:
+        os.utime(s, (gebaut_ab - 10, gebaut_ab - 10))
+    except OSError:
+        zeitstempel_gesetzt = False
 
 for pfad, name in BAUTEN:
     p = hier / pfad
@@ -174,6 +187,110 @@ if verdrahtet:
     fehlgeschlagen.append('festverdrahtete Pfade')
 else:
     print('  keine festverdrahteten Pfade')
+
+# 5 · jede ausgelieferte Seite hat einen Ursprung
+#     Fehlerklasse: eine Seite, die neben dem Bausystem von Hand
+#     gepflegt wird. Genau so ist der Monatsbericht dünn geblieben —
+#     kein Bauskript erzeugte ihn, also verbesserte ihn auch niemand,
+#     und er trug eine eigene Himmelsrechnung mit sich herum.
+#     Ab jetzt muss jede Seite in wiki/ entweder gerade neu gebaut
+#     worden sein oder unten als bekannte Handarbeit stehen. Eine
+#     neue Seite von Hand kommt nicht mehr unbemerkt herein.
+#     Die Liste soll schrumpfen: wandert eine Seite ins Bausystem,
+#     wird ihr Eintrag gestrichen — das erzwingt die zweite Prüfung
+#     darunter von selbst.
+HANDARBEIT = {
+    'achsen.html', 'angebote-struktur.html', 'ankommen.html',
+    'aspekt-muster.html', 'aspekte-lesen.html', 'aspekte.html',
+    'asteroiden.html', 'astrokartographie.html', 'audhs-verstehen.html',
+    'bausteine.html', 'bazi.html', 'berufe.html', 'briefing.html',
+    'chart-lesen.html', 'chart-rechner.html', 'coaching-verbinden.html',
+    'coaching.html', 'dating-muster.html', 'diagnose-weg.html',
+    'element-mix.html', 'erinnerung.html', 'faden.html',
+    'finsternisse.html', 'fragen-schatzkiste.html', 'glossar.html',
+    'grade.html', 'grenzen.html', 'grundlagen.html',
+    'haeuser-lebensbuehnen.html', 'haeuser.html', 'haeusersysteme.html',
+    'haltung-ethik.html', 'haltung.html', 'haus-achsen.html',
+    'herrscher.html', 'kleine-punkte.html', 'klientinnen-fragen.html',
+    'konzept-plattform.html', 'learning-seite.html',
+    'lebens-kompass.html', 'leitfaden-fundament.html',
+    'leitfaden-mars.html', 'leitfaden-merkur.html',
+    'leitfaden-mond.html', 'leitfaden.html', 'lilith-arbeit.html',
+    'linien-lesen.html', 'lunationen.html', 'mein-chart.html',
+    'menschen-lesen.html', 'methoden.html', 'mondknoten-coaching.html',
+    'mondknoten.html', 'mondphasen-rhythmus.html', 'mondzyklen.html',
+    'nd-leitfaden.html', 'neurodivergente-astrologie.html',
+    'neurodivergenz-vertiefung.html', 'orbis-gewichtung.html',
+    'organizer.html', 'planet-jupiter.html', 'planet-mars.html',
+    'planet-merkur.html', 'planet-mond.html', 'planet-saturn.html',
+    'planet-sonne.html', 'planet-venus.html',
+    'planeten-in-zeichen.html', 'planeten.html', 'planetenzyklen.html',
+    'profektionen.html', 'profil-ansicht.html', 'profile.html',
+    'quiz.html', 'raeume.html', 'raum-alltag.html',
+    'raum-anders-verdrahtet.html', 'raum-berufung.html',
+    'raum-herkunft.html', 'raum-koerper.html', 'raum-naehe.html',
+    'raum-selbstwert.html', 'raum-sicherheit.html',
+    'raum-unerlaubte.html', 'raum-versorgung.html',
+    'raum-wunder-punkt.html', 'raum-zugehoerigkeit.html',
+    'reading-ablauf.html', 'reading-gespraech.html', 'retrograde.html',
+    'ruhe-schlaf.html', 'sekte.html', 'siderisch.html',
+    'solar-return-light.html', 'solar-return-vertiefung.html',
+    'spannungskarte.html', 'synastrie-vertiefung.html',
+    'synastrie.html', 'timing.html', 'tool.html',
+    'ueber-mich-vorlage.html', 'uebungscharts.html', 'vorschau.html',
+    'weg.html', 'werkzeuge.html', 'wissen.html', 'zeichen.html',
+    'zeitqualitaet.html',
+}
+frisch    = {s.name for s in seiten if s.stat().st_mtime > gebaut_ab}
+herrenlos = sorted({s.name for s in seiten} - frisch - HANDARBEIT)
+veraltet  = sorted(HANDARBEIT & frisch)
+print(f'  {len(frisch)} Seiten gebaut, {len(HANDARBEIT)} noch Handarbeit')
+if not zeitstempel_gesetzt:
+    print('  Änderungszeiten nicht setzbar — der Ursprung der Seiten')
+    print('  ist hier nicht prüfbar.')
+    fehlgeschlagen.append('Ursprung nicht prüfbar')
+if herrenlos:
+    print('  SEITEN OHNE URSPRUNG:')
+    for s in herrenlos[:8]:
+        print(f'      {s}')
+    print('      (eine Seite gehört in ein bau-*.py — oder, wenn sie')
+    print('       vorerst von Hand bleibt, in HANDARBEIT in dieser Datei)')
+    fehlgeschlagen.append('Seiten ohne Ursprung')
+if veraltet:
+    print('  IN HANDARBEIT, OBWOHL GEBAUT: ' + ', '.join(veraltet[:8]))
+    print('      (die Seite kommt jetzt aus dem Bausystem — Eintrag streichen)')
+    fehlgeschlagen.append('HANDARBEIT veraltet')
+
+# 6 · es gibt genau eine Himmelsrechnung
+#     Fehlerklasse: eine zweite Kopie der Engine. Solange sie gleich
+#     ist, fällt sie nicht auf; sobald eine davon gepflegt wird,
+#     rechnen zwei Seiten verschieden und niemand sieht, warum.
+#     Erlaubt ist deshalb nur, was Zeichen für Zeichen mit
+#     rituale/engine.js übereinstimmt.
+ENGINE = hier / 'rituale' / 'engine.js'
+engine_text = ENGINE.read_text(encoding='utf-8')
+#     Die Namen werden zusammengesetzt, damit diese Prüfung nicht
+#     sich selbst meldet.
+KERN = tuple('function ' + n for n in
+             ('helio', 'sunLon', 'moonLon', 'placidus'))
+zweite = []
+for q in sorted(hier.rglob('*')):
+    if q.is_symlink() or not q.is_file() or q.suffix not in ('.js', '.html', '.py'):
+        continue
+    if wiki in q.parents or q == ENGINE or q.name.startswith('_probe-'):
+        continue
+    t_ = q.read_text(encoding='utf-8', errors='replace')
+    if all(k in t_ for k in KERN) and t_ != engine_text:
+        zweite.append(str(q.relative_to(hier)))
+if zweite:
+    print('  ZWEITE HIMMELSRECHNUNG:')
+    for z in zweite[:8]:
+        print(f'      {z}')
+    print('      (gerechnet wird gegen rituale/engine.js — eine Kopie,')
+    print('       die abweicht, lässt zwei Seiten verschieden rechnen)')
+    fehlgeschlagen.append('zweite Himmelsrechnung')
+else:
+    print('  eine Himmelsrechnung, keine abweichende Kopie')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
