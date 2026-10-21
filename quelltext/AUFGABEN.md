@@ -124,6 +124,29 @@ Rechnung bleiben vier Dateien.
 
 ---
 
+### 14 · Die Stufenleiste darf nicht weiter zurückfallen
+Im Auslieferstand liegen 124 HTML-Seiten, fünf davon tragen `#nivleiste`.
+Die 108 Seiten, die `pruefe-alles.py` als `HANDARBEIT` führt, tragen
+weder `#nivleiste` noch `ac-tech` noch `data-ab`. „Verständlich auf jeder
+Stufe" ist damit eine Eigenschaft von fünf Seiten, nicht der Plattform.
+Siehe Recherche vom 2026-10-21, Spur B: Was nur die Absicht hält, driftet.
+**Fertig, wenn:** `pruefe-alles.py` als siebte Querprüfung die Seiten ohne
+Stufenleiste namentlich führt, abbricht, sobald eine Seite ohne
+Stufenleiste auftaucht, die nicht auf der Liste steht, und ebenso
+abbricht, wenn eine Seite auf der Liste eine Stufenleiste bekommen hat —
+dieselbe Bauart wie `HANDARBEIT` und `veraltet` darüber.
+
+### 15 · Den ersten Vorsprungssatz nachschärfen
+`PRODUKT.md` Abschnitt 3 sagt, fast alles auf dem Markt rede über dich
+allein. The Pattern verkauft seit Jahren eine Paarsicht, Co-Star führt
+eine Freundesliste mit Passung. Siehe Recherche vom 2026-10-21, Spur B:
+Die Paarsicht als solche ist kein Vorsprung mehr; die Verbindung mit
+Ehrlichkeit über die Häufigkeit und mit der Sicht der Coachin kann einer
+sein. Nur dieser Satz wird angefasst, keine Seite.
+**Fertig, wenn:** der erste Vorsprung in Abschnitt 3 benennt, was die
+anderen bei Paaren bereits tun, und den eigenen Vorsprung so formuliert,
+dass eine Leserin ihn an der Seite nachprüfen kann.
+
 ## Erledigt
 
 * **2026-10-20** · Der Monatsbericht kommt aus dem Bausystem: `monat/` mit
