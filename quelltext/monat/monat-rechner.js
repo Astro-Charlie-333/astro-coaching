@@ -68,12 +68,29 @@ function mSchwerpunkt(P, jahr, mon){
   return haus(P, lon('Sonne', mitte));
 }
 
+/* Welche der natalen Punkte in einem bestimmten Haus stehen.
+   Reihenfolge wie in M_PUNKTE, damit derselbe Mensch zweimal
+   dieselbe Aufzählung bekommt. Das ist die Antwort auf die Frage,
+   was bei DIESEM Menschen in dem Bereich liegt, auf den der Monat
+   zeigt — bei den meisten liegt dort nichts, und auch das ist eine
+   Aussage über ihn. */
+function mBewohner(P, h){
+  return M_PUNKTE.filter(function(r){
+    return P[r] !== undefined && haus(P, P[r]) === h;
+  });
+}
+
 /* ── Die Treffer ────────────────────────────────────────────── */
 
 /* Höchstens ein Eintrag je Paar aus Wanderer und natalem Punkt:
    der engste Winkel, den das Paar im Monat erreicht. Dadurch kann
    derselbe Vorgang nicht mehrfach im Bericht stehen.
-   Sortiert nach Enge — der deutlichste zuerst. */
+   Sortiert nach Enge — der deutlichste zuerst.
+
+   Jeder Treffer trägt hausNatal: das natale Haus, in dem der
+   getroffene Punkt steht. Erst damit kann der Bericht sagen, welche
+   Anlage dieses Menschen getroffen ist und wo sie bei ihm liegt —
+   ohne das ist jeder Monatsbericht für jeden derselbe. */
 function mTreffer(P, jahr, mon){
   var tage = mTageImMonat(jahr, mon), jdA = mMonatJD(jahr, mon, 1), out = [];
   M_WANDERER.forEach(function(w){
@@ -86,7 +103,8 @@ function mTreffer(P, jahr, mon){
           var o = Math.abs(s - k.grad);
           if(o <= M_ORBIS && (best === null || o < best.orbis))
             best = { wanderer:w, punkt:r, winkel:k.grad, k:k.k,
-                     art:k.art, orbis:o, tag:d + 1 };
+                     art:k.art, orbis:o, tag:d + 1,
+                     hausNatal:haus(P, P[r]) };
         });
       }
       if(best) out.push(best);
@@ -151,11 +169,13 @@ function mLunationen(P, jahr, mon){
 /* ── Der ganze Monat ────────────────────────────────────────── */
 
 function mBericht(P, jahr, mon){
+  var schwer = mSchwerpunkt(P, jahr, mon);
   return {
     jahr: jahr,
     mon: mon,
     tage: mTageImMonat(jahr, mon),
-    schwerpunkt: mSchwerpunkt(P, jahr, mon),
+    schwerpunkt: schwer,
+    bewohner: mBewohner(P, schwer),
     treffer: mTreffer(P, jahr, mon),
     lunationen: mLunationen(P, jahr, mon)
   };
@@ -167,7 +187,8 @@ window.AC_MONAT = {
   nrm:mnrm, dist:mdist,
   tageImMonat:mTageImMonat, monatJD:mMonatJD, monatVon:mMonatVon,
   phase:mPhase, genau:mGenau,
-  schwerpunkt:mSchwerpunkt, treffer:mTreffer, lunationen:mLunationen,
+  schwerpunkt:mSchwerpunkt, bewohner:mBewohner,
+  treffer:mTreffer, lunationen:mLunationen,
   bericht:mBericht
 };
 

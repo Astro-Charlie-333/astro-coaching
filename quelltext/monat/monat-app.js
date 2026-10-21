@@ -37,6 +37,28 @@ function mbSatz(vorlage, werte){
 
 function mbZahl(x){ return String(x.toFixed(1)).replace('.', ','); }
 
+/* Aufzählung mehrerer Anlagen. Die Wörter kommen aus den Daten. */
+function mbListe(teile){
+  if(teile.length < 2) return teile.join('');
+  return teile.slice(0, -1).join(T.LISTE.trenner)
+       + T.LISTE.letzter + teile[teile.length - 1];
+}
+
+/* Welche Anlage dieses Menschen ein Vorgang trifft, wo sie bei ihm
+   liegt, und was die Bewegung dort macht. Hier wird nur gefüllt:
+   die Form im vierten Fall kommt aus ANLAGE.akk, die im ersten aus
+   ANLAGE.nom. Diese Zuordnung prüft bau-monat.py nach. */
+function mbAnlage(x){
+  var A = T.ANLAGE[x.punkt];
+  if(!A) return '';
+  return '<p class="anlage">'
+    + mbSatz(T.ANLAGE_SATZ, { anlageAkk: A.akk, lang: A.lang,
+                              feld: HT[x.hausNatal - 1] })
+    + ' '
+    + mbSatz(T.BEDEUTUNG[x.wanderer][x.art], { anlageNom: A.nom })
+    + '</p>';
+}
+
 /* ── Der Brief ──────────────────────────────────────────────── */
 function mbBrief(p, versatz){
   var P  = chartVon(p);
@@ -54,25 +76,33 @@ function mbBrief(p, versatz){
   h += '<h4>' + mbEsc(T.H.monat) + '</h4>';
   h += '<p>' + mbSatz(T.SCHWERPUNKT[b.schwerpunkt - 1]) + ' '
      + mbSatz(T.SCHWERPUNKT_NACH) + '</p>';
+  h += '<p class="anlagenfeld">' + (b.bewohner.length
+     ? mbSatz(T.BEWOHNT, { anlagen: mbListe(b.bewohner.map(function(r){
+         return T.ANLAGE[r].nom; })) })
+     : mbSatz(T.UNBEWOHNT)) + '</p>';
 
   if(b.treffer.length){
-    var x = b.treffer[0], d = T.LAUF[x.wanderer];
+    var x = b.treffer[0], d = T.LAUF[x.wanderer][x.art];
     h += '<div class="kasten">';
     h += '<p><b>' + mbSatz(d.titel) + '</b></p>';
     h += '<p>' + mbSatz(d.text) + '</p>';
+    h += mbAnlage(x);
     h += '<p class="hintergrund ac-tech" data-ab="2">'
        + mbSatz(T.TECH.satz, { wanderer: x.wanderer,
                                winkel: T.TECH.winkel[x.k],
                                punkt: T.TECH.punkt[x.punkt],
+                               hausNatal: x.hausNatal,
                                orbis: mbZahl(x.orbis) }) + '</p>';
     h += '</div>';
     var zweit = b.treffer.filter(function(z){
       return z.wanderer !== x.wanderer; })[0];
-    if(zweit)
+    if(zweit){
       h += '<p><b>' + mbSatz(T.ZWEITES) + '</b> '
-         + mbSatz(T.LAUF[zweit.wanderer].text) + '</p>';
+         + mbSatz(T.LAUF[zweit.wanderer][zweit.art].text) + '</p>';
+      h += mbAnlage(zweit);
+    }
   } else {
-    h += '<div class="kasten">';
+    h += '<div class="kasten ruhig">';
     h += '<p><b>' + mbSatz(T.RUHIG.titel) + '</b></p>';
     h += '<p>' + mbSatz(T.RUHIG.text) + '</p>';
     h += '</div>';
