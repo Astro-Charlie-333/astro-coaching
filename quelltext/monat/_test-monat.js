@@ -20,9 +20,11 @@ function laden(dateien){
   return f({}, console);
 }
 
-const U = laden(['rituale/engine.js', 'monat/monat-rechner.js', 'monat/monat-daten.js']);
+const U = laden(['rituale/engine.js', 'bereiche/lebensbereiche.js',
+                 'monat/monat-rechner.js', 'monat/monat-daten.js']);
 const M = U.window.AC_MONAT;
 const T = U.window.AC_MONAT_TEXT;
+const LB = U.window.AC_LB;
 const { chartVon, haus, lon, datVon, MN, HT } = U;
 
 let ok = 0; const fehler = [];
@@ -322,6 +324,73 @@ p('Bericht sagt, was im Schwerpunkt liegt', Array.isArray(ber.bewohner));
 p('die Bewohner gehören zum Schwerpunkt',
   ber.bewohner.every(r => haus(CA, CA[r]) === ber.schwerpunkt),
   ber.bewohner.join(','));
+
+/* ── Die Auswahl der Bereiche ───────────────────────────────── */
+/* Fehlerklassen, die hier dauerhaft verbaut werden:
+   · Die Auswahl ändert die Reihenfolge nicht — dann ist sie Zierde.
+   · Die Auswahl wirft Vorgänge weg, statt sie nach hinten zu
+     stellen; dann verschweigt der Brief, was sonst noch läuft.
+   · inWahl zählt falsch, und der Brief sagt „darin läuft nichts",
+     obwohl etwas läuft (oder umgekehrt). */
+const JAHRE = [[2026, 0], [2026, 4], [2026, 9], [2027, 2]];
+let probenMitTreffer = 0, umsortiert = 0;
+JAHRE.forEach(([jahr, mon]) => {
+  [CA, CB].forEach(C => {
+    const ohne = M.bericht(C, jahr, mon);
+    p('ohne Auswahl ist inWahl die ganze Liste',
+      ohne.inWahl === ohne.treffer.length,
+      ohne.inWahl + ' von ' + ohne.treffer.length);
+    p('ohne Auswahl bleibt die Liste nach Enge sortiert',
+      ohne.treffer.every((x, i) => i === 0 || ohne.treffer[i-1].orbis <= x.orbis));
+    p('eine leere Auswahl ändert nichts',
+      JSON.stringify(M.bericht(C, jahr, mon, []).treffer) ===
+      JSON.stringify(ohne.treffer));
+    if(!ohne.treffer.length) return;
+    probenMitTreffer++;
+    /* Eine Auswahl, die genau den Bereich des letzten Treffers
+       enthält: der muss nach vorn, ohne dass einer verlorengeht. */
+    const letzter = ohne.treffer[ohne.treffer.length - 1];
+    const bereich = LB.BEREICHE.filter(b => b.haeuser.indexOf(letzter.hausNatal) >= 0)[0];
+    if(!bereich) return;
+    const felder = LB.felder([bereich.k]);
+    const mit = M.bericht(C, jahr, mon, felder);
+    p('die Auswahl wirft keinen Vorgang weg',
+      mit.treffer.length === ohne.treffer.length,
+      mit.treffer.length + ' statt ' + ohne.treffer.length);
+    p('kein Vorgang kommt doppelt vor',
+      new Set(mit.treffer.map(x => x.wanderer + x.punkt)).size === mit.treffer.length);
+    p('die gewählten Felder stehen vorn',
+      mit.treffer.every((x, i) => i === 0 ||
+        !(felder.indexOf(x.hausNatal) >= 0 &&
+          felder.indexOf(mit.treffer[i-1].hausNatal) < 0)),
+      mit.treffer.map(x => x.hausNatal).join(','));
+    p('innerhalb der Auswahl bleibt es bei der Enge',
+      mit.treffer.filter(x => felder.indexOf(x.hausNatal) >= 0)
+        .every((x, i, a) => i === 0 || a[i-1].orbis <= x.orbis));
+    p('inWahl zählt genau die Vorgänge in den gewählten Feldern',
+      mit.inWahl === mit.treffer.filter(x => felder.indexOf(x.hausNatal) >= 0).length,
+      String(mit.inWahl));
+    p('inWahl ist mindestens eins, wenn der Bereich getroffen ist',
+      mit.inWahl >= 1, String(mit.inWahl));
+    if(JSON.stringify(mit.treffer) !== JSON.stringify(ohne.treffer)) umsortiert++;
+    /* Eine Auswahl, in der nichts liegt: der Brief muss das merken. */
+    const leer = LB.BEREICHE.filter(b =>
+      b.haeuser.every(h => ohne.treffer.every(x => x.hausNatal !== h)));
+    if(leer.length){
+      const nix = M.bericht(C, jahr, mon, LB.felder([leer[0].k]));
+      p('eine Auswahl ohne Vorgang meldet inWahl null', nix.inWahl === 0,
+        String(nix.inWahl));
+      p('und nennt die Vorgänge trotzdem',
+        nix.treffer.length === ohne.treffer.length);
+    }
+  });
+});
+p('es gab Proben mit laufenden Vorgängen', probenMitTreffer >= 3,
+  String(probenMitTreffer));
+p('die Auswahl sortiert wirklich um', umsortiert >= 1,
+  umsortiert + ' von ' + probenMitTreffer + ' Proben');
+/* Die Felder der Auswahl kommen aus der einen Liste. */
+p('der Monatsbericht kennt die zehn Bereiche', LB && LB.ZAHL === 10);
 
 /* ── Ergebnis ───────────────────────────────────────────────── */
 if(fehler.length){

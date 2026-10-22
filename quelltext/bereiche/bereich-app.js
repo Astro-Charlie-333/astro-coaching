@@ -39,6 +39,15 @@
   }
   function stufe(){ try{ return AC_NIV.stufe(); }catch(e){ return 0; } }
 
+  /* Die Bereiche, die dieser Mensch sehen will. Keine Auswahl heißt
+     alle — die Entscheidung darüber liegt in lebensbereiche.js, hier
+     wird sie nur angewendet. Gerechnet wird weiter alles: eine
+     ausgeblendete Lautstärke bleibt richtig, sie wird nur nicht
+     gezeigt, und die Leiste sagt das auch. */
+  function gewaehlt(b){
+    try{ return AC_WAHL.istGewaehlt(b.k); }catch(e){ return true; }
+  }
+
   /* Tage in Alltagssprache. Unter einem Jahr in Monaten oder Wochen,
      darüber in Jahren — nie "17 Monate" neben "1,5 Jahre". */
   function dauer(tage){
@@ -362,7 +371,8 @@
     var bs = Bl.bereiche.slice().sort(function(a,b){
       if(b.laut !== a.laut) return b.laut - a.laut;
       return b.laeuft.length - a.laeuft.length;
-    });
+    }).filter(gewaehlt);
+    if(!bs.length) bs = Bl.bereiche.slice();
 
     /* Kopf */
     if(kopf){
@@ -448,6 +458,11 @@
     };
 
     try{ if(window.AC_NIV) AC_NIV.leiste(D.getElementById('nivleiste'), alles); }catch(err){}
+
+    /* Die Auswahl der Bereiche gilt plattformweit. Ändert sie sich,
+       wird die Seite neu gezeichnet — die Leiste selbst zeichnet
+       wahl-app.js. */
+    try{ window.addEventListener('ac-bereiche', alles); }catch(err){}
   }
 
   if(D === null && document.readyState === 'loading')

@@ -91,7 +91,16 @@ function mBewohner(P, h){
    getroffene Punkt steht. Erst damit kann der Bericht sagen, welche
    Anlage dieses Menschen getroffen ist und wo sie bei ihm liegt —
    ohne das ist jeder Monatsbericht für jeden derselbe. */
-function mTreffer(P, jahr, mon){
+/* felder ist die Liste der natalen Häuser, die diesen Menschen
+   interessieren — die Bereiche, die er gewählt hat, in Feldern
+   ausgedrückt. Treffer darin stehen vorn; die anderen bleiben
+   dahinter stehen, statt verschwiegen zu werden. Ohne felder
+   bleibt die Reihenfolge die alte: der engste Winkel zuerst. */
+function mInFeldern(x, felder){
+  return !felder || !felder.length || felder.indexOf(x.hausNatal) >= 0;
+}
+
+function mTreffer(P, jahr, mon, felder){
   var tage = mTageImMonat(jahr, mon), jdA = mMonatJD(jahr, mon, 1), out = [];
   M_WANDERER.forEach(function(w){
     M_PUNKTE.forEach(function(r){
@@ -111,6 +120,10 @@ function mTreffer(P, jahr, mon){
     });
   });
   return out.sort(function(a,b){
+    /* Erst die gewählten Bereiche, dann der Rest. Innerhalb beider
+       Gruppen bleibt es bei der Enge des Winkels. */
+    var fa = mInFeldern(a, felder), fb = mInFeldern(b, felder);
+    if(fa !== fb) return fa ? -1 : 1;
     if(a.orbis !== b.orbis) return a.orbis - b.orbis;
     /* Gleich eng: feste Reihenfolge, damit derselbe Monat beim
        zweiten Aufruf denselben Bericht ergibt. */
@@ -168,15 +181,21 @@ function mLunationen(P, jahr, mon){
 
 /* ── Der ganze Monat ────────────────────────────────────────── */
 
-function mBericht(P, jahr, mon){
+function mBericht(P, jahr, mon, felder){
   var schwer = mSchwerpunkt(P, jahr, mon);
+  var tr = mTreffer(P, jahr, mon, felder);
   return {
     jahr: jahr,
     mon: mon,
     tage: mTageImMonat(jahr, mon),
     schwerpunkt: schwer,
     bewohner: mBewohner(P, schwer),
-    treffer: mTreffer(P, jahr, mon),
+    treffer: tr,
+    /* Wie viele der laufenden Vorgänge in den gewählten Bereichen
+       liegen. Daran entscheidet der Brief, ob er sagt, dass er
+       nach der Auswahl sortiert — oder dass darin nichts läuft. */
+    inWahl: tr.filter(function(x){ return mInFeldern(x, felder); }).length,
+    felder: (felder && felder.length) ? felder.slice() : [],
     lunationen: mLunationen(P, jahr, mon)
   };
 }
@@ -187,7 +206,7 @@ window.AC_MONAT = {
   nrm:mnrm, dist:mdist,
   tageImMonat:mTageImMonat, monatJD:mMonatJD, monatVon:mMonatVon,
   phase:mPhase, genau:mGenau,
-  schwerpunkt:mSchwerpunkt, bewohner:mBewohner,
+  schwerpunkt:mSchwerpunkt, bewohner:mBewohner, inFeldern:mInFeldern,
   treffer:mTreffer, lunationen:mLunationen,
   bericht:mBericht
 };

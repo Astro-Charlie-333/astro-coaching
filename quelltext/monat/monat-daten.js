@@ -242,6 +242,20 @@
 
   var M_ZWEITES = 'Daneben läuft noch etwas Zweites.';
 
+  /* ── Wenn dieser Mensch Bereiche gewählt hat ──────────────── */
+  /* Der Brief richtet sich nach der Auswahl: Vorgänge in gewählten
+     Bereichen kommen zuerst. Was er nicht tut, ist das verschweigen.
+     Sonst liest jemand einen Brief über zwei Vorgänge und hält sie
+     für alles, was läuft — dieselbe stille Übertreibung, die
+     PRODUKT.md Abschnitt 3 ausschließt. */
+  var M_AUSWAHL = {
+    drin: 'Du hast {zahl} von zehn Bereichen gewählt. Dieser Brief '
+        + 'nennt zuerst, was davon betroffen ist.',
+    draussen: 'Du hast {zahl} von zehn Bereichen gewählt. In diesem '
+            + 'Monat läuft darin nichts Deutliches — was hier steht, '
+            + 'liegt außerhalb deiner Auswahl.'
+  };
+
   var M_RUHIG = {
     titel: 'Ein ruhiger Monat.',
     text:  'In diesem Monat berührt keine der langsamen Bewegungen deine '
@@ -334,7 +348,7 @@
     SCHWERPUNKT:M_SCHWERPUNKT, SCHWERPUNKT_NACH:M_SCHWERPUNKT_NACH,
     ANLAGE:M_ANLAGE, ANLAGE_SATZ:M_ANLAGE_SATZ, BEDEUTUNG:M_BEDEUTUNG,
     BEWOHNT:M_BEWOHNT, UNBEWOHNT:M_UNBEWOHNT, LISTE:M_LISTE,
-    LAUF:M_LAUF, ZWEITES:M_ZWEITES, RUHIG:M_RUHIG,
+    LAUF:M_LAUF, ZWEITES:M_ZWEITES, RUHIG:M_RUHIG, AUSWAHL:M_AUSWAHL,
     MOND:M_MOND, FRAGE:M_FRAGE, FRAGE_NACH:M_FRAGE_NACH,
     GRUSS:M_GRUSS, TECH:M_TECH, BEDIENUNG:M_BEDIENUNG
   };

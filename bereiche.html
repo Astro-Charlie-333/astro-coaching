@@ -259,6 +259,28 @@ a{color:var(--nacht);}
   .b-in{padding:4px 16px 20px;}
   .b-ehrlich{padding:20px 18px;}
 }
+
+/* Die Bereichsauswahl. Sieht aus wie die Leiste für den
+   Wissensstand daneben — beides sind Einstellungen, die
+   plattformweit gelten, und sie sollen als Paar erkennbar sein. */
+.bw-leiste{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:11px 14px;margin-bottom:14px;}
+.bw-lab{font-family:var(--sans,system-ui);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing,#9A7235);flex:none;}
+.bw-knoepfe{display:flex;gap:4px;flex-wrap:wrap;}
+.bw-knoepfe button{font-family:var(--sans,system-ui);font-size:13.5px;
+ padding:7px 13px;border:1px solid var(--linie,#EBE1D2);
+ background:var(--bg,#FCF7EF);color:var(--tinte,#231F1A);
+ border-radius:16px;cursor:pointer;}
+.bw-knoepfe button:hover{border-color:var(--nacht,#2E3A5C);}
+.bw-knoepfe button[aria-pressed="true"]{background:var(--nacht,#2E3A5C);
+ border-color:var(--nacht,#2E3A5C);color:#fff;}
+.bw-knoepfe button.bw-alle[aria-pressed="true"]{background:var(--messing,#9A7235);
+ border-color:var(--messing,#9A7235);}
+.bw-tipp{font-size:12.5px;color:var(--leise,#6B6259);margin-left:auto;
+ max-width:46ch;line-height:1.45;}
+@media(max-width:620px){.bw-tipp{margin-left:0;max-width:none;}}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -279,6 +301,7 @@ a{color:var(--nacht);}
 </div>
 
 <div id="nivleiste"></div>
+<div id="berwahl"></div>
 
 <!-- Überblick ──────────────────────────────────────────── -->
 <section class="b-abschnitt" id="ueberblick">
@@ -695,6 +718,102 @@ window.AC_ZEIT={
 })();
 
 /* ───────────────────────────────────────────────────────────────
+   lebensbereiche.js — die zehn Lebensbereiche, einmal.
+
+   Struktur, kein Satz und keine Himmelsrechnung: Schlüssel, Name
+   und die Felder, die zu einem Bereich gehören. Das erste Feld ist
+   das Kernfeld; es wiegt beim Rechnen doppelt.
+
+   Diese Liste stand bis heute allein in bereich-rechner.js. Drei
+   Seiten brauchen sie aber: die Bereichsseite, die Startseite und
+   der Monatsbericht — der Monatsbericht rechnet nichts von der
+   Bereichsseite, muss aber wissen, welche Felder zu einem Bereich
+   gehören, um die Auswahl eines Menschen zu beachten. Eine zweite
+   Kopie der Liste wäre genau der Fehler, den die Plattform bei der
+   Himmelsrechnung schon einmal hatte: solange die Kopien gleich
+   sind, fällt nichts auf, und sobald eine gepflegt wird, zeigen
+   zwei Seiten verschiedene Bereiche.
+
+   Hier steht außerdem, was eine Auswahl von Bereichen bedeutet.
+   Die Regel aus PRODUKT.md Abschnitt 4: Keine Auswahl heißt alle.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+
+/* zrk: der Bereich auf der Zeitenseite, der dasselbe Thema über
+        Jahrzehnte beschreibt. Nur gesetzt, wo die Zuordnung ehrlich
+        ist — sonst null, dann steht eben kein Kapitel dabei. */
+var LB_BEREICHE = [
+  { k:'liebe',       name:'Liebe',              haeuser:[7,5,8],  zrk:'liebe'   },
+  { k:'beruf',       name:'Beruf',              haeuser:[10,6,2], zrk:'arbeit'  },
+  { k:'gesundheit',  name:'Gesundheit',         haeuser:[6,1,12], zrk:'koerper' },
+  { k:'geld',        name:'Geld',               haeuser:[2,8,11], zrk:null      },
+  { k:'familie',     name:'Zuhause und Familie',haeuser:[4,3,10], zrk:null      },
+  { k:'freunde',     name:'Freunde',            haeuser:[11,7,3], zrk:null      },
+  { k:'freude',      name:'Freude und Kreativität', haeuser:[5,11,9], zrk:null  },
+  { k:'selbstwert',  name:'Selbstwert',         haeuser:[1,2,10], zrk:'erfolg'  },
+  { k:'sinn',        name:'Sinn und Richtung',  haeuser:[9,5,12], zrk:null      },
+  { k:'umbruch',     name:'Umbruch',            haeuser:[8,12,4], zrk:'druck'   }
+];
+
+var LB_KEY = {};
+(function(){ for(var i=0;i<LB_BEREICHE.length;i++) LB_KEY[LB_BEREICHE[i].k]=LB_BEREICHE[i]; })();
+
+/* Eine gespeicherte Auswahl auf das Mögliche zurückführen:
+   Unbekanntes fliegt heraus, Doppeltes auch, und die Reihenfolge
+   ist immer die der Liste oben. Damit kann ein alter oder
+   verdorbener Speicherstand die Seite nicht leer machen — er
+   bedeutet dann eben „alle". */
+function lbNormieren(ks){
+  if(!ks || !ks.length) return [];
+  var out = [], gesehen = {};
+  for(var i=0;i<LB_BEREICHE.length;i++){
+    var k = LB_BEREICHE[i].k;
+    for(var j=0;j<ks.length;j++){
+      if(ks[j] === k && !gesehen[k]){ out.push(k); gesehen[k]=1; }
+    }
+  }
+  return out;
+}
+
+/* Gehört dieser Bereich zur Auswahl? Keine Auswahl heißt alle. */
+function lbIstGewaehlt(k, ks){
+  var n = lbNormieren(ks);
+  if(!n.length) return true;
+  return n.indexOf(k) >= 0;
+}
+
+/* Die Felder einer Auswahl, aufsteigend. Keine Auswahl heißt alle
+   zwölf — so kann eine Seite das Ergebnis ungeprüft weiterbenutzen. */
+function lbFelder(ks){
+  var n = lbNormieren(ks), drin = {}, out = [], i;
+  if(!n.length){
+    for(i=1;i<=12;i++) out.push(i);
+    return out;
+  }
+  for(i=0;i<n.length;i++){
+    var h = LB_KEY[n[i]].haeuser;
+    for(var j=0;j<h.length;j++) drin[h[j]] = 1;
+  }
+  for(i=1;i<=12;i++) if(drin[i]) out.push(i);
+  return out;
+}
+
+function lbName(k){ return LB_KEY[k] ? LB_KEY[k].name : ''; }
+
+window.AC_LB = {
+  BEREICHE: LB_BEREICHE,
+  ZAHL: LB_BEREICHE.length,
+  normieren: lbNormieren,
+  istGewaehlt: lbIstGewaehlt,
+  felder: lbFelder,
+  name: lbName,
+  von: function(k){ return LB_KEY[k] || null; }
+};
+
+})();
+
+/* ───────────────────────────────────────────────────────────────
    bereich-rechner.js — Lebensbereiche: was läuft gerade, wie lange.
    Baut auf rituale/engine.js auf (lon, chartVon, haus, jdFromUT, datVon).
    Rechnet nichts Neues am Himmel, sondern sortiert das Vorhandene
@@ -705,24 +824,13 @@ window.AC_ZEIT={
   var TAG = 86400000;
 
   /* ── Bereiche ───────────────────────────────────────────────
-     haeuser: Whole-Sign-Häuser, die zu diesem Bereich gehören.
-              Das erste ist das Kernhaus — es wiegt doppelt.
-     Die Reihenfolge der Bereiche ist die Anzeigereihenfolge.
-     zrk: der Bereich auf der Zeitenseite, der dasselbe Thema über
-          Jahrzehnte beschreibt. Nur gesetzt, wo die Zuordnung ehrlich
-          ist — sonst null, dann steht hier eben kein Kapitel. */
-  var B_BEREICHE = [
-    { k:'liebe',       name:'Liebe',              haeuser:[7,5,8],  zrk:'liebe'   },
-    { k:'beruf',       name:'Beruf',              haeuser:[10,6,2], zrk:'arbeit'  },
-    { k:'gesundheit',  name:'Gesundheit',         haeuser:[6,1,12], zrk:'koerper' },
-    { k:'geld',        name:'Geld',               haeuser:[2,8,11], zrk:null      },
-    { k:'familie',     name:'Zuhause und Familie',haeuser:[4,3,10], zrk:null      },
-    { k:'freunde',     name:'Freunde',            haeuser:[11,7,3], zrk:null      },
-    { k:'freude',      name:'Freude und Kreativität', haeuser:[5,11,9], zrk:null  },
-    { k:'selbstwert',  name:'Selbstwert',         haeuser:[1,2,10], zrk:'erfolg'  },
-    { k:'sinn',        name:'Sinn und Richtung',  haeuser:[9,5,12], zrk:null      },
-    { k:'umbruch',     name:'Umbruch',            haeuser:[8,12,4], zrk:'druck'   }
-  ];
+     Die Liste der zehn Bereiche steht nicht hier, sondern in
+     bereiche/lebensbereiche.js. Drei Seiten brauchen sie, und eine
+     zweite Kopie würde genau so auseinanderlaufen wie früher die
+     Himmelsrechnung. Fehlt die Datei, bleibt die Liste leer — dann
+     zeigt die Seite keinen Bereich, und das fällt sofort auf,
+     statt still falsch zu rechnen. */
+  var B_BEREICHE = (window.AC_LB && window.AC_LB.BEREICHE) || [];
 
   /* ── Wanderer ───────────────────────────────────────────────
      g  = Gewicht: wie viel ein Durchgang dieses Planeten bedeutet.
@@ -1581,6 +1689,165 @@ window.AC_ZEIT={
 })();
 
 /* ───────────────────────────────────────────────────────────────
+   wahl-daten.js — alle Sätze der Bereichsauswahl.
+
+   Hier steht jeder Satz vollständig. In wahl-app.js steht keiner:
+   eine Lücke heißt {zahl} und wird gefüllt, nie erweitert. Das ist
+   dieselbe Regel wie im Monatsbericht und sie wird beim Bauen
+   geprüft.
+
+   Kein Fachwort. Die Auswahl ist das Erste, was ein Mensch auf der
+   Seite anfasst — sie muss auf Stufe 0 verständlich sein.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+
+window.AC_WAHL_TEXT = {
+
+  /* Die Leiste selbst */
+  lab:   'Deine Bereiche',
+  alleKnopf: 'Alle zehn',
+
+  /* Was die Leiste über den eigenen Zustand sagt. Der zweite Satz
+     ist der wichtige: eine ausgeblendete Sache sieht auf einer
+     Seite genauso aus wie eine stille, und das wäre eine stille
+     Übertreibung zugunsten der Seite. */
+  alle: 'Du siehst alle zehn Lebensbereiche. Tipp einen an, wenn dich '
+      + 'nur ein Teil davon interessiert — die Auswahl gilt dann '
+      + 'überall, nicht nur hier.',
+
+  auswahl: 'Du siehst {zahl} von zehn Bereichen. Die übrigen sind '
+         + 'ausgeblendet, nicht ruhig — sie werden weiter gerechnet, '
+         + 'nur nicht gezeigt.'
+};
+
+})();
+
+/* ───────────────────────────────────────────────────────────────
+   wahl-app.js — die Leiste, mit der ein Mensch seine Bereiche
+   wählt. Die Auswahl liegt in AC_P neben dem Profil und gilt
+   deshalb für die ganze Plattform, nicht für eine Seite.
+
+   In dieser Datei steht kein Satz: die Wörter kommen aus
+   wahl-daten.js, die Bereiche aus lebensbereiche.js. Eine Seite
+   erfährt von einer Änderung über das Ereignis "ac-bereiche" und
+   zeichnet sich dann neu.
+
+   Alle eigenen Namen mit bw bzw. BW_ davor, damit nichts mit der
+   Rechen-Engine kollidiert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+
+function bwLB(){ return window.AC_LB; }
+function bwText(){ return window.AC_WAHL_TEXT || {}; }
+
+function bwEsc(s){
+  return String(s === undefined || s === null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* Lücken füllen, dann maskieren. In dieser Reihenfolge kann kein
+   Wert HTML einschmuggeln. */
+function bwSatz(vorlage, werte){
+  var t = String(vorlage || '').replace(/\{([a-zA-Z]+)\}/g, function(_, k){
+    return (werte && werte[k] !== undefined) ? String(werte[k]) : '';
+  });
+  return bwEsc(t);
+}
+
+/* ── Zustand ────────────────────────────────────────────────── */
+
+function bwGewaehlt(){
+  var L = bwLB(); if(!L) return [];
+  var roh = [];
+  try{ roh = (window.AC_P && AC_P.bereiche()) || []; }catch(e){ roh = []; }
+  return L.normieren(roh);
+}
+
+function bwSetzen(ks){
+  var L = bwLB(); if(!L) return;
+  var n = L.normieren(ks);
+  /* Alle zehn gewählt heißt dasselbe wie keine Auswahl. Dann wird
+     auch nichts gespeichert — sonst müsste jede Seite zwei Fälle
+     unterscheiden, die dasselbe bedeuten. */
+  if(n.length === L.ZAHL) n = [];
+  try{ if(window.AC_P) AC_P.setzeBereiche(n); }catch(e){}
+  bwLeisteZeichnen();
+  try{ window.dispatchEvent(new CustomEvent('ac-bereiche', { detail:{ bereiche:n } })); }
+  catch(e){}
+}
+
+function bwUmschalten(k){
+  var L = bwLB(); if(!L) return;
+  var n = bwGewaehlt();
+  /* Ohne Auswahl ist alles gewählt. Der erste Griff auf einen
+     Bereich bedeutet deshalb: nur dieser. */
+  if(!n.length){ bwSetzen([k]); return; }
+  var i = n.indexOf(k);
+  if(i < 0) n = n.concat([k]);
+  else n = n.slice(0, i).concat(n.slice(i + 1));
+  /* Der letzte Bereich lässt sich nicht abwählen: eine leere Seite
+     wäre keine Einstellung, sondern ein Defekt. */
+  if(!n.length) return;
+  bwSetzen(n);
+}
+
+/* ── Die Leiste ─────────────────────────────────────────────── */
+
+function bwTipp(n){
+  var T = bwText(), L = bwLB();
+  if(!n.length || n.length === L.ZAHL) return bwSatz(T.alle);
+  return bwSatz(T.auswahl, { zahl:n.length });
+}
+
+function bwLeisteZeichnen(){
+  var L = bwLB(), T = bwText();
+  var kaesten = document.querySelectorAll('#berwahl, .bw-leiste');
+  if(!L || !kaesten.length) return;
+  var n = bwGewaehlt(), alle = !n.length;
+  var h = '<span class="bw-lab">' + bwEsc(T.lab) + '</span><div class="bw-knoepfe">';
+  h += '<button type="button" class="bw-alle" data-bw="" aria-pressed="' +
+       (alle ? 'true' : 'false') + '">' + bwEsc(T.alleKnopf) + '</button>';
+  for(var i=0;i<L.BEREICHE.length;i++){
+    var B = L.BEREICHE[i], an = alle ? false : (n.indexOf(B.k) >= 0);
+    h += '<button type="button" data-bw="' + bwEsc(B.k) + '" aria-pressed="' +
+         (an ? 'true' : 'false') + '">' + bwEsc(B.name) + '</button>';
+  }
+  h += '</div><p class="bw-tipp">' + bwTipp(n) + '</p>';
+  Array.prototype.forEach.call(kaesten, function(box){
+    box.className = 'bw-leiste';
+    box.innerHTML = h;
+    if(box.getAttribute('data-bw-an')) return;
+    box.setAttribute('data-bw-an', '1');
+    box.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('button[data-bw]') : null;
+      if(!b) return;
+      var k = b.getAttribute('data-bw');
+      if(!k) bwSetzen([]); else bwUmschalten(k);
+    });
+  });
+}
+
+function bwStart(){ bwLeisteZeichnen(); }
+if(document.readyState === 'loading')
+  document.addEventListener('DOMContentLoaded', bwStart);
+else bwStart();
+
+window.AC_WAHL = {
+  bereiche: bwGewaehlt,
+  setzen: bwSetzen,
+  alle: function(){ return !bwGewaehlt().length; },
+  istGewaehlt: function(k){ return bwLB() ? bwLB().istGewaehlt(k, bwGewaehlt()) : true; },
+  felder: function(){ return bwLB() ? bwLB().felder(bwGewaehlt()) : []; },
+  leiste: bwLeisteZeichnen,
+  satz: bwSatz
+};
+
+})();
+
+/* ───────────────────────────────────────────────────────────────
    bereich-app.js — zeichnet die Bereichsseite.
 
    Reihenfolge auf der Seite: die lautesten Bereiche zuerst. Nicht
@@ -1620,6 +1887,15 @@ window.AC_ZEIT={
     try{ return AC_P.anzeige(p, AC_P.zeigeNamen()); }catch(e){ return (p && p.name) || '?'; }
   }
   function stufe(){ try{ return AC_NIV.stufe(); }catch(e){ return 0; } }
+
+  /* Die Bereiche, die dieser Mensch sehen will. Keine Auswahl heißt
+     alle — die Entscheidung darüber liegt in lebensbereiche.js, hier
+     wird sie nur angewendet. Gerechnet wird weiter alles: eine
+     ausgeblendete Lautstärke bleibt richtig, sie wird nur nicht
+     gezeigt, und die Leiste sagt das auch. */
+  function gewaehlt(b){
+    try{ return AC_WAHL.istGewaehlt(b.k); }catch(e){ return true; }
+  }
 
   /* Tage in Alltagssprache. Unter einem Jahr in Monaten oder Wochen,
      darüber in Jahren — nie "17 Monate" neben "1,5 Jahre". */
@@ -1944,7 +2220,8 @@ window.AC_ZEIT={
     var bs = Bl.bereiche.slice().sort(function(a,b){
       if(b.laut !== a.laut) return b.laut - a.laut;
       return b.laeuft.length - a.laeuft.length;
-    });
+    }).filter(gewaehlt);
+    if(!bs.length) bs = Bl.bereiche.slice();
 
     /* Kopf */
     if(kopf){
@@ -2030,6 +2307,11 @@ window.AC_ZEIT={
     };
 
     try{ if(window.AC_NIV) AC_NIV.leiste(D.getElementById('nivleiste'), alles); }catch(err){}
+
+    /* Die Auswahl der Bereiche gilt plattformweit. Ändert sie sich,
+       wird die Seite neu gezeichnet — die Leiste selbst zeichnet
+       wahl-app.js. */
+    try{ window.addEventListener('ac-bereiche', alles); }catch(err){}
   }
 
   if(D === null && document.readyState === 'loading')

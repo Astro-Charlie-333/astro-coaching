@@ -292,6 +292,83 @@ if zweite:
 else:
     print('  eine Himmelsrechnung, keine abweichende Kopie')
 
+# 7 · die Bausteine am Wurzelort und ihre Quelle sind gleich
+#     Fehlerklasse: eine Datei liegt zweimal — einmal in quelltext/
+#     als Quelle, einmal oben, wo die Seiten sie wirklich laden.
+#     Niemand kopiert sie, also wird eine Änderung an der Quelle
+#     stillschweigend nicht ausgeliefert, und umgekehrt überlebt
+#     eine Änderung oben den nächsten Blick in die Quelle nicht.
+#     Heute aufgefallen an niveau.js und wortwahl.js: beide liegen
+#     doppelt, beide sind noch gleich.
+doppelt = []
+for oben_js in sorted(wiki.glob('*.js')):
+    if oben_js.is_symlink():
+        continue
+    quellen = [q for q in hier.rglob(oben_js.name)
+               if q.is_file() and not q.is_symlink() and wiki not in q.parents]
+    for q in quellen:
+        if q.read_bytes() != oben_js.read_bytes():
+            doppelt.append(f'{oben_js.name}  ≠  {q.relative_to(hier)}')
+if doppelt:
+    print('  ZWEI FASSUNGEN DERSELBEN DATEI:')
+    for d in doppelt[:8]:
+        print(f'      {d}')
+    print('      (die Seiten laden die Fassung oben; eine abweichende')
+    print('       Quelle in quelltext/ wird nie ausgeliefert)')
+    fehlgeschlagen.append('zwei Fassungen derselben Datei')
+else:
+    print('  keine abweichende Zweitfassung am Wurzelort')
+
+# 8 · es gibt genau eine Liste der zehn Lebensbereiche
+#     Fehlerklasse wie bei der Himmelsrechnung: solange zwei Kopien
+#     gleich sind, fällt nichts auf; sobald eine gepflegt wird,
+#     zeigen zwei Seiten verschiedene Bereiche.
+LISTE = hier / 'bereiche' / 'lebensbereiche.js'
+zuordnung = re.compile(r"name:'[^']*',\s*haeuser:\s*\[")
+zweite_liste = []
+for q in sorted(hier.rglob('*')):
+    if q.is_symlink() or not q.is_file() or q.suffix not in ('.js', '.py'):
+        continue
+    if wiki in q.parents or q == LISTE or q.name.startswith('_probe-'):
+        continue
+    if zuordnung.search(q.read_text(encoding='utf-8', errors='replace')):
+        zweite_liste.append(str(q.relative_to(hier)))
+if not LISTE.exists():
+    print('  bereiche/lebensbereiche.js fehlt — die zehn Bereiche haben')
+    print('  keine gemeinsame Quelle mehr')
+    fehlgeschlagen.append('Bereichsliste fehlt')
+elif zweite_liste:
+    print('  ZWEITE LISTE DER LEBENSBEREICHE:')
+    for z in zweite_liste[:8]:
+        print(f'      {z}')
+    print('      (die zehn Bereiche stehen allein in')
+    print('       bereiche/lebensbereiche.js)')
+    fehlgeschlagen.append('zweite Bereichsliste')
+else:
+    print('  eine Liste der Lebensbereiche')
+
+# 9 · wer die Bereiche zeigt, lässt sie auch wählen
+#     Fehlerklasse: eine Seite nimmt die zehn Bereiche, zeigt aber
+#     keine Auswahl — dann gilt die Auswahl eben doch nur für
+#     manche Seiten, und das ist genau die Zersplitterung, die
+#     PRODUKT.md Abschnitt 4 ausschließt.
+ohne_wahl = []
+for s in seiten:
+    t = s.read_text(encoding='utf-8', errors='replace')
+    if 'AC_LB' not in t:
+        continue
+    if 'id="berwahl"' not in t or 'AC_WAHL' not in t:
+        ohne_wahl.append(s.name)
+if ohne_wahl:
+    print('  SEITEN MIT BEREICHEN, ABER OHNE AUSWAHL:')
+    for s in ohne_wahl[:8]:
+        print(f'      {s}')
+    print('      (die Auswahl gilt plattformweit — eine Seite, die die')
+    print('       Bereiche zeigt, muss sie auch wählen lassen)')
+    fehlgeschlagen.append('Bereiche ohne Auswahl')
+else:
+    print('  jede Seite mit Bereichen lässt sie auch wählen')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:

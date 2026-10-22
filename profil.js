@@ -3,7 +3,12 @@
 (function(){
   var KEY='ac_profile_v1', ALT='ac_geburt';
 
-  function leer(){ return {v:1, eigen:null, aktiv:null, zeigeNamen:false, liste:[]}; }
+  /* bereiche: die Lebensbereiche, die diesen Menschen interessieren.
+     Leer heißt alle — siehe PRODUKT.md Abschnitt 4. Die Auswahl liegt
+     hier neben dem Profil, damit sie plattformweit gilt und nicht je
+     Seite neu getroffen werden muss. */
+  function leer(){ return {v:1, eigen:null, aktiv:null, zeigeNamen:false,
+                           bereiche:[], liste:[]}; }
   function lade(){
     var d;
     try{ d=JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ d=null; }
@@ -51,6 +56,17 @@
     eigenes:function(){ var d=lade(); return d.liste.filter(function(p){return p.id===d.eigen;})[0]||null; },
     aktives:function(){ var d=lade(); return d.liste.filter(function(p){return p.id===d.aktiv;})[0]||this.eigenes(); },
     zeigeNamen:function(){ return !!lade().zeigeNamen; },
+
+    /* Die gewählten Lebensbereiche. Ein leeres Feld heißt: alle.
+       Welche Schlüssel es gibt, weiß diese Datei nicht — das steht in
+       bereiche/lebensbereiche.js, und dort wird eine Auswahl auch auf
+       das Mögliche zurückgeführt. Hier wird nur aufbewahrt. */
+    bereiche:function(){ var b=lade().bereiche; return Array.isArray(b)?b.slice():[]; },
+    setzeBereiche:function(ks){
+      var d=lade();
+      d.bereiche=Array.isArray(ks)?ks.filter(function(k){ return typeof k==='string'; }):[];
+      sichere(d);
+    },
 
     setzeNamenSichtbar:function(b){ var d=lade(); d.zeigeNamen=!!b; sichere(d); },
     setzeAktiv:function(pid){

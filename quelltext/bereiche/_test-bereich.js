@@ -12,8 +12,10 @@ function laden(dateien){
   return f(sandkasten.window, console);
 }
 
-const U = laden(['rituale/engine.js', 'zeit/zeit-rechner.js', 'bereiche/bereich-rechner.js']);
+const U = laden(['rituale/engine.js', 'zeit/zeit-rechner.js',
+                 'bereiche/lebensbereiche.js', 'bereiche/bereich-rechner.js']);
 const AC = U.window.AC_BER;
+const LB = U.window.AC_LB;
 const AZ = U.window.AC_ZEIT;
 const { lon, chartVon, haus, jdFromUT, datVon } = U;
 
@@ -400,7 +402,59 @@ EICH.forEach(e => {
 p('nie sagen alle Bereiche gleichzeitig dasselbe', gleich === 0,
   gleich + ' von ' + proben + ' Stichtagen ohne jede Unterscheidung');
 
-/* ── 14. Keine echten Geburtsdaten in dieser Datei ──────────── */
+/* ── 14. Die Auswahl der Bereiche ───────────────────────────── */
+/* Fehlerklassen, die hier dauerhaft verbaut werden:
+   · Ein alter oder verdorbener Speicherstand macht die Seite leer,
+     statt "alle" zu bedeuten.
+   · Die Felder einer Auswahl werden falsch zusammengelegt, und der
+     Monatsbericht beachtet dann die falschen Bereiche.
+   · Ein Feld gehört zu keinem Bereich — dann ist es über die
+     Auswahl nicht erreichbar, egal was jemand anklickt. */
+p('die Liste hat zehn Bereiche', LB && LB.ZAHL === 10, LB ? String(LB.ZAHL) : 'AC_LB fehlt');
+p('der Rechner nimmt dieselbe Liste',
+  AC.BEREICHE === LB.BEREICHE,
+  'der Rechner führt eine eigene Kopie der Bereiche');
+p('keine Auswahl heisst alle Felder', LB.felder([]).length === 12);
+p('keine Auswahl heisst jeder Bereich ist gewaehlt',
+  LB.BEREICHE.every(b => LB.istGewaehlt(b.k, [])));
+p('eine Auswahl schliesst andere Bereiche aus',
+  LB.istGewaehlt('liebe', ['liebe']) && !LB.istGewaehlt('geld', ['liebe']));
+p('unbekannte Schluessel fliegen heraus',
+  JSON.stringify(LB.normieren(['liebe', 'nichtdabei', 'geld'])) ===
+  JSON.stringify(['liebe', 'geld']),
+  JSON.stringify(LB.normieren(['liebe', 'nichtdabei', 'geld'])));
+p('nur Unbekanntes bedeutet alle', LB.normieren(['nichtdabei']).length === 0);
+p('Doppeltes zaehlt einmal', LB.normieren(['geld', 'geld']).length === 1);
+p('die Reihenfolge ist immer die der Liste',
+  JSON.stringify(LB.normieren(['umbruch', 'liebe'])) ===
+  JSON.stringify(['liebe', 'umbruch']));
+p('die Felder einer Auswahl sind die Vereinigung',
+  JSON.stringify(LB.felder(['liebe'])) === JSON.stringify([5, 7, 8]),
+  JSON.stringify(LB.felder(['liebe'])));
+p('zwei Bereiche legen ihre Felder zusammen',
+  JSON.stringify(LB.felder(['liebe', 'geld'])) === JSON.stringify([2, 5, 7, 8, 11]),
+  JSON.stringify(LB.felder(['liebe', 'geld'])));
+p('alle zehn ergeben alle zwoelf Felder',
+  LB.felder(LB.BEREICHE.map(b => b.k)).length === 12);
+let felderAlle = {};
+LB.BEREICHE.forEach(b => {
+  p('Bereich ' + b.k + ' hat drei Felder', b.haeuser.length === 3, String(b.haeuser.length));
+  p('Bereich ' + b.k + ' hat einen Namen', !!b.name && b.name.length > 2);
+  b.haeuser.forEach(h => {
+    p('Feld ' + h + ' in ' + b.k + ' liegt zwischen 1 und 12', h >= 1 && h <= 12);
+    felderAlle[h] = 1;
+  });
+  p('Bereich ' + b.k + ' nennt kein Feld zweimal',
+    new Set(b.haeuser).size === b.haeuser.length);
+});
+for(let h = 1; h <= 12; h++)
+  p('Feld ' + h + ' gehoert zu mindestens einem Bereich', !!felderAlle[h]);
+p('keine zwei Bereiche heissen gleich',
+  new Set(LB.BEREICHE.map(b => b.name)).size === 10);
+p('keine zwei Bereiche haben denselben Schluessel',
+  new Set(LB.BEREICHE.map(b => b.k)).size === 10);
+
+/* ── 15. Keine echten Geburtsdaten in dieser Datei ──────────── */
 const selbst = fs.readFileSync(__filename, 'utf8');
 p('keine echten Geburtsdaten in der Pruefdatei',
   !/\b1987\b/.test(selbst) && !/\b08:58\b/.test(selbst));

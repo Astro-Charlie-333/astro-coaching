@@ -59,11 +59,21 @@ function mbAnlage(x){
     + '</p>';
 }
 
+/* Die Bereiche, die dieser Mensch gewählt hat — als Felder, in
+   denen der Rechner sucht. Keine Auswahl heißt alle. */
+function mbWahl(){
+  try{ return (window.AC_WAHL && AC_WAHL.bereiche()) || []; }catch(e){ return []; }
+}
+function mbFelder(){
+  try{ return (window.AC_WAHL && AC_WAHL.felder()) || []; }catch(e){ return []; }
+}
+
 /* ── Der Brief ──────────────────────────────────────────────── */
 function mbBrief(p, versatz){
   var P  = chartVon(p);
   var mv = R.monatVon(new Date(), versatz);
-  var b  = R.bericht(P, mv.jahr, mv.mon);
+  var wahl = mbWahl();
+  var b  = R.bericht(P, mv.jahr, mv.mon, mbFelder());
   var monat = MN[b.mon];
   var name  = (p.name || AC_P.anzeige(p, true) || '').trim();
 
@@ -80,6 +90,15 @@ function mbBrief(p, versatz){
      ? mbSatz(T.BEWOHNT, { anlagen: mbListe(b.bewohner.map(function(r){
          return T.ANLAGE[r].nom; })) })
      : mbSatz(T.UNBEWOHNT)) + '</p>';
+
+  /* Hat dieser Mensch Bereiche gewählt, sagt der Brief es — und
+     auch, wenn darin gerade nichts läuft. Sonst hielte er die zwei
+     genannten Vorgänge für alles, was los ist. */
+  if(wahl.length && b.treffer.length){
+    h += '<p class="mb-wahl" data-art="' + (b.inWahl ? 'drin' : 'draussen') + '">'
+       + mbSatz(b.inWahl ? T.AUSWAHL.drin : T.AUSWAHL.draussen,
+                { zahl: wahl.length }) + '</p>';
+  }
 
   if(b.treffer.length){
     var x = b.treffer[0], d = T.LAUF[x.wanderer][x.art];
@@ -201,6 +220,9 @@ function mbHinweis(text){
 
 mbSteuer();
 mbZeigen();
+
+/* Wählt jemand andere Bereiche, wird der Brief neu gesetzt. */
+window.addEventListener('ac-bereiche', mbZeigen);
 
 mbEl('mbkopie').addEventListener('click', function(){
   var t = mbNurText();

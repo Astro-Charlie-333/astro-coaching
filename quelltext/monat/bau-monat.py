@@ -39,11 +39,20 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
 """
 
+ber = hier.parent / 'bereiche'
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'monat-stil.css')
+        + "\n" + lies(ber / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
         + lies(hier / 'monat-koerper.html') + "\n<script>\n"
         + lies(rit / 'engine.js') + "\n"
+        # Die zehn Bereiche und die Auswahl-Leiste. Der Brief rechnet
+        # nichts von der Bereichsseite, muss aber wissen, welche
+        # Felder zu einem gewählten Bereich gehören.
+        + lies(ber / 'lebensbereiche.js') + "\n"
+        + lies(ber / 'wahl-daten.js') + "\n"
+        + lies(ber / 'wahl-app.js') + "\n"
         + lies(hier / 'monat-rechner.js') + "\n"
         + lies(hier / 'monat-daten.js') + "\n"
         + lies(hier / 'monat-app.js')
@@ -75,6 +84,22 @@ if gesucht - ids:
     fehler.append('Skript sucht IDs, die es nicht gibt: ' + ', '.join(sorted(gesucht - ids)))
 if 'nivleiste' not in ids:
     fehler.append('die Leiste für den Wissensstand fehlt')
+# Fehlerklasse: der Brief bietet die Bereichsauswahl an, richtet sich
+# aber nicht nach ihr — oder richtet sich danach, ohne sie anzubieten.
+if 'berwahl' not in ids:
+    fehler.append('die Leiste für die Bereichsauswahl fehlt im Körper')
+if 'AC_WAHL' not in app:
+    fehler.append('der Brief beachtet die Bereichsauswahl nicht')
+if "addEventListener('ac-bereiche'" not in app:
+    fehler.append('der Brief wird nach einer Änderung der Auswahl nicht neu gesetzt')
+# Die Felder der Auswahl kommen aus der einen Liste, nicht aus einer
+# zweiten Kopie der zehn Bereiche.
+if re.search(r"k:'liebe'|haeuser:\s*\[", app + daten + rechner):
+    fehler.append('die Bereiche stehen im Monatsbericht noch einmal — '
+                  'sie gehören allein in bereiche/lebensbereiche.js')
+# Die Auswahl muss den Rechner wirklich erreichen.
+if 'felder' not in rechner:
+    fehler.append('der Rechner nimmt die Felder der Auswahl nicht an')
 
 for tag in ('div', 'section', 'nav', 'details'):
     a, z = len(re.findall(r'<%s\b' % tag, koerper)), len(re.findall(r'</%s>' % tag, koerper))
@@ -88,7 +113,10 @@ for href in sorted(set(re.findall(r'href="([a-z0-9._-]+\.html)"', koerper + app)
 # ── 2 · Namenskollisionen mit der Engine ───────────────────────
 def oben(t):
     return set(re.findall(r'^(?:var|function)\s+([A-Za-z_$][\w$]*)', t, re.M))
-koll = (oben(app) | oben(daten) | oben(rechner)) & oben(lies(rit / 'engine.js'))
+geliehen = (lies(ber / 'lebensbereiche.js') + lies(ber / 'wahl-daten.js')
+            + lies(ber / 'wahl-app.js'))
+koll = ((oben(app) | oben(daten) | oben(rechner) | oben(geliehen))
+        & oben(lies(rit / 'engine.js')))
 if koll:
     fehler.append('Namenskollision mit der Rechen-Engine: ' + ', '.join(sorted(koll)))
 
@@ -107,7 +135,9 @@ if 'ELEM' in rechner and 'ELEM=' in rechner.replace(' ', ''):
 #     Geprüft wird nach dem Entfernen der HTML-Teile: drei Wörter
 #     hintereinander sind ein Satzanfang und gehören in monat-daten.js.
 for lit in literale(app):
-    rest = re.sub(r'<[^>]*>', ' ', lit)
+    # Auch ein abgeschnittenes Tag ist Auszeichnung, kein Satz:
+    # '<p class="x" data-art="' endet mitten im Tag.
+    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
     woerter = re.findall(r'[A-Za-zÄÖÜäöüß]{3,}', rest)
     if len(woerter) >= 3:
         fehler.append('Text in der Anzeige statt in monat-daten.js: '
@@ -191,6 +221,22 @@ if T:
     satz('SCHWERPUNKT_NACH', T['SCHWERPUNKT_NACH'], 80)
     satz('FRAGE_NACH', T['FRAGE_NACH'], 40)
     satz('ZWEITES', T['ZWEITES'], 20)
+    # Fehlerklasse: der Brief sortiert nach der Auswahl, sagt das aber
+    # nicht — dann hält ein Mensch die genannten Vorgänge für alles,
+    # was läuft. Beide Fassungen müssen da sein und sich wirklich
+    # unterscheiden.
+    for art in ('drin', 'draussen'):
+        if art not in T.get('AUSWAHL', {}):
+            fehler.append(f'AUSWAHL.{art} fehlt — der Brief verschweigt, '
+                          'dass er nach der Auswahl sortiert')
+            continue
+        satz(f'AUSWAHL.{art}', T['AUSWAHL'][art], 80)
+        if '{zahl}' not in T['AUSWAHL'][art]:
+            fehler.append(f'AUSWAHL.{art} nennt nicht, wie viele Bereiche '
+                          'gewählt sind')
+    if T.get('AUSWAHL', {}).get('drin') == T.get('AUSWAHL', {}).get('draussen'):
+        fehler.append('AUSWAHL: beide Fassungen sagen dasselbe — dann ist der '
+                      'Unterschied nur behauptet')
     satz('GRUSS.text', T['GRUSS']['text'], 60)
     satz('BEDIENUNG.leer', T['BEDIENUNG']['leer'], 60)
     satz('ANREDE', T['ANREDE'], 5)
@@ -418,7 +464,53 @@ const t0=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(2); }); await p.waitForTimeout(400);
 const t2=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
   .filter(e=>e.offsetParent!==null).length);
-console.log(JSON.stringify({v,knopf,zwei,spaeter,roh,j0,t0,t2,fehler:[...new Set(f)]}));
+/* Die Bereichsauswahl: angeboten, wirksam, und sie verschweigt nicht,
+   dass der Brief nach ihr sortiert.
+   Vorher zurück auf das erste Profil und diesen Monat — sonst wird
+   gegen einen Brief geprüft, der von jemand anderem handelt. */
+await p.evaluate(()=>{const b=[...document.querySelectorAll('#mbsteuer button')]
+ .filter(x=>/Lena/.test(x.textContent))[0]; if(b) b.click();});
+await p.waitForTimeout(500);
+await p.evaluate(()=>{const b=[...document.querySelectorAll('#mbsteuer button')]
+ .filter(x=>x.textContent.trim()==='dieser')[0]; if(b) b.click();});
+await p.waitForTimeout(700);
+const wahl=await p.evaluate(()=>{
+  const ps=AC_P.alle()[0], P=chartVon(ps), mv=AC_MONAT.monatVon(new Date(),0);
+  const b=AC_MONAT.bericht(P,mv.jahr,mv.mon);
+  const haeuser=b.treffer.map(x=>x.hausNatal);
+  return {
+    knoepfe:document.querySelectorAll('#berwahl button[data-bw]').length,
+    tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||'',
+    ohneWahl:document.querySelectorAll('.mb-brief .mb-wahl').length,
+    treffer:b.treffer.length,
+    drin:AC_LB.BEREICHE.filter(x=>x.haeuser.some(h=>haeuser.indexOf(h)>=0)).map(x=>x.k),
+    draussen:AC_LB.BEREICHE.filter(x=>!x.haeuser.some(h=>haeuser.indexOf(h)>=0)).map(x=>x.k)};
+});
+let wDrin={}, wDraussen={};
+if(wahl.treffer && wahl.drin.length){
+  await p.evaluate(k=>{ window.AC_WAHL.setzen([k]); }, wahl.drin[0]);
+  await p.waitForTimeout(900);
+  wDrin=await p.evaluate(()=>({
+    art:(document.querySelector('.mb-brief .mb-wahl')||{}).getAttribute
+        ? document.querySelector('.mb-brief .mb-wahl').getAttribute('data-art') : '',
+    text:(document.querySelector('.mb-brief .mb-wahl')||{}).innerText||'',
+    briefe:document.querySelectorAll('.mb-brief').length,
+    gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
+}
+if(wahl.treffer && wahl.draussen.length){
+  await p.evaluate(k=>{ window.AC_WAHL.setzen([k]); }, wahl.draussen[0]);
+  await p.waitForTimeout(900);
+  wDraussen=await p.evaluate(()=>({
+    art:(document.querySelector('.mb-brief .mb-wahl')||{}).getAttribute
+        ? document.querySelector('.mb-brief .mb-wahl').getAttribute('data-art') : '',
+    text:(document.querySelector('.mb-brief .mb-wahl')||{}).innerText||'',
+    kasten:document.querySelectorAll('.mb-brief .kasten').length}));
+}
+await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
+await p.waitForTimeout(700);
+const nachWahl=await p.evaluate(()=>document.querySelectorAll('.mb-brief .mb-wahl').length);
+console.log(JSON.stringify({v,knopf,zwei,spaeter,roh,j0,t0,t2,
+  wahl,wDrin,wDraussen,nachWahl,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -458,6 +550,47 @@ if pr:
         if not b['feld'].strip():
             fehler.append(f'{wer}: der Brief sagt nicht, was bei diesem '
                           f'Menschen in dem Bereich liegt, auf den der Monat zeigt')
+
+    # ── Die Bereichsauswahl im Brief ──────────────────────────
+    # Fehlerklassen: die Leiste fehlt; der Brief sortiert nach der
+    # Auswahl, ohne es zu sagen; er sagt „darin läuft nichts", wo
+    # etwas läuft; ohne Auswahl steht der Satz trotzdem da.
+    w = pr['wahl']
+    if w['knoepfe'] != 11:
+        fehler.append(f"{w['knoepfe']} statt 11 Knöpfe in der Bereichsauswahl")
+    if len(w['tipp']) < 40:
+        fehler.append('die Auswahl erklärt sich nicht: ' + repr(w['tipp'][:60]))
+    if w['ohneWahl'] != 0:
+        fehler.append('ohne Auswahl redet der Brief trotzdem von einer Auswahl')
+    if not w['treffer']:
+        fehler.append('die Probe trifft keinen Vorgang — damit ist nicht '
+                      'geprüft, ob der Brief die Auswahl beachtet')
+    else:
+        if not w['drin']:
+            fehler.append('kein Bereich enthält einen der laufenden Vorgänge — '
+                          'die Zuordnung von Feld zu Bereich greift nicht')
+        else:
+            d = pr['wDrin']
+            if d.get('art') != 'drin':
+                fehler.append('der Brief sagt nicht, dass er nach der Auswahl '
+                              'sortiert: ' + repr(d.get('art')))
+            if len(d.get('text', '')) < 40:
+                fehler.append('der Satz über die Auswahl ist leer oder zu kurz')
+            if d.get('briefe') != 1:
+                fehler.append('nach einer Auswahl steht kein Brief mehr da')
+            if d.get('gespeichert') != [w['drin'][0]]:
+                fehler.append('die Auswahl liegt nicht in AC_P neben dem '
+                              'Profil: ' + str(d.get('gespeichert')))
+        if w['draussen']:
+            a = pr['wDraussen']
+            if a.get('art') != 'draussen':
+                fehler.append('in einer Auswahl ohne laufenden Vorgang tut der '
+                              'Brief, als wäre sie getroffen: ' + repr(a.get('art')))
+            if a.get('kasten') != 1:
+                fehler.append('der Brief verliert seinen Kasten, wenn in der '
+                              'Auswahl nichts läuft')
+    if pr['nachWahl'] != 0:
+        fehler.append('nach "alle zehn" redet der Brief weiter von einer Auswahl')
         if b['ruhig'] and b['anlagen']:
             fehler.append(f'{wer}: ein ruhiger Monat nennt trotzdem eine '
                           f'getroffene Anlage')

@@ -53,3 +53,8 @@
 @media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
 /* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
    nach der Raster- und Flexspalten ihre Breite berechnen. */
+
+/* Der Satz über die gewählten Bereiche. Steht vor dem Kasten und
+   gehört zum Brief, nicht zur Bedienung. */
+.mb-brief .mb-wahl{font-size:14px;color:var(--leise,#6B6259);
+ border-left:2px solid var(--linie,#EBE1D2);padding-left:11px;margin:14px 0;}
