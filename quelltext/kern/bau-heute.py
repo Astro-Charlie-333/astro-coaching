@@ -20,8 +20,11 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
 """
 
+ber = hier.parent / 'bereiche'
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + "\n" + lies(hier / 'heute-stil.css')
+        + "\n" + lies(ber / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
         + lies(hier / 'heute-koerper.html') + "\n<script>\n"
@@ -30,8 +33,12 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + lies(rit / 'ritual.js') + "\n"
         + lies(hier / 'kern-rad.js') + "\n"
         + lies(hier.parent / 'zeit' / 'zeit-rechner.js') + "\n"
-        + lies(hier.parent / 'bereiche' / 'bereich-rechner.js') + "\n"
-        + lies(hier.parent / 'bereiche' / 'bereich-daten.js') + "\n"
+        # Die eine Liste der Bereiche vor dem Rechner, der sie holt.
+        + lies(ber / 'lebensbereiche.js') + "\n"
+        + lies(ber / 'bereich-rechner.js') + "\n"
+        + lies(ber / 'bereich-daten.js') + "\n"
+        + lies(ber / 'wahl-daten.js') + "\n"
+        + lies(ber / 'wahl-app.js') + "\n"
         + lies(hier / 'heute-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -47,6 +54,15 @@ if '.toLowerCase(' in app:
     fehler.append('toLowerCase verändert deutsche Großschreibung — nicht benutzen')
 
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
+# Fehlerklasse: eine Seite richtet sich nach der Bereichsauswahl,
+# bietet sie aber nicht an — oder umgekehrt.
+if 'berwahl' not in ids:
+    fehler.append('die Leiste für die Bereichsauswahl fehlt im Körper')
+if 'AC_WAHL' not in app:
+    fehler.append('die Startseite beachtet die Bereichsauswahl nicht')
+if "addEventListener('ac-bereiche'" not in app:
+    fehler.append('der Kurzblick wird nach einer Änderung der Auswahl '
+                  'nicht neu gezeichnet')
 gesucht = set(re.findall(r"""\bel\(['"]([A-Za-z0-9_-]+)['"]\)""", app))
 if gesucht - ids:
     fehler.append('Skript sucht IDs, die es nicht gibt: ' + ', '.join(sorted(gesucht - ids)))
@@ -116,7 +132,21 @@ const t0=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(400);
 const t3=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
   .filter(e=>e.offsetParent!==null).length);
-console.log(JSON.stringify({v,k,j0,t0,t3,fehler:[...new Set(f)]}));
+/* Die Bereichsauswahl: da, wirksam, und sie sagt, dass sie ausblendet. */
+const wahl=await p.evaluate(()=>({
+  knoepfe:document.querySelectorAll('#berwahl button[data-bw]').length,
+  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||''}));
+await p.evaluate(()=>{ window.AC_WAHL.setzen(['liebe']); });
+await p.waitForTimeout(800);
+const einer=await p.evaluate(()=>({
+  bereiche:document.querySelectorAll('.ht-b').length,
+  namen:[...document.querySelectorAll('.ht-bn')].map(x=>x.textContent.trim()),
+  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||'',
+  gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
+await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
+await p.waitForTimeout(800);
+const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
+console.log(JSON.stringify({v,k,j0,t0,t3,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -162,6 +192,24 @@ if pr:
         fehler.append(f"{pr['t0']} Mechanik-Elemente schon auf Stufe 0 sichtbar")
     if pr['t3'] < 3:
         fehler.append(f"auf Stufe 3 nur {pr['t3']} Mechanik-Elemente — zu wenig")
+    w, e = pr['wahl'], pr['einer']
+    if w['knoepfe'] != 11:
+        fehler.append(f"{w['knoepfe']} statt 11 Knöpfe in der Bereichsauswahl")
+    if len(w['tipp']) < 40:
+        fehler.append('die Auswahl erklärt sich nicht: ' + repr(w['tipp'][:60]))
+    if e['bereiche'] != 1:
+        fehler.append(f"ein gewählter Bereich ergibt {e['bereiche']} Zeilen "
+                      'im Kurzblick — die Auswahl wirkt hier nicht')
+    if e['namen'] != ['Liebe']:
+        fehler.append('der Kurzblick zeigt den falschen Bereich: ' + str(e['namen']))
+    if 'ausgeblendet' not in e['tipp']:
+        fehler.append('die Startseite blendet Bereiche aus, ohne zu sagen, '
+                      'dass sie ausgeblendet und nicht ruhig sind')
+    if e['gespeichert'] != ['liebe']:
+        fehler.append('die Auswahl liegt nicht in AC_P neben dem Profil: '
+                      + str(e['gespeichert']))
+    if pr['zurueck'] < 3:
+        fehler.append(f"nach \"alle zehn\" nur {pr['zurueck']} Bereiche im Kurzblick")
     print('  Rauchprobe: %d Fakten, %d Wocheneinträge, %d Bereiche, '
           '%d Transitpunkte' % (v['fakten'], v['woche'], v['bereiche'], v['transit']))
 

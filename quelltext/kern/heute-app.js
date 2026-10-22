@@ -208,6 +208,16 @@ function bereicheBauen(p){
     if(b.laut!==a.laut) return b.laut-a.laut;
     return b.laeuft.length-a.laeuft.length;
   });
+  /* Nur die Bereiche, die dieser Mensch sehen will. Die Auswahl
+     liegt in AC_P und gilt plattformweit; keine Auswahl heißt alle.
+     Gerechnet wird weiter alles — die Leiste darüber sagt, dass
+     hier ausgeblendet und nicht beruhigt wird. */
+  try{
+    if(window.AC_WAHL){
+      var gew=bs.filter(function(b){ return AC_WAHL.istGewaehlt(b.k); });
+      if(gew.length) bs=gew;
+    }
+  }catch(e){}
 
   var zeigen=bs.slice(0,3), schon={};
   /* Ein stiller Bereich am Ende: das ist die nützlichste Zeile
@@ -293,6 +303,9 @@ function anwenden(){
   jetztBauen(p); radBauen(); bereicheBauen(p); wocheBauen(); kapBauen(); anwenden();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
     jetztBauen(p); bereicheBauen(p); wocheBauen(); }); }catch(e){}
+  /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
+     wird der Kurzblick neu gezeichnet. */
+  try{ window.addEventListener('ac-bereiche',function(){ bereicheBauen(p); }); }catch(e){}
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p);
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);

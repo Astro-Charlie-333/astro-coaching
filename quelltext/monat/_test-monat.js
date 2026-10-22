@@ -20,9 +20,11 @@ function laden(dateien){
   return f({}, console);
 }
 
-const U = laden(['rituale/engine.js', 'monat/monat-rechner.js', 'monat/monat-daten.js']);
+const U = laden(['rituale/engine.js', 'bereiche/lebensbereiche.js',
+                 'monat/monat-rechner.js', 'monat/monat-daten.js']);
 const M = U.window.AC_MONAT;
 const T = U.window.AC_MONAT_TEXT;
+const LB = U.window.AC_LB;
 const { chartVon, haus, lon, datVon, MN, HT } = U;
 
 let ok = 0; const fehler = [];
@@ -109,6 +111,83 @@ for(const C of [CA, CB]){
 p('die Rechnung ist wiederholbar',
   JSON.stringify(M.treffer(CA, 2026, 4)) === JSON.stringify(M.treffer(CA, 2026, 4)));
 
+/* ── 4b · Die getroffene Anlage ─────────────────────────────── */
+/* Fehlerklasse: der Bericht beschreibt nur den Himmel. Dann liest
+   sich derselbe Monat für jeden Menschen gleich. Jeder Treffer muss
+   sagen, welche Anlage er trifft und wo sie bei diesem Menschen
+   liegt — und das muss vom Geburtsbild abhängen, nicht vom Datum. */
+for(const [n, C] of [['A', CA], ['B', CB]]){
+  for(let jahr = 2026; jahr <= 2028; jahr++){
+    for(let mon = 0; mon < 12; mon++){
+      M.treffer(C, jahr, mon).forEach(x => {
+        p('Treffer nennt das natale Feld (' + n + ')',
+          Number.isInteger(x.hausNatal) && x.hausNatal >= 1 && x.hausNatal <= 12,
+          x.punkt + ' → ' + x.hausNatal);
+        p('das natale Feld ist das Feld des getroffenen Punktes (' + n + ')',
+          x.hausNatal === haus(C, C[x.punkt]),
+          x.punkt + ': ' + x.hausNatal + ' statt ' + haus(C, C[x.punkt]));
+        p('die Winkelart hat eine Fassung (' + n + ')',
+          !!(T.BEDEUTUNG[x.wanderer] && T.BEDEUTUNG[x.wanderer][x.art]),
+          x.wanderer + '/' + x.art);
+        p('der getroffene Punkt hat eine Anlage (' + n + ')',
+          !!T.ANLAGE[x.punkt], x.punkt);
+      });
+    }
+  }
+}
+
+/* Das Feld, in dem eine Anlage liegt, hängt am Geburtsbild. Wäre es
+   das nicht, bekämen alle Menschen denselben Satz. */
+const andersherum = M.PUNKTE.filter(k => haus(CA, CA[k]) !== haus(CB, CB[k]));
+p('dieselbe Anlage liegt bei zwei Menschen in verschiedenen Feldern',
+  andersherum.length >= 4,
+  andersherum.length + ' von ' + M.PUNKTE.length + ': ' + andersherum.join(', '));
+
+/* Über drei Jahre wird nicht immer dieselbe Anlage genannt. */
+for(const [n, C] of [['A', CA], ['B', CB]]){
+  const genannt = new Set();
+  for(let jahr = 2026; jahr <= 2028; jahr++)
+    for(let mon = 0; mon < 12; mon++){
+      const tr = M.treffer(C, jahr, mon);
+      if(tr.length) genannt.add(tr[0].punkt);
+    }
+  p('über drei Jahre werden verschiedene Anlagen genannt (' + n + ')',
+    genannt.size >= 4, genannt.size + ': ' + [...genannt].join(', '));
+}
+
+/* Zwei Geburtsbilder, derselbe Monat, verschiedener Inhalt — und
+   zwar nicht nur verschiedene Daten. Verglichen wird der inhaltliche
+   Schlüssel: der Schwerpunkt, was dort natal liegt, und die ersten
+   beiden Vorgänge mit ihrer getroffenen Anlage. */
+function inhalt(C, jahr, mon){
+  const h = M.schwerpunkt(C, jahr, mon);
+  return h + '|' + M.bewohner(C, h).join('+') + '|'
+    + M.treffer(C, jahr, mon).slice(0, 2)
+        .map(x => x.wanderer + '/' + x.punkt + '/' + x.hausNatal + '/' + x.art)
+        .join(';');
+}
+let gleicherInhalt = 0;
+for(let jahr = 2026; jahr <= 2028; jahr++)
+  for(let mon = 0; mon < 12; mon++)
+    if(inhalt(CA, jahr, mon) === inhalt(CB, jahr, mon)) gleicherInhalt++;
+p('zwei Geburtsbilder ergeben nie denselben Monatsinhalt',
+  gleicherInhalt === 0, gleicherInhalt + ' von 36 Monaten gleich');
+
+/* Die Bewohner eines Feldes sind genau die Punkte, die dort stehen. */
+for(const [n, C] of [['A', CA], ['B', CB]]){
+  for(let h = 1; h <= 12; h++){
+    const b = M.bewohner(C, h);
+    p('Bewohner stehen wirklich in dem Feld (' + n + ', ' + h + ')',
+      b.every(r => haus(C, C[r]) === h), b.join(','));
+    p('kein Punkt wird übersehen (' + n + ', ' + h + ')',
+      M.PUNKTE.filter(r => haus(C, C[r]) === h).length === b.length);
+  }
+  const alle = [];
+  for(let h = 1; h <= 12; h++) alle.push(...M.bewohner(C, h));
+  p('jeder Punkt wohnt in genau einem Feld (' + n + ')',
+    alle.length === M.PUNKTE.length, alle.length + ' statt ' + M.PUNKTE.length);
+}
+
 /* ── 5 · Neu- und Vollmond ──────────────────────────────────── */
 /* Fehlerklasse: ein Datum, das es im Monat nicht gibt. */
 let neu = 0, voll = 0;
@@ -184,9 +263,50 @@ p('ungefähr ein Vollmond je Monat', voll >= 24 && voll <= 26, voll + ' in 24 Mo
 M.WINKEL.forEach(k => p('Winkel ' + k.k + ' hat ein Wort', !!T.TECH.winkel[k.k]));
 M.PUNKTE.forEach(r => p('Punkt ' + r + ' hat eine Dativform', !!T.TECH.punkt[r]));
 M.WANDERER.forEach(w => {
-  p('Wanderer ' + w + ' hat einen Titel', !!(T.LAUF[w] && T.LAUF[w].titel));
-  p('Wanderer ' + w + ' hat einen Text', !!(T.LAUF[w] && T.LAUF[w].text));
+  ['hart','weich'].forEach(art => {
+    const d = T.LAUF[w] && T.LAUF[w][art];
+    p('Wanderer ' + w + '/' + art + ' hat einen Titel', !!(d && d.titel));
+    p('Wanderer ' + w + '/' + art + ' hat einen Text', !!(d && d.text));
+  });
+  /* Fehlerklasse: beide Fassungen sind dieselbe, der Unterschied
+     zwischen reibendem und tragendem Winkel nur behauptet. */
+  p('Wanderer ' + w + ': die beiden Fassungen unterscheiden sich',
+    !!(T.LAUF[w] && T.LAUF[w].hart.titel !== T.LAUF[w].weich.titel
+       && T.LAUF[w].hart.text !== T.LAUF[w].weich.text));
 });
+M.PUNKTE.forEach(r => {
+  const A = T.ANLAGE[r];
+  p('Punkt ' + r + ' hat eine Anlage in Alltagssprache', !!A);
+  if(!A) return;
+  p('Anlage ' + r + ' nennt ihr Geschlecht', ['m','f','n'].indexOf(A.genus) >= 0, A.genus);
+  /* Die Fallprobe: aus dem Geschlecht folgen beide Formen. */
+  const soll = { m:['dein ','deinen '], f:['deine ','deine '], n:['dein ','dein '] }[A.genus];
+  p('Anlage ' + r + ': erster Fall passt zum Geschlecht',
+    !!soll && A.nom.indexOf(soll[0]) === 0, A.nom);
+  p('Anlage ' + r + ': vierter Fall passt zum Geschlecht',
+    !!soll && A.akk.indexOf(soll[1]) === 0, A.akk);
+  p('Anlage ' + r + ': beide Fälle meinen dasselbe',
+    !!soll && A.nom.slice(soll[0].length) === A.akk.slice(soll[1].length),
+    A.nom + ' / ' + A.akk);
+  p('Anlage ' + r + ' erklärt sich', (A.lang || '').length >= 20, A.lang);
+});
+M.WANDERER.forEach(w => {
+  p('Bewegung ' + w + ' sagt, was sie mit einer Anlage macht', !!T.BEDEUTUNG[w]);
+  ['hart','weich'].forEach(art => {
+    const t = T.BEDEUTUNG[w] && T.BEDEUTUNG[w][art];
+    p('Bewegung ' + w + ' hat die Fassung ' + art, !!t);
+    p('Bewegung ' + w + '/' + art + ' nennt die Anlage',
+      !!t && t.indexOf('{anlageNom}') >= 0);
+  });
+});
+M.WANDERER.forEach(w => p('Bewegung ' + w + ': die beiden Bedeutungen unterscheiden sich',
+  !!(T.BEDEUTUNG[w] && T.BEDEUTUNG[w].hart !== T.BEDEUTUNG[w].weich)));
+M.WINKEL.forEach(k => p('Winkelart ' + k.art + ' kommt in BEDEUTUNG vor',
+  M.WANDERER.every(w => T.BEDEUTUNG[w] && T.BEDEUTUNG[w][k.art]), k.art));
+p('der Anlagensatz nennt das Feld', T.ANLAGE_SATZ.indexOf('{feld}') >= 0);
+p('der Anlagensatz steht im vierten Fall', T.ANLAGE_SATZ.indexOf('{anlageAkk}') >= 0);
+p('es gibt einen Satz für ein besetztes Feld', (T.BEWOHNT||'').indexOf('{anlagen}') >= 0);
+p('es gibt einen Satz für ein leeres Feld', (T.UNBEWOHNT||'').length >= 80);
 p('zwölf Schwerpunktsätze', T.SCHWERPUNKT.length === 12, T.SCHWERPUNKT.length);
 p('zwölf Fragen', T.FRAGE.length === 12, T.FRAGE.length);
 p('zwölf Hausnamen in der Engine', HT.length === 12, HT.length);
@@ -200,6 +320,77 @@ p('Bericht nennt die Tage', ber.tage === 31);
 p('Bericht hat einen Schwerpunkt', ber.schwerpunkt >= 1 && ber.schwerpunkt <= 12);
 p('Bericht hat eine Trefferliste', Array.isArray(ber.treffer));
 p('Bericht hat eine Mondliste', Array.isArray(ber.lunationen));
+p('Bericht sagt, was im Schwerpunkt liegt', Array.isArray(ber.bewohner));
+p('die Bewohner gehören zum Schwerpunkt',
+  ber.bewohner.every(r => haus(CA, CA[r]) === ber.schwerpunkt),
+  ber.bewohner.join(','));
+
+/* ── Die Auswahl der Bereiche ───────────────────────────────── */
+/* Fehlerklassen, die hier dauerhaft verbaut werden:
+   · Die Auswahl ändert die Reihenfolge nicht — dann ist sie Zierde.
+   · Die Auswahl wirft Vorgänge weg, statt sie nach hinten zu
+     stellen; dann verschweigt der Brief, was sonst noch läuft.
+   · inWahl zählt falsch, und der Brief sagt „darin läuft nichts",
+     obwohl etwas läuft (oder umgekehrt). */
+const JAHRE = [[2026, 0], [2026, 4], [2026, 9], [2027, 2]];
+let probenMitTreffer = 0, umsortiert = 0;
+JAHRE.forEach(([jahr, mon]) => {
+  [CA, CB].forEach(C => {
+    const ohne = M.bericht(C, jahr, mon);
+    p('ohne Auswahl ist inWahl die ganze Liste',
+      ohne.inWahl === ohne.treffer.length,
+      ohne.inWahl + ' von ' + ohne.treffer.length);
+    p('ohne Auswahl bleibt die Liste nach Enge sortiert',
+      ohne.treffer.every((x, i) => i === 0 || ohne.treffer[i-1].orbis <= x.orbis));
+    p('eine leere Auswahl ändert nichts',
+      JSON.stringify(M.bericht(C, jahr, mon, []).treffer) ===
+      JSON.stringify(ohne.treffer));
+    if(!ohne.treffer.length) return;
+    probenMitTreffer++;
+    /* Eine Auswahl, die genau den Bereich des letzten Treffers
+       enthält: der muss nach vorn, ohne dass einer verlorengeht. */
+    const letzter = ohne.treffer[ohne.treffer.length - 1];
+    const bereich = LB.BEREICHE.filter(b => b.haeuser.indexOf(letzter.hausNatal) >= 0)[0];
+    if(!bereich) return;
+    const felder = LB.felder([bereich.k]);
+    const mit = M.bericht(C, jahr, mon, felder);
+    p('die Auswahl wirft keinen Vorgang weg',
+      mit.treffer.length === ohne.treffer.length,
+      mit.treffer.length + ' statt ' + ohne.treffer.length);
+    p('kein Vorgang kommt doppelt vor',
+      new Set(mit.treffer.map(x => x.wanderer + x.punkt)).size === mit.treffer.length);
+    p('die gewählten Felder stehen vorn',
+      mit.treffer.every((x, i) => i === 0 ||
+        !(felder.indexOf(x.hausNatal) >= 0 &&
+          felder.indexOf(mit.treffer[i-1].hausNatal) < 0)),
+      mit.treffer.map(x => x.hausNatal).join(','));
+    p('innerhalb der Auswahl bleibt es bei der Enge',
+      mit.treffer.filter(x => felder.indexOf(x.hausNatal) >= 0)
+        .every((x, i, a) => i === 0 || a[i-1].orbis <= x.orbis));
+    p('inWahl zählt genau die Vorgänge in den gewählten Feldern',
+      mit.inWahl === mit.treffer.filter(x => felder.indexOf(x.hausNatal) >= 0).length,
+      String(mit.inWahl));
+    p('inWahl ist mindestens eins, wenn der Bereich getroffen ist',
+      mit.inWahl >= 1, String(mit.inWahl));
+    if(JSON.stringify(mit.treffer) !== JSON.stringify(ohne.treffer)) umsortiert++;
+    /* Eine Auswahl, in der nichts liegt: der Brief muss das merken. */
+    const leer = LB.BEREICHE.filter(b =>
+      b.haeuser.every(h => ohne.treffer.every(x => x.hausNatal !== h)));
+    if(leer.length){
+      const nix = M.bericht(C, jahr, mon, LB.felder([leer[0].k]));
+      p('eine Auswahl ohne Vorgang meldet inWahl null', nix.inWahl === 0,
+        String(nix.inWahl));
+      p('und nennt die Vorgänge trotzdem',
+        nix.treffer.length === ohne.treffer.length);
+    }
+  });
+});
+p('es gab Proben mit laufenden Vorgängen', probenMitTreffer >= 3,
+  String(probenMitTreffer));
+p('die Auswahl sortiert wirklich um', umsortiert >= 1,
+  umsortiert + ' von ' + probenMitTreffer + ' Proben');
+/* Die Felder der Auswahl kommen aus der einen Liste. */
+p('der Monatsbericht kennt die zehn Bereiche', LB && LB.ZAHL === 10);
 
 /* ── Ergebnis ───────────────────────────────────────────────── */
 if(fehler.length){

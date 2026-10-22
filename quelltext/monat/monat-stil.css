@@ -22,6 +22,10 @@
 .mb-brief .kasten{background:var(--messing-bg);border-radius:15px;padding:16px 19px;margin:16px 0;}
 .mb-brief .kasten p{margin:0 0 9px;font-size:15.3px;}
 .mb-brief .kasten p:last-child{margin-bottom:0;}
+/* Der persönliche Teil: welche Anlage dieses Menschen getroffen ist.
+   Abgesetzt, damit sichtbar wird, wo die allgemeine Beschreibung
+   aufhört und das Eigene anfängt. */
+.mb-brief .anlage{border-left:2px solid var(--messing);padding-left:13px;}
 /* Die Mechanik-Zeile: leiser als der Text, der sie erklärt. */
 .mb-brief .hintergrund{font-size:14px;color:var(--leise);}
 .mb-brief .frage{background:var(--bg);border-left:3px solid var(--messing);border-radius:12px;
@@ -49,3 +53,8 @@
 @media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
 /* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
    nach der Raster- und Flexspalten ihre Breite berechnen. */
+
+/* Der Satz über die gewählten Bereiche. Steht vor dem Kasten und
+   gehört zum Brief, nicht zur Bedienung. */
+.mb-brief .mb-wahl{font-size:14px;color:var(--leise,#6B6259);
+ border-left:2px solid var(--linie,#EBE1D2);padding-left:11px;margin:14px 0;}

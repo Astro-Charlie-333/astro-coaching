@@ -25,13 +25,19 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 """
 
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'bereich-stil.css')
+        + "\n" + lies(hier / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
         + lies(hier / 'bereich-koerper.html') + "\n<script>\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(zeit / 'zeit-rechner.js') + "\n"
+        # Die Liste der Bereiche vor allem anderen: der Rechner holt
+        # sie dort, und die Auswahl-Leiste auch.
+        + lies(hier / 'lebensbereiche.js') + "\n"
         + lies(hier / 'bereich-rechner.js') + "\n"
         + lies(hier / 'bereich-daten.js') + "\n"
+        + lies(hier / 'wahl-daten.js') + "\n"
+        + lies(hier / 'wahl-app.js') + "\n"
         + lies(hier / 'bereich-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -43,6 +49,9 @@ koerper = lies(hier / 'bereich-koerper.html')
 app     = lies(hier / 'bereich-app.js')
 daten   = lies(hier / 'bereich-daten.js')
 rechner = lies(hier / 'bereich-rechner.js')
+felder  = lies(hier / 'lebensbereiche.js')
+wdaten  = lies(hier / 'wahl-daten.js')
+wapp    = lies(hier / 'wahl-app.js')
 
 BEREICHE = ['liebe', 'beruf', 'gesundheit', 'geld', 'familie',
             'freunde', 'freude', 'selbstwert', 'sinn', 'umbruch']
@@ -57,6 +66,8 @@ gesucht = set(re.findall(r"""getElementById\(['"]([A-Za-z0-9_-]+)['"]\)""", app)
 gesucht = {g for g in gesucht if not g.startswith('ber-')}
 if gesucht - ids:
     fehler.append('Skript sucht IDs, die es nicht gibt: ' + ', '.join(sorted(gesucht - ids)))
+if 'berwahl' not in ids:
+    fehler.append('die Leiste für die Bereichsauswahl fehlt im Körper')
 if 'nivleiste' not in ids:
     fehler.append('die Leiste für den Wissensstand fehlt')
 
@@ -186,13 +197,14 @@ if not m_fac:
     fehler.append('B_FACET fehlt — die Bereiche haben keine Facetten')
 else:
     fac_block = klammerblock(daten, m_fac.end() - 1)
-    # welche Felder gehören zu welchem Bereich — aus dem Rechner, nicht doppelt gepflegt
+    # welche Felder gehören zu welchem Bereich — aus lebensbereiche.js,
+    # der einen Liste, nicht doppelt gepflegt
     HAEUSER = {}
-    for mb in re.finditer(r"k:'(\w+)',\s*name:'[^']*',\s*haeuser:\[([\d,\s]+)\]", rechner):
+    for mb in re.finditer(r"k:'(\w+)',\s*name:'[^']*',\s*haeuser:\[([\d,\s]+)\]", felder):
         HAEUSER[mb.group(1)] = [int(x) for x in mb.group(2).split(',')]
     if set(HAEUSER) != set(BEREICHE):
-        fehler.append('die Felder der Bereiche sind im Rechner nicht lesbar: '
-                      + str(sorted(HAEUSER)))
+        fehler.append('die Felder der Bereiche sind in lebensbereiche.js '
+                      'nicht lesbar: ' + str(sorted(HAEUSER)))
     for b in BEREICHE:
         mb = re.search(r"^\s{4}" + b + r":\s*\[", fac_block, re.M)
         if not mb:
@@ -311,10 +323,65 @@ for d in ('1987', '08:58'):
 if 'esc(' not in app:
     fehler.append('die Ausgabe wird nicht maskiert')
 
-# jeder Bereich muss im Rechner und in den Daten stehen
+# ── Die eine Liste der Bereiche ────────────────────────────────
+# Fehlerklasse: eine zweite Kopie der zehn Bereiche. Drei Seiten
+# brauchen die Liste; solange zwei Kopien gleich sind, fällt nichts
+# auf, und sobald eine gepflegt wird, zeigen zwei Seiten anderes.
+# Deshalb steht sie allein in lebensbereiche.js, und der Rechner
+# darf dort nur nachfragen.
 for b in BEREICHE:
-    if f"k:'{b}'" not in rechner:
-        fehler.append(f'Bereich {b} fehlt im Rechner')
+    if f"k:'{b}'" not in felder:
+        fehler.append(f'Bereich {b} fehlt in lebensbereiche.js')
+    if f"k:'{b}'" in rechner:
+        fehler.append(f'Bereich {b} steht noch im Rechner — die Liste '
+                      'gehört allein in lebensbereiche.js')
+if 'AC_LB' not in rechner:
+    fehler.append('der Rechner holt die Bereiche nicht aus lebensbereiche.js')
+if re.search(r"name:'[^']*',\s*haeuser:\[", rechner):
+    fehler.append('die Zuordnung von Bereich zu Feldern steht noch im '
+                  'Rechner — sie gehört allein in lebensbereiche.js')
+
+# ── Die Auswahl: angeboten und wirklich beachtet ───────────────
+# Fehlerklasse: eine Seite zeigt die Leiste, richtet sich aber nicht
+# danach. Dann ist die Einstellung Zierde.
+if 'AC_WAHL' not in app:
+    fehler.append('die Seite beachtet die Bereichsauswahl nicht')
+if "addEventListener('ac-bereiche'" not in app:
+    fehler.append('die Seite zeichnet sich nach einer Änderung der '
+                  'Auswahl nicht neu')
+# In wahl-app.js steht kein Satz — dieselbe Regel wie im Monatsbericht.
+for lit in re.findall(r"'((?:[^'\\\n]|\\.)*)'",
+                      re.sub(r'/\*.*?\*/', ' ', wapp, flags=re.S)):
+    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
+    if len(re.findall(r'[A-Za-zÄÖÜäöüß]{3,}', rest)) >= 3:
+        fehler.append(f'Text in wahl-app.js statt in wahl-daten.js: "{lit[:60]}"')
+# Die Sätze der Leiste: vollständig, ohne Fachwort, und der Satz über
+# eine getroffene Auswahl muss sagen, dass Ausgeblendetes nicht
+# dasselbe ist wie Ruhe.
+wtexte = dict(re.findall(r"^\s*(\w+):\s*'((?:[^'\\]|\\.)*)'", wdaten, re.M))
+for name, mind in (('lab', 4), ('alleKnopf', 5)):
+    if name not in wtexte:
+        fehler.append(f'wahl-daten.js: {name} fehlt')
+for name in ('alle', 'auswahl'):
+    v = re.search(r"\b" + name + r":\s*'((?:[^'\\]|\\.)*)'"
+                  r"(?:\s*\+\s*'((?:[^'\\]|\\.)*)')*", wdaten)
+    if not v:
+        fehler.append(f'wahl-daten.js: {name} fehlt')
+        continue
+    ganz = ''.join(re.findall(r"'((?:[^'\\]|\\.)*)'",
+                   re.search(r"\b" + name + r":((?:[^;]|\n)*?)(?:,\n|\n\s*\})",
+                             wdaten).group(1)))
+    if len(ganz) < 60:
+        fehler.append(f'wahl-daten.js: {name} ist zu dünn ({len(ganz)} Zeichen)')
+    if not ganz.rstrip().endswith(('.', '?')):
+        fehler.append(f'wahl-daten.js: {name} endet ohne Punkt')
+    lay_texte.append((f'WAHL.{name}', ganz))
+    if name == 'auswahl' and '{zahl}' not in ganz:
+        fehler.append(f'wahl-daten.js: {name} nennt nicht, wie viele '
+                      'Bereiche gewählt sind')
+if 'ausgeblendet' not in wtexte.get('auswahl', '') + wdaten:
+    fehler.append('die Leiste sagt nicht, dass ausgeblendete Bereiche '
+                  'nicht dasselbe sind wie stille')
 
 # die fünf Blöcke müssen in der festgelegten Reihenfolge erscheinen
 blocks = re.findall(r"<h4>(\d) &middot; ([^<]+)</h4>", app)
@@ -508,6 +575,54 @@ q.on('pageerror',e=>f.push('JS ohne Profil: '+String(e.message).slice(0,150)));
 await q.goto('file://ZIEL'); await q.waitForTimeout(700);
 notiz.ohneProfil=await q.evaluate(()=>(document.getElementById('bkopf')||{}).innerText||'');
 
+/* Die Auswahl der Bereiche. Vier Dinge müssen stimmen:
+   sie ist da, sie wirkt, sie sagt dass sie ausblendet, und sie
+   liegt in AC_P neben dem Profil statt in einem eigenen Schlüssel. */
+notiz.wahl=await p.evaluate(()=>({
+  knoepfe:document.querySelectorAll('#berwahl button[data-bw]').length,
+  alleAn:(document.querySelector('#berwahl button[data-bw=""]')||{})
+           .getAttribute? document.querySelector('#berwahl button[data-bw=""]')
+           .getAttribute('aria-pressed'):'',
+  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||''}));
+await p.evaluate(()=>{ window.AC_WAHL.setzen(['liebe']); });
+await p.waitForTimeout(600);
+notiz.einer=await p.evaluate(()=>({
+  bereiche:document.querySelectorAll('.b-ber').length,
+  ueber:document.querySelectorAll('.b-u').length,
+  name:(document.querySelector('.b-ber .b-name')||{}).textContent||'',
+  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||'',
+  gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[],
+  eigenerSchluessel:Object.keys(localStorage).filter(k=>/bereich/i.test(k))}));
+/* Ein zweiter Bereich kommt dazu, nicht an die Stelle des ersten. */
+await p.evaluate(()=>{ const b=[...document.querySelectorAll('#berwahl button[data-bw]')]
+  .filter(x=>x.getAttribute('data-bw')==='beruf')[0]; if(b) b.click(); });
+await p.waitForTimeout(600);
+notiz.zwei=await p.evaluate(()=>({
+  bereiche:document.querySelectorAll('.b-ber').length,
+  gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
+/* Der letzte Bereich lässt sich nicht abwählen — eine leere Seite
+   wäre keine Einstellung. */
+await p.evaluate(()=>{ window.AC_WAHL.setzen(['geld']); });
+await p.waitForTimeout(500);
+await p.evaluate(()=>{ const b=[...document.querySelectorAll('#berwahl button[data-bw]')]
+  .filter(x=>x.getAttribute('data-bw')==='geld')[0]; if(b) b.click(); });
+await p.waitForTimeout(500);
+notiz.letzter=await p.evaluate(()=>document.querySelectorAll('.b-ber').length);
+/* Zurück auf alle zehn. */
+await p.evaluate(()=>{ const b=document.querySelector('#berwahl button[data-bw=""]');
+  if(b) b.click(); });
+await p.waitForTimeout(700);
+notiz.zurueckAlle=await p.evaluate(()=>({
+  bereiche:document.querySelectorAll('.b-ber').length,
+  gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
+/* Ein verdorbener Speicherstand darf die Seite nicht leeren. */
+await p.evaluate(()=>{ window.AC_P.setzeBereiche(['gibtsnicht']);
+  window.dispatchEvent(new CustomEvent('ac-bereiche')); });
+await p.waitForTimeout(700);
+notiz.unsinn=await p.evaluate(()=>document.querySelectorAll('.b-ber').length);
+await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
+await p.waitForTimeout(700);
+
 /* Breiten */
 notiz.ueberlauf=[];
 for(const w of BREITEN){
@@ -598,6 +713,57 @@ else:
             fehler.append('der Knopf "Heute" bringt die Seite nicht zurück')
         if 'Profil' not in n['ohneProfil']:
             fehler.append('ohne Profil fehlt der Hinweis: ' + repr(n['ohneProfil'][:90]))
+        # ── Die Auswahl der Bereiche ──────────────────────────
+        # Fehlerklassen: die Leiste fehlt; sie wirkt nicht; sie
+        # blendet aus, ohne es zu sagen; sie liegt nicht bei AC_P;
+        # sie lässt sich leerklicken; ein verdorbener Stand macht
+        # die Seite leer.
+        w = n['wahl']
+        if w['knoepfe'] != 11:
+            fehler.append(f"{w['knoepfe']} statt 11 Knöpfe in der "
+                          'Bereichsauswahl (zehn Bereiche und "alle")')
+        if w['alleAn'] != 'true':
+            fehler.append('ohne Auswahl ist "alle zehn" nicht markiert')
+        if len(w['tipp']) < 40:
+            fehler.append('die Auswahl erklärt sich nicht: ' + repr(w['tipp'][:60]))
+        e = n['einer']
+        if e['bereiche'] != 1:
+            fehler.append(f"eine Auswahl von einem Bereich zeigt "
+                          f"{e['bereiche']} Bereiche — die Auswahl wirkt nicht")
+        if e['ueber'] != 1:
+            fehler.append(f"der Überblick zeigt {e['ueber']} Zeilen, "
+                          'obwohl ein Bereich gewählt ist')
+        if 'Liebe' not in e['name']:
+            fehler.append('die Auswahl zeigt den falschen Bereich: ' + repr(e['name']))
+        if 'ausgeblendet' not in e['tipp']:
+            fehler.append('die Seite blendet Bereiche aus, ohne zu sagen, '
+                          'dass sie ausgeblendet und nicht ruhig sind')
+        if e['gespeichert'] != ['liebe']:
+            fehler.append('die Auswahl liegt nicht in AC_P neben dem Profil: '
+                          + str(e['gespeichert']))
+        if e['eigenerSchluessel']:
+            fehler.append('die Auswahl legt einen eigenen Speicherschlüssel an: '
+                          + str(e['eigenerSchluessel'])
+                          + ' — sie gehört zu den Profildaten')
+        if n['zwei']['bereiche'] != 2:
+            fehler.append(f"ein zweiter Bereich ergibt {n['zwei']['bereiche']} "
+                          'Bereiche statt zwei')
+        if n['zwei']['gespeichert'] != ['liebe', 'beruf']:
+            fehler.append('die zweite Wahl wird nicht ergänzt: '
+                          + str(n['zwei']['gespeichert']))
+        if n['letzter'] != 1:
+            fehler.append('der letzte gewählte Bereich lässt sich abwählen — '
+                          f"dann bleiben {n['letzter']} Bereiche übrig")
+        if n['zurueckAlle']['bereiche'] != 10:
+            fehler.append('"alle zehn" bringt nicht alle zehn zurück: '
+                          + str(n['zurueckAlle']['bereiche']))
+        if n['zurueckAlle']['gespeichert'] != []:
+            fehler.append('alle zehn gewählt wird gespeichert, statt als '
+                          '"keine Auswahl" zu gelten: '
+                          + str(n['zurueckAlle']['gespeichert']))
+        if n['unsinn'] != 10:
+            fehler.append('ein unbekannter Bereich im Speicher leert die Seite: '
+                          f"{n['unsinn']} Bereiche")
         if n['ueberlauf']:
             fehler.append('seitlicher Überlauf bei ' + '; '.join(n['ueberlauf']))
 

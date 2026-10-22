@@ -9,24 +9,13 @@
   var TAG = 86400000;
 
   /* ── Bereiche ───────────────────────────────────────────────
-     haeuser: Whole-Sign-Häuser, die zu diesem Bereich gehören.
-              Das erste ist das Kernhaus — es wiegt doppelt.
-     Die Reihenfolge der Bereiche ist die Anzeigereihenfolge.
-     zrk: der Bereich auf der Zeitenseite, der dasselbe Thema über
-          Jahrzehnte beschreibt. Nur gesetzt, wo die Zuordnung ehrlich
-          ist — sonst null, dann steht hier eben kein Kapitel. */
-  var B_BEREICHE = [
-    { k:'liebe',       name:'Liebe',              haeuser:[7,5,8],  zrk:'liebe'   },
-    { k:'beruf',       name:'Beruf',              haeuser:[10,6,2], zrk:'arbeit'  },
-    { k:'gesundheit',  name:'Gesundheit',         haeuser:[6,1,12], zrk:'koerper' },
-    { k:'geld',        name:'Geld',               haeuser:[2,8,11], zrk:null      },
-    { k:'familie',     name:'Zuhause und Familie',haeuser:[4,3,10], zrk:null      },
-    { k:'freunde',     name:'Freunde',            haeuser:[11,7,3], zrk:null      },
-    { k:'freude',      name:'Freude und Kreativität', haeuser:[5,11,9], zrk:null  },
-    { k:'selbstwert',  name:'Selbstwert',         haeuser:[1,2,10], zrk:'erfolg'  },
-    { k:'sinn',        name:'Sinn und Richtung',  haeuser:[9,5,12], zrk:null      },
-    { k:'umbruch',     name:'Umbruch',            haeuser:[8,12,4], zrk:'druck'   }
-  ];
+     Die Liste der zehn Bereiche steht nicht hier, sondern in
+     bereiche/lebensbereiche.js. Drei Seiten brauchen sie, und eine
+     zweite Kopie würde genau so auseinanderlaufen wie früher die
+     Himmelsrechnung. Fehlt die Datei, bleibt die Liste leer — dann
+     zeigt die Seite keinen Bereich, und das fällt sofort auf,
+     statt still falsch zu rechnen. */
+  var B_BEREICHE = (window.AC_LB && window.AC_LB.BEREICHE) || [];
 
   /* ── Wanderer ───────────────────────────────────────────────
      g  = Gewicht: wie viel ein Durchgang dieses Planeten bedeutet.
