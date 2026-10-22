@@ -52,11 +52,31 @@ Vier Dinge, die es so sonst nicht gibt. Sie sind der eigentliche Wert.
 Wird eines davon schwächer, ist das ein Rückschritt, auch wenn die Seite
 schöner geworden ist.
 
-### Nicht nur du, sondern ihr beide
-Fast alles auf dem Markt redet über dich allein. Hier ist die zweite
-Person gleichberechtigt eingebaut: Wie bist du, wie ist dein Gegenüber,
-wo verfehlt ihr euch, und wie arbeitet ihr zusammen. Das gilt für
-Partnerschaft, Familie und Team gleichermaßen.
+### Nicht nur du, sondern ihr beide — und zwar zum Handeln
+Die Paarsicht allein ist **kein** Vorsprung mehr. The Pattern verkauft
+seit Jahren eine Sicht auf die Verbindung zweier Menschen, Co-Star führt
+eine Freundesliste mit Passung. Wer behauptet, das gebe es sonst nicht,
+irrt sich.
+
+Was dort steht, ist eine **Beschreibung**: So seid ihr, so ist die
+Dynamik zwischen euch. Was dort nicht steht:
+
+* was man damit anfangen kann — ein Handgriff, nicht eine Einsicht
+* wie lange es läuft, mit Datum
+* was die Methode nicht weiß
+* wie jemand damit arbeitet, der beruflich mit Menschen zu tun hat
+
+Der Vorsprung liegt also nicht in der Paarsicht, sondern darin, dass sie
+hier **handhabbar** ist. Beschreiben können es andere auch.
+
+Zur Einordnung der beiden: Co-Star ist offen astrologisch und spricht in
+Planeten und Zeichen; vom Ton her ist es das Gegenteil von Coaching.
+The Pattern meidet die Fachsprache und klingt psychologisch — das ist
+der nähere Wettbewerb, aber auch dort endet es bei der Beschreibung.
+
+*Diese Einschätzung stützt sich auf öffentliche Beschreibungen, nicht auf
+eigene Nutzung. Wer sie prüfen will, nutzt beide Apps zwei Wochen lang —
+das schlägt jede Übersichtsseite.*
 
 ### Ehrlichkeit über die eigenen Grenzen
 Jede rechnende Seite sagt, was die Methode **nicht** kann, wie häufig eine

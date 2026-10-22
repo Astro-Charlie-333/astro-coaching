@@ -160,18 +160,15 @@ Stufenleiste auftaucht, die nicht auf der Liste steht, und ebenso
 abbricht, wenn eine Seite auf der Liste eine Stufenleiste bekommen hat —
 dieselbe Bauart wie `HANDARBEIT` und `veraltet` darüber.
 
-### 15 · Den ersten Vorsprungssatz nachschärfen
-`PRODUKT.md` Abschnitt 3 sagt, fast alles auf dem Markt rede über dich
-allein. The Pattern verkauft seit Jahren eine Paarsicht, Co-Star führt
-eine Freundesliste mit Passung. Siehe Recherche vom 2026-10-21, Spur B:
-Die Paarsicht als solche ist kein Vorsprung mehr; die Verbindung mit
-Ehrlichkeit über die Häufigkeit und mit der Sicht der Coachin kann einer
-sein. Nur dieser Satz wird angefasst, keine Seite.
-**Fertig, wenn:** der erste Vorsprung in Abschnitt 3 benennt, was die
-anderen bei Paaren bereits tun, und den eigenen Vorsprung so formuliert,
-dass eine Leserin ihn an der Seite nachprüfen kann.
 
 ## Erledigt
+
+* **2026-10-22** · Erster Vorsprung in `PRODUKT.md` nachgeschärft (Aufgabe 16,
+  aus der Recherche vom 21.10.): Die Paarsicht allein ist kein Vorsprung —
+  The Pattern und Co-Star haben sie. Was dort fehlt, ist der Handgriff, das
+  Zeitfenster mit Datum, die eigene Grenze und die Sicht der Coachin. Dazu
+  die Einordnung, dass Co-Star offen astrologisch spricht und The Pattern
+  der nähere Wettbewerb ist, weil es die Fachsprache meidet.
 
 * **2026-10-22** · Die Besucherin wählt ihre Bereiche. Neben dem
   Wissensstand steht jetzt eine zweite Leiste: zehn Bereiche und „alle
