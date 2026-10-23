@@ -41,21 +41,9 @@ function rueck(k,jd){
   return nrm(geo(k,b)-geo(k,a))>180;
 }
 
-var WINKEL=[[0,'Konjunktion','weich'],[180,'Opposition','hart'],[90,'Quadrat','hart'],
- [120,'Trigon','weich'],[60,'Sextil','weich']];
-function aspekte(P){
-  var pts=PNAMEN.concat(['ASC','MC']), raus=[];
-  for(var i=0;i<pts.length;i++) for(var j=i+1;j<pts.length;j++){
-    if(P[pts[i]]===undefined||P[pts[j]]===undefined) continue;
-    var d=Math.abs(nrm(P[pts[i]]-P[pts[j]])); if(d>180) d=360-d;
-    for(var w=0;w<WINKEL.length;w++){
-      var W=WINKEL[w], o=Math.abs(d-W[0]), max=(W[0]===60?4:6);
-      if(o<=max){ raus.push({a:pts[i],b:pts[j],typ:W[1],art:W[2],o:o}); break; }
-    }
-  }
-  raus.sort(function(x,y){ return x.o-y.o; });
-  return raus;
-}
+/* Die Winkelrechnung steht in ich-rechner.js — eine Fassung,
+   die auch die Häufigkeitsabtastung beim Bauen benutzt. */
+function aspekte(P){ return window.AC_ICH.aspekte(P); }
 
 /* ── Zustand ───────────────────────────────────────────────── */
 var P=null, Q=null, rad=null, offen=0;
@@ -108,6 +96,91 @@ function heuteBauen(){
     a.addEventListener('click',function(ev){
       ev.preventDefault(); hausOeffnen(+a.getAttribute('data-h'), true); });
   });
+}
+
+/* ── Was an dir auffällt ───────────────────────────────────────
+   Der Rechner sagt, welche Stellen bei diesem Menschen anders
+   liegen; hier werden die Sätze dazu eingesetzt und die gerechnete
+   Häufigkeit danebengestellt. Kein Satz entsteht hier — alle
+   stehen in ich-daten.js. */
+function fuellen(form, werte){
+  var s=String(form||'');
+  for(var k in werte) if(werte.hasOwnProperty(k))
+    s=s.split('{'+k+'}').join(String(werte[k]));
+  return s;
+}
+function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
+
+function haeufigZeile(m){
+  if(m.anteil===null||m.anteil===undefined) return I_AUF.haeufigOhne;
+  var p=Math.round(m.anteil*100);
+  if(p<1) return I_AUF.haeufigSelten;
+  return fuellen(I_AUF.haeufigForm,{p:p});
+}
+
+/* Satz, Handgriff und Mechanik zu einem Befund. Die Mechanik
+   wartet in ac-tech und erscheint erst ab Wissensstufe 2 —
+   auf Stufe 0 kommt in diesem Abschnitt kein Fachwort vor. */
+function merkmalText(m){
+  if(m.art==='schwerpunkt'){
+    var form=(m.zahl>=3)?I_AUF.spViel:(m.zahl===2?I_AUF.spZwei:I_AUF.spEins);
+    return { satz:fuellen(form,{bereich:bereichName(m.haus),zahl:m.zahl}),
+             zusatz:fuellen(I_AUF.spLeer,{zahl:m.leereFelder}),
+             tun:(m.zahl===1?I_AUF.spTunEins:I_AUF.spTun),
+             tech:m.haus+'. Haus, natal darin: '+m.punkte.join(', ') };
+  }
+  if(m.art==='kette'){
+    return { satz:(m.eigen?I_AUF.ketteEigen
+                          :fuellen(I_AUF.kette,{nach:bereichName(m.nachHaus)})),
+             zusatz:'',
+             tun:(m.eigen?I_AUF.ketteTunEigen:I_AUF.ketteTun),
+             tech:'Herrscher des '+m.vonHaus+'. Hauses ist '+m.herr+
+                  ', steht im '+m.nachHaus+'. Haus' };
+  }
+  if(m.art==='winkel'){
+    return { satz:fuellen(m.hart?I_AUF.winkelHart:I_AUF.winkelWeich,
+               {a:(I_ROLLE[m.a]||''), b:(I_ROLLE[m.b]||'')}),
+             zusatz:(m.stufe==='eng'?I_AUF.winkelEng:''),
+             tun:(m.hart?I_AUF.winkelHartTun:I_AUF.winkelWeichTun),
+             tech:m.a+' '+m.typ+' '+m.b+', Orbis '+kz(m.orb,2)+'°' };
+  }
+  if(m.art==='rueck'){
+    var f=(m.zahl===0)?I_AUF.rueckKeine:(m.zahl>=4?I_AUF.rueckViel:I_AUF.rueckWenig);
+    return { satz:fuellen(f,{zahl:m.zahl}), zusatz:'',
+             tun:(m.zahl===0?I_AUF.rueckTunKeine
+                            :(m.zahl>=4?I_AUF.rueckTunViel:'')),
+             tech:(m.welche.length?'Rückläufig bei Geburt: '+m.welche.join(', ')
+                                  :'Kein Punkt rückläufig bei Geburt') };
+  }
+  return null;
+}
+
+function auffaelligBauen(){
+  var H=window.I_HAEUFIG||null;
+  var M=[];
+  try{ M=AC_ICH.merkmale(P,P._jd,I_HERR,aspekte(P),H&&H.anteil)||[]; }catch(e){ M=[]; }
+  el('ichaufh').textContent=I_AUF.titel;
+  /* Tausender im Deutschen mit Punkt: 10.000, nicht 10000. */
+  var zahlN=String((H&&H.n)||0).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  el('ichaufvor').textContent=fuellen(I_AUF.vor,{n:zahlN});
+  var h=[];
+  for(var i=0;i<M.length;i++){
+    var T=merkmalText(M[i]);
+    if(!T) continue;
+    h.push('<div class="au">');
+    h.push('<p class="au-satz">'+esc(T.satz)+'</p>');
+    if(T.zusatz) h.push('<p class="au-zu">'+esc(T.zusatz)+'</p>');
+    h.push('<p class="au-h">'+esc(haeufigZeile(M[i]))+'</p>');
+    if(T.tun) h.push('<p class="au-tun"><b>'+esc(I_AUF.tunVor)+'</b> '+esc(T.tun)+'</p>');
+    h.push('<p class="ac-tech" data-ab="2">'+esc(T.tech)+'</p>');
+    h.push('</div>');
+  }
+  el('ichauf').innerHTML=h.join('');
+  /* Der ehrliche Teil gehört zu jeder rechnenden Ausgabe. */
+  var g=['<h3>'+esc(I_AUF.grenzeTitel)+'</h3>'];
+  for(var j=0;j<I_AUF.grenzen.length;j++)
+    g.push('<p>'+esc(I_AUF.grenzen[j])+'</p>');
+  el('ichaufgrenze').innerHTML=g.join('');
 }
 
 /* ── Die zwölf Häuser ──────────────────────────────────────── */
@@ -233,10 +306,15 @@ function indexBauen(){
   }
   P=chartVon(p); Q=jetztChart();
   kopfBauen(p);
+  auffaelligBauen();
   haeuserBauen();
   heuteBauen();
   aspekteBauen();
   indexBauen();
   rad=window.AC_KERNRAD({el:el('ichrad'), chart:P, transit:Q, gross:true,
     aufHaus:function(n){ hausOeffnen(n, true); }});
+  /* Die Mechanik im neuen Abschnitt wartet in ac-tech. Ohne diesen
+     Aufruf wäre sie von Anfang an sichtbar — und damit stünde auf
+     Stufe 0 Fachsprache, was REGELN.md Abschnitt 2 ausschließt. */
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
 })();

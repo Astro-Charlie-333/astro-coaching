@@ -112,3 +112,25 @@
 
 .ich-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;}
+
+/* ── Was an dir auffällt ───────────────────────────────────────
+   Vier Befunde, der seltenste oben. Keine Farbe, die Dringlichkeit
+   behauptet — die Reihenfolge ist die ganze Gewichtung. */
+.ich-auf{border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:26px;}
+.au{padding:20px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.au p{margin:0 0 9px;}
+.au p:last-child{margin-bottom:0;}
+.au-satz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+  line-height:1.5;color:var(--tinte,#2A2520);}
+.au-zu{font-size:14.6px;color:var(--leise,#6B6259);line-height:1.6;}
+.au-h{font-size:13.5px;color:var(--messing,#9A7235);}
+.au-tun{font-size:15px;line-height:1.6;}
+.au-tun b{font-weight:600;}
+.ich-aufgrenze{background:var(--nacht-bg,#F2F3F7);border-radius:16px;
+  padding:20px 22px;margin-bottom:30px;}
+.ich-aufgrenze h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
+  font-weight:600;margin:0 0 10px;color:var(--nacht,#2E3A5C);}
+.ich-aufgrenze p{font-size:14px;line-height:1.65;color:var(--leise,#6B6259);
+  margin:0 0 9px;}
+.ich-aufgrenze p:last-child{margin-bottom:0;}
+@media(max-width:480px){ .au-satz{font-size:17.5px;} }

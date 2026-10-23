@@ -207,8 +207,62 @@ nach `bereich-daten.js` gewandert; die übrigen warten.
 stehen und `bau-bereiche.py` abbricht, sobald dort wieder einer auftaucht —
 dieselbe Prüfung, die `wahl-app.js` schon hat.
 
+### 21 · „Heute" sagt über jeden Menschen zu viel Gleiches
+Gemessen am 2026-10-23 mit zwei sehr verschiedenen erfundenen
+Geburtsbildern: Auf `index.html` sind 67 von 100 Sätzen wortgleich. Besser
+als „Ich" vorher, aber die Seite nennt nur den lautesten Bereich und einen
+Handgriff; der Rest gilt für alle. Dazu steht dort „Der Mond steht in
+Fische 26 Grad 44 und läuft durch das 2." mitten im Laientext — Mechanik,
+die in `ac-tech` gehört.
+Gehört in einen Zug mit Aufgabe 17 und 18, die beide dieselbe Seite
+betreffen; zweimal anfassen wäre doppelte Arbeit.
+**Fertig, wenn:** „Heute" zu jedem Vorgang sagt, welche Anlage dieses
+Menschen er trifft (wie der Monatsbericht seit dem 21.10.), die Mechanik
+in `ac-tech` wartet, und `bau-heute.py` wie `bau-ich.py` seit heute fünf
+erfundene Bilder zeichnet und abbricht, wenn im Schnitt mehr als ein
+Viertel der Kernaussagen wortgleich ist.
+
+### 22 · Der Index auf „Ich" kennt die Bereichsseite nicht
+`bau-ich.py` meldet als Hinweis: `bereiche.html` rechnet mit einem Profil,
+steht aber nicht im Index „Alles, was es zu dir gibt". Die Bereichsseite
+ist einer der fünf Hauptpunkte der Navigation — wer den Index für
+vollständig hält, übersieht sie.
+**Fertig, wenn:** die Bereichsseite im Index steht und der Hinweis beim
+Bauen ein Fehler wird statt eines Hinweises, damit die nächste fehlende
+Seite nicht wieder nur eine Zeile im Protokoll ist.
+
 ## Erledigt
 
+* **2026-10-23** · „Ich" sagt endlich etwas über diesen einen Menschen.
+  Mandys Befund: Die Aussagen seien vage und unpersönlich. Nachgemessen mit
+  zwei sehr verschiedenen erfundenen Geburtsbildern: 86 von 100 Sätzen
+  waren wortgleich, und was sich unterschied, waren Aufzählungen von
+  Fachbegriffen („7. Haus (Partnerschaft): Mars, Jupiter") — also gar keine
+  Sätze. Ursache: zwölf Haustexte und zwölf Anlagensätze, jeder für sich
+  allgemeingültig geschrieben und zusammengeklebt; die Kombination erreichte
+  nie einen Satz. Neu ist der Abschnitt „Was an dir auffällt": vier Befunde,
+  der seltenste zuerst — wo sich bei diesem Menschen die Anlagen häufen, wo
+  sich sein erster Eindruck entscheidet, welche zwei Anlagen bei ihm
+  aufeinandertreffen, und wie viele bei seiner Geburt rückwärts liefen.
+  Jeder Befund nennt eine gerechnete Häufigkeit: Die Tabelle wird beim Bauen
+  aus 10.000 erfundenen Geburtsbildern abgezählt, mit festem Startwert,
+  damit zwei Bauläufe dieselbe Zahl ergeben. Dabei fiel ein Fehler im
+  eigenen Entwurf auf: „fast auf den Grad genau" hätten 60 von 100 Menschen,
+  weil der engste von 66 Winkeln fast immer eng ist — die Schwelle ist jetzt
+  an der Abtastung geeicht statt geraten. Gemessen nachher: 5 Prozent
+  wortgleiche Kernaussagen im Schnitt über zehn Paare, schlimmstes Paar 25.
+  Dazu, weil es dieselbe Stelle betraf: Die Winkelrechnung ist aus der
+  Anzeige in `ich-rechner.js` gewandert, damit die Abtastung dieselbe
+  Rechnung benutzt und nicht eine zweite Fassung. Fehlerklassen abgestellt:
+  ein Satz ohne Lücke, der wieder für jeden gilt; eine Anlage, die als
+  Planetenname statt als Rolle erscheint; Fachsprache auf Stufe 0; eine
+  Mechanikzeile ohne Wartemarke; ein fehlender Häufigkeitssatz; eine
+  Abtastung, die nichts liefert; ein Satz im Rechner statt in den Daten; ein
+  ehrlicher Teil ohne den Vorrang des eigenen Erlebens; eine Tausenderzahl
+  ohne deutsche Trennung. Die wichtigste davon ist die erste: `bau-ich.py`
+  zeichnet bei jedem Bau fünf erfundene Bilder und bricht ab, sobald im
+  Schnitt mehr als ein Viertel der Kernaussagen wortgleich ist. Neun
+  absichtlich eingebaute Fehler alle erkannt.
 * **2026-10-23** · Überblick und Tiefgang getrennt (Aufgabe 1). Die Seite
   zeigt den Überblick: was los ist, was du tun kannst, wie lange es läuft.
   Der Tiefgang ist dieselbe Rechnung, zu Ende geschrieben — woher ein Thema
