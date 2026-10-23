@@ -15,13 +15,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 ## Als Nächstes
 
-### 1 · Überblick und Tiefgang trennen
-Siehe `PRODUKT.md`, Abschnitt 4. Dieselbe Rechnung, zwei Ausgaben.
-**Fertig, wenn:** jeder Bereich einen Überblick zeigt und einen Tiefgang
-erzeugen kann, der die natale Herkunft, die Facetten, die Widersprüche und
-Gesprächsfragen enthält — und der Tiefgang als Datei herausgeht, statt im
-Quelltext zu stehen. **Kein Schalter, der Freischalten vortäuscht.**
-
 ### 2 · Die App-Ansicht
 Siehe `PRODUKT.md` Abschnitt 7, Stufe 2. Die Seite soll sich auf dem
 Telefon installieren lassen: eigenes Symbol, Vollbild ohne Browserleiste,
@@ -148,7 +141,7 @@ sobald eine Einstellung wieder einen eigenen Speicherschlüssel anlegt.
 
 ---
 
-### 14 · Die Stufenleiste darf nicht weiter zurückfallen
+### 16 · Die Stufenleiste darf nicht weiter zurückfallen
 Im Auslieferstand liegen 124 HTML-Seiten, fünf davon tragen `#nivleiste`.
 Die 108 Seiten, die `pruefe-alles.py` als `HANDARBEIT` führt, tragen
 weder `#nivleiste` noch `ac-tech` noch `data-ab`. „Verständlich auf jeder
@@ -160,9 +153,65 @@ Stufenleiste auftaucht, die nicht auf der Liste steht, und ebenso
 abbricht, wenn eine Seite auf der Liste eine Stufenleiste bekommen hat —
 dieselbe Bauart wie `HANDARBEIT` und `veraltet` darüber.
 
+### 17 · `toLowerCase` wird nur dort geprüft, wo jemand daran gedacht hat
+`REGELN.md` Abschnitt 4 verbietet `toLowerCase` auf deutschen Text
+plattformweit. Geprüft wird es aber in sechs `bau-*.py` einzeln, jedes nur
+für seinen eigenen Ordner — und zwei Dateien, über die kein solcher
+Wächter läuft, benutzen es: `niveau/reading-app.js` baut den Dateinamen
+eines Readings damit, und `bez/beziehung-app.js` schreibt damit den ersten
+Buchstaben eines Satzes klein, was bei einem Substantiv falsches Deutsch
+ergibt. Eine Regel, die pro Ordner geprüft wird, gilt für jeden neuen
+Ordner nicht.
+**Fertig, wenn:** `pruefe-alles.py` als Querprüfung über den ganzen
+Quelltext abbricht, sobald irgendwo `toLowerCase` steht, die
+Ordnerprüfungen dafür entfallen, und die beiden Fundstellen ohne sie
+auskommen.
+
+### 18 · In `bereich-app.js` darf noch ein Satz stehen
+Für `monat-app.js` und `wahl-app.js` bricht der Bau ab, sobald dort ein
+Satz steht — daraus entstand seinerzeit „liegt auf deinen Ausdruck".
+`bereich-app.js` trägt weiter eigene Sätze: den Hinweis auf ein fehlendes
+Profil, den Satz über einen Stichtag vor der Geburt, die Zeile über die
+drei Seiten eines Bereichs. Beim Tiefgang sind heute fünf solche Sätze
+nach `bereich-daten.js` gewandert; die übrigen warten.
+**Fertig, wenn:** alle Sätze aus `bereich-app.js` in `bereich-daten.js`
+stehen und `bau-bereiche.py` abbricht, sobald dort wieder einer auftaucht —
+dieselbe Prüfung, die `wahl-app.js` schon hat.
 
 ## Erledigt
 
+* **2026-10-23** · Überblick und Tiefgang getrennt (Aufgabe 1). Die Seite
+  zeigt den Überblick: was los ist, was du tun kannst, wie lange es läuft.
+  Der Tiefgang ist dieselbe Rechnung, zu Ende geschrieben — woher ein Thema
+  bei diesem Menschen kommt, alle Facetten statt der ersten drei, was sich
+  darin widerspricht, drei Gesprächsfragen und eine Grenze, dazu der
+  ehrliche Teil. Je Bereich ein Knopf und einer für alle gewählten; der
+  Text entsteht beim Antippen auf dem Gerät und geht als Datei heraus,
+  statt auf der Seite zu stehen. Kein Schalter, der Freischalten
+  vortäuscht: Die Seite sagt selbst, dass sie keinen Server hat und jedes
+  Schloss hier gemalt wäre. Der Wissensstand gilt auch für die Datei — auf
+  der untersten Stufe kommt sie ohne ein einziges Fachwort heraus, sonst
+  wäre „verständlich auf jeder Stufe" ein Versprechen, das die Seite hält
+  und die Datei bricht. Neu gerechnet werden die Widersprüche: zwei
+  natale Punkte in den Feldern eines Bereichs im harten Winkel, ein
+  reibender und ein tragender Vorgang zur selben Zeit, und ein Kapitel,
+  das mit seinem eigenen Abschnitt nicht übereinstimmt. Findet die
+  Rechnung keinen, steht genau das da. Fehlerklassen abgestellt: ein
+  Tiefgang, dem einer seiner Teile fehlt; eine Gesprächsfrage, die eine
+  Diagnose stellt; ein Widerspruch, der zweimal denselben Satz ergibt
+  (daran fielen zwei natale Paare zwischen denselben beiden Feldern auf);
+  ein Widerspruch, der erfunden oder verschwiegen wird; ein Satz im
+  Tiefgang-Bauer statt in den Daten; ein Fachwort in einer Datei, die auf
+  Stufe 0 erzeugt wurde; ein Knopf, der keine Datei schreibt; ein
+  Tiefgang, der doch auf der Seite steht; und ein Wort wie
+  „freischalten" im Code oder im Markup. Zwei Funde beim Prüfen selbst:
+  die Rauchprobe platzte bei einem Abbruch mit einem unlesbaren
+  Node-Stapel, statt zu melden, was sie nicht mehr erreicht hat — und die
+  Rechenprüfung rechnete ohne die langen Kapitel, weshalb die dritte
+  Sorte Widerspruch dort nie entstand und ihre Prüfung grün und blind
+  war. Beides ist abgestellt, samt einer Prüfung, dass jede Sorte in den
+  Probebildern wirklich vorkommt. 3455 Prüfungen im Bereichsrechner,
+  vierzehn absichtlich eingebaute Fehler alle erkannt.
 * **2026-10-22** · Erster Vorsprung in `PRODUKT.md` nachgeschärft (Aufgabe 16,
   aus der Recherche vom 21.10.): Die Paarsicht allein ist kein Vorsprung —
   The Pattern und Co-Star haben sie. Was dort fehlt, ist der Handgriff, das

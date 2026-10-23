@@ -298,6 +298,88 @@
     return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz };
   }
 
+
+  /* ── Widersprüche in einem Bereich ──────────────────────────
+     Ein Bereich zieht oft in zwei Richtungen gleichzeitig. Wer das
+     verschweigt, baut einen Menschen widerspruchsfrei — und genau
+     daran merkt er, dass die Seite ihn nicht meint.
+
+     Drei Sorten, alle aus Gerechnetem. Keine wird erfunden:
+
+       'anlage'   — zwei natale Punkte in den Feldern des Bereichs
+                    stehen im harten Winkel zueinander. Das ist der
+                    Widerspruch, der seit der Geburt da ist.
+       'zugleich' — in diesem Bereich läuft gerade etwas Reibendes
+                    und etwas Tragendes zur selben Zeit.
+       'kapitel'  — das lange Kapitel und der Abschnitt darin sagen
+                    Verschiedenes (kommt aus kapitel()).
+
+     Gibt eine Liste von Befunden ohne jeden Satz; die Texte stehen
+     in bereich-daten.js. Findet sich nichts, bleibt die Liste leer
+     — dann sagt die Ausgabe das, statt einen Widerspruch zu
+     behaupten, den die Rechnung nicht hergibt. */
+
+  var REIBEND = { spannung:1, gegenueber:1 };
+  var TRAGEND = { leicht:1 };
+  var HART    = { quadrat:1, opposition:1 };
+  var NAT_ORB = 6;        /* Orb für den Winkel zwischen zwei natalen Punkten */
+
+  function widersprueche(C, B, L, K, N){
+    var out = [], i, j;
+
+    /* 1) Die Anlage selbst: zwei Punkte im Bereich, die sich
+          gegenseitig im Weg stehen. Nur Paare, bei denen beide in
+          den Feldern dieses Bereichs liegen — ein Winkel nach
+          draußen ist kein Widerspruch dieses Bereichs. */
+    var P = (N && N.planeten) || [];
+    for(i=0;i<P.length;i++){
+      for(j=i+1;j<P.length;j++){
+        var la = C[P[i].p], lb = C[P[j].p];
+        if(la === undefined || la === null || lb === undefined || lb === null) continue;
+        var A = aspektVon(la, lb, NAT_ORB);
+        if(!A || !HART[A.aspekt]) continue;
+        out.push({ art:'anlage', aspekt:A.aspekt, ab:A.ab,
+                   a:P[i], b:P[j],
+                   kern:(P[i].kern || P[j].kern) });
+      }
+    }
+    /* Der genaueste Winkel zuerst — er wiegt am meisten. */
+    out.sort(function(x,y){ return x.ab - y.ab; });
+
+    /* Zwei Paare, die zwischen denselben beiden Feldern stehen,
+       sind ein Widerspruch und nicht zwei: der Satz darüber redet
+       von den Stellen, nicht von den Punkten, und stünde sonst
+       zweimal wörtlich gleich da. Der genaueste Winkel bleibt
+       stehen und nimmt die übrigen Paare in auch mit — damit die
+       Mechanik sie ab Stufe 2 trotzdem alle nennen kann. */
+    var nach = [], gesehenPaar = {};
+    for(i=0;i<out.length;i++){
+      var pa = Math.min(out[i].a.haus, out[i].b.haus) + 'x' +
+               Math.max(out[i].a.haus, out[i].b.haus);
+      if(gesehenPaar[pa]){ gesehenPaar[pa].auch.push(out[i]); continue; }
+      out[i].auch = [];
+      gesehenPaar[pa] = out[i];
+      nach.push(out[i]);
+    }
+    out = nach;
+
+    /* 2) Reibend und tragend zur selben Zeit. Je Sorte der
+          stärkste Vorgang; L ist schon nach Gewicht sortiert. */
+    var reib = null, trag = null;
+    for(i=0;i<L.length;i++){
+      if(!reib && REIBEND[L[i].art]) reib = L[i];
+      if(!trag && TRAGEND[L[i].art]) trag = L[i];
+    }
+    if(reib && trag && reib !== trag)
+      out.push({ art:'zugleich', reibend:reib, tragend:trag });
+
+    /* 3) Rahmen und Tonlage sagen Verschiedenes. */
+    if(K && K.anders)
+      out.push({ art:'kapitel', gipfel:!!K.laut, gipfelJetzt:!!K.lautJetzt });
+
+    return out;
+  }
+
   /* ── Facetten nach Geburtsbild gewichten ────────────────────
      Ein Bereich hat mehrere Seiten. Welche davon bei diesem
      Menschen vorn steht, entscheidet das Geburtsbild — nicht die
@@ -357,11 +439,14 @@
     var V = vorgaenge(C, jd), out = [];
     for(var i=0;i<B_BEREICHE.length;i++){
       var B = B_BEREICHE[i], L = fuerBereich(V, B);
-      var K = kapitel(Z, B.k, tage);
+      var K = kapitel(Z, B.k, tage), N = natal(C, B);
       out.push({ k:B.k, name:B.name, haeuser:B.haeuser, zrk:B.zrk,
                  laeuft:L, kapitel:K, laut:lautstaerke(L, K),
                  nurKapitel: !!(K && K.laut && lautstaerke(L, null) < 2),
-                 natal:natal(C, B) });
+                 natal:N,
+                 /* Die Widersprüche werden hier einmal gerechnet, damit
+                    Überblick und Tiefgang nie verschiedene zeigen. */
+                 wid:widersprueche(C, B, L, K, N) });
     }
     return { jd:jd, bereiche:out, alle:V };
   }
@@ -374,7 +459,7 @@
     fenster: fenster, hausDurchgang: hausDurchgang,
     vorgaenge: vorgaenge, fuerBereich: fuerBereich,
     lautstaerke: lautstaerke, kapitel: kapitel, natal: natal,
-    facetten: facetten, blatt: blatt
+    facetten: facetten, widersprueche: widersprueche, blatt: blatt
   };
 
 })();
