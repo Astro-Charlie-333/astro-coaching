@@ -13,8 +13,11 @@ function laden(dateien){
 }
 
 const U = laden(['rituale/engine.js', 'zeit/zeit-rechner.js',
-                 'bereiche/lebensbereiche.js', 'bereiche/bereich-rechner.js']);
+                 'bereiche/lebensbereiche.js', 'bereiche/bereich-rechner.js',
+                 'bereiche/bereich-daten.js', 'bereiche/tief-bauer.js']);
 const AC = U.window.AC_BER;
+const BD = U.window.AC_BDAT;
+const TI = U.window.AC_TIEF;
 const LB = U.window.AC_LB;
 const AZ = U.window.AC_ZEIT;
 const { lon, chartVon, haus, jdFromUT, datVon } = U;
@@ -453,6 +456,268 @@ p('keine zwei Bereiche heissen gleich',
   new Set(LB.BEREICHE.map(b => b.name)).size === 10);
 p('keine zwei Bereiche haben denselben Schluessel',
   new Set(LB.BEREICHE.map(b => b.k)).size === 10);
+
+/* ── 16. Widersprüche: gefunden, nicht erfunden ──────────────
+   Ein Bereich zieht oft in zwei Richtungen; das gehört in den
+   Tiefgang. Gefährlich ist dabei nur eines: ein Widerspruch, den
+   die Rechnung nicht hergibt. Geprüft wird deshalb über mehrere
+   erfundene Geburtsbilder hinweg, dass jeder Befund an etwas
+   Gerechnetem hängt — und dass kein Satz zweimal dasteht. */
+const HART_ERLAUBT = { quadrat:1, opposition:1 };
+const CHARTS = [
+  { y:1954, mo:2,  d:17, h:6,  mi:5,  tz:1, lat:48.14, lon:11.58 },
+  { y:1968, mo:11, d:3,  h:19, mi:42, tz:1, lat:53.55, lon:9.99  },
+  { y:1975, mo:8,  d:4,  h:14, mi:20, tz:1, lat:52.52, lon:13.405 },
+  { y:1981, mo:5,  d:28, h:2,  mi:11, tz:2, lat:50.11, lon:8.68  },
+  { y:1993, mo:9,  d:9,  h:23, mi:55, tz:2, lat:51.34, lon:12.37 },
+  { y:2001, mo:12, d:21, h:11, mi:30, tz:1, lat:48.78, lon:9.18  }
+];
+const TAGE = [ jdFromUT(2008, 3, 11, 9), jdFromUT(2026, 10, 23, 12),
+               jdFromUT(2031, 7, 1, 20) ];
+
+let widGesamt = 0, widLeer = 0, artenGesehen = {};
+CHARTS.forEach((pd, ci) => {
+  const Cx = chartVon(pd);
+  const jdGeb = jdFromUT(pd.y, pd.mo, pd.d, pd.h + pd.mi/60 - pd.tz);
+  const gebDat = new Date(Date.UTC(pd.y, pd.mo-1, pd.d, pd.h - pd.tz, pd.mi));
+  TAGE.forEach((jdx, ti) => {
+    if(jdx <= jdGeb) return;
+    /* Mit den langen Kapiteln rechnen, nicht ohne: sonst bleibt der
+       dritte Widerspruch ungeprüft, weil er nie entsteht. Genau so
+       war diese Prüfung bis zur ersten absichtlichen Fehlerprobe
+       blind. */
+    const Zx = AZ.blatt(Cx, jdGeb, gebDat, datVon(jdx));
+    const Bl = AC.blatt(Cx, jdx, Zx, jdx - jdGeb);
+    Bl.bereiche.forEach(b => {
+      const wo = 'Chart ' + (ci+1) + '/Tag ' + (ti+1) + '/' + b.k;
+      const wl = b.wid;
+      p(wo + ': wid ist eine Liste', Array.isArray(wl));
+      if(!Array.isArray(wl)) return;
+      widGesamt += wl.length;
+      if(!wl.length) widLeer++;
+      /* Kein Satz zweimal: zwei Befunde, die denselben Satz
+         ergeben, sind für die Leserin ein Widerspruch, nicht zwei.
+         Genau so stand bis heute zweimal derselbe Absatz da. */
+      /* Und umgekehrt: gehen Rahmen und Abschnitt auseinander, darf
+         der Befund nicht fehlen. Ein verschwiegener Widerspruch ist
+         dieselbe Unehrlichkeit wie ein erfundener. */
+      p(wo + ': ein auseinandergehendes Kapitel wird genannt',
+        !!(b.kapitel && b.kapitel.anders) ===
+        wl.some(x => x.art === 'kapitel'));
+      const saetze = wl.map(x => { const v = TI.widSatz(x); return v ? v.satz : '?'; });
+      p(wo + ': kein Widerspruch steht zweimal',
+        new Set(saetze).size === saetze.length, saetze.join(' || ').slice(0, 120));
+      wl.forEach(x => {
+        artenGesehen[x.art] = (artenGesehen[x.art] || 0) + 1;
+        const v = TI.widSatz(x);
+        p(wo + ': ' + x.art + ' hat einen Satz', !!v && v.satz.length > 40);
+        p(wo + ': ' + x.art + ' hat einen Handgriff', !!v && v.tun.length > 25);
+        p(wo + ': ' + x.art + ' nennt seine Mechanik', !!v && v.tech.length > 10);
+        p(wo + ': ' + x.art + ' lässt keine Lücke offen',
+          !!v && !/\{\w+\}/.test(v.satz + v.tun + v.tech),
+          v ? v.satz : '');
+        if(x.art === 'anlage'){
+          /* Beide Punkte müssen in den Feldern dieses Bereichs
+             liegen, der Winkel muss hart und innerhalb des Orbs
+             sein. Sonst behauptet der Befund etwas. */
+          p(wo + ': Anlage liegt in den Feldern des Bereichs',
+            b.haeuser.indexOf(x.a.haus) >= 0 && b.haeuser.indexOf(x.b.haus) >= 0,
+            x.a.haus + '/' + x.b.haus + ' nicht in ' + b.haeuser);
+          p(wo + ': Anlage ist ein harter Winkel', !!HART_ERLAUBT[x.aspekt], x.aspekt);
+          p(wo + ': Anlage liegt im Orbis', x.ab <= 6.0001, String(x.ab));
+          p(wo + ': Anlage nennt zwei verschiedene Punkte', x.a.p !== x.b.p);
+          const d6 = AC.dist(Cx[x.a.p], Cx[x.b.p]);
+          p(wo + ': der Winkel stimmt wirklich',
+            Math.abs(d6 - (x.aspekt === 'quadrat' ? 90 : 180)) <= 6.0001,
+            'Abstand ' + d6.toFixed(2));
+        }
+        if(x.art === 'kapitel'){
+          /* Ein Kapitel-Widerspruch darf nur dastehen, wenn Rahmen
+             und Abschnitt wirklich auseinandergehen. Sonst behauptet
+             die Datei einen Widerspruch, den die Rechnung nicht hat. */
+          p(wo + ': der Kapitel-Widerspruch hängt an der Rechnung',
+            !!(b.kapitel && b.kapitel.anders));
+        }
+        if(x.art === 'zugleich'){
+          p(wo + ': zugleich hat zwei verschiedene Vorgänge',
+            x.reibend !== x.tragend);
+          p(wo + ': der reibende Teil reibt wirklich',
+            x.reibend.art === 'spannung' || x.reibend.art === 'gegenueber',
+            x.reibend.art);
+          p(wo + ': der tragende Teil trägt wirklich',
+            x.tragend.art === 'leicht', x.tragend.art);
+          p(wo + ': beide laufen in diesem Bereich',
+            b.laeuft.indexOf(x.reibend) >= 0 && b.laeuft.indexOf(x.tragend) >= 0);
+        }
+      });
+    });
+  });
+});
+p('über alle Probebilder wird überhaupt ein Widerspruch gefunden',
+  widGesamt > 20, String(widGesamt));
+p('und es wird nicht überall einer gefunden', widLeer > 5, String(widLeer));
+p('die Sorte "anlage" kommt vor', (artenGesehen.anlage || 0) > 0);
+p('die Sorte "zugleich" kommt vor', (artenGesehen.zugleich || 0) > 0);
+/* Fehlerklasse aus der heutigen Fehlerprobe: eine Prüfung, die nie
+   an ihren Fall kommt, ist grün und blind. Die Probebilder müssen
+   jede Sorte wirklich hervorbringen, sonst prüft hier niemand. */
+p('die Sorte "kapitel" kommt vor — sonst ist ihre Prüfung blind',
+  (artenGesehen.kapitel || 0) > 0, JSON.stringify(artenGesehen));
+
+/* ── 17. Der Tiefgang ────────────────────────────────────────
+   Dieselbe Rechnung wie der Überblick, zu Ende geschrieben. Er
+   muss alle vier zusätzlichen Teile tragen — natale Herkunft,
+   Facetten, Widersprüche, Gesprächsfragen —, mehr Facetten zeigen
+   als die Seite, und auf Stufe 0 ohne ein einziges Fachwort
+   auskommen. Eine Datei, die das Versprechen der Seite bricht,
+   wäre schlimmer als keine Datei. */
+const JARGON = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn',
+  'Uranus','Neptun','Pluto','Lilith','Chiron','Haus','Häuser','Hauses',
+  'Aspekt','Aspekte','Konjunktion','Opposition','Quadrat','Trigon','Sextil',
+  'Orbis','Orben','Transit','Transite','Aszendent','rückläufig','winkelhaft',
+  'Radix','Ekliptik','Profektion','Widder','Stier','Zwillinge','Krebs','Löwe',
+  'Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+function jargonIn(s){
+  return JARGON.filter(w =>
+    new RegExp('(?<![A-Za-zÄÖÜäöüß])' + w + '(?![A-Za-zÄÖÜäöüß])').test(s));
+}
+const T_TEILE = [BD.TIEF.ueberblickTitel, BD.TIEF.herkunftTitel,
+                 BD.TIEF.facettenTitel, BD.TIEF.widTitel, BD.TIEF.fragenTitel];
+const FAC_AUF_DER_SEITE = 3;
+
+CHARTS.forEach((pd, ci) => {
+  const Cx = chartVon(pd);
+  const Bl = AC.blatt(Cx, jdFromUT(2026, 10, 23, 12));
+  const wo0 = 'Chart ' + (ci+1);
+  [0, 1, 2, 3, 4].forEach(st => {
+    const ganz = TI.bauen(Bl.bereiche, { wer:'Probe', stichtag:'' }, st);
+    p(wo0 + '/Stufe ' + st + ': der Tiefgang ist nicht leer', ganz.length > 8000,
+      String(ganz.length));
+    p(wo0 + '/Stufe ' + st + ': keine offene Lücke im Tiefgang',
+      !/\{\w+\}/.test(ganz), (ganz.match(/\{\w+\}/) || [''])[0]);
+    p(wo0 + '/Stufe ' + st + ': kein undefined im Tiefgang',
+      !/undefined|NaN|\[object|null/.test(ganz),
+      (ganz.match(/undefined|NaN|\[object|null/) || [''])[0]);
+    p(wo0 + '/Stufe ' + st + ': der ehrliche Teil ist dabei',
+      ganz.indexOf(BD.TIEF.ehrlichTitel) >= 0 &&
+      ganz.indexOf(BD.EHRLICH[0].a) >= 0);
+    p(wo0 + '/Stufe ' + st + ': die Grenzen stehen im Fuß',
+      ganz.indexOf(BD.TIEF.fuss) >= 0);
+    if(st < 2)
+      p(wo0 + '/Stufe ' + st + ': kein Fachwort im Tiefgang',
+        jargonIn(ganz).length === 0, jargonIn(ganz).join(', '));
+    else
+      p(wo0 + '/Stufe ' + st + ': ab Stufe 2 steht die Mechanik drin',
+        ganz.indexOf('[ ') >= 0);
+  });
+  Bl.bereiche.forEach(b => {
+    const wo = wo0 + '/' + b.k;
+    const t0 = TI.bereich(b, 0), t3 = TI.bereich(b, 3);
+    T_TEILE.forEach(teil => {
+      p(wo + ': Teil "' + teil + '" fehlt nicht', t0.indexOf(teil) >= 0);
+    });
+    /* Alle Facetten, nicht nur die drei von der Seite. */
+    const FA = TI.facetten(b);
+    p(wo + ': der Tiefgang zeigt mehr Facetten als die Seite',
+      FA.length > FAC_AUF_DER_SEITE, FA.length + ' Facetten');
+    FA.forEach(E => {
+      p(wo + ': Facette "' + E.f.titel + '" steht im Tiefgang',
+        t0.indexOf(E.f.titel) >= 0 && t0.indexOf(E.f.was) >= 0);
+    });
+    /* Die natale Herkunft: entweder der Schwerpunkt oder der Satz
+       über einen unbesetzten Bereich — nie beides, nie keines. */
+    const hatVor = t0.indexOf(BD.TIEF.herkunftVor) >= 0;
+    const hatLeer = t0.indexOf(BD.LEER.natalLeer) >= 0;
+    p(wo + ': die natale Herkunft steht genau einmal da',
+      hatVor !== hatLeer, 'Schwerpunkt ' + hatVor + ', unbesetzt ' + hatLeer);
+    p(wo + ': der unbesetzte Fall stimmt mit der Rechnung',
+      hatLeer === b.natal.leer);
+    /* Die Widersprüche: entweder Befunde oder der Satz, dass die
+       Rechnung keinen findet. Kein Bereich bleibt stumm, und
+       keiner erfindet etwas. */
+    const hatKeiner = t0.indexOf(BD.WID.keiner) >= 0;
+    p(wo + ': Widerspruch oder das Eingeständnis, keinen zu finden',
+      hatKeiner === (b.wid.length === 0));
+    /* Die Fragen und die Grenze. */
+    const FR = BD.FRAGEN[b.k];
+    p(wo + ': der Bereich hat Gesprächsfragen', !!FR);
+    if(FR){
+      FR.fragen.forEach(f => p(wo + ': Frage steht im Tiefgang', t0.indexOf(f) >= 0));
+      p(wo + ': die Grenze steht im Tiefgang', t0.indexOf(FR.grenze) >= 0);
+    }
+    p(wo + ': auf Stufe 0 kein Fachwort im Bereich',
+      jargonIn(t0).length === 0, jargonIn(t0).join(', '));
+    p(wo + ': ab Stufe 2 ist der Bereich länger', t3.length > t0.length);
+  });
+});
+
+/* ── 18. Die Gesprächsfragen ─────────────────────────────────
+   Drei Fragen und eine Grenze je Bereich. Fragen, keine Deutungen,
+   und nie eine Diagnose — PRODUKT.md Abschnitt 5. */
+const DIAGNOSE = ['Diagnose','diagnos','Störung','Syndrom','krank','Krankheit',
+  'Depression','depressiv','Trauma','traumat','ADHS','Autismus','autistisch',
+  'Burnout','therapieren','behandeln','leidest','Patient','Befund'];
+BD.BER && Object.keys(BD.FRAGEN).forEach(bk => {
+  const FR = BD.FRAGEN[bk];
+  p('Fragen ' + bk + ': genau drei', FR.fragen.length === 3, String(FR.fragen.length));
+  p('Fragen ' + bk + ': keine zweimal', new Set(FR.fragen).size === 3);
+  FR.fragen.forEach((f, i) => {
+    p('Fragen ' + bk + '/' + i + ': ist eine Frage', /\?$/.test(f.trim()), f);
+    p('Fragen ' + bk + '/' + i + ': lang genug', f.length >= 25, String(f.length));
+    p('Fragen ' + bk + '/' + i + ': ohne Fachwort', jargonIn(f).length === 0);
+    p('Fragen ' + bk + '/' + i + ': keine Diagnose',
+      !DIAGNOSE.some(d => f.indexOf(d) >= 0), f);
+  });
+  p('Grenze ' + bk + ': vorhanden und lang genug', FR.grenze.length >= 60,
+    String(FR.grenze.length));
+  p('Grenze ' + bk + ': endet mit Punkt', /\.$/.test(FR.grenze.trim()));
+  p('Grenze ' + bk + ': ohne Fachwort', jargonIn(FR.grenze).length === 0,
+    jargonIn(FR.grenze).join(', '));
+  p('Grenze ' + bk + ': keine Diagnose',
+    !DIAGNOSE.some(d => FR.grenze.indexOf(d) >= 0));
+});
+p('alle zehn Bereiche haben Gesprächsfragen',
+  Object.keys(BD.FRAGEN).length === 10, String(Object.keys(BD.FRAGEN).length));
+p('keine zwei Bereiche haben dieselbe Grenze',
+  new Set(Object.keys(BD.FRAGEN).map(k => BD.FRAGEN[k].grenze)).size === 10);
+let alleFragen = [];
+Object.keys(BD.FRAGEN).forEach(k => { alleFragen = alleFragen.concat(BD.FRAGEN[k].fragen); });
+p('keine Frage kommt in zwei Bereichen vor',
+  new Set(alleFragen).size === alleFragen.length);
+
+/* ── 19. Zeitspannen und Fenster ─────────────────────────────
+   Unter einem Jahr in Monaten oder Wochen, darüber in Jahren —
+   nie "17 Monate" neben "1,5 Jahre", und nie ein Dezimalpunkt. */
+p('ein Tag', TI.dauer(1) === '1 Tag', TI.dauer(1));
+p('drei Tage', TI.dauer(3) === '3 Tage', TI.dauer(3));
+p('drei Wochen', TI.dauer(21) === '3 Wochen', TI.dauer(21));
+p('vier Monate', /Monate$/.test(TI.dauer(120)), TI.dauer(120));
+p('zwölf Monate', TI.dauer(360) === '12 Monate', TI.dauer(360));
+p('ein Jahr', TI.dauer(400).indexOf('Jahr') > 0, TI.dauer(400));
+p('zwölf Jahre', /Jahre$/.test(TI.dauer(4300)), TI.dauer(4300));
+p('abgelaufen', TI.dauer(0) === BD.FORM.laeuftAus, TI.dauer(0));
+p('nichts ergibt nichts', TI.dauer(null) === null);
+[1, 3, 13, 21, 69, 120, 360, 700, 4300, 9000].forEach(x => {
+  const s = TI.dauer(x);
+  p('Dauer ' + x + ' Tage ohne Dezimalpunkt', !/\d\.\d/.test(s), s);
+  p('Dauer ' + x + ' Tage ohne Lücke', !/\{\w+\}/.test(s), s);
+  p('Dauer ' + x + ' Tage nennt nicht zwei Einheiten',
+    [/Woche/, /Monat/, /Jahr/, /Tage?\b/].filter(r => r.test(s)).length === 1, s);
+});
+
+/* ── 20. tief-bauer.js formuliert nicht selbst ───────────────
+   Dieselbe Fehlerklasse wie beim Monatsbericht: ein Satz im
+   Bauwerk wird dort nebenbei geändert und von keiner Prüfung
+   gelesen. Deshalb stehen alle Sätze in bereich-daten.js. */
+const bauerQuelle = fs.readFileSync(path.join(wurzel, 'bereiche/tief-bauer.js'), 'utf8')
+  .replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/^\s*\/\/.*$/gm, ' ');
+const satzImBauer = [];
+(bauerQuelle.match(/'((?:[^'\\\n]|\\.)*)'/g) || []).forEach(lit => {
+  const rein = lit.slice(1, -1).replace(/\\u[0-9a-f]{4}/gi, ' ');
+  if((rein.match(/[A-Za-zÄÖÜäöüß]{3,}/g) || []).length >= 3) satzImBauer.push(lit);
+});
+p('kein Satz in tief-bauer.js', satzImBauer.length === 0,
+  satzImBauer.slice(0, 3).join(' | '));
 
 /* ── 15. Keine echten Geburtsdaten in dieser Datei ──────────── */
 const selbst = fs.readFileSync(__filename, 'utf8');

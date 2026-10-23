@@ -472,6 +472,211 @@
     tech:'Zodiakale Freilassung, erste und zweite Ebene'
   };
 
+  /* ── Wenn nichts läuft ───────────────────────────────────────
+     Ein stiller Bereich ist der Normalfall, nicht der Ausfall. Die
+     Sätze dafür standen bis heute in bereich-app.js — dieselbe
+     Fehlerklasse wie beim Monatsbericht: ein Satz im Bauwerk wird
+     nebenbei geändert und von keiner Prüfung gelesen. Überblick
+     und Tiefgang holen sie jetzt beide hier. */
+  var B_LEER = {
+    keinVorgang:'Zur Zeit rührt kein größerer Vorgang an diesem Bereich. Das ist der Normalfall und kein Mangel — es läuft nie überall gleichzeitig etwas.',
+    keinFenster:'Kein Fenster, das zuläuft oder abläuft.',
+    tun:'Nichts, was dringend wäre. Stille Bereiche sind die, in denen man ohne Gegenwind etwas aufbauen kann — wenn du hier etwas willst, musst du es selbst anfangen.',
+    nutzen:'In einer stillen Phase ist das Nützlichste, etwas vorzubereiten, das später Aufmerksamkeit braucht.',
+    natalLeer:'Dieser Bereich ist bei dir von Geburt an unbesetzt. Das heißt nicht, dass er leer bleibt — nur, dass du ihn selbst füllen musst, statt von einer Veranlagung hineingeschoben zu werden.'
+  };
+
+  /* ── Fugen und Formen ────────────────────────────────────────
+     Alles, was gebaute Sätze zusammenhält: Monatsnamen, Zeitwörter,
+     und die Formen, in die der Bauer seine Zahlen einsetzt.
+
+     Warum das hier steht und nicht im Bauer: Dieselbe Fehlerklasse
+     wie beim Monatsbericht. Steht ein Satz im Bauwerk, wird er dort
+     nebenbei geändert, und niemand prüft ihn. Steht er hier, ist er
+     Text und wird geprüft wie jeder andere. tief-bauer.js darf
+     deshalb keinen eigenen Satz enthalten; der Bau prüft das. */
+  var B_FORM = {
+    monate:['Januar','Februar','März','April','Mai','Juni','Juli',
+            'August','September','Oktober','November','Dezember'],
+    zeichen:['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau',
+             'Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'],
+    /* Zeitspannen. Unter einem Jahr in Monaten oder Wochen, darüber
+       in Jahren — nie "17 Monate" neben "1,5 Jahre". */
+    laeuftAus:'läuft aus',
+    tag:'Tag', tage:'Tage',
+    woche:'Woche', wochen:'Wochen',
+    einMonat:'Monat', vieleMonate:'Monate',
+    einJahr:'etwa ein Jahr', vieleJahre:'etwa {n} Jahre',
+    /* Das Fenster eines Vorgangs */
+    fensterOffen:'Das läuft noch über Jahre hinaus — ein Ende ist in dieser Rechnung nicht in Sicht.',
+    fensterKurz:'Noch {d}.',
+    fensterBis:'Noch {d}, bis etwa {m}.',
+    fensterSeit:'Angefangen hat es vor {d}.',
+    /* Mechanik. Wartet bis Wissensstufe 2 und steht nie im Laientext. */
+    techDurchgang:'{p} läuft durch das {h}. Haus',
+    techAspekt:'{p} {a} {z}, {g} Grad vom exakten Stand',
+    techRueck:', rückläufig',
+    techZu:', zulaufend',
+    techWeg:', weggehend',
+    techNatal:'Natal darin: {p}.',
+    techNatalLeer:'Natal unbesetzt.',
+    techFeldNr:'{h}. Haus',
+    techFacDrin:', natal darin: {p}',
+    techFacBereich:', im Bereich, aber anderes Haus: {p}',
+    techFacBesetzt:', natal besetzt, aber nicht von den Punkten dieser Facette',
+    techFacLeer:', natal unbesetzt',
+    techGewicht:' (Gewicht {g})'
+  };
+
+  /* ── Was sich in einem Bereich widerspricht ──────────────────
+     Der Rechner findet die Widersprüche, hier stehen die Worte
+     dafür. Drei Sorten, und ein Satz für den Fall, dass die
+     Rechnung keinen findet — denn dann wird keiner erfunden.
+     {a} und {b} füllt der Tiefgang mit dem, worum es an der
+     jeweiligen Stelle geht; die Mechanik dazu wartet in tech. */
+  var B_WID = {
+    vor:'Ein Lebensbereich zieht fast immer in zwei Richtungen. Was hier steht, ist kein Fehler an dir, sondern die Form, in der dieser Bereich bei dir arbeitet.',
+    keiner:'Hier findet die Rechnung keinen Gegenzug. Das heißt nicht, dass es keinen gibt — nur, dass er nicht aus den Stellen kommt, die hier gerechnet werden. Was du selbst an Widerspruch kennst, gilt trotzdem.',
+    anlageZwei:'Zwei Stellen in diesem Bereich ziehen bei dir von Anfang an in verschiedene Richtungen. Die eine: {a}. Die andere: {b}. Beide gehören dir, und beide verlangen etwas anderes. Das löst sich nicht auf; es wird mit den Jahren nur besser zu bedienen.',
+    anlageEins:'An einer einzigen Stelle — {a} — ziehen bei dir zwei Kräfte auseinander. Von außen sieht das nach Unentschlossenheit aus. Von innen ist es ein Spagat.',
+    anlageTun:'Nicht entscheiden, welche Seite recht hat, sondern beiden eine eigene Zeit geben. Was abwechselnd Platz bekommt, muss nicht gegeneinander kämpfen.',
+    zugleich:'Gerade läuft hier beides zur selben Zeit: etwas, das reibt, und etwas, das trägt. Deshalb kommt dir dieser Bereich widersprüchlich vor — er ist es auch.',
+    zugleichTun:'Das Tragende für das benutzen, was am Reibenden hängt. Der leichte Teil ist das Werkzeug, nicht die Belohnung.',
+    kapitel:'Der lange Rahmen und die jetzige Tonlage sagen Verschiedenes. Beides gilt: der Rahmen sagt, worum es über Jahre geht, die Tonlage, wie es sich in diesen Wochen anfühlt.',
+    kapitelTun:'Die jetzige Tonlage nicht für das Ganze nehmen. Wer in einer leisen Strecke aufhört, hört in einem Kapitel auf, das noch läuft.',
+    techAnlage:'Natal {x} {w} {y}, {g} Grad vom exakten Stand',
+    techAnlageAuch:'; ebenso zwischen denselben Häusern: {p}',
+    techWinkel:{ quadrat:'Quadrat', opposition:'Opposition' },
+    techZugleich:'Reibender und tragender Transit gleichzeitig im selben Bereich',
+    techKapitel:'Erste und zweite Ebene der zodiakalen Freilassung weichen in der Winkelhaftigkeit voneinander ab'
+  };
+
+  /* ── Zum Darübersprechen ─────────────────────────────────────
+     Drei Fragen und eine Grenze je Bereich. Für die Coachin, die
+     Therapeutin, oder für jemanden, dem man vertraut.
+
+     Es sind Fragen, keine Deutungen: die Antwort steht nicht hier
+     und wird auch nicht nahegelegt. Und jede Grenze sagt, was
+     dieser Bereich über das Leben eines Menschen nicht weiß —
+     das ist der Teil, den sonst niemand mitliefert.
+     Eine Diagnose steht hier nie; der Bau prüft das. */
+  var B_FRAGEN = {
+    liebe: {
+      fragen:[
+        'Wann hast du zuletzt etwas gewollt und es auch gesagt?',
+        'Woran merkst du, dass du dich in einer Verbindung kleiner machst?',
+        'Was müsste jemand tun, damit du ihm glaubst?'],
+      grenze:'Ob eine bestimmte Beziehung trägt, steht hier nicht. Die Rechnung kennt deine Anlage, nicht den Menschen neben dir — und über ihn sagt sie ohnehin nichts, solange er nicht selbst gefragt wurde.'
+    },
+    beruf: {
+      fragen:[
+        'Was von deiner Arbeit ist in den letzten zwei Jahren wirklich fertig geworden?',
+        'Wofür möchtest du gelten, und wofür kennt man dich bisher?',
+        'Was hält dich an deiner Stelle — das Gute daran oder die Kosten des Gehens?'],
+      grenze:'Ob ein Wechsel richtig ist, entscheidet dein Leben und nicht diese Rechnung. Sie sagt, wo gerade Bewegung liegt, nicht, wohin du gehen sollst.'
+    },
+    gesundheit: {
+      fragen:[
+        'Woran merkst du zuerst, dass du über deine Kraft gehst?',
+        'Welche Routine hält bei dir auch an einem schlechten Tag?',
+        'Was tust du, wenn der Körper nicht mehr mitmacht, und was davon hilft wirklich?'],
+      grenze:'Hier wird nichts über deinen Körper festgestellt, und nichts hier ersetzt eine Behandlung. Bei allem Körperlichen gehört eine Fachperson gefragt, die dich untersuchen kann — diese Seite kann das nicht und soll es nicht.'
+    },
+    geld: {
+      fragen:[
+        'Wann hast du zuletzt eine Zahl genannt, ohne sie vorher kleiner zu machen?',
+        'Was wäre genug, und woran würdest du es merken?',
+        'Welche Ausgabe schützt dich wirklich, und welche beruhigt dich nur?'],
+      grenze:'Über deine Lage sagt diese Rechnung nichts. Sie kennt keine Konten, keine Verträge und keine Preise, und sie ist keine Beratung.'
+    },
+    familie: {
+      fragen:[
+        'In welche Rolle rutschst du, sobald du zu Hause bist?',
+        'Was von deinem Zuhause hast du selbst gewählt?',
+        'Welches Gespräch mit wem schiebst du seit Jahren vor dir her?'],
+      grenze:'Was einen anderen in deiner Familie bewegt, steht hier nicht. Über Menschen, die nicht selbst gefragt wurden, sagt diese Seite nichts.'
+    },
+    freunde: {
+      fragen:[
+        'Bei wem musst du dich nicht erklären?',
+        'Wo bleibst du dabei, obwohl es längst nicht mehr stimmt?',
+        'Wann hast du zuletzt selbst gefragt, ob jemand Zeit hat?'],
+      grenze:'Ob eine Freundschaft hält, lässt sich hier nicht ablesen. Die Rechnung sagt, wo bei dir Bewegung liegt, nicht, wer bleibt.'
+    },
+    freude: {
+      fragen:[
+        'Was tust du, wenn niemand zusieht und es keinen Nutzen hat?',
+        'Wann hast du zuletzt etwas angefangen, ohne es zu Ende bringen zu müssen?',
+        'Was hast du als Kind gern gemacht, und seit wann nicht mehr?'],
+      grenze:'Dass Freude fehlt, kann viele Gründe haben, und dieser Bereich nennt keinen davon. Hält es länger an und wird es schwer, gehört ein Mensch gefragt und nicht eine Seite gelesen.'
+    },
+    selbstwert: {
+      fragen:[
+        'Woran misst du gerade, ob du genug bist?',
+        'Wessen Stimme hörst du, wenn du streng mit dir wirst?',
+        'Was würdest du einem Menschen sagen, der dir erzählt, was du dir erzählst?'],
+      grenze:'Diese Seite stellt nichts über dich fest. Sie beschreibt ein Muster und misst keinen Wert; wie du dich siehst, ist hier nicht nachlesbar.'
+    },
+    sinn: {
+      fragen:[
+        'Welche Überzeugung von dir hat die letzten fünf Jahre überlebt?',
+        'Wohin willst du, wenn niemand fragt, ob das vernünftig ist?',
+        'Was glaubst du, weil du es selbst gesehen hast, und was, weil es dir gesagt wurde?'],
+      grenze:'Wohin dein Weg geht, sagt diese Rechnung nicht. Sie sagt, wann die Frage laut wird, nicht, was die Antwort ist.'
+    },
+    umbruch: {
+      fragen:[
+        'Was ist gerade zu Ende, auch wenn es noch steht?',
+        'Was willst du mitnehmen, und was lässt du bewusst zurück?',
+        'Wer weiß, dass es dir gerade so geht?'],
+      grenze:'Dass etwas laut ist, heißt nicht, dass es schlimm wird, und kein Datum hier ist ein Ereignis. Wird ein Umbruch zu viel, gehört ein Mensch gefragt und nicht eine Seite gelesen.'
+    }
+  };
+
+  /* ── Der Tiefgang ────────────────────────────────────────────
+     Die Seite zeigt den Überblick: was los ist, was du tun kannst,
+     wie lange es läuft. Der Tiefgang ist dieselbe Rechnung, zu Ende
+     geschrieben — und er geht als Datei heraus, statt auf der Seite
+     zu stehen.
+
+     Warum als Datei: Diese Plattform ist eine statische Seite ohne
+     Server. Alles, was im Quelltext steht, kann jeder lesen. Ein
+     Tiefgang hinter einem Schalter wäre deshalb nicht verkauft,
+     sondern verschenkt — und der Schalter eine Lüge. Der Tiefgang
+     entsteht stattdessen auf dem Gerät, aus den Daten des Menschen,
+     der ihn anfordert, und gehört ihm.
+
+     Hier stehen nur Überschriften und Rahmensätze. Alles Weitere
+     holt der Tiefgang aus den Blöcken darüber. */
+  var B_TIEF = {
+    titel:'Tiefgang',
+    vor:'Dieser Text ist auf dem Gerät entstanden, aus den Geburtsdaten, die dort gespeichert sind. Er geht über den Überblick auf der Seite hinaus: woher ein Thema kommt, welche Seiten es hat, was sich darin widerspricht, und was man darüber sprechen kann.',
+    ueberblickTitel:'Was gerade läuft',
+    herkunftTitel:'Woher das bei dir kommt',
+    facettenTitel:'Die Seiten dieses Bereichs',
+    widTitel:'Was sich hier widerspricht',
+    fragenTitel:'Zum Darübersprechen',
+    ehrlichTitel:'Was das taugt — und was nicht',
+    herkunftVor:'Dein Schwerpunkt liegt hier bei dem, was man so beschreiben kann:',
+    facettenVor:'Dieser Bereich hat mehrere Seiten. Die Reihenfolge kommt aus dem Geburtsbild: was oben steht, wiegt bei diesem Menschen mehr. Der Überblick auf der Seite zeigt nur die ersten davon.',
+    fragenVor:'Drei Fragen für ein Gespräch — mit einer Coachin, einer Therapeutin, oder mit jemandem, dem du vertraust. Es sind Fragen und keine Deutungen: die Antwort steht nicht hier.',
+    grenzeVor:'Was dieser Bereich nicht weiß:',
+    /* Was auf der Seite über den Tiefgang steht. Ehrlich, weil es
+       hier nichts zu verbergen gibt: Diese Seite hat keinen Server,
+       also ist nichts verschlossen. Der Tiefgang ist nicht
+       versteckt, sondern noch nicht geschrieben. */
+    seiteTitel:'Der Tiefgang',
+    seiteVor:'Oben steht der Überblick: was los ist, was du tun kannst, wie lange es läuft. Der Tiefgang ist dieselbe Rechnung, zu Ende geschrieben — woher ein Thema bei dir kommt, welche Seiten es hat, was sich darin widerspricht, und drei Fragen, mit denen man darüber sprechen kann.',
+    seiteOffen:'Er liegt nicht hinter einem Schloss. Diese Seite hat keinen Server, deshalb wäre jedes Schloss hier nur gemalt. Der Tiefgang ist einfach noch nicht geschrieben: Er entsteht beim Antippen auf deinem Gerät, aus den Daten, die dort liegen, und wird als Textdatei gespeichert. Niemand anders bekommt ihn zu sehen.',
+    seiteStufe:'Er ist so ausführlich, wie dein Wissensstand oben eingestellt ist. Steht der auf der untersten Stufe, kommt die Datei ohne ein einziges Fachwort.',
+    knopfAlle:'Tiefgang zu allen gewählten Bereichen',
+    knopfEiner:'Tiefgang zu diesem Bereich',
+    echoFertig:'Die Datei ist geschrieben: {n}',
+    echoOhne:'Dafür fehlt ein Profil. Leg eines unter Profile an.',
+    tunVor:'Ein Handgriff dazu:',
+    fuss:'Astro-Charlie · Der Tiefgang ist ein Werkzeug zum Verstehen, keine Diagnose, keine Vorhersage und kein Ersatz für Behandlung. Dein eigenes Erleben hat Vorrang vor allem, was hier steht.'
+  };
+
   /* ── Was die Seite nicht kann ───────────────────────────────── */
   var B_EHRLICH = [
     { f:'Sagt das, was passieren wird?',
@@ -487,7 +692,8 @@
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
-    KAP:B_KAP, EHRLICH:B_EHRLICH
+    KAP:B_KAP, EHRLICH:B_EHRLICH,
+    WID:B_WID, FRAGEN:B_FRAGEN, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER
   };
 
 })();

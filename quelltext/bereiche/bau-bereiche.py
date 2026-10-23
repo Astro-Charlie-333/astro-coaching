@@ -36,6 +36,9 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'bereich-stil.css')
         + lies(hier / 'lebensbereiche.js') + "\n"
         + lies(hier / 'bereich-rechner.js') + "\n"
         + lies(hier / 'bereich-daten.js') + "\n"
+        # Die gemeinsamen Sätze und der Tiefgang: nach den Daten,
+        # weil beides sie braucht, und vor der Anzeige.
+        + lies(hier / 'tief-bauer.js') + "\n"
         + lies(hier / 'wahl-daten.js') + "\n"
         + lies(hier / 'wahl-app.js') + "\n"
         + lies(hier / 'bereich-app.js')
@@ -49,6 +52,7 @@ koerper = lies(hier / 'bereich-koerper.html')
 app     = lies(hier / 'bereich-app.js')
 daten   = lies(hier / 'bereich-daten.js')
 rechner = lies(hier / 'bereich-rechner.js')
+bauer   = lies(hier / 'tief-bauer.js')
 felder  = lies(hier / 'lebensbereiche.js')
 wdaten  = lies(hier / 'wahl-daten.js')
 wapp    = lies(hier / 'wahl-app.js')
@@ -285,6 +289,231 @@ for f_ in ('einl', 'rueck'):
     if v:
         lay_texte.append((f'B_DURCH.{f_}', v.group(1)))
 
+# ── Die Texte des Tiefgangs ────────────────────────────────────
+# Fehlerklassen: ein Teil des Tiefgangs ohne Worte; eine
+# Gesprächsfrage, die in Wahrheit eine Deutung oder gar eine
+# Diagnose ist; ein Rahmensatz, der Fachsprache in eine Datei
+# trägt, die ein Laie öffnet. Die Rechenprüfung sieht sich den
+# fertigen Text an, hier werden die Bausteine geprüft.
+TIEF_PFLICHT = {
+    'titel': 4, 'vor': 120,
+    'ueberblickTitel': 8, 'herkunftTitel': 10, 'facettenTitel': 10,
+    'widTitel': 10, 'fragenTitel': 10, 'ehrlichTitel': 10,
+    'herkunftVor': 30, 'facettenVor': 80, 'fragenVor': 80,
+    'grenzeVor': 15, 'tunVor': 8, 'fuss': 100,
+    'seiteTitel': 6, 'seiteVor': 150, 'seiteOffen': 150, 'seiteStufe': 60,
+    'knopfAlle': 15, 'knopfEiner': 15, 'echoFertig': 15, 'echoOhne': 20,
+}
+m_tief = re.search(r"var B_TIEF = \{", daten)
+if not m_tief:
+    fehler.append('B_TIEF fehlt — der Tiefgang hat keine Überschriften')
+else:
+    tblk = klammerblock(daten, m_tief.end() - 1)
+    for name, mind in TIEF_PFLICHT.items():
+        v = feld(tblk, name)
+        if not v:
+            fehler.append(f'B_TIEF.{name} fehlt')
+            continue
+        if len(v) < mind:
+            fehler.append(f'B_TIEF.{name} nur {len(v)} Zeichen — mindestens {mind}')
+        lay_texte.append((f'B_TIEF.{name}', v))
+    # Der Abschnitt auf der Seite muss sagen, dass nichts verschlossen
+    # ist. Siehe PRODUKT.md Abschnitt 4: ein gemaltes Schloss auf einer
+    # statischen Seite wäre eine Lüge, und hier wird keine erzählt.
+    offen = feld(tblk, 'seiteOffen') or ''
+    if 'Schloss' not in offen or 'Server' not in offen:
+        fehler.append('B_TIEF.seiteOffen sagt nicht, dass der Tiefgang nicht '
+                      'verschlossen ist, sondern noch nicht geschrieben')
+    if '{n}' not in (feld(tblk, 'echoFertig') or ''):
+        fehler.append('B_TIEF.echoFertig nennt den Dateinamen nicht')
+
+# ── Was sich widerspricht ──────────────────────────────────────
+WID_PFLICHT = {'vor': 100, 'keiner': 120, 'anlageZwei': 150, 'anlageEins': 100,
+               'anlageTun': 60, 'zugleich': 100, 'zugleichTun': 60,
+               'kapitel': 100, 'kapitelTun': 60}
+m_wid = re.search(r"var B_WID = \{", daten)
+if not m_wid:
+    fehler.append('B_WID fehlt — die Widersprüche haben keine Worte')
+else:
+    wblk = klammerblock(daten, m_wid.end() - 1)
+    for name, mind in WID_PFLICHT.items():
+        v = feld(wblk, name)
+        if not v:
+            fehler.append(f'B_WID.{name} fehlt')
+            continue
+        if len(v) < mind:
+            fehler.append(f'B_WID.{name} nur {len(v)} Zeichen — mindestens {mind}')
+        lay_texte.append((f'B_WID.{name}', v))
+    # Die beiden Formen für die Anlage brauchen ihre Lücken, sonst
+    # steht derselbe Satz über zwei verschiedenen Befunden.
+    for name, lueck in (('anlageZwei', ('{a}', '{b}')), ('anlageEins', ('{a}',))):
+        v = feld(wblk, name) or ''
+        for l in lueck:
+            if l not in v:
+                fehler.append(f'B_WID.{name} hat keine Lücke {l} — dann sagt '
+                              'der Satz nicht, welche Stellen gegeneinander stehen')
+    if feld(wblk, 'anlageZwei') == feld(wblk, 'anlageEins'):
+        fehler.append('die beiden Formen für die Anlage sind gleich')
+    # Das Eingeständnis, keinen Widerspruch zu finden, muss auch
+    # sagen, dass das eigene Erleben Vorrang hat.
+    if 'kennst' not in (feld(wblk, 'keiner') or ''):
+        fehler.append('B_WID.keiner sagt nicht, dass ein selbst erlebter '
+                      'Widerspruch trotzdem gilt')
+    for name in ('techAnlage', 'techZugleich', 'techKapitel'):
+        if not feld(wblk, name):
+            fehler.append(f'B_WID.{name} fehlt — der Befund nennt seine Mechanik nicht')
+
+# ── Wenn nichts läuft ──────────────────────────────────────────
+m_leer = re.search(r"var B_LEER = \{", daten)
+if not m_leer:
+    fehler.append('B_LEER fehlt — die stillen Bereiche haben keine Worte')
+else:
+    lblk = klammerblock(daten, m_leer.end() - 1)
+    for name, mind in (('keinVorgang', 100), ('keinFenster', 25),
+                       ('tun', 100), ('nutzen', 60), ('natalLeer', 120)):
+        v = feld(lblk, name)
+        if not v:
+            fehler.append(f'B_LEER.{name} fehlt')
+            continue
+        if len(v) < mind:
+            fehler.append(f'B_LEER.{name} nur {len(v)} Zeichen — mindestens {mind}')
+        lay_texte.append((f'B_LEER.{name}', v))
+    # Fehlerklasse: derselbe Platzhalter stand in app und in daten.
+    # Steht er noch in app, laufen zwei Fassungen auseinander.
+    for name in ('keinVorgang', 'keinFenster', 'tun', 'nutzen', 'natalLeer'):
+        v = feld(lblk, name)
+        if v and v[:40] in app:
+            fehler.append(f'B_LEER.{name} steht wörtlich auch in bereich-app.js '
+                          '— zwei Fassungen desselben Satzes')
+
+# ── Fugen und Formen ───────────────────────────────────────────
+m_form = re.search(r"var B_FORM = \{", daten)
+if not m_form:
+    fehler.append('B_FORM fehlt — die gebauten Sätze haben keine Formen')
+else:
+    fblk = klammerblock(daten, m_form.end() - 1)
+    monate = re.findall(r"'([A-ZÄÖÜ][a-zäöü]+)'",
+                        re.search(r"monate:\[(.*?)\]", fblk, re.S).group(1))
+    if len(monate) != 12:
+        fehler.append(f'{len(monate)} statt 12 Monatsnamen in B_FORM')
+    zeichen = re.findall(r"'([A-ZÄÖÜ][a-zäöü]+)'",
+                         re.search(r"zeichen:\[(.*?)\]", fblk, re.S).group(1))
+    if len(zeichen) != 12:
+        fehler.append(f'{len(zeichen)} statt 12 Zeichennamen in B_FORM')
+    # Nur die Formen, die ein Laie zu sehen bekommt, gehen in die
+    # Stufe-0-Prüfung. Die tech-Formen dürfen Fachsprache tragen.
+    for name, mind in (('laeuftAus', 5), ('fensterOffen', 60),
+                       ('fensterKurz', 6), ('fensterBis', 12), ('fensterSeit', 20)):
+        v = feld(fblk, name)
+        if not v:
+            fehler.append(f'B_FORM.{name} fehlt')
+            continue
+        if len(v) < mind:
+            fehler.append(f'B_FORM.{name} nur {len(v)} Zeichen')
+        lay_texte.append((f'B_FORM.{name}', v))
+    for name, lueck in (('fensterKurz', '{d}'), ('fensterBis', '{d}'),
+                        ('fensterBis', '{m}'), ('fensterSeit', '{d}'),
+                        ('vieleJahre', '{n}'), ('techDurchgang', '{h}'),
+                        ('techAspekt', '{z}')):
+        if lueck not in (feld(fblk, name) or ''):
+            fehler.append(f'B_FORM.{name} hat keine Lücke {lueck}')
+
+# ── Die Gesprächsfragen ────────────────────────────────────────
+# PRODUKT.md Abschnitt 5: keine Diagnose. Eine Frage, die eine
+# Diagnose nahelegt, ist keine Frage, sondern ein Befund im
+# Fragezeichen-Mantel — und genau das wird hier unmöglich gemacht.
+DIAGNOSE = ['Diagnose', 'diagnos', 'Störung', 'Syndrom', 'krank', 'Krankheit',
+            'Depression', 'depressiv', 'Trauma', 'traumat', 'ADHS', 'Autismus',
+            'autistisch', 'Burnout', 'therapieren', 'behandeln', 'leidest',
+            'Patient', 'Befund']
+m_fra = re.search(r"var B_FRAGEN = \{", daten)
+if not m_fra:
+    fehler.append('B_FRAGEN fehlt — die Bereiche haben keine Gesprächsfragen')
+else:
+    fra_block = klammerblock(daten, m_fra.end() - 1)
+    alle_fragen, alle_grenzen = [], []
+    for b in BEREICHE:
+        mb = re.search(r"^\s{4}" + b + r":\s*\{", fra_block, re.M)
+        if not mb:
+            fehler.append(f'Bereich {b}: keine Gesprächsfragen in B_FRAGEN')
+            continue
+        blk = klammerblock(fra_block, mb.end() - 1)
+        mf = re.search(r"fragen:\s*\[(.*?)\]", blk, re.S)
+        fr = re.findall(r"'((?:[^'\\]|\\.)*)'", mf.group(1)) if mf else []
+        if len(fr) != 3:
+            fehler.append(f'Bereich {b}: {len(fr)} statt genau 3 Gesprächsfragen')
+        for i, f_ in enumerate(fr):
+            if not f_.rstrip().endswith('?'):
+                fehler.append(f'Frage {b}/{i} ist keine Frage: "{f_[:50]}"')
+            if len(f_) < 25:
+                fehler.append(f'Frage {b}/{i} nur {len(f_)} Zeichen — zu dünn')
+            for d in DIAGNOSE:
+                if d in f_:
+                    fehler.append(f'Frage {b}/{i} stellt eine Diagnose '
+                                  f'("{d}"): "{f_[:60]}"')
+            lay_texte.append((f'B_FRAGEN.{b}.frage{i}', f_))
+            alle_fragen.append(f_)
+        gr = feld(blk, 'grenze')
+        if not gr:
+            fehler.append(f'Bereich {b}: die Grenze fehlt — dann sagt der '
+                          'Tiefgang nicht, was er über diesen Bereich nicht weiß')
+        else:
+            if len(gr) < 60:
+                fehler.append(f'Grenze {b}: nur {len(gr)} Zeichen — zu dünn')
+            if not gr.rstrip().endswith('.'):
+                fehler.append(f'Grenze {b}: endet ohne Punkt')
+            for d in DIAGNOSE:
+                if d in gr:
+                    fehler.append(f'Grenze {b} stellt eine Diagnose ("{d}")')
+            lay_texte.append((f'B_FRAGEN.{b}.grenze', gr))
+            alle_grenzen.append(gr)
+    if len(set(alle_fragen)) != len(alle_fragen):
+        fehler.append('dieselbe Gesprächsfrage steht in zwei Bereichen')
+    if len(set(alle_grenzen)) != len(alle_grenzen):
+        fehler.append('dieselbe Grenze steht in zwei Bereichen — dann ist sie '
+                      'allgemein und sagt über den Bereich nichts')
+
+# ── Kein Schalter, der Freischalten vortäuscht ─────────────────
+# PRODUKT.md Abschnitt 4: Die Seite hat keinen Server, alles im
+# Quelltext ist lesbar. Ein Schloss wäre gemalt. Solange nicht
+# entschieden ist, welcher Weg es wird, wird keines gebaut.
+SCHLOSS = ['freischalt', 'Freischalt', 'entsperr', 'Entsperr', 'Zugangscode',
+           'Gutschein', 'Lizenzschlüssel', 'Aktivierungs', 'gekauft',
+           'Kaufcode', 'unlock', 'premium', 'Premium']
+# Gesucht wird im Code und im Markup, nicht in Kommentaren: dass
+# eine Datei erklärt, warum sie kein Schloss baut, ist das Gegenteil
+# eines Schlosses.
+def ohne_kommentar(s, html_auch=False):
+    s = re.sub(r'/\*.*?\*/', ' ', s, flags=re.S)
+    s = re.sub(r'^\s*//.*$', ' ', s, flags=re.M)
+    if html_auch:
+        s = re.sub(r'<!--.*?-->', ' ', s, flags=re.S)
+    return s
+
+nackt = (ohne_kommentar(koerper, True) + ohne_kommentar(app) +
+         ohne_kommentar(daten) + ohne_kommentar(rechner) + ohne_kommentar(bauer) +
+         ohne_kommentar(wapp) + ohne_kommentar(wdaten))
+for w in SCHLOSS:
+    if w in nackt:
+        fehler.append(f'die Seite täuscht Freischalten vor ("{w}") — auf einer '
+                      'statischen Seite ist jedes Schloss gemalt, '
+                      'siehe PRODUKT.md Abschnitt 4')
+# Und nichts wird nur ausgeblendet, statt herausgegeben: ein Teil
+# der Seite, der den Tiefgang trägt und per Stil verborgen ist,
+# wäre derselbe gemalte Schalter in anderer Form.
+if re.search(r'id="btief[a-z]*"[^>]*style="[^"]*display\s*:\s*none', koerper):
+    fehler.append('der Tiefgang-Abschnitt ist im Markup verborgen — '
+                  'verbergen ist auf einer statischen Seite keine Grenze')
+# Und der Tiefgang darf nicht fertig in der Seite liegen: dann wäre
+# er nicht herausgegeben, sondern nur ausgeblendet.
+if 'AC_TIEF.bauen' in app and 'innerHTML' in app.split('AC_TIEF.bauen')[1][:400]:
+    fehler.append('der gebaute Tiefgang wird in die Seite geschrieben — '
+                  'er geht als Datei heraus, nicht in das Markup')
+if 'tief-bauer.js' not in lies(hier / 'bau-bereiche.py'):
+    fehler.append('tief-bauer.js wird nicht mitgebaut')
+if 'download' not in app or 'Blob' not in app:
+    fehler.append('der Tiefgang geht nicht als Datei heraus')
+
 # ── 4 · Die Grundregel: kein Maschinenraum im Laientext ────────
 # Diese Wörter dürfen in keinem Text stehen, den ein Laie auf
 # Stufe 0 sieht. Sie gehören in die Felder mit "tech" und in
@@ -422,8 +651,31 @@ const JARGON=['Konjunktion','Opposition','Quadrat','Trigon','Sextil','Orbis',
   'Profektion','Firdaria','Dispositor','Ekliptik'];
 const BREITEN=[320,360,390,768,1024,1440];
 (async()=>{
-const b=await chromium.launch(); const f=[]; const notiz={};
-const p=await (await b.newContext({viewport:{width:390,height:900}})).newPage();
+const b=await chromium.launch(); const f=[];
+/* Die Notizen werden vorbelegt, und zwar mit Werten, die die
+   Urteile unten durchfallen lassen. Fehlerklasse aus der
+   Fehlerprobe vom 23.10.: bricht die Probe in der Mitte ab (eine
+   Seite navigiert weg, ein Klick geht ins Leere), platzte sie
+   vorher mit einem unlesbaren Node-Stapel — und die Prüfungen
+   danach liefen nie. Eine abgebrochene Probe muss melden, was sie
+   nicht mehr erreicht hat, statt grün oder stumm zu sein. */
+const NICHT='Rauchprobe kam nicht bis hierher';
+const leerDatei=()=>({name:'',laenge:0,fehler:NICHT,jargon:[],
+  fehlendeTeile:['(ungelaufen)'],schlecht:''});
+const notiz={
+  start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
+  doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
+  folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,
+  stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
+  wahl:{knoepfe:0,alleAn:'',tipp:''},
+  einer:{bereiche:0,ueber:0,name:'',tipp:'',gespeichert:[],eigenerSchluessel:[]},
+  zwei:{bereiche:0,gespeichert:[]},letzter:0,
+  zurueckAlle:{bereiche:0,gespeichert:[]},unsinn:0,ueberlauf:[],
+  tief:{titel:'',vor:'',knopfAlle:'',knoepfe:0,verborgen:0},
+  datei0:leerDatei(),dateiEiner:leerDatei(),
+  datei3:{laenge:0,mechanik:0,fehler:NICHT},echo:'',aufDerSeite:[]};
+try{
+const p=await (await b.newContext({viewport:{width:390,height:900},acceptDownloads:true})).newPage();
 p.on('pageerror',e=>f.push('JS: '+String(e.message).slice(0,150)));
 p.on('console',m=>{ if(m.type()==='error'){ const s=m.text();
   if(!/ERR_TUNNEL|ERR_NAME_NOT_RESOLVED|net::ERR_|Failed to load resource/.test(s))
@@ -539,6 +791,82 @@ notiz.techSichtbar3=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech
   .filter(e=>e.offsetParent!==null).length);
 await schlecht('Stufe 3');
 
+/* ── Der Tiefgang geht als Datei heraus ─────────────────────
+   Fünf Dinge müssen stimmen:
+     · der Abschnitt erklärt sich und sagt, dass nichts verschlossen ist
+     · jeder Bereich hat seinen eigenen Knopf
+     · der Knopf schreibt wirklich eine Datei, mit allen Teilen darin
+     · auf Stufe 0 ist auch diese Datei frei von Fachsprache
+     · und der Tiefgang steht nicht auf der Seite, sondern nur in
+       der Datei — sonst wäre er nicht herausgegeben, nur sichtbar */
+const TD = await p.evaluate(()=>window.AC_BDAT.TIEF);
+const TEILE = [TD.ueberblickTitel, TD.herkunftTitel, TD.facettenTitel,
+               TD.widTitel, TD.fragenTitel, TD.ehrlichTitel];
+
+notiz.tief = await p.evaluate(()=>({
+  titel:(document.getElementById('btieftitel')||{}).innerText||'',
+  vor:(document.getElementById('btiefvor')||{}).innerText||'',
+  knopfAlle:(document.getElementById('btiefalle')||{}).innerText||'',
+  knoepfe:document.querySelectorAll('#bliste button[data-tief]').length,
+  verborgen:[...document.querySelectorAll('#tiefgang,#btiefalle')]
+              .filter(e=>e.offsetParent===null).length}));
+
+async function holen(sel){
+  /* Der Wächter wird vor dem Klick aufgesetzt und sein Fehlschlag
+     sofort abgefangen: bleibt die Datei aus, soll die Probe das
+     melden und nicht daran zerbrechen. */
+  const warten=p.waitForEvent('download',{timeout:9000}).then(d=>d,()=>null);
+  try{ await p.click(sel); }
+  catch(e){ await warten; return { name:'', text:'',
+            fehler:'Knopf nicht klickbar: '+String(e.message).slice(0,90) }; }
+  const dl=await warten;
+  if(!dl) return { name:'', text:'', fehler:'keine Datei nach dem Klick' };
+  let ort=null; try{ ort=await dl.path(); }catch(e){}
+  return { name:dl.suggestedFilename(),
+           text:ort ? require('fs').readFileSync(ort,'utf8') : '' };
+}
+function befund(d){
+  return { name:d.name, laenge:d.text.length, fehler:d.fehler||'',
+    jargon:JARGON.filter(w=>new RegExp('(?<![A-Za-zÄÖÜäöüß])'+w+'(?![A-Za-zÄÖÜäöüß])')
+             .test(d.text)),
+    fehlendeTeile:TEILE.filter(x=>d.text.indexOf(x)<0),
+    schlecht:(d.text.match(/undefined|NaN|\[object|\{\w+\}/)||[''])[0] };
+}
+
+/* Stufe 0: die Datei muss ohne ein Fachwort auskommen. */
+await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(350);
+notiz.datei0 = befund(await holen('#btiefalle'));
+notiz.echo = await p.evaluate(()=>(document.getElementById('btiefecho')||{}).innerText||'');
+
+/* Ein einzelner Bereich: kürzer als alle zehn, aber vollständig. */
+await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
+await p.waitForTimeout(200);
+const dEiner = await holen('#bliste button[data-tief]');
+notiz.dateiEiner = befund(dEiner);
+
+/* Stufe 3: jetzt darf die Mechanik in der Datei stehen. */
+await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(350);
+const d3 = await holen('#btiefalle');
+notiz.datei3 = { laenge:d3.text.length, mechanik:(d3.text.match(/\[ /g)||[]).length,
+                 fehler:d3.fehler||'' };
+
+/* Und das Wichtigste: auf der Seite selbst steht der Tiefgang
+   nicht — auf keiner Stufe, auch nicht mit allen Bereichen offen. */
+notiz.aufDerSeite = [];
+for(const st of [0,2,4]){
+  await p.evaluate(s=>{ if(window.AC_NIV) AC_NIV.setzen(s); }, st);
+  await p.waitForTimeout(300);
+  await p.evaluate(()=>document.querySelectorAll('.b-ber,details').forEach(d=>d.open=true));
+  await p.waitForTimeout(200);
+  const drin = await p.evaluate(T=>{
+    const t=document.body.innerText;
+    return [T.herkunftTitel,T.widTitel,T.fragenTitel,T.grenzeVor]
+             .filter(x=>t.indexOf(x)>=0);
+  }, TD);
+  if(drin.length) notiz.aufDerSeite.push('Stufe '+st+': '+drin.join(', '));
+}
+await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(300);
+
 /* Stichtag wirkt wirklich. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(250);
 const vor=await p.evaluate(()=>document.getElementById('bliste').innerText);
@@ -631,7 +959,11 @@ for(const w of BREITEN){
   if(s>w+1) notiz.ueberlauf.push(w+'px → '+s+'px');
 }
 
-await b.close();
+}catch(e){
+  f.push('Rauchprobe brach ab, bevor sie fertig war: '
+         + String((e && e.message) || e).slice(0,200));
+}
+try{ await b.close(); }catch(e){}
 console.log(JSON.stringify({fehler:f, notiz}, null, 1));
 })();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
@@ -764,6 +1096,69 @@ else:
         if n['unsinn'] != 10:
             fehler.append('ein unbekannter Bereich im Speicher leert die Seite: '
                           f"{n['unsinn']} Bereiche")
+        # ── Der Tiefgang als Datei ────────────────────────────
+        # Fehlerklassen: der Knopf fehlt; er schreibt nichts; die
+        # Datei ist unvollständig; sie trägt Fachsprache auf Stufe 0
+        # in die Hände eines Laien; oder der Tiefgang steht doch auf
+        # der Seite und ist damit nicht herausgegeben, sondern nur
+        # sichtbar gemacht.
+        tf = n['tief']
+        if len(tf['titel']) < 5:
+            fehler.append('der Abschnitt über den Tiefgang hat keine Überschrift')
+        if len(tf['vor']) < 300:
+            fehler.append('der Abschnitt über den Tiefgang erklärt sich nicht: '
+                          + repr(tf['vor'][:80]))
+        if 'Schloss' not in tf['vor']:
+            fehler.append('die Seite sagt nicht, dass der Tiefgang nicht '
+                          'verschlossen ist, sondern noch nicht geschrieben')
+        if len(tf['knopfAlle']) < 15:
+            fehler.append('der Knopf für den Tiefgang ist nicht beschriftet')
+        if tf['knoepfe'] != 10:
+            fehler.append(f"{tf['knoepfe']} statt 10 Knöpfe für den Tiefgang "
+                          '— jeder Bereich braucht einen eigenen')
+        if tf['verborgen']:
+            fehler.append('der Abschnitt über den Tiefgang ist unsichtbar')
+
+        for wo, d, mind in (('alle Bereiche', n['datei0'], 20000),
+                            ('einen Bereich', n['dateiEiner'], 1500)):
+            if d['fehler']:
+                fehler.append(f'der Knopf für {wo} schreibt keine Datei: '
+                              + d['fehler'])
+                continue
+            if not d['name'].startswith('tiefgang-') or not d['name'].endswith('.txt'):
+                fehler.append(f'die Datei für {wo} heißt {d["name"]!r}')
+            if d['laenge'] < mind:
+                fehler.append(f'der Tiefgang für {wo} ist nur {d["laenge"]} '
+                              f'Zeichen lang — mindestens {mind}')
+            if d['fehlendeTeile']:
+                fehler.append(f'dem Tiefgang für {wo} fehlen Teile: '
+                              + ', '.join(d['fehlendeTeile']))
+            if d['jargon']:
+                fehler.append(f'Fachsprache im Tiefgang für {wo} auf Stufe 0: '
+                              + ', '.join(d['jargon']))
+            if d['schlecht']:
+                fehler.append(f'schlechter Text im Tiefgang für {wo}: '
+                              + repr(d['schlecht']))
+        if n['datei0']['laenge'] and n['dateiEiner']['laenge'] >= n['datei0']['laenge']:
+            fehler.append('ein einzelner Bereich ergibt keinen kürzeren '
+                          'Tiefgang als alle zehn')
+        if 'tiefgang-' not in n['echo']:
+            fehler.append('die Seite sagt nicht, dass die Datei geschrieben '
+                          'wurde: ' + repr(n['echo'][:60]))
+        if n['datei3']['fehler']:
+            fehler.append('auf Stufe 3 schreibt der Knopf keine Datei: '
+                          + n['datei3']['fehler'])
+        else:
+            if n['datei3']['mechanik'] < 10:
+                fehler.append(f"auf Stufe 3 stehen nur {n['datei3']['mechanik']} "
+                              'Mechanik-Zeilen im Tiefgang — zu wenig')
+            if n['datei3']['laenge'] <= n['datei0']['laenge']:
+                fehler.append('der Tiefgang auf Stufe 3 ist nicht länger als '
+                              'der auf Stufe 0 — dann wirkt der Wissensstand nicht')
+        if n['aufDerSeite']:
+            fehler.append('der Tiefgang steht auf der Seite statt nur in der '
+                          'Datei: ' + '; '.join(n['aufDerSeite']))
+
         if n['ueberlauf']:
             fehler.append('seitlicher Überlauf bei ' + '; '.join(n['ueberlauf']))
 

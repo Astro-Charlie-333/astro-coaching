@@ -145,3 +145,12 @@
   .b-in{padding:4px 16px 20px;}
   .b-ehrlich{padding:20px 18px;}
 }
+
+/* ── Tiefgang ──────────────────────────────────────────────────
+   Der Knopf, der den Tiefgang als Datei schreibt. Kein Schloss,
+   kein Hinweis auf etwas Verborgenes — es ist nichts verborgen. */
+.b-tiefzeile{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px;}
+.b-knopf-gross{font-size:15px;padding:10px 20px;}
+.b-tiefknopf{margin-top:4px;}
+.b-echo{font-family:var(--sans);font-size:13px;color:var(--leise);line-height:1.5;}
+#tiefgang .u:last-of-type{margin-bottom:4px;}

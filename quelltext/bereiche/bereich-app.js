@@ -14,13 +14,16 @@
 (function(){
 
   var D = null, BER = null;
-  var MN = ['Januar','Februar','März','April','Mai','Juni','Juli',
-            'August','September','Oktober','November','Dezember'];
-  var ZN = ['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau',
-            'Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
-
+  /* Was die Seite gerade zeigt — der Tiefgang gibt genau das aus,
+     nie einen zweiten, frisch gerechneten Stand. */
+  var STAND = null;
   function bD(){ return window.AC_BDAT; }
   function bB(){ return window.AC_BER; }
+  /* Die Sätze, die Überblick und Tiefgang gemeinsam brauchen,
+     stehen in tief-bauer.js — einmal, nicht zweimal. */
+  function bT(){ return window.AC_TIEF; }
+  function MN_(){ return bD().FORM.monate; }
+  function ZN_(){ return bD().FORM.zeichen; }
 
   /* ── Hilfen ─────────────────────────────────────────────────── */
   function esc(s){
@@ -48,86 +51,15 @@
     try{ return AC_WAHL.istGewaehlt(b.k); }catch(e){ return true; }
   }
 
-  /* Tage in Alltagssprache. Unter einem Jahr in Monaten oder Wochen,
-     darüber in Jahren — nie "17 Monate" neben "1,5 Jahre". */
-  function dauer(tage){
-    if(tage === null || tage === undefined) return null;
-    var t = Math.round(tage);
-    if(t <= 0) return 'läuft aus';
-    if(t < 14)  return t + (t === 1 ? ' Tag' : ' Tage');
-    if(t < 70){ var w = Math.round(t/7);  return w + (w === 1 ? ' Woche' : ' Wochen'); }
-    if(t < 365){ var m = Math.round(t/30.44); return m + (m === 1 ? ' Monat' : ' Monate'); }
-    var j = t/365.2422;
-    if(j < 1.9) return 'etwa ein Jahr';
-    return 'etwa ' + Math.round(j) + ' Jahre';
-  }
-
-  function datum(jd){
-    if(jd === null || jd === undefined) return null;
-    var d = datVon(jd);
-    return MN[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
-  }
-
-  /* ── Ein laufender Vorgang als Satz ───────────────────────────
-     gesehen sammelt die Arten, die in diesem Bereich schon erklärt
-     wurden. Zwei Vorgänge derselben Art bekommen den Zusatz nur
-     einmal — sonst steht zweimal wörtlich derselbe Satz da. */
-  function vorgangSatz(v, B, gesehen){
-    var W = bD().WAND[v.wanderer];
-    if(!W) return null;
-    if(v.form === 'durchgang'){
-      /* Die Rahmenerklärung gehört einmal in den Bereich, nicht an
-         jeden Durchgang. Was einen Durchgang vom anderen
-         unterscheidet, ist der Vorgang selbst. */
-      var rahmen = '';
-      if(!gesehen || !gesehen.durchgang){
-        rahmen = ' ' + bD().DURCH.einl;
-        if(gesehen) gesehen.durchgang = true;
-      }
-      var rw = '';
-      if(v.rueck && (!gesehen || !gesehen.rueck)){
-        rw = ' ' + bD().DURCH.rueck;
-        if(gesehen) gesehen.rueck = true;
-      }
-      return { was: W.was + rahmen + rw,
-               tun: W.tun, nutzen: W.nutzen, tempo: W.tempo };
-    }
-    var A = bD().ART[v.art], zusatz = '';
-    if(A && (!gesehen || !gesehen[v.art])){
-      zusatz = ' ' + A.wie;
-      if(gesehen) gesehen[v.art] = true;
-    }
-    return { was: W.was + zusatz,
-             tun: W.tun, nutzen: W.nutzen, tempo: W.tempo };
-  }
-
-  /* Die Mechanik dazu — erst ab Stufe 2 sichtbar. */
-  function vorgangTech(v){
-    var W = bD().WAND[v.wanderer], t = W ? W.tech : v.wanderer;
-    if(v.form === 'durchgang')
-      return t + ' läuft durch das ' + v.haus + '. Haus' + (v.rueck ? ', rückläufig' : '');
-    var A = bD().ART[v.art];
-    return t + ' ' + (A ? A.tech : v.aspekt) + ' ' + v.ziel +
-           ', ' + v.ab.toFixed(1).replace('.', ',') + '° vom exakten Stand' +
-           (v.zu ? ', zulaufend' : ', weggehend') + (v.rueck ? ', rückläufig' : '');
-  }
-
-  /* ── Fensterzeile ───────────────────────────────────────────── */
-  function fensterZeile(v){
-    var f = v.f;
-    if(!f) return '';
-    if(f.bisOffen || f.bis === null)
-      return 'Das läuft noch über Jahre hinaus — ein Ende ist in dieser Rechnung nicht in Sicht.';
-    var noch = dauer(f.tageNoch);
-    /* Unter sechs Wochen ist "noch zwei Wochen" genauer als ein
-       Monatsname — der wäre oft der laufende Monat und sagt nichts. */
-    var s = (f.tageNoch !== null && f.tageNoch < 42)
-      ? 'Noch ' + noch + '.'
-      : 'Noch ' + noch + ', bis etwa ' + datum(f.bis) + '.';
-    if(f.tageSchon !== null && f.tageSchon > 20)
-      s += ' Angefangen hat es vor ' + dauer(f.tageSchon) + '.';
-    return s;
-  }
+  /* Zeitspannen, Daten, Vorgangssätze, Fensterzeilen und die
+     Mechanik dazu: alles aus tief-bauer.js. Eine zweite Fassung
+     hier wäre genau die Sorte Doppelung, die auseinanderläuft. */
+  function dauer(tage){ return bT().dauer(tage); }
+  function datum(jd){ return bT().datum(jd); }
+  function vorgangSatz(v, B, gesehen){ return bT().vorgangSatz(v, gesehen); }
+  function vorgangTech(v){ return bT().vorgangTech(v); }
+  function fensterZeile(v){ return bT().fensterZeile(v); }
+  function facTech(E){ return bT().facTech(E); }
 
   /* ── Facetten eines Bereichs ─────────────────────────────────
      Die Reihenfolge kommt aus dem Rechner, die Texte aus den
@@ -136,21 +68,7 @@
      Tiefe, mehr liest niemand. */
   var FAC_ZEIGE = 3;
 
-  function fac(b){
-    var liste = (bD().FACET || {})[b.k];
-    if(!liste || !liste.length) return [];
-    try{ return bB().facetten(b.natal, b, liste) || []; }catch(e){ return []; }
-  }
-
-  /* Die Mechanik einer Facette — erst ab Stufe 2 sichtbar. */
-  function facTech(E){
-    var s = E.wo + '. Haus';
-    if(E.treffer && E.treffer.length) s += ', natal darin: ' + E.treffer.join(', ');
-    else if(E.auch && E.auch.length) s += ', im Bereich, aber anderes Haus: ' + E.auch.join(', ');
-    else if(E.besetzt) s += ', natal besetzt, aber nicht von den Punkten dieser Facette';
-    else s += ', natal unbesetzt';
-    return s + ' (Gewicht ' + String(E.g).replace('.', ',') + ')';
-  }
+  function fac(b){ return bT().facetten(b); }
 
   /* ── Ein Bereich ────────────────────────────────────────────── */
   function bereichBlock(b, offen){
@@ -179,13 +97,12 @@
       if(b.nurKapitel) h.push('<p class="b-kap">' + esc(bD().KAP.nurKapitel) + '</p>');
       if(b.kapitel.anders) h.push('<p class="b-kap b-leise">' + esc(bD().KAP.widerspruch) + '</p>');
       if(n >= 2) h.push('<p class="ac-tech">' + esc(bD().KAP.tech) + ': ' +
-        esc(ZN[b.kapitel.l1.zeichen]) + (b.kapitel.l1.gipfel ? ' (winkelhaft)' : '') +
-        (b.kapitel.l2 ? ' &rarr; ' + esc(ZN[b.kapitel.l2.zeichen]) +
+        esc(ZN_()[b.kapitel.l1.zeichen]) + (b.kapitel.l1.gipfel ? ' (winkelhaft)' : '') +
+        (b.kapitel.l2 ? ' &rarr; ' + esc(ZN_()[b.kapitel.l2.zeichen]) +
           (b.kapitel.l2.gipfel ? ' (winkelhaft)' : '') : '') + '</p>');
     }
     if(!top.length){
-      h.push('<p>Zur Zeit rührt kein größerer Vorgang an diesem Bereich. ' +
-             'Das ist der Normalfall und kein Mangel &mdash; es läuft nie überall gleichzeitig etwas.</p>');
+      h.push('<p>' + esc(bD().LEER.keinVorgang) + '</p>');
     } else {
       for(var i=0;i<top.length;i++){
         var v = top[i], S = vorgangSatz(v, b, gesehen);
@@ -209,8 +126,7 @@
         if(S1 && S1.tun !== (S0 && S0.tun)) h.push('<p>' + esc(S1.tun) + '</p>');
       }
     } else {
-      h.push('<p>Nichts, was dringend wäre. Stille Bereiche sind die, in denen man ohne Gegenwind etwas aufbauen kann &mdash; ' +
-             'wenn du hier etwas willst, musst du es selbst anfangen.</p>');
+      h.push('<p>' + esc(bD().LEER.tun) + '</p>');
     }
     h.push('</div>');
 
@@ -224,7 +140,7 @@
       }
       h.push('</ul>');
     } else {
-      h.push('<p>Kein Fenster, das zuläuft oder abläuft.</p>');
+      h.push('<p>' + esc(bD().LEER.keinFenster) + '</p>');
     }
     if(b.kapitel){
       var kv = b.kapitel.l1;
@@ -239,8 +155,7 @@
       var Sn = vorgangSatz(top[0], b);
       h.push('<p>' + esc(Sn ? Sn.nutzen : '') + '</p>');
     } else {
-      h.push('<p>In einer stillen Phase ist das Nützlichste, etwas vorzubereiten, ' +
-             'das später Aufmerksamkeit braucht.</p>');
+      h.push('<p>' + esc(bD().LEER.nutzen) + '</p>');
     }
     h.push('</div>');
 
@@ -248,12 +163,10 @@
     h.push('<div class="b-blk b-dauer"><h4>5 &middot; Dein Dauerthema hier</h4>');
     h.push('<p>' + esc(T.meistern) + '</p>');
     if(b.natal.leer){
-      h.push('<p class="b-leise">Dieser Bereich ist bei dir von Geburt an unbesetzt. ' +
-             'Das heißt nicht, dass er leer bleibt &mdash; nur, dass du ihn selbst füllen musst, ' +
-             'statt von einer Veranlagung hineingeschoben zu werden.</p>');
+      h.push('<p class="b-leise">' + esc(bD().LEER.natalLeer) + '</p>');
     } else {
       var kernH = b.natal.kernHaus, HH = bD().HAUS[kernH];
-      h.push('<p>Dein Schwerpunkt liegt hier bei dem, was man so beschreiben kann: ' +
+      h.push('<p>' + esc(bD().TIEF.herkunftVor) + ' ' +
              esc(HH ? HH.kurz : '') + '. ' + esc(HH ? HH.meistern : '') + '</p>');
     }
     /* Die Facetten. Ein Bereich hat mehrere Seiten; welche davon
@@ -284,6 +197,13 @@
     }
     h.push('</div>');
 
+    /* Der Tiefgang zu diesem Bereich. Kein Schalter, der
+       Freischalten vortäuscht: der Text ist nicht verborgen,
+       sondern wird beim Antippen hier geschrieben und als Datei
+       gespeichert. Siehe PRODUKT.md Abschnitt 4. */
+    h.push('<div class="b-tiefzeile"><button type="button" class="b-knopf b-tiefknopf" ' +
+           'data-tief="' + esc(b.k) + '">' + esc(bD().TIEF.knopfEiner) + '</button></div>');
+
     h.push('</div></details>');
     return h.join('');
   }
@@ -294,7 +214,7 @@
   function kapEnde(a){
     if(GEB_MS === null || !a) return 'auf Weiteres';
     var d = new Date(GEB_MS + a.bis * 86400000);
-    return MN[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+    return MN_()[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
   }
 
   /* ── Überblick ──────────────────────────────────────────────── */
@@ -393,6 +313,10 @@
       kopf.innerHTML = k.join('');
     }
 
+    STAND = { bereiche:bs, wer:namen(p),
+              stichtag:(feld && feld.value)
+                ? feld.value.split('-').reverse().join('.') : '' };
+
     if(ueb) ueb.innerHTML = ueberblick(bs);
 
     /* die drei lautesten offen, der Rest zugeklappt */
@@ -401,6 +325,42 @@
     ziel.innerHTML = h.join('');
 
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+  }
+
+  /* ── Der Tiefgang als Datei ───────────────────────────────────
+     Der Text entsteht in tief-bauer.js, hier wird er nur zur Datei.
+     Der Wissensstand entscheidet mit: steht er auf 0 oder 1, kommt
+     die Datei ohne Fachsprache — dasselbe Versprechen wie auf der
+     Seite, nur in einer Datei, die das Haus verlässt. */
+  function echo(s){
+    var e = D && D.getElementById('btiefecho');
+    if(!e) return;
+    e.textContent = s;
+    setTimeout(function(){ if(e.textContent === s) e.textContent = ''; }, 6000);
+  }
+
+  function dateiname(teil){
+    var d = new Date(), z = function(x){ return (x < 10 ? '0' : '') + x; };
+    return 'tiefgang-' + teil + '-' + d.getFullYear() + '-' +
+           z(d.getMonth()+1) + '-' + z(d.getDate()) + '.txt';
+  }
+
+  function tiefgang(bk){
+    if(!STAND || !STAND.bereiche.length){ echo(bD().TIEF.echoOhne); return; }
+    var bs = STAND.bereiche;
+    if(bk) bs = bs.filter(function(x){ return x.k === bk; });
+    if(!bs.length) return;
+    var txt = bT().bauen(bs, { wer:STAND.wer, stichtag:STAND.stichtag }, stufe());
+    var name = dateiname(bk || 'alle');
+    try{
+      var bl = new Blob([txt], { type:'text/plain;charset=utf-8' });
+      var a = D.createElement('a');
+      a.href = URL.createObjectURL(bl);
+      a.download = name;
+      D.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
+    }catch(e){ return; }
+    echo(bD().TIEF.echoFertig.split('{n}').join(name));
   }
 
   /* ── Bedienung ──────────────────────────────────────────────── */
@@ -445,6 +405,24 @@
       eh.innerHTML = e.join('');
     }
 
+    /* Der Abschnitt über den Tiefgang. Die Sätze stehen in den
+       Daten, hier wird nur eingesetzt. */
+    var tt = D.getElementById('btieftitel'), tv = D.getElementById('btiefvor'),
+        ta = D.getElementById('btiefalle');
+    if(tt) tt.textContent = bD().TIEF.seiteTitel;
+    if(tv) tv.innerHTML = '<p class="u">' + esc(bD().TIEF.seiteVor) + '</p>' +
+      '<p class="u">' + esc(bD().TIEF.seiteOffen) + '</p>' +
+      '<p class="u">' + esc(bD().TIEF.seiteStufe) + '</p>';
+    if(ta){ ta.textContent = bD().TIEF.knopfAlle;
+            ta.onclick = function(){ tiefgang(null); }; }
+
+    var liste = D.getElementById('bliste');
+    if(liste) liste.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('button[data-tief]') : null;
+      if(!b) return;
+      tiefgang(b.getAttribute('data-tief'));
+    });
+
     personen();
     alles();
 
@@ -469,6 +447,6 @@
     document.addEventListener('DOMContentLoaded', start);
   else start();
 
-  window.AC_BAPP = { alles:alles, dauer:dauer, datum:datum };
+  window.AC_BAPP = { alles:alles, dauer:dauer, datum:datum, tiefgang:tiefgang };
 
 })();
