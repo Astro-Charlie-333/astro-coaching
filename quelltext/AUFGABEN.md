@@ -153,7 +153,36 @@ Stufenleiste auftaucht, die nicht auf der Liste steht, und ebenso
 abbricht, wenn eine Seite auf der Liste eine Stufenleiste bekommen hat —
 dieselbe Bauart wie `HANDARBEIT` und `veraltet` darüber.
 
-### 17 · `toLowerCase` wird nur dort geprüft, wo jemand daran gedacht hat
+### 17 · „Heute" sagt die Zukunft voraus und nicht, was es taugt
+Befund der Prüferin vom 2026-10-23 (Die Suchende, dritter Befund — in
+`PRUEFERIN.md` der erste, weil Grenzen zuerst kommen). Unter „Was du tun
+kannst" stehen Sätze, die eine Zukunft behaupten und einen Preis darauf
+setzen: „Was du in diesem Fenster nicht fragst, musst du später teurer
+verhandeln." `PRODUKT.md` Abschnitt 5 schließt beides aus — Vorhersage
+und Dringlichkeit, die es nicht gibt. Dazu fehlt „Heute" der Abschnitt
+„Was das taugt — und was nicht", den `REGELN.md` Abschnitt 4 von jeder
+rechnenden Seite verlangt; dieselbe Fehlerklasse wie Aufgabe 10.
+**Fertig, wenn:** kein Handgriff auf „Heute" mehr eine Folge in der
+Zukunft behauptet, „Heute" den Ehrlichkeitsabschnitt trägt (wie häufig
+die Aussage rechnerisch ist, dass die Deutung nicht überprüft ist, dass
+das eigene Erleben Vorrang hat), beides aus den Datendateien kommt, und
+der Bau abbricht, wenn der Abschnitt fehlt oder ein Handgriff eine
+Zukunftsform mit Folge enthält.
+
+### 18 · Die Startseite ohne Profil sagt nicht, wofür sie da ist
+Befund der Prüferin vom 2026-10-23 (Die Suchende, zweiter Befund). Wer
+`index.html` ohne Profil öffnet, sieht nur den Kasten „Noch kein Profil
+angelegt" und sonst eine leere Seite — am Telefon 351 Pixel hoch. Die
+Seite verlangt als Erstes Geburtszeit und Geburtsort und hat bis dahin
+mit keinem Satz gesagt, was sie dafür zurückgibt. Der Satz, der das
+könnte, steht schon auf `bereiche.html`.
+**Fertig, wenn:** der Leerzustand von „Heute" vor der Aufforderung in
+zwei bis drei Sätzen sagt, was die Seite tut, was sie zurückgibt und
+warum sie Zeit und Ort braucht — auf Stufe 0, ohne Verkaufston —, der
+Text aus einer Datendatei kommt und der Bau abbricht, wenn der
+Leerzustand nur noch aus der Aufforderung besteht.
+
+### 19 · `toLowerCase` wird nur dort geprüft, wo jemand daran gedacht hat
 `REGELN.md` Abschnitt 4 verbietet `toLowerCase` auf deutschen Text
 plattformweit. Geprüft wird es aber in sechs `bau-*.py` einzeln, jedes nur
 für seinen eigenen Ordner — und zwei Dateien, über die kein solcher
@@ -167,7 +196,7 @@ Quelltext abbricht, sobald irgendwo `toLowerCase` steht, die
 Ordnerprüfungen dafür entfallen, und die beiden Fundstellen ohne sie
 auskommen.
 
-### 18 · In `bereich-app.js` darf noch ein Satz stehen
+### 20 · In `bereich-app.js` darf noch ein Satz stehen
 Für `monat-app.js` und `wahl-app.js` bricht der Bau ab, sobald dort ein
 Satz steht — daraus entstand seinerzeit „liegt auf deinen Ausdruck".
 `bereich-app.js` trägt weiter eigene Sätze: den Hinweis auf ein fehlendes
