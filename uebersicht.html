@@ -251,6 +251,28 @@ a{color:var(--nacht);}
 
 .ich-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;}
+
+/* ── Was an dir auffällt ───────────────────────────────────────
+   Vier Befunde, der seltenste oben. Keine Farbe, die Dringlichkeit
+   behauptet — die Reihenfolge ist die ganze Gewichtung. */
+.ich-auf{border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:26px;}
+.au{padding:20px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.au p{margin:0 0 9px;}
+.au p:last-child{margin-bottom:0;}
+.au-satz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
+  line-height:1.5;color:var(--tinte,#2A2520);}
+.au-zu{font-size:14.6px;color:var(--leise,#6B6259);line-height:1.6;}
+.au-h{font-size:13.5px;color:var(--messing,#9A7235);}
+.au-tun{font-size:15px;line-height:1.6;}
+.au-tun b{font-weight:600;}
+.ich-aufgrenze{background:var(--nacht-bg,#F2F3F7);border-radius:16px;
+  padding:20px 22px;margin-bottom:30px;}
+.ich-aufgrenze h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
+  font-weight:600;margin:0 0 10px;color:var(--nacht,#2E3A5C);}
+.ich-aufgrenze p{font-size:14px;line-height:1.65;color:var(--leise,#6B6259);
+  margin:0 0 9px;}
+.ich-aufgrenze p:last-child{margin-bottom:0;}
+@media(max-width:480px){ .au-satz{font-size:17.5px;} }
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -282,6 +304,12 @@ a{color:var(--nacht);}
     <div class="ich-heute" id="ichheute"></div>
   </div>
 </div>
+
+<!-- Was an dir auffaellt ───────────────────────────────── -->
+<h2 class="ich-h" id="ichaufh"></h2>
+<p class="ich-sub" id="ichaufvor"></p>
+<div class="ich-auf" id="ichauf"></div>
+<div class="ich-aufgrenze" id="ichaufgrenze"></div>
 
 <h2 class="ich-h">Deine zw&ouml;lf H&auml;user</h2>
 <p class="ich-sub">Jedes Haus ist ein Lebensbereich, und jeder Bereich geh&ouml;rt einem Zeichen und damit einem Herrscher. Tipp eine Zeile an &mdash; oder gleich das Feld im Rad.</p>
@@ -625,6 +653,80 @@ var I_PLANET={
 var I_KETTE='Was in diesem Haus passiert, läuft über {h} — und {hs} steht im {n}. Haus. '+
  'Praktisch heißt das: Dieses Thema wird dort entschieden.';
 
+/* ── Was eine Anlage antreibt ─────────────────────────────────
+   Nicht der Planetenname, sondern das, was er im Leben macht.
+   Diese Rollen sind der Baustein, aus dem die Sätze über diesen
+   einen Menschen entstehen — in ihnen kommt kein Fachwort vor,
+   deshalb tragen sie auch auf Wissensstufe 0. */
+var I_ROLLE={
+ Sonne:'worauf du hinauswillst',
+ Mond:'was dich beruhigt',
+ Merkur:'wie du denkst und redest',
+ Venus:'was du schön findest und wem du nachgibst',
+ Mars:'womit du anfängst und wofür du kämpfst',
+ Jupiter:'wo du dir viel zutraust',
+ Saturn:'wo du streng mit dir bist',
+ Uranus:'wo du aus der Reihe tanzt',
+ Neptun:'wo dir die Umrisse verschwimmen',
+ Pluto:'wo es bei dir um alles oder nichts geht',
+ Chiron:'wo Kleinigkeiten dich unverhältnismäßig treffen',
+ Lilith:'was bei dir nie einen Platz bekommen hat'};
+
+/* ── Was an dir auffällt ──────────────────────────────────────
+   Die Sätze für die Befunde aus ich-rechner.js. Jeder benennt
+   eine Stelle, die bei diesem Menschen anders liegt als bei den
+   meisten — und sagt dazu, wie häufig das überhaupt ist.
+
+   Was hier nicht steht: Schmeichelei und Dringlichkeit. Beides
+   wäre der billige Weg, eine Seite packend zu machen, und beides
+   schließt PRODUKT.md Abschnitt 5 aus. Spannend wird das hier
+   durch Genauigkeit über diesen einen Menschen — ein Satz, der
+   auf die Nachbarin nicht passt, ist von selbst interessant. */
+var I_AUF={
+ titel:'Was an dir auffällt',
+ vor:'Vier Stellen, an denen dein Bild von den meisten abweicht. Zu jeder steht, wie häufig sie überhaupt vorkommt — abgezählt an {n} erfundenen Geburtsbildern, nicht geschätzt.',
+ haeufigForm:'Das haben etwa {p} von 100 Menschen.',
+ haeufigSelten:'Das haben weniger als 1 von 100 Menschen.',
+ haeufigOhne:'Wie häufig das ist, lässt sich nicht sinnvoll abzählen: es liegt bei jedem Menschen woanders.',
+
+ /* Der Schwerpunkt — das vollste Feld */
+ spViel:'Bei dir sammelt sich ungewöhnlich viel an einer einzigen Stelle: {bereich}. {zahl} von zehn Anlagen liegen dort. Dieser Bereich bekommt bei dir Gewicht, ob du ihn willst oder nicht, und er zieht Kraft aus den anderen ab.',
+ spZwei:'Am dichtesten ist es bei dir an einer Stelle: {bereich}. Dort liegen {zahl} deiner zehn Anlagen — genug, dass dieser Bereich etwas mehr Gewicht hat als der Rest, aber kein Übergewicht.',
+ spEins:'Bei dir verteilt sich alles: In keinem Lebensbereich liegt mehr als eine Anlage. Das heißt, kein Bereich zieht dich stärker als die anderen — du verteilst deine Kraft, statt sie zu bündeln, und musst selbst entscheiden, wohin sie geht.',
+ spTun:'Nicht gegen den Schwerpunkt arbeiten. Was dort liegt, passiert ohnehin — die Frage ist nur, ob absichtlich.',
+ spTunEins:'Dir die Reihenfolge selbst geben. Wo nichts von allein zieht, entscheidet, was du zuerst anfasst.',
+ spLeer:'{zahl} von zwölf Bereichen sind bei dir unbesetzt. Das ist normal — es gibt zehn Anlagen und zwölf Bereiche. Unbesetzt heißt nicht, dass der Bereich fehlt, sondern dass du ihn selbst füllst.',
+
+ /* Die Kette — wo sich der erste Eindruck entscheidet */
+ kette:'Wie du ankommst, bevor du etwas sagst, entscheidet sich bei dir nicht bei dir selbst, sondern in einem anderen Bereich: {nach}. Was dort los ist, sieht man dir an — auch wenn das Gespräch gar nicht davon handelt.',
+ ketteEigen:'Wie du ankommst, entscheidet sich bei dir an derselben Stelle, an der es entsteht. Das ist selten, und es heißt: Was man an dir sieht, ist nicht von woanders geliehen. Der erste Eindruck stimmt bei dir öfter als bei anderen.',
+ ketteTun:'Bei einem ersten Eindruck, der nicht ankommt, nicht am Auftreten schrauben, sondern dort nachsehen, wo es herkommt.',
+ ketteTunEigen:'Dem ersten Eindruck trauen, auch dem, den du bei anderen hast.',
+
+ /* Der engste Winkel — zwei Anlagen, die sich begegnen */
+ winkelHart:'Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}. Das ist kein Fehler, sondern eine Reibung, die nicht aufhört — und die Stelle, an der du mehr geübt hast als Menschen ohne sie.',
+ winkelWeich:'Zwei Dinge in dir arbeiten zusammen, ohne dass du etwas dafür tust: {a} und {b}. Das geht so glatt, dass du es leicht übersiehst und selten dafür Anerkennung bekommst.',
+ winkelEng:'Bei dieser Stelle steht der Winkel fast auf den Grad genau. Je genauer er ist, desto deutlicher zeigt er sich in der Rechnung — was das in deinem Leben heißt, musst du selbst prüfen.',
+ winkelHartTun:'Nicht entscheiden, welche Seite recht hat. Beiden abwechselnd den Vortritt lassen.',
+ winkelWeichTun:'Das, was ohne Anstrengung geht, bewusst für etwas einsetzen, das Anstrengung kostet.',
+
+ /* Rückläufige Anlagen bei der Geburt */
+ rueckViel:'{zahl} deiner Anlagen liefen bei deiner Geburt rückwärts. Praktisch heißt das: Du arbeitest Dinge eher nach innen durch, bevor sie nach außen gehen — und wirkst dabei langsamer, als du bist.',
+ rueckWenig:'{zahl} deiner Anlagen liefen bei deiner Geburt rückwärts. Das ist der Normalfall; auffällig wäre erst keine oder mehr als vier.',
+ rueckKeine:'Keine einzige deiner Anlagen lief bei deiner Geburt rückwärts. Das ist ungewöhnlich und heißt: Bei dir geht fast alles direkt nach außen. Der Umweg nach innen ist bei dir keine eingebaute Gewohnheit, sondern etwas, das du dir nehmen musst.',
+ rueckTunViel:'Dir die Zeit nach innen zugestehen, statt sie für Trödeln zu halten.',
+ rueckTunKeine:'Vor der Antwort absichtlich eine Nacht verstreichen lassen. Was bei anderen von allein passiert, musst du einplanen.',
+
+ /* Der ehrliche Teil, der zu jeder rechnenden Ausgabe gehört */
+ grenzeTitel:'Was das taugt — und was nicht',
+ grenzen:[
+  'Die Häufigkeiten sind gerechnet, die Bedeutung nicht. Abgezählt ist, wie oft eine Stellung vorkommt — dass daraus ein bestimmter Zug folgt, ist Deutung und nicht überprüft.',
+  'Selten heißt nicht wichtig. Eine seltene Stellung fällt in der Rechnung auf; ob sie in deinem Leben auffällt, weißt nur du.',
+  'Hier steht nichts über deine Zukunft und nichts über deinen Wert. Es steht da, wo dein Bild von den meisten abweicht, und was man damit anfangen kann.',
+  'Erkennst du dich nicht wieder, hat dein Erleben Vorrang. Die Rechnung kennt die Uhr deiner Geburt, nicht dein Leben.'
+ ],
+ tunVor:'Ein Handgriff dazu:'};
+
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
    nicht wieder veralten. */
@@ -688,6 +790,196 @@ var I_INDEX=[
   {s:'wissen.html', t:'Alle Seiten', w:'Das vollständige Regal — 119 Seiten.'}]}
 ];
 
+var I_HAEUFIG={"n": 10000, "anteil": {"kette_eigen": 0.0867, "rueck0": 0.1058, "rueck1": 0.2141, "rueck2": 0.2387, "rueck3": 0.2163, "rueck4": 0.1513, "rueck5": 0.0606, "rueck6": 0.0132, "sp1": 0.0007, "sp2": 0.3115, "sp3": 0.4845, "sp4": 0.1627, "sp5": 0.0406, "winkel_hart_eng": 0.1237, "winkel_hart_mittel": 0.1774, "winkel_hart_weit": 0.0073, "winkel_weich_eng": 0.2877, "winkel_weich_mittel": 0.384, "winkel_weich_weit": 0.0199}};
+/* ───────────────────────────────────────────────────────────────
+   ich-rechner.js — was an einem Geburtsbild überhaupt auffällt.
+
+   Warum es diese Datei gibt: Die Seite „Ich" hat bis heute zwölf
+   Haustexte und zwölf Planetensätze zusammengeklebt, die beide für
+   jeden Menschen gleich wahr sind. Gemessen am 23.10.: 86 von 100
+   Sätzen waren bei zwei völlig verschiedenen Geburtsbildern
+   wortgleich, und was sich unterschied, waren Aufzählungen von
+   Fachbegriffen, keine Sätze. Eine Seite, die über jeden dasselbe
+   sagt, holt niemanden ab.
+
+   Der Rechner sucht deshalb, was an diesem einen Bild besonders
+   ist. Er gibt Befunde ohne jeden Satz — die Worte stehen in
+   ich-daten.js, die Anzeige in ich-app.js.
+
+   Jeder Befund nennt einen Schlüssel für die Häufigkeitstabelle.
+   Die wird beim Bauen aus Tausenden erfundener Geburtsbilder
+   abgetastet, nicht geschätzt: „Das haben etwa 7 von 100 Menschen"
+   ist eine gerechnete Zahl oder sie steht nicht da.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+
+  var PUNKTE = ['Sonne','Mond','Merkur','Venus','Mars',
+                'Jupiter','Saturn','Uranus','Neptun','Pluto'];
+
+  function nrm2(x){ x = x % 360; return x < 0 ? x + 360 : x; }
+  function hausVon(P, l){
+    return ((Math.floor(nrm2(l)/30) - Math.floor(nrm2(P.ASC)/30)) % 12 + 12) % 12 + 1;
+  }
+  function zeichenDesHauses(P, h){
+    return (Math.floor(nrm2(P.ASC)/30) + h - 1) % 12;
+  }
+
+  /* ── Wie die Anlagen auf die Felder fallen ──────────────────
+     Gibt je Feld die Punkte, die darin stehen. */
+  function belegung(P){
+    var b = {}, i;
+    for(i=0;i<PUNKTE.length;i++){
+      var l = P[PUNKTE[i]];
+      if(l === undefined || l === null) continue;
+      var h = hausVon(P, l);
+      (b[h] || (b[h] = [])).push(PUNKTE[i]);
+    }
+    return b;
+  }
+
+  /* ── Der Schwerpunkt ────────────────────────────────────────
+     Das vollste Feld. Zwei Punkte in einem Feld hat fast jeder,
+     vier hat kaum jemand — deshalb entscheidet die Zahl, wie
+     stark der Befund wiegt, und die Häufigkeitstabelle sagt
+     hinterher, wie selten er wirklich ist. */
+  function schwerpunkt(P){
+    var b = belegung(P), bestH = 0, bestN = 0, h;
+    for(h in b) if(b.hasOwnProperty(h)){
+      if(b[h].length > bestN || (b[h].length === bestN && +h < bestH)){
+        bestN = b[h].length; bestH = +h;
+      }
+    }
+    if(!bestH) return null;
+    var leere = 0;
+    for(var n=1;n<=12;n++) if(!b[n]) leere++;
+    return { art:'schwerpunkt', haus:bestH, zahl:bestN,
+             punkte:b[bestH].slice(), leereFelder:leere,
+             schluessel:'sp' + Math.min(bestN, 5) };
+  }
+
+  /* ── Die Kette ──────────────────────────────────────────────
+     Das erste Feld gehört einem Zeichen, das Zeichen einem
+     Herrscher, und der steht irgendwo. Praktisch heißt das:
+     Wie dieser Mensch ankommt, entscheidet sich in einem anderen
+     Lebensbereich. Das ist bei jedem anders und braucht keine
+     Häufigkeit — außer im seltenen Fall, dass der Herrscher im
+     eigenen Feld steht. */
+  function kette(P, HERR, vonHaus){
+    if(!HERR) return null;
+    var h = vonHaus || 1;
+    var z = zeichenDesHauses(P, h), herr = HERR[z];
+    if(!herr || P[herr] === undefined || P[herr] === null) return null;
+    var nach = hausVon(P, P[herr]);
+    return { art:'kette', vonHaus:h, herr:herr, nachHaus:nach,
+             eigen:(nach === h),
+             schluessel:(nach === h) ? 'kette_eigen' : null };
+  }
+
+  /* ── Die Winkel des Bildes ──────────────────────────────────
+     Stand bis heute in ich-app.js, also in der Anzeige. Hier ist
+     sie richtig: Die Abtastung beim Bauen braucht dieselbe
+     Rechnung, und zwei Fassungen davon wären genau die Doppelung,
+     die auseinanderläuft. */
+  var WINKEL_ARTEN = [[0,'Konjunktion','weich'],[180,'Opposition','hart'],
+                      [90,'Quadrat','hart'],[120,'Trigon','weich'],[60,'Sextil','weich']];
+
+  function aspekte(P){
+    var pts = PUNKTE.concat(['ASC','MC']), raus = [], i, j, w;
+    for(i=0;i<pts.length;i++) for(j=i+1;j<pts.length;j++){
+      if(P[pts[i]] === undefined || P[pts[j]] === undefined) continue;
+      var d = Math.abs(nrm2(P[pts[i]] - P[pts[j]])); if(d > 180) d = 360 - d;
+      for(w=0;w<WINKEL_ARTEN.length;w++){
+        var W = WINKEL_ARTEN[w], o = Math.abs(d - W[0]), max = (W[0] === 60 ? 4 : 6);
+        if(o <= max){ raus.push({ a:pts[i], b:pts[j], typ:W[1], art:W[2], o:o }); break; }
+      }
+    }
+    raus.sort(function(x,y){ return x.o - y.o; });
+    return raus;
+  }
+
+  /* ── Der engste Winkel ──────────────────────────────────────
+     Zwei Anlagen, die sich am stärksten ins Handwerk pfuschen
+     oder am stärksten zusammenarbeiten. Je genauer der Winkel,
+     desto deutlicher merkt man ihn — und desto seltener ist er.
+     A ist die Liste der Aspekte, wie ich-app.js sie rechnet:
+     {a, b, typ, art, o}. */
+  var ROLLEN_PUNKTE = { Sonne:1, Mond:1, Merkur:1, Venus:1, Mars:1,
+                        Jupiter:1, Saturn:1, Uranus:1, Neptun:1, Pluto:1 };
+
+  function engsterWinkel(A){
+    if(!A || !A.length) return null;
+    /* Nur Winkel zwischen zwei Anlagen — ein Winkel auf einen
+       Hauspunkt beschreibt keine zwei Antriebe, die sich
+       begegnen, und ergäbe keinen Satz über zwei Seiten. */
+    var W = null;
+    for(var i=0;i<A.length;i++){
+      if(ROLLEN_PUNKTE[A[i].a] && ROLLEN_PUNKTE[A[i].b]){ W = A[i]; break; }
+    }
+    if(!W) return null;
+    /* Die Schwellen sind an der Abtastung geeicht, nicht geraten:
+       der engste von 66 Winkeln liegt fast immer unter einem Grad,
+       also wäre „unter einem Grad" keine Auffälligkeit, sondern der
+       Normalfall. Gemessen am 23.10.: 60 von 100 Menschen hätten
+       ihn. Erst ein Viertelgrad ist wirklich selten. */
+    var stufe = (W.o < 0.25) ? 'eng' : (W.o < 1.5) ? 'mittel' : 'weit';
+    return { art:'winkel', a:W.a, b:W.b, typ:W.typ, hart:(W.art === 'hart'),
+             orb:W.o, stufe:stufe,
+             schluessel:'winkel_' + (W.art === 'hart' ? 'hart' : 'weich') + '_' + stufe };
+  }
+
+  /* ── Rückläufige Anlagen bei Geburt ─────────────────────────
+     Wer mit mehreren rückläufigen Planeten geboren ist, arbeitet
+     messbar oft nach innen, bevor es nach außen geht. Wie selten
+     das ist, sagt die Tabelle — behauptet wird hier nichts. */
+  function rueckGeburt(P, jd){
+    if(typeof rueck !== 'function') return null;
+    var welche = [];
+    for(var i=0;i<PUNKTE.length;i++){
+      var k = PUNKTE[i];
+      if(P[k] === undefined || P[k] === null) continue;
+      if(k === 'Sonne' || k === 'Mond') continue;
+      try{ if(rueck(k, jd)) welche.push(k); }catch(e){}
+    }
+    return { art:'rueck', zahl:welche.length, welche:welche,
+             schluessel:'rueck' + Math.min(welche.length, 6) };
+  }
+
+  /* ── Alles zusammen, das Seltenste zuerst ───────────────────
+     H ist die Häufigkeitstabelle (Anteil zwischen 0 und 1 je
+     Schlüssel). Ohne sie bleibt die Reihenfolge wie gebaut —
+     dann fehlt nur die Einordnung, nicht der Befund.
+
+     Ein Befund ohne Schlüssel gilt als mittel häufig: er ist
+     weder selten noch alltäglich, sondern bei jedem anders. */
+  function merkmale(P, jd, HERR, A, H){
+    var out = [], i;
+    var kandidaten = [ schwerpunkt(P), kette(P, HERR, 1),
+                       engsterWinkel(A), rueckGeburt(P, jd) ];
+    for(i=0;i<kandidaten.length;i++) if(kandidaten[i]) out.push(kandidaten[i]);
+    for(i=0;i<out.length;i++){
+      var s = out[i].schluessel;
+      out[i].anteil = (s && H && typeof H[s] === 'number') ? H[s] : null;
+      /* Ohne Schlüssel in die Mitte, nicht nach vorn: was nicht
+         gemessen ist, darf sich nicht als selten ausgeben. */
+      out[i]._rang = (out[i].anteil === null) ? 0.5 : out[i].anteil;
+    }
+    out.sort(function(x,y){ return x._rang - y._rang; });
+    return out;
+  }
+
+  window.AC_ICH = {
+    PUNKTE: PUNKTE,
+    aspekte: aspekte,
+    belegung: belegung,
+    schwerpunkt: schwerpunkt,
+    kette: kette,
+    engsterWinkel: engsterWinkel,
+    rueckGeburt: rueckGeburt,
+    merkmale: merkmale
+  };
+
+})();
+
 /* Astro-Charlie · Ich — Rechnung und Darstellung */
 function nrm(x){x=x%360;return x<0?x+360:x;}
 function el(i){ return document.getElementById(i); }
@@ -731,21 +1023,9 @@ function rueck(k,jd){
   return nrm(geo(k,b)-geo(k,a))>180;
 }
 
-var WINKEL=[[0,'Konjunktion','weich'],[180,'Opposition','hart'],[90,'Quadrat','hart'],
- [120,'Trigon','weich'],[60,'Sextil','weich']];
-function aspekte(P){
-  var pts=PNAMEN.concat(['ASC','MC']), raus=[];
-  for(var i=0;i<pts.length;i++) for(var j=i+1;j<pts.length;j++){
-    if(P[pts[i]]===undefined||P[pts[j]]===undefined) continue;
-    var d=Math.abs(nrm(P[pts[i]]-P[pts[j]])); if(d>180) d=360-d;
-    for(var w=0;w<WINKEL.length;w++){
-      var W=WINKEL[w], o=Math.abs(d-W[0]), max=(W[0]===60?4:6);
-      if(o<=max){ raus.push({a:pts[i],b:pts[j],typ:W[1],art:W[2],o:o}); break; }
-    }
-  }
-  raus.sort(function(x,y){ return x.o-y.o; });
-  return raus;
-}
+/* Die Winkelrechnung steht in ich-rechner.js — eine Fassung,
+   die auch die Häufigkeitsabtastung beim Bauen benutzt. */
+function aspekte(P){ return window.AC_ICH.aspekte(P); }
 
 /* ── Zustand ───────────────────────────────────────────────── */
 var P=null, Q=null, rad=null, offen=0;
@@ -798,6 +1078,91 @@ function heuteBauen(){
     a.addEventListener('click',function(ev){
       ev.preventDefault(); hausOeffnen(+a.getAttribute('data-h'), true); });
   });
+}
+
+/* ── Was an dir auffällt ───────────────────────────────────────
+   Der Rechner sagt, welche Stellen bei diesem Menschen anders
+   liegen; hier werden die Sätze dazu eingesetzt und die gerechnete
+   Häufigkeit danebengestellt. Kein Satz entsteht hier — alle
+   stehen in ich-daten.js. */
+function fuellen(form, werte){
+  var s=String(form||'');
+  for(var k in werte) if(werte.hasOwnProperty(k))
+    s=s.split('{'+k+'}').join(String(werte[k]));
+  return s;
+}
+function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
+
+function haeufigZeile(m){
+  if(m.anteil===null||m.anteil===undefined) return I_AUF.haeufigOhne;
+  var p=Math.round(m.anteil*100);
+  if(p<1) return I_AUF.haeufigSelten;
+  return fuellen(I_AUF.haeufigForm,{p:p});
+}
+
+/* Satz, Handgriff und Mechanik zu einem Befund. Die Mechanik
+   wartet in ac-tech und erscheint erst ab Wissensstufe 2 —
+   auf Stufe 0 kommt in diesem Abschnitt kein Fachwort vor. */
+function merkmalText(m){
+  if(m.art==='schwerpunkt'){
+    var form=(m.zahl>=3)?I_AUF.spViel:(m.zahl===2?I_AUF.spZwei:I_AUF.spEins);
+    return { satz:fuellen(form,{bereich:bereichName(m.haus),zahl:m.zahl}),
+             zusatz:fuellen(I_AUF.spLeer,{zahl:m.leereFelder}),
+             tun:(m.zahl===1?I_AUF.spTunEins:I_AUF.spTun),
+             tech:m.haus+'. Haus, natal darin: '+m.punkte.join(', ') };
+  }
+  if(m.art==='kette'){
+    return { satz:(m.eigen?I_AUF.ketteEigen
+                          :fuellen(I_AUF.kette,{nach:bereichName(m.nachHaus)})),
+             zusatz:'',
+             tun:(m.eigen?I_AUF.ketteTunEigen:I_AUF.ketteTun),
+             tech:'Herrscher des '+m.vonHaus+'. Hauses ist '+m.herr+
+                  ', steht im '+m.nachHaus+'. Haus' };
+  }
+  if(m.art==='winkel'){
+    return { satz:fuellen(m.hart?I_AUF.winkelHart:I_AUF.winkelWeich,
+               {a:(I_ROLLE[m.a]||''), b:(I_ROLLE[m.b]||'')}),
+             zusatz:(m.stufe==='eng'?I_AUF.winkelEng:''),
+             tun:(m.hart?I_AUF.winkelHartTun:I_AUF.winkelWeichTun),
+             tech:m.a+' '+m.typ+' '+m.b+', Orbis '+kz(m.orb,2)+'°' };
+  }
+  if(m.art==='rueck'){
+    var f=(m.zahl===0)?I_AUF.rueckKeine:(m.zahl>=4?I_AUF.rueckViel:I_AUF.rueckWenig);
+    return { satz:fuellen(f,{zahl:m.zahl}), zusatz:'',
+             tun:(m.zahl===0?I_AUF.rueckTunKeine
+                            :(m.zahl>=4?I_AUF.rueckTunViel:'')),
+             tech:(m.welche.length?'Rückläufig bei Geburt: '+m.welche.join(', ')
+                                  :'Kein Punkt rückläufig bei Geburt') };
+  }
+  return null;
+}
+
+function auffaelligBauen(){
+  var H=window.I_HAEUFIG||null;
+  var M=[];
+  try{ M=AC_ICH.merkmale(P,P._jd,I_HERR,aspekte(P),H&&H.anteil)||[]; }catch(e){ M=[]; }
+  el('ichaufh').textContent=I_AUF.titel;
+  /* Tausender im Deutschen mit Punkt: 10.000, nicht 10000. */
+  var zahlN=String((H&&H.n)||0).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  el('ichaufvor').textContent=fuellen(I_AUF.vor,{n:zahlN});
+  var h=[];
+  for(var i=0;i<M.length;i++){
+    var T=merkmalText(M[i]);
+    if(!T) continue;
+    h.push('<div class="au">');
+    h.push('<p class="au-satz">'+esc(T.satz)+'</p>');
+    if(T.zusatz) h.push('<p class="au-zu">'+esc(T.zusatz)+'</p>');
+    h.push('<p class="au-h">'+esc(haeufigZeile(M[i]))+'</p>');
+    if(T.tun) h.push('<p class="au-tun"><b>'+esc(I_AUF.tunVor)+'</b> '+esc(T.tun)+'</p>');
+    h.push('<p class="ac-tech" data-ab="2">'+esc(T.tech)+'</p>');
+    h.push('</div>');
+  }
+  el('ichauf').innerHTML=h.join('');
+  /* Der ehrliche Teil gehört zu jeder rechnenden Ausgabe. */
+  var g=['<h3>'+esc(I_AUF.grenzeTitel)+'</h3>'];
+  for(var j=0;j<I_AUF.grenzen.length;j++)
+    g.push('<p>'+esc(I_AUF.grenzen[j])+'</p>');
+  el('ichaufgrenze').innerHTML=g.join('');
 }
 
 /* ── Die zwölf Häuser ──────────────────────────────────────── */
@@ -923,12 +1288,17 @@ function indexBauen(){
   }
   P=chartVon(p); Q=jetztChart();
   kopfBauen(p);
+  auffaelligBauen();
   haeuserBauen();
   heuteBauen();
   aspekteBauen();
   indexBauen();
   rad=window.AC_KERNRAD({el:el('ichrad'), chart:P, transit:Q, gross:true,
     aufHaus:function(n){ hausOeffnen(n, true); }});
+  /* Die Mechanik im neuen Abschnitt wartet in ac-tech. Ohne diesen
+     Aufruf wäre sie von Anfang an sichtbar — und damit stünde auf
+     Stufe 0 Fachsprache, was REGELN.md Abschnitt 2 ausschließt. */
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
 })();
 
 </script>

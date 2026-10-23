@@ -54,6 +54,80 @@ var I_PLANET={
 var I_KETTE='Was in diesem Haus passiert, läuft über {h} — und {hs} steht im {n}. Haus. '+
  'Praktisch heißt das: Dieses Thema wird dort entschieden.';
 
+/* ── Was eine Anlage antreibt ─────────────────────────────────
+   Nicht der Planetenname, sondern das, was er im Leben macht.
+   Diese Rollen sind der Baustein, aus dem die Sätze über diesen
+   einen Menschen entstehen — in ihnen kommt kein Fachwort vor,
+   deshalb tragen sie auch auf Wissensstufe 0. */
+var I_ROLLE={
+ Sonne:'worauf du hinauswillst',
+ Mond:'was dich beruhigt',
+ Merkur:'wie du denkst und redest',
+ Venus:'was du schön findest und wem du nachgibst',
+ Mars:'womit du anfängst und wofür du kämpfst',
+ Jupiter:'wo du dir viel zutraust',
+ Saturn:'wo du streng mit dir bist',
+ Uranus:'wo du aus der Reihe tanzt',
+ Neptun:'wo dir die Umrisse verschwimmen',
+ Pluto:'wo es bei dir um alles oder nichts geht',
+ Chiron:'wo Kleinigkeiten dich unverhältnismäßig treffen',
+ Lilith:'was bei dir nie einen Platz bekommen hat'};
+
+/* ── Was an dir auffällt ──────────────────────────────────────
+   Die Sätze für die Befunde aus ich-rechner.js. Jeder benennt
+   eine Stelle, die bei diesem Menschen anders liegt als bei den
+   meisten — und sagt dazu, wie häufig das überhaupt ist.
+
+   Was hier nicht steht: Schmeichelei und Dringlichkeit. Beides
+   wäre der billige Weg, eine Seite packend zu machen, und beides
+   schließt PRODUKT.md Abschnitt 5 aus. Spannend wird das hier
+   durch Genauigkeit über diesen einen Menschen — ein Satz, der
+   auf die Nachbarin nicht passt, ist von selbst interessant. */
+var I_AUF={
+ titel:'Was an dir auffällt',
+ vor:'Vier Stellen, an denen dein Bild von den meisten abweicht. Zu jeder steht, wie häufig sie überhaupt vorkommt — abgezählt an {n} erfundenen Geburtsbildern, nicht geschätzt.',
+ haeufigForm:'Das haben etwa {p} von 100 Menschen.',
+ haeufigSelten:'Das haben weniger als 1 von 100 Menschen.',
+ haeufigOhne:'Wie häufig das ist, lässt sich nicht sinnvoll abzählen: es liegt bei jedem Menschen woanders.',
+
+ /* Der Schwerpunkt — das vollste Feld */
+ spViel:'Bei dir sammelt sich ungewöhnlich viel an einer einzigen Stelle: {bereich}. {zahl} von zehn Anlagen liegen dort. Dieser Bereich bekommt bei dir Gewicht, ob du ihn willst oder nicht, und er zieht Kraft aus den anderen ab.',
+ spZwei:'Am dichtesten ist es bei dir an einer Stelle: {bereich}. Dort liegen {zahl} deiner zehn Anlagen — genug, dass dieser Bereich etwas mehr Gewicht hat als der Rest, aber kein Übergewicht.',
+ spEins:'Bei dir verteilt sich alles: In keinem Lebensbereich liegt mehr als eine Anlage. Das heißt, kein Bereich zieht dich stärker als die anderen — du verteilst deine Kraft, statt sie zu bündeln, und musst selbst entscheiden, wohin sie geht.',
+ spTun:'Nicht gegen den Schwerpunkt arbeiten. Was dort liegt, passiert ohnehin — die Frage ist nur, ob absichtlich.',
+ spTunEins:'Dir die Reihenfolge selbst geben. Wo nichts von allein zieht, entscheidet, was du zuerst anfasst.',
+ spLeer:'{zahl} von zwölf Bereichen sind bei dir unbesetzt. Das ist normal — es gibt zehn Anlagen und zwölf Bereiche. Unbesetzt heißt nicht, dass der Bereich fehlt, sondern dass du ihn selbst füllst.',
+
+ /* Die Kette — wo sich der erste Eindruck entscheidet */
+ kette:'Wie du ankommst, bevor du etwas sagst, entscheidet sich bei dir nicht bei dir selbst, sondern in einem anderen Bereich: {nach}. Was dort los ist, sieht man dir an — auch wenn das Gespräch gar nicht davon handelt.',
+ ketteEigen:'Wie du ankommst, entscheidet sich bei dir an derselben Stelle, an der es entsteht. Das ist selten, und es heißt: Was man an dir sieht, ist nicht von woanders geliehen. Der erste Eindruck stimmt bei dir öfter als bei anderen.',
+ ketteTun:'Bei einem ersten Eindruck, der nicht ankommt, nicht am Auftreten schrauben, sondern dort nachsehen, wo es herkommt.',
+ ketteTunEigen:'Dem ersten Eindruck trauen, auch dem, den du bei anderen hast.',
+
+ /* Der engste Winkel — zwei Anlagen, die sich begegnen */
+ winkelHart:'Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}. Das ist kein Fehler, sondern eine Reibung, die nicht aufhört — und die Stelle, an der du mehr geübt hast als Menschen ohne sie.',
+ winkelWeich:'Zwei Dinge in dir arbeiten zusammen, ohne dass du etwas dafür tust: {a} und {b}. Das geht so glatt, dass du es leicht übersiehst und selten dafür Anerkennung bekommst.',
+ winkelEng:'Bei dieser Stelle steht der Winkel fast auf den Grad genau. Je genauer er ist, desto deutlicher zeigt er sich in der Rechnung — was das in deinem Leben heißt, musst du selbst prüfen.',
+ winkelHartTun:'Nicht entscheiden, welche Seite recht hat. Beiden abwechselnd den Vortritt lassen.',
+ winkelWeichTun:'Das, was ohne Anstrengung geht, bewusst für etwas einsetzen, das Anstrengung kostet.',
+
+ /* Rückläufige Anlagen bei der Geburt */
+ rueckViel:'{zahl} deiner Anlagen liefen bei deiner Geburt rückwärts. Praktisch heißt das: Du arbeitest Dinge eher nach innen durch, bevor sie nach außen gehen — und wirkst dabei langsamer, als du bist.',
+ rueckWenig:'{zahl} deiner Anlagen liefen bei deiner Geburt rückwärts. Das ist der Normalfall; auffällig wäre erst keine oder mehr als vier.',
+ rueckKeine:'Keine einzige deiner Anlagen lief bei deiner Geburt rückwärts. Das ist ungewöhnlich und heißt: Bei dir geht fast alles direkt nach außen. Der Umweg nach innen ist bei dir keine eingebaute Gewohnheit, sondern etwas, das du dir nehmen musst.',
+ rueckTunViel:'Dir die Zeit nach innen zugestehen, statt sie für Trödeln zu halten.',
+ rueckTunKeine:'Vor der Antwort absichtlich eine Nacht verstreichen lassen. Was bei anderen von allein passiert, musst du einplanen.',
+
+ /* Der ehrliche Teil, der zu jeder rechnenden Ausgabe gehört */
+ grenzeTitel:'Was das taugt — und was nicht',
+ grenzen:[
+  'Die Häufigkeiten sind gerechnet, die Bedeutung nicht. Abgezählt ist, wie oft eine Stellung vorkommt — dass daraus ein bestimmter Zug folgt, ist Deutung und nicht überprüft.',
+  'Selten heißt nicht wichtig. Eine seltene Stellung fällt in der Rechnung auf; ob sie in deinem Leben auffällt, weißt nur du.',
+  'Hier steht nichts über deine Zukunft und nichts über deinen Wert. Es steht da, wo dein Bild von den meisten abweicht, und was man damit anfangen kann.',
+  'Erkennst du dich nicht wieder, hat dein Erleben Vorrang. Die Rechnung kennt die Uhr deiner Geburt, nicht dein Leben.'
+ ],
+ tunVor:'Ein Handgriff dazu:'};
+
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
    nicht wieder veralten. */
