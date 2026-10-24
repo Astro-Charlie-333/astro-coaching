@@ -273,10 +273,39 @@ if '--schnell' not in sys.argv:
         s_.bind(('127.0.0.1', 0))
         port = s_.getsockname()[1]
 
+    # Der Schalter, mit dem die Probe das Netz wirklich abstellt.
+    # Nicht über den Browser: context.setOffline() wirkt je nach
+    # Playwright-Fassung nur auf die Seite und nicht auf den
+    # Zwischenspeicher — mit 1.47.2 lief die nie besuchte Seite trotz
+    # „offline" ganz normal vom Server. Ein Server, der die Verbindung
+    # zumacht, ist für beide dasselbe, in jeder Fassung.
+    am_netz = threading.Event()
+    am_netz.set()
+
     class Still(http.server.SimpleHTTPRequestHandler):
         # Ohne eigenen Eintrag liefert Python das Manifest als Text aus.
         extensions_map = dict(http.server.SimpleHTTPRequestHandler.extensions_map,
                               **{'.webmanifest': 'application/manifest+json'})
+
+        def do_GET(self):
+            if self.path.startswith('/__netz'):
+                (am_netz.clear if 'aus=1' in self.path else am_netz.set)()
+                self.send_response(200)
+                self.send_header('Content-Length', '2')
+                self.end_headers()
+                self.wfile.write(b'ok')
+                return
+            if not am_netz.is_set():
+                # Zumachen, ohne ein Byte zu schreiben: der Browser sieht
+                # einen Verbindungsabbruch, und fetch() scheitert — genau
+                # das, was ohne Netz passiert.
+                self.close_connection = True
+                try:
+                    self.connection.close()
+                except OSError:
+                    pass
+                return
+            http.server.SimpleHTTPRequestHandler.do_GET(self)
 
         def end_headers(self):
             # Der Browser hat einen eigenen Zwischenspeicher. Der würde die
@@ -300,6 +329,9 @@ if '--schnell' not in sys.argv:
     probe.write_text(r"""
 const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright nicht gefunden. AC_PLAYWRIGHT setzen oder playwright installieren.');})();
 const BASIS='http://127.0.0.1:PORT';
+/* Der Schalter wird aus Node bedient, nicht aus der Seite: so geht die
+   Anfrage am Browser und am Zwischenspeicher vorbei. */
+const netz=async an=>{await fetch(BASIS+'/__netz?aus='+(an?0:1));};
 (async()=>{
 const b=await chromium.launch(); const f=[];
 try{
@@ -334,7 +366,8 @@ if(uebernommen){
   const titelOhne='OHNETITEL';
   if(titelBer===titelOhne) f.push('schon mit Netz kommt die Ohne-Netz-Seite');
   await p.waitForTimeout(1200);          /* die Kopien in Ruhe ablegen */
-  await ctx.setOffline(true);
+  await netz(false);                     /* der Server macht zu */
+  await ctx.setOffline(true);            /* und der Browser weiß es auch */
 
   /* 1 · Die besuchte Seite steht auch ohne Netz, mit Inhalt. */
   await p.reload({waitUntil:'load'});
@@ -359,6 +392,7 @@ if(uebernommen){
   /* 4 · Und mit Netz ist dieselbe Seite wieder die frische, nicht die Kopie.
          Sonst gäbe die Seite Veraltetes als Heutiges aus. */
   await ctx.setOffline(false);
+  await netz(true);
   await q.goto(BASIS+'/zeiten.html',{waitUntil:'load'});
   const frisch=await q.evaluate(()=>({titel:document.title,text:document.body.innerText}));
   if(/MARKE/.test(frisch.text)||frisch.titel===titelOhne)
@@ -379,7 +413,10 @@ console.log('ok');
     if r.returncode != 0:
         print('  ✗ Rauchprobe fehlgeschlagen')
         for zeile in (r.stdout + r.stderr).strip().splitlines()[:14]:
-            print('      ' + zeile.strip())
+            if zeile.strip() and zeile.strip() != 'FEHLER':
+                # Mit Marke, sonst reicht pruefe-alles.py die Zeile nicht
+                # weiter und der Pull Request bekommt den Grund nie zu sehen.
+                print('      ✗ ' + zeile.strip())
         sys.exit(1)
 
 print('  App-Ansicht: Manifest, 4 Symbole, Zwischenspeicher, Ohne-Netz-Seite')
