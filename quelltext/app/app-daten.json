@@ -1,0 +1,21 @@
+{
+  "_": "Alle Texte und Farben der App-Ansicht. Liegt als JSON, weil das Manifest selbst JSON ist und bau-app.py sie ohne Umweg liest. Hier stehen Texte, nirgends sonst.",
+
+  "name": "Astro-Charlie",
+  "kurzname": "Charlie",
+  "beschreibung": "Ein Werkzeug, mit dem du dich selbst und dein Gegenüber verstehen kannst — im Coaching-Format, erklärt über die Astrologie.",
+  "start": "index.html",
+
+  "farbe_flaeche": "#FCF7EF",
+  "farbe_ring": "#9A7235",
+  "farbe_kern": "#2E3A5C",
+
+  "ohne_netz": {
+    "titel": "Ohne Netz",
+    "ueberschrift": "Gerade keine Verbindung",
+    "lage": "Dein Gerät ist im Moment nicht am Netz. Diese Seite war noch nicht auf dem Gerät, deshalb steht sie hier nicht.",
+    "was_geht": "Die Seiten, die du vorher schon geöffnet hattest, kannst du weiter lesen. Sie liegen auf dem Gerät und brauchen kein Netz.",
+    "handgriff": "Tipp oben auf einen Punkt, den du heute schon offen hattest. Oder lade diese Seite neu, sobald du wieder Netz hast.",
+    "grenze": "Gerechnet wird ohnehin auf deinem Gerät, nicht auf einem Server. Was fehlt, ist nur die Seite selbst — sie muss einmal geladen worden sein, damit sie bleibt."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Astro-Charlie",
+  "short_name": "Charlie",
+  "description": "Ein Werkzeug, mit dem du dich selbst und dein Gegenüber verstehen kannst — im Coaching-Format, erklärt über die Astrologie.",
+  "lang": "de",
+  "dir": "ltr",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FCF7EF",
+  "theme_color": "#FCF7EF",
+  "icons": [
+    {
+      "src": "symbol-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "symbol-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "symbol-maskierbar-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
