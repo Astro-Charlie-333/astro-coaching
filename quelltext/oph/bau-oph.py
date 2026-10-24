@@ -14,6 +14,9 @@ kopf='''<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 html=(kopf+T('basis.css')+"\n"+T('oph-stil.css')+"</style></head><body>\n"
  +T('oph-koerper.html')+"\n<script>\n"+T('engine.js')+"\n"
  +T('sternbild.js')+"\n"+T('oph-app.js')+"\n</script>\n</body></html>\n")
+# Die App-Ansicht: Manifest, Symbol, Zwischenspeicher. Die Zeilen dafür
+# stehen in app/app-kopf.html — an einer Stelle für alle Seiten.
+html = html.replace('<head>', '<head>' + (h.parent / 'app' / 'app-kopf.html').read_text(encoding='utf-8'), 1)
 z=w/'ophiuchus.html'; z.write_text(html,encoding='utf-8')
 k=T('oph-koerper.html'); a=T('oph-app.js')
 ids=set(re.findall(r'\bid="([A-Za-z0-9_-]+)"',k))

@@ -51,6 +51,9 @@ BAUTEN = [
     ('monat/bau-monat.py',     'Monat'),
     ('kern/bau-ich.py',       'Ich'),
     ('kern/bau-heute.py',     'Heute'),
+    # Zuletzt: die Rauchprobe der App-Ansicht lädt die eben gebauten
+    # Seiten unter einem echten Netzprotokoll und schaltet das Netz ab.
+    ('app/bau-app.py',        'App'),
 ]
 
 print('Astro-Charlie · alles bauen und prüfen')
@@ -368,6 +371,65 @@ if ohne_wahl:
     fehlgeschlagen.append('Bereiche ohne Auswahl')
 else:
     print('  jede Seite mit Bereichen lässt sie auch wählen')
+
+# 10 · jede gebaute Seite bindet die App-Ansicht ein
+#      Fehlerklasse: eine Seite, die das Manifest nicht nennt. Auf dem
+#      Telefon fällt das nicht auf — die Seite sieht aus wie immer, nur
+#      lässt sie sich von dort aus nicht installieren und bleibt nach
+#      einem Verbindungsabbruch leer. Geprüft wird am Ergebnis, nicht in
+#      den sechzehn Bauskripten: die Zeilen stehen in app/app-kopf.html,
+#      und jede gebaute Seite muss genau diesen Block tragen. Wer eine
+#      neue Seite baut und ihn vergisst, kommt hier nicht durch.
+#      Die Handarbeitsseiten haben keine Quelle, in die er gehörte — sie
+#      sind so lange ausgenommen, wie sie auf der Liste oben stehen, und
+#      die Liste soll schrumpfen.
+APP_KOPF = hier / 'app' / 'app-kopf.html'
+if not APP_KOPF.exists():
+    print('  app/app-kopf.html fehlt — die Seiten haben keine gemeinsame')
+    print('  Quelle für Manifest und Zwischenspeicher mehr')
+    fehlgeschlagen.append('app-kopf.html fehlt')
+else:
+    block = APP_KOPF.read_text(encoding='utf-8').strip()
+    ohne_app, halb = [], []
+    for s in seiten:
+        if s.name in HANDARBEIT:
+            continue
+        t = s.read_text(encoding='utf-8', errors='replace')
+        if block in t:
+            continue
+        (halb if 'rel="manifest"' in t else ohne_app).append(s.name)
+    # Jede Datei, auf die der gemeinsame Kopf und das Manifest zeigen,
+    # muss oben liegen. Ein Symbol, das fehlt, bleibt sonst still.
+    gebraucht = set(re.findall(r'(?:href|src)="([a-z0-9._-]+)"', block))
+    man = wiki / 'manifest.webmanifest'
+    if man.exists():
+        import json as _json
+        try:
+            mm = _json.loads(man.read_text(encoding='utf-8'))
+            gebraucht |= {i.get('src', '') for i in mm.get('icons', [])}
+            gebraucht |= {mm.get('start_url', '')}
+        except ValueError:
+            fehlgeschlagen.append('Manifest ist kein lesbares JSON')
+    gebraucht |= {'manifest.webmanifest', 'sw.js', 'app-start.js', 'offline.html'}
+    fehlende = sorted(n for n in gebraucht if n and not (wiki / n).exists())
+    if ohne_app:
+        print(f'  {len(ohne_app)} GEBAUTE SEITEN OHNE APP-ANSICHT:')
+        for s in ohne_app[:8]:
+            print(f'      {s}')
+        print('      (die Zeilen stehen in app/app-kopf.html — ein bau-*.py')
+        print('       setzt sie mit einer Zeile vor dem Schreiben ein)')
+        fehlgeschlagen.append('Seiten ohne App-Ansicht')
+    if halb:
+        print('  SEITEN MIT HALBEM APP-KOPF: ' + ', '.join(halb[:8]))
+        print('      (der Block in app/app-kopf.html gilt ganz oder nicht —')
+        print('       eine eigene Fassung je Seite läuft wieder auseinander)')
+        fehlgeschlagen.append('halber App-Kopf')
+    if fehlende:
+        print('  DIE APP-ANSICHT VERWEIST INS LEERE: ' + ', '.join(fehlende[:8]))
+        fehlgeschlagen.append('App-Ansicht verweist ins Leere')
+    if not ohne_app and not halb and not fehlende:
+        anzahl = len([s for s in seiten if s.name not in HANDARBEIT])
+        print(f'  alle {anzahl} gebauten Seiten binden die App-Ansicht ein')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
