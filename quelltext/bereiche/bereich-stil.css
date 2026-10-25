@@ -154,3 +154,22 @@
 .b-tiefknopf{margin-top:4px;}
 .b-echo{font-family:var(--sans);font-size:13px;color:var(--leise);line-height:1.5;}
 #tiefgang .u:last-of-type{margin-bottom:4px;}
+
+/* Zum Nachlesen — die langen Themenseiten zu einem Bereich.
+   Gleiche Bausteine wie die Facetten darüber: Papier, dünne Linie,
+   Messing für den Namen. Keine neue Farbe, keine neue Schrift. */
+.b-nach{margin-top:18px;padding-top:14px;border-top:1px dashed var(--linie);}
+.b-nach h4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:8px;}
+.b-nachvor{font-size:14px;line-height:1.6;color:var(--leise);margin-bottom:12px;max-width:640px;}
+.b-nachl{display:block;text-decoration:none;background:var(--papier);
+ border:1px solid var(--linie);border-radius:12px;padding:12px 14px;margin-bottom:8px;
+ max-width:640px;}
+.b-nachl:hover{border-color:var(--messing);}
+.b-nachn{display:block;font-family:'Fraunces',Georgia,serif;font-size:16px;
+ color:var(--nacht);margin-bottom:3px;}
+.b-nachn::after{content:' \2192';color:var(--messing);}
+.b-nachw{display:block;font-family:var(--sans);font-size:13.5px;line-height:1.6;
+ color:var(--leise);}
+.b-nachhin{font-size:13px!important;line-height:1.6;color:var(--leise);
+ margin-top:4px;max-width:640px;}

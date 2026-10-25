@@ -432,6 +432,108 @@ else:
         anzahl = len([s for s in seiten if s.name not in HANDARBEIT])
         print(f'  alle {anzahl} gebauten Seiten binden die App-Ansicht ein')
 
+# 11 · kein Maschinenraum im Titel einer Raumseite
+#     Fehlerklasse: Eine Seite nennt oben, woraus sie gerechnet ist,
+#     statt wovon sie handelt. Auf den Karten der Räume stand bis
+#     heute "2. Haus, Venus, Saturn, Lilith" unter dem Namen — genau
+#     das, was REGELN.md Abschnitt 2 verbietet: Eine Seite spricht
+#     darüber, WAS passiert, nicht darüber, woran man es abliest.
+#     Die Räume sind Handarbeit, haben also kein bau-*.py, das das
+#     prüfen könnte. Deshalb steht die Prüfung hier.
+#     Geprüft wird nur, was im Markup wirklich oben steht: Titel,
+#     Überschriften und die Titelzeilen einer Raumkarte. Was in
+#     ac-tech wartet, darf die Mechanik nennen — es ist ja der Ort
+#     dafür. Skripte und Stil bleiben außen vor: dort entstehen die
+#     Fachbegriffe für die Wartemarken.
+#     Die Wortliste liegt bewusst klein und nur hier. Dieselbe Liste
+#     steht heute in sechs bau-*.py je für ihren Ordner — das
+#     zusammenzulegen ist eine eigene Aufgabe und steht in AUFGABEN.md.
+MASCHINE = (
+    ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter', 'Saturn',
+     'Uranus', 'Neptun', 'Pluto', 'Lilith', 'Chiron', 'Mondknoten']
+    + ['Haus', 'Häuser', 'Hauses', 'Aszendent', 'Deszendent', 'Radix',
+       'MC', 'IC', 'Orbis', 'Orben', 'rückläufig', 'winkelhaft']
+    + ['Aspekt', 'Aspekte', 'Konjunktion', 'Opposition', 'Quadrat',
+       'Trigon', 'Sextil']
+    + ['Widder', 'Stier', 'Zwillinge', 'Krebs', 'Löwe', 'Jungfrau',
+       'Waage', 'Skorpion', 'Schütze', 'Steinbock', 'Wassermann', 'Fische']
+)
+# Zwei Stellen werden angesehen, und nur diese zwei: die
+# Überschriften einer Seite und alles, was auf einer Raumkarte steht.
+# Ein Fließtext weiter unten darf Fachbegriffe erklären, das ist sein
+# Zweck. Die Karte wird als Ganzes geprüft und nicht nach
+# Klassennamen: Sonst heißt die nächste Zeile anders und ist wieder
+# ungeprüft — genau so kam „2. Haus, Venus, Saturn, Lilith" dorthin.
+UEBERSCHRIFT = re.compile(r'<(h1|h2|h3|title)\b([^>]*)>(.*?)</\1>'
+                          r'|<div\b([^>]*\bclass="rm-frage[^"]*"[^>]*)>(.*?)</div>',
+                          re.S)
+RAUMKARTE = re.compile(r'<a\b[^>]*class="rk\b[^"]*"[^>]*>(.*?)</a>', re.S)
+WARTET = re.compile(r'<([a-z]+)\b[^>]*\bclass="[^"]*\bac-tech\b[^"]*"[^>]*>.*?</\1>', re.S)
+
+def klartext(roh):
+    """Was ein Mensch von diesem Stück Markup wirklich zu sehen bekommt."""
+    s = re.sub(r'<[^>]*>', ' ', roh or '')
+    for ent, zeichen in (('&amp;', '&'), ('&nbsp;', ' '), ('&bdquo;', '„'),
+                         ('&ldquo;', '"'), ('&middot;', '·'), ('&uuml;', 'ü'),
+                         ('&auml;', 'ä'), ('&ouml;', 'ö'), ('&mdash;', '—'),
+                         ('&amp;rarr;', '→'), ('&rarr;', '→')):
+        s = s.replace(ent, zeichen)
+    return re.sub(r'\s+', ' ', s).strip()
+
+def maschinenwort(text):
+    for w in MASCHINE:
+        if re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(w)
+                     + r'(?![A-Za-zÄÖÜäöüß])', text):
+            return w
+    return None
+
+raumseiten = [s for s in seiten
+              if s.name == 'raeume.html' or s.name.startswith('raum-')]
+maschinentitel, ohne_marke = [], []
+for s in raumseiten:
+    roh = s.read_text(encoding='utf-8', errors='replace')
+    ohne = re.sub(r'<(script|style)\b.*?</\1>', ' ', roh, flags=re.S)
+    stellen = []
+    for m in UEBERSCHRIFT.finditer(ohne):
+        attr = (m.group(2) or '') + (m.group(4) or '')
+        if 'ac-tech' in attr:          # wartet an der richtigen Stelle
+            continue
+        stellen.append(m.group(3) if m.group(3) is not None else m.group(5))
+    # Auf einer Karte zählt alles, was nicht wartet.
+    for m in RAUMKARTE.finditer(ohne):
+        stellen.append(WARTET.sub(' ', m.group(1)))
+    for stelle in stellen:
+        klar = klartext(stelle)
+        w = maschinenwort(klar)
+        if w:
+            maschinentitel.append(f'{s.name}: „{klar[:60]}" ({w})')
+    # Und was wartet, muss auch wirklich warten. Zwei Wege, auf denen
+    # eine Wartemarke nichts bewirkt: ohne data-ab hängt sie an einer
+    # einzigen Stilregel, und ohne niveau.js gibt es gar keine Regel —
+    # dann steht die Mechanik wieder offen da, obwohl im Markup alles
+    # richtig aussieht.
+    for m in re.finditer(r'<[a-z]+\b([^>]*\bclass="[^"]*\bac-tech\b[^"]*"[^>]*)>', ohne):
+        if 'data-ab' not in m.group(1):
+            ohne_marke.append(f'{s.name}: ac-tech ohne data-ab')
+    if 'ac-tech' in ohne and 'niveau.js' not in roh:
+        ohne_marke.append(f'{s.name}: Wartemarken, aber niveau.js fehlt')
+if maschinentitel:
+    print('  MASCHINENRAUM IM TITEL EINER RAUMSEITE:')
+    for d in maschinentitel[:8]:
+        print(f'      {d}')
+    print('      (eine Seite sagt oben, WAS passiert — woran man es')
+    print('       abliest, wartet in ac-tech mit data-ab="2")')
+    fehlgeschlagen.append('Maschinenraum im Titel')
+elif ohne_marke:
+    print('  WARTEMARKE OHNE STUFE:')
+    for d in sorted(set(ohne_marke))[:8]:
+        print(f'      {d}')
+    print('      (ac-tech verbirgt sich nur über eine einzige Stilregel —')
+    print('       data-ab="2" sagt, ab welcher Stufe es erscheint)')
+    fehlgeschlagen.append('ac-tech ohne data-ab')
+else:
+    print(f'  {len(raumseiten)} Raumseiten ohne Maschinenraum im Titel')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:

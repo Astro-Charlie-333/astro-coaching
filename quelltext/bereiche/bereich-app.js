@@ -204,6 +204,26 @@
     h.push('<div class="b-tiefzeile"><button type="button" class="b-knopf b-tiefknopf" ' +
            'data-tief="' + esc(b.k) + '">' + esc(bD().TIEF.knopfEiner) + '</button></div>');
 
+    /* Zum Nachlesen: die langen Texte zu diesem Bereich. Sie standen
+       bisher nur auf einer eigenen Übersicht — wer beim lautesten
+       Bereich ankam und weiterlesen wollte, fand sie nicht. Welche
+       Seite zu welchem Bereich gehört und was auf ihr steht, steht
+       in bereich-daten.js; hier wird es nur gezeichnet. */
+    var RM = bD().RAUM, rk = (RM.zu[b.k] || []);
+    if(rk.length){
+      h.push('<div class="b-nach"><h4>' + esc(RM.titel) + '</h4>');
+      h.push('<p class="b-nachvor">' + esc(RM.vor) + '</p>');
+      for(var ri=0; ri<rk.length; ri++){
+        var R = RM.seiten[rk[ri]];
+        if(!R) continue;
+        h.push('<a class="b-nachl" href="' + esc(R.datei) + '" data-raum="' + esc(rk[ri]) + '">' +
+               '<span class="b-nachn">' + esc(R.name) + '</span>' +
+               '<span class="b-nachw">' + esc(R.was) + '</span></a>');
+      }
+      h.push('<p class="b-nachhin">' + esc(RM.hin) + '</p>');
+      h.push('</div>');
+    }
+
     h.push('</div></details>');
     return h.join('');
   }

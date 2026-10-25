@@ -677,6 +677,68 @@
     fuss:'Astro-Charlie · Der Tiefgang ist ein Werkzeug zum Verstehen, keine Diagnose, keine Vorhersage und kein Ersatz für Behandlung. Dein eigenes Erleben hat Vorrang vor allem, was hier steht.'
   };
 
+  /* ── Die langen Texte zu einem Bereich ──────────────────────── */
+  /* Zu zehn der Themen gibt es seit den Anfängen der Plattform eine
+     eigene, lange Seite — nach der Frage geordnet, mit der ein
+     Mensch tatsächlich kommt, und ohne Zeitbezug. Diese Seiten
+     waren bisher nur über eine eigene Übersicht erreichbar: Wer
+     beim lautesten Bereich ankam und weiterlesen wollte, fand sie
+     nicht.
+
+     Hier steht, welche Seite zu welchem Bereich gehört und was auf
+     ihr steht — in Alltagssprache, weil der Verweis auf Stufe 0
+     sichtbar ist. Zwei Bereiche dürfen auf dieselbe Seite zeigen:
+     "Warum nehme ich eigentlich zu wenig?" ist eine Frage nach dem
+     Geld und eine nach dem eigenen Wert, und die Seite beantwortet
+     beide. Was nicht sein darf, ist eine Seite, auf die kein
+     Bereich zeigt — das prüft bau-bereiche.py. */
+  var B_RAUM = {
+    titel:'Zum Nachlesen',
+    vor:'Oben steht, was gerade läuft. Zu diesem Bereich gibt es auch einen langen Text ohne Zeitbezug — geordnet nach der Frage, mit der Menschen damit kommen.',
+    hin:'Diese Seiten sind älter als der Rest der Plattform. Sie sind gründlich, aber sie reden mehr über die Rechnung als die Seiten hier.',
+    seiten:{
+      naehe:{ datei:'raum-naehe.html', name:'Nähe',
+        was:'Was dich anzieht, wie viel Nähe du zulässt, wie du streitest — und was sich darin immer wiederholt.' },
+      berufung:{ datei:'raum-berufung.html', name:'Berufung',
+        was:'Was dich antreibt, wofür du gesehen wirst, womit du dein Geld verdienst und wem das alles nützt.' },
+      alltag:{ datei:'raum-alltag.html', name:'Alltag',
+        was:'Dein eigener Rhythmus, Ordnung die hält, Anfangen und Dranbleiben — und was passiert, wenn es zu viel wird.' },
+      koerper:{ datei:'raum-koerper.html', name:'Körper',
+        was:'Wie du im Körper bist, wo Anspannung sich zeigt, was mit Schlaf und Genuss zu tun hat und was Bewegung bei dir bewirkt.' },
+      andersVerdrahtet:{ datei:'raum-anders-verdrahtet.html', name:'Anders verdrahtet',
+        was:'Wie dein Kopf arbeitet, was dich überlastet, wie dein Vorrat an Kraft sich füllt und was du nach einem lauten Tag brauchst.' },
+      herkunft:{ datei:'raum-herkunft.html', name:'Herkunft',
+        was:'Die Stimmung, in der du groß wurdest, was nie ausgesprochen wurde, was du davon übernommen hast und was du daraus machst.' },
+      versorgung:{ datei:'raum-versorgung.html', name:'Versorgung',
+        was:'Essen, Trinken, Papierkram, Haushalt, Schlaf — das Einfache, das trotzdem liegen bleibt, und warum das keine Faulheit ist.' },
+      selbstwert:{ datei:'raum-selbstwert.html', name:'Selbstwert',
+        was:'Einen Preis nennen und ihn stehen lassen, genügen, Nein sagen, Raum einnehmen — und die Sätze, die von früher mitlaufen.' },
+      wunderPunkt:{ datei:'raum-wunder-punkt.html', name:'Der wunde Punkt',
+        was:'Wo es zuverlässig wehtut, was du deshalb vermeidest, womit du es überdeckst und was tatsächlich hilft.' },
+      zugehoerigkeit:{ datei:'raum-zugehoerigkeit.html', name:'Zugehörigkeit',
+        was:'Wie du in Gruppen bist, welche Rolle du dort übernimmst, wofür du gebraucht wirst und was dich das Dazugehören kostet.' },
+      unerlaubte:{ datei:'raum-unerlaubte.html', name:'Das Unerlaubte',
+        was:'Was du dir nicht erlaubst, wie du es verbirgst, wo es trotzdem herauskommt und welche Kraft darin ungenutzt liegt.' },
+      sicherheit:{ datei:'raum-sicherheit.html', name:'Sicherheit und Fallenlassen',
+        was:'Was Sicherheit für dich bedeutet, wo deine Bremsen sitzen, was du dir nicht erlaubst und was du brauchst, um loszulassen.' }
+    },
+    /* Welcher Bereich auf welche Seite zeigt. Die Zuordnung ist nach
+       dem Inhalt gemacht, nicht nach dem Namen: Der Alltag gehört zum
+       Beruf, weil dort die Arbeit steht, die jeden Tag getan wird. */
+    zu:{
+      liebe:      ['naehe'],
+      beruf:      ['berufung', 'alltag'],
+      gesundheit: ['koerper', 'andersVerdrahtet'],
+      geld:       ['selbstwert'],
+      familie:    ['herkunft', 'versorgung'],
+      freunde:    ['zugehoerigkeit'],
+      freude:     ['unerlaubte'],
+      selbstwert: ['selbstwert', 'wunderPunkt'],
+      sinn:       ['berufung'],
+      umbruch:    ['sicherheit']
+    }
+  };
+
   /* ── Was die Seite nicht kann ───────────────────────────────── */
   var B_EHRLICH = [
     { f:'Sagt das, was passieren wird?',
@@ -693,7 +755,8 @@
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH,
-    WID:B_WID, FRAGEN:B_FRAGEN, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER
+    WID:B_WID, FRAGEN:B_FRAGEN, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
+    RAUM:B_RAUM
   };
 
 })();
