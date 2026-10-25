@@ -1,0 +1,1336 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ereignisse lesen &middot; Astro-Charlie</title>
+<meta name="description" content="Wie man aus einem Chart abliest, was in welchem Lebensbereich wann ansteht — und wo die Grenze liegt.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="niveau.js"></script>
+<script src="wortwahl.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* Astro-Charlie · Ereignisse lesen */
+
+.eg-mehr{font-size:14px;color:var(--leise);margin:-4px 0 26px;}
+.eg-fein{font-size:12.5px;color:var(--leise);line-height:1.5;margin-top:10px;}
+
+/* ── Der Stapel ─────────────────────────────────────── */
+.eg-stapel{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0 18px;}
+.eg-st{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:16px 18px;}
+.eg-st-0{opacity:.62;}
+.eg-st-1{opacity:.82;}
+.eg-st-2{border-color:var(--nacht);box-shadow:0 2px 14px rgba(46,58,92,.07);}
+.eg-st-zahl{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:7px;}
+.eg-st-name{font-family:var(--serif);font-size:20px;color:var(--nacht);margin-bottom:6px;}
+.eg-st-text{font-size:13.5px;line-height:1.55;color:var(--leise);}
+@media(max-width:700px){.eg-stapel{grid-template-columns:1fr;}}
+
+/* ── Bausteinkarten ─────────────────────────────────── */
+.eg-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px;margin:22px 0 26px;}
+.eg-k{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:19px 21px;}
+.eg-k-kopf{display:flex;align-items:center;gap:9px;margin-bottom:9px;}
+.eg-k-nr{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;
+ border-radius:50%;background:var(--nacht);color:#fff;font-family:var(--sans);font-size:13px;flex:none;}
+.eg-k-frage{font-family:var(--sans);font-size:10px;letter-spacing:.15em;color:var(--messing);}
+.eg-k h3{margin:0 0 5px;font-family:var(--serif);font-size:20px;color:var(--nacht);font-weight:400;}
+.eg-k-kurz{font-size:14px;color:var(--tinte);margin:0 0 9px;}
+.eg-k p{font-size:14px;line-height:1.6;margin:0 0 11px;}
+.eg-k-liste{list-style:none;padding:0;margin:0;border-top:1px solid var(--linie);padding-top:11px;}
+.eg-k-liste li{font-size:13.5px;line-height:1.5;padding:3px 0;}
+.eg-li-n{font-family:var(--mono,var(--sans));font-size:12.5px;color:var(--nacht);
+ background:var(--bg);border-radius:5px;padding:1px 6px;margin-right:5px;}
+.eg-li-w{color:var(--leise);}
+.eg-li-b{color:var(--tinte);}
+
+/* ── Mischer ────────────────────────────────────────── */
+.eg-mischer{background:var(--papier);border:1px solid var(--linie);border-radius:20px;
+ padding:20px 22px;margin:20px 0 28px;}
+.eg-regler{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px;}
+.eg-regler label{display:flex;flex-direction:column;gap:5px;}
+.eg-regler span{font-family:var(--sans);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);}
+.eg-regler select{font-family:var(--sans);font-size:14px;padding:9px 10px;color:var(--tinte);
+ background:var(--bg);border:1px solid var(--linie);border-radius:11px;width:100%;max-width:100%;}
+.eg-ausgabe{margin-top:17px;padding:17px 19px;background:var(--bg);border-radius:14px;
+ border-left:3px solid var(--messing);}
+.eg-ausgabe p{margin:0;font-family:var(--serif);font-size:18px;line-height:1.55;color:var(--nacht);}
+.eg-zerlegt{display:grid;grid-template-columns:repeat(auto-fit,minmax(142px,1fr));gap:8px;margin-top:13px;}
+.eg-z{background:var(--bg);border-radius:11px;padding:9px 11px;}
+.eg-z-f{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;color:var(--messing);}
+.eg-z-w{display:block;font-size:13.5px;line-height:1.4;color:var(--tinte);margin-top:3px;}
+.eg-wuerfel{margin-top:14px;font-family:var(--sans);font-size:13.5px;padding:9px 16px;
+ background:transparent;color:var(--nacht);border:1px solid var(--linie);border-radius:16px;cursor:pointer;}
+.eg-wuerfel:hover{border-color:var(--nacht);}
+
+/* ── Rezepte ────────────────────────────────────────── */
+.eg-rezepte{display:grid;grid-template-columns:repeat(auto-fit,minmax(292px,1fr));gap:14px;margin:20px 0 26px;}
+.eg-r{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:19px 21px;}
+.eg-r h3{margin:0 0 11px;font-family:var(--serif);font-size:19px;color:var(--nacht);font-weight:400;}
+.eg-formel{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:13px;}
+.eg-f-t{font-family:var(--sans);font-size:12px;background:var(--bg);border:1px solid var(--linie);
+ border-radius:9px;padding:4px 9px;color:var(--nacht);}
+.eg-f-p,.eg-f-g{font-family:var(--sans);font-size:13px;color:var(--messing);}
+.eg-f-e{font-family:var(--sans);font-size:12px;background:var(--nacht);color:#fff;
+ border-radius:9px;padding:4px 9px;}
+.eg-r ul{margin:0 0 11px;padding-left:19px;}
+.eg-r li{font-size:13.5px;line-height:1.55;margin-bottom:5px;}
+.eg-ehrlich-klein{font-size:13px;line-height:1.55;color:var(--leise);margin:0;
+ border-top:1px solid var(--linie);padding-top:10px;}
+
+/* ── Menschen ───────────────────────────────────────── */
+.eg-wahl{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 16px;}
+.eg-mb{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13.5px;
+ padding:8px 14px;background:var(--papier);color:var(--tinte);border:1px solid var(--linie);
+ border-radius:18px;cursor:pointer;}
+.eg-mb:hover{border-color:var(--nacht);}
+.eg-mb[aria-pressed="true"]{background:var(--nacht);border-color:var(--nacht);color:#fff;}
+.eg-mb-i{font-size:14px;}
+.eg-p{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:21px 23px;}
+.eg-p-kopf{display:flex;align-items:center;gap:11px;margin-bottom:13px;}
+.eg-p-i{font-size:24px;color:var(--messing);}
+.eg-p h3{margin:0;font-family:var(--serif);font-size:23px;color:var(--nacht);font-weight:400;}
+.eg-p-zeilen{display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:9px;margin-bottom:14px;}
+.eg-p-zeilen>div{background:var(--bg);border-radius:12px;padding:10px 13px;}
+.eg-p-lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);}
+.eg-p-wert{display:block;font-size:14.5px;color:var(--nacht);margin-top:3px;line-height:1.4;}
+.eg-p p{font-size:14.5px;line-height:1.65;}
+.eg-p h4{font-family:var(--sans);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+ color:var(--messing);margin:16px 0 8px;}
+.eg-p-asp{margin:0 0 14px;padding-left:19px;}
+.eg-p-asp li{font-size:13.5px;line-height:1.6;margin-bottom:6px;}
+.eg-p-streit{font-size:13px;line-height:1.6;color:var(--leise);margin:0;
+ border-top:1px solid var(--linie);padding-top:11px;}
+
+.eg-klapp{margin:16px 0 20px;background:var(--papier);border:1px solid var(--linie);
+ border-radius:16px;padding:13px 18px;}
+.eg-klapp summary{cursor:pointer;font-family:var(--sans);font-size:14px;color:var(--nacht);}
+.eg-tabwrap{margin-top:13px;}
+.eg-tab{border-collapse:collapse;width:100%;font-size:13.5px;table-layout:fixed;}
+.eg-tab td{word-break:break-word;}
+.eg-tab th{text-align:left;font-family:var(--sans);font-size:10px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--messing);padding:7px 10px;border-bottom:1px solid var(--linie);}
+.eg-tab td{padding:8px 10px;border-bottom:1px solid var(--linie);line-height:1.45;vertical-align:top;}
+.eg-tab tr:last-child td{border-bottom:none;}
+@media(max-width:620px){
+ .eg-tab,.eg-tab tbody,.eg-tab tr,.eg-tab td{display:block;width:100%;}
+ .eg-tab thead{display:none;}
+ .eg-tab tr{border-bottom:1px solid var(--linie);padding:9px 0;}
+ .eg-tab tr:last-child{border-bottom:none;}
+ .eg-tab td{border-bottom:none;padding:2px 0;}
+ .eg-tab td[data-sp]::before{content:attr(data-sp) " · ";font-family:var(--sans);
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--messing);}
+ .eg-tab td:first-child{font-size:15px;color:var(--nacht);padding-bottom:5px;}
+ .eg-tab td:first-child::before{content:none;}
+}
+
+.eg-tech{background:var(--bg);border:1px dashed var(--linie);border-radius:16px;
+ padding:17px 20px;margin:18px 0 20px;}
+.eg-tech h3{margin:0 0 9px;font-family:var(--serif);font-size:18px;color:var(--nacht);font-weight:400;}
+.eg-tech p{font-size:14px;line-height:1.6;margin:0 0 9px;}
+.eg-tech p:last-child{margin-bottom:0;}
+.eg-rechnung{font-family:var(--mono,var(--sans));font-size:13px;line-height:1.8;
+ background:var(--papier);border-radius:10px;padding:11px 14px;}
+
+/* ── Zwei Charts ────────────────────────────────────── */
+.eg-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin:20px 0 22px;}
+.eg-zwei .card{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:19px 21px;}
+.eg-zwei h3{margin:0 0 9px;font-family:var(--serif);font-size:19px;color:var(--nacht);font-weight:400;}
+.eg-zwei ul{margin:0 0 11px;padding-left:19px;}
+.eg-zwei li{font-size:13.5px;line-height:1.6;margin-bottom:6px;}
+.eg-weiter{font-size:13px;color:var(--leise);margin:0;}
+
+/* ── Durchgerechnete Fälle ──────────────────────────── */
+.eg-faelle{display:grid;gap:16px;margin:20px 0 22px;}
+.eg-fall{background:var(--papier);border:1px solid var(--linie);border-radius:20px;padding:21px 23px;}
+.eg-fall h3{margin:0 0 14px;font-family:var(--serif);font-size:20px;color:var(--nacht);font-weight:400;}
+.eg-schritte{display:grid;gap:8px;margin-bottom:15px;}
+.eg-s{display:grid;grid-template-columns:132px 1fr;gap:4px 14px;background:var(--bg);
+ border-radius:12px;padding:11px 14px;}
+.eg-s-summe{background:var(--papier);border:1px solid var(--nacht);}
+.eg-s-nr{font-family:var(--sans);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+ color:var(--messing);padding-top:3px;}
+.eg-s-was{font-size:14px;color:var(--nacht);}
+.eg-s-text{grid-column:2;font-size:13.5px;line-height:1.55;color:var(--leise);}
+@media(max-width:620px){.eg-s{grid-template-columns:1fr;}.eg-s-text{grid-column:1;}}
+.eg-deutung{background:var(--bg);border-left:3px solid var(--messing);border-radius:12px;
+ padding:14px 16px;font-size:14.5px;line-height:1.65;margin-bottom:10px;}
+.eg-nicht{font-size:13px;line-height:1.6;color:var(--leise);}
+
+/* ── Coaching-Teil ──────────────────────────────────── */
+.eg-coach{background:var(--papier);border:1px solid var(--linie);border-radius:20px;
+ padding:16px 21px;margin:24px 0;}
+.eg-coach summary{cursor:pointer;font-family:var(--sans);font-size:14.5px;color:var(--nacht);}
+.eg-coach-inner{padding-top:14px;}
+.eg-coach h3{font-family:var(--sans);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+ color:var(--messing);margin:16px 0 9px;}
+.eg-coach ol{padding-left:20px;margin:0;}
+.eg-coach ol li{font-size:14px;line-height:1.65;margin-bottom:9px;}
+.eg-fragen{padding-left:20px;margin:0 0 13px;}
+.eg-fragen li{font-size:14px;line-height:1.65;margin-bottom:8px;}
+
+/* ── Ehrlichkeit ────────────────────────────────────── */
+.eg-ehrlich{background:var(--bg);border:1px solid var(--linie);border-radius:18px;padding:19px 21px;margin:18px 0 24px;}
+.eg-ehrlich p{font-size:14px;line-height:1.65;margin:0 0 11px;}
+.eg-ehrlich p:last-child{margin-bottom:0;}
+
+/* ── Quiz ───────────────────────────────────────────── */
+.eg-quiz{display:grid;gap:13px;margin:18px 0 12px;}
+.eg-q{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:18px 20px;}
+.eg-q-nr{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--messing);margin-bottom:7px;}
+.eg-q-f{font-family:var(--serif);font-size:18px;line-height:1.5;color:var(--nacht);margin:0 0 13px;}
+.eg-q-opts{display:grid;gap:7px;}
+.eg-q-opt{text-align:left;font-family:var(--sans);font-size:14px;padding:11px 14px;
+ background:var(--bg);color:var(--tinte);border:1px solid var(--linie);border-radius:13px;cursor:pointer;}
+.eg-q-opt:hover:enabled{border-color:var(--nacht);}
+.eg-q-opt:disabled{cursor:default;opacity:.72;}
+.eg-q-opt.ist-richtig{background:var(--nacht);border-color:var(--nacht);color:#fff;opacity:1;}
+.eg-q-opt.ist-falsch{border-color:var(--messing);opacity:1;}
+.eg-q-echo{margin-top:11px;font-size:13.5px;line-height:1.6;color:var(--leise);}
+.eg-q-echo:empty{margin-top:0;}
+.eg-quiz-stand{font-size:14px;color:var(--tinte);margin:6px 0 12px;}
+
+/* ── Weiterlernen ───────────────────────────────────── */
+.eg-links{background:var(--papier);border:1px solid var(--linie);border-radius:18px;
+ padding:19px 21px;margin:18px 0 24px;}
+.eg-links p{font-size:14px;line-height:1.8;margin:0 0 13px;}
+.eg-links p:last-child{margin-bottom:0;}
+</style></head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Heute</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html" class="ist">Wissen</a></nav>
+</div></div>
+
+<div class="wrap">
+<div class="eyebrow">Astro-Coaching &middot; Praxis</div>
+<h1>Ereignisse lesen: <em>das Bausteine-Prinzip.</em></h1>
+<p class="lede">Wie man aus einem Geburtsbild abliest, <b>was</b> in <b>welchem Lebensbereich</b> <b>wann</b> ansteht &mdash; und wo die Grenze liegt. Ein Ereignis entsteht nie aus einem einzelnen Hinweis. Es entsteht, wenn mehrere Bausteine gleichzeitig dasselbe sagen.</p>
+
+<div id="nivleiste"></div>
+
+<div class="tip" data-bis="0"><b>Du liest gerade die Fassung ohne Fachsprache.</b> Das Prinzip steht hier vollst&auml;ndig: wie viele Hinweise es braucht, aus welchen f&uuml;nf Teilen eine Aussage besteht, und wo im Bild die Menschen stehen, zu denen du eine Verbindung hast. Was fehlt, sind die Fachbegriffe und die durchgerechneten Beispiele &mdash; daf&uuml;r stell oben eine h&ouml;here Stufe ein.</div>
+
+<!-- 1 · Die Grundidee -->
+<h2 id="idee">Die Grundidee: ein Hinweis ist kein Ereignis</h2>
+<p>Ein einzelner Hinweis sagt wenig. Er ist ein Wort, kein Satz. Erst wenn mehrere Bausteine gleichzeitig aktiv sind und <b>in dieselbe Richtung zeigen</b>, wird eine Aussage deutlich genug, um sie auszusprechen.</p>
+
+<div class="eg-stapel" id="egstapel"></div>
+
+<div class="tip"><b>Die Faustregel:</b> Ein Baustein ist Rauschen. Zwei sind ein Verdacht. Drei, die dasselbe sagen, sind ein Thema. Und selbst dann beschreibst du ein <i>Zeitfenster</i>, keine Tatsache.</div>
+
+<!-- 2 · Die fünf Bausteine -->
+<h2 id="bausteine">Die f&uuml;nf Bausteine</h2>
+<p>Jede Aussage, die man aus einem Bild holt, setzt sich aus denselben f&uuml;nf Teilen zusammen. Wer die Reihenfolge einh&auml;lt, verrennt sich seltener.</p>
+
+<div class="eg-karten" id="egkarten"></div>
+
+<p class="eg-mehr" data-ab="1">Wenn du die Bausteine einzeln nachschlagen willst: <a href="bausteine.html">Planeten, Zeichen und H&auml;user</a>, <a href="aspekte.html">die Aspekte</a>, <a href="orbis-gewichtung.html">Orbis und Gewichtung</a>, <a href="timing.html">Timing</a>.</p>
+
+<!-- 3 · Der Mischer -->
+<h2 id="mischer">Zum Ausprobieren: der Mischer</h2>
+<p>Stell dir eine Kombination zusammen und sieh, welcher Satz dabei herauskommt. Der Satz richtet sich nach der Stufe, die du oben eingestellt hast.</p>
+
+<div class="eg-mischer">
+  <div class="eg-regler">
+    <label><span>Kraft</span><select id="egpl"></select></label>
+    <label><span>Art</span><select id="egzc"></select></label>
+    <label><span>Lebensbereich</span><select id="eghs"></select></label>
+    <label><span>Verbindung</span><select id="egas"></select></label>
+    <label><span>N&auml;he</span><select id="egor"></select></label>
+  </div>
+  <div class="eg-ausgabe" id="egsatz"></div>
+  <div class="eg-zerlegt" id="egzerlegt"></div>
+  <button type="button" class="eg-wuerfel" id="egwuerfel">Zuf&auml;llige Mischung</button>
+</div>
+
+<!-- 4 · Rezepte -->
+<section data-ab="1">
+<h2 id="rezepte">Rezepte: so liest man ein Thema</h2>
+<p>F&uuml;r wiederkehrende Fragen gibt es wiederkehrende Zutatenlisten. Keine Zauberformeln &mdash; nur die Stellen, an denen man zuerst nachsieht.</p>
+<div class="eg-rezepte" id="egrezepte"></div>
+</section>
+
+<!-- 5 · Menschen im Chart -->
+<h2 id="menschen">Wo die Menschen stehen: Eltern, Geschwister, Freunde, Haustiere</h2>
+<p>Im eigenen Bild stehen nicht nur eigene Themen. Jeder Mensch, zu dem es eine Verbindung gibt, hat einen Ort &mdash; und dieser Ort erz&auml;hlt, <b>welche Rolle diese Verbindung im eigenen Leben spielt</b>. Nicht, wie der andere Mensch wirklich ist. Daf&uuml;r braucht es sein eigenes Bild.</p>
+
+<div class="eg-wahl" id="egmwahl"></div>
+<div class="eg-person" id="egperson"></div>
+
+<details class="eg-klapp">
+<summary>Alle Verbindungen auf einen Blick</summary>
+<div class="eg-tabwrap"><table class="eg-tab" id="egmtab"></table></div>
+</details>
+
+<div class="eg-tech ac-tech" data-ab="3">
+<h3>Abgeleitete H&auml;user</h3>
+<p>Wenn das 3. Haus die Geschwister sind, dann ist die Partnerin der Schwester das 7. Haus <i>von dort aus gez&auml;hlt</i> &mdash; also das 9. Haus im eigenen Chart. Man z&auml;hlt vom Haus der Person weiter, als w&auml;re es deren 1. Haus.</p>
+<p class="eg-rechnung">Haus der Person &minus; 1 + gesuchtes Haus = das Haus, in dem man nachsieht<br>
+Beispiel: Geschwister (3) &minus; 1 + Partnerschaft (7) = <b>9. Haus</b></p>
+<p>Die Technik ist alt und in der hellenistischen wie in der indischen Astrologie gebr&auml;uchlich. Sie wird schnell beliebig: Mit genug Ableitungen l&auml;sst sich jedes Haus zu jeder Person erkl&auml;ren. Benutze sie f&uuml;r eine konkrete Frage, nicht zum Durchrechnen eines ganzen Stammbaums.</p>
+</div>
+
+<div class="tip"><b>Eine Warnung, die ernst gemeint ist.</b> Aus dem Ort der Eltern l&auml;sst sich <i>nicht</i> ablesen, ob jemandes Eltern gut oder schlecht zu ihm waren. Was dort steht, ist die <b>Erfahrung</b> der Person mit diesem Teil ihrer Herkunft &mdash; gef&auml;rbt, erinnert, verarbeitet. Ein schwerer Befund ist kein Beweis f&uuml;r irgendetwas und darf nie als einer behandelt werden. Mehr dazu unter <a href="grenzen.html">Wann du nicht deutest</a>.</div>
+
+<!-- 6 · Zwei Charts -->
+<section data-ab="1">
+<h2 id="zweicharts">Zwei Charts: Synastrie und Composite</h2>
+<div class="eg-zwei">
+  <div class="card">
+    <h3>Synastrie &mdash; wie ihr aufeinander wirkt</h3>
+    <p>Zwei Geburtsbilder &uuml;bereinandergelegt. Die Frage lautet: Was macht Person A mit Person B?</p>
+    <ul>
+      <li>Wessen Planeten landen in welchen H&auml;usern der anderen? Das Haus sagt, <b>wo</b> der Mensch im eigenen Leben sp&uuml;rbar wird.</li>
+      <li>Leichte Anziehung: Venus der einen im Trigon zum Mars der anderen.</li>
+      <li>Gef&uuml;hl von Zuhause: der Mond der einen auf der Sonne der anderen.</li>
+      <li>Bindung mit Gewicht: Saturn-Kontakte. Sie halten &mdash; und sie pr&uuml;fen.</li>
+    </ul>
+    <p class="eg-weiter"><a href="synastrie.html">Synastrie</a> &middot; <a href="synastrie-vertiefung.html">vertieft</a> &middot; <a href="beziehung.html">das Werkzeug</a></p>
+  </div>
+  <div class="card">
+    <h3>Composite &mdash; die Verbindung selbst</h3>
+    <p>Aus den Mittelpunkten beider Charts entsteht ein drittes. Es beschreibt nicht euch, sondern <b>das Dritte, das zwischen euch entsteht</b>.</p>
+    <ul>
+      <li>Wof&uuml;r ist diese Verbindung da? Wohin zieht sie, wenn man sie l&auml;sst?</li>
+      <li>Wo liegt ihr wunder Punkt &mdash; die Stelle, an der es immer wieder dieselbe Reibung gibt?</li>
+      <li>Transite auf das Composite zeigen, wann die Verbindung selbst ein Thema hat.</li>
+    </ul>
+    <p class="eg-weiter"><a href="beziehung.html">Zwischen euch beiden</a></p>
+  </div>
+</div>
+</section>
+
+<div class="tip"><b>Was ein gutes Fenster ist und was nicht.</b> Ein offenes Zeitfenster ist eine Einladung, kein Termin. Ob ein Mensch sich meldet, entscheidet dieser Mensch &mdash; nicht der Himmel und nicht du. Ein Geburtsbild zeigt <i>deine</i> Bereitschaft und <i>deine</i> Lage. &Uuml;ber den Willen anderer sagt es nichts.</div>
+
+<!-- 7 · Durchgerechnet -->
+<section data-ab="1">
+<h2 id="beispiel">Durchgerechnet: zwei erfundene Abende</h2>
+<p>Zwei Beispielmenschen, beide ausgedacht. Dieselbe Methode, zwei sehr verschiedene Ergebnisse &mdash; und zwei sehr verschiedene S&auml;tze, die man dazu sagt.</p>
+<div class="eg-faelle" id="egfaelle"></div>
+<div class="eg-tech ac-tech" data-ab="2">
+<h3>Warum das zweite Beispiel nicht schlechter ist</h3>
+<p>Beide Konstellationen sind gleich eng. Der Unterschied liegt nicht in der St&auml;rke, sondern in der <b>Art</b>: Im ersten Fall arbeiten die Bausteine zusammen, im zweiten ziehen sie gegeneinander. Eine Deutung, die den zweiten Fall sch&ouml;nredet, ist keine freundliche Deutung &mdash; sie ist eine falsche.</p>
+</div>
+</section>
+
+<!-- 8 · Für die Coachin -->
+<details class="eg-coach">
+<summary>F&uuml;r die Coachin &mdash; wie man das weitergibt</summary>
+<div class="eg-coach-inner">
+<h3>Vier Regeln</h3>
+<ol>
+<li><b>M&ouml;glichkeiten zeigen, keine Tatsachen ank&uuml;ndigen.</b> &bdquo;In den n&auml;chsten drei Wochen ist dieser Bereich offen&ldquo; statt &bdquo;Du wirst jemanden kennenlernen&ldquo;.</li>
+<li><b>Keine Aussagen &uuml;ber dritte Menschen.</b> Du hast deren Chart nicht und deren Einverst&auml;ndnis auch nicht. Was du lesen kannst, ist die Lage deiner Klientin &mdash; nicht die Absicht ihres Gegen&uuml;bers.</li>
+<li><b>Selbstwirksamkeit st&auml;rken.</b> Nach jeder Deutung die Frage: Was davon liegt in ihrer Hand? Wenn die Antwort &bdquo;nichts&ldquo; ist, hast du eine Prophezeiung abgeliefert, keine Beratung.</li>
+<li><b>Nicht zum Warten einladen.</b> Astrologie wird gef&auml;hrlich, wenn sie einen Grund liefert, das eigene Leben zu vertagen. &bdquo;Erst wenn der Transit vorbei ist&ldquo; ist fast immer eine Ausrede, die du nicht mitbauen solltest.</li>
+</ol>
+<h3>Reflexionsfragen f&uuml;r das Gespr&auml;ch</h3>
+<ul class="eg-fragen">
+<li>Wenn dieses Fenster offen ist &mdash; wof&uuml;r willst du es benutzen? Was w&auml;re dein erster Schritt, noch diese Woche?</li>
+<li>Angenommen, es passiert <i>nichts</i> von dem, was wir hier besprochen haben. Was tust du dann?</li>
+<li>Welcher Teil dessen, worauf du wartest, h&auml;ngt an einem anderen Menschen &mdash; und welcher Teil h&auml;ngt an dir?</li>
+<li>Was w&uuml;rdest du tun, wenn du dieses Chart nie gesehen h&auml;ttest?</li>
+</ul>
+<p class="eg-weiter">Dazu passt: <a href="haltung-ethik.html">Haltung und Ethik</a> &middot; <a href="grenzen.html">Wann du nicht deutest</a> &middot; <a href="klientinnen-fragen.html">H&auml;ufige Klientinnenfragen</a></p>
+</div>
+</details>
+
+<!-- 9 · Was das taugt -->
+<h2 id="grenzen">Was das taugt &mdash; und was nicht</h2>
+<div class="eg-ehrlich">
+<p><b>Ein lautes Fenster ist kein Versprechen, dass es gut wird.</b> Es sagt, dass ein Bereich in Bewegung ist. Bewegung kann Ankunft hei&szlig;en und Abschied, und die Methode unterscheidet das nicht.</p>
+<p><b>Wie h&auml;ufig das &uuml;berhaupt ist:</b> Die schnellen Bewegungen treffen jedes Bild mehrmals im Monat. Enge Kontakte der langsamen sind selten &mdash; wenige pro Jahr. Wer in jeder Woche ein gro&szlig;es Thema findet, rechnet zu gro&szlig;z&uuml;gig.</p>
+<p><b>Diese Deutungen sind nicht &uuml;berpr&uuml;ft.</b> Es gibt keine belastbare Statistik, die sie st&uuml;tzt. Sie sind &Uuml;berlieferung und Erfahrung, sinnvoll geordnet &mdash; mehr nicht.</p>
+<p><b>Dein Erleben hat Vorrang.</b> Wenn die Seite sagt, ein Bereich sei laut, und du sp&uuml;rst nichts, dann hat die Seite unrecht und nicht du.</p>
+</div>
+
+<!-- 10 · Quiz -->
+<section data-ab="1">
+<h2 id="quiz">Kleines Quiz</h2>
+<p>F&uuml;nf Fragen. Jede Antwort wird erkl&auml;rt &mdash; auch die falschen.</p>
+<div class="eg-quiz" id="egquiz"></div>
+<div class="eg-quiz-stand" id="egquizstand"></div>
+<button type="button" class="eg-wuerfel" id="egquizneu">Von vorn</button>
+</section>
+
+<!-- 11 · Weiterlernen -->
+<h2 id="weiterlernen">Weiterlernen</h2>
+<div class="eg-links">
+<p data-bis="0"><b>Auf dieser Plattform</b><br>
+<a href="bausteine.html">Die Bausteine</a> &middot; <a href="haeuser-lebensbuehnen.html">Die 12 Lebensb&uuml;hnen</a> &middot; <a href="timing.html">Timing</a> &middot; <a href="glossar.html">Glossar</a></p>
+<p data-ab="1"><b>Auf dieser Plattform</b><br>
+<a href="bausteine.html">Die Bausteine</a> &middot; <a href="haeuser-lebensbuehnen.html">Die 12 Lebensb&uuml;hnen</a> &middot; <a href="aspekte-lesen.html">Aspekte lesen</a> &middot; <a href="orbis-gewichtung.html">Orbis und Gewichtung</a> &middot; <a href="timing.html">Timing</a> &middot; <a href="retrograde.html">R&uuml;ckl&auml;ufigkeit</a> &middot; <a href="herrscher.html">Herrscher</a> &middot; <a href="synastrie.html">Synastrie</a> &middot; <a href="glossar.html">Glossar</a></p>
+<p><b>Au&szlig;erhalb</b><br>
+<a href="https://theastrologypodcast.com/2018/02/22/secondary-progressions/" rel="noopener">The Astrology Podcast &mdash; Secondary Progressions</a> (englisch, ausf&uuml;hrliche Folge zu Progressionen)<br>
+<a href="https://horoscopes.astro-seek.com/secondary-progressions-astrology-calculator" rel="noopener">astro-seek &mdash; Progressionsrechner</a><br>
+<a href="https://horoscopes.astro-seek.com/calculate-transit-chart-online" rel="noopener">astro-seek &mdash; Transitrechner</a></p>
+<p class="eg-fein">Die externen Seiten geh&ouml;ren nicht zu dieser Plattform. Sie werden hier genannt, weil sie frei zug&auml;nglich sind und sauber rechnen &mdash; nicht, weil ihre Deutungen gepr&uuml;ft w&auml;ren.</p>
+</div>
+
+<div class="weiter"><a href="bausteine.html"><span class="lbl">&larr; Davor</span><span class="ttl">Die Bausteine</span></a><a href="timing.html" class="nx"><span class="lbl">Danach &rarr;</span><span class="ttl">Timing &mdash; wann etwas gilt</span></a></div>
+<div class="foot">Ereignisse lesen &middot; Alle Beispielmenschen auf dieser Seite sind erfunden.<span data-ab="2"> Whole Sign, tropisch.</span></div>
+</div>
+
+<script>
+/* Astro-Charlie · Ereignisse lesen — die Texte.
+   Hier stehen nur Sätze. Nichts rechnet, nichts zeigt an.
+
+   Zwei Register: Wo ein Feld ein Paar ['Alltag','Fach'] ist, gilt der
+   erste Eintrag auf Stufe 0 und der zweite ab Stufe 1. Ein einfacher
+   String gilt überall — dann ist der Satz auf beiden Stufen derselbe
+   und enthält kein Fachwort. Die Auswahl trifft w() in ereignis-app.js. */
+(function(){
+'use strict';
+
+/* ── Die fünf Bausteine ────────────────────────────────── */
+var BAUSTEINE = [
+ { nr:'1', frage:'WAS',
+   titel:['Welche Kraft','Der Planet'],
+   kurz:'Welche Kraft gerade angesprochen ist.',
+   text:['Jede Kraft hat ihr eigenes Thema. Zuneigung geht anders vor als Antrieb, '
+       + 'und Struktur fühlt sich anders an als Wachstum. Der erste Schritt ist immer: '
+       + 'Welche Kraft ist überhaupt beteiligt?',
+         'Jeder Planet hat sein eigenes Thema. Venus geht anders vor als Mars, '
+       + 'und Saturn fühlt sich anders an als Jupiter. Der erste Schritt ist immer: '
+       + 'Welcher Planet ist überhaupt beteiligt?'],
+   liste:[
+    ['Sonne','Identität, Richtung, Fokus'],
+    ['Mond','Gefühl, Bedürfnis, Zuhause'],
+    ['Merkur','Denken, Reden, Nachrichten'],
+    ['Venus','Zuneigung, Werte, Geschmack'],
+    ['Mars','Antrieb, Ärger, Durchsetzung'],
+    ['Jupiter','Wachstum, Vertrauen, Rückenwind'],
+    ['Saturn','Struktur, Prüfung, Verbindlichkeit'],
+    ['Uranus','Überraschung, Bruch, Befreiung'],
+    ['Neptun','Sehnsucht, Nebel, Auflösung'],
+    ['Pluto','Tiefe, Macht, Verwandlung']] },
+
+ { nr:'2', frage:'WIE',
+   titel:['Auf welche Art','Das Zeichen'],
+   kurz:'In welchem Stil diese Kraft vorgeht.',
+   text:['Dieselbe Kraft tritt verschieden auf. Sie kann direkt losgehen oder lange zögern, '
+       + 'laut werden oder sich zurückziehen. Die Art ändert nicht das Thema — sie ändert die Umgangsform.',
+         'Derselbe Planet tritt in jedem Zeichen anders auf. Er kann direkt losgehen oder lange zögern, '
+       + 'laut werden oder sich zurückziehen. Das Zeichen ändert nicht das Thema — es ändert die Umgangsform.'],
+   liste:[
+    ['Widder','direkt, sofort, ohne Umweg'],
+    ['Stier','langsam, sinnlich, beharrlich'],
+    ['Zwillinge','beweglich, neugierig, in Worten'],
+    ['Krebs','vorsichtig, schützend, nah'],
+    ['Löwe','sichtbar, großzügig, mit Geste'],
+    ['Jungfrau','genau, prüfend, im Detail'],
+    ['Waage','abwägend, über das Gegenüber'],
+    ['Skorpion','tief, unbedingt, verdeckt'],
+    ['Schütze','weit, meinungsstark, hinaus'],
+    ['Steinbock','ernst, geduldig, mit Plan'],
+    ['Wassermann','eigensinnig, abstrakt, quer'],
+    ['Fische','durchlässig, mitfühlend, unscharf']] },
+
+ { nr:'3', frage:'WO',
+   titel:['In welchem Lebensbereich','Das Haus'],
+   kurz:'An welcher Stelle des Lebens es spürbar wird.',
+   text:['Der Lebensbereich ist die Bühne. Er sagt nichts darüber, ob etwas gut ausgeht — '
+       + 'nur, in welchem Teil des Lebens es sich abspielt. Dieselbe Spannung ist in der Arbeit '
+       + 'etwas anderes als zu Hause.',
+         'Das Haus ist die Bühne. Es sagt nichts darüber, ob etwas gut ausgeht — '
+       + 'nur, in welchem Teil des Lebens es sich abspielt. Dieselbe Spannung ist im 10. Haus '
+       + 'etwas anderes als im 4.'],
+   liste:[
+    ['1. Haus','du selbst, dein Auftreten, dein Körper'],
+    ['2. Haus','Geld, Besitz, Selbstwert'],
+    ['3. Haus','Nachrichten, kurze Wege, Geschwister, Nachbarn'],
+    ['4. Haus','Zuhause, Herkunft, Familie, Wurzeln'],
+    ['5. Haus','Romantik, Dating, Spiel, Kinder, Kreatives'],
+    ['6. Haus','Alltag, Arbeit, Körperpflege, Haustiere'],
+    ['7. Haus','Partnerschaft, das verbindliche Gegenüber'],
+    ['8. Haus','Tiefe, Intimität, geteiltes Geld, Krisen'],
+    ['9. Haus','Ferne, Studium, Überzeugung, Ausland'],
+    ['10. Haus','Berufung, Lebensrichtung, Ansehen'],
+    ['11. Haus','Freundschaften, Gruppen, Hoffnungen'],
+    ['12. Haus','Verborgenes, Rückzug, das Unerledigte']] },
+
+ { nr:'4', frage:'WIE STARK',
+   titel:['Welche Art Verbindung','Der Aspekt'],
+   kurz:'Ob zwei Kräfte zusammenarbeiten oder gegeneinander.',
+   text:['Die Verbindung ist der Umgangston zwischen zwei Kräften. Sie entscheidet, ob etwas leicht geht, '
+       + 'ob es Reibung gibt oder ob zwei Dinge einander im Weg stehen.',
+         'Der Aspekt ist der Umgangston zwischen zwei Planeten. Er entscheidet, ob etwas leicht geht, '
+       + 'ob es Reibung gibt oder ob zwei Dinge einander im Weg stehen.'],
+   liste:[
+    ['Konjunktion','verschmilzt — beides zugleich, nicht trennbar'],
+    ['Sextil','bietet an — geht leicht, wenn man zugreift'],
+    ['Quadrat','reibt — verlangt eine Handlung, erzwingt sie nicht'],
+    ['Trigon','fließt — geht von allein, wird leicht übersehen'],
+    ['Opposition','spiegelt — zwei Pole, die beide recht haben']] },
+
+ { nr:'5', frage:'WANN',
+   titel:['Zu welcher Zeit','Das Timing'],
+   kurz:'Ab wann, bis wann, und wie nah dran.',
+   text:['Ohne Zeitangabe ist eine Deutung wertlos. Erst das Fenster macht aus einer Beschreibung '
+       + 'etwas, mit dem jemand etwas anfangen kann.',
+         'Ohne Zeitangabe ist eine Deutung wertlos. Erst das Fenster macht aus einer Beschreibung '
+       + 'etwas, mit dem jemand etwas anfangen kann.'],
+   liste:[
+    ['Transit','der heutige Himmel berührt das Geburtsbild'],
+    ['Orbis','der Abstand zum genauen Winkel — je enger, desto lauter'],
+    ['exakter Tag','der Höhepunkt, meist nicht der eindrücklichste'],
+    ['Station','ein Planet dreht — die intensivsten Wochen'],
+    ['Rückläufigkeit','Rückschau und Prüfung statt Neuanfang'],
+    ['Progression','ein Tag nach der Geburt zählt ein Lebensjahr']] }
+];
+
+/* ── Rezepte (ab Stufe 1 sichtbar) ─────────────────────── */
+var REZEPTE = [
+ { k:'nachricht', ergebnis:'es klingelt', name:'Eine überraschende Nachricht',
+   formel:['Überraschung','Kommunikation','Thema'],
+   zutaten:[
+    'Uranus — der Baustein für das Unerwartete',
+    'Merkur, das 3. Haus oder Zwillinge — der Baustein für Nachrichten',
+    'ein Thema-Baustein: Venus oder das 5. Haus für Liebe, das 10. Haus für Arbeit'],
+   ehrlich:'Das Chart zeigt, DASS etwas ankommen kann — nicht, von wem. '
+         + 'Wer daraus einen Namen macht, hat die Methode verlassen.' },
+
+ { k:'naehe', ergebnis:'nah oder fern', name:'Persönlich oder über Entfernung',
+   formel:['Ort','Entfernung','Kanal'],
+   zutaten:[
+    'Für persönlich: 3. Haus (kurze Wege), 7. Haus (das Gegenüber), 4. Haus (Zuhause)',
+    'Für Distanz oder Indirektes: 9. Haus (Ferne), 12. Haus (Verborgenes), Neptun (unscharf)',
+    'Merkur ohne Ortsangabe heißt meist: über ein Gerät, nicht von Angesicht zu Angesicht'],
+   ehrlich:'Diese Unterscheidung ist die unsicherste auf der ganzen Seite. '
+         + 'Sie stammt aus einer Zeit ohne Telefon. Behandle sie als Vermutung.' },
+
+ { k:'liebe', ergebnis:'ein offenes Fenster', name:'Liebe und Dating',
+   formel:['Zuneigung','Antrieb','Bühne'],
+   zutaten:[
+    'Venus — was angezogen wird, und wovon',
+    'Mars — wer losgeht und wie',
+    '5. Haus für Verliebtsein und Dating, 7. Haus für Verbindlichkeit, 8. Haus für Tiefe',
+    'Aspekte auf Venus, Mars, den Aszendenten und den Mond'],
+   ehrlich:'Ein offenes Fenster sagt nichts über die Qualität dessen, was hindurchkommt. '
+         + 'Und nichts darüber, ob jemand bleibt.' },
+
+ { k:'energie', ergebnis:'viel oder wenig Akku', name:'Energie und Antrieb',
+   formel:['Kraft','Körper','Gegenwind'],
+   zutaten:[
+    'Mars — der Akku selbst',
+    'Aszendent und Sonne — die Grundverfassung',
+    'Neptun im Quadrat oder in Konjunktion: Erschöpfung, Nebel, diffuse Müdigkeit',
+    'Saturn: Last, aber tragfähig. Jupiter: Rückenwind, manchmal zu viel davon'],
+   ehrlich:'Anhaltende Erschöpfung gehört ärztlich abgeklärt, nicht astrologisch. '
+         + 'Das Chart darf die Untersuchung nicht ersetzen.' },
+
+ { k:'berufung', ergebnis:'die Richtung dreht sich', name:'Berufung und Lebensrichtung',
+   formel:['Richtung','Reife','Zeit'],
+   zutaten:[
+    'MC und 10. Haus — wohin es öffentlich geht',
+    'Sonne — was die Person im Kern ist',
+    'Saturn — was Verbindlichkeit verlangt und wo Reife wächst',
+    'Pluto auf dem MC: eine tiefe Neuerfindung der Richtung, über Jahre'],
+   ehrlich:'Langsame Planeten brauchen Jahre. Wer hier auf einen Tag deutet, '
+         + 'verkauft Dramatik statt Timing.' },
+
+ { k:'phasen', ergebnis:'ein Lebensabschnitt', name:'Große Lebensphasen',
+   formel:['langsamer Zyklus','Lebensalter'],
+   zutaten:[
+    'Saturn auf der Sonne — Reife, Grenzen, Ernsthaftigkeit (etwa alle 29 Jahre)',
+    'Uranus am Aszendenten — Befreiung, neue Identität (einmal im Leben, falls überhaupt)',
+    'Jupiterwiederkehr alle zwölf Jahre — Aufbruch, Weite',
+    'Saturnwiederkehr um 29 und um 58 — die bekannteste Schwelle'],
+   ehrlich:'Diese Phasen sind groß und langsam. Sie erklären ein Lebensjahr, '
+         + 'nicht einen schlechten Dienstag.' }
+];
+
+/* ── Menschen im Chart (auf beiden Stufen sichtbar) ────── */
+var MENSCHEN = [
+ { k:'mutter', name:'Mutter', icon:'☽',
+   wo:['Zuhause und Herkunft — manchmal auch die Lebensrichtung',
+       '4. Haus — oft auch das 10.'],
+   kraft:['dein Gefühl','Mond'],
+   text:['Das Nährende, das Versorgende, das früh Erfahrene. Der Ort dafür ist das Zuhause, '
+       + 'aus dem jemand kommt. In der heutigen Praxis wird die Mutter meist dort gesucht.',
+         'Der Mond steht für das Nährende, das Versorgende, das früh Erfahrene. Das 4. Haus ist '
+       + 'das Zuhause, aus dem jemand kommt. In der modernen Praxis wird die Mutter meist dort gesucht.'],
+   aspekte:[
+    ['was dein Gefühl von außen gerade berührt — Härte, Nebel oder Druck',
+     'wer sonst noch in diesem Bereich wohnt — das färbt die ganze Herkunft',
+     'wann der tiefste Punkt deines Bildes wieder angerührt wird'],
+    ['Aspekte auf den Mond — besonders von Saturn (Härte), Neptun (Idealisierung), Pluto (Macht)',
+     'Aspekte auf den Herrscher des 4. Hauses',
+     'Planeten, die im 4. Haus stehen — sie färben die ganze Herkunft',
+     'Transite über den IC zeigen, wann das Thema wieder lebendig wird']],
+   streit:['Die Überlieferung ist sich uneins, welchem Elternteil dieser Ort gehört. Beide Zuordnungen '
+         + 'sind in Gebrauch. Frag im Zweifel die Person, wer das Zuhause gemacht hat und wer den '
+         + 'Maßstab gesetzt hat — das trifft es besser als jede Regel.',
+           'In der hellenistischen Astrologie gilt das 4. Haus dem Vater, nicht der Mutter. Beide '
+         + 'Zuordnungen sind in Gebrauch. Frag im Zweifel die Person, welcher Elternteil das Zuhause '
+         + 'gemacht hat und welcher den Maßstab gesetzt hat — das trifft es besser als jede Regel.'] },
+
+ { k:'vater', name:'Vater', icon:'♄',
+   wo:['Berufung und Lebensrichtung — manchmal auch das Zuhause',
+       '10. Haus — oft auch das 4.'],
+   kraft:['deine Struktur, dazu dein Wesenskern','Saturn, bei Tagesgeburten auch die Sonne'],
+   text:['Autorität, Maßstab und Grenze. Der Ort dafür ist die Richtung, in die jemand öffentlich geht — '
+       + 'und damit oft die Stelle, an der ein Vater seine Spur hinterlassen hat.',
+         'Saturn steht für Autorität, Maßstab und Grenze. Das 10. Haus ist die Richtung, in die jemand '
+       + 'öffentlich geht — und damit oft die Stelle, an der ein Vater seine Spur hinterlassen hat.'],
+   aspekte:[
+    ['was deine Struktur und deinen Wesenskern von außen berührt',
+     'wer sonst in deinem Bereich der Lebensrichtung wohnt',
+     'wann der höchste Punkt deines Bildes angerührt wird'],
+    ['Aspekte auf Saturn und auf die Sonne',
+     'Aspekte auf den Herrscher des 10. Hauses',
+     'Planeten im 10. Haus',
+     'Transite über das MC — besonders von Saturn und Pluto']],
+   streit:['Dieselbe Uneinigkeit wie bei der Mutter, nur umgekehrt. Nimm nicht die Regel, nimm die Person.',
+           'Dieselbe Uneinigkeit wie bei der Mutter, nur umgekehrt. Nimm nicht die Regel, nimm die Person.'] },
+
+ { k:'geschwister', name:'Geschwister', icon:'☿',
+   wo:['Nachrichten, kurze Wege, nähere Umgebung','3. Haus'],
+   kraft:['dein Denken','Merkur'],
+   text:['Die nächste Umgebung: Geschwister, Cousins, Nachbarn, alle, mit denen man aufgewachsen ist, '
+       + 'ohne sie gewählt zu haben. Es geht um den Austausch auf Augenhöhe.',
+         'Das 3. Haus ist die nächste Umgebung: Geschwister, Cousins, Nachbarn, alle, mit denen man '
+       + 'aufgewachsen ist, ohne sie gewählt zu haben. Merkur ist der Austausch auf Augenhöhe.'],
+   aspekte:[
+    ['was dein Denken gerade von außen berührt',
+     'wer sonst in deiner näheren Umgebung wohnt — Antrieb dort heißt oft Rivalität, Struktur oft Abstand',
+     'wann in dieser Ecke etwas in Bewegung kommt'],
+    ['Aspekte auf Merkur',
+     'Aspekte auf den Herrscher des 3. Hauses',
+     'Planeten im 3. Haus — Mars dort heißt oft Rivalität, Saturn oft Abstand',
+     'Transite durch das 3. Haus: wann in dieser Ecke etwas in Bewegung kommt']],
+   streit:['Für einzelne Geschwister gibt es alte Abzählregeln. Sie sind unzuverlässig und hier bewusst weggelassen.',
+           'Für einzelne Geschwister gibt es alte Abzählregeln. Sie sind unzuverlässig und hier bewusst weggelassen.'] },
+
+ { k:'familie', name:'Familie und Herkunft', icon:'⌂',
+   wo:['Zuhause und Wurzeln','4. Haus, dazu der IC'],
+   kraft:['dein Gefühl','Mond'],
+   text:['Der tiefste Punkt des Bildes ist die Wurzel. Alles, was von dort kommt, gehört dazu: '
+       + 'Wohnung, Familie, das Gefühl von Woher.',
+         'Der IC ist der tiefste Punkt des Charts — die Wurzel. Das 4. Haus ist alles, was von dort '
+       + 'kommt: Wohnung, Familie, das Gefühl von Woher.'],
+   aspekte:[
+    ['was den tiefsten Punkt deines Bildes gerade berührt',
+     'was dein Gefühl von außen berührt',
+     'wohin die Herkunft führt — dafür sieht man, wo ihr Verwalter sitzt',
+     'die langsamen Bewegungen über diesen Punkt: Umzüge und Neusortierungen über Jahre'],
+    ['Aspekte auf den IC',
+     'Aspekte auf den Mond',
+     'der Herrscher des 4. Hauses und wo er steht — er sagt, wohin die Herkunft führt',
+     'langsame Transite über den IC: Umzüge, Brüche, Neusortierungen über Jahre']],
+   streit:['Dieser Ort beschreibt die Erfahrung, nicht die Familie. Zwei Geschwister mit derselben '
+         + 'Kindheit haben hier Verschiedenes stehen — und beide haben recht.',
+           'Das 4. Haus beschreibt die Erfahrung, nicht die Familie. Zwei Geschwister mit derselben '
+         + 'Kindheit haben verschiedene vierte Häuser — und beide haben recht.'] },
+
+ { k:'freunde', name:'Freundinnen und Freunde', icon:'✦',
+   wo:['Freundschaften, Gruppen, Hoffnungen','11. Haus'],
+   kraft:['deine Zuneigung für die Nähe, dein Vertrauen für die Förderer',
+          'Venus für die Nähe, Jupiter für die Förderer'],
+   text:['Die gewählten Menschen: Freundschaften, Gruppen, Szenen, Verbündete — und das, '
+       + 'worauf man gemeinsam hofft.',
+         'Das 11. Haus sind die gewählten Menschen: Freundschaften, Gruppen, Szenen, Verbündete — '
+       + 'und das, worauf man gemeinsam hofft.'],
+   aspekte:[
+    ['wer in diesem Bereich wohnt — ein Freiheitsdrang dort heißt oft: viele, lose, wechselnd',
+     'was deine Zuneigung berührt — das sagt etwas über die Qualität der Nähe',
+     'Phasen, in denen sich der Kreis austauscht'],
+    ['Aspekte auf den Herrscher des 11. Hauses',
+     'Planeten im 11. Haus — Uranus dort heißt oft: viele, lose, wechselnd',
+     'Aspekte auf Venus für die Qualität der Nähe',
+     'Transite durch das 11. Haus: Phasen, in denen sich der Kreis austauscht']],
+   streit:['In der Überlieferung ging es hier eher um Wohltäter als um Freundschaft im heutigen Sinn. '
+         + 'Die moderne Lesart ist jünger, aber brauchbar.',
+           'Das 11. Haus ist in der Überlieferung eher „gute Geister und Wohltäter" als „Freundschaft" '
+         + 'im heutigen Sinn. Die moderne Lesart ist jünger, aber brauchbar.'] },
+
+ { k:'partner', name:'Partnerin oder Partner', icon:'∞',
+   wo:['feste Beziehungen — Verliebtsein davor, Tiefe danach',
+       '7. Haus — Dating im 5., Tiefe im 8.'],
+   kraft:['deine Zuneigung und dein Antrieb','Venus und Mars'],
+   text:['Das verbindliche Gegenüber: Partnerschaft, aber auch feste Gegner. Davor liegt das '
+       + 'Verliebtsein, danach die Tiefe.',
+         'Das 7. Haus ist das verbindliche Gegenüber: Ehe, Partnerschaft, aber auch feste Gegner. '
+       + 'Das 5. Haus ist das Verliebtsein davor, das 8. die Tiefe danach.'],
+   aspekte:[
+    ['wer deinen Bereich der festen Beziehungen verwaltet und was ihn berührt',
+     'was deine Zuneigung, deinen Antrieb und dein Gefühl von außen berührt',
+     'wann der Punkt gegenüber deinem Auftreten angerührt wird',
+     'bei zwei Bildern: wessen Kräfte in deinem Bereich der festen Beziehungen landen'],
+    ['Aspekte auf den Herrscher des 7. Hauses',
+     'Aspekte auf Venus, Mars und den Mond',
+     'Transite über den Deszendenten',
+     'in zwei Charts: wessen Planeten im 7. Haus der anderen landen']],
+   streit:['Dieser Ort beschreibt, was jemand im Gegenüber sucht — nicht, wen er bekommt.',
+           'Das 7. Haus beschreibt, was jemand im Gegenüber sucht — nicht, wen er bekommt.'] },
+
+ { k:'kinder', name:'Kinder', icon:'✧',
+   wo:['Romantik, Spiel und alles Hervorgebrachte','5. Haus'],
+   kraft:['dein Vertrauen, bei Nachtgeburten auch deine Zuneigung',
+          'Jupiter, bei Nachtgeburten auch die Venus'],
+   text:['Alles Hervorgebrachte: Kinder, Kreatives, Spiel, Freude. Derselbe Ort, dieselbe Bewegung — '
+       + 'etwas entsteht und geht eigene Wege.',
+         'Das 5. Haus ist alles Hervorgebrachte: Kinder, Kreatives, Spiel, Freude. Dasselbe Haus, '
+       + 'dieselbe Bewegung — etwas entsteht und geht eigene Wege.'],
+   aspekte:[
+    ['wer diesen Bereich verwaltet und was ihn berührt',
+     'wer sonst dort wohnt',
+     'Phasen, in denen dieser Bereich in Bewegung kommt'],
+    ['Aspekte auf den Herrscher des 5. Hauses',
+     'Planeten im 5. Haus',
+     'Transite durch das 5. Haus']],
+   streit:['Ob jemand Kinder bekommt, lässt sich hier nicht ablesen. Wer das behauptet, richtet '
+         + 'Schaden an. Das ist keine Vorsicht, das ist die Grenze der Methode.',
+           'Aus dem 5. Haus lässt sich nicht ablesen, ob jemand Kinder bekommt. Wer das behauptet, '
+         + 'richtet Schaden an. Das ist keine Vorsicht, das ist die Grenze der Methode.'] },
+
+ { k:'haustier', name:'Haustiere', icon:'❀',
+   wo:['Alltag und tägliche Versorgung — bei großen Tieren das Verborgene',
+       '6. Haus — bei großen Tieren das 12.'],
+   kraft:['dein Denken für kleine Tiere, dein Gefühl für die Bindung',
+          'Merkur für kleine Tiere, Mond und Venus für die Bindung'],
+   text:['In der Überlieferung gehören kleine Tiere zum Alltag und große Tiere — Pferde, Vieh — '
+       + 'ins Verborgene. Der Alltagsbereich ist dabei vor allem die tägliche Versorgung: '
+       + 'füttern, rausgehen, zum Tierarzt.',
+         'In der Überlieferung gehören kleine Tiere ins 6. Haus und große Tiere — Pferde, Vieh — '
+       + 'ins 12. Das 6. Haus ist dabei vor allem die tägliche Versorgung: füttern, Gassi, '
+       + 'zum Tierarzt.'],
+   aspekte:[
+    ['wer in deinem Alltagsbereich wohnt und wer ihn verwaltet — das beschreibt die Art der Fürsorge',
+     'was dein Gefühl berührt, für die Bindung',
+     'Phasen, in denen Pflege und Alltag mehr Raum brauchen',
+     'bei einem geliebten Tier zusätzlich den Bereich von Freude und Spiel ansehen'],
+    ['Planeten im 6. Haus und sein Herrscher — sie beschreiben die Art der Fürsorge',
+     'Aspekte auf den Mond für die Bindung',
+     'Transite durch das 6. Haus: Phasen, in denen Pflege und Alltag mehr Raum brauchen',
+     'bei einem geliebten Tier zusätzlich das 5. Haus ansehen']],
+   streit:['Viele heutige Astrologinnen lesen ein geliebtes Haustier zusätzlich dort, wo Freude und '
+         + 'Zugehörigkeit sitzen — nicht bei den Pflichten. Das ist eine moderne Erweiterung und '
+         + 'keine alte Regel. Beides nebeneinander zu lesen, funktioniert gut.',
+           'Viele heutige Astrologinnen lesen ein geliebtes Haustier zusätzlich im 5. Haus, weil es '
+         + 'dort steht, wo Freude und Zugehörigkeit sitzen — nicht bei den Pflichten. Das ist eine '
+         + 'moderne Erweiterung und keine alte Regel. Beides nebeneinander zu lesen, funktioniert gut.'] },
+
+ { k:'kollegen', name:'Kolleginnen und Alltagsmenschen', icon:'⚒',
+   wo:['Alltag und Arbeit','6. Haus'],
+   kraft:['dein Denken','Merkur'],
+   text:['Alle, mit denen man den Werktag teilt, ohne sie gewählt zu haben: Team, Dienstleister, '
+       + 'die Leute im Laden um die Ecke.',
+         'Alle, mit denen man den Werktag teilt, ohne sie gewählt zu haben: Team, Dienstleister, '
+       + 'die Leute im Laden um die Ecke.'],
+   aspekte:[
+    ['wer in deinem Alltagsbereich wohnt und wer ihn verwaltet',
+     'Phasen, in denen dort etwas in Bewegung kommt',
+     'ein Antrieb dort: Reibung im Team, oft über Zuständigkeiten'],
+    ['Planeten im 6. Haus und sein Herrscher',
+     'Transite durch das 6. Haus',
+     'Mars dort: Reibung im Team, oft über Zuständigkeiten']],
+   streit:['Vorgesetzte gehören nicht hierher, sondern zur Lebensrichtung — der Unterschied ist die '
+         + 'Macht, nicht die Nähe.',
+           'Vorgesetzte gehören nicht hierher, sondern ins 10. Haus — der Unterschied ist die Macht, '
+         + 'nicht die Nähe.'] },
+
+ { k:'fremde', name:'Menschen aus der Ferne', icon:'➹',
+   wo:['Ferne, Studium, Überzeugung','9. Haus'],
+   kraft:['dein Vertrauen','Jupiter'],
+   text:['Lehrerinnen, Menschen aus anderen Ländern, Mentorinnen, alles, was den eigenen Horizont '
+       + 'von außen anstößt.',
+         'Lehrerinnen, Menschen aus anderen Ländern, Mentorinnen, alles, was den eigenen Horizont '
+       + 'von außen anstößt.'],
+   aspekte:[
+    ['wer in deinem Bereich der Ferne wohnt und wer ihn verwaltet',
+     'was dein Vertrauen von außen berührt',
+     'Zeiten, in denen Fremdes näher kommt'],
+    ['Planeten im 9. Haus und sein Herrscher',
+     'Aspekte auf Jupiter',
+     'Transite durch das 9. Haus: Zeiten, in denen Fremdes näher kommt']],
+   streit:['„Ferne" meinte ursprünglich mehr als ein paar Tagesreisen. Heute ist die Grenze unscharf.',
+           '„Ferne" meinte ursprünglich mehr als ein paar Tagesreisen. Heute ist die Grenze unscharf.'] }
+];
+
+/* ── Durchgerechnete Beispiele (ab Stufe 1, erfundene Menschen) ── */
+var FAELLE = [
+ { name:'Beispiel A — der Abend, an dem etwas aufgeht',
+   schritte:[
+    ['Baustein 1','Uranus im Quadrat zur Venus, Orbis 0,4°',
+     'Das Unerwartete reibt an der Zuneigung. Sehr eng — also laut.'],
+    ['Baustein 2','Jupiter im 3. Haus, im Trigon zu Uranus, Orbis 0,3°',
+     'Wachstum auf der Bühne der Nachrichten, fließend verbunden mit demselben Unerwarteten.'],
+    ['Baustein 3','Der Mond läuft durch das 5. Haus',
+     'Das Gefühl ist an diesem Tag in Romantik und Spiel unterwegs. Der Mond macht nichts Großes — er sagt, wo heute das Herz sitzt.'],
+    ['Zusammen','Drei Bausteine, eine Richtung',
+     'Überraschung, Nachricht und Zuneigung, alle gleichzeitig eng. Das ist genug für eine Aussage.']],
+   deutung:'An diesem Abend ist der Bereich offen, in dem Zuneigung über Worte läuft. '
+         + 'Es kann etwas hereinkommen, das du nicht geplant hast — eine Nachricht, ein Gespräch, '
+         + 'eine Wendung. Was du tun kannst: erreichbar sein und antworten, statt zu warten.',
+   nicht:'Was NICHT dasteht: von wem. Ob es eine bestimmte Person ist. Ob daraus etwas wird. '
+       + 'Und ob überhaupt etwas passiert — das Fenster ist offen, mehr sagt die Methode nicht.' },
+
+ { name:'Beispiel B — Herz offen, Akku leer',
+   schritte:[
+    ['Baustein 1','Neptun im Quadrat zum Mars, Orbis 0,0°',
+     'Auflösung reibt genau am Antrieb. Exakt, also so laut wie es geht.'],
+    ['Baustein 2','Venus läuft durch das 5. Haus',
+     'Die Zuneigung ist wach und sucht. Der Wunsch ist da.'],
+    ['Baustein 3','Kein Aspekt zwischen beiden',
+     'Die zwei Bausteine reden nicht miteinander. Das ist der ganze Punkt.'],
+    ['Zusammen','Zwei Bausteine, zwei Richtungen',
+     'Das Wollen ist offen, die Kraft ist weg. Nicht ein Thema — zwei, die sich im Weg stehen.']],
+   deutung:'Du willst, und du kannst gerade nicht. Das ist keine Charakterschwäche und kein Hinweis '
+         + 'darauf, dass es nicht sein soll. Es ist eine Phase mit wenig Treibstoff. Was du tun kannst: '
+         + 'das Fenster klein halten — ein Gespräch statt eines Abends, und erst danach entscheiden.',
+   nicht:'Was NICHT dasteht: dass du nicht geliebt wirst, dass es die falsche Person ist, '
+       + 'oder dass du warten sollst, bis es vorbei ist. Anhaltende Erschöpfung gehört ärztlich abgeklärt.' }
+];
+
+/* ── Quiz (ab Stufe 1) ─────────────────────────────────── */
+var QUIZ = [
+ { f:'Welches Haus steht für Nachrichten, kurze Wege und Geschwister?',
+   a:['Das 3. Haus','Das 9. Haus','Das 11. Haus','Das 7. Haus'], r:0,
+   e:'Das 3. Haus ist die nähere Umgebung: alles, was in Reichweite liegt — Nachrichten, Nachbarn, '
+    + 'Geschwister, der Weg zum Bäcker. Das 9. ist das Gegenstück: die Ferne.' },
+
+ { f:'Ein einzelner sehr enger Aspekt steht im Chart. Was folgt daraus?',
+   a:['Dass das Ereignis sicher eintritt','Dass man noch mindestens einen zweiten Baustein braucht',
+      'Dass man ihn ignorieren kann','Dass der Tag schlecht wird'], r:1,
+   e:'Ein Baustein ist ein Wort, kein Satz. Erst wenn mehrere gleichzeitig dasselbe sagen, '
+    + 'ist eine Aussage tragfähig. Enge allein reicht nicht.' },
+
+ { f:'Wo sieht man in der Überlieferung zuerst nach, wenn es um ein Haustier geht?',
+   a:['Im 5. Haus','Im 6. Haus','Im 12. Haus','Im 2. Haus'], r:1,
+   e:'Kleine Tiere gehören traditionell ins 6. Haus, zusammen mit Alltag und täglicher Versorgung. '
+    + 'Große Tiere ins 12. Viele moderne Astrologinnen lesen ein geliebtes Tier zusätzlich im 5. Haus — '
+    + 'das ist eine Erweiterung, keine alte Regel.' },
+
+ { f:'Eine Klientin fragt: „Meldet er sich diese Woche?" Was ist die saubere Antwort?',
+   a:['Ein Datum nennen, wenn das Fenster eng genug ist',
+      'Aus seinem Sternzeichen ableiten, wie er tickt',
+      'Sagen, was in IHREM Chart offen ist — und dass sein Wille nicht darin steht',
+      'Die Frage ablehnen'], r:2,
+   e:'Das Chart der Klientin zeigt ihre Lage und ihre Bereitschaft. Über die Absicht eines anderen '
+    + 'Menschen sagt es nichts. Die Frage ablehnen muss man nicht — man beantwortet sie nur ehrlich.' },
+
+ { f:'Was bedeutet ein rückläufiger Planet für das Timing?',
+   a:['Alles geht schief','Rückschau und Überprüfung statt Neustart',
+      'Der Aspekt gilt nicht','Es geht doppelt so schnell'], r:1,
+   e:'Rückläufigkeit ist kein Unglück. Sie verschiebt den Modus: zurückgehen, nachbessern, '
+    + 'noch einmal ansehen. Was in dieser Zeit neu aufgesetzt wird, kommt oft noch einmal auf den Tisch.' }
+];
+
+window.AC_EREIG = { BAUSTEINE:BAUSTEINE, REZEPTE:REZEPTE,
+                    MENSCHEN:MENSCHEN, FAELLE:FAELLE, QUIZ:QUIZ };
+})();
+
+/* Astro-Charlie · Ereignisse lesen — die Mechanik.
+   Setzt aus Bausteinen einen Satz zusammen, stufengerecht.
+   Weiß nichts vom Himmel und nichts von der Anzeige. */
+(function(){
+'use strict';
+
+var PLANETEN = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var ZEICHEN  = ['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
+                'Schütze','Steinbock','Wassermann','Fische'];
+var ASPEKTE  = ['Konjunktion','Sextil','Quadrat','Trigon','Opposition'];
+
+/* Alltagssprache als eigene Quelle — damit die Seite auch dann
+   ohne Fachwort auskommt, wenn wortwahl.js nicht geladen ist. */
+var P0 = { Sonne:'dein Wesenskern', Mond:'dein Gefühl', Merkur:'dein Denken',
+  Venus:'deine Zuneigung', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
+  Saturn:'deine Struktur', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
+  Pluto:'deine Tiefe' };
+var P1 = { Sonne:'deine Sonne', Mond:'dein Mond', Merkur:'dein Merkur', Venus:'deine Venus',
+  Mars:'dein Mars', Jupiter:'dein Jupiter', Saturn:'dein Saturn', Uranus:'dein Uranus',
+  Neptun:'dein Neptun', Pluto:'dein Pluto' };
+var Z0 = ['direkt und ohne Umweg','langsam und beharrlich','beweglich und neugierig',
+  'vorsichtig und schützend','sichtbar und großzügig','genau und prüfend',
+  'abwägend, über das Gegenüber','tief und unbedingt','weit und meinungsstark',
+  'ernst und geduldig','eigensinnig und quer','durchlässig und mitfühlend'];
+var H0 = ['bei dir selbst und deinem Auftreten','bei Geld und Selbstwert',
+  'bei Nachrichten und kurzen Wegen','zu Hause und bei der Herkunft',
+  'in Romantik, Spiel und allem Kreativen','im Alltag, in der Arbeit und am Körper',
+  'in festen Beziehungen','in der Tiefe und beim geteilten Geld',
+  'in der Ferne und bei dem, was du glaubst','bei Berufung und Lebensrichtung',
+  'bei Freundschaften und in Gruppen','im Verborgenen und im Rückzug'];
+var A0 = ['verschmilzt damit','bietet sich dort an','reibt daran','fließt dort mit','steht dem gegenüber'];
+var A1 = ['Konjunktion — verschmolzen','Sextil — angeboten','Quadrat — reibend',
+  'Trigon — fließend','Opposition — gespiegelt'];
+
+/* ── Lautstärke aus dem Orbis ──────────────────────────── */
+var STUFEN_ORB = [
+ { bis:0.5, k:3, n:'Volltreffer',  t:'Man merkt es, ohne nachzusehen.' },
+ { bis:1.0, k:3, n:'sehr eng',     t:'Verlässlich. Hier darf man etwas sagen.' },
+ { bis:2.0, k:2, n:'eng',          t:'Deutlich. Bei langsamen Planeten die übliche Grenze.' },
+ { bis:3.0, k:1, n:'spürbar',      t:'Gilt für die schnellen Planeten. Bei langsamen schon dünn.' },
+ { bis:99,  k:0, n:'Hintergrund',  t:'Nicht mehr als einzelne Aussage benutzen.' }
+];
+function laut(orbis){
+  for(var i=0;i<STUFEN_ORB.length;i++) if(orbis<=STUFEN_ORB[i].bis) return STUFEN_ORB[i];
+  return STUFEN_ORB[STUFEN_ORB.length-1];
+}
+
+/* ── Abgeleitete Häuser ────────────────────────────────── */
+function abgeleitet(hausDerPerson, gesuchtesHaus){
+  var h = ((hausDerPerson-1 + gesuchtesHaus-1) % 12) + 1;
+  return h;
+}
+
+/* ── Zahl mit Komma, nie mit Punkt ─────────────────────── */
+function komma(x, stellen){
+  return Number(x).toFixed(stellen===undefined?1:stellen).replace('.', ',');
+}
+
+/* ── Der Satz ──────────────────────────────────────────── */
+function satz(w, stufe){
+  var pi = PLANETEN.indexOf(w.planet), zi = w.zeichen, hi = w.haus, ai = w.aspekt;
+  var L = laut(w.orbis);
+  if(pi < 0) pi = 0;
+
+  if(stufe <= 0){
+    return gross(P0[PLANETEN[pi]]) + ' geht gerade ' + Z0[zi] + ' vor, und zwar '
+         + H0[hi] + '. Etwas anderes ' + A0[ai] + '. ' + L.t;
+  }
+  if(stufe === 1){
+    return gross(P1[PLANETEN[pi]]) + ' steht ' + Z0[zi] + ' (' + ZEICHEN[zi] + ') '
+         + H0[hi] + ' — im ' + (hi+1) + '. Haus. Die Verbindung: '
+         + A1[ai] + '. ' + gross(L.n) + '.';
+  }
+  var g = (stufe >= 3) ? (', Orbis ' + komma(w.orbis, 1) + '°') : '';
+  return PLANETEN[pi] + ' in ' + ZEICHEN[zi] + ', ' + (hi+1) + '. Haus — '
+       + ASPEKTE[ai] + g + '. ' + gross(L.n) + ': ' + L.t;
+}
+
+/* Die Zerlegung in die fünf Bausteine, stufengerecht benannt */
+function zerlegung(w, stufe){
+  var L = laut(w.orbis);
+  var fach = stufe >= 2;
+  return [
+   { nr:1, frage:'WAS',       wert: fach ? PLANETEN[PLANETEN.indexOf(w.planet)] : P0[w.planet] },
+   { nr:2, frage:'WIE',       wert: fach ? ZEICHEN[w.zeichen] : Z0[w.zeichen] },
+   { nr:3, frage:'WO',        wert: fach ? ((w.haus+1) + '. Haus') : H0[w.haus] },
+   { nr:4, frage:'WIE STARK', wert: fach ? ASPEKTE[w.aspekt] : A0[w.aspekt] },
+   { nr:5, frage:'WANN',      wert: fach ? ('Orbis ' + komma(w.orbis,1) + '° — ' + L.n) : L.n }
+  ];
+}
+
+function gross(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/* Die Werte des Reglers. Der Startwert MUSS einer davon sein, sonst zeigt
+   die Auswahl etwas anderes an als der Satz sagt. Geprüft in _test-ereignis.js. */
+var ORBWERTE = [0.2, 0.5, 1.0, 2.0, 3.0, 4.5];
+var START = { planet:'Venus', zeichen:1, haus:4, aspekt:2, orbis:1.0 };
+
+function zufall(){
+  var r = function(n){ return Math.floor(Math.random()*n); };
+  return { planet: PLANETEN[r(PLANETEN.length)], zeichen: r(12), haus: r(12),
+           aspekt: r(5), orbis: ORBWERTE[r(ORBWERTE.length)] };
+}
+
+window.AC_EREIGR = {
+  PLANETEN:PLANETEN, ZEICHEN:ZEICHEN, ASPEKTE:ASPEKTE,
+  H0:H0, A1:A1, STUFEN_ORB:STUFEN_ORB, ORBWERTE:ORBWERTE, START:START,
+  laut:laut, abgeleitet:abgeleitet, satz:satz, zerlegung:zerlegung,
+  zufall:zufall, komma:komma
+};
+})();
+
+/* Astro-Charlie · Ereignisse lesen — die Anzeige.
+   Rechnet nichts und formuliert nichts. Setzt nur zusammen,
+   was Daten und Rechner liefern, und zieht bei Stufenwechsel nach. */
+(function(){
+'use strict';
+var D = window.AC_EREIG, R = window.AC_EREIGR;
+function el(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+  return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+/* Zwei Register: ein Paar ['Alltag','Fach'] oder ein String für beides. */
+function w(v, fach){ return Array.isArray(v) ? v[fach ? 1 : 0] : v; }
+function stufe(){
+  try{ if(window.AC_NIV && AC_NIV.stufe) return AC_NIV.stufe(); }catch(e){}
+  return 2;
+}
+
+/* ── 1 · Der Stapel: ein Hinweis, zwei, drei ───────────── */
+var STAPEL = [
+ ['1 Baustein','Rauschen','Zu wenig. Jeder Tag hat davon mehrere. Wer hier schon deutet, deutet ins Blaue.'],
+ ['2 Bausteine','Verdacht','Eine Richtung zeichnet sich ab. Man denkt darüber nach, sagt es aber noch nicht.'],
+ ['3 Bausteine','Thema','Jetzt trägt es. Und selbst jetzt beschreibt man ein Zeitfenster, keine Tatsache.']
+];
+function stapelBauen(){
+  var z = el('egstapel'); if(!z) return;
+  z.innerHTML = STAPEL.map(function(s, i){
+    return '<div class="eg-st eg-st-' + i + '">'
+         + '<div class="eg-st-zahl">' + esc(s[0]) + '</div>'
+         + '<div class="eg-st-name">' + esc(s[1]) + '</div>'
+         + '<div class="eg-st-text">' + esc(s[2]) + '</div></div>';
+  }).join('');
+}
+
+/* ── 2 · Die fünf Bausteinkarten ───────────────────────── */
+function kartenBauen(){
+  var z = el('egkarten'); if(!z) return;
+  var n = stufe(), fach = n >= 1;
+  z.innerHTML = D.BAUSTEINE.map(function(b){
+    var titel = w(b.titel, fach);
+    var liste = b.liste.map(function(p){
+      var name = p[0];
+      /* Auf Stufe 0 steht die Wirkung vorn und der Fachname gar nicht da. */
+      if(!fach) return '<li><span class="eg-li-b">' + esc(grossErst(p[1])) + '</span></li>';
+      return '<li><span class="eg-li-n">' + esc(name) + '</span> '
+           + '<span class="eg-li-w">' + esc(p[1]) + '</span></li>';
+    }).join('');
+    return '<div class="eg-k">'
+      + '<div class="eg-k-kopf"><span class="eg-k-nr">' + esc(b.nr) + '</span>'
+      + '<span class="eg-k-frage">' + esc(b.frage) + '</span></div>'
+      + '<h3>' + esc(titel) + '</h3>'
+      + '<p class="eg-k-kurz">' + esc(b.kurz) + '</p>'
+      + '<p>' + esc(w(b.text, fach)) + '</p>'
+      + '<ul class="eg-k-liste">' + liste + '</ul>'
+      + '</div>';
+  }).join('');
+}
+function grossErst(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/* ── 3 · Der Mischer ───────────────────────────────────── */
+var wahl = { planet:R.START.planet, zeichen:R.START.zeichen, haus:R.START.haus,
+             aspekt:R.START.aspekt, orbis:R.START.orbis };
+var ORBWERTE = R.ORBWERTE;
+
+function reglerBauen(){
+  var pl = el('egpl'), zc = el('egzc'), hs = el('eghs'), as = el('egas'), or = el('egor');
+  if(!pl) return;
+  var n = stufe(), fach = n >= 1;
+  pl.innerHTML = R.PLANETEN.map(function(p, i){
+    var t = fach ? p : grossErst(mundart(p));
+    return '<option value="' + esc(p) + '"' + (p===wahl.planet?' selected':'') + '>' + esc(t) + '</option>';
+  }).join('');
+  zc.innerHTML = R.ZEICHEN.map(function(z, i){
+    return '<option value="' + i + '"' + (i===wahl.zeichen?' selected':'') + '>'
+         + esc(fach ? z : grossErst(zStil(i))) + '</option>'; }).join('');
+  hs.innerHTML = R.H0.map(function(h, i){
+    return '<option value="' + i + '"' + (i===wahl.haus?' selected':'') + '>'
+         + esc(fach ? ((i+1) + '. Haus — ' + kurzHaus(i)) : grossErst(h)) + '</option>'; }).join('');
+  as.innerHTML = R.ASPEKTE.map(function(a, i){
+    return '<option value="' + i + '"' + (i===wahl.aspekt?' selected':'') + '>'
+         + esc(fach ? a : aStil(i)) + '</option>'; }).join('');
+  or.innerHTML = ORBWERTE.map(function(o){
+    var L = R.laut(o);
+    var t = fach ? (R.komma(o,1) + '° — ' + L.n) : L.n;
+    return '<option value="' + o + '"' + (o===wahl.orbis?' selected':'') + '>' + esc(t) + '</option>';
+  }).join('');
+}
+function mundart(p){
+  var m = { Sonne:'dein Wesenskern', Mond:'dein Gefühl', Merkur:'dein Denken',
+    Venus:'deine Zuneigung', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
+    Saturn:'deine Struktur', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
+    Pluto:'deine Tiefe' };
+  return m[p] || p;
+}
+function zStil(i){
+  return ['direkt','langsam','beweglich','vorsichtig','sichtbar','genau',
+          'abwägend','tief','weit','ernst','eigensinnig','durchlässig'][i];
+}
+function aStil(i){
+  return ['verschmolzen','angeboten','reibend','fließend','gegenübergestellt'][i];
+}
+function kurzHaus(i){
+  return ['Auftreten','Geld und Selbstwert','Nachrichten','Zuhause','Romantik','Alltag',
+          'Partnerschaft','Tiefe','Ferne','Berufung','Freundschaften','Verborgenes'][i];
+}
+
+function mischerZeigen(){
+  var s = el('egsatz'), zl = el('egzerlegt'); if(!s) return;
+  var n = stufe();
+  s.innerHTML = '<p>' + esc(R.satz(wahl, n)) + '</p>';
+  zl.innerHTML = R.zerlegung(wahl, n).map(function(t){
+    return '<div class="eg-z"><span class="eg-z-f">' + esc(t.frage) + '</span>'
+         + '<span class="eg-z-w">' + esc(t.wert) + '</span></div>';
+  }).join('');
+}
+function mischerBinden(){
+  var ids = [['egpl','planet'],['egzc','zeichen'],['eghs','haus'],['egas','aspekt'],['egor','orbis']];
+  ids.forEach(function(p){
+    var e = el(p[0]); if(!e) return;
+    e.addEventListener('change', function(){
+      wahl[p[1]] = (p[1]==='planet') ? e.value : parseFloat(e.value);
+      mischerZeigen();
+    });
+  });
+  var w = el('egwuerfel');
+  if(w) w.addEventListener('click', function(){
+    wahl = R.zufall(); reglerBauen(); mischerZeigen();
+  });
+}
+
+/* ── 4 · Rezepte ───────────────────────────────────────── */
+function rezepteBauen(){
+  var z = el('egrezepte'); if(!z) return;
+  z.innerHTML = D.REZEPTE.map(function(r){
+    var formel = r.formel.map(function(f){ return '<span class="eg-f-t">' + esc(f) + '</span>'; })
+                 .join('<span class="eg-f-p">+</span>');
+    return '<div class="eg-r">'
+      + '<h3>' + esc(r.name) + '</h3>'
+      + '<div class="eg-formel">' + formel + '<span class="eg-f-g">=</span>'
+      + '<span class="eg-f-e">' + esc(r.ergebnis) + '</span></div>'
+      + '<ul>' + r.zutaten.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>'
+      + '<p class="eg-ehrlich-klein"><b>Ehrlich dazu:</b> ' + esc(r.ehrlich) + '</p>'
+      + '</div>';
+  }).join('');
+}
+
+/* ── 5 · Menschen im Chart ─────────────────────────────── */
+var mWahl = 'mutter';
+function menschenBauen(){
+  var w = el('egmwahl'); if(!w) return;
+  w.innerHTML = D.MENSCHEN.map(function(m){
+    return '<button type="button" class="eg-mb" data-m="' + esc(m.k) + '" '
+         + 'aria-pressed="' + (m.k===mWahl) + '">'
+         + '<span class="eg-mb-i" aria-hidden="true">' + esc(m.icon) + '</span>'
+         + esc(m.name) + '</button>';
+  }).join('');
+  Array.prototype.forEach.call(w.querySelectorAll('button[data-m]'), function(b){
+    b.addEventListener('click', function(){
+      mWahl = b.getAttribute('data-m');
+      Array.prototype.forEach.call(w.querySelectorAll('button[data-m]'), function(x){
+        x.setAttribute('aria-pressed', String(x.getAttribute('data-m')===mWahl)); });
+      personZeigen();
+    });
+  });
+  personZeigen();
+  tabelleBauen();
+}
+function personZeigen(){
+  var z = el('egperson'); if(!z) return;
+  var fach = stufe() >= 1, m = null;
+  for(var i=0;i<D.MENSCHEN.length;i++) if(D.MENSCHEN[i].k===mWahl) m = D.MENSCHEN[i];
+  if(!m) return;
+  var asp = w(m.aspekte, fach);
+  z.innerHTML = '<div class="eg-p">'
+    + '<div class="eg-p-kopf"><span class="eg-p-i" aria-hidden="true">' + esc(m.icon) + '</span>'
+    + '<h3>' + esc(m.name) + '</h3></div>'
+    + '<div class="eg-p-zeilen">'
+    + '<div><span class="eg-p-lab">Wo</span><span class="eg-p-wert">' + esc(w(m.wo, fach)) + '</span></div>'
+    + '<div><span class="eg-p-lab">Welche Kraft</span><span class="eg-p-wert">' + esc(w(m.kraft, fach)) + '</span></div>'
+    + '</div>'
+    + '<p>' + esc(w(m.text, fach)) + '</p>'
+    + '<h4>Worauf du schaust</h4>'
+    + '<ul class="eg-p-asp">' + asp.map(function(a){ return '<li>' + esc(a) + '</li>'; }).join('') + '</ul>'
+    + '<p class="eg-p-streit"><b>Wo die \u00dcberlieferung streitet:</b> ' + esc(w(m.streit, fach)) + '</p>'
+    + '</div>';
+}
+function tabelleBauen(){
+  var t = el('egmtab'); if(!t) return;
+  var fach = stufe() >= 1;
+  t.innerHTML = '<thead><tr><th>Verbindung</th><th>' + (fach ? 'Haus' : 'Lebensbereich')
+    + '</th><th>Kraft</th></tr></thead><tbody>'
+    + D.MENSCHEN.map(function(m){
+        return '<tr><td data-sp="Verbindung">' + esc(m.name) + '</td>'
+             + '<td data-sp="' + (fach ? 'Haus' : 'Lebensbereich') + '">' + esc(w(m.wo, fach)) + '</td>'
+             + '<td data-sp="Kraft">' + esc(w(m.kraft, fach)) + '</td></tr>';
+      }).join('')
+    + '</tbody>';
+}
+
+/* ── 6 · Durchgerechnete Fälle ─────────────────────────── */
+function faelleBauen(){
+  var z = el('egfaelle'); if(!z) return;
+  z.innerHTML = D.FAELLE.map(function(f){
+    var schritte = f.schritte.map(function(s, i){
+      var letzte = (i === f.schritte.length - 1);
+      return '<div class="eg-s' + (letzte ? ' eg-s-summe' : '') + '">'
+        + '<div class="eg-s-nr">' + esc(s[0]) + '</div>'
+        + '<div class="eg-s-was">' + esc(s[1]) + '</div>'
+        + '<div class="eg-s-text">' + esc(s[2]) + '</div></div>';
+    }).join('');
+    return '<div class="eg-fall">'
+      + '<h3>' + esc(f.name) + '</h3>'
+      + '<div class="eg-schritte">' + schritte + '</div>'
+      + '<div class="eg-deutung"><b>So sagt man es:</b> ' + esc(f.deutung) + '</div>'
+      + '<div class="eg-nicht">' + esc(f.nicht) + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+/* ── 7 · Quiz ──────────────────────────────────────────── */
+var qAntwort = {};
+function quizBauen(){
+  var z = el('egquiz'); if(!z) return;
+  z.innerHTML = D.QUIZ.map(function(q, i){
+    var opt = q.a.map(function(a, j){
+      return '<button type="button" class="eg-q-opt" data-q="' + i + '" data-a="' + j + '">'
+           + esc(a) + '</button>';
+    }).join('');
+    return '<div class="eg-q" data-qi="' + i + '">'
+      + '<div class="eg-q-nr">Frage ' + (i+1) + ' von ' + D.QUIZ.length + '</div>'
+      + '<p class="eg-q-f">' + esc(q.f) + '</p>'
+      + '<div class="eg-q-opts">' + opt + '</div>'
+      + '<div class="eg-q-echo" id="egqe' + i + '"></div></div>';
+  }).join('');
+  Array.prototype.forEach.call(z.querySelectorAll('.eg-q-opt'), function(b){
+    b.addEventListener('click', function(){
+      var qi = +b.getAttribute('data-q'), ai = +b.getAttribute('data-a');
+      if(qAntwort[qi] !== undefined) return;
+      qAntwort[qi] = ai;
+      var q = D.QUIZ[qi], richtig = (ai === q.r);
+      var box = z.querySelector('.eg-q[data-qi="' + qi + '"]');
+      Array.prototype.forEach.call(box.querySelectorAll('.eg-q-opt'), function(x){
+        var xi = +x.getAttribute('data-a');
+        x.disabled = true;
+        if(xi === q.r) x.classList.add('ist-richtig');
+        else if(xi === ai) x.classList.add('ist-falsch');
+      });
+      el('egqe' + qi).innerHTML = '<b>' + (richtig ? 'Stimmt.' : 'Nicht ganz.') + '</b> ' + esc(q.e);
+      standZeigen();
+    });
+  });
+  standZeigen();
+}
+function standZeigen(){
+  var s = el('egquizstand'); if(!s) return;
+  var n = 0, r = 0;
+  for(var k in qAntwort){ if(Object.prototype.hasOwnProperty.call(qAntwort,k)){
+    n++; if(qAntwort[k] === D.QUIZ[k].r) r++; } }
+  if(!n){ s.textContent = ''; return; }
+  s.innerHTML = n < D.QUIZ.length
+    ? esc(r + ' von ' + n + ' richtig — noch ' + (D.QUIZ.length - n) + ' offen.')
+    : '<b>' + esc(r + ' von ' + D.QUIZ.length + ' richtig.') + '</b> '
+      + esc(r === D.QUIZ.length ? 'Das sitzt.'
+          : r >= 3 ? 'Die Richtung stimmt. Die Erklärungen oben sind die Nacharbeit.'
+          : 'Lies die Erklärungen in Ruhe — die Bausteinkarten weiter oben helfen dabei.');
+}
+
+/* ── Alles zusammen ────────────────────────────────────── */
+function stufenAbhaengig(){
+  kartenBauen();
+  reglerBauen();
+  mischerZeigen();
+  personZeigen();
+  tabelleBauen();
+}
+function start(){
+  stapelBauen();
+  stufenAbhaengig();
+  mischerBinden();
+  rezepteBauen();
+  menschenBauen();
+  faelleBauen();
+  quizBauen();
+  var neu = el('egquizneu');
+  if(neu) neu.addEventListener('click', function(){ qAntwort = {}; quizBauen(); });
+  window.addEventListener('ac-niveau', stufenAbhaengig);
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+else start();
+})();
+
+</script>
+</body></html>

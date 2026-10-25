@@ -49,6 +49,7 @@ BAUTEN = [
     ('zeit/bau-zeit.py',      'Zeiten'),
     ('bereiche/bau-bereiche.py', 'Bereiche'),
     ('monat/bau-monat.py',     'Monat'),
+    ('ereignis/bau-ereignis.py', 'Ereignisse'),
     ('kern/bau-ich.py',       'Ich'),
     ('kern/bau-heute.py',     'Heute'),
     # Zuletzt: die Rauchprobe der App-Ansicht lädt die eben gebauten
