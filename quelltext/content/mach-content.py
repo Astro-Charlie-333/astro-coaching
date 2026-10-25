@@ -26,6 +26,22 @@ if r.returncode != 0:
     sys.exit(1)
 D = json.loads(r.stdout)
 
+# ── Vorrat prüfen, bevor etwas geschrieben wird ───────────────
+# Einmal war die Bereichsliste in eine eigene Datei gewandert, die
+# content-rechner.js nicht mehr mitlud. Die Rechnung lief trotzdem
+# durch und lieferte leere Bereiche; der Entwurf hätte „None" in
+# jedem Karussellbild gehabt. Lieber hier abbrechen.
+for feld in ('bereiche', 'ehrlich', 'stand'):
+    if not D.get(feld):
+        print(f'Die Rechnung kam ohne „{feld}" zurück — da fehlt eine Quelldatei. '
+              'Siehe die Ladeliste in content-rechner.js.')
+        sys.exit(1)
+luecken = [x['aszendent'] for x in D['aufhaenger']['proAszendent']
+           if not x.get('bereich') or not x.get('worum')]
+if luecken:
+    print('Zu diesen Aszendenten fehlt der Lebensbereich: ' + ', '.join(luecken))
+    sys.exit(1)
+
 SPRECHTEMPO = 2.2          # Wörter je Sekunde, ruhig gesprochen
 
 
@@ -53,13 +69,26 @@ elif A['art'] == 'lunation':
     art = 'Neumond' if A['mondart'] == 'neu' else 'Vollmond'
     titel = f"{art} in {A['zeichenName']} — {A['datum']['kurz']}"
     aufreisser = f"{art} am {A['datum']['kurz']}."
-    uebersetzung = ('Ein guter Zeitpunkt, in einem bestimmten Bereich etwas anzufangen.'
-                    if A['mondart'] == 'neu'
-                    else 'Ein guter Zeitpunkt, in einem bestimmten Bereich etwas abzuschließen.')
+    # „Ein guter Zeitpunkt" wertet ein Datum, das noch nicht da ist —
+    # genau das, was die Regeln als Zukunftsversprechen ausschließen.
+    # Was stimmt: Ein Datum ist ein Datum, und Daten funktionieren
+    # besser als Vorsätze. Das ist die Übersetzung ins Leben.
+    uebersetzung = (
+        'Das ist keine Vorhersage und kein Befehl. Es ist ein Datum, an dem du '
+        'eine Sache anfangen kannst — und ein Datum funktioniert dafür besser '
+        'als ein Vorsatz.'
+        if A['mondart'] == 'neu' else
+        'Das ist keine Vorhersage und kein Befehl. Es ist ein Datum, an dem du '
+        'eine offene Sache zu Ende bringen kannst — und ein Datum funktioniert '
+        'dafür besser als ein Vorsatz.')
     handgriff = ('Such dir eine Sache und fang sie an. Eine, nicht fünf.'
                  if A['mondart'] == 'neu'
                  else 'Such dir eine Sache und bring sie zu Ende. Eine, nicht fünf.')
-    nutzen = 'Welcher Bereich das bei dir ist, hängt von deinem Aszendenten ab.'
+    # Nicht noch einmal der Aszendenten-Satz aus Bild 1: der steht dort
+    # schon und wird hier nur zur Füllung wiederholt.
+    nutzen = ('Die kleinste, die du dir zutraust, ist die richtige.'
+              if A['mondart'] == 'neu'
+              else 'Eine, die du schon dreimal verschoben hast, ist die richtige.')
 else:
     titel = f"{A['planet']} steht in {A['zeichenName']}"
     aufreisser = f"{A['planet']} läuft gerade durch {A['zeichenName']}."
@@ -85,20 +114,30 @@ bilder.append(('Letztes · Hinweis',
 woche_nr = int(D['woche'].split('KW')[1])
 B = D['bereiche'][woche_nr % len(D['bereiche'])]
 
+# Zwei Dinge, die der Sprechtext hier nicht tun darf:
+#   · behaupten, was beim Aufnehmen auf dem Bildschirm steht. Welcher
+#     Bereich oben landet, hängt an den Daten, die eingegeben werden —
+#     das weiß dieses Skript nicht. Also sagt der Text, dass einer
+#     aufgeklappt wird, und nicht, dass er oben steht.
+#   · „Man kann es ausrechnen" behaupten. Die Rechnung ist belegt, die
+#     Deutung nicht; die Seite beantwortet die Frage nicht, sie sortiert.
 reel = [
     ('Hook', 'Bildschirm: die Seite, noch nichts eingegeben',
-     f"{B['frage']} Die meisten beantworten das aus dem Bauch. "
-     f"Man kann es auch ausrechnen."),
-    ('Was man sieht', 'Bildschirm: Geburtsdaten eingeben, die Bereiche erscheinen',
-     f"Zehn Lebensbereiche, sortiert danach, wo gerade am meisten passiert. "
-     f"Bei mir steht {B['name']} weit oben — bei dir kann ein ganz anderer oben stehen."),
+     f"{B['frage']} Aus dem Bauch beantwortet man das jeden Tag anders. "
+     f"Ausrechnen kann man die Antwort nicht — aber man kann ausrechnen, "
+     f"wo gerade am meisten zusammenkommt."),
+    ('Was man sieht',
+     'Bildschirm: erst ab der Bereichsliste aufnehmen — die Eingabefelder '
+     'mit den Geburtsdaten nicht mitfilmen',
+     f"Zehn Lebensbereiche, gegeneinander sortiert. Welcher bei dir oben "
+     f"steht, hängt an deinen Daten — ich klappe hier einen auf."),
     ('Was da steht', f"Bildschirm: {B['name']} aufklappen, langsam scrollen",
      f"{B['worum']}"),
     ('Der Punkt', 'Bildschirm: Block „Was du tun kannst"',
      f"{satzende(B['dauerthema'])}"),
     ('Abschluss', 'Bildschirm: Block „Wie lange das läuft"',
-     'Und das Nützlichste daran ist nicht, dass da etwas los ist — sondern '
-     'dass dabeisteht, wann es vorbei ist.'),
+     'Das Nützlichste ist nicht, dass da etwas los ist — sondern dass '
+     'dabeisteht, wann es vorbei ist.'),
 ]
 
 # ── Beitrag 3 · Das Ehrliche ──────────────────────────────────
@@ -157,9 +196,19 @@ z.append(f"**Gesamt rund {gesamt} Sekunden** bei ruhigem Sprechtempo.")
 z.append('')
 z.append('**Caption**')
 z.append('')
+# Nicht das Dauerthema wiederholen — das ist der Sprechtext im Video.
+# Die Caption hat eine eigene Aufgabe: sagen, was die Seite wirklich
+# tut, und was man als Nächstes tun kann.
 z.append(f"> {B['frage']}")
 z.append('>')
-z.append(f"> {B['dauerthema']}")
+# „worauf Druck liegt und wie lange noch" ist der Satz, der alle vier
+# Wochen im ehrlichen Einzelbild vom Freitag steht. In der Caption vom
+# Mittwoch also anders sagen, sonst klingt die Woche nach einem Satz.
+z.append('> Die Seite beantwortet das nicht. Sie sortiert zehn Lebensbereiche '
+         'gegeneinander — interessant ist nicht, ob etwas läuft, sondern wo '
+         'am meisten. Den Rest machst du.')
+z.append('>')
+z.append('> Wenn du es nachrechnen willst: Der Rechner steht auf der Seite, Link im Profil.')
 z.append('')
 z.append('---')
 z.append('')
@@ -222,6 +271,13 @@ VERBOTEN = {
     'folg mir': 'Aufforderung statt Inhalt',
     'Banane': 'kein Maskottchen mehr',
     'Charlie': 'kein Maskottchen mehr',
+    # Wertungen über ein Datum, das noch nicht da ist. Die Seite sagt,
+    # worauf Druck liegt — nicht, dass ein Tag gut wird.
+    'guter Zeitpunkt': 'Wertung über ein zukünftiges Datum',
+    'günstiger Zeitpunkt': 'Wertung über ein zukünftiges Datum',
+    'beste Zeit': 'Wertung über ein zukünftiges Datum',
+    'perfekter Moment': 'Wertung über ein zukünftiges Datum',
+    'richtige Moment': 'Wertung über ein zukünftiges Datum',
 }
 for wort, grund in VERBOTEN.items():
     if re.search(re.escape(wort), text, re.I):
@@ -253,11 +309,48 @@ leer = [n for n, t in bilder if len(t.strip()) < 15]
 if leer:
     fehler.append('leere Karussellbilder: ' + ', '.join(leer))
 
-# 4 · Das Reel muss in die Länge passen, die die Plattformen zeigen
-if gesamt < 18:
-    fehler.append(f'das Reel ist mit {gesamt} s zu kurz')
-if gesamt > 55:
-    fehler.append(f'das Reel ist mit {gesamt} s zu lang — unter 45 s halten')
+# 4 · Das Reel muss in die Länge passen, die CONTENT-REGELN.md nennt:
+#     25 bis 50 Sekunden. Vorher stand hier 18 bis 55 — die Prüfung war
+#     weiter als die Regel, die sie prüfen sollte.
+if gesamt < 25:
+    fehler.append(f'das Reel ist mit {gesamt} s zu kurz — die Regel sagt 25 bis 50 s')
+if gesamt > 50:
+    fehler.append(f'das Reel ist mit {gesamt} s zu lang — die Regel sagt 25 bis 50 s')
+
+# 4a · Der Sprechtext darf nicht behaupten, was auf dem Bildschirm steht.
+#      Welcher Bereich beim Aufnehmen oben landet, hängt an den
+#      eingegebenen Daten und steht beim Schreiben nicht fest.
+BEHAUPTET = [
+    (r'[Bb]ei mir (steht|ist|liegt)', 'behauptet etwas über den eigenen Bildschirm'),
+    (r'ganz oben steht', 'behauptet eine Reihenfolge, die nicht feststeht'),
+    (r'kann man (es|das) (auch )?ausrechnen',
+     'behauptet, die Frage sei berechenbar — die Rechnung ist belegt, die Deutung nicht'),
+]
+for name, bild, sprech in reel:
+    for muster, grund in BEHAUPTET:
+        if re.search(muster, sprech):
+            fehler.append(f'Reel „{name}": {grund}')
+
+# 4b · Keine Aufnahmeanweisung, die Geburtsdaten ins Bild holt.
+for name, bild, sprech in reel:
+    if re.search(r'Geburtsdaten (eingeben|eintippen)|Eingabe .{0,12}aufnehmen', bild):
+        fehler.append(f'Reel „{name}": die Anweisung filmt Geburtsdaten mit')
+
+# 4c · Kein Satz zweimal. Captions dürfen den Aufhänger aufgreifen —
+#      innerhalb eines Beitrags ist dieselbe Zeile dagegen Füllung.
+#      Die zwölf Aszendentenbilder sind absichtlich parallel gebaut und
+#      bleiben außen vor.
+def saetze(t):
+    return [x.strip() for x in re.split(r'(?<=[.!?])\s+|\n+', t) if len(x.strip()) > 35]
+
+for was, stuecke in (('Karussell', [t for n, t in bilder if not n.startswith('Aszendent')]),
+                     ('Reel', [t for _, _, t in reel])):
+    gesehen = {}
+    for st in stuecke:
+        for satz in saetze(st):
+            if satz in gesehen:
+                fehler.append(f'{was}: „{satz[:60]}…" steht zweimal')
+            gesehen[satz] = True
 
 # 5 · Keine Geburtsdaten von irgendwem.
 #     Der eigene Erzeugungsstempel oben ist kein Geburtsdatum.
@@ -267,7 +360,13 @@ if re.search(r'\b(19|20)\d{2}\b.{0,20}\b\d{1,2}[:.]\d{2}\b', koerper):
 if re.search(r'\b\d{1,2}\.\d{1,2}\.(19|20)\d{2}\b', koerper):
     fehler.append('da steht ein vollständiges Datum im Geburtsdatumsformat')
 
-# 6 · Deutsche Zahlen mit Komma
+# 6 · Keine Platzhalter aus leeren Datenfeldern
+#     („None" und „null" entstehen, wenn eine Quelldatei fehlt.)
+for platzhalter in ('None', 'null', 'undefined'):
+    if re.search(r'\b' + platzhalter + r'\b', text):
+        fehler.append(f'„{platzhalter}" steht im Entwurf — ein Datenfeld war leer')
+
+# 7 · Deutsche Zahlen mit Komma
 m = re.search(r'\d\.\d', text)
 if m and 'Uhr' not in text[max(0, m.start()-20):m.start()+20]:
     fehler.append(f'Dezimalpunkt statt Komma: „{m.group(0)}"')
