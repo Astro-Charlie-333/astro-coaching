@@ -132,6 +132,9 @@ s = s[:i] + "\n/* Engine für das eigene Chart, nachgerüstet */\n" + \
     rit.joinpath('engine.js').read_text(encoding='utf-8') + \
     "\ntry{ pihMeins(); }catch(e){}\n" + s[i:]
 
+# Die App-Ansicht: Manifest, Symbol, Zwischenspeicher. Die Zeilen dafür
+# stehen in app/app-kopf.html — an einer Stelle für alle Seiten.
+s = s.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html').read_text(encoding='utf-8'), 1)
 ziel.write_text(s, encoding='utf-8')
 
 # ── Prüfungen ───────────────────────────────────────────────
