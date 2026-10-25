@@ -24,13 +24,6 @@ Markenfarben existiert, jede gebaute Seite sie einbindet, ein Service
 Worker die Seiten zwischenspeichert, und `pruefe-alles.py` prüft, dass
 keine Seite das Einbinden vergisst. Kein Framework, kein Bauwerkzeug.
 
-### 3 · Die zwölf alten Raumseiten in die Bereiche überführen
-`raum-selbstwert.html` und die anderen elf enthalten gute Texte, aber in der
-alten Form (Frage als Titel, Maschinenraum darunter).
-**Fertig, wenn:** jeder Bereich auf `bereiche.html` unten auf die passende
-alte Seite verweist, und keine alte Seite mehr den Maschinenraum im Titel
-führt („2. Haus, Venus, Saturn, Lilith" gehört in `ac-tech`).
-
 ### 4 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.
@@ -231,7 +224,71 @@ vollständig hält, übersieht sie.
 Bauen ein Fehler wird statt eines Hinweises, damit die nächste fehlende
 Seite nicht wieder nur eine Zeile im Protokoll ist.
 
+### 25 · Die Stufe-0-Prüfung steht in sechs Ordnern einzeln
+Beim Anbinden der Raumseiten ist aufgefallen: Die Liste der Wörter, die
+auf Stufe 0 nicht sichtbar sein dürfen, liegt heute in sechs `bau-*.py`
+je für den eigenen Ordner, in drei `_test-*.js` noch einmal und seit
+heute auch in `pruefe-alles.py`. Solange die Kopien gleich sind, fällt
+nichts auf; sobald eine gepflegt wird, gilt auf einer Seite ein Fachwort
+als Fachwort und auf der nächsten nicht. Dieselbe Fehlerklasse wie bei
+der Himmelsrechnung und der Bereichsliste — und dieselbe wie Aufgabe 19
+beim `toLowerCase`.
+**Fertig, wenn:** die Liste an einer Stelle steht, die Python und
+JavaScript beide lesen können, die Kopien gelöscht sind, und
+`pruefe-alles.py` abbricht, sobald irgendwo im Quelltext eine zweite
+Liste mit Planetennamen und Zeichennamen auftaucht.
+
+### 26 · Die Raumseiten sagen nicht, zu welchem Bereich sie gehören
+Von der Bereichsseite führt seit heute ein Weg zu jedem Themenraum,
+aber nicht zurück: Wer auf `raum-naehe.html` landet, erfährt nicht, dass
+dasselbe Thema auf `bereiche.html` mit Datum und Handgriff steht. Der
+Fuß der Raumseiten verweist auf `raeume.html` und auf eine passende
+Nachbarseite — die Bereiche fehlen.
+**Fertig, wenn:** jede der zwölf Raumseiten unten auf ihren Bereich
+verweist, die Zuordnung dieselbe Quelle benutzt wie der Weg hin
+(`B_RAUM.zu`, nicht eine zweite Liste), und `pruefe-alles.py` abbricht,
+sobald eine Raumseite keinen Rückweg hat.
+
 ## Erledigt
+
+* **2026-10-25** · Die alten Raumseiten hängen an den Bereichen
+  (Aufgabe 3). Zehn lange Texte lagen seit den Anfängen da — „Warum
+  nehme ich eigentlich zu wenig?", „Warum wiederholt sich das immer?" —
+  und waren von der Bereichsseite aus nicht erreichbar: Wer beim
+  lautesten Bereich ankam und weiterlesen wollte, fand sie nicht. Jetzt
+  steht unter jedem Bereich, welche lange Seite dazugehört und was auf
+  ihr steht, in Alltagssprache und auf der untersten Stufe sichtbar.
+  Zwei Bereiche dürfen auf dieselbe Seite zeigen: „Warum nehme ich
+  eigentlich zu wenig?" ist eine Frage nach dem Geld und eine nach dem
+  eigenen Wert. Dazu die zweite Hälfte: Auf den Karten der
+  Raumübersicht stand unter dem Namen „2. Haus, Venus, Saturn, Lilith" —
+  also woran man es abliest, an der Stelle, wo stehen soll, wovon die
+  Seite handelt. Die Seite selbst sagt zwei Kästen weiter unten, dass
+  die Räume nach der Frage heißen und nicht nach der Technik; genau das
+  gilt nun auch für die Karten. Die Mechanik wartet jetzt in `ac-tech`
+  und erscheint ab der zweiten Stufe, und wo eine Karte Lebenssprache
+  und Mechanik in einer Zeile mischte („Essen, Trinken, Papierkram …"),
+  bleibt der Lebensteil stehen. Fehlerklassen abgestellt: ein Bereich
+  ohne Verweis; ein Verweis auf eine Seite, die es nicht gibt; ein
+  Themenraum in `wiki/`, auf den niemand zeigt (gemessen an der
+  gebauten Seite, nicht an den Daten); ein Verweis, der in der Mechanik
+  wartet und deshalb auf Stufe 0 unsichtbar ist; zwei Räume mit
+  demselben Satz beschrieben; ein Dateiname im Anzeigeskript statt in
+  den Daten; und Maschinenraum im Titel einer Raumseite — das als
+  zehnte Querprüfung über alle dreizehn Raumseiten, weil diese Seiten
+  Handarbeit sind und kein eigenes Bauskript haben, das es prüfen
+  könnte. Ein Fund an der eigenen Prüfung dabei: Die Stufe-0-Prüfung
+  stand mitten in `bau-bereiche.py`, und alles, was danach noch Sätze
+  sammelte, lief an ihr vorbei — die Sätze der Auswahlleiste taten das
+  seit dem 22. Oktober unbemerkt. Die Prüfung steht jetzt hinter dem
+  letzten Sammler, und die Liste wird danach zugemacht, damit ein
+  späterer Sammler den Bau abbricht statt lautlos durchzukommen. Und
+  weil eine Wartemarke nur wartet, wenn jemand die Stufe anwendet,
+  bricht die Querprüfung auch ab, wenn eine Raumseite Wartemarken
+  trägt, aber den Wissensstand nicht lädt — im Markup sähe sonst
+  alles richtig aus und die Mechanik stünde trotzdem offen da. 3455
+  Prüfungen im Bereichsrechner, vierzehn absichtlich eingebaute Fehler
+  alle erkannt.
 
 * **2026-10-23** · „Ich" sagt endlich etwas über diesen einen Menschen.
   Mandys Befund: Die Aussagen seien vage und unpersönlich. Nachgemessen mit

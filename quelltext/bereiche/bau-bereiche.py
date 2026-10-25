@@ -530,18 +530,13 @@ VERBOTEN = (
     + ['Widder', 'Stier', 'Zwillinge', 'Krebs', 'Löwe', 'Jungfrau',
        'Waage', 'Skorpion', 'Schütze', 'Steinbock', 'Wassermann', 'Fische']
 )
-for wo, text in lay_texte:
-    for v in VERBOTEN:
-        if re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(v) + r'(?![A-Za-zÄÖÜäöüß])', text):
-            fehler.append(f'Fachwort "{v}" steht im Laientext {wo}: "{text[:70]}…"')
-    if '°' in text:
-        fehler.append(f'Gradzeichen im Laientext {wo}')
-
-# Zahlen mit Punkt statt Komma sind im Deutschen falsch
-for wo, text in lay_texte:
-    m = re.search(r'\d\.\d', text)
-    if m:
-        fehler.append(f'Dezimalpunkt statt Komma in {wo}: "{m.group(0)}"')
+# Geprüft wird nicht hier, sondern am Ende, wenn alle Sätze
+# gesammelt sind. Fehlerklasse, aufgefallen bei Aufgabe 3: Ein Satz,
+# der weiter unten zu lay_texte dazukommt — die Sätze der
+# Auswahlleiste taten das seit dem 22.10. —, lief an dieser Prüfung
+# vorbei und durfte stillschweigend ein Fachwort tragen. Die Prüfung
+# steht deshalb hinter dem letzten Sammler, und danach wird die
+# Liste zugemacht.
 
 # ── 5 · Handwerk ───────────────────────────────────────────────
 if 'toLowerCase' in app + daten + rechner:
@@ -612,6 +607,125 @@ if 'ausgeblendet' not in wtexte.get('auswahl', '') + wdaten:
     fehler.append('die Leiste sagt nicht, dass ausgeblendete Bereiche '
                   'nicht dasselbe sind wie stille')
 
+# ── Zum Nachlesen: jeder Bereich kennt seine lange Seite ───────
+# Fehlerklasse: ein Themenraum, auf den kein Bereich zeigt. Zehn
+# lange Seiten lagen seit den Anfängen da und waren von der
+# Bereichsseite aus nicht erreichbar — wer beim lautesten Bereich
+# ankam und weiterlesen wollte, fand sie nicht. Geprüft wird
+# deshalb beides und in beide Richtungen: Jeder der zehn Bereiche
+# braucht mindestens eine Seite, und jede Seite raum-*.html in
+# wiki/ braucht mindestens einen Bereich. Eine neue Raumseite, die
+# nirgends angebunden ist, kommt damit nicht mehr durch den Bau.
+m_raum = re.search(r"^\s{2}var B_RAUM\s*=\s*\{", daten, re.M)
+if not m_raum:
+    fehler.append('B_RAUM fehlt in bereich-daten.js — die Bereichsseite '
+                  'kennt die langen Seiten nicht')
+    RAUM_SEITEN, RAUM_ZU = {}, {}
+else:
+    raumblk = klammerblock(daten, m_raum.end() - 1)
+    for name, mind in (('titel', 6), ('vor', 60), ('hin', 60)):
+        v = feld(raumblk, name)
+        if not v:
+            fehler.append(f'B_RAUM.{name} fehlt')
+        elif len(v) < mind:
+            fehler.append(f'B_RAUM.{name} ist zu dünn ({len(v)} Zeichen)')
+        elif name != 'titel' and not v.rstrip().endswith(('.', '?')):
+            fehler.append(f'B_RAUM.{name} endet ohne Punkt')
+        elif name != 'titel':
+            lay_texte.append((f'RAUM.{name}', v))
+    # Der Hinweis muss zugeben, dass diese Seiten in der alten Form
+    # geschrieben sind. PRODUKT.md Abschnitt 3: Ehrlichkeit über die
+    # eigenen Grenzen gilt auch für die eigenen alten Seiten.
+    if 'älter' not in (feld(raumblk, 'hin') or ''):
+        fehler.append('B_RAUM.hin sagt nicht, dass diese Seiten älter '
+                      'sind als der Rest der Plattform')
+
+    m_s = re.search(r"\bseiten:\s*\{", raumblk)
+    RAUM_SEITEN = {}
+    if not m_s:
+        fehler.append('B_RAUM.seiten fehlt')
+    else:
+        sblk = klammerblock(raumblk, m_s.end() - 1)
+        for ms in re.finditer(r"\b([A-Za-z][\w]*):\s*\{", sblk):
+            eintrag = klammerblock(sblk, ms.end() - 1)
+            RAUM_SEITEN[ms.group(1)] = {
+                'datei': feld(eintrag, 'datei'),
+                'name':  feld(eintrag, 'name'),
+                'was':   feld(eintrag, 'was')}
+        if len(RAUM_SEITEN) < 10:
+            fehler.append(f'B_RAUM.seiten kennt nur {len(RAUM_SEITEN)} Seiten')
+        gesehen_was = {}
+        for k, e in sorted(RAUM_SEITEN.items()):
+            if not e['datei'] or not re.fullmatch(r'raum-[a-z-]+\.html', e['datei']):
+                fehler.append(f'B_RAUM.seiten.{k}: datei fehlt oder heißt '
+                              f'nicht raum-….html ({e["datei"]!r})')
+            elif not (wiki / e['datei']).exists():
+                fehler.append(f'B_RAUM.seiten.{k} zeigt auf {e["datei"]}, '
+                              'die es in wiki/ nicht gibt')
+            if not e['name'] or len(e['name']) < 4:
+                fehler.append(f'B_RAUM.seiten.{k}: name fehlt')
+            else:
+                lay_texte.append((f'RAUM.{k}.name', e['name']))
+            if not e['was']:
+                fehler.append(f'B_RAUM.seiten.{k}: was fehlt')
+            elif len(e['was']) < 80:
+                fehler.append(f'B_RAUM.seiten.{k}: was ist zu dünn '
+                              f'({len(e["was"])} Zeichen)')
+            elif not e['was'].rstrip().endswith('.'):
+                fehler.append(f'B_RAUM.seiten.{k}: was endet ohne Punkt')
+            else:
+                # Fehlerklasse: zwei Seiten mit demselben Satz
+                # beschrieben. Dann steht unter einem Bereich zweimal
+                # dasselbe Angebot, und die Wahl ist keine.
+                if e['was'] in gesehen_was:
+                    fehler.append(f'B_RAUM.seiten.{k} und '
+                                  f'{gesehen_was[e["was"]]} tragen denselben Satz')
+                gesehen_was[e['was']] = k
+                lay_texte.append((f'RAUM.{k}.was', e['was']))
+
+    m_z = re.search(r"\bzu:\s*\{", raumblk)
+    RAUM_ZU = {}
+    if not m_z:
+        fehler.append('B_RAUM.zu fehlt — kein Bereich kennt seine Seite')
+    else:
+        zblk = klammerblock(raumblk, m_z.end() - 1)
+        for mz in re.finditer(r"\b([a-z]+)\s*:\s*\[([^\]]*)\]", zblk):
+            RAUM_ZU[mz.group(1)] = re.findall(r"'([^']+)'", mz.group(2))
+        for b in BEREICHE:
+            if not RAUM_ZU.get(b):
+                fehler.append(f'Bereich {b} zeigt auf keine lange Seite')
+        for b, ks in sorted(RAUM_ZU.items()):
+            if b not in BEREICHE:
+                fehler.append(f'B_RAUM.zu kennt den Bereich {b} nicht')
+            for k in ks:
+                if k not in RAUM_SEITEN:
+                    fehler.append(f'Bereich {b} zeigt auf {k}, das in '
+                                  'B_RAUM.seiten nicht steht')
+            if len(set(ks)) != len(ks):
+                fehler.append(f'Bereich {b} zeigt zweimal auf dieselbe Seite')
+
+    # Die andere Richtung: keine Raumseite ohne Bereich.
+    verwendet = {k for ks in RAUM_ZU.values() for k in ks}
+    ohne_bereich = sorted(k for k in RAUM_SEITEN if k not in verwendet)
+    if ohne_bereich:
+        fehler.append('Themenraum ohne Bereich, der darauf zeigt: '
+                      + ', '.join(ohne_bereich))
+    angebunden = {RAUM_SEITEN[k]['datei'] for k in verwendet if k in RAUM_SEITEN}
+    fremd = sorted(q.name for q in wiki.glob('raum-*.html')
+                   if q.name not in angebunden)
+    if fremd:
+        fehler.append('Raumseiten in wiki/, auf die kein Bereich zeigt: '
+                      + ', '.join(fremd))
+
+# Gezeichnet wird es auch wirklich, und die Sätze kommen aus den Daten.
+if 'RAUM' not in app or 'data-raum=' not in app:
+    fehler.append('die Bereichsseite zeichnet die langen Seiten nicht')
+for k in sorted(RAUM_SEITEN):
+    d = RAUM_SEITEN[k].get('datei') or ''
+    if d and d in app:
+        fehler.append(f'der Dateiname {d} steht in bereich-app.js statt '
+                      'in bereich-daten.js')
+
 # die fünf Blöcke müssen in der festgelegten Reihenfolge erscheinen
 blocks = re.findall(r"<h4>(\d) &middot; ([^<]+)</h4>", app)
 if [b[0] for b in blocks] != ['1', '2', '3', '4', '5']:
@@ -625,6 +739,25 @@ if [b[1] for b in blocks] != erwartet:
 for href in set(re.findall(r'href="([a-z0-9-]+\.html)"', koerper)):
     if not (wiki / href).exists():
         fehler.append(f'toter Verweis: {href}')
+
+# ── Stufe 0: kein Maschinenraum in einem Laientext ─────────────
+# Alle Sätze sind gesammelt. Jetzt erst wird geprüft — und danach
+# die Liste zugemacht, damit ein späterer Sammler nicht lautlos an
+# dieser Prüfung vorbeikommt, sondern den Bau abbricht.
+for wo, text in lay_texte:
+    for v in VERBOTEN:
+        if re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(v) + r'(?![A-Za-zÄÖÜäöüß])', text):
+            fehler.append(f'Fachwort "{v}" steht im Laientext {wo}: "{text[:70]}…"')
+    if '°' in text:
+        fehler.append(f'Gradzeichen im Laientext {wo}')
+
+# Zahlen mit Punkt statt Komma sind im Deutschen falsch
+for wo, text in lay_texte:
+    m = re.search(r'\d\.\d', text)
+    if m:
+        fehler.append(f'Dezimalpunkt statt Komma in {wo}: "{m.group(0)}"')
+
+lay_texte = tuple(lay_texte)
 
 # ── 6 · Die Rechnung einzeln prüfen ────────────────────────────
 t = subprocess.run([sys.executable and 'node', str(hier / '_test-bereich.js')],
@@ -666,6 +799,7 @@ const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
   doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
   folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,
+  nach:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
   wahl:{knoepfe:0,alleAn:'',tipp:''},
   einer:{bereiche:0,ueber:0,name:'',tipp:'',gespeichert:[],eigenerSchluessel:[]},
@@ -782,6 +916,26 @@ notiz.stufe0=await p.evaluate(J=>{
 }, JARGON);
 notiz.techSichtbar0=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
   .filter(e=>e.offsetParent!==null).length);
+
+/* Zum Nachlesen: jeder Bereich zeigt unten auf seine lange Seite.
+   Fehlerklasse: die Zuordnung steht in den Daten, aber die Seite
+   zeichnet sie nicht — oder sie steht in der Mechanik und wartet
+   damit auf Stufe 0 unsichtbar. Gemessen wird deshalb am Ergebnis
+   und auf Stufe 0, nicht an den Daten. */
+notiz.nach=await p.evaluate(()=>{
+  const raus=[];
+  document.querySelectorAll('.b-ber').forEach(d=>{
+    d.open=true;
+    const a=[...d.querySelectorAll('.b-nach .b-nachl')];
+    raus.push({name:((d.querySelector('.b-name')||{}).textContent||'?').trim(),
+      ziele:a.map(x=>x.getAttribute('href')),
+      sicht:a.filter(x=>x.offsetParent!==null).length,
+      duenn:a.filter(x=>
+        ((x.querySelector('.b-nachw')||{}).innerText||'').trim().length<60
+        || ((x.querySelector('.b-nachn')||{}).innerText||'').trim().length<4).length});
+  });
+  return raus;
+});
 
 /* Stufe 3: jetzt darf die Mechanik da sein. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(300);
@@ -1027,6 +1181,34 @@ else:
             fehler.append(f"die Facetten sind bei zwei verschiedenen Geburtsbildern "
                           f"in nur {n['facAnders']} von 10 Bereichen anders sortiert "
                           '— dann sortiert nicht das Chart, sondern die Textdatei')
+        # ── Zum Nachlesen ────────────────────────────────────
+        # Fehlerklassen: ein Bereich ohne Verweis; ein Verweis, der
+        # auf Stufe 0 nicht sichtbar ist; eine Zeile ohne Namen oder
+        # ohne Satz; ein toter Verweis; und ein Themenraum in wiki/,
+        # auf den von der Bereichsseite aus niemand zeigt.
+        nach = n['nach']
+        if len(nach) != 10:
+            fehler.append(f'{len(nach)} statt 10 Bereiche beim Nachlesen')
+        for e in nach:
+            if not e['ziele']:
+                fehler.append(f"Bereich {e['name']} verweist unten auf "
+                              'keine lange Seite')
+                continue
+            if e['sicht'] != len(e['ziele']):
+                fehler.append(f"Bereich {e['name']}: {len(e['ziele']) - e['sicht']} "
+                              'Verweise sind auf Stufe 0 nicht sichtbar')
+            if e['duenn']:
+                fehler.append(f"Bereich {e['name']}: {e['duenn']} Verweise ohne "
+                              'Namen oder ohne Satz, der sagt, was dort steht')
+            for z in e['ziele']:
+                if not z or not (wiki / z).exists():
+                    fehler.append(f"Bereich {e['name']} verweist auf {z!r} — "
+                                  'die Seite gibt es nicht')
+        angebunden = {z for e in nach for z in e['ziele'] if z}
+        offen = sorted({q.name for q in wiki.glob('raum-*.html')} - angebunden)
+        if offen:
+            fehler.append('Themenräume, auf die von der Bereichsseite aus '
+                          'niemand zeigt: ' + ', '.join(offen))
         if n['stufe0']:
             fehler.append('Fachsprache auf Stufe 0 sichtbar: ' + ', '.join(n['stufe0']))
         if n['techSichtbar0'] != 0:
