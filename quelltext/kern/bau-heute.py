@@ -115,6 +115,26 @@ const v=await p.evaluate(()=>({
   kap:document.querySelectorAll('.kb').length,
   schlecht:/undefined|NaN|\[object|Invalid/.test(document.body.innerText),
   breit:document.body.scrollWidth}));
+/* Der Aufmacher: Datum, Dopplung, Fensterangaben. */
+const auf=await p.evaluate(()=>{
+  const k=document.querySelector('.ht-auf-k');
+  const titel=[...document.querySelectorAll('.we .tt')].map(x=>x.textContent.trim());
+  return {
+    da:!!k,
+    wann:(document.querySelector('.ht-auf-w')||{}).textContent||'',
+    titel:(document.querySelector('.ht-auf-t')||{}).textContent.trim()||'',
+    text:(document.querySelector('.ht-auf-x')||{}).textContent.trim()||'',
+    wochentitel:titel,
+    volltexte:[...document.querySelectorAll('.we:not(.we-oben) .tx')]
+      .map(x=>x.textContent.trim()),
+    fenster:[...document.querySelectorAll('.ht-bbis-v')].map(x=>x.textContent.trim()),
+    erstGross:!!document.querySelector('.ht-b-gross'),
+    stellZu:!document.querySelector('#htstell').open,
+    stellOben:(()=>{ const st=document.querySelector('#htstell'),
+      be=document.querySelector('#htbereicheteil');
+      return st&&be ? st.getBoundingClientRect().top < be.getBoundingClientRect().top : false; })()};
+});
+
 // „Wenig" muss die hinteren Bänder ausblenden
 await p.evaluate(()=>document.querySelector('.kb[data-k="wenig"]').click());
 await p.waitForTimeout(220);
@@ -138,18 +158,19 @@ const t3=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
 /* Die Bereichsauswahl: da, wirksam, und sie sagt, dass sie ausblendet. */
 const wahl=await p.evaluate(()=>({
   knoepfe:document.querySelectorAll('#berwahl button[data-bw]').length,
-  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||''}));
+  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).textContent||''}));
+
 await p.evaluate(()=>{ window.AC_WAHL.setzen(['liebe']); });
 await p.waitForTimeout(800);
 const einer=await p.evaluate(()=>({
   bereiche:document.querySelectorAll('.ht-b').length,
   namen:[...document.querySelectorAll('.ht-bn')].map(x=>x.textContent.trim()),
-  tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||'',
+  tipp:(document.getElementById('htbwhin')||{}).innerText||'',
   gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,j0,t0,t3,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,j0,t0,t3,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -195,6 +216,51 @@ if pr:
         fehler.append(f"{pr['t0']} Mechanik-Elemente schon auf Stufe 0 sichtbar")
     if pr['t3'] < 3:
         fehler.append(f"auf Stufe 3 nur {pr['t3']} Mechanik-Elemente — zu wenig")
+    import datetime as _dt
+    _dtjahr = _dt.date.today().year
+    a = pr['auf']
+    if not a['da']:
+        fehler.append('kein Aufmacher im Kopf')
+    if len(a['text']) < 40:
+        fehler.append('der Aufmacher sagt nicht, worum es geht')
+    # Der Aufmacher darf nicht zweimal ausführlich auf der Seite stehen
+    gleich = [t2 for t2 in a['wochentitel'] if t2 == a['titel']]
+    if len(gleich) > 1:
+        fehler.append('der Aufmacher steht mehrfach in der Terminliste')
+    if a['titel'] and a['text'] in a['volltexte']:
+        fehler.append('der Aufmachertext steht wortgleich noch einmal in der Terminliste')
+    # „Heute" muss zum Kalendertag passen, nicht zur Stundendifferenz
+    if a['wann'].lower().startswith('heute'):
+        if ', ' in a['wann']:
+            uhrz = a['wann'].split(', ')[-1].strip()
+            try:
+                hh, mm = (int(x) for x in uhrz.split(':'))
+                if (hh, mm) < (_dt.datetime.now().hour, _dt.datetime.now().minute):
+                    fehler.append(f"Aufmacher sagt „heute {uhrz}“, das ist schon vorbei")
+            except ValueError:
+                pass
+    # Fensterangaben: kein nacktes Datum ohne Jahr, keine Mondphase in ferner Zukunft
+    for f2 in a['fenster']:
+        # Jede Angabe sagt entweder eine Dauer oder einen nahen Tag — nie beides unklar
+        if not any(w in f2 for w in ('noch', 'mindestens', 'morgen')):
+            fehler.append('Fensterangabe ohne Dauer: ' + repr(f2))
+        # Ein genanntes Datum trägt immer die Jahreszahl
+        if 'bis ' in f2 and '20' not in f2:
+            fehler.append('Datum ohne Jahreszahl: ' + repr(f2))
+        # Jenseits eines Jahres ist ein tagesgenaues Datum falsche Genauigkeit
+        import re as _re
+        m = _re.search(r'bis \d+\. \w+ (20\d\d)', f2)
+        if m and int(m.group(1)) > _dtjahr + 1:
+            fehler.append('tagesgenaues Datum weit in der Zukunft: ' + repr(f2))
+        if 'bis noch' in f2 or 'noch noch' in f2:
+            fehler.append('verdoppeltes Wort in der Fensterangabe: ' + repr(f2))
+    if a['fenster'] and not a['erstGross']:
+        fehler.append('die Bereichsliste hat kein Gefälle — alle Zeilen gleich groß')
+    if not a['stellZu']:
+        fehler.append('die Einstellleiste steht offen statt zugeklappt')
+    if a['stellOben']:
+        fehler.append('die Einstellungen stehen über dem Inhalt')
+
     w, e = pr['wahl'], pr['einer']
     if w['knoepfe'] != 11:
         fehler.append(f"{w['knoepfe']} statt 11 Knöpfe in der Bereichsauswahl")
@@ -205,9 +271,9 @@ if pr:
                       'im Kurzblick — die Auswahl wirkt hier nicht')
     if e['namen'] != ['Liebe']:
         fehler.append('der Kurzblick zeigt den falschen Bereich: ' + str(e['namen']))
-    if 'ausgeblendet' not in e['tipp']:
-        fehler.append('die Startseite blendet Bereiche aus, ohne zu sagen, '
-                      'dass sie ausgeblendet und nicht ruhig sind')
+    if 'ausgeblendet' not in e['tipp'] or 'nicht ruhig' not in e['tipp']:
+        fehler.append('die Startseite blendet Bereiche aus, ohne sichtbar zu sagen, '
+                      'dass sie ausgeblendet und nicht ruhig sind: ' + repr(e['tipp'][:70]))
     if e['gespeichert'] != ['liebe']:
         fehler.append('die Auswahl liegt nicht in AC_P neben dem Profil: '
                       + str(e['gespeichert']))

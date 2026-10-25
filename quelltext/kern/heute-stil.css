@@ -67,8 +67,18 @@
 .ht-bl{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.1em;
  text-transform:uppercase;white-space:nowrap;}
 .ht-bs{grid-column:2/-1;font-size:14.5px;color:var(--leise,#6B6259);line-height:1.55;margin-top:3px;}
-.ht-bt{grid-column:2/-1;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;
- margin-top:8px;padding-top:9px;border-top:1px dashed var(--linie,#EBE1D2);}
+.ht-bz{grid-column:2/-1;display:block;margin-top:9px;padding-top:10px;
+ border-top:1px solid var(--linie,#EBE1D2);}
+.ht-bz-l{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:4px;}
+.ht-bt{display:block;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;}
+.ht-bbis{grid-column:2/-1;display:block;margin-top:9px;}
+.ht-bbis-v{display:block;font-size:14px;color:var(--nacht,#2E3A5C);line-height:1.5;}
+.ht-b-gross{padding:21px 24px;border-color:var(--nacht,#2E3A5C);
+ box-shadow:0 3px 18px rgba(46,58,92,.07);}
+.ht-b-gross .ht-bn{font-size:25px;}
+.ht-b-gross .ht-bs{font-size:16px;margin-top:5px;}
+.ht-b-gross .ht-bt{font-size:15.5px;}
 .ht-mehr{display:inline-block;font-size:14.5px;color:var(--messing,#9A7235);text-decoration:none;}
 .ht-mehr:hover{text-decoration:underline;}
 @media(max-width:620px){
@@ -141,3 +151,43 @@
 .ht-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;margin-top:30px;}
 .ht-nix{font-size:15px;color:var(--leise,#6B6259);padding:14px 2px;}
+
+
+/* ── Der Aufmacher: das eine Ding mit Datum ───────────────── */
+.ht-auf{margin:16px 0 20px;}
+.ht-auf-k{background:var(--papier,#FFFDFA);border:1px solid var(--nacht,#2E3A5C);
+ border-radius:18px;padding:19px 22px;box-shadow:0 4px 20px rgba(46,58,92,.08);}
+.ht-auf-ruhig{border-color:var(--linie,#EBE1D2);box-shadow:none;}
+.ht-auf-w{font-family:var(--sans,system-ui);font-size:10.5px;letter-spacing:.15em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:7px;}
+.ht-auf-t{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
+ font-size:clamp(21px,2.6vw,27px);line-height:1.22;color:var(--nacht,#2E3A5C);margin:0 0 9px;}
+.ht-auf-x{font-size:15.5px;line-height:1.62;color:var(--tinte,#231F1A);margin:0;}
+.ht-auf-x b{color:var(--nacht,#2E3A5C);font-weight:600;}
+.ht-auf-m{margin-top:12px;padding:11px 14px;background:var(--bg,#FCF7EF);border-radius:11px;
+ font-size:14px;line-height:1.55;color:var(--tinte,#231F1A);}
+.ht-auf-m b{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;font-weight:500;}
+.ht-auf-bis{margin-top:11px;font-size:13.5px;color:var(--leise,#6B6259);}
+.ht-auf-tech{margin-top:11px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
+ line-height:1.55;color:var(--leise,#6B6259);}
+
+/* ── Einstellen: zugeklappt, unter dem Inhalt ─────────────── */
+.ht-stell{margin-top:54px;background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie,#EBE1D2);border-radius:18px;padding:14px 20px;}
+.ht-stell summary{cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+ list-style:none;}
+.ht-stell summary::-webkit-details-marker{display:none;}
+.ht-stell summary::before{content:"+";font-family:var(--mono,monospace);color:var(--messing,#9A7235);
+ margin-right:2px;}
+.ht-stell[open] summary::before{content:"–";}
+.ht-stell-t{font-family:var(--sans,system-ui);font-size:14.5px;color:var(--nacht,#2E3A5C);}
+.ht-stell-u{font-size:13px;color:var(--leise,#6B6259);}
+.ht-stell-in{padding-top:16px;}
+.ht-stell-in .ht-kap{margin-top:14px;}
+
+.we-oben{opacity:.6;}
+.we-oben .tx{font-style:italic;}
+.ht-bwhin{font-size:13.8px;line-height:1.55;color:var(--messing,#9A7235);
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:12px;padding:10px 14px;margin:0 0 14px;}
