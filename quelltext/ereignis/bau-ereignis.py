@@ -40,6 +40,9 @@ html = (KOPF + T('../niveau/basis.css') + '\n' + stil + '</style></head><body>\n
         + '\n</script>\n</body></html>\n')
 
 ziel = wiki / 'ereignisse-lesen.html'
+# Die App-Ansicht: Manifest, Symbol, Zwischenspeicher. Die Zeilen dafür
+# stehen in app/app-kopf.html — an einer Stelle für alle Seiten.
+html = html.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html').read_text(encoding='utf-8'), 1)
 ziel.write_text(html, encoding='utf-8')
 
 fehler = []

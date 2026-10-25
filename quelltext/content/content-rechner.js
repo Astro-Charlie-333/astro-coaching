@@ -31,12 +31,41 @@ function laden(dateien){
   return f(fensterAttrappe, console, docAttrappe);
 }
 
+/* lebensbereiche.js muss vor bereich-rechner.js stehen: der Rechner
+   liest die Liste der Bereiche beim Laden aus window.AC_LB. Fehlt sie,
+   ist AC_BER.BEREICHE leer, und jeder Bereich im Entwurf wird leer —
+   ohne dass etwas abstürzt. Darum prüft `pflicht` unten nach. */
 const U = laden(['rituale/engine.js', 'rituale/ritual.js',
+                 'bereiche/lebensbereiche.js',
                  'bereiche/bereich-rechner.js', 'bereiche/bereich-daten.js']);
 const AC   = U.window.AC_BER;
 const DAT  = U.window.AC_BDAT;
 const BOARD= U.window.AC_BOARD;
 const { lon, jdFromUT, datVon, rueck } = U;
+
+/* ── Pflichtvorrat ───────────────────────────────────────────
+   Wenn eine der Quelldateien umgebaut wird und eine Liste
+   anderswo landet, bleibt hier eine leere Liste übrig. Der
+   Entwurf entsteht dann trotzdem — nur ohne Inhalt. Das ist die
+   Fehlerklasse, die einmal durchgegangen ist. Also: früh und
+   laut abbrechen, statt still leere Beiträge zu schreiben. */
+function pflicht(name, liste){
+  if(!Array.isArray(liste) || !liste.length){
+    console.error(`content-rechner.js: ${name} ist leer. Wahrscheinlich ` +
+      'lädt die Liste in `laden([...])` nicht mehr mit — prüfe, welche ' +
+      'Datei window.AC_LB, window.AC_BER bzw. window.AC_BDAT setzt.');
+    process.exit(1);
+  }
+}
+pflicht('AC_BER.BEREICHE', AC && AC.BEREICHE);
+pflicht('AC_BDAT.EHRLICH', DAT && DAT.EHRLICH);
+if(DAT && AC) for(const B of AC.BEREICHE){
+  const T = DAT.BER[B.k];
+  if(!T || !T.frage || !T.worum || !T.meistern){
+    console.error(`content-rechner.js: zum Bereich „${B.k}" fehlen Texte in AC_BDAT.BER.`);
+    process.exit(1);
+  }
+}
 
 const ZEICHEN = ['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau',
                  'Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
@@ -53,12 +82,32 @@ function hausBei(ascZeichen, l){
 }
 
 /* Welcher Lebensbereich gehört zu einem Haus?
-   Erst der, dessen Kernhaus es ist, sonst der erste, der es führt. */
+   Erst der, dessen Kernhaus es ist. Sonst der, bei dem das Haus am
+   weitesten vorn in der eigenen Liste steht — denn diese Reihenfolge
+   ist in lebensbereiche.js Absicht: das erste Feld ist das Kernfeld.
+   Vorher wurde einfach der erste Bereich der Gesamtliste genommen,
+   der das Haus irgendwo führt. Das ist aber die Reihenfolge der
+   Datei, keine Aussage über das Haus: Haus 12 landete damit bei
+   „Gesundheit" (dort an dritter Stelle) statt bei „Umbruch" (dort an
+   zweiter) — nur weil Gesundheit in der Datei weiter oben steht. */
 function bereichZuHaus(h){
   const L = AC.BEREICHE;
   for(const B of L) if(B.haeuser[0] === h) return B;
-  for(const B of L) if(B.haeuser.indexOf(h) >= 0) return B;
-  return null;
+  let beste = null, besterRang = 99;
+  for(const B of L){
+    const i = B.haeuser.indexOf(h);
+    if(i >= 0 && i < besterRang){ besterRang = i; beste = B; }
+  }
+  return beste;
+}
+
+/* Jedes Haus muss bei einem Bereich landen — sonst steht im Karussell
+   für einen Aszendenten nichts. */
+for(let h = 1; h <= 12; h++){
+  if(!bereichZuHaus(h)){
+    console.error(`content-rechner.js: zu Haus ${h} gehört kein Lebensbereich.`);
+    process.exit(1);
+  }
 }
 
 function datum(jd){

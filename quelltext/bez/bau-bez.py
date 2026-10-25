@@ -14,6 +14,9 @@ kopf='''<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 html=(kopf+T('basis.css')+"\n"+T('beziehung-stil.css')+"</style></head><body>\n"
  +T('beziehung-koerper.html')+"\n<script>\n"+T('engine.js')+"\n"
  +T('beziehung-daten.js')+"\n"+T('beziehung-app.js')+"\n</script>\n</body></html>\n")
+# Die App-Ansicht: Manifest, Symbol, Zwischenspeicher. Die Zeilen dafür
+# stehen in app/app-kopf.html — an einer Stelle für alle Seiten.
+html = html.replace('<head>', '<head>' + (h.parent / 'app' / 'app-kopf.html').read_text(encoding='utf-8'), 1)
 z=w/'beziehung.html'; z.write_text(html,encoding='utf-8')
 k=T('beziehung-koerper.html'); a=T('beziehung-app.js')
 ids=set(re.findall(r'\bid="([A-Za-z0-9_-]+)"',k))

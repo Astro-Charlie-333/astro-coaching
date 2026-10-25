@@ -29,6 +29,9 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'zahlen-stil.css')
         + "\n</script>\n</body></html>\n")
 
 ziel = wiki / 'zahlen.html'
+# Die App-Ansicht: Manifest, Symbol, Zwischenspeicher. Die Zeilen dafür
+# stehen in app/app-kopf.html — an einer Stelle für alle Seiten.
+html = html.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html').read_text(encoding='utf-8'), 1)
 ziel.write_text(html, encoding='utf-8')
 
 fehler, hinweise = [], []

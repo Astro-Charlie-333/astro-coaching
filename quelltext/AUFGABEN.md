@@ -15,15 +15,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 ## Als Nächstes
 
-### 2 · Die App-Ansicht
-Siehe `PRODUKT.md` Abschnitt 7, Stufe 2. Die Seite soll sich auf dem
-Telefon installieren lassen: eigenes Symbol, Vollbild ohne Browserleiste,
-und die zuletzt besuchten Seiten funktionieren auch ohne Netz.
-**Fertig, wenn:** eine `manifest.webmanifest` mit Symbolen in den
-Markenfarben existiert, jede gebaute Seite sie einbindet, ein Service
-Worker die Seiten zwischenspeichert, und `pruefe-alles.py` prüft, dass
-keine Seite das Einbinden vergisst. Kein Framework, kein Bauwerkzeug.
-
 ### 4 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.
@@ -224,6 +215,32 @@ vollständig hält, übersieht sie.
 Bauen ein Fehler wird statt eines Hinweises, damit die nächste fehlende
 Seite nicht wieder nur eine Zeile im Protokoll ist.
 
+### 23 · Die App-Ansicht endet an den 108 Handarbeitsseiten
+Seit heute binden die 17 gebauten Seiten Manifest und Zwischenspeicher
+ein. Die 108 Seiten, die `pruefe-alles.py` als `HANDARBEIT` führt, tun es
+nicht — sie haben keine Quelle, in die die Zeilen gehörten. Wer über eine
+von ihnen auf die Seite kommt, bekommt kein Angebot, sie aufs Telefon zu
+legen, und nach einem Verbindungsabbruch bleibt sie leer. „Installierbar"
+ist damit eine Eigenschaft von 17 Seiten, nicht der Plattform — dieselbe
+Lücke wie bei der Stufenleiste in Aufgabe 16.
+**Fertig, wenn:** auch die Handarbeitsseiten den Block aus
+`app/app-kopf.html` tragen — entweder weil sie ins Bausystem gewandert
+sind oder weil ein Bauskript sie an dieser einen Stelle nachrüstet — und
+die Ausnahmeliste in der zehnten Querprüfung schrumpfen kann statt zu
+bleiben.
+
+### 24 · Niemand erfährt, dass man die Seite aufs Telefon legen kann
+Das Manifest liegt, der Zwischenspeicher läuft, und kein Satz auf der
+Plattform sagt es. Auf dem Telefon versteckt der Browser das Angebot in
+einem Menü, das die wenigsten öffnen; eine Stufe, von der niemand weiß,
+ist keine Stufe. Nach `PRODUKT.md` Abschnitt 5 ohne Dringlichkeit und
+ohne Verkaufston — ein Hinweis, der einmal erscheint und sich wegtippen
+lässt.
+**Fertig, wenn:** die Startseite in zwei Sätzen sagt, was das Ablegen auf
+dem Telefon bringt und dass dabei nichts an einen Server geht, der Text
+aus einer Datendatei kommt, ein Wegtippen dauerhaft gilt, und der Bau
+abbricht, wenn der Hinweis beim zweiten Besuch wieder auftaucht.
+
 ### 25 · Die Stufe-0-Prüfung steht in sechs Ordnern einzeln
 Beim Anbinden der Raumseiten ist aufgefallen: Die Liste der Wörter, die
 auf Stufe 0 nicht sichtbar sein dürfen, liegt heute in sechs `bau-*.py`
@@ -250,7 +267,6 @@ verweist, die Zuordnung dieselbe Quelle benutzt wie der Weg hin
 sobald eine Raumseite keinen Rückweg hat.
 
 ## Erledigt
-
 * **2026-10-25** · Die alten Raumseiten hängen an den Bereichen
   (Aufgabe 3). Zehn lange Texte lagen seit den Anfängen da — „Warum
   nehme ich eigentlich zu wenig?", „Warum wiederholt sich das immer?" —
@@ -275,7 +291,7 @@ sobald eine Raumseite keinen Rückweg hat.
   wartet und deshalb auf Stufe 0 unsichtbar ist; zwei Räume mit
   demselben Satz beschrieben; ein Dateiname im Anzeigeskript statt in
   den Daten; und Maschinenraum im Titel einer Raumseite — das als
-  zehnte Querprüfung über alle dreizehn Raumseiten, weil diese Seiten
+  elfte Querprüfung über alle dreizehn Raumseiten, weil diese Seiten
   Handarbeit sind und kein eigenes Bauskript haben, das es prüfen
   könnte. Ein Fund an der eigenen Prüfung dabei: Die Stufe-0-Prüfung
   stand mitten in `bau-bereiche.py`, und alles, was danach noch Sätze
@@ -290,6 +306,42 @@ sobald eine Raumseite keinen Rückweg hat.
   Prüfungen im Bereichsrechner, vierzehn absichtlich eingebaute Fehler
   alle erkannt.
 
+* **2026-10-24** · Die App-Ansicht (Aufgabe 2, Stufe 2 aus `PRODUKT.md`
+  Abschnitt 7). Die Seite lässt sich aufs Telefon legen: eigenes Symbol in
+  den Markenfarben, Vollbild ohne Browserleiste, und was man einmal offen
+  hatte, steht auch ohne Netz noch da. Kein Framework, kein Bauwerkzeug —
+  die vier Symbole entstehen beim Bauen aus zwei Kreisen und zlib, damit
+  der Bau auf jedem Rechner mit Python läuft und nicht an einem
+  Bildprogramm hängt. Der Zwischenspeicher fragt bewusst erst das Netz und
+  dann sich selbst: Andersherum wäre er schneller, würde aber alte Texte
+  als heutige ausgeben, und das ist genau die stille Übertreibung, die
+  `PRODUKT.md` Abschnitt 3 ausschließt. Die Startseite legt er schon beim
+  Anmelden ab, weil der erste Seitenaufruf noch an ihm vorbeiläuft — sonst
+  wäre nach dem ersten Besuch ausgerechnet die Seite nicht da, von der aus
+  man weitergeht. Ist eine Seite gar nicht da, kommt `offline.html` statt
+  einer Browserfehlermeldung: was los ist, was trotzdem geht, und dass
+  ohnehin das eigene Gerät rechnet und kein Server. Neu ist dabei vor
+  allem eine Stelle statt sechzehn: Die Zeilen, mit denen eine Seite
+  Manifest, Symbol und Zwischenspeicher einbindet, stehen allein in
+  `app/app-kopf.html`; jedes `bau-*.py` setzt sie mit einer Zeile ein, und
+  geprüft wird am Ergebnis, nicht in den Bauskripten. Fehlerklassen
+  abgestellt: eine gebaute Seite ohne App-Ansicht; eine Seite mit einer
+  eigenen halben Fassung des Blocks; ein Symbol, das das Manifest nennt
+  und das es nicht gibt; ein Symbol, dessen wirkliche Größe nicht zu der
+  passt, die das Manifest behauptet (gelesen wird aus der Datei, nicht aus
+  dem Dateinamen); zwei Orte für die Markenfarbe, die auseinanderlaufen;
+  ein Zwischenspeicher, der zuerst in sich selbst greift; ein `sw.js`
+  oben, das von seiner Quelle abweicht; ein Satz im Anzeigeskript statt in
+  den Daten; ein halber oder fehlender Text; Fachsprache auf Stufe 0. Dazu
+  ein Fund an der eigenen Prüfung: Die Rauchprobe war beim ersten Anlauf
+  grün und blind — der Browser hat seinen eigenen Zwischenspeicher, und
+  der lieferte die Seite ohne Netz auch dann aus, wenn `sw.js` nichts
+  getan hatte. Der Prüfserver schickt jetzt `no-store`; was ohne Netz noch
+  steht, steht wirklich wegen `sw.js`. Die Probe schaltet das Netz ab und
+  prüft dreierlei: die besuchte Seite steht noch, die Startseite auch, und
+  eine nie besuchte zeigt die Ohne-Netz-Seite statt eines Abbruchs — und
+  mit Netz ist wieder die frische Seite da. Siebzehn absichtlich
+  eingebaute Fehler alle erkannt.
 * **2026-10-23** · „Ich" sagt endlich etwas über diesen einen Menschen.
   Mandys Befund: Die Aussagen seien vage und unpersönlich. Nachgemessen mit
   zwei sehr verschiedenen erfundenen Geburtsbildern: 86 von 100 Sätzen

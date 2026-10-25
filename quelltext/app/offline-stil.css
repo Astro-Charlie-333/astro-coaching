@@ -1,0 +1,11 @@
+.on-wrap{max-width:620px;margin:0 auto;padding:52px 28px 70px;}
+.on-zeichen{margin-bottom:18px;}
+.on-wrap h1{font-family:var(--serif);font-weight:400;font-size:clamp(28px,6vw,40px);
+ line-height:1.08;letter-spacing:-.02em;color:var(--nacht);margin:0 0 14px;}
+.on-lage{font-size:16.5px;line-height:1.7;color:var(--leise);margin:0 0 24px;}
+.on-karte{background:var(--messing-bg);border:1px solid var(--linie-stark);
+ border-radius:17px;padding:20px 22px;margin:0 0 22px;}
+.on-k{font-size:15.4px;line-height:1.7;color:var(--tinte);margin:0;}
+.on-k + .on-k{margin-top:11px;padding-top:11px;border-top:1px dashed var(--linie-stark);}
+.on-grenze{font-size:13.6px;line-height:1.65;color:var(--leise);margin:0;}
+@media(max-width:560px){.on-wrap{padding:36px 18px 54px;}}
