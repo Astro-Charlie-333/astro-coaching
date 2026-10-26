@@ -52,24 +52,59 @@ function profil(){
   try{ return AC_P.aktives()||AC_P.eigenes(); }catch(e){ return null; }
 }
 
-/* ── Kopf ──────────────────────────────────────────────────── */
+/* ── Kopf ───────────────────────────────────────────────────────
+   Zuerst drei Sätze über diesen Menschen, dann das Geburtsdatum,
+   dann die Sprungmarken. Kein Rad, kein Grad, kein Zeichenname:
+   der erste Bildschirm sagt, was los ist, nicht woran man es
+   abliest (REGELN.md Abschnitt 2). Das Rad und die Dreierzeile
+   warten weiter unten unter „Dein Geburtsbild". */
 function kopfBauen(p){
-  var nm=AC_P.anzeige(p,true);
-  el('ichname').textContent=nm;
+  el('ichname').textContent=AC_P.anzeige(p,true);
   el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
     ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+  satzBauen();
+  markenBauen();
+  dreiBauen();
+}
 
+/* Der Satz, mit dem die Seite anfängt. Drei Tafeln aus
+   ich-daten.js, je nach Stelle im Bild — hier entsteht kein
+   Wort, hier wird nur zusammengesetzt. */
+function satzBauen(){
+  var t=[I_KOPF.antrieb[zI(P.Sonne)],
+         I_KOPF.beduerfnis[zI(P.Mond)],
+         I_KOPF.wirkung[zI(P.ASC)]];
+  el('ichsatz').innerHTML=t.map(function(x){
+    return '<p class="ks">'+esc(x||I_KOPF.leer)+'</p>'; }).join('');
+}
+
+/* Sprungmarken. Eine Marke, deren Ziel es nicht gibt, wäre ein
+   toter Link mitten im ersten Bildschirm — deshalb wird hier
+   nachgesehen und beim Bauen noch einmal geprüft. */
+function markenBauen(){
+  var h=[];
+  for(var i=0;i<I_MARKEN.length;i++){
+    var m=I_MARKEN[i];
+    if(!el(m.id)) continue;
+    h.push('<a href="#'+m.id+'">'+esc(m.t)+'</a>');
+  }
+  el('ichmarken').innerHTML=h.join('');
+}
+
+/* Die drei tragenden Stellen — die Alltagsbedeutung vorn, Zeichen
+   und Grad warten in ac-tech. */
+function dreiBauen(){
   var drei=[
    ['Antrieb','Sonne',P.Sonne,'Worauf du hinauswillst'],
    ['Bedürfnis','Mond',P.Mond,'Was dich beruhigt'],
-   ['Wirkung','Aszendent',P.ASC,'Wie du ankommst']];
+   ['Wirkung','Aszendent',P.ASC,'Wie du bei anderen ankommst']];
   el('ichdrei').innerHTML=drei.map(function(d){
-    var h=haus(P,d[2]);
-    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+
-      I_SIGNS[zI(d[2])]+' <em>'+gradKurz(d[2])+'</em>'+
-      '<span class="zu">'+(d[1]==='Aszendent'?'Herrscher '+I_HERR[zI(d[2])]+
-        ' im '+haus(P,P[I_HERR[zI(d[2])]])+'. Haus':
-        d[3]+' · '+h+'. Haus, '+I_HAUS[h-1].k)+'</span></div></div>';
+    var h=haus(P,d[2]), z=zI(d[2]), herr=I_HERR[z];
+    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+d[3]+
+      '<span class="zu">'+I_HAUS[h-1].k+'</span>'+
+      '<span class="ac-tech" data-ab="2">'+I_SIGNS[z]+' '+gradKurz(d[2])+
+        ' · '+h+'. Haus · Herrscher '+herr+' im '+haus(P,P[herr])+'. Haus</span>'+
+      '</div></div>';
   }).join('');
 }
 
@@ -86,10 +121,13 @@ function heuteBauen(){
   var box=el('ichheute');
   if(!hs.length){ box.innerHTML='<p class="nix">Gerade steht nichts in deinen Häusern.</p>'; return; }
   var oben=hs.slice(0,3);
-  box.innerHTML='<div class="k">Heute auf deinem Chart</div>'+
-    '<p>'+oben.map(function(h){
-      return '<a href="#h'+h+'" data-h="'+h+'">'+h+'. Haus</a> ('+
-        I_HAUS[h-1].k+'): '+treffer[h].join(', ');
+  /* Der Link heißt nach dem Lebensfeld, nicht nach der Hausnummer:
+     eine Seite sagt, WAS los ist. Die Nummern und die Namen der
+     Anlagen warten in ac-tech. */
+  box.innerHTML='<p>'+oben.map(function(h){
+      return '<a href="#h'+h+'" data-h="'+h+'">'+I_HAUS[h-1].k+'</a>'+
+        '<span class="ac-tech" data-ab="2"> ('+h+'. Haus: '+
+        treffer[h].join(', ')+')</span>';
     }).join(' · ')+'</p>'+
     '<p style="margin-bottom:0"><a href="index.html">Was das heute konkret heißt →</a></p>';
   Array.prototype.forEach.call(box.querySelectorAll('a[data-h]'),function(a){
@@ -284,14 +322,23 @@ function aspekteBauen(){
 }
 
 /* ── Index ─────────────────────────────────────────────────── */
+/* Der Index ist Nachschlagewerk, nicht Lesestoff: über fünfzig
+   Karten offen untereinander waren die Hälfte der Seitenhöhe und
+   haben dafür gesorgt, dass niemand bis hierher kam. Jede Gruppe
+   liegt jetzt in einer Klappe und sagt im Deckel, was drin ist. */
 function indexBauen(){
   el('ichindex').innerHTML=I_INDEX.map(function(g){
-    return '<div class="ich-gruppe">'+esc(g.g)+'</div><div class="ich-index">'+
+    var neu=g.e.filter(function(e){ return e.neu; }).length;
+    return '<details class="ich-klappe ix-kl"><summary>'+
+      '<span class="kl-t">'+esc(g.g)+'</span>'+
+      '<span class="kl-u">'+g.e.length+' Seiten'+
+        (neu?' · '+neu+' neu':'')+'</span></summary>'+
+      '<div class="ich-index">'+
       g.e.map(function(e){
         return '<a class="ix'+(e.neu?' neu':'')+'" href="'+e.s+'">'+
           '<div class="t">'+esc(e.t)+'</div><div class="w">'+esc(e.w)+'</div>'+
           (e.neu?'<div class="neu-m">neu</div>':'')+'</a>';
-      }).join('')+'</div>';
+      }).join('')+'</div></details>';
   }).join('');
 }
 

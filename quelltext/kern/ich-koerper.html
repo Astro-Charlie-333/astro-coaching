@@ -8,41 +8,78 @@
 
 <div class="ich-wrap" id="ichinhalt">
 
+<!-- Der Kopf: zuerst ein Satz &uuml;ber diesen Menschen. Das Rad wartet
+     weiter unten in einer Klappe &mdash; Inhalt vor Maschinenraum. -->
 <div class="ich-kopf">
-  <div>
-    <div class="ich-radbox">
-      <div class="kr-huelle" id="ichrad"></div>
-      <div class="ich-radfuss">
-        <span><i class="b"></i> ausgew&auml;hlt</span>
-        <span><i class="a"></i> heute besetzt</span>
-        <span>au&szlig;en: wo die Planeten gerade stehen</span>
-      </div>
-    </div>
-  </div>
-  <div>
-    <h1 class="ich-name" id="ichname">&nbsp;</h1>
-    <div class="ich-dat" id="ichdat"></div>
-    <div class="ich-drei" id="ichdrei"></div>
-    <div class="ich-heute" id="ichheute"></div>
-  </div>
+  <h1 class="ich-name" id="ichname">&nbsp;</h1>
+  <div class="ich-satz" id="ichsatz"></div>
+  <div class="ich-dat" id="ichdat"></div>
+  <nav class="ich-marken" id="ichmarken" aria-label="Abschnitte dieser Seite"></nav>
+  <details class="ich-stell" id="ichstell">
+  <summary><span class="kl-t">Seite einstellen</span><span class="kl-u">Wie viel Fachsprache du sehen willst</span></summary>
+  <div class="ich-stell-in"><div id="nivleiste"></div></div>
+  </details>
 </div>
 
-<!-- Was an dir auffaellt ───────────────────────────────── -->
+<!-- 1 &middot; Was an dir auff&auml;llt ───────────────────────────────── -->
+<div class="ich-ab" id="ab-auffaellt">
 <h2 class="ich-h" id="ichaufh"></h2>
 <p class="ich-sub" id="ichaufvor"></p>
 <div class="ich-auf" id="ichauf"></div>
 <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+</div>
 
-<h2 class="ich-h">Deine zw&ouml;lf H&auml;user</h2>
-<p class="ich-sub">Jedes Haus ist ein Lebensbereich, und jeder Bereich geh&ouml;rt einem Zeichen und damit einem Herrscher. Tipp eine Zeile an &mdash; oder gleich das Feld im Rad.</p>
+<!-- 2 &middot; Was heute bei dir los ist ─────────────────────────────── -->
+<div class="ich-ab" id="ab-heute">
+<h2 class="ich-h">Was heute bei dir los ist</h2>
+<p class="ich-sub">Wo das, was heute am Himmel l&auml;uft, dein Geburtsbild trifft. Was es konkret hei&szlig;t, steht auf der Startseite.</p>
+<div class="ich-heute" id="ichheute"></div>
+</div>
+
+<!-- 3 &middot; Deine zw&ouml;lf Lebensfelder ───────────────────────────── -->
+<div class="ich-ab" id="ab-felder">
+<h2 class="ich-h">Deine zw&ouml;lf Lebensfelder</h2>
+<p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben: Zuhause, Arbeit, N&auml;he, Geld, R&uuml;ckzug. Tipp eine Zeile an &mdash; dann steht da, worum es in diesem Feld bei dir geht und welche Frage es aufmacht.
+<span class="ac-tech" data-ab="2">In der Fachsprache sind das die zw&ouml;lf H&auml;user, jedes mit seinem Zeichen und dessen Herrscher.</span></p>
 <div class="ich-haeuser" id="ichhaeuser"></div>
+</div>
 
+<!-- 4 &middot; Was zusammenh&auml;ngt ──────────────────────────────────── -->
+<div class="ich-ab" id="ab-zusammen">
 <h2 class="ich-h">Was zusammenh&auml;ngt</h2>
-<p class="ich-sub">Die <span id="ichaspzahl">0</span> Aspekte deines Charts, die engsten zuerst. Rot fordert, gr&uuml;n flie&szlig;t &mdash; keins von beidem ist gut oder schlecht.</p>
+<p class="ich-sub">Die Stellen, an denen zwei Anlagen in dir sich begegnen. Rot fordert, gr&uuml;n flie&szlig;t &mdash; keins von beidem ist gut oder schlecht.
+<span class="ac-tech" data-ab="2">Gelistet sind die Aspekte des Radix, nach Orbis sortiert.</span></p>
+<details class="ich-klappe" id="ichaspklappe">
+<summary><span class="kl-t">Alle <span id="ichaspzahl">0</span> Verbindungen nachschlagen</span><span class="kl-u">Die engste steht schon oben in Alltagssprache &mdash; hier die ganze Liste</span></summary>
 <div class="ich-asp" id="ichasp"></div>
+</details>
+</div>
 
+<!-- 5 &middot; Dein Geburtsbild ────────────────────────────────────── -->
+<div class="ich-ab" id="ab-bild">
+<h2 class="ich-h">Dein Geburtsbild</h2>
+<p class="ich-sub">Dasselbe als Bild, dazu die drei Stellen, auf denen alles andere aufsitzt.</p>
+<details class="ich-klappe" id="ichradklappe">
+<summary><span class="kl-t">Das Rad aufklappen</span><span class="kl-u">Zum Antippen &mdash; jedes Feld &ouml;ffnet oben das passende Lebensfeld</span></summary>
+<div class="ich-radin">
+  <div class="ich-radbox">
+    <div class="kr-huelle" id="ichrad"></div>
+    <div class="ich-radfuss">
+      <span><i class="b"></i> ausgew&auml;hlt</span>
+      <span><i class="a"></i> heute besetzt</span>
+      <span>au&szlig;en: wo die Planeten gerade stehen</span>
+    </div>
+  </div>
+  <div class="ich-drei" id="ichdrei"></div>
+</div>
+</details>
+</div>
+
+<!-- 6 &middot; Alles, was es zu dir gibt ───────────────────────────── -->
+<div class="ich-ab" id="ab-alles">
 <h2 class="ich-h">Alles, was es zu dir gibt</h2>
-<p class="ich-sub">Jede Seite der Plattform, die mit deinem Chart rechnet. Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
+<p class="ich-sub">Jede Seite der Plattform, die mit deinem Geburtsbild rechnet, nach Thema geordnet. Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
 <div id="ichindex"></div>
+</div>
 
 </div>
