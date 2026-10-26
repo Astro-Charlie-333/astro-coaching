@@ -344,7 +344,8 @@ function bereicheBauen(p){
     var n=bs.length;
     if(n<Bl.bereiche.length){
       hin.textContent='Du siehst '+n+' von '+Bl.bereiche.length+' Bereichen. '+
-        'Die übrigen sind ausgeblendet, nicht ruhig — gerechnet werden sie weiter. '+
+        'Die übrigen sind ausgeblendet. Gerechnet werden sie weiter — dort kann also '+
+        'einiges los sein, ohne dass du es hier siehst. '+
         'Unter „Seite einstellen\u201c kannst du das ändern.';
       hin.hidden=false;
     } else { hin.textContent=''; hin.hidden=true; }

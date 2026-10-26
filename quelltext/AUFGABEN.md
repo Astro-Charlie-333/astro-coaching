@@ -17,53 +17,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 
 
-### 1 · Die Sprache der Bereichstexte vom Kopf auf die Füße stellen
-
-Mandy am 26.10. zu `bereiche.html`: „die ganze Sprachgebung und der Aufbau".
-Der **Aufbau** ist umgebaut — ein Bereich auf einmal, Sprungziele, die
-greifen, Maschinenraum gebündelt. Die **Sprache** nicht. Die steht in
-`bereiche/bereich-daten.js` und ist das eigentliche Problem.
-
-Was beim Lesen auffällt — Beispiele aus dem Bereich Liebe:
-
-* *„Über Jahre hinweg ist dieser Bereich bei dir ein Hauptthema. Das heißt
-  nicht, dass jede Woche etwas passiert — es heißt, dass hier mehr geschieht
-  als in den stillen Bereichen."* Zwei Sätze, die einander erklären, und am
-  Ende weiß man nichts.
-* *„Gerade rührt kein langsamer Vorgang daran. Was in diesem Bereich
-  passiert, passiert deshalb im Alltäglichen und nicht als Einschnitt — und
-  es passiert trotzdem."* Drei Verneinungen in einem Satz.
-* *„Etwas wird größer und leichter. Türen gehen auf, Menschen sagen ja, und
-  es kostet weniger Überredung als üblich."* Das ist gut. So müsste alles
-  klingen.
-
-Das Muster: Die Texte **erklären, was sie nicht meinen**, statt zu sagen,
-was sie meinen. Sie reden über Bereiche, Vorgänge und Schwerpunkte — über
-die eigene Rechnung also, nur ohne Fachwörter. Das ist Maschinenraum in
-Alltagssprache, und damit genau der Fehler aus `REGELN.md` §2, nur eine
-Ebene tiefer versteckt.
-
-Zu tun:
-
-1. Jeden Satz in `B_WAND`, `B_ART`, `B_KAP` und `B_BER` auf die Probe
-   stellen: **Beschreibt er etwas, das jemand an seinem Tag wiedererkennt?**
-   Wenn im Satz „Bereich", „Vorgang", „Schwerpunkt", „Hintergrund" oder
-   „Einschnitt" vorkommt, lautet die Antwort fast immer nein.
-2. Keine Verneinung ohne eine Behauptung daneben. „Das heißt nicht, dass …"
-   darf nur stehen, wenn im selben Absatz steht, was es heißt.
-3. Höchstens ein Nebensatz je Satz.
-4. Der Handgriff („Was du tun kannst") muss ein Handgriff sein, kein
-   Aphorismus. *„Luft lassen. Wer alles festbindet, erlebt den Ruck als
-   Bruch"* ist ein Sinnspruch. *„Keine Verträge auf Gefühl unterschreiben"*
-   ist ein Handgriff.
-
-Fertig, wenn: In zehn zufälligen Bereichstexten steht kein Satz mehr, der
-nur sagt, was nicht gemeint ist, und jeder Handgriff nennt eine Handlung.
-
-Dauerhafte Prüfung in `bau-bereiche.py`: Wortliste für Maschinenraum in
-Alltagssprache („Bereich", „Vorgang", „Schwerpunkt" im Fließtext der Daten);
-kein Satz mit mehr als einem „nicht"/„kein"; jeder `tun`-Satz beginnt mit
-einem Verb oder enthält eines in den ersten vier Wörtern.
 
 ### 1 · Die Ich-Seite nach demselben Muster wie die Startseite umbauen
 
@@ -352,6 +305,12 @@ verweist, die Zuordnung dieselbe Quelle benutzt wie der Weg hin
 sobald eine Raumseite keinen Rückweg hat.
 
 ## Erledigt
+
+* **2026-10-26** · Die Sprache der Bereichstexte umgeschrieben. 32 Texte in
+  `bereich-daten.js`, dazu zwei Logikfehler in der Anzeige: Der Satz „Gerade
+  zieht nichts Großes daran" stand auch dann da, wenn darunter drei laufende
+  Sachen aufgezählt wurden, und die lange Linie nannte Monatsdaten bis zu
+  zehn Jahre voraus. Drei dauerhafte Sprachprüfungen dazu.
 * **2026-10-25** · Die alten Raumseiten hängen an den Bereichen
   (Aufgabe 3). Zehn lange Texte lagen seit den Anfängen da — „Warum
   nehme ich eigentlich zu wenig?", „Warum wiederholt sich das immer?" —

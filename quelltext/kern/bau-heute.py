@@ -271,9 +271,12 @@ if pr:
                       'im Kurzblick — die Auswahl wirkt hier nicht')
     if e['namen'] != ['Liebe']:
         fehler.append('der Kurzblick zeigt den falschen Bereich: ' + str(e['namen']))
-    if 'ausgeblendet' not in e['tipp'] or 'nicht ruhig' not in e['tipp']:
+    # Geprüft wird die Aussage, nicht der Wortlaut: Es muss dastehen, dass
+    # ausgeblendet wird UND dass dort trotzdem etwas los sein kann.
+    _t = e['tipp'].lower()
+    if 'ausgeblendet' not in _t or 'gerechnet' not in _t:
         fehler.append('die Startseite blendet Bereiche aus, ohne sichtbar zu sagen, '
-                      'dass sie ausgeblendet und nicht ruhig sind: ' + repr(e['tipp'][:70]))
+                      'dass dort trotzdem etwas los sein kann: ' + repr(e['tipp'][:90]))
     if e['gespeichert'] != ['liebe']:
         fehler.append('die Auswahl liegt nicht in AC_P neben dem Profil: '
                       + str(e['gespeichert']))
