@@ -760,6 +760,52 @@ for wo, text in lay_texte:
     if m:
         fehler.append(f'Dezimalpunkt statt Komma in {wo}: "{m.group(0)}"')
 
+# ── Die Sprache selbst ─────────────────────────────────────────
+# Befund vom 26.10. (Mandy): "die texte sind noch immer kacke und
+# unübersichtlich... für alle bereiche". Drei Muster waren schuld,
+# und alle drei lassen sich zählen.
+
+# 1 · Maschinenraum in Alltagssprache. Diese Wörter benennen die
+#     eigene Rechnung, nicht das Leben. Sie tragen kein Fachwissen
+#     und sind deshalb an der Prüfung oben vorbeigekommen — gesagt
+#     haben sie trotzdem nichts.
+MODELLWORT = ['Vorgang', 'Vorgangs', 'Vorgänge', 'Vorgängen',
+              'Schwerpunkt', 'Schwerpunkts', 'Einschnitt', 'Einschnitts',
+              'Zeitraum', 'Zeitraums', 'Konstellation', 'Konstellationen',
+              'Tonlage']
+for wo, text in lay_texte:
+    for v in MODELLWORT:
+        if re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(v) + r'(?![A-Za-zÄÖÜäöüß])', text):
+            fehler.append(f'"{v}" beschreibt die Rechnung statt das Leben, in {wo}: '
+                          f'"{text[:70]}…"')
+
+# 2 · Sätze, die vor allem sagen, was sie NICHT meinen. Ein "nicht"
+#     ist in Ordnung, zwei in einem Satz heißen fast immer, dass der
+#     Satz sich selbst erklärt statt etwas zu behaupten.
+NEG = re.compile(r'(?<![A-Za-zÄÖÜäöüß])(nicht|kein|keine|keinen|keiner|keinem|'
+                 r'nichts|nie|niemals)(?![A-Za-zÄÖÜäöüß])', re.I)
+# Ausgenommen sind die Felder, deren Aufgabe das Verneinen IST: die
+# Grenzen der Methode, die Haftungssätze, der ehrliche Teil. Dort ist
+# "sie kennt keine Konten, keine Verträge" der Inhalt, nicht die Ausrede.
+GRENZFELD = ('.grenze', '.fuss', 'B_EHRLICH', 'B_WID.', '.fragenVor', '.ehrlich')
+for wo, text in lay_texte:
+    if any(g in wo for g in GRENZFELD):
+        continue
+    for satz in re.split(r'(?<=[.!?])\s+', text):
+        n = len(NEG.findall(satz))
+        if n > 1 and len(satz) > 30:
+            fehler.append(f'{n} Verneinungen in einem Satz ({wo}) — der Satz sagt vor allem, '
+                          f'was er nicht meint: "{satz[:90]}…"')
+
+# 3 · Ein Handgriff ist eine Handlung. Fängt er mit einer Verneinung
+#     an, verbietet er etwas, statt etwas zu sagen.
+for wo, text in lay_texte:
+    if not wo.endswith('.tun'):
+        continue
+    erst = text.split()[0].rstrip(',.') if text.split() else ''
+    if erst.lower() in ('nicht', 'kein', 'keine', 'keinen', 'nichts', 'niemals', 'nie'):
+        fehler.append(f'Der Handgriff {wo} beginnt mit einer Verneinung: "{text[:70]}…"')
+
 lay_texte = tuple(lay_texte)
 
 # ── 6 · Die Rechnung einzeln prüfen ────────────────────────────
@@ -960,6 +1006,21 @@ notiz.anker=await (async()=>{
              hoehe:document.body.scrollHeight };
   }, ziel);
 })();
+
+/* Zwei Dinge, die beim Lesen auffielen und sich zählen lassen:
+   kein Satz darf sagen, es laufe nichts, während darunter etwas
+   aufgezählt wird — und keine Jahreszahl weit jenseits eines
+   Jahrzehnts, das ist falsche Genauigkeit. */
+notiz.widerspruch=Object.values(await proBereich(()=>{
+  const d=document.querySelector('.b-ber'); if(!d) return null;
+  const kap=[...d.querySelectorAll('.b-kap')].map(e=>e.innerText);
+  const vor=d.querySelectorAll('.b-vor').length;
+  const zeit=(d.querySelector('.b-kapzeit')||{}).innerText||'';
+  const jahr=(zeit.match(/\b(20\d\d)\b/)||[])[1];
+  return { name:(d.querySelector('.b-name')||{}).textContent||'?',
+           nichtsUndDoch: vor>0 && kap.some(t=>/zieht nichts Großes/.test(t)),
+           fernesJahr: jahr ? +jahr : null };
+})).filter(Boolean);
 
 /* Die Ankerprobe hat die Seite neu geladen und steht jetzt beim
    stillsten Bereich. Alles Weitere wird am lautesten gemessen. */
@@ -1241,6 +1302,15 @@ else:
 
         if not n['gleich']:
             fehler.append('Überblick und Reiterleiste haben verschiedene Reihenfolgen')
+
+        import datetime as _d2
+        for w in n.get('widerspruch', []):
+            if w['nichtsUndDoch']:
+                fehler.append(f"{w['name']}: Der Text sagt, es laufe nichts Großes — "
+                              'und zählt darunter laufende Sachen auf')
+            if w['fernesJahr'] and w['fernesJahr'] - _d2.date.today().year > 3:
+                fehler.append(f"{w['name']}: Jahreszahl {w['fernesJahr']} in der Laufzeit — "
+                              'das ist falsche Genauigkeit, so weit voraus')
 
         # Der Befund vom 26.10.: ein Link von außen landete auf einer
         # zugeklappten Zeile bei 82 % einer 18-Bildschirm-Seite.

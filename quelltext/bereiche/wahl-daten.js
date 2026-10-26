@@ -27,8 +27,8 @@ window.AC_WAHL_TEXT = {
       + 'überall, nicht nur hier.',
 
   auswahl: 'Du siehst {zahl} von zehn Bereichen. Die übrigen sind '
-         + 'ausgeblendet, nicht ruhig — sie werden weiter gerechnet, '
-         + 'nur nicht gezeigt.'
+         + 'ausgeblendet. Gerechnet werden sie weiter — dort kann '
+         + 'also einiges los sein, ohne dass du es hier siehst.'
 };
 
 })();

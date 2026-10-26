@@ -108,7 +108,13 @@
     var tech1 = [];
     if(b.kapitel){
       h.push('<p class="b-kap">' + esc(b.kapitel.laut ? bD().KAP.laut : bD().KAP.leise) + '</p>');
-      if(b.nurKapitel) h.push('<p class="b-kap">' + esc(bD().KAP.nurKapitel) + '</p>');
+      /* Der Satz "Gerade zieht nichts Großes daran" stand bisher auch
+         dann da, wenn darunter drei laufende Sachen aufgezählt wurden.
+         Drei Sätze, die einander widersprechen, in einem Absatz —
+         genau das, was Mandy am 26.10. als unübersichtlich gemeldet
+         hat. Er gilt nur, wenn wirklich nichts läuft. */
+      if(b.nurKapitel && !b.laeuft.length)
+        h.push('<p class="b-kap">' + esc(bD().KAP.nurKapitel) + '</p>');
       if(b.kapitel.anders) h.push('<p class="b-kap b-leise">' + esc(bD().KAP.widerspruch) + '</p>');
       if(n >= 2) tech1.push(bD().KAP.tech + ': ' +
         ZN_()[b.kapitel.l1.zeichen] + (b.kapitel.l1.gipfel ? ' (winkelhaft)' : '') +
@@ -168,8 +174,12 @@
     }
     if(b.kapitel){
       var kv = b.kapitel.l1;
-      h.push('<p class="b-kapzeit">Das große Kapitel darüber läuft noch bis ' +
-             esc(kapEnde(kv)) + '.</p>');
+      /* Ein Monat zehn Jahre voraus ist falsche Genauigkeit. Dieselbe
+         Regel wie bei den Fenstern auf der Startseite. */
+      var kj = kapJahreNoch(kv);
+      h.push('<p class="b-kapzeit">' + (kj > 3
+        ? 'Die lange Linie darüber läuft noch Jahre.'
+        : 'Die lange Linie darüber läuft noch bis ' + esc(kapEnde(kv)) + '.') + '</p>');
     }
     h.push('</div>');
 
@@ -255,6 +265,12 @@
   /* Ende eines Kapitels als Jahr — die Zeitenseite rechnet in
      Tagen seit der Geburt, hier wird daraus ein Datum. */
   var GEB_MS = null;
+  /* Wie viele Jahre läuft das Kapitel noch? */
+  function kapJahreNoch(a){
+    if(!a || GEB_MS === null || a.bis === undefined || a.bis === null) return 0;
+    var ende = GEB_MS + a.bis * 86400000;
+    return (ende - Date.now()) / (365.2422 * 86400000);
+  }
   function kapEnde(a){
     if(GEB_MS === null || !a) return 'auf Weiteres';
     var d = new Date(GEB_MS + a.bis * 86400000);
