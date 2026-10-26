@@ -128,6 +128,75 @@ var I_AUF={
  ],
  tunVor:'Ein Handgriff dazu:'};
 
+/* ── Der Satz über diesen Menschen ────────────────────────────
+   Der Kopf der Seite führt nicht mit dem Rad, sondern mit drei
+   Sätzen darüber, was bei diesem Menschen los ist. Drei Tafeln
+   mit je zwölf Einträgen: Antrieb, Bedürfnis, Wirkung. Zwölf
+   mal zwölf mal zwölf Möglichkeiten — ein Satz, der auf die
+   Nachbarin nicht passt.
+
+   In keinem Satz steht ein Fachwort, deshalb trägt der Kopf auf
+   Wissensstufe 0. Jeder Satz nennt auch den Preis der Sache:
+   Schmeichelei schließt PRODUKT.md Abschnitt 5 aus, und ein
+   Werkzeug, das einem nach dem Mund redet, hilft beim Verstehen
+   nicht. Reihenfolge wie die Zeichen, von vorn. */
+var I_KOPF={
+ /* Worauf du hinauswillst */
+ antrieb:[
+  'Du willst vorangehen und selbst anfangen, statt zu warten, bis jemand dich fragt.',
+  'Du willst etwas aufbauen, das bleibt, und zwar in deinem Tempo und nicht in fremdem.',
+  'Du willst verstehen und weitersagen, und du brauchst mehr als eine Sache gleichzeitig.',
+  'Du willst dafür sorgen, dass es den Menschen um dich herum gut geht — und dabei selbst einen Ort haben.',
+  'Du willst etwas machen, das dir gehört und das man sieht, nicht etwas Anonymes.',
+  'Du willst, dass es wirklich stimmt, und du willst gebraucht werden für etwas Konkretes.',
+  'Du willst, dass es zwischen Menschen aufgeht, und du entscheidest ungern allein.',
+  'Du willst auf den Grund kommen. Halbe Antworten hältst du nicht lange aus.',
+  'Du willst wissen, was weiter draußen liegt, und dich nicht zu früh festlegen.',
+  'Du willst etwas zustande bringen, für das du mit deinem Namen einstehen kannst.',
+  'Du willst es anders machen als vorgegeben, und zwar so, dass es mehr als dir nützt.',
+  'Du willst dich einlassen und mitgehen, statt dich an einer Grenze festzumachen.'],
+ /* Was dich beruhigt */
+ beduerfnis:[
+  'Ruhe findest du in Bewegung. Stillsitzen macht es bei dir schlimmer, nicht besser.',
+  'Ruhe findest du in dem, was gleich bleibt: dasselbe Essen, derselbe Weg, vertraute Dinge.',
+  'Ruhe findest du, wenn du es aussprechen oder aufschreiben kannst. Ungesagt wird es größer.',
+  'Ruhe findest du dort, wo du niemandem etwas erklären musst.',
+  'Ruhe findest du, wenn jemand dich wirklich meint — nicht, wenn jemand nur nett ist.',
+  'Ruhe findest du, wenn eine Sache fertig ist und an ihrem Platz liegt.',
+  'Ruhe findest du, wenn kein Streit offen im Raum steht. Ein ungeklärter Ton hält dich wach.',
+  'Ruhe findest du, wenn du weißt, woran du bei jemandem bist. Unklarheit kostet dich mehr als schlechte Nachrichten.',
+  'Ruhe findest du, wenn du weg könntest — auch an den Tagen, an denen du bleibst.',
+  'Ruhe findest du, wenn du weißt, dass es trägt, auch ohne dich.',
+  'Ruhe findest du mit genug Abstand, um von außen auf die Sache zu sehen.',
+  'Ruhe findest du, wo gerade nichts von dir verlangt wird: Musik, Wasser, Schlaf.'],
+ /* Wie du bei anderen ankommst */
+ wirkung:[
+  'Bei anderen kommst du direkt an, oft schneller und schärfer als du es gemeint hast.',
+  'Bei anderen kommst du ruhig und verlässlich an, manchmal auch als nicht zu bewegen.',
+  'Bei anderen kommst du wach und gesprächig an, aber schwer festzuhalten.',
+  'Bei anderen kommst du zugewandt und vorsichtig an. Offen bist du erst später.',
+  'Bei anderen kommst du deutlich an, auch wenn du nichts dafür tust.',
+  'Bei anderen kommst du genau und zurückhaltend an, oft prüfender als du es meinst.',
+  'Bei anderen kommst du freundlich und ausgleichend an. Kanten zeigst du selten zuerst.',
+  'Bei anderen kommst du dicht und verschlossen an. Man rät bei dir, statt zu wissen.',
+  'Bei anderen kommst du offen und unbekümmert an, manchmal eine Nummer zu groß.',
+  'Bei anderen kommst du ernst und zuständig an, meist älter als du bist.',
+  'Bei anderen kommst du eigen und sachlich an, und bist nicht leicht einzuordnen.',
+  'Bei anderen kommst du weich und durchlässig an, mit unscharfen Rändern.'],
+ /* Die Zeile unter dem Namen, wenn noch nichts gerechnet ist */
+ leer:'Für diesen Satz fehlt die Geburtszeit. Ohne sie lässt sich nicht sagen, wie du bei anderen ankommst.'};
+
+/* Die Sprungmarken oben. Jede nennt ihren Abschnitt in
+   Alltagssprache — im ersten Bildschirm steht kein Fachwort.
+   Die Kennungen müssen im Körper vorkommen; das prüft bau-ich.py. */
+var I_MARKEN=[
+ {id:'ab-auffaellt', t:'Was auffällt'},
+ {id:'ab-heute',     t:'Heute'},
+ {id:'ab-felder',    t:'Zwölf Lebensfelder'},
+ {id:'ab-zusammen',  t:'Was zusammenhängt'},
+ {id:'ab-bild',      t:'Dein Geburtsbild'},
+ {id:'ab-alles',     t:'Alles zu dir'}];
+
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
    nicht wieder veralten. */

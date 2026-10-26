@@ -16,41 +16,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 ## Als Nächstes
 
 
-### 1 · Die Ich-Seite nach demselben Muster wie die Startseite umbauen
-
-Mandy am 25.10.: „die Ich Seite und die heute Seite sind noch immer nicht
-spannend und gut genug." Die Startseite ist umgebaut — die Ich-Seite hat
-dieselben vier Fehler:
-
-* Sie **beginnt mit dem Chartrad.** Maschinenraum vor Inhalt, genau der
-  Fehler, den die Startseite gerade losgeworden ist.
-* Die Dreierzeile direkt darunter (Antrieb · Bedürfnis · Wirkung) führt mit
-  **Zeichen und Gradzahl**. Das gehört hinter die Alltagsbedeutung.
-* **15 Bildschirme auf dem Telefon**, ohne Inhaltsverzeichnis und ohne eine
-  Möglichkeit zu springen. Niemand liest das zu Ende.
-* Der stärkste Teil — **„Was an dir auffällt"** mit den Häufigkeiten aus
-  10.000 erfundenen Geburtsbildern und je einem Handgriff — steht unter
-  allem anderen begraben. Das ist das Beste auf der ganzen Plattform und
-  es kommt als Viertes.
-
-Zu tun, in dieser Reihenfolge:
-
-1. Der Seitenkopf führt mit **einem Satz über diesen Menschen**, nicht mit
-   dem Rad. Das Rad rutscht nach unten oder in eine Klappe.
-2. „Was an dir auffällt" wird der **erste** Abschnitt nach dem Kopf.
-3. **Sprungmarken** oben: anklickbare Links auf die Abschnitte, wie auf der
-   Essensseite. Auf dem Telefon mitlaufend oder zumindest am Anfang.
-4. Alles, was Grad und Zeichen nennt, bekommt `ac-tech` und `data-ab="2"`.
-
-Fertig, wenn: Auf 390 Pixeln steht im ersten Bildschirm ein Satz über diesen
-Menschen und kein Gradzeichen; die Sprungmarken funktionieren; die Seite ist
-auf dem Telefon höchstens halb so hoch wie jetzt (12.758 Pixel), weil alles
-Nachschlagbare in Klappen liegt.
-
-Dauerhafte Prüfung dazu in `bau-ich.py`: Höhe auf 390 Pixeln unter einer
-Obergrenze; kein Gradzeichen und kein Zeichenname im ersten Bildschirm;
-jede Sprungmarke zeigt auf eine ID, die es gibt.
-
 ### 4 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.
@@ -79,6 +44,32 @@ der Textdatei — dann behauptet die Seite eine Gewichtung, die keine ist.
 **Fertig, wenn:** auch ein Bereich ohne natale Besetzung eine Reihenfolge
 zeigt, die von der Reihenfolge in `bereich-daten.js` abweicht, und
 `bau-bereiche.py` genau das prüft.
+
+
+### 27 · Der Wissensstand steht beim ersten Besuch auf „Mittel"
+
+Beim Umbau der Ich-Seite aufgefallen: `niveau.js` gibt zurück, wer noch
+nichts gewählt hat, die Stufe 2 — „Häuser und Aspekte sagen mir was".
+Wer die Plattform zum ersten Mal öffnet, bekommt also Gradzahlen,
+Hausnummern und Planetennamen zu sehen, ohne je gesagt zu haben, dass er
+damit etwas anfangen kann.
+
+Das steht gegen `PRODUKT.md` Abschnitt 3: „Auf Stufe 0 kein Fachwort, und
+trotzdem Tiefe. Wer mehr wissen will, dreht hoch. Niemand muss erst eine
+Sprache lernen." Und es trifft genau die Menschen aus Abschnitt 2, die
+keine Astrologie-Kenntnisse haben und oft auch keine wollen. Die ganze
+Arbeit, die in `ac-tech` und `data-ab` steckt, wirkt beim ersten Besuch
+nicht — sie wartet auf eine Stufe, die niemand eingestellt hat.
+
+Zu prüfen ist dabei auch, ob die Seiten auf Stufe 0 wirklich tragen: Die
+Dreierzeile auf „Ich" zeigt dort nur noch „Worauf du hinauswillst · Sinn
+und Weite". Was auf Stufe 0 zu dünn wird, braucht einen Alltagssatz, nicht
+eine Rückkehr zur Fachsprache.
+
+**Fertig, wenn:** ein Besuch ohne gespeicherte Wahl auf Stufe 0 landet,
+eine dauerhafte Prüfung festhält, dass der Vorgabewert 0 ist, und auf
+jeder gebauten Seite auf Stufe 0 kein Abschnitt übrig bleibt, der ohne die
+Mechanik nichts mehr aussagt.
 
 ---
 
@@ -303,6 +294,39 @@ verweist, die Zuordnung dieselbe Quelle benutzt wie der Weg hin
 sobald eine Raumseite keinen Rückweg hat.
 
 ## Erledigt
+* **2026-10-26** · Die Ich-Seite führt mit dem Menschen, nicht mit dem Rad
+  (Aufgabe 1). Sie begann mit dem Chartrad und darunter mit Zeichen und
+  Gradzahl — Maschinenraum vor Inhalt, derselbe Fehler, den die
+  Startseite gerade losgeworden war. Jetzt stehen im ersten Bildschirm
+  drei Sätze über diesen einen Menschen: worauf er hinauswill, was ihn
+  beruhigt, wie er bei anderen ankommt. Jeder Satz kommt aus einer Tafel
+  mit zwölf Einträgen, also zwölf mal zwölf mal zwölf Möglichkeiten, und
+  jeder nennt auch den Preis der Sache — Schmeichelei schließt
+  `PRODUKT.md` Abschnitt 5 aus. Darunter Sprungmarken auf die sechs
+  Abschnitte, auf dem Telefon in einer wischbaren Zeile. „Was an dir
+  auffällt" ist jetzt der erste Abschnitt und nicht mehr der vierte. Das
+  Rad und die Dreierzeile mit Zeichen, Grad und Herrscher warten weiter
+  unten unter „Dein Geburtsbild"; die Verbindungsliste und die fünf
+  Gruppen des Index liegen in Klappen, die im Deckel sagen, was drin ist.
+  Damit ist die Seite auf 390 Pixeln von 12.496 auf 6.210 Pixel
+  geschrumpft, also knapp unter die Hälfte. Nebenbei hörte die Brücke zu
+  „Heute" auf, ihre Verweise „9. Haus" zu nennen — dort steht jetzt das
+  Lebensfeld, und die Nummer wartet in `ac-tech`.
+  Fehlerklassen abgestellt, alle in `bau-ich.py`: die Seite höher als
+  6.300 Pixel auf 390 Breite; das Rad wieder im Kopf; ein Fachwort oder
+  ein Gradzeichen im ersten Bildschirm; ein Abschnitt vor „Was an dir
+  auffällt"; eine Klappe, die offen steht, oder eine, die im Deckel nicht
+  sagt, was drin ist; eine Sprungmarke ohne Ziel, auf einen leeren
+  Abschnitt, mit einem Fachwort auf der Aufschrift — oder eine, die
+  hinter der festen Kopfleiste landet, was wirklich angeklickt und
+  nachgemessen wird; eine fehlende oder doppelte Zeile in den drei
+  Tafeln; zwei Probebilder mit demselben Kopfsatz; eine Seite ohne
+  Stufenleiste, auf der die Mechanik in `ac-tech` niemand aufdrehen kann;
+  und eine nicht geschlossene `details`-, `summary`-, `nav`- oder
+  `p`-Klammer im Körper. Dazu eine Prüfung an der Prüfung selbst: was in
+  einer zugeklappten Klappe liegt, hat in Chromium weiterhin ein Rechteck
+  und ein `offsetParent` — wer bloß danach fragt, hält den Inhalt
+  geschlossener Klappen für sichtbar.
 * **2026-10-25** · Die alten Raumseiten hängen an den Bereichen
   (Aufgabe 3). Zehn lange Texte lagen seit den Anfängen da — „Warum
   nehme ich eigentlich zu wenig?", „Warum wiederholt sich das immer?" —

@@ -150,13 +150,65 @@ a{color:var(--nacht);}
 .ich-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
 @media(max-width:620px){.ich-wrap{padding:0 17px 70px;}}
 
-/* Kopf: Rad links, die drei tragenden Stellungen rechts */
-.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
- gap:46px;align-items:start;padding:30px 0 10px;}
-@media(max-width:900px){.ich-kopf{grid-template-columns:1fr;gap:28px;}}
+/* Kopf: ein Satz über diesen Menschen, dann das Datum, dann die
+   Sprungmarken. Eine Spalte, damit auf dem Telefon im ersten
+   Bildschirm Inhalt steht und kein Maschinenraum. */
+.ich-kopf{padding:30px 0 4px;max-width:34em;}
+.ich-satz{margin:0 0 20px;}
+.ich-satz .ks{font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:clamp(17.5px,2.5vw,22px);font-weight:300;line-height:1.5;
+ letter-spacing:-.008em;color:var(--tinte,#2A2520);margin:0 0 9px;}
+.ich-satz .ks:last-child{margin-bottom:0;}
+
+/* Sprungmarken: auf dem Telefon in einer Zeile wischbar */
+.ich-marken{display:flex;flex-wrap:wrap;gap:7px 9px;margin:0 0 4px;}
+@media(max-width:620px){.ich-marken{flex-wrap:nowrap;overflow-x:auto;
+ scrollbar-width:none;margin-right:-17px;padding-right:17px;}
+ .ich-marken::-webkit-scrollbar{display:none;}}
+.ich-marken a{white-space:nowrap;text-decoration:none;font-size:13.6px;
+ color:var(--nacht,#2E3A5C);background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie-stark,#DDD0BC);border-radius:999px;
+ padding:7px 13px;}
+.ich-marken a:hover{border-color:var(--nacht,#2E3A5C);}
+.ich-marken a:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:2px;}
+
+/* Abschnitte: das Sprungziel braucht Luft unter der festen Leiste.
+   Auf dem Telefon bricht die Leiste auf zwei Zeilen um — zu wenig
+   Abstand, und die Überschrift landet hinter ihr. */
+.ich-ab{scroll-margin-top:78px;}
+@media(max-width:620px){.ich-ab{scroll-margin-top:118px;}}
+
+/* Was wartet, liegt in einer Klappe und sagt im Deckel, was drin ist */
+.ich-klappe{border-top:1px solid var(--linie-stark,#DDD0BC);
+ border-bottom:1px solid var(--linie,#EBE1D2);}
+.ich-klappe>summary{cursor:pointer;padding:15px 2px;list-style:none;
+ display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;
+ align-items:baseline;}
+.ich-klappe>summary::-webkit-details-marker{display:none;}
+.ich-klappe>summary::after{content:'+';font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:17px;color:var(--messing,#9A7235);line-height:1;grid-row:1;grid-column:2;}
+.ich-klappe[open]>summary::after{content:'–';}
+.ich-klappe>summary:hover .kl-t{color:var(--messing,#9A7235);}
+.ich-klappe>summary:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:-2px;}
+.kl-t{font-size:15.6px;color:var(--nacht,#2E3A5C);}
+.kl-u{grid-column:1;font-size:13.4px;color:var(--leise,#6B6259);line-height:1.5;}
+.ich-klappe>summary+*{padding-bottom:22px;}
+.ix-kl{border-top:0;}
+.ix-kl:first-of-type{border-top:1px solid var(--linie-stark,#DDD0BC);}
+
+/* Das Rad, jetzt in der Klappe: Bild und Dreierzeile nebeneinander */
+.ich-radin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:38px;align-items:start;padding-top:6px;}
+@media(max-width:900px){.ich-radin{grid-template-columns:1fr;gap:24px;}}
 .ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:26px;padding:16px;position:sticky;top:76px;}
-@media(max-width:900px){.ich-radbox{position:static;}}
+ border-radius:26px;padding:16px;}
+
+/* Seite einstellen: zugeklappt, nie im Weg */
+.ich-stell{margin:14px 0 0;border-top:1px solid var(--linie,#EBE1D2);}
+.ich-stell>summary{cursor:pointer;padding:13px 2px;list-style:none;}
+.ich-stell>summary::-webkit-details-marker{display:none;}
+.ich-stell .kl-u{display:block;}
+.ich-stell-in{padding:0 0 16px;}
 .ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
  font-size:12.6px;color:var(--leise,#6B6259);}
 .ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
@@ -168,21 +220,23 @@ a{color:var(--nacht);}
  font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
 .ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
  color:var(--leise,#6B6259);margin-bottom:26px;}
-.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
+.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);}
 .ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
  padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
 .ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
-.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(20px,2.7vw,27px);
- font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.18;letter-spacing:-.012em;}
-.ich-drei .wert em{font-style:normal;color:var(--messing,#9A7235);}
+.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(18px,2.3vw,22px);
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.25;letter-spacing:-.012em;}
 .ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
  color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
+.ich-drei .ac-tech{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.8px;color:var(--messing,#9A7235);margin-top:6px;line-height:1.55;}
 
 /* Die Brücke zu Heute */
 .ich-heute{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
  border-radius:17px;padding:16px 19px;}
-.ich-heute .k{font-size:13px;color:var(--messing,#9A7235);margin-bottom:7px;}
 .ich-heute p{margin:0 0 9px;font-size:15px;line-height:1.62;}
+.ich-heute .ac-tech{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.8px;
+ color:var(--messing,#9A7235);}
 .ich-heute a{color:var(--nacht,#2E3A5C);}
 .ich-heute .nix{color:var(--leise,#6B6259);font-size:14.4px;}
 
@@ -254,9 +308,6 @@ a{color:var(--nacht);}
 .ix .w{font-size:13.9px;color:var(--leise,#6B6259);line-height:1.52;}
 .ix.neu{background:var(--messing-bg,#F7EFE1);border-color:var(--messing,#9A7235);}
 .ix .neu-m{font-size:11.6px;color:var(--messing,#9A7235);margin-top:7px;}
-.ich-gruppe{font-size:14px;color:var(--leise,#6B6259);margin:26px 0 11px;
- padding-bottom:7px;border-bottom:1px solid var(--linie,#EBE1D2);}
-.ich-gruppe:first-of-type{margin-top:0;}
 
 .ich-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;}
@@ -295,42 +346,79 @@ a{color:var(--nacht);}
 
 <div class="ich-wrap" id="ichinhalt">
 
+<!-- Der Kopf: zuerst ein Satz &uuml;ber diesen Menschen. Das Rad wartet
+     weiter unten in einer Klappe &mdash; Inhalt vor Maschinenraum. -->
 <div class="ich-kopf">
-  <div>
-    <div class="ich-radbox">
-      <div class="kr-huelle" id="ichrad"></div>
-      <div class="ich-radfuss">
-        <span><i class="b"></i> ausgew&auml;hlt</span>
-        <span><i class="a"></i> heute besetzt</span>
-        <span>au&szlig;en: wo die Planeten gerade stehen</span>
-      </div>
-    </div>
-  </div>
-  <div>
-    <h1 class="ich-name" id="ichname">&nbsp;</h1>
-    <div class="ich-dat" id="ichdat"></div>
-    <div class="ich-drei" id="ichdrei"></div>
-    <div class="ich-heute" id="ichheute"></div>
-  </div>
+  <h1 class="ich-name" id="ichname">&nbsp;</h1>
+  <div class="ich-satz" id="ichsatz"></div>
+  <div class="ich-dat" id="ichdat"></div>
+  <nav class="ich-marken" id="ichmarken" aria-label="Abschnitte dieser Seite"></nav>
+  <details class="ich-stell" id="ichstell">
+  <summary><span class="kl-t">Seite einstellen</span><span class="kl-u">Wie viel Fachsprache du sehen willst</span></summary>
+  <div class="ich-stell-in"><div id="nivleiste"></div></div>
+  </details>
 </div>
 
-<!-- Was an dir auffaellt ───────────────────────────────── -->
+<!-- 1 &middot; Was an dir auff&auml;llt ───────────────────────────────── -->
+<div class="ich-ab" id="ab-auffaellt">
 <h2 class="ich-h" id="ichaufh"></h2>
 <p class="ich-sub" id="ichaufvor"></p>
 <div class="ich-auf" id="ichauf"></div>
 <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+</div>
 
-<h2 class="ich-h">Deine zw&ouml;lf H&auml;user</h2>
-<p class="ich-sub">Jedes Haus ist ein Lebensbereich, und jeder Bereich geh&ouml;rt einem Zeichen und damit einem Herrscher. Tipp eine Zeile an &mdash; oder gleich das Feld im Rad.</p>
+<!-- 2 &middot; Was heute bei dir los ist ─────────────────────────────── -->
+<div class="ich-ab" id="ab-heute">
+<h2 class="ich-h">Was heute bei dir los ist</h2>
+<p class="ich-sub">Wo das, was heute am Himmel l&auml;uft, dein Geburtsbild trifft. Was es konkret hei&szlig;t, steht auf der Startseite.</p>
+<div class="ich-heute" id="ichheute"></div>
+</div>
+
+<!-- 3 &middot; Deine zw&ouml;lf Lebensfelder ───────────────────────────── -->
+<div class="ich-ab" id="ab-felder">
+<h2 class="ich-h">Deine zw&ouml;lf Lebensfelder</h2>
+<p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben: Zuhause, Arbeit, N&auml;he, Geld, R&uuml;ckzug. Tipp eine Zeile an &mdash; dann steht da, worum es in diesem Feld bei dir geht und welche Frage es aufmacht.
+<span class="ac-tech" data-ab="2">In der Fachsprache sind das die zw&ouml;lf H&auml;user, jedes mit seinem Zeichen und dessen Herrscher.</span></p>
 <div class="ich-haeuser" id="ichhaeuser"></div>
+</div>
 
+<!-- 4 &middot; Was zusammenh&auml;ngt ──────────────────────────────────── -->
+<div class="ich-ab" id="ab-zusammen">
 <h2 class="ich-h">Was zusammenh&auml;ngt</h2>
-<p class="ich-sub">Die <span id="ichaspzahl">0</span> Aspekte deines Charts, die engsten zuerst. Rot fordert, gr&uuml;n flie&szlig;t &mdash; keins von beidem ist gut oder schlecht.</p>
+<p class="ich-sub">Die Stellen, an denen zwei Anlagen in dir sich begegnen. Rot fordert, gr&uuml;n flie&szlig;t &mdash; keins von beidem ist gut oder schlecht.
+<span class="ac-tech" data-ab="2">Gelistet sind die Aspekte des Radix, nach Orbis sortiert.</span></p>
+<details class="ich-klappe" id="ichaspklappe">
+<summary><span class="kl-t">Alle <span id="ichaspzahl">0</span> Verbindungen nachschlagen</span><span class="kl-u">Die engste steht schon oben in Alltagssprache &mdash; hier die ganze Liste</span></summary>
 <div class="ich-asp" id="ichasp"></div>
+</details>
+</div>
 
+<!-- 5 &middot; Dein Geburtsbild ────────────────────────────────────── -->
+<div class="ich-ab" id="ab-bild">
+<h2 class="ich-h">Dein Geburtsbild</h2>
+<p class="ich-sub">Dasselbe als Bild, dazu die drei Stellen, auf denen alles andere aufsitzt.</p>
+<details class="ich-klappe" id="ichradklappe">
+<summary><span class="kl-t">Das Rad aufklappen</span><span class="kl-u">Zum Antippen &mdash; jedes Feld &ouml;ffnet oben das passende Lebensfeld</span></summary>
+<div class="ich-radin">
+  <div class="ich-radbox">
+    <div class="kr-huelle" id="ichrad"></div>
+    <div class="ich-radfuss">
+      <span><i class="b"></i> ausgew&auml;hlt</span>
+      <span><i class="a"></i> heute besetzt</span>
+      <span>au&szlig;en: wo die Planeten gerade stehen</span>
+    </div>
+  </div>
+  <div class="ich-drei" id="ichdrei"></div>
+</div>
+</details>
+</div>
+
+<!-- 6 &middot; Alles, was es zu dir gibt ───────────────────────────── -->
+<div class="ich-ab" id="ab-alles">
 <h2 class="ich-h">Alles, was es zu dir gibt</h2>
-<p class="ich-sub">Jede Seite der Plattform, die mit deinem Chart rechnet. Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
+<p class="ich-sub">Jede Seite der Plattform, die mit deinem Geburtsbild rechnet, nach Thema geordnet. Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
 <div id="ichindex"></div>
+</div>
 
 </div>
 
@@ -736,6 +824,75 @@ var I_AUF={
  ],
  tunVor:'Ein Handgriff dazu:'};
 
+/* ── Der Satz über diesen Menschen ────────────────────────────
+   Der Kopf der Seite führt nicht mit dem Rad, sondern mit drei
+   Sätzen darüber, was bei diesem Menschen los ist. Drei Tafeln
+   mit je zwölf Einträgen: Antrieb, Bedürfnis, Wirkung. Zwölf
+   mal zwölf mal zwölf Möglichkeiten — ein Satz, der auf die
+   Nachbarin nicht passt.
+
+   In keinem Satz steht ein Fachwort, deshalb trägt der Kopf auf
+   Wissensstufe 0. Jeder Satz nennt auch den Preis der Sache:
+   Schmeichelei schließt PRODUKT.md Abschnitt 5 aus, und ein
+   Werkzeug, das einem nach dem Mund redet, hilft beim Verstehen
+   nicht. Reihenfolge wie die Zeichen, von vorn. */
+var I_KOPF={
+ /* Worauf du hinauswillst */
+ antrieb:[
+  'Du willst vorangehen und selbst anfangen, statt zu warten, bis jemand dich fragt.',
+  'Du willst etwas aufbauen, das bleibt, und zwar in deinem Tempo und nicht in fremdem.',
+  'Du willst verstehen und weitersagen, und du brauchst mehr als eine Sache gleichzeitig.',
+  'Du willst dafür sorgen, dass es den Menschen um dich herum gut geht — und dabei selbst einen Ort haben.',
+  'Du willst etwas machen, das dir gehört und das man sieht, nicht etwas Anonymes.',
+  'Du willst, dass es wirklich stimmt, und du willst gebraucht werden für etwas Konkretes.',
+  'Du willst, dass es zwischen Menschen aufgeht, und du entscheidest ungern allein.',
+  'Du willst auf den Grund kommen. Halbe Antworten hältst du nicht lange aus.',
+  'Du willst wissen, was weiter draußen liegt, und dich nicht zu früh festlegen.',
+  'Du willst etwas zustande bringen, für das du mit deinem Namen einstehen kannst.',
+  'Du willst es anders machen als vorgegeben, und zwar so, dass es mehr als dir nützt.',
+  'Du willst dich einlassen und mitgehen, statt dich an einer Grenze festzumachen.'],
+ /* Was dich beruhigt */
+ beduerfnis:[
+  'Ruhe findest du in Bewegung. Stillsitzen macht es bei dir schlimmer, nicht besser.',
+  'Ruhe findest du in dem, was gleich bleibt: dasselbe Essen, derselbe Weg, vertraute Dinge.',
+  'Ruhe findest du, wenn du es aussprechen oder aufschreiben kannst. Ungesagt wird es größer.',
+  'Ruhe findest du dort, wo du niemandem etwas erklären musst.',
+  'Ruhe findest du, wenn jemand dich wirklich meint — nicht, wenn jemand nur nett ist.',
+  'Ruhe findest du, wenn eine Sache fertig ist und an ihrem Platz liegt.',
+  'Ruhe findest du, wenn kein Streit offen im Raum steht. Ein ungeklärter Ton hält dich wach.',
+  'Ruhe findest du, wenn du weißt, woran du bei jemandem bist. Unklarheit kostet dich mehr als schlechte Nachrichten.',
+  'Ruhe findest du, wenn du weg könntest — auch an den Tagen, an denen du bleibst.',
+  'Ruhe findest du, wenn du weißt, dass es trägt, auch ohne dich.',
+  'Ruhe findest du mit genug Abstand, um von außen auf die Sache zu sehen.',
+  'Ruhe findest du, wo gerade nichts von dir verlangt wird: Musik, Wasser, Schlaf.'],
+ /* Wie du bei anderen ankommst */
+ wirkung:[
+  'Bei anderen kommst du direkt an, oft schneller und schärfer als du es gemeint hast.',
+  'Bei anderen kommst du ruhig und verlässlich an, manchmal auch als nicht zu bewegen.',
+  'Bei anderen kommst du wach und gesprächig an, aber schwer festzuhalten.',
+  'Bei anderen kommst du zugewandt und vorsichtig an. Offen bist du erst später.',
+  'Bei anderen kommst du deutlich an, auch wenn du nichts dafür tust.',
+  'Bei anderen kommst du genau und zurückhaltend an, oft prüfender als du es meinst.',
+  'Bei anderen kommst du freundlich und ausgleichend an. Kanten zeigst du selten zuerst.',
+  'Bei anderen kommst du dicht und verschlossen an. Man rät bei dir, statt zu wissen.',
+  'Bei anderen kommst du offen und unbekümmert an, manchmal eine Nummer zu groß.',
+  'Bei anderen kommst du ernst und zuständig an, meist älter als du bist.',
+  'Bei anderen kommst du eigen und sachlich an, und bist nicht leicht einzuordnen.',
+  'Bei anderen kommst du weich und durchlässig an, mit unscharfen Rändern.'],
+ /* Die Zeile unter dem Namen, wenn noch nichts gerechnet ist */
+ leer:'Für diesen Satz fehlt die Geburtszeit. Ohne sie lässt sich nicht sagen, wie du bei anderen ankommst.'};
+
+/* Die Sprungmarken oben. Jede nennt ihren Abschnitt in
+   Alltagssprache — im ersten Bildschirm steht kein Fachwort.
+   Die Kennungen müssen im Körper vorkommen; das prüft bau-ich.py. */
+var I_MARKEN=[
+ {id:'ab-auffaellt', t:'Was auffällt'},
+ {id:'ab-heute',     t:'Heute'},
+ {id:'ab-felder',    t:'Zwölf Lebensfelder'},
+ {id:'ab-zusammen',  t:'Was zusammenhängt'},
+ {id:'ab-bild',      t:'Dein Geburtsbild'},
+ {id:'ab-alles',     t:'Alles zu dir'}];
+
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
    nicht wieder veralten. */
@@ -1043,24 +1200,59 @@ function profil(){
   try{ return AC_P.aktives()||AC_P.eigenes(); }catch(e){ return null; }
 }
 
-/* ── Kopf ──────────────────────────────────────────────────── */
+/* ── Kopf ───────────────────────────────────────────────────────
+   Zuerst drei Sätze über diesen Menschen, dann das Geburtsdatum,
+   dann die Sprungmarken. Kein Rad, kein Grad, kein Zeichenname:
+   der erste Bildschirm sagt, was los ist, nicht woran man es
+   abliest (REGELN.md Abschnitt 2). Das Rad und die Dreierzeile
+   warten weiter unten unter „Dein Geburtsbild". */
 function kopfBauen(p){
-  var nm=AC_P.anzeige(p,true);
-  el('ichname').textContent=nm;
+  el('ichname').textContent=AC_P.anzeige(p,true);
   el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
     ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+  satzBauen();
+  markenBauen();
+  dreiBauen();
+}
 
+/* Der Satz, mit dem die Seite anfängt. Drei Tafeln aus
+   ich-daten.js, je nach Stelle im Bild — hier entsteht kein
+   Wort, hier wird nur zusammengesetzt. */
+function satzBauen(){
+  var t=[I_KOPF.antrieb[zI(P.Sonne)],
+         I_KOPF.beduerfnis[zI(P.Mond)],
+         I_KOPF.wirkung[zI(P.ASC)]];
+  el('ichsatz').innerHTML=t.map(function(x){
+    return '<p class="ks">'+esc(x||I_KOPF.leer)+'</p>'; }).join('');
+}
+
+/* Sprungmarken. Eine Marke, deren Ziel es nicht gibt, wäre ein
+   toter Link mitten im ersten Bildschirm — deshalb wird hier
+   nachgesehen und beim Bauen noch einmal geprüft. */
+function markenBauen(){
+  var h=[];
+  for(var i=0;i<I_MARKEN.length;i++){
+    var m=I_MARKEN[i];
+    if(!el(m.id)) continue;
+    h.push('<a href="#'+m.id+'">'+esc(m.t)+'</a>');
+  }
+  el('ichmarken').innerHTML=h.join('');
+}
+
+/* Die drei tragenden Stellen — die Alltagsbedeutung vorn, Zeichen
+   und Grad warten in ac-tech. */
+function dreiBauen(){
   var drei=[
    ['Antrieb','Sonne',P.Sonne,'Worauf du hinauswillst'],
    ['Bedürfnis','Mond',P.Mond,'Was dich beruhigt'],
-   ['Wirkung','Aszendent',P.ASC,'Wie du ankommst']];
+   ['Wirkung','Aszendent',P.ASC,'Wie du bei anderen ankommst']];
   el('ichdrei').innerHTML=drei.map(function(d){
-    var h=haus(P,d[2]);
-    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+
-      I_SIGNS[zI(d[2])]+' <em>'+gradKurz(d[2])+'</em>'+
-      '<span class="zu">'+(d[1]==='Aszendent'?'Herrscher '+I_HERR[zI(d[2])]+
-        ' im '+haus(P,P[I_HERR[zI(d[2])]])+'. Haus':
-        d[3]+' · '+h+'. Haus, '+I_HAUS[h-1].k)+'</span></div></div>';
+    var h=haus(P,d[2]), z=zI(d[2]), herr=I_HERR[z];
+    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+d[3]+
+      '<span class="zu">'+I_HAUS[h-1].k+'</span>'+
+      '<span class="ac-tech" data-ab="2">'+I_SIGNS[z]+' '+gradKurz(d[2])+
+        ' · '+h+'. Haus · Herrscher '+herr+' im '+haus(P,P[herr])+'. Haus</span>'+
+      '</div></div>';
   }).join('');
 }
 
@@ -1077,10 +1269,13 @@ function heuteBauen(){
   var box=el('ichheute');
   if(!hs.length){ box.innerHTML='<p class="nix">Gerade steht nichts in deinen Häusern.</p>'; return; }
   var oben=hs.slice(0,3);
-  box.innerHTML='<div class="k">Heute auf deinem Chart</div>'+
-    '<p>'+oben.map(function(h){
-      return '<a href="#h'+h+'" data-h="'+h+'">'+h+'. Haus</a> ('+
-        I_HAUS[h-1].k+'): '+treffer[h].join(', ');
+  /* Der Link heißt nach dem Lebensfeld, nicht nach der Hausnummer:
+     eine Seite sagt, WAS los ist. Die Nummern und die Namen der
+     Anlagen warten in ac-tech. */
+  box.innerHTML='<p>'+oben.map(function(h){
+      return '<a href="#h'+h+'" data-h="'+h+'">'+I_HAUS[h-1].k+'</a>'+
+        '<span class="ac-tech" data-ab="2"> ('+h+'. Haus: '+
+        treffer[h].join(', ')+')</span>';
     }).join(' · ')+'</p>'+
     '<p style="margin-bottom:0"><a href="index.html">Was das heute konkret heißt →</a></p>';
   Array.prototype.forEach.call(box.querySelectorAll('a[data-h]'),function(a){
@@ -1275,14 +1470,23 @@ function aspekteBauen(){
 }
 
 /* ── Index ─────────────────────────────────────────────────── */
+/* Der Index ist Nachschlagewerk, nicht Lesestoff: über fünfzig
+   Karten offen untereinander waren die Hälfte der Seitenhöhe und
+   haben dafür gesorgt, dass niemand bis hierher kam. Jede Gruppe
+   liegt jetzt in einer Klappe und sagt im Deckel, was drin ist. */
 function indexBauen(){
   el('ichindex').innerHTML=I_INDEX.map(function(g){
-    return '<div class="ich-gruppe">'+esc(g.g)+'</div><div class="ich-index">'+
+    var neu=g.e.filter(function(e){ return e.neu; }).length;
+    return '<details class="ich-klappe ix-kl"><summary>'+
+      '<span class="kl-t">'+esc(g.g)+'</span>'+
+      '<span class="kl-u">'+g.e.length+' Seiten'+
+        (neu?' · '+neu+' neu':'')+'</span></summary>'+
+      '<div class="ich-index">'+
       g.e.map(function(e){
         return '<a class="ix'+(e.neu?' neu':'')+'" href="'+e.s+'">'+
           '<div class="t">'+esc(e.t)+'</div><div class="w">'+esc(e.w)+'</div>'+
           (e.neu?'<div class="neu-m">neu</div>':'')+'</a>';
-      }).join('')+'</div>';
+      }).join('')+'</div></details>';
   }).join('');
 }
 

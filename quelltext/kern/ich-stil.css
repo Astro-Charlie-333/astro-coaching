@@ -2,13 +2,65 @@
 .ich-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
 @media(max-width:620px){.ich-wrap{padding:0 17px 70px;}}
 
-/* Kopf: Rad links, die drei tragenden Stellungen rechts */
-.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
- gap:46px;align-items:start;padding:30px 0 10px;}
-@media(max-width:900px){.ich-kopf{grid-template-columns:1fr;gap:28px;}}
+/* Kopf: ein Satz über diesen Menschen, dann das Datum, dann die
+   Sprungmarken. Eine Spalte, damit auf dem Telefon im ersten
+   Bildschirm Inhalt steht und kein Maschinenraum. */
+.ich-kopf{padding:30px 0 4px;max-width:34em;}
+.ich-satz{margin:0 0 20px;}
+.ich-satz .ks{font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:clamp(17.5px,2.5vw,22px);font-weight:300;line-height:1.5;
+ letter-spacing:-.008em;color:var(--tinte,#2A2520);margin:0 0 9px;}
+.ich-satz .ks:last-child{margin-bottom:0;}
+
+/* Sprungmarken: auf dem Telefon in einer Zeile wischbar */
+.ich-marken{display:flex;flex-wrap:wrap;gap:7px 9px;margin:0 0 4px;}
+@media(max-width:620px){.ich-marken{flex-wrap:nowrap;overflow-x:auto;
+ scrollbar-width:none;margin-right:-17px;padding-right:17px;}
+ .ich-marken::-webkit-scrollbar{display:none;}}
+.ich-marken a{white-space:nowrap;text-decoration:none;font-size:13.6px;
+ color:var(--nacht,#2E3A5C);background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie-stark,#DDD0BC);border-radius:999px;
+ padding:7px 13px;}
+.ich-marken a:hover{border-color:var(--nacht,#2E3A5C);}
+.ich-marken a:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:2px;}
+
+/* Abschnitte: das Sprungziel braucht Luft unter der festen Leiste.
+   Auf dem Telefon bricht die Leiste auf zwei Zeilen um — zu wenig
+   Abstand, und die Überschrift landet hinter ihr. */
+.ich-ab{scroll-margin-top:78px;}
+@media(max-width:620px){.ich-ab{scroll-margin-top:118px;}}
+
+/* Was wartet, liegt in einer Klappe und sagt im Deckel, was drin ist */
+.ich-klappe{border-top:1px solid var(--linie-stark,#DDD0BC);
+ border-bottom:1px solid var(--linie,#EBE1D2);}
+.ich-klappe>summary{cursor:pointer;padding:15px 2px;list-style:none;
+ display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;
+ align-items:baseline;}
+.ich-klappe>summary::-webkit-details-marker{display:none;}
+.ich-klappe>summary::after{content:'+';font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:17px;color:var(--messing,#9A7235);line-height:1;grid-row:1;grid-column:2;}
+.ich-klappe[open]>summary::after{content:'–';}
+.ich-klappe>summary:hover .kl-t{color:var(--messing,#9A7235);}
+.ich-klappe>summary:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:-2px;}
+.kl-t{font-size:15.6px;color:var(--nacht,#2E3A5C);}
+.kl-u{grid-column:1;font-size:13.4px;color:var(--leise,#6B6259);line-height:1.5;}
+.ich-klappe>summary+*{padding-bottom:22px;}
+.ix-kl{border-top:0;}
+.ix-kl:first-of-type{border-top:1px solid var(--linie-stark,#DDD0BC);}
+
+/* Das Rad, jetzt in der Klappe: Bild und Dreierzeile nebeneinander */
+.ich-radin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:38px;align-items:start;padding-top:6px;}
+@media(max-width:900px){.ich-radin{grid-template-columns:1fr;gap:24px;}}
 .ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:26px;padding:16px;position:sticky;top:76px;}
-@media(max-width:900px){.ich-radbox{position:static;}}
+ border-radius:26px;padding:16px;}
+
+/* Seite einstellen: zugeklappt, nie im Weg */
+.ich-stell{margin:14px 0 0;border-top:1px solid var(--linie,#EBE1D2);}
+.ich-stell>summary{cursor:pointer;padding:13px 2px;list-style:none;}
+.ich-stell>summary::-webkit-details-marker{display:none;}
+.ich-stell .kl-u{display:block;}
+.ich-stell-in{padding:0 0 16px;}
 .ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
  font-size:12.6px;color:var(--leise,#6B6259);}
 .ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
@@ -20,21 +72,23 @@
  font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
 .ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
  color:var(--leise,#6B6259);margin-bottom:26px;}
-.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
+.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);}
 .ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
  padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
 .ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
-.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(20px,2.7vw,27px);
- font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.18;letter-spacing:-.012em;}
-.ich-drei .wert em{font-style:normal;color:var(--messing,#9A7235);}
+.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(18px,2.3vw,22px);
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.25;letter-spacing:-.012em;}
 .ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
  color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
+.ich-drei .ac-tech{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.8px;color:var(--messing,#9A7235);margin-top:6px;line-height:1.55;}
 
 /* Die Brücke zu Heute */
 .ich-heute{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
  border-radius:17px;padding:16px 19px;}
-.ich-heute .k{font-size:13px;color:var(--messing,#9A7235);margin-bottom:7px;}
 .ich-heute p{margin:0 0 9px;font-size:15px;line-height:1.62;}
+.ich-heute .ac-tech{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.8px;
+ color:var(--messing,#9A7235);}
 .ich-heute a{color:var(--nacht,#2E3A5C);}
 .ich-heute .nix{color:var(--leise,#6B6259);font-size:14.4px;}
 
@@ -106,9 +160,6 @@
 .ix .w{font-size:13.9px;color:var(--leise,#6B6259);line-height:1.52;}
 .ix.neu{background:var(--messing-bg,#F7EFE1);border-color:var(--messing,#9A7235);}
 .ix .neu-m{font-size:11.6px;color:var(--messing,#9A7235);margin-top:7px;}
-.ich-gruppe{font-size:14px;color:var(--leise,#6B6259);margin:26px 0 11px;
- padding-bottom:7px;border-bottom:1px solid var(--linie,#EBE1D2);}
-.ich-gruppe:first-of-type{margin-top:0;}
 
 .ich-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;}
