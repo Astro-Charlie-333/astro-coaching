@@ -70,19 +70,32 @@
 
   function fac(b){ return bT().facetten(b); }
 
+  /* Der Maschinenraum eines Schritts, gesammelt an dessen Ende.
+     Zwischen den Absätzen zerhackt er das Lesen; darunter wartet er. */
+  function techBlock(zeilen){
+    if(!zeilen || !zeilen.length) return '';
+    return '<div class="ac-tech b-techblk" data-ab="2">' +
+      '<span class="b-techlab">Woran das abgelesen ist</span>' +
+      zeilen.map(function(z){ return '<span class="b-techz">' + esc(z) + '</span>'; }).join('') +
+      '</div>';
+  }
+
   /* ── Ein Bereich ────────────────────────────────────────────── */
   function bereichBlock(b, offen){
     var T = bD().BER[b.k], L = bD().LAUT[b.laut], n = stufe();
     if(!T) return '';
     var h = [];
 
-    h.push('<details class="b-ber" id="ber-' + b.k + '"' + (offen ? ' open' : '') + '>');
-    h.push('<summary>');
+    /* Ein Abschnitt, keine Klappe. Ein Sprungziel, das sich erst
+       aufklappen muss, ist für den, der von außen darauf zeigt,
+       kein Sprungziel — er landet auf einer geschlossenen Zeile. */
+    h.push('<section class="b-ber" id="ber-' + b.k + '">');
+    h.push('<div class="b-kopfz">');
     h.push('<span class="b-punkt" style="background:' + L.farbe + '"></span>');
-    h.push('<span class="b-name">' + esc(b.name) + '</span>');
+    h.push('<h3 class="b-name">' + esc(b.name) + '</h3>');
     h.push('<span class="b-laut" style="color:' + L.farbe + '">' + esc(L.n) + '</span>');
-    h.push('<span class="b-satz">' + esc(T.lautSatz[b.laut]) + '</span>');
-    h.push('</summary>');
+    h.push('</div>');
+    h.push('<p class="b-satz">' + esc(T.lautSatz[b.laut]) + '</p>');
     h.push('<div class="b-in">');
 
     /* worum es in diesem Bereich überhaupt geht */
@@ -92,14 +105,15 @@
 
     /* ── 1. Was ist los ─────────────────────────────────── */
     h.push('<div class="b-blk"><h4>1 &middot; Was ist los</h4>');
+    var tech1 = [];
     if(b.kapitel){
       h.push('<p class="b-kap">' + esc(b.kapitel.laut ? bD().KAP.laut : bD().KAP.leise) + '</p>');
       if(b.nurKapitel) h.push('<p class="b-kap">' + esc(bD().KAP.nurKapitel) + '</p>');
       if(b.kapitel.anders) h.push('<p class="b-kap b-leise">' + esc(bD().KAP.widerspruch) + '</p>');
-      if(n >= 2) h.push('<p class="ac-tech">' + esc(bD().KAP.tech) + ': ' +
-        esc(ZN_()[b.kapitel.l1.zeichen]) + (b.kapitel.l1.gipfel ? ' (winkelhaft)' : '') +
-        (b.kapitel.l2 ? ' &rarr; ' + esc(ZN_()[b.kapitel.l2.zeichen]) +
-          (b.kapitel.l2.gipfel ? ' (winkelhaft)' : '') : '') + '</p>');
+      if(n >= 2) tech1.push(bD().KAP.tech + ': ' +
+        ZN_()[b.kapitel.l1.zeichen] + (b.kapitel.l1.gipfel ? ' (winkelhaft)' : '') +
+        (b.kapitel.l2 ? ' \u2192 ' + ZN_()[b.kapitel.l2.zeichen] +
+          (b.kapitel.l2.gipfel ? ' (winkelhaft)' : '') : ''));
     }
     if(!top.length){
       h.push('<p>' + esc(bD().LEER.keinVorgang) + '</p>');
@@ -110,10 +124,11 @@
         h.push('<div class="b-vor' + (i === 0 ? ' b-haupt' : '') + '">');
         if(i === 0) h.push('<span class="b-marke">Das Stärkste gerade</span>');
         h.push('<p>' + esc(S.was) + '</p>');
-        if(n >= 2) h.push('<p class="ac-tech">' + esc(vorgangTech(v)) + '</p>');
+        if(n >= 2) tech1.push(vorgangTech(v));
         h.push('</div>');
       }
     }
+    h.push(techBlock(tech1));
     h.push('</div>');
 
     /* ── 2. Was du tun kannst ───────────────────────────── */
@@ -133,12 +148,21 @@
     /* ── 3. Wie lange das läuft ─────────────────────────── */
     h.push('<div class="b-blk"><h4>3 &middot; Wie lange das läuft</h4>');
     if(top.length){
-      h.push('<ul class="b-zeit">');
-      for(var j=0;j<top.length;j++){
-        var vj = top[j], Sj = vorgangSatz(vj, b);
-        h.push('<li><b>' + esc(Sj ? Sj.tempo : '') + '</b> ' + esc(fensterZeile(vj)) + '</li>');
+      /* Vier Zeiträume untereinander beantworten die Frage nicht,
+         sie stellen sie viermal. Der stärkste steht vorn, der Rest
+         wartet hinter einer Klappe. */
+      var S0z = vorgangSatz(top[0], b);
+      h.push('<p class="b-zeit-haupt"><b>' + esc(S0z ? S0z.tempo : '') + '</b> ' +
+             esc(fensterZeile(top[0])) + '</p>');
+      if(top.length > 1){
+        h.push('<details class="b-mehrzeit"><summary>Was sonst noch l\u00e4uft (' +
+               (top.length - 1) + ')</summary><ul class="b-zeit">');
+        for(var j=1;j<top.length;j++){
+          var vj = top[j], Sj = vorgangSatz(vj, b);
+          h.push('<li><b>' + esc(Sj ? Sj.tempo : '') + '</b> ' + esc(fensterZeile(vj)) + '</li>');
+        }
+        h.push('</ul></details>');
       }
-      h.push('</ul>');
     } else {
       h.push('<p>' + esc(bD().LEER.keinFenster) + '</p>');
     }
@@ -224,7 +248,7 @@
       h.push('</div>');
     }
 
-    h.push('</div></details>');
+    h.push('</div></section>');
     return h.join('');
   }
 
@@ -259,6 +283,50 @@
     }
     h.push('</dl></details>');
     return h.join('');
+  }
+
+  /* ── Welcher Bereich ist gerade gezeigt? ─────────────────────
+     Der Anker aus der Adresse gewinnt — damit ein Link von der
+     Startseite wirklich bei dem Bereich ankommt, auf den er zeigt.
+     Sonst der lauteste. */
+  var GEWAEHLT = null;
+  function ausHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    return (h.indexOf('ber-') === 0) ? h.slice(4) : null;
+  }
+  /* Wer getippt hat, hat entschieden. Der Anker zählt beim ersten
+     Laden und wenn er sich ändert — danach nicht mehr. Sonst schlägt
+     eine veraltete Adresse den Klick: Das Umschreiben der Adresse
+     kann fehlschlagen (bei einer Datei im Browser tut es das immer),
+     und die Auswahl springt stumm zurück. */
+  function gewaehlterBereich(bs){
+    var da = function(k){ for(var i=0;i<bs.length;i++) if(bs[i].k === k) return true; return false; };
+    if(GEWAEHLT && da(GEWAEHLT)) return GEWAEHLT;
+    var h = ausHash();
+    if(h && da(h)){ GEWAEHLT = h; return h; }
+    return bs.length ? bs[0].k : null;
+  }
+  function reiterLeiste(bs, k){
+    var h = [];
+    for(var i=0;i<bs.length;i++){
+      var b = bs[i], L = bD().LAUT[b.laut], ist = (b.k === k);
+      h.push('<button type="button" class="b-rt" role="tab" data-rt="' + esc(b.k) + '" ' +
+             'aria-selected="' + ist + '">' +
+             '<span class="b-rtp" style="background:' + L.farbe + '"></span>' +
+             esc(b.name) + '</button>');
+    }
+    return h.join('');
+  }
+  /* Einen Bereich zeigen — ohne die Seite neu zu laden und ohne
+     den Sprung des Browsers, der sonst am Kopf vorbeischießt. */
+  function waehle(k, springen){
+    GEWAEHLT = k;
+    try{ history.replaceState(null, '', '#ber-' + k); }catch(e){}
+    alles();
+    if(springen){
+      var z = document.getElementById('ber-' + k);
+      if(z) z.scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }
 
   /* ── Alles zeichnen ─────────────────────────────────────────── */
@@ -339,10 +407,16 @@
 
     if(ueb) ueb.innerHTML = ueberblick(bs);
 
-    /* die drei lautesten offen, der Rest zugeklappt */
-    var h = [];
-    for(var i=0;i<bs.length;i++) h.push(bereichBlock(bs[i], i < 3));
-    ziel.innerHTML = h.join('');
+    /* Ein Bereich auf einmal. Zehn Kapitel untereinander waren
+       achtzehn Bildschirme — da sieht niemand durch, und das
+       Sprungziel von außen landete in einer zugeklappten Zeile. */
+    var k = gewaehlterBereich(bs);
+    var reiter = document.getElementById('breiter');
+    if(reiter) reiter.innerHTML = reiterLeiste(bs, k);
+    var zeig = null;
+    for(var i=0;i<bs.length;i++) if(bs[i].k === k) zeig = bs[i];
+    if(!zeig) zeig = bs[0];
+    ziel.innerHTML = bereichBlock(zeig, true);
 
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   }
@@ -446,14 +520,25 @@
     personen();
     alles();
 
-    /* Überblick springt und klappt den Bereich auf */
+    /* Der Überblick wählt aus, statt nur zu springen. */
     var ueb = D.getElementById('bueber');
     if(ueb) ueb.onclick = function(e){
       var a = e.target.closest ? e.target.closest('a[data-k]') : null;
       if(!a) return;
-      var d = D.getElementById('ber-' + a.getAttribute('data-k'));
-      if(d && !d.open) d.open = true;
+      e.preventDefault();
+      waehle(a.getAttribute('data-k'), true);
     };
+    /* Die Reiterleiste wechselt, ohne zu springen — sie steht
+       ohnehin direkt über dem Bereich. */
+    var rt = D.getElementById('breiter');
+    if(rt) rt.onclick = function(e){
+      var b = e.target.closest ? e.target.closest('button[data-rt]') : null;
+      if(b) waehle(b.getAttribute('data-rt'), false);
+    };
+    /* Kommt jemand mit einem Anker von außen, oder geht er zurück. */
+    try{ window.addEventListener('hashchange', function(){
+      var k = ausHash();
+      if(k && k !== GEWAEHLT) waehle(k, true); }); }catch(err){}
 
     try{ if(window.AC_NIV) AC_NIV.leiste(D.getElementById('nivleiste'), alles); }catch(err){}
 

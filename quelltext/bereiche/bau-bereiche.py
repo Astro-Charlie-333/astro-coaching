@@ -801,7 +801,7 @@ const leerDatei=()=>({name:'',laenge:0,fehler:NICHT,jargon:[],
 const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
   doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
-  folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,
+  folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,techJeBereich:[],
   nach:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
   wahl:{knoepfe:0,alleAn:'',tipp:''},
@@ -819,7 +819,8 @@ p.on('console',m=>{ if(m.type()==='error'){ const s=m.text();
     f.push('Konsole: '+s.slice(0,130)); } });
 await p.addInitScript(l=>localStorage.setItem('ac_profile_v1',JSON.stringify(
  {v:1,eigen:'p1',aktiv:'p1',zeigeNamen:true,liste:l})), liste);
-await p.goto('file://ZIEL'); await p.waitForTimeout(900);
+const ORT='file://ZIEL';
+await p.goto(ORT); await p.waitForTimeout(900);
 
 const bad=/undefined|NaN|\[object|&[a-z]+;|Invalid Date|\w\.\.(?!\.)|\s\.|,,|\[\[|null/;
 async function schlecht(wo){
@@ -829,23 +830,54 @@ async function schlecht(wo){
 }
 await schlecht('Start');
 
+/* Die Seite zeigt einen Bereich auf einmal. Was über alle zehn
+   gelten muss, wird geprüft, indem die Probe jeden Reiter antippt —
+   das prüft die Zusicherung und die Bedienung in einem Zug. */
+async function proBereich(fn){
+  const ks=await p.evaluate(()=>[...document.querySelectorAll('.b-rt')].map(b=>b.dataset.rt));
+  /* Merken, wo die Probe stand — sonst misst alles Folgende am
+     letzten Reiter statt dort, wo es messen wollte. */
+  const vorher=await p.evaluate(()=>{
+    const a=document.querySelector('.b-rt[aria-selected="true"]');
+    return a?a.dataset.rt:null; });
+  const out={};
+  for(const k of ks){
+    await p.evaluate(x=>document.querySelector('.b-rt[data-rt="'+x+'"]').click(), k);
+    await p.waitForTimeout(170);
+    out[k]=await p.evaluate(fn);
+  }
+  if(vorher){
+    await p.evaluate(x=>{ const b=document.querySelector('.b-rt[data-rt="'+x+'"]');
+      if(b) b.click(); }, vorher);
+    await p.waitForTimeout(220);
+  }
+  return out;
+}
+
 notiz.start=await p.evaluate(()=>({
-  facs:[...document.querySelectorAll('.b-ber[open] .b-facs')]
+  facs:[...document.querySelectorAll('.b-facs')]
         .map(e=>e.querySelectorAll('.b-fac').length),
-  bereiche:document.querySelectorAll('.b-ber').length,
-  offen:document.querySelectorAll('.b-ber[open]').length,
+  bereiche:document.querySelectorAll('.b-rt').length,
+  gezeigt:document.querySelectorAll('.b-ber').length,
+  klappen:document.querySelectorAll('#bliste details.b-ber').length,
+  gewaehlt:document.querySelectorAll('.b-rt[aria-selected="true"]').length,
+  reiterPasst:(()=>{ const a=document.querySelector('.b-rt[aria-selected="true"]'),
+    s2=document.querySelector('.b-ber'); return !!(a&&s2&&s2.id==='ber-'+a.dataset.rt); })(),
+  folgeGleich:(()=>{
+    const u=[...document.querySelectorAll('.b-u')].map(x=>x.dataset.k),
+          r=[...document.querySelectorAll('.b-rt')].map(x=>x.dataset.rt);
+    return JSON.stringify(u)===JSON.stringify(r); })(),
   ueber:document.querySelectorAll('.b-u').length,
-  bloecke:document.querySelectorAll('.b-ber[open] .b-blk').length,
+  bloecke:document.querySelectorAll('.b-ber .b-blk').length,
   haupt:document.querySelectorAll('.b-haupt').length,
   ehrlich:document.querySelectorAll('#behrlich h4').length,
   kopf:(document.getElementById('bkopf')||{}).innerText||'',
   breit:document.body.scrollWidth}));
 
 /* In einem Bereich darf kein Satz zweimal wörtlich stehen. */
-notiz.doppelt=await p.evaluate(()=>{
+notiz.doppelt=[].concat(...Object.values(await proBereich(()=>{
   const raus=[];
   document.querySelectorAll('.b-ber').forEach(d=>{
-    d.open=true;
     const name=(d.querySelector('.b-name')||{}).textContent||'?';
     const saetze=[];
     /* Nur Fließtext. In der Dauerliste dürfen zwei Fenster
@@ -861,22 +893,15 @@ notiz.doppelt=await p.evaluate(()=>{
     Object.keys(zahl).forEach(s=>{ if(zahl[s]>1) raus.push(name+': "'+s.slice(0,55)+'…"'); });
   });
   return raus;
-});
+})));
 
 /* Die Facetten müssen vom Chart sortiert sein, nicht von der
    Textdatei. Prüfung: zwei verschiedene Geburtsbilder dürfen nicht
    überall dieselbe Reihenfolge zeigen — sonst ist die Sortierung
    Behauptung. */
 async function facFolge(){
-  await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
-  await p.waitForTimeout(250);
-  return p.evaluate(()=>{
-    const o={};
-    document.querySelectorAll('.b-ber').forEach(d=>{
-      o[d.id]=[...d.querySelectorAll('.b-fac h5')].map(x=>x.textContent.trim());
-    });
-    return o;
-  });
+  return proBereich(()=>[...document.querySelectorAll('.b-fac h5')]
+    .map(x=>x.textContent.trim()));
 }
 const facA=await facFolge();
 await p.evaluate(()=>{const bs=[...document.querySelectorAll('#bpersonen button')];
@@ -898,21 +923,51 @@ await p.waitForTimeout(700);
 /* Die Reihenfolge muss nach Lautstärke fallen. */
 notiz.folge=await p.evaluate(()=>{
   const rang={'STILL':0,'LEISE':1,'IN BEWEGUNG':2,'VIEL LOS':3};
-  return [...document.querySelectorAll('.b-ber .b-laut')]
+  return [...document.querySelectorAll('.b-u .b-ul')]
     .map(x=>rang[x.textContent.trim().toUpperCase()]);
 });
 
-/* Der Überblick muss dieselbe Reihenfolge haben wie die Liste. */
+/* Überblick und Reiterleiste müssen dieselbe Reihenfolge haben. */
 notiz.gleich=await p.evaluate(()=>{
-  const a=[...document.querySelectorAll('.b-u .b-un')].map(x=>x.textContent.trim());
-  const c=[...document.querySelectorAll('.b-ber .b-name')].map(x=>x.textContent.trim());
+  const a=[...document.querySelectorAll('.b-u')].map(x=>x.dataset.k);
+  const c=[...document.querySelectorAll('.b-rt')].map(x=>x.dataset.rt);
   return JSON.stringify(a)===JSON.stringify(c);
 });
 
+/* Der Kern der Umstellung: Ein Anker von außen muss wirklich bei
+   dem Bereich ankommen, auf den er zeigt — nicht auf einer
+   zugeklappten Zeile. Fehler vom 26.10., von Mandy gemeldet. */
+notiz.anker=await (async()=>{
+  const ks=await p.evaluate(()=>[...document.querySelectorAll('.b-rt')].map(b=>b.dataset.rt));
+  const ziel=ks[ks.length-1];
+  await p.goto(ORT+'#ber-'+ziel);
+  await p.waitForTimeout(2200);
+  await p.evaluate(z=>{ const d=document.getElementById('ber-'+z);
+    if(d) d.scrollIntoView({block:'start'}); }, ziel);
+  await p.waitForTimeout(400);
+  return p.evaluate(z=>{
+    const s2=document.querySelector('.b-ber');
+    const d=document.getElementById('ber-'+z);
+    const h3=d?d.querySelector('.b-name'):null;
+    const leiste=document.querySelector('.ac-leiste');
+    const lu=leiste?leiste.getBoundingClientRect().bottom:0;
+    return { gezeigt:s2?s2.id:'', erwartet:'ber-'+z,
+             sichtbar:!!(d&&d.offsetParent!==null),
+             inKlappe:!!(d&&d.closest('details')),
+             /* Steht die Überschrift nach dem Sprung frei oder
+                hinter der klebenden Leiste? */
+             frei:!!(h3 && h3.getBoundingClientRect().top >= lu - 1),
+             hoehe:document.body.scrollHeight };
+  }, ziel);
+})();
+
+/* Die Ankerprobe hat die Seite neu geladen und steht jetzt beim
+   stillsten Bereich. Alles Weitere wird am lautesten gemessen. */
+await p.evaluate(()=>{ const b=document.querySelector('.b-rt'); if(b) b.click(); });
+await p.waitForTimeout(400);
+
 /* Stufe 0: kein Fachwort irgendwo sichtbar. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(300);
-await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
-await p.waitForTimeout(200);
 notiz.stufe0=await p.evaluate(J=>{
   const t=document.body.innerText;
   return J.filter(w=>new RegExp('(?<![A-Za-zÄÖÜäöüß])'+w+'(?![A-Za-zÄÖÜäöüß])').test(t));
@@ -925,27 +980,30 @@ notiz.techSichtbar0=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech
    zeichnet sie nicht — oder sie steht in der Mechanik und wartet
    damit auf Stufe 0 unsichtbar. Gemessen wird deshalb am Ergebnis
    und auf Stufe 0, nicht an den Daten. */
-notiz.nach=await p.evaluate(()=>{
-  const raus=[];
-  document.querySelectorAll('.b-ber').forEach(d=>{
-    d.open=true;
-    const a=[...d.querySelectorAll('.b-nach .b-nachl')];
-    raus.push({name:((d.querySelector('.b-name')||{}).textContent||'?').trim(),
-      ziele:a.map(x=>x.getAttribute('href')),
-      sicht:a.filter(x=>x.offsetParent!==null).length,
-      duenn:a.filter(x=>
-        ((x.querySelector('.b-nachw')||{}).innerText||'').trim().length<60
-        || ((x.querySelector('.b-nachn')||{}).innerText||'').trim().length<4).length});
-  });
-  return raus;
-});
+notiz.nach=Object.values(await proBereich(()=>{
+  const d=document.querySelector('.b-ber');
+  if(!d) return null;
+  const a=[...d.querySelectorAll('.b-nach .b-nachl')];
+  return {name:((d.querySelector('.b-name')||{}).textContent||'?').trim(),
+    ziele:a.map(x=>x.getAttribute('href')),
+    sicht:a.filter(x=>x.offsetParent!==null).length,
+    duenn:a.filter(x=>
+      ((x.querySelector('.b-nachw')||{}).innerText||'').trim().length<60
+      || ((x.querySelector('.b-nachn')||{}).innerText||'').trim().length<4).length};
+})).filter(Boolean);
 
-/* Stufe 3: jetzt darf die Mechanik da sein. */
-await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(300);
-await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
-await p.waitForTimeout(200);
-notiz.techSichtbar3=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
-  .filter(e=>e.offsetParent!==null).length);
+/* Stufe 3: jetzt darf die Mechanik da sein. Gemessen wird am
+   lautesten Bereich — im stillsten gibt es nichts abzulesen, und
+   dann prüft die Zahl nicht die Mechanik, sondern die Stille. */
+await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(500);
+/* Über alle zehn Bereiche zählen. An einem einzelnen zu messen hieße,
+   die Stille eines ruhigen Bereichs für fehlende Mechanik zu halten —
+   genau das ist beim Umbau am 26.10. passiert. */
+notiz.techJeBereich=Object.values(await proBereich(()=>
+  [...document.querySelectorAll('.ac-tech:not(.b-techblk), .b-techz')]
+    .filter(e=>e.offsetParent!==null).length));
+notiz.techSichtbar3=Math.max.apply(null, notiz.techJeBereich);
+
 await schlecht('Stufe 3');
 
 /* ── Der Tiefgang geht als Datei heraus ─────────────────────
@@ -960,11 +1018,16 @@ const TD = await p.evaluate(()=>window.AC_BDAT.TIEF);
 const TEILE = [TD.ueberblickTitel, TD.herkunftTitel, TD.facettenTitel,
                TD.widTitel, TD.fragenTitel, TD.ehrlichTitel];
 
+notiz.tiefKnoepfe = Object.values(await proBereich(
+  ()=>document.querySelectorAll('#bliste button[data-tief]').length));
 notiz.tief = await p.evaluate(()=>({
   titel:(document.getElementById('btieftitel')||{}).innerText||'',
   vor:(document.getElementById('btiefvor')||{}).innerText||'',
   knopfAlle:(document.getElementById('btiefalle')||{}).innerText||'',
   knoepfe:document.querySelectorAll('#bliste button[data-tief]').length,
+  knopfPasst:(()=>{ const b=document.querySelector('#bliste button[data-tief]'),
+    s2=document.querySelector('.b-ber');
+    return !!(b&&s2&&s2.id==='ber-'+b.dataset.tief); })(),
   verborgen:[...document.querySelectorAll('#tiefgang,#btiefalle')]
               .filter(e=>e.offsetParent===null).length}));
 
@@ -996,7 +1059,6 @@ notiz.datei0 = befund(await holen('#btiefalle'));
 notiz.echo = await p.evaluate(()=>(document.getElementById('btiefecho')||{}).innerText||'');
 
 /* Ein einzelner Bereich: kürzer als alle zehn, aber vollständig. */
-await p.evaluate(()=>document.querySelectorAll('.b-ber').forEach(d=>d.open=true));
 await p.waitForTimeout(200);
 const dEiner = await holen('#bliste button[data-tief]');
 notiz.dateiEiner = befund(dEiner);
@@ -1013,7 +1075,7 @@ notiz.aufDerSeite = [];
 for(const st of [0,2,4]){
   await p.evaluate(s=>{ if(window.AC_NIV) AC_NIV.setzen(s); }, st);
   await p.waitForTimeout(300);
-  await p.evaluate(()=>document.querySelectorAll('.b-ber,details').forEach(d=>d.open=true));
+  await p.evaluate(()=>document.querySelectorAll('details').forEach(d=>d.open=true));
   await p.waitForTimeout(200);
   const drin = await p.evaluate(T=>{
     const t=document.body.innerText;
@@ -1043,7 +1105,7 @@ notiz.vorGeburt=await p.evaluate(()=>(document.getElementById('bkopf')||{}).inne
 /* Zurück auf heute. */
 await p.evaluate(()=>document.getElementById('bheute').click());
 await p.waitForTimeout(500);
-notiz.zurueck=await p.evaluate(()=>document.querySelectorAll('.b-ber').length);
+notiz.zurueck=await p.evaluate(()=>document.querySelectorAll('.b-rt').length);
 
 /* Person wechseln ändert das Bild. */
 const p1=await p.evaluate(()=>document.getElementById('bliste').innerText);
@@ -1072,7 +1134,7 @@ notiz.wahl=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen(['liebe']); });
 await p.waitForTimeout(600);
 notiz.einer=await p.evaluate(()=>({
-  bereiche:document.querySelectorAll('.b-ber').length,
+  bereiche:document.querySelectorAll('.b-rt').length,
   ueber:document.querySelectorAll('.b-u').length,
   name:(document.querySelector('.b-ber .b-name')||{}).textContent||'',
   tipp:(document.querySelector('#berwahl .bw-tipp')||{}).innerText||'',
@@ -1083,7 +1145,7 @@ await p.evaluate(()=>{ const b=[...document.querySelectorAll('#berwahl button[da
   .filter(x=>x.getAttribute('data-bw')==='beruf')[0]; if(b) b.click(); });
 await p.waitForTimeout(600);
 notiz.zwei=await p.evaluate(()=>({
-  bereiche:document.querySelectorAll('.b-ber').length,
+  bereiche:document.querySelectorAll('.b-rt').length,
   gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
 /* Der letzte Bereich lässt sich nicht abwählen — eine leere Seite
    wäre keine Einstellung. */
@@ -1092,19 +1154,19 @@ await p.waitForTimeout(500);
 await p.evaluate(()=>{ const b=[...document.querySelectorAll('#berwahl button[data-bw]')]
   .filter(x=>x.getAttribute('data-bw')==='geld')[0]; if(b) b.click(); });
 await p.waitForTimeout(500);
-notiz.letzter=await p.evaluate(()=>document.querySelectorAll('.b-ber').length);
+notiz.letzter=await p.evaluate(()=>document.querySelectorAll('.b-rt').length);
 /* Zurück auf alle zehn. */
 await p.evaluate(()=>{ const b=document.querySelector('#berwahl button[data-bw=""]');
   if(b) b.click(); });
 await p.waitForTimeout(700);
 notiz.zurueckAlle=await p.evaluate(()=>({
-  bereiche:document.querySelectorAll('.b-ber').length,
+  bereiche:document.querySelectorAll('.b-rt').length,
   gespeichert:JSON.parse(localStorage.getItem('ac_profile_v1')||'{}').bereiche||[]}));
 /* Ein verdorbener Speicherstand darf die Seite nicht leeren. */
 await p.evaluate(()=>{ window.AC_P.setzeBereiche(['gibtsnicht']);
   window.dispatchEvent(new CustomEvent('ac-bereiche')); });
 await p.waitForTimeout(700);
-notiz.unsinn=await p.evaluate(()=>document.querySelectorAll('.b-ber').length);
+notiz.unsinn=await p.evaluate(()=>document.querySelectorAll('.b-rt').length);
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(700);
 
@@ -1140,15 +1202,25 @@ else:
         n = erg['notiz']
         s = n['start']
         if s['bereiche'] != 10:
-            fehler.append(f"{s['bereiche']} statt 10 Bereiche auf der Seite")
-        if s['offen'] != 3:
-            fehler.append(f"{s['offen']} statt 3 offene Bereiche beim Laden")
+            fehler.append(f"{s['bereiche']} statt 10 Reiter über dem Bereich")
+        if s['gezeigt'] != 1:
+            fehler.append(f"{s['gezeigt']} Bereiche gleichzeitig gezeigt statt einem — "
+                          'die Seite ist wieder eine Textwüste')
+        if s['klappen']:
+            fehler.append('der gezeigte Bereich steckt in einer Klappe — ein Sprungziel, '
+                          'das sich erst öffnen muss, ist für einen Link von außen keines')
+        if s['gewaehlt'] != 1:
+            fehler.append(f"{s['gewaehlt']} Reiter markiert statt genau einem")
+        if not s['reiterPasst']:
+            fehler.append('der markierte Reiter gehört nicht zum gezeigten Bereich')
+        if not s['folgeGleich']:
+            fehler.append('Überblick und Reiterleiste stehen in verschiedener Reihenfolge')
         if s['ueber'] != 10:
             fehler.append(f"{s['ueber']} statt 10 Zeilen im Überblick")
-        if s['bloecke'] != 15:
-            fehler.append(f"{s['bloecke']} statt 15 Blöcke in den drei offenen Bereichen")
-        if len(s['facs']) != 3 or any(x < 3 for x in s['facs']):
-            fehler.append('die drei offenen Bereiche zeigen nicht je drei '
+        if s['bloecke'] != 5:
+            fehler.append(f"{s['bloecke']} statt 5 Blöcke im gezeigten Bereich")
+        if len(s['facs']) != 1 or any(x < 3 for x in s['facs']):
+            fehler.append('der gezeigte Bereich zeigt nicht drei '
                           f"Facetten im Dauerthema: {s['facs']}")
         if s['haupt'] < 1:
             fehler.append('kein Bereich hebt seinen stärksten Vorgang hervor')
@@ -1168,7 +1240,23 @@ else:
             fehler.append('alle zehn Bereiche sind gleich laut — die Seite unterscheidet nichts')
 
         if not n['gleich']:
-            fehler.append('Überblick und Liste haben verschiedene Reihenfolgen')
+            fehler.append('Überblick und Reiterleiste haben verschiedene Reihenfolgen')
+
+        # Der Befund vom 26.10.: ein Link von außen landete auf einer
+        # zugeklappten Zeile bei 82 % einer 18-Bildschirm-Seite.
+        a = n['anker']
+        if a['gezeigt'] != a['erwartet']:
+            fehler.append(f"ein Anker von außen zeigt den falschen Bereich: "
+                          f"{a['gezeigt']!r} statt {a['erwartet']!r}")
+        if not a['sichtbar']:
+            fehler.append('der Bereich, auf den ein Anker zeigt, ist nicht sichtbar')
+        if a['inKlappe']:
+            fehler.append('das Sprungziel eines Ankers steckt in einer Klappe')
+        if not a['frei']:
+            fehler.append('nach dem Sprung steht die Überschrift des Bereichs hinter der '
+                          'Markenleiste — der Sprung sieht aus, als hätte er nicht gegriffen')
+        if a['hoehe'] > 9000:
+            fehler.append(f"die Seite ist {a['hoehe']} Pixel hoch — da sieht niemand durch")
 
         if n['doppelt']:
             fehler.append('derselbe Satz steht zweimal in einem Bereich: '
@@ -1177,6 +1265,13 @@ else:
         if not n['facAlleDrei']:
             fehler.append('nicht jeder Bereich zeigt drei Facetten: '
                           + str(n['facAnzahl']))
+        if len(n['facAnzahl']) != 10:
+            fehler.append(f"nur {len(n['facAnzahl'])} von 10 Bereichen über die "
+                          'Reiter erreichbar')
+        if n.get('tiefKnoepfe') and (len(n['tiefKnoepfe']) != 10
+                                     or any(x != 1 for x in n['tiefKnoepfe'])):
+            fehler.append('nicht jeder Bereich hat genau einen Knopf für den Tiefgang: '
+                          + str(n['tiefKnoepfe']))
         if n['facDoppelt']:
             fehler.append('eine Facette steht zweimal im selben Bereich: '
                           + ', '.join(n['facDoppelt'][:4]))
@@ -1217,7 +1312,11 @@ else:
         if n['techSichtbar0'] != 0:
             fehler.append(f"{n['techSichtbar0']} Mechanik-Zeilen schon auf Stufe 0 sichtbar")
         if n['techSichtbar3'] < 5:
-            fehler.append(f"auf Stufe 3 nur {n['techSichtbar3']} Mechanik-Zeilen — zu wenig")
+            fehler.append(f"auf Stufe 3 höchstens {n['techSichtbar3']} Mechanik-Zeilen "
+                          f"je Bereich — zu wenig: {n.get('techJeBereich')}")
+        if n.get('techJeBereich') and sum(n['techJeBereich']) < 20:
+            fehler.append('über alle zehn Bereiche nur '
+                          f"{sum(n['techJeBereich'])} Mechanik-Zeilen auf Stufe 3")
 
         if not n['stichtagWirkt']:
             fehler.append('der Stichtag verändert die Anzeige nicht')
@@ -1298,9 +1397,11 @@ else:
                           'verschlossen ist, sondern noch nicht geschrieben')
         if len(tf['knopfAlle']) < 15:
             fehler.append('der Knopf für den Tiefgang ist nicht beschriftet')
-        if tf['knoepfe'] != 10:
-            fehler.append(f"{tf['knoepfe']} statt 10 Knöpfe für den Tiefgang "
-                          '— jeder Bereich braucht einen eigenen')
+        if tf['knoepfe'] != 1:
+            fehler.append(f"{tf['knoepfe']} statt einem Knopf für den Tiefgang "
+                          'beim gezeigten Bereich')
+        if not tf['knopfPasst']:
+            fehler.append('der Knopf für den Tiefgang gehört nicht zum gezeigten Bereich')
         if tf['verborgen']:
             fehler.append('der Abschnitt über den Tiefgang ist unsichtbar')
 
