@@ -15,6 +15,42 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 ## Als Nächstes
 
+
+### 1 · Die Ich-Seite nach demselben Muster wie die Startseite umbauen
+
+Mandy am 25.10.: „die Ich Seite und die heute Seite sind noch immer nicht
+spannend und gut genug." Die Startseite ist umgebaut — die Ich-Seite hat
+dieselben vier Fehler:
+
+* Sie **beginnt mit dem Chartrad.** Maschinenraum vor Inhalt, genau der
+  Fehler, den die Startseite gerade losgeworden ist.
+* Die Dreierzeile direkt darunter (Antrieb · Bedürfnis · Wirkung) führt mit
+  **Zeichen und Gradzahl**. Das gehört hinter die Alltagsbedeutung.
+* **15 Bildschirme auf dem Telefon**, ohne Inhaltsverzeichnis und ohne eine
+  Möglichkeit zu springen. Niemand liest das zu Ende.
+* Der stärkste Teil — **„Was an dir auffällt"** mit den Häufigkeiten aus
+  10.000 erfundenen Geburtsbildern und je einem Handgriff — steht unter
+  allem anderen begraben. Das ist das Beste auf der ganzen Plattform und
+  es kommt als Viertes.
+
+Zu tun, in dieser Reihenfolge:
+
+1. Der Seitenkopf führt mit **einem Satz über diesen Menschen**, nicht mit
+   dem Rad. Das Rad rutscht nach unten oder in eine Klappe.
+2. „Was an dir auffällt" wird der **erste** Abschnitt nach dem Kopf.
+3. **Sprungmarken** oben: anklickbare Links auf die Abschnitte, wie auf der
+   Essensseite. Auf dem Telefon mitlaufend oder zumindest am Anfang.
+4. Alles, was Grad und Zeichen nennt, bekommt `ac-tech` und `data-ab="2"`.
+
+Fertig, wenn: Auf 390 Pixeln steht im ersten Bildschirm ein Satz über diesen
+Menschen und kein Gradzeichen; die Sprungmarken funktionieren; die Seite ist
+auf dem Telefon höchstens halb so hoch wie jetzt (12.758 Pixel), weil alles
+Nachschlagbare in Klappen liegt.
+
+Dauerhafte Prüfung dazu in `bau-ich.py`: Höhe auf 390 Pixeln unter einer
+Obergrenze; kein Gradzeichen und kein Zeichenname im ersten Bildschirm;
+jede Sprungmarke zeigt auf eine ID, die es gibt.
+
 ### 4 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.

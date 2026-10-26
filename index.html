@@ -213,8 +213,18 @@ a{color:var(--nacht);}
 .ht-bl{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.1em;
  text-transform:uppercase;white-space:nowrap;}
 .ht-bs{grid-column:2/-1;font-size:14.5px;color:var(--leise,#6B6259);line-height:1.55;margin-top:3px;}
-.ht-bt{grid-column:2/-1;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;
- margin-top:8px;padding-top:9px;border-top:1px dashed var(--linie,#EBE1D2);}
+.ht-bz{grid-column:2/-1;display:block;margin-top:9px;padding-top:10px;
+ border-top:1px solid var(--linie,#EBE1D2);}
+.ht-bz-l{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:4px;}
+.ht-bt{display:block;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;}
+.ht-bbis{grid-column:2/-1;display:block;margin-top:9px;}
+.ht-bbis-v{display:block;font-size:14px;color:var(--nacht,#2E3A5C);line-height:1.5;}
+.ht-b-gross{padding:21px 24px;border-color:var(--nacht,#2E3A5C);
+ box-shadow:0 3px 18px rgba(46,58,92,.07);}
+.ht-b-gross .ht-bn{font-size:25px;}
+.ht-b-gross .ht-bs{font-size:16px;margin-top:5px;}
+.ht-b-gross .ht-bt{font-size:15.5px;}
 .ht-mehr{display:inline-block;font-size:14.5px;color:var(--messing,#9A7235);text-decoration:none;}
 .ht-mehr:hover{text-decoration:underline;}
 @media(max-width:620px){
@@ -288,6 +298,46 @@ a{color:var(--nacht);}
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;margin-top:30px;}
 .ht-nix{font-size:15px;color:var(--leise,#6B6259);padding:14px 2px;}
 
+
+/* ── Der Aufmacher: das eine Ding mit Datum ───────────────── */
+.ht-auf{margin:16px 0 20px;}
+.ht-auf-k{background:var(--papier,#FFFDFA);border:1px solid var(--nacht,#2E3A5C);
+ border-radius:18px;padding:19px 22px;box-shadow:0 4px 20px rgba(46,58,92,.08);}
+.ht-auf-ruhig{border-color:var(--linie,#EBE1D2);box-shadow:none;}
+.ht-auf-w{font-family:var(--sans,system-ui);font-size:10.5px;letter-spacing:.15em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:7px;}
+.ht-auf-t{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
+ font-size:clamp(21px,2.6vw,27px);line-height:1.22;color:var(--nacht,#2E3A5C);margin:0 0 9px;}
+.ht-auf-x{font-size:15.5px;line-height:1.62;color:var(--tinte,#231F1A);margin:0;}
+.ht-auf-x b{color:var(--nacht,#2E3A5C);font-weight:600;}
+.ht-auf-m{margin-top:12px;padding:11px 14px;background:var(--bg,#FCF7EF);border-radius:11px;
+ font-size:14px;line-height:1.55;color:var(--tinte,#231F1A);}
+.ht-auf-m b{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;font-weight:500;}
+.ht-auf-bis{margin-top:11px;font-size:13.5px;color:var(--leise,#6B6259);}
+.ht-auf-tech{margin-top:11px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
+ line-height:1.55;color:var(--leise,#6B6259);}
+
+/* ── Einstellen: zugeklappt, unter dem Inhalt ─────────────── */
+.ht-stell{margin-top:54px;background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie,#EBE1D2);border-radius:18px;padding:14px 20px;}
+.ht-stell summary{cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+ list-style:none;}
+.ht-stell summary::-webkit-details-marker{display:none;}
+.ht-stell summary::before{content:"+";font-family:var(--mono,monospace);color:var(--messing,#9A7235);
+ margin-right:2px;}
+.ht-stell[open] summary::before{content:"–";}
+.ht-stell-t{font-family:var(--sans,system-ui);font-size:14.5px;color:var(--nacht,#2E3A5C);}
+.ht-stell-u{font-size:13px;color:var(--leise,#6B6259);}
+.ht-stell-in{padding-top:16px;}
+.ht-stell-in .ht-kap{margin-top:14px;}
+
+.we-oben{opacity:.6;}
+.we-oben .tx{font-style:italic;}
+.ht-bwhin{font-size:13.8px;line-height:1.55;color:var(--messing,#9A7235);
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:12px;padding:10px 14px;margin:0 0 14px;}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -324,9 +374,9 @@ a{color:var(--nacht);}
   <div>
     <div class="ht-tag" id="httag"></div>
     <h1 class="ht-gruss" id="htgruss">&nbsp;</h1>
+    <div class="ht-auf" id="htaufmacher"></div>
     <p class="ht-satz" id="htsatz"></p>
     <div id="httech"></div>
-    <div class="ht-fakten" id="htfakten"></div>
   </div>
   <div>
     <div class="ht-radmini"><div class="kr-huelle" id="htrad"></div></div>
@@ -337,31 +387,36 @@ a{color:var(--nacht);}
 
 <div class="ht-wrap" id="htinhalt">
 
-<div id="nivleiste"></div>
-<div id="berwahl"></div>
+<div id="htwocheteil">
+  <h2 class="ht-h">Was als N&auml;chstes ansteht</h2>
+  <p class="ht-sub">Alles mit festem Termin in den n&auml;chsten zehn Tagen, in der Reihenfolge, in der es kommt. Was eine Vorbereitung braucht, sagt es dazu.</p>
+  <div class="ht-woche" id="htwoche"></div>
+</div>
 
 <div id="htbereicheteil">
   <h2 class="ht-h">Wo gerade am meisten los ist</h2>
-  <p class="ht-sub">Deine Lebensbereiche, nach Lautst&auml;rke sortiert. Das hier ist der Kurzblick &mdash; auf der Bereichsseite steht zu jedem, was los ist, was du tun kannst und wie lange es l&auml;uft.</p>
+  <p class="ht-sub">Deine Lebensbereiche, der lauteste zuerst. Zu jedem steht, was los ist, was du tun kannst und bis wann es l&auml;uft.</p>
+  <p class="ht-bwhin" id="htbwhin" hidden></p>
   <div class="ht-ber" id="htber"></div>
   <a class="ht-mehr" href="bereiche.html">Alle zehn Bereiche ansehen &rarr;</a>
 </div>
 
-<div id="htwocheteil">
-  <h2 class="ht-h">Diese Woche</h2>
-  <p class="ht-sub">Alles, was in den n&auml;chsten zehn Tagen einen festen Termin hat &mdash; in der Reihenfolge, in der es kommt. Was eine Vorbereitung braucht, sagt es dazu.</p>
-  <div class="ht-woche" id="htwoche"></div>
+<details class="ht-stell" id="htstell">
+<summary><span class="ht-stell-t">Seite einstellen</span><span class="ht-stell-u" id="htstellu"></span></summary>
+<div class="ht-stell-in">
+  <div id="nivleiste"></div>
+  <div id="berwahl"></div>
+  <div class="ht-kap">
+    <h3>Wie viel geht heute?</h3>
+    <p>Danach richtet sich, wie viel diese Seite zeigt. Es wird nichts mitgeschrieben und nichts gez&auml;hlt &mdash; morgen fragt sie wieder neu.</p>
+    <div class="ht-kapr" id="htkapr"></div>
+  </div>
+  <div class="ht-fakten" id="htfakten"></div>
 </div>
-
-<div class="ht-kap">
-  <h3>Wie viel geht heute?</h3>
-  <p>Danach richtet sich, wie viel diese Seite zeigt. Es wird nichts mitgeschrieben und nichts gez&auml;hlt &mdash; morgen fragt sie wieder neu.</p>
-  <div class="ht-kapr" id="htkapr"></div>
-</div>
+</details>
 
 <div class="foot">Heute &middot; Gerechnet f&uuml;r deinen Wohnort und dein Geburtsbild.<br>
-Mondphasen, Wendepunkte und Sonnenzeiten gegen PyEphem gepr&uuml;ft.
-<span class="ac-tech" data-ab="2">Planetenstunden nach chald&auml;ischer Ordnung, H&auml;user im Whole-Sign-System aus dem Profil.</span></div>
+<span class="ac-tech" data-ab="2">Mondphasen, Wendepunkte und Sonnenzeiten gegen PyEphem gepr&uuml;ft. Planetenstunden nach chald&auml;ischer Ordnung, H&auml;user im Whole-Sign-System aus dem Profil.</span></div>
 </div>
 
 <script>
@@ -2980,14 +3035,16 @@ function jetztBauen(p){
   var mz=zI(Q.Mond), mh=haus(P,Q.Mond);
   var ol=null; try{ ol=AC_HIMMEL.ohneLauf(jd); }catch(e){}
 
-  /* Der eine Satz, der jetzt gilt — in Alltagssprache.
-     Welcher Lebensbereich gerade dran ist, nicht welcher Planet
-     wo steht. Die Mechanik steht darunter und erst ab Stufe 2. */
+  /* Der Aufmacher ist das, was als Nächstes wirklich ansteht —
+     mit Datum. Vorher stand hier immer der Mondstand; das ist das
+     schwächste Signal, das die Seite hat, und es widersprach
+     regelmäßig der Terminliste darunter. */
+  aufmacherBauen(jd);
+
+  /* Darunter der ruhige Hintergrundsatz: welcher Bereich getönt ist. */
   var B=bereichZuHaus(mh);
-  var satz='Die nächsten zwei Tage liegt deine Aufmerksamkeit vor allem bei einem Thema: <b>'+
+  var satz='Im Hintergrund liegt deine Aufmerksamkeit die nächsten zwei Tage bei einem Thema: <b>'+
     esc(B?B.name:H_HAUS[mh-1])+'</b>.';
-  /* Kein toLowerCase: im Deutschen sind das Substantive und
-     bleiben groß. Stattdessen ein Doppelpunkt davor. */
   if(B&&window.AC_BDAT&&AC_BDAT.BER[B.k])
     satz+=' Also: '+esc(AC_BDAT.BER[B.k].worum);
   if(ol&&ol.leer) satz+=' Dazu kommt: bis '+uhr(ol.bis)+
@@ -2998,7 +3055,8 @@ function jetztBauen(p){
     ' und läuft durch das '+mh+'. Haus — '+H_HAUS[mh-1]+
     (ol&&ol.leer?'. Mond ohne Lauf bis '+uhr(ol.bis):'')+'.</div>';
 
-  /* Die Kacheln sind der Maschinenraum und bleiben bis Stufe 2 zu. */
+  /* Die Kacheln sind der Maschinenraum. Sie stehen jetzt in der
+     Einstellleiste unten statt im Kopf. */
   var f=[];
   if(st&&!st.polar) f.push(['Stunde',st.herr,'bis '+uhr(st.bis)]);
   if(st&&!st.polar) f.push(['Tag',st.tagesherr,n.toLocaleDateString('de-DE',{weekday:'long'})]);
@@ -3008,6 +3066,59 @@ function jetztBauen(p){
     f.map(function(x){
       return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
         '</div><div class="z">'+esc(x[2])+'</div></div>'; }).join('')+'</div></div>';
+}
+
+/* ── Der Aufmacher ────────────────────────────────────────────
+   Nimmt denselben Ereignisstrom wie die Terminliste — keine zweite
+   Himmelsrechnung — und hebt den stärksten Termin der nächsten vier
+   Tage heraus. Ist keiner da, tritt der lauteste Lebensbereich an
+   seine Stelle. Eines von beiden gibt es immer. */
+/* Kalendertage, nicht Tagesdifferenz. Um 22:30 ist ein Termin um
+   05:13 am nächsten Morgen „morgen" und nicht „heute", auch wenn
+   rechnerisch nur sieben Stunden dazwischenliegen. */
+function tagesAbstand(jd){
+  var a=datVon(jd), b=new Date();
+  a=new Date(a.getFullYear(),a.getMonth(),a.getDate());
+  b=new Date(b.getFullYear(),b.getMonth(),b.getDate());
+  return Math.round((a-b)/86400000);
+}
+function wann(jd){
+  var t=tagesAbstand(jd);
+  if(t<=0) return 'Heute';
+  if(t===1) return 'Morgen';
+  if(t===2) return 'Übermorgen';
+  return 'Am ' + datVon(jd).toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
+}
+var AUFMACHER=null;
+function aufmacherBauen(jd){
+  var z=el('htaufmacher'); if(!z) return;
+  var e=ereignisse(jd).filter(function(x){
+    return x.rang && x.jd>=jd-0.02 && x.jd<=jd+4; });
+  e.sort(function(a,b){ return (b.rang-a.rang) || (a.jd-b.jd); });
+
+  if(e.length){
+    var x=e[0];
+    AUFMACHER=x.jd;
+    z.innerHTML='<div class="ht-auf-k">'+
+      '<div class="ht-auf-w">'+esc(wann(x.jd))+', '+esc(uhr(x.jd))+'</div>'+
+      '<h2 class="ht-auf-t">'+esc(x.tt)+'</h2>'+
+      '<p class="ht-auf-x">'+x.tx+'</p>'+
+      (x.mit?'<div class="ht-auf-m"><b>Dafür brauchst du</b> '+esc(x.mit)+'</div>':'')+
+      (x.tech?'<div class="ac-tech ht-auf-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
+      '</div>';
+    return;
+  }
+  /* Kein Termin in Sicht: dann der lauteste Bereich, auch mit Datum. */
+  AUFMACHER=null;
+  var B=lautesterBereich();
+  if(!B){ z.innerHTML=''; return; }
+  z.innerHTML='<div class="ht-auf-k ht-auf-ruhig">'+
+    '<div class="ht-auf-w">Kein fester Termin in den nächsten Tagen</div>'+
+    '<h2 class="ht-auf-t">'+esc(B.name)+'</h2>'+
+    '<p class="ht-auf-x">'+esc(B.satz)+'</p>'+
+    (B.tun?'<div class="ht-auf-m"><b>Was du tun kannst</b> '+esc(B.tun)+'</div>':'')+
+    (B.bis?'<div class="ht-auf-bis">Läuft noch bis '+esc(B.bis)+'</div>':'')+
+    '</div>';
 }
 
 /* Welcher Lebensbereich gehört zu einem Haus?
@@ -3020,13 +3131,16 @@ function bereichZuHaus(h){
   return null;
 }
 
-/* ── Band 2 · Diese Woche ─────────────────────────────────── */
-function wocheBauen(){
-  var jd=jetztJD(), e=[];
+/* ── Der Ereignisstrom ────────────────────────────────────────
+   Eine Quelle für den Aufmacher oben und die Terminliste darunter.
+   `rang` sagt, wie schwer ein Termin wiegt, wenn einer herausgehoben
+   werden muss: 0 heißt „taugt nicht als Aufmacher". */
+function ereignisse(jd){
+  var e=[];
 
   /* Planetenstunde endet — reine Mechanik, erst ab Stufe 2 */
   var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e2){}
-  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute', ab:2,
+  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute', ab:2, rang:0,
     tt:'Die Stunde '+(H_GEN[st.herr]||st.herr)+' endet',
     tx:'Planetenstunden sind der kleinste Taktgeber, den die Überlieferung kennt. '+
        'Wenn du etwas unter '+st.herr+' stellen willst, ist jetzt das Fenster.',
@@ -3036,7 +3150,7 @@ function wocheBauen(){
   var zw=null; try{ zw=AC_HIMMEL.naechsterZeichenwechsel(jd); }catch(e2){}
   if(zw){
     var neuH=haus(P, zw.zeichen*30+1), nB=bereichZuHaus(neuH);
-    e.push({jd:zw.jd, wann:uhr(zw.jd), tag:tagKurz(zw.jd),
+    e.push({jd:zw.jd, wann:uhr(zw.jd), tag:tagKurz(zw.jd), rang:1,
       tt:'Die Aufmerksamkeit wandert zu: '+(nB?nB.name:H_HAUS[neuH-1]),
       tx:'Für die nächsten zweieinhalb Tage ist das der Bereich, in dem du am ehesten '+
          'etwas merkst. Kein großer Einschnitt — eher eine Tönung.',
@@ -3048,12 +3162,10 @@ function wocheBauen(){
   /* Lunationen mit Ritualfenster */
   var lun=[]; try{ lun=AC_BOARD.lunationen(jd, jd+40)||[]; }catch(e2){}
   lun.slice(0,3).forEach(function(l){
-    /* Die Lunation steht dort, wo der Mond steht: beim Neumond = Sonne,
-       beim Vollmond gegenüber. */
     var ml=moonLon((l.jd-2451545)/36525);
     var h=haus(P,ml), lB=bereichZuHaus(h);
     var lN=lB?lB.name:H_HAUS[h-1];
-    e.push({jd:l.jd, wann:uhr(l.jd), tag:tagKurz(l.jd),
+    e.push({jd:l.jd, wann:uhr(l.jd), tag:tagKurz(l.jd), rang:4,
       tt:(l.art==='neu'?'Neumond':'Vollmond')+' — bei dir im Bereich '+lN,
       tech:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)]+
            ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
@@ -3070,13 +3182,14 @@ function wocheBauen(){
 
   /* Stationen: Planeten, die drehen */
   var stn=[]; try{ stn=AC_BOARD.stationen(jd, 21)||[]; }catch(e2){}
-  stn.forEach(function(s){
-    var h=haus(P,s.lon), sB=bereichZuHaus(h), sN=sB?sB.name:H_HAUS[h-1];
-    e.push({jd:s.jd, wann:tageBis(s.jd)<=0?'heute':'in '+tageBis(s.jd)+' T.', tag:tagKurz(s.jd),
-      tt:(s.direkt?'Es geht wieder voran: ':'Es wird zäher: ')+sN,
-      tech:s.planet+(s.direkt?' läuft wieder direkt':' wird rückläufig')+
+  stn.forEach(function(s2){
+    var h=haus(P,s2.lon), sB=bereichZuHaus(h), sN=sB?sB.name:H_HAUS[h-1];
+    e.push({jd:s2.jd, wann:tageBis(s2.jd)<=0?'heute':'in '+tageBis(s2.jd)+' T.', tag:tagKurz(s2.jd),
+      rang:5,
+      tt:(s2.direkt?'Es geht wieder voran: ':'Es wird zäher: ')+sN,
+      tech:s2.planet+(s2.direkt?' läuft wieder direkt':' wird rückläufig')+
            ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
-      tx:(s.direkt
+      tx:(s2.direkt
          ? 'Was in diesem Bereich seit Wochen zäh war, nimmt wieder Fahrt auf. '+
            'Nicht sofort, aber merklich.'
          : 'In diesem Bereich wird es für eine Weile mühsamer. Nichts Neues anfangen, '+
@@ -3085,10 +3198,24 @@ function wocheBauen(){
   });
 
   e.sort(function(a,b){ return a.jd-b.jd; });
-  e=e.filter(function(x){ return x.jd>=jd-0.02 && x.jd<=jd+10; }).slice(0,7);
+  return e;
+}
+
+/* ── Band 2 · Was als Nächstes ansteht ────────────────────── */
+function wocheBauen(){
+  var jd=jetztJD();
+  var e=ereignisse(jd).filter(function(x){ return x.jd>=jd-0.02 && x.jd<=jd+10; }).slice(0,7);
   if(!e.length){ el('htwoche').innerHTML='<p class="ht-nix">In den nächsten zehn Tagen '+
     'steht nichts Datiertes an. Das kommt vor und ist eine gute Nachricht.</p>'; return; }
   el('htwoche').innerHTML=e.map(function(x){
+    /* Was oben schon ausführlich steht, wird hier nur noch
+       eingereiht — damit die Reihenfolge stimmt, ohne dass
+       derselbe Text zweimal auf der Seite steht. */
+    if(AUFMACHER!==null && Math.abs(x.jd-AUFMACHER)<1e-6)
+      return '<div class="we we-oben">'+
+        '<div class="wann"><b>'+esc(x.wann)+'</b>'+esc(x.tag)+'</div>'+
+        '<div class="tt">'+esc(x.tt)+'</div>'+
+        '<div class="tx">Steht oben, ganz am Anfang der Seite.</div></div>';
     var wo='';
     if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
     /* ab: ganze Einträge, die nur Mechanik sind, erscheinen erst
@@ -3107,6 +3234,53 @@ function wocheBauen(){
    Dasselbe Wissen wie die alte Planetentabelle, nur als das, was
    es für einen Menschen bedeutet. Die Tiefe steht auf bereiche.html;
    hier stehen nur die drei lautesten und einer, der still ist. */
+var BL_CACHE=null;
+
+/* Wie lange läuft das noch? Nimmt das Fenster des stärksten laufenden
+   Vorgangs. Ohne Datum ist eine laute Phase nur ein Gefühl — die
+   Regel „mit Datum, nicht bald" gilt auch im Kurzblick. */
+function bisWann(b, jd){
+  if(!b.laeuft || !b.laeuft.length) return null;
+  var v=b.laeuft[0], f=v.f;
+  if(!f || !f.bis) return null;
+  var t=Math.round(f.bis-jd);
+  if(t<0) return null;
+  var dat=datVon(f.bis).toLocaleDateString('de-DE',
+    {day:'numeric',month:'long',year:'numeric'});
+  /* Ein Datum trägt nur, solange man es sich merken kann. Weiter
+     draußen sagt die Dauer mehr als der Tag. Und ab einem Jahr ist
+     ein tagesgenaues Datum falsche Genauigkeit: Was so lange läuft,
+     ist eine Welle und kein Fenster. (REGELN.md §4) */
+  if(t>365) return 'läuft noch Jahre — eine lange Welle, kein Fenster';
+  if(f.bisOffen) return 'mindestens bis ' + dat;
+  if(t===0) return 'nur noch heute';
+  if(t===1) return 'bis morgen';
+  if(t<=28) return 'bis ' + dat + ', noch ' + t + ' Tage';
+  if(t<=70) return 'noch etwa ' + Math.round(t/7) + ' Wochen, bis ' + dat;
+  return 'noch etwa ' + Math.round(t/30) + ' Monate, bis ' + dat;
+}
+
+/* Der Handgriff eines Bereichs — nie zweimal derselbe in der Liste. */
+function handgriff(b, schon){
+  if(b.laut===0 || !b.laeuft.length)
+    return 'Hier arbeitet gerade nichts gegen dich. Wenn du in diesem Bereich etwas '+
+           'vorhast, ist jetzt der Moment, es selbst anzufangen.';
+  for(var i=0;i<b.laeuft.length;i++){
+    var W=AC_BDAT.WAND[b.laeuft[i].wanderer];
+    if(W && !schon[W.tun]){ schon[W.tun]=true; return W.tun; }
+  }
+  return 'Was hier läuft, läuft wie in den Bereichen darüber — '+
+         'auf der Bereichsseite steht, was es hier bedeutet.';
+}
+
+function lautesterBereich(){
+  if(!BL_CACHE || !BL_CACHE.length) return null;
+  var b=BL_CACHE[0], T=AC_BDAT.BER[b.k];
+  if(!T) return null;
+  return { name:b.name, satz:T.lautSatz[b.laut], tun:handgriff(b,{}),
+           bis:bisWann(b, jetztJD()) };
+}
+
 function bereicheBauen(p){
   var ziel=el('htber');
   if(!ziel) return;
@@ -3124,15 +3298,27 @@ function bereicheBauen(p){
     return b.laeuft.length-a.laeuft.length;
   });
   /* Nur die Bereiche, die dieser Mensch sehen will. Die Auswahl
-     liegt in AC_P und gilt plattformweit; keine Auswahl heißt alle.
-     Gerechnet wird weiter alles — die Leiste darüber sagt, dass
-     hier ausgeblendet und nicht beruhigt wird. */
+     liegt in AC_P und gilt plattformweit; keine Auswahl heißt alle. */
   try{
     if(window.AC_WAHL){
       var gew=bs.filter(function(b){ return AC_WAHL.istGewaehlt(b.k); });
       if(gew.length) bs=gew;
     }
   }catch(e){}
+  BL_CACHE=bs;
+
+  /* Wer Bereiche abwählt, soll nicht glauben, dort sei Ruhe.
+     Gerechnet wird weiter alles — hier steht, dass ausgeblendet wird. */
+  var hin=el('htbwhin');
+  if(hin){
+    var n=bs.length;
+    if(n<Bl.bereiche.length){
+      hin.textContent='Du siehst '+n+' von '+Bl.bereiche.length+' Bereichen. '+
+        'Die übrigen sind ausgeblendet, nicht ruhig — gerechnet werden sie weiter. '+
+        'Unter „Seite einstellen\u201c kannst du das ändern.';
+      hin.hidden=false;
+    } else { hin.textContent=''; hin.hidden=true; }
+  }
 
   var zeigen=bs.slice(0,3), schon={};
   /* Ein stiller Bereich am Ende: das ist die nützlichste Zeile
@@ -3140,30 +3326,23 @@ function bereicheBauen(p){
   var still=bs[bs.length-1];
   if(still && zeigen.indexOf(still)<0 && still.laut<=1) zeigen.push(still);
 
-  ziel.innerHTML=zeigen.map(function(b){
+  ziel.innerHTML=zeigen.map(function(b,i){
     var T=AC_BDAT.BER[b.k], L=AC_BDAT.LAUT[b.laut];
     if(!T) return '';
-    /* Bei einem stillen Bereich ist die Stille die Nachricht.
-       Sonst der Handgriff des stärksten Vorgangs — aber keiner
-       zweimal: drei gleiche Sätze untereinander sagen nichts. */
-    var erst='';
-    if(b.laut===0 || !b.laeuft.length){
-      erst='Hier arbeitet gerade nichts gegen dich. Wenn du in diesem Bereich etwas '+
-           'vorhast, ist jetzt der Moment, es selbst anzufangen.';
-    } else {
-      for(var i=0;i<b.laeuft.length && !erst;i++){
-        var W=AC_BDAT.WAND[b.laeuft[i].wanderer];
-        if(W && !schon[W.tun]){ erst=W.tun; schon[W.tun]=true; }
-      }
-      if(!erst) erst='Was hier läuft, läuft wie in den Bereichen darüber — '+
-                     'auf der Bereichsseite steht, was es hier bedeutet.';
-    }
-    return '<a class="ht-b" href="bereiche.html#ber-'+esc(b.k)+'">'+
+    var tun=handgriff(b, schon), bis=bisWann(b, jd);
+    /* Der erste bekommt Gewicht. Eine Liste, in der alles gleich
+       aussieht, sagt nicht, womit man anfangen soll. */
+    var gross=(i===0);
+    return '<a class="ht-b'+(gross?' ht-b-gross':'')+'" href="bereiche.html#ber-'+esc(b.k)+'">'+
       '<span class="ht-bp" style="background:'+L.farbe+'"></span>'+
       '<span class="ht-bn">'+esc(b.name)+'</span>'+
       '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
       '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
-      '<span class="ht-bt">'+esc(erst)+'</span></a>';
+      '<span class="ht-bz"><span class="ht-bz-l">Was du tun kannst</span>'+
+      '<span class="ht-bt">'+esc(tun)+'</span></span>'+
+      (bis?'<span class="ht-bbis"><span class="ht-bz-l">Wie lange</span>'+
+           '<span class="ht-bbis-v">'+esc(bis)+'</span></span>':'')+
+      '</a>';
   }).join('');
 }
 
@@ -3183,7 +3362,7 @@ function kapSetzen(s){
   try{ var n=new Date();
     localStorage.setItem(KAP,JSON.stringify({d:n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate(),s:s}));
   }catch(e){}
-  kapBauen(); anwenden();
+  kapBauen(); anwenden(); stellBauen();
 }
 function kapBauen(){
   var a=kapHeute();
@@ -3204,6 +3383,17 @@ function anwenden(){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
+/* ── Die Einstellleiste sagt zu, was eingestellt ist ──────── */
+function stellBauen(){
+  var u=el('htstellu'); if(!u) return;
+  var t=[];
+  try{ if(window.AC_NIV) t.push(['Neu','Wenig','Mittel','Viel','Pro'][AC_NIV.stufe()]); }catch(e){}
+  try{ if(window.AC_WAHL){ var g=AC_WAHL.gewaehlte&&AC_WAHL.gewaehlte();
+    t.push(g&&g.length?g.length+' von zehn Bereichen':'alle zehn Bereiche'); } }catch(e){}
+  var k=kapHeute(); if(k) t.push('heute: '+k);
+  u.textContent=t.join(' · ');
+}
+
 /* ── Start ────────────────────────────────────────────────── */
 (function(){
   var p=profil();
@@ -3215,14 +3405,15 @@ function anwenden(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  jetztBauen(p); radBauen(); bereicheBauen(p); wocheBauen(); kapBauen(); anwenden();
+  P=P; bereicheBauen(p); jetztBauen(p); radBauen(); wocheBauen(); kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    jetztBauen(p); bereicheBauen(p); wocheBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
-  try{ window.addEventListener('ac-bereiche',function(){ bereicheBauen(p); }); }catch(e){}
+  try{ window.addEventListener('ac-bereiche',function(){
+    bereicheBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
-  setInterval(function(){ Q=chartZu(jetztJD()); jetztBauen(p);
+  setInterval(function(){ Q=chartZu(jetztJD()); bereicheBauen(p); jetztBauen(p);
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);
 })();
 
