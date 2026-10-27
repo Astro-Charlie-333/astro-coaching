@@ -52,25 +52,130 @@ function profil(){
   try{ return AC_P.aktives()||AC_P.eigenes(); }catch(e){ return null; }
 }
 
-/* ── Kopf ──────────────────────────────────────────────────── */
-function kopfBauen(p){
-  var nm=AC_P.anzeige(p,true);
-  el('ichname').textContent=nm;
+/* ── Kopf ──────────────────────────────────────────────────────
+   Der Kopf führt mit einem Satz über diesen Menschen. Genommen
+   wird der seltenste Befund — derselbe, der unten in „Was an dir
+   auffällt" oben steht, nur kürzer. Ein Befund ohne eigene
+   Kopfform sagt über diesen Menschen nichts (die zwei oder drei
+   nach innen laufenden Anlagen sind der Normalfall) und rutscht
+   nach hinten, statt den ersten Bildschirm zu belegen. */
+function kopfForm(m){
+  if(m.art==='schwerpunkt')
+    return {form:(m.zahl>=3?I_KOPF.spViel:(m.zahl===2?I_KOPF.spZwei:I_KOPF.spEins)),
+            werte:{bereich:bereichName(m.haus)}};
+  if(m.art==='kette')
+    return {form:(m.eigen?I_KOPF.ketteEigen:I_KOPF.kette),
+            werte:{nach:bereichName(m.nachHaus)}};
+  if(m.art==='winkel')
+    return {form:(m.hart?I_KOPF.winkelHart:I_KOPF.winkelWeich),
+            werte:{a:(I_ROLLE[m.a]||''), b:(I_ROLLE[m.b]||'')}};
+  if(m.art==='rueck'){
+    if(m.zahl>=4)  return {form:I_KOPF.rueckViel,  werte:{}};
+    if(m.zahl===0) return {form:I_KOPF.rueckKeine, werte:{}};
+    return null;
+  }
+  return null;
+}
+function kopfSatz(M){
+  for(var i=0;i<M.length;i++){
+    var f=kopfForm(M[i]);
+    if(f&&f.form) return fuellen(f.form, f.werte);
+  }
+  return I_KOPF.ohne;
+}
+
+function kopfBauen(p, M){
+  el('ichname').textContent=AC_P.anzeige(p,true);
   el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
     ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+  el('ichleit').textContent=kopfSatz(M);
+  el('ichleitzu').textContent=I_KOPF.nach;
+}
 
-  var drei=[
-   ['Antrieb','Sonne',P.Sonne,'Worauf du hinauswillst'],
-   ['Bedürfnis','Mond',P.Mond,'Was dich beruhigt'],
-   ['Wirkung','Aszendent',P.ASC,'Wie du ankommst']];
-  el('ichdrei').innerHTML=drei.map(function(d){
-    var h=haus(P,d[2]);
-    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+
-      I_SIGNS[zI(d[2])]+' <em>'+gradKurz(d[2])+'</em>'+
-      '<span class="zu">'+(d[1]==='Aszendent'?'Herrscher '+I_HERR[zI(d[2])]+
-        ' im '+haus(P,P[I_HERR[zI(d[2])]])+'. Haus':
-        d[3]+' · '+h+'. Haus, '+I_HAUS[h-1].k)+'</span></div></div>';
+/* ── Die drei Stellen, die den Grundton setzen ──────────────────
+   Erst, worum es im Leben geht, dann der Lebensbereich. Zeichen,
+   Grad und Herrscher warten in ac-tech — vorher stand genau das
+   hier zuerst. */
+function dreiBauen(){
+  el('ichdreih').textContent=I_DREI_TITEL;
+  el('ichdreisub').textContent=I_DREI_SUB;
+  el('ichdrei').innerHTML=I_DREI.map(function(d){
+    var l=P[d.k];
+    if(l===undefined||l===null) return '';
+    var z=zI(l), bereich, tech;
+    if(d.k==='ASC'){
+      var herr=I_HERR[z], hH=haus(P,P[herr]);
+      bereich=fuellen(I_DREI_WIRKUNG,{bereich:bereichName(hH)});
+      tech=I_SIGNS[z]+' '+gradKurz(l)+' · Herrscher '+herr+' im '+hH+'. Haus';
+    } else {
+      var h=haus(P,l);
+      bereich=fuellen(I_DREI_BEREICH,{bereich:bereichName(h)});
+      tech=I_SIGNS[z]+' '+gradKurz(l)+' · '+h+'. Haus, '+I_HAUS[h-1].k;
+    }
+    return '<div><div class="rolle">'+esc(d.rolle)+'</div><div class="wert">'+
+      esc(d.was)+'<span class="zu">'+esc(bereich)+'</span>'+
+      '<span class="zu ac-tech" data-ab="2">'+esc(tech)+'</span></div></div>';
   }).join('');
+}
+
+/* ── Sprungmarken ──────────────────────────────────────────────
+   Fünfzehn Bildschirme ohne Inhaltsverzeichnis liest niemand zu
+   Ende. Die Marken entstehen aus den Abschnitten der Seite
+   selbst — eine zweite Liste im Skript würde auseinanderlaufen,
+   und bau-ich.py prüft am Ergebnis nach, dass jede Marke auf
+   einen Abschnitt zeigt, den es gibt.
+   Ein Sprung in eine geschlossene Klappe macht sie auf, sonst
+   springt man ins Leere. */
+function klappeAuf(ziel){
+  var e=ziel;
+  while(e&&e!==document.body){
+    if(e.tagName==='DETAILS') e.open=true;
+    e=e.parentNode;
+  }
+  /* Und die Klappe, die der Abschnitt selbst ist: Wer auf „Dein
+     Bild" springt, will das Rad sehen, nicht die Aufschrift
+     darüber. */
+  if(ziel&&ziel.querySelectorAll)
+    Array.prototype.forEach.call(ziel.querySelectorAll('details'),
+      function(d){ d.open=true; });
+}
+function springen(ziel){
+  if(!ziel) return;
+  klappeAuf(ziel);
+  ziel.scrollIntoView({block:'start',
+    behavior:(window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
+}
+/* Die obere Leiste bricht auf schmalen Schirmen um und ist dann
+   doppelt so hoch. Eine feste Zahl im Stil ließe die Sprungzeile
+   darunter verschwinden — deshalb wird gemessen. */
+function leisteMessen(){
+  var l=document.querySelector('.ac-leiste'), s=el('ichsprung');
+  var oben=l?Math.round(l.getBoundingClientRect().height):0;
+  var hoch=s?Math.round(s.getBoundingClientRect().height):0;
+  var w=document.documentElement.style;
+  w.setProperty('--ac-oben', oben+'px');
+  w.setProperty('--ac-sprung', hoch+'px');
+}
+
+function sprungBauen(){
+  var nav=el('ichsprung');
+  if(!nav) return;
+  var abs=document.querySelectorAll('.ich-ab[data-sprung]');
+  if(!abs.length) return;
+  var h=['<span class="sp-t">'+esc(I_SPRUNG_TITEL)+'</span>'], i;
+  for(i=0;i<abs.length;i++)
+    h.push('<a href="#'+esc(abs[i].id)+'">'+esc(abs[i].getAttribute('data-sprung'))+'</a>');
+  nav.innerHTML=h.join('');
+  Array.prototype.forEach.call(nav.querySelectorAll('a[href^="#"]'),function(a){
+    a.addEventListener('click',function(ev){
+      var ziel=document.getElementById(a.getAttribute('href').slice(1));
+      if(!ziel) return;
+      ev.preventDefault();
+      springen(ziel);
+    });
+  });
+  leisteMessen();
+  window.addEventListener('resize', leisteMessen);
 }
 
 /* ── Die Brücke zu Heute ───────────────────────────────────── */
@@ -88,13 +193,15 @@ function heuteBauen(){
   var oben=hs.slice(0,3);
   box.innerHTML='<div class="k">Heute auf deinem Chart</div>'+
     '<p>'+oben.map(function(h){
-      return '<a href="#h'+h+'" data-h="'+h+'">'+h+'. Haus</a> ('+
-        I_HAUS[h-1].k+'): '+treffer[h].join(', ');
+      return '<a href="#h'+h+'" data-h="'+h+'">'+I_HAUS[h-1].k+'</a>'+
+        '<span class="ac-tech" data-ab="2"> ('+h+'. Haus: '+treffer[h].join(', ')+')</span>';
     }).join(' · ')+'</p>'+
     '<p style="margin-bottom:0"><a href="index.html">Was das heute konkret heißt →</a></p>';
   Array.prototype.forEach.call(box.querySelectorAll('a[data-h]'),function(a){
     a.addEventListener('click',function(ev){
-      ev.preventDefault(); hausOeffnen(+a.getAttribute('data-h'), true); });
+      ev.preventDefault();
+      klappeAuf(el('ichhaeuser'));
+      hausOeffnen(+a.getAttribute('data-h'), true); });
   });
 }
 
@@ -181,6 +288,7 @@ function auffaelligBauen(){
   for(var j=0;j<I_AUF.grenzen.length;j++)
     g.push('<p>'+esc(I_AUF.grenzen[j])+'</p>');
   el('ichaufgrenze').innerHTML=g.join('');
+  return M;
 }
 
 /* ── Die zwölf Häuser ──────────────────────────────────────── */
@@ -194,11 +302,15 @@ function haeuserBauen(){
       return Q[k]!==undefined&&haus(P,Q[k])===n; });
     h+='<button type="button" class="hz'+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
       '<span class="nr">'+n+'</span>'+
-      '<span class="ze"><b>'+I_SIGNS[z]+'</b>'+
-        (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
-      '<span class="herr">Herrscher '+herr+'<br>steht im '+hH+'. Haus</span>'+
-      '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
-        I_HAUS[n-1].k+(heut.length?' — heute: '+heut.join(', '):'')+'</span>'+
+      '<span class="hz-inhalt">'+
+        '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
+          I_HAUS[n-1].k+'</span>'+
+        '<span class="ze ac-tech" data-ab="2"><b>'+I_SIGNS[z]+'</b>'+
+          (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
+        '<span class="herr ac-tech" data-ab="2">Herrscher '+herr+
+          ' steht im '+hH+'. Haus'+
+          (heut.length?' · heute hier: '+heut.join(', '):'')+'</span>'+
+      '</span>'+
       '</button><div class="hdetail" id="d'+n+'" hidden></div>';
   }
   box.innerHTML=h;
@@ -217,23 +329,23 @@ function detailBauen(n){
   var h='<h4>'+n+'. Haus — '+H.k+'</h4><p>'+H.t+'</p>';
   h+='<p><b>Die Frage, die es aufmacht:</b> '+H.f+'</p>';
   if(bew.length){
-    h+='<div class="stell">'+bew.map(function(k){
+    h+='<div class="stell ac-tech" data-ab="2">'+bew.map(function(k){
       var rw=(PNAMEN.indexOf(k)>=0&&rueck(k,P._jd));
       return '<div class="st"><span><b>'+k+'</b> '+stellung(P[k])+(rw?' ℞':'')+'</span>'+
         '<span>'+(I_PLANET[k]||'')+'</span></div>';
     }).join('')+'</div>';
   } else {
-    h+='<p>Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. '+
+    h+='<p class="ac-tech" data-ab="2">Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. '+
       'Ein leeres Haus heißt nicht, dass das Thema fehlt. Es heißt, dass es anderswo entschieden wird:</p>';
   }
-  h+='<p>'+I_KETTE.replace('{h}',herr)
+  h+='<p class="ac-tech" data-ab="2">'+I_KETTE.replace('{h}',herr)
       .replace('{hs}',herr+' ('+stellung(P[herr])+')')
       .replace('{n}',hH)+'</p>';
   if(I_MIT[I_SIGNS[z]])
-    h+='<p>Modern wird '+I_SIGNS[z]+' auch '+I_MIT[I_SIGNS[z]]+' zugeordnet — '+
+    h+='<p class="ac-tech" data-ab="2">Modern wird '+I_SIGNS[z]+' auch '+I_MIT[I_SIGNS[z]]+' zugeordnet — '+
       stellung(P[I_MIT[I_SIGNS[z]]])+', '+haus(P,P[I_MIT[I_SIGNS[z]]])+'. Haus.</p>';
   if(heut.length)
-    h+='<p><b>Heute hier:</b> '+heut.map(function(k){
+    h+='<p class="ac-tech" data-ab="2"><b>Heute hier:</b> '+heut.map(function(k){
       return k+' '+stellung(Q[k]); }).join(', ')+'. '+
       '<a href="index.html">Was das heißt →</a></p>';
 
@@ -272,15 +384,25 @@ function hausOeffnen(n, scrollen){
 
 /* ── Aspekte ───────────────────────────────────────────────── */
 function aspekteBauen(){
-  var a=aspekte(P).slice(0,12);
-  el('ichasp').innerHTML=a.map(function(x){
-    var d=null;
-    try{ d=window.AC_ASP?AC_ASP.deutung(x.a,x.b,x.typ):null; }catch(e){}
-    return '<div class="ia '+x.art+'"><div class="f">'+x.a+' '+x.typ+' '+x.b+'</div>'+
-      '<div class="o">Orbis '+kz(x.o,2)+'° · '+(x.art==='hart'?'fordernd':'fließend')+'</div>'+
-      (d&&d.kurz?'<div class="d">'+esc(d.kurz)+'</div>':'')+'</div>';
+  var alle=aspekte(P), mit=[], i, d;
+  for(i=0;i<alle.length;i++){
+    d=null;
+    try{ d=window.AC_ASP?AC_ASP.deutung(alle[i].a,alle[i].b,alle[i].typ):null; }catch(e){}
+    if(d&&d.thema) mit.push({x:alle[i], d:d});
+  }
+  var zeig=mit.slice(0,12);
+  el('ichasp').innerHTML=zeig.map(function(e){
+    var x=e.x, d=e.d;
+    return '<div class="ia '+x.art+'">'+
+      '<div class="f">'+esc(d.thema)+'</div>'+
+      (d.text?'<div class="d">'+esc(d.text)+'</div>':'')+
+      '<div class="o ac-tech" data-ab="2">'+x.a+' '+x.typ+' '+x.b+
+        ' · Orbis '+kz(x.o,2)+'° · '+(x.art==='hart'?'fordernd':'fließend')+'</div>'+
+      '</div>';
   }).join('');
-  el('ichaspzahl').textContent=aspekte(P).length;
+  el('ichaspsub').innerHTML=esc(fuellen(I_ASP_SUB,{zahl:zeig.length}))+
+    ' <span class="ac-tech" data-ab="2">'+
+    esc(fuellen(I_ASP_TECH,{gesamt:alle.length, zahl:zeig.length}))+'</span>';
 }
 
 /* ── Index ─────────────────────────────────────────────────── */
@@ -305,14 +427,16 @@ function indexBauen(){
     return;
   }
   P=chartVon(p); Q=jetztChart();
-  kopfBauen(p);
-  auffaelligBauen();
+  var M=auffaelligBauen();
+  kopfBauen(p, M);
+  dreiBauen();
   haeuserBauen();
   heuteBauen();
   aspekteBauen();
   indexBauen();
+  sprungBauen();
   rad=window.AC_KERNRAD({el:el('ichrad'), chart:P, transit:Q, gross:true,
-    aufHaus:function(n){ hausOeffnen(n, true); }});
+    aufHaus:function(n){ klappeAuf(el('ichhaeuser')); hausOeffnen(n, true); }});
   /* Die Mechanik im neuen Abschnitt wartet in ac-tech. Ohne diesen
      Aufruf wäre sie von Anfang an sichtbar — und damit stünde auf
      Stufe 0 Fachsprache, was REGELN.md Abschnitt 2 ausschließt. */

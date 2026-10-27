@@ -172,6 +172,62 @@ else:
         fehler.append('der ehrliche Teil sagt nicht, dass die Deutung nicht '
                       'überprüft ist')
 
+# ── Der Satz, mit dem die Seite anfängt ───────────────────────
+# Fehlerklasse vom 27.10.: Die Seite begann mit dem Rad, und die
+# Dreierzeile darunter führte mit Zeichen und Gradzahl. Der Kopf
+# führt jetzt mit einem Satz über diesen Menschen — und der
+# gehört in dieselbe Laienprüfung wie alles andere, sonst steht
+# im ersten Bildschirm wieder Fachsprache.
+KOPF_PFLICHT = {
+    'spViel': 90, 'spZwei': 80, 'spEins': 90,
+    'kette': 90, 'ketteEigen': 90,
+    'winkelHart': 90, 'winkelWeich': 90,
+    'rueckViel': 60, 'rueckKeine': 90,
+    'ohne': 60, 'nach': 40,
+}
+m_kopf = re.search(r"var I_KOPF=\{", daten)
+if not m_kopf:
+    fehler.append('I_KOPF fehlt — dann hat der Kopf keinen Satz über diesen Menschen')
+else:
+    kblk = klammerblock(daten, m_kopf.end() - 1)
+    for name, mind in KOPF_PFLICHT.items():
+        v = feld(kblk, name)
+        if not v:
+            fehler.append(f'I_KOPF.{name} fehlt')
+            continue
+        if len(v) < mind:
+            fehler.append(f'I_KOPF.{name} nur {len(v)} Zeichen — mindestens {mind}')
+        lay_texte.append((f'I_KOPF.{name}', v))
+    for name, luecken in (('spViel', ('{bereich}',)), ('spZwei', ('{bereich}',)),
+                          ('kette', ('{nach}',)),
+                          ('winkelHart', ('{a}', '{b}')),
+                          ('winkelWeich', ('{a}', '{b}'))):
+        v = feld(kblk, name) or ''
+        for l in luecken:
+            if l not in v:
+                fehler.append(f'I_KOPF.{name} hat keine Lücke {l} — dann steht im '
+                              'ersten Bildschirm ein Satz, der für jeden gilt')
+
+# Die Dreierzeile: erst das Leben, dann der Bereich. Was sie sagt,
+# ist Laientext und wird so geprüft.
+m_drei = re.search(r"var I_DREI=\[", daten)
+if not m_drei:
+    fehler.append('I_DREI fehlt — die Dreierzeile hätte keine Alltagsbedeutung')
+else:
+    dblk = daten[m_drei.end() - 1:daten.index(']', m_drei.end()) + 1]
+    for name in ('rolle', 'was'):
+        for v in re.findall(r"\b" + name + r":\s*'((?:[^'\\]|\\.)*)'", dblk):
+            lay_texte.append((f'I_DREI.{name}', v))
+    if len(re.findall(r"\bwas:", dblk)) != 3:
+        fehler.append('die Dreierzeile hat nicht drei Alltagsbedeutungen')
+for name in ('I_DREI_TITEL', 'I_DREI_SUB', 'I_DREI_BEREICH', 'I_DREI_WIRKUNG',
+             'I_SPRUNG_TITEL', 'I_ASP_SUB'):
+    mv = re.search(r"var " + name + r"\s*=\s*'((?:[^'\\]|\\.)*)'", daten)
+    if not mv:
+        fehler.append(f'{name} fehlt')
+    else:
+        lay_texte.append((name, mv.group(1)))
+
 # Die Rollen: aus ihnen entstehen die Sätze über zwei Anlagen, die
 # sich begegnen. Ohne sie stünden dort Planetennamen.
 m_rolle = re.search(r"var I_ROLLE=\{", daten)
@@ -241,9 +297,24 @@ gesucht = {g for g in gesucht if not re.fullmatch(r'[hd]\d+', g)}
 if gesucht - ids:
     fehler.append('Skript sucht IDs, die es nicht gibt: ' + ', '.join(sorted(gesucht - ids)))
 
-auf, zu = len(re.findall(r'<div\b', koerper)), len(re.findall(r'</div>', koerper))
-if auf != zu:
-    fehler.append(f'div-Bilanz: {auf} auf, {zu} zu')
+# REGELN.md Abschnitt 5 verlangt, dass die Tags aufgehen — und
+# nennt vier Sorten. Geprüft wurde bisher nur div; seit der Körper
+# Abschnitte und Klappen trägt, ist ein nicht geschlossenes
+# section oder details genauso möglich und fällt im Browser
+# nicht auf, weil er stillschweigend repariert.
+for tag in ('div', 'section', 'nav', 'details'):
+    auf = len(re.findall(r'<' + tag + r'\b', koerper))
+    zu = len(re.findall(r'</' + tag + r'>', koerper))
+    if auf != zu:
+        fehler.append(f'{tag}-Bilanz: {auf} auf, {zu} zu')
+
+# Jede Sprungmarke zeigt auf einen Abschnitt, den es gibt. Geprüft
+# wird am Körper (hier) und am gerenderten Ergebnis (unten) — die
+# Marken entstehen zur Laufzeit aus genau diesen Abschnitten.
+for m_ab in re.finditer(r'<section\b([^>]*\bdata-sprung="[^"]*"[^>]*)>', koerper):
+    if not re.search(r'\bid="[A-Za-z0-9_-]+"', m_ab.group(1)):
+        fehler.append('ein Abschnitt mit Sprungmarke hat keine ID: '
+                      + m_ab.group(1)[:60])
 
 # Der Index darf nicht ins Leere zeigen …
 vorhanden = {p.name for p in wiki.iterdir()}
@@ -300,6 +371,156 @@ const nach=await p.evaluate(()=>({
   welches:(document.querySelector('.hz.ist')||{}).dataset,
   radIst:(document.querySelector('.kr-haus.ist')||{}).getAttribute('data-h'),
   text:(document.querySelector('.hdetail:not([hidden]) h4')||{}).textContent}));
+/* ── Der erste Bildschirm und der Aufbau der Seite ───────────
+   Die Fehlerklasse vom 27.10., in Messungen festgehalten: Die
+   Seite begann mit dem Rad, war auf dem Telefon fünfzehn
+   Bildschirme hoch und hatte keine Möglichkeit zu springen.
+
+   Gemessen wird in einem eigenen, frisch geladenen Fenster. Die
+   Probe oben hat geklickt und gescrollt — auf derselben Seite
+   gemessen hieße „der erste Bildschirm" irgendeine Stelle in der
+   Mitte, und eine aufgeklappte Klappe zählte als Höhe mit.
+   Gemessen wird auf Stufe 0: dort gilt die Regel am strengsten. */
+const cb=await b.newContext({viewport:{width:390,height:844}});
+const q0=await cb.newPage();
+q0.on('pageerror',e=>f.push('JS beim Aufbau: '+String(e.message).slice(0,110)));
+await q0.addInitScript(()=>localStorage.setItem('ac_profile_v1',JSON.stringify(
+ {v:1,eigen:'p1',aktiv:'p1',zeigeNamen:true,liste:[{id:'p1',name:'Probe Person',alias:'Probe',
+  y:1980,mo:7,d:15,h:14,mi:20,tz:1,lat:52.52,lon:13.405,ort:'Berlin',
+  wlat:52.52,wlon:13.405,wort:'Berlin',eigen:true,readings:[]}]})));
+await q0.goto('file://ZIEL'); await q0.waitForTimeout(1100);
+await q0.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); });
+await q0.waitForTimeout(400);
+const bau=await q0.evaluate(()=>{
+  /* Eine geschlossene Klappe nimmt ihrem Inhalt im Browser nicht
+     den Kasten, nur die Darstellung: offsetParent und Höhe bleiben
+     stehen, der Text ist leer. Wer nur danach fragt, hält jede
+     zugeklappte Zeile für eine leere Zeile. */
+  const zu=e=>!!e.closest('details:not([open])');
+  const sicht=e=>{ const r=e.getBoundingClientRect();
+    return r.height>0 && r.width>0 && e.offsetParent!==null && !zu(e); };
+  /* Was ein Mensch im ersten Bildschirm wirklich liest. */
+  const erst=[...document.querySelectorAll('.ich-wrap *')].filter(e=>{
+    const r=e.getBoundingClientRect();
+    return r.top<844 && r.bottom>0 && sicht(e) && !e.children.length
+           && e.innerText && e.innerText.trim(); })
+    .map(e=>e.innerText.trim()).join(' ⁞ ');
+  const marken=[...document.querySelectorAll('#ichsprung a[href^="#"]')]
+    .map(a=>({text:(a.textContent||'').trim(), ziel:a.getAttribute('href').slice(1),
+              gibts:!!document.getElementById(a.getAttribute('href').slice(1)),
+              sichtbar:sicht(a)}));
+  /* Ein Kasten, der nichts sagt: entsteht, sobald ein Block nur
+     noch aus wartender Mechanik besteht. Gezählt wird nur, was
+     wirklich auf dem Schirm steht — was in einer geschlossenen
+     Klappe liegt, ist nicht leer, sondern zu. */
+  const leer=[...document.querySelectorAll('.ia, .au, .ix, .hz, .ich-drei > div')]
+    .filter(e=>sicht(e) && !(e.innerText||'').trim())
+    .map(e=>e.className).slice(0,6);
+  const leiste=document.querySelector('.ac-leiste');
+  const spr=document.getElementById('ichsprung');
+  return {
+    hoehe:document.documentElement.scrollHeight,
+    erst, marken, leer,
+    leit:(document.getElementById('ichleit')||{}).innerText||'',
+    klappen:document.querySelectorAll('.ich-wrap details').length,
+    klappenOffen:document.querySelectorAll('.ich-wrap details[open]').length,
+    niv:!!document.getElementById('nivleiste'),
+    nivKnoepfe:document.querySelectorAll('#nivleiste button').length,
+    techGanz:document.querySelectorAll('.ich-wrap .ac-tech').length,
+    techOffen:[...document.querySelectorAll('.ich-wrap .ac-tech')].filter(sicht).length,
+    /* Zwei klebende Zeilen übereinander: die untere verschwindet
+       hinter der oberen, sobald die obere umbricht. */
+    leisteUnten:leiste?Math.round(leiste.getBoundingClientRect().bottom):0,
+    sprungOben:spr?Math.round(spr.getBoundingClientRect().top):0 };
+});
+/* Zwei klebende Zeilen überlappen erst, wenn sie wirklich kleben.
+   Am Seitenanfang steht die Sprungzeile an ihrem eigenen Platz
+   weit unterhalb der Leiste — dort gemessen sähe jede falsche
+   Einstellung richtig aus. Also erst scrollen, dann messen. */
+await q0.evaluate(()=>window.scrollTo(0,1400));
+await q0.waitForTimeout(350);
+Object.assign(bau, await q0.evaluate(()=>{
+  const l=document.querySelector('.ac-leiste'), s=document.getElementById('ichsprung');
+  return {klebtLeisteUnten:l?Math.round(l.getBoundingClientRect().bottom):0,
+          klebtSprungOben:s?Math.round(s.getBoundingClientRect().top):0,
+          klebtSprungUnten:s?Math.round(s.getBoundingClientRect().bottom):0}; }));
+await q0.evaluate(()=>window.scrollTo(0,0));
+await q0.waitForTimeout(250);
+/* Alles aufgeklappt darf die Seite nicht seitlich überlaufen —
+   und auf Stufe 0 auch dann keinen Grad und kein Zeichen zeigen.
+   Eine Klappe ist kein Versteck: Was darin liegt, liest jemand,
+   der sie aufmacht, und für den gilt dieselbe Regel. Ein Feld
+   wird mit aufgemacht, weil die Felder ihren Text erst beim
+   Antippen bauen und sonst ungeprüft blieben. */
+await q0.evaluate(()=>document.querySelectorAll('.ich-wrap details')
+  .forEach(d=>{ d.open=true; }));
+await q0.waitForTimeout(400);
+await q0.evaluate(()=>{ const z=document.getElementById('h1'); if(z) z.click(); });
+await q0.waitForTimeout(400);
+bau.offenText=await q0.evaluate(()=>{
+  const w=document.querySelector('.ich-wrap');
+  if(!w) return '';
+  /* Ohne das Regal: Dort stehen die Namen anderer Seiten, und
+     eine Seite darf „Chiron und Lilith" heißen. Geprüft wird,
+     was die Seite über diesen Menschen sagt — nicht, wie die
+     Seiten heißen, auf die sie verweist. */
+  const k=w.cloneNode(true);
+  const ix=k.querySelector('#ichindex'); if(ix) ix.remove();
+  /* Der Klon hängt nicht im Dokument, innerText fiele auf
+     textContent zurück und nähme das Wartende mit. Also wird er
+     unsichtbar eingehängt und dort gelesen. */
+  k.style.position='absolute'; k.style.left='-9999px'; k.style.width='390px';
+  document.body.appendChild(k);
+  const txt=k.innerText||'';
+  k.remove();
+  return txt; });
+bau.breitOffen=await q0.evaluate(()=>document.body.scrollWidth);
+bau.leerOffen=await q0.evaluate(()=>
+  [...document.querySelectorAll('.ia, .hz, .ix, .ich-drei > div')]
+    .filter(e=>e.offsetParent!==null && e.getBoundingClientRect().height>0
+               && !e.closest('details:not([open])')
+               && !(e.innerText||'').trim()).length);
+/* Stufe 2: die Mechanik muss wirklich erscheinen. Eine Wartemarke
+   auf einer Seite ohne Stufenschalter wäre für immer unsichtbar. */
+await q0.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(2); });
+await q0.waitForTimeout(400);
+const stufe2=await q0.evaluate(()=>({
+  techOffen:[...document.querySelectorAll('.ich-wrap .ac-tech')]
+    .filter(e=>e.offsetParent!==null
+               && e.getBoundingClientRect().height>0
+               && !e.closest('details:not([open])')).length }));
+await cb.close();
+
+/* Springt eine Marke wirklich — und macht sie die Klappe auf?
+   Eigenes Fenster, damit der Klick nichts misst, was oben schon
+   gemessen wurde. */
+const cs=await b.newContext({viewport:{width:390,height:844}});
+const q1=await cs.newPage();
+q1.on('pageerror',e=>f.push('JS beim Springen: '+String(e.message).slice(0,110)));
+await q1.addInitScript(()=>localStorage.setItem('ac_profile_v1',JSON.stringify(
+ {v:1,eigen:'p1',aktiv:'p1',zeigeNamen:true,liste:[{id:'p1',name:'Probe Person',alias:'Probe',
+  y:1980,mo:7,d:15,h:14,mi:20,tz:1,lat:52.52,lon:13.405,ort:'Berlin',
+  wlat:52.52,wlon:13.405,wort:'Berlin',eigen:true,readings:[]}]})));
+await q1.goto('file://ZIEL'); await q1.waitForTimeout(1100);
+const sprung=await q1.evaluate(async()=>{
+  const marken=[...document.querySelectorAll('#ichsprung a[href^="#"]')];
+  const a=marken.find(x=>{
+    const z=document.getElementById(x.getAttribute('href').slice(1));
+    return z && z.querySelector('details'); }) || marken[marken.length-1];
+  if(!a) return {ok:false, grund:'keine Marke'};
+  const ziel=document.getElementById(a.getAttribute('href').slice(1));
+  const vorher=window.scrollY;
+  a.click();
+  await new Promise(r=>setTimeout(r,800));
+  const kasten=ziel.getBoundingClientRect();
+  return {ok:true, bewegt:Math.abs(window.scrollY-vorher)>40,
+          hatKlappe:!!ziel.querySelector('details'),
+          klappeNachher:!!ziel.querySelector('details[open]'),
+          obenImBild:Math.round(kasten.top),
+          ziel:a.getAttribute('href')};
+});
+await cs.close();
+
 /* ── Sagt die Seite über jeden dasselbe? ─────────────────────
    Die Prüfung, die den Fund vom 23.10. dauerhaft abstellt.
    Fünf erfundene Geburtsbilder, und von den Kernaussagen im
@@ -344,6 +565,7 @@ for(const L of LEUTE){
       schlecht:(t.match(/undefined|NaN|\[object|null/)||[''])[0],
       grenzen:document.querySelectorAll('#ichaufgrenze p').length,
       ueberschrift:(document.getElementById('ichaufh')||{}).innerText||'',
+      leit:((document.getElementById('ichleit')||{}).innerText||'').trim(),
       vorzeile:(document.getElementById('ichaufvor')||{}).innerText||'',
       breit:document.body.scrollWidth };
   }, JARGON);
@@ -361,7 +583,7 @@ for(let i=0;i<ids.length;i++) for(let j=i+1;j<ids.length;j++){
 notiz.gleichMittel=paare?Math.round(100*summe/paare):100;
 notiz.gleichSchlimmster=Math.round(100*schlimm);
 
-console.log(JSON.stringify({vor,nach,notiz,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({vor,nach,bau,sprung,stufe2,notiz,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -390,6 +612,159 @@ if pr:
     if n['radIst'] != '7':      fehler.append('Rad merkt sich das gewählte Haus nicht')
     if '7. Haus' not in (n['text'] or ''):
         fehler.append('Klick aufs 7. Hausfeld öffnet das falsche Haus: ' + str(n['text']))
+    # ── Der erste Bildschirm, die Höhe, die Sprungmarken ──────
+    # Der Fund vom 25.10.: „die Ich Seite ist noch immer nicht
+    # spannend und gut genug." Dahinter steckten drei Fehler, und
+    # jeder bekommt hier seine Prüfung, damit er nicht zurückkommt.
+    #
+    # 1 · Der erste Bildschirm führte mit dem Rad und mit Zeichen
+    #     und Gradzahl — Maschinenraum vor Inhalt.
+    # 2 · 12.496 Pixel auf dem Telefon, also fünfzehn Bildschirme
+    #     am Stück, ohne eine Möglichkeit zu springen.
+    # 3 · Der stärkste Abschnitt stand als vierter.
+    #
+    # Die Obergrenze ist nicht gerundet geraten: Sie ist die
+    # Hälfte der gemessenen 12.496 Pixel, und genau das war die
+    # Bedingung in AUFGABEN.md.
+    HOECHSTENS_HOCH = 6248        # Pixel auf 390 Pixeln Breite, Stufe 0
+    ERSTER_BILDSCHIRM = 844
+    b = pr.get('bau') or {}
+    if not b:
+        fehler.append('der Aufbau der Seite wurde nicht gemessen')
+    else:
+        if b['hoehe'] > HOECHSTENS_HOCH:
+            fehler.append(f'die Seite ist auf 390 Pixeln {b["hoehe"]} Pixel hoch '
+                          f'(höchstens {HOECHSTENS_HOCH}) — das sind '
+                          f'{b["hoehe"]/ERSTER_BILDSCHIRM:.0f} Bildschirme am Stück. '
+                          'Was nachgeschlagen wird, gehört in eine Klappe')
+        # Der erste Bildschirm: ein Satz über diesen Menschen, und
+        # nichts, woran man ihn abliest.
+        erst = b.get('erst') or ''
+        if '°' in erst or '′' in erst:
+            fehler.append('Gradzeichen im ersten Bildschirm: '
+                          + repr(erst[:120]))
+        for wort in VERBOTEN:
+            if re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(wort)
+                         + r'(?![A-Za-zÄÖÜäöüß])', erst):
+                fehler.append(f'Fachwort "{wort}" im ersten Bildschirm — dort steht, '
+                              'was mit diesem Menschen los ist, nicht woran man '
+                              'es abliest')
+        leit = (b.get('leit') or '').strip()
+        if len(leit) < 70:
+            fehler.append(f'der Kopf führt nicht mit einem Satz über diesen '
+                          f'Menschen (nur {len(leit)} Zeichen)')
+        elif leit not in erst:
+            fehler.append('der Satz über diesen Menschen steht nicht im ersten '
+                          'Bildschirm')
+        # Die Sprungmarken müssen zeigen, wohin sie zeigen.
+        marken = b.get('marken') or []
+        if len(marken) < 4:
+            fehler.append(f'nur {len(marken)} Sprungmarken — ohne sie liest '
+                          'niemand eine lange Seite zu Ende')
+        for mk in marken:
+            if not mk['gibts']:
+                fehler.append(f'Sprungmarke „{mk["text"]}" zeigt auf #{mk["ziel"]} '
+                              '— diesen Abschnitt gibt es nicht')
+            if not mk['sichtbar']:
+                fehler.append(f'Sprungmarke „{mk["text"]}" ist nicht sichtbar')
+            if not mk['text']:
+                fehler.append(f'eine Sprungmarke auf #{mk["ziel"]} hat keine Aufschrift')
+        if len({mk['ziel'] for mk in marken}) != len(marken):
+            fehler.append('zwei Sprungmarken zeigen auf denselben Abschnitt')
+        # Klappen: ohne sie wäre die Höhe oben nicht zu halten, und
+        # eine Klappe, die offen startet, ist keine.
+        if b.get('klappen', 0) < 3:
+            fehler.append(f'nur {b.get("klappen", 0)} Klappen — alles '
+                          'Nachschlagbare gehört in eine')
+        if b.get('klappenOffen'):
+            fehler.append(f'{b["klappenOffen"]} Klappen stehen beim Laden offen '
+                          '— dann ist die Seite wieder so hoch wie vorher')
+        if b.get('leer'):
+            fehler.append('sichtbare Kästen ohne ein Wort darin: '
+                          + ', '.join(b['leer'])
+                          + ' — ein Block, der nur aus wartender Mechanik '
+                            'besteht, hinterlässt auf Stufe 0 ein Loch')
+        if b.get('leerOffen'):
+            fehler.append(f'{b["leerOffen"]} leere Kästen, wenn alle Klappen '
+                          'offen sind')
+        # Grad und Zeichen gehören auf Stufe 0 nirgends hin, auch
+        # nicht in einer aufgeklappten Klappe. Gelesen wird der
+        # sichtbare Text: Was in ac-tech wartet, steht dort nicht
+        # drin, und genau das ist der Unterschied, den diese
+        # Prüfung festhält.
+        ot = b.get('offenText') or ''
+        if not ot:
+            fehler.append('der aufgeklappte Text wurde nicht gelesen')
+        else:
+            for zeichen in ('°', '′', '″'):
+                if zeichen in ot:
+                    stelle = ot[max(0, ot.index(zeichen) - 60):ot.index(zeichen) + 10]
+                    fehler.append(f'Gradzeichen „{zeichen}" auf Stufe 0 sichtbar: '
+                                  + repr(stelle.replace(chr(10), ' ')))
+            ZEICHEN_UND_ANLAGEN = (
+                ['Widder', 'Stier', 'Zwillinge', 'Krebs', 'Löwe', 'Jungfrau',
+                 'Waage', 'Skorpion', 'Schütze', 'Steinbock', 'Wassermann', 'Fische']
+                + ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter',
+                   'Saturn', 'Uranus', 'Neptun', 'Pluto', 'Lilith', 'Chiron']
+                + ['Aszendent', 'Herrscher', 'Orbis', 'rückläufig', 'Rückläufig',
+                   'Konjunktion', 'Opposition', 'Quadrat', 'Trigon', 'Sextil'])
+            for wort in ZEICHEN_UND_ANLAGEN:
+                mw = re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(wort)
+                               + r'(?![A-Za-zÄÖÜäöüß])', ot)
+                if mw:
+                    stelle = ot[max(0, mw.start() - 50):mw.end() + 30]
+                    fehler.append(f'„{wort}" auf Stufe 0 sichtbar — Zeichen und '
+                                  'Anlagen warten in ac-tech: '
+                                  + repr(stelle.replace(chr(10), ' ')))
+        if b.get('breitOffen', 0) > 391:
+            fehler.append(f'seitlicher Überlauf auf {b["breitOffen"]}px, wenn '
+                          'alle Klappen offen sind')
+        # Die Stufe muss auf der Seite einstellbar sein. Sonst
+        # wartet die Mechanik für immer: Was in ac-tech liegt,
+        # bekäme niemand je zu sehen, und die Seite behauptete
+        # fünf Stufen, von denen sie nur eine zeigt.
+        if not b.get('niv'):
+            fehler.append('die Seite hat keinen Stufenschalter — dann ist alles, '
+                          'was in ac-tech wartet, für immer unsichtbar')
+        elif b.get('nivKnoepfe', 0) < 5:
+            fehler.append(f'der Stufenschalter hat {b.get("nivKnoepfe")} Knöpfe '
+                          'statt fünf')
+        if not b.get('techGanz'):
+            fehler.append('nichts wartet in ac-tech — dann steht die Mechanik '
+                          'entweder offen da oder sie fehlt ganz')
+        if b.get('techOffen'):
+            fehler.append(f'{b["techOffen"]} Mechanikstellen sind schon auf '
+                          'Stufe 0 sichtbar')
+        s2 = (pr.get('stufe2') or {}).get('techOffen', 0)
+        if s2 <= 0:
+            fehler.append('auf Stufe 2 erscheint keine einzige Mechanikstelle — '
+                          'dann ist das Warten ein Verstecken')
+        # Zwei klebende Zeilen übereinander: die obere Leiste bricht
+        # auf schmalen Schirmen um, und die Sprungzeile verschwände
+        # dahinter.
+        if b.get('klebtSprungOben', 0) < b.get('klebtLeisteUnten', 0) - 1:
+            fehler.append(f'die Sprungzeile klebt bei {b["klebtSprungOben"]}px und '
+                          f'liegt damit hinter der oberen Leiste (die reicht bis '
+                          f'{b["klebtLeisteUnten"]}px) — die obere Leiste bricht '
+                          'auf schmalen Schirmen um, eine feste Zahl im Stil '
+                          'verdeckt die Sprungzeile dann')
+        if b.get('klebtSprungUnten', 0) <= b.get('klebtSprungOben', 0):
+            fehler.append('die Sprungzeile ist beim Scrollen nicht mehr da — '
+                          'dann läuft sie auf dem Telefon nicht mit')
+    sp = pr.get('sprung') or {}
+    if not sp.get('ok'):
+        fehler.append('keine Sprungmarke zum Anklicken gefunden')
+    else:
+        if not sp.get('bewegt'):
+            fehler.append(f'ein Klick auf die Sprungmarke {sp.get("ziel")} '
+                          'bewegt die Seite nicht')
+        if sp.get('obenImBild') is not None and not (-5 <= sp['obenImBild'] <= 200):
+            fehler.append(f'nach dem Sprung steht der Abschnitt {sp.get("ziel")} '
+                          f'bei {sp["obenImBild"]}px statt oben im Bild')
+        if sp.get('hatKlappe') and not sp.get('klappeNachher'):
+            fehler.append(f'die Sprungmarke {sp.get("ziel")} führt in eine '
+                          'geschlossene Klappe — man springt ins Leere')
+
     # ── Was an dir auffällt ───────────────────────────────────
     # Der Fund vom 23.10.: Die Seite sagte über jeden Menschen
     # dasselbe — 86 von 100 Sätzen waren bei zwei verschiedenen
@@ -435,6 +810,17 @@ if pr:
             fehler.append(f'{wer}: der Abschnitt hat keine Überschrift')
         if a['breit'] > 391:
             fehler.append(f'{wer}: seitlicher Überlauf auf {a["breit"]}px')
+    # Derselbe Anspruch wie für die Kernaussagen gilt für den
+    # Satz im Kopf: Er ist das Erste, was jemand liest. Stünde
+    # dort bei fünf verschiedenen Bildern dreimal dasselbe, wäre
+    # er wieder ein Satz, der für jeden gilt.
+    leitsaetze = [a.get('leit', '') for a in au.values() if a.get('leit')]
+    if len(leitsaetze) < len(au):
+        fehler.append('bei mindestens einem Probebild fehlt der Satz im Kopf')
+    if leitsaetze and len(set(leitsaetze)) < 3:
+        fehler.append(f'fünf verschiedene Geburtsbilder bekommen nur '
+                      f'{len(set(leitsaetze))} verschiedene Sätze im Kopf — '
+                      'der erste Satz der Seite soll von diesem Menschen handeln')
     mittel = pr['notiz'].get('gleichMittel', 100)
     schlimm = pr['notiz'].get('gleichSchlimmster', 100)
     if mittel > GLEICH_HOECHSTENS:
@@ -451,6 +837,12 @@ if pr:
 
     print('  Rauchprobe: 12 Häuser, %d Transitpunkte, %d Aspekte, %d Indexeinträge, '
           'Radklick öffnet „%s"' % (v['transit'], v['aspekte'], v['index'], n['text']))
+    if pr.get('bau'):
+        b = pr['bau']
+        print('  Aufbau auf 390px: %d Pixel hoch (%.1f Bildschirme), %d Sprungmarken, '
+              '%d Klappen, %d Wartemarken'
+              % (b['hoehe'], b['hoehe'] / 844, len(b.get('marken') or []),
+                 b.get('klappen', 0), b.get('techGanz', 0)))
 
 print(f'uebersicht.html  {ziel.stat().st_size:,} Bytes  →  {ziel}')
 for h in hinweise:
