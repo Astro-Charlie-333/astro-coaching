@@ -159,6 +159,26 @@ Das wird beim Packen erzwungen (`packen.py`), nicht nur hier notiert:
 
 ---
 
+## 6b · Wer von außen draufschaut
+
+Drei Aufgaben prüfen die Plattform, und sie fragen Verschiedenes:
+
+| | fragt | schreibt in |
+|---|---|---|
+| **Prüferin** | Wo steigt jemand aus? | `PRUEFERIN.md` |
+| **Späherin** | Was machen die anderen? | `RECHERCHE.md` |
+| **Gestalterin** | Warum sollte jemand bleiben, das weiterschicken oder dafür bezahlen? | `GESTALTERIN.md` |
+
+Die Gestalterin ist die Einzige, die sagen darf: **richtig gebaut und
+trotzdem schlecht.** Alle Prüfungen in diesem Projekt fragen, ob etwas
+funktioniert — sie fragt, ob es jemanden interessiert. Wer eine Seite baut,
+liest ihren letzten Durchgang zu dieser Seite.
+
+Keine der drei baut. Sie schreiben ihre eigene Datei und höchstens eine
+Aufgabe nach `AUFGABEN.md`.
+
+---
+
 ## 7 · Wenn etwas unklar ist
 
 Im Zweifel: **weniger Astrologie, mehr Leben.** Und wenn eine Aussage nicht
