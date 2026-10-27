@@ -191,7 +191,7 @@
  /* Die Markenleiste klebt oben. Ohne diesen Abstand springt ein
     Anker genau hinter sie, und die Überschrift des Bereichs ist
     verdeckt — der Sprung sieht aus, als hätte er nicht gegriffen. */
- scroll-margin-top:96px;}
+ scroll-margin-top:var(--ac-sprung, 110px);}
 .b-kopfz{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:8px;}
 .b-ber .b-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:27px;font-weight:400;
  color:var(--nacht,#2E3A5C);margin:0;line-height:1.15;}

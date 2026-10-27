@@ -988,9 +988,10 @@ notiz.anker=await (async()=>{
   const ziel=ks[ks.length-1];
   await p.goto(ORT+'#ber-'+ziel);
   await p.waitForTimeout(2200);
-  await p.evaluate(z=>{ const d=document.getElementById('ber-'+z);
-    if(d) d.scrollIntoView({block:'start'}); }, ziel);
-  await p.waitForTimeout(400);
+  /* Kein Nachhelfen. Die Seite ist mit dem Anker geladen worden und
+     muss von selbst dort stehen — so kommt auch ein Mensch an, der
+     von der Startseite aus klickt. */
+  await p.waitForTimeout(600);
   return p.evaluate(z=>{
     const s2=document.querySelector('.b-ber');
     const d=document.getElementById('ber-'+z);
