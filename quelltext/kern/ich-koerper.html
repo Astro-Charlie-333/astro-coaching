@@ -8,26 +8,38 @@
 
 <div class="ich-wrap" id="ichinhalt">
 
-<!-- Der Kopf f&uuml;hrt mit einem Satz &uuml;ber diesen Menschen.
-     Das Rad wartet weiter unten in einer Klappe: Maschinenraum
-     kommt nach dem Inhalt, nicht davor. -->
-<div class="ich-kopf">
-  <h1 class="ich-name" id="ichname">&nbsp;</h1>
-  <p class="ich-leit" id="ichleit"></p>
-  <p class="ich-leit-zu" id="ichleitzu"></p>
-  <div class="ich-dat" id="ichdat"></div>
-</div>
+<!-- Der Kopf: ein Satz &uuml;ber diesen Menschen, daneben sein Bild.
+     Das Rad stand bis zum 27.10. zugeklappt am Seitenende. Auf einer
+     Astrologieseite ist das Chart das Bild des Menschen &mdash; es geh&ouml;rt
+     neben die Aussage, nicht hinter eine Klappe. -->
+<header class="ich-kopf">
+  <div class="ich-kopf-text">
+    <p class="ich-leit" id="ichleit"></p>
+    <h1 class="ich-name" id="ichname">&nbsp;</h1>
+    <p class="ich-leit-zu" id="ichleitzu"></p>
+    <p class="ich-wer" id="ichdat"></p>
+  </div>
+  <figure class="ich-kopf-rad">
+    <div class="kr-huelle" id="ichrad"></div>
+    <figcaption class="ich-radfuss">
+      <span><i class="b"></i> dein Geburtsbild</span>
+      <span><i class="a"></i> wo die Planeten heute stehen</span>
+    </figcaption>
+  </figure>
+</header>
 
 <div id="nivleiste"></div>
 
 <nav class="ich-sprung" id="ichsprung" aria-label="Auf dieser Seite"></nav>
 
-<!-- Was an dir auff&auml;llt: der st&auml;rkste Abschnitt, deshalb der erste ─ -->
+<!-- Was an dir auff&auml;llt ──────────────────────────────────── -->
 <section class="ich-ab" id="a-auf" data-sprung="Was auff&auml;llt">
   <h2 class="ich-h" id="ichaufh"></h2>
   <p class="ich-sub" id="ichaufvor"></p>
   <div class="ich-auf" id="ichauf"></div>
-  <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+  <details class="ich-klappe ich-klein"><summary><span class="kl-t">Was diese Zahlen taugen</span></summary>
+    <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+  </details>
 </section>
 
 <!-- Die drei Stellen, die den Grundton setzen ──────────────── -->
@@ -37,36 +49,19 @@
   <div class="ich-drei" id="ichdrei"></div>
 </section>
 
+<!-- Die zw&ouml;lf Felder, offen ─────────────────────────────── -->
+<section class="ich-ab" id="a-felder" data-sprung="Zw&ouml;lf Felder">
+  <h2 class="ich-h">Die zw&ouml;lf Felder deines Lebens</h2>
+  <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben. Tipp eins an, dann steht da, was bei dir darin liegt. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user; die Zeile nennt das Zeichen, die Besetzung und den Herrscher.</span></p>
+  <div class="ich-haeuser" id="ichhaeuser"></div>
+</section>
+
 <!-- Die Br&uuml;cke zu Heute ─────────────────────────────────── -->
 <section class="ich-ab" id="a-heute" data-sprung="Heute">
   <div class="ich-heute" id="ichheute"></div>
 </section>
 
-<!-- Ab hier: alles Nachschlagbare in Klappen. Das ist der Grund,
-     warum die Seite auf dem Telefon nicht mehr f&uuml;nfzehn
-     Bildschirme hoch ist. -->
-<section class="ich-ab" id="a-rad" data-sprung="Dein Bild">
-  <details class="ich-klappe" id="kl-rad">
-    <summary><span class="kl-t">Dein Bild als Rad</span><span class="kl-w">Wo bei deiner Geburt was stand &mdash; und wo es heute steht</span></summary>
-    <div class="ich-radbox">
-      <div class="kr-huelle" id="ichrad"></div>
-      <div class="ich-radfuss">
-        <span><i class="b"></i> ausgew&auml;hlt</span>
-        <span><i class="a"></i> heute besetzt</span>
-        <span>au&szlig;en: wo die Planeten gerade stehen</span>
-      </div>
-    </div>
-  </details>
-</section>
-
-<section class="ich-ab" id="a-felder" data-sprung="Zw&ouml;lf Felder">
-  <details class="ich-klappe" id="kl-felder">
-    <summary><span class="kl-t">Die zw&ouml;lf Felder deines Lebens</span><span class="kl-w">Tipp eine Zeile an &mdash; jedes Feld mit einer Frage, die es aufmacht</span></summary>
-    <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben: Auftreten, Geld, Zuhause, Arbeit, N&auml;he, R&uuml;ckzug. Was bei dir darin liegt, steht in der Zeile. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user; die Zeile nennt das Zeichen, die Besetzung und den Herrscher.</span></p>
-    <div class="ich-haeuser" id="ichhaeuser"></div>
-  </details>
-</section>
-
+<!-- Ab hier das Nachschlagbare ───────────────────────────── -->
 <section class="ich-ab" id="a-zusammen" data-sprung="Was zusammenh&auml;ngt">
   <details class="ich-klappe" id="kl-asp">
     <summary><span class="kl-t">Was in dir zusammenh&auml;ngt</span><span class="kl-w">Die Stellen, an denen zwei Antriebe sich begegnen</span></summary>

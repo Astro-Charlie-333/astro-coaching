@@ -4,14 +4,11 @@
 
 /* Kopf: ein Satz über diesen Menschen. Das Rad wartet weiter
    unten in einer Klappe — Inhalt vor Maschinenraum. */
-.ich-kopf{padding:30px 0 4px;max-width:34em;}
-.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,4.6vw,48px);
- font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 14px;}
-.ich-leit{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(19px,2.6vw,24px);
- font-weight:400;line-height:1.46;color:var(--tinte,#2A2520);margin:0 0 12px;}
-.ich-leit-zu{font-size:14.6px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 12px;}
-.ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
- color:var(--leise,#6B6259);margin:0 0 6px;}
+
+
+
+
+
 
 /* Sprungmarken: auf dem Telefon mitlaufend. Die Zeile scrollt in
    sich, damit sie die Seite nicht breiter macht. */
@@ -43,8 +40,7 @@
  margin-top:4px;line-height:1.55;max-width:56ch;}
 .ich-klappe>*:last-child{margin-bottom:28px;}
 
-.ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:26px;padding:16px;max-width:560px;}
+
 .ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
  font-size:12.6px;color:var(--leise,#6B6259);}
 .ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
@@ -150,15 +146,14 @@
    Vier Befunde, der seltenste oben. Keine Farbe, die Dringlichkeit
    behauptet — die Reihenfolge ist die ganze Gewichtung. */
 .ich-auf{border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:26px;}
-.au{padding:20px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
-.au p{margin:0 0 9px;}
-.au p:last-child{margin-bottom:0;}
-.au-satz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
-  line-height:1.5;color:var(--tinte,#2A2520);}
-.au-zu{font-size:14.6px;color:var(--leise,#6B6259);line-height:1.6;}
-.au-h{font-size:13.5px;color:var(--messing,#9A7235);}
-.au-tun{font-size:15px;line-height:1.6;}
-.au-tun b{font-weight:600;}
+
+
+
+
+
+
+
+
 .ich-aufgrenze{background:var(--nacht-bg,#F2F3F7);border-radius:16px;
   padding:20px 22px;margin-bottom:30px;}
 .ich-aufgrenze h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
@@ -166,9 +161,79 @@
 .ich-aufgrenze p{font-size:14px;line-height:1.65;color:var(--leise,#6B6259);
   margin:0 0 9px;}
 .ich-aufgrenze p:last-child{margin-bottom:0;}
-@media(max-width:480px){ .au-satz{font-size:17.5px;} }
+@media(max-width:480px){  }
 
 /* Die Abschnitte, auf die die Sprungmarken zeigen. Der Abstand
    nach oben hält den angesprungenen Titel unter der Leiste. */
 .ich-ab{scroll-margin-top:calc(var(--ac-oben,51px) + var(--ac-sprung,53px) + 10px);}
 .ich-ab>.ich-h:first-child{margin-top:44px;}
+
+
+/* ═══ Kopf: Aussage und Bild nebeneinander ═══════════════════ */
+.ich-kopf{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:40px;
+ align-items:center;margin:34px 0 30px;}
+.ich-wer{font-size:13px;color:var(--leise,#6B6259);margin:14px 0 0;}
+.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:300;
+ font-size:clamp(14.5px,1.5vw,16px);letter-spacing:.01em;color:var(--messing,#9A7235);
+ margin:0 0 10px;}
+.ich-leit{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
+ font-size:clamp(28px,4vw,44px);line-height:1.14;color:var(--nacht,#2E3A5C);
+ margin:0 0 16px;max-width:21ch;}
+.ich-leit-zu{font-size:16px;line-height:1.6;color:var(--tinte,#231F1A);margin:0;max-width:46ch;}
+.ich-kopf-rad{margin:0;}
+.ich-kopf-rad .kr-huelle{width:100%;}
+.ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:11px;
+ font-size:11.5px;color:var(--leise,#6B6259);}
+.ich-radfuss i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;}
+.ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
+.ich-radfuss i.a{background:var(--messing,#9A7235);}
+@media(max-width:780px){
+ .ich-kopf{grid-template-columns:1fr;gap:22px;}
+ .ich-kopf-rad{max-width:320px;}
+}
+
+/* ═══ Was auffällt: die Zahl ist das Bild ═══════════════════ */
+.ich-auf{display:grid;gap:14px;margin:4px 0 16px;}
+.au{display:grid;grid-template-columns:132px 1fr;gap:26px;align-items:start;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:20px;padding:24px 26px;}
+.au-haupt{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);
+ grid-template-columns:168px 1fr;padding:32px 34px;}
+.au-zahl{text-align:center;}
+.au-feld{width:100%;max-width:132px;display:block;margin:0 auto 11px;}
+.au-haupt .au-feld{max-width:168px;}
+.au-feld .an{fill:var(--messing,#9A7235);}
+.au-feld .aus{fill:var(--linie,#EBE1D2);}
+.au-haupt .au-feld .an{fill:#F3C98B;}
+.au-haupt .au-feld .aus{fill:rgba(255,255,255,.17);}
+.au-z b{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:36px;line-height:1;color:var(--nacht,#2E3A5C);}
+.au-haupt .au-z b{font-size:46px;color:#fff;}
+.au-z span{display:block;font-size:11.5px;line-height:1.35;margin-top:5px;
+ color:var(--leise,#6B6259);}
+.au-haupt .au-z span{color:rgba(255,255,255,.72);}
+.au-ohne{font-size:12.5px;line-height:1.5;color:var(--leise,#6B6259);padding-top:18px;}
+.au-satz{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
+ font-size:clamp(18px,2.1vw,23px);line-height:1.38;color:var(--nacht,#2E3A5C);margin:0 0 11px;}
+.au-haupt .au-satz{font-size:clamp(21px,2.6vw,28px);color:#fff;}
+.au-zu{font-size:14.5px;line-height:1.62;color:var(--leise,#6B6259);margin:0 0 12px;}
+.au-haupt .au-zu{color:rgba(255,255,255,.78);}
+.au-tun{font-size:15px;line-height:1.6;color:var(--tinte,#231F1A);margin:0;
+ padding-top:12px;border-top:1px solid var(--linie,#EBE1D2);}
+.au-tun b{color:var(--messing,#9A7235);font-weight:500;}
+.au-haupt .au-tun{color:#fff;border-top-color:rgba(255,255,255,.22);}
+.au-haupt .au-tun b{color:#F3C98B;}
+.au .ac-tech{margin-top:10px;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.5px;color:var(--leise,#6B6259);}
+.au-haupt .ac-tech{color:rgba(255,255,255,.6);}
+@media(max-width:700px){
+ .au,.au-haupt{grid-template-columns:1fr;gap:16px;padding:20px 18px;}
+ .au-zahl{display:flex;align-items:center;gap:16px;text-align:left;}
+ .au-feld,.au-haupt .au-feld{width:92px;margin:0;}
+ .au-z b,.au-haupt .au-z b{font-size:30px;}
+}
+
+.ich-klein{margin-top:6px;}
+.ich-klein summary{font-size:13.5px;}
+.ich-aufgrenze h3{display:none;}
+.ich-aufgrenze p{font-size:13.5px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 9px;}

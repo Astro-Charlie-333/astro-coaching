@@ -85,9 +85,15 @@ function kopfSatz(M){
 }
 
 function kopfBauen(p, M){
-  el('ichname').textContent=AC_P.anzeige(p,true);
-  el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
-    ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+  /* Eine Zeile, die man vorlesen kann. "21.6.1996 · 14:40 · Berlin"
+     ist eine Datenzeile; hier steht ein Mensch. */
+  var MON=['Januar','Februar','März','April','Mai','Juni','Juli','August',
+           'September','Oktober','November','Dezember'];
+  el('ichname').textContent = AC_P.anzeige(p,true) + ', geboren am ' +
+    p.d + '. ' + MON[p.mo-1] + ' ' + p.y + ' um ' +
+    ('0'+p.h).slice(-2) + ':' + ('0'+p.mi).slice(-2) +
+    (p.ort ? ' in ' + p.ort : '') + '.';
+  el('ichdat').textContent='';
   el('ichleit').textContent=kopfSatz(M);
   el('ichleitzu').textContent=I_KOPF.nach;
 }
@@ -218,6 +224,30 @@ function fuellen(form, werte){
 }
 function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
 
+/* Hundert Punkte, davon n hell. Man kann sie abzählen — genau das
+   ist der Unterschied zwischen "selten" und einer Zahl. */
+function punktfeld(m){
+  var a = m.anteil;
+  var h = ['<div class="au-zahl">'];
+  if(a === null || a === undefined){
+    h.push('<div class="au-ohne">bei jedem Menschen<br>woanders</div>');
+    h.push('</div>');
+    return h.join('');
+  }
+  var p = Math.round(a*100);
+  var voll = Math.max(1, Math.min(100, p));          /* unter 1 % bleibt 1 Punkt */
+  h.push('<svg class="au-feld" viewBox="0 0 104 104" aria-hidden="true">');
+  for(var r=0;r<10;r++) for(var c=0;c<10;c++){
+    var nr = r*10 + c;
+    h.push('<circle cx="'+(6+c*10.8).toFixed(1)+'" cy="'+(6+r*10.8).toFixed(1)+'" r="3.1" class="'+
+           (nr < voll ? 'an' : 'aus')+'"/>');
+  }
+  h.push('</svg>');
+  h.push('<div class="au-z"><b>'+(p<1?'<1':p)+'</b><span>von 100 Menschen</span></div>');
+  h.push('</div>');
+  return h.join('');
+}
+
 function haeufigZeile(m){
   if(m.anteil===null||m.anteil===undefined) return I_AUF.haeufigOhne;
   var p=Math.round(m.anteil*100);
@@ -274,13 +304,19 @@ function auffaelligBauen(){
   for(var i=0;i<M.length;i++){
     var T=merkmalText(M[i]);
     if(!T) continue;
-    h.push('<div class="au">');
+    /* Die Seltenheit ist das Einzige, was diese Plattform hat und
+       sonst niemand: abgezählt, nicht behauptet. Sie stand bis zum
+       27.10. als 11-Pixel-Zeile unter einem Absatz. Jetzt ist sie
+       das Bild — hundert Punkte, davon so viele hell, wie Menschen
+       es haben. Der seltenste Befund steht zuerst und dunkel. */
+    h.push('<article class="au' + (i === 0 ? ' au-haupt' : '') + '">');
+    h.push(punktfeld(M[i]));
+    h.push('<div class="au-text">');
     h.push('<p class="au-satz">'+esc(T.satz)+'</p>');
     if(T.zusatz) h.push('<p class="au-zu">'+esc(T.zusatz)+'</p>');
-    h.push('<p class="au-h">'+esc(haeufigZeile(M[i]))+'</p>');
     if(T.tun) h.push('<p class="au-tun"><b>'+esc(I_AUF.tunVor)+'</b> '+esc(T.tun)+'</p>');
     h.push('<p class="ac-tech" data-ab="2">'+esc(T.tech)+'</p>');
-    h.push('</div>');
+    h.push('</div></article>');
   }
   el('ichauf').innerHTML=h.join('');
   /* Der ehrliche Teil gehört zu jeder rechnenden Ausgabe. */
