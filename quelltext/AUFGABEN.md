@@ -18,41 +18,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 
 
-### 1 · Die Ich-Seite nach demselben Muster wie die Startseite umbauen
-
-Mandy am 25.10.: „die Ich Seite und die heute Seite sind noch immer nicht
-spannend und gut genug." Die Startseite ist umgebaut — die Ich-Seite hat
-dieselben vier Fehler:
-
-* Sie **beginnt mit dem Chartrad.** Maschinenraum vor Inhalt, genau der
-  Fehler, den die Startseite gerade losgeworden ist.
-* Die Dreierzeile direkt darunter (Antrieb · Bedürfnis · Wirkung) führt mit
-  **Zeichen und Gradzahl**. Das gehört hinter die Alltagsbedeutung.
-* **15 Bildschirme auf dem Telefon**, ohne Inhaltsverzeichnis und ohne eine
-  Möglichkeit zu springen. Niemand liest das zu Ende.
-* Der stärkste Teil — **„Was an dir auffällt"** mit den Häufigkeiten aus
-  10.000 erfundenen Geburtsbildern und je einem Handgriff — steht unter
-  allem anderen begraben. Das ist das Beste auf der ganzen Plattform und
-  es kommt als Viertes.
-
-Zu tun, in dieser Reihenfolge:
-
-1. Der Seitenkopf führt mit **einem Satz über diesen Menschen**, nicht mit
-   dem Rad. Das Rad rutscht nach unten oder in eine Klappe.
-2. „Was an dir auffällt" wird der **erste** Abschnitt nach dem Kopf.
-3. **Sprungmarken** oben: anklickbare Links auf die Abschnitte, wie auf der
-   Essensseite. Auf dem Telefon mitlaufend oder zumindest am Anfang.
-4. Alles, was Grad und Zeichen nennt, bekommt `ac-tech` und `data-ab="2"`.
-
-Fertig, wenn: Auf 390 Pixeln steht im ersten Bildschirm ein Satz über diesen
-Menschen und kein Gradzeichen; die Sprungmarken funktionieren; die Seite ist
-auf dem Telefon höchstens halb so hoch wie jetzt (12.758 Pixel), weil alles
-Nachschlagbare in Klappen liegt.
-
-Dauerhafte Prüfung dazu in `bau-ich.py`: Höhe auf 390 Pixeln unter einer
-Obergrenze; kein Gradzeichen und kein Zeichenname im ersten Bildschirm;
-jede Sprungmarke zeigt auf eine ID, die es gibt.
-
 ### 4 · Die Coachin-Sicht als zweite Schublade
 In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
 sprechen": drei Gesprächsfragen und eine Grenze.
@@ -304,7 +269,81 @@ verweist, die Zuordnung dieselbe Quelle benutzt wie der Weg hin
 (`B_RAUM.zu`, nicht eine zweite Liste), und `pruefe-alles.py` abbricht,
 sobald eine Raumseite keinen Rückweg hat.
 
+### 27 · „Haus" steht auf der Ich-Seite noch auf Stufe 0
+Seit dem Umbau vom 27.10. warten Grad, Zeichen und Anlagennamen auf der
+Ich-Seite in `ac-tech`, und `bau-ich.py` prüft das über den gerenderten
+Text der ganzen aufgeklappten Seite. Für „Haus" gilt das noch nicht: Die
+Überschrift eines aufgeklappten Feldes heißt „7. Haus — Partnerschaft",
+und die Weiterverweise nennen „Alle Häuser". `REGELN.md` Abschnitt 2
+schließt das Wort auf Stufe 0 aus.
+**Fertig, wenn:** auf Stufe 0 nirgends auf der Ich-Seite „Haus",
+„Häuser" oder „Hauses" sichtbar ist, die Wörter stattdessen in `ac-tech`
+warten, und die Prüfung in `bau-ich.py`, die heute Grad, Zeichen und
+Anlagen abfängt, auch diese drei Wörter führt. Der Stufenschalter, der
+der Ich-Seite bis zum 27.10. ganz fehlte, gehört zu Aufgabe 16.
+
+### 28 · In `ich-app.js` stehen noch Sätze
+`bau-ich.py` fängt seit dem 23.10. jeden Satz ab, der in
+`ich-rechner.js` steht statt in `ich-daten.js` — dieselbe Fehlerklasse
+wie bei `tief-bauer.js` und `monat-app.js`. Die Anzeige wird dabei nicht
+angesehen, und dort steht noch welches: „Heute auf deinem Chart",
+„Gerade steht nichts in deinen Häusern", „Kein Planet steht hier — das
+ist der Normalfall …", „Die Frage, die es aufmacht", „Noch kein Profil
+angelegt". Diese Sätze liest keine Prüfung, also kann sie auch niemand
+auf Stufe 0 prüfen — und beim Umzug nach `PRODUKT.md` Abschnitt 7
+wandern sie nicht mit, weil sie in der Anzeige hängen.
+**Fertig, wenn:** diese Sätze in `ich-daten.js` stehen, in der
+Laienprüfung mitlaufen, und `bau-ich.py` `ich-app.js` mit derselben
+Suche abfängt wie `ich-rechner.js` — ein neuer Satz in der Anzeige
+bricht den Bau.
+
+---
+
 ## Erledigt
+
+* **2026-10-27** · Die Ich-Seite umgebaut (Aufgabe 1). Sie begann mit
+  dem Chartrad und führte darunter mit Zeichen und Gradzahl — und war
+  auf dem Telefon 12.496 Pixel hoch, fünfzehn Bildschirme am Stück ohne
+  eine Möglichkeit zu springen. Jetzt steht im ersten Bildschirm ein
+  Satz über diesen Menschen, genommen aus dem seltensten Befund und
+  ohne ein Fachwort: „Zwei Dinge in dir arbeiten zusammen, ohne dass du
+  etwas dafür tust …" Darunter kommt „Was an dir auffällt" als erster
+  Abschnitt, dann die drei tragenden Stellen — erst, worum es im Leben
+  geht, dann der Lebensbereich, und Grad und Zeichen warten. Alles
+  Nachschlagbare liegt in Klappen: das Rad, die zwölf Felder, die
+  Verbindungen, das Regal. Die Seite ist damit 3.766 Pixel hoch, weniger
+  als ein Drittel, und oben läuft eine Sprungzeile mit.
+  Zwei Funde nebenbei. Die Seite hatte keinen Stufenschalter: `niveau.js`
+  setzt ihn nur ein, wo ein Platzhalter steht oder ein `.wrap` existiert,
+  und die Ich-Seite hat `.ich-wrap`. Alles, was dort in `ac-tech`
+  wartete, wäre für immer unsichtbar geblieben. Und auf jeder Karte im
+  Abschnitt „Was zusammenhängt" stand nur die Formel: Der Satz dazu
+  wurde geholt und unter einem Namen gesucht, den es in
+  `aspekte-daten.js` nie gab, also fiel er jedes Mal lautlos weg. Jetzt
+  steht dort, worum es geht, Karten ohne Satz entfallen, und daneben
+  steht, wie viele Winkel insgesamt gerechnet sind — eine Auswahl, die
+  sich nicht als Ganzes ausgibt.
+  Fehlerklassen abgestellt, alle in `bau-ich.py`: die Seite höher als
+  6.248 Pixel auf 390 Pixeln; ein Gradzeichen, ein Zeichen- oder
+  Anlagenname auf Stufe 0 sichtbar — gemessen am gerenderten Text der
+  ganzen aufgeklappten Seite, inklusive eines aufgeklappten Feldes, denn
+  eine Klappe ist kein Versteck; ein Abschnitt mit Sprungmarke ohne ID;
+  eine Sprungmarke ohne Ziel, ohne Aufschrift oder unsichtbar; ein
+  Sprung, der die Seite nicht bewegt oder in eine geschlossene Klappe
+  führt; eine Klappe, die beim Laden offen steht; eine Seite ohne
+  Stufenschalter oder mit einem, auf dem die Mechanik trotzdem nicht
+  erscheint; ein sichtbarer Kasten ohne ein Wort darin; ein seitlicher
+  Überlauf bei offenen Klappen; zwei klebende Zeilen übereinander,
+  gemessen im gescrollten Zustand, weil am Seitenanfang jede falsche
+  Einstellung richtig aussieht; derselbe Satz im Kopf bei fünf
+  verschiedenen Geburtsbildern; ein Satz im Kopf ohne Lücke oder mit
+  Fachwort; und `section`, `nav` und `details`, die nicht aufgehen —
+  bisher wurde nur `div` gezählt. Zehn absichtlich eingebaute Fehler,
+  alle zehn erkannt.
+  Offen geblieben: „Haus" steht auf Stufe 0 noch sichtbar (Aufgabe 27),
+  und in `ich-app.js` hängen weiter Sätze, die keine Prüfung liest
+  (Aufgabe 28). Wie viele andere Seiten denselben fehlenden
+  Stufenschalter haben, ist nicht gezählt — das gehört zu Aufgabe 16.
 
 * **2026-10-26** · Die Sprache der Bereichstexte umgeschrieben. 32 Texte in
   `bereich-daten.js`, dazu zwei Logikfehler in der Anzeige: Der Satz „Gerade

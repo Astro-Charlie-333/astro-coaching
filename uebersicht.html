@@ -150,13 +150,49 @@ a{color:var(--nacht);}
 .ich-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
 @media(max-width:620px){.ich-wrap{padding:0 17px 70px;}}
 
-/* Kopf: Rad links, die drei tragenden Stellungen rechts */
-.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
- gap:46px;align-items:start;padding:30px 0 10px;}
-@media(max-width:900px){.ich-kopf{grid-template-columns:1fr;gap:28px;}}
+/* Kopf: ein Satz über diesen Menschen. Das Rad wartet weiter
+   unten in einer Klappe — Inhalt vor Maschinenraum. */
+.ich-kopf{padding:30px 0 4px;max-width:34em;}
+.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,4.6vw,48px);
+ font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 14px;}
+.ich-leit{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(19px,2.6vw,24px);
+ font-weight:400;line-height:1.46;color:var(--tinte,#2A2520);margin:0 0 12px;}
+.ich-leit-zu{font-size:14.6px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 12px;}
+.ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
+ color:var(--leise,#6B6259);margin:0 0 6px;}
+
+/* Sprungmarken: auf dem Telefon mitlaufend. Die Zeile scrollt in
+   sich, damit sie die Seite nicht breiter macht. */
+.ich-sprung{position:sticky;top:var(--ac-oben,51px);z-index:30;display:flex;align-items:center;
+ gap:7px 14px;margin:14px 0 6px;padding:9px 0;overflow-x:auto;
+ background:rgba(253,251,247,.94);border-bottom:1px solid var(--linie,#EBE1D2);
+ -webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.ich-sprung::-webkit-scrollbar{display:none;}
+.ich-sprung .sp-t{flex:none;font-size:12.4px;color:var(--leise,#6B6259);}
+.ich-sprung a{flex:none;white-space:nowrap;font-size:14px;text-decoration:none;
+ color:var(--nacht,#2E3A5C);border:1px solid var(--linie-stark,#DDD0BC);border-radius:999px;
+ padding:5px 12px;background:var(--papier,#FFFDFA);}
+.ich-sprung a:hover{border-color:var(--nacht,#2E3A5C);}
+
+/* Klappen: alles Nachschlagbare liegt darin. Vorher war die Seite
+   auf dem Telefon fünfzehn Bildschirme hoch. */
+.ich-klappe{border-top:1px solid var(--linie-stark,#DDD0BC);}
+.ich-klappe>summary{cursor:pointer;list-style:none;padding:19px 0;display:block;}
+.ich-klappe>summary::-webkit-details-marker{display:none;}
+.ich-klappe>summary::after{content:'';display:inline-block;width:8px;height:8px;
+ margin-left:10px;vertical-align:3px;border-right:1.5px solid var(--messing,#9A7235);
+ border-bottom:1.5px solid var(--messing,#9A7235);transform:rotate(45deg);}
+.ich-klappe[open]>summary::after{transform:rotate(-135deg);vertical-align:6px;}
+.ich-klappe>summary:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:2px;}
+.ich-klappe .kl-t{font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:clamp(21px,2.9vw,27px);font-weight:300;letter-spacing:-.018em;
+ color:var(--nacht,#2E3A5C);}
+.ich-klappe .kl-w{display:block;font-size:14px;color:var(--leise,#6B6259);
+ margin-top:4px;line-height:1.55;max-width:56ch;}
+.ich-klappe>*:last-child{margin-bottom:28px;}
+
 .ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:26px;padding:16px;position:sticky;top:76px;}
-@media(max-width:900px){.ich-radbox{position:static;}}
+ border-radius:26px;padding:16px;max-width:560px;}
 .ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
  font-size:12.6px;color:var(--leise,#6B6259);}
 .ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
@@ -164,17 +200,13 @@ a{color:var(--nacht);}
 .ich-radfuss i.a{background:#F3EADA;border:1px solid var(--messing,#9A7235);}
 .ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
 
-.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(34px,5.4vw,56px);
- font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 6px;}
-.ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
- color:var(--leise,#6B6259);margin-bottom:26px;}
 .ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
 .ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
  padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+@media(max-width:480px){.ich-drei>div{grid-template-columns:1fr;gap:3px;}}
 .ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
-.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(20px,2.7vw,27px);
- font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.18;letter-spacing:-.012em;}
-.ich-drei .wert em{font-style:normal;color:var(--messing,#9A7235);}
+.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(18px,2.4vw,23px);
+ font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.3;letter-spacing:-.012em;}
 .ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
  color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
 
@@ -193,12 +225,11 @@ a{color:var(--nacht);}
 
 /* Die zwölf Häuser als Zeilen, nicht als Karten */
 .ich-haeuser{border-top:1px solid var(--linie-stark,#DDD0BC);}
-.hz{display:grid;grid-template-columns:52px 136px minmax(0,1fr) minmax(0,1.15fr);
- gap:16px;align-items:baseline;width:100%;text-align:left;
- padding:15px 12px;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
+.hz{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;align-items:baseline;
+ width:100%;text-align:left;padding:14px 10px;background:none;border:0;
+ border-bottom:1px solid var(--linie,#EBE1D2);
  font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;}
-@media(max-width:860px){.hz{grid-template-columns:44px minmax(0,1fr);gap:5px 13px;padding:14px 10px;}
- .hz .herr,.hz .was{grid-column:2;}}
+.hz-inhalt{display:block;min-width:0;}
 .hz:hover{background:var(--papier,#FFFDFA);}
 .hz.ist{background:var(--nacht,#2E3A5C);}
 .hz.ist .nr,.hz.ist .ze,.hz.ist .herr,.hz.ist .was{color:#F4EFE6;}
@@ -208,11 +239,13 @@ a{color:var(--nacht);}
 .hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:300;
  color:var(--leise,#6B6259);line-height:1;}
 .hz.heut .nr{color:var(--messing,#9A7235);}
-.hz .ze{font-size:15.6px;line-height:1.35;min-width:0;}
+.hz .ze{display:block;font-size:14.6px;line-height:1.4;min-width:0;margin-top:3px;}
 .hz .ze b{font-weight:500;color:var(--nacht,#2E3A5C);}
 .hz .bew{display:block;font-size:13.6px;color:var(--messing,#9A7235);margin-top:3px;}
-.hz .herr{font-size:14px;color:var(--leise,#6B6259);line-height:1.45;min-width:0;}
-.hz .was{font-size:14.3px;color:var(--leise,#6B6259);line-height:1.5;min-width:0;}
+.hz .herr{display:block;font-size:13.6px;color:var(--leise,#6B6259);
+ line-height:1.45;min-width:0;margin-top:2px;}
+.hz .was{display:block;font-family:var(--serif,Fraunces,Georgia,serif);
+ font-size:17.5px;font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.3;min-width:0;}
 .hz .punkt{display:inline-block;width:6px;height:6px;border-radius:50%;
  background:var(--messing,#9A7235);vertical-align:2px;margin-right:5px;}
 
@@ -282,6 +315,11 @@ a{color:var(--nacht);}
   margin:0 0 9px;}
 .ich-aufgrenze p:last-child{margin-bottom:0;}
 @media(max-width:480px){ .au-satz{font-size:17.5px;} }
+
+/* Die Abschnitte, auf die die Sprungmarken zeigen. Der Abstand
+   nach oben hält den angesprungenen Titel unter der Leiste. */
+.ich-ab{scroll-margin-top:calc(var(--ac-oben,51px) + var(--ac-sprung,53px) + 10px);}
+.ich-ab>.ich-h:first-child{margin-top:44px;}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -295,8 +333,46 @@ a{color:var(--nacht);}
 
 <div class="ich-wrap" id="ichinhalt">
 
+<!-- Der Kopf f&uuml;hrt mit einem Satz &uuml;ber diesen Menschen.
+     Das Rad wartet weiter unten in einer Klappe: Maschinenraum
+     kommt nach dem Inhalt, nicht davor. -->
 <div class="ich-kopf">
-  <div>
+  <h1 class="ich-name" id="ichname">&nbsp;</h1>
+  <p class="ich-leit" id="ichleit"></p>
+  <p class="ich-leit-zu" id="ichleitzu"></p>
+  <div class="ich-dat" id="ichdat"></div>
+</div>
+
+<div id="nivleiste"></div>
+
+<nav class="ich-sprung" id="ichsprung" aria-label="Auf dieser Seite"></nav>
+
+<!-- Was an dir auff&auml;llt: der st&auml;rkste Abschnitt, deshalb der erste ─ -->
+<section class="ich-ab" id="a-auf" data-sprung="Was auff&auml;llt">
+  <h2 class="ich-h" id="ichaufh"></h2>
+  <p class="ich-sub" id="ichaufvor"></p>
+  <div class="ich-auf" id="ichauf"></div>
+  <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+</section>
+
+<!-- Die drei Stellen, die den Grundton setzen ──────────────── -->
+<section class="ich-ab" id="a-drei" data-sprung="Was dich tr&auml;gt">
+  <h2 class="ich-h" id="ichdreih"></h2>
+  <p class="ich-sub" id="ichdreisub"></p>
+  <div class="ich-drei" id="ichdrei"></div>
+</section>
+
+<!-- Die Br&uuml;cke zu Heute ─────────────────────────────────── -->
+<section class="ich-ab" id="a-heute" data-sprung="Heute">
+  <div class="ich-heute" id="ichheute"></div>
+</section>
+
+<!-- Ab hier: alles Nachschlagbare in Klappen. Das ist der Grund,
+     warum die Seite auf dem Telefon nicht mehr f&uuml;nfzehn
+     Bildschirme hoch ist. -->
+<section class="ich-ab" id="a-rad" data-sprung="Dein Bild">
+  <details class="ich-klappe" id="kl-rad">
+    <summary><span class="kl-t">Dein Bild als Rad</span><span class="kl-w">Wo bei deiner Geburt was stand &mdash; und wo es heute steht</span></summary>
     <div class="ich-radbox">
       <div class="kr-huelle" id="ichrad"></div>
       <div class="ich-radfuss">
@@ -305,32 +381,32 @@ a{color:var(--nacht);}
         <span>au&szlig;en: wo die Planeten gerade stehen</span>
       </div>
     </div>
-  </div>
-  <div>
-    <h1 class="ich-name" id="ichname">&nbsp;</h1>
-    <div class="ich-dat" id="ichdat"></div>
-    <div class="ich-drei" id="ichdrei"></div>
-    <div class="ich-heute" id="ichheute"></div>
-  </div>
-</div>
+  </details>
+</section>
 
-<!-- Was an dir auffaellt ───────────────────────────────── -->
-<h2 class="ich-h" id="ichaufh"></h2>
-<p class="ich-sub" id="ichaufvor"></p>
-<div class="ich-auf" id="ichauf"></div>
-<div class="ich-aufgrenze" id="ichaufgrenze"></div>
+<section class="ich-ab" id="a-felder" data-sprung="Zw&ouml;lf Felder">
+  <details class="ich-klappe" id="kl-felder">
+    <summary><span class="kl-t">Die zw&ouml;lf Felder deines Lebens</span><span class="kl-w">Tipp eine Zeile an &mdash; jedes Feld mit einer Frage, die es aufmacht</span></summary>
+    <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben: Auftreten, Geld, Zuhause, Arbeit, N&auml;he, R&uuml;ckzug. Was bei dir darin liegt, steht in der Zeile. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user; die Zeile nennt das Zeichen, die Besetzung und den Herrscher.</span></p>
+    <div class="ich-haeuser" id="ichhaeuser"></div>
+  </details>
+</section>
 
-<h2 class="ich-h">Deine zw&ouml;lf H&auml;user</h2>
-<p class="ich-sub">Jedes Haus ist ein Lebensbereich, und jeder Bereich geh&ouml;rt einem Zeichen und damit einem Herrscher. Tipp eine Zeile an &mdash; oder gleich das Feld im Rad.</p>
-<div class="ich-haeuser" id="ichhaeuser"></div>
+<section class="ich-ab" id="a-zusammen" data-sprung="Was zusammenh&auml;ngt">
+  <details class="ich-klappe" id="kl-asp">
+    <summary><span class="kl-t">Was in dir zusammenh&auml;ngt</span><span class="kl-w">Die Stellen, an denen zwei Antriebe sich begegnen</span></summary>
+    <p class="ich-sub" id="ichaspsub"></p>
+    <div class="ich-asp" id="ichasp"></div>
+  </details>
+</section>
 
-<h2 class="ich-h">Was zusammenh&auml;ngt</h2>
-<p class="ich-sub">Die <span id="ichaspzahl">0</span> Aspekte deines Charts, die engsten zuerst. Rot fordert, gr&uuml;n flie&szlig;t &mdash; keins von beidem ist gut oder schlecht.</p>
-<div class="ich-asp" id="ichasp"></div>
-
-<h2 class="ich-h">Alles, was es zu dir gibt</h2>
-<p class="ich-sub">Jede Seite der Plattform, die mit deinem Chart rechnet. Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
-<div id="ichindex"></div>
+<section class="ich-ab" id="a-index" data-sprung="Alles zu dir">
+  <details class="ich-klappe" id="kl-index">
+    <summary><span class="kl-t">Alles, was es zu dir gibt</span><span class="kl-w">Jede Seite der Plattform, die mit deinen Daten rechnet</span></summary>
+    <p class="ich-sub">Dieser Index wird beim Bauen gepr&uuml;ft &mdash; wenn eine Seite dazukommt und hier fehlt, schl&auml;gt die Pr&uuml;fung an.</p>
+    <div id="ichindex"></div>
+  </details>
+</section>
 
 </div>
 
@@ -736,6 +812,64 @@ var I_AUF={
  ],
  tunVor:'Ein Handgriff dazu:'};
 
+/* ── Der Satz, mit dem die Seite anfängt ──────────────────────
+   Bis zum 27.10. begann die Seite mit dem Chartrad: Maschinenraum
+   vor Inhalt, genau der Fehler, den REGELN.md Abschnitt 2
+   ausschließt. Jetzt führt der Kopf mit einem Satz über diesen
+   einen Menschen.
+
+   Genommen wird der seltenste Befund — derselbe, der unten in
+   „Was an dir auffällt" oben steht, aber kürzer gefasst, damit er
+   im ersten Bildschirm ganz zu lesen ist. Kein Fachwort, kein
+   Gradzeichen: Das steht hier auf Stufe 0.
+
+   Ein Befund ohne Form hier führt nicht: 'rueckWenig' ist der
+   Normalfall und sagt über diesen Menschen nichts, also rutscht
+   der nächste Befund nach vorn. */
+var I_KOPF={
+ spViel:'Bei dir sammelt sich auffällig viel an einer einzigen Stelle deines Lebens: {bereich}. Dieser Bereich bekommt Gewicht, ob du ihn willst oder nicht.',
+ spZwei:'Am dichtesten ist es bei dir an einer Stelle: {bereich}. Etwas mehr Gewicht als der Rest, aber kein Übergewicht.',
+ spEins:'Bei dir verteilt sich alles gleichmäßig: Kein Lebensbereich zieht dich stärker als die anderen. Die Reihenfolge musst du dir selbst geben.',
+ kette:'Wie du auf andere wirkst, entscheidet sich bei dir nicht bei dir selbst, sondern in einem anderen Bereich: {nach}.',
+ ketteEigen:'Wie du auf andere wirkst, entscheidet sich bei dir an derselben Stelle, an der es entsteht. Der erste Eindruck stimmt bei dir öfter als bei anderen.',
+ winkelHart:'Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}. Eine Reibung, die nicht aufhört — und die Stelle, an der du mehr geübt hast als andere.',
+ winkelWeich:'Zwei Dinge in dir arbeiten zusammen, ohne dass du etwas dafür tust: {a} und {b}. So glatt, dass du es leicht übersiehst.',
+ rueckViel:'Vieles in dir läuft erst nach innen, bevor es nach außen geht. Du wirkst dabei langsamer, als du bist.',
+ rueckKeine:'Bei dir geht fast alles direkt nach außen. Der Umweg nach innen ist bei dir keine eingebaute Gewohnheit, sondern etwas, das du dir nehmen musst.',
+ ohne:'Dein Bild hat keine einzelne Stelle, die stark aus dem Rahmen fällt. Was bei dir auffällt, liegt in der Mischung.',
+ nach:'Das ist die auffälligste von vier Stellen. Alle vier stehen gleich darunter, jede mit einem Handgriff dazu.'};
+
+/* ── Die drei Stellen, die den Grundton setzen ────────────────
+   Bis zum 27.10. stand hier Zeichen und Gradzahl zuerst und die
+   Alltagsbedeutung darunter. Jetzt umgekehrt: erst, worum es im
+   Leben geht, dann der Lebensbereich — und die Mechanik wartet. */
+var I_DREI_TITEL='Was dich trägt';
+var I_DREI_SUB='Drei Stellen, die bei jedem Menschen den Grundton setzen. Bei dir liegen sie in diesen Bereichen.';
+var I_DREI=[
+ {rolle:'Antrieb',   k:'Sonne', was:'Worauf du hinauswillst'},
+ {rolle:'Bedürfnis', k:'Mond',  was:'Was dich beruhigt, wenn es eng wird'},
+ {rolle:'Wirkung',   k:'ASC',   was:'Wie du ankommst, bevor du etwas sagst'}
+];
+var I_DREI_BEREICH='Liegt bei dir im Bereich: {bereich}';
+var I_DREI_WIRKUNG='Entscheidet sich bei dir im Bereich: {bereich}';
+
+/* Die Überschrift über den Sprungmarken. Die Marken selbst
+   entstehen aus den Abschnitten der Seite, nicht aus einer
+   zweiten Liste — eine zweite Liste läuft auseinander. */
+var I_SPRUNG_TITEL='Auf dieser Seite';
+
+/* Was in dir zusammenhängt. Bis zum 27.10. stand auf jeder Karte
+   nur die Formel: Der Satz dazu wurde geholt und unter einem
+   Namen gesucht, den es in aspekte-daten.js nie gab, also fiel er
+   jedes Mal weg. Jetzt steht er da, und die Formel wartet.
+   Gezeigt werden nur Verbindungen, zu denen es einen Satz gibt —
+   eine leere Karte sagt nichts, und eine Karte, die nur aus
+   Fachsprache besteht, ist auf Stufe 0 unsichtbar und hinterlässt
+   ein Loch. Wie viele es insgesamt sind, steht daneben: eine
+   Auswahl, die sich nicht als Ganzes ausgibt. */
+var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Rot fordert, grün fließt — keins von beidem ist gut oder schlecht.';
+var I_ASP_TECH='Gerechnet sind {gesamt} Aspekte. Hier stehen die {zahl} engsten zwischen zwei Planeten; Aspekte auf Aszendent und MC stehen auf der Achsenseite.';
+
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
    nicht wieder veralten. */
@@ -1043,25 +1177,130 @@ function profil(){
   try{ return AC_P.aktives()||AC_P.eigenes(); }catch(e){ return null; }
 }
 
-/* ── Kopf ──────────────────────────────────────────────────── */
-function kopfBauen(p){
-  var nm=AC_P.anzeige(p,true);
-  el('ichname').textContent=nm;
+/* ── Kopf ──────────────────────────────────────────────────────
+   Der Kopf führt mit einem Satz über diesen Menschen. Genommen
+   wird der seltenste Befund — derselbe, der unten in „Was an dir
+   auffällt" oben steht, nur kürzer. Ein Befund ohne eigene
+   Kopfform sagt über diesen Menschen nichts (die zwei oder drei
+   nach innen laufenden Anlagen sind der Normalfall) und rutscht
+   nach hinten, statt den ersten Bildschirm zu belegen. */
+function kopfForm(m){
+  if(m.art==='schwerpunkt')
+    return {form:(m.zahl>=3?I_KOPF.spViel:(m.zahl===2?I_KOPF.spZwei:I_KOPF.spEins)),
+            werte:{bereich:bereichName(m.haus)}};
+  if(m.art==='kette')
+    return {form:(m.eigen?I_KOPF.ketteEigen:I_KOPF.kette),
+            werte:{nach:bereichName(m.nachHaus)}};
+  if(m.art==='winkel')
+    return {form:(m.hart?I_KOPF.winkelHart:I_KOPF.winkelWeich),
+            werte:{a:(I_ROLLE[m.a]||''), b:(I_ROLLE[m.b]||'')}};
+  if(m.art==='rueck'){
+    if(m.zahl>=4)  return {form:I_KOPF.rueckViel,  werte:{}};
+    if(m.zahl===0) return {form:I_KOPF.rueckKeine, werte:{}};
+    return null;
+  }
+  return null;
+}
+function kopfSatz(M){
+  for(var i=0;i<M.length;i++){
+    var f=kopfForm(M[i]);
+    if(f&&f.form) return fuellen(f.form, f.werte);
+  }
+  return I_KOPF.ohne;
+}
+
+function kopfBauen(p, M){
+  el('ichname').textContent=AC_P.anzeige(p,true);
   el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
     ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+  el('ichleit').textContent=kopfSatz(M);
+  el('ichleitzu').textContent=I_KOPF.nach;
+}
 
-  var drei=[
-   ['Antrieb','Sonne',P.Sonne,'Worauf du hinauswillst'],
-   ['Bedürfnis','Mond',P.Mond,'Was dich beruhigt'],
-   ['Wirkung','Aszendent',P.ASC,'Wie du ankommst']];
-  el('ichdrei').innerHTML=drei.map(function(d){
-    var h=haus(P,d[2]);
-    return '<div><div class="rolle">'+d[0]+'</div><div class="wert">'+
-      I_SIGNS[zI(d[2])]+' <em>'+gradKurz(d[2])+'</em>'+
-      '<span class="zu">'+(d[1]==='Aszendent'?'Herrscher '+I_HERR[zI(d[2])]+
-        ' im '+haus(P,P[I_HERR[zI(d[2])]])+'. Haus':
-        d[3]+' · '+h+'. Haus, '+I_HAUS[h-1].k)+'</span></div></div>';
+/* ── Die drei Stellen, die den Grundton setzen ──────────────────
+   Erst, worum es im Leben geht, dann der Lebensbereich. Zeichen,
+   Grad und Herrscher warten in ac-tech — vorher stand genau das
+   hier zuerst. */
+function dreiBauen(){
+  el('ichdreih').textContent=I_DREI_TITEL;
+  el('ichdreisub').textContent=I_DREI_SUB;
+  el('ichdrei').innerHTML=I_DREI.map(function(d){
+    var l=P[d.k];
+    if(l===undefined||l===null) return '';
+    var z=zI(l), bereich, tech;
+    if(d.k==='ASC'){
+      var herr=I_HERR[z], hH=haus(P,P[herr]);
+      bereich=fuellen(I_DREI_WIRKUNG,{bereich:bereichName(hH)});
+      tech=I_SIGNS[z]+' '+gradKurz(l)+' · Herrscher '+herr+' im '+hH+'. Haus';
+    } else {
+      var h=haus(P,l);
+      bereich=fuellen(I_DREI_BEREICH,{bereich:bereichName(h)});
+      tech=I_SIGNS[z]+' '+gradKurz(l)+' · '+h+'. Haus, '+I_HAUS[h-1].k;
+    }
+    return '<div><div class="rolle">'+esc(d.rolle)+'</div><div class="wert">'+
+      esc(d.was)+'<span class="zu">'+esc(bereich)+'</span>'+
+      '<span class="zu ac-tech" data-ab="2">'+esc(tech)+'</span></div></div>';
   }).join('');
+}
+
+/* ── Sprungmarken ──────────────────────────────────────────────
+   Fünfzehn Bildschirme ohne Inhaltsverzeichnis liest niemand zu
+   Ende. Die Marken entstehen aus den Abschnitten der Seite
+   selbst — eine zweite Liste im Skript würde auseinanderlaufen,
+   und bau-ich.py prüft am Ergebnis nach, dass jede Marke auf
+   einen Abschnitt zeigt, den es gibt.
+   Ein Sprung in eine geschlossene Klappe macht sie auf, sonst
+   springt man ins Leere. */
+function klappeAuf(ziel){
+  var e=ziel;
+  while(e&&e!==document.body){
+    if(e.tagName==='DETAILS') e.open=true;
+    e=e.parentNode;
+  }
+  /* Und die Klappe, die der Abschnitt selbst ist: Wer auf „Dein
+     Bild" springt, will das Rad sehen, nicht die Aufschrift
+     darüber. */
+  if(ziel&&ziel.querySelectorAll)
+    Array.prototype.forEach.call(ziel.querySelectorAll('details'),
+      function(d){ d.open=true; });
+}
+function springen(ziel){
+  if(!ziel) return;
+  klappeAuf(ziel);
+  ziel.scrollIntoView({block:'start',
+    behavior:(window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
+}
+/* Die obere Leiste bricht auf schmalen Schirmen um und ist dann
+   doppelt so hoch. Eine feste Zahl im Stil ließe die Sprungzeile
+   darunter verschwinden — deshalb wird gemessen. */
+function leisteMessen(){
+  var l=document.querySelector('.ac-leiste'), s=el('ichsprung');
+  var oben=l?Math.round(l.getBoundingClientRect().height):0;
+  var hoch=s?Math.round(s.getBoundingClientRect().height):0;
+  var w=document.documentElement.style;
+  w.setProperty('--ac-oben', oben+'px');
+  w.setProperty('--ac-sprung', hoch+'px');
+}
+
+function sprungBauen(){
+  var nav=el('ichsprung');
+  if(!nav) return;
+  var abs=document.querySelectorAll('.ich-ab[data-sprung]');
+  if(!abs.length) return;
+  var h=['<span class="sp-t">'+esc(I_SPRUNG_TITEL)+'</span>'], i;
+  for(i=0;i<abs.length;i++)
+    h.push('<a href="#'+esc(abs[i].id)+'">'+esc(abs[i].getAttribute('data-sprung'))+'</a>');
+  nav.innerHTML=h.join('');
+  Array.prototype.forEach.call(nav.querySelectorAll('a[href^="#"]'),function(a){
+    a.addEventListener('click',function(ev){
+      var ziel=document.getElementById(a.getAttribute('href').slice(1));
+      if(!ziel) return;
+      ev.preventDefault();
+      springen(ziel);
+    });
+  });
+  leisteMessen();
+  window.addEventListener('resize', leisteMessen);
 }
 
 /* ── Die Brücke zu Heute ───────────────────────────────────── */
@@ -1079,13 +1318,15 @@ function heuteBauen(){
   var oben=hs.slice(0,3);
   box.innerHTML='<div class="k">Heute auf deinem Chart</div>'+
     '<p>'+oben.map(function(h){
-      return '<a href="#h'+h+'" data-h="'+h+'">'+h+'. Haus</a> ('+
-        I_HAUS[h-1].k+'): '+treffer[h].join(', ');
+      return '<a href="#h'+h+'" data-h="'+h+'">'+I_HAUS[h-1].k+'</a>'+
+        '<span class="ac-tech" data-ab="2"> ('+h+'. Haus: '+treffer[h].join(', ')+')</span>';
     }).join(' · ')+'</p>'+
     '<p style="margin-bottom:0"><a href="index.html">Was das heute konkret heißt →</a></p>';
   Array.prototype.forEach.call(box.querySelectorAll('a[data-h]'),function(a){
     a.addEventListener('click',function(ev){
-      ev.preventDefault(); hausOeffnen(+a.getAttribute('data-h'), true); });
+      ev.preventDefault();
+      klappeAuf(el('ichhaeuser'));
+      hausOeffnen(+a.getAttribute('data-h'), true); });
   });
 }
 
@@ -1172,6 +1413,7 @@ function auffaelligBauen(){
   for(var j=0;j<I_AUF.grenzen.length;j++)
     g.push('<p>'+esc(I_AUF.grenzen[j])+'</p>');
   el('ichaufgrenze').innerHTML=g.join('');
+  return M;
 }
 
 /* ── Die zwölf Häuser ──────────────────────────────────────── */
@@ -1185,11 +1427,15 @@ function haeuserBauen(){
       return Q[k]!==undefined&&haus(P,Q[k])===n; });
     h+='<button type="button" class="hz'+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
       '<span class="nr">'+n+'</span>'+
-      '<span class="ze"><b>'+I_SIGNS[z]+'</b>'+
-        (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
-      '<span class="herr">Herrscher '+herr+'<br>steht im '+hH+'. Haus</span>'+
-      '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
-        I_HAUS[n-1].k+(heut.length?' — heute: '+heut.join(', '):'')+'</span>'+
+      '<span class="hz-inhalt">'+
+        '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
+          I_HAUS[n-1].k+'</span>'+
+        '<span class="ze ac-tech" data-ab="2"><b>'+I_SIGNS[z]+'</b>'+
+          (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
+        '<span class="herr ac-tech" data-ab="2">Herrscher '+herr+
+          ' steht im '+hH+'. Haus'+
+          (heut.length?' · heute hier: '+heut.join(', '):'')+'</span>'+
+      '</span>'+
       '</button><div class="hdetail" id="d'+n+'" hidden></div>';
   }
   box.innerHTML=h;
@@ -1208,23 +1454,23 @@ function detailBauen(n){
   var h='<h4>'+n+'. Haus — '+H.k+'</h4><p>'+H.t+'</p>';
   h+='<p><b>Die Frage, die es aufmacht:</b> '+H.f+'</p>';
   if(bew.length){
-    h+='<div class="stell">'+bew.map(function(k){
+    h+='<div class="stell ac-tech" data-ab="2">'+bew.map(function(k){
       var rw=(PNAMEN.indexOf(k)>=0&&rueck(k,P._jd));
       return '<div class="st"><span><b>'+k+'</b> '+stellung(P[k])+(rw?' ℞':'')+'</span>'+
         '<span>'+(I_PLANET[k]||'')+'</span></div>';
     }).join('')+'</div>';
   } else {
-    h+='<p>Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. '+
+    h+='<p class="ac-tech" data-ab="2">Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. '+
       'Ein leeres Haus heißt nicht, dass das Thema fehlt. Es heißt, dass es anderswo entschieden wird:</p>';
   }
-  h+='<p>'+I_KETTE.replace('{h}',herr)
+  h+='<p class="ac-tech" data-ab="2">'+I_KETTE.replace('{h}',herr)
       .replace('{hs}',herr+' ('+stellung(P[herr])+')')
       .replace('{n}',hH)+'</p>';
   if(I_MIT[I_SIGNS[z]])
-    h+='<p>Modern wird '+I_SIGNS[z]+' auch '+I_MIT[I_SIGNS[z]]+' zugeordnet — '+
+    h+='<p class="ac-tech" data-ab="2">Modern wird '+I_SIGNS[z]+' auch '+I_MIT[I_SIGNS[z]]+' zugeordnet — '+
       stellung(P[I_MIT[I_SIGNS[z]]])+', '+haus(P,P[I_MIT[I_SIGNS[z]]])+'. Haus.</p>';
   if(heut.length)
-    h+='<p><b>Heute hier:</b> '+heut.map(function(k){
+    h+='<p class="ac-tech" data-ab="2"><b>Heute hier:</b> '+heut.map(function(k){
       return k+' '+stellung(Q[k]); }).join(', ')+'. '+
       '<a href="index.html">Was das heißt →</a></p>';
 
@@ -1263,15 +1509,25 @@ function hausOeffnen(n, scrollen){
 
 /* ── Aspekte ───────────────────────────────────────────────── */
 function aspekteBauen(){
-  var a=aspekte(P).slice(0,12);
-  el('ichasp').innerHTML=a.map(function(x){
-    var d=null;
-    try{ d=window.AC_ASP?AC_ASP.deutung(x.a,x.b,x.typ):null; }catch(e){}
-    return '<div class="ia '+x.art+'"><div class="f">'+x.a+' '+x.typ+' '+x.b+'</div>'+
-      '<div class="o">Orbis '+kz(x.o,2)+'° · '+(x.art==='hart'?'fordernd':'fließend')+'</div>'+
-      (d&&d.kurz?'<div class="d">'+esc(d.kurz)+'</div>':'')+'</div>';
+  var alle=aspekte(P), mit=[], i, d;
+  for(i=0;i<alle.length;i++){
+    d=null;
+    try{ d=window.AC_ASP?AC_ASP.deutung(alle[i].a,alle[i].b,alle[i].typ):null; }catch(e){}
+    if(d&&d.thema) mit.push({x:alle[i], d:d});
+  }
+  var zeig=mit.slice(0,12);
+  el('ichasp').innerHTML=zeig.map(function(e){
+    var x=e.x, d=e.d;
+    return '<div class="ia '+x.art+'">'+
+      '<div class="f">'+esc(d.thema)+'</div>'+
+      (d.text?'<div class="d">'+esc(d.text)+'</div>':'')+
+      '<div class="o ac-tech" data-ab="2">'+x.a+' '+x.typ+' '+x.b+
+        ' · Orbis '+kz(x.o,2)+'° · '+(x.art==='hart'?'fordernd':'fließend')+'</div>'+
+      '</div>';
   }).join('');
-  el('ichaspzahl').textContent=aspekte(P).length;
+  el('ichaspsub').innerHTML=esc(fuellen(I_ASP_SUB,{zahl:zeig.length}))+
+    ' <span class="ac-tech" data-ab="2">'+
+    esc(fuellen(I_ASP_TECH,{gesamt:alle.length, zahl:zeig.length}))+'</span>';
 }
 
 /* ── Index ─────────────────────────────────────────────────── */
@@ -1296,14 +1552,16 @@ function indexBauen(){
     return;
   }
   P=chartVon(p); Q=jetztChart();
-  kopfBauen(p);
-  auffaelligBauen();
+  var M=auffaelligBauen();
+  kopfBauen(p, M);
+  dreiBauen();
   haeuserBauen();
   heuteBauen();
   aspekteBauen();
   indexBauen();
+  sprungBauen();
   rad=window.AC_KERNRAD({el:el('ichrad'), chart:P, transit:Q, gross:true,
-    aufHaus:function(n){ hausOeffnen(n, true); }});
+    aufHaus:function(n){ klappeAuf(el('ichhaeuser')); hausOeffnen(n, true); }});
   /* Die Mechanik im neuen Abschnitt wartet in ac-tech. Ohne diesen
      Aufruf wäre sie von Anfang an sichtbar — und damit stünde auf
      Stufe 0 Fachsprache, was REGELN.md Abschnitt 2 ausschließt. */

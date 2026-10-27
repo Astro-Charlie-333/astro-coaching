@@ -128,6 +128,64 @@ var I_AUF={
  ],
  tunVor:'Ein Handgriff dazu:'};
 
+/* ── Der Satz, mit dem die Seite anfängt ──────────────────────
+   Bis zum 27.10. begann die Seite mit dem Chartrad: Maschinenraum
+   vor Inhalt, genau der Fehler, den REGELN.md Abschnitt 2
+   ausschließt. Jetzt führt der Kopf mit einem Satz über diesen
+   einen Menschen.
+
+   Genommen wird der seltenste Befund — derselbe, der unten in
+   „Was an dir auffällt" oben steht, aber kürzer gefasst, damit er
+   im ersten Bildschirm ganz zu lesen ist. Kein Fachwort, kein
+   Gradzeichen: Das steht hier auf Stufe 0.
+
+   Ein Befund ohne Form hier führt nicht: 'rueckWenig' ist der
+   Normalfall und sagt über diesen Menschen nichts, also rutscht
+   der nächste Befund nach vorn. */
+var I_KOPF={
+ spViel:'Bei dir sammelt sich auffällig viel an einer einzigen Stelle deines Lebens: {bereich}. Dieser Bereich bekommt Gewicht, ob du ihn willst oder nicht.',
+ spZwei:'Am dichtesten ist es bei dir an einer Stelle: {bereich}. Etwas mehr Gewicht als der Rest, aber kein Übergewicht.',
+ spEins:'Bei dir verteilt sich alles gleichmäßig: Kein Lebensbereich zieht dich stärker als die anderen. Die Reihenfolge musst du dir selbst geben.',
+ kette:'Wie du auf andere wirkst, entscheidet sich bei dir nicht bei dir selbst, sondern in einem anderen Bereich: {nach}.',
+ ketteEigen:'Wie du auf andere wirkst, entscheidet sich bei dir an derselben Stelle, an der es entsteht. Der erste Eindruck stimmt bei dir öfter als bei anderen.',
+ winkelHart:'Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}. Eine Reibung, die nicht aufhört — und die Stelle, an der du mehr geübt hast als andere.',
+ winkelWeich:'Zwei Dinge in dir arbeiten zusammen, ohne dass du etwas dafür tust: {a} und {b}. So glatt, dass du es leicht übersiehst.',
+ rueckViel:'Vieles in dir läuft erst nach innen, bevor es nach außen geht. Du wirkst dabei langsamer, als du bist.',
+ rueckKeine:'Bei dir geht fast alles direkt nach außen. Der Umweg nach innen ist bei dir keine eingebaute Gewohnheit, sondern etwas, das du dir nehmen musst.',
+ ohne:'Dein Bild hat keine einzelne Stelle, die stark aus dem Rahmen fällt. Was bei dir auffällt, liegt in der Mischung.',
+ nach:'Das ist die auffälligste von vier Stellen. Alle vier stehen gleich darunter, jede mit einem Handgriff dazu.'};
+
+/* ── Die drei Stellen, die den Grundton setzen ────────────────
+   Bis zum 27.10. stand hier Zeichen und Gradzahl zuerst und die
+   Alltagsbedeutung darunter. Jetzt umgekehrt: erst, worum es im
+   Leben geht, dann der Lebensbereich — und die Mechanik wartet. */
+var I_DREI_TITEL='Was dich trägt';
+var I_DREI_SUB='Drei Stellen, die bei jedem Menschen den Grundton setzen. Bei dir liegen sie in diesen Bereichen.';
+var I_DREI=[
+ {rolle:'Antrieb',   k:'Sonne', was:'Worauf du hinauswillst'},
+ {rolle:'Bedürfnis', k:'Mond',  was:'Was dich beruhigt, wenn es eng wird'},
+ {rolle:'Wirkung',   k:'ASC',   was:'Wie du ankommst, bevor du etwas sagst'}
+];
+var I_DREI_BEREICH='Liegt bei dir im Bereich: {bereich}';
+var I_DREI_WIRKUNG='Entscheidet sich bei dir im Bereich: {bereich}';
+
+/* Die Überschrift über den Sprungmarken. Die Marken selbst
+   entstehen aus den Abschnitten der Seite, nicht aus einer
+   zweiten Liste — eine zweite Liste läuft auseinander. */
+var I_SPRUNG_TITEL='Auf dieser Seite';
+
+/* Was in dir zusammenhängt. Bis zum 27.10. stand auf jeder Karte
+   nur die Formel: Der Satz dazu wurde geholt und unter einem
+   Namen gesucht, den es in aspekte-daten.js nie gab, also fiel er
+   jedes Mal weg. Jetzt steht er da, und die Formel wartet.
+   Gezeigt werden nur Verbindungen, zu denen es einen Satz gibt —
+   eine leere Karte sagt nichts, und eine Karte, die nur aus
+   Fachsprache besteht, ist auf Stufe 0 unsichtbar und hinterlässt
+   ein Loch. Wie viele es insgesamt sind, steht daneben: eine
+   Auswahl, die sich nicht als Ganzes ausgibt. */
+var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Rot fordert, grün fließt — keins von beidem ist gut oder schlecht.';
+var I_ASP_TECH='Gerechnet sind {gesamt} Aspekte. Hier stehen die {zahl} engsten zwischen zwei Planeten; Aspekte auf Aszendent und MC stehen auf der Achsenseite.';
+
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index
    nicht wieder veralten. */
