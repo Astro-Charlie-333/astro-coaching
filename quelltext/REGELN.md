@@ -159,6 +159,34 @@ Das wird beim Packen erzwungen (`packen.py`), nicht nur hier notiert:
 
 ---
 
+## 6c · Wie ein Pull Request abgeliefert wird
+
+Seit dem 27.10. ist `main` geschützt: Ein Pull Request kann nur übernommen
+werden, wenn die Prüfung **Alles bauen und prüfen** grün ist, und er muss
+auf dem aktuellen Stand sein.
+
+Damit daraus wirklich Zeit gespart wird, **schaltet jede Aufgabe nach dem
+Öffnen ihres Pull Requests die Selbstübernahme ein**:
+
+```
+gh api -X PUT repos/Astro-Charlie-333/astro-coaching/pulls/<nr>/ccr/auto_merge \
+  -f merge_method=squash
+```
+
+Danach übernimmt sich der Pull Request selbst, sobald die Prüfung grün ist.
+Ist sie rot, bleibt er liegen, bis jemand ihn repariert — das ist der Sinn
+der Sache.
+
+Ohne diesen Schritt wartet jeder Pull Request auf einen Klick von Mandy, und
+die Arbeit liegt herum. Am 26.10. lag eine fertige Textarbeit vier Stunden
+ungenutzt da, weil niemand sie übernommen hat.
+
+Schlägt der Befehl fehl, ist das kein Grund, den Pull Request zurückzuziehen:
+Er steht dann einfach da und wartet. Den Grund aus der Fehlermeldung in die
+Antwort schreiben, fertig.
+
+---
+
 ## 7 · Wenn etwas unklar ist
 
 Im Zweifel: **weniger Astrologie, mehr Leben.** Und wenn eine Aussage nicht

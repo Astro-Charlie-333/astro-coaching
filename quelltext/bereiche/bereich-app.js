@@ -333,6 +333,18 @@
     }
     return h.join('');
   }
+  /* Wie weit muss ein Sprung über dem Ziel landen? So hoch, wie die
+     klebende Markenleiste gerade ist — gemessen, nicht geraten. Ein
+     fester Wert war am 27.10. auf GitHub rot, weil die Leiste dort
+     ohne geladene Schriften höher ausfällt als hier. */
+  function sprungAbstand(){
+    var l = D.querySelector('.ac-leiste');
+    return (l ? Math.ceil(l.getBoundingClientRect().height) : 78) + 14;
+  }
+  function abstandSetzen(){
+    try{ D.documentElement.style.setProperty('--ac-sprung', sprungAbstand()+'px'); }catch(e){}
+  }
+
   /* Einen Bereich zeigen — ohne die Seite neu zu laden und ohne
      den Sprung des Browsers, der sonst am Kopf vorbeischießt. */
   function waehle(k, springen){
@@ -341,7 +353,11 @@
     alles();
     if(springen){
       var z = document.getElementById('ber-' + k);
-      if(z) z.scrollIntoView({behavior:'smooth', block:'start'});
+      if(z){
+        abstandSetzen();
+        var y = z.getBoundingClientRect().top + window.pageYOffset - sprungAbstand();
+        window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+      }
     }
   }
 
@@ -535,6 +551,18 @@
 
     personen();
     alles();
+    abstandSetzen();
+    try{ window.addEventListener('resize', abstandSetzen); }catch(err){}
+
+    /* Kommt jemand mit einem Anker herein, springt die Seite selbst.
+       Der Browser kann es nicht: Das Ziel entsteht erst, wenn hier
+       gezeichnet wurde — da hat er seinen Sprung längst aufgegeben. */
+    var ank = ausHash();
+    if(ank && D.getElementById('ber-' + ank)){
+      var zz = D.getElementById('ber-' + ank);
+      window.scrollTo({top: Math.max(0,
+        zz.getBoundingClientRect().top + window.pageYOffset - sprungAbstand())});
+    }
 
     /* Der Überblick wählt aus, statt nur zu springen. */
     var ueb = D.getElementById('bueber');
