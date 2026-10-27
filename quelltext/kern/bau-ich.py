@@ -556,7 +556,20 @@ for(const L of LEUTE){
     return {
       saetze:[...document.querySelectorAll('#ichauf .au-satz')].map(e=>e.innerText.trim()),
       bloecke:document.querySelectorAll('#ichauf .au').length,
-      haeufig:[...document.querySelectorAll('#ichauf .au-h')].map(e=>e.innerText.trim()),
+      haeufig:[...document.querySelectorAll('#ichauf .au-zahl')].map(e=>e.innerText.trim()),
+      /* Die Punkte müssen die Zahl wirklich zeigen: so viele helle
+         Punkte wie die Zahl sagt, und immer genau hundert insgesamt.
+         Sonst ist das Bild Dekoration und keine Angabe. */
+      punkte:[...document.querySelectorAll('#ichauf .au-feld')].map(f=>({
+        gesamt:f.querySelectorAll('circle').length,
+        an:f.querySelectorAll('circle.an').length,
+        sagt:(()=>{ const z=f.parentElement.querySelector('.au-z b');
+          return z?z.textContent.trim():null; })()})),
+      hauptKarten:document.querySelectorAll('#ichauf .au-haupt').length,
+      radInKlappe:(()=>{ const r=document.getElementById('ichrad');
+        return r?!!r.closest('details'):null; })(),
+      radY:(()=>{ const r=document.getElementById('ichrad');
+        return r?Math.round(r.getBoundingClientRect().top+window.scrollY):null; })(),
       tech:document.querySelectorAll('#ichauf .ac-tech').length,
       techOffen:[...document.querySelectorAll('#ichauf .ac-tech')]
                   .filter(e=>e.offsetParent!==null).length,
@@ -785,9 +798,29 @@ if pr:
             if len(s) < 80:
                 fehler.append(f'{wer}: Kernaussage zu dünn: "{s[:50]}"')
         if len(a['haeufig']) != a['bloecke']:
-            fehler.append(f'{wer}: {len(a["haeufig"])} Häufigkeitszeilen bei '
+            fehler.append(f'{wer}: {len(a["haeufig"])} Häufigkeitsangaben bei '
                           f'{a["bloecke"]} Befunden — jeder Befund sagt, wie '
                           'häufig er ist')
+
+        for q in a.get('punkte', []):
+            if q['gesamt'] != 100:
+                fehler.append(f'{wer}: Punktfeld mit {q["gesamt"]} statt 100 Punkten')
+            if q['sagt'] and q['sagt'].lstrip('<').isdigit():
+                soll = int(q['sagt'].lstrip('<'))
+                if q['sagt'].startswith('<'):
+                    if q['an'] != 1:
+                        fehler.append(f'{wer}: "<1" zeigt {q["an"]} helle Punkte statt einem')
+                elif q['an'] != soll:
+                    fehler.append(f'{wer}: Punktfeld zeigt {q["an"]} helle Punkte, '
+                                  f'die Zahl daneben sagt {soll}')
+        if a.get('hauptKarten') != 1:
+            fehler.append(f'{wer}: {a.get("hauptKarten")} hervorgehobene Karten statt '
+                          'genau einer — ohne Gefälle ist es wieder eine Liste')
+        if a.get('radInKlappe'):
+            fehler.append(f'{wer}: das Chart steckt in einer Klappe. Auf einer '
+                          'Astrologieseite ist es das Bild des Menschen und gehört sichtbar')
+        if a.get('radY') is not None and a['radY'] > 900:
+            fehler.append(f'{wer}: das Chart steht erst bei {a["radY"]} Pixeln — zu weit unten')
         if a['tech'] != a['bloecke']:
             fehler.append(f'{wer}: {a["tech"]} Mechanikzeilen bei {a["bloecke"]} '
                           'Befunden')

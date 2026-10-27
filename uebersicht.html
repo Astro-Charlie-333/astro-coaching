@@ -152,14 +152,11 @@ a{color:var(--nacht);}
 
 /* Kopf: ein Satz über diesen Menschen. Das Rad wartet weiter
    unten in einer Klappe — Inhalt vor Maschinenraum. */
-.ich-kopf{padding:30px 0 4px;max-width:34em;}
-.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,4.6vw,48px);
- font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 14px;}
-.ich-leit{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(19px,2.6vw,24px);
- font-weight:400;line-height:1.46;color:var(--tinte,#2A2520);margin:0 0 12px;}
-.ich-leit-zu{font-size:14.6px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 12px;}
-.ich-dat{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
- color:var(--leise,#6B6259);margin:0 0 6px;}
+
+
+
+
+
 
 /* Sprungmarken: auf dem Telefon mitlaufend. Die Zeile scrollt in
    sich, damit sie die Seite nicht breiter macht. */
@@ -191,8 +188,7 @@ a{color:var(--nacht);}
  margin-top:4px;line-height:1.55;max-width:56ch;}
 .ich-klappe>*:last-child{margin-bottom:28px;}
 
-.ich-radbox{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:26px;padding:16px;max-width:560px;}
+
 .ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;padding:11px 6px 2px;
  font-size:12.6px;color:var(--leise,#6B6259);}
 .ich-radfuss span{display:inline-flex;align-items:center;gap:6px;}
@@ -298,15 +294,14 @@ a{color:var(--nacht);}
    Vier Befunde, der seltenste oben. Keine Farbe, die Dringlichkeit
    behauptet — die Reihenfolge ist die ganze Gewichtung. */
 .ich-auf{border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:26px;}
-.au{padding:20px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
-.au p{margin:0 0 9px;}
-.au p:last-child{margin-bottom:0;}
-.au-satz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
-  line-height:1.5;color:var(--tinte,#2A2520);}
-.au-zu{font-size:14.6px;color:var(--leise,#6B6259);line-height:1.6;}
-.au-h{font-size:13.5px;color:var(--messing,#9A7235);}
-.au-tun{font-size:15px;line-height:1.6;}
-.au-tun b{font-weight:600;}
+
+
+
+
+
+
+
+
 .ich-aufgrenze{background:var(--nacht-bg,#F2F3F7);border-radius:16px;
   padding:20px 22px;margin-bottom:30px;}
 .ich-aufgrenze h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
@@ -314,12 +309,82 @@ a{color:var(--nacht);}
 .ich-aufgrenze p{font-size:14px;line-height:1.65;color:var(--leise,#6B6259);
   margin:0 0 9px;}
 .ich-aufgrenze p:last-child{margin-bottom:0;}
-@media(max-width:480px){ .au-satz{font-size:17.5px;} }
+@media(max-width:480px){  }
 
 /* Die Abschnitte, auf die die Sprungmarken zeigen. Der Abstand
    nach oben hält den angesprungenen Titel unter der Leiste. */
 .ich-ab{scroll-margin-top:calc(var(--ac-oben,51px) + var(--ac-sprung,53px) + 10px);}
 .ich-ab>.ich-h:first-child{margin-top:44px;}
+
+
+/* ═══ Kopf: Aussage und Bild nebeneinander ═══════════════════ */
+.ich-kopf{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:40px;
+ align-items:center;margin:34px 0 30px;}
+.ich-wer{font-size:13px;color:var(--leise,#6B6259);margin:14px 0 0;}
+.ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:300;
+ font-size:clamp(14.5px,1.5vw,16px);letter-spacing:.01em;color:var(--messing,#9A7235);
+ margin:0 0 10px;}
+.ich-leit{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
+ font-size:clamp(28px,4vw,44px);line-height:1.14;color:var(--nacht,#2E3A5C);
+ margin:0 0 16px;max-width:21ch;}
+.ich-leit-zu{font-size:16px;line-height:1.6;color:var(--tinte,#231F1A);margin:0;max-width:46ch;}
+.ich-kopf-rad{margin:0;}
+.ich-kopf-rad .kr-huelle{width:100%;}
+.ich-radfuss{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:11px;
+ font-size:11.5px;color:var(--leise,#6B6259);}
+.ich-radfuss i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;}
+.ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
+.ich-radfuss i.a{background:var(--messing,#9A7235);}
+@media(max-width:780px){
+ .ich-kopf{grid-template-columns:1fr;gap:22px;}
+ .ich-kopf-rad{max-width:320px;}
+}
+
+/* ═══ Was auffällt: die Zahl ist das Bild ═══════════════════ */
+.ich-auf{display:grid;gap:14px;margin:4px 0 16px;}
+.au{display:grid;grid-template-columns:132px 1fr;gap:26px;align-items:start;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:20px;padding:24px 26px;}
+.au-haupt{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);
+ grid-template-columns:168px 1fr;padding:32px 34px;}
+.au-zahl{text-align:center;}
+.au-feld{width:100%;max-width:132px;display:block;margin:0 auto 11px;}
+.au-haupt .au-feld{max-width:168px;}
+.au-feld .an{fill:var(--messing,#9A7235);}
+.au-feld .aus{fill:var(--linie,#EBE1D2);}
+.au-haupt .au-feld .an{fill:#F3C98B;}
+.au-haupt .au-feld .aus{fill:rgba(255,255,255,.17);}
+.au-z b{display:block;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:36px;line-height:1;color:var(--nacht,#2E3A5C);}
+.au-haupt .au-z b{font-size:46px;color:#fff;}
+.au-z span{display:block;font-size:11.5px;line-height:1.35;margin-top:5px;
+ color:var(--leise,#6B6259);}
+.au-haupt .au-z span{color:rgba(255,255,255,.72);}
+.au-ohne{font-size:12.5px;line-height:1.5;color:var(--leise,#6B6259);padding-top:18px;}
+.au-satz{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
+ font-size:clamp(18px,2.1vw,23px);line-height:1.38;color:var(--nacht,#2E3A5C);margin:0 0 11px;}
+.au-haupt .au-satz{font-size:clamp(21px,2.6vw,28px);color:#fff;}
+.au-zu{font-size:14.5px;line-height:1.62;color:var(--leise,#6B6259);margin:0 0 12px;}
+.au-haupt .au-zu{color:rgba(255,255,255,.78);}
+.au-tun{font-size:15px;line-height:1.6;color:var(--tinte,#231F1A);margin:0;
+ padding-top:12px;border-top:1px solid var(--linie,#EBE1D2);}
+.au-tun b{color:var(--messing,#9A7235);font-weight:500;}
+.au-haupt .au-tun{color:#fff;border-top-color:rgba(255,255,255,.22);}
+.au-haupt .au-tun b{color:#F3C98B;}
+.au .ac-tech{margin-top:10px;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.5px;color:var(--leise,#6B6259);}
+.au-haupt .ac-tech{color:rgba(255,255,255,.6);}
+@media(max-width:700px){
+ .au,.au-haupt{grid-template-columns:1fr;gap:16px;padding:20px 18px;}
+ .au-zahl{display:flex;align-items:center;gap:16px;text-align:left;}
+ .au-feld,.au-haupt .au-feld{width:92px;margin:0;}
+ .au-z b,.au-haupt .au-z b{font-size:30px;}
+}
+
+.ich-klein{margin-top:6px;}
+.ich-klein summary{font-size:13.5px;}
+.ich-aufgrenze h3{display:none;}
+.ich-aufgrenze p{font-size:13.5px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 9px;}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -333,26 +398,38 @@ a{color:var(--nacht);}
 
 <div class="ich-wrap" id="ichinhalt">
 
-<!-- Der Kopf f&uuml;hrt mit einem Satz &uuml;ber diesen Menschen.
-     Das Rad wartet weiter unten in einer Klappe: Maschinenraum
-     kommt nach dem Inhalt, nicht davor. -->
-<div class="ich-kopf">
-  <h1 class="ich-name" id="ichname">&nbsp;</h1>
-  <p class="ich-leit" id="ichleit"></p>
-  <p class="ich-leit-zu" id="ichleitzu"></p>
-  <div class="ich-dat" id="ichdat"></div>
-</div>
+<!-- Der Kopf: ein Satz &uuml;ber diesen Menschen, daneben sein Bild.
+     Das Rad stand bis zum 27.10. zugeklappt am Seitenende. Auf einer
+     Astrologieseite ist das Chart das Bild des Menschen &mdash; es geh&ouml;rt
+     neben die Aussage, nicht hinter eine Klappe. -->
+<header class="ich-kopf">
+  <div class="ich-kopf-text">
+    <p class="ich-leit" id="ichleit"></p>
+    <h1 class="ich-name" id="ichname">&nbsp;</h1>
+    <p class="ich-leit-zu" id="ichleitzu"></p>
+    <p class="ich-wer" id="ichdat"></p>
+  </div>
+  <figure class="ich-kopf-rad">
+    <div class="kr-huelle" id="ichrad"></div>
+    <figcaption class="ich-radfuss">
+      <span><i class="b"></i> dein Geburtsbild</span>
+      <span><i class="a"></i> wo die Planeten heute stehen</span>
+    </figcaption>
+  </figure>
+</header>
 
 <div id="nivleiste"></div>
 
 <nav class="ich-sprung" id="ichsprung" aria-label="Auf dieser Seite"></nav>
 
-<!-- Was an dir auff&auml;llt: der st&auml;rkste Abschnitt, deshalb der erste ─ -->
+<!-- Was an dir auff&auml;llt ──────────────────────────────────── -->
 <section class="ich-ab" id="a-auf" data-sprung="Was auff&auml;llt">
   <h2 class="ich-h" id="ichaufh"></h2>
   <p class="ich-sub" id="ichaufvor"></p>
   <div class="ich-auf" id="ichauf"></div>
-  <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+  <details class="ich-klappe ich-klein"><summary><span class="kl-t">Was diese Zahlen taugen</span></summary>
+    <div class="ich-aufgrenze" id="ichaufgrenze"></div>
+  </details>
 </section>
 
 <!-- Die drei Stellen, die den Grundton setzen ──────────────── -->
@@ -362,36 +439,19 @@ a{color:var(--nacht);}
   <div class="ich-drei" id="ichdrei"></div>
 </section>
 
+<!-- Die zw&ouml;lf Felder, offen ─────────────────────────────── -->
+<section class="ich-ab" id="a-felder" data-sprung="Zw&ouml;lf Felder">
+  <h2 class="ich-h">Die zw&ouml;lf Felder deines Lebens</h2>
+  <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben. Tipp eins an, dann steht da, was bei dir darin liegt. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user; die Zeile nennt das Zeichen, die Besetzung und den Herrscher.</span></p>
+  <div class="ich-haeuser" id="ichhaeuser"></div>
+</section>
+
 <!-- Die Br&uuml;cke zu Heute ─────────────────────────────────── -->
 <section class="ich-ab" id="a-heute" data-sprung="Heute">
   <div class="ich-heute" id="ichheute"></div>
 </section>
 
-<!-- Ab hier: alles Nachschlagbare in Klappen. Das ist der Grund,
-     warum die Seite auf dem Telefon nicht mehr f&uuml;nfzehn
-     Bildschirme hoch ist. -->
-<section class="ich-ab" id="a-rad" data-sprung="Dein Bild">
-  <details class="ich-klappe" id="kl-rad">
-    <summary><span class="kl-t">Dein Bild als Rad</span><span class="kl-w">Wo bei deiner Geburt was stand &mdash; und wo es heute steht</span></summary>
-    <div class="ich-radbox">
-      <div class="kr-huelle" id="ichrad"></div>
-      <div class="ich-radfuss">
-        <span><i class="b"></i> ausgew&auml;hlt</span>
-        <span><i class="a"></i> heute besetzt</span>
-        <span>au&szlig;en: wo die Planeten gerade stehen</span>
-      </div>
-    </div>
-  </details>
-</section>
-
-<section class="ich-ab" id="a-felder" data-sprung="Zw&ouml;lf Felder">
-  <details class="ich-klappe" id="kl-felder">
-    <summary><span class="kl-t">Die zw&ouml;lf Felder deines Lebens</span><span class="kl-w">Tipp eine Zeile an &mdash; jedes Feld mit einer Frage, die es aufmacht</span></summary>
-    <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben: Auftreten, Geld, Zuhause, Arbeit, N&auml;he, R&uuml;ckzug. Was bei dir darin liegt, steht in der Zeile. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user; die Zeile nennt das Zeichen, die Besetzung und den Herrscher.</span></p>
-    <div class="ich-haeuser" id="ichhaeuser"></div>
-  </details>
-</section>
-
+<!-- Ab hier das Nachschlagbare ───────────────────────────── -->
 <section class="ich-ab" id="a-zusammen" data-sprung="Was zusammenh&auml;ngt">
   <details class="ich-klappe" id="kl-asp">
     <summary><span class="kl-t">Was in dir zusammenh&auml;ngt</span><span class="kl-w">Die Stellen, an denen zwei Antriebe sich begegnen</span></summary>
@@ -693,29 +753,29 @@ var I_MIT={Skorpion:'Pluto',Wassermann:'Uranus',Fische:'Neptun'};
 /* Die zwölf Häuser: Kurzname fürs Raster, dann der Satz, der erklärt,
    worum es wirklich geht, und die Frage, die das Haus aufmacht. */
 var I_HAUS=[
- {k:'Person und Auftreten', t:'Wie du ankommst, bevor du etwas sagst — Körper, Tempo, erster Eindruck. Nicht wer du bist, sondern was ankommt.',
+ {k:'Wie du reinkommst', t:'Wie du ankommst, bevor du etwas sagst — Körper, Tempo, erster Eindruck. Nicht wer du bist, sondern was ankommt.',
   f:'Wofür hält man mich, bevor man mich kennt?'},
- {k:'Wert und Besitz', t:'Was dir gehört und was du dir zugestehst. Geld steht hier, aber darunter liegt die Frage, was du dir wert bist.',
+ {k:'Geld — und was du dir wert bist', t:'Was dir gehört und was du dir zugestehst. Geld steht hier, aber darunter liegt die Frage, was du dir wert bist.',
   f:'Was traue ich mich zu verlangen?'},
- {k:'Sprache und Nahbereich', t:'Reden, lernen, kurze Wege, Geschwister, Nachbarschaft. Das Alltägliche, das man nicht plant.',
+ {k:'Reden, lernen, Geschwister', t:'Reden, lernen, kurze Wege, Geschwister, Nachbarschaft. Das Alltägliche, das man nicht plant.',
   f:'Wie denke ich, wenn niemand zuhört?'},
- {k:'Zuhause und Herkunft', t:'Wo du herkommst und wo du landest. Familie, Wohnung, der Boden unter allem.',
+ {k:'Zuhause und wo du herkommst', t:'Wo du herkommst und wo du landest. Familie, Wohnung, der Boden unter allem.',
   f:'Was hieß bei uns zu Hause „normal"?'},
- {k:'Ausdruck und Lust', t:'Was du aus Freude machst — Kunst, Spiel, Kinder, Verliebtsein. Ohne Zweck.',
+ {k:'Verliebtsein, Spielen, Machen', t:'Was du aus Freude machst — Kunst, Spiel, Kinder, Verliebtsein. Ohne Zweck.',
   f:'Was mache ich, wenn es niemandem nützt?'},
- {k:'Alltag und Körper', t:'Das Tägliche: Arbeit, Pflege, Routinen, Gesundheit. Das Unspektakuläre, das alles trägt.',
+ {k:'Dein Alltag und dein Körper', t:'Das Tägliche: Arbeit, Pflege, Routinen, Gesundheit. Das Unspektakuläre, das alles trägt.',
   f:'Woran scheitert bei mir der Montag?'},
- {k:'Partnerschaft', t:'Das Gegenüber — in Liebe, in Verträgen, auch in offener Gegnerschaft. Wer dir aus Augenhöhe begegnet.',
+ {k:'Das verbindliche Gegenüber', t:'Das Gegenüber — in Liebe, in Verträgen, auch in offener Gegnerschaft. Wer dir aus Augenhöhe begegnet.',
   f:'Welchen Menschentyp ziehe ich wiederholt an?'},
- {k:'Tiefe und Geteiltes', t:'Was zwei Menschen teilen und was keiner allein lösen kann. Geld von anderen, Verlust, Übergänge, Sexualität.',
+ {k:'Tiefe und geteiltes Geld', t:'Was zwei Menschen teilen und was keiner allein lösen kann. Geld von anderen, Verlust, Übergänge, Sexualität.',
   f:'Worüber rede ich mit niemandem?'},
- {k:'Sinn und Weite', t:'Glaube, Lehre, Ferne. Wonach du dich ausrichtest, wenn der Alltag nicht reicht.',
+ {k:'Was du glaubst, wie weit du gehst', t:'Glaube, Lehre, Ferne. Wonach du dich ausrichtest, wenn der Alltag nicht reicht.',
   f:'Woran glaube ich, ohne es beweisen zu können?'},
- {k:'Beruf und Sichtbarkeit', t:'Wofür man dich kennt. Nicht der Job, sondern das, was dein Name bedeutet.',
+ {k:'Wohin du öffentlich gehst', t:'Wofür man dich kennt. Nicht der Job, sondern das, was dein Name bedeutet.',
   f:'Wofür will ich bekannt sein?'},
- {k:'Gruppen und Ziele', t:'Freundeskreis, Netzwerk, worauf du mit anderen zugehst. Das Haus der Hoffnung.',
+ {k:'Deine Leute und worauf du hoffst', t:'Freundeskreis, Netzwerk, worauf du mit anderen zugehst. Das Haus der Hoffnung.',
   f:'Mit wem will ich in zehn Jahren noch zu tun haben?'},
- {k:'Rückzug und Inneres', t:'Was ohne Zeugen passiert. Schlaf, Rückzug, das Unbewusste, die eigenen blinden Flecken.',
+ {k:'Was du mit dir allein ausmachst', t:'Was ohne Zeugen passiert. Schlaf, Rückzug, das Unbewusste, die eigenen blinden Flecken.',
   f:'Was kostet mich Kraft, ohne dass ich es merke?'}
 ];
 
@@ -1210,9 +1270,15 @@ function kopfSatz(M){
 }
 
 function kopfBauen(p, M){
-  el('ichname').textContent=AC_P.anzeige(p,true);
-  el('ichdat').textContent=p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+
-    ('0'+p.mi).slice(-2)+(p.ort?' · '+p.ort:'');
+  /* Eine Zeile, die man vorlesen kann. "21.6.1996 · 14:40 · Berlin"
+     ist eine Datenzeile; hier steht ein Mensch. */
+  var MON=['Januar','Februar','März','April','Mai','Juni','Juli','August',
+           'September','Oktober','November','Dezember'];
+  el('ichname').textContent = AC_P.anzeige(p,true) + ', geboren am ' +
+    p.d + '. ' + MON[p.mo-1] + ' ' + p.y + ' um ' +
+    ('0'+p.h).slice(-2) + ':' + ('0'+p.mi).slice(-2) +
+    (p.ort ? ' in ' + p.ort : '') + '.';
+  el('ichdat').textContent='';
   el('ichleit').textContent=kopfSatz(M);
   el('ichleitzu').textContent=I_KOPF.nach;
 }
@@ -1343,6 +1409,30 @@ function fuellen(form, werte){
 }
 function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
 
+/* Hundert Punkte, davon n hell. Man kann sie abzählen — genau das
+   ist der Unterschied zwischen "selten" und einer Zahl. */
+function punktfeld(m){
+  var a = m.anteil;
+  var h = ['<div class="au-zahl">'];
+  if(a === null || a === undefined){
+    h.push('<div class="au-ohne">bei jedem Menschen<br>woanders</div>');
+    h.push('</div>');
+    return h.join('');
+  }
+  var p = Math.round(a*100);
+  var voll = Math.max(1, Math.min(100, p));          /* unter 1 % bleibt 1 Punkt */
+  h.push('<svg class="au-feld" viewBox="0 0 104 104" aria-hidden="true">');
+  for(var r=0;r<10;r++) for(var c=0;c<10;c++){
+    var nr = r*10 + c;
+    h.push('<circle cx="'+(6+c*10.8).toFixed(1)+'" cy="'+(6+r*10.8).toFixed(1)+'" r="3.1" class="'+
+           (nr < voll ? 'an' : 'aus')+'"/>');
+  }
+  h.push('</svg>');
+  h.push('<div class="au-z"><b>'+(p<1?'<1':p)+'</b><span>von 100 Menschen</span></div>');
+  h.push('</div>');
+  return h.join('');
+}
+
 function haeufigZeile(m){
   if(m.anteil===null||m.anteil===undefined) return I_AUF.haeufigOhne;
   var p=Math.round(m.anteil*100);
@@ -1399,13 +1489,19 @@ function auffaelligBauen(){
   for(var i=0;i<M.length;i++){
     var T=merkmalText(M[i]);
     if(!T) continue;
-    h.push('<div class="au">');
+    /* Die Seltenheit ist das Einzige, was diese Plattform hat und
+       sonst niemand: abgezählt, nicht behauptet. Sie stand bis zum
+       27.10. als 11-Pixel-Zeile unter einem Absatz. Jetzt ist sie
+       das Bild — hundert Punkte, davon so viele hell, wie Menschen
+       es haben. Der seltenste Befund steht zuerst und dunkel. */
+    h.push('<article class="au' + (i === 0 ? ' au-haupt' : '') + '">');
+    h.push(punktfeld(M[i]));
+    h.push('<div class="au-text">');
     h.push('<p class="au-satz">'+esc(T.satz)+'</p>');
     if(T.zusatz) h.push('<p class="au-zu">'+esc(T.zusatz)+'</p>');
-    h.push('<p class="au-h">'+esc(haeufigZeile(M[i]))+'</p>');
     if(T.tun) h.push('<p class="au-tun"><b>'+esc(I_AUF.tunVor)+'</b> '+esc(T.tun)+'</p>');
     h.push('<p class="ac-tech" data-ab="2">'+esc(T.tech)+'</p>');
-    h.push('</div>');
+    h.push('</div></article>');
   }
   el('ichauf').innerHTML=h.join('');
   /* Der ehrliche Teil gehört zu jeder rechnenden Ausgabe. */
