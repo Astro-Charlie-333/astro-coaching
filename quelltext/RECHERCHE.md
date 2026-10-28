@@ -198,3 +198,162 @@ möglicherweise sicherer formuliert, als die Belege hergeben. Und
 drittens: Ein umgeschriebener Satz in `PRODUKT.md` erzeugt keine Seite.
 Wer die Stunde dafür aufwendet, hat den Monatsbericht aus Aufgabe 1 nicht
 weitergebracht.
+### 2026-10-28 · Spur C · Die geratene Geburtszeit ist überall erlaubt und nirgends vermerkt
+
+**Gesehen:** „Was, wenn ich meine Geburtszeit nicht kenne?" ist eine Frage,
+die Menschen wirklich und immer wieder stellen. Eine Astrologin schreibt am
+24. März 2013, Menschen nennten ihr „immer wieder" die Uhrzeit, die sie von
+der Mutter haben, und „nicht wenige Menschen" hätten keine Chance, an ihre
+Geburtszeit zu kommen; sie selbst berate nur, wenn jemand die Zeit beim
+Standesamt erfragt hat
+(`astromind.de/astrologie-artikel/spot-an-geht-ohne-geburtszeit-wirklich-gar-nichts.html`).
+Ein Leserkommentar dort beschreibt die Praxis, die zu 12:00 gehört: Zeit auf
+mittags setzen und dann den Mond und die Häuser weglassen. Städte führen für
+diese Frage eigene Dienstleistungen: Braunschweig verlangt für die Auskunft
+über die Geburtszeit 20,00 Euro im Voraus und rechnet mit etwa vier Wochen
+(`braunschweig.de/vv/produkte/II/32/32_6/anfragegeburtszeit.php`).
+
+Beschaffbar ist die Zeit in Deutschland also, aber nicht umsonst und nicht
+heute. § 59 PStG in der seit dem 1. November 2022 geltenden Fassung
+(3. Personenstandsrechts-Änderungsgesetz vom 19. Oktober 2022, BGBl. I
+S. 1744) verlangt in der Geburtsurkunde „Ort sowie Tag, Stunde und Minute
+der Geburt" (`buzer.de/59_PStG.htm`). Hamburg sagt dazu, die genaue
+Geburtszeit stehe seit diesem Datum „auch in jeder neuen Geburtsurkunde",
+bei älteren sei sie nicht zwingend enthalten; im beglaubigten Ausdruck aus
+dem Geburtenregister steht sie, 19,50 Euro je Urkunde
+(`hamburg.de/service/info/11254336/n0/`). Für erwachsene Nutzerinnen heißt
+das: Ihre eigene Urkunde trägt die Zeit in der Regel nicht.
+
+Bei uns nehmen vier Stellen eine Geburtszeit an. `tool.html` sagt es
+ehrlich: „Wenn du die Uhrzeit nicht kennst, nimm 12:00; dann stimmen Sonne
+und Planeten, nur Aszendent und Häuser nicht." `ankommen.js` sagt dasselbe
+in anderen Worten. `chart-rechner.html` warnt nur vor der Zeitzone.
+`profile.html` trägt 12:00 vor und sagt dazu nichts — und das ist die
+Seite, auf die 123 der 126 ausgelieferten Seiten im Wurzelordner verweisen,
+auch die Leerzustände von Heute, Dossier und Geistführung, von denen einer
+ausdrücklich dazuschreibt, „weil alles an den Häusern hängt". Auf
+`ankommen.html`, wo der ehrliche Satz steht, verweist genau eine Seite.
+Gespeichert wird die Zeit wie jede andere Angabe; kein Schlüssel hält fest,
+dass sie geraten war. 43 ausgelieferte Dateien benutzen `haus(`.
+
+Was eine geratene Zeit kostet, ist mit der eigenen Rechnung messbar.
+`haus()` in `rituale/engine.js` ist Whole Sign und hängt allein am Zeichen
+des Aszendenten. Über ein Minutenraster eines ganzen Tages, vier erfundene
+Geburten an deutschen Breiten, gerechnet am 2026-10-28: 12:00 trifft das
+richtige Aszendenten-Zeichen nur innerhalb eines Fensters von 50 bis 173
+Minuten, also 3,5 bis 12 Prozent des Tages. Die kürzesten Zeichenfenster
+dieser Tage dauern 26 bis 47 Minuten. Liegt das Zeichen falsch, wandert
+jeder Punkt um dieselbe Zahl von Häusern weiter — und damit die Reihenfolge
+der zehn Bereiche, der lauteste Bereich und jedes „Dauerthema hier".
+Nebenbei: `grade.html` nennt Whole Sign „gegen ungenaue Geburtszeiten
+robust". Im Zusammenhang der Grade ist das richtig. Wer auf einer geratenen
+Zeit sitzt, kann den Satz als Entwarnung lesen.
+
+**Heißt für uns:** Der Satz fehlt nicht — er steht zweimal da. Was fehlt,
+ist sein Ort und seine Haltbarkeit. Die Plattform weiß in der Sekunde der
+Eingabe, dass eine Zeit geraten sein könnte, und vergisst es danach für
+immer; alles, was danach aus den Häusern kommt, tritt mit derselben Sicherheit
+auf wie der Rest. Genau das schließt `PRODUKT.md` Abschnitt 3 aus, und
+`REGELN.md` Abschnitt 4 verlangt für jede rechnende Seite, dass sie sagt,
+was sie nicht kann.
+
+**Vorschlag:** Den Vermerk einführen und ihn dort anzeigen, wo die
+Kernaussage an den Häusern hängt. Siehe Aufgabe 29.
+
+**Dagegen spricht:** Die billige Hälfte — ein Satz am Zeitfeld von
+`profile.html` — kostet fast nichts; die teure Hälfte fasst viele Dateien
+an und endet leicht als Warnband auf jeder Seite, also als das, was Menschen
+überlesen. Zweitens ist Whole Sign dort wirklich robust, wo der Fehler
+häufig ist: Eine auf die halbe Stunde erinnerte Zeit stimmt meistens, und
+ein Vermerk, der „geraten" nicht von „ungefähr" unterscheidet, warnt die
+Falschen. Drittens hängt vieles gar nicht an den Häusern — Zeichen, Aspekte,
+gradgenaue Durchgänge —, eine pauschale Warnung würde also übertreiben und
+gerade die Ehrlichkeit beschädigen, der sie dienen soll. Viertens habe ich
+keine Zahl dazu, wie viele Besucherinnen ihre Zeit nicht kennen: „nicht
+wenige" ist der Eindruck einer Praktikerin von 2013, und die Gesetzesänderung
+von 2022 hilft Menschen, die danach geboren sind, nicht den heutigen
+Erwachsenen. Ist der Fall selten, ist die Arbeit teuer bezahlt. Und
+fünftens, der ernsteste Einwand: Nimmt man den Fund ernst, steht nicht ein
+Satz zur Entscheidung, sondern der Einstieg. Dann wären die Fragen, ob die
+Seite die Zeit genauer verlangt, ob sie den Weg zum Standesamt nennt (etwa
+20 Euro, Wochen), oder ob es eine Lesart ohne Häuser gibt. Aufgabe 29
+entscheidet das nicht; sie verhindert nur das Vergessen. Wer die größere
+Antwort will, sollte sie vor der kleinen entscheiden.
+
+### 2026-10-28 · Spur C · Die häufigsten Fragen der Andersgebauten beantwortet die Seite schon — ein Verfahren heißt falsch
+
+**Gesehen:** Was diese Gruppe wirklich fragt, steht gesammelt bei der
+Autismus-Stiftung, einer gemeinnützigen Stiftung in Kassel, die es nach
+eigener Angabe seit 2005 gibt. Ihre sechs häufigen Fragen zu AuDHD bei
+Erwachsenen: zu alt für eine Diagnostik, was eine Abklärung kostet, welche
+Praxen weibliche Erscheinungsformen erkennen, welche Rolle die
+Selbstdiagnose spielt, ob es nach der Diagnose Medikamente gibt, ob man die
+Diagnose vor der Familie behalten kann
+(`autismusstiftung.de/audhd-erwachsene/`). Keine davon ist eine Frage nach
+Deutung. Alle sind Fragen nach Zugang.
+
+`diagnose-weg.html` beantwortet sie, und zwar gründlich: Unterlagen vor dem
+ersten Anruf, die Hausärztin als Startpunkt, wer abklären darf, realistische
+Wartezeiten, Anrufprotokoll, Kostenerstattung, 116 117, dazu „Stand:
+September 2026" und der Hinweis, dass es kein medizinischer oder
+rechtlicher Rat ist. An der Prüffrage aus `PRODUKT.md` Abschnitt 6 gemessen
+leistet diese Seite für die Andersgebaute mehr als die meisten.
+
+Eine Stelle trägt nicht. Die Seite beschreibt für Berlin eine „gemeinsame
+zentrale Warteliste" der vier Autismus-Spezialambulanzen, Anmeldung über
+ein Online-Formular der Spezialambulanz für Soziale Interaktion, nur am
+ersten Mittwoch eines Quartals. Die vier Stellen, die eine Anmeldung und der
+erste Mittwoch stimmen. Eine Warteliste ist es nicht: Das Berliner
+Autismusnetzwerk, dessen Redaktion an der Hochschulambulanz der
+Humboldt-Universität sitzt, beschreibt eine zentrale Vergabe per
+Zufallsverfahren, seit Juni 2025 von den vier Zentren gemeinsam
+koordiniert; verteilt wird nach organisatorischen Kriterien, individuelle
+Wünsche werden nicht berücksichtigt, und Rückmeldung bekommt nur, wer einen
+Platz erhält (`berlinerautismusnetzwerk.org/diagnostik/diagnostikplatzvergabe/`,
+abgerufen 2026-10-28). Ein Blog aus der Community nennt die vier
+Quartalstermine und das Anmeldefenster am Tag selbst
+(`differentplanet.de/2025/01/04/diagnostik-warteliste-der-hu-berlin-oeffnet-am-8-1-25/`);
+maßgeblich für aktuelle Termine ist die Seite der Ambulanz selbst, die ich
+nicht gelesen habe.
+
+Daraus folgt eine zweite Unstimmigkeit auf derselben Seite: Schritt 4 rät,
+sich „gleichzeitig überall" anzumelden und abzusagen, sobald ein Termin
+sicher ist. Überall sonst ist das der richtige Rat. Hier gibt es eine Tür
+für vier Stellen, keine Absage macht einen gewählten Platz frei, und wer
+keine Antwort bekommt, ist nicht übersehen worden.
+
+Nebenbei, ohne Vorschlag: Wir schreiben den Namen der Gruppe auf zwei
+Weisen. Die meisten ausgelieferten Seiten sagen AuDHS, zwei sagen AuDHD
+(`neurodivergente-astrologie.html`, `mondphasen-rhythmus.html`). Beides ist
+im deutschsprachigen Raum in Gebrauch: Eine Autismus-Coaching-Seite schreibt
+am 12. August 2024 „AuDHS (im englischen: AuDHD)"
+(`autismus-coaching-rheinmain.de/post/audhs-schon-wieder-ein-modewort`), die
+Autismus-Stiftung schreibt durchgehend AuDHD. Keines der Wörter ist falsch,
+also ist nichts zu korrigieren. Wissen sollte es, wer die nächste dieser
+Seiten anfasst.
+
+**Heißt für uns:** Auf dieser Seite tut die Plattform etwas, das sie
+sonst nirgends tut — sie beantwortet eine Frage, die mit Astrologie nichts
+zu tun hat, und tut es gut. Der Preis dafür ist, dass eine solche Seite
+altert: Wartezeiten, Verfahren und Beträge ändern sich, und nichts im Repo
+macht das sichtbar. Das falsch benannte Verfahren ist billig zu berichtigen.
+Das Altern ist die Klasse dahinter, und eine Prüfung auf ein Datum löst sie
+nicht, weil kein Bauskript nachsehen kann, ob eine Angabe draußen noch
+stimmt. Dafür schlage ich nichts vor; das gehört in diese Spur und wird
+wiederkommen.
+
+**Vorschlag:** Den Berlin-Absatz berichtigen. Siehe Aufgabe 30.
+
+**Dagegen spricht:** Es ist ein Absatz auf einer Handarbeitsseite, gelesen
+von dem Bruchteil der Besucherinnen, der in Berlin wohnt und einen
+Autismus-Verdacht hat. Gegen die offenen Aufgaben 10, 17 und 18 gerechnet,
+die alle die Seite betreffen, die jede sieht, ist das ein kleiner Hebel.
+Zweitens stützt sich der Fund auf eine Netzwerkseite und einen Blog, nicht
+auf die Ambulanz selbst; nennt die ihr Verfahren eine Warteliste, ist unser
+Wort vertretbar. Drittens ist „Zufallsverfahren" ein härteres Wort als
+„Warteliste" — eine Seite, die eine Hürde senken soll, könnte sie damit
+erhöhen; wer es schreibt, sollte die Zahl der Plätze und die Frage nach
+Mehrfachanmeldungen weglassen, solange sie nicht von der Ambulanz selbst
+belegt sind. Und viertens altert eine heute datierte Berichtigung genauso
+wie der Satz, den sie ersetzt: Ohne jemanden, der die Seite alle paar Monate
+nachliest, verschiebt der Fund das Veralten nur um einen Schritt.
