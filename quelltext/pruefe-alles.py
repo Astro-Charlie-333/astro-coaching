@@ -131,6 +131,29 @@ if len(navs) > 1:
 else:
     print('  Navigation überall gleich')
 
+# 2b · die Startseite heißt „Jetzt"
+# Am 28.10. umbenannt: Sie hieß „Heute" und zeigte zehn Tage — der Name
+# hat gelogen (ENTWURF-JETZT.md Abschnitt 1). Weil die Navigation in
+# jeder Seite von Hand steht, wäre „überall oder gar nicht" sonst eine
+# Sache des Erinnerns. REGELN.md Abschnitt 6c: Was verlässlich sein
+# soll, gehört in die Maschine.
+falsch_benannt = []
+for s in seiten:
+    t = s.read_text(encoding='utf-8', errors='replace')
+    m = re.search(r'<nav class="ac-nav">(.*?)</nav>', t, re.S)
+    if not m:
+        continue
+    b = re.search(r'href="index\.html"[^>]*>([^<]*)</a>', m.group(1))
+    if b and b.group(1).strip() != 'Jetzt':
+        falsch_benannt.append(f'{s.name}: „{b.group(1).strip()}"')
+if falsch_benannt:
+    print(f'  {len(falsch_benannt)} Seiten nennen die Startseite anders als „Jetzt":')
+    for z in falsch_benannt[:8]:
+        print(f'      {z}')
+    fehlgeschlagen.append('Startseite heißt nicht überall „Jetzt"')
+else:
+    print('  die Startseite heißt überall „Jetzt"')
+
 # 3 · nichts Privates ist ausgeliefert
 #     Keine nackten Zahlen prüfen: "1180" ist auch eine CSS-Breite, und ein
 #     Wächter, der täglich grundlos anschlägt, wird nach einer Woche ignoriert.

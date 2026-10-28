@@ -187,6 +187,40 @@ Antwort schreiben, fertig.
 
 ---
 
+## 6d · Ein gebauter Satz nennt eine Folge
+
+Mandy am 28.10. über einen Satz der Ich-Seite:
+
+> „Zwei Dinge in dir arbeiten gegeneinander: worauf du hinauswillst und wo
+> dir die Umrisse verschwimmen. — was soll ein satz bitte bedeuten."
+
+Nichts. So war er gebaut:
+
+```
+Vorlage:  "Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}."
+{a} = Sonne  → "worauf du hinauswillst"
+{b} = Neptun → "wo dir die Umrisse verschwimmen"
+```
+
+Zwei Nebensätze aneinandergeklebt, und danach kommt nichts. Daraus zwei
+Regeln, die für jede Vorlage gelten, in die etwas eingesetzt wird:
+
+1. **Jeder eingesetzte Halbsatz bezeichnet etwas, das man sich vorstellen
+   kann.** „Wo dir die Umrisse verschwimmen" bezeichnet nichts. „Es offen
+   lassen, statt dich festzulegen" schon. Praktisch heißt das: keine
+   Ortsangabe („wo …"), keine Frageform („was …", „wie …") — eine
+   Handlung.
+2. **Der Satz endet mit einer Folge, nicht mit zwei Zuständen.** Nicht
+   „A und B arbeiten gegeneinander", sondern was dabei herauskommt:
+   „… also hältst du eine Möglichkeit so lange offen, dass nichts davon
+   stattfindet."
+
+Deshalb hat jede Rolle in `ich-daten.js` zwei Teile — `will` (die
+Handlung) und `zuweit` (die Folge). `bau-ich.py` prüft beide und
+verlangt in jeder Winkelvorlage ein Folgewort.
+
+---
+
 ## 7 · Wenn etwas unklar ist
 
 Im Zweifel: **weniger Astrologie, mehr Leben.** Und wenn eine Aussage nicht

@@ -56,22 +56,54 @@ var I_KETTE='Was in diesem Haus passiert, läuft über {h} — und {hs} steht im
 
 /* ── Was eine Anlage antreibt ─────────────────────────────────
    Nicht der Planetenname, sondern das, was er im Leben macht.
-   Diese Rollen sind der Baustein, aus dem die Sätze über diesen
-   einen Menschen entstehen — in ihnen kommt kein Fachwort vor,
-   deshalb tragen sie auch auf Wissensstufe 0. */
+   Diese Rollen sind der Baustein, aus dem die Sätze über zwei
+   Anlagen entstehen, die sich begegnen. Kein Fachwort darin,
+   deshalb tragen sie auch auf Wissensstufe 0.
+
+   Mandy am 28.10.: „Zwei Dinge in dir arbeiten gegeneinander:
+   worauf du hinauswillst und wo dir die Umrisse verschwimmen. —
+   was soll ein satz bitte bedeuten."
+
+   Nichts. Die Rollen waren Ortsangaben — „wo dir die Umrisse
+   verschwimmen" benennt nichts, was man sich vorstellen kann.
+   Zwei davon aneinandergeklebt ergeben einen Satz, der auf jeden
+   Menschen passt und deshalb über keinen etwas sagt.
+
+   Jede Rolle hat jetzt zwei Teile:
+
+     will   — was diese Anlage will, als Handlung, die man sich
+              vorstellen kann. Steht nach einem Doppelpunkt.
+     zuweit — was passiert, wenn man ihr zu weit folgt. Ein
+              Hauptsatz mit „du" darin: eine Folge, kein Zustand.
+
+   Daraus baut der Winkelsatz nicht zwei Zustände, sondern das,
+   was dabei herauskommt. REGELN.md Abschnitt 7 hält die Regel
+   fest, bau-ich.py prüft sie. */
 var I_ROLLE={
- Sonne:'worauf du hinauswillst',
- Mond:'was dich beruhigt',
- Merkur:'wie du denkst und redest',
- Venus:'was du schön findest und wem du nachgibst',
- Mars:'womit du anfängst und wofür du kämpfst',
- Jupiter:'wo du dir viel zutraust',
- Saturn:'wo du streng mit dir bist',
- Uranus:'wo du aus der Reihe tanzt',
- Neptun:'wo dir die Umrisse verschwimmen',
- Pluto:'wo es bei dir um alles oder nichts geht',
- Chiron:'wo Kleinigkeiten dich unverhältnismäßig treffen',
- Lilith:'was bei dir nie einen Platz bekommen hat'};
+ Sonne:  {will:'etwas hinstellen, das am Ende nach dir aussieht',
+          zuweit:'ziehst du es allein durch und merkst zu spät, dass es keiner von dir verlangt hat'},
+ Mond:   {will:'dich sicher fühlen, bevor du weitergehst',
+          zuweit:'bleibst du, wo es bequem ist, und nennst das eine Entscheidung'},
+ Merkur: {will:'es einmal durchsprechen, bevor es gilt',
+          zuweit:'redest du eine Sache so lange klein, dass niemand mehr anfangen mag'},
+ Venus:  {will:'es angenehm halten zwischen dir und den anderen',
+          zuweit:'sagst du Ja zu etwas, das du nicht wolltest, und bist hinterher verstimmt'},
+ Mars:   {will:'anfangen, bevor alles geklärt ist',
+          zuweit:'fängst du drei Dinge an und bringst keins zu Ende'},
+ Jupiter:{will:'mehr vorhaben, als gerade hineinpasst',
+          zuweit:'sagst du etwas zu, für das du den Kalender noch nicht angesehen hattest'},
+ Saturn: {will:'erst nachweisen können, dass du es kannst',
+          zuweit:'wartest du auf eine Erlaubnis, die dir niemand erteilen wird'},
+ Uranus: {will:'es nicht so machen, wie man es macht',
+          zuweit:'wirfst du etwas hin, das gerade erst angefangen hatte zu laufen'},
+ Neptun: {will:'es offen lassen, statt dich festzulegen',
+          zuweit:'hältst du eine Möglichkeit so lange offen, dass nichts davon stattfindet'},
+ Pluto:  {will:'ganz hineingehen oder gar nicht',
+          zuweit:'machst du eine Lebensfrage aus etwas, das in einer Woche vorbei gewesen wäre'},
+ Chiron: {will:'nicht noch einmal an dieselbe Stelle gefasst werden',
+          zuweit:'weichst du einem Gespräch aus, das in zehn Minuten erledigt wäre'},
+ Lilith: {will:'nicht wieder die Seite sein, die zurücksteckt',
+          zuweit:'machst du eine Grundsatzfrage aus einer Kleinigkeit'}};
 
 /* ── Was an dir auffällt ──────────────────────────────────────
    Die Sätze für die Befunde aus ich-rechner.js. Jeder benennt
@@ -105,8 +137,8 @@ var I_AUF={
  ketteTunEigen:'Dem ersten Eindruck trauen, auch dem, den du bei anderen hast.',
 
  /* Der engste Winkel — zwei Anlagen, die sich begegnen */
- winkelHart:'Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}. Das ist kein Fehler, sondern eine Reibung, die nicht aufhört — und die Stelle, an der du mehr geübt hast als Menschen ohne sie.',
- winkelWeich:'Zwei Dinge in dir arbeiten zusammen, ohne dass du etwas dafür tust: {a} und {b}. Das geht so glatt, dass du es leicht übersiehst und selten dafür Anerkennung bekommst.',
+ winkelHart:'Zwei Dinge in dir ziehen auseinander. Das eine: {a}. Das andere: {b}. Beides auf einmal geht nicht, also kippt es abwechselnd. Mal {az}. Mal {bz}. Das ist kein Fehler, sondern die Stelle, an der du mehr geübt hast als Menschen ohne sie.',
+ winkelWeich:'Zwei Dinge in dir ziehen in dieselbe Richtung. Das eine: {a}. Das andere: {b}. Dafür musst du nichts tun, und deshalb fällt es dir nicht auf: du rechnest es dir nicht an und setzt es selten dort ein, wo es dir etwas brächte.',
  winkelEng:'Bei dieser Stelle steht der Winkel fast auf den Grad genau. Je genauer er ist, desto deutlicher zeigt er sich in der Rechnung — was das in deinem Leben heißt, musst du selbst prüfen.',
  winkelHartTun:'Nicht entscheiden, welche Seite recht hat. Beiden abwechselnd den Vortritt lassen.',
  winkelWeichTun:'Das, was ohne Anstrengung geht, bewusst für etwas einsetzen, das Anstrengung kostet.',
@@ -148,8 +180,8 @@ var I_KOPF={
  spEins:'Bei dir verteilt sich alles gleichmäßig: Kein Lebensbereich zieht dich stärker als die anderen. Die Reihenfolge musst du dir selbst geben.',
  kette:'Wie du auf andere wirkst, entscheidet sich bei dir nicht bei dir selbst, sondern in einem anderen Bereich: {nach}.',
  ketteEigen:'Wie du auf andere wirkst, entscheidet sich bei dir an derselben Stelle, an der es entsteht. Der erste Eindruck stimmt bei dir öfter als bei anderen.',
- winkelHart:'Zwei Dinge in dir arbeiten gegeneinander: {a} und {b}. Eine Reibung, die nicht aufhört — und die Stelle, an der du mehr geübt hast als andere.',
- winkelWeich:'Zwei Dinge in dir arbeiten zusammen, ohne dass du etwas dafür tust: {a} und {b}. So glatt, dass du es leicht übersiehst.',
+ winkelHart:'Zwei Dinge wollen bei dir Verschiedenes: {a} — und {b}. Weil beides zusammen nicht geht, {az}.',
+ winkelWeich:'Zwei Dinge ziehen bei dir in dieselbe Richtung: {a} — und {b}. Das läuft von allein, deshalb rechnest du es dir nicht an.',
  rueckViel:'Vieles in dir läuft erst nach innen, bevor es nach außen geht. Du wirkst dabei langsamer, als du bist.',
  rueckKeine:'Bei dir geht fast alles direkt nach außen. Der Umweg nach innen ist bei dir keine eingebaute Gewohnheit, sondern etwas, das du dir nehmen musst.',
  ohne:'Dein Bild hat keine einzelne Stelle, die stark aus dem Rahmen fällt. Was bei dir auffällt, liegt in der Mischung.',
@@ -211,7 +243,7 @@ var I_INDEX=[
   {s:'ophiuchus.html', t:'Ophiuchus', w:'Das dreizehnte Zeichen, durchgerechnet — in vier Systemen.', neu:1}]},
  {g:'Was gerade läuft', e:[
   {s:'zeiten.html', t:'Wann bei dir was los ist', w:'Dein Leben in Kapitel: laute und leise Jahre für fünf Lebensbereiche, von Grund auf erklärt.', neu:1},
-  {s:'index.html', t:'Heute', w:'Was diese Stunde, diese Woche und diesen Monat läuft.'},
+  {s:'index.html', t:'Jetzt', w:'Was diese Stunde, diese Woche und diesen Monat läuft.'},
   {s:'solar-return-light.html', t:'Dein Jahr', w:'Das Solar — was die nächsten zwölf Monate ansagen.'},
   {s:'solar-return-vertiefung.html', t:'Solar vertieft', w:'Dasselbe Jahr genauer, mit Herrschern und Achsen.'},
   {s:'profektionen.html', t:'Profektionen', w:'Welches Haus dieses Lebensjahr regiert.'},

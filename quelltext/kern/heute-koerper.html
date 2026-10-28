@@ -3,7 +3,7 @@
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html" class="ist">Heute</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="index.html" class="ist">Jetzt</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
 <div class="ht-jetzt" id="htjetzt"><div class="ht-jetzt-in">
@@ -32,10 +32,18 @@
   <div class="ht-lauf" id="htlauf"></div>
 </div>
 
+<!-- Die Woche als Woche.
+     Bis zum 28.10. stand hier eine Liste von zehn Tagen. Eine Liste
+     beantwortet „was kommt als N&auml;chstes" &mdash; nicht „wie ist meine
+     Woche". Jetzt steht zuerst ihre Form, dann die Tage.
+     ENTWURF-JETZT.md Abschnitt 3. -->
 <div id="htwocheteil">
-  <h2 class="ht-h">Was als N&auml;chstes ansteht</h2>
-  <p class="ht-sub">Alles mit festem Termin in den n&auml;chsten zehn Tagen, in der Reihenfolge, in der es kommt. Was eine Vorbereitung braucht, sagt es dazu.</p>
+  <h2 class="ht-h">Deine Woche</h2>
+  <p class="ht-sub">Sieben Tage ab heute. Erst die Form der Woche, dann die Tage mit festem Termin. Was eine Vorbereitung braucht, sagt es dazu.</p>
+  <p class="wo-form" id="htwoform"></p>
+  <nav class="wo-band" id="htwoband" aria-label="Die sieben Tage dieser Woche"></nav>
   <div class="ht-woche" id="htwoche"></div>
+  <p class="wo-danach" id="htwodanach"></p>
 </div>
 
 <div id="htbereicheteil">
@@ -60,6 +68,6 @@
 </div>
 </details>
 
-<div class="foot">Heute &middot; Gerechnet f&uuml;r deinen Wohnort und dein Geburtsbild.<br>
+<div class="foot">Jetzt &middot; Gerechnet f&uuml;r deinen Wohnort und dein Geburtsbild.<br>
 <span class="ac-tech" data-ab="2">Mondphasen, Wendepunkte und Sonnenzeiten gegen PyEphem gepr&uuml;ft. Planetenstunden nach chald&auml;ischer Ordnung, H&auml;user im Whole-Sign-System aus dem Profil.</span></div>
 </div>
