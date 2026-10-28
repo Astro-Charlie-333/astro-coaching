@@ -156,6 +156,23 @@ const wo=await p.evaluate(()=>{
     danach:(document.getElementById('htwodanach')||{}).textContent.trim()};
 });
 
+/* Schlaf und Bewegung: die Trennung von Gemessenem und
+   Ueberliefertem ist hier die ganze Prüfung. */
+const kp=await p.evaluate(()=>{
+  const w=document.getElementById('htkoerperteil'); if(!w) return null;
+  const sum=[...w.querySelectorAll('.th-dazu summary')].map(e=>e.textContent.trim());
+  return {
+    da:true,
+    kopf:((w.querySelector('.kp-kopf')||{}).textContent||'').trim(),
+    schlaf:((w.querySelectorAll('.kp-k p')[0]||{}).textContent||'').trim(),
+    bewegung:((w.querySelectorAll('.kp-k')[1]||{}).textContent||'').trim(),
+    treffer:w.querySelectorAll('.kp-tr').length,
+    herkunft:sum,
+    selbst:!!w.querySelector('.kp-selbst'),
+    techSichtbar:[...w.querySelectorAll('.ac-tech')].filter(e=>e.offsetParent!==null).length,
+    text:w.innerText};
+});
+
 /* Der Aufmacher: Datum, Dopplung, Fensterangaben. */
 const auf=await p.evaluate(()=>{
   const k=document.querySelector('.ht-auf-k');
@@ -181,6 +198,9 @@ await p.evaluate(()=>document.querySelector('.kb[data-k="wenig"]').click());
 await p.waitForTimeout(220);
 const k=await p.evaluate(()=>({
   wocheWeg:document.getElementById('htwocheteil').hidden,
+  themenWeg:document.getElementById('htthementeil').hidden,
+  koerperWeg:document.getElementById('htkoerperteil').hidden,
+  laeuftDa:!document.getElementById('htlaeuftteil').hidden,
   bereicheDa:!document.getElementById('htbereicheteil').hidden,
   jetztDa:!document.getElementById('htjetzt').hidden}));
 /* Auf Stufe 0 darf die Startseite keine Fachsprache zeigen. */
@@ -225,6 +245,9 @@ const th=await p.evaluate(()=>[...document.querySelectorAll('.th')].map(c=>({
   name:(c.querySelector('.th-n')||{}).textContent||'',
   was:((c.querySelector('.th-was')||{}).textContent||'').trim(),
   tut:((c.querySelector('.th-tut')||{}).textContent||'').trim(),
+  felder:[...c.querySelectorAll('.th-felder li')].map(e=>e.textContent.trim()),
+  schnittGrenze:!!c.querySelector('.th-schnitt .th-grenze'),
+  schnitt:!!c.querySelector('.th-schnitt'),
   gut:!!c.querySelector('.th-z'),
   wasVorTut:(()=>{ const a=c.querySelector('.th-was'), b=c.querySelector('.th-tut');
     return (a&&b) ? (a.compareDocumentPosition(b)&4)===4 : true; })(),
@@ -250,7 +273,7 @@ const einer=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,j0,n0,th,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,j0,n0,th,kp,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -286,6 +309,14 @@ if pr:
     if v['breit'] > 390:     fehler.append(f'Überlauf auf {v["breit"]}px')
     if not k['wocheWeg']:
         fehler.append('„Wenig" blendet die Terminliste nicht aus')
+    # Wer wenig Kapazität angibt, hat sie nicht für eine längere
+    # Seite. Die langen Abschnitte gehen weg, der Kern bleibt.
+    if not k['themenWeg']:
+        fehler.append('„Wenig" blendet „Die großen Themen" nicht aus')
+    if not k['koerperWeg']:
+        fehler.append('„Wenig" blendet „Schlaf und Bewegung" nicht aus')
+    if not k['laeuftDa']:
+        fehler.append('„Wenig" blendet auch „Was gerade läuft" aus — das ist der Kern')
     if not k['bereicheDa']:
         fehler.append('„Wenig" blendet die Bereiche aus — die sollen bleiben')
     if not k['jetztDa']:
@@ -324,8 +355,18 @@ if pr:
             fehler.append(f'„{nm}" nennt einen Namen, ohne ihn zu erklären')
         if not c['wasVorTut']:
             fehler.append(f'„{nm}": die Erklärung steht hinter der Wirkung')
-        if len(c['tut']) < 60:
+        # Was es im Leben macht, darf als Absatz oder als Liste der
+        # Ecken dastehen, an denen es klemmt — aber eines von beidem
+        # muss da sein, und zusammen genug Substanz haben.
+        _wirkung = len(c['tut']) + sum(len(f) for f in c['felder'])
+        if _wirkung < 120:
             fehler.append(f'„{nm}" sagt nicht, was es im Leben macht')
+        if c['tut'].endswith(':') and not c['felder']:
+            fehler.append(f'„{nm}" kündigt eine Aufzählung an, die nicht kommt')
+        # Ein Rat, etwas zu verschieben, ohne die Grenze dazu wäre
+        # Gesundheitsberatung durch die Hintertür (PRODUKT.md 5).
+        if c['schnitt'] and not c['schnittGrenze']:
+            fehler.append(f'„{nm}" rät etwas aufzuschieben, ohne die Grenze dazu')
         if not c['gut']:
             fehler.append(f'„{nm}" sagt nicht, wofür der Zeitraum taugt')
         if c['techSichtbar']:
@@ -338,6 +379,43 @@ if pr:
         for w in _angst:
             if w in _t:
                 fehler.append(f'„{c["name"].strip()}" arbeitet mit Angst: „{w.strip()}"')
+
+    # ── Schlaf und Bewegung ────────────────────────────────────
+    # Mandy am 28.10.: „mir fiel auf dass ich anhand des Mondes zB
+    # besser oder schlechter schlafe … Sowas zB auch mega spannend."
+    #
+    # Das ist der einzige Abschnitt der Seite, in dem Gemessenes und
+    # Überliefertes nebeneinanderstehen. Wenn die beiden Herkünfte
+    # verschwimmen, wird aus einer alten Zuordnung eine Studie — und
+    # genau das ist die Sorte Behauptung, die PRODUKT.md Abschnitt 5
+    # ausschließt. Die Trennung ist deshalb Pflicht, nicht Zierde.
+    kp = pr['kp']
+    if not kp:
+        fehler.append('der Abschnitt „Schlaf und Bewegung" fehlt')
+    else:
+        if len(kp['schlaf']) < 60:
+            fehler.append('„Schlaf und Bewegung" sagt nichts über den Schlaf')
+        if len(kp['bewegung']) < 60:
+            fehler.append('„Schlaf und Bewegung" sagt nichts über Bewegung')
+        if not any('gemessen' in t.lower() for t in kp['herkunft']):
+            fehler.append('„Schlaf und Bewegung" sagt nicht, was daran gemessen ist')
+        if not any('überliefer' in t.lower() for t in kp['herkunft']):
+            fehler.append('„Schlaf und Bewegung" sagt nicht, was daran Überlieferung ist')
+        if not kp['selbst']:
+            fehler.append('„Schlaf und Bewegung" lädt nicht zum Nachprüfen an sich selbst ein')
+        if kp['techSichtbar']:
+            fehler.append('„Schlaf und Bewegung" zeigt die Mechanik schon auf Stufe 0')
+        # Eine Zahl ohne Quelle ist hier die teuerste Fehlerklasse:
+        # Sie macht aus einer Zuordnung einen Befund.
+        import re as _re
+        _zahlen = _re.findall(r'\b\d+\s*(?:Minuten|Prozent|%)', kp['text'])
+        if _zahlen and 'Studie' not in kp['text'] and 'Feldstudie' not in kp['text']:
+            fehler.append('Zahlen in „Schlaf und Bewegung" ohne Hinweis auf die Quelle: '
+                          + ', '.join(_zahlen[:3]))
+        # Kein Trainingsplan. Die Seite schlägt vor, sie verordnet nicht.
+        for w in ('Sätze', 'Wiederholungen', 'kcal', 'Kalorien', 'mindestens 30 Minuten'):
+            if w in kp['text']:
+                fehler.append(f'„Schlaf und Bewegung" verordnet statt vorzuschlagen: „{w}"')
 
     # ── Die Woche ist eine Woche ───────────────────────────────
     # Bis zum 28.10. war dieser Abschnitt eine Liste aus zehn Tagen.

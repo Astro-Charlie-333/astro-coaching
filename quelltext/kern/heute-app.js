@@ -329,8 +329,20 @@ function themaKarte(o){
   if(o.bahn) h.push(o.bahn);
   if(o.was) h.push('<p class="th-was">'+esc(o.was)+'</p>');
   if(o.tut) h.push('<p class="th-tut">'+esc(o.tut)+'</p>');
+  /* Die vier Ecken, an denen es klemmt. Eine Liste sagt hier mehr
+     als ein Absatz: Mandy am 28.10. wollte genau diese Konkretheit
+     — „wichtig dass technik kaputt gehen kann oder travel
+     Schwierigkeiten". */
+  if(o.felder && o.felder.length)
+    h.push('<ul class="th-felder">'+o.felder.map(function(f){
+      return '<li><b>'+esc(f[0])+'</b>'+esc(f[1])+'</li>'; }).join('')+'</ul>');
   if(o.beiDir) h.push(o.beiDir);
   if(o.auch) h.push('<div class="th-auch">'+esc(o.auch)+'</div>');
+  if(o.schnitt) h.push('<div class="th-schnitt"><b>'+esc(o.schnitt.titel)+'</b>'+
+    '<p>'+esc(o.schnitt.text)+'</p>'+
+    '<p class="th-grenze">'+esc(T_SCHNITT.grenze)+'</p>'+
+    '<details class="th-dazu"><summary>Was daran belegt ist</summary><p>'+
+    esc(T_SCHNITT.beleg)+'</p></details></div>');
   if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
   if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
                     '</summary><p>'+esc(o.dazu)+'</p></details>');
@@ -355,7 +367,8 @@ function themenBauen(){
       marke:sp?nochWie(sp.bis,jd):'läuft',
       spanne:sp?(monatTag(sp.von)+' – '+monatTag(sp.bis)):'',
       bahn:sp?spanneBalken(sp.von,sp.bis,jd):'',
-      was:D.was, tut:D.tut, gut:D.gut, dazu:D.dazu,
+      was:D.was, tut:D.tut, felder:D.felder, gut:D.gut, dazu:D.dazu,
+      schnitt:(window.T_SCHNITT?T_SCHNITT[k]:null),
       beiDir:beiDirZeile(lon(k,jd)),
       tech:k+' rückläufig in '+H_SIGNS[zI(lon(k,jd))]+
            /* Das Zeichen der Station nur, wenn es ein anderes ist —
@@ -384,7 +397,7 @@ function themenBauen(){
       marke:(t<=0?'heute':t===1?'morgen':tf(T_KOPF.inTagen,{n:t})),
       spanne:wochentagDatum(l.jd)+', '+uhr(l.jd)+' — '+
              tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]}),
-      was:D.was, tut:tut, gut:D.gut, dazu:dazu,
+      was:D.was, tut:tut, felder:D.felder, gut:D.gut, dazu:dazu,
       beiDir:beiDirZeile(ml),
       tech:(art==='neu'?'Neumond':'Vollmond')+' auf '+gr(ml)+' '+H_SIGNS[zI(ml)]+
            (fi?', '+fi.knoten.toFixed(1)+'° vom Mondknoten':'')});
@@ -454,6 +467,102 @@ function themenBauen(){
       '<span class="th-leise">'+esc(T_RUECK_LANGSAM.nach)+'</span>';
     lz.hidden=false;
   }else{ lz.innerHTML=''; lz.hidden=true; }
+}
+
+/* ── Schlaf und Bewegung ──────────────────────────────────────
+   Mandy am 28.10.: „mir fiel auf dass ich anhand des Mondes zB
+   besser oder schlechter schlafe … bei mir stier mars 12 haus wenn
+   da mond drin ist dann eher yoga als kraftsport."
+
+   Hier treffen zwei Sorten Wissen aufeinander, und genau deshalb
+   stehen sie getrennt: Der Zusammenhang zwischen Mondphase und
+   Schlaf ist gemessen (klein, umstritten, mehrfach gefunden). Die
+   Zuordnung von Element und Mondstellung zu Training ist
+   Überlieferung. Beides steht da, beides beschriftet. Siehe
+   themen-daten.js. */
+var ELEMENT_VON = ['feuer','erde','luft','wasser'];
+function elementVon(lng){ return ELEMENT_VON[zI(lng)%4]; }
+
+/* Welche Punkte des Geburtsbilds der Mond heute berührt. Orbis 5°:
+   Der Mond läuft gut 13° am Tag, das sind rund neun Stunden — eine
+   Tagesaussage, keine Minutenaussage. */
+function mondTrifft(jd){
+  if(!P || !window.T_MONDTREFFER) return [];
+  var ml=lon('Mond',jd), mh=haus(P,ml), out=[];
+  Object.keys(T_MONDTREFFER).forEach(function(k){
+    if(P[k]===undefined || P[k]===null) return;
+    var ab=Math.abs(((ml-P[k]+540)%360)-180);
+    if(ab<=5){ out.push({k:k, ab:ab, genau:true, D:T_MONDTREFFER[k]}); return; }
+    /* Sonst: dasselbe Haus. Das ist Mandys eigener Fall und dauert
+       zwei bis drei Tage statt neun Stunden — die häufigere und
+       damit brauchbarere Aussage von beiden. */
+    if(window.T_MONDHAUS && T_MONDHAUS[k] && haus(P,P[k])===mh)
+      out.push({k:k, ab:ab, genau:false, D:T_MONDHAUS[k]});
+  });
+  out.sort(function(a,b){ return (b.genau-a.genau) || (a.ab-b.ab); });
+  return out;
+}
+
+/* Die Nächte vor dem Vollmond sind die, in denen gemessen kürzer
+   geschlafen wird. Drei bis fünf Tage davor war der Tiefpunkt. */
+function vorVollmond(jd){
+  var l=[]; try{ l=AC_BOARD.lunationen(jd, jd+7)||[]; }catch(e){ return null; }
+  var v=l.filter(function(x){ return x.art==='voll'; })[0];
+  if(!v) return null;
+  var t=tagesAbstand(v.jd);
+  return (t>=0 && t<=5) ? {jd:v.jd, tage:t} : null;
+}
+
+function koerperBauen(){
+  var ziel=el('htkoerper'); if(!ziel || !window.T_KOERPER) return;
+  el('htkoerperh').textContent=T_KOERPER.titel;
+  el('htkoerpersub').textContent=T_KOERPER.sub;
+  var jd=jetztJD(), ml=lon('Mond',jd), E=T_ELEMENT[elementVon(ml)];
+  var h=[], B=beiDir(ml), vv=vorVollmond(jd);
+
+  h.push('<div class="kp-kopf"><span class="kp-vor">'+esc(T_KOERPER.heuteVor)+'</span>'+
+    '<b>'+esc(E.name)+'mond</b>'+
+    (B?'<span class="kp-ber">bei dir im Bereich '+esc(B.name)+'</span>':'')+'</div>');
+
+  h.push('<div class="kp-zwei">');
+  h.push('<div class="kp-k"><div class="kp-t">'+esc(T_KOERPER.schlafVor)+'</div>'+
+    '<p>'+esc(E.schlaf)+'</p>'+
+    (vv?'<p class="kp-mess">Dazu kommt das Einzige hier, was gemessen ist: '+
+        (vv.tage===0?'Heute ist Vollmond.':'In '+vv.tage+' Tag'+(vv.tage===1?'':'en')+
+         ' ist Vollmond.')+' In den Nächten davor schlafen Menschen im Schnitt etwas '+
+        'später ein und kürzer — ein kleiner Effekt, der umso kleiner wird, je mehr '+
+        'künstliches Licht da ist.</p>':'')+'</div>');
+  h.push('<div class="kp-k"><div class="kp-t">'+esc(T_KOERPER.bewegungVor)+'</div>'+
+    '<p>'+esc(E.bewegung)+'</p></div>');
+  h.push('</div>');
+
+  var tr=mondTrifft(jd);
+  if(tr.length){
+    h.push('<div class="kp-treffer"><div class="kp-t">'+esc(T_KOERPER.trefferVor)+'</div>');
+    tr.slice(0,2).forEach(function(t){
+      h.push('<div class="kp-tr"><b>'+esc(t.D.was)+'</b>'+
+        '<p>'+esc(t.D.tut)+'</p><p class="kp-rat">'+esc(t.D.rat)+'</p>'+
+        '<div class="kp-tech ac-tech" data-ab="2">Mond '+gr(lon('Mond',jd))+' '+
+        H_SIGNS[zI(lon('Mond',jd))]+', dein '+t.k+' auf '+gr(P[t.k])+' '+
+        H_SIGNS[zI(P[t.k])]+' im '+haus(P,P[t.k])+'. Haus'+
+        (t.genau?' — '+t.ab.toFixed(1)+'° Abstand':', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
+        '</div></div>');
+    });
+    h.push('</div>');
+  }
+
+  /* Die Trennung, auf die es hier ankommt. Ohne sie wäre der ganze
+     Abschnitt eine Behauptung mit Studienanstrich. */
+  h.push('<div class="kp-herkunft">');
+  h.push('<details class="th-dazu"><summary>'+esc(T_KOERPER.gemessenTitel)+
+         '</summary><p>'+esc(T_KOERPER.gemessen)+'</p></details>');
+  h.push('<details class="th-dazu"><summary>'+esc(T_KOERPER.ueberliefertTitel)+
+         '</summary><p>'+esc(T_KOERPER.ueberliefert)+'</p></details>');
+  h.push('</div>');
+  h.push('<div class="kp-selbst"><b>'+esc(T_KOERPER.selbstVor)+'</b>'+
+         esc(T_KOERPER.selbst)+'</div>');
+
+  ziel.innerHTML=h.join('');
 }
 
 /* ── Band 2 · Deine Woche ─────────────────────────────────────
@@ -873,11 +982,15 @@ function kapBauen(){
     b.addEventListener('click',function(){ kapSetzen(b.getAttribute('data-k')); });
   });
 }
-/* Bei „wenig" bleiben der Kopf und die Bereiche stehen —
-   die Terminliste ist das, was sich am ehesten weglassen lässt. */
+/* Bei „wenig" bleiben der Kopf und die Bereiche stehen.
+   Weggelassen wird, was Zeit zum Lesen braucht: die Terminliste,
+   die ausführlichen Themen und der Abschnitt zu Schlaf und
+   Bewegung. „Was gerade läuft" bleibt — das ist der Kern.
+   Wer wenig Kapazität angibt, hat sie nicht für eine längere
+   Seite, sondern für eine kürzere. */
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
-  ['htwocheteil'].forEach(function(i){
+  ['htwocheteil','htthementeil','htkoerperteil'].forEach(function(i){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
@@ -903,10 +1016,10 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); wocheBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); koerperBauen(); wocheBauen();
   kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
