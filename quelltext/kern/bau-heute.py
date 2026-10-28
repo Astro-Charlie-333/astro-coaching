@@ -115,6 +115,21 @@ const v=await p.evaluate(()=>({
   kap:document.querySelectorAll('.kb').length,
   schlecht:/undefined|NaN|\[object|Invalid/.test(document.body.innerText),
   breit:document.body.scrollWidth}));
+/* Was gerade läuft: der neue Abschnitt vom 28.10. */
+const lauf=await p.evaluate(()=>({
+  karten:[...document.querySelectorAll('.lf')].length,
+  haupt:document.querySelectorAll('.lf-haupt').length,
+  saetze:[...document.querySelectorAll('.lf-was')].map(x=>x.textContent.trim()),
+  wanderer:[...document.querySelectorAll('.lf-tech')]
+    .map(x=>(x.textContent.trim().split(' ')[0]||'')),
+  bahnen:document.querySelectorAll('.lf-bahn').length,
+  marken:[...document.querySelectorAll('.lf-bahn')].map(b=>({
+    jetzt:!!b.querySelector('.lf-jetzt'),
+    exakt:!!b.querySelector('.lf-exakt')})),
+  klein:[...document.querySelectorAll('.lf-tech')]
+    .filter(x=>/\b(konjunktion|quadrat|trigon|sextil|opposition)\b/.test(x.textContent))
+    .map(x=>x.textContent.slice(0,60))}));
+
 /* Der Aufmacher: Datum, Dopplung, Fensterangaben. */
 const auf=await p.evaluate(()=>{
   const k=document.querySelector('.ht-auf-k');
@@ -170,7 +185,7 @@ const einer=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,j0,t0,t3,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,j0,t0,t3,lauf,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -218,6 +233,26 @@ if pr:
         fehler.append(f"auf Stufe 3 nur {pr['t3']} Mechanik-Elemente — zu wenig")
     import datetime as _dt
     _dtjahr = _dt.date.today().year
+    lf = pr['lauf']
+    if lf['karten'] < 3:
+        fehler.append(f"nur {lf['karten']} Konstellationen unter Was gerade laeuft")
+    if lf['haupt'] != 1:
+        fehler.append(f"{lf['haupt']} hervorgehobene Konstellationen statt genau einer")
+    # Der Befund vom 28.10.: drei Karten sagten wortwörtlich denselben Satz,
+    # weil der Text am Wanderer hängt und Saturn dreimal vorkam.
+    if len(set(lf['saetze'])) != len(lf['saetze']):
+        doppelt = [t[:60] for t in lf['saetze']
+                   if lf['saetze'].count(t) > 1]
+        fehler.append('derselbe Satz steht mehrfach unter „Was gerade läuft": '
+                      + repr(doppelt[0] if doppelt else ''))
+    if len(set(lf['wanderer'])) != len(lf['wanderer']):
+        fehler.append('derselbe Wanderer steht mehrfach: ' + str(lf['wanderer']))
+    for m in lf['marken']:
+        if not m['jetzt']:
+            fehler.append('eine Bahn ohne Marke für den heutigen Stand')
+    if lf['klein']:
+        fehler.append('Aspektname kleingeschrieben: ' + repr(lf['klein'][0]))
+
     a = pr['auf']
     if not a['da']:
         fehler.append('kein Aufmacher im Kopf')

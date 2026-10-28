@@ -105,6 +105,41 @@
     return { jd:a, offen:false };
   }
 
+  /* Wann ist der Winkel genau getroffen? Das Fenster sagt von wann
+     bis wann — der Höhepunkt darin stand nirgends. Genau der ist aber
+     das Datum, das einen Menschen interessiert.
+
+     Gesucht wird das Minimum des Abstands zum genauen Winkel. Weil ein
+     Wanderer rückläufig werden kann, wird nicht halbiert, sondern in
+     Schritten abgefahren und danach verfeinert. */
+  function exaktAm(wk, natL, grad, von, bis, jd){
+    var a = (von === null || von === undefined) ? jd - 400 : von;
+    var b = (bis === null || bis === undefined) ? jd + 400 : bis;
+    if(!(b > a)) return null;
+    var schritt = Math.max(0.25, (b - a) / 260);
+    var best = null, bo = 1e9, t;
+    function ab(x){
+      var d = nrm(lon(wk, x) - natL);
+      if(d > 180) d = 360 - d;
+      return Math.abs(d - grad);
+    }
+    for(t = a; t <= b; t += schritt){
+      var o = ab(t);
+      if(o < bo){ bo = o; best = t; }
+    }
+    if(best === null) return null;
+    /* verfeinern */
+    var u = best - schritt, v = best + schritt;
+    for(var i = 0; i < 40; i++){
+      var m1 = u + (v - u) / 3, m2 = v - (v - u) / 3;
+      if(ab(m1) < ab(m2)) v = m2; else u = m1;
+    }
+    var e = (u + v) / 2;
+    /* Nur melden, wenn der Winkel wirklich getroffen wird. Streift ein
+       Wanderer nur und dreht vorher, gibt es keinen Höhepunkt. */
+    return (ab(e) < 0.05) ? e : null;
+  }
+
   function fenster(wk, natL, grad, orb, jd){
     if(!imOrb(wk, natL, grad, orb, jd)) return null;
     var v = kante(wk, natL, grad, orb, jd, -1);
@@ -154,6 +189,7 @@
         if(W.k === zk && A.aspekt === 'konjunktion') continue;   /* Rückkehr, eigene Kategorie */
         var F = fenster(W.k, zl, A.grad, W.orb, jd);
         if(!F) continue;
+        F.exakt = exaktAm(W.k, zl, A.grad, F.von, F.bis, jd);
         var naehe = 1 - (A.ab / W.orb);                          /* 0…1, 1 = exakt */
         out.push({
           form:'aspekt', wanderer:W.k, ziel:zk, zielArt:'planet',
@@ -174,6 +210,7 @@
         if(!A2) continue;
         var F2 = fenster(W.k, al, A2.grad, W.orb, jd);
         if(!F2) continue;
+        F2.exakt = exaktAm(W.k, al, A2.grad, F2.von, F2.bis, jd);
         var n2 = 1 - (A2.ab / W.orb);
         out.push({
           form:'aspekt', wanderer:W.k, ziel:ak, zielArt:'achse',
