@@ -18,12 +18,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 
 
-### 4 · Die Coachin-Sicht als zweite Schublade
-In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
-sprechen": drei Gesprächsfragen und eine Grenze.
-**Fertig, wenn:** zehn Bereiche je drei Fragen und eine Grenze haben und der
-Bau prüft, dass keine davon eine Diagnose stellt.
-
 ### 5 · Doppelte Seiten zusammenlegen
 Es gibt Seitenpaare, die fast dasselbe sagen (`aspekte.html` /
 `aspekte-lesen.html`, `chart-lesen.html` / `bausteine.html`).
@@ -46,6 +40,18 @@ der Textdatei — dann behauptet die Seite eine Gewichtung, die keine ist.
 **Fertig, wenn:** auch ein Bereich ohne natale Besetzung eine Reihenfolge
 zeigt, die von der Reihenfolge in `bereich-daten.js` abweicht, und
 `bau-bereiche.py` genau das prüft.
+
+### 9 · Die Sätze aus der Anzeige holen
+`bereich-app.js` schreibt selbst Text, statt ihn zu zeichnen: die fünf
+Blockköpfe, die Marke „Das Stärkste gerade", der Satz über die drei Seiten
+eines Bereichs und die beiden Sätze über die lange Linie. PRODUKT.md
+Abschnitt 7 verlangt das Gegenteil — ein Satz in der Anzeige wird beim
+nächsten Umbau nebenbei geändert und von keiner Prüfung gesehen. Beim
+Tiefgang ist das schon erzwungen, bei der Seite nicht.
+**Fertig, wenn:** diese Sätze in `bereich-daten.js` stehen und
+`bau-bereiche.py` abbricht, sobald in `bereich-app.js` wieder ein
+Satzzeichen-tragender Text in Anführungszeichen auftaucht, der nicht aus
+den Daten kommt.
 
 ---
 
@@ -300,6 +306,28 @@ bricht den Bau.
 ---
 
 ## Erledigt
+
+* **2026-10-28** · Die Coachin-Sicht steht jetzt auf der Seite (Aufgabe 4).
+  Die drei Gesprächsfragen und die Grenze gab es für alle zehn Bereiche
+  schon — sie gingen aber nur in den Tiefgang, also in eine Datei, die man
+  erst anfordern muss. Wer die Seite las, bekam genau den Teil nie zu
+  sehen, der aus einem Befund ein Gespräch macht. Jetzt sitzt unter den
+  fünf Blöcken jedes Bereichs eine zugeklappte Schublade „Mit jemand
+  anderem darüber sprechen": drei Fragen, und darunter, was dieser Bereich
+  über einen Menschen nicht weiß. Zugeklappt, weil die zweite Sicht nie im
+  Vordergrund steht — und ohne Schloss, denn die Klappe hält die Fragen aus
+  dem Weg, nicht zurück.
+  Die dauerhafte Prüfung misst am gezeichneten Ergebnis und auf Stufe 0,
+  nicht an den Daten: Eine Prüfung, die nur die Datei liest, hätte den
+  Mangel nie gemerkt — die Fragen standen dort ja. Sie fällt durch, wenn
+  eine Klappe fehlt, offen steht, auf Stufe 0 unsichtbar ist, nicht genau
+  drei Fragen trägt, die Fragen eines anderen Bereichs zeigt, die Grenze
+  nicht mitbringt oder irgendwo eine Diagnose stellt. Alle sechs Fälle
+  wurden einzeln ausprobiert, bevor sie eingebaut wurden.
+  Ein Fund nebenbei: `_test-bereich.js` lief über alle Schlüssel von
+  `B_FRAGEN` statt über die zehn Bereiche. Solange die beiden gleich waren,
+  fiel das nicht auf. Jetzt läuft die Prüfung über die Bereiche — damit
+  prüft sie ohnehin das Richtige, nämlich dass keiner fehlt.
 
 * **2026-10-27** · Die Ich-Seite umgebaut (Aufgabe 1). Sie begann mit
   dem Chartrad und führte darunter mit Zeichen und Gradzahl — und war
