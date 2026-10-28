@@ -303,6 +303,38 @@ Laienprüfung mitlaufen, und `bau-ich.py` `ich-app.js` mit derselben
 Suche abfängt wie `ich-rechner.js` — ein neuer Satz in der Anzeige
 bricht den Bau.
 
+### 29 · Die geratene Geburtszeit ist nirgends vermerkt
+Vier Stellen nehmen eine Geburtszeit an. `tool.html` und `ankommen.js` sagen,
+was eine geratene Zeit kostet; `chart-rechner.html` warnt nur vor der
+Zeitzone; `profile.html` trägt 12:00 vor und sagt nichts dazu — und das ist
+die Seite, auf die 123 der 126 ausgelieferten Seiten verweisen, auch die
+Leerzustände von Heute, Dossier und Geistführung. Gespeichert wird die Zeit
+wie jede andere Angabe; kein Schlüssel hält fest, dass sie geraten war. 43
+ausgelieferte Dateien benutzen `haus(`. Siehe Recherche vom 2026-10-28,
+Spur C: Bei vier erfundenen Geburten an deutschen Breiten trifft 12:00 das
+Aszendenten-Zeichen nur in einem Fenster von 50 bis 173 Minuten; liegt es
+falsch, wandert jeder Punkt um dieselbe Zahl von Häusern weiter und mit ihm
+die Reihenfolge der zehn Bereiche.
+**Fertig, wenn:** `profile.html` am Zeitfeld sagt, was eine geratene Zeit
+kostet, das Profil einen Vermerk darüber führt, ob die Zeit geraten ist, die
+Seiten, deren Kernaussage an den Häusern hängt, diesen Vermerk in einem Satz
+anzeigen, und `pruefe-alles.py` abbricht, sobald eine ausgelieferte Seite
+`haus(` benutzt und den Vermerk nicht liest.
+
+### 30 · Die Berliner Platzvergabe ist keine Warteliste
+`diagnose-weg.html` beschreibt für Berlin eine „gemeinsame zentrale
+Warteliste" der vier Autismus-Spezialambulanzen. Die vier Stellen, die eine
+Anmeldung über die Spezialambulanz der Humboldt-Universität und der erste
+Mittwoch eines Quartals stimmen; das Verfahren nicht — vergeben wird per
+Zufallsverfahren, verteilt wird nach organisatorischen Kriterien, eine Wahl
+der Stelle gibt es nicht, und Rückmeldung bekommt nur, wer einen Platz
+erhält. Damit gilt Schritt 4 derselben Seite („gleichzeitig überall
+anmelden, absagen sobald ein Termin sicher ist") dort gerade nicht. Siehe
+Recherche vom 2026-10-28, Spur C.
+**Fertig, wenn:** der Berlin-Absatz das Verfahren benennt, Schritt 4 Berlin
+ausdrücklich ausnimmt, Quelle und Abrufdatum auf der Seite stehen, und wer
+den Absatz liest, weiß, was er als Nächstes tut.
+
 ---
 
 ## Erledigt
