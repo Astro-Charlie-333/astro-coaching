@@ -338,6 +338,37 @@ a{color:var(--nacht);}
  background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
  border-radius:12px;padding:10px 14px;margin:0 0 14px;}
 
+/* ═══ Was gerade läuft ══════════════════════════════════════ */
+.ht-lauf{display:grid;gap:11px;margin:4px 0 8px;}
+.lf{display:block;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:16px 19px;text-decoration:none;color:var(--tinte,#231F1A);
+ transition:border-color .14s ease;}
+.lf:hover{border-color:var(--nacht,#2E3A5C);}
+.lf-haupt{border-color:var(--nacht,#2E3A5C);padding:21px 24px;
+ box-shadow:0 3px 16px rgba(46,58,92,.06);}
+.lf-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:8px;}
+.lf-ber{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;
+ color:var(--nacht,#2E3A5C);}
+.lf-haupt .lf-ber{font-size:22px;}
+.lf-wann{margin-left:auto;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.5px;color:var(--messing,#9A7235);white-space:nowrap;}
+.lf-was{font-size:15px;line-height:1.6;margin:0;color:var(--tinte,#231F1A);}
+.lf-haupt .lf-was{font-size:16.5px;}
+/* Die Bahn des Fensters: wo stehen wir darin, und wo ist der Höhepunkt. */
+.lf-bahn{position:relative;height:3px;border-radius:2px;margin:13px 0 0;
+ background:var(--linie,#EBE1D2);}
+.lf-bahn i{position:absolute;top:50%;transform:translate(-50%,-50%);display:block;}
+.lf-jetzt{width:9px;height:9px;border-radius:50%;background:var(--nacht,#2E3A5C);
+ box-shadow:0 0 0 3px var(--papier,#FFFDFA);}
+.lf-exakt{width:2px;height:11px;background:var(--messing,#9A7235);border-radius:1px;}
+.lf-tech{margin:11px 0 0;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.5px;line-height:1.5;color:var(--leise,#6B6259);}
+@media(max-width:560px){
+ .lf,.lf-haupt{padding:15px 15px;}
+ .lf-wann{margin-left:0;width:100%;}
+}
+.lf-auch{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--leise,#6B6259);}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -386,6 +417,15 @@ a{color:var(--nacht);}
 </div></div>
 
 <div class="ht-wrap" id="htinhalt">
+
+<!-- Was gerade l&auml;uft: die st&auml;rksten Konstellationen, die das
+     Geburtsbild gerade ber&uuml;hren. Bis zum 28.10. standen sie nirgends —
+     der Rechner kannte sie l&auml;ngst, gezeigt wurden sie nicht. -->
+<div id="htlaeuftteil">
+  <h2 class="ht-h">Was gerade l&auml;uft</h2>
+  <p class="ht-sub">Was gerade auf dein Geburtsbild trifft, das St&auml;rkste zuerst. Wo ein Winkel genau aufgeht, steht der Tag dabei.</p>
+  <div class="ht-lauf" id="htlauf"></div>
+</div>
 
 <div id="htwocheteil">
   <h2 class="ht-h">Was als N&auml;chstes ansteht</h2>
@@ -1687,6 +1727,41 @@ window.AC_LB = {
     return { jd:a, offen:false };
   }
 
+  /* Wann ist der Winkel genau getroffen? Das Fenster sagt von wann
+     bis wann — der Höhepunkt darin stand nirgends. Genau der ist aber
+     das Datum, das einen Menschen interessiert.
+
+     Gesucht wird das Minimum des Abstands zum genauen Winkel. Weil ein
+     Wanderer rückläufig werden kann, wird nicht halbiert, sondern in
+     Schritten abgefahren und danach verfeinert. */
+  function exaktAm(wk, natL, grad, von, bis, jd){
+    var a = (von === null || von === undefined) ? jd - 400 : von;
+    var b = (bis === null || bis === undefined) ? jd + 400 : bis;
+    if(!(b > a)) return null;
+    var schritt = Math.max(0.25, (b - a) / 260);
+    var best = null, bo = 1e9, t;
+    function ab(x){
+      var d = nrm(lon(wk, x) - natL);
+      if(d > 180) d = 360 - d;
+      return Math.abs(d - grad);
+    }
+    for(t = a; t <= b; t += schritt){
+      var o = ab(t);
+      if(o < bo){ bo = o; best = t; }
+    }
+    if(best === null) return null;
+    /* verfeinern */
+    var u = best - schritt, v = best + schritt;
+    for(var i = 0; i < 40; i++){
+      var m1 = u + (v - u) / 3, m2 = v - (v - u) / 3;
+      if(ab(m1) < ab(m2)) v = m2; else u = m1;
+    }
+    var e = (u + v) / 2;
+    /* Nur melden, wenn der Winkel wirklich getroffen wird. Streift ein
+       Wanderer nur und dreht vorher, gibt es keinen Höhepunkt. */
+    return (ab(e) < 0.05) ? e : null;
+  }
+
   function fenster(wk, natL, grad, orb, jd){
     if(!imOrb(wk, natL, grad, orb, jd)) return null;
     var v = kante(wk, natL, grad, orb, jd, -1);
@@ -1736,6 +1811,7 @@ window.AC_LB = {
         if(W.k === zk && A.aspekt === 'konjunktion') continue;   /* Rückkehr, eigene Kategorie */
         var F = fenster(W.k, zl, A.grad, W.orb, jd);
         if(!F) continue;
+        F.exakt = exaktAm(W.k, zl, A.grad, F.von, F.bis, jd);
         var naehe = 1 - (A.ab / W.orb);                          /* 0…1, 1 = exakt */
         out.push({
           form:'aspekt', wanderer:W.k, ziel:zk, zielArt:'planet',
@@ -1756,6 +1832,7 @@ window.AC_LB = {
         if(!A2) continue;
         var F2 = fenster(W.k, al, A2.grad, W.orb, jd);
         if(!F2) continue;
+        F2.exakt = exaktAm(W.k, al, A2.grad, F2.von, F2.bis, jd);
         var n2 = 1 - (A2.ab / W.orb);
         out.push({
           form:'aspekt', wanderer:W.k, ziel:ak, zielArt:'achse',
@@ -3246,7 +3323,7 @@ function wocheBauen(){
    Dasselbe Wissen wie die alte Planetentabelle, nur als das, was
    es für einen Menschen bedeutet. Die Tiefe steht auf bereiche.html;
    hier stehen nur die drei lautesten und einer, der still ist. */
-var BL_CACHE=null;
+var BL_CACHE=null, BL_ALLE=null;
 
 /* Wie lange läuft das noch? Nimmt das Fenster des stärksten laufenden
    Vorgangs. Ohne Datum ist eine laute Phase nur ein Gefühl — die
@@ -3317,7 +3394,7 @@ function bereicheBauen(p){
       if(gew.length) bs=gew;
     }
   }catch(e){}
-  BL_CACHE=bs;
+  BL_CACHE=bs; BL_ALLE=Bl.alle;
 
   /* Wer Bereiche abwählt, soll nicht glauben, dort sei Ruhe.
      Gerechnet wird weiter alles — hier steht, dass ausgeblendet wird. */
@@ -3356,6 +3433,144 @@ function bereicheBauen(p){
       (bis?'<span class="ht-bbis"><span class="ht-bz-l">Wie lange</span>'+
            '<span class="ht-bbis-v">'+esc(bis)+'</span></span>':'')+
       '</a>';
+  }).join('');
+}
+
+/* ── Band: Was gerade läuft ───────────────────────────────────
+   Die stärksten Konstellationen über alle Lebensbereiche hinweg.
+   Der Rechner liefert sie samt Gewicht und Fenster; bis zum 28.10.
+   wurden sie nirgends gezeigt. Mandy: "Die Heute seite hat fast
+   keine coolen Aspekte mehr."
+
+   Die Regel "Inhalt statt Maschinenraum" heißt: nicht damit
+   anfangen. Sie heißt nicht: weglassen. Ab Stufe 2 steht der
+   Aspekt deshalb im Klartext darunter. */
+var LAUF_ZEIGE = 5;
+
+function monatTag(jd){
+  return datVon(jd).toLocaleDateString('de-DE',{day:'numeric',month:'long'});
+}
+/* Wie weit ist das Fenster durch? Gibt null, wenn es keinen Anfang
+   hat — dann ist der Balken eine Behauptung und bleibt weg. */
+function fensterStand(f, jd){
+  if(!f || f.von === null || f.von === undefined || !f.bis) return null;
+  var ganz = f.bis - f.von;
+  if(!(ganz > 0)) return null;
+  return { anteil: Math.max(0, Math.min(1, (jd - f.von) / ganz)),
+           exakt: (f.exakt && f.exakt >= f.von && f.exakt <= f.bis)
+                  ? (f.exakt - f.von) / ganz : null };
+}
+function laufSatz(v){
+  var W = AC_BDAT.WAND[v.wanderer];
+  if(!W) return null;
+  if(v.form === 'durchgang') return W.was;
+  var A = AC_BDAT.ART[v.art];
+  return A ? (W.was + ' ' + A.wie) : W.was;
+}
+/* Der Rechner schreibt die Aspekte klein. Im Deutschen sind das
+   Substantive. Eine Liste statt einer Umschaltung: toLowerCase und
+   Verwandte sind in diesem Projekt verboten, und zwar zu Recht. */
+var ASP_NAME = { konjunktion:'Konjunktion', opposition:'Opposition',
+  quadrat:'Quadrat', trigon:'Trigon', sextil:'Sextil' };
+function aspektName(k){ return ASP_NAME[k] || k; }
+
+function laufTech(v){
+  if(v.form === 'durchgang')
+    return v.wanderer + ' läuft durch das ' + v.haus + '. Haus' +
+           (v.rueck ? ', rückläufig' : '');
+  var t = v.wanderer + ' ' + aspektName(v.aspekt) + ' ' +
+          (v.zielArt === 'achse' ? v.ziel : 'Radix-' + v.ziel);
+  t += ', ' + v.ab.toFixed(1).replace('.', ',') + '° vom genauen Stand';
+  t += v.zu ? ', zulaufend' : ', weggehend';
+  if(v.rueck) t += ', rückläufig';
+  return t;
+}
+function laufBauen(p){
+  var ziel = el('htlauf');
+  if(!ziel) return;
+  if(!window.AC_BER || !window.AC_BDAT || !BL_ALLE){ ziel.innerHTML = ''; return; }
+  var jd = jetztJD();
+
+  /* Ein Aspekt ist ein Ereignis, ein Hausdurchgang ist Wetter.
+     Dieser Abschnitt handelt von Ereignissen — sonst stehen hier
+     fünf Zeilen "läuft durch das 7. Haus" ohne einen einzigen Tag.
+     Durchgänge füllen nur auf, wenn es zu wenige Aspekte gibt. */
+  var nachGewicht = function(a,b){ return b.gewicht - a.gewicht; };
+  var asp = BL_ALLE.filter(function(v){ return v.form === 'aspekt'; }).sort(nachGewicht);
+  var dur = BL_ALLE.filter(function(v){ return v.form !== 'aspekt'; }).sort(nachGewicht);
+
+  /* Höchstens ein Eintrag je Wanderer. Sonst stehen drei Karten
+     untereinander, die wortwörtlich denselben Satz sagen — der Text
+     hängt am Wanderer, nicht am Ziel. Dieselbe Fehlerklasse, die auf
+     der Bereichsseite schon abgefangen wird.
+     Was ein Wanderer sonst noch berührt, steht als Zeile darunter. */
+  var proWanderer = {}, vs = [];
+  asp.forEach(function(v){
+    var k = v.wanderer;
+    if(proWanderer[k]){ proWanderer[k].weitere.push(v); return; }
+    if(vs.length >= LAUF_ZEIGE) return;
+    proWanderer[k] = { haupt:v, weitere:[] };
+    vs.push(v);
+  });
+  if(vs.length < 3){
+    dur.forEach(function(v){
+      if(vs.length >= 3 || proWanderer[v.wanderer]) return;
+      proWanderer[v.wanderer] = { haupt:v, weitere:[] };
+      vs.push(v);
+    });
+  }
+  if(!vs.length){
+    ziel.innerHTML = '<p class="ht-nix">Gerade trifft nichts Größeres auf dein ' +
+      'Geburtsbild. Das ist der Normalfall und kommt häufiger vor als das Gegenteil.</p>';
+    return;
+  }
+  ziel.innerHTML = vs.map(function(v, i){
+    var B = bereichZuHaus(v.haeuser && v.haeuser[0]);
+    var satz = laufSatz(v);
+    if(!satz) return '';
+    var st = fensterStand(v.f, jd);
+    var h = ['<a class="lf' + (i === 0 ? ' lf-haupt' : '') + '" href="bereiche.html#ber-' +
+             esc(B ? B.k : '') + '">'];
+    h.push('<div class="lf-kopf">');
+    h.push('<span class="lf-ber">' + esc(B ? B.name : H_HAUS[(v.haeuser && v.haeuser[0] || 1)-1]) + '</span>');
+    if(v.f && v.f.exakt){
+      var t = tagesAbstand(v.f.exakt);
+      h.push('<span class="lf-wann">' +
+        (t === 0 ? 'heute genau' : t === 1 ? 'morgen genau'
+         : t > 0 ? 'genau am ' + esc(monatTag(v.f.exakt))
+         : 'genau war am ' + esc(monatTag(v.f.exakt))) + '</span>');
+    } else if(v.f && v.f.bis){
+      h.push('<span class="lf-wann">bis ' + esc(monatTag(v.f.bis)) + '</span>');
+    }
+    h.push('</div>');
+    h.push('<p class="lf-was">' + esc(satz) + '</p>');
+    if(st){
+      h.push('<div class="lf-bahn"><i class="lf-jetzt" style="left:' +
+             (st.anteil*100).toFixed(1) + '%"></i>' +
+             (st.exakt !== null ? '<i class="lf-exakt" style="left:' +
+                (st.exakt*100).toFixed(1) + '%"></i>' : '') + '</div>');
+    }
+    /* Was derselbe Wanderer sonst noch berührt — kurz, ohne den
+       Satz zu wiederholen. */
+    var w = proWanderer[v.wanderer] ? proWanderer[v.wanderer].weitere : [];
+    if(w.length){
+      var orte = [], eigener = B ? B.name : null;
+      w.slice(0,4).forEach(function(x){
+        var XB = bereichZuHaus(x.haeuser && x.haeuser[0]);
+        var n = XB ? XB.name : null;
+        /* Den Bereich, auf dem die Karte ohnehin steht, nicht noch
+           einmal aufzählen. */
+        if(n && n !== eigener && orte.indexOf(n) < 0) orte.push(n);
+      });
+      if(orte.length)
+        h.push('<p class="lf-auch">Dasselbe wirkt gerade auch auf: ' +
+               esc(orte.join(', ')) + '</p>');
+    }
+    h.push('<p class="lf-tech ac-tech" data-ab="2">' + esc(laufTech(v)) +
+      (w.length ? ' · dazu ' + esc(String(w.length)) + ' weitere mit ' +
+                  esc(v.wanderer) : '') + '</p>');
+    h.push('</a>');
+    return h.join('');
   }).join('');
 }
 
@@ -3418,13 +3633,14 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  P=P; bereicheBauen(p); jetztBauen(p); radBauen(); wocheBauen(); kapBauen(); anwenden(); stellBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); wocheBauen();
+  kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); jetztBauen(p); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
-    bereicheBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   setInterval(function(){ Q=chartZu(jetztJD()); bereicheBauen(p); jetztBauen(p);
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);

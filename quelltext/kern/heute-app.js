@@ -264,7 +264,7 @@ function wocheBauen(){
    Dasselbe Wissen wie die alte Planetentabelle, nur als das, was
    es für einen Menschen bedeutet. Die Tiefe steht auf bereiche.html;
    hier stehen nur die drei lautesten und einer, der still ist. */
-var BL_CACHE=null;
+var BL_CACHE=null, BL_ALLE=null;
 
 /* Wie lange läuft das noch? Nimmt das Fenster des stärksten laufenden
    Vorgangs. Ohne Datum ist eine laute Phase nur ein Gefühl — die
@@ -335,7 +335,7 @@ function bereicheBauen(p){
       if(gew.length) bs=gew;
     }
   }catch(e){}
-  BL_CACHE=bs;
+  BL_CACHE=bs; BL_ALLE=Bl.alle;
 
   /* Wer Bereiche abwählt, soll nicht glauben, dort sei Ruhe.
      Gerechnet wird weiter alles — hier steht, dass ausgeblendet wird. */
@@ -374,6 +374,144 @@ function bereicheBauen(p){
       (bis?'<span class="ht-bbis"><span class="ht-bz-l">Wie lange</span>'+
            '<span class="ht-bbis-v">'+esc(bis)+'</span></span>':'')+
       '</a>';
+  }).join('');
+}
+
+/* ── Band: Was gerade läuft ───────────────────────────────────
+   Die stärksten Konstellationen über alle Lebensbereiche hinweg.
+   Der Rechner liefert sie samt Gewicht und Fenster; bis zum 28.10.
+   wurden sie nirgends gezeigt. Mandy: "Die Heute seite hat fast
+   keine coolen Aspekte mehr."
+
+   Die Regel "Inhalt statt Maschinenraum" heißt: nicht damit
+   anfangen. Sie heißt nicht: weglassen. Ab Stufe 2 steht der
+   Aspekt deshalb im Klartext darunter. */
+var LAUF_ZEIGE = 5;
+
+function monatTag(jd){
+  return datVon(jd).toLocaleDateString('de-DE',{day:'numeric',month:'long'});
+}
+/* Wie weit ist das Fenster durch? Gibt null, wenn es keinen Anfang
+   hat — dann ist der Balken eine Behauptung und bleibt weg. */
+function fensterStand(f, jd){
+  if(!f || f.von === null || f.von === undefined || !f.bis) return null;
+  var ganz = f.bis - f.von;
+  if(!(ganz > 0)) return null;
+  return { anteil: Math.max(0, Math.min(1, (jd - f.von) / ganz)),
+           exakt: (f.exakt && f.exakt >= f.von && f.exakt <= f.bis)
+                  ? (f.exakt - f.von) / ganz : null };
+}
+function laufSatz(v){
+  var W = AC_BDAT.WAND[v.wanderer];
+  if(!W) return null;
+  if(v.form === 'durchgang') return W.was;
+  var A = AC_BDAT.ART[v.art];
+  return A ? (W.was + ' ' + A.wie) : W.was;
+}
+/* Der Rechner schreibt die Aspekte klein. Im Deutschen sind das
+   Substantive. Eine Liste statt einer Umschaltung: toLowerCase und
+   Verwandte sind in diesem Projekt verboten, und zwar zu Recht. */
+var ASP_NAME = { konjunktion:'Konjunktion', opposition:'Opposition',
+  quadrat:'Quadrat', trigon:'Trigon', sextil:'Sextil' };
+function aspektName(k){ return ASP_NAME[k] || k; }
+
+function laufTech(v){
+  if(v.form === 'durchgang')
+    return v.wanderer + ' läuft durch das ' + v.haus + '. Haus' +
+           (v.rueck ? ', rückläufig' : '');
+  var t = v.wanderer + ' ' + aspektName(v.aspekt) + ' ' +
+          (v.zielArt === 'achse' ? v.ziel : 'Radix-' + v.ziel);
+  t += ', ' + v.ab.toFixed(1).replace('.', ',') + '° vom genauen Stand';
+  t += v.zu ? ', zulaufend' : ', weggehend';
+  if(v.rueck) t += ', rückläufig';
+  return t;
+}
+function laufBauen(p){
+  var ziel = el('htlauf');
+  if(!ziel) return;
+  if(!window.AC_BER || !window.AC_BDAT || !BL_ALLE){ ziel.innerHTML = ''; return; }
+  var jd = jetztJD();
+
+  /* Ein Aspekt ist ein Ereignis, ein Hausdurchgang ist Wetter.
+     Dieser Abschnitt handelt von Ereignissen — sonst stehen hier
+     fünf Zeilen "läuft durch das 7. Haus" ohne einen einzigen Tag.
+     Durchgänge füllen nur auf, wenn es zu wenige Aspekte gibt. */
+  var nachGewicht = function(a,b){ return b.gewicht - a.gewicht; };
+  var asp = BL_ALLE.filter(function(v){ return v.form === 'aspekt'; }).sort(nachGewicht);
+  var dur = BL_ALLE.filter(function(v){ return v.form !== 'aspekt'; }).sort(nachGewicht);
+
+  /* Höchstens ein Eintrag je Wanderer. Sonst stehen drei Karten
+     untereinander, die wortwörtlich denselben Satz sagen — der Text
+     hängt am Wanderer, nicht am Ziel. Dieselbe Fehlerklasse, die auf
+     der Bereichsseite schon abgefangen wird.
+     Was ein Wanderer sonst noch berührt, steht als Zeile darunter. */
+  var proWanderer = {}, vs = [];
+  asp.forEach(function(v){
+    var k = v.wanderer;
+    if(proWanderer[k]){ proWanderer[k].weitere.push(v); return; }
+    if(vs.length >= LAUF_ZEIGE) return;
+    proWanderer[k] = { haupt:v, weitere:[] };
+    vs.push(v);
+  });
+  if(vs.length < 3){
+    dur.forEach(function(v){
+      if(vs.length >= 3 || proWanderer[v.wanderer]) return;
+      proWanderer[v.wanderer] = { haupt:v, weitere:[] };
+      vs.push(v);
+    });
+  }
+  if(!vs.length){
+    ziel.innerHTML = '<p class="ht-nix">Gerade trifft nichts Größeres auf dein ' +
+      'Geburtsbild. Das ist der Normalfall und kommt häufiger vor als das Gegenteil.</p>';
+    return;
+  }
+  ziel.innerHTML = vs.map(function(v, i){
+    var B = bereichZuHaus(v.haeuser && v.haeuser[0]);
+    var satz = laufSatz(v);
+    if(!satz) return '';
+    var st = fensterStand(v.f, jd);
+    var h = ['<a class="lf' + (i === 0 ? ' lf-haupt' : '') + '" href="bereiche.html#ber-' +
+             esc(B ? B.k : '') + '">'];
+    h.push('<div class="lf-kopf">');
+    h.push('<span class="lf-ber">' + esc(B ? B.name : H_HAUS[(v.haeuser && v.haeuser[0] || 1)-1]) + '</span>');
+    if(v.f && v.f.exakt){
+      var t = tagesAbstand(v.f.exakt);
+      h.push('<span class="lf-wann">' +
+        (t === 0 ? 'heute genau' : t === 1 ? 'morgen genau'
+         : t > 0 ? 'genau am ' + esc(monatTag(v.f.exakt))
+         : 'genau war am ' + esc(monatTag(v.f.exakt))) + '</span>');
+    } else if(v.f && v.f.bis){
+      h.push('<span class="lf-wann">bis ' + esc(monatTag(v.f.bis)) + '</span>');
+    }
+    h.push('</div>');
+    h.push('<p class="lf-was">' + esc(satz) + '</p>');
+    if(st){
+      h.push('<div class="lf-bahn"><i class="lf-jetzt" style="left:' +
+             (st.anteil*100).toFixed(1) + '%"></i>' +
+             (st.exakt !== null ? '<i class="lf-exakt" style="left:' +
+                (st.exakt*100).toFixed(1) + '%"></i>' : '') + '</div>');
+    }
+    /* Was derselbe Wanderer sonst noch berührt — kurz, ohne den
+       Satz zu wiederholen. */
+    var w = proWanderer[v.wanderer] ? proWanderer[v.wanderer].weitere : [];
+    if(w.length){
+      var orte = [], eigener = B ? B.name : null;
+      w.slice(0,4).forEach(function(x){
+        var XB = bereichZuHaus(x.haeuser && x.haeuser[0]);
+        var n = XB ? XB.name : null;
+        /* Den Bereich, auf dem die Karte ohnehin steht, nicht noch
+           einmal aufzählen. */
+        if(n && n !== eigener && orte.indexOf(n) < 0) orte.push(n);
+      });
+      if(orte.length)
+        h.push('<p class="lf-auch">Dasselbe wirkt gerade auch auf: ' +
+               esc(orte.join(', ')) + '</p>');
+    }
+    h.push('<p class="lf-tech ac-tech" data-ab="2">' + esc(laufTech(v)) +
+      (w.length ? ' · dazu ' + esc(String(w.length)) + ' weitere mit ' +
+                  esc(v.wanderer) : '') + '</p>');
+    h.push('</a>');
+    return h.join('');
   }).join('');
 }
 
@@ -436,13 +574,14 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  P=P; bereicheBauen(p); jetztBauen(p); radBauen(); wocheBauen(); kapBauen(); anwenden(); stellBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); wocheBauen();
+  kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); jetztBauen(p); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
-    bereicheBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   setInterval(function(){ Q=chartZu(jetztJD()); bereicheBauen(p); jetztBauen(p);
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);

@@ -191,3 +191,34 @@
 .ht-bwhin{font-size:13.8px;line-height:1.55;color:var(--messing,#9A7235);
  background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
  border-radius:12px;padding:10px 14px;margin:0 0 14px;}
+
+/* ═══ Was gerade läuft ══════════════════════════════════════ */
+.ht-lauf{display:grid;gap:11px;margin:4px 0 8px;}
+.lf{display:block;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:16px;padding:16px 19px;text-decoration:none;color:var(--tinte,#231F1A);
+ transition:border-color .14s ease;}
+.lf:hover{border-color:var(--nacht,#2E3A5C);}
+.lf-haupt{border-color:var(--nacht,#2E3A5C);padding:21px 24px;
+ box-shadow:0 3px 16px rgba(46,58,92,.06);}
+.lf-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:8px;}
+.lf-ber{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;
+ color:var(--nacht,#2E3A5C);}
+.lf-haupt .lf-ber{font-size:22px;}
+.lf-wann{margin-left:auto;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.5px;color:var(--messing,#9A7235);white-space:nowrap;}
+.lf-was{font-size:15px;line-height:1.6;margin:0;color:var(--tinte,#231F1A);}
+.lf-haupt .lf-was{font-size:16.5px;}
+/* Die Bahn des Fensters: wo stehen wir darin, und wo ist der Höhepunkt. */
+.lf-bahn{position:relative;height:3px;border-radius:2px;margin:13px 0 0;
+ background:var(--linie,#EBE1D2);}
+.lf-bahn i{position:absolute;top:50%;transform:translate(-50%,-50%);display:block;}
+.lf-jetzt{width:9px;height:9px;border-radius:50%;background:var(--nacht,#2E3A5C);
+ box-shadow:0 0 0 3px var(--papier,#FFFDFA);}
+.lf-exakt{width:2px;height:11px;background:var(--messing,#9A7235);border-radius:1px;}
+.lf-tech{margin:11px 0 0;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.5px;line-height:1.5;color:var(--leise,#6B6259);}
+@media(max-width:560px){
+ .lf,.lf-haupt{padding:15px 15px;}
+ .lf-wann{margin-left:0;width:100%;}
+}
+.lf-auch{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--leise,#6B6259);}
