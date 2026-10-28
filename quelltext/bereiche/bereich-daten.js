@@ -559,8 +559,20 @@
      und wird auch nicht nahegelegt. Und jede Grenze sagt, was
      dieser Bereich über das Leben eines Menschen nicht weiß —
      das ist der Teil, den sonst niemand mitliefert.
-     Eine Diagnose steht hier nie; der Bau prüft das. */
+     Eine Diagnose steht hier nie; der Bau prüft das.
+
+     Seit heute stehen diese Fragen nicht mehr nur im Tiefgang,
+     sondern auf der Seite selbst — in einer zugeklappten Schublade
+     unter den fünf Blöcken jedes Bereichs. REGELN.md Abschnitt 1:
+     Die Sicht der Coachin wird zugeklappt angeboten, nie im
+     Vordergrund. Der Rahmen dafür steht hier und nicht in der
+     Anzeige, damit er geprüft wird wie jeder andere Text. */
   var B_FRAGEN = {
+    rahmen: {
+      titel:'Mit jemand anderem darüber sprechen',
+      vor:'Drei Fragen, die du mitnehmen kannst — zu einer Coachin, in eine Therapie, oder zu jemandem, dem du vertraust. Die Antworten stehen nicht hier, und das ist der Sinn der Fragen.',
+      grenzeVor:'Und was dieser Bereich über dich nicht weiß:'
+    },
     liebe: {
       fragen:[
         'Wann hast du zuletzt etwas gewollt und es auch gesagt?',

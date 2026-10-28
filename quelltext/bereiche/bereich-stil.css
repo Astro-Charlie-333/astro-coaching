@@ -217,3 +217,22 @@
 .b-mehrzeit{margin-top:4px;}
 .b-mehrzeit summary{cursor:pointer;font-size:13.5px;color:var(--messing,#9A7235);}
 .b-mehrzeit .b-zeit{margin-top:9px;}
+
+/* Mit jemand anderem darüber sprechen — die zweite Sicht, zugeklappt.
+   Keine neue Farbe und keine neue Schrift: dieselben Bausteine wie
+   "Zum Nachlesen" darunter, nur als Klappe. Die Zusammenfassung
+   trägt das Messing, damit man sie findet, ohne dass sie den fünf
+   Blöcken darüber die Aufmerksamkeit nimmt. */
+.b-gespr{margin-top:18px;padding-top:14px;border-top:1px dashed var(--linie);}
+.b-gespr > summary{cursor:pointer;list-style:none;font-family:var(--sans,system-ui);
+ font-size:13.5px;letter-spacing:.02em;color:var(--messing,#9A7235);padding:2px 0;}
+.b-gespr > summary::-webkit-details-marker{display:none;}
+.b-gespr > summary:before{content:'+ ';font-family:var(--mono,'JetBrains Mono',monospace);}
+.b-gespr[open] > summary:before{content:'\2013 ';}
+.b-gesprin{margin-top:11px;max-width:640px;}
+.b-gesprvor{font-size:14px!important;line-height:1.6;color:var(--leise);margin-bottom:12px;}
+.b-gesprf{list-style:none;margin:0 0 12px;padding:0;}
+.b-gesprf li{background:var(--papier);border:1px solid var(--linie);border-radius:12px;
+ padding:11px 14px;margin-bottom:7px;font-family:'Fraunces',Georgia,serif;
+ font-size:15.5px;line-height:1.55;color:var(--nacht);}
+.b-gesprg{font-size:13px!important;line-height:1.6;color:var(--leise);margin:0;}
