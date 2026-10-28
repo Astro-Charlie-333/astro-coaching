@@ -161,29 +161,33 @@ Das wird beim Packen erzwungen (`packen.py`), nicht nur hier notiert:
 
 ## 6c · Wie ein Pull Request abgeliefert wird
 
-Seit dem 27.10. ist `main` geschützt: Ein Pull Request kann nur übernommen
-werden, wenn die Prüfung **Alles bauen und prüfen** grün ist, und er muss
-auf dem aktuellen Stand sein.
+Seit dem 27.10. ist `main` geschützt: Ein Pull Request kommt nur durch, wenn
+die Prüfung **Alles bauen und prüfen** grün ist und der Zweig auf dem
+aktuellen Stand steht.
 
-Damit daraus wirklich Zeit gespart wird, **schaltet jede Aufgabe nach dem
-Öffnen ihres Pull Requests die Selbstübernahme ein**:
+**Du musst dafür nichts tun.** Öffne den Pull Request und hör auf. Ein
+Ablauf in `.github/workflows/selbstuebernahme.yml` schaltet die
+Selbstübernahme ein, sobald der Pull Request aus einem Aufgabenzweig
+aufgeht (`taeglich/`, `recherche/`, `pruefung/`, `gestaltung/`,
+`beitraege/`). Ist die Prüfung grün, übernimmt er sich selbst. Ist sie rot,
+bleibt er liegen und schreibt den Grund als Kommentar hinein.
 
-```
-gh api -X PUT repos/Astro-Charlie-333/astro-coaching/pulls/<nr>/ccr/auto_merge \
-  -f merge_method=squash
-```
+### Warum das nicht als Anweisung dasteht
 
-Danach übernimmt sich der Pull Request selbst, sobald die Prüfung grün ist.
-Ist sie rot, bleibt er liegen, bis jemand ihn repariert — das ist der Sinn
-der Sache.
+Bis zum 28.10. stand hier: „Jede Aufgabe schaltet nach dem Öffnen die
+Selbstübernahme ein." Alle Agentinnen lesen diese Datei. Am nächsten Morgen
+hatten zwei von ihnen sie gelesen und es trotzdem nicht getan.
 
-Ohne diesen Schritt wartet jeder Pull Request auf einen Klick von Mandy, und
-die Arbeit liegt herum. Am 26.10. lag eine fertige Textarbeit vier Stunden
-ungenutzt da, weil niemand sie übernommen hat.
+Wer eine nummerierte Schrittliste abarbeitet, führt keine Regel aus, die in
+einem anderen Dokument steht. **Eine Anweisung, an die sich jemand erinnern
+muss, ist keine Automatik.** Das gilt für Menschen wie für Agentinnen, und
+es ist dieselbe Lehre wie bei den Prüfungen in den `bau-*.py`: Was
+verlässlich sein soll, gehört in die Maschine, nicht in einen Satz.
 
-Schlägt der Befehl fehl, ist das kein Grund, den Pull Request zurückzuziehen:
-Er steht dann einfach da und wartet. Den Grund aus der Fehlermeldung in die
-Antwort schreiben, fertig.
+Dazu kam ein Zeitproblem, das von Hand kaum zu treffen ist: GitHub lässt die
+Selbstübernahme nur scharfschalten, **solange die Prüfung noch läuft**. Ist
+sie bereits grün, antwortet es „clean status", und der Pull Request bleibt
+stehen. Der Ablauf startet beim Öffnen und ist damit immer früh genug.
 
 ---
 
