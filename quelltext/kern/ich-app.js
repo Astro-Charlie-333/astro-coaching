@@ -59,6 +59,15 @@ function profil(){
    Kopfform sagt über diesen Menschen nichts (die zwei oder drei
    nach innen laufenden Anlagen sind der Normalfall) und rutscht
    nach hinten, statt den ersten Bildschirm zu belegen. */
+/* Die vier Teile eines Winkelsatzes: was jede der beiden Anlagen
+   will, und was passiert, wenn man ihr zu weit folgt. Die Folge
+   ist der Grund, warum der Satz etwas bedeutet — ohne sie stünden
+   dort zwei Zustände nebeneinander und sonst nichts. */
+function rollenWerte(m){
+  var ra=I_ROLLE[m.a]||{}, rb=I_ROLLE[m.b]||{};
+  return {a:(ra.will||''),   b:(rb.will||''),
+          az:(ra.zuweit||''), bz:(rb.zuweit||'')};
+}
 function kopfForm(m){
   if(m.art==='schwerpunkt')
     return {form:(m.zahl>=3?I_KOPF.spViel:(m.zahl===2?I_KOPF.spZwei:I_KOPF.spEins)),
@@ -68,7 +77,7 @@ function kopfForm(m){
             werte:{nach:bereichName(m.nachHaus)}};
   if(m.art==='winkel')
     return {form:(m.hart?I_KOPF.winkelHart:I_KOPF.winkelWeich),
-            werte:{a:(I_ROLLE[m.a]||''), b:(I_ROLLE[m.b]||'')}};
+            werte:rollenWerte(m)};
   if(m.art==='rueck'){
     if(m.zahl>=4)  return {form:I_KOPF.rueckViel,  werte:{}};
     if(m.zahl===0) return {form:I_KOPF.rueckKeine, werte:{}};
@@ -276,7 +285,7 @@ function merkmalText(m){
   }
   if(m.art==='winkel'){
     return { satz:fuellen(m.hart?I_AUF.winkelHart:I_AUF.winkelWeich,
-               {a:(I_ROLLE[m.a]||''), b:(I_ROLLE[m.b]||'')}),
+               rollenWerte(m)),
              zusatz:(m.stufe==='eng'?I_AUF.winkelEng:''),
              tun:(m.hart?I_AUF.winkelHartTun:I_AUF.winkelWeichTun),
              tech:m.a+' '+m.typ+' '+m.b+', Orbis '+kz(m.orb,2)+'°' };

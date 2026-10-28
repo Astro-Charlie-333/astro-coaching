@@ -230,25 +230,82 @@ for name in ('I_DREI_TITEL', 'I_DREI_SUB', 'I_DREI_BEREICH', 'I_DREI_WIRKUNG',
 
 # Die Rollen: aus ihnen entstehen die Sätze über zwei Anlagen, die
 # sich begegnen. Ohne sie stünden dort Planetennamen.
+PLANETEN_ROLLE = ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter',
+                  'Saturn', 'Uranus', 'Neptun', 'Pluto']
+
 m_rolle = re.search(r"var I_ROLLE=\{", daten)
 if not m_rolle:
     fehler.append('I_ROLLE fehlt — dann stünden im Winkelsatz Planetennamen')
 else:
     rblk = klammerblock(daten, m_rolle.end() - 1)
-    for pk in ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter',
-               'Saturn', 'Uranus', 'Neptun', 'Pluto']:
-        v = feld(rblk, pk)
-        if not v:
+    wills, folgen = [], []
+    for pk in PLANETEN_ROLLE:
+        m_pk = re.search(re.escape(pk) + r"\s*:\s*\{", rblk)
+        if not m_pk:
             fehler.append(f'I_ROLLE.{pk} fehlt')
             continue
-        if len(v) < 15:
-            fehler.append(f'I_ROLLE.{pk} nur {len(v)} Zeichen')
-        lay_texte.append((f'I_ROLLE.{pk}', v))
-    rollen = [feld(rblk, k) for k in ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars',
-                                      'Jupiter', 'Saturn', 'Uranus', 'Neptun', 'Pluto']]
-    if len({r for r in rollen if r}) != len([r for r in rollen if r]):
-        fehler.append('zwei Anlagen haben dieselbe Rolle — dann sagt der '
-                      'Winkelsatz zweimal dasselbe')
+        pblk = klammerblock(rblk, m_pk.end() - 1)
+        will, zuweit = feld(pblk, 'will'), feld(pblk, 'zuweit')
+
+        # „will": eine Handlung, die man sich vorstellen kann. Ein
+        # Relativsatz („wo dir die Umrisse verschwimmen") benennt eine
+        # Stelle statt einer Sache — genau der Satz, über den Mandy am
+        # 28.10. gestolpert ist.
+        if not will:
+            fehler.append(f'I_ROLLE.{pk}.will fehlt')
+        else:
+            if len(will) < 20:
+                fehler.append(f'I_ROLLE.{pk}.will nur {len(will)} Zeichen')
+            if re.match(r'^(wo|was|wie|wofür|womit|worauf|wem)\b', will):
+                fehler.append(f'I_ROLLE.{pk}.will fängt mit „{will.split()[0]}" an — '
+                              'das benennt eine Stelle, keine Handlung')
+            wills.append(will)
+            lay_texte.append((f'I_ROLLE.{pk}.will', will))
+
+        # „zuweit": die Folge. Ein Hauptsatz mit „du" darin — ohne den
+        # bleibt der Winkelsatz bei zwei Zuständen stehen.
+        if not zuweit:
+            fehler.append(f'I_ROLLE.{pk}.zuweit fehlt — ohne Folge sagt der '
+                          'Winkelsatz nur, dass es zwei Dinge gibt')
+        else:
+            if len(zuweit) < 25:
+                fehler.append(f'I_ROLLE.{pk}.zuweit nur {len(zuweit)} Zeichen')
+            if not re.search(r'\bdu\b', zuweit):
+                fehler.append(f'I_ROLLE.{pk}.zuweit ohne „du" — dann ist es '
+                              'keine Folge für den Leser')
+            folgen.append(zuweit)
+            lay_texte.append((f'I_ROLLE.{pk}.zuweit', zuweit))
+
+    for name, liste in (('will', wills), ('zuweit', folgen)):
+        if len(set(liste)) != len(liste):
+            fehler.append(f'zwei Anlagen haben dasselbe „{name}" — dann sagt '
+                          'der Winkelsatz zweimal dasselbe')
+
+# ── Ein gebauter Satz nennt eine Folge, nicht zwei Zustände ────
+# Mandy am 28.10.: „Zwei Dinge in dir arbeiten gegeneinander: worauf
+# du hinauswillst und wo dir die Umrisse verschwimmen. — was soll ein
+# satz bitte bedeuten."
+#
+# Nichts. Zwei Halbsätze mit „und" dazwischen, und danach kommt keine
+# Folge. REGELN.md Abschnitt 7 hält die Regel fest, hier wird sie
+# geprüft: Jede Vorlage, die zwei Rollen einsetzt, braucht ein Wort,
+# das eine Folge anschließt — und die harte Fassung die Folge selbst.
+FOLGEWORT = ('also', 'deshalb', 'weshalb', 'weil', 'sodass', 'dadurch',
+             'darum', 'daher')
+for blockname, blk in (('I_AUF', ablk if m_auf else ''),
+                       ('I_KOPF', kblk if m_kopf else '')):
+    for vn in ('winkelHart', 'winkelWeich'):
+        v = feld(blk, vn) if blk else ''
+        if not v:
+            continue
+        if '{a}' not in v or '{b}' not in v:
+            fehler.append(f'{blockname}.{vn} setzt nicht beide Rollen ein')
+        if not any(w in v.lower() for w in FOLGEWORT):
+            fehler.append(f'{blockname}.{vn} ohne Folgewort — der Satz stellt '
+                          'zwei Zustände nebeneinander und hört auf')
+        if vn == 'winkelHart' and '{az}' not in v:
+            fehler.append('I_AUF/I_KOPF.winkelHart ohne {az} — dann steht da '
+                          'nicht, was aus der Reibung folgt')
 
 # ── Auf Stufe 0 kein Fachwort ──────────────────────────────────
 # Dieselbe Liste wie in bau-bereiche.py. Sie gilt für alles, was ein

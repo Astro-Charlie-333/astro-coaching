@@ -227,37 +227,170 @@ function ereignisse(jd){
       wo:'bereiche.html#ber-'+(sB?sB.k:'')+'|Den Bereich ansehen'});
   });
 
+  /* Aspekte, die in diesem Zeitraum genau aufgehen.
+     Mandy am 28.10.: „Was ist die Woche zB los und highlights der
+     ganzen aspekte." Die Woche kannte bis dahin nur Mond, Lunation
+     und Rückläufigkeit — also alles, was vom Himmel kommt, und
+     nichts, was dein Geburtsbild trifft. Der Tag, an dem ein Winkel
+     genau aufgeht, ist der datierte Termin schlechthin; seit
+     exaktAm() im Bereichsrechner steht, lässt er sich auch nennen. */
+  /* Höchstens ein Tag je Wanderer. Der Satz hängt am Wanderer und
+     nicht am Ziel — ohne diese Sperre stehen zwei Tage in derselben
+     Woche mit wortwörtlich demselben Text. Dieselbe Fehlerklasse,
+     die „Was gerade läuft" schon einmal hatte. */
+  var proW={};
+  if(window.BL_ALLE) BL_ALLE.forEach(function(v){
+    if(v.form!=='aspekt' || !v.f || !v.f.exakt) return;
+    if(tagesAbstand(v.f.exakt)<0 || tagesAbstand(v.f.exakt)>40) return;
+    if(!proW[v.wanderer] || v.gewicht>proW[v.wanderer].gewicht) proW[v.wanderer]=v;
+  });
+  Object.keys(proW).forEach(function(k){
+    var v=proW[k], satz=laufSatz(v); if(!satz) return;
+    var B=bereichZuHaus(v.haeuser && v.haeuser[0]);
+    var nm=B?B.name:H_HAUS[((v.haeuser&&v.haeuser[0])||1)-1];
+    e.push({jd:v.f.exakt, wann:'genau', tag:tagKurz(v.f.exakt), rang:3,
+      tt:nm+': der deutlichste Tag',
+      tx:satz+' An diesem Tag steht der Winkel auf den Grad genau — davor baut '+
+         'es sich auf, danach lässt es nach.',
+      tech:v.wanderer+' '+(ASP_NAME[v.aspekt]||v.aspekt)+' '+v.ziel+', exakt',
+      wo:'bereiche.html#ber-'+(B?B.k:'')+'|Den Bereich ansehen'});
+  });
+
   e.sort(function(a,b){ return a.jd-b.jd; });
   return e;
 }
 
-/* ── Band 2 · Was als Nächstes ansteht ────────────────────── */
-function wocheBauen(){
-  var jd=jetztJD();
-  var e=ereignisse(jd).filter(function(x){ return x.jd>=jd-0.02 && x.jd<=jd+10; }).slice(0,7);
-  if(!e.length){ el('htwoche').innerHTML='<p class="ht-nix">In den nächsten zehn Tagen '+
-    'steht nichts Datiertes an. Das kommt vor und ist eine gute Nachricht.</p>'; return; }
-  el('htwoche').innerHTML=e.map(function(x){
-    /* Was oben schon ausführlich steht, wird hier nur noch
-       eingereiht — damit die Reihenfolge stimmt, ohne dass
-       derselbe Text zweimal auf der Seite steht. */
-    if(AUFMACHER!==null && Math.abs(x.jd-AUFMACHER)<1e-6)
-      return '<div class="we we-oben">'+
-        '<div class="wann"><b>'+esc(x.wann)+'</b>'+esc(x.tag)+'</div>'+
-        '<div class="tt">'+esc(x.tt)+'</div>'+
-        '<div class="tx">Steht oben, ganz am Anfang der Seite.</div></div>';
-    var wo='';
-    if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
-    /* ab: ganze Einträge, die nur Mechanik sind, erscheinen erst
-       ab der genannten Wissensstufe. tech: die Mechanik zu einem
-       Eintrag, der auch ohne sie verständlich ist. */
-    return '<div class="we'+(x.jetzt?' jetzt':'')+(x.ab?' ac-tech':'')+'"'+
-      (x.ab?' data-ab="'+x.ab+'"':'')+'>'+
-      '<div class="wann"><b>'+esc(x.wann)+'</b>'+esc(x.tag)+'</div>'+
-      '<div class="tt">'+esc(x.tt)+'</div><div class="tx">'+x.tx+'</div>'+
-      (x.tech?'<div class="ac-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
-      (x.mit?'<div class="mit"><b>Dafür brauchst du</b>'+esc(x.mit)+'</div>':'')+wo+'</div>';
+/* ── Band 2 · Deine Woche ─────────────────────────────────────
+   Bis zum 28.10. war das eine Liste: sieben Karten mit je eigenem
+   Datum, aus zehn Tagen zusammengesucht. Eine Liste beantwortet
+   „was kommt als Nächstes" — nicht „wie ist meine Woche".
+
+   Jetzt ist der Zeitraum eine Woche, und sie wird als Woche
+   gelesen: ein Satz über ihre Form, ein Band mit sieben Tagen,
+   dann die Tage, an denen etwas steht. Was dahinter liegt, wird
+   nicht angehängt, sondern in einer Zeile genannt.
+   ENTWURF-JETZT.md Abschnitt 3. */
+var WO_TAGE=7;
+var WO_KURZ=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var WO_LANG=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
+/* Kalendertage, über die Sommerzeit hinweg: nicht 86400000
+   addieren, sondern den Tag im Konstruktor weiterzählen. */
+function wocheGerippe(){
+  var n=new Date(), t=[], i;
+  for(i=0;i<WO_TAGE;i++){
+    var d=new Date(n.getFullYear(), n.getMonth(), n.getDate()+i);
+    t.push({d:d, id:'wt-'+d.getMonth()+'-'+d.getDate(),
+            kurz:WO_KURZ[d.getDay()], lang:WO_LANG[d.getDay()],
+            zahl:d.getDate(), ist:(i===0), posten:[], gewicht:0});
+  }
+  return t;
+}
+
+/* Ein Satz über die Form der Woche. Gerechnet, nicht behauptet:
+   das Gewicht ist die Summe der Ränge an diesem Tag. */
+function wocheForm(t){
+  var mit=t.filter(function(x){ return x.posten.length; });
+  if(!mit.length)
+    return 'Diese Woche ist nichts mit festem Termin dabei. Das kommt vor — und es '+
+           'heißt, die Reihenfolge bestimmst du selbst.';
+  var max=t[0], i;
+  for(i=0;i<t.length;i++) if(t[i].gewicht>max.gewicht) max=t[i];
+  /* Ein „schwerster Tag", der aus einer einzigen leisen Sache
+     besteht, ist eine Behauptung. Unter dem Schwellenwert sagt die
+     Woche lieber, dass wenig los ist. */
+  if(max.gewicht<4)
+    return 'Diese Woche ist ruhig: '+(mit.length===1?'an einem Tag':'an '+mit.length+' Tagen')+
+           ' steht etwas mit festem Termin an, und nichts davon wiegt schwer.';
+  var schwer=t.filter(function(x){ return x.gewicht===max.gewicht; });
+  if(schwer.length>2)
+    return 'Diese Woche verteilt sich: an '+mit.length+' von sieben Tagen steht etwas '+
+           'mit festem Termin an, und kein Tag sticht heraus.';
+  var wort=(max.ist?'heute':max.lang), ix=t.indexOf(max);
+  if(ix<=1) return 'Das Gewicht der Woche liegt vorn: '+wort+'. Danach wird es ruhiger.';
+  if(ix>=5) return 'Die Woche fängt ruhig an und wird nach hinten dichter. Der schwerste '+
+                   'Tag ist '+wort+'.';
+  return 'Der schwerste Tag der Woche ist '+wort+'. Davor und danach ist Platz.';
+}
+
+/* Das Band: sieben Tage auf einen Blick. Ein Tag mit Termin ist
+   anklickbar und springt zu seiner Gruppe; ein leerer Tag bleibt
+   stehen, damit die Woche ihre Länge behält. */
+function wocheBand(t){
+  return t.map(function(x){
+    var n=Math.min(x.posten.length,3), p='', i;
+    for(i=0;i<n;i++) p+='<i></i>';
+    var inn='<span class="wt-k">'+esc(x.kurz)+'</span>'+
+            '<span class="wt-z">'+x.zahl+'</span>'+
+            '<span class="wt-p">'+p+'</span>';
+    var kl='wt'+(x.ist?' ist':'')+(x.posten.length?'':' leer');
+    return x.posten.length
+      ? '<a class="'+kl+'" href="#'+x.id+'">'+inn+'</a>'
+      : '<span class="'+kl+'">'+inn+'</span>';
   }).join('');
+}
+
+function postenHtml(x){
+  /* Was oben schon ausführlich steht, wird hier nur noch
+     eingereiht — damit die Reihenfolge stimmt, ohne dass
+     derselbe Text zweimal auf der Seite steht. */
+  if(AUFMACHER!==null && Math.abs(x.jd-AUFMACHER)<1e-6)
+    return '<div class="we we-oben">'+
+      '<div class="wann"><b>'+esc(x.wann)+'</b></div>'+
+      '<div class="tt">'+esc(x.tt)+'</div>'+
+      '<div class="tx">Steht oben, ganz am Anfang der Seite.</div></div>';
+  var wo='';
+  if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
+  /* ab: ganze Einträge, die nur Mechanik sind, erscheinen erst
+     ab der genannten Wissensstufe. tech: die Mechanik zu einem
+     Eintrag, der auch ohne sie verständlich ist. */
+  return '<div class="we'+(x.jetzt?' jetzt':'')+(x.ab?' ac-tech':'')+'"'+
+    (x.ab?' data-ab="'+x.ab+'"':'')+'>'+
+    '<div class="wann"><b>'+esc(x.wann)+'</b></div>'+
+    '<div class="tt">'+esc(x.tt)+'</div><div class="tx">'+x.tx+'</div>'+
+    (x.tech?'<div class="ac-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
+    (x.mit?'<div class="mit"><b>Dafür brauchst du</b>'+esc(x.mit)+'</div>':'')+wo+'</div>';
+}
+
+function wocheBauen(){
+  var jd=jetztJD(), t=wocheGerippe(), alle=ereignisse(jd), danach=[];
+
+  alle.forEach(function(x){
+    var ab=tagesAbstand(x.jd);
+    if(ab<0) return;
+    if(ab<WO_TAGE){ t[ab].posten.push(x); t[ab].gewicht+=(x.rang||0)+1; }
+    else if(ab<=40) danach.push(x);
+  });
+
+  el('htwoform').textContent=wocheForm(t);
+  el('htwoband').innerHTML=wocheBand(t);
+
+  var mit=t.filter(function(x){ return x.posten.length; });
+  el('htwoche').innerHTML = mit.length
+    ? mit.map(function(x){
+        var dat=x.d.toLocaleDateString('de-DE',{day:'numeric',month:'long'});
+        return '<section class="wo-grp" id="'+x.id+'">'+
+          '<h3 class="wo-gh"><b>'+esc(x.ist?'Heute':x.lang)+'</b>'+
+          '<span>'+esc(dat)+'</span></h3>'+
+          x.posten.map(postenHtml).join('')+'</section>';
+      }).join('')
+    : '';
+
+  /* Was hinter der Woche liegt, wird nicht angehängt — sonst ist
+     es wieder eine Liste. Es wird genannt. */
+  var dz=el('htwodanach');
+  if(danach.length){
+    /* Erst die drei stärksten auswählen, dann wieder in die
+       Reihenfolge bringen, in der sie kommen — sonst steht der
+       13. November vor dem 9. */
+    danach.sort(function(a,b){ return (b.rang-a.rang)||(a.jd-b.jd); });
+    danach=danach.slice(0,3).sort(function(a,b){ return a.jd-b.jd; });
+    dz.innerHTML='<b>Danach schon in Sicht:</b> '+danach.map(function(x){
+      return esc(x.tt)+' am '+esc(datVon(x.jd).toLocaleDateString('de-DE',
+        {day:'numeric',month:'long'}));
+    }).join(' · ')+'.';
+    dz.hidden=false;
+  }else{ dz.innerHTML=''; dz.hidden=true; }
 }
 
 /* ── Band 3 · Die lautesten Bereiche ──────────────────────────
