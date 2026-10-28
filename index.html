@@ -460,6 +460,62 @@ a{color:var(--nacht);}
  border-radius:10px;background:var(--messing-bg,#F7EFE1);color:var(--tinte,#231F1A);}
 .th-gross .th-auch{background:rgba(232,201,141,.14);color:#E6E3DA;}
 
+/* Die vier Ecken, an denen es klemmt. */
+.th-felder{list-style:none;margin:0 0 11px;padding:0;display:grid;gap:7px;}
+.th-felder li{font-size:14.6px;line-height:1.55;color:var(--tinte,#231F1A);
+ padding-left:13px;border-left:2px solid var(--linie,#EBE1D2);}
+.th-gross .th-felder li{color:#E6E3DA;border-left-color:rgba(232,201,141,.4);}
+.th-felder li b{display:block;font-size:12.2px;font-weight:400;letter-spacing:.06em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:1px;}
+.th-gross .th-felder li b{color:#E8C98D;}
+
+/* Verschiebbares verschieben — mit der Grenze dazu. */
+.th-schnitt{margin:0 0 10px;padding:11px 13px;border-radius:11px;
+ background:var(--messing-bg,#F7EFE1);}
+.th-gross .th-schnitt{background:rgba(232,201,141,.13);}
+.th-schnitt b{display:block;font-size:13.2px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin-bottom:4px;}
+.th-gross .th-schnitt b{color:#E8C98D;}
+.th-schnitt p{font-size:14.2px;line-height:1.58;margin:0 0 7px;
+ color:var(--tinte,#231F1A);}
+.th-gross .th-schnitt p{color:#E6E3DA;}
+.th-schnitt .th-grenze{font-size:13px;color:var(--leise,#6B6259);
+ border-top:1px solid var(--linie,#EBE1D2);padding-top:7px;margin-bottom:0;}
+.th-gross .th-schnitt .th-grenze{color:#BFC7DC;border-top-color:rgba(243,239,231,.2);}
+.th-schnitt .th-dazu{border-top:0;padding-top:4px;margin-top:4px;}
+
+/* ═══ Schlaf und Bewegung ═══════════════════════════════════ */
+.ht-koerper{border:1px solid var(--linie,#EBE1D2);border-radius:15px;
+ background:var(--papier,#FFFDFA);padding:15px 16px 14px;margin:4px 0 10px;}
+.kp-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;
+ padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid var(--linie,#EBE1D2);}
+.kp-vor{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.2px;
+ letter-spacing:.08em;text-transform:uppercase;color:var(--messing,#9A7235);}
+.kp-kopf b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;
+ font-weight:500;color:var(--nacht,#2E3A5C);}
+.kp-ber{font-size:13.4px;color:var(--leise,#6B6259);}
+.kp-zwei{display:grid;gap:14px;}
+@media(min-width:620px){.kp-zwei{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.kp-t{font-size:11.4px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin-bottom:4px;}
+.kp-k p{font-size:15px;line-height:1.62;margin:0 0 7px;color:var(--tinte,#231F1A);}
+.kp-mess{font-size:13.8px;line-height:1.58;color:var(--leise,#6B6259);
+ border-left:2px solid var(--linie-stark,#DDD0BC);padding-left:10px;}
+.kp-treffer{margin-top:14px;padding-top:12px;border-top:1px solid var(--linie,#EBE1D2);}
+.kp-tr{margin-bottom:10px;}
+.kp-tr b{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
+ font-weight:500;color:var(--nacht,#2E3A5C);margin-bottom:4px;}
+.kp-tr p{font-size:14.8px;line-height:1.6;margin:0 0 5px;color:var(--tinte,#231F1A);}
+.kp-tr .kp-rat{color:var(--nacht,#2E3A5C);}
+.kp-tech{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.6px;
+ line-height:1.5;color:var(--leise,#6B6259);}
+.kp-herkunft{margin-top:13px;display:grid;gap:2px;}
+.kp-selbst{margin-top:12px;padding:11px 13px;border-radius:11px;
+ background:var(--messing-bg,#F7EFE1);font-size:14.2px;line-height:1.6;
+ color:var(--tinte,#231F1A);}
+.kp-selbst b{display:block;font-size:12.2px;font-weight:400;letter-spacing:.06em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -522,6 +578,16 @@ a{color:var(--nacht);}
   <p class="ht-sub" id="htthemensub"></p>
   <div class="ht-themen" id="htthemen"></div>
   <p class="th-langsam" id="htthlangsam"></p>
+</div>
+
+<!-- Schlaf und Bewegung.
+     Der einzige Abschnitt, in dem Gemessenes und &Uuml;berliefertes
+     nebeneinanderstehen &mdash; deshalb stehen sie hier getrennt
+     ausgewiesen und nicht vermischt. -->
+<div id="htkoerperteil">
+  <h2 class="ht-h" id="htkoerperh"></h2>
+  <p class="ht-sub" id="htkoerpersub"></p>
+  <div class="ht-koerper" id="htkoerper"></div>
 </div>
 
 <div id="htlaeuftteil">
@@ -3301,24 +3367,37 @@ var T_RUECK = {
  Merkur:{
   name:'Merkur rückläufig',
   schnell:true,
-  was:'Merkur steht für Absprachen, Technik und alles Geschriebene. Dreimal im Jahr läuft er für etwa drei Wochen scheinbar rückwärts.',
-  tut:'Nachrichten kommen anders an, als sie gemeint waren. Termine verschieben sich, Dateien sind weg, Gespräche, die du für geklärt hieltest, gehen noch einmal von vorn los.',
-  gut:'Alles mit „wieder": wieder aufnehmen, wieder lesen, wieder hinsetzen. Was liegengeblieben ist, geht in diesen Wochen leichter von der Hand als etwas Neues.',
-  dazu:'Was im Netz daraus gemacht wird, ist meist zu groß. Verträge gelten in diesen drei Wochen genauso wie sonst, und Flüge fallen nicht häufiger aus. Was stimmt: Du liest zweimal, und das ist selten verkehrt.'},
+  was:'Merkur steht für zwei Dinge, die zusammengehören: wie du redest, und was ihr miteinander abmacht. Dazu alles, was Sachen von A nach B bringt — Technik, Post, Wege. Dreimal im Jahr läuft er für etwa drei Wochen scheinbar rückwärts.',
+  tut:'Vier Ecken, an denen es in diesen Wochen klemmt:',
+  felder:[
+   ['Reden','Du sagst etwas, und es kommt anders an. Nicht falsch verstanden — anders gewichtet.'],
+   ['Absprachen','Wer was bis wann macht, war klar und ist es plötzlich nicht mehr. Termine verschieben sich doppelt.'],
+   ['Technik','Das Telefon spinnt, die Datei ist weg, das Update kommt zum schlechtesten Moment. Ein Backup ist in diesen Wochen keine Paranoia.'],
+   ['Unterwegs','Anschlüsse werden knapp, Schlüssel bleiben drin, Adressen stimmen nicht. Eine halbe Stunde Puffer spart mehr Nerven, als sie kostet.']],
+  gut:'Alles mit „wieder": wieder aufnehmen, wieder lesen, wieder hinsetzen, wieder melden. Was liegengeblieben ist, geht in diesen Wochen leichter von der Hand als etwas Neues.',
+  dazu:'Was im Netz daraus gemacht wird, ist meist zu groß. Verträge sind in diesen drei Wochen genauso gültig wie sonst, Flüge fallen nicht messbar häufiger aus, und wer jetzt kündigt, bereut es nicht öfter als im Juli. Was näher dran ist: Du liest zweimal und fragst einmal nach — und das ist selten verkehrt, egal wie Merkur läuft.'},
  Venus:{
   name:'Venus rückläufig',
   schnell:true,
-  was:'Venus steht für das, was dir nah ist und was du dir wert bist — Beziehungen, Geschmack, Geld. Alle anderthalb Jahre läuft sie für sechs Wochen rückwärts.',
-  tut:'Alte Namen tauchen wieder auf. Du stellst fest, dass dir etwas nicht mehr gefällt, das lange selbstverständlich war — oder umgekehrt, dass du etwas vermisst, das du abgeschrieben hattest.',
-  gut:'Nachsehen, was du eigentlich willst, bevor du es wieder vergisst. Alte Beziehungen anschauen, ohne sofort etwas daraus machen zu müssen. Preise und Zusagen noch einmal prüfen.',
-  dazu:'Der verbreitete Rat lautet, jetzt nichts zu entscheiden und niemandem zu antworten. Das ist zu viel verlangt für sechs Wochen. Näher dran: Entscheidungen aus diesen Wochen halten seltener, weil sich die Frage danach oft anders stellt.'},
+  was:'Venus steht für das, was dir nah ist und was du dir wert bist — Beziehungen, Geschmack, Geld, und auch dein Verhältnis zum eigenen Aussehen. Alle anderthalb Jahre läuft sie für sechs Wochen rückwärts.',
+  tut:'Drei Ecken, an denen sich in diesen Wochen etwas verschiebt:',
+  felder:[
+   ['Alte Namen','Jemand meldet sich, an den du länger nicht gedacht hast. Oder du denkst an jemanden und greifst fast zum Telefon.'],
+   ['Geschmack','Etwas, das lange selbstverständlich war, gefällt dir plötzlich nicht mehr — oder umgekehrt.'],
+   ['Was es dir wert ist','Preise, Zusagen, Gehalt: Du merkst, wo du dich unter Wert verkauft hast. Manchmal erst, wenn es schon gesagt ist.']],
+  gut:'Nachsehen, was du eigentlich willst, bevor du es wieder vergisst. Alte Beziehungen anschauen, ohne sofort etwas daraus machen zu müssen. Zahlen noch einmal prüfen, bevor du zusagst.',
+  dazu:'Der verbreitete Rat lautet, jetzt gar nichts zu entscheiden und niemandem zu antworten. Das ist für sechs Wochen zu viel verlangt und auch nicht nötig. Näher dran: Entscheidungen aus diesen Wochen halten seltener — nicht, weil etwas schiefgeht, sondern weil sich die Frage danach oft anders stellt.'},
  Mars:{
   name:'Mars rückläufig',
   schnell:true,
-  was:'Mars ist der Antrieb — womit du anfängst und wofür du streitest. Alle zwei Jahre läuft er für gut zwei Monate rückwärts.',
-  tut:'Die Energie geht nach innen. Du fängst Dinge an und verlierst nach drei Tagen die Lust. Ärger kommt verspätet und dann an der falschen Stelle heraus.',
-  gut:'Überarbeiten statt anfangen. Und: zu merken, worüber du dich eigentlich ärgerst, bevor du es jemandem sagst.',
-  dazu:'Das ist die unangenehmste der drei und zugleich die seltenste. Sie kommt nur alle zwei Jahre und dauert dann aber wirklich.'},
+  was:'Mars ist der Antrieb — womit du anfängst, wofür du streitest, und wie viel Kraft du draufsetzt. Alle zwei Jahre läuft er für gut zwei Monate rückwärts.',
+  tut:'Die Kraft geht nach innen, bevor sie wieder nach außen geht:',
+  felder:[
+   ['Anfangen','Du fängst etwas an und verlierst nach drei Tagen die Lust. Das liegt nicht an dir.'],
+   ['Ärger','Er kommt verspätet und dann an der falschen Stelle heraus — meist bei jemandem, der nichts dafür kann.'],
+   ['Körper','Weniger Druck beim Training, mehr Wert auf Erholung. Wer in dieser Zeit etwas erzwingt, zahlt es hinterher.']],
+  gut:'Überarbeiten statt anfangen. Und: herausfinden, worüber du dich eigentlich ärgerst, bevor du es jemandem sagst.',
+  dazu:'Das ist die unangenehmste der drei und zugleich die seltenste — alle zwei Jahre, dafür dann wirklich lang. Was hier nicht steht: dass du in dieser Zeit nichts Neues anfangen „darfst". Du merkst nur deutlicher, was dir ohnehin schwerfällt.'},
  Jupiter:{name:'Jupiter rückläufig', schnell:false,
   was:'Jupiter steht für Wachstum und dafür, wie weit du gehst.',
   tut:'Die großen Pläne gehen in die Prüfung statt in die Umsetzung.',
@@ -3358,12 +3437,20 @@ var T_MOND = {
  neu:{
   name:'Neumond',
   was:'Der Mond steht genau bei der Sonne. Am Himmel ist nichts zu sehen — der dunkelste Punkt des Monats.',
-  tut:'Ein Anfang, der noch niemandem auffällt. Was du jetzt beginnst, hat zwei Wochen Zeit, bis es sichtbar wird.',
+  tut:'Der leiseste Punkt im Monat. Drei Ecken, an denen man das merkt:',
+  felder:[
+   ['Stimmung','Eher nach innen gerichtet als nach außen. Lust auf Gesellschaft ist in diesen Tagen oft gering, und das ist kein Rückzug im schlechten Sinn.'],
+   ['Anfangen','Was du jetzt beginnst, fällt noch niemandem auf. Es hat zwei Wochen Zeit, bis es sichtbar wird — und die braucht es meistens auch.'],
+   ['Schlaf','Die ruhigsten Nächte im Monatslauf, soweit sich das messen lässt. Wenn du lange schläfst, hol es dir.']],
   gut:'Anfangen statt abschließen. Einen Satz aufschreiben, was bis zum Vollmond passiert sein soll.'},
  voll:{
   name:'Vollmond',
   was:'Mond und Sonne stehen sich vom Himmel aus genau gegenüber, deshalb ist der Mond ganz beleuchtet. Der hellste Punkt des Monats, und sein Höhepunkt.',
-  tut:'Sichtbar wird, was vor zwei Wochen angelegt wurde. Gefühle sind lauter als sonst, Entscheidungen fallen schneller — nicht unbedingt besser.',
+  tut:'Der lauteste Punkt im Monat. Drei Ecken, an denen man das merkt:',
+  felder:[
+   ['Stimmung','Gefühle sind lauter als sonst, und Entscheidungen fallen schneller — nicht unbedingt besser. Was dich heute maßlos ärgert, ärgert dich übermorgen normal.'],
+   ['Sichtbar','Was vor zwei Wochen angelegt wurde, zeigt sich jetzt. Oft auch gegenüber anderen, ohne dass du es vorhattest.'],
+   ['Schlaf','In den Nächten davor schlafen Menschen messbar etwas später ein und kürzer. Der Effekt ist klein und hängt offenbar am Licht — mehr dazu unter „Schlaf und Bewegung".']],
   gut:'Abschließen statt anfangen. Und: eine Nacht darüber schlafen, bevor du etwas davon abschickst.'},
  inZeichen:'im Zeichen {zeichen}',
  beiDir:'Bei dir fällt er in den Bereich {bereich}.'};
@@ -3401,6 +3488,35 @@ var T_SONNE = {
   gut:'Abwarten, wenn es an diesem Thema hängt.',
   dazu:'Eine Feinheit aus der klassischen Astrologie, die die meisten Apps nicht kennen.'}};
 
+/* ── Verschiebbares verschieben ───────────────────────────────
+   Mandy am 28.10.: „dass man nicht unbedingt kosmetische eingriffe
+   oder botox etc machen sollte."
+
+   Der Rat ist verbreitet und gehört in der Überlieferung an zwei
+   andere Stellen als die, an der er meist steht:
+
+     Venus rückläufig — weil sich das Urteil darüber verschiebt,
+       was man schön findet. Nicht das Ergebnis wird anders, der
+       Maßstab wird es.
+     Mars rückläufig — die klassische Regel für alles, was
+       schneidet. Mars ist in der Überlieferung die Klinge.
+
+   Merkur rückläufig ist für Verträge, Technik und Wege zuständig,
+   nicht für den Körper.
+
+   Dazu die Grenze, ohne die das hier nicht stehen dürfte: Es geht
+   um Verschiebbares. Was medizinisch nötig ist, richtet sich nach
+   der Ärztin und nach gar nichts sonst (PRODUKT.md Abschnitt 5). */
+var T_SCHNITT = {
+ Venus:{
+  titel:'Kosmetisches lieber später',
+  text:'Die Überlieferung rät in diesen Wochen von Dingen ab, die man wegen des Aussehens macht und auch in sechs Wochen noch machen könnte — Botox, Füller, größere Haarveränderungen, kosmetische Eingriffe. Der Grund ist nicht, dass etwas schiefgeht, sondern dass sich gerade dein Maßstab dafür verschiebt, was dir gefällt. Was du jetzt entscheidest, beurteilst du danach oft anders.'},
+ Mars:{
+  titel:'Nichts, was schneidet',
+  text:'Für alles, was schneidet, gilt in der Überlieferung dasselbe: aufschiebbare Eingriffe lieber aufschieben, bis Mars wieder vorwärts läuft. Mars ist in dieser Lehre die Klinge, und rückwärts heißt: zweimal ansetzen.'},
+ grenze:'Das gilt für Verschiebbares. Was medizinisch nötig ist, entscheidet deine Ärztin — nach dem Befund, nicht nach dem Himmel. Diese Seite ersetzt keine Beratung und rät nie davon ab, einen Termin wahrzunehmen.',
+ beleg:'Das ist eine alte Wahlregel, keine gemessene Wirkung. Es gibt keine Studie, die zeigt, dass kosmetische Eingriffe zu diesen Zeiten schlechter ausgehen. Was die Regel beschreibt, ist etwas anderes und durchaus nachvollziehbar: dass man den eigenen Geschmack in bestimmten Phasen schlechter einschätzt.'};
+
 /* Die Saturnrückkehr. Für die Zielgruppe aus PRODUKT.md Abschnitt 2
    das größte Thema überhaupt — zwischen 27 und 31 zum ersten Mal,
    zwischen 56 und 60 zum zweiten — und auf der Seite kam es bis zum
@@ -3428,6 +3544,100 @@ var T_KOPF = {
  beiDirVor:'Bei dir',
  gutVor:'Gut dafür',
  dazuVor:'Was oft zu groß erzählt wird'};
+
+/* ── Schlaf und Bewegung ──────────────────────────────────────
+   Mandy am 28.10.:
+
+     „mir fiel auf dass ich anhand des Mondes zB besser oder
+      schlechter schlafe … bei mir stier mars 12 haus wenn da mond
+      drin ist dann eher yoga als kraftsport … Wo man mehr auf
+      schlaf wo mehr auf aktivität gehen oder sowas machen sollte.
+      Welcher tag ist passend für was."
+
+   Das ist der Abschnitt, in dem sich zwei Sorten Wissen begegnen,
+   und beide werden hier getrennt ausgewiesen:
+
+   GEMESSEN ist der Zusammenhang zwischen Mondphase und Schlaf.
+   Casiraghi u.a. (Science Advances, 2021) haben drei Gemeinschaften
+   in Argentinien über Monate vermessen: In den Nächten vor dem
+   Vollmond schliefen die Menschen später ein und kürzer. Ohne
+   elektrisches Licht 22 Minuten später und 25 Minuten kürzer, mit
+   wenig Licht 22 und 19, in der Stadt 9 und 11. Dasselbe Muster
+   fand sich bei 464 Studierenden in Seattle. Cajochen u.a.
+   (Current Biology, 2013) fanden im Schlaflabor bei 33 Menschen
+   um den Vollmond rund 20 Minuten weniger Schlaf, fünf Minuten
+   längeres Einschlafen und 30 Prozent weniger Tiefschlafaktivität.
+   Beide Arbeiten sind umstritten: Die Laborauswertung war nachträglich
+   und nicht geplant, Replikationsversuche schlugen fehl, und es gibt
+   die begründete Vermutung, dass Studien ohne Befund seltener
+   veröffentlicht werden. Was bleibt: ein kleiner, mehrfach
+   gefundener Effekt — und eine plausible Ursache, nämlich das Licht.
+
+   ÜBERLIEFERT ist alles Übrige: dass der Mond im Erdzeichen zu
+   anderem Training passt als im Feuerzeichen, dass ein Mond über
+   dem eigenen Mars anders anfühlt. Dafür gibt es keine Messung,
+   und das steht auch so da. */
+
+var T_KOERPER = {
+ titel:'Schlaf und Bewegung',
+ sub:'Wo der Mond gerade steht — und was in deinem Bild er dabei berührt.',
+ heuteVor:'Heute',
+ schlafVor:'Schlaf',
+ bewegungVor:'Bewegung',
+ trefferVor:'Der Mond steht heute auf etwas von dir',
+ gemessenTitel:'Was daran gemessen ist',
+ gemessen:'Nur der Zusammenhang zwischen Mondphase und Schlaf, und auch der ist klein und umstritten. In den Nächten vor dem Vollmond schlafen Menschen etwas später ein und etwas kürzer — in einer argentinischen Feldstudie ohne elektrisches Licht rund 22 Minuten später und 25 Minuten kürzer, in der Stadt nur noch 9 und 11 Minuten. Je mehr künstliches Licht, desto kleiner der Effekt; das spricht dafür, dass es am Licht liegt und nicht am Mond als solchem. Eine Laborarbeit von 2013 fand Ähnliches, ließ sich aber nicht wiederholen.',
+ ueberliefertTitel:'Was Überlieferung ist',
+ ueberliefert:'Alles andere hier. Dass ein Erdmond zu ruhigem Training passt und ein Feuermond zu schnellem, dass ein Mond über deinem Mars sich anders anfühlt — das sind alte Zuordnungen, keine Messungen. Sie taugen als Vorschlag, den du an dir selbst prüfst. Merkst du nichts davon, hat dein Erleben recht.',
+ selbstVor:'Prüf es an dir',
+ selbst:'Das Interessante daran ist nicht, ob die Zuordnung stimmt, sondern ob sie bei dir stimmt. Notier dir zwei Monate lang in einem Satz, wie du geschlafen hast und wonach dir war. Danach weißt du mehr über dich, als jede Tabelle dir sagen kann.'};
+
+/* Die vier Elemente, in Körpersprache statt in Astrologensprache. */
+var T_ELEMENT = {
+ feuer:{name:'Feuer', schlaf:'Du kommst abends schwerer runter, als dir lieb ist. Ein Abend ohne Bildschirm hilft mehr als früher ins Bett gehen.',
+        bewegung:'Gut für alles Schnelle: laufen, tanzen, etwas, das Spaß macht und außer Atem bringt.'},
+ erde:{name:'Erde', schlaf:'Der Schlaf ist eher tief und schwer. Gut möglich, dass du morgens länger brauchst, um wach zu werden.',
+       bewegung:'Gut für alles Langsame mit Gewicht: Kraft, Wandern, lange Einheiten in gleichem Tempo.'},
+ luft:{name:'Luft', schlaf:'Der Kopf macht abends weiter. Aufschreiben, was noch offen ist, wirkt besser als dagegen anzukämpfen.',
+       bewegung:'Gut für alles Bewegliche und Gesellige: Radfahren, Kurse, Sport mit anderen.'},
+ wasser:{name:'Wasser', schlaf:'Oft der beste Schlaf im Monat, dafür lebhaftere Träume. Mehr Schlaf als sonst ist hier keine Schwäche.',
+         bewegung:'Gut für alles Weiche: Schwimmen, Dehnen, Yoga. Weniger gut für Bestzeiten.'}};
+
+/* Was der Mond im eigenen Bild gerade berührt. Nur die Punkte, bei
+   denen die Überlieferung etwas über Körper und Rhythmus sagt —
+   nicht alle zehn, sonst steht jeden Tag irgendetwas da. */
+/* Das Haus, nicht nur der Grad. Mandys eigenes Beispiel war
+   „stier mars 12 haus wenn da mond drin ist" — das ist der
+   Mondlauf durch das Haus, in dem ihr Mars steht, und dauert zwei
+   bis drei Tage. Die genaue Begegnung auf den Grad dauert neun
+   Stunden. Beides ist nützlich, und das Haus ist das häufigere. */
+var T_MONDHAUS = {
+ Mars:{was:'Der Mond läuft diese Tage durch den Bereich, in dem dein Mars steht.',
+       tut:'Zwei bis drei Tage lang liegt dein Antrieb im Licht des Mondes. Manche merken das als Unruhe, manche als Lust auf Bewegung.',
+       rat:'Wenn Training ansteht: eher das Weiche als das Schwere — dehnen, Yoga, Schwimmen statt Bestzeit. Und wenn dir doch nach Kraft ist, hat das Vorrang vor dieser Zeile.'},
+ Saturn:{was:'Der Mond läuft diese Tage durch den Bereich, in dem dein Saturn steht.',
+         tut:'Eine Phase, in der man sich selbst gegenüber leicht zu streng wird.',
+         rat:'Weniger vornehmen. Ruhige Bewegung statt Leistungsmessung.'},
+ Mond:{was:'Der Mond läuft diese Tage durch den Bereich, in dem er bei deiner Geburt stand.',
+       tut:'Einmal im Monat kommt er dort vorbei. In der Überlieferung die Tage, an denen man am ehesten bei sich ist.',
+       rat:'Auf dich hören statt auf den Plan. Was dir zu viel ist, ist dir wahrscheinlich wirklich zu viel.'}};
+
+var T_MONDTREFFER = {
+ Mars:{was:'Der Mond läuft heute über deinen Mars.',
+       tut:'Antrieb und Bedürfnis liegen übereinander. Bei manchen kommt das als Tatendrang heraus, bei anderen als Gereiztheit — und bei vielen als beides nacheinander.',
+       rat:'Wenn dir nach Kraft ist: gern. Wenn nicht, ist heute der Tag, an dem Dehnen oder Yoga mehr bringt als ein Programm durchzuziehen. Beides ist richtig; es kommt darauf an, was du merkst.'},
+ Saturn:{was:'Der Mond läuft heute über deinen Saturn.',
+         tut:'Die Überlieferung hält das für den schwersten Mondtag im Monat: weniger Elan, mehr Ernst, und eine Neigung, streng mit sich zu sein.',
+         rat:'Heute weniger vornehmen und das Wenige fertig machen. Kein Tag für eine Leistungsmessung.'},
+ Mond:{was:'Der Mond steht heute dort, wo er bei deiner Geburt stand.',
+       tut:'Das passiert einmal im Monat. In der Überlieferung ist es der Tag, an dem du am ehesten bei dir selbst bist.',
+       rat:'Ein guter Tag, um auf dich zu hören statt auf einen Plan. Was dir heute zu viel ist, ist dir wahrscheinlich wirklich zu viel.'},
+ Sonne:{was:'Der Mond läuft heute über deine Sonne.',
+        tut:'Was du willst und was du brauchst, zeigen in dieselbe Richtung — das ist selten und fühlt sich leicht an.',
+        rat:'Ein guter Tag für etwas, das dir wichtig ist und das du sonst aufschiebst.'},
+ Venus:{was:'Der Mond läuft heute über deine Venus.',
+        tut:'Ein weicher Tag. Nähe, Essen, Schönes fallen leichter als Disziplin.',
+        rat:'Gut für Bewegung, die sich gut anfühlt, statt für eine, die etwas beweist.'}};
 
 /* Astro-Charlie · Heute — nach Zeitdruck geordnet
    Drei Bänder: was diese Stunde gilt, was diese Woche ein Datum hat,
@@ -3760,8 +3970,20 @@ function themaKarte(o){
   if(o.bahn) h.push(o.bahn);
   if(o.was) h.push('<p class="th-was">'+esc(o.was)+'</p>');
   if(o.tut) h.push('<p class="th-tut">'+esc(o.tut)+'</p>');
+  /* Die vier Ecken, an denen es klemmt. Eine Liste sagt hier mehr
+     als ein Absatz: Mandy am 28.10. wollte genau diese Konkretheit
+     — „wichtig dass technik kaputt gehen kann oder travel
+     Schwierigkeiten". */
+  if(o.felder && o.felder.length)
+    h.push('<ul class="th-felder">'+o.felder.map(function(f){
+      return '<li><b>'+esc(f[0])+'</b>'+esc(f[1])+'</li>'; }).join('')+'</ul>');
   if(o.beiDir) h.push(o.beiDir);
   if(o.auch) h.push('<div class="th-auch">'+esc(o.auch)+'</div>');
+  if(o.schnitt) h.push('<div class="th-schnitt"><b>'+esc(o.schnitt.titel)+'</b>'+
+    '<p>'+esc(o.schnitt.text)+'</p>'+
+    '<p class="th-grenze">'+esc(T_SCHNITT.grenze)+'</p>'+
+    '<details class="th-dazu"><summary>Was daran belegt ist</summary><p>'+
+    esc(T_SCHNITT.beleg)+'</p></details></div>');
   if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
   if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
                     '</summary><p>'+esc(o.dazu)+'</p></details>');
@@ -3786,7 +4008,8 @@ function themenBauen(){
       marke:sp?nochWie(sp.bis,jd):'läuft',
       spanne:sp?(monatTag(sp.von)+' – '+monatTag(sp.bis)):'',
       bahn:sp?spanneBalken(sp.von,sp.bis,jd):'',
-      was:D.was, tut:D.tut, gut:D.gut, dazu:D.dazu,
+      was:D.was, tut:D.tut, felder:D.felder, gut:D.gut, dazu:D.dazu,
+      schnitt:(window.T_SCHNITT?T_SCHNITT[k]:null),
       beiDir:beiDirZeile(lon(k,jd)),
       tech:k+' rückläufig in '+H_SIGNS[zI(lon(k,jd))]+
            /* Das Zeichen der Station nur, wenn es ein anderes ist —
@@ -3815,7 +4038,7 @@ function themenBauen(){
       marke:(t<=0?'heute':t===1?'morgen':tf(T_KOPF.inTagen,{n:t})),
       spanne:wochentagDatum(l.jd)+', '+uhr(l.jd)+' — '+
              tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]}),
-      was:D.was, tut:tut, gut:D.gut, dazu:dazu,
+      was:D.was, tut:tut, felder:D.felder, gut:D.gut, dazu:dazu,
       beiDir:beiDirZeile(ml),
       tech:(art==='neu'?'Neumond':'Vollmond')+' auf '+gr(ml)+' '+H_SIGNS[zI(ml)]+
            (fi?', '+fi.knoten.toFixed(1)+'° vom Mondknoten':'')});
@@ -3885,6 +4108,102 @@ function themenBauen(){
       '<span class="th-leise">'+esc(T_RUECK_LANGSAM.nach)+'</span>';
     lz.hidden=false;
   }else{ lz.innerHTML=''; lz.hidden=true; }
+}
+
+/* ── Schlaf und Bewegung ──────────────────────────────────────
+   Mandy am 28.10.: „mir fiel auf dass ich anhand des Mondes zB
+   besser oder schlechter schlafe … bei mir stier mars 12 haus wenn
+   da mond drin ist dann eher yoga als kraftsport."
+
+   Hier treffen zwei Sorten Wissen aufeinander, und genau deshalb
+   stehen sie getrennt: Der Zusammenhang zwischen Mondphase und
+   Schlaf ist gemessen (klein, umstritten, mehrfach gefunden). Die
+   Zuordnung von Element und Mondstellung zu Training ist
+   Überlieferung. Beides steht da, beides beschriftet. Siehe
+   themen-daten.js. */
+var ELEMENT_VON = ['feuer','erde','luft','wasser'];
+function elementVon(lng){ return ELEMENT_VON[zI(lng)%4]; }
+
+/* Welche Punkte des Geburtsbilds der Mond heute berührt. Orbis 5°:
+   Der Mond läuft gut 13° am Tag, das sind rund neun Stunden — eine
+   Tagesaussage, keine Minutenaussage. */
+function mondTrifft(jd){
+  if(!P || !window.T_MONDTREFFER) return [];
+  var ml=lon('Mond',jd), mh=haus(P,ml), out=[];
+  Object.keys(T_MONDTREFFER).forEach(function(k){
+    if(P[k]===undefined || P[k]===null) return;
+    var ab=Math.abs(((ml-P[k]+540)%360)-180);
+    if(ab<=5){ out.push({k:k, ab:ab, genau:true, D:T_MONDTREFFER[k]}); return; }
+    /* Sonst: dasselbe Haus. Das ist Mandys eigener Fall und dauert
+       zwei bis drei Tage statt neun Stunden — die häufigere und
+       damit brauchbarere Aussage von beiden. */
+    if(window.T_MONDHAUS && T_MONDHAUS[k] && haus(P,P[k])===mh)
+      out.push({k:k, ab:ab, genau:false, D:T_MONDHAUS[k]});
+  });
+  out.sort(function(a,b){ return (b.genau-a.genau) || (a.ab-b.ab); });
+  return out;
+}
+
+/* Die Nächte vor dem Vollmond sind die, in denen gemessen kürzer
+   geschlafen wird. Drei bis fünf Tage davor war der Tiefpunkt. */
+function vorVollmond(jd){
+  var l=[]; try{ l=AC_BOARD.lunationen(jd, jd+7)||[]; }catch(e){ return null; }
+  var v=l.filter(function(x){ return x.art==='voll'; })[0];
+  if(!v) return null;
+  var t=tagesAbstand(v.jd);
+  return (t>=0 && t<=5) ? {jd:v.jd, tage:t} : null;
+}
+
+function koerperBauen(){
+  var ziel=el('htkoerper'); if(!ziel || !window.T_KOERPER) return;
+  el('htkoerperh').textContent=T_KOERPER.titel;
+  el('htkoerpersub').textContent=T_KOERPER.sub;
+  var jd=jetztJD(), ml=lon('Mond',jd), E=T_ELEMENT[elementVon(ml)];
+  var h=[], B=beiDir(ml), vv=vorVollmond(jd);
+
+  h.push('<div class="kp-kopf"><span class="kp-vor">'+esc(T_KOERPER.heuteVor)+'</span>'+
+    '<b>'+esc(E.name)+'mond</b>'+
+    (B?'<span class="kp-ber">bei dir im Bereich '+esc(B.name)+'</span>':'')+'</div>');
+
+  h.push('<div class="kp-zwei">');
+  h.push('<div class="kp-k"><div class="kp-t">'+esc(T_KOERPER.schlafVor)+'</div>'+
+    '<p>'+esc(E.schlaf)+'</p>'+
+    (vv?'<p class="kp-mess">Dazu kommt das Einzige hier, was gemessen ist: '+
+        (vv.tage===0?'Heute ist Vollmond.':'In '+vv.tage+' Tag'+(vv.tage===1?'':'en')+
+         ' ist Vollmond.')+' In den Nächten davor schlafen Menschen im Schnitt etwas '+
+        'später ein und kürzer — ein kleiner Effekt, der umso kleiner wird, je mehr '+
+        'künstliches Licht da ist.</p>':'')+'</div>');
+  h.push('<div class="kp-k"><div class="kp-t">'+esc(T_KOERPER.bewegungVor)+'</div>'+
+    '<p>'+esc(E.bewegung)+'</p></div>');
+  h.push('</div>');
+
+  var tr=mondTrifft(jd);
+  if(tr.length){
+    h.push('<div class="kp-treffer"><div class="kp-t">'+esc(T_KOERPER.trefferVor)+'</div>');
+    tr.slice(0,2).forEach(function(t){
+      h.push('<div class="kp-tr"><b>'+esc(t.D.was)+'</b>'+
+        '<p>'+esc(t.D.tut)+'</p><p class="kp-rat">'+esc(t.D.rat)+'</p>'+
+        '<div class="kp-tech ac-tech" data-ab="2">Mond '+gr(lon('Mond',jd))+' '+
+        H_SIGNS[zI(lon('Mond',jd))]+', dein '+t.k+' auf '+gr(P[t.k])+' '+
+        H_SIGNS[zI(P[t.k])]+' im '+haus(P,P[t.k])+'. Haus'+
+        (t.genau?' — '+t.ab.toFixed(1)+'° Abstand':', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
+        '</div></div>');
+    });
+    h.push('</div>');
+  }
+
+  /* Die Trennung, auf die es hier ankommt. Ohne sie wäre der ganze
+     Abschnitt eine Behauptung mit Studienanstrich. */
+  h.push('<div class="kp-herkunft">');
+  h.push('<details class="th-dazu"><summary>'+esc(T_KOERPER.gemessenTitel)+
+         '</summary><p>'+esc(T_KOERPER.gemessen)+'</p></details>');
+  h.push('<details class="th-dazu"><summary>'+esc(T_KOERPER.ueberliefertTitel)+
+         '</summary><p>'+esc(T_KOERPER.ueberliefert)+'</p></details>');
+  h.push('</div>');
+  h.push('<div class="kp-selbst"><b>'+esc(T_KOERPER.selbstVor)+'</b>'+
+         esc(T_KOERPER.selbst)+'</div>');
+
+  ziel.innerHTML=h.join('');
 }
 
 /* ── Band 2 · Deine Woche ─────────────────────────────────────
@@ -4304,11 +4623,15 @@ function kapBauen(){
     b.addEventListener('click',function(){ kapSetzen(b.getAttribute('data-k')); });
   });
 }
-/* Bei „wenig" bleiben der Kopf und die Bereiche stehen —
-   die Terminliste ist das, was sich am ehesten weglassen lässt. */
+/* Bei „wenig" bleiben der Kopf und die Bereiche stehen.
+   Weggelassen wird, was Zeit zum Lesen braucht: die Terminliste,
+   die ausführlichen Themen und der Abschnitt zu Schlaf und
+   Bewegung. „Was gerade läuft" bleibt — das ist der Kern.
+   Wer wenig Kapazität angibt, hat sie nicht für eine längere
+   Seite, sondern für eine kürzere. */
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
-  ['htwocheteil'].forEach(function(i){
+  ['htwocheteil','htthementeil','htkoerperteil'].forEach(function(i){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
@@ -4334,10 +4657,10 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); wocheBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); koerperBauen(); wocheBauen();
   kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
