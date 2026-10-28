@@ -319,6 +319,25 @@ if zweite:
 else:
     print('  eine Himmelsrechnung, keine abweichende Kopie')
 
+# 6b · die Bausteine am Wurzelort aus ihrer Quelle erneuern
+#      Am 28.10. hat Prüfung 7 genau das gefunden, wofür sie
+#      geschrieben wurde: himmel.js war in quelltext/ geändert und
+#      oben alt. Die Prüfung war richtig — nur ist „daran denken,
+#      die Datei zu kopieren" keine Automatik (REGELN.md 6c).
+#      Also kopiert der Bau sie jetzt, und Prüfung 7 bleibt als
+#      Netz für den Fall, dass jemand oben von Hand ändert.
+erneuert = []
+for oben_js in sorted(wiki.glob('*.js')):
+    if oben_js.is_symlink():
+        continue
+    quellen = [q for q in hier.rglob(oben_js.name)
+               if q.is_file() and not q.is_symlink() and wiki not in q.parents]
+    if len(quellen) == 1 and quellen[0].read_bytes() != oben_js.read_bytes():
+        oben_js.write_bytes(quellen[0].read_bytes())
+        erneuert.append(oben_js.name)
+if erneuert:
+    print('  aus der Quelle erneuert: ' + ', '.join(erneuert))
+
 # 7 · die Bausteine am Wurzelort und ihre Quelle sind gleich
 #     Fehlerklasse: eine Datei liegt zweimal — einmal in quelltext/
 #     als Quelle, einmal oben, wo die Seiten sie wirklich laden.

@@ -34,17 +34,56 @@ Die zweite Sicht wird **zugeklappt** angeboten, nie im Vordergrund.
 
 Konkret:
 
-* Auf Wissensstufe 0 kommt **kein** Planetenname vor, kein Haus, kein Aspekt,
-  kein Zeichen, kein Gradzeichen, kein Fachbegriff.
+* Auf Wissensstufe 0 kommt **kein** Haus vor, kein Aspekt, kein Zeichen,
+  kein Gradzeichen, kein Fachbegriff.
 * Die Mechanik steht in Elementen mit der Klasse `ac-tech` und dem Attribut
   `data-ab="2"`. Sie wird nicht versteckt — sie wartet.
-* Eine Überschrift sagt das Ereignis, nicht die Ursache.
-  Falsch: „Merkur wird rückläufig". Richtig: „Es wird zäher: Beruf".
+* Eine Überschrift sagt, was passiert, nicht nur, woran man es abliest.
 * Eine Seite, die ohne die Mechanik nicht verständlich ist, ist nicht fertig.
 
 Das ist **geprüft**, nicht erhofft: `bau-bereiche.py` und `bau-heute.py`
 brechen ab, wenn auf Stufe 0 eines der verbotenen Wörter sichtbar ist.
 Jede neue Seite bekommt dieselbe Prüfung.
+
+## 2a · Ein Name ist keine Fachsprache
+
+Hier stand bis zum 28.10. eine Zeile, die falsch war:
+
+> ~~Falsch: „Merkur wird rückläufig". Richtig: „Es wird zäher: Beruf".~~
+
+Mandy hat gemerkt, was daraus geworden ist:
+
+> „also auch Themen enthalten wie merkur rückläufig venus rückläufig etc?
+> Sowas halt. Das sind die themen die es spannend machen und wann der
+> nächste vollmond oder neumond ist oder kazimi und was sowas bei einem
+> macht. Also solch themen sind alle nicht mehr vorhanden gewesen."
+
+Sie hatte recht. Die Rechnung kannte das alles seit Monaten — welche
+Planeten rückwärts laufen, jeden Neu- und Vollmond, fertige Sätze dazu.
+Die Seite hat jedes davon in einen Bereichsnamen übersetzt und damit
+unkenntlich gemacht. Es war alles da und nichts davon zu finden.
+
+**Der Unterschied, auf den es ankommt:**
+
+| | Beispiele | auf Stufe 0 |
+|---|---|---|
+| **Mechanik** — verschlüsselt einen Rechenweg, den man kennen muss | Orbis, Konjunktion, Quadrat, Aszendent, Whole Sign, applikativ | nie |
+| **Name** — das Wort, unter dem die Leute die Sache kennen und danach suchen | Merkur rückläufig, Vollmond, Neumond, Kazimi, Sonnenfinsternis | ja, **wenn erklärt** |
+
+„Orbis" wegzulassen macht die Seite zugänglicher. „Merkur rückläufig"
+wegzulassen macht sie unkenntlich: Es ist kein Fachwort, sondern die
+Überschrift, unter der die halbe Zielgruppe das Thema kennt.
+
+**Der Preis für diese Erlaubnis** steht in `bau-heute.py` und ist streng:
+Wer einen Namen nennt, erklärt ihn **auf derselben Karte**, in
+Alltagssprache, **bevor** etwas über seine Wirkung dasteht. Dazu gehört
+jedes Mal, was der Zeitraum taugt — und die Zeile „Was oft zu groß erzählt
+wird", die der verbreiteten Erzählung widerspricht, wo sie übertreibt.
+Ein Name ohne Erklärung ist wieder Fachsprache, und der Bau bricht ab.
+
+Dasselbe gilt für Angst: Ein Thema, das mit „vermeide", „bloß nicht" oder
+„gefährlich" arbeitet, lässt den Bau scheitern. Angst verkauft, und genau
+deshalb steht sie hier nicht (PRODUKT.md Abschnitt 5).
 
 ### Die fünf Stufen
 

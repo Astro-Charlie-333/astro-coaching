@@ -381,7 +381,7 @@ if(uebernommen){
   const st=await ctx.newPage();
   await st.goto(BASIS+'/index.html',{waitUntil:'load'}).catch(e=>f.push('die Startseite bricht ohne Netz ab'));
   const stt=await st.evaluate(()=>document.title).catch(()=>'');
-  if(stt===titelOhne||!/Heute/.test(stt)) f.push('die Startseite steht ohne Netz nicht: '+stt);
+  if(stt===titelOhne||!/Jetzt/.test(stt)) f.push('die Startseite steht ohne Netz nicht: '+stt);
 
   /* 3 · Eine nie besuchte Seite bekommt die Ohne-Netz-Seite, keinen Browserfehler. */
   const q=await ctx.newPage();

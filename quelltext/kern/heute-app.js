@@ -216,7 +216,11 @@ function ereignisse(jd){
     var h=haus(P,s2.lon), sB=bereichZuHaus(h), sN=sB?sB.name:H_HAUS[h-1];
     e.push({jd:s2.jd, wann:tageBis(s2.jd)<=0?'heute':'in '+tageBis(s2.jd)+' T.', tag:tagKurz(s2.jd),
       rang:5,
-      tt:(s2.direkt?'Es geht wieder voran: ':'Es wird zäher: ')+sN,
+      /* Der Name zuerst. „Es wird zäher: Kommunikation" ist dieselbe
+         Information wie „Merkur wird rückläufig" — nur dass niemand
+         sie wiedererkennt. Mandy am 28.10.: „Das sind die themen die
+         es spannend machen." */
+      tt:s2.planet+(s2.direkt?' läuft wieder direkt':' wird rückläufig')+' — '+sN,
       tech:s2.planet+(s2.direkt?' läuft wieder direkt':' wird rückläufig')+
            ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
       tx:(s2.direkt
@@ -258,6 +262,198 @@ function ereignisse(jd){
 
   e.sort(function(a,b){ return a.jd-b.jd; });
   return e;
+}
+
+/* ── Die großen Themen ────────────────────────────────────────
+   Merkur rückläufig, der nächste Vollmond, Kazimi. Die Rechnung
+   wusste das alles schon; gezeigt wurde es nie, weil die Seite
+   jedes Himmelsereignis in einen Bereichsnamen übersetzt hat.
+   „Es wird zäher: Kommunikation" ist dieselbe Information wie
+   „Merkur rückläufig, 24. Oktober bis 13. November" — nur dass
+   niemand sie wiedererkennt. Siehe themen-daten.js. */
+
+function tf(s, w){ return String(s).replace(/\{(\w+)\}/g, function(m,k){
+  return (w && w[k]!==undefined) ? w[k] : m; }); }
+function gr(l){ var g=nrm(l)%30; return Math.floor(g)+'°'+
+  ('0'+Math.floor((g%1)*60)).slice(-2)+'′'; }
+function wochentagDatum(jd){ return datVon(jd).toLocaleDateString('de-DE',
+  {weekday:'long', day:'numeric', month:'long'}); }
+
+/* Wo ein Punkt in deinem Geburtsbild landet — Haus und Bereich. */
+function beiDir(lng){
+  if(lng===null||lng===undefined||!P) return null;
+  var h=haus(P,lng), B=bereichZuHaus(h);
+  return {haus:h, bereich:B, name:(B?B.name:H_HAUS[h-1])};
+}
+function beiDirZeile(lng){
+  var b=beiDir(lng); if(!b) return '';
+  return '<div class="th-z"><b>'+esc(T_KOPF.beiDirVor)+'</b>'+
+    (b.bereich
+      ? '<a href="bereiche.html#ber-'+esc(b.bereich.k)+'">'+esc(b.name)+' →</a>'
+      : esc(b.name))+'</div>';
+}
+
+/* Die Spanne einer Rückläufigkeit: von der Station, die sie
+   eingeleitet hat, bis zu der, die sie beendet. Ohne beide Enden
+   ist „rückläufig" eine Behauptung ohne Zeitraum — und der
+   Zeitraum ist das, wonach gefragt wird. */
+function rueckSpanne(k, jd){
+  var st=[]; try{ st=AC_BOARD.stationen(jd-220, 440)||[]; }catch(e){ return null; }
+  var meine=st.filter(function(s){ return s.planet===k; });
+  var von=null, bis=null, i;
+  for(i=0;i<meine.length;i++){
+    if(meine[i].jd<=jd && !meine[i].direkt) von=meine[i];
+    if(meine[i].jd>jd && meine[i].direkt){ bis=meine[i]; break; }
+  }
+  return (von&&bis) ? {von:von.jd, bis:bis.jd, lon:von.lon} : null;
+}
+
+/* Der Balken, der zeigt, wo im Zeitraum wir heute stehen. */
+function spanneBalken(von, bis, jd){
+  if(!(bis>von)) return '';
+  var a=Math.max(0,Math.min(1,(jd-von)/(bis-von)));
+  return '<div class="th-bahn"><i class="th-jetzt" style="left:'+(a*100).toFixed(1)+'%"></i></div>';
+}
+function nochWie(bis, jd){
+  var t=tagesAbstand(bis);
+  if(t<=0) return T_KOPF.nochEinTag;
+  if(t===1) return 'noch 1 Tag';
+  return tf(T_KOPF.nochTage,{n:t});
+}
+
+function themaKarte(o){
+  var h=['<article class="th'+(o.gross?' th-gross':'')+'">'];
+  h.push('<div class="th-kopf"><h3 class="th-n">'+esc(o.name)+'</h3>'+
+         (o.marke?'<span class="th-marke">'+esc(o.marke)+'</span>':'')+'</div>');
+  if(o.spanne) h.push('<div class="th-spanne">'+esc(o.spanne)+'</div>');
+  if(o.bahn) h.push(o.bahn);
+  if(o.was) h.push('<p class="th-was">'+esc(o.was)+'</p>');
+  if(o.tut) h.push('<p class="th-tut">'+esc(o.tut)+'</p>');
+  if(o.beiDir) h.push(o.beiDir);
+  if(o.auch) h.push('<div class="th-auch">'+esc(o.auch)+'</div>');
+  if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
+  if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
+                    '</summary><p>'+esc(o.dazu)+'</p></details>');
+  if(o.tech) h.push('<div class="th-tech ac-tech" data-ab="2">'+esc(o.tech)+'</div>');
+  h.push('</article>');
+  return h.join('');
+}
+
+function themenBauen(){
+  var ziel=el('htthemen'); if(!ziel || !window.T_RUECK) return;
+  var jd=jetztJD(), karten=[], langsam=[];
+  el('htthemenh').textContent=T_KOPF.titel;
+  el('htthemensub').textContent=T_KOPF.sub;
+
+  /* 1 · Rückläufige Planeten, die schnellen zuerst und groß. */
+  var rueck=[]; try{ rueck=AC_BOARD.jetztRueck(jd)||[]; }catch(e){}
+  rueck.forEach(function(k){
+    var D=T_RUECK[k]; if(!D) return;
+    if(!D.schnell){ langsam.push(D.name.replace(' rückläufig','')); return; }
+    var sp=rueckSpanne(k,jd);
+    karten.push({gross:true, planet:k, name:D.name,
+      marke:sp?nochWie(sp.bis,jd):'läuft',
+      spanne:sp?(monatTag(sp.von)+' – '+monatTag(sp.bis)):'',
+      bahn:sp?spanneBalken(sp.von,sp.bis,jd):'',
+      was:D.was, tut:D.tut, gut:D.gut, dazu:D.dazu,
+      beiDir:beiDirZeile(lon(k,jd)),
+      tech:k+' rückläufig in '+H_SIGNS[zI(lon(k,jd))]+
+           /* Das Zeichen der Station nur, wenn es ein anderes ist —
+              sonst steht zweimal dasselbe Wort in einer Zeile. */
+           (sp && zI(sp.lon)!==zI(lon(k,jd))
+             ? ', rückwärts aus '+H_SIGNS[zI(sp.lon)]:'')});
+  });
+
+  /* 2 · Der nächste Neumond und der nächste Vollmond — beide
+     immer, auch wenn sie noch Wochen hin sind. „Wann ist der
+     nächste Vollmond" muss jederzeit beantwortbar sein. */
+  var lun=[]; try{ lun=AC_BOARD.lunationen(jd, jd+45)||[]; }catch(e){}
+  ['neu','voll'].forEach(function(art){
+    var l=lun.filter(function(x){ return x.art===art; })[0]; if(!l) return;
+    var D=T_MOND[art], ml=moonLon((l.jd-2451545)/36525);
+    var fi=null; try{ fi=AC_HIMMEL.finsternis(l.jd, art); }catch(e){}
+    var nm=D.name, tut=D.tut, dazu='';
+    if(fi){
+      var F=T_FINSTERNIS[fi.art];
+      nm=F.name+(fi.sicher?'':' (möglich)');
+      tut=F.tut+(fi.sicher?'':' '+T_FINSTERNIS.vielleicht);
+      dazu=T_FINSTERNIS.dazu;
+    }
+    var t=tagesAbstand(l.jd);
+    karten.push({gross:!!fi, name:nm,
+      marke:(t<=0?'heute':t===1?'morgen':tf(T_KOPF.inTagen,{n:t})),
+      spanne:wochentagDatum(l.jd)+', '+uhr(l.jd)+' — '+
+             tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]}),
+      was:D.was, tut:tut, gut:D.gut, dazu:dazu,
+      beiDir:beiDirZeile(ml),
+      tech:(art==='neu'?'Neumond':'Vollmond')+' auf '+gr(ml)+' '+H_SIGNS[zI(ml)]+
+           (fi?', '+fi.knoten.toFixed(1)+'° vom Mondknoten':'')});
+  });
+
+  /* 2b · Die Saturnrückkehr. Steht ganz oben, wenn sie läuft: Für
+     die Zielgruppe ist das das größte Thema, das es gibt, und es
+     kommt höchstens zweimal im Leben vor. Gerechnet wird der
+     Abstand des laufenden Saturn zum Saturn der Geburt; das Fenster
+     ist großzügig, weil Saturn in dieser Zeit zwei- bis dreimal
+     über dieselbe Stelle läuft. */
+  if(P && P.Saturn!==undefined && window.T_SATURN){
+    var sg=P.Saturn, ab=Math.abs(((lon('Saturn',jd)-sg+540)%360)-180);
+    if(ab<=8){
+      var pr=profil(), gJD=pr?jdFromUT(pr.y,pr.mo,pr.d,pr.h+pr.mi/60-pr.tz):null;
+      var alter=gJD?Math.floor((jd-gJD)/365.2422):null;
+      var welche=(alter===null?T_SATURN.erste
+                 :alter<45?T_SATURN.erste:(alter<75?T_SATURN.zweite:T_SATURN.dritte));
+      karten.unshift({gross:true, name:T_SATURN.name, marke:T_SATURN.laeuft,
+        spanne:(alter!==null?tf(T_SATURN.nummer,{welche:welche, alter:alter}):''),
+        was:T_SATURN.was, tut:T_SATURN.tut, gut:T_SATURN.gut, dazu:T_SATURN.dazu,
+        beiDir:beiDirZeile(sg),
+        tech:'Saturn auf '+gr(lon('Saturn',jd))+' '+H_SIGNS[zI(lon('Saturn',jd))]+
+             ', dein Saturn auf '+gr(sg)+' '+H_SIGNS[zI(sg)]+' — '+ab.toFixed(1)+'° Abstand'});
+    }
+  }
+
+  /* 3 · Kazimi und Verbrennung. */
+  var kz=null; try{ kz=AC_HIMMEL.naechstesKazimi(jd, 45); }catch(e){}
+  if(kz){
+    var tk=tagesAbstand(kz.jd);
+    karten.push({planet:kz.planet, name:tf(T_SONNE.kazimi.name,{planet:kz.planet}),
+      marke:(tk<=0?'heute':tk===1?'morgen':tf(T_KOPF.inTagen,{n:tk})),
+      spanne:wochentagDatum(kz.jd)+', gegen '+uhr(kz.jd),
+      was:tf(T_SONNE.kazimi.was,{planet:kz.planet}),
+      tut:T_SONNE.kazimi.tut, gut:T_SONNE.kazimi.gut, dazu:T_SONNE.kazimi.dazu,
+      beiDir:beiDirZeile(kz.lon),
+      tech:kz.planet+' in Konjunktion mit der Sonne, Abstand unter '+
+           (AC_HIMMEL.GRENZEN.kazimi*60).toFixed(0)+'′'});
+  }
+  /* Sonnennähe gehört zum Planeten, nicht neben ihn. Ohne diese
+     Zusammenlegung stünde Merkur dreimal untereinander: einmal
+     rückläufig, einmal als Kazimi, einmal unter den Strahlen —
+     dreimal derselbe Planet, dreimal fast derselbe Zeitraum. */
+  var nah=[]; try{ nah=AC_HIMMEL.sonnennah(jd)||[]; }catch(e){}
+  nah.forEach(function(s){
+    if(s.art==='kazimi') return;            /* steht schon oben */
+    var D=T_SONNE[s.art]; if(!D) return;
+    /* Die erste Karte dieses Planeten, nicht die letzte: Bei Merkur
+       stünde die Zeile sonst an der Kazimi-Karte statt an der
+       großen Karte zur Rückläufigkeit. */
+    var schon=null, i;
+    for(i=0;i<karten.length;i++) if(karten[i].planet===s.planet){ schon=karten[i]; break; }
+    if(schon){ schon.auch=tf(D.name,{planet:s.planet})+': '+tf(D.was,{planet:s.planet}); return; }
+    if(s.art==='strahlen') return;          /* zu fein für eine eigene Karte */
+    karten.push({planet:s.planet, name:tf(D.name,{planet:s.planet}), marke:'läuft',
+      was:tf(D.was,{planet:s.planet}), tut:D.tut, gut:D.gut, dazu:D.dazu,
+      beiDir:beiDirZeile(lon(s.planet,jd)),
+      tech:s.planet+' '+s.ab.toFixed(1)+'° von der Sonne'});
+  });
+
+  ziel.innerHTML = karten.length ? karten.map(themaKarte).join('')
+                                 : '<p class="ht-nix">'+esc(T_KOPF.nix)+'</p>';
+  var lz=el('htthlangsam');
+  if(langsam.length){
+    lz.innerHTML='<b>'+esc(T_RUECK_LANGSAM.vor)+'</b> '+esc(langsam.join(', '))+'. '+
+      '<span class="th-leise">'+esc(T_RUECK_LANGSAM.nach)+'</span>';
+    lz.hidden=false;
+  }else{ lz.innerHTML=''; lz.hidden=true; }
 }
 
 /* ── Band 2 · Deine Woche ─────────────────────────────────────
@@ -707,10 +903,10 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); wocheBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); wocheBauen();
   kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
