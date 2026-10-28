@@ -550,6 +550,92 @@ function letzterAspekt(jd, bisJD){
   return best;
 }
 
+/* ── Kazimi und Verbrennung ───────────────────────────────────
+   Mandy am 28.10.: „oder kazimi und was sowas bei einem macht.
+   Also solch themen sind alle nicht mehr vorhanden gewesen."
+
+   Drei Zustände, die die Überlieferung seit der Antike kennt und
+   die bis heute in jedem Astrologie-Feed vorkommen:
+
+     Kazimi      — der Planet steht im Herzen der Sonne, näher als
+                   17 Bogenminuten. Selten; klassisch die stärkste
+                   Stellung, die ein Planet haben kann.
+     Verbrennung — näher als 8,5°, aber nicht im Herzen. Klassisch
+                   die schwächste: Das Thema ist da, aber niemand
+                   sieht es.
+     Unter den Strahlen — näher als 15°, am Himmel noch unsichtbar.
+
+   Gerechnet wird auf die Länge, wie es die Überlieferung tut; die
+   Breite bleibt außen vor. Die Grenzen stehen hier als Zahlen, weil
+   sie sonst niemand nachlesen kann. */
+var SONNENNAH=['Merkur','Venus','Mars','Jupiter','Saturn'];
+var KAZIMI_GRAD=17/60, VERBRANNT_GRAD=8.5, STRAHLEN_GRAD=15;
+
+function sonnenAbstand(k, jd){
+  var d=n360(pLon(k,jd)-pLon('Sonne',jd));
+  return d>180?360-d:d;
+}
+function sonnenlage(k, jd){
+  var ab=sonnenAbstand(k,jd);
+  if(ab<=KAZIMI_GRAD)    return {art:'kazimi',    ab:ab};
+  if(ab<=VERBRANNT_GRAD) return {art:'verbrannt', ab:ab};
+  if(ab<=STRAHLEN_GRAD)  return {art:'strahlen',  ab:ab};
+  return null;
+}
+/* Alle Planeten, die gerade sonnennah stehen, das Engste zuerst. */
+function sonnennah(jd){
+  var out=[];
+  SONNENNAH.forEach(function(k){
+    var s=sonnenlage(k,jd);
+    if(s) out.push({planet:k, art:s.art, ab:s.ab});
+  });
+  out.sort(function(a,b){ return a.ab-b.ab; });
+  return out;
+}
+/* Wann ein Planet das nächste Mal ins Herz der Sonne tritt.
+   Gesucht wird der Durchgang durch 0° Abstand; das Kazimi-Fenster
+   dauert nur Stunden, deshalb wird es minutengenau eingegrenzt. */
+function naechstesKazimi(jd, tage){
+  var best=null;
+  SONNENNAH.forEach(function(k){
+    var d=function(t){ return ((pLon(k,t)-pLon('Sonne',t)+540)%360)-180; };
+    var a=jd, fa=d(a);
+    for(var i=0;i<tage;i++){
+      var b=a+1, fb=d(b);
+      if((fa<0)!==(fb<0) && Math.abs(fa)<30 && Math.abs(fb)<30){
+        var lo=a, hi=b;
+        for(var q=0;q<34;q++){ var m=(lo+hi)/2;
+          if((d(m)<0)===(fa<0)) lo=m; else hi=m; }
+        var t=(lo+hi)/2;
+        if(!best||t<best.jd) best={planet:k, jd:t, lon:pLon(k,t)};
+      }
+      a=b; fa=fb;
+    }
+  });
+  return best;
+}
+
+/* ── Finsternis oder gewöhnliche Lunation ─────────────────────
+   Eine Lunation nahe an einem Mondknoten ist eine Finsternis. Die
+   Grenzen sind die üblichen: Sonnenfinsternis bis etwa 18°,
+   Mondfinsternis bis etwa 12° vom Knoten. Zwischen „sicher" und
+   „möglich" liegt eine Grauzone — die wird als solche benannt und
+   nicht zur Gewissheit gerundet (REGELN.md Abschnitt 4). */
+function knotenAbstand(jd){
+  var T=(jd-2451545)/36525;
+  var kn=n360(nodeLon(T)), s=n360(sunLon(T));
+  var d=Math.abs(((s-kn+540)%360)-180);
+  return Math.min(d, 180-d);
+}
+function finsternis(jd, art){
+  var d=knotenAbstand(jd);
+  var sicher=(art==='neu')?15.4:10.0;
+  var moeglich=(art==='neu')?18.5:12.2;
+  if(d<=sicher)   return {art:(art==='neu'?'sonne':'mond'), sicher:true,  knoten:d};
+  if(d<=moeglich) return {art:(art==='neu'?'sonne':'mond'), sicher:false, knoten:d};
+  return null;
+}
+
 function ohneLauf(jd){
   var zw=naechsterZeichenwechsel(jd);
   if(!zw) return null;
@@ -571,7 +657,13 @@ window.AC_HIMMEL={
   stundenTabelle:stundenTabelle,
   naechsterZeichenwechsel:naechsterZeichenwechsel,
   letzterAspekt:letzterAspekt,
-  ohneLauf:ohneLauf
+  ohneLauf:ohneLauf,
+  sonnenlage:sonnenlage,
+  sonnennah:sonnennah,
+  naechstesKazimi:naechstesKazimi,
+  finsternis:finsternis,
+  knotenAbstand:knotenAbstand,
+  GRENZEN:{kazimi:KAZIMI_GRAD, verbrannt:VERBRANNT_GRAD, strahlen:STRAHLEN_GRAD}
 };
 })();
 

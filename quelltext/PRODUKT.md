@@ -44,6 +44,49 @@ Geschwister, Team.
 machen und interessiert sich für den Menschen vor ihr — **ohne** selbst
 viel Astrologie zu können. Braucht Gesprächsfragen, keine Deutungen.
 
+### Woher sie kommen — und was daraus folgt
+
+Mandy am 28.10.: *„Es soll spannend sein für GenZ und Millenials. Und somit
+sollte man schauen wie man diese generationen abholt und dann auch speziell
+frauen denn das ist ja meine zielgruppe."*
+
+Die fünf oben sind überwiegend zwischen Anfang zwanzig und Mitte vierzig,
+und sie sind fast nie über ein Buch zur Astrologie gekommen, sondern über
+TikTok, Instagram, Co-Star und The Pattern. Daraus folgen vier Sachen, und
+alle vier sind Bauentscheidungen, keine Geschmacksfragen:
+
+**1 · Sie haben schon ein Vokabular.** „Merkur rückläufig", „big three",
+„Saturn Return", „mein Mars in …". Eine Seite, die diese Worte vermeidet,
+wirkt auf sie nicht zugänglicher, sondern wie ein anderes Thema. Deshalb
+Abschnitt 2a in `REGELN.md`: Namen dürfen stehen, wenn sie erklärt werden.
+Was sie *nicht* mitbringen, ist der Rechenweg dahinter — der wartet.
+
+**2 · Sie sind an Verkauf gewöhnt und erkennen ihn.** „Merkur rückläufig —
+unterschreib jetzt bloß nichts!" ist für sie keine Information, sondern ein
+Format. Der Satz, der Vertrauen herstellt, ist der, der der verbreiteten
+Erzählung widerspricht: *was daran zu groß erzählt wird*. Diese Zeile steht
+deshalb auf jeder Themenkarte und ist Pflicht, nicht Zierde.
+
+**3 · Sie teilen Screenshots.** Was hier steht, wird nicht gelesen und
+weggelegt, sondern abfotografiert und weitergeschickt. Ein Befund, der nur
+im Zusammenhang der ganzen Seite stimmt, ist für diese Nutzung kaputt.
+Jede Karte muss allein stehen können: Name, Zeitraum, was es heißt.
+
+**4 · Speziell Frauen heißt hier nicht rosa.** Es heißt:
+
+* Kein Ratschlag, der Überforderung zum Charakterfehler macht. „Du musst
+  nur besser priorisieren" steht hier nicht.
+* Keine Beziehungsseite, die ein männliches Gegenüber voraussetzt. Die
+  Texte zu Partnerschaft funktionieren unabhängig davon, wer gemeint ist.
+* Kein „manifestiere es einfach". Wo etwas an Umständen hängt und nicht an
+  Haltung, steht das da.
+* Selbstwert ist ein eigener Lebensbereich und keine Unterrubrik von
+  Beziehung.
+
+**Die Prüffrage für diese Zielgruppe:** *Würde ich davon einen Screenshot
+machen und ihn einer Freundin schicken?* Wenn nein, ist es entweder zu
+allgemein (gilt für jede) oder zu verklausuliert (versteht keine).
+
 ---
 
 ## 3 · Was es anders macht

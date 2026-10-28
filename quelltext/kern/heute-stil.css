@@ -92,6 +92,63 @@
 .ht-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 22px;max-width:62ch;line-height:1.6;}
 
 /* Band 2 — Diese Woche. Eine echte Folge, also eine Zeitachse. */
+/* ═══ Die großen Themen ═════════════════════════════════════
+   Merkur rückläufig, Vollmond, Kazimi. Karten statt Zeilen: Jedes
+   Thema hat einen Namen, einen Zeitraum und einen Platz in deinem
+   Bild — das ist mehr, als in eine Zeile passt. */
+.ht-themen{display:grid;gap:13px;margin:4px 0 10px;}
+@media(min-width:760px){.ht-themen{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .ht-themen .th-gross{grid-column:1/-1;}}
+.th{border:1px solid var(--linie,#EBE1D2);border-radius:15px;
+ background:var(--papier,#FFFDFA);padding:15px 16px 13px;}
+.th-gross{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#F3EFE7;}
+.th-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+ margin-bottom:3px;}
+.th-n{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.22;margin:0;}
+.th-gross .th-n{color:#FFFDFA;font-size:23.5px;}
+.th-marke{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ letter-spacing:.04em;color:var(--messing,#9A7235);white-space:nowrap;
+ border:1px solid var(--linie,#EBE1D2);border-radius:999px;padding:3px 9px;}
+.th-gross .th-marke{color:#E8C98D;border-color:rgba(232,201,141,.45);}
+.th-spanne{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.6px;
+ color:var(--leise,#6B6259);margin-bottom:9px;}
+.th-gross .th-spanne{color:#BFC7DC;}
+.th-bahn{position:relative;height:3px;border-radius:2px;margin:0 0 11px;
+ background:var(--linie,#EBE1D2);}
+.th-gross .th-bahn{background:rgba(243,239,231,.22);}
+.th-bahn .th-jetzt{position:absolute;top:-3.5px;width:10px;height:10px;border-radius:50%;
+ margin-left:-5px;background:var(--messing,#9A7235);}
+.th-gross .th-bahn .th-jetzt{background:#E8C98D;}
+.th-was{font-size:14.6px;line-height:1.62;color:var(--leise,#6B6259);margin:0 0 8px;}
+.th-gross .th-was{color:#C7CEE0;}
+.th-tut{font-size:15.4px;line-height:1.66;color:var(--tinte,#231F1A);margin:0 0 10px;}
+.th-gross .th-tut{color:#F3EFE7;}
+.th-z{font-size:14.4px;line-height:1.58;margin:0 0 7px;color:var(--tinte,#231F1A);}
+.th-gross .th-z{color:#E6E3DA;}
+.th-z b{display:block;font-size:11.4px;font-weight:400;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:2px;}
+.th-gross .th-z b{color:#E8C98D;}
+.th-z a{color:var(--messing,#9A7235);}
+.th-gross .th-z a{color:#E8C98D;}
+.th-dazu{margin-top:9px;border-top:1px solid var(--linie,#EBE1D2);padding-top:8px;}
+.th-gross .th-dazu{border-top-color:rgba(243,239,231,.2);}
+.th-dazu summary{cursor:pointer;font-size:13.2px;color:var(--leise,#6B6259);
+ list-style:none;}
+.th-gross .th-dazu summary{color:#BFC7DC;}
+.th-dazu summary::-webkit-details-marker{display:none;}
+.th-dazu summary::before{content:'＋ ';font-family:var(--mono,'JetBrains Mono',monospace);}
+.th-dazu[open] summary::before{content:'− ';}
+.th-dazu p{font-size:14px;line-height:1.62;margin:7px 0 0;color:var(--tinte,#231F1A);}
+.th-gross .th-dazu p{color:#E6E3DA;}
+.th-tech{margin-top:9px;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.8px;line-height:1.5;color:var(--leise,#6B6259);}
+.th-gross .th-tech{color:#A9B2C8;}
+.th-langsam{font-size:13.8px;line-height:1.6;color:var(--tinte,#231F1A);
+ margin:2px 0 0;max-width:64ch;}
+.th-langsam b{font-weight:400;color:var(--nacht,#2E3A5C);}
+.th-langsam .th-leise{color:var(--leise,#6B6259);}
+
 /* Die Woche als Woche: Form, Band, dann die Tage. */
 .wo-form{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.4px;line-height:1.45;
  color:var(--nacht,#2E3A5C);margin:0 0 14px;max-width:46ch;}
@@ -251,3 +308,8 @@
  .lf-wann{margin-left:0;width:100%;}
 }
 .lf-auch{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--leise,#6B6259);}
+
+/* Sonnennähe gehört zum Planeten, nicht neben ihn. */
+.th-auch{font-size:13.8px;line-height:1.58;margin:0 0 9px;padding:8px 11px;
+ border-radius:10px;background:var(--messing-bg,#F7EFE1);color:var(--tinte,#231F1A);}
+.th-gross .th-auch{background:rgba(232,201,141,.14);color:#E6E3DA;}

@@ -20,7 +20,7 @@ def lies(p):
 
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Heute &middot; Astro-Charlie</title>
+<title>Jetzt &middot; Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <style>
@@ -45,6 +45,7 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + lies(ber / 'bereich-daten.js') + "\n"
         + lies(ber / 'wahl-daten.js') + "\n"
         + lies(ber / 'wahl-app.js') + "\n"
+        + lies(hier / 'themen-daten.js') + "\n"
         + lies(hier / 'heute-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -184,12 +185,51 @@ const k=await p.evaluate(()=>({
   jetztDa:!document.getElementById('htjetzt').hidden}));
 /* Auf Stufe 0 darf die Startseite keine Fachsprache zeigen. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(400);
-const JARGON=['Konjunktion','Quadrat','Trigon','Sextil','Orbis','Transit','Aszendent',
- 'r\u00fcckl\u00e4ufig','Whole','Radix','Planetenstunde','Planetenstunden',
- 'Pluto','Neptun','Uranus','Saturn','Jupiter','Merkur'];
-const j0=await p.evaluate(J=>{ const t=document.body.innerText;
-  return J.filter(w=>new RegExp('(?<![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])'+w+
-    '(?![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])').test(t)); }, JARGON);
+/* Zwei Listen, nicht eine. Der Unterschied ist der ganze Punkt.
+
+   MECHANIK ist Fachsprache: Worte, die einen Rechenweg verschl\u00fcsseln.
+   Wer \u201eOrbis" nicht kennt, kann es nicht erraten, und es hilft ihm
+   auch nichts. Das bleibt auf Stufe 0 drau\u00dfen.
+
+   NAMEN sind etwas anderes: \u201eMerkur r\u00fcckl\u00e4ufig" und \u201eVollmond" sind
+   die Worte, unter denen die Leute diese Sachen kennen und nach
+   ihnen suchen. Sie wegzulassen macht die Seite nicht
+   zug\u00e4nglicher, sondern unkenntlich \u2014 genau das hat Mandy am
+   28.10. bemerkt. Sie d\u00fcrfen vorkommen; der Preis steht unten:
+   \u201eDie gro\u00dfen Themen" muss sie erkl\u00e4ren. REGELN.md Abschnitt 2a. */
+const MECHANIK=['Konjunktion','Quadrat','Trigon','Sextil','Orbis','Transit',
+ 'Aszendent','Whole','Radix','Planetenstunde','Planetenstunden','Ekliptik',
+ 'Orbis','applikativ','separativ'];
+const NAMEN=['Pluto','Neptun','Uranus','Saturn','Jupiter','Merkur',
+ 'r\u00fcckl\u00e4ufig','Kazimi'];
+const wortDa=(t,x)=>new RegExp('(?<![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])'+x+
+  '(?![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])').test(t);
+const j0=await p.evaluate(J=>{
+  const t=document.body.innerText;
+  return J.filter(x=>new RegExp('(?<![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])'+x+
+    '(?![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])').test(t)); }, MECHANIK);
+/* Welche Namen auf Stufe 0 \u00fcberhaupt vorkommen \u2014 und ob der
+   Abschnitt da ist, der sie erkl\u00e4rt. */
+const n0=await p.evaluate(J=>{
+  const t=document.body.innerText;
+  const w=document.getElementById('htthementeil');
+  return {benutzt:J.filter(x=>new RegExp('(?<![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])'+x+
+    '(?![A-Za-z\u00c4\u00d6\u00dc\u00e4\u00f6\u00fc\u00df])').test(t)),
+    erklaertDa:!!(w && w.offsetParent!==null && w.querySelector('.th-was'))};
+}, NAMEN);
+
+/* Der Preis f\u00fcr diese Ausnahme: Jeder Name muss auf derselben
+   Karte erkl\u00e4rt werden, in Alltagssprache, bevor irgendetwas
+   anderes dasteht. Ein Name ohne Erkl\u00e4rung ist Fachsprache. */
+const th=await p.evaluate(()=>[...document.querySelectorAll('.th')].map(c=>({
+  name:(c.querySelector('.th-n')||{}).textContent||'',
+  was:((c.querySelector('.th-was')||{}).textContent||'').trim(),
+  tut:((c.querySelector('.th-tut')||{}).textContent||'').trim(),
+  gut:!!c.querySelector('.th-z'),
+  wasVorTut:(()=>{ const a=c.querySelector('.th-was'), b=c.querySelector('.th-tut');
+    return (a&&b) ? (a.compareDocumentPosition(b)&4)===4 : true; })(),
+  techSichtbar:[...c.querySelectorAll('.th-tech')].filter(e=>e.offsetParent!==null).length
+})));
 const t0=await p.evaluate(()=>[...document.querySelectorAll('.ac-tech')]
   .filter(e=>e.offsetParent!==null).length);
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(3); }); await p.waitForTimeout(400);
@@ -210,7 +250,7 @@ const einer=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,j0,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,j0,n0,th,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -252,12 +292,53 @@ if pr:
         fehler.append('„Wenig" blendet auch das Jetzt-Band aus')
     if pr['j0']:
         fehler.append('Fachsprache auf Stufe 0 sichtbar: ' + ', '.join(pr['j0']))
+    # Namen darf die Seite nennen — aber nur, solange der Abschnitt
+    # dasteht, der sie erklärt. Ohne ihn wären es doch wieder Worte,
+    # die man kennen muss, um mitzukommen.
+    if pr['n0']['benutzt'] and not pr['n0']['erklaertDa']:
+        fehler.append('Namen auf Stufe 0 (' + ', '.join(pr['n0']['benutzt']) +
+                      '), aber „Die großen Themen" erklärt sie nicht')
     if pr['t0'] != 0:
         fehler.append(f"{pr['t0']} Mechanik-Elemente schon auf Stufe 0 sichtbar")
     if pr['t3'] < 3:
         fehler.append(f"auf Stufe 3 nur {pr['t3']} Mechanik-Elemente — zu wenig")
     import datetime as _dt
     _dtjahr = _dt.date.today().year
+    # ── Die großen Themen: ein Name nur mit Erklärung ──────────
+    # Mandy am 28.10.: „merkur rückläufig venus rückläufig etc …
+    # Das sind die themen die es spannend machen."
+    #
+    # Sie hat recht, und die Grundregel war falsch verstanden:
+    # „Inhalt vor Maschinenraum" heißt, nicht mit Gradzahlen
+    # anzufangen — nicht, die Namen wegzulassen, unter denen die
+    # Leute die Sachen kennen. Dieser Abschnitt darf sie deshalb
+    # nennen. Der Preis dafür steht hier: Wer einen Namen nennt,
+    # erklärt ihn auf derselben Karte, vor allem anderen, in
+    # Alltagssprache. Sonst ist es doch wieder Fachsprache.
+    th = pr['th']
+    if not th:
+        fehler.append('keine einzige Karte unter „Die großen Themen"')
+    for c in th:
+        nm = c['name'].strip() or '(ohne Namen)'
+        if len(c['was']) < 80:
+            fehler.append(f'„{nm}" nennt einen Namen, ohne ihn zu erklären')
+        if not c['wasVorTut']:
+            fehler.append(f'„{nm}": die Erklärung steht hinter der Wirkung')
+        if len(c['tut']) < 60:
+            fehler.append(f'„{nm}" sagt nicht, was es im Leben macht')
+        if not c['gut']:
+            fehler.append(f'„{nm}" sagt nicht, wofür der Zeitraum taugt')
+        if c['techSichtbar']:
+            fehler.append(f'„{nm}" zeigt die Mechanik schon auf Stufe 0')
+    # Angst verkauft und gehört nicht hierher (PRODUKT.md 5).
+    _angst = ('vermeide', 'meide ', 'auf keinen fall', 'bloß nicht', 'gefährlich',
+              'warnung', 'achtung!', 'niemals')
+    for c in th:
+        _t = (c['was'] + ' ' + c['tut']).lower()
+        for w in _angst:
+            if w in _t:
+                fehler.append(f'„{c["name"].strip()}" arbeitet mit Angst: „{w.strip()}"')
+
     # ── Die Woche ist eine Woche ───────────────────────────────
     # Bis zum 28.10. war dieser Abschnitt eine Liste aus zehn Tagen.
     # Eine Liste beantwortet „was kommt als Nächstes", nicht „wie ist
