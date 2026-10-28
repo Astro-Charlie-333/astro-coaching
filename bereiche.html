@@ -341,6 +341,25 @@ a{color:var(--nacht);}
 .b-mehrzeit summary{cursor:pointer;font-size:13.5px;color:var(--messing,#9A7235);}
 .b-mehrzeit .b-zeit{margin-top:9px;}
 
+/* Mit jemand anderem darüber sprechen — die zweite Sicht, zugeklappt.
+   Keine neue Farbe und keine neue Schrift: dieselben Bausteine wie
+   "Zum Nachlesen" darunter, nur als Klappe. Die Zusammenfassung
+   trägt das Messing, damit man sie findet, ohne dass sie den fünf
+   Blöcken darüber die Aufmerksamkeit nimmt. */
+.b-gespr{margin-top:18px;padding-top:14px;border-top:1px dashed var(--linie);}
+.b-gespr > summary{cursor:pointer;list-style:none;font-family:var(--sans,system-ui);
+ font-size:13.5px;letter-spacing:.02em;color:var(--messing,#9A7235);padding:2px 0;}
+.b-gespr > summary::-webkit-details-marker{display:none;}
+.b-gespr > summary:before{content:'+ ';font-family:var(--mono,'JetBrains Mono',monospace);}
+.b-gespr[open] > summary:before{content:'\2013 ';}
+.b-gesprin{margin-top:11px;max-width:640px;}
+.b-gesprvor{font-size:14px!important;line-height:1.6;color:var(--leise);margin-bottom:12px;}
+.b-gesprf{list-style:none;margin:0 0 12px;padding:0;}
+.b-gesprf li{background:var(--papier);border:1px solid var(--linie);border-radius:12px;
+ padding:11px 14px;margin-bottom:7px;font-family:'Fraunces',Georgia,serif;
+ font-size:15.5px;line-height:1.55;color:var(--nacht);}
+.b-gesprg{font-size:13px!important;line-height:1.6;color:var(--leise);margin:0;}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -1931,8 +1950,20 @@ window.AC_LB = {
      und wird auch nicht nahegelegt. Und jede Grenze sagt, was
      dieser Bereich über das Leben eines Menschen nicht weiß —
      das ist der Teil, den sonst niemand mitliefert.
-     Eine Diagnose steht hier nie; der Bau prüft das. */
+     Eine Diagnose steht hier nie; der Bau prüft das.
+
+     Seit heute stehen diese Fragen nicht mehr nur im Tiefgang,
+     sondern auf der Seite selbst — in einer zugeklappten Schublade
+     unter den fünf Blöcken jedes Bereichs. REGELN.md Abschnitt 1:
+     Die Sicht der Coachin wird zugeklappt angeboten, nie im
+     Vordergrund. Der Rahmen dafür steht hier und nicht in der
+     Anzeige, damit er geprüft wird wie jeder andere Text. */
   var B_FRAGEN = {
+    rahmen: {
+      titel:'Mit jemand anderem darüber sprechen',
+      vor:'Drei Fragen, die du mitnehmen kannst — zu einer Coachin, in eine Therapie, oder zu jemandem, dem du vertraust. Die Antworten stehen nicht hier, und das ist der Sinn der Fragen.',
+      grenzeVor:'Und was dieser Bereich über dich nicht weiß:'
+    },
     liebe: {
       fragen:[
         'Wann hast du zuletzt etwas gewollt und es auch gesagt?',
@@ -2847,6 +2878,33 @@ window.AC_WAHL = {
              (tp ? 'Natal darin: ' + esc(tp) + ' Haus.' : 'Natal unbesetzt.') + '</p>');
     }
     h.push('</div>');
+
+    /* Mit jemand anderem darüber sprechen. Die zweite Sicht aus
+       REGELN.md Abschnitt 1: Dieselbe Seite muss einer Coachin
+       erlauben, mit einem Menschen zu arbeiten — Gesprächsfragen und
+       das Eingeständnis, wo die Methode nichts hergibt.
+
+       Zugeklappt, nie im Vordergrund. Und ohne Schloss: Die Fragen
+       stehen im Quelltext und sind es auch wert, gefunden zu werden;
+       die Klappe hält sie aus dem Weg, sie hält sie nicht zurück.
+
+       Die drei Fragen und die Grenze gingen bisher nur in den
+       Tiefgang, also in eine Datei, die jemand erst anfordern muss.
+       Wer die Seite liest, bekam den Teil nie zu sehen, der aus dem
+       Befund ein Gespräch macht. Gezeichnet wird hier, geschrieben
+       wird in bereich-daten.js. */
+    var FR = (bD().FRAGEN || {})[b.k], RH = (bD().FRAGEN || {}).rahmen;
+    if(FR && RH && FR.fragen && FR.grenze){
+      h.push('<details class="b-gespr"><summary>' + esc(RH.titel) + '</summary>');
+      h.push('<div class="b-gesprin">');
+      h.push('<p class="b-gesprvor">' + esc(RH.vor) + '</p>');
+      h.push('<ul class="b-gesprf">');
+      for(var qi=0; qi<FR.fragen.length; qi++)
+        h.push('<li>' + esc(FR.fragen[qi]) + '</li>');
+      h.push('</ul>');
+      h.push('<p class="b-gesprg">' + esc(RH.grenzeVor) + ' ' + esc(FR.grenze) + '</p>');
+      h.push('</div></details>');
+    }
 
     /* Der Tiefgang zu diesem Bereich. Kein Schalter, der
        Freischalten vortäuscht: der Text ist nicht verborgen,

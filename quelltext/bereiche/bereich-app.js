@@ -231,6 +231,33 @@
     }
     h.push('</div>');
 
+    /* Mit jemand anderem darüber sprechen. Die zweite Sicht aus
+       REGELN.md Abschnitt 1: Dieselbe Seite muss einer Coachin
+       erlauben, mit einem Menschen zu arbeiten — Gesprächsfragen und
+       das Eingeständnis, wo die Methode nichts hergibt.
+
+       Zugeklappt, nie im Vordergrund. Und ohne Schloss: Die Fragen
+       stehen im Quelltext und sind es auch wert, gefunden zu werden;
+       die Klappe hält sie aus dem Weg, sie hält sie nicht zurück.
+
+       Die drei Fragen und die Grenze gingen bisher nur in den
+       Tiefgang, also in eine Datei, die jemand erst anfordern muss.
+       Wer die Seite liest, bekam den Teil nie zu sehen, der aus dem
+       Befund ein Gespräch macht. Gezeichnet wird hier, geschrieben
+       wird in bereich-daten.js. */
+    var FR = (bD().FRAGEN || {})[b.k], RH = (bD().FRAGEN || {}).rahmen;
+    if(FR && RH && FR.fragen && FR.grenze){
+      h.push('<details class="b-gespr"><summary>' + esc(RH.titel) + '</summary>');
+      h.push('<div class="b-gesprin">');
+      h.push('<p class="b-gesprvor">' + esc(RH.vor) + '</p>');
+      h.push('<ul class="b-gesprf">');
+      for(var qi=0; qi<FR.fragen.length; qi++)
+        h.push('<li>' + esc(FR.fragen[qi]) + '</li>');
+      h.push('</ul>');
+      h.push('<p class="b-gesprg">' + esc(RH.grenzeVor) + ' ' + esc(FR.grenze) + '</p>');
+      h.push('</div></details>');
+    }
+
     /* Der Tiefgang zu diesem Bereich. Kein Schalter, der
        Freischalten vortäuscht: der Text ist nicht verborgen,
        sondern wird beim Antippen hier geschrieben und als Datei

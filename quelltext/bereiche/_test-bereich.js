@@ -657,8 +657,10 @@ CHARTS.forEach((pd, ci) => {
 const DIAGNOSE = ['Diagnose','diagnos','Störung','Syndrom','krank','Krankheit',
   'Depression','depressiv','Trauma','traumat','ADHS','Autismus','autistisch',
   'Burnout','therapieren','behandeln','leidest','Patient','Befund'];
-BD.BER && Object.keys(BD.FRAGEN).forEach(bk => {
-  const FR = BD.FRAGEN[bk];
+const FRBER = Object.keys(BD.BER || {});
+FRBER.forEach(bk => {
+  const FR = BD.FRAGEN[bk] || {fragen:[], grenze:''};
+  p('Fragen ' + bk + ': vorhanden', !!BD.FRAGEN[bk]);
   p('Fragen ' + bk + ': genau drei', FR.fragen.length === 3, String(FR.fragen.length));
   p('Fragen ' + bk + ': keine zweimal', new Set(FR.fragen).size === 3);
   FR.fragen.forEach((f, i) => {
@@ -677,13 +679,30 @@ BD.BER && Object.keys(BD.FRAGEN).forEach(bk => {
     !DIAGNOSE.some(d => FR.grenze.indexOf(d) >= 0));
 });
 p('alle zehn Bereiche haben Gesprächsfragen',
-  Object.keys(BD.FRAGEN).length === 10, String(Object.keys(BD.FRAGEN).length));
+  FRBER.length === 10 && FRBER.every(k => !!BD.FRAGEN[k]), String(FRBER.length));
 p('keine zwei Bereiche haben dieselbe Grenze',
-  new Set(Object.keys(BD.FRAGEN).map(k => BD.FRAGEN[k].grenze)).size === 10);
+  new Set(FRBER.map(k => (BD.FRAGEN[k] || {}).grenze)).size === 10);
 let alleFragen = [];
-Object.keys(BD.FRAGEN).forEach(k => { alleFragen = alleFragen.concat(BD.FRAGEN[k].fragen); });
+FRBER.forEach(k => { alleFragen = alleFragen.concat((BD.FRAGEN[k] || {}).fragen || []); });
 p('keine Frage kommt in zwei Bereichen vor',
   new Set(alleFragen).size === alleFragen.length);
+
+/* Der Rahmen der Schublade auf der Seite. Er trägt die Überschrift
+   und den Satz, der sagt, dass hier Fragen stehen und keine
+   Antworten — ohne ihn liest sich die Schublade wie eine Deutung. */
+const RH = BD.FRAGEN.rahmen || {};
+p('die Schublade hat eine Überschrift', (RH.titel || '').length >= 20, RH.titel);
+p('die Schublade sagt, wofür die Fragen da sind',
+  (RH.vor || '').length >= 80, String((RH.vor || '').length));
+p('die Schublade sagt, dass die Antworten nicht hier stehen',
+  (RH.vor || '').indexOf('Antwort') >= 0);
+p('die Schublade kündigt die Grenze an', (RH.grenzeVor || '').length >= 15, RH.grenzeVor);
+['titel', 'vor', 'grenzeVor'].forEach(f => {
+  p('Rahmen ' + f + ': ohne Fachwort', jargonIn(RH[f] || '').length === 0,
+    jargonIn(RH[f] || '').join(', '));
+  p('Rahmen ' + f + ': keine Diagnose',
+    !DIAGNOSE.some(d => (RH[f] || '').indexOf(d) >= 0));
+});
 
 /* ── 19. Zeitspannen und Fenster ─────────────────────────────
    Unter einem Jahr in Monaten oder Wochen, darüber in Jahren —

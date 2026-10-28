@@ -429,6 +429,7 @@ DIAGNOSE = ['Diagnose', 'diagnos', 'Störung', 'Syndrom', 'krank', 'Krankheit',
             'Depression', 'depressiv', 'Trauma', 'traumat', 'ADHS', 'Autismus',
             'autistisch', 'Burnout', 'therapieren', 'behandeln', 'leidest',
             'Patient', 'Befund']
+fragen_je, grenze_je, rah_texte = {}, {}, {}
 m_fra = re.search(r"var B_FRAGEN = \{", daten)
 if not m_fra:
     fehler.append('B_FRAGEN fehlt — die Bereiche haben keine Gesprächsfragen')
@@ -456,6 +457,7 @@ else:
                                   f'("{d}"): "{f_[:60]}"')
             lay_texte.append((f'B_FRAGEN.{b}.frage{i}', f_))
             alle_fragen.append(f_)
+        fragen_je[b] = fr
         gr = feld(blk, 'grenze')
         if not gr:
             fehler.append(f'Bereich {b}: die Grenze fehlt — dann sagt der '
@@ -470,11 +472,72 @@ else:
                     fehler.append(f'Grenze {b} stellt eine Diagnose ("{d}")')
             lay_texte.append((f'B_FRAGEN.{b}.grenze', gr))
             alle_grenzen.append(gr)
+            grenze_je[b] = gr
     if len(set(alle_fragen)) != len(alle_fragen):
         fehler.append('dieselbe Gesprächsfrage steht in zwei Bereichen')
     if len(set(alle_grenzen)) != len(alle_grenzen):
         fehler.append('dieselbe Grenze steht in zwei Bereichen — dann ist sie '
                       'allgemein und sagt über den Bereich nichts')
+
+    # ── Der Rahmen der Schublade ───────────────────────────────
+    # Die Fehlerklasse, die hier unmöglich wird: Die Fragen stehen in
+    # den Daten, aber auf der Seite sieht sie niemand — sie gingen
+    # bis heute nur in den Tiefgang, also in eine Datei, die man erst
+    # anfordern muss. Wer die Seite liest, bekam den Teil nie zu
+    # sehen, der aus dem Befund ein Gespräch macht.
+    #
+    # Dagegen steht hier der Rahmen, und in der Rauchprobe weiter
+    # unten wird am gezeichneten Ergebnis gemessen, nicht an den
+    # Daten: Ein Rahmen, den die Anzeige nicht benutzt, fällt dort
+    # durch.
+    m_rah = re.search(r"^\s{4}rahmen:\s*\{", fra_block, re.M)
+    if not m_rah:
+        fehler.append('B_FRAGEN.rahmen fehlt — dann hat die Schublade auf '
+                      'der Seite keine Überschrift und keinen Rahmen')
+    else:
+        rblk = klammerblock(fra_block, m_rah.end() - 1)
+        rah_texte = {}
+        for name, mind in (('titel', 20), ('vor', 80), ('grenzeVor', 15)):
+            v = feld(rblk, name)
+            if not v:
+                fehler.append(f'B_FRAGEN.rahmen.{name} fehlt')
+                continue
+            if len(v) < mind:
+                fehler.append(f'B_FRAGEN.rahmen.{name} nur {len(v)} Zeichen — zu dünn')
+            for d in DIAGNOSE:
+                if d in v:
+                    fehler.append(f'B_FRAGEN.rahmen.{name} stellt eine Diagnose ("{d}")')
+            lay_texte.append((f'B_FRAGEN.rahmen.{name}', v))
+            rah_texte[name] = v
+        # Die Schublade sagt, dass sie Fragen bringt und keine
+        # Antworten. Ohne diesen Satz ist sie eine Deutung in
+        # Fragezeichen — PRODUKT.md Abschnitt 5.
+        if 'vor' in rah_texte and 'Antwort' not in rah_texte['vor']:
+            fehler.append('B_FRAGEN.rahmen.vor sagt nicht, dass die Antworten '
+                          'nicht hier stehen — dann liest die Schublade sich '
+                          'wie eine Deutung')
+        # Und der Rahmen bleibt Text: Steht einer dieser Sätze wörtlich
+        # in der Anzeige, ist er dort beim nächsten Umbau geändert und
+        # von keiner Prüfung gesehen. PRODUKT.md Abschnitt 7.
+        # Gesucht wird im Code, nicht im Kommentar: Dass die Anzeige
+        # erklärt, was sie zeichnet, ist das Gegenteil des Fehlers.
+        # ohne_kommentar steht weiter unten erst zur Verfügung — hier
+        # genügt derselbe Griff in Kurzform.
+        app_nackt = re.sub(r'^\s*//.*$', ' ',
+                           re.sub(r'/\*.*?\*/', ' ', app, flags=re.S), flags=re.M)
+        for name, v in rah_texte.items():
+            if v in app_nackt:
+                fehler.append(f'B_FRAGEN.rahmen.{name} steht wörtlich in '
+                              'bereich-app.js — Texte gehören in die Daten')
+        for f_ in alle_fragen + alle_grenzen:
+            if f_ in app_nackt:
+                fehler.append('eine Gesprächsfrage oder Grenze steht wörtlich in '
+                              'bereich-app.js — sie gehört in bereich-daten.js')
+    # Gezeichnet wird aus den Daten, nicht geraten: Ohne diesen Griff
+    # ist die Schublade gar nicht angebunden.
+    if '.rahmen' not in app:
+        fehler.append('bereich-app.js holt den Rahmen der Schublade nicht aus '
+                      'B_FRAGEN — dann zeichnet die Seite die Coachin-Sicht nicht')
 
 # ── Kein Schalter, der Freischalten vortäuscht ─────────────────
 # PRODUKT.md Abschnitt 4: Die Seite hat keinen Server, alles im
@@ -848,7 +911,7 @@ const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
   doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
   folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,techJeBereich:[],
-  nach:[],
+  nach:[],gespr:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
   wahl:{knoepfe:0,alleAn:'',tipp:''},
   einer:{bereiche:0,ueber:0,name:'',tipp:'',gespeichert:[],eigenerSchluessel:[]},
@@ -1052,6 +1115,42 @@ notiz.nach=Object.values(await proBereich(()=>{
     duenn:a.filter(x=>
       ((x.querySelector('.b-nachw')||{}).innerText||'').trim().length<60
       || ((x.querySelector('.b-nachn')||{}).innerText||'').trim().length<4).length};
+})).filter(Boolean);
+
+/* Mit jemand anderem darüber sprechen: die zweite Sicht aus
+   REGELN.md Abschnitt 1, zugeklappt angeboten.
+
+   Gemessen wird am gezeichneten Ergebnis und auf Stufe 0 — nicht an
+   den Daten. Die Fragen standen dort schon, bevor die Seite sie
+   zeigte; eine Prüfung, die nur die Daten liest, hätte das nie
+   gemerkt. Deshalb zählt hier, was ein Mensch wirklich aufklappen
+   kann: eine Klappe je Bereich, zu, sichtbar, mit den Fragen dieses
+   Bereichs darin und mit der Grenze darunter. */
+notiz.gespr=Object.values(await proBereich(()=>{
+  const d=document.querySelector('.b-ber');
+  if(!d) return null;
+  const o={k:(d.id||'').replace(/^ber-/,''),
+    name:((d.querySelector('.b-name')||{}).textContent||'?').trim(),
+    klappen:d.querySelectorAll('.b-gespr').length};
+  if(o.klappen!==1) return o;
+  const k=d.querySelector('.b-gespr');
+  o.tag=k.tagName.toLowerCase();
+  o.offenVorher=!!k.open;
+  o.sichtbar=k.offsetParent!==null;
+  o.titel=((k.querySelector('summary')||{}).innerText||'').trim();
+  /* Erst messen, dann aufklappen: Die Frage, ob sie zu ist, lässt
+     sich nach dem Öffnen nicht mehr stellen. */
+  k.open=true;
+  const fr=[...k.querySelectorAll('.b-gesprf li')];
+  o.fragen=fr.map(x=>(x.innerText||'').trim());
+  o.fragenSicht=fr.filter(x=>x.offsetParent!==null).length;
+  const g=[...k.querySelectorAll('.b-gesprg')];
+  o.grenzen=g.length;
+  o.grenze=g.length?(g[0].innerText||'').trim():'';
+  o.grenzeSicht=g.filter(x=>x.offsetParent!==null).length;
+  o.vor=((k.querySelector('.b-gesprvor')||{}).innerText||'').trim();
+  o.text=(k.innerText||'').trim();
+  return o;
 })).filter(Boolean);
 
 /* Stufe 3: jetzt darf die Mechanik da sein. Gemessen wird am
@@ -1378,6 +1477,77 @@ else:
         if offen:
             fehler.append('Themenräume, auf die von der Bereichsseite aus '
                           'niemand zeigt: ' + ', '.join(offen))
+        # ── Die Schublade zum Darübersprechen ──────────────────
+        # Die Fehlerklasse: eine Coachin-Sicht, die in den Daten
+        # steht und auf der Seite nicht ankommt. Bis heute ging sie
+        # nur in den Tiefgang — in eine Datei, die man erst
+        # anfordern muss. Zwei weitere Weisen, denselben Fehler zu
+        # machen, sind hier mit ausgeschlossen: eine Klappe, die
+        # offen steht (dann ist die zweite Sicht im Vordergrund,
+        # gegen REGELN.md Abschnitt 1), und eine, die überall
+        # dieselben Fragen zeigt (dann ist die Zuordnung Behauptung).
+        def _s(x):
+            return ' '.join((x or '').split())
+        gespr = n['gespr']
+        if len(gespr) != 10:
+            fehler.append(f'{len(gespr)} statt 10 Bereiche mit einer Schublade '
+                          'zum Darübersprechen')
+        for e in gespr:
+            wer = e.get('name') or e.get('k') or '?'
+            if e.get('klappen') != 1:
+                fehler.append(f"Bereich {wer}: {e.get('klappen')} Schubladen zum "
+                              'Darübersprechen statt genau einer')
+                continue
+            if e.get('tag') != 'details':
+                fehler.append(f"Bereich {wer}: die Schublade ist ein "
+                              f"<{e.get('tag')}> und keine Klappe")
+            if e.get('offenVorher'):
+                fehler.append(f'Bereich {wer}: die Schublade steht offen — die '
+                              'Sicht der Coachin gehört zugeklappt, nie in den '
+                              'Vordergrund (REGELN.md Abschnitt 1)')
+            if not e.get('sichtbar'):
+                fehler.append(f'Bereich {wer}: die Schublade ist auf Stufe 0 '
+                              'nicht sichtbar — dann findet sie niemand')
+            soll_t = _s(rah_texte.get('titel', ''))
+            if soll_t and _s(e.get('titel')) != soll_t:
+                fehler.append(f"Bereich {wer}: die Schublade heißt "
+                              f"{_s(e.get('titel'))!r} statt {soll_t!r}")
+            fr = e.get('fragen') or []
+            if len(fr) != 3:
+                fehler.append(f'Bereich {wer}: {len(fr)} statt genau drei '
+                              'Gesprächsfragen in der Schublade')
+            for f_ in fr:
+                if not f_.rstrip().endswith('?'):
+                    fehler.append(f'Bereich {wer}: "{f_[:50]}" ist keine Frage')
+            if e.get('fragenSicht') != len(fr):
+                fehler.append(f'Bereich {wer}: nach dem Aufklappen sind nur '
+                              f"{e.get('fragenSicht')} von {len(fr)} Fragen sichtbar")
+            # Die Fragen dieses Bereichs, nicht irgendwelche.
+            soll_f = {_s(x) for x in fragen_je.get(e.get('k'), [])}
+            if soll_f and {_s(x) for x in fr} != soll_f:
+                fehler.append(f'Bereich {wer}: die Schublade zeigt nicht die drei '
+                              'Fragen dieses Bereichs')
+            if e.get('grenzen') != 1:
+                fehler.append(f"Bereich {wer}: {e.get('grenzen')} Grenzen in der "
+                              'Schublade statt genau einer')
+            elif not e.get('grenzeSicht'):
+                fehler.append(f'Bereich {wer}: die Grenze ist nach dem '
+                              'Aufklappen nicht sichtbar')
+            soll_g = _s(grenze_je.get(e.get('k'), ''))
+            if soll_g and soll_g not in _s(e.get('grenze')):
+                fehler.append(f'Bereich {wer}: unter den Fragen steht nicht die '
+                              'Grenze dieses Bereichs')
+            if len(_s(e.get('vor'))) < 80:
+                fehler.append(f'Bereich {wer}: die Schublade sagt nicht, wofür '
+                              'die Fragen da sind')
+            # PRODUKT.md Abschnitt 5: keine Diagnose. Gesucht wird im
+            # gezeichneten Text, damit auch ein Satz auffällt, den die
+            # Anzeige dazwischensetzt.
+            for d in DIAGNOSE:
+                if d in (e.get('text') or ''):
+                    fehler.append(f'Bereich {wer}: die Schublade stellt eine '
+                                  f'Diagnose ("{d}")')
+
         if n['stufe0']:
             fehler.append('Fachsprache auf Stufe 0 sichtbar: ' + ', '.join(n['stufe0']))
         if n['techSichtbar0'] != 0:
