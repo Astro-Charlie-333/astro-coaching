@@ -3,6 +3,12 @@
 """Setzt index.html neu zusammen."""
 import pathlib, re, sys, subprocess, json
 
+# Für die Reihenfolgeprüfung im Wochenausblick: ein Datum über den
+# Jahreswechsel hinweg ist nur dann sortiert, wenn der Monat zählt.
+_MONFOLGE = {m: i for i, m in enumerate(
+    ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August',
+     'September', 'Oktober', 'November', 'Dezember'])}
+
 hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
@@ -130,6 +136,25 @@ const lauf=await p.evaluate(()=>({
     .filter(x=>/\b(konjunktion|quadrat|trigon|sextil|opposition)\b/.test(x.textContent))
     .map(x=>x.textContent.slice(0,60))}));
 
+/* Die Woche als Woche: Form, Band, Gruppen, Ausblick.
+   Vorher war das eine Liste aus zehn Tagen. */
+const wo=await p.evaluate(()=>{
+  const tage=[...document.querySelectorAll('#htwoband .wt')];
+  const grp=[...document.querySelectorAll('.wo-grp')];
+  return {
+    form:(document.getElementById('htwoform')||{}).textContent.trim(),
+    tage:tage.length,
+    heute:tage.filter(t=>t.classList.contains('ist')).length,
+    heuteErst:tage.length?tage[0].classList.contains('ist'):false,
+    klickbar:tage.filter(t=>t.tagName==='A').length,
+    punkteOhneGruppe:tage.filter(t=>t.tagName==='A'&&!document.getElementById(
+      t.getAttribute('href').slice(1))).length,
+    gruppen:grp.length,
+    koepfe:grp.map(g=>(g.querySelector('.wo-gh')||{}).textContent||''),
+    lose:[...document.querySelectorAll('.we')].filter(w=>!w.closest('.wo-grp')).length,
+    danach:(document.getElementById('htwodanach')||{}).textContent.trim()};
+});
+
 /* Der Aufmacher: Datum, Dopplung, Fensterangaben. */
 const auf=await p.evaluate(()=>{
   const k=document.querySelector('.ht-auf-k');
@@ -185,7 +210,7 @@ const einer=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,j0,t0,t3,lauf,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,j0,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -233,6 +258,47 @@ if pr:
         fehler.append(f"auf Stufe 3 nur {pr['t3']} Mechanik-Elemente — zu wenig")
     import datetime as _dt
     _dtjahr = _dt.date.today().year
+    # ── Die Woche ist eine Woche ───────────────────────────────
+    # Bis zum 28.10. war dieser Abschnitt eine Liste aus zehn Tagen.
+    # Eine Liste beantwortet „was kommt als Nächstes", nicht „wie ist
+    # meine Woche". Diese Prüfungen halten die Form fest, damit sie
+    # nicht beim nächsten Eingriff wieder zur Liste wird.
+    wo = pr['wo']
+    if wo['tage'] != 7:
+        fehler.append(f"das Wochenband hat {wo['tage']} Tage statt sieben")
+    if wo['heute'] != 1:
+        fehler.append(f"{wo['heute']} Tage im Band sind als heute markiert")
+    if not wo['heuteErst']:
+        fehler.append('das Wochenband fängt nicht bei heute an')
+    if wo['punkteOhneGruppe']:
+        fehler.append(f"{wo['punkteOhneGruppe']} Tage im Band springen ins Leere")
+    if wo['lose']:
+        fehler.append(f"{wo['lose']} Termine stehen ohne Tagesüberschrift — "
+                      'dann ist es wieder eine Liste')
+    if len(wo['form']) < 60:
+        fehler.append('die Woche sagt nicht, welche Form sie hat')
+    if wo['gruppen'] and not any(k.startswith('Heute') or k[:2] in
+                                 ('Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So')
+                                 for k in wo['koepfe']):
+        fehler.append('eine Tagesüberschrift nennt keinen Wochentag')
+    if len(set(wo['koepfe'])) != len(wo['koepfe']):
+        fehler.append('derselbe Tag hat zwei Überschriften')
+    # Der Ausblick muss in der Reihenfolge stehen, in der er kommt.
+    if wo['danach']:
+        _tage = [int(m) for m in re.findall(r'am (\d+)\.', wo['danach'])]
+        _mon = re.findall(r'am \d+\. (\w+)', wo['danach'])
+        # Über den Jahreswechsel kommt Januar nach Dezember: der Monat
+        # wird fortlaufend gezählt, ein Umbruch ist erlaubt.
+        _lauf, _vor, _plus = [], -1, 0
+        for _m, _t in zip(_mon, _tage):
+            _i = _MONFOLGE.get(_m, 99)
+            if _vor >= 0 and _i < _vor:
+                _plus += 12
+            _vor = _i
+            _lauf.append((_i + _plus, _t))
+        if _lauf != sorted(_lauf):
+            fehler.append('der Ausblick steht nicht in der Reihenfolge, in der er kommt')
+
     lf = pr['lauf']
     if lf['karten'] < 3:
         fehler.append(f"nur {lf['karten']} Konstellationen unter Was gerade laeuft")

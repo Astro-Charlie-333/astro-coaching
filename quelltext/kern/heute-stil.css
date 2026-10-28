@@ -92,6 +92,35 @@
 .ht-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 22px;max-width:62ch;line-height:1.6;}
 
 /* Band 2 — Diese Woche. Eine echte Folge, also eine Zeitachse. */
+/* Die Woche als Woche: Form, Band, dann die Tage. */
+.wo-form{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.4px;line-height:1.45;
+ color:var(--nacht,#2E3A5C);margin:0 0 14px;max-width:46ch;}
+.wo-band{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;
+ margin:0 0 26px;max-width:470px;}
+.wo-band .wt{display:flex;flex-direction:column;align-items:center;gap:3px;
+ padding:7px 2px 8px;border-radius:11px;text-decoration:none;
+ border:1px solid var(--linie,#EBE1D2);background:var(--papier,#FFFDFA);}
+.wo-band .wt-k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.8px;
+ letter-spacing:.07em;text-transform:uppercase;color:var(--leise,#6B6259);}
+.wo-band .wt-z{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.6px;
+ font-weight:500;color:var(--nacht,#2E3A5C);line-height:1;}
+.wo-band .wt-p{display:flex;gap:2.5px;height:5px;align-items:center;}
+.wo-band .wt-p i{width:5px;height:5px;border-radius:50%;background:var(--messing,#9A7235);}
+.wo-band .wt.leer{background:transparent;border-style:dashed;}
+.wo-band .wt.leer .wt-z{color:var(--leise,#6B6259);font-weight:400;}
+.wo-band .wt.ist{border-color:var(--nacht,#2E3A5C);box-shadow:inset 0 0 0 1px var(--nacht,#2E3A5C);}
+.wo-band a.wt:hover{border-color:var(--messing,#9A7235);}
+.wo-grp{margin:0 0 4px;}
+.wo-gh{display:flex;align-items:baseline;gap:9px;margin:0 0 13px;
+ padding-bottom:6px;border-bottom:1px solid var(--linie,#EBE1D2);}
+@media(min-width:701px){.wo-gh{margin-left:-124px;}}
+.wo-gh b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18.6px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.wo-gh span{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
+ color:var(--leise,#6B6259);}
+.wo-danach{font-size:14.2px;line-height:1.6;color:var(--leise,#6B6259);
+ margin:6px 0 0;max-width:64ch;}
+.wo-danach b{font-weight:400;color:var(--nacht,#2E3A5C);}
 .ht-woche{position:relative;padding-left:124px;}
 @media(max-width:700px){.ht-woche{padding-left:0;}}
 .ht-woche::before{content:'';position:absolute;left:97px;top:6px;bottom:18px;width:1px;
