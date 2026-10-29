@@ -576,6 +576,58 @@ elif ohne_marke:
 else:
     print(f'  {len(raumseiten)} Raumseiten ohne Maschinenraum im Titel')
 
+# 12 · die Tafel der fünf Aspekte steht nur an den eingetragenen Stellen
+# Aufgabe 5 vom 29.10.: Zwei Seiten erklärten dieselben fünf Winkel,
+# mit verschiedenen Worten und verschiedenen Beispielen. Wer beide
+# liest, lernt nicht mehr, sondern zweifelt — und beim nächsten
+# Umschreiben wandert nur eine der beiden mit.
+#
+# Ob zwei Texte dasselbe sagen, kann keine Prüfung entscheiden. Was
+# sie kann: die Stellen festhalten, an denen die fünf Winkel
+# überhaupt ausgelegt werden dürfen, und jede weitere auffallen
+# lassen. Dieselbe Bauart wie HANDARBEIT oben: die Liste bricht in
+# beide Richtungen — eine neue Seite mit der Tafel ist ein Fehler,
+# und eine eingetragene Seite, die sie verloren hat, auch. Dann
+# steht hier nie eine Liste, die nichts mehr beschreibt.
+ASPEKTNAMEN = ['Konjunktion', 'Sextil', 'Quadrat', 'Trigon', 'Opposition']
+ASPEKTGRADE = ['0°', '60°', '90°', '120°', '180°']
+TAFEL_ERLAUBT = {
+    # die Lektion: was die fünf Winkel sind, mit Beispielen und Spielraum
+    'aspekte.html',
+    # das Nachschlagewerk: nur Winkel und Farbe, damit man die Linien
+    # im Chart zuordnen kann — die Bedeutung steht auf aspekte.html
+    'aspekte-lesen.html',
+    # das Wörterbuch: eine Zeile je Begriff, wie für jeden anderen auch
+    'glossar.html',
+}
+mit_tafel = set()
+for s_ in seiten:
+    t = s_.read_text(encoding='utf-8', errors='replace')
+    t = re.sub(r'<(script|style)\b.*?</\1>', ' ', t, flags=re.S)
+    klar = re.sub(r'<[^>]+>', ' ', t)
+    if (all(n in klar for n in ASPEKTNAMEN)
+            and all(g in klar for g in ASPEKTGRADE)):
+        mit_tafel.add(s_.name)
+neu_tafel = sorted(mit_tafel - TAFEL_ERLAUBT)
+weg_tafel = sorted(TAFEL_ERLAUBT - mit_tafel)
+if neu_tafel:
+    print('  NOCH EINE SEITE LEGT DIE FÜNF WINKEL AUS:')
+    for d in neu_tafel[:8]:
+        print(f'      {d}')
+    print('      (die Winkel werden einmal erklärt — auf aspekte.html.')
+    print('       Soll es wirklich eine weitere Stelle sein, gehört sie')
+    print('       mit einem Satz Begründung in TAFEL_ERLAUBT)')
+    fehlgeschlagen.append('zweite Aspekttafel')
+elif weg_tafel:
+    print('  EINGETRAGENE ASPEKTTAFEL FEHLT:')
+    for d in weg_tafel:
+        print(f'      {d}')
+    print('      (steht in TAFEL_ERLAUBT, trägt die Tafel aber nicht mehr —')
+    print('       dann gehört der Eintrag heraus)')
+    fehlgeschlagen.append('Aspekttafel verschwunden')
+else:
+    print(f'  die fünf Winkel an {len(mit_tafel)} eingetragenen Stellen')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:
