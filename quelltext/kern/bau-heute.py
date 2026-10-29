@@ -169,7 +169,6 @@ const kp=await p.evaluate(()=>{
     treffer:w.querySelectorAll('.kp-tr').length,
     herkunft:sum,
     selbst:!!w.querySelector('.kp-selbst'),
-    techSichtbar:[...w.querySelectorAll('.ac-tech')].filter(e=>e.offsetParent!==null).length,
     text:w.innerText};
 });
 
@@ -205,6 +204,37 @@ const k=await p.evaluate(()=>({
   jetztDa:!document.getElementById('htjetzt').hidden}));
 /* Auf Stufe 0 darf die Startseite keine Fachsprache zeigen. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(400);
+/* Jetzt erst wird die Mechanik in „Schlaf und Bewegung“ gezählt.
+   Vorher stand der Wissensstand auf dem Auslieferstand, und dort
+   SOLL sie zu sehen sein — die Zahl maß also den Normalfall und
+   meldete ihn als Regelbruch.
+
+   Zwei Fallen stecken in der Messung selbst, und beide haben hier
+   schon zugeschlagen:
+
+   offsetParent taugt nicht als Sichtprüfung — in einer zugeklappten
+   Klappe hat ein Kind weiter eine Box und einen offsetParent.
+   checkVisibility() beantwortet genau die Frage, die gemeint ist.
+
+   Und innerText taugt es auch nicht: Ist der Abschnitt selbst nicht
+   gerendert — der Klick auf „Wenig“ oben blendet ihn aus —, gibt
+   innerText den rohen Textinhalt zurück, samt allem, was auf Stufe 0
+   gerade versteckt ist. Deshalb wird für die Messung kurz wieder
+   alles eingeblendet und danach zurückgestellt: Eine Prüfung, die an
+   einem ausgeblendeten Abschnitt misst, prüft nichts. */
+if(kp) kp.techSichtbar=await p.evaluate(()=>{
+  const w=document.getElementById('htkoerperteil'); if(!w) return 0;
+  const ist=document.querySelector('#htkapr .kb.ist');
+  const zurueck=ist?ist.getAttribute('data-k'):null;
+  const viel=document.querySelector('.kb[data-k="viel"]');
+  if(viel) viel.click();
+  const n=[...w.querySelectorAll('.ac-tech')].filter(e=>
+    e.checkVisibility ? e.checkVisibility() : e.offsetParent!==null).length;
+  if(zurueck && zurueck!=='viel'){
+    const b=document.querySelector('.kb[data-k="'+zurueck+'"]');
+    if(b) b.click();
+  }
+  return n;});
 /* Zwei Listen, nicht eine. Der Unterschied ist der ganze Punkt.
 
    MECHANIK ist Fachsprache: Worte, die einen Rechenweg verschl\u00fcsseln.

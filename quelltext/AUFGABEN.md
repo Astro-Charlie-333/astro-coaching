@@ -18,12 +18,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 
 
-### 5 · Doppelte Seiten zusammenlegen
-Es gibt Seitenpaare, die fast dasselbe sagen (`aspekte.html` /
-`aspekte-lesen.html`, `chart-lesen.html` / `bausteine.html`).
-**Fertig, wenn:** jedes Paar entweder zusammengelegt ist oder in einem Satz
-begründet, warum es zwei bleiben.
-
 ### 6 · Die Tierkreiszeichen auf `strategie/umgang-kristi.html`
 Die Glyphen rendern als Emoji statt als Schriftzeichen; es fehlt `︎`.
 **Fertig, wenn:** die Seite die Zeichen einfarbig zeigt.
@@ -335,9 +329,77 @@ Recherche vom 2026-10-28, Spur C.
 ausdrücklich ausnimmt, Quelle und Abrufdatum auf der Seite stehen, und wer
 den Absatz liest, weiß, was er als Nächstes tut.
 
+### 29 · Die Prüfung auf Stufe 0 misst an ausgeblendeten Abschnitten
+Beim Reparieren von „Schlaf und Bewegung“ am 29.10. aufgefallen: Die
+Rauchprobe in `bau-heute.py` klickt vorher auf „Wenig“, und das blendet
+mehrere Abschnitte aus. Die Zählungen `t0` und `t3` danach messen deshalb
+an einer Seite, auf der die Hälfte gar nicht gerendert ist — sie können
+nicht mehr finden, was dort stehen würde. „Auf Stufe 0 keine Fachsprache“
+ist damit für die hinteren Bänder nicht geprüft, sondern nur gehofft.
+**Fertig, wenn:** `t0` und `t3` an der vollständig eingeblendeten Seite
+gemessen werden, die Zählung `checkVisibility()` benutzt statt
+`offsetParent`, und ein absichtlich sichtbar gemachtes Fachwort in einem
+der hinteren Bänder den Bau bricht.
+
+### 30 · Zwei Seiten erklären dasselbe — die nächsten Paare sind ungeprüft
+Aufgabe 5 hat zwei Paare angesehen und eine doppelte Tafel abgeräumt.
+`pruefe-alles.py` hält seit heute die Stellen fest, an denen die fünf
+Winkel ausgelegt werden dürfen — für jede andere Doppelung gibt es nichts
+Vergleichbares. Bei 108 Handarbeitsseiten ist das nächste Paar nur eine
+Frage der Zeit.
+**Fertig, wenn:** eine Querprüfung die ausgelieferten Seiten paarweise auf
+wörtlich gleiche Absätze ab einer bestimmten Länge vergleicht, die
+bekannten und gewollten Dopplungen namentlich eingetragen sind, und eine
+neue Dopplung den Bau bricht.
+
 ---
 
 ## Erledigt
+
+* **2026-10-29** · Die doppelten Seitenpaare angesehen (Aufgabe 5). Beide
+  Paare bleiben zwei Seiten, und beide sagen das jetzt selbst: Auf jeder
+  der vier steht ein Satz, wofür die Nachbarseite da ist.
+  `aspekte.html` ist die Lektion (was die fünf Winkel sind, mit Beispielen
+  und Spielraum), `aspekte-lesen.html` das Nachschlagewerk für 45
+  Planetenpaare. `chart-lesen.html` ist eine Methode — in welcher
+  Reihenfolge man liest —, `bausteine.html` ein Nachschlagewerk für die
+  Teile. Eine Methode liest man einmal, ein Nachschlagewerk schlägt man
+  immer wieder auf; das zusammenzulegen hätte beides schlechter gemacht.
+  Eine echte Doppelung war darunter: Die fünf Winkel wurden auf zwei
+  Seiten erklärt, mit verschiedenen Worten. Auf `aspekte-lesen.html` ist
+  die Spalte „Was es tut“ jetzt weg — die Tafel dort sagt nur noch,
+  welcher Winkel welche Farbe im Chart hat, und das ist genau das, was
+  diese Seite braucht. Die Bedeutung steht einmal, auf `aspekte.html`.
+  Fehlerklasse abgestellt, als zwölfte Querprüfung in `pruefe-alles.py`:
+  Ob zwei Texte dasselbe sagen, kann keine Prüfung entscheiden — aber sie
+  kann die Stellen festhalten, an denen die fünf Winkel überhaupt
+  ausgelegt werden dürfen. `TAFEL_ERLAUBT` führt drei (Lektion,
+  Farbschlüssel, Wörterbuch), jede mit einem Satz Begründung, und die
+  Liste bricht in beide Richtungen: eine vierte Seite mit der Tafel ist
+  ein Fehler, eine eingetragene ohne sie auch. Dieselbe Bauart wie
+  `HANDARBEIT`.
+
+* **2026-10-29** · `main` war rot, und zwar an der Prüfung, nicht an der
+  Seite. Seit dem Zusammenführen vom 28.10. meldete `bau-heute.py`:
+  „‚Schlaf und Bewegung‘ zeigt die Mechanik schon auf Stufe 0.“ Die Seite
+  tut das nicht — auf Stufe 0 steht dort „Der Mond läuft heute über deine
+  Sonne“ und sonst nichts. Gemessen wurde nur zum falschen Zeitpunkt: Der
+  Block lief, bevor die Rauchprobe den Wissensstand überhaupt auf 0
+  gestellt hatte, also auf dem Auslieferstand — und dort soll die Mechanik
+  zu sehen sein.
+  Zwei Messfallen stecken darin, beide notiert, wo sie passiert sind:
+  `offsetParent` taugt nicht als Sichtprüfung, weil ein Kind in einer
+  zugeklappten Klappe weiter eine Box und einen offsetParent hat — jetzt
+  `checkVisibility()`. Und `innerText` taugt es auch nicht, solange der
+  Abschnitt selbst ausgeblendet ist: Dann gibt er den rohen Textinhalt
+  zurück, samt allem, was gerade versteckt ist. Der Klick auf „Wenig“
+  kurz davor tat genau das. Für die Messung wird deshalb kurz wieder
+  alles eingeblendet und danach zurückgestellt.
+  Geprüft in beide Richtungen: Auf der richtigen Seite meldet die Prüfung
+  nichts mehr, und eine absichtlich sichtbar gemachte Mechanikzeile bricht
+  den Bau weiter.
+  Dass dieselbe Falle noch an zwei weiteren Stellen derselben Rauchprobe
+  sitzt, steht als Aufgabe 29.
 
 * **2026-10-28** · Die Coachin-Sicht steht jetzt auf der Seite (Aufgabe 4).
   Die drei Gesprächsfragen und die Grenze gab es für alle zehn Bereiche
