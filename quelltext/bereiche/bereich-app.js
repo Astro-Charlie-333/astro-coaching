@@ -231,6 +231,34 @@
     }
     h.push('</div>');
 
+    /* ── Die zweite Schublade: darüber sprechen ───────────
+       REGELN.md Abschnitt 1 nennt zwei Nutzungen dieser Seite:
+       für sich selbst, und aus Sicht einer Coachin. Die zweite
+       wird zugeklappt angeboten, nie im Vordergrund — deshalb
+       eine Klappe unter den fünf Blöcken und kein sechster
+       Block. Zugeklappt heißt hier nicht versteckt: ohne das
+       Attribut "open" steht sie geschlossen da, und ein Antippen
+       reicht.
+
+       Die Fragen und die Grenze holt diese Stelle aus
+       bereich-daten.js — dieselben, die der Tiefgang benutzt.
+       Gezeichnet wird hier, geschrieben dort. */
+    var G = bD().GESPR, FR = (bD().FRAGEN || {})[b.k];
+    if(G && FR && FR.fragen && FR.fragen.length){
+      h.push('<details class="b-gespr" data-gespr="' + esc(b.k) + '">');
+      h.push('<summary>' + esc(G.titel) + '</summary>');
+      h.push('<div class="b-gesprin">');
+      h.push('<p class="b-gesprvor">' + esc(G.vor) + '</p>');
+      h.push('<ol class="b-gesprf">');
+      for(var gi=0; gi<FR.fragen.length; gi++)
+        h.push('<li>' + esc(FR.fragen[gi]) + '</li>');
+      h.push('</ol>');
+      h.push('<p class="b-gesprg"><b>' + esc(G.grenzeTitel) + '</b> ' +
+             esc(FR.grenze) + '</p>');
+      h.push('<p class="b-gesprfuer">' + esc(G.fuer) + '</p>');
+      h.push('</div></details>');
+    }
+
     /* Der Tiefgang zu diesem Bereich. Kein Schalter, der
        Freischalten vortäuscht: der Text ist nicht verborgen,
        sondern wird beim Antippen hier geschrieben und als Datei

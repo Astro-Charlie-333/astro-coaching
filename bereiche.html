@@ -341,6 +341,30 @@ a{color:var(--nacht);}
 .b-mehrzeit summary{cursor:pointer;font-size:13.5px;color:var(--messing,#9A7235);}
 .b-mehrzeit .b-zeit{margin-top:9px;}
 
+/* ── Die zweite Schublade: darüber sprechen ─────────────────
+   Die Sicht einer Coachin wird zugeklappt angeboten (REGELN.md
+   Abschnitt 1). Dieselben Bausteine wie „Zum Nachlesen" darüber:
+   Papier, dünne Linie, Messing für die Aufschrift. Keine neue
+   Farbe, keine neue Schrift. */
+.b-gespr{margin-top:18px;padding-top:14px;border-top:1px dashed var(--linie);
+ max-width:640px;}
+.b-gespr > summary{cursor:pointer;list-style:none;padding:4px 0;
+ font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);}
+.b-gespr > summary::-webkit-details-marker{display:none;}
+.b-gespr > summary:before{content:'+\00a0';}
+.b-gespr[open] > summary:before{content:'\2013\00a0';}
+.b-gesprin{background:var(--papier);border:1px solid var(--linie);border-radius:12px;
+ padding:14px 16px;margin-top:10px;}
+.b-gesprvor{font-size:14px;line-height:1.65;color:var(--leise);margin-bottom:12px;}
+.b-gesprf{margin:0 0 12px;padding-left:22px;}
+.b-gesprf li{font-family:'Fraunces',Georgia,serif;font-size:16px;line-height:1.5;
+ color:var(--nacht);margin-bottom:9px;}
+.b-gesprg{font-size:13.5px!important;line-height:1.65;color:var(--leise);
+ padding-top:10px;border-top:1px solid var(--linie);}
+.b-gesprg b{font-family:var(--sans);color:var(--nacht);}
+.b-gesprfuer{font-size:13px!important;line-height:1.6;color:var(--leise);margin-top:8px;}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -2005,6 +2029,30 @@ window.AC_LB = {
     }
   };
 
+  /* ── Die zweite Schublade: darüber sprechen ──────────────────
+     REGELN.md Abschnitt 1 nennt zwei Nutzungen: für sich selbst,
+     und aus Sicht einer Coachin. Die zweite wird zugeklappt
+     angeboten, nie im Vordergrund — deshalb eine Schublade unter
+     den fünf Blöcken und nicht ein sechster Block.
+
+     Die drei Fragen und die Grenze stehen nicht hier, sondern in
+     B_FRAGEN: derselbe Text, den der Tiefgang benutzt. Eine zweite
+     Liste von Fragen wäre genau der Fehler, den die Plattform bei
+     der Himmelsrechnung schon hatte — solange die Kopien gleich
+     sind, fällt nichts auf, und sobald eine gepflegt wird, stellt
+     die Seite andere Fragen als die Datei.
+
+     Hier stehen nur die Aufschriften. Es sind Fragen und keine
+     Befunde: PRODUKT.md Abschnitt 5 schließt die Diagnose aus, und
+     bau-bereiche.py prüft das am gezeichneten Text, nicht nur an
+     den Daten. */
+  var B_GESPR = {
+    titel:'Mit jemand anderem darüber sprechen',
+    vor:'Drei Fragen, die du mitnehmen kannst — zu einer Coachin, einer Therapeutin, oder zu jemandem, dem du vertraust. Es sind Fragen und keine Deutungen: die Antwort gehört dir.',
+    grenzeTitel:'Wo diese Rechnung aufhört:',
+    fuer:'Wer beruflich mit Menschen arbeitet, kann die Fragen so stellen, wie sie hier stehen. Sie setzen kein Wissen voraus und bleiben offen.'
+  };
+
   /* ── Der Tiefgang ────────────────────────────────────────────
      Die Seite zeigt den Überblick: was los ist, was du tun kannst,
      wie lange es läuft. Der Tiefgang ist dieselbe Rechnung, zu Ende
@@ -2127,7 +2175,8 @@ window.AC_LB = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH,
-    WID:B_WID, FRAGEN:B_FRAGEN, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
+    WID:B_WID, FRAGEN:B_FRAGEN, GESPR:B_GESPR, TIEF:B_TIEF,
+    FORM:B_FORM, LEER:B_LEER,
     RAUM:B_RAUM
   };
 
@@ -2847,6 +2896,34 @@ window.AC_WAHL = {
              (tp ? 'Natal darin: ' + esc(tp) + ' Haus.' : 'Natal unbesetzt.') + '</p>');
     }
     h.push('</div>');
+
+    /* ── Die zweite Schublade: darüber sprechen ───────────
+       REGELN.md Abschnitt 1 nennt zwei Nutzungen dieser Seite:
+       für sich selbst, und aus Sicht einer Coachin. Die zweite
+       wird zugeklappt angeboten, nie im Vordergrund — deshalb
+       eine Klappe unter den fünf Blöcken und kein sechster
+       Block. Zugeklappt heißt hier nicht versteckt: ohne das
+       Attribut "open" steht sie geschlossen da, und ein Antippen
+       reicht.
+
+       Die Fragen und die Grenze holt diese Stelle aus
+       bereich-daten.js — dieselben, die der Tiefgang benutzt.
+       Gezeichnet wird hier, geschrieben dort. */
+    var G = bD().GESPR, FR = (bD().FRAGEN || {})[b.k];
+    if(G && FR && FR.fragen && FR.fragen.length){
+      h.push('<details class="b-gespr" data-gespr="' + esc(b.k) + '">');
+      h.push('<summary>' + esc(G.titel) + '</summary>');
+      h.push('<div class="b-gesprin">');
+      h.push('<p class="b-gesprvor">' + esc(G.vor) + '</p>');
+      h.push('<ol class="b-gesprf">');
+      for(var gi=0; gi<FR.fragen.length; gi++)
+        h.push('<li>' + esc(FR.fragen[gi]) + '</li>');
+      h.push('</ol>');
+      h.push('<p class="b-gesprg"><b>' + esc(G.grenzeTitel) + '</b> ' +
+             esc(FR.grenze) + '</p>');
+      h.push('<p class="b-gesprfuer">' + esc(G.fuer) + '</p>');
+      h.push('</div></details>');
+    }
 
     /* Der Tiefgang zu diesem Bereich. Kein Schalter, der
        Freischalten vortäuscht: der Text ist nicht verborgen,

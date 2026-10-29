@@ -217,3 +217,27 @@
 .b-mehrzeit{margin-top:4px;}
 .b-mehrzeit summary{cursor:pointer;font-size:13.5px;color:var(--messing,#9A7235);}
 .b-mehrzeit .b-zeit{margin-top:9px;}
+
+/* ── Die zweite Schublade: darüber sprechen ─────────────────
+   Die Sicht einer Coachin wird zugeklappt angeboten (REGELN.md
+   Abschnitt 1). Dieselben Bausteine wie „Zum Nachlesen" darüber:
+   Papier, dünne Linie, Messing für die Aufschrift. Keine neue
+   Farbe, keine neue Schrift. */
+.b-gespr{margin-top:18px;padding-top:14px;border-top:1px dashed var(--linie);
+ max-width:640px;}
+.b-gespr > summary{cursor:pointer;list-style:none;padding:4px 0;
+ font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing);}
+.b-gespr > summary::-webkit-details-marker{display:none;}
+.b-gespr > summary:before{content:'+\00a0';}
+.b-gespr[open] > summary:before{content:'\2013\00a0';}
+.b-gesprin{background:var(--papier);border:1px solid var(--linie);border-radius:12px;
+ padding:14px 16px;margin-top:10px;}
+.b-gesprvor{font-size:14px;line-height:1.65;color:var(--leise);margin-bottom:12px;}
+.b-gesprf{margin:0 0 12px;padding-left:22px;}
+.b-gesprf li{font-family:'Fraunces',Georgia,serif;font-size:16px;line-height:1.5;
+ color:var(--nacht);margin-bottom:9px;}
+.b-gesprg{font-size:13.5px!important;line-height:1.65;color:var(--leise);
+ padding-top:10px;border-top:1px solid var(--linie);}
+.b-gesprg b{font-family:var(--sans);color:var(--nacht);}
+.b-gesprfuer{font-size:13px!important;line-height:1.6;color:var(--leise);margin-top:8px;}

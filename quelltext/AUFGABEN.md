@@ -18,12 +18,6 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 
 
 
-### 4 · Die Coachin-Sicht als zweite Schublade
-In jedem Bereich eine zugeklappte Schublade „Mit jemand anderem darüber
-sprechen": drei Gesprächsfragen und eine Grenze.
-**Fertig, wenn:** zehn Bereiche je drei Fragen und eine Grenze haben und der
-Bau prüft, dass keine davon eine Diagnose stellt.
-
 ### 5 · Doppelte Seiten zusammenlegen
 Es gibt Seitenpaare, die fast dasselbe sagen (`aspekte.html` /
 `aspekte-lesen.html`, `chart-lesen.html` / `bausteine.html`).
@@ -297,9 +291,47 @@ Laienprüfung mitlaufen, und `bau-ich.py` `ich-app.js` mit derselben
 Suche abfängt wie `ich-rechner.js` — ein neuer Satz in der Anzeige
 bricht den Bau.
 
+### 29 · Die Schublade sagt nicht, dass es sie auf jeder Seite gibt
+Seit heute trägt jeder Bereich die Schublade „Mit jemand anderem darüber
+sprechen". Eine Coachin, die mit einem Menschen arbeitet, findet sie nur,
+wenn sie zufällig aufklappt: Die Seite sagt oben mit keinem Satz, dass es
+zu jedem Bereich drei Fragen und eine Grenze gibt. Dieselbe Lücke wie bei
+der App-Ansicht in Aufgabe 24 — etwas ist da, und niemand weiß davon.
+**Fertig, wenn:** der Kopf der Bereichsseite in einem Satz sagt, dass unter
+jedem Bereich drei Fragen zum Darübersprechen liegen, der Satz aus
+`bereich-daten.js` kommt, und `bau-bereiche.py` abbricht, wenn er fehlt.
+
 ---
 
 ## Erledigt
+
+* **2026-10-29** · Die Coachin-Sicht als zweite Schublade (Aufgabe 4).
+  Unter jedem der zehn Bereiche steht jetzt eine zugeklappte Klappe „Mit
+  jemand anderem darüber sprechen": drei Fragen, die man mitnehmen kann,
+  und ein Satz dazu, wo die Rechnung aufhört. Damit ist die zweite
+  Nutzung aus `REGELN.md` Abschnitt 1 nicht mehr nur im Tiefgang
+  vorhanden, sondern auf der Seite selbst — zugeklappt, wie es dort
+  steht, nicht im Vordergrund.
+  Die Fragen sind keine neuen: Sie standen schon in `B_FRAGEN` und
+  gingen bisher nur in die Tiefgang-Datei. Eine zweite Liste wäre
+  derselbe Fehler wie die vier Himmelsrechnungen — `bau-bereiche.py`
+  bricht deshalb ab, sobald `B_GESPR` eigene Fragen oder eine eigene
+  Grenze mitbringt.
+  Fehlerklassen abgestellt, alle in `bau-bereiche.py` und am
+  gezeichneten Text gemessen, nicht an den Daten: eine Schublade, die in
+  einem Bereich fehlt; eine, die beim Laden offen steht; Fragen, die auch
+  zugeklappt dastehen; nicht genau drei Fragen; ein Satz in der Klappe,
+  der kein Fragezeichen trägt; Fragen, Grenze oder der Satz für die
+  Coachin auf Stufe 0 unsichtbar; zwei Bereiche mit demselben Text; und
+  — die wichtigste — eine Diagnose irgendwo in der gezeichneten
+  Schublade, egal aus welcher Datei sie hereinkommt. Sechs absichtlich
+  eingebaute Fehler, alle sechs erkannt.
+  Nebenbei: `offsetParent` taugt nicht, um „zugeklappt" zu messen — in
+  einer geschlossenen `details` hat ein Kind weiter eine Box. Gemessen
+  wird deshalb an `innerText`, und das fängt in einem Zug auch ab, was
+  in `ac-tech` auf Stufe 0 wartet.
+  Offen geblieben: Dass es die Schublade gibt, sagt die Seite nirgends
+  (Aufgabe 29).
 
 * **2026-10-27** · Die Ich-Seite umgebaut (Aufgabe 1). Sie begann mit
   dem Chartrad und führte darunter mit Zeichen und Gradzahl — und war

@@ -476,6 +476,34 @@ else:
         fehler.append('dieselbe Grenze steht in zwei Bereichen — dann ist sie '
                       'allgemein und sagt über den Bereich nichts')
 
+# ── Die zweite Schublade ───────────────────────────────────────
+# REGELN.md Abschnitt 1: Die Sicht einer Coachin wird zugeklappt
+# angeboten, nie im Vordergrund. Hier stehen nur die Aufschriften —
+# die Fragen selbst sind oben schon geprüft. Eine zweite Liste von
+# Fragen in B_GESPR wäre eine Kopie und wird deshalb abgefangen.
+m_ges = re.search(r"var B_GESPR = \{", daten)
+if not m_ges:
+    fehler.append('B_GESPR fehlt — die Bereiche haben keine Schublade '
+                  '"darüber sprechen"')
+else:
+    ges_blk = klammerblock(daten, m_ges.end() - 1)
+    for name, mindest in (('titel', 12), ('vor', 80),
+                          ('grenzeTitel', 12), ('fuer', 60)):
+        v = feld(ges_blk, name)
+        if not v:
+            fehler.append(f'B_GESPR.{name} fehlt')
+            continue
+        if len(v) < mindest:
+            fehler.append(f'B_GESPR.{name}: nur {len(v)} Zeichen — zu dünn')
+        for d in DIAGNOSE:
+            if d in v:
+                fehler.append(f'B_GESPR.{name} stellt eine Diagnose ("{d}")')
+        lay_texte.append((f'B_GESPR.{name}', v))
+    if re.search(r"fragen\s*:", ges_blk) or re.search(r"grenze\s*:", ges_blk):
+        fehler.append('B_GESPR trägt eigene Fragen oder eine eigene Grenze — '
+                      'die stehen in B_FRAGEN, sonst stellt die Seite andere '
+                      'Fragen als der Tiefgang')
+
 # ── Kein Schalter, der Freischalten vortäuscht ─────────────────
 # PRODUKT.md Abschnitt 4: Die Seite hat keinen Server, alles im
 # Quelltext ist lesbar. Ein Schloss wäre gemalt. Solange nicht
@@ -848,7 +876,7 @@ const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
   doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
   folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,techJeBereich:[],
-  nach:[],
+  nach:[], gespr:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
   wahl:{knoepfe:0,alleAn:'',tipp:''},
   einer:{bereiche:0,ueber:0,name:'',tipp:'',gespeichert:[],eigenerSchluessel:[]},
@@ -1052,6 +1080,37 @@ notiz.nach=Object.values(await proBereich(()=>{
     duenn:a.filter(x=>
       ((x.querySelector('.b-nachw')||{}).innerText||'').trim().length<60
       || ((x.querySelector('.b-nachn')||{}).innerText||'').trim().length<4).length};
+})).filter(Boolean);
+
+/* Die zweite Schublade: darüber sprechen. Fehlerklassen, die hier
+   unmöglich werden: die Schublade fehlt in einem Bereich; sie steht
+   beim Laden offen und damit im Vordergrund; ihr Inhalt steht auch
+   zugeklappt da; sie trägt nicht genau drei Fragen oder keine
+   Grenze; der Inhalt ist auf Stufe 0 unsichtbar; oder irgendwo in
+   ihr steht eine Diagnose. Gemessen wird am gezeichneten Text und
+   auf Stufe 0 — nicht an den Daten, damit auch ein Satz, der von
+   woanders hereinkommt, durch dieselbe Prüfung muss. */
+notiz.gespr=Object.values(await proBereich(()=>{
+  const d=document.querySelector('.b-ber');
+  if(!d) return null;
+  const name=((d.querySelector('.b-name')||{}).textContent||'?').trim();
+  const g=d.querySelector('details.b-gespr');
+  if(!g) return {name,da:false};
+  /* Gemessen wird an innerText, nicht an offsetParent: in einer
+     zugeklappten details hat ein Kind weiter eine Box und einen
+     offsetParent — gerendert ist es trotzdem nicht. innerText
+     zeigt nur, was wirklich dasteht, und lässt damit auch ein
+     ac-tech auf Stufe 0 heraus. */
+  const r={name,da:true,offenBeimLaden:g.hasAttribute('open'),
+    auf:((g.querySelector('summary')||{}).innerText||'').trim(),
+    textZu:g.innerText.trim()};
+  g.open=true;
+  r.fragen=[...g.querySelectorAll('.b-gesprf li')].map(x=>x.textContent.trim());
+  r.grenze=((g.querySelector('.b-gesprg')||{}).textContent||'').trim();
+  r.fuer=((g.querySelector('.b-gesprfuer')||{}).textContent||'').trim();
+  r.textAuf=g.innerText.trim();
+  g.open=false;
+  return r;
 })).filter(Boolean);
 
 /* Stufe 3: jetzt darf die Mechanik da sein. Gemessen wird am
@@ -1378,6 +1437,62 @@ else:
         if offen:
             fehler.append('Themenräume, auf die von der Bereichsseite aus '
                           'niemand zeigt: ' + ', '.join(offen))
+        # ── Die zweite Schublade: darüber sprechen ───────────
+        # REGELN.md Abschnitt 1 und PRODUKT.md Abschnitt 5: die
+        # Sicht einer Coachin wird zugeklappt angeboten, und sie
+        # stellt nichts fest. Beides wird am gezeichneten Text
+        # geprüft, nicht an den Daten — damit auch ein Satz, der
+        # von woanders hereinkommt, durch dieselbe Prüfung muss.
+        def _gl(t):
+            return re.sub(r'\s+', ' ', t or '').strip()
+        gespr = n.get('gespr') or []
+        if len(gespr) != 10:
+            fehler.append(f'{len(gespr)} statt 10 Bereiche mit einer Schublade '
+                          'zum Darübersprechen')
+        for e in gespr:
+            wo = e.get('name') or '?'
+            if not e.get('da'):
+                fehler.append(f'Bereich {wo} hat keine Schublade '
+                              '"Mit jemand anderem darüber sprechen"')
+                continue
+            zu, auf = _gl(e.get('textZu')), _gl(e.get('textAuf'))
+            if e.get('offenBeimLaden'):
+                fehler.append(f'Bereich {wo}: die Schublade steht beim Laden offen '
+                              '— die Sicht einer Coachin gehört nicht in den Vordergrund')
+            if len(_gl(e.get('auf'))) < 12:
+                fehler.append(f'Bereich {wo}: die Schublade hat keine lesbare Aufschrift')
+            fr = [_gl(x) for x in (e.get('fragen') or [])]
+            if len(fr) != 3:
+                fehler.append(f'Bereich {wo}: {len(fr)} statt genau 3 Fragen '
+                              'in der Schublade')
+            for f_ in fr:
+                if not f_.endswith('?'):
+                    fehler.append(f'Bereich {wo}: "{f_[:50]}" steht in der Schublade, '
+                                  'ist aber keine Frage')
+                if f_ and f_ in zu:
+                    fehler.append(f'Bereich {wo}: die Fragen stehen auch zugeklappt da '
+                                  '— dann ist die Klappe keine')
+                if f_ and f_ not in auf:
+                    fehler.append(f'Bereich {wo}: die Frage "{f_[:40]}" ist auf '
+                                  'Stufe 0 nicht sichtbar')
+            gr = _gl(e.get('grenze'))
+            if len(gr) < 60:
+                fehler.append(f'Bereich {wo}: die Schublade sagt nicht, was dieser '
+                              'Bereich nicht weiß')
+            elif gr not in auf:
+                fehler.append(f'Bereich {wo}: die Grenze ist auf Stufe 0 nicht sichtbar')
+            fu = _gl(e.get('fuer'))
+            if len(fu) < 40 or fu not in auf:
+                fehler.append(f'Bereich {wo}: der Satz für die Coachin fehlt oder ist '
+                              'auf Stufe 0 nicht sichtbar')
+            for d in DIAGNOSE:
+                if d in auf:
+                    fehler.append(f'Bereich {wo}: in der Schublade steht eine '
+                                  f'Diagnose ("{d}")')
+        da = [e for e in gespr if e.get('da')]
+        if len({_gl(e.get('textAuf')) for e in da}) != len(da):
+            fehler.append('zwei Bereiche zeigen in der Schublade denselben Text — '
+                          'dann sind die Fragen allgemein und nicht die des Bereichs')
         if n['stufe0']:
             fehler.append('Fachsprache auf Stufe 0 sichtbar: ' + ', '.join(n['stufe0']))
         if n['techSichtbar0'] != 0:
