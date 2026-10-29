@@ -469,6 +469,187 @@ function themenBauen(){
   }else{ lz.innerHTML=''; lz.hidden=true; }
 }
 
+/* ── Was dein Bild gerade trifft ──────────────────────────────
+   Mandy am 29.10.: „welche punkte werden heute und in den tagen
+   konkret getroffen? Heute ist da angeblich nichts bei mir, aber
+   das wage ich zu bezweifeln."
+
+   Sie hatte recht. An dem Tag standen vierzehn Berührungen auf
+   ihrem Bild, darunter Saturn 0,47° auf ihrer Sonne und Pluto
+   0,35° auf ihrem MC. Die Seite sagte „heute nichts", weil der
+   einzige Abschnitt, der Treffer prüfte, nur Konjunktionen kannte.
+   Siehe bahn-rechner.js. */
+var TR_ZEIGE = 4, TR_ALLE = false;
+/* Was oben schon als laufende Berührung steht, wird im Zeitstrahl
+   nur eingereiht statt wortgleich wiederholt. Dieselbe Fehlerklasse
+   wie beim Aufmacher und in der Woche — hier zum dritten Mal, also
+   gehört sie auch zum dritten Mal in eine Prüfung. */
+var TR_LAEUFT = {};
+function laeuftSchluessel(x){ return x.wanderer + '|' + x.ziel + '|' + x.grad; }
+
+function bahnSatz(t){
+  var Z = B_ZIEL[t.ziel], W = B_WAND[t.wanderer];
+  if(!Z || !W) return '';
+  return t.wanderer + ' ' + W.tut + ', ' + Z.was + '. ' +
+         (t.art === 'hart' ? W.hart : W.weich);
+}
+/* Zwei Register: Auf Stufe 0 und 1 „Saturn auf deiner Sonne", ab
+   Stufe 2 „Saturn Konjunktion deine Sonne". Dieselbe Aussage, und
+   die erste braucht keine Vorbildung. */
+function bahnTitel(t){
+  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
+  var wort = B_WINKELWORT[t.aspekt] || 'bei';
+  return '<span data-bis="1">' + esc(t.wanderer + ' ' + wort + ' ' +
+           (Z.laie || Z.kurz)) + '</span>' +
+         '<span class="ac-tech" data-ab="2">' + esc(t.wanderer + ' ' + t.aspekt +
+           ' ' + Z.kurz) + '</span>';
+}
+/* Der Balken zeigt, wie nah der Winkel steht — nicht, wie wichtig
+   er ist. Das sagt die Legende auch so. */
+function naeheBalken(t){
+  return '<div class="tr-bahn"><i style="width:' +
+         (Math.max(3, t.naehe * 100)).toFixed(0) + '%"></i></div>';
+}
+function trefferKarte(t, gross){
+  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
+  var B = beiDir(P[t.ziel]);
+  var h = ['<article class="tr' + (gross ? ' tr-gross' : '') +
+           (t.art === 'hart' ? ' tr-hart' : ' tr-weich') + '">'];
+  h.push('<div class="tr-kopf"><h3 class="tr-n">' + bahnTitel(t) + '</h3>' +
+         '<span class="tr-nah">' + t.ab.toFixed(1) + '°</span></div>');
+  h.push(naeheBalken(t));
+  h.push('<p class="tr-s">' + esc(bahnSatz(t)) + '</p>');
+  var unten = [];
+  if(B) unten.push('<a class="tr-ber" href="bereiche.html#ber-' +
+                   esc(B.bereich ? B.bereich.k : '') + '">' + esc(B.name) + ' →</a>');
+  if(gross && B_TEMPO[t.tempo])
+    unten.push('<span class="tr-t">' + esc(B_TEMPO[t.tempo].satz) + '</span>');
+  if(t.rueckwaerts) unten.push('<span class="tr-r">' + esc(B_KOPF.rueck) + '</span>');
+  h.push('<div class="tr-unten">' + unten.join('') + '</div>');
+  h.push('<div class="tr-tech ac-tech" data-ab="2">' + esc(t.wanderer) + ' ' +
+         gr(lon(t.wanderer, jetztJD())) + ' ' + H_SIGNS[zI(lon(t.wanderer, jetztJD()))] +
+         ' ' + t.aspekt + ' ' + t.ziel + ' ' + gr(P[t.ziel]) + ' ' +
+         H_SIGNS[zI(P[t.ziel])] + ', Orbis ' + t.ab.toFixed(2) + '°</div>');
+  h.push('</article>');
+  return h.join('');
+}
+
+function trefferBauen(){
+  var ziel = el('httreffer'); if(!ziel || !window.AC_BAHN || !P) return;
+  el('httrefferh').textContent = B_KOPF.titel;
+  el('httreffersub').textContent = B_KOPF.sub;
+  var jd = jetztJD(), alle = AC_BAHN.treffer(P, jd);
+  TR_LAEUFT = {};
+  alle.forEach(function(t){ if(t.tempo !== 'schnell') TR_LAEUFT[laeuftSchluessel(t)] = true; });
+  var lang = alle.filter(function(t){ return t.tempo !== 'schnell'; });
+  var kurz = alle.filter(function(t){ return t.tempo === 'schnell'; });
+
+  if(!lang.length && !kurz.length){
+    ziel.innerHTML = '<p class="ht-nix">' + esc(B_KOPF.nix) + '</p>';
+    el('httreffermehr').hidden = true;
+    el('httrefferschnell').innerHTML = '';
+    return;
+  }
+  var zeige = TR_ALLE ? lang : lang.slice(0, TR_ZEIGE);
+  ziel.innerHTML = zeige.map(function(t, i){ return trefferKarte(t, i === 0); }).join('');
+
+  var m = el('httreffermehr');
+  if(lang.length > TR_ZEIGE){
+    m.hidden = false;
+    m.textContent = TR_ALLE ? B_KOPF.wenigerVor
+                            : B_KOPF.mehrVor + ' (' + lang.length + ')';
+    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); };
+  } else { m.hidden = true; }
+
+  /* Die schnellen Wanderer getrennt und klein: Sie machen den Tag,
+     nicht den Abschnitt — stünden sie dazwischen, würde Pluto auf
+     dem MC neben dem Mond auf Merkur stehen. */
+  var s = el('httrefferschnell');
+  if(kurz.length){
+    s.innerHTML = '<div class="trs-t">' + esc(B_KOPF.schnellTitel) + '</div>' +
+      '<p class="trs-s">' + esc(B_KOPF.schnellSub) + '</p>' +
+      '<ul class="trs-l">' + kurz.slice(0, 5).map(function(t){
+        return '<li><b>' + bahnTitel(t) + '</b><span>' + t.ab.toFixed(1) + '°</span></li>';
+      }).join('') + '</ul>';
+  } else { s.innerHTML = ''; }
+}
+
+/* ── Der Zeitstrahl ───────────────────────────────────────────
+   Mandy am 29.10.: „zeitstrahl dinge zum aufklappen und und und.
+   Damit man etwas zum interagieren hat. Das ist alles so
+   runtergerattert."
+
+   Senkrecht, nicht waagerecht: Auf 390 Pixeln ist eine liegende
+   Zeitachse unlesbar, eine stehende liest sich wie eine Liste mit
+   Ordnung. Monate als Marken, jeder Eintrag aufklappbar. */
+var ST_ZEIGE = 6, ST_ALLE = false;
+var ST_MONAT = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                'August','September','Oktober','November','Dezember'];
+
+function strahlBauen(){
+  var ziel = el('htstrahl'); if(!ziel || !window.AC_BAHN || !P) return;
+  el('htstrahlh').textContent = B_STRAHL.titel;
+  el('htstrahlsub').textContent = B_STRAHL.sub;
+  var jd = jetztJD(), e = [];
+  try{ e = AC_BAHN.exakteTage(P, jd, jd + 365) || []; }catch(err){ e = []; }
+  e = e.filter(function(x){ return x.gewicht >= 0.45; });
+
+  if(!e.length){
+    ziel.innerHTML = '<p class="ht-nix">' + esc(B_STRAHL.nix) + '</p>';
+    el('htstrahlmehr').hidden = true;
+    return;
+  }
+  var zeige = ST_ALLE ? e : e.slice(0, ST_ZEIGE);
+  var h = ['<div class="st-jetzt"><i></i>' + esc(B_STRAHL.jetztMarke) + '</div>'], letzterMonat = null;
+
+  zeige.forEach(function(x){
+    var d = datVon(x.jd), mk = d.getFullYear() + '-' + d.getMonth();
+    if(mk !== letzterMonat){
+      letzterMonat = mk;
+      h.push('<div class="st-m">' + esc(ST_MONAT[d.getMonth()]) + ' ' + d.getFullYear() + '</div>');
+    }
+    var tage = tagesAbstand(x.jd);
+    var Z = B_ZIEL[x.ziel] || {kurz:x.ziel};
+    var B = beiDir(P[x.ziel]);
+    var dg = (x.durchgaenge > 1 && B_DURCHGANG[x.durchgang])
+      ? (B_DURCHGANG[x.durchgang][x.durchgaenge === 3 ? 'von3' : 'von2'] || '') : '';
+    h.push('<details class="st-e' + (x.art === 'hart' ? ' st-hart' : ' st-weich') + '">');
+    h.push('<summary><span class="st-d">' + d.getDate() + '.</span>' +
+      '<span class="st-n">' + bahnTitel(x) + '</span>' +
+      '<span class="st-w">' + (tage === 0 ? esc(B_STRAHL.heute)
+        : tage < 31 ? 'in ' + tage + ' T.'
+        : 'in ' + Math.round(tage / 30.44) + ' Mon.') + '</span></summary>');
+    /* Ein rückläufiger Wanderer kreuzt dieselbe Stelle bis zu
+       dreimal. Beim zweiten und dritten Mal denselben Absatz noch
+       einmal hinzuschreiben, wäre Füllmaterial — dort zählt nur,
+       der wievielte Durchgang es ist und was der bedeutet. */
+    var schon = TR_LAEUFT[laeuftSchluessel(x)];
+    h.push('<div class="st-i">');
+    if(x.durchgang > 1) h.push('<p class="st-schon">' + esc(B_STRAHL.wieder) + '</p>');
+    else if(schon)      h.push('<p class="st-schon">' + esc(B_STRAHL.steht) + '</p>');
+    else                h.push('<p>' + esc(bahnSatz(x)) + '</p>');
+    if(dg) h.push('<p class="st-dg">' + esc(dg) + '</p>');
+    if(B) h.push('<a class="tr-ber" href="bereiche.html#ber-' +
+                 esc(B.bereich ? B.bereich.k : '') + '">' + esc(B.name) + ' →</a>');
+    h.push('<div class="tr-tech ac-tech" data-ab="2">' + esc(x.wanderer) + ' ' +
+      esc(x.aspekt) + ' ' + esc(x.ziel) + ' exakt am ' +
+      esc(datVon(x.jd).toLocaleDateString('de-DE')) +
+      (x.rueckwaerts ? ', rückläufig' : '') +
+      (x.durchgaenge > 1 ? ', Durchgang ' + x.durchgang + ' von ' + x.durchgaenge : '') +
+      '</div></div></details>');
+  });
+  h.push('<p class="st-legende">' + esc(B_STRAHL.legende) + '</p>');
+  ziel.innerHTML = h.join('');
+
+  var m = el('htstrahlmehr');
+  if(e.length > ST_ZEIGE){
+    m.hidden = false;
+    m.textContent = ST_ALLE ? B_STRAHL.weniger
+      : tf(B_STRAHL.mehr, {n:(e.length - ST_ZEIGE)});
+    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); };
+  } else { m.hidden = true; }
+}
+
 /* ── Schlaf und Bewegung ──────────────────────────────────────
    Mandy am 28.10.: „mir fiel auf dass ich anhand des Mondes zB
    besser oder schlechter schlafe … bei mir stier mars 12 haus wenn
@@ -491,8 +672,18 @@ function mondTrifft(jd){
   var ml=lon('Mond',jd), mh=haus(P,ml), out=[];
   Object.keys(T_MONDTREFFER).forEach(function(k){
     if(P[k]===undefined || P[k]===null) return;
-    var ab=Math.abs(((ml-P[k]+540)%360)-180);
-    if(ab<=5){ out.push({k:k, ab:ab, genau:true, D:T_MONDTREFFER[k]}); return; }
+    /* Alle fünf Winkel, nicht nur die Konjunktion. Bis zum 29.10.
+       stand hier nur der Längenabstand — damit fiel Mandys Mond in
+       Opposition zu ihrem Saturn durch, 0,29° vom Exakten entfernt,
+       und die Seite sagte „heute nichts". */
+    var ab=null, nam=null;
+    [[0,'Konjunktion'],[180,'Opposition'],[90,'Quadrat'],
+     [120,'Trigon'],[60,'Sextil']].forEach(function(A){
+      var d=Math.abs(((ml-P[k]-A[0]+540)%360)-180);
+      if(d<=5 && (ab===null || d<ab)){ ab=d; nam=A[1]; }
+    });
+    if(ab!==null){ out.push({k:k, ab:ab, winkel:nam, genau:true, D:T_MONDTREFFER[k]}); return; }
+    ab=Math.abs(((ml-P[k]+540)%360)-180);
     /* Sonst: dasselbe Haus. Das ist Mandys eigener Fall und dauert
        zwei bis drei Tage statt neun Stunden — die häufigere und
        damit brauchbarere Aussage von beiden. */
@@ -545,7 +736,8 @@ function koerperBauen(){
         '<div class="kp-tech ac-tech" data-ab="2">Mond '+gr(lon('Mond',jd))+' '+
         H_SIGNS[zI(lon('Mond',jd))]+', dein '+t.k+' auf '+gr(P[t.k])+' '+
         H_SIGNS[zI(P[t.k])]+' im '+haus(P,P[t.k])+'. Haus'+
-        (t.genau?' — '+t.ab.toFixed(1)+'° Abstand':', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
+        (t.genau?' — '+(t.winkel||'Konjunktion')+', '+t.ab.toFixed(1)+'° Abstand'
+                :', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
         '</div></div>');
     });
     h.push('</div>');
@@ -990,7 +1182,7 @@ function kapBauen(){
    Seite, sondern für eine kürzere. */
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
-  ['htwocheteil','htthementeil','htkoerperteil'].forEach(function(i){
+  ['htwocheteil','htthementeil','htkoerperteil','htstrahlteil'].forEach(function(i){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
@@ -1016,10 +1208,10 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); koerperBauen(); wocheBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
   kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){

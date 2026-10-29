@@ -516,6 +516,95 @@ a{color:var(--nacht);}
 .kp-selbst b{display:block;font-size:12.2px;font-weight:400;letter-spacing:.06em;
  text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;}
 
+/* ═══ Was dein Bild gerade trifft ═══════════════════════════ */
+.ht-treffer{display:grid;gap:11px;margin:4px 0 10px;}
+@media(min-width:760px){.ht-treffer{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .ht-treffer .tr-gross{grid-column:1/-1;}}
+.tr{border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ background:var(--papier,#FFFDFA);padding:13px 15px 11px;
+ border-left:3px solid var(--linie-stark,#DDD0BC);}
+.tr-hart{border-left-color:var(--messing,#9A7235);}
+.tr-weich{border-left-color:#8FA6B8;}
+.tr-gross{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);
+ border-left-color:#E8C98D;color:#F3EFE7;}
+.tr-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+.tr-n{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18.6px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.25;margin:0;}
+.tr-gross .tr-n{color:#FFFDFA;font-size:22px;}
+.tr-nah{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.6px;
+ color:var(--messing,#9A7235);}
+.tr-gross .tr-nah{color:#E8C98D;}
+.tr-bahn{height:3px;border-radius:2px;background:var(--linie,#EBE1D2);margin:8px 0 10px;
+ overflow:hidden;}
+.tr-gross .tr-bahn{background:rgba(243,239,231,.2);}
+.tr-bahn i{display:block;height:100%;background:var(--messing,#9A7235);border-radius:2px;}
+.tr-gross .tr-bahn i{background:#E8C98D;}
+.tr-s{font-size:15.2px;line-height:1.64;margin:0 0 9px;color:var(--tinte,#231F1A);}
+.tr-gross .tr-s{color:#F3EFE7;font-size:16px;}
+.tr-unten{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;font-size:13.2px;}
+.tr-ber{color:var(--messing,#9A7235);}
+.tr-gross .tr-ber{color:#E8C98D;}
+.tr-t{color:var(--leise,#6B6259);}
+.tr-gross .tr-t{color:#BFC7DC;}
+.tr-r{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ color:var(--leise,#6B6259);border:1px solid var(--linie,#EBE1D2);
+ border-radius:999px;padding:2px 8px;}
+.tr-gross .tr-r{color:#BFC7DC;border-color:rgba(243,239,231,.3);}
+.tr-tech{margin-top:8px;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.4px;line-height:1.5;color:var(--leise,#6B6259);}
+.tr-gross .tr-tech{color:#A9B2C8;}
+.tr-mehr{display:block;width:100%;margin:2px 0 12px;padding:10px;
+ background:transparent;border:1px dashed var(--linie-stark,#DDD0BC);border-radius:11px;
+ font-family:inherit;font-size:13.8px;color:var(--messing,#9A7235);cursor:pointer;}
+.tr-mehr:hover{border-style:solid;}
+.trs-t{font-size:11.4px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin-bottom:3px;}
+.trs-s{font-size:13.6px;line-height:1.55;color:var(--leise,#6B6259);margin:0 0 8px;
+ max-width:64ch;}
+.trs-l{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
+.trs-l li{display:flex;justify-content:space-between;gap:12px;font-size:14px;
+ padding:5px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.trs-l li b{font-weight:400;color:var(--nacht,#2E3A5C);}
+.trs-l li span{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.2px;
+ color:var(--leise,#6B6259);}
+
+/* ═══ Der Zeitstrahl ════════════════════════════════════════ */
+.ht-strahl{position:relative;padding-left:22px;margin:4px 0 10px;}
+.ht-strahl::before{content:'';position:absolute;left:6px;top:8px;bottom:26px;width:2px;
+ background:var(--linie-stark,#DDD0BC);border-radius:1px;}
+.st-jetzt{position:relative;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.4px;letter-spacing:.06em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin-bottom:12px;}
+.st-jetzt i{position:absolute;left:-21px;top:3px;width:11px;height:11px;border-radius:50%;
+ background:var(--messing,#9A7235);border:2px solid var(--creme,#FCF7EF);}
+.st-m{position:relative;font-family:var(--serif,Fraunces,Georgia,serif);font-size:15px;
+ font-weight:500;color:var(--leise,#6B6259);margin:16px 0 7px;}
+.st-m::before{content:'';position:absolute;left:-19px;top:7px;width:7px;height:7px;
+ border-radius:50%;background:var(--creme,#FCF7EF);
+ border:2px solid var(--linie-stark,#DDD0BC);}
+.st-e{position:relative;border:1px solid var(--linie,#EBE1D2);border-radius:12px;
+ background:var(--papier,#FFFDFA);margin-bottom:7px;
+ border-left:3px solid var(--linie-stark,#DDD0BC);}
+.st-e.st-hart{border-left-color:var(--messing,#9A7235);}
+.st-e.st-weich{border-left-color:#8FA6B8;}
+.st-e summary{display:flex;align-items:baseline;gap:9px;padding:10px 13px;
+ cursor:pointer;list-style:none;}
+.st-e summary::-webkit-details-marker{display:none;}
+.st-d{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:13.4px;
+ color:var(--messing,#9A7235);min-width:2.2em;}
+.st-n{flex:1;font-family:var(--serif,Fraunces,Georgia,serif);font-size:16.4px;
+ font-weight:500;color:var(--nacht,#2E3A5C);line-height:1.3;}
+.st-w{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ color:var(--leise,#6B6259);}
+.st-e[open] summary{border-bottom:1px solid var(--linie,#EBE1D2);}
+.st-i{padding:10px 13px 11px;}
+.st-i p{font-size:14.8px;line-height:1.62;margin:0 0 7px;color:var(--tinte,#231F1A);}
+.st-i .st-dg{background:var(--messing-bg,#F7EFE1);border-radius:9px;padding:8px 11px;
+ font-size:14px;}
+.st-legende{font-size:12.8px;line-height:1.5;color:var(--leise,#6B6259);
+ margin:14px 0 0;max-width:64ch;}
+.st-i .st-schon{font-style:italic;color:var(--leise,#6B6259);}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -588,6 +677,26 @@ a{color:var(--nacht);}
   <h2 class="ht-h" id="htkoerperh"></h2>
   <p class="ht-sub" id="htkoerpersub"></p>
   <div class="ht-koerper" id="htkoerper"></div>
+</div>
+
+<!-- Was dein Bild gerade trifft.
+     Mandy am 29.10.: "welche punkte werden heute und in den tagen
+     konkret getroffen? Heute ist da angeblich nichts bei mir, aber
+     das wage ich zu bezweifeln." Sie hatte recht. -->
+<div id="httrefferteil">
+  <h2 class="ht-h" id="httrefferh"></h2>
+  <p class="ht-sub" id="httreffersub"></p>
+  <div class="ht-treffer" id="httreffer"></div>
+  <button type="button" class="tr-mehr" id="httreffermehr" hidden></button>
+  <div class="tr-schnell" id="httrefferschnell"></div>
+</div>
+
+<!-- Der Zeitstrahl: zwoelf Monate, exakte Tage, aufklappbar. -->
+<div id="htstrahlteil">
+  <h2 class="ht-h" id="htstrahlh"></h2>
+  <p class="ht-sub" id="htstrahlsub"></p>
+  <div class="ht-strahl" id="htstrahl"></div>
+  <button type="button" class="tr-mehr" id="htstrahlmehr" hidden></button>
 </div>
 
 <div id="htlaeuftteil">
@@ -3639,6 +3748,321 @@ var T_MONDTREFFER = {
         tut:'Ein weicher Tag. Nähe, Essen, Schönes fallen leichter als Disziplin.',
         rat:'Gut für Bewegung, die sich gut anfühlt, statt für eine, die etwas beweist.'}};
 
+/* ── Was dein Bild trifft, und wann genau ─────────────────────
+   Mandy am 29.10.:
+
+     „welche punkte werden heute und in den tagen konkret getroffen?
+      Heute ist da angeblich nichts bei mir, aber das wage ich zu
+      bezweifeln."
+
+   Sie hatte recht, und der Fehler war klein und teuer: Der
+   Treffer-Abschnitt verglich den Abstand zweier Längen gegen einen
+   Orbis — das findet nur Konjunktionen. Opposition, Quadrat,
+   Trigon und Sextil fielen durch. An dem Tag stand ihr laufender
+   Mond 0,29° von der Opposition zu ihrem Saturn entfernt, Saturn
+   0,47° auf ihrer Sonne und Pluto 0,35° auf ihrem MC. Die Seite
+   sagte „heute nichts".
+
+   Diese Datei rechnet zweierlei:
+
+     treffer()    — was gerade innerhalb des Orbis steht, alle fünf
+                    Winkel, alle Punkte des Geburtsbilds.
+     exakteTage() — wann ein Winkel im gesuchten Zeitraum genau
+                    aufgeht. Dafür wird die Zeit abgefahren und bei
+                    jedem Vorzeichenwechsel verfeinert.
+
+   Teuer wäre es, für jeden Punkt und jeden Winkel einzeln durch die
+   Zeit zu laufen. Deshalb andersherum: einmal pro Schritt die Länge
+   jedes Wanderers holen, dann alle Ziele und Winkel damit
+   vergleichen. Aus 300 Zeitläufen wird einer. */
+(function(){
+'use strict';
+
+var BAHN_ASPEKTE = [
+  {grad:0,   name:'Konjunktion', art:'hart',  gewicht:1.00},
+  {grad:180, name:'Opposition',  art:'hart',  gewicht:0.95},
+  {grad:90,  name:'Quadrat',     art:'hart',  gewicht:0.90},
+  {grad:120, name:'Trigon',      art:'weich', gewicht:0.70},
+  {grad:60,  name:'Sextil',      art:'weich', gewicht:0.50}
+];
+
+/* Die Wanderer, nach Geschwindigkeit. Der Orbis richtet sich danach,
+   wie lange ein Wanderer für ein Grad braucht: Beim Mond sind 6°
+   ein halber Tag, bei Pluto zwei Jahre. */
+var BAHN_WANDERER = {
+  Mond:   {orb:6, tempo:'schnell', g:0.30},
+  Merkur: {orb:3, tempo:'schnell', g:0.45},
+  Venus:  {orb:3, tempo:'schnell', g:0.50},
+  Sonne:  {orb:4, tempo:'schnell', g:0.65},
+  Mars:   {orb:3, tempo:'mittel',  g:0.75},
+  Jupiter:{orb:3, tempo:'langsam', g:0.85},
+  Saturn: {orb:3, tempo:'langsam', g:1.00},
+  Uranus: {orb:2, tempo:'langsam', g:0.95},
+  Neptun: {orb:2, tempo:'langsam', g:0.90},
+  Pluto:  {orb:2, tempo:'langsam', g:1.00}
+};
+
+var BAHN_ZIELE = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn',
+                  'Uranus','Neptun','Pluto','ASC','MC'];
+
+function b360(x){ x=x%360; return x<0?x+360:x; }
+function bDiff(a,b){ return ((a-b+540)%360)-180; }
+
+/* Die Länge eines Wanderers zu einem Zeitpunkt. lon() aus engine.js
+   kennt alle; Sonne und Mond gehen dort eigene Wege. */
+function bLon(k, jd){
+  try{ return b360(lon(k, jd)); }catch(e){ return null; }
+}
+
+/* ── Was gerade innerhalb des Orbis steht ─────────────────────
+   Alle fünf Winkel, alle Punkte. `naehe` ist 1 bei exakt und 0 am
+   Rand des Orbis; daraus und aus dem Gewicht des Wanderers wird
+   sortiert, damit Pluto auf dem MC vor dem Mond auf Merkur steht. */
+function treffer(P, jd, opt){
+  opt = opt || {};
+  var nurLangsam = !!opt.nurLangsam, out = [];
+  Object.keys(BAHN_WANDERER).forEach(function(w){
+    var W = BAHN_WANDERER[w];
+    if(nurLangsam && W.tempo === 'schnell') return;
+    var wl = bLon(w, jd); if(wl === null) return;
+    BAHN_ZIELE.forEach(function(z){
+      if(P[z] === undefined || P[z] === null) return;
+      /* Ein Wanderer auf seinem eigenen Geburtsort ist eine Rückkehr
+         und hat anderswo ihren Platz — hier wäre sie eine Zeile wie
+         jede andere und damit untertrieben. */
+      BAHN_ASPEKTE.forEach(function(A){
+        var ab = Math.abs(bDiff(wl, b360(P[z] + A.grad)));
+        if(ab > W.orb) return;
+        var naehe = 1 - (ab / W.orb);
+        out.push({
+          wanderer:w, ziel:z, aspekt:A.name, art:A.art, grad:A.grad,
+          ab:ab, naehe:naehe, tempo:W.tempo,
+          rueckwaerts:(function(){ try{ return rueck(w, jd); }catch(e){ return false; } })(),
+          gewicht: W.g * A.gewicht * (0.4 + 0.6 * naehe),
+          eigen:(w === z && A.grad === 0)
+        });
+      });
+    });
+  });
+  out.sort(function(a,b){ return b.gewicht - a.gewicht; });
+  return out;
+}
+
+/* ── Wann ein Winkel genau aufgeht ────────────────────────────
+   Die Zeit wird in Schritten abgefahren; wo der Abstand das
+   Vorzeichen wechselt, liegt ein exakter Tag dazwischen und wird
+   durch Halbieren eingegrenzt.
+
+   Ein rückläufiger Wanderer überquert dieselbe Stelle bis zu
+   dreimal. Das ist kein Fehler, den man wegfiltert — es sind
+   wirklich drei Termine, und der mittlere fühlt sich anders an als
+   die äußeren. Sie werden deshalb alle zurückgegeben und als
+   Durchgang gezählt. */
+function exakteTage(P, vonJD, bisJD, opt){
+  opt = opt || {};
+  var schritt = opt.schritt || 2;
+  var welche = opt.wanderer ||
+    ['Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+  var ziele = opt.ziele || BAHN_ZIELE;
+  var out = [];
+
+  welche.forEach(function(w){
+    var W = BAHN_WANDERER[w]; if(!W) return;
+    /* Je Schritt einmal die Länge holen, dann alle Ziele damit
+       vergleichen — nicht andersherum. */
+    var zeiten = [], laengen = [], t;
+    for(t = vonJD; t <= bisJD + schritt; t += schritt){
+      var l = bLon(w, t); if(l === null) return;
+      zeiten.push(t); laengen.push(l);
+    }
+    ziele.forEach(function(z){
+      if(P[z] === undefined || P[z] === null) return;
+      BAHN_ASPEKTE.forEach(function(A){
+        var ziel = b360(P[z] + A.grad), i;
+        var vor = bDiff(laengen[0], ziel);
+        for(i = 1; i < zeiten.length; i++){
+          var jetzt = bDiff(laengen[i], ziel);
+          /* Ein Sprung über 180° ist der Rundlauf, kein Treffer. */
+          if((vor < 0) !== (jetzt < 0) && Math.abs(vor) < 90 && Math.abs(jetzt) < 90){
+            var lo = zeiten[i-1], hi = zeiten[i], q;
+            for(q = 0; q < 34; q++){
+              var m = (lo + hi) / 2;
+              if((bDiff(bLon(w, m), ziel) < 0) === (vor < 0)) lo = m; else hi = m;
+            }
+            var genau = (lo + hi) / 2;
+            if(genau >= vonJD && genau <= bisJD)
+              out.push({
+                wanderer:w, ziel:z, aspekt:A.name, art:A.art, grad:A.grad,
+                jd:genau, tempo:W.tempo,
+                rueckwaerts:(function(){ try{ return rueck(w, genau); }catch(e){ return false; } })(),
+                gewicht: W.g * A.gewicht,
+                eigen:(w === z && A.grad === 0)
+              });
+          }
+          vor = jetzt;
+        }
+      });
+    });
+  });
+
+  out.sort(function(a,b){ return a.jd - b.jd; });
+
+  /* Mehrfachdurchgänge zusammenzählen: Wer dreimal über dieselbe
+     Stelle läuft, soll das auch dastehen sehen. */
+  var zaehler = {};
+  out.forEach(function(x){
+    var k = x.wanderer + '|' + x.ziel + '|' + x.grad;
+    zaehler[k] = (zaehler[k] || 0) + 1;
+  });
+  var lauf = {};
+  out.forEach(function(x){
+    var k = x.wanderer + '|' + x.ziel + '|' + x.grad;
+    lauf[k] = (lauf[k] || 0) + 1;
+    x.durchgang = lauf[k];
+    x.durchgaenge = zaehler[k];
+  });
+  return out;
+}
+
+window.AC_BAHN = {
+  ASPEKTE:BAHN_ASPEKTE, WANDERER:BAHN_WANDERER, ZIELE:BAHN_ZIELE,
+  treffer:treffer, exakteTage:exakteTage
+};
+})();
+
+/* ── Die Worte für das, was dein Bild trifft ──────────────────
+   Mandy am 29.10.: „die Textblöcke sind noch zu bla in teile. Also
+   deine Sprachwahl ist noch immer nicht passend genug."
+
+   Der Grund dafür ist derselbe wie bei dem Satz über die Umrisse
+   (REGELN.md Abschnitt 6d): Ein Satz aus zwei Bausteinen wird nur
+   dann konkret, wenn **beide** Bausteine etwas bezeichnen, das man
+   sich vorstellen kann — und wenn am Ende eine Folge steht.
+
+   Hier sind es drei Bausteine:
+
+     ZIEL     — was dieser Punkt in deinem Leben ist. Kein
+                Planetenname, sondern das, worum es geht.
+     WANDERER — was der laufende Planet damit macht. Ein Verb.
+     FOLGE    — was dabei herauskommt. Unterschiedlich für harte
+                und weiche Winkel.
+
+   Daraus: „Saturn prüft gerade, wofür du gehalten werden willst.
+   Was davon nur Anspruch war, hält diese Zeit nicht."
+
+   Zehn Wanderer mal zwölf Ziele ergeben 120 Paare; einzeln
+   geschrieben wären sie in zwei Jahren noch nicht fertig und jedes
+   dritte wäre schlecht. Zusammengesetzt sind es 42 Texte, und jeder
+   einzelne davon kann gut sein. */
+
+/* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
+   entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch. */
+var B_ZIEL = {
+ Sonne:  {kurz:'deine Sonne',   was:'wofür du gehalten werden willst'},
+ Mond:   {kurz:'dein Mond',     was:'was du brauchst, damit es sich sicher anfühlt'},
+ Merkur: {kurz:'dein Merkur',   was:'wie du denkst und was du mit anderen ausmachst'},
+ Venus:  {kurz:'deine Venus',   was:'was dir nah ist und was du dir wert bist'},
+ Mars:   {kurz:'dein Mars',     was:'womit du anfängst und wofür du kämpfst'},
+ Jupiter:{kurz:'dein Jupiter',  was:'wo du dir etwas zutraust'},
+ Saturn: {kurz:'dein Saturn',   was:'wo du dich zusammenreißt und streng mit dir bist'},
+ Uranus: {kurz:'dein Uranus',   was:'wo du nicht mitmachst, wie man es macht'},
+ Neptun: {kurz:'dein Neptun',   was:'wofür du dich begeisterst, ohne es prüfen zu wollen'},
+ Pluto:  {kurz:'dein Pluto',    was:'wo es bei dir um alles oder nichts geht'},
+ ASC:    {kurz:'dein Aszendent',laie:'dein Auftreten',
+          was:'wie du ankommst, bevor du etwas gesagt hast'},
+ MC:     {kurz:'dein MC',       laie:'deine öffentliche Seite',
+          was:'wohin du öffentlich gehst und wofür man dich kennt'}};
+
+/* Die Winkel in zwei Registern. „Konjunktion" verschlüsselt einen
+   Rechenweg und bleibt auf Stufe 0 draußen (REGELN.md 2a); „auf"
+   sagt dasselbe und braucht keine Vorbildung. Ab Stufe 2 steht der
+   Fachname daneben, weil er ab dort der genauere ist. */
+var B_WINKELWORT = {
+ 'Konjunktion':'auf',
+ 'Opposition':'gegenüber',
+ 'Quadrat':'quer zu',
+ 'Trigon':'im Einklang mit',
+ 'Sextil':'in Reichweite von'};
+
+/* Was ein laufender Planet mit dem macht, was er berührt.
+   `tut` ist ein Verb mit offener Stelle dahinter, `hart` und
+   `weich` sind die Folgen — die eine für Konjunktion, Opposition
+   und Quadrat, die andere für Trigon und Sextil. */
+var B_WAND = {
+ Mond:{tut:'streift gerade',
+   hart:'Für ein paar Stunden liegt das näher an der Oberfläche als sonst. Es geht vorbei, bevor du etwas daraus machen musst.',
+   weich:'Ein paar Stunden, in denen das leichter von der Hand geht. Nichts, worauf man planen kann — aber brauchbar, wenn es gerade ansteht.'},
+ Merkur:{tut:'bringt gerade zur Sprache',
+   hart:'Es wird darüber geredet, und zwar nicht unbedingt so, wie du es gern hättest. Ein Gespräch, eine Nachricht, ein Satz, der hängen bleibt.',
+   weich:'Es lässt sich in diesen Tagen leichter aussprechen als sonst. Wenn etwas gesagt werden muss, ist jetzt der günstigere Moment.'},
+ Venus:{tut:'macht gerade weicher',
+   hart:'Du willst, dass es angenehm bleibt, und gibst dabei schneller nach, als du es später gutheißt.',
+   weich:'Es fällt leichter, sich darüber zu einigen. Gut für ein Gespräch, das sonst zäh wird.'},
+ Sonne:{tut:'beleuchtet gerade',
+   hart:'Ein paar Tage lang steht das im Mittelpunkt, ob du willst oder nicht. Danach ist es wieder eines unter vielen.',
+   weich:'Ein paar Tage, in denen das sichtbar wird, ohne dass du drängen musst.'},
+ Mars:{tut:'bringt gerade in Bewegung',
+   hart:'Die Sache wird schnell heiß. Entweder du packst sie an, oder sie kommt als Gereiztheit bei jemandem heraus, der nichts dafür kann.',
+   weich:'Du kommst hier gerade leicht in Bewegung. Was du jetzt anfängst, fängt wirklich an.'},
+ Jupiter:{tut:'macht gerade größer',
+   hart:'Es wird mehr, als hineinpasst. Das fühlt sich gut an und wird erst später zum Problem — meist, wenn der Kalender es einholt.',
+   weich:'Hier geht in diesen Monaten mehr als sonst. Türen gehen auf, und es kostet weniger Überredung als üblich.'},
+ Saturn:{tut:'prüft gerade',
+   hart:'Was daran nur Anspruch war, hält diese Zeit nicht. Was echt ist, steht hinterher fester als vorher — aber es dauert, und es fühlt sich zwischendurch nach Rückschritt an.',
+   weich:'Hier lässt sich gerade etwas festmachen, das sonst nicht hält. Keine aufregende Zeit, aber eine, nach der etwas steht.'},
+ Uranus:{tut:'reißt gerade auf',
+   hart:'Das verträgt gerade keine Fortsetzung wie bisher. Entweder du änderst es, oder es wird von außen geändert — das ist der unangenehmere Weg.',
+   weich:'Hier ist gerade Luft für etwas, das du sonst nicht gewagt hättest. Der Widerstand dagegen ist kleiner als üblich.'},
+ Neptun:{tut:'macht gerade unscharf',
+   hart:'Die Umrisse verschwimmen: Du siehst hier gerade schlechter, was wirklich ist und was du dir dazudenkst. Das ist der Moment, in dem man jemanden fragt, der nicht beteiligt ist.',
+   weich:'Hier darf gerade etwas offen bleiben, ohne dass es schadet. Gut für alles, was nicht entschieden werden muss.'},
+ Pluto:{tut:'baut gerade um',
+   hart:'Das geht nicht in Schritten, die du dir aussuchst, und es dauert Jahre statt Wochen. Was dabei verschwindet, war meistens schon vorher geborgt.',
+   weich:'Hier bekommst du in diesen Jahren mehr Gewicht, ohne dass du dafür lauter werden musst.'}};
+
+/* Die drei Tempi. Daraus entsteht die Angabe, wie lange das gilt —
+   ohne sie ist „Saturn auf deiner Sonne" ein Satz ohne Zeitraum. */
+var B_TEMPO = {
+ schnell:{name:'Stunden', satz:'Das ist morgen vorbei.'},
+ mittel: {name:'Tage',    satz:'Das zieht ein paar Tage.'},
+ langsam:{name:'Monate',  satz:'Das ist keine Stimmung, das ist ein Abschnitt.'}};
+
+/* Mehrfachdurchgänge. Ein rückläufiger Wanderer kreuzt dieselbe
+   Stelle bis zu dreimal — und die drei Termine fühlen sich
+   unterschiedlich an. Das ist eine der Sachen, die fast keine App
+   zeigt, obwohl sie leicht zu rechnen ist. */
+var B_DURCHGANG = {
+ 1: {von3:'Das erste von drei Malen. Jetzt zeigt sich, worum es geht; entschieden wird es noch nicht.',
+     von2:'Das erste von zwei Malen. Jetzt kommt das Thema auf den Tisch.'},
+ 2: {von3:'Das zweite von drei Malen, rückwärts. Jetzt geht es noch einmal von innen durch — unangenehmer als beim ersten Mal und meist der Teil, an dem sich etwas dreht.',
+     von2:'Das zweite und letzte Mal. Jetzt steht es fest.'},
+ 3: {von3:'Das dritte und letzte Mal. Was beim zweiten Durchgang klar geworden ist, wird jetzt gemacht.'}};
+
+var B_KOPF = {
+ titel:'Was dein Bild gerade trifft',
+ sub:'Welche Punkte bei dir berührt werden, von wem, und wie nah das dran ist.',
+ nix:'Gerade steht nichts innerhalb der Orbis-Grenzen auf deinem Bild. Das ist selten und hält nie lange.',
+ nahVor:'Abstand',
+ exaktVor:'Genau am',
+ laeuftVor:'Gilt für',
+ rueck:'läuft rückwärts',
+ mehrVor:'Alle Berührungen anzeigen',
+ wenigerVor:'Weniger anzeigen',
+ schnellTitel:'Dazu heute, nur für Stunden',
+ schnellSub:'Mond, Merkur, Venus und Sonne ziehen schnell vorbei. Sie machen den Tag, nicht den Abschnitt.'};
+
+var B_STRAHL = {
+ titel:'Die nächsten zwölf Monate',
+ sub:'Die langsamen Wanderer auf deinem Bild, mit dem Tag, an dem der Winkel genau aufgeht. Tipp eine Zeile an, dann steht da, was sie heißt.',
+ nix:'In den nächsten zwölf Monaten geht kein Winkel der langsamen Wanderer auf deinem Bild genau auf. Das kommt vor — dann sind die Jahre davor und danach die dichteren.',
+ heute:'heute',
+ jetztMarke:'Hier stehst du',
+ mehr:'Noch {n} weitere anzeigen',
+ weniger:'Weniger anzeigen',
+ legende:'Gerechnet ist der Tag, an dem der Winkel genau aufgeht. Was er bedeutet, ist Deutung — und die prüfst du an dir.',
+ wieder:'Dieselbe Begegnung noch einmal — was sie heißt, steht beim ersten Mal.',
+ steht:'Läuft schon. Steht oben unter „Was dein Bild gerade trifft".'};
+
 /* Astro-Charlie · Heute — nach Zeitdruck geordnet
    Drei Bänder: was diese Stunde gilt, was diese Woche ein Datum hat,
    und was monatelang läuft und nichts von dir will.                 */
@@ -4110,6 +4534,187 @@ function themenBauen(){
   }else{ lz.innerHTML=''; lz.hidden=true; }
 }
 
+/* ── Was dein Bild gerade trifft ──────────────────────────────
+   Mandy am 29.10.: „welche punkte werden heute und in den tagen
+   konkret getroffen? Heute ist da angeblich nichts bei mir, aber
+   das wage ich zu bezweifeln."
+
+   Sie hatte recht. An dem Tag standen vierzehn Berührungen auf
+   ihrem Bild, darunter Saturn 0,47° auf ihrer Sonne und Pluto
+   0,35° auf ihrem MC. Die Seite sagte „heute nichts", weil der
+   einzige Abschnitt, der Treffer prüfte, nur Konjunktionen kannte.
+   Siehe bahn-rechner.js. */
+var TR_ZEIGE = 4, TR_ALLE = false;
+/* Was oben schon als laufende Berührung steht, wird im Zeitstrahl
+   nur eingereiht statt wortgleich wiederholt. Dieselbe Fehlerklasse
+   wie beim Aufmacher und in der Woche — hier zum dritten Mal, also
+   gehört sie auch zum dritten Mal in eine Prüfung. */
+var TR_LAEUFT = {};
+function laeuftSchluessel(x){ return x.wanderer + '|' + x.ziel + '|' + x.grad; }
+
+function bahnSatz(t){
+  var Z = B_ZIEL[t.ziel], W = B_WAND[t.wanderer];
+  if(!Z || !W) return '';
+  return t.wanderer + ' ' + W.tut + ', ' + Z.was + '. ' +
+         (t.art === 'hart' ? W.hart : W.weich);
+}
+/* Zwei Register: Auf Stufe 0 und 1 „Saturn auf deiner Sonne", ab
+   Stufe 2 „Saturn Konjunktion deine Sonne". Dieselbe Aussage, und
+   die erste braucht keine Vorbildung. */
+function bahnTitel(t){
+  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
+  var wort = B_WINKELWORT[t.aspekt] || 'bei';
+  return '<span data-bis="1">' + esc(t.wanderer + ' ' + wort + ' ' +
+           (Z.laie || Z.kurz)) + '</span>' +
+         '<span class="ac-tech" data-ab="2">' + esc(t.wanderer + ' ' + t.aspekt +
+           ' ' + Z.kurz) + '</span>';
+}
+/* Der Balken zeigt, wie nah der Winkel steht — nicht, wie wichtig
+   er ist. Das sagt die Legende auch so. */
+function naeheBalken(t){
+  return '<div class="tr-bahn"><i style="width:' +
+         (Math.max(3, t.naehe * 100)).toFixed(0) + '%"></i></div>';
+}
+function trefferKarte(t, gross){
+  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
+  var B = beiDir(P[t.ziel]);
+  var h = ['<article class="tr' + (gross ? ' tr-gross' : '') +
+           (t.art === 'hart' ? ' tr-hart' : ' tr-weich') + '">'];
+  h.push('<div class="tr-kopf"><h3 class="tr-n">' + bahnTitel(t) + '</h3>' +
+         '<span class="tr-nah">' + t.ab.toFixed(1) + '°</span></div>');
+  h.push(naeheBalken(t));
+  h.push('<p class="tr-s">' + esc(bahnSatz(t)) + '</p>');
+  var unten = [];
+  if(B) unten.push('<a class="tr-ber" href="bereiche.html#ber-' +
+                   esc(B.bereich ? B.bereich.k : '') + '">' + esc(B.name) + ' →</a>');
+  if(gross && B_TEMPO[t.tempo])
+    unten.push('<span class="tr-t">' + esc(B_TEMPO[t.tempo].satz) + '</span>');
+  if(t.rueckwaerts) unten.push('<span class="tr-r">' + esc(B_KOPF.rueck) + '</span>');
+  h.push('<div class="tr-unten">' + unten.join('') + '</div>');
+  h.push('<div class="tr-tech ac-tech" data-ab="2">' + esc(t.wanderer) + ' ' +
+         gr(lon(t.wanderer, jetztJD())) + ' ' + H_SIGNS[zI(lon(t.wanderer, jetztJD()))] +
+         ' ' + t.aspekt + ' ' + t.ziel + ' ' + gr(P[t.ziel]) + ' ' +
+         H_SIGNS[zI(P[t.ziel])] + ', Orbis ' + t.ab.toFixed(2) + '°</div>');
+  h.push('</article>');
+  return h.join('');
+}
+
+function trefferBauen(){
+  var ziel = el('httreffer'); if(!ziel || !window.AC_BAHN || !P) return;
+  el('httrefferh').textContent = B_KOPF.titel;
+  el('httreffersub').textContent = B_KOPF.sub;
+  var jd = jetztJD(), alle = AC_BAHN.treffer(P, jd);
+  TR_LAEUFT = {};
+  alle.forEach(function(t){ if(t.tempo !== 'schnell') TR_LAEUFT[laeuftSchluessel(t)] = true; });
+  var lang = alle.filter(function(t){ return t.tempo !== 'schnell'; });
+  var kurz = alle.filter(function(t){ return t.tempo === 'schnell'; });
+
+  if(!lang.length && !kurz.length){
+    ziel.innerHTML = '<p class="ht-nix">' + esc(B_KOPF.nix) + '</p>';
+    el('httreffermehr').hidden = true;
+    el('httrefferschnell').innerHTML = '';
+    return;
+  }
+  var zeige = TR_ALLE ? lang : lang.slice(0, TR_ZEIGE);
+  ziel.innerHTML = zeige.map(function(t, i){ return trefferKarte(t, i === 0); }).join('');
+
+  var m = el('httreffermehr');
+  if(lang.length > TR_ZEIGE){
+    m.hidden = false;
+    m.textContent = TR_ALLE ? B_KOPF.wenigerVor
+                            : B_KOPF.mehrVor + ' (' + lang.length + ')';
+    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); };
+  } else { m.hidden = true; }
+
+  /* Die schnellen Wanderer getrennt und klein: Sie machen den Tag,
+     nicht den Abschnitt — stünden sie dazwischen, würde Pluto auf
+     dem MC neben dem Mond auf Merkur stehen. */
+  var s = el('httrefferschnell');
+  if(kurz.length){
+    s.innerHTML = '<div class="trs-t">' + esc(B_KOPF.schnellTitel) + '</div>' +
+      '<p class="trs-s">' + esc(B_KOPF.schnellSub) + '</p>' +
+      '<ul class="trs-l">' + kurz.slice(0, 5).map(function(t){
+        return '<li><b>' + bahnTitel(t) + '</b><span>' + t.ab.toFixed(1) + '°</span></li>';
+      }).join('') + '</ul>';
+  } else { s.innerHTML = ''; }
+}
+
+/* ── Der Zeitstrahl ───────────────────────────────────────────
+   Mandy am 29.10.: „zeitstrahl dinge zum aufklappen und und und.
+   Damit man etwas zum interagieren hat. Das ist alles so
+   runtergerattert."
+
+   Senkrecht, nicht waagerecht: Auf 390 Pixeln ist eine liegende
+   Zeitachse unlesbar, eine stehende liest sich wie eine Liste mit
+   Ordnung. Monate als Marken, jeder Eintrag aufklappbar. */
+var ST_ZEIGE = 6, ST_ALLE = false;
+var ST_MONAT = ['Januar','Februar','März','April','Mai','Juni','Juli',
+                'August','September','Oktober','November','Dezember'];
+
+function strahlBauen(){
+  var ziel = el('htstrahl'); if(!ziel || !window.AC_BAHN || !P) return;
+  el('htstrahlh').textContent = B_STRAHL.titel;
+  el('htstrahlsub').textContent = B_STRAHL.sub;
+  var jd = jetztJD(), e = [];
+  try{ e = AC_BAHN.exakteTage(P, jd, jd + 365) || []; }catch(err){ e = []; }
+  e = e.filter(function(x){ return x.gewicht >= 0.45; });
+
+  if(!e.length){
+    ziel.innerHTML = '<p class="ht-nix">' + esc(B_STRAHL.nix) + '</p>';
+    el('htstrahlmehr').hidden = true;
+    return;
+  }
+  var zeige = ST_ALLE ? e : e.slice(0, ST_ZEIGE);
+  var h = ['<div class="st-jetzt"><i></i>' + esc(B_STRAHL.jetztMarke) + '</div>'], letzterMonat = null;
+
+  zeige.forEach(function(x){
+    var d = datVon(x.jd), mk = d.getFullYear() + '-' + d.getMonth();
+    if(mk !== letzterMonat){
+      letzterMonat = mk;
+      h.push('<div class="st-m">' + esc(ST_MONAT[d.getMonth()]) + ' ' + d.getFullYear() + '</div>');
+    }
+    var tage = tagesAbstand(x.jd);
+    var Z = B_ZIEL[x.ziel] || {kurz:x.ziel};
+    var B = beiDir(P[x.ziel]);
+    var dg = (x.durchgaenge > 1 && B_DURCHGANG[x.durchgang])
+      ? (B_DURCHGANG[x.durchgang][x.durchgaenge === 3 ? 'von3' : 'von2'] || '') : '';
+    h.push('<details class="st-e' + (x.art === 'hart' ? ' st-hart' : ' st-weich') + '">');
+    h.push('<summary><span class="st-d">' + d.getDate() + '.</span>' +
+      '<span class="st-n">' + bahnTitel(x) + '</span>' +
+      '<span class="st-w">' + (tage === 0 ? esc(B_STRAHL.heute)
+        : tage < 31 ? 'in ' + tage + ' T.'
+        : 'in ' + Math.round(tage / 30.44) + ' Mon.') + '</span></summary>');
+    /* Ein rückläufiger Wanderer kreuzt dieselbe Stelle bis zu
+       dreimal. Beim zweiten und dritten Mal denselben Absatz noch
+       einmal hinzuschreiben, wäre Füllmaterial — dort zählt nur,
+       der wievielte Durchgang es ist und was der bedeutet. */
+    var schon = TR_LAEUFT[laeuftSchluessel(x)];
+    h.push('<div class="st-i">');
+    if(x.durchgang > 1) h.push('<p class="st-schon">' + esc(B_STRAHL.wieder) + '</p>');
+    else if(schon)      h.push('<p class="st-schon">' + esc(B_STRAHL.steht) + '</p>');
+    else                h.push('<p>' + esc(bahnSatz(x)) + '</p>');
+    if(dg) h.push('<p class="st-dg">' + esc(dg) + '</p>');
+    if(B) h.push('<a class="tr-ber" href="bereiche.html#ber-' +
+                 esc(B.bereich ? B.bereich.k : '') + '">' + esc(B.name) + ' →</a>');
+    h.push('<div class="tr-tech ac-tech" data-ab="2">' + esc(x.wanderer) + ' ' +
+      esc(x.aspekt) + ' ' + esc(x.ziel) + ' exakt am ' +
+      esc(datVon(x.jd).toLocaleDateString('de-DE')) +
+      (x.rueckwaerts ? ', rückläufig' : '') +
+      (x.durchgaenge > 1 ? ', Durchgang ' + x.durchgang + ' von ' + x.durchgaenge : '') +
+      '</div></div></details>');
+  });
+  h.push('<p class="st-legende">' + esc(B_STRAHL.legende) + '</p>');
+  ziel.innerHTML = h.join('');
+
+  var m = el('htstrahlmehr');
+  if(e.length > ST_ZEIGE){
+    m.hidden = false;
+    m.textContent = ST_ALLE ? B_STRAHL.weniger
+      : tf(B_STRAHL.mehr, {n:(e.length - ST_ZEIGE)});
+    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); };
+  } else { m.hidden = true; }
+}
+
 /* ── Schlaf und Bewegung ──────────────────────────────────────
    Mandy am 28.10.: „mir fiel auf dass ich anhand des Mondes zB
    besser oder schlechter schlafe … bei mir stier mars 12 haus wenn
@@ -4132,8 +4737,18 @@ function mondTrifft(jd){
   var ml=lon('Mond',jd), mh=haus(P,ml), out=[];
   Object.keys(T_MONDTREFFER).forEach(function(k){
     if(P[k]===undefined || P[k]===null) return;
-    var ab=Math.abs(((ml-P[k]+540)%360)-180);
-    if(ab<=5){ out.push({k:k, ab:ab, genau:true, D:T_MONDTREFFER[k]}); return; }
+    /* Alle fünf Winkel, nicht nur die Konjunktion. Bis zum 29.10.
+       stand hier nur der Längenabstand — damit fiel Mandys Mond in
+       Opposition zu ihrem Saturn durch, 0,29° vom Exakten entfernt,
+       und die Seite sagte „heute nichts". */
+    var ab=null, nam=null;
+    [[0,'Konjunktion'],[180,'Opposition'],[90,'Quadrat'],
+     [120,'Trigon'],[60,'Sextil']].forEach(function(A){
+      var d=Math.abs(((ml-P[k]-A[0]+540)%360)-180);
+      if(d<=5 && (ab===null || d<ab)){ ab=d; nam=A[1]; }
+    });
+    if(ab!==null){ out.push({k:k, ab:ab, winkel:nam, genau:true, D:T_MONDTREFFER[k]}); return; }
+    ab=Math.abs(((ml-P[k]+540)%360)-180);
     /* Sonst: dasselbe Haus. Das ist Mandys eigener Fall und dauert
        zwei bis drei Tage statt neun Stunden — die häufigere und
        damit brauchbarere Aussage von beiden. */
@@ -4186,7 +4801,8 @@ function koerperBauen(){
         '<div class="kp-tech ac-tech" data-ab="2">Mond '+gr(lon('Mond',jd))+' '+
         H_SIGNS[zI(lon('Mond',jd))]+', dein '+t.k+' auf '+gr(P[t.k])+' '+
         H_SIGNS[zI(P[t.k])]+' im '+haus(P,P[t.k])+'. Haus'+
-        (t.genau?' — '+t.ab.toFixed(1)+'° Abstand':', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
+        (t.genau?' — '+(t.winkel||'Konjunktion')+', '+t.ab.toFixed(1)+'° Abstand'
+                :', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
         '</div></div>');
     });
     h.push('</div>');
@@ -4631,7 +5247,7 @@ function kapBauen(){
    Seite, sondern für eine kürzere. */
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
-  ['htwocheteil','htthementeil','htkoerperteil'].forEach(function(i){
+  ['htwocheteil','htthementeil','htkoerperteil','htstrahlteil'].forEach(function(i){
     var e=el(i); if(e) e.hidden=knapp; });
 }
 
@@ -4657,10 +5273,10 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); koerperBauen(); wocheBauen();
+  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
   kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){

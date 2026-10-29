@@ -46,6 +46,8 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + lies(ber / 'wahl-daten.js') + "\n"
         + lies(ber / 'wahl-app.js') + "\n"
         + lies(hier / 'themen-daten.js') + "\n"
+        + lies(hier / 'bahn-rechner.js') + "\n"
+        + lies(hier / 'bahn-daten.js') + "\n"
         + lies(hier / 'heute-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -156,6 +158,28 @@ const wo=await p.evaluate(()=>{
     danach:(document.getElementById('htwodanach')||{}).textContent.trim()};
 });
 
+/* Treffer und Zeitstrahl. */
+const tr=await p.evaluate(()=>{
+  const karten=[...document.querySelectorAll('.tr')];
+  const st=[...document.querySelectorAll('.st-e')];
+  return {
+    karten:karten.length,
+    titel:karten.map(c=>(c.querySelector('.tr-n')||{}).innerText||''),
+    saetze:karten.map(c=>((c.querySelector('.tr-s')||{}).textContent||'').trim()),
+    balken:karten.filter(c=>c.querySelector('.tr-bahn i')).length,
+    tempoZeilen:document.querySelectorAll('.tr-t').length,
+    schnellGetrennt:!!document.querySelector('.trs-l'),
+    strahl:st.length,
+    strahlOffen:st.filter(d=>d.open).length,
+    strahlTage:st.map(d=>((d.querySelector('.st-d')||{}).textContent||'').trim()),
+    strahlNamen:st.map(d=>((d.querySelector('.st-n')||{}).innerText||'').trim()),
+    strahlTexte:st.map(d=>((d.querySelector('.st-i p')||{}).textContent||'').trim()),
+    monate:[...document.querySelectorAll('.st-m')].map(e=>e.textContent.trim()),
+    jetztMarke:!!document.querySelector('.st-jetzt'),
+    mehrTreffer:!document.getElementById('httreffermehr').hidden,
+    mehrStrahl:!document.getElementById('htstrahlmehr').hidden};
+});
+
 /* Schlaf und Bewegung: die Trennung von Gemessenem und
    Ueberliefertem ist hier die ganze Prüfung. */
 const kp=await p.evaluate(()=>{
@@ -202,6 +226,15 @@ const k=await p.evaluate(()=>({
   laeuftDa:!document.getElementById('htlaeuftteil').hidden,
   bereicheDa:!document.getElementById('htbereicheteil').hidden,
   jetztDa:!document.getElementById('htjetzt').hidden}));
+/* Erst die Kapazität zurückstellen, dann auf Stufe 0 messen.
+   Sonst misst die Laienprüfung eine Seite, auf der die Hälfte der
+   Abschnitte gerade vom Klick auf „Wenig" ausgeblendet ist —
+   dieselbe Fehlerklasse, die am 29.10. bei der Mechanikzählung
+   auffiel, nur eine Zeile weiter unten. */
+await p.evaluate(()=>{ const b=document.querySelector('.kb[data-k="viel"]')
+  || document.querySelector('.kb:not([data-k="wenig"])'); if(b) b.click(); });
+await p.waitForTimeout(260);
+const kapZurueck=await p.evaluate(()=>!document.getElementById('htthementeil').hidden);
 /* Auf Stufe 0 darf die Startseite keine Fachsprache zeigen. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(400);
 /* Jetzt erst wird die Mechanik in „Schlaf und Bewegung“ gezählt.
@@ -303,7 +336,7 @@ const einer=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,j0,n0,th,kp,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,kapZurueck,j0,n0,th,kp,tr,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -347,6 +380,9 @@ if pr:
         fehler.append('„Wenig" blendet „Schlaf und Bewegung" nicht aus')
     if not k['laeuftDa']:
         fehler.append('„Wenig" blendet auch „Was gerade läuft" aus — das ist der Kern')
+    if not pr['kapZurueck']:
+        fehler.append('die Kapazität lässt sich nicht zurückstellen — dann misst '
+                      'alles danach eine halb ausgeblendete Seite')
     if not k['bereicheDa']:
         fehler.append('„Wenig" blendet die Bereiche aus — die sollen bleiben')
     if not k['jetztDa']:
@@ -409,6 +445,71 @@ if pr:
         for w in _angst:
             if w in _t:
                 fehler.append(f'„{c["name"].strip()}" arbeitet mit Angst: „{w.strip()}"')
+
+    # ── Was dein Bild trifft, und der Zeitstrahl ───────────────
+    # Mandy am 29.10.: „Heute ist da angeblich nichts bei mir, aber
+    # das wage ich zu bezweifeln."
+    #
+    # Sie hatte recht. Der Abschnitt, der Treffer prüfte, kannte nur
+    # Konjunktionen — Opposition, Quadrat, Trigon und Sextil fielen
+    # durch. An dem Tag standen vierzehn Berührungen auf ihrem Bild,
+    # darunter zwei unter einem halben Grad. Die Prüfung unten macht
+    # genau diese Fehlerklasse unmöglich: Ein Abschnitt, der Treffer
+    # zeigt, muss alle fünf Winkel kennen.
+    tr = pr['tr']
+    if tr['karten'] < 1:
+        fehler.append('keine einzige Berührung unter „Was dein Bild gerade trifft"')
+    if tr['balken'] != tr['karten']:
+        fehler.append('nicht jede Berührung zeigt, wie nah sie dran ist')
+    if tr['tempoZeilen'] > 1:
+        fehler.append(f"die Tempo-Zeile steht {tr['tempoZeilen']}× — einmal reicht")
+    if len(set(tr['titel'])) != len(tr['titel']):
+        fehler.append('dieselbe Berührung steht zweimal')
+    if len(set(tr['saetze'])) != len(tr['saetze']):
+        fehler.append('zwei Berührungen sagen wortwörtlich dasselbe')
+    for _s in tr['saetze']:
+        if len(_s) < 80:
+            fehler.append(f'eine Berührung sagt zu wenig: „{_s[:40]}"')
+    # Der eigentliche Fehler vom 29.10.: nur Konjunktionen gezählt.
+    _winkel = set()
+    for _t in tr['titel'] + tr['strahlNamen']:
+        for _w in ('Konjunktion', 'Opposition', 'Quadrat', 'Trigon', 'Sextil',
+                   ' auf ', 'gegenüber', 'quer zu', 'Einklang', 'Reichweite'):
+            if _w in _t:
+                _winkel.add(_w.strip())
+    if len(_winkel) < 2:
+        fehler.append('die Trefferliste kennt offenbar nur einen Winkel — '
+                      f'gefunden: {", ".join(sorted(_winkel)) or "keiner"}')
+    if not tr['schnellGetrennt']:
+        fehler.append('die schnellen Wanderer stehen nicht getrennt — dann steht '
+                      'Pluto auf dem MC neben dem Mond auf Merkur')
+
+    if tr['strahl'] < 3:
+        fehler.append(f"nur {tr['strahl']} Einträge im Zeitstrahl")
+    if tr['strahlOffen']:
+        fehler.append('ein Zeitstrahl-Eintrag ist schon offen — dann ist er keine Liste mehr')
+    if not tr['jetztMarke']:
+        fehler.append('der Zeitstrahl sagt nicht, wo heute ist')
+    if not tr['monate']:
+        fehler.append('der Zeitstrahl hat keine Monatsmarken — dann ist es eine Liste')
+    if len(set(tr['monate'])) != len(tr['monate']):
+        fehler.append('ein Monat steht zweimal im Zeitstrahl')
+    for _m in tr['monate']:
+        if not re.search(r'\b(19|20)\d\d$', _m):
+            fehler.append(f'Monatsmarke ohne Jahreszahl: „{_m}"')
+    if not all(t.endswith('.') for t in tr['strahlTage'] if t):
+        fehler.append('ein Zeitstrahl-Eintrag hat keinen Tag')
+    # Die beiden Rückverweise dürfen mehrfach dastehen — sie sind
+    # die Markierung dafür, dass hier absichtlich nichts wiederholt
+    # wird. Alles andere nicht.
+    _echte = [t for t in tr['strahlTexte']
+              if 'Steht oben' not in t and 'Dieselbe Begegnung' not in t]
+    if len(set(_echte)) != len(_echte):
+        fehler.append('zwei Zeitstrahl-Einträge sagen wortwörtlich dasselbe')
+    # Trennbare Verben: „Pluto baut um gerade" statt „baut gerade um".
+    for _s in tr['saetze'] + tr['strahlTexte']:
+        if re.search(r'\b(um|auf|ein|größer|weicher|unscharf|zur Sprache) gerade\b', _s):
+            fehler.append(f'zerbrochenes Verb im gebauten Satz: „{_s[:60]}"')
 
     # ── Schlaf und Bewegung ────────────────────────────────────
     # Mandy am 28.10.: „mir fiel auf dass ich anhand des Mondes zB
