@@ -1,0 +1,56 @@
+# Schaltet die Selbstübernahme ein, sobald eine Aufgabe einen Pull
+# Request öffnet.
+#
+# Warum das hier steht und nicht in den Aufträgen der Agentinnen:
+# Am 27.10. stand die Regel in REGELN.md — "jede Aufgabe schaltet nach
+# dem Öffnen die Selbstübernahme ein". Alle Agentinnen lesen diese
+# Datei. Am nächsten Morgen hatten zwei von ihnen sie gelesen und
+# trotzdem nicht getan: Wer eine nummerierte Schrittliste abarbeitet,
+# führt keine Regel aus, die in einem anderen Dokument steht.
+#
+# Eine Anweisung, an die sich jemand erinnern muss, ist keine
+# Automatik. Diese Datei macht es stattdessen.
+#
+# Dazu kommt ein Zeitproblem, das von Hand kaum zu treffen ist: GitHub
+# lässt die Selbstübernahme nur scharfschalten, SOLANGE die Prüfung
+# noch läuft. Ist sie schon grün, heißt es "clean status" und der Pull
+# Request bleibt für immer liegen. Dieser Ablauf startet beim Öffnen,
+# also immer früh genug.
+name: Selbstübernahme
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  anschalten:
+    name: Selbstübernahme einschalten
+    runs-on: ubuntu-latest
+    # Nur die Zweige der Aufgaben. Was Mandy oder jemand anders von
+    # Hand aufmacht, bleibt liegen, bis sie es selbst übernimmt.
+    if: >-
+      startsWith(github.event.pull_request.head.ref, 'taeglich/') ||
+      startsWith(github.event.pull_request.head.ref, 'recherche/') ||
+      startsWith(github.event.pull_request.head.ref, 'pruefung/') ||
+      startsWith(github.event.pull_request.head.ref, 'gestaltung/') ||
+      startsWith(github.event.pull_request.head.ref, 'beitraege/')
+    steps:
+      - name: Einschalten
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NR: ${{ github.event.pull_request.number }}
+        run: |
+          # Schlägt es fehl, ist das kein Grund, den Lauf rot zu
+          # machen: Der Pull Request steht dann einfach da und wartet
+          # auf einen Klick. Der Grund landet im Protokoll.
+          if gh pr merge "$NR" --repo "$REPO" --auto --squash; then
+            echo "Selbstübernahme eingeschaltet für #$NR"
+          else
+            echo "Konnte die Selbstübernahme für #$NR nicht einschalten."
+            echo "Der Pull Request wartet jetzt auf einen Klick."
+          fi
