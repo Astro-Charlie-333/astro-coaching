@@ -51,6 +51,7 @@ BAUTEN = [
     ('monat/bau-monat.py',     'Monat'),
     ('ereignis/bau-ereignis.py', 'Ereignisse'),
     ('kern/bau-ich.py',       'Ich'),
+    ('begleitung/bau-begleitung.py', 'Begleitung'),
     ('kern/bau-heute.py',     'Heute'),
     # Zuletzt: die Rauchprobe der App-Ansicht lädt die eben gebauten
     # Seiten unter einem echten Netzprotokoll und schaltet das Netz ab.

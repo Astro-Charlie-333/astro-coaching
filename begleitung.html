@@ -1,0 +1,1829 @@
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die Begleitung &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Die Begleitung ───────────────────────────────────────────
+   Eine Arbeitsseite. Sie wird nicht gelesen, sie wird benutzt —
+   oft während eines Gesprächs, auf dem Telefon oder dem Rechner
+   neben dem Block. Deshalb: große Treffflächen, ruhige Flächen,
+   und die Sitzung als das einzige, was sich bewegt. */
+.bg-wrap{max-width:860px;margin:0 auto;padding:26px 16px 60px;}
+.bg-eyebrow{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ letter-spacing:.1em;text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:6px;}
+.bg-h1{font-family:var(--serif,Fraunces,Georgia,serif);font-size:40px;font-weight:400;
+ line-height:1.08;color:var(--nacht,#2E3A5C);margin:0 0 10px;letter-spacing:-.015em;}
+@media(max-width:560px){.bg-h1{font-size:32px;}}
+.bg-lede{font-size:17px;line-height:1.6;color:var(--tinte,#231F1A);max-width:62ch;margin:0 0 20px;}
+.bg-h2{font-family:var(--serif,Fraunces,Georgia,serif);font-size:26px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:0 0 6px;line-height:1.2;}
+.bg-sub{font-size:14.8px;line-height:1.6;color:var(--leise,#6B6259);max-width:64ch;margin:0 0 16px;}
+.bg-ab{margin:34px 0 0;padding-top:24px;border-top:1px solid var(--linie,#EBE1D2);
+ scroll-margin-top:var(--ac-sprung,110px);}
+.bg-nix,.bg-leer{font-size:14.8px;line-height:1.6;color:var(--leise,#6B6259);
+ background:var(--papier,#FFFDFA);border:1px dashed var(--linie-stark,#DDD0BC);
+ border-radius:12px;padding:14px 16px;margin:0;}
+
+/* Wen begleitest du */
+.bg-wen{background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ border-radius:15px;padding:14px 16px;margin:0 0 12px;}
+.bg-wen-t{font-size:11.6px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin-bottom:9px;}
+.bw{font-family:inherit;font-size:14.6px;padding:8px 14px;margin:0 6px 6px 0;
+ border:1px solid var(--linie-stark,#DDD0BC);border-radius:999px;background:transparent;
+ color:var(--nacht,#2E3A5C);cursor:pointer;}
+.bw.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#FFFDFA;}
+.bg-eigen{font-size:13.8px;line-height:1.55;color:var(--messing,#9A7235);
+ background:var(--messing-bg,#F7EFE1);border-radius:10px;padding:9px 12px;margin:9px 0 0;}
+.bg-dossier{display:inline-block;margin-top:10px;font-size:14px;color:var(--messing,#9A7235);}
+.bg-privat{font-size:13.2px;line-height:1.55;color:var(--leise,#6B6259);margin:0 0 16px;
+ max-width:70ch;}
+
+.bg-sprung{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px;}
+.bg-sprung a{font-size:13.2px;padding:6px 11px;border-radius:999px;
+ border:1px solid var(--linie,#EBE1D2);color:var(--leise,#6B6259);text-decoration:none;}
+.bg-sprung a:hover{border-color:var(--messing,#9A7235);color:var(--messing,#9A7235);}
+
+/* Der Rahmen */
+.bg-rahmen{display:grid;gap:10px;}
+.rh{border:1px solid var(--linie,#EBE1D2);border-radius:13px;padding:12px 14px;
+ background:var(--papier,#FFFDFA);}
+.rh-an{border-color:var(--messing,#9A7235);background:var(--messing-bg,#F7EFE1);}
+.rh-l{display:flex;align-items:flex-start;gap:9px;cursor:pointer;}
+.rh-l input{margin-top:4px;width:17px;height:17px;accent-color:#9A7235;flex:none;}
+.rh-t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.3;}
+.rh-d{font-size:14.6px;line-height:1.62;color:var(--tinte,#231F1A);margin:7px 0 0;
+ padding-left:26px;}
+.rh-s{font-size:14.6px;line-height:1.6;color:var(--nacht,#2E3A5C);margin:8px 0 0 26px;
+ padding:9px 12px;background:var(--creme,#FCF7EF);border-radius:10px;font-style:italic;}
+.rh-an .rh-s{background:var(--papier,#FFFDFA);}
+.bg-hin{font-size:13px;color:var(--leise,#6B6259);margin:10px 0 0;}
+
+/* Die Sitzungsleiste */
+.bg-leiste{display:grid;grid-template-columns:repeat(auto-fit,minmax(124px,1fr));gap:7px;
+ margin:0 0 16px;}
+.sz{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;
+ font-family:inherit;padding:10px 12px;border:1px solid var(--linie,#EBE1D2);
+ border-radius:12px;background:var(--papier,#FFFDFA);cursor:pointer;}
+.sz-n{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ color:var(--messing,#9A7235);}
+.sz-t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:15px;font-weight:500;
+ color:var(--nacht,#2E3A5C);line-height:1.25;}
+.sz.sz-ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
+.sz.sz-ist .sz-t{color:#FFFDFA;} .sz.sz-ist .sz-n{color:#E8C98D;}
+.sz.sz-fertig{border-color:var(--messing,#9A7235);}
+.sz.sz-fertig .sz-n::after{content:' ✓';}
+
+/* Die Sitzung selbst */
+.bg-sitzung{border:1px solid var(--linie-stark,#DDD0BC);border-radius:16px;
+ background:var(--papier,#FFFDFA);padding:18px 18px 16px;}
+@media(max-width:560px){.bg-sitzung{padding:15px 14px 14px;}}
+.sz-kopf{margin-bottom:14px;}
+.sz-nr{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ letter-spacing:.08em;text-transform:uppercase;color:var(--messing,#9A7235);}
+.sz-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:27px;font-weight:500;
+ color:var(--nacht,#2E3A5C);margin:2px 0 8px;line-height:1.15;}
+.sz-ziel{font-size:15.6px;line-height:1.6;color:var(--tinte,#231F1A);margin:0;max-width:62ch;}
+.sz-ziel b{display:block;font-size:11.4px;font-weight:400;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:2px;}
+.sz-chartlage{font-size:14.4px;line-height:1.58;color:var(--tinte,#231F1A);
+ background:var(--creme,#FCF7EF);border-radius:11px;padding:11px 13px;margin:0 0 16px;}
+.sz-chartlage b{display:block;font-size:11.4px;font-weight:400;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;}
+.sz-chartlage.sz-zu{background:var(--nacht,#2E3A5C);color:#E6E3DA;}
+.sz-chartlage.sz-zu b{color:#E8C98D;}
+.sz-zwei{display:grid;gap:16px;margin-bottom:16px;}
+@media(min-width:640px){.sz-zwei{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.sz-t{font-size:11.4px;font-weight:400;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin-bottom:5px;}
+.sz-ablauf{width:100%;border-collapse:collapse;font-size:14.4px;}
+.sz-ablauf td{padding:5px 0;vertical-align:top;border-bottom:1px solid var(--linie,#EBE1D2);
+ line-height:1.5;}
+.sz-ablauf td:first-child{width:5.6em;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:12.4px;color:var(--leise,#6B6259);white-space:nowrap;}
+.sz-oeff{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18.6px;line-height:1.38;
+ color:var(--nacht,#2E3A5C);margin:0 0 13px;}
+.sz-kern{list-style:none;margin:0;padding:0;display:grid;gap:7px;}
+.sz-kern li{font-size:14.8px;line-height:1.56;color:var(--tinte,#231F1A);
+ padding-left:13px;border-left:2px solid var(--linie,#EBE1D2);}
+
+/* Die Fragen aus dem Bild */
+.sz-chart{background:var(--nacht,#2E3A5C);border-radius:13px;padding:14px 16px;
+ margin:0 0 16px;color:#E6E3DA;}
+.sz-chart-t{font-size:11.4px;letter-spacing:.07em;text-transform:uppercase;
+ color:#E8C98D;margin-bottom:9px;}
+.sz-chart-zu{font-size:14.4px;line-height:1.58;}
+.cf{margin-bottom:12px;}
+.cf:last-child{margin-bottom:0;}
+.cf-th{font-size:13px;color:#BFC7DC;margin-bottom:4px;}
+.cf ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;}
+.cf li{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;line-height:1.4;
+ color:#FFFDFA;padding-left:13px;border-left:2px solid #E8C98D;}
+.cf-sp li{border-left-color:#8FA6B8;}
+.cf-tech{margin-top:5px;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.4px;color:#A9B2C8;}
+
+.sz-haken{margin:0 0 16px;}
+.hk{display:grid;gap:2px;padding:9px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.hk b{font-size:14.4px;font-weight:500;color:var(--nacht,#2E3A5C);}
+.hk span{font-size:14.4px;line-height:1.56;color:var(--tinte,#231F1A);}
+.sz-auf p,.sz-no p{font-size:14.8px;line-height:1.58;margin:0;color:var(--tinte,#231F1A);}
+.sz-auf{background:var(--messing-bg,#F7EFE1);border-radius:11px;padding:11px 13px;}
+.sz-notiz{margin:0 0 14px;}
+.sz-hin{text-transform:none;letter-spacing:0;color:var(--leise,#6B6259);}
+.sz-notiz textarea{width:100%;font-family:inherit;font-size:15px;line-height:1.6;
+ padding:11px 13px;border:1px solid var(--linie-stark,#DDD0BC);border-radius:11px;
+ background:var(--creme,#FCF7EF);color:var(--tinte,#231F1A);resize:vertical;}
+.sz-fuss{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+ padding-top:12px;border-top:1px solid var(--linie,#EBE1D2);}
+.sz-fertig{display:flex;align-items:center;gap:8px;font-size:14.4px;
+ color:var(--nacht,#2E3A5C);cursor:pointer;}
+.sz-fertig input{width:17px;height:17px;accent-color:#9A7235;}
+.sz-druck{font-family:inherit;font-size:13.6px;padding:8px 14px;border-radius:999px;
+ border:1px solid var(--linie-stark,#DDD0BC);background:transparent;
+ color:var(--messing,#9A7235);cursor:pointer;}
+
+/* Was gerade läuft */
+.bg-jetzt{display:grid;gap:9px;}
+.jz{border:1px solid var(--linie,#EBE1D2);border-left:3px solid var(--messing,#9A7235);
+ border-radius:12px;background:var(--papier,#FFFDFA);padding:11px 14px;}
+.jz-k{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+.jz-f{font-size:11.4px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--messing,#9A7235);}
+.jz-n{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
+ color:var(--leise,#6B6259);}
+.jz-q{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;line-height:1.38;
+ color:var(--nacht,#2E3A5C);margin:5px 0 0;}
+.jz-tech{margin-top:6px;font-family:var(--mono,'JetBrains Mono',monospace);
+ font-size:11.4px;color:var(--leise,#6B6259);}
+.bg-warn{font-size:13.4px;line-height:1.55;color:var(--leise,#6B6259);margin:12px 0 0;
+ max-width:64ch;}
+
+/* Der Vorrat */
+.bg-fragen{display:grid;gap:6px;}
+.vf{border:1px solid var(--linie,#EBE1D2);border-radius:12px;
+ background:var(--papier,#FFFDFA);}
+.vf summary{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+ padding:11px 14px;cursor:pointer;list-style:none;}
+.vf summary::-webkit-details-marker{display:none;}
+.vf-t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:16.4px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.vf-h{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
+ color:var(--leise,#6B6259);white-space:nowrap;}
+.vf ul{list-style:none;margin:0;padding:0 14px 12px;display:grid;gap:7px;}
+.vf li{font-size:15px;line-height:1.56;color:var(--tinte,#231F1A);padding-left:12px;
+ border-left:2px solid var(--messing,#9A7235);}
+.vf-sp li{border-left-color:#8FA6B8;}
+
+/* Dazwischen und Wenn-er-sagt */
+.bg-zwischen{display:grid;gap:10px;}
+.zw{display:grid;gap:2px;}
+.zw b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.zw span{font-size:14.8px;line-height:1.6;color:var(--tinte,#231F1A);max-width:64ch;}
+.bg-wenn{display:grid;gap:10px;}
+.we2{border-left:2px solid var(--linie-stark,#DDD0BC);padding-left:13px;}
+.we2-s{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.4px;line-height:1.36;
+ color:var(--nacht,#2E3A5C);margin:0 0 5px;}
+.we2-a{font-size:14.8px;line-height:1.6;color:var(--tinte,#231F1A);margin:0;max-width:64ch;}
+
+/* Die Grenzen: der eine Abschnitt, der anders aussehen darf */
+.bg-ab-grenzen{border-top-width:2px;border-top-color:var(--messing,#9A7235);}
+.gr-t{font-size:11.6px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin:0 0 9px;}
+.gr{display:grid;gap:2px;padding:9px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
+.gr b{font-size:15px;font-weight:500;color:var(--nacht,#2E3A5C);}
+.gr span{font-size:14.6px;line-height:1.58;color:var(--tinte,#231F1A);max-width:64ch;}
+.bg-weich{margin-top:20px;}
+.kr{margin:18px 0;background:var(--nacht,#2E3A5C);border-radius:15px;padding:16px 18px;
+ color:#E6E3DA;}
+.kr-t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
+ color:#FFFDFA;margin-bottom:7px;}
+.kr p{font-size:15.2px;line-height:1.62;margin:0 0 10px;}
+.kr .kr-s{font-style:italic;color:#FFFDFA;background:rgba(232,201,141,.14);
+ border-radius:10px;padding:10px 12px;}
+.kr-l{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:7px;}
+.kr-l li{display:grid;gap:1px;padding:8px 11px;background:rgba(243,239,231,.08);
+ border-radius:9px;}
+.kr-l b{font-size:14.4px;color:#FFFDFA;}
+.kr-l span{font-family:var(--mono,'JetBrains Mono',monospace);font-size:13px;color:#E8C98D;}
+.kr .kr-d{font-size:14px;color:#BFC7DC;margin:0;}
+.dr{margin-top:20px;background:var(--messing-bg,#F7EFE1);border-radius:13px;padding:14px 16px;}
+.dr-t{font-size:11.6px;letter-spacing:.07em;text-transform:uppercase;
+ color:var(--messing,#9A7235);margin-bottom:7px;}
+.dr p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;line-height:1.4;
+ color:var(--nacht,#2E3A5C);margin:0 0 5px;}
+
+@media print{
+  .ac-leiste,.bg-sprung,.bg-leiste,.sz-fuss,.weiter,#bgniv,.bg-wen{display:none!important;}
+  .bg-sitzung{border:0;padding:0;}
+  .sz-chart{background:#fff;color:#000;border:1px solid #999;}
+  .cf li,.sz-chart-t,.cf-th{color:#000;border-left-color:#999;}
+}
+</style><script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="index.html">Jetzt</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html" class="ist">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="bg-wrap">
+
+<div class="bg-eyebrow">F&uuml;r dich als Coachin</div>
+<h1 class="bg-h1" id="bgtitel">&nbsp;</h1>
+<p class="bg-lede" id="bglede"></p>
+
+<!-- Wen begleitest du? Die Auswahl entscheidet alles, was darunter
+     steht &mdash; ohne sie w&auml;ren die Fragen allgemein und damit nutzlos. -->
+<section class="bg-wen" id="bgwen">
+  <div class="bg-wen-t" id="bgwent"></div>
+  <div id="bgwahl"></div>
+  <p class="bg-eigen" id="bgeigen" hidden></p>
+  <a class="bg-dossier" id="bgdossier" href="dossier.html"></a>
+</section>
+
+<p class="bg-privat" id="bgprivat"></p>
+
+<div id="bgniv"></div>
+
+<nav class="bg-sprung" id="bgsprung" aria-label="Auf dieser Seite"></nav>
+
+<!-- Der Rahmen ─────────────────────────────────────────────── -->
+<section class="bg-ab" id="a-rahmen" data-sprung="Rahmen">
+  <h2 class="bg-h2" id="bgrahmenh"></h2>
+  <p class="bg-sub" id="bgrahmensub"></p>
+  <div class="bg-rahmen" id="bgrahmen"></div>
+  <p class="bg-hin" id="bgrahmenhin"></p>
+</section>
+
+<!-- Der Bogen ──────────────────────────────────────────────── -->
+<section class="bg-ab" id="a-bogen" data-sprung="Der Bogen">
+  <h2 class="bg-h2">Der Bogen</h2>
+  <p class="bg-sub">Sechs Sitzungen, jede mit genau einer Aufgabe. Tipp eine an, dann steht da der Ablauf, die Fragen und was du tust, wenn es hakt.</p>
+  <div class="bg-leiste" id="bgleiste"></div>
+  <div class="bg-sitzung" id="bgsitzung"></div>
+</section>
+
+<!-- Was gerade l&auml;uft ────────────────────────────────────── -->
+<section class="bg-ab" id="a-jetzt" data-sprung="Gerade">
+  <h2 class="bg-h2" id="bgjetzth"></h2>
+  <p class="bg-sub" id="bgjetztsub"></p>
+  <div class="bg-jetzt" id="bgjetzt"></div>
+  <p class="bg-warn" id="bgjetztwarn"></p>
+</section>
+
+<!-- Alle Fragen aus seinem Bild ────────────────────────────── -->
+<section class="bg-ab" id="a-fragen" data-sprung="Alle Fragen">
+  <h2 class="bg-h2">Alle Fragen aus seinem Bild</h2>
+  <p class="bg-sub">Der ganze Vorrat, nach Brauchbarkeit sortiert. Keine davon ist eine Aussage &uuml;ber ihn &mdash; was er nicht wiedererkennt, gilt nicht.</p>
+  <div class="bg-fragen" id="bgfragen"></div>
+</section>
+
+<!-- Zwischen den Terminen ──────────────────────────────────── -->
+<section class="bg-ab" id="a-zwischen" data-sprung="Dazwischen">
+  <h2 class="bg-h2" id="bgzwischenh"></h2>
+  <div class="bg-zwischen" id="bgzwischen"></div>
+</section>
+
+<!-- Wenn er etwas sagt ─────────────────────────────────────── -->
+<section class="bg-ab" id="a-wenn" data-sprung="Wenn er sagt">
+  <h2 class="bg-h2" id="bgwennh"></h2>
+  <p class="bg-sub" id="bgwennsub"></p>
+  <div class="bg-wenn" id="bgwenn"></div>
+</section>
+
+<!-- Die Grenzen ────────────────────────────────────────────── -->
+<section class="bg-ab bg-ab-grenzen" id="a-grenzen" data-sprung="Grenzen">
+  <h2 class="bg-h2" id="bggrenzenh"></h2>
+  <p class="bg-sub" id="bggrenzensub"></p>
+  <div class="bg-hart" id="bghart"></div>
+  <div class="bg-krise" id="bgkrise"></div>
+  <div class="bg-weich" id="bgweich"></div>
+  <div class="bg-drei" id="bgdrei"></div>
+</section>
+
+<div class="weiter"><a href="dossier.html"><span class="lbl">&larr; Daneben</span><span class="ttl">Das Dossier &mdash; die &Uuml;bersicht &uuml;ber den Menschen</span></a><a href="grenzen.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Wann du nicht deutest</span></a></div>
+<div class="foot">Die Begleitung &middot; Deine Vorbereitung, nicht zum Weitergeben. Notizen bleiben in diesem Browser.<br>
+Was aus dem Chart kommt, sind Fragen &mdash; keine Befunde. Wenn Chart und Mensch sich widersprechen, hat der Mensch recht.</div>
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Astro-Charlie · Himmelsrechnung für Ritualzeiten
+   Sonnenauf- und -untergang, Planetentag und Planetenstunde nach der
+   chaldäischen Ordnung, Mond ohne Lauf, Zeichenwechsel des Mondes.
+   Setzt die Ephemeriden-Funktionen der Plattform voraus
+   (jdFromUT, sunLon, moonLon, geo). */
+(function(){
+'use strict';
+var RAD=Math.PI/180;
+function n360(x){ x=x%360; return x<0?x+360:x; }
+
+/* ── Sonnenauf- und -untergang (NOAA-Verfahren) ─────────
+   lat/lon in Grad, lon östlich positiv. Liefert Julianische Tage in UT
+   oder null bei Polartag und Polarnacht. */
+var H0=-0.833;   /* Oberrand der Sonne am Horizont, mit mittlerer Refraktion */
+
+function sonnenZeiten(jd, lat, lon){
+  var lw=-lon;
+  var n=Math.round(jd-2451545.0009-lw/360);
+  var Js=2451545.0009+lw/360+n;
+
+  function sonne(J){
+    var M=n360(357.5291+0.98560028*(J-2451545));
+    var C=1.9148*Math.sin(M*RAD)+0.0200*Math.sin(2*M*RAD)+0.0003*Math.sin(3*M*RAD);
+    var lam=n360(M+102.9372+C+180);
+    return {M:M, lam:lam, dek:Math.asin(Math.sin(lam*RAD)*Math.sin(23.4397*RAD))};
+  }
+  /* Wahrer Mittag, einmal nachgezogen */
+  var s=sonne(Js);
+  var Jt=Js+0.0053*Math.sin(s.M*RAD)-0.0069*Math.sin(2*s.lam*RAD);
+  s=sonne(Jt);
+  Jt=Js+0.0053*Math.sin(s.M*RAD)-0.0069*Math.sin(2*s.lam*RAD);
+
+  /* Auf- und Untergang getrennt verfeinern: die Deklination gehört zum
+     Zeitpunkt des Ereignisses, nicht zum Mittag dazwischen. */
+  var polar=null;
+  function ereignis(vz){
+    var J=Jt+vz*0.25;
+    for(var i=0;i<3;i++){
+      var e=sonne(J);
+      var co=(Math.sin(H0*RAD)-Math.sin(lat*RAD)*Math.sin(e.dek))/(Math.cos(lat*RAD)*Math.cos(e.dek));
+      if(co>1){ polar='nacht'; return null; }
+      if(co<-1){ polar='tag'; return null; }
+      J=Jt+vz*(Math.acos(co)/RAD)/360;
+    }
+    return J;
+  }
+  var auf=ereignis(-1), unter=ereignis(1);
+  return {auf:auf, unter:unter, mittag:Jt, polar:polar};
+}
+
+/* ── Planetentag und Planetenstunde ─────────────────────
+   Chaldäische Reihenfolge, absteigend nach scheinbarer Umlaufzeit.
+   Die erste Stunde nach Sonnenaufgang gehört dem Herrscher des
+   Wochentags — der Tag beginnt also mit dem Sonnenaufgang,
+   nicht um Mitternacht. */
+var CHALD=['Saturn','Jupiter','Mars','Sonne','Venus','Merkur','Mond'];
+/* Wochentag 0=Sonntag … 6=Samstag → Herrscher */
+var TAGSHERR=['Sonne','Mond','Mars','Merkur','Jupiter','Venus','Saturn'];
+
+function planetenStunde(jd, lat, lon){
+  var heute=sonnenZeiten(jd,lat,lon);
+  if(heute.polar) return {polar:heute.polar};
+  var gestern=sonnenZeiten(jd-1,lat,lon), morgen=sonnenZeiten(jd+1,lat,lon);
+
+  var aufJD, unterJD, naechsterAuf, istNacht;
+  if(jd < heute.auf){
+    /* noch vor Sonnenaufgang → Nachtstunden des Vortags */
+    aufJD=gestern.auf; unterJD=gestern.unter; naechsterAuf=heute.auf; istNacht=true;
+  } else if(jd < heute.unter){
+    aufJD=heute.auf; unterJD=heute.unter; naechsterAuf=morgen.auf; istNacht=false;
+  } else {
+    aufJD=heute.auf; unterJD=heute.unter; naechsterAuf=morgen.auf; istNacht=true;
+  }
+  if(aufJD===null||unterJD===null||naechsterAuf===null) return {polar:'rand'};
+
+  /* Der Wochentag richtet sich nach dem Sonnenaufgang, der diesen Tag eröffnet */
+  var wt=new Date((aufJD-2440587.5)*86400000).getDay();
+  var herrTag=TAGSHERR[wt];
+  var start=CHALD.indexOf(herrTag);
+
+  var nr, laenge, von;
+  if(!istNacht){
+    laenge=(unterJD-aufJD)/12;
+    nr=Math.floor((jd-aufJD)/laenge);
+    von=aufJD+nr*laenge;
+  } else {
+    laenge=(naechsterAuf-unterJD)/12;
+    nr=12+Math.floor((jd-unterJD)/laenge);
+    von=unterJD+(nr-12)*laenge;
+  }
+  nr=Math.max(0,Math.min(23,nr));
+  return {
+    tagesherr:herrTag, wochentag:wt,
+    herr:CHALD[(start+nr)%7],
+    nr:nr+1, nacht:istNacht,
+    von:von, bis:von+laenge, laengeMin:laenge*1440,
+    auf:aufJD, unter:unterJD, naechsterAuf:naechsterAuf
+  };
+}
+
+/* Alle 24 Stunden eines Sonnentags, beginnend mit dem Sonnenaufgang */
+function stundenTabelle(jd, lat, lon){
+  var p=planetenStunde(jd,lat,lon);
+  if(p.polar) return [];
+  var start=CHALD.indexOf(p.tagesherr);
+  var tagL=(p.unter-p.auf)/12, nachtL=(p.naechsterAuf-p.unter)/12;
+  var out=[];
+  for(var i=0;i<24;i++){
+    var nacht=i>=12;
+    var von=nacht? p.unter+(i-12)*nachtL : p.auf+i*tagL;
+    var bis=nacht? von+nachtL : von+tagL;
+    out.push({nr:i+1,herr:CHALD[(start+i)%7],nacht:nacht,von:von,bis:bis,
+              jetzt:(jd>=von&&jd<bis)});
+  }
+  return out;
+}
+
+/* ── Mond ohne Lauf ─────────────────────────────────────
+   Von seinem letzten klassischen Aspekt an einen der sieben Planeten
+   bis zum Zeichenwechsel „läuft der Mond leer". */
+var ASPEKTE=[0,60,90,120,180];
+var ASP_NAME={0:'Konjunktion',60:'Sextil',90:'Quadrat',120:'Trigon',180:'Opposition'};
+var KLASSISCH=['Sonne','Merkur','Venus','Mars','Jupiter','Saturn'];
+
+function mondLon(jd){ return moonLon((jd-2451545)/36525); }
+function pLon(k,jd){ var T=(jd-2451545)/36525;
+  return k==='Sonne'?sunLon(T):(k==='Mond'?moonLon(T):geo(k,T)); }
+
+/* Nächster Zeichenwechsel des Mondes nach jd */
+function naechsterZeichenwechsel(jd){
+  var ziel=(Math.floor(mondLon(jd)/30)+1)*30;
+  var a=jd, fa=((mondLon(a)-ziel+540)%360)-180;
+  for(var i=0;i<200;i++){
+    var b=a+0.05, fb=((mondLon(b)-ziel+540)%360)-180;
+    if(fa<0&&fb>=0){
+      var lo=a,hi=b;
+      for(var k=0;k<40;k++){ var m=(lo+hi)/2;
+        if(((mondLon(m)-ziel+540)%360)-180<0) lo=m; else hi=m; }
+      return {jd:(lo+hi)/2, zeichen:Math.floor(n360(ziel)/30)};
+    }
+    a=b; fa=fb;
+  }
+  return null;
+}
+
+/* Letzter exakter Aspekt des Mondes vor dem Zeichenwechsel */
+function letzterAspekt(jd, bisJD){
+  var best=null;
+  KLASSISCH.forEach(function(k){
+    ASPEKTE.forEach(function(w){
+      var a=jd-2.2, fa=((mondLon(a)-pLon(k,a)-w+540)%360)-180;
+      while(a<bisJD){
+        var b=Math.min(a+0.04,bisJD), fb=((mondLon(b)-pLon(k,b)-w+540)%360)-180;
+        if(fa<0&&fb>=0){
+          var lo=a,hi=b;
+          for(var i=0;i<34;i++){ var m=(lo+hi)/2;
+            if(((mondLon(m)-pLon(k,m)-w+540)%360)-180<0) lo=m; else hi=m; }
+          var t=(lo+hi)/2;
+          if(t<=bisJD && (!best||t>best.jd)) best={jd:t,planet:k,winkel:w,name:ASP_NAME[w]};
+        }
+        a=b; fa=fb;
+        if(b>=bisJD) break;
+      }
+    });
+  });
+  return best;
+}
+
+/* ── Kazimi und Verbrennung ───────────────────────────────────
+   Mandy am 28.10.: „oder kazimi und was sowas bei einem macht.
+   Also solch themen sind alle nicht mehr vorhanden gewesen."
+
+   Drei Zustände, die die Überlieferung seit der Antike kennt und
+   die bis heute in jedem Astrologie-Feed vorkommen:
+
+     Kazimi      — der Planet steht im Herzen der Sonne, näher als
+                   17 Bogenminuten. Selten; klassisch die stärkste
+                   Stellung, die ein Planet haben kann.
+     Verbrennung — näher als 8,5°, aber nicht im Herzen. Klassisch
+                   die schwächste: Das Thema ist da, aber niemand
+                   sieht es.
+     Unter den Strahlen — näher als 15°, am Himmel noch unsichtbar.
+
+   Gerechnet wird auf die Länge, wie es die Überlieferung tut; die
+   Breite bleibt außen vor. Die Grenzen stehen hier als Zahlen, weil
+   sie sonst niemand nachlesen kann. */
+var SONNENNAH=['Merkur','Venus','Mars','Jupiter','Saturn'];
+var KAZIMI_GRAD=17/60, VERBRANNT_GRAD=8.5, STRAHLEN_GRAD=15;
+
+function sonnenAbstand(k, jd){
+  var d=n360(pLon(k,jd)-pLon('Sonne',jd));
+  return d>180?360-d:d;
+}
+function sonnenlage(k, jd){
+  var ab=sonnenAbstand(k,jd);
+  if(ab<=KAZIMI_GRAD)    return {art:'kazimi',    ab:ab};
+  if(ab<=VERBRANNT_GRAD) return {art:'verbrannt', ab:ab};
+  if(ab<=STRAHLEN_GRAD)  return {art:'strahlen',  ab:ab};
+  return null;
+}
+/* Alle Planeten, die gerade sonnennah stehen, das Engste zuerst. */
+function sonnennah(jd){
+  var out=[];
+  SONNENNAH.forEach(function(k){
+    var s=sonnenlage(k,jd);
+    if(s) out.push({planet:k, art:s.art, ab:s.ab});
+  });
+  out.sort(function(a,b){ return a.ab-b.ab; });
+  return out;
+}
+/* Wann ein Planet das nächste Mal ins Herz der Sonne tritt.
+   Gesucht wird der Durchgang durch 0° Abstand; das Kazimi-Fenster
+   dauert nur Stunden, deshalb wird es minutengenau eingegrenzt. */
+function naechstesKazimi(jd, tage){
+  var best=null;
+  SONNENNAH.forEach(function(k){
+    var d=function(t){ return ((pLon(k,t)-pLon('Sonne',t)+540)%360)-180; };
+    var a=jd, fa=d(a);
+    for(var i=0;i<tage;i++){
+      var b=a+1, fb=d(b);
+      if((fa<0)!==(fb<0) && Math.abs(fa)<30 && Math.abs(fb)<30){
+        var lo=a, hi=b;
+        for(var q=0;q<34;q++){ var m=(lo+hi)/2;
+          if((d(m)<0)===(fa<0)) lo=m; else hi=m; }
+        var t=(lo+hi)/2;
+        if(!best||t<best.jd) best={planet:k, jd:t, lon:pLon(k,t)};
+      }
+      a=b; fa=fb;
+    }
+  });
+  return best;
+}
+
+/* ── Finsternis oder gewöhnliche Lunation ─────────────────────
+   Eine Lunation nahe an einem Mondknoten ist eine Finsternis. Die
+   Grenzen sind die üblichen: Sonnenfinsternis bis etwa 18°,
+   Mondfinsternis bis etwa 12° vom Knoten. Zwischen „sicher" und
+   „möglich" liegt eine Grauzone — die wird als solche benannt und
+   nicht zur Gewissheit gerundet (REGELN.md Abschnitt 4). */
+function knotenAbstand(jd){
+  var T=(jd-2451545)/36525;
+  var kn=n360(nodeLon(T)), s=n360(sunLon(T));
+  var d=Math.abs(((s-kn+540)%360)-180);
+  return Math.min(d, 180-d);
+}
+function finsternis(jd, art){
+  var d=knotenAbstand(jd);
+  var sicher=(art==='neu')?15.4:10.0;
+  var moeglich=(art==='neu')?18.5:12.2;
+  if(d<=sicher)   return {art:(art==='neu'?'sonne':'mond'), sicher:true,  knoten:d};
+  if(d<=moeglich) return {art:(art==='neu'?'sonne':'mond'), sicher:false, knoten:d};
+  return null;
+}
+
+function ohneLauf(jd){
+  var zw=naechsterZeichenwechsel(jd);
+  if(!zw) return null;
+  var la=letzterAspekt(jd,zw.jd);
+  return {
+    leer: !!(la && jd>la.jd),
+    seit: la?la.jd:null,
+    letzter: la,
+    bis: zw.jd,
+    naechstesZeichen: zw.zeichen,
+    zeichenJetzt: Math.floor(mondLon(jd)/30)
+  };
+}
+
+window.AC_HIMMEL={
+  CHALD:CHALD, TAGSHERR:TAGSHERR,
+  sonnenZeiten:sonnenZeiten,
+  planetenStunde:planetenStunde,
+  stundenTabelle:stundenTabelle,
+  naechsterZeichenwechsel:naechsterZeichenwechsel,
+  letzterAspekt:letzterAspekt,
+  ohneLauf:ohneLauf,
+  sonnenlage:sonnenlage,
+  sonnennah:sonnennah,
+  naechstesKazimi:naechstesKazimi,
+  finsternis:finsternis,
+  knotenAbstand:knotenAbstand,
+  GRENZEN:{kazimi:KAZIMI_GRAD, verbrannt:VERBRANNT_GRAD, strahlen:STRAHLEN_GRAD}
+};
+})();
+
+/* ── Was dein Bild trifft, und wann genau ─────────────────────
+   Mandy am 29.10.:
+
+     „welche punkte werden heute und in den tagen konkret getroffen?
+      Heute ist da angeblich nichts bei mir, aber das wage ich zu
+      bezweifeln."
+
+   Sie hatte recht, und der Fehler war klein und teuer: Der
+   Treffer-Abschnitt verglich den Abstand zweier Längen gegen einen
+   Orbis — das findet nur Konjunktionen. Opposition, Quadrat,
+   Trigon und Sextil fielen durch. An dem Tag stand ihr laufender
+   Mond 0,29° von der Opposition zu ihrem Saturn entfernt, Saturn
+   0,47° auf ihrer Sonne und Pluto 0,35° auf ihrem MC. Die Seite
+   sagte „heute nichts".
+
+   Diese Datei rechnet zweierlei:
+
+     treffer()    — was gerade innerhalb des Orbis steht, alle fünf
+                    Winkel, alle Punkte des Geburtsbilds.
+     exakteTage() — wann ein Winkel im gesuchten Zeitraum genau
+                    aufgeht. Dafür wird die Zeit abgefahren und bei
+                    jedem Vorzeichenwechsel verfeinert.
+
+   Teuer wäre es, für jeden Punkt und jeden Winkel einzeln durch die
+   Zeit zu laufen. Deshalb andersherum: einmal pro Schritt die Länge
+   jedes Wanderers holen, dann alle Ziele und Winkel damit
+   vergleichen. Aus 300 Zeitläufen wird einer. */
+(function(){
+'use strict';
+
+var BAHN_ASPEKTE = [
+  {grad:0,   name:'Konjunktion', art:'hart',  gewicht:1.00},
+  {grad:180, name:'Opposition',  art:'hart',  gewicht:0.95},
+  {grad:90,  name:'Quadrat',     art:'hart',  gewicht:0.90},
+  {grad:120, name:'Trigon',      art:'weich', gewicht:0.70},
+  {grad:60,  name:'Sextil',      art:'weich', gewicht:0.50}
+];
+
+/* Die Wanderer, nach Geschwindigkeit. Der Orbis richtet sich danach,
+   wie lange ein Wanderer für ein Grad braucht: Beim Mond sind 6°
+   ein halber Tag, bei Pluto zwei Jahre. */
+var BAHN_WANDERER = {
+  Mond:   {orb:6, tempo:'schnell', g:0.30},
+  Merkur: {orb:3, tempo:'schnell', g:0.45},
+  Venus:  {orb:3, tempo:'schnell', g:0.50},
+  Sonne:  {orb:4, tempo:'schnell', g:0.65},
+  Mars:   {orb:3, tempo:'mittel',  g:0.75},
+  Jupiter:{orb:3, tempo:'langsam', g:0.85},
+  Saturn: {orb:3, tempo:'langsam', g:1.00},
+  Uranus: {orb:2, tempo:'langsam', g:0.95},
+  Neptun: {orb:2, tempo:'langsam', g:0.90},
+  Pluto:  {orb:2, tempo:'langsam', g:1.00}
+};
+
+var BAHN_ZIELE = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn',
+                  'Uranus','Neptun','Pluto','ASC','MC'];
+
+function b360(x){ x=x%360; return x<0?x+360:x; }
+function bDiff(a,b){ return ((a-b+540)%360)-180; }
+
+/* Die Länge eines Wanderers zu einem Zeitpunkt. lon() aus engine.js
+   kennt alle; Sonne und Mond gehen dort eigene Wege. */
+function bLon(k, jd){
+  try{ return b360(lon(k, jd)); }catch(e){ return null; }
+}
+
+/* ── Was gerade innerhalb des Orbis steht ─────────────────────
+   Alle fünf Winkel, alle Punkte. `naehe` ist 1 bei exakt und 0 am
+   Rand des Orbis; daraus und aus dem Gewicht des Wanderers wird
+   sortiert, damit Pluto auf dem MC vor dem Mond auf Merkur steht. */
+function treffer(P, jd, opt){
+  opt = opt || {};
+  var nurLangsam = !!opt.nurLangsam, out = [];
+  Object.keys(BAHN_WANDERER).forEach(function(w){
+    var W = BAHN_WANDERER[w];
+    if(nurLangsam && W.tempo === 'schnell') return;
+    var wl = bLon(w, jd); if(wl === null) return;
+    BAHN_ZIELE.forEach(function(z){
+      if(P[z] === undefined || P[z] === null) return;
+      /* Ein Wanderer auf seinem eigenen Geburtsort ist eine Rückkehr
+         und hat anderswo ihren Platz — hier wäre sie eine Zeile wie
+         jede andere und damit untertrieben. */
+      BAHN_ASPEKTE.forEach(function(A){
+        var ab = Math.abs(bDiff(wl, b360(P[z] + A.grad)));
+        if(ab > W.orb) return;
+        var naehe = 1 - (ab / W.orb);
+        out.push({
+          wanderer:w, ziel:z, aspekt:A.name, art:A.art, grad:A.grad,
+          ab:ab, naehe:naehe, tempo:W.tempo,
+          rueckwaerts:(function(){ try{ return rueck(w, jd); }catch(e){ return false; } })(),
+          gewicht: W.g * A.gewicht * (0.4 + 0.6 * naehe),
+          eigen:(w === z && A.grad === 0)
+        });
+      });
+    });
+  });
+  out.sort(function(a,b){ return b.gewicht - a.gewicht; });
+  return out;
+}
+
+/* ── Wann ein Winkel genau aufgeht ────────────────────────────
+   Die Zeit wird in Schritten abgefahren; wo der Abstand das
+   Vorzeichen wechselt, liegt ein exakter Tag dazwischen und wird
+   durch Halbieren eingegrenzt.
+
+   Ein rückläufiger Wanderer überquert dieselbe Stelle bis zu
+   dreimal. Das ist kein Fehler, den man wegfiltert — es sind
+   wirklich drei Termine, und der mittlere fühlt sich anders an als
+   die äußeren. Sie werden deshalb alle zurückgegeben und als
+   Durchgang gezählt. */
+function exakteTage(P, vonJD, bisJD, opt){
+  opt = opt || {};
+  var schritt = opt.schritt || 2;
+  var welche = opt.wanderer ||
+    ['Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+  var ziele = opt.ziele || BAHN_ZIELE;
+  var out = [];
+
+  welche.forEach(function(w){
+    var W = BAHN_WANDERER[w]; if(!W) return;
+    /* Je Schritt einmal die Länge holen, dann alle Ziele damit
+       vergleichen — nicht andersherum. */
+    var zeiten = [], laengen = [], t;
+    for(t = vonJD; t <= bisJD + schritt; t += schritt){
+      var l = bLon(w, t); if(l === null) return;
+      zeiten.push(t); laengen.push(l);
+    }
+    ziele.forEach(function(z){
+      if(P[z] === undefined || P[z] === null) return;
+      BAHN_ASPEKTE.forEach(function(A){
+        var ziel = b360(P[z] + A.grad), i;
+        var vor = bDiff(laengen[0], ziel);
+        for(i = 1; i < zeiten.length; i++){
+          var jetzt = bDiff(laengen[i], ziel);
+          /* Ein Sprung über 180° ist der Rundlauf, kein Treffer. */
+          if((vor < 0) !== (jetzt < 0) && Math.abs(vor) < 90 && Math.abs(jetzt) < 90){
+            var lo = zeiten[i-1], hi = zeiten[i], q;
+            for(q = 0; q < 34; q++){
+              var m = (lo + hi) / 2;
+              if((bDiff(bLon(w, m), ziel) < 0) === (vor < 0)) lo = m; else hi = m;
+            }
+            var genau = (lo + hi) / 2;
+            if(genau >= vonJD && genau <= bisJD)
+              out.push({
+                wanderer:w, ziel:z, aspekt:A.name, art:A.art, grad:A.grad,
+                jd:genau, tempo:W.tempo,
+                rueckwaerts:(function(){ try{ return rueck(w, genau); }catch(e){ return false; } })(),
+                gewicht: W.g * A.gewicht,
+                eigen:(w === z && A.grad === 0)
+              });
+          }
+          vor = jetzt;
+        }
+      });
+    });
+  });
+
+  out.sort(function(a,b){ return a.jd - b.jd; });
+
+  /* Mehrfachdurchgänge zusammenzählen: Wer dreimal über dieselbe
+     Stelle läuft, soll das auch dastehen sehen. */
+  var zaehler = {};
+  out.forEach(function(x){
+    var k = x.wanderer + '|' + x.ziel + '|' + x.grad;
+    zaehler[k] = (zaehler[k] || 0) + 1;
+  });
+  var lauf = {};
+  out.forEach(function(x){
+    var k = x.wanderer + '|' + x.ziel + '|' + x.grad;
+    lauf[k] = (lauf[k] || 0) + 1;
+    x.durchgang = lauf[k];
+    x.durchgaenge = zaehler[k];
+  });
+  return out;
+}
+
+window.AC_BAHN = {
+  ASPEKTE:BAHN_ASPEKTE, WANDERER:BAHN_WANDERER, ZIELE:BAHN_ZIELE,
+  treffer:treffer, exakteTage:exakteTage
+};
+})();
+
+/* ── Die Begleitung ───────────────────────────────────────────
+   Mandy am 29.10.:
+
+     „So jetzt bin ich in die Situation gekommen dass ich coachen
+      werde. Es ist ein Bekannter zwar aber ich will mit ihm an
+      sich arbeiten. Das fehlt mir jetzt komplett in dem Tool. Ich
+      brauche eine komplette Coaching Seite. Wie ich das aufziehe
+      als Coachin. … Von Anfang bis Ende der Coaching Zeit."
+
+   Was es schon gab: `dossier.html` — die Übersicht über einen
+   Menschen, mit der richtigen Rahmung („Hypothesen, keine
+   Befunde"). Was fehlte: der Verlauf. Wie fängt es an, was
+   passiert in der dritten Sitzung, woran merkt man, dass es
+   fertig ist.
+
+   Diese Datei ist der Verlauf. Drei Grundsätze stecken darin:
+
+   1. **Seine Worte zuerst, das Chart danach.** In der ersten
+      Sitzung bleibt das Chart zu. Wer mit einer Deutung anfängt,
+      bekommt für den Rest der Begleitung Bestätigung statt
+      Material.
+
+   2. **Das Chart liefert Fragen, keine Aussagen.** „Du hast
+      Saturn im siebten Haus" ist eine Behauptung über einen
+      Menschen. „Woran merkst du, dass eine Beziehung verbindlich
+      geworden ist — und was kostet dich das?" ist dieselbe
+      Information als Werkzeug. Nur die zweite Form steht hier.
+
+   3. **Die Grenzen sind kein Anhang.** Eine Coachin, die nicht
+      weiß, wann sie aufhört, ist keine professionelle Coachin.
+      Deshalb stehen sie in jeder Sitzung mit dabei und nicht nur
+      ganz hinten (PRODUKT.md Abschnitt 5).
+*/
+
+/* ── Der Rahmen, bevor es losgeht ─────────────────────────────
+   Auftragsklärung. Das Unspektakulärste am ganzen Prozess und das,
+   woran die meisten Begleitungen später scheitern. */
+var C_RAHMEN = {
+ titel:'Der Rahmen',
+ sub:'Was ihr klärt, bevor die erste Sitzung anfängt. Zehn Minuten, die dir später Stunden sparen.',
+ punkte:[
+  {k:'was',  t:'Was das hier ist — und was nicht',
+   d:'Sag es in zwei Sätzen, bevor er fragt: Du arbeitest mit ihm an einer Frage, die er mitbringt. Du behandelst nicht, du diagnostizierst nicht, und du sagst ihm nicht, was passieren wird. Wer das am Anfang hört, fragt später nicht danach.',
+   satz:'„Ich arbeite mit dir an der Frage, die du mitbringst. Ich bin keine Therapeutin und sage dir auch nicht die Zukunft voraus — ich stelle Fragen, und du entscheidest, was daraus wird."'},
+  {k:'chart', t:'Einwilligung für das Chart',
+   d:'Er muss wissen, dass du mit seinen Geburtsdaten rechnest, was dabei herauskommt und dass es Hypothesen sind. Und er muss Nein sagen dürfen, ohne dass die Begleitung dadurch schlechter wird.',
+   satz:'„Ich rechne mit deinem Geburtsdatum ein Bild und bereite mich damit vor. Was dabei herauskommt, sind Vermutungen — nichts davon gilt, solange du es nicht wiedererkennst. Wenn du lieber ohne arbeiten willst, geht das auch."'},
+  {k:'form', t:'Wie oft, wie lange, wo',
+   d:'Leg die Anzahl vorher fest, nicht „wir schauen mal". Sechs Sitzungen à 60 bis 90 Minuten ist ein brauchbarer Bogen für eine Frage. Ein festes Ende macht die Arbeit ernster, nicht lockerer.',
+   satz:'„Sechs Termine, je anderthalb Stunden. Nach dem vierten schauen wir, ob wir auf Kurs sind."'},
+  {k:'notizen', t:'Was mit deinen Notizen passiert',
+   d:'Du schreibst mit. Sag, dass du das tust, wo es liegt, und dass niemand sonst es sieht. Diese Seite legt deine Notizen nur in deinem Browser ab — sie gehen nirgendwohin.',
+   satz:'„Ich mache mir Notizen, damit ich zwischen den Terminen den Faden behalte. Die liegen bei mir und sieht sonst niemand."'},
+  {k:'bekannt', t:'Wenn ihr euch kennt',
+   d:'Das ist der Punkt, den fast alle überspringen, und er ist bei einem Bekannten der wichtigste. Ihr habt eine Geschichte, gemeinsame Leute und eine Zeit nach der Begleitung. Klärt drei Dinge: Was passiert mit dem, was er hier sagt, wenn ihr euch privat trefft? Darf er abbrechen, ohne dass es die Bekanntschaft kostet? Und was machst du, wenn du über Dritte etwas hörst, das hierher gehört?',
+   satz:'„Was du hier sagst, kommt privat nicht vor — auch nicht als Anspielung. Und wenn du merkst, dass es nicht passt, sagst du das, und wir hören auf. Das ändert zwischen uns nichts."'},
+  {k:'raus', t:'Wann du aufhörst',
+   d:'Sag jetzt, unter welchen Umständen du abbrichst und weiterverweist, damit es später keine Zurückweisung ist, sondern eine Abmachung. Die Liste steht unten unter „Grenzen".',
+   satz:'„Wenn ich merke, dass du etwas brauchst, das ich nicht kann, sage ich das — und helfe dir, die richtige Stelle zu finden. Das ist kein Abschieben."'}],
+ hinweis:'Das ist kein Vertrag und ersetzt keinen. Es ist das Gespräch, das du führst, bevor die Arbeit anfängt.'};
+
+/* ── Der Bogen ────────────────────────────────────────────────
+   Sechs Sitzungen. Jede hat genau eine Aufgabe; eine Sitzung, die
+   zwei Aufgaben hat, erledigt keine davon. */
+var C_SITZUNGEN = [
+ {n:1, k:'auftrag', titel:'Ankommen und Auftrag',
+  ziel:'Du verstehst, woran er arbeiten will — in seinen Worten, nicht in deinen.',
+  chartZu:true,
+  chartSatz:'Das Chart bleibt diese Sitzung zu. Wer mit einer Deutung anfängt, bekommt für den Rest der Begleitung Bestätigung statt Material.',
+  ablauf:[['10 Min','Ankommen, Rahmen wiederholen, Fragen dazu'],
+          ['35 Min','Sein Anliegen — und zwar an Beispielen, nicht als Überschrift'],
+          ['20 Min','Den Auftrag schärfen, bis er in einem Satz steht'],
+          ['10 Min','Abschluss, Hausaufgabe, nächster Termin']],
+  oeffnung:'Was soll anders sein, wenn wir in sechs Terminen fertig sind?',
+  kern:['Erzähl mir eine Situation aus der letzten Woche, in der das ein Thema war.',
+        'Woran genau hast du gemerkt, dass es dich stört?',
+        'Was hast du bisher versucht? Und was davon hat ein bisschen geholfen?',
+        'Wenn sich nichts ändert — was kostet dich das in einem Jahr?',
+        'Woran würdest du merken, dass es sich gelohnt hat? Nenn mir etwas, das man sehen kann.'],
+  haken:[['Er bleibt im Allgemeinen','„Gib mir ein Beispiel von letzter Woche." Dreimal fragen, wenn nötig. Ohne Szene gibt es nichts zu arbeiten.'],
+         ['Er will, dass du etwas sagst','„Dazu komme ich. Erst will ich verstehen, worum es bei dir geht — sonst erzähle ich dir etwas, das auf jeden passt."'],
+         ['Er bringt drei Themen','Nimm eins. „Welches davon würdest du als Erstes loswerden wollen, wenn du nur eins haben kannst?"']],
+  aufgabe:'Bis zum nächsten Mal: Eine Woche lang jeden Abend ein Satz — wann war es heute Thema, und was ist passiert?',
+  notiz:'Sein Auftrag in SEINEN Worten. Wörtlich aufschreiben, nicht zusammenfassen.'},
+
+ {n:2, k:'muster', titel:'Das Muster',
+  ziel:'Ihr seht, wo sich dasselbe wiederholt — und was jedes Mal gleich abläuft.',
+  chartZu:false,
+  chartSatz:'Ab jetzt kommt das Chart dazu — als Frage, nie als Aussage. Was er nicht wiedererkennt, gilt nicht.',
+  ablauf:[['10 Min','Die Woche, die Notizen'],
+          ['40 Min','Drei Situationen nebeneinanderlegen'],
+          ['20 Min','Was ist jedes Mal gleich?'],
+          ['10 Min','Abschluss']],
+  oeffnung:'Was ist dir diese Woche aufgefallen, als du es aufgeschrieben hast?',
+  kern:['Erzähl mir drei Male, bei denen das passiert ist — einmal aus dieser Woche, einmal aus diesem Jahr, einmal aus früher.',
+        'Was ist bei allen dreien gleich? Nicht die Situation — der Ablauf.',
+        'An welcher Stelle hättest du jedes Mal etwas anderes machen können?',
+        'Was hat dich daran gehindert?',
+        'Wem gegenüber passiert dir das nie?'],
+  haken:[['Er findet nur ein Beispiel','Dann nimm das eine und geh hinein: „Was war in den zehn Minuten davor?"'],
+         ['Er erklärt statt zu erzählen','„Das ist deine Erklärung dafür. Was ist passiert?"'],
+         ['Er redet über eine andere Person','„Und was hast du in dem Moment gemacht?" Das Muster ist seins, nicht ihres.']],
+  aufgabe:'Diese Woche: Wenn es wieder passiert, notier die zehn Minuten davor.',
+  notiz:'Der Ablauf des Musters in drei bis vier Schritten. Und: Wo ist die Stelle, an der es kippt?'},
+
+ {n:3, k:'ressource', titel:'Was schon geht',
+  ziel:'Ihr findet, was bei ihm bereits funktioniert — und übertragt es.',
+  chartZu:false,
+  chartSatz:'Hier eignen sich die Stellen seines Bildes, an denen etwas leicht läuft. Die werden meistens übersehen, weil sie nicht wehtun.',
+  ablauf:[['10 Min','Die Woche'],
+          ['35 Min','Wo geht es schon? Auch in ganz anderen Lebensbereichen'],
+          ['25 Min','Was davon lässt sich übertragen?'],
+          ['10 Min','Abschluss']],
+  oeffnung:'Wo in deinem Leben hast du etwas Ähnliches schon mal hinbekommen?',
+  kern:['Erzähl mir von etwas, das du gut kannst und das dich keine Überwindung kostet.',
+        'Wie machst du das? Beschreib die Schritte, als müsstest du es jemandem beibringen.',
+        'Wer würde dich am ehesten für genau diese Sache loben?',
+        'Was von dem, was du da tust, kommt in der schwierigen Situation nicht vor?',
+        'Was wäre der kleinste Teil davon, den du nächste Woche ausprobieren könntest?'],
+  haken:[['Er sagt, er kann nichts davon','„Dann frag ich anders: Was machst du, ohne nachzudenken, und andere finden es schwer?"'],
+         ['Er wertet es ab','„Das zählt nicht" ist keine Beschreibung, sondern eine Bewertung. „Es zählt hier. Wie machst du es?"'],
+         ['Es wird zu gemütlich','Diese Sitzung ist angenehm und deshalb gefährlich. Mindestens zwanzig Minuten müssen auf die Übertragung gehen.']],
+  aufgabe:'Einmal in dieser Woche den kleinsten übertragbaren Teil anwenden. Einmal reicht.',
+  notiz:'Seine Ressource in seinen Worten — und der eine Schritt, der sich übertragen lässt.'},
+
+ {n:4, k:'widerstand', titel:'Was es festhält',
+  ziel:'Ihr versteht, wofür das Muster gut ist. Nichts hält sich jahrelang, das nichts bringt.',
+  chartZu:false,
+  chartSatz:'Hier gehören die Spannungen aus seinem Bild hin — aber als Frage nach dem Nutzen, nicht nach dem Fehler.',
+  ablauf:[['10 Min','Die Woche, der Versuch'],
+          ['40 Min','Wofür ist das Muster gut?'],
+          ['20 Min','Was kostet es, es aufzugeben?'],
+          ['10 Min','Abschluss, Zwischenbilanz: sind wir auf Kurs?']],
+  oeffnung:'Du hast es diese Woche einmal anders gemacht. Was war daran unangenehm?',
+  kern:['Angenommen, das Muster wäre klug: Wovor schützt es dich?',
+        'Was müsstest du können oder aushalten, wenn du es nicht mehr hättest?',
+        'Wer in deinem Leben hat etwas davon, dass es so bleibt?',
+        'Was würdest du verlieren, wenn sich das ändert? Auch Kleines zählt.',
+        'Was davon kannst du dir leisten zu verlieren?'],
+  haken:[['Er wehrt ab','Nicht nachsetzen. „Lass die Frage einfach eine Woche liegen." Widerstand bei dieser Frage ist die Antwort.'],
+         ['Es wird emotional','Bleib. Nicht trösten, nicht deuten, nicht weitermachen. „Nimm dir Zeit." Schweigen aushalten.'],
+         ['Es kippt ins Therapeutische','Merkst du, dass ihr an etwas Altem und Großem seid — Gewalt, Verlust, etwas Unverarbeitetes: Das ist die Stelle zum Weiterverweisen. Siehe unten.']],
+  aufgabe:'Keine. Diese Woche nur mitnehmen, was aufgegangen ist.',
+  notiz:'Wofür das Muster gut ist — in seinen Worten. Und: Hat es gekippt? Wenn ja, wohin?'},
+
+ {n:5, k:'entscheidung', titel:'Die Entscheidung',
+  ziel:'Er entscheidet etwas Konkretes. Klein, datiert, überprüfbar.',
+  chartZu:false,
+  chartSatz:'Jetzt sind die laufenden Zeiten nützlich: Wo etwas ohnehin in Bewegung ist, fällt der Anfang leichter.',
+  ablauf:[['10 Min','Die Woche'],
+          ['30 Min','Was ändert sich jetzt wirklich?'],
+          ['30 Min','Daraus einen Schritt machen, der am Dienstag funktioniert'],
+          ['10 Min','Abschluss']],
+  oeffnung:'Wenn du von allem, was wir besprochen haben, eine Sache mitnimmst — welche?',
+  kern:['Was machst du ab jetzt anders? Sag es als Handlung, nicht als Haltung.',
+        'Wann zum ersten Mal? Nenn mir einen Tag.',
+        'Was muss dafür vorher passieren?',
+        'Was ist der wahrscheinlichste Grund, warum es doch nicht passiert?',
+        'Was machst du, wenn genau das eintritt?',
+        'Woran merkst du in vier Wochen, dass du es getan hast?'],
+  haken:[['Der Schritt ist zu groß','Halbieren. Dann noch einmal halbieren. Ein Schritt, der sicher klappt, ist mehr wert als einer, der beeindruckt.'],
+         ['Er formuliert eine Haltung','„Gelassener sein" kann man nicht am Dienstag machen. „Was tust du stattdessen, wenn es anfängt?"'],
+         ['Er will, dass du entscheidest','„Ich kann dir sagen, was ich sehe. Entscheiden musst du, sonst hält es nicht."']],
+  aufgabe:'Der Schritt, am vereinbarten Tag. Und eine Notiz, was passiert ist — auch wenn nichts passiert ist.',
+  notiz:'Die Entscheidung wörtlich, mit Datum. Und der Plan für den wahrscheinlichsten Rückfall.'},
+
+ {n:6, k:'abschluss', titel:'Abschluss',
+  ziel:'Er geht mit etwas, das er allein weiterführen kann — und weiß, was er erreicht hat.',
+  chartZu:false,
+  chartSatz:'Zum Schluss darf das Bild als Ganzes vorkommen: nicht als Deutung, sondern als das, was ihr beide inzwischen daran wiedererkennt.',
+  ablauf:[['15 Min','Was ist in den letzten Wochen passiert?'],
+          ['30 Min','Rückblick auf den Auftrag aus Sitzung 1'],
+          ['25 Min','Was führt er allein weiter?'],
+          ['10 Min','Abschied']],
+  oeffnung:'Lies mir deinen Satz aus der ersten Sitzung vor. Was sagst du heute dazu?',
+  kern:['Was ist anders als vor sechs Terminen? Auch Kleines.',
+        'Was davon hast du selbst gemacht?',
+        'Was ist offen geblieben?',
+        'Was von dem hier willst du allein weiterführen — und wie?',
+        'Woran wirst du merken, dass du in ein altes Muster zurückfällst?',
+        'Was machst du dann?'],
+  haken:[['Er will verlängern','Erst fertig abschließen, dann getrennt davon neu verabreden. Ein Anhängsel ist keine Begleitung.'],
+         ['Er ist enttäuscht','Aushalten, nicht reparieren. „Was hättest du gebraucht?" — die Antwort ist für dich mehr wert als jedes Lob.'],
+         ['Es ist zu Ende, aber ihr kennt euch','Sag ausdrücklich, dass die Begleitung endet und was das für euren privaten Umgang heißt. Ohne diesen Satz läuft es unausgesprochen weiter.']],
+  aufgabe:'Keine. Es ist fertig.',
+  notiz:'Was erreicht wurde, was offen ist, und was du beim nächsten Mal anders machen würdest.'}];
+
+/* ── Zwischen den Sitzungen ───────────────────────────────── */
+var C_ZWISCHEN = {
+ titel:'Zwischen den Terminen',
+ punkte:[
+  ['Deine Vorbereitung','Zwanzig Minuten reichen. Notizen der letzten Sitzung lesen, zwei bis drei Chart-Fragen aussuchen, und einen Satz aufschreiben, was du diesmal verstehen willst.'],
+  ['Was du nicht tust','Nicht zwischendurch deuten und ihm schreiben. Nicht nachbessern, was in der Sitzung nicht lief. Die Woche gehört ihm.'],
+  ['Wenn er sich meldet','Kurz antworten, auf den Termin verweisen. Ausnahme: Krise — siehe Grenzen.'],
+  ['Deine eigene Stelle','Merkst du, dass dich etwas an ihm besonders beschäftigt oder ärgert: aufschreiben. Nicht für ihn — für dich. Das ist meistens deins.']]};
+
+/* ── Die Grenzen ──────────────────────────────────────────────
+   Nicht als Anhang, sondern in jeder Sitzung sichtbar. Eine
+   Coachin, die nicht weiß, wann sie aufhört, ist keine. */
+var C_GRENZEN = {
+ titel:'Wo du aufhörst',
+ sub:'Das Unterscheidende an professioneller Arbeit ist nicht, was du kannst — es ist, dass du weißt, wo es aufhört.',
+ hart:[
+  ['Keine Diagnose','Du benennst keine Störung und bestätigst keine. Auch nicht, wenn er selbst eine nennt und du zustimmen würdest. „Das klingt nach etwas, das jemand anschauen sollte, der das darf."'],
+  ['Kein Ersatz für Behandlung','Ist er in Therapie oder sollte es sein, läuft die Begleitung daneben, nicht stattdessen. Rat ihm nie, etwas abzusetzen, abzubrechen oder zu verschieben.'],
+  ['Keine Vorhersage','Du sagst nicht, ob die Beziehung hält, ob er den Job bekommt, ob die Operation gut geht. Auch nicht als Vermutung, auch nicht, wenn er darum bittet.'],
+  ['Keine Gesundheits-, Rechts- oder Geldberatung','Egal, was im Chart steht.'],
+  ['Nichts über Dritte','Du deutest keine Charts von Menschen, die nicht dabei sind und nicht gefragt wurden. Auch nicht „nur, damit ich ihn verstehe".']],
+ krise:{
+  titel:'Wenn es eine Krise ist',
+  text:'Spricht er von Selbstverletzung, davon, nicht mehr leben zu wollen, oder von akuter Gewalt — dann ist die Begleitung in diesem Moment vorbei, und du bist ein Mensch im Gespräch mit einem Menschen. Nicht deuten. Nicht beruhigen wollen. Fragen, ob er gerade sicher ist, und gemeinsam die nächste Stelle finden.',
+  satz:'„Das ist zu wichtig für das, was ich hier mache. Lass uns zusammen jemanden finden, der das richtig kann — ich bleibe solange dran."',
+  stellen:[
+   ['Telefonseelsorge','0800 111 0 111 · 0800 111 0 222 · rund um die Uhr, kostenfrei, anonym'],
+   ['Ärztlicher Bereitschaftsdienst','116 117'],
+   ['Notruf','112, wenn jemand unmittelbar in Gefahr ist']],
+  danach:'Danach meldest du dich bei ihm — nicht als Coachin, sondern als Mensch. Und du besprichst mit jemandem, was das mit dir gemacht hat.'},
+ weich:[
+  ['Du wirst zur Freundin','Merkst du, dass du tröstest statt fragst, ist die Rolle verrutscht. Benennen und zurück.'],
+  ['Du willst recht behalten','Wenn du dich dabei ertappst, das Chart verteidigen zu wollen: Der Mensch hat recht, immer.'],
+  ['Du langweilst dich','Meistens heißt das, dass ihr am falschen Thema arbeitet. Frag ihn danach.'],
+  ['Er kommt nicht voran','Nach der vierten Sitzung ehrlich benennen. Entweder der Auftrag stimmt nicht, oder er braucht etwas anderes.']],
+ drei:{titel:'Drei Sätze, die dich immer herausbringen',
+  saetze:['„Dazu kann ich nichts sagen."',
+          '„Das ist eine Vermutung, keine Aussage über dich."',
+          '„Was davon stimmt bei dir, und was nicht?"']}};
+
+/* ── Wenn er etwas sagt, das dich aus dem Takt bringt ───────── */
+var C_WENN = {
+ titel:'Wenn er etwas sagt',
+ sub:'Die Sätze, auf die man nicht vorbereitet ist — und eine Antwort, die den Rahmen hält.',
+ paare:[
+  ['„Sag mir einfach, was rauskommt."',
+   '„Das wäre bequem und würde nichts ändern. Was ich kann: dir Fragen stellen, auf die du selbst nicht kommst."'],
+  ['„Das stimmt bei mir überhaupt nicht."',
+   '„Gut. Dann streichen wir es." Nicht verteidigen, nicht nachjustieren. Was nicht passt, war eine Vermutung und ist jetzt erledigt.'],
+  ['„Ich weiß es nicht."',
+   'Warten. Zehn Sekunden. Dann: „Und wenn du es wüsstest?"'],
+  ['„Bin ich damit normal?"',
+   '„Darum geht es hier nicht. Die Frage ist, ob es für dich funktioniert."'],
+  ['„Meine Mutter ist das eigentliche Problem."',
+   '„Kann sein. Sie sitzt nur nicht hier. Was machst DU, wenn sie das tut?"'],
+  ['„Du bist doch meine Freundin, sag mir ehrlich …"',
+   '„Als Bekannte hätte ich eine Meinung. Hier arbeite ich anders — und das nützt dir mehr."'],
+  ['Er weint.',
+   'Nichts sagen. Ein Taschentuch, Zeit. Erst wenn er wieder da ist: „Was war das gerade?"'],
+  ['Er schweigt lange.',
+   'Mitschweigen. Die meisten Coachinnen reden eine Sekunde zu früh und nehmen ihm damit die Antwort weg.'],
+  ['„Das haben wir doch letztes Mal schon geklärt."',
+   '„Stimmt. Und es ist wieder da. Was heißt das?"']]};
+
+/* ── Wie aus einem Chart eine Frage wird ──────────────────────
+   Die Vorlagen pro Anlage. Eingesetzt wird das Lebensfeld des
+   Hauses — damit wird aus zehn mal zwölf Kombinationen eine
+   Frage, die nach diesem Menschen klingt und kein Fachwort
+   enthält. Dieselbe Bauweise wie in bahn-daten.js. */
+var C_FRAGE = {
+ Sonne:  {thema:'Wofür er gehalten werden will',
+   du:'wofür du gesehen werden willst',
+   fragen:['Wo willst du in {feld} gesehen werden — und von wem genau?',
+           'Was machst du in {feld}, damit es von dir ist und nicht bloß erledigt?']},
+ Mond:   {thema:'Was er braucht, um sich sicher zu fühlen',
+   du:'was du brauchst, um dich sicher zu fühlen',
+   fragen:['Was brauchst du in {feld}, damit du dich entspannen kannst?',
+           'Wann hast du dich in {feld} zuletzt sicher gefühlt — und was war da anders?']},
+ Merkur: {thema:'Wie er denkt und was er ausmacht',
+   du:'wie du denkst und was du ausmachst',
+   fragen:['Worüber redest du in {feld} ständig, und worüber nie?',
+           'Was hast du in {feld} nie ausgesprochen, obwohl es alle betrifft?']},
+ Venus:  {thema:'Was ihm nah ist und was er sich wert ist',
+   du:'was dir nah ist und was du dir wert bist',
+   fragen:['Wofür sagst du in {feld} ja, obwohl du nein meinst?',
+           'Was wäre dir in {feld} etwas wert — und was verlangst du dafür tatsächlich?']},
+ Mars:   {thema:'Womit er anfängt und wofür er kämpft',
+   du:'womit du anfängst und wofür du kämpfst',
+   fragen:['Worüber ärgerst du dich in {feld} regelmäßig, ohne es zu sagen?',
+           'Was hast du in {feld} angefangen und nicht zu Ende gebracht? Und warum gerade das?']},
+ Jupiter:{thema:'Wo er sich etwas zutraut',
+   du:'wo du dir etwas zutraust',
+   fragen:['Was nimmst du dir in {feld} immer wieder vor und schaffst es nicht?',
+           'Wo machst du in {feld} mehr, weil es sich gut anfühlt, und nicht, weil es nötig wäre?']},
+ Saturn: {thema:'Wo er streng mit sich ist',
+   du:'wo du streng mit dir bist',
+   fragen:['Was hältst du in {feld} aufrecht, das längst niemand mehr von dir verlangt?',
+           'Wessen Erlaubnis wartest du in {feld} ab — und weiß diese Person davon?']},
+ Uranus: {thema:'Wo er nicht mitmacht',
+   du:'wo du nicht mitmachst',
+   fragen:['Wo machst du es in {feld} absichtlich anders als alle — und was kostet dich das?',
+           'Was hast du in {feld} abgebrochen, obwohl es lief?']},
+ Neptun: {thema:'Wofür er sich begeistert, ohne zu prüfen',
+   du:'wofür du dich begeisterst, ohne zu prüfen',
+   fragen:['Was erzählst du dir in {feld} schöner, als es ist?',
+           'Wo hältst du dir in {feld} eine Möglichkeit offen, die nie stattfindet?']},
+ Pluto:  {thema:'Wo es um alles oder nichts geht',
+   du:'wo es bei dir um alles oder nichts geht',
+   fragen:['Was ist bei dir in {feld} nie halb, sondern immer ganz oder gar nicht?',
+           'Worüber redest du in {feld} mit niemandem?']},
+ Chiron: {thema:'Wo Kleinigkeiten unverhältnismäßig treffen',
+   du:'wo Kleinigkeiten dich zu hart treffen',
+   fragen:['Was trifft dich in {feld} härter, als es sollte?',
+           'Was könntest du anderen in {feld} gut beibringen und bei dir selbst nicht?']},
+ Lilith: {thema:'Was nie einen Platz bekommen hat',
+   du:'was bei dir nie Platz hatte',
+   fragen:['Was hat bei dir in {feld} nie Platz gehabt?',
+           'Wo wirst du in {feld} laut — und war das als Kind erlaubt?']}};
+
+/* Die zwölf Felder als Ortsangabe — „in deinem Zuhause", nicht
+   „im vierten Haus". Was eingesetzt wird, muss sich im Satz
+   anhören wie Alltagssprache. */
+var C_FELD = [
+ 'deinem Auftreten',
+ 'deinem Verhältnis zu Geld',
+ 'deinem Alltag und deinem Reden',
+ 'deinem Zuhause',
+ 'deiner Freude und Kreativität',
+ 'deinem Alltag und deinem Körper',
+ 'deinen festen Beziehungen',
+ 'deinen tiefsten Bindungen',
+ 'deiner Ausrichtung',
+ 'deiner öffentlichen Rolle',
+ 'deinem Freundeskreis',
+ 'deinem Rückzug'];
+
+/* Die Spannungen: eine Frage, die den Winkel als Frage stellt. */
+var C_WINKEL = {
+ hart:['Zwei Sachen willst du gleichzeitig. Die eine: {a}. Die andere: {b}. Wo im Alltag merkst du, dass beides zusammen nicht geht?',
+       'Die eine Seite: {a}. Die andere: {b}. Welche von beiden gibt bei dir nach — und was passiert danach?'],
+ weich:['Zwei Sachen ziehen bei dir in dieselbe Richtung. Die eine: {a}. Die andere: {b}. Wofür hast du das noch nie absichtlich eingesetzt?',
+        'Die eine Seite: {a}. Die andere: {b}. Das geht bei dir zusammen — wem ist das außer dir schon aufgefallen?']};
+
+var C_JETZT = {
+ titel:'Was bei ihm gerade läuft',
+ sub:'Die Zeiten sagen nicht, was passiert. Sie sagen, welche Frage gerade offen liegt — und deshalb jetzt leichter zu stellen ist.',
+ frageVor:'Daraus eine Frage:',
+ fragen:{
+  hart:['Wo arbeitest du dich gerade in {feld} an etwas ab?',
+        'Was in {feld} kostet dich im Moment mehr Kraft als sonst?',
+        'Woran reibst du dich in {feld} gerade — und seit wann?'],
+  weich:['Wo geht dir gerade in {feld} etwas leichter von der Hand als sonst?',
+         'Was wäre in {feld} gerade möglich, das sonst schwerer wäre?',
+         'Wo hast du in {feld} im Moment Rückenwind, ohne es zu merken?']},
+ warnung:'Sag ihm nicht, dass gerade „ein Transit läuft". Stell die Frage und sieh, ob sie trifft. Tut sie es nicht, war es die falsche Woche dafür.'};
+
+var C_KOPF = {
+ titel:'Die Begleitung',
+ lede:'Wie du eine Begleitung aufziehst — vom ersten Gespräch bis zum Abschluss. Mit den Fragen aus dem Bild des Menschen, mit dem du arbeitest.',
+ warnung:'Alles, was du hier eintippst, bleibt in deinem Browser. Es geht nicht ins Netz, niemand sonst sieht es, und es ist auch nicht gesichert — mach dir von Wichtigem eine eigene Kopie.',
+ wen:'Mit wem arbeitest du?',
+ keinProfil:'Leg zuerst ein Profil für die Person an, dann stehen hier ihre Fragen.',
+ dossier:'Die Übersicht über diesen Menschen steht im Dossier →',
+ eigen:'Das ist dein eigenes Profil. Für eine Begleitung wählst du das Profil der Person aus, mit der du arbeitest — sonst stehen hier deine Fragen und nicht ihre.',
+ notizVor:'Deine Notizen',
+ notizHin:'Bleibt in diesem Browser.',
+ erledigt:'erledigt',
+ drucken:'Diese Sitzung drucken'};
+
+/* ── Aus einem Chart werden Fragen ────────────────────────────
+   Der Unterschied, um den es auf dieser ganzen Seite geht:
+
+     Aussage: „Du hast Saturn im siebten Haus."
+     Frage:   „Was hältst du in deinen verbindlichen Beziehungen
+               aufrecht, das längst niemand mehr von dir verlangt?"
+
+   Dieselbe Rechnung, aber die zweite Form ist ein Werkzeug und
+   die erste eine Behauptung über einen Menschen. Diese Datei
+   liefert nur die zweite.
+
+   Drei Quellen, nach Brauchbarkeit im Gespräch sortiert:
+
+     stellungen() — welche Anlage in welchem Lebensfeld steht.
+                    Der Grundstock; davon gibt es immer welche.
+     spannungen() — die engsten Winkel. Die interessantesten
+                    Fragen, aber auch die, bei denen man am
+                    ehesten danebenliegt.
+     jetzt()      — was gerade läuft. Nicht, um es ihm zu sagen,
+                    sondern um zu wissen, welche Frage diese
+                    Woche leichter aufgeht.
+
+   Keine davon gibt ein Ergebnis zurück, das man vorlesen könnte.
+   Es sind Fragen. Was er nicht wiedererkennt, gilt nicht. */
+(function(){
+'use strict';
+
+var BG_ANLAGEN = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter',
+                  'Saturn','Uranus','Neptun','Pluto','Chiron','Lilith'];
+
+/* Wie schwer eine Stellung im Gespräch wiegt. Die persönlichen
+   Anlagen zuerst: Eine Frage nach Pluto im achten Haus ist
+   eindrucksvoll, eine nach dem Mond im vierten bringt mehr. */
+var BG_GEWICHT = {
+  Sonne:1.00, Mond:1.00, Merkur:0.80, Venus:0.85, Mars:0.85,
+  Jupiter:0.60, Saturn:0.90, Uranus:0.55, Neptun:0.55, Pluto:0.60,
+  Chiron:0.70, Lilith:0.50
+};
+
+function bgHaus(P, l){ try{ return haus(P, l); }catch(e){ return null; } }
+
+/* ── Welche Anlage steht in welchem Lebensfeld ──────────────── */
+function stellungen(P){
+  if(!P) return [];
+  var out = [];
+  BG_ANLAGEN.forEach(function(k){
+    if(P[k] === undefined || P[k] === null) return;
+    var V = C_FRAGE[k]; if(!V) return;
+    var h = bgHaus(P, P[k]); if(!h) return;
+    var feld = C_FELD[h-1]; if(!feld) return;
+    out.push({
+      anlage:k, haus:h, feld:feld, thema:V.thema,
+      fragen:V.fragen.map(function(f){ return f.replace('{feld}', feld); }),
+      gewicht:BG_GEWICHT[k] || 0.5
+    });
+  });
+  out.sort(function(a,b){ return b.gewicht - a.gewicht; });
+  return out;
+}
+
+/* ── Die engsten Winkel ──────────────────────────────────────
+   Nur die wirklich engen: Was über drei Grad hinausgeht, ist im
+   Gespräch nicht mehr unterscheidbar von allem anderen. Und
+   höchstens vier — mehr Spannungen als Sitzungen wäre eine
+   Materialsammlung, keine Vorbereitung. */
+function spannungen(P, hoechstens){
+  if(!P || !window.C_WINKEL || !window.C_FRAGE) return [];
+  var WINKEL = [{g:0,art:'weich'},{g:180,art:'hart'},{g:90,art:'hart'},
+                {g:120,art:'weich'},{g:60,art:'weich'}];
+  var out = [], i, j;
+  for(i = 0; i < BG_ANLAGEN.length; i++){
+    for(j = i+1; j < BG_ANLAGEN.length; j++){
+      var a = BG_ANLAGEN[i], b = BG_ANLAGEN[j];
+      if(P[a] === undefined || P[b] === undefined) continue;
+      if(!C_FRAGE[a] || !C_FRAGE[b]) continue;
+      WINKEL.forEach(function(W){
+        var ab = Math.abs(((P[a] - P[b] - W.g + 540) % 360) - 180);
+        if(ab > 3) return;
+        /* Die Konjunktion ist weder hart noch weich; sie wird
+           danach beurteilt, welche zwei Anlagen zusammenliegen.
+           Hier reicht: Saturn oder Pluto dabei heißt hart. */
+        var art = (W.g === 0)
+          ? ((a === 'Saturn' || b === 'Saturn' || a === 'Pluto' || b === 'Pluto' ||
+              a === 'Chiron' || b === 'Chiron') ? 'hart' : 'weich')
+          : W.art;
+        /* Die Du-Fassung, nicht die Überschrift: „womit er anfängt"
+           in einer Frage, die ihm vorgelesen wird, wäre die falsche
+           Person — und genau das stand hier am 29.10. */
+        var fa = C_FRAGE[a].du, fb = C_FRAGE[b].du;
+        if(!fa || !fb) return;
+        out.push({
+          a:a, b:b, ab:ab, art:art,
+          fragen:C_WINKEL[art].map(function(f){
+            return f.replace('{a}', fa).replace('{b}', fb); }),
+          gewicht:(3 - ab) * ((BG_GEWICHT[a]||0.5) + (BG_GEWICHT[b]||0.5))
+        });
+      });
+    }
+  }
+  out.sort(function(x,y){ return y.gewicht - x.gewicht; });
+  return out.slice(0, hoechstens || 4);
+}
+
+/* ── Was gerade läuft ────────────────────────────────────────
+   Nutzt denselben Rechner wie die Startseite. Hier aber nicht,
+   um etwas anzukündigen, sondern um die Frage zu finden, die
+   diese Woche am leichtesten aufgeht. */
+function jetzt(P, jd, hoechstens){
+  if(!P || !window.AC_BAHN) return [];
+  var t = [];
+  try{ t = AC_BAHN.treffer(P, jd, {nurLangsam:true}) || []; }catch(e){ return []; }
+  /* Reihum eine andere Fassung, sonst steht dreimal dieselbe
+     Frage mit drei verschiedenen Lebensfeldern darunter. */
+  return t.slice(0, hoechstens || 3).map(function(x, i){
+    var h = bgHaus(P, P[x.ziel]), feld = h ? C_FELD[h-1] : null;
+    return {
+      wanderer:x.wanderer, ziel:x.ziel, aspekt:x.aspekt, art:x.art, ab:x.ab,
+      haus:h, feld:feld,
+      frage: feld ? (function(){
+        var v = C_JETZT.fragen[x.art];
+        return (Array.isArray(v) ? v[i % v.length] : v).replace('{feld}', feld);
+      })() : null
+    };
+  }).filter(function(x){ return !!x.frage; });
+}
+
+/* Eine Auswahl für eine einzelne Sitzung: zwei Stellungen und
+   eine Spannung, wechselnd nach Sitzungsnummer, damit nicht in
+   jeder Sitzung dieselben zwei Fragen oben stehen. */
+function fuerSitzung(P, n){
+  var st = stellungen(P), sp = spannungen(P, 4), raus = [];
+  if(st.length){
+    raus.push(st[(n * 2) % st.length]);
+    if(st.length > 1) raus.push(st[(n * 2 + 1) % st.length]);
+  }
+  return {stellungen:raus, spannung:(sp.length ? sp[n % sp.length] : null)};
+}
+
+window.AC_BEGLEIT = {
+  ANLAGEN:BG_ANLAGEN,
+  stellungen:stellungen, spannungen:spannungen,
+  jetzt:jetzt, fuerSitzung:fuerSitzung
+};
+})();
+
+/* ── Die Begleitung: Anzeige ──────────────────────────────────
+   Eine Arbeitsseite, keine Leseseite. Die Notizen liegen im
+   Browser dieser einen Person und gehen nirgendwohin — das steht
+   auch oben auf der Seite, weil es um die Daten eines anderen
+   Menschen geht und man das nicht aus einer Datenschutzerklärung
+   erraten soll. */
+(function(){
+'use strict';
+var D = document;
+function el(i){ return D.getElementById(i); }
+function esc(s){ return String(s === undefined || s === null ? '' : s)
+  .replace(/[<>&"]/g, function(c){
+    return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
+
+var P = null, PROFIL = null, SITZUNG = 1, GEWAEHLT = null;
+var SPEICHER = 'ac_begleit_v1';
+
+/* ── Notizen ──────────────────────────────────────────────────
+   Je Person und Sitzung. Der Schlüssel ist die Profil-Id, damit
+   zwei Begleitungen sich nicht in die Quere kommen. */
+function alles(){
+  try{ return JSON.parse(localStorage.getItem(SPEICHER) || '{}') || {}; }
+  catch(e){ return {}; }
+}
+function holen(id, feld){
+  var a = alles(); return (a[id] && a[id][feld]) || '';
+}
+function legen(id, feld, wert){
+  try{
+    var a = alles();
+    if(!a[id]) a[id] = {};
+    if(wert === '' || wert === false) delete a[id][feld]; else a[id][feld] = wert;
+    localStorage.setItem(SPEICHER, JSON.stringify(a));
+  }catch(e){}
+}
+
+/* Die Wahl hier ändert NICHT das aktive Profil der ganzen Seite.
+   Wer eine Begleitung vorbereitet, will nicht, dass danach auf
+   „Jetzt" das Chart der Klientin steht — dasselbe hält das
+   Dossier so. */
+function profil(){
+  var alle = [];
+  try{ alle = AC_P.alle() || []; }catch(e){ return null; }
+  if(!alle.length) return null;
+  /* Wen man begleitet, wechselt man nicht ständig. Die Wahl
+     überlebt deshalb den Neustart — sonst steht nach jedem Laden
+     wieder das eigene Profil da und die Notizen scheinen weg. */
+  if(GEWAEHLT === null){
+    try{ GEWAEHLT = localStorage.getItem(SPEICHER + '-wer') || null; }catch(e){}
+  }
+  var g = alle.filter(function(x){ return x.id === GEWAEHLT; })[0];
+  if(g) return g;
+  var e2 = alle.filter(function(x){ return x.eigen; })[0] || alle[0];
+  GEWAEHLT = e2.id;
+  return e2;
+}
+
+/* ── Wen begleitest du ────────────────────────────────────── */
+function wenBauen(){
+  el('bgtitel').textContent = C_KOPF.titel;
+  el('bglede').textContent = C_KOPF.lede;
+  el('bgwent').textContent = C_KOPF.wen;
+  el('bgprivat').textContent = C_KOPF.warnung;
+  el('bgdossier').textContent = C_KOPF.dossier;
+  var box = el('bgwahl'), alle = [];
+  try{ alle = AC_P.alle() || []; }catch(err){}
+  if(!alle.length){
+    box.innerHTML = '<p class="bg-leer">Noch kein Profil angelegt. ' +
+      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und ' +
+      'Geburtsort kann hier nichts gerechnet werden, weil alles an den Häusern hängt.</p>';
+  } else {
+    var zn = false; try{ zn = AC_P.zeigeNamen(); }catch(err){}
+    box.innerHTML = '';
+    alle.forEach(function(x){
+      var b = D.createElement('button');
+      b.type = 'button';
+      b.className = 'bw' + (x.id === GEWAEHLT ? ' ist' : '');
+      b.textContent = AC_P.anzeige(x, zn);
+      b.addEventListener('click', function(){
+        GEWAEHLT = x.id;
+        try{ localStorage.setItem(SPEICHER + '-wer', x.id); }catch(err){}
+        neu(); });
+      box.appendChild(b);
+    });
+  }
+  var e = el('bgeigen');
+  /* Der häufigste Anfängerfehler mit dieser Seite: das eigene
+     Profil aktiv lassen und sich über die Fragen wundern. */
+  var eigen = false;
+  try{ eigen = !!(PROFIL && PROFIL.eigen); }catch(err){}
+  e.textContent = C_KOPF.eigen;
+  e.hidden = !eigen;
+}
+
+/* ── Der Rahmen ──────────────────────────────────────────── */
+function rahmenBauen(){
+  el('bgrahmenh').textContent = C_RAHMEN.titel;
+  el('bgrahmensub').textContent = C_RAHMEN.sub;
+  el('bgrahmenhin').textContent = C_RAHMEN.hinweis;
+  var id = PROFIL ? PROFIL.id : 'ohne';
+  el('bgrahmen').innerHTML = C_RAHMEN.punkte.map(function(p){
+    var an = holen(id, 'rahmen-' + p.k) ? ' checked' : '';
+    return '<div class="rh' + (an ? ' rh-an' : '') + '" data-k="' + esc(p.k) + '">' +
+      '<label class="rh-l"><input type="checkbox" data-rahmen="' + esc(p.k) + '"' + an + '>' +
+      '<span class="rh-t">' + esc(p.t) + '</span></label>' +
+      '<p class="rh-d">' + esc(p.d) + '</p>' +
+      '<p class="rh-s">' + esc(p.satz) + '</p></div>';
+  }).join('');
+  Array.prototype.forEach.call(el('bgrahmen').querySelectorAll('[data-rahmen]'), function(b){
+    b.addEventListener('change', function(){
+      legen(id, 'rahmen-' + b.getAttribute('data-rahmen'), b.checked);
+      b.closest('.rh').classList.toggle('rh-an', b.checked);
+    });
+  });
+}
+
+/* ── Der Bogen ───────────────────────────────────────────── */
+function leisteBauen(){
+  el('bgleiste').innerHTML = C_SITZUNGEN.map(function(s){
+    var id = PROFIL ? PROFIL.id : 'ohne';
+    var fertig = holen(id, 'fertig-' + s.n) ? ' sz-fertig' : '';
+    return '<button type="button" class="sz' + (s.n === SITZUNG ? ' sz-ist' : '') +
+      fertig + '" data-n="' + s.n + '">' +
+      '<span class="sz-n">' + s.n + '</span>' +
+      '<span class="sz-t">' + esc(s.titel) + '</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(el('bgleiste').querySelectorAll('.sz'), function(b){
+    b.addEventListener('click', function(){
+      SITZUNG = parseInt(b.getAttribute('data-n'), 10);
+      leisteBauen(); sitzungBauen();
+      var z = el('bgsitzung');
+      if(z) window.scrollTo({top:Math.max(0, z.getBoundingClientRect().top +
+        window.pageYOffset - 90), behavior:'smooth'});
+    });
+  });
+}
+
+function fragenBlock(f){
+  if(!f) return '';
+  var h = ['<div class="sz-chart"><div class="sz-chart-t">Fragen aus seinem Bild</div>'];
+  f.stellungen.forEach(function(s){
+    h.push('<div class="cf"><div class="cf-th">' + esc(s.thema) + '</div><ul>' +
+      s.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
+      '</ul><div class="cf-tech ac-tech" data-ab="2">' + esc(s.anlage) +
+      ' im ' + s.haus + '. Haus</div></div>');
+  });
+  if(f.spannung){
+    var sp = f.spannung;
+    h.push('<div class="cf cf-sp"><div class="cf-th">Eine Spannung</div><ul>' +
+      sp.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
+      '</ul><div class="cf-tech ac-tech" data-ab="2">' + esc(sp.a) + ' und ' +
+      esc(sp.b) + ', ' + sp.ab.toFixed(1) + '° — ' + esc(sp.art) + '</div></div>');
+  }
+  h.push('</div>');
+  return h.join('');
+}
+
+function sitzungBauen(){
+  var s = C_SITZUNGEN[SITZUNG - 1]; if(!s) return;
+  var id = PROFIL ? PROFIL.id : 'ohne';
+  var f = (P && window.AC_BEGLEIT) ? AC_BEGLEIT.fuerSitzung(P, SITZUNG) : null;
+  var h = [];
+
+  h.push('<div class="sz-kopf"><div class="sz-nr">Sitzung ' + s.n + '</div>' +
+    '<h3 class="sz-h">' + esc(s.titel) + '</h3>' +
+    '<p class="sz-ziel"><b>Ziel</b>' + esc(s.ziel) + '</p></div>');
+
+  h.push('<div class="sz-chartlage' + (s.chartZu ? ' sz-zu' : '') + '">' +
+    '<b>' + (s.chartZu ? 'Das Chart bleibt zu' : 'Das Chart kommt dazu') + '</b>' +
+    esc(s.chartSatz) + '</div>');
+
+  h.push('<div class="sz-zwei">');
+  h.push('<div class="sz-sp"><div class="sz-t">Ablauf</div><table class="sz-ablauf">' +
+    s.ablauf.map(function(a){
+      return '<tr><td>' + esc(a[0]) + '</td><td>' + esc(a[1]) + '</td></tr>'; }).join('') +
+    '</table></div>');
+
+  h.push('<div class="sz-sp"><div class="sz-t">Womit du anfängst</div>' +
+    '<p class="sz-oeff">' + esc(s.oeffnung) + '</p>' +
+    '<div class="sz-t">Dann</div><ul class="sz-kern">' +
+    s.kern.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></div>');
+  h.push('</div>');
+
+  if(!s.chartZu && f) h.push(fragenBlock(f));
+  else if(s.chartZu) h.push('<div class="sz-chart sz-chart-zu">' +
+    'Diese Sitzung ohne Chart. Die Fragen aus seinem Bild stehen ab Sitzung 2 hier.</div>');
+
+  h.push('<div class="sz-haken"><div class="sz-t">Wenn es hakt</div>' +
+    s.haken.map(function(x){
+      return '<div class="hk"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>';
+    }).join('') + '</div>');
+
+  h.push('<div class="sz-zwei">');
+  h.push('<div class="sz-sp sz-auf"><div class="sz-t">Bis zum nächsten Mal</div><p>' +
+    esc(s.aufgabe) + '</p></div>');
+  h.push('<div class="sz-sp sz-no"><div class="sz-t">Was du dir notierst</div><p>' +
+    esc(s.notiz) + '</p></div>');
+  h.push('</div>');
+
+  h.push('<div class="sz-notiz"><label class="sz-t" for="bgnotiz">' +
+    esc(C_KOPF.notizVor) + ' <span class="sz-hin">' + esc(C_KOPF.notizHin) + '</span></label>' +
+    '<textarea id="bgnotiz" rows="7" placeholder="…"></textarea></div>');
+
+  h.push('<div class="sz-fuss">' +
+    '<label class="sz-fertig"><input type="checkbox" id="bgfertig"> Sitzung ' + s.n + ' ' +
+    esc(C_KOPF.erledigt) + '</label>' +
+    '<button type="button" class="sz-druck" id="bgdruck">' + esc(C_KOPF.drucken) + '</button>' +
+    '</div>');
+
+  el('bgsitzung').innerHTML = h.join('');
+
+  var t = el('bgnotiz');
+  t.value = holen(id, 'notiz-' + s.n);
+  t.addEventListener('input', function(){ legen(id, 'notiz-' + s.n, t.value); });
+
+  var fx = el('bgfertig');
+  fx.checked = !!holen(id, 'fertig-' + s.n);
+  fx.addEventListener('change', function(){
+    legen(id, 'fertig-' + s.n, fx.checked); leisteBauen();
+  });
+  el('bgdruck').addEventListener('click', function(){ window.print(); });
+
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+}
+
+/* ── Was gerade läuft ────────────────────────────────────── */
+function jetztBauen(){
+  el('bgjetzth').textContent = C_JETZT.titel;
+  el('bgjetztsub').textContent = C_JETZT.sub;
+  el('bgjetztwarn').textContent = C_JETZT.warnung;
+  var z = el('bgjetzt'); if(!P || !window.AC_BEGLEIT){ z.innerHTML = ''; return; }
+  var jd; try{ jd = jdFromUT(new Date().getUTCFullYear(), new Date().getUTCMonth()+1,
+    new Date().getUTCDate(), new Date().getUTCHours() + new Date().getUTCMinutes()/60);
+  }catch(e){ z.innerHTML = ''; return; }
+  var l = AC_BEGLEIT.jetzt(P, jd, 3);
+  if(!l.length){ z.innerHTML = '<p class="bg-nix">Gerade trifft nichts Langsames sein ' +
+    'Bild. Dann arbeitet ihr mit dem, was er mitbringt — so soll es ohnehin sein.</p>'; return; }
+  z.innerHTML = l.map(function(x, i){
+    return '<div class="jz"><div class="jz-k">' +
+      '<span class="jz-f">' + (i === 0 ? esc(C_JETZT.frageVor) : '') + '</span>' +
+      '<span class="jz-n">' + x.ab.toFixed(1) + '°</span></div>' +
+      '<p class="jz-q">' + esc(x.frage) + '</p>' +
+      '<div class="jz-tech ac-tech" data-ab="2">' + esc(x.wanderer) + ' ' +
+      esc(x.aspekt) + ' ' + esc(x.ziel) + ', ' + x.ab.toFixed(2) + '°</div></div>';
+  }).join('');
+}
+
+/* ── Der ganze Vorrat ───────────────────────────────────── */
+function vorratBauen(){
+  var z = el('bgfragen'); if(!P || !window.AC_BEGLEIT){ z.innerHTML = ''; return; }
+  var st = AC_BEGLEIT.stellungen(P), sp = AC_BEGLEIT.spannungen(P, 4);
+  var h = st.map(function(s){
+    return '<details class="vf"><summary><span class="vf-t">' + esc(s.thema) + '</span>' +
+      '<span class="vf-h ac-tech" data-ab="2">' + esc(s.anlage) + ' · ' + s.haus + '. Haus</span>' +
+      '</summary><ul>' + s.fragen.map(function(q){
+        return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></details>';
+  });
+  sp.forEach(function(x){
+    h.push('<details class="vf vf-sp"><summary><span class="vf-t">Spannung: ' +
+      esc(x.a) + ' und ' + esc(x.b) + '</span>' +
+      '<span class="vf-h ac-tech" data-ab="2">' + x.ab.toFixed(1) + '°</span></summary><ul>' +
+      x.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
+      '</ul></details>');
+  });
+  z.innerHTML = h.join('');
+  try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+}
+
+/* ── Die festen Texte ───────────────────────────────────── */
+function festBauen(){
+  el('bgzwischenh').textContent = C_ZWISCHEN.titel;
+  el('bgzwischen').innerHTML = C_ZWISCHEN.punkte.map(function(p){
+    return '<div class="zw"><b>' + esc(p[0]) + '</b><span>' + esc(p[1]) + '</span></div>';
+  }).join('');
+
+  el('bgwennh').textContent = C_WENN.titel;
+  el('bgwennsub').textContent = C_WENN.sub;
+  el('bgwenn').innerHTML = C_WENN.paare.map(function(p){
+    return '<div class="we2"><p class="we2-s">' + esc(p[0]) + '</p>' +
+      '<p class="we2-a">' + esc(p[1]) + '</p></div>';
+  }).join('');
+
+  el('bggrenzenh').textContent = C_GRENZEN.titel;
+  el('bggrenzensub').textContent = C_GRENZEN.sub;
+  el('bghart').innerHTML = '<div class="gr-t">Die harten Grenzen</div>' +
+    C_GRENZEN.hart.map(function(g){
+      return '<div class="gr"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>';
+    }).join('');
+
+  var K = C_GRENZEN.krise;
+  el('bgkrise').innerHTML = '<div class="kr"><div class="kr-t">' + esc(K.titel) + '</div>' +
+    '<p>' + esc(K.text) + '</p>' +
+    '<p class="kr-s">' + esc(K.satz) + '</p>' +
+    '<ul class="kr-l">' + K.stellen.map(function(s){
+      return '<li><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'; }).join('') +
+    '</ul><p class="kr-d">' + esc(K.danach) + '</p></div>';
+
+  el('bgweich').innerHTML = '<div class="gr-t">Die weichen Grenzen</div>' +
+    C_GRENZEN.weich.map(function(g){
+      return '<div class="gr gr-w"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>';
+    }).join('');
+
+  el('bgdrei').innerHTML = '<div class="dr"><div class="dr-t">' + esc(C_GRENZEN.drei.titel) +
+    '</div>' + C_GRENZEN.drei.saetze.map(function(s){
+      return '<p>' + esc(s) + '</p>'; }).join('') + '</div>';
+}
+
+function sprungBauen(){
+  var z = el('bgsprung'); if(!z) return;
+  z.innerHTML = Array.prototype.map.call(D.querySelectorAll('.bg-ab[data-sprung]'),
+    function(s){
+      return '<a href="#' + s.id + '">' + esc(s.getAttribute('data-sprung')) + '</a>';
+    }).join('');
+}
+
+function neu(){
+  PROFIL = profil();
+  if(!PROFIL){
+    el('bgsitzung').innerHTML = '<p class="bg-nix">' + esc(C_KOPF.keinProfil) + '</p>';
+    el('bgfragen').innerHTML = ''; el('bgjetzt').innerHTML = '';
+    P = null;
+    rahmenBauen(); leisteBauen(); festBauen();
+    return;
+  }
+  try{ P = chartVon(PROFIL); }catch(e){ P = null; }
+  var d = el('bgdossier');
+  if(d) d.setAttribute('href', 'dossier.html');
+  wenBauen(); rahmenBauen(); leisteBauen(); sitzungBauen();
+  jetztBauen(); vorratBauen(); festBauen();
+}
+
+function start(){
+  sprungBauen();
+  neu();
+  try{ if(window.AC_NIV) AC_NIV.leiste(el('bgniv'),
+    function(){ sitzungBauen(); vorratBauen(); jetztBauen(); }); }catch(e){}
+  try{ window.addEventListener('ac-profil', neu); }catch(e){}
+}
+if(D.readyState === 'loading') D.addEventListener('DOMContentLoaded', start); else start();
+})();
+
+</script>
+</body></html>
