@@ -353,3 +353,93 @@ var C_KOPF = {
  notizHin:'Bleibt in diesem Browser.',
  erledigt:'erledigt',
  drucken:'Diese Sitzung drucken'};
+
+/* ── Die Methode ──────────────────────────────────────────────
+   Mandy am 30.10., über ein fremdes Konzeptdokument:
+
+     „ich meinte nur die Struktur und Ideen dahinter … Denn meine
+      Seite ist einfach zu cluddert und vor allem sehe ich nicht
+      mehr durch."
+
+   Was dieses Dokument richtig gesehen hat, ist nicht neu — es ist
+   ein Name für das, was diese Seite ohnehin schon tut. Die
+   Begleitung hatte einen Verlauf, aber keine Methode, die man in
+   einem Satz sagen kann. Genau das fehlte.
+
+   Drei Linsen. Sie sind keine Erfindung: Die mittlere kommt aus
+   der Individualpsychologie Alfred Adlers (1870–1937), einer
+   eigenen Schule mit eigener Literatur. Sie taugt für Coaching
+   besser als die meisten anderen, weil sie nicht nach Krankheit
+   fragt, sondern nach Zielen und Mustern — und weil sie von
+   Anfang an für die Arbeit mit gesunden Menschen gedacht war.
+
+   Was sie nicht ist: eine Therapie. Adlerianische Psychotherapie
+   gibt es, sie wird von ausgebildeten Therapeutinnen gemacht, und
+   davon ist das hier so weit entfernt wie ein Kochbuch von einer
+   Ernährungsberatung. Die Linse ist ein Blickwinkel, keine
+   Behandlung — und das steht auf der Seite auch so. */
+var C_METHODE = {
+ titel:'Die Methode',
+ sub:'Drei Linsen, durch die du dasselbe Leben dreimal ansiehst. Jede Sitzung im Bogen liegt auf einer davon.',
+ name:'Bauplan · Logik · Landung',
+ linsen:[
+  {k:'bauplan', n:'Der Bauplan',
+   frage:'Was ist angelegt?',
+   d:'Das Geburtsbild — als Hypothese, nicht als Befund. Es sagt, welche Fragen bei diesem Menschen wahrscheinlich etwas aufmachen, und in welchem Lebensfeld sie sitzen. Es sagt nicht, wer er ist.',
+   wo:'Sitzung 2 und 3, und in jeder Sitzung die Fragen aus seinem Bild.',
+   falle:'Den Bauplan für die Antwort zu halten. Er liefert die Frage.'},
+  {k:'logik', n:'Die private Logik',
+   frage:'Wofür ist das gut?',
+   d:'Jedes Muster, das sich jahrelang hält, bringt etwas ein — meistens Schutz vor etwas, das noch unangenehmer wäre. Alfred Adler nannte das die private Logik: die unausgesprochenen Regeln, nach denen jemand sein Leben einrichtet, und die von innen völlig vernünftig aussehen.',
+   wo:'Sitzung 4 ist ganz dafür da. Die Frage nach dem Gewinn steht unten bei den Werkzeugen.',
+   falle:'Daraus eine Diagnose zu machen. Es ist eine Frage an ihn, keine Feststellung über ihn.'},
+  {k:'landung', n:'Die Landung',
+   frage:'Was tust du am Dienstag?',
+   d:'Der Teil, an dem die meisten spirituellen Ansätze aufhören und an dem sich entscheidet, ob eine Begleitung etwas gebracht hat. Eine Einsicht, die keine Handlung nach sich zieht, verfliegt in zwei Wochen.',
+   wo:'Sitzung 5, und als Hausaufgabe am Ende jeder einzelnen Sitzung.',
+   falle:'Zu große Schritte. Halbieren, dann noch einmal halbieren.'}],
+ ehrlich:'Die mittlere Linse stammt aus einer echten psychologischen Schule, die erste aus einer Überlieferung ohne Wirksamkeitsnachweis, die dritte ist schlichtes Handwerk. Das ist kein Makel, solange es dasteht — und es steht da.',
+ abgrenzung:'Diese drei Linsen sind ein Blickwinkel für ein Gespräch. Sie sind keine Therapie, keine Diagnostik und kein Behandlungsverfahren. Wer behandelt werden muss, wird behandelt — von jemandem, der das darf.'};
+
+/* ── Die Werkzeuge ────────────────────────────────────────────
+   Fünf Handgriffe, die man sich merken kann. Alle fünf kommen aus
+   der Individualpsychologie und sind seit Jahrzehnten in Gebrauch;
+   keiner davon ist hier erfunden. Zu jedem steht, wann er passt,
+   wie der Satz lautet und woran man merkt, dass er gerade nicht
+   passt — das Letzte fehlt in den meisten Werkzeugkästen und ist
+   das Nützlichste daran. */
+var C_WERKZEUG = [
+ {n:'Die Frage nach dem Gewinn', wann:'Wenn ein Muster sich hält, obwohl alle es loswerden wollen.',
+  satz:'„Angenommen, das wäre morgen früh weg — was müsstest du dann tun, vor dem du dich jetzt noch drücken kannst?"',
+  wozu:'Macht sichtbar, wofür das Muster gut ist. Fast immer schützt es vor etwas, das noch unangenehmer wäre.',
+  nicht:'Nicht, wenn jemand gerade weint oder überfordert ist. Die Frage ist scharf und braucht einen Menschen, der stehen kann.',
+  her:'Adler fragte Klienten sinngemäß, was anders wäre, wenn sie gesund wären — und hörte aus der Antwort, wofür das Symptom gebraucht wird.'},
+ {n:'Die frühe Erinnerung', wann:'Wenn du verstehen willst, nach welchen Regeln jemand sein Leben einrichtet.',
+  satz:'„Erzähl mir eine einzelne Erinnerung von früher. Keine, die dir oft erzählt wurde — eine, die du selbst siehst. Und sag mir, was du dabei gefühlt hast."',
+  wozu:'Welche Szene jemand auswählt und wie er sie erzählt, sagt mehr über seine heutigen Regeln als über seine Kindheit. Es geht nicht darum, ob sie stimmt.',
+  nicht:'Nicht benutzen, um Kindheit aufzuarbeiten. Du fragst nach einer Erinnerung, nicht nach einer Geschichte. Kommt etwas Schweres, hörst du auf und siehst bei den Grenzen nach.',
+  her:'Adlers „frühe Kindheitserinnerungen" — eines der ältesten Verfahren der Individualpsychologie.'},
+ {n:'Mut zur Unvollkommenheit', wann:'Bei Perfektionismus, Aufschieben, und bei „ich bin noch nicht so weit".',
+  satz:'„Was wäre die unperfekteste Fassung davon, die trotzdem zählt?"',
+  wozu:'Nimmt dem Aufschieben den Vorwand. Wer nicht perfekt sein muss, kann anfangen.',
+  nicht:'Nicht bei jemandem, der ohnehin schon alles hinwirft. Da brauchst du das Gegenteil.',
+  her:'Ein Kernsatz der adlerianischen Tradition, geprägt im Umfeld von Rudolf Dreikurs.'},
+ {n:'Als ob handeln', wann:'Wenn jemand weiß, was er will, und es trotzdem nicht tut.',
+  satz:'„Mach es diese Woche einmal so, als wärst du schon der Mensch, der das kann. Nur einmal, nur eine Situation."',
+  wozu:'Umgeht die Frage, ob er sich bereit fühlt. Gefühle kommen meistens nach der Handlung, nicht davor.',
+  nicht:'Nicht als Dauerzustand. „Als ob" ist ein Versuch, keine Maske — sonst wird daraus Anpassung.',
+  her:'Adlers „acting as if", heute in fast jeder Coaching-Schule in irgendeiner Form.'},
+ {n:'Die drei Lebensaufgaben', wann:'Zur Bestandsaufnahme, und immer dann, wenn ein Thema alles andere überdeckt.',
+  satz:'„Wie steht es gerade in deiner Arbeit, in deinen Beziehungen und in dem, was du mit anderen teilst?"',
+  wozu:'Zeigt schnell, ob ein Bereich alles frisst — und ob es in den anderen besser läuft, als er gerade denkt.',
+  nicht:'Keine Checkliste daraus machen. Es sind drei Türen, nicht drei Punkte.',
+  her:'Adler fasste das Leben in drei Aufgaben: Arbeit, Gemeinschaft und Liebe.'}];
+
+var C_SPICK = {
+ titel:'Spickzettel',
+ sub:'Eine Bildschirmhöhe, damit du während des Gesprächs nicht scrollst. Zum Ausdrucken gedacht.',
+ knopf:'Spickzettel anzeigen',
+ zu:'Spickzettel schließen',
+ minuten:'Minuten',
+ raus:'Wenn es zu viel wird',
+ rausSatz:'„Das ist zu wichtig für das, was ich hier mache. Lass uns zusammen jemanden finden, der das richtig kann."'};

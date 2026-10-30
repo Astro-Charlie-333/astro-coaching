@@ -58,7 +58,7 @@ fehler, hinweise = [], []
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
 gesucht = set(re.findall(r"""\bel\(['"]([A-Za-z0-9_-]+)['"]\)""", app))
 # Was das Skript selbst in die Sitzung schreibt, steht nicht im Körper.
-erzeugt = set(re.findall(r'id="(bg(?:notiz|fertig|druck))"', app))
+erzeugt = set(re.findall(r'id="(bg[a-z]+)"', app))
 fehlt = gesucht - ids - erzeugt
 if fehlt:
     fehler.append('Skript sucht IDs, die es nicht gibt: ' + ', '.join(sorted(fehlt)))
@@ -148,6 +148,44 @@ else:
             fehler.append(f'Lebensfeld ist ein Nebensatz und zerbricht den Satz: „{f_}"')
         if len(f_) > 36:
             fehler.append(f'Lebensfeld zu lang für die Einsetzung: „{f_}"')
+
+# ── Die Methode nennt ihre Herkunft ──────────────────────────
+# Eine Linse, die aus einer psychologischen Schule stammt, und eine,
+# die aus einer Überlieferung ohne Wirksamkeitsnachweis kommt, dürfen
+# nicht gleich aussehen. Steht die Herkunft nicht da, wird aus einem
+# Blickwinkel ein Verfahren — und das ist der Punkt, an dem Coaching
+# anfängt, Behandlung zu spielen.
+if 'C_METHODE' not in daten:
+    fehler.append('C_METHODE fehlt — dann hat die Begleitung keine Methode')
+else:
+    for pflicht, was in (
+            ('Adler', 'die mittlere Linse nennt ihre Herkunft nicht'),
+            ('keine Therapie', 'die Methode grenzt sich nicht gegen Therapie ab'),
+            ('ohne Wirksamkeitsnachweis', 'die Methode sagt nicht, was daran nicht belegt ist')):
+        if pflicht not in daten:
+            fehler.append(was)
+    for feld in ('frage:', 'wo:', 'falle:'):
+        n = len(re.findall(r'\b' + re.escape(feld), daten))
+        if n < 3:
+            fehler.append(f'„{feld}" steht nur {n}× bei drei Linsen')
+
+# ── Jedes Werkzeug sagt, wann es NICHT passt ─────────────────
+# Das Nützlichste an einem Werkzeugkasten, und das, was in fast
+# allen fehlt. Ohne diese Zeile wird jeder Handgriff überall
+# angewandt, auch da, wo er schadet.
+mw = re.search(r'var C_WERKZEUG = \[(.*?)\}\];', daten, re.S)
+if not mw:
+    fehler.append('C_WERKZEUG fehlt')
+else:
+    blk = mw.group(1)
+    anzahl = len(re.findall(r"\{n:'", blk))
+    if anzahl < 4:
+        fehler.append(f'nur {anzahl} Werkzeuge')
+    for feld in ('wann:', 'satz:', 'wozu:', 'nicht:', 'her:'):
+        n = len(re.findall(r'\b' + re.escape(feld), blk))
+        if n != anzahl:
+            fehler.append(f'„{feld}" steht {n}× bei {anzahl} Werkzeugen — '
+                          'jedes braucht alle fünf Angaben')
 
 # ── Die Grenzen ──────────────────────────────────────────────
 # Ohne sie ist die Seite nicht professionell, sondern gefährlich.
@@ -259,7 +297,36 @@ const j0=await p.evaluate(J=>{
     .map(x=>x.textContent).join(' ');
   return J.filter(w=>new RegExp('(?<![A-Za-zÄÖÜäöüß])'+w+'(?![A-Za-zÄÖÜäöüß])').test(t));
 }, JARG);
-console.log(JSON.stringify({v,eigenHinweis,vorher,s2,nachher,j0,fehler:[...new Set(f)]}));
+/* Der Spickzettel: eine Bildschirmhoehe, sonst taugt er nichts. */
+await p.evaluate(()=>{ const b=document.getElementById('bgspickan'); if(b) b.click(); });
+await p.waitForTimeout(400);
+const spick=await p.evaluate(()=>{
+  const z=document.getElementById('bgspick');
+  if(!z||z.hidden) return null;
+  return {hoehe:Math.round(z.getBoundingClientRect().height),
+    fragen:z.querySelectorAll('.sp-fragen li').length,
+    minuten:z.querySelectorAll('.sp-min span').length,
+    raus:!!z.querySelector('.sp-raus')};
+});
+/* Sitzung 1 haelt das Chart zu — der Spickzettel auch.
+   Dafuer erst zurueck auf Sitzung 1: Die Probe steht oben noch
+   auf Sitzung 2. */
+await p.evaluate(()=>{ const b=document.querySelector('#bgleiste .sz[data-n="1"]');
+  if(b) b.click(); });
+await p.waitForTimeout(350);
+await p.evaluate(()=>{ const b=document.getElementById('bgspickan'); if(b) b.click(); });
+await p.waitForTimeout(350);
+const spick1=await p.evaluate(()=>{
+  const z=document.getElementById('bgspick');
+  return z&&!z.hidden ? [...z.querySelectorAll('.sp-fragen li')].map(x=>x.textContent) : [];
+});
+const linsen=await p.evaluate(()=>({
+  anzahl:document.querySelectorAll('.ln').length,
+  werkzeuge:document.querySelectorAll('.wz').length,
+  nichtZeilen:document.querySelectorAll('.wz-nicht').length,
+  herkunft:document.querySelectorAll('.wz-her').length,
+  abgrenzung:((document.getElementById('bgabgrenzung')||{}).textContent||'').length}));
+console.log(JSON.stringify({v,eigenHinweis,vorher,s2,nachher,j0,spick,spick1,linsen,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -328,6 +395,43 @@ if pr:
         fehler.append(f"die Notiz überlebt den Neustart nicht: „{pr['nachher']}\"")
     if pr['j0']:
         fehler.append('Fachsprache in den Fragen auf Stufe 0: ' + ', '.join(pr['j0']))
+
+    sp = pr['spick']
+    if not sp:
+        fehler.append('der Spickzettel lässt sich nicht öffnen')
+    else:
+        # Wer während eines Gesprächs scrollen muss, schaut weg —
+        # und der Mensch gegenüber sieht das.
+        if sp['hoehe'] > 900:
+            fehler.append(f"der Spickzettel ist {sp['hoehe']}px hoch — mehr als eine "
+                          'Bildschirmhöhe, dann muss man im Gespräch scrollen')
+        if sp['fragen'] < 3:
+            fehler.append(f"nur {sp['fragen']} Fragen auf dem Spickzettel")
+        if not sp['minuten']:
+            fehler.append('der Spickzettel zeigt die Minuten nicht')
+        if not sp['raus']:
+            fehler.append('der Spickzettel sagt nicht, wie man aussteigt')
+    # Der Spickzettel liegt im Gespräch vor ihr. Unterläuft er die
+    # Regel der Seite, ist er schlimmer als keiner.
+    kern1 = []
+    m1 = re.search(r"kern:\[(.*?)\],\n  haken", daten, re.S)
+    if m1:
+        kern1 = re.findall(r"'((?:[^'\\]|\\.)*)'", m1.group(1))
+    for q in pr['spick1']:
+        if kern1 and q not in [k.replace("\\'", "'") for k in kern1]:
+            fehler.append('der Spickzettel für Sitzung 1 zeigt eine Frage, die nicht '
+                          f'aus Sitzung 1 stammt — das Chart bleibt dort zu: „{q[:50]}"')
+    ln = pr['linsen']
+    if ln['anzahl'] != 3:
+        fehler.append(f"{ln['anzahl']} Linsen statt drei")
+    if ln['werkzeuge'] < 4:
+        fehler.append(f"nur {ln['werkzeuge']} Werkzeuge auf der Seite")
+    if ln['nichtZeilen'] != ln['werkzeuge']:
+        fehler.append('nicht jedes Werkzeug sagt, wann es nicht passt')
+    if ln['herkunft'] != ln['werkzeuge']:
+        fehler.append('nicht jedes Werkzeug nennt seine Herkunft')
+    if ln['abgrenzung'] < 80:
+        fehler.append('die Abgrenzung gegen Therapie steht nicht auf der Seite')
 
 grosse = len(html.encode('utf-8'))
 print(f"begleitung.html  {grosse:,} Bytes  →  {ziel}".replace(',', '.'))
