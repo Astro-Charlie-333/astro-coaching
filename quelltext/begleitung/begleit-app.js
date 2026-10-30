@@ -204,8 +204,10 @@ function sitzungBauen(){
   h.push('<div class="sz-fuss">' +
     '<label class="sz-fertig"><input type="checkbox" id="bgfertig"> Sitzung ' + s.n + ' ' +
     esc(C_KOPF.erledigt) + '</label>' +
+    '<span class="sz-knoepfe">' +
+    '<button type="button" class="sz-druck" id="bgspickan">' + esc(C_SPICK.knopf) + '</button>' +
     '<button type="button" class="sz-druck" id="bgdruck">' + esc(C_KOPF.drucken) + '</button>' +
-    '</div>');
+    '</span></div>');
 
   el('bgsitzung').innerHTML = h.join('');
 
@@ -219,8 +221,41 @@ function sitzungBauen(){
     legen(id, 'fertig-' + s.n, fx.checked); leisteBauen();
   });
   el('bgdruck').addEventListener('click', function(){ window.print(); });
+  el('bgspickan').addEventListener('click', function(){ spickBauen(s, f); });
 
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
+}
+
+/* ── Der Spickzettel ──────────────────────────────────────
+   Eine Bildschirmhöhe. Was man während eines Gesprächs vor sich
+   hat, darf nicht gescrollt werden müssen: Wer scrollt, schaut
+   weg — und der Mensch gegenüber sieht das. Deshalb nur die
+   Minuten, die Eröffnung, vier Fragen und der Satz, mit dem man
+   aussteigt. Alles Weitere steht oben. */
+function spickBauen(s, f){
+  var z = el('bgspick'); if(!z) return;
+  /* In Sitzung 1 bleibt das Chart zu — dann auch hier. Ein
+     Spickzettel, der die Regel der Seite unterläuft, ist
+     schlimmer als keiner: Man hat ihn im Gespräch vor sich. */
+  var fragen = s.kern.slice(0, s.chartZu ? 4 : 3);
+  if(!s.chartZu && f && f.stellungen.length && f.stellungen[0].fragen.length)
+    fragen.push(f.stellungen[0].fragen[0]);
+  z.innerHTML =
+    '<div class="sp-kopf"><div><span class="sp-nr">Sitzung ' + s.n + '</span>' +
+    '<b>' + esc(s.titel) + '</b></div>' +
+    '<button type="button" class="sp-zu" id="bgspickzu">' + esc(C_SPICK.zu) + '</button></div>' +
+    '<div class="sp-min">' + s.ablauf.map(function(a){
+      return '<span><i>' + esc(a[0].replace(' Min','')) + '</i>' + esc(a[1]) + '</span>';
+    }).join('') + '</div>' +
+    '<p class="sp-oeff">' + esc(s.oeffnung) + '</p>' +
+    '<ol class="sp-fragen">' + fragen.map(function(q){
+      return '<li>' + esc(q) + '</li>'; }).join('') + '</ol>' +
+    '<div class="sp-raus"><b>' + esc(C_SPICK.raus) + '</b>' +
+    esc(C_SPICK.rausSatz) + '</div>';
+  z.hidden = false;
+  el('bgspickzu').addEventListener('click', function(){ z.hidden = true; });
+  window.scrollTo({top:Math.max(0, z.getBoundingClientRect().top + window.pageYOffset - 80),
+    behavior:'smooth'});
 }
 
 /* ── Was gerade läuft ────────────────────────────────────── */
@@ -266,8 +301,38 @@ function vorratBauen(){
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
 }
 
+/* ── Die Methode und die Werkzeuge ──────────────────────── */
+function methodeBauen(){
+  if(!window.C_METHODE) return;
+  el('bgmethodeh').textContent = C_METHODE.titel + ' — ' + C_METHODE.name;
+  el('bgmethodesub').textContent = C_METHODE.sub;
+  el('bgehrlich').textContent = C_METHODE.ehrlich;
+  el('bgabgrenzung').textContent = C_METHODE.abgrenzung;
+  el('bglinsen').innerHTML = C_METHODE.linsen.map(function(L, i){
+    return '<div class="ln ln-' + esc(L.k) + '">' +
+      '<div class="ln-n"><span class="ln-z">' + (i+1) + '</span>' + esc(L.n) + '</div>' +
+      '<p class="ln-f">' + esc(L.frage) + '</p>' +
+      '<p class="ln-d">' + esc(L.d) + '</p>' +
+      '<div class="ln-z2"><b>Wo im Bogen</b>' + esc(L.wo) + '</div>' +
+      '<div class="ln-z2 ln-falle"><b>Die Falle</b>' + esc(L.falle) + '</div>' +
+      '</div>';
+  }).join('');
+}
+function werkzeugBauen(){
+  if(!window.C_WERKZEUG) return;
+  el('bgwerkzeug').innerHTML = C_WERKZEUG.map(function(W){
+    return '<details class="wz"><summary><span class="wz-n">' + esc(W.n) + '</span>' +
+      '<span class="wz-w">' + esc(W.wann) + '</span></summary>' +
+      '<div class="wz-i"><p class="wz-s">' + esc(W.satz) + '</p>' +
+      '<div class="wz-z"><b>Wozu</b>' + esc(W.wozu) + '</div>' +
+      '<div class="wz-z wz-nicht"><b>Wann nicht</b>' + esc(W.nicht) + '</div>' +
+      '<div class="wz-her">' + esc(W.her) + '</div></div></details>';
+  }).join('');
+}
+
 /* ── Die festen Texte ───────────────────────────────────── */
 function festBauen(){
+  methodeBauen(); werkzeugBauen();
   el('bgzwischenh').textContent = C_ZWISCHEN.titel;
   el('bgzwischen').innerHTML = C_ZWISCHEN.punkte.map(function(p){
     return '<div class="zw"><b>' + esc(p[0]) + '</b><span>' + esc(p[1]) + '</span></div>';
