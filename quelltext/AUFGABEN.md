@@ -74,6 +74,43 @@ sobald im erzeugten Text auf „auf", „quer zu", „im Einklang mit",
 „gegenüber" oder „in Reichweite von" ein unflektiertes `dein` oder `deine`
 vor einem großgeschriebenen Wort folgt.
 
+### 32 · Die Grenze im Bereich Gesundheit liegt zugeklappt
+Befund der Prüferin vom 2026-10-30 (Die Begleitete, erster Befund — die
+Grenzen kommen zuerst). Die Sätze „Hier wird nichts über deinen Körper
+festgestellt, und nichts hier ersetzt eine Behandlung" und „Bei allem
+Körperlichen gehört eine Fachperson gefragt" stehen in einem
+Klappabschnitt, der zugeklappt ausgeliefert wird und „Mit jemand anderem
+darüber sprechen" heißt. Im sichtbaren Text der Bereichsseite kommt kein
+Hinweis auf Behandlung, Therapie oder Fachperson vor, während offen
+dasteht, dass der Körper „Aufmerksamkeit verlangt" und „etwas ernst
+wird". `PRODUKT.md` Abschnitt 5 verlangt, dass das **dabei**steht;
+`REGELN.md` Abschnitt 1 klappt die Sicht der Coachin zu, nicht die
+Grenze. Auf „Jetzt" steht der vergleichbare Satz zu Kosmetischem offen im
+Text — die Plattform kann es also, nur an der teuersten Stelle nicht.
+**Fertig, wenn:** die Grenzsätze eines Bereichs ohne Aufklappen sichtbar
+sind (die Gesprächsfragen dürfen gefaltet bleiben), das in den Daten
+getrennt liegt und nicht in der Anzeige, und `bau-bereiche.py` abbricht,
+wenn in einem Bereich mit Körper- oder Psychebezug der Grenzsatz fehlt
+oder nur in einem zugeklappten Element steht.
+
+### 33 · Aufgabe 17 greift zu kurz: der Preissatz steht auch in den Bereichen
+Befund der Prüferin vom 2026-10-30 (zweiter Befund). „Was du in diesem
+Fenster nicht fragst, musst du später teurer verhandeln" steht auf
+`bereiche.html` in fünf von zehn Bereichen, „Was dabei wegbricht, hat nur
+so ausgesehen, als trüge es" in zwei weiteren — zusammen sieben von zehn,
+sichtbar auf Stufe 0 ohne Aufklappen. Dieselbe Fehlerklasse wie Aufgabe
+17, aber 17 ist auf „Heute" zugeschnitten („kein Handgriff auf „Heute"",
+Prüfung in `bau-heute.py`). So gefasst bleibt die Seite mit der größeren
+Reichweite stehen. Gehört mit 17 in einen Zug; zweimal anfassen wäre
+doppelte Arbeit.
+**Fertig, wenn:** kein Handgriff auf „Heute" **und** keiner in den
+Bereichen eine Folge in der Zukunft behauptet oder einen Preis auf
+Nichthandeln setzt, die Handgriffe dafür nur an einer Stelle in den Daten
+geändert werden mussten, und eine gemeinsame Prüfung — nicht je
+`bau-*.py` eine eigene — abbricht, sobald ein Handgriff eine Zukunftsform
+mit Folge oder ein Wort wie „teurer", „musst du später" oder „sonst"
+enthält.
+
 ---
 
 ## Was nicht gemacht wird
