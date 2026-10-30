@@ -54,6 +54,26 @@ dieses Menschen hält.
 verschiedene Reihenfolgen zeigen, kein Paar auf allen gerechneten Gewichten
 gleich liegt, und `bau-begleitung.py` beides prüft.
 
+### 31 · „Jupiter auf dein Mond" — die gebauten Überschriften beugen nicht
+Gefunden im Gestaltungs-Durchgang vom 30.10. zu `index.html`
+(`GESTALTERIN.md`, Befund 30.10-1). Die Köpfe in „Was dein Bild gerade
+trifft", „Die nächsten zwölf Monate" und „Was gerade läuft" setzen immer
+ein unflektiertes `dein` oder `deine` ein: „Jupiter auf dein Mond", „Mars
+quer zu dein Mars", „Jupiter in Reichweite von deine Sonne", „Saturn
+gegenüber dein Auftreten" — elf verschiedene, keine richtige. Auf Stufe 2
+dasselbe („Jupiter Konjunktion dein Mond"). Die Vorlage kennt weder den
+Fall, den die Präposition verlangt, noch das Geschlecht des Punktes
+dahinter. Es trifft die größten Überschriften der Seite und damit die
+Karten, die am ehesten fotografiert werden.
+**Fertig, wenn:** jeder Punkt in den Daten sein grammatisches Geschlecht
+trägt und jede Verbindungsformel ihren Fall, die elf Überschriften auf
+`index.html` mit einem erfundenen Profil korrekt gebeugt dastehen („auf
+deinen Mond", „quer zu deinem Mars", „von deiner Sonne", „gegenüber deinem
+Auftreten") — auf Stufe 0 und auf Stufe 2 — und `bau-heute.py` abbricht,
+sobald im erzeugten Text auf „auf", „quer zu", „im Einklang mit",
+„gegenüber" oder „in Reichweite von" ein unflektiertes `dein` oder `deine`
+vor einem großgeschriebenen Wort folgt.
+
 ---
 
 ## Was nicht gemacht wird

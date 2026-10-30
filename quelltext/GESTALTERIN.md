@@ -126,4 +126,90 @@ Der Reihe nach, von oben. Nach der letzten wieder von vorn.
 
 ## 6 · Die Durchgänge
 
-*Noch keiner. Der erste nimmt `index.html`.*
+### 30.10.2026 · `index.html` — Jetzt
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil. Seitenhöhe bei 390: 13.118 Pixel, also gut fünfzehn
+Bildschirme. Keine Fehler in der Konsole, nichts läuft über den Rand.
+
+Was trägt: „Die großen Themen" ist die beste Sache auf dieser Seite. Die
+Karten zu Merkur rückläufig, Neumond, Vollmond und Kazimi stehen jede für
+sich — Name, Zeitraum, „noch 14 Tage", drei Ecken, und die Zeile, die der
+verbreiteten Erzählung widerspricht. Das ist genau der Vorsprung aus
+`PRODUKT.md` Abschnitt 3, und es sieht auch so aus. Die beiden Befunde
+unten handeln davon, dass man es nicht sieht und dass es falsch spricht.
+
+#### 30.10-1 · Jede personalisierte Überschrift ist grammatisch kaputt
+
+**Zitat:** In „Was dein Bild gerade trifft" steht als Kartenkopf, 22 Pixel
+Fraunces: **„Jupiter auf dein Mond"**. Darunter, 19 Pixel: „Mars quer zu
+dein Mars" und „Jupiter in Reichweite von deine Sonne". In der Liste
+darunter, 12 Pixel: „Sonne im Einklang mit dein Merkur", „Venus quer zu
+deine Venus", „Merkur gegenüber dein Mars", „Mond auf dein Merkur". In
+„Die nächsten zwölf Monate", 16 Pixel: „Mars auf dein Mond", „Pluto quer
+zu dein Jupiter", „Saturn gegenüber dein Auftreten". Auf Stufe 2 dieselbe
+Stelle, dieselbe Form: „Jupiter Konjunktion dein Mond".
+
+Elf verschiedene Überschriften, und keine einzige richtige dazwischen.
+Richtig wäre „auf deinen Mond", „quer zu deinem Mars", „von deiner Sonne",
+„gegenüber deinem Auftreten". Die Vorlage setzt immer `dein` oder `deine`
+ein und fragt weder nach dem Fall, den die Präposition verlangt, noch nach
+dem Geschlecht des Wortes dahinter. Im Fließtext der Seite steht es
+überall richtig — kaputt ist nur, was gebaut wird. Eine Stelle weiter oben
+dasselbe Muster in der Wortstellung: „Wo der Mond gerade steht — und was
+in deinem Bild er dabei berührt."
+
+**Kosten:** Das ist der Stimmen-Test, und er fällt nicht knapp durch. Man
+muss die Absätze nicht laut lesen, um die Datenbank zu hören — man sieht
+sie, in Fraunces, als Überschrift. Eine 28-Jährige braucht dafür keine
+zwei Sekunden: „Jupiter auf dein Mond" ist der Satz, an dem sie merkt,
+dass hier niemand mitgelesen hat. Und es trifft ausgerechnet die Karten,
+die auf dieser Seite am ehesten fotografiert werden — dunkle Karte, großer
+Name, die Gradzahl in Messing rechts oben. Ein Screenshot davon geht nicht
+an eine Freundin, weil das Erste, was sie zurückschreibt, „dein Mond?"
+wäre. Dazu kommt, was `PRODUKT.md` Abschnitt 8 für diese Plattform
+festhält: Die öffentliche Arbeit soll sprachlich sein. Elf falsche
+Überschriften sind die lauteste Gegenbehauptung auf der Seite.
+
+**Vorschlag:** Die Wortliste, aus der diese Köpfe entstehen, bekommt je
+Punkt das grammatische Geschlecht (Mond, Merkur, Mars, Jupiter, Saturn,
+Pluto, Aszendent → männlich; Sonne, Venus → weiblich), und jede
+Verbindungsformel bekommt den Fall, den sie verlangt: „auf" den Akkusativ,
+„quer zu", „im Einklang mit", „gegenüber", „in Reichweite von" den Dativ.
+Die Vorlage setzt dann `deinen` / `deinem` / `deine` / `deiner` statt einer
+festen Form. Dazu, nach der goldenen Regel aus `REGELN.md` Abschnitt 5,
+eine Prüfung im Bau, die genau diese Klasse unmöglich macht: Der Bau bricht
+ab, sobald im erzeugten Text auf eine dieser Präpositionen ein
+unflektiertes `dein` oder `deine` vor einem großgeschriebenen Wort folgt.
+
+#### 30.10-2 · Der erste Bildschirm gehört der Begrüßung
+
+**Zitat:** Auf dem Telefon ist das größte Stück Text der ganzen Seite
+**„Guten Morgen, Lioba Meerwald."** — 30 Pixel Fraunces, zwei Zeilen, ab
+Pixel 160. Die eigentliche Nachricht steht darunter kleiner: „Beruf: der
+deutlichste Tag", 21 Pixel. Das ist nicht nur kleiner als die Begrüßung,
+sondern auch kleiner als jede Abschnittsüberschrift weiter unten, die alle
+25 Pixel haben. „Die großen Themen" beginnt bei Pixel 1.197, die
+Merkur-Karte bei 1.327 — eineinhalb Bildschirme tiefer.
+
+**Kosten:** Der Drei-Sekunden-Test. Nach drei Sekunden auf dem Telefon hat
+sie ihren eigenen Namen gelesen, groß, und eine Zeile, die sie nicht
+einordnen kann. Ihren Namen kennt sie. Die Seite gibt der einzigen
+Information, die ihr nichts sagt, die oberste Stufe der Hierarchie und
+schiebt die Nachricht eine Stufe darunter. Dabei hätte sie etwas zu sagen,
+das die beiden Apps auf ihrem Telefon nicht haben: Merkur rückläufig mit
+Restlaufzeit, der Neumond mit Datum, der Vollmond, Kazimi. Nichts auf dem
+ersten Bildschirm deutet an, dass das weiter unten steht. Wer hier
+weiterwischt, tut es auf gut Glück; wer nicht weiterwischt, hat die beste
+Hälfte der Seite nie gesehen. Bei 1.280 Pixeln fällt das kaum auf, weil die
+Merkur-Karte dort gerade noch an den unteren Rand stößt — der Verlust ist
+ein reiner Telefon-Verlust, also der, der zählt.
+
+**Vorschlag:** Die beiden tauschen die Plätze. „Guten Morgen, Lioba" wandert
+in die Zeile, die ohnehin schon darüber steht — „Freitag, 30. Oktober 2026"
+in 13 Pixel JetBrains Mono — und wird dort angehängt. Was heute in der
+Karte als „Beruf: der deutlichste Tag" steht, rückt in den h1 und bekommt
+dessen 30 Pixel. Keine neue Farbe, keine neue Schrift, kein neuer Baustein:
+dieselben zwei Texte, die Größen vertauscht. Nebenbei werden rund 190 Pixel
+frei, und alles darunter rückt um eine Zeile hoch.
+
