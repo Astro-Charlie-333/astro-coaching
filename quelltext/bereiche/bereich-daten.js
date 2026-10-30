@@ -525,7 +525,12 @@
     techFacBereich:', im Bereich, aber anderes Haus: {p}',
     techFacBesetzt:', natal besetzt, aber nicht von den Punkten dieser Facette',
     techFacLeer:', natal unbesetzt',
-    techGewicht:' (Gewicht {g})'
+    /* Was die Reihenfolge entschieden hat, wenn im Feld nichts
+       steht: der Herr des Feldes und die Bündelung der Punkte. */
+    techHerr:', Herr des Feldes: {p}',
+    techHerrDrin:', im Bereich',
+    techHerrNah:', im Winkel dazu: {p}',
+    techGewicht:' (Gewicht {g}, Herr {gh}, Bündelung {gs})'
   };
 
   /* ── Was sich in einem Bereich widerspricht ──────────────────

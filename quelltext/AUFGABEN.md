@@ -27,14 +27,6 @@ Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 8 · Facetten auch in unbesetzten Bereichen gewichten
-Die Facetten in Block 5 werden danach sortiert, was natal in den Feldern
-des Bereichs steht. Ist dort nichts, entscheidet nur noch die Reihenfolge
-der Textdatei — dann behauptet die Seite eine Gewichtung, die keine ist.
-**Fertig, wenn:** auch ein Bereich ohne natale Besetzung eine Reihenfolge
-zeigt, die von der Reihenfolge in `bereich-daten.js` abweicht, und
-`bau-bereiche.py` genau das prüft.
-
 ### 9 · Die Sätze aus der Anzeige holen
 `bereich-app.js` schreibt selbst Text, statt ihn zu zeichnen: die fünf
 Blockköpfe, die Marke „Das Stärkste gerade", der Satz über die drei Seiten
@@ -46,6 +38,21 @@ Tiefgang ist das schon erzwungen, bei der Seite nicht.
 `bau-bereiche.py` abbricht, sobald in `bereich-app.js` wieder ein
 Satzzeichen-tragender Text in Anführungszeichen auftaucht, der nicht aus
 den Daten kommt.
+
+### 19 · Die Begleitung sortiert für alle Menschen gleich
+Gefunden beim Bauen am 30.10. `begleit-rechner.js` sortiert die Anlagen
+eines Menschen nach `BG_GEWICHT` — einer festen Zahl je Planet. Sonne und
+Mond stehen dort beide auf 1,00, Venus und Mars beide auf 0,85, Uranus und
+Neptun beide auf 0,55. Zwei Folgen: Die Reihenfolge ist bei jedem Menschen
+dieselbe, egal was in seinem Bild steht; und wo zwei Zahlen gleich sind,
+entscheidet die Reihenfolge der Liste `BG_ANLAGEN`. Dieselbe Fehlerklasse
+wie bei den Facetten (Aufgabe 8, erledigt), nur eine Seite weiter — und
+hier wiegt sie mehr, weil die Coachin die oberste Anlage für die wichtigste
+dieses Menschen hält.
+**Fertig, wenn:** die Reihenfolge der Anlagen von der natalen Lage abhängt
+(nicht allein vom Planetennamen), zwei erfundene Geburtsbilder nachweislich
+verschiedene Reihenfolgen zeigen, kein Paar auf allen gerechneten Gewichten
+gleich liegt, und `bau-begleitung.py` beides prüft.
 
 ---
 
@@ -355,6 +362,27 @@ neue Dopplung den Bau bricht.
 ---
 
 ## Erledigt
+
+* **2026-10-30** · Facetten auch in unbesetzten Bereichen gewichtet
+  (Aufgabe 8). Jeder der zehn Bereiche hat zwei Facetten am selben Feld —
+  in Geld hängen „Was reinkommt" und „Wie du damit umgehst" beide am
+  Kernfeld. Stand dort natal nichts, bekamen beide dasselbe Gewicht, und
+  dann entschied die Reihenfolge in `bereich-daten.js`, welche oben steht.
+  Die Seite sagt aber, die Reihenfolge komme aus dem Geburtsbild.
+  Jetzt wird ein unbesetztes Feld über seinen Herrn gelesen, wie es das
+  Fach seit Jahrhunderten tut: Gehört der Herr des Feldes selbst zur
+  Facette, steht er in einem Feld des Bereichs, berühren ihn die Punkte
+  der Facette im Winkel — daraus kommt ein zweites Gewicht. Bleibt auch
+  das gleich, entscheidet ein drittes: wie dicht die Punkte einer Facette
+  im Bild beieinanderstehen. Weil dieser Wert stetig ist, sind zwei
+  Facetten nie mehr gleich schwer.
+  Die dauerhafte Prüfung in `bau-bereiche.py` prüft nicht den Einzelfall,
+  sondern die Eigenschaft: Über 1.200 erfundene Geburtsbilder hinweg darf
+  kein Paar von Facetten auf allen Gewichten gleich liegen, und die
+  unbesetzten Bereiche müssen oft genug anders sortieren als die
+  Textdatei. Beides bricht den Bau ab, wenn es kippt. Auf Wissensstufe 2
+  nennt die Mechanik jetzt den Herrn des Feldes, statt nur eine Zahl
+  hinzuschreiben.
 
 * **2026-10-29** · Die doppelten Seitenpaare angesehen (Aufgabe 5). Beide
   Paare bleiben zwei Seiten, und beide sagen das jetzt selbst: Auf jeder

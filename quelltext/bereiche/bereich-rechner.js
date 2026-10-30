@@ -48,6 +48,25 @@
   /* Natale Punkte, die angesprochen werden können. */
   var ZIELE = ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 
+  /* ── Die Herren der Felder ──────────────────────────────────
+     Steht in einem Feld des Bereichs natal nichts, ist das Feld
+     damit nicht stumm: Es wird über seinen Herrn gelesen — den
+     Punkt, dem das Zeichen auf dem Feld zugeordnet ist. Das ist
+     das älteste Handwerk des Fachs und hier der Grund, warum ein
+     unbesetzter Bereich trotzdem eine gerechnete Reihenfolge hat
+     statt der Reihenfolge der Textdatei.
+
+     Klassische Zuordnung, Widder bis Fische, wie in
+     zeit/zeit-rechner.js. Alle sieben kommen in ZIELE vor, also
+     hat jedes Feld einen Herrn mit einer natalen Länge. */
+  var B_HERRSCHER = ['Mars','Venus','Merkur','Mond','Sonne','Merkur',
+                     'Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+
+  /* Orb für den Winkel zwischen einem Punkt der Facette und dem
+     Herrn ihres Feldes. Enger als der Transitorb: es geht um die
+     Anlage, nicht um einen Durchgang. */
+  var HERR_ORB = 6;
+
   function nrm(x){ x=x%360; return x<0?x+360:x; }
 
   /* Winkelabstand 0…180 */
@@ -332,7 +351,30 @@
     /* Zeichen auf dem Kernhaus */
     var kh = B.haeuser[0];
     var kz = (Math.floor(C.ASC/30) + (kh-1)) % 12;
-    return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz };
+
+    /* Die natalen Längen, die die Facettengewichtung braucht, und
+       je Feld des Bereichs sein Herr. Beides wird hier mitgegeben,
+       damit facetten() ohne das ganze Chart auskommt — die Anzeige
+       reicht nur diese Lage weiter, nicht das Geburtsbild. */
+    var laengen = {};
+    for(i=0;i<ZIELE.length;i++)
+      if(C[ZIELE[i]] !== undefined && C[ZIELE[i]] !== null)
+        laengen[ZIELE[i]] = C[ZIELE[i]];
+    var herren = {};
+    for(i=0;i<B.haeuser.length;i++){
+      var hh = B.haeuser[i], z = (Math.floor(C.ASC/30) + (hh-1)) % 12,
+          hp = B_HERRSCHER[z], hl = laengen[hp];
+      herren[hh] = { p:hp, zeichen:z,
+                     lon:(hl === undefined ? null : hl),
+                     haus:(hl === undefined ? null : haus(C, hl)) };
+      /* Steht der Herr selbst in einem Feld des Bereichs, bleibt
+         das Thema im Bereich — das wiegt. */
+      herren[hh].imBereich = (herren[hh].haus !== null
+                              && B.haeuser.indexOf(herren[hh].haus) >= 0);
+    }
+
+    return { planeten:drin, leer:(drin.length===0), kernHaus:kh, kernZeichen:kz,
+             laengen:laengen, herren:herren };
   }
 
 
@@ -432,6 +474,34 @@
      fällt also nach unten, verschwindet aber nicht. Deshalb hat
      jeder Bereich immer genug Facetten zum Anzeigen.
 
+     Das allein reicht aber nicht. In jedem der zehn Bereiche
+     hängen mindestens zwei Facetten am selben Feld — in Geld
+     hängen „Was reinkommt" und „Wie du damit umgehst" beide am
+     Kernfeld. Steht in diesem Feld natal nichts, bekommen beide
+     dasselbe Grundgewicht, und dann entscheidet die Reihenfolge
+     der Textdatei, welche oben steht. Die Seite behauptet in
+     diesem Fall eine Gewichtung, die keine ist.
+
+     Deshalb hat jede Facette ein zweites, feineres Gewicht gh,
+     das vom Herrn ihres Feldes kommt und auch dann etwas hergibt,
+     wenn im Feld selbst nichts steht:
+       · gehört der Herr des Feldes selbst zur Facette,
+       · steht er in einem Feld des Bereichs,
+       · und wie nah stehen die Punkte der Facette bei ihm.
+     Das ist kein neues Rechenverfahren, sondern dieselbe
+     Winkelrechnung auf die natale Lage angewandt. gh entscheidet
+     nur bei gleichem g — die Besetzung bleibt das stärkere Wort.
+
+     Bleibt auch gh gleich — der Herr des Feldes berührt keine der
+     beiden Facetten —, entscheidet gs: wie dicht die Punkte einer
+     Facette im Geburtsbild beieinanderstehen. Punkte, die nah
+     zusammenliegen, bündeln ihr Thema; weit verstreute führen es
+     auseinander. gs ist bewusst klein gehalten (höchstens 0,5) und
+     kann die beiden Gewichte darüber nie umstoßen. Es ist ein
+     stetiger Wert und damit der Grund, warum am Ende keine zwei
+     Facetten gleich schwer sind — und die Textdatei nie wieder
+     entscheidet, was die Rechnung entscheiden soll.
+
      facetten(N, B, liste) nimmt die schon gerechnete natale Lage
      (natal(C, B)) und gibt die Liste in neuer Reihenfolge zurück;
      jeder Eintrag bekommt g (Gewicht) und wo (an welchem Feld des
@@ -460,13 +530,78 @@
       }
       var besetzt = !!imFeld[F.haus];
       if(besetzt) g += 0.8;
+      var H = herrGewicht(N, F);
       out.push({ f:F, g:Math.round(g*100)/100, wo:F.haus, besetzt:besetzt,
-                 treffer:treffer, auch:auch, rang:i });
+                 treffer:treffer, auch:auch, rang:i,
+                 gh:H.gh, herr:H.herr, herrDrin:H.drin, herrNah:H.nah,
+                 gs:buendelung(N, F) });
     }
-    /* Gleiches Gewicht behält die Reihenfolge der Datei — damit
-       dieselbe Person zweimal dasselbe Blatt sieht. */
-    out.sort(function(a,b){ return (b.g - a.g) || (a.rang - b.rang); });
+    /* Bei gleichem Grundgewicht entscheidet der Herr des Feldes,
+       dann die Bündelung — nicht die Reihenfolge der Textdatei.
+       Alle drei Gewichte hängen allein am Geburtsbild, also sieht
+       dieselbe Person zweimal dasselbe Blatt. */
+    out.sort(function(a,b){
+      return (b.g - a.g) || (b.gh - a.gh) || (b.gs - a.gs)
+          || (a.rang - b.rang); });
     return out;
+  }
+
+  /* ── Wie dicht die Punkte einer Facette stehen ───────────────
+     Der mittlere Winkelabstand aller Paare, auf 0…0,5 gedreht:
+     0,5 heißt, die Punkte stehen übereinander, 0 heißt, sie stehen
+     sich maximal gegenüber. Eine Facette mit nur einem Punkt hat
+     keine Paare und bekommt den Mittelwert 0,25.
+
+     Das ist der feinste der drei Werte und entscheidet nur, wenn
+     Besetzung und Herr nichts hergeben. Weil er stetig ist, sind
+     zwei Facetten praktisch nie gleich schwer — und bau-bereiche.py
+     bricht ab, falls es doch einmal passiert. */
+  function buendelung(N, F){
+    var L = (N && N.laengen) || {}, wer = F.wer || [], hab = [], i, j;
+    for(i=0;i<wer.length;i++){
+      var v = L[wer[i]];
+      if(v !== undefined && v !== null) hab.push(v);
+    }
+    if(hab.length < 2) return 0.25;
+    var summe = 0, paare = 0;
+    for(i=0;i<hab.length;i++)
+      for(j=i+1;j<hab.length;j++){ summe += dist(hab[i], hab[j]); paare++; }
+    return Math.round((0.5 * (1 - (summe/paare)/180)) * 100000) / 100000;
+  }
+
+  /* ── Das zweite Gewicht: der Herr des Feldes ─────────────────
+     Gibt gh und das, was dazu geführt hat. Ohne Herrendaten (eine
+     alte natale Lage ohne herren) bleibt gh 0 — dann sortiert wie
+     früher das Grundgewicht allein, statt dass die Seite bricht. */
+  function herrGewicht(N, F){
+    var leer = { gh:0, herr:null, drin:false, nah:[] };
+    if(!N || !N.herren) return leer;
+    var HR = N.herren[F.haus];
+    if(!HR || HR.lon === null) return leer;
+    var gh = 0, nah = [], wer = F.wer || [], j;
+
+    /* 1) Der Herr des Feldes gehört selbst zu dieser Facette. */
+    if(wer.indexOf(HR.p) >= 0) gh += 2;
+
+    /* 2) Er bleibt im Bereich, statt das Thema nach draußen zu
+          tragen. */
+    if(HR.imBereich) gh += 1.5;
+
+    /* 3) Die Punkte der Facette stehen im Winkel zu ihm. Je näher
+          am exakten Winkel, desto mehr; ein reibender Winkel wiegt
+          schwerer als ein tragender, weil er mehr verlangt. */
+    for(j=0;j<wer.length;j++){
+      var w = wer[j];
+      if(w === HR.p) continue;
+      var wl = (N.laengen || {})[w];
+      if(wl === undefined || wl === null) continue;
+      var A = aspektVon(wl, HR.lon, HERR_ORB);
+      if(!A) continue;
+      gh += (REIBEND[A.art] ? 1.2 : 0.8) * (1 - A.ab / HERR_ORB);
+      nah.push(w);
+    }
+    return { gh:Math.round(gh*1000)/1000, herr:HR.p,
+             drin:!!HR.imBereich, nah:nah };
   }
 
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
@@ -496,7 +631,8 @@
     fenster: fenster, hausDurchgang: hausDurchgang,
     vorgaenge: vorgaenge, fuerBereich: fuerBereich,
     lautstaerke: lautstaerke, kapitel: kapitel, natal: natal,
-    facetten: facetten, widersprueche: widersprueche, blatt: blatt
+    facetten: facetten, herrGewicht: herrGewicht, buendelung: buendelung,
+    widersprueche: widersprueche, blatt: blatt
   };
 
 })();

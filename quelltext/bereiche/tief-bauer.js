@@ -137,7 +137,20 @@
     else if(E.auch && E.auch.length)  s += fuellen(f.techFacBereich, { p:E.auch.join(', ') });
     else if(E.besetzt)                s += f.techFacBesetzt;
     else                              s += f.techFacLeer;
-    return s + fuellen(f.techGewicht, { g:komma(E.g) });
+    /* Steht im Feld nichts von dieser Facette, hat der Herr des
+       Feldes die Reihenfolge entschieden — dann wird er auch
+       genannt, statt dass die Seite nur eine Zahl hinschreibt. */
+    if(E.herr && !(E.treffer && E.treffer.length)){
+      s += fuellen(f.techHerr, { p:E.herr });
+      if(E.herrDrin) s += f.techHerrDrin;
+      if(E.herrNah && E.herrNah.length)
+        s += fuellen(f.techHerrNah, { p:E.herrNah.join(', ') });
+    }
+    /* Gerechnet wird mit der ganzen Genauigkeit, angezeigt mit
+       zwei Stellen — sonst steht im Text eine Zahlenwurst. */
+    var zwei = function(x){ return komma(Math.round(x*100)/100); };
+    return s + fuellen(f.techGewicht,
+      { g:zwei(E.g), gh:zwei(E.gh), gs:zwei(E.gs) });
   }
 
   /* Die Facetten eines Bereichs, vom Geburtsbild sortiert. */

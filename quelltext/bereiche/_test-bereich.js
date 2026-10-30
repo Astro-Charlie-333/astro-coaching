@@ -246,6 +246,96 @@ const Nk = AC.natal(C, Bk);
 p('Kernzeichen folgt dem Aszendenten',
   Nk.kernZeichen === (Math.floor(C.ASC/30) + (Bk.haeuser[0]-1)) % 12);
 
+/* ── 9b. Facetten: gewichtet, nicht aus der Datei abgelesen ───
+   Jeder Bereich hat zwei Facetten am selben Feld. Steht dort natal
+   nichts, lagen sie früher gleich schwer — und die Reihenfolge kam
+   aus bereich-daten.js, während die Seite behauptet, sie komme aus
+   dem Geburtsbild. Geprüft wird deshalb die Eigenschaft, nicht der
+   Einzelfall: kein Paar liegt auf allen Gewichten gleich.         */
+AC.BEREICHE.forEach(B => {
+  const N = AC.natal(C, B);
+  p('natal: jedes Feld von ' + B.k + ' hat einen Herrn',
+    B.haeuser.every(h => N.herren && N.herren[h] && N.herren[h].p));
+  p('natal: die Herren von ' + B.k + ' stehen in einem Haus',
+    B.haeuser.every(h => N.herren[h].haus >= 1 && N.herren[h].haus <= 12));
+});
+
+/* Ein erfundenes Geburtsbild, in dem Geld (Häuser 2, 8, 11) leer
+   ist: Aszendent im Widder, alle zehn Punkte in den Häusern 1 und
+   4 bis 7. So ist der unbesetzte Fall sicher dabei. */
+const CL = { ASC:5, MC:275,
+  Sonne:10, Mond:12, Merkur:95, Venus:130, Mars:135,
+  Jupiter:160, Saturn:165, Uranus:185, Neptun:190, Pluto:14 };
+const Bg = AC.BEREICHE.find(b => b.k === 'geld');
+const Ng = AC.natal(CL, Bg);
+p('Probebild: Geld ist natal unbesetzt', Ng.leer === true,
+  'planeten: ' + Ng.planeten.map(x => x.p).join(','));
+const Lg = BD.FACET.geld, Fg = AC.facetten(Ng, Bg, Lg);
+p('facetten gibt jede Facette zurueck', Fg.length === Lg.length,
+  Fg.length + ' von ' + Lg.length);
+p('jede Facette traegt alle drei Gewichte',
+  Fg.every(e => typeof e.g === 'number' && typeof e.gh === 'number'
+                && typeof e.gs === 'number'));
+p('im unbesetzten Bereich liegt kein Paar auf allen Gewichten gleich',
+  new Set(Fg.map(e => e.g + '|' + e.gh + '|' + e.gs)).size === Fg.length,
+  Fg.map(e => e.f.k + ' ' + e.g + '/' + e.gh + '/' + e.gs).join('  '));
+/* Die beiden Facetten am Kernfeld tragen dasselbe Grundgewicht —
+   genau hier entschied früher die Textdatei. */
+const amKern = Fg.filter(e => e.wo === Bg.haeuser[0]);
+p('zwei Facetten von Geld haengen am Kernfeld', amKern.length >= 2,
+  amKern.length + '');
+p('sie haben dasselbe Grundgewicht', amKern.every(e => e.g === amKern[0].g));
+p('und werden trotzdem unterschieden',
+  new Set(amKern.map(e => e.gh + '|' + e.gs)).size === amKern.length,
+  amKern.map(e => e.f.k + ' gh' + e.gh + ' gs' + e.gs).join('  '));
+
+/* Dieselbe Person sieht zweimal dasselbe Blatt. */
+p('die Reihenfolge ist bei gleichem Bild dieselbe',
+  AC.facetten(Ng, Bg, Lg).map(e => e.f.k).join(',') === Fg.map(e => e.f.k).join(','));
+
+/* Und die Gewichtung bewegt bei unbesetzten Bereichen wirklich
+   etwas: über erfundene Bilder hinweg muss die Reihenfolge oft
+   genug von der Dateireihenfolge abweichen. */
+let leerGesehen = 0, leerAnders = 0, gleichstand = [];
+for(let s2 = 1; s2 <= 600; s2++){
+  const asc = (s2*7.37)%360, C2 = { ASC:asc, MC:(asc+270)%360 };
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto']
+    .forEach((pl,i) => C2[pl] = (s2*13.73 + i*41.31 + s2*s2*0.0131)%360);
+  AC.BEREICHE.forEach(B => {
+    const N2 = AC.natal(C2, B), L2 = BD.FACET[B.k] || [];
+    if(!L2.length) return;
+    const F2 = AC.facetten(N2, B, L2);
+    const schl = F2.map(e => e.g + '|' + e.gh + '|' + e.gs);
+    if(new Set(schl).size !== schl.length && gleichstand.length < 3)
+      gleichstand.push(B.k + ': ' + schl.join(' '));
+    if(!N2.leer) return;
+    leerGesehen++;
+    if(F2.map(e => e.f.k).join(',') !== L2.map(f => f.k).join(',')) leerAnders++;
+  });
+}
+p('ueber viele Bilder liegt nie ein Paar auf allen Gewichten gleich',
+  gleichstand.length === 0, gleichstand.join(' | '));
+p('die Probe sieht genug unbesetzte Bereiche', leerGesehen >= 50, leerGesehen + '');
+p('unbesetzte Bereiche sortieren oft anders als die Textdatei',
+  leerAnders * 3 >= leerGesehen, leerAnders + ' von ' + leerGesehen);
+
+/* Bündelung: nah zusammen wiegt mehr als weit auseinander. */
+p('Buendelung: zwei Punkte uebereinander wiegen am meisten',
+  AC.buendelung({ laengen:{ a:10, b:10 } }, { wer:['a','b'] }) === 0.5);
+p('Buendelung: zwei Punkte gegenueber wiegen am wenigsten',
+  AC.buendelung({ laengen:{ a:0, b:180 } }, { wer:['a','b'] }) === 0);
+p('Buendelung: ein einzelner Punkt bekommt den Mittelwert',
+  AC.buendelung({ laengen:{ a:10 } }, { wer:['a'] }) === 0.25);
+p('Buendelung bleibt in 0 bis 0,5',
+  AC.BEREICHE.every(B => (BD.FACET[B.k]||[]).every(F => {
+    const v = AC.buendelung(AC.natal(C, B), F); return v >= 0 && v <= 0.5; })));
+
+/* Der Herr des Feldes zaehlt, wenn er selbst zur Facette gehoert. */
+const Hg = AC.herrGewicht(Ng, { haus:Bg.haeuser[0], wer:[Ng.herren[Bg.haeuser[0]].p] });
+p('gehoert der Herr zur Facette, wiegt das',  Hg.gh >= 2, 'gh ' + Hg.gh);
+p('ohne Herrendaten bleibt das zweite Gewicht 0',
+  AC.herrGewicht({}, { haus:2, wer:['Venus'] }).gh === 0);
+
 /* ── 10. Blatt ──────────────────────────────────────────────── */
 const Bl = AC.blatt(C, JETZT);
 p('Blatt nennt den Stichtag', Bl.jd === JETZT);
