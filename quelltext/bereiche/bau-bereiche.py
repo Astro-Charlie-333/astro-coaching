@@ -6,7 +6,7 @@ Die wichtigste Prüfung hier ist die letzte: Auf Wissensstufe 0 darf kein
 einziges Fachwort sichtbar sein. Kein Planetenname, kein Haus, kein Aspekt.
 Wer das verletzt, kommt nicht durch den Bau.
 """
-import pathlib, re, sys, subprocess
+import pathlib, re, sys, subprocess, json
 
 hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
@@ -878,6 +878,106 @@ if t.returncode != 0:
     fehler.append('die Rechenprüfung schlägt fehl:\n' + (t.stdout + t.stderr)[-1800:])
 else:
     print(t.stdout.strip().splitlines()[-1])
+
+# ── 6a · Ein unbesetzter Bereich muss trotzdem gewichtet sein ──
+# Fehlerklasse vom 30.10.: In jedem der zehn Bereiche hängen
+# mindestens zwei Facetten am selben Feld — in Geld hängen „Was
+# reinkommt" und „Wie du damit umgehst" beide am Kernfeld. Steht
+# dort natal nichts, bekamen beide dasselbe Gewicht, und dann
+# entschied die Reihenfolge in bereich-daten.js, welche oben steht.
+# Die Seite sagt aber „Die Reihenfolge kommt aus dem Geburtsbild".
+#
+# Diese Prüfung macht die Klasse unmöglich, und zwar nicht an einem
+# Fall, sondern an der Eigenschaft: Über tausend erfundene
+# Geburtsbilder hinweg darf in keinem Bereich ein Paar von Facetten
+# auf allen gerechneten Gewichten gleich liegen. Liegt eines gleich,
+# entscheidet wieder die Textdatei — dann bricht der Bau ab und sagt,
+# welches Paar es war. Dazu muss die Gewichtung bei unbesetzten
+# Bereichen nachweislich etwas bewegen, sonst ist sie Zierde.
+fprobe = hier / '_probe-facetten.js'
+fprobe.write_text(r"""
+/* Probedaten sind erfunden — nie echte Geburtsdaten hier hinein. */
+const fs=require('fs'), path=require('path');
+const wurzel=path.join(__dirname,'..');
+const code=['rituale/engine.js','zeit/zeit-rechner.js','bereiche/lebensbereiche.js',
+            'bereiche/bereich-rechner.js','bereiche/bereich-daten.js']
+  .map(f=>fs.readFileSync(path.join(wurzel,f),'utf8')).join('\n;\n');
+const w={}; new Function('window','console',code)(w,console);
+const AC=w.AC_BER, BD=w.AC_BDAT;
+const ZIELE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter',
+             'Saturn','Uranus','Neptun','Pluto'];
+const raus={gleichstand:[], leerGesehen:0, leerAnders:0, bereicheLeer:{},
+            ohneGewichte:[], fehler:''};
+try{
+  for(let s=1;s<=1200;s++){
+    const asc=(s*7.37)%360, C={ASC:asc, MC:(asc+270)%360};
+    ZIELE.forEach((p,i)=>C[p]=(s*13.73+i*41.31+s*s*0.0131)%360);
+    for(const B of AC.BEREICHE){
+      const N=AC.natal(C,B), L=(BD.FACET||{})[B.k]||[];
+      if(!L.length) continue;
+      const out=AC.facetten(N,B,L);
+      if(out.length!==L.length){ raus.fehler='facetten() verliert Facetten'; break; }
+      /* Jede Facette muss alle drei Gewichte tragen. */
+      out.forEach(e=>{ if(typeof e.g!=='number'||typeof e.gh!=='number'
+                        ||typeof e.gs!=='number')
+        raus.ohneGewichte.push(B.k+'/'+e.f.k); });
+      /* Kein Paar darf auf allen Gewichten gleich liegen. */
+      const schl=out.map(e=>e.g+'|'+e.gh+'|'+e.gs);
+      for(let i=0;i<schl.length;i++) for(let j=i+1;j<schl.length;j++)
+        if(schl[i]===schl[j] && raus.gleichstand.length<5)
+          raus.gleichstand.push(B.k+': "'+out[i].f.k+'" und "'+out[j].f.k
+            +'" liegen beide bei '+schl[i]);
+      /* Und: bewegt die Gewichtung bei unbesetzten Bereichen etwas? */
+      if(N.leer){
+        raus.leerGesehen++;
+        raus.bereicheLeer[B.k]=(raus.bereicheLeer[B.k]||0)+1;
+        if(out.map(e=>e.f.k).join(',')!==L.map(f=>f.k).join(','))
+          raus.leerAnders++;
+      }
+    }
+    if(raus.fehler) break;
+  }
+}catch(e){ raus.fehler=String(e && e.message || e); }
+console.log(JSON.stringify(raus));
+""", encoding='utf-8')
+fp = subprocess.run(['node', str(fprobe)], capture_output=True, text=True,
+                    cwd=str(hier.parent))
+try:
+    fprobe.unlink()
+except OSError:
+    pass
+if fp.returncode != 0:
+    fehler.append('die Facettenprobe läuft nicht:\n' + (fp.stdout + fp.stderr)[-900:])
+else:
+    try:
+        fn = json.loads(fp.stdout.strip().splitlines()[-1])
+    except (ValueError, IndexError):
+        fn = None
+        fehler.append('die Facettenprobe gibt keinen lesbaren Bericht:\n'
+                      + (fp.stdout + fp.stderr)[-600:])
+    if fn:
+        if fn['fehler']:
+            fehler.append('die Facettenprobe bricht ab: ' + fn['fehler'])
+        if fn['ohneGewichte']:
+            fehler.append('eine Facette kommt ohne alle drei Gewichte (g, gh, gs): '
+                          + ', '.join(sorted(set(fn['ohneGewichte']))[:4]))
+        if fn['gleichstand']:
+            fehler.append('zwei Facetten liegen auf allen Gewichten gleich — dann '
+                          'sortiert die Textdatei, nicht das Geburtsbild: '
+                          + ' | '.join(fn['gleichstand'][:3]))
+        # Die Probe muss unbesetzte Bereiche überhaupt zu sehen bekommen,
+        # sonst prüft sie die Klasse nicht, um die es geht.
+        if fn['leerGesehen'] < 50:
+            fehler.append(f"die Facettenprobe fand nur {fn['leerGesehen']} unbesetzte "
+                          'Bereiche — zu wenige, um die Gewichtung dort zu prüfen')
+        elif fn['leerAnders'] * 3 < fn['leerGesehen']:
+            fehler.append(f"von {fn['leerGesehen']} unbesetzten Bereichen zeigen nur "
+                          f"{fn['leerAnders']} eine andere Reihenfolge als die "
+                          'Textdatei — dort gewichtet nichts')
+        else:
+            print(f"  Facetten: {fn['leerGesehen']} unbesetzte Bereiche geprüft, "
+                  f"{fn['leerAnders']} davon anders sortiert als die Textdatei, "
+                  'kein Gleichstand')
 
 # ── 7 · Rauchprobe im Browser ──────────────────────────────────
 probe = hier / '_probe-bereich.js'
