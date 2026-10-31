@@ -792,14 +792,114 @@ for k in sorted(RAUM_SEITEN):
         fehler.append(f'der Dateiname {d} steht in bereich-app.js statt '
                       'in bereich-daten.js')
 
-# die fünf Blöcke müssen in der festgelegten Reihenfolge erscheinen
-blocks = re.findall(r"<h4>(\d) &middot; ([^<]+)</h4>", app)
+# ── In bereich-app.js steht kein Satz ──────────────────────────
+# Fehlerklasse (Aufgabe 9, 31.10.): Die Anzeige schreibt selbst Text,
+# statt ihn zu zeichnen. PRODUKT.md Abschnitt 7 verlangt das
+# Gegenteil — ein Satz, der in der Anzeige steht, wandert beim
+# Umzug nicht mit, wird beim nächsten Umbau nebenbei geändert und
+# von keiner Prüfung gesehen. Beim Tiefgang war das längst
+# erzwungen, bei der Seite nicht.
+#
+# Geprüft wird nicht der Fall, sondern die Klasse: Jede Zeichenkette
+# in bereich-app.js wird vom Markup befreit; was dann noch nach Sprache
+# aussieht, bricht den Bau ab. Nach Sprache sieht es aus, wenn zwei
+# Wörter nebeneinanderstehen oder ein Wort ein Satzzeichen trägt.
+# Technische Zeichenketten — IDs, Klassen, Auswahlausdrücke, Typen —
+# haben kein Leerzeichen, keinen Großbuchstaben und keinen Umlaut;
+# ein deutscher Satz hat immer eines davon.
+ENTITAET = {'&middot;':'\u00b7', '&mdash;':'\u2014', '&ndash;':'\u2013',
+            '&amp;':'&', '&lt;':'<', '&gt;':'>', '&quot;':'"',
+            '&nbsp;':' ', '&hellip;':'\u2026'}
+SATZZEICHEN = '.,:;!?\u2026\u2014\u00b7()'
+WORT = r'[A-Za-zÄÖÜäöüß]{2,}(?:-[A-Za-zÄÖÜäöüß0-9]+)*'
+
+def nur_code(t):
+    """Kommentare und Suchmuster weg — in einem Kommentar darf stehen,
+    warum hier kein Satz steht, und /&/g ist kein Text."""
+    t = re.sub(r'/\*.*?\*/', ' ', t, flags=re.S)
+    t = re.sub(r'(?m)^\s*//.*$', ' ', t)
+    return re.sub(r'(?<=[(,])\s*/(?:[^/\\\n]|\\.)*/[gimsuy]*', ' ', t)
+
+def satz_darin(lit):
+    """Was von einer Zeichenkette übrig bleibt, wenn man das Markup
+    abzieht — oder None, wenn nichts nach Sprache aussieht."""
+    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
+    for k, v in ENTITAET.items():
+        rest = rest.replace(k, v)
+    rest = re.sub(r'&[a-zA-Z]+;|&#\d+;', ' ', rest)
+    if (' ' not in rest and not re.search(r'[A-ZÄÖÜ]', rest)
+            and not re.search(r'[äöüßÄÖÜ]', rest)):
+        return None          # eine technische Zeichenkette
+    w = re.findall(WORT, rest)
+    if len(w) >= 2 or (w and re.search('[' + re.escape(SATZZEICHEN) + ']', rest)):
+        return rest.strip()
+    return None
+
+app_code = nur_code(app)
+for lit in re.findall(r"'((?:[^'\\\n]|\\.)*)'", app_code):
+    gefunden = satz_darin(lit)
+    if gefunden:
+        fehler.append('Satz in bereich-app.js statt in bereich-daten.js: '
+                      f'"{gefunden[:70]}"')
+# Und kein Ausweichen auf die andere Anführung: jedes " und jeder
+# Backtick in dieser Datei steht innerhalb einer einfach
+# angeführten Markup-Zeichenkette. Steht einer draußen, ist es eine
+# zweite Art, Text unterzubringen, an der die Prüfung oben vorbeiläuft.
+draussen = re.sub(r"'(?:[^'\\\n]|\\.)*'", ' ', app_code)
+for z, wie in (('"', 'doppelte Anführungszeichen'), ('`', 'Backticks')):
+    if z in draussen:
+        fehler.append(f'{wie} in bereich-app.js außerhalb einer '
+                      'Markup-Zeichenkette — Text gehört in bereich-daten.js')
+
+# die fünf Blöcke müssen in der festgelegten Reihenfolge erscheinen.
+# Sie heißen jetzt in bereich-daten.js; geprüft wird beides: wie sie
+# heißen und dass die Anzeige sie der Reihe nach einsetzt.
+m_seite = re.search(r"^\s{2}var B_SEITE\s*=\s*\{", daten, re.M)
+if not m_seite:
+    fehler.append('B_SEITE fehlt in bereich-daten.js — die Sätze der '
+                  'Anzeige haben keinen Ort')
+    SEITE_BLK = ''
+else:
+    SEITE_BLK = klammerblock(daten, m_seite.end() - 1)
+m_bl = re.search(r"bloecke:\s*\[(.*?)\]", SEITE_BLK, re.S)
+blocks = re.findall(r"'(\d) \\u00b7 ([^']+)'", m_bl.group(1)) if m_bl else []
 if [b[0] for b in blocks] != ['1', '2', '3', '4', '5']:
     fehler.append('die fünf Blöcke stehen nicht in der Reihenfolge 1–5: ' + str(blocks))
 erwartet = ['Was ist los', 'Was du tun kannst', 'Wie lange das läuft',
             'Wie du es nutzt', 'Dein Dauerthema hier']
 if [b[1] for b in blocks] != erwartet:
     fehler.append('die Blöcke heißen anders als vereinbart: ' + str([b[1] for b in blocks]))
+if re.findall(r'bloecke\[(\d)\]', app) != ['0', '1', '2', '3', '4']:
+    fehler.append('bereich-app.js setzt die fünf Blöcke nicht der Reihe nach ein: '
+                  + str(re.findall(r'bloecke\[(\d)\]', app)))
+
+# Die Sätze der Anzeige: vollständig, und die auf Stufe 0 sichtbaren
+# ohne Fachwort. Der Maschinenraum unter .tech steht nur in
+# ac-tech-Elementen und wird deshalb nicht mitgeprüft.
+seite_laien = SEITE_BLK.split('tech:')[0]
+for name, mind in (('marke', 10), ('mehrZeit', 15), ('kapJahre', 25),
+                   ('kapBis', 25), ('kapOffen', 5), ('facVor', 40),
+                   ('stufenFrage', 15), ('fuer', 10), ('stichtag', 8),
+                   ('ruhig', 20), ('ohneProfilVor', 25), ('ohneProfilLink', 4),
+                   ('ohneProfilNach', 40), ('vorGeburt', 40)):
+    v = feld(seite_laien, name)
+    if v is None:
+        fehler.append(f'B_SEITE.{name} fehlt')
+        continue
+    if len(v) < mind:
+        fehler.append(f'B_SEITE.{name} ist zu dünn ({len(v)} Zeichen)')
+    lay_texte.append((f'SEITE.{name}', v))
+for name, platz in (('mehrZeit', '{zahl}'), ('kapBis', '{ende}'),
+                    ('fuer', '{wer}'), ('stichtag', '{datum}'),
+                    ('ruhig', '{liste}')):
+    if platz not in (feld(seite_laien, name) or ''):
+        fehler.append(f'B_SEITE.{name} hat keinen Platz für {platz}')
+for name in ('natalDarin', 'natalEins'):
+    if '{' not in (feld(SEITE_BLK, name) or ''):
+        fehler.append(f'B_SEITE.tech.{name} hat keinen Platz zum Einsetzen')
+for titel in erwartet + [feld(seite_laien, 'marke') or 'Das Stärkste gerade']:
+    if titel in app_code:
+        fehler.append(f'"{titel}" steht wieder in bereich-app.js')
 
 # tote Verweise
 for href in set(re.findall(r'href="([a-z0-9-]+\.html)"', koerper)):
