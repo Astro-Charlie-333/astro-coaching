@@ -3395,6 +3395,58 @@ window.AC_LB = {
     }
   };
 
+  /* ── Was die Anzeige selbst sagt ─────────────────────────────
+     Bis zum 31.10. standen diese Sätze in bereich-app.js: die fünf
+     Blockköpfe, die Marke über dem stärksten Vorgang, der Satz über
+     die drei Seiten eines Bereichs und die beiden über die lange
+     Linie. PRODUKT.md Abschnitt 7 verlangt das Gegenteil — ein Satz,
+     der in der Anzeige steht, wird beim nächsten Umbau nebenbei
+     geändert und von keiner Prüfung gesehen. Beim Tiefgang war das
+     längst erzwungen, bei der Seite nicht.
+
+     Was in geschweiften Klammern steht, setzt die Anzeige ein. */
+  var B_SEITE = {
+    /* Die fünf Blöcke jedes Bereichs. Die Reihenfolge ist
+       REGELN.md Abschnitt 3 und nicht verhandelbar; bau-bereiche.py
+       prüft sie hier und in der Anzeige. */
+    bloecke:[
+      '1 \u00b7 Was ist los',
+      '2 \u00b7 Was du tun kannst',
+      '3 \u00b7 Wie lange das läuft',
+      '4 \u00b7 Wie du es nutzt',
+      '5 \u00b7 Dein Dauerthema hier'
+    ],
+    marke:'Das Stärkste gerade',
+    mehrZeit:'Was sonst noch läuft ({zahl})',
+    kapJahre:'Die lange Linie darüber läuft noch Jahre.',
+    kapBis:'Die lange Linie darüber läuft noch bis {ende}.',
+    /* Wenn kein Ende zu rechnen ist, wird keines behauptet. */
+    kapOffen:'auf Weiteres',
+    facVor:'Dieser Bereich hat bei dir drei Seiten. Die erste wiegt am meisten.',
+    stufenFrage:'Was heißen die vier Stufen?',
+    fuer:'Gerechnet für {wer}',
+    stichtag:'\u00b7 Stichtag {datum}',
+    ruhig:'Ruhig ist es gerade bei: {liste}.',
+    /* Ohne Profil zeigt die Seite nicht nichts, sondern den Weg
+       dorthin. Der Dateiname gehört zum Text, nicht in die Anzeige —
+       dieselbe Regel wie bei den langen Seiten in B_RAUM. */
+    ohneProfilVor:'Für diese Seite fehlt ein Profil. Leg eines unter',
+    ohneProfilLink:'Profile',
+    ohneProfilDatei:'profile.html',
+    ohneProfilNach:'an \u2014 danach steht hier, was bei dir gerade in welchem Bereich los ist.',
+    vorGeburt:'Der Stichtag liegt vor der Geburt. Stell ihn auf ein Datum danach.',
+    /* Der Maschinenraum. Diese Sätze stehen nur in Elementen mit
+       ac-tech und damit erst ab Stufe 2 — hier dürfen Fachwörter
+       vorkommen, und nur hier. */
+    tech:{
+      label:'Woran das abgelesen ist',
+      gipfel:'(winkelhaft)',
+      natalDarin:'Natal darin: {liste} Haus.',
+      natalEins:'{planet} im {haus}.',
+      natalLeer:'Natal unbesetzt.'
+    }
+  };
+
   /* ── Was die Seite nicht kann ───────────────────────────────── */
   var B_EHRLICH = [
     { f:'Sagt das, was passieren wird?',
@@ -3410,7 +3462,7 @@ window.AC_LB = {
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
-    KAP:B_KAP, EHRLICH:B_EHRLICH,
+    KAP:B_KAP, EHRLICH:B_EHRLICH, SEITE:B_SEITE,
     WID:B_WID, FRAGEN:B_FRAGEN, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
     RAUM:B_RAUM
   };

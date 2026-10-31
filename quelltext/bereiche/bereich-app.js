@@ -4,12 +4,10 @@
    Reihenfolge auf der Seite: die lautesten Bereiche zuerst. Nicht
    alphabetisch, nicht nach Häusernummer — nach dem, was gerade
    wirklich dran ist. Innerhalb eines Bereichs immer dieselben fünf
-   Blöcke, in dieser Reihenfolge:
-     1. Was ist los
-     2. Was du tun kannst
-     3. Wie lange das läuft
-     4. Wie du es nutzt
-     5. Dein Dauerthema hier
+   Blöcke in der Reihenfolge aus REGELN.md Abschnitt 3; wie sie
+   heißen, steht in bereich-daten.js unter B_SEITE.bloecke.
+
+   Hier steht kein Satz. Diese Datei zeichnet, sie schreibt nicht.
    ─────────────────────────────────────────────────────────────── */
 (function(){
 
@@ -24,6 +22,20 @@
   function bT(){ return window.AC_TIEF; }
   function MN_(){ return bD().FORM.monate; }
   function ZN_(){ return bD().FORM.zeichen; }
+  /* Die Sätze, die diese Datei zeigt, stehen in bereich-daten.js.
+     PRODUKT.md Abschnitt 7: ein Satz in der Anzeige wird beim
+     nächsten Umbau nebenbei geändert und von keiner Prüfung
+     gesehen. bau-bereiche.py bricht ab, sobald hier wieder einer
+     auftaucht. */
+  function SE(){ return bD().SEITE; }
+  /* Eine Vorlage füllen: {name} wird ersetzt. Was eingesetzt wird,
+     ist entweder schon maskiert oder absichtlich Markup. */
+  function fuell(v, m){
+    var s = String(v === undefined || v === null ? '' : v);
+    for(var k in m) if(Object.prototype.hasOwnProperty.call(m, k))
+      s = s.split('{' + k + '}').join(m[k]);
+    return s;
+  }
 
   /* ── Hilfen ─────────────────────────────────────────────────── */
   function esc(s){
@@ -75,7 +87,7 @@
   function techBlock(zeilen){
     if(!zeilen || !zeilen.length) return '';
     return '<div class="ac-tech b-techblk" data-ab="2">' +
-      '<span class="b-techlab">Woran das abgelesen ist</span>' +
+      '<span class="b-techlab">' + esc(SE().tech.label) + '</span>' +
       zeilen.map(function(z){ return '<span class="b-techz">' + esc(z) + '</span>'; }).join('') +
       '</div>';
   }
@@ -104,7 +116,7 @@
     var top = b.laeuft.slice(0, 3), gesehen = {};
 
     /* ── 1. Was ist los ─────────────────────────────────── */
-    h.push('<div class="b-blk"><h4>1 &middot; Was ist los</h4>');
+    h.push('<div class="b-blk"><h4>' + esc(SE().bloecke[0]) + '</h4>');
     var tech1 = [];
     if(b.kapitel){
       h.push('<p class="b-kap">' + esc(b.kapitel.laut ? bD().KAP.laut : bD().KAP.leise) + '</p>');
@@ -117,9 +129,10 @@
         h.push('<p class="b-kap">' + esc(bD().KAP.nurKapitel) + '</p>');
       if(b.kapitel.anders) h.push('<p class="b-kap b-leise">' + esc(bD().KAP.widerspruch) + '</p>');
       if(n >= 2) tech1.push(bD().KAP.tech + ': ' +
-        ZN_()[b.kapitel.l1.zeichen] + (b.kapitel.l1.gipfel ? ' (winkelhaft)' : '') +
+        ZN_()[b.kapitel.l1.zeichen] +
+        (b.kapitel.l1.gipfel ? ' ' + SE().tech.gipfel : '') +
         (b.kapitel.l2 ? ' \u2192 ' + ZN_()[b.kapitel.l2.zeichen] +
-          (b.kapitel.l2.gipfel ? ' (winkelhaft)' : '') : ''));
+          (b.kapitel.l2.gipfel ? ' ' + SE().tech.gipfel : '') : ''));
     }
     if(!top.length){
       h.push('<p>' + esc(bD().LEER.keinVorgang) + '</p>');
@@ -128,7 +141,7 @@
         var v = top[i], S = vorgangSatz(v, b, gesehen);
         if(!S) continue;
         h.push('<div class="b-vor' + (i === 0 ? ' b-haupt' : '') + '">');
-        if(i === 0) h.push('<span class="b-marke">Das Stärkste gerade</span>');
+        if(i === 0) h.push('<span class="b-marke">' + esc(SE().marke) + '</span>');
         h.push('<p>' + esc(S.was) + '</p>');
         if(n >= 2) tech1.push(vorgangTech(v));
         h.push('</div>');
@@ -138,7 +151,7 @@
     h.push('</div>');
 
     /* ── 2. Was du tun kannst ───────────────────────────── */
-    h.push('<div class="b-blk"><h4>2 &middot; Was du tun kannst</h4>');
+    h.push('<div class="b-blk"><h4>' + esc(SE().bloecke[1]) + '</h4>');
     if(top.length){
       var S0 = vorgangSatz(top[0], b);
       h.push('<p class="b-tun">' + esc(S0 ? S0.tun : '') + '</p>');
@@ -152,7 +165,7 @@
     h.push('</div>');
 
     /* ── 3. Wie lange das läuft ─────────────────────────── */
-    h.push('<div class="b-blk"><h4>3 &middot; Wie lange das läuft</h4>');
+    h.push('<div class="b-blk"><h4>' + esc(SE().bloecke[2]) + '</h4>');
     if(top.length){
       /* Vier Zeiträume untereinander beantworten die Frage nicht,
          sie stellen sie viermal. Der stärkste steht vorn, der Rest
@@ -161,8 +174,9 @@
       h.push('<p class="b-zeit-haupt"><b>' + esc(S0z ? S0z.tempo : '') + '</b> ' +
              esc(fensterZeile(top[0])) + '</p>');
       if(top.length > 1){
-        h.push('<details class="b-mehrzeit"><summary>Was sonst noch l\u00e4uft (' +
-               (top.length - 1) + ')</summary><ul class="b-zeit">');
+        h.push('<details class="b-mehrzeit"><summary>' +
+               fuell(esc(SE().mehrZeit), { zahl:(top.length - 1) }) +
+               '</summary><ul class="b-zeit">');
         for(var j=1;j<top.length;j++){
           var vj = top[j], Sj = vorgangSatz(vj, b);
           h.push('<li><b>' + esc(Sj ? Sj.tempo : '') + '</b> ' + esc(fensterZeile(vj)) + '</li>');
@@ -178,13 +192,13 @@
          Regel wie bei den Fenstern auf der Startseite. */
       var kj = kapJahreNoch(kv);
       h.push('<p class="b-kapzeit">' + (kj > 3
-        ? 'Die lange Linie darüber läuft noch Jahre.'
-        : 'Die lange Linie darüber läuft noch bis ' + esc(kapEnde(kv)) + '.') + '</p>');
+        ? esc(SE().kapJahre)
+        : fuell(esc(SE().kapBis), { ende:esc(kapEnde(kv)) })) + '</p>');
     }
     h.push('</div>');
 
     /* ── 4. Wie du es nutzt ─────────────────────────────── */
-    h.push('<div class="b-blk"><h4>4 &middot; Wie du es nutzt</h4>');
+    h.push('<div class="b-blk"><h4>' + esc(SE().bloecke[3]) + '</h4>');
     if(top.length){
       var Sn = vorgangSatz(top[0], b);
       h.push('<p>' + esc(Sn ? Sn.nutzen : '') + '</p>');
@@ -194,7 +208,7 @@
     h.push('</div>');
 
     /* ── 5. Dein Dauerthema hier ────────────────────────── */
-    h.push('<div class="b-blk b-dauer"><h4>5 &middot; Dein Dauerthema hier</h4>');
+    h.push('<div class="b-blk b-dauer"><h4>' + esc(SE().bloecke[4]) + '</h4>');
     h.push('<p>' + esc(T.meistern) + '</p>');
     if(b.natal.leer){
       h.push('<p class="b-leise">' + esc(bD().LEER.natalLeer) + '</p>');
@@ -211,8 +225,7 @@
     var FA = fac(b);
     if(FA.length){
       h.push('<div class="b-facs">');
-      h.push('<p class="b-facvor">Dieser Bereich hat bei dir drei Seiten. ' +
-             'Die erste wiegt am meisten.</p>');
+      h.push('<p class="b-facvor">' + esc(SE().facVor) + '</p>');
       for(var fi=0; fi<FAC_ZEIGE && fi<FA.length; fi++){
         var E = FA[fi], F = E.f;
         h.push('<div class="b-fac">');
@@ -225,9 +238,12 @@
       h.push('</div>');
     }
     if(n >= 2){
-      var tp = b.natal.planeten.map(function(x){ return x.p + ' im ' + x.haus + '.'; }).join(', ');
+      var tp = b.natal.planeten.map(function(x){
+        return fuell(SE().tech.natalEins, { planet:x.p, haus:x.haus });
+      }).join(', ');
       h.push('<p class="ac-tech">' + esc(T.techFeld) + '. ' +
-             (tp ? 'Natal darin: ' + esc(tp) + ' Haus.' : 'Natal unbesetzt.') + '</p>');
+             (tp ? fuell(esc(SE().tech.natalDarin), { liste:esc(tp) })
+                 : esc(SE().tech.natalLeer)) + '</p>');
     }
     h.push('</div>');
 
@@ -299,7 +315,7 @@
     return (ende - Date.now()) / (365.2422 * 86400000);
   }
   function kapEnde(a){
-    if(GEB_MS === null || !a) return 'auf Weiteres';
+    if(GEB_MS === null || !a) return SE().kapOffen;
     var d = new Date(GEB_MS + a.bis * 86400000);
     return MN_()[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
   }
@@ -318,7 +334,8 @@
     }
     h.push('</div>');
     /* Die Skala einmal erklären, zugeklappt. */
-    h.push('<details class="b-legende"><summary>Was heißen die vier Stufen?</summary><dl>');
+    h.push('<details class="b-legende"><summary>' + esc(SE().stufenFrage) +
+           '</summary><dl>');
     for(var j=0;j<bD().LAUT.length;j++){
       var S = bD().LAUT[j];
       h.push('<dt style="color:' + S.farbe + '">' + esc(S.n) + '</dt>');
@@ -397,9 +414,9 @@
     if(!ziel) return;
 
     if(!p){
-      if(kopf) kopf.innerHTML = '<p class="b-hinweis">Für diese Seite fehlt ein Profil. ' +
-        'Leg eines unter <a href="profile.html">Profile</a> an &mdash; danach steht hier, ' +
-        'was bei dir gerade in welchem Bereich los ist.</p>';
+      if(kopf) kopf.innerHTML = '<p class="b-hinweis">' + esc(SE().ohneProfilVor) +
+        ' <a href="' + esc(SE().ohneProfilDatei) + '">' + esc(SE().ohneProfilLink) +
+        '</a> ' + esc(SE().ohneProfilNach) + '</p>';
       ziel.innerHTML = ''; if(ueb) ueb.innerHTML = '';
       return;
     }
@@ -420,8 +437,7 @@
 
     /* Stichtag vor der Geburt abfangen, bevor gerechnet wird */
     if(jd < jdGeb){
-      if(kopf) kopf.innerHTML = '<p class="b-hinweis">Der Stichtag liegt vor der Geburt. ' +
-        'Stell ihn auf ein Datum danach.</p>';
+      if(kopf) kopf.innerHTML = '<p class="b-hinweis">' + esc(SE().vorGeburt) + '</p>';
       ziel.innerHTML = ''; if(ueb) ueb.innerHTML = '';
       return;
     }
@@ -445,8 +461,11 @@
     if(kopf){
       var lauteste = bs[0];
       var k = [];
-      k.push('<p class="b-fuer">Gerechnet für <b>' + esc(namen(p)) + '</b>');
-      if(feld && feld.value) k.push(' &middot; Stichtag ' + esc(feld.value.split('-').reverse().join('.')));
+      k.push('<p class="b-fuer">' +
+             fuell(esc(SE().fuer), { wer:'<b>' + esc(namen(p)) + '</b>' }));
+      if(feld && feld.value)
+        k.push(' ' + fuell(esc(SE().stichtag),
+               { datum:esc(feld.value.split('-').reverse().join('.')) }));
       k.push('</p>');
       k.push('<p class="b-oben">' + esc(bD().BER[lauteste.k].lautSatz[lauteste.laut]) + '</p>');
       /* Kein zweites Mal dasselbe sagen — stattdessen der Handgriff,
@@ -455,8 +474,10 @@
       if(sp) k.push('<p class="b-oben b-tat">' + esc(sp.tun) + '</p>');
       var stille = bs.filter(function(x){ return x.laut === 0; });
       if(stille.length)
-        k.push('<p class="b-oben b-leise">Ruhig ist es gerade bei: ' +
-               esc(stille.map(function(x){ return x.name; }).join(', ')) + '.</p>');
+        k.push('<p class="b-oben b-leise">' +
+               fuell(esc(SE().ruhig),
+                     { liste:esc(stille.map(function(x){ return x.name; }).join(', ')) }) +
+               '</p>');
       kopf.innerHTML = k.join('');
     }
 

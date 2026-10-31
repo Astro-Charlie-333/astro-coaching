@@ -27,18 +27,6 @@ Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 9 · Die Sätze aus der Anzeige holen
-`bereich-app.js` schreibt selbst Text, statt ihn zu zeichnen: die fünf
-Blockköpfe, die Marke „Das Stärkste gerade", der Satz über die drei Seiten
-eines Bereichs und die beiden Sätze über die lange Linie. PRODUKT.md
-Abschnitt 7 verlangt das Gegenteil — ein Satz in der Anzeige wird beim
-nächsten Umbau nebenbei geändert und von keiner Prüfung gesehen. Beim
-Tiefgang ist das schon erzwungen, bei der Seite nicht.
-**Fertig, wenn:** diese Sätze in `bereich-daten.js` stehen und
-`bau-bereiche.py` abbricht, sobald in `bereich-app.js` wieder ein
-Satzzeichen-tragender Text in Anführungszeichen auftaucht, der nicht aus
-den Daten kommt.
-
 ### 19 · Die Begleitung sortiert für alle Menschen gleich
 Gefunden beim Bauen am 30.10. `begleit-rechner.js` sortiert die Anlagen
 eines Menschen nach `BG_GEWICHT` — einer festen Zahl je Planet. Sonne und
@@ -110,6 +98,20 @@ geändert werden mussten, und eine gemeinsame Prüfung — nicht je
 `bau-*.py` eine eigene — abbricht, sobald ein Handgriff eine Zukunftsform
 mit Folge oder ein Wort wie „teurer", „musst du später" oder „sonst"
 enthält.
+
+### 34 · Dieselbe Prüfung fehlt in den anderen Anzeigen
+Gefunden beim Erledigen von Aufgabe 9 am 31.10. `bereich-app.js` ist jetzt
+satzfrei und wird darauf geprüft; `wahl-app.js` wird seit dem 22.10. lose
+geprüft (drei Wörter in einer Zeichenkette, Markup abgezogen, nur einfache
+Anführung). Die übrigen Anzeigen werden gar nicht geprüft: `ich-app.js` und
+`heute-app.js` tragen noch Sätze (Aufgaben 20 und 28 sagen es für einzelne
+Stellen), und keine der Prüfungen sieht doppelte Anführungszeichen oder
+Backticks, mit denen sich jede davon umgehen lässt. Dieselbe Fehlerklasse,
+in sechs Ordnern einzeln — wie bei der Stufe-0-Prüfung (Aufgabe 25).
+**Fertig, wenn:** die Prüfung „in dieser Anzeige steht kein Satz" an einer
+Stelle steht, die alle `bau-*.py` benutzen, jede `*-app.js` sie besteht,
+und ein eingebauter Satz in jeder dieser Dateien den Bau abbricht —
+geprüft in allen drei Anführungsarten.
 
 ---
 
@@ -419,6 +421,32 @@ neue Dopplung den Bau bricht.
 ---
 
 ## Erledigt
+
+* **2026-10-31** · Die Sätze aus der Anzeige geholt (Aufgabe 9).
+  `bereich-app.js` schrieb zwanzig Texte selbst: die fünf Blockköpfe, die
+  Marke über dem stärksten Vorgang, die beiden Sätze über die lange Linie,
+  der Satz über die drei Seiten eines Bereichs, die Frage nach den vier
+  Stufen, der Hinweis ohne Profil, der Hinweis bei einem Stichtag vor der
+  Geburt, die Kopfzeile, die Zeile über die stillen Bereiche und der
+  Maschinenraum zur natalen Lage. Alle stehen jetzt in `bereich-daten.js`
+  unter `B_SEITE`; die Anzeige setzt nur noch ein, was in geschweiften
+  Klammern steht. Auf der Seite ändert sich kein Wort — das war der Punkt:
+  PRODUKT.md Abschnitt 7 verlangt, dass Texte unverändert umziehen können,
+  und ein Satz in der Anzeige zieht nicht mit.
+  Die dauerhafte Prüfung in `bau-bereiche.py` repariert nicht die zwanzig
+  Fälle, sondern schließt die Klasse: Jede Zeichenkette in
+  `bereich-app.js` wird vom Markup befreit; bleibt etwas übrig, das nach
+  Sprache aussieht — zwei Wörter nebeneinander oder ein Wort mit
+  Satzzeichen —, bricht der Bau ab. Technische Zeichenketten fallen
+  durch, weil sie kein Leerzeichen, keinen Großbuchstaben und keinen
+  Umlaut haben; ein deutscher Satz hat immer eines davon. Dazu die beiden
+  Umwege: ein doppeltes Anführungszeichen oder ein Backtick außerhalb
+  einer Markup-Zeichenkette bricht den Bau ebenfalls ab. Nachgewiesen an
+  fünf eingebauten Fehlern — Satz in einfacher, doppelter und
+  Backtick-Anführung, die dreiwörtige Marke ohne Satzzeichen und das
+  Fragment „ Haus." —, jeder einzelne bricht den Bau. Die Reihenfolge der
+  fünf Blöcke wird jetzt in den Daten geprüft und zusätzlich daran, dass
+  die Anzeige sie der Reihe nach einsetzt.
 
 * **2026-10-30** · Facetten auch in unbesetzten Bereichen gewichtet
   (Aufgabe 8). Jeder der zehn Bereiche hat zwei Facetten am selben Feld —
