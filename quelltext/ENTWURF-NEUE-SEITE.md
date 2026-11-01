@@ -47,7 +47,7 @@ Fassungen dorthin holen, den Rest stilllegen.
 
 ## 2 · Was die neue Seite ist
 
-**Marke:** Mandy Netta · Astrologie & Coaching
+**Marke:** Mandy Netta Coaching
 **Angebot und Methode:** Schwerkraft *(Arbeitstitel)*
 **Werkzeug dahinter:** Astro-Charlie
 
@@ -56,8 +56,46 @@ Eine Seite beantwortet eine Frage. Diese beantwortet:
 > **Was ist bei dir angelegt — und was machst du am Dienstag damit?**
 
 Das ist dieselbe Spannung wie der Name: Der Himmel zieht, der Boden hält.
-Und es ist die Grenze, an der sich diese Seite von jeder anderen
-Astrologieseite unterscheidet.
+
+### Coachin, die mit dem Geburtsbild arbeitet — keine Astrologin
+
+> Mandy am 1.11.: „aktuell ist es aber eher Coaching als Astrologie. Bin
+> ja keine Astrologin … Astrologie als Unterstützung beim Coaching, als
+> Verständnis wie jemand ist."
+
+Das ist keine Bescheidenheit, das ist die Positionierung, und sie räumt
+mehr auf als jeder Umbau. Alles, was hier gebaut wurde, sagt es ohnehin:
+die Plattform fordert *weniger Astrologie, mehr Leben*; die Begleitung
+macht aus dem Chart **Fragen** statt Aussagen; in der Methode ist der
+Bauplan eine von drei Linsen, nicht die ganze Brille.
+
+Daraus folgt dreierlei, und alles drei ist eine Erleichterung:
+
+* **Die Reihenfolge im Namen dreht sich.** Nicht „Astrologie & Coaching",
+  sondern Coaching — das Geburtsbild ist die Methode, nicht der Beruf.
+* **Es gibt weniger zu verteidigen.** Eine Astrologin muss Astrologie
+  verteidigen. Eine Coachin, die das Bild als Linse benutzt, muss nur
+  zeigen, dass daraus bessere Fragen werden. Das ist belegbar, das andere
+  nicht.
+* **Sie muss im Gespräch nicht alles wissen.** „Das sehe ich mir bis zum
+  nächsten Mal an" ist für eine Coachin normal und für eine Astrologin
+  peinlich.
+
+### Zwei Ebenen, eine Richtung
+
+Das heißt nicht, dass die Astrologie kleiner wird — sie bekommt nur ihren
+Platz:
+
+| | | |
+|---|---|---|
+| **Die Tür** | Astro-Charlie, das Werkzeug | kostenlos, findbar, das eigene Bild ansehen |
+| **Der Raum** | Mandy Netta Coaching | die Begleitung, bezahlt |
+
+Wer über die Astrologie kommt, findet die Tür. Was dahinter stattfindet,
+ist Coaching. Diese Trennung ist der Grund, warum die Navigation in
+Abschnitt 3 so aussieht, wie sie aussieht — und warum auf „Start" der
+erste Satz vom Coaching handelt und das Geburtsbild erst unter „wie ich
+arbeite" vorkommt.
 
 ---
 
@@ -81,13 +119,16 @@ Erreichbar über einen eigenen Weg, den nur du kennst.
 Der Teil, der heute komplett fehlt, und der Grund, warum du niemandem
 einen Link schicken kannst:
 
-1. **Ein Satz, was du machst.** Kein Claim, ein Satz.
-2. **Wie du arbeitest** — die drei Linsen, in drei Zeilen.
+1. **Ein Satz, was du machst** — und zwar über das Coaching, nicht über
+   die Astrologie. Kein Claim, ein Satz.
+2. **Wie du arbeitest** — die drei Linsen, in drei Zeilen. Hier kommt das
+   Geburtsbild vor: als Methode, nicht als Berufsbezeichnung.
 3. **Was es gibt** — Reading, Begleitung, und was jeweils dabei ist.
 4. **Was es kostet.** Zahlen, keine „Investition auf Anfrage".
 5. **Wer du bist** — kurz, ohne Heldenreise.
-6. **Was das hier nicht ist** — keine Therapie, keine Vorhersage. Dieser
-   Abschnitt verkauft besser als jeder Claim, weil ihn sonst niemand hat.
+6. **Was das hier nicht ist** — keine Therapie, keine Vorhersage, keine
+   Astrologieberatung. Dieser Abschnitt verkauft besser als jeder Claim,
+   weil ihn sonst niemand hat.
 7. **Ein Weg hinein, der nichts kostet:** das eigene Bild ansehen.
 
 Keine Dringlichkeit, keine Verknappung, keine Countdown-Uhr. Das ist in
@@ -209,7 +250,8 @@ und kann dauern.
 
 ## 9 · Was offen ist
 
-* **Der Name des Angebots.** „Schwerkraft" ist Arbeitstitel. Domain und
+* **Der Name des Angebots.** „Schwerkraft" ist Arbeitstitel. Die Marke
+  steht: Mandy Netta Coaching. Domain und
   Handle sind nicht geprüft — das musst du selbst tun, bevor es fest wird.
 * **Die Preise.** Stehen auf „Start", also müssen sie vorher entschieden
   sein. Das fremde Dokument schlägt 250–350 € für ein Reading vor; ob das

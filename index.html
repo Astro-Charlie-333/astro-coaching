@@ -4506,16 +4506,32 @@ function ereignisse(jd){
     if(tagesAbstand(v.f.exakt)<0 || tagesAbstand(v.f.exakt)>40) return;
     if(!proW[v.wanderer] || v.gewicht>proW[v.wanderer].gewicht) proW[v.wanderer]=v;
   });
+  /* Und höchstens ein Tag je Bereich. Die Sperre darüber hält einen Tag
+     je Wanderer fest — der Titel hängt aber am Bereich, und zwei
+     verschiedene Wanderer können denselben Bereich treffen. Am 1.11.
+     hieß deshalb ein Jupitertag und ein Venustag beide „Beruf: der
+     deutlichste Tag". Ein Superlativ, der zweimal vorkommt, ist keiner.
+     Der schwerere Treffer gewinnt; der andere steht weiter im
+     Zeitstrahl, wo alle Durchgänge stehen. Siehe REGELN.md 6f. */
+  var kand=[];
   Object.keys(proW).forEach(function(k){
     var v=proW[k], satz=laufSatz(v); if(!satz) return;
     var B=bereichZuHaus(v.haeuser && v.haeuser[0]);
-    var nm=B?B.name:H_HAUS[((v.haeuser&&v.haeuser[0])||1)-1];
+    kand.push({v:v, satz:satz, B:B,
+      nm:B?B.name:H_HAUS[((v.haeuser&&v.haeuser[0])||1)-1]});
+  });
+  kand.sort(function(a,b){ return b.v.gewicht-a.v.gewicht; });
+  var proB={};
+  kand.forEach(function(c){
+    if(proB[c.nm]) return;
+    proB[c.nm]=true;
+    var v=c.v;
     e.push({jd:v.f.exakt, wann:'genau', tag:tagKurz(v.f.exakt), rang:3,
-      tt:nm+': der deutlichste Tag',
-      tx:satz+' An diesem Tag steht der Winkel auf den Grad genau — davor baut '+
+      tt:c.nm+': der deutlichste Tag',
+      tx:c.satz+' An diesem Tag steht der Winkel auf den Grad genau — davor baut '+
          'es sich auf, danach lässt es nach.',
       tech:v.wanderer+' '+(ASP_NAME[v.aspekt]||v.aspekt)+' '+v.ziel+', exakt',
-      wo:'bereiche.html#ber-'+(B?B.k:'')+'|Den Bereich ansehen'});
+      wo:'bereiche.html#ber-'+(c.B?c.B.k:'')+'|Den Bereich ansehen'});
   });
 
   e.sort(function(a,b){ return a.jd-b.jd; });
