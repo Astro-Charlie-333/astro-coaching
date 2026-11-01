@@ -278,6 +278,93 @@ verlangt in jeder Winkelvorlage ein Folgewort.
 
 ---
 
+## 6e · Eine Prüfung prüft eine Form, kein Textstück
+
+Am 1.11. war `main` rot, ohne dass sich ein Commit geändert hatte. Die
+Meldung:
+
+```
+FEHLER: Datum ohne Jahreszahl: 'bis morgen'
+```
+
+Die Regel dahinter lautete:
+
+```python
+if 'bis ' in f2 and '20' not in f2:
+```
+
+Gemeint war: *ein genanntes Kalenderdatum trägt immer die Jahreszahl.*
+Geprüft wurde: *kommt irgendwo „bis " vor und nirgends „20"?* „bis morgen"
+ist aber kein Datum, sondern eine Dauer — und ob dieser Satz überhaupt auf
+der Seite steht, entscheidet der Himmel des Tages. Die Prüfung ging
+monatelang durch und schlug an dem Tag zu, an dem zufällig ein Fenster
+morgen endete.
+
+Daraus zwei Regeln für jede Prüfung in einem `bau-*.py`:
+
+1. **Geprüft wird die Form, die gemeint ist, nicht ein Wort, das meistens
+   dabeisteht.** Ein Datum erkennt man an Tag-Punkt-Monat, nicht an „bis".
+   Steht in einer Prüfung ein `in` auf einem Allerweltswort, ist das fast
+   immer der Fehler.
+2. **Eine Prüfung, deren Eingabe sich täglich ändert, wird gegen feste
+   Beispiele gehalten.** Die Regel wandert in eine eigene Funktion, und
+   darunter stehen `assert`-Zeilen mit den Fällen, die durchgehen müssen,
+   und denen, die anschlagen müssen. Dann bricht der Bau an der Regel und
+   nicht an der Seite — unabhängig davon, welcher Tag ist.
+
+Siehe `_datum_ohne_jahr` in `bau-heute.py`: zehn Beispiele, bevor die erste
+Seite gebaut wird.
+
+Und der Nachsatz zu 6c gilt doppelt: dass eine Prüfung grün ist, heißt
+nicht, dass sie etwas prüft. Es kann auch heißen, dass ihr Fall heute
+nicht vorkam.
+
+---
+
+## 6f · Eine Sperre sitzt an dem Schlüssel, der im Text steht
+
+Am 1.11. standen in der Terminliste zwei Tage mit demselben Titel:
+
+```
+genau | Beruf: der deutlichste Tag   ← Jupitertag
+genau | Beruf: der deutlichste Tag   ← Venustag
+```
+
+Im Rechner stand seit Wochen eine Sperre, und sie war begründet:
+
+```js
+/* Höchstens ein Tag je Wanderer. */
+var proW={};
+```
+
+Sie hält fest, dass dasselbe *Wandergestirn* nicht zweimal auftaucht —
+weil der **Satz** am Wanderer hängt. Der **Titel** hängt aber am
+Lebensbereich, und den bestimmt das getroffene Haus. Zwei verschiedene
+Wanderer, die in denselben Bereich treffen, laufen durch die Sperre und
+tragen danach denselben Superlativ.
+
+Daraus die Regel:
+
+> **Jeder Schlüssel, der in einem gebauten Text landet, braucht seine
+> eigene Sperre.** Hängt der Satz am Wanderer und der Titel am Bereich,
+> dann reicht eine Sperre auf dem Wanderer nicht.
+
+Praktisch heißt das: bevor eine Liste gebaut wird, wird aufgezählt, welche
+Felder aus welchem Schlüssel entstehen. Für jeden dieser Schlüssel gibt es
+entweder eine Sperre oder eine Begründung, warum eine Dopplung dort
+richtig ist (die Durchgänge im Zeitstrahl sind so ein Fall — da ist die
+Wiederholung die Information, und die Rückverweistexte sagen es).
+
+Und ein Superlativ im besonderen: **„der deutlichste", „der stärkste",
+„der nächste" gibt es je Bezug genau einmal.** Kommt er zweimal vor, ist
+keiner von beiden wahr.
+
+Die Prüfung dazu zählt jetzt *alle* Titel der Terminliste, nicht nur die,
+die mit dem Aufmacher kollidieren. Die alte Fassung hat die Dopplung am
+1.11. nur gefunden, weil sie zufällig oben stand.
+
+---
+
 ## 7 · Wenn etwas unklar ist
 
 Im Zweifel: **weniger Astrologie, mehr Leben.** Und wenn eine Aussage nicht

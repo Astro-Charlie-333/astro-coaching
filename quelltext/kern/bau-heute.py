@@ -9,6 +9,29 @@ _MONFOLGE = {m: i for i, m in enumerate(
     ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August',
      'September', 'Oktober', 'November', 'Dezember'])}
 
+# Trägt eine Fensterangabe ein genanntes Kalenderdatum ohne Jahreszahl?
+# Nur eine echte Datumsform zählt — ein Tag mit Punkt und Monat dahinter.
+# Dauerangaben („bis morgen“, „noch drei Tage“) sind keine Daten.
+_DATUM = re.compile(
+    r'\b\d{1,2}\.\s*(?:\d{1,2}\.|Jan(?:uar)?|Feb(?:ruar)?|März|Apr(?:il)?|Mai'
+    r'|Juni?|Juli?|Aug(?:ust)?|Sep(?:tember)?|Okt(?:ober)?|Nov(?:ember)?'
+    r'|Dez(?:ember)?)')
+
+
+def _datum_ohne_jahr(s):
+    return bool(_DATUM.search(s)) and not re.search(r'\b20\d\d\b', s)
+
+
+# Die Regel wird gegen feste Beispiele gehalten, nicht gegen den Himmel von
+# heute. Sonst hängt es vom Datum des Durchlaufs ab, ob sie überhaupt greift —
+# und ein Fehler darin fällt erst auf, wenn er main rot macht.
+for _s in ['bis morgen', 'noch bis morgen', 'noch drei Tage',
+           'noch mindestens vier Wochen', 'bis 14. November 2026',
+           'bis 3.12.2026', 'noch bis morgen früh']:
+    assert not _datum_ohne_jahr(_s), 'Datumsregel schlägt falsch an: ' + _s
+for _s in ['bis 14. November', 'bis 3.12.', 'noch bis 1. Januar']:
+    assert _datum_ohne_jahr(_s), 'Datumsregel findet das Datum nicht: ' + _s
+
 hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
@@ -618,6 +641,14 @@ if pr:
     gleich = [t2 for t2 in a['wochentitel'] if t2 == a['titel']]
     if len(gleich) > 1:
         fehler.append('der Aufmacher steht mehrfach in der Terminliste')
+    # Und keiner der anderen Titel steht zweimal. Die Zeile darüber fand die
+    # Dopplung am 1.11. nur, weil sie zufällig den Aufmacher traf — zwei
+    # gleiche Titel weiter unten in der Liste wären durchgegangen. Ein Titel
+    # wie „Beruf: der deutlichste Tag“ darf es einmal geben, nicht zweimal.
+    from collections import Counter as _Counter
+    for _t, _n in _Counter(a['wochentitel']).items():
+        if _n > 1 and _t != a['titel']:
+            fehler.append(f'Titel steht {_n}× in der Terminliste: ' + repr(_t))
     if a['titel'] and a['text'] in a['volltexte']:
         fehler.append('der Aufmachertext steht wortgleich noch einmal in der Terminliste')
     # „Heute" muss zum Kalendertag passen, nicht zur Stundendifferenz
@@ -635,8 +666,13 @@ if pr:
         # Jede Angabe sagt entweder eine Dauer oder einen nahen Tag — nie beides unklar
         if not any(w in f2 for w in ('noch', 'mindestens', 'morgen')):
             fehler.append('Fensterangabe ohne Dauer: ' + repr(f2))
-        # Ein genanntes Datum trägt immer die Jahreszahl
-        if 'bis ' in f2 and '20' not in f2:
+        # Ein genanntes Datum trägt immer die Jahreszahl. Entscheidend ist die
+        # Datumsform, nicht das Wort „bis“: „bis morgen“ und „noch drei Tage“
+        # sind Dauerangaben und brauchen kein Jahr. Vorher stand hier
+        # `'bis ' in f2 and '20' not in f2` — das hat „bis morgen“ gemeldet und
+        # damit main an einem Tag rot gemacht, an dem sich kein Commit geändert
+        # hatte, nur der Himmel. Siehe REGELN.md 6e.
+        if _datum_ohne_jahr(f2):
             fehler.append('Datum ohne Jahreszahl: ' + repr(f2))
         # Jenseits eines Jahres ist ein tagesgenaues Datum falsche Genauigkeit
         import re as _re
