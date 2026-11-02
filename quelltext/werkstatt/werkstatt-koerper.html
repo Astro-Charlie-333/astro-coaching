@@ -1,0 +1,96 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="werkstatt.html">Werkstatt</a>
+<nav class="ac-nav"><a href="index.html">Jetzt</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html">Profile</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="wk-wrap">
+
+<!-- Die Liste. Sie ist die Startansicht; ein Klick oeffnet einen Menschen. -->
+<div id="wkliste">
+  <div class="wk-kopf">
+    <div class="wk-eyebrow">Nur f&uuml;r dich &middot; nichts davon verl&auml;sst diesen Browser</div>
+    <h1 class="wk-h1">Deine Leute</h1>
+    <p class="wk-lede" id="wkanzahl"></p>
+  </div>
+  <div class="wk-karten" id="wkkarten"></div>
+  <div class="wk-leer" id="wkleer" hidden>
+    <b>Noch niemand angelegt</b>
+    <p>Menschen legst du unter <a href="profile.html">Profile</a> an &mdash;
+    mit Geburtsdatum, Uhrzeit und Ort. Danach stehen sie hier.</p>
+  </div>
+</div>
+
+<!-- Die Einzelansicht. Alles zu einem Menschen auf einem Blatt. -->
+<div id="wkdetail" hidden>
+  <a class="wk-zurueck" href="#" id="wkzurueck">&larr; Alle</a>
+
+  <div class="wk-kopf">
+    <div class="wk-eyebrow" id="wkgeb"></div>
+    <h1 class="wk-h1" id="wkname"></h1>
+    <p class="wk-lede" id="wkstand"></p>
+  </div>
+
+  <!-- Sprungleiste: setzt das Profil aktiv und geht hin -->
+  <div class="wk-spruenge" id="wkspruenge"></div>
+
+  <!-- Auf einen Blick: die Herrscherketten, die in der Praxis am
+       meisten hergeben. Gerechnet, nicht gedeutet. -->
+  <section class="wk-ab">
+    <h2 class="wk-h2">Auf einen Blick</h2>
+    <p class="wk-sub">Gerechnet aus den Geburtsdaten. Was es bedeutet,
+    steht hier bewusst nicht &mdash; das ist Gespr&auml;ch, nicht Anzeige.</p>
+    <div class="wk-blick" id="wkblick"></div>
+  </section>
+
+  <!-- Der Verlauf der Begleitung, aus ac_begleit_v1 -->
+  <section class="wk-ab">
+    <h2 class="wk-h2">Wo ihr steht</h2>
+    <p class="wk-sub" id="wkverlaufsub"></p>
+    <div class="wk-sitzungen" id="wksitzungen"></div>
+  </section>
+
+  <!-- Dokumente: Links auf alles, was ausserhalb liegt -->
+  <section class="wk-ab">
+    <h2 class="wk-h2">Dokumente</h2>
+    <p class="wk-sub">Alles, was zu diesem Menschen geh&ouml;rt und woanders
+    liegt &mdash; eine Analyse, ein Zettel, ein geteilter Ordner.</p>
+    <div class="wk-dok" id="wkdok"></div>
+    <form class="wk-dokneu" id="wkdokneu">
+      <input type="text" id="wkdt" placeholder="Titel" maxlength="80">
+      <!-- Bewusst kein type="url": Der Browser w&uuml;rde dann jede Eingabe
+           ohne https:// als ung&uuml;ltig abweisen und das Abschicken
+           blockieren. Erg&auml;nzt wird das Schema im Skript. -->
+      <input type="text" inputmode="url" id="wkdu" placeholder="https://&hellip;">
+      <button type="submit">Hinzuf&uuml;gen</button>
+    </form>
+  </section>
+
+  <!-- Readings aus dem Profil -->
+  <section class="wk-ab" id="wkreadingsteil">
+    <h2 class="wk-h2">Readings</h2>
+    <div class="wk-readings" id="wkreadings"></div>
+  </section>
+
+  <!-- Freie Notiz -->
+  <section class="wk-ab">
+    <h2 class="wk-h2">Notiz</h2>
+    <p class="wk-sub">Was du dir zwischen den Sitzungen merken willst.
+    Speichert automatisch.</p>
+    <textarea id="wkmerk" rows="6" placeholder="&hellip;"></textarea>
+    <div class="wk-gespeichert" id="wkgesp"></div>
+  </section>
+
+</div>
+
+<div class="wk-fuss">
+  <p>Diese Seite steht in keinem Men&uuml;. Alles, was du hier siehst, liegt
+  im Speicher dieses Browsers &mdash; nicht auf einem Server und nicht im
+  Projekt. Wenn du den Browser wechselst oder Daten l&ouml;schst, ist es weg.
+  Unter <a href="profile.html">Profile</a> kannst du alles aus- und wieder
+  einlesen.</p>
+</div>
+
+</div>
