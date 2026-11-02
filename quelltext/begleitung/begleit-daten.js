@@ -321,6 +321,20 @@ var C_FELD = [
  'deinem Freundeskreis',
  'deinem Rückzug'];
 
+/* ── Woran die Reihenfolge der Stellungen hängt ───────────────
+   Wartet auf Wissensstufe 2 in ac-tech. Auf Stufe 0 steht nur die
+   Frage da; wer wissen will, warum diese oben steht, dreht hoch.
+   Bruchstücke, keine Sätze — der Rechner gibt die Tatsachen, die
+   Anzeige reiht die zutreffenden hintereinander. */
+var C_STELL_TECH = {
+ feld:'{anlage} im {haus}. Haus',
+ grad:'{grad}° im Feld',
+ winkelfeld:'Winkelfeld',
+ eigenherr:'Herr des Feldes',
+ chartherr:'Herr des Aszendenten',
+ herrnah:'im Winkel zum Herrn des Feldes',
+ verknuepft:'Verknüpfung {gv}'};
+
 /* Die Spannungen: eine Frage, die den Winkel als Frage stellt. */
 var C_WINKEL = {
  hart:['Zwei Sachen willst du gleichzeitig. Die eine: {a}. Die andere: {b}. Wo im Alltag merkst du, dass beides zusammen nicht geht?',
