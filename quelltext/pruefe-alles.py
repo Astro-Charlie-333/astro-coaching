@@ -36,6 +36,7 @@ if not wiki.exists():
 # gebaut sein, weil die Startseite deren Rechner mitnimmt.
 BAUTEN = [
     ('rituale/bau.py',        'Rituale'),
+    ('start/bau-start.py',    'Start'),
     ('rituale/bau-zauber.py', 'Zauber'),
     ('niveau/bau-reading.py', 'Reading'),
     ('karte/bau-karte.py',    'Karte'),
