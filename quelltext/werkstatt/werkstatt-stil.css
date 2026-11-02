@@ -1,0 +1,123 @@
+/* ── Werkstatt ────────────────────────────────────────────────
+   Die stille fuenfte Tuer (ENTWURF-NEUE-SEITE.md Abschnitt 3).
+   Arbeitsplatz, kein Schaufenster: dichter gesetzt als die
+   oeffentlichen Seiten, weniger Luft, mehr auf einem Blick. */
+
+.wk-wrap{max-width:820px;margin:0 auto;padding:0 18px 80px;}
+.wk-kopf{padding:30px 0 20px;}
+.wk-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--messing);margin-bottom:8px;}
+.wk-h1{font-family:var(--serif);font-size:clamp(30px,6.6vw,42px);font-weight:300;
+  line-height:1.05;letter-spacing:-.022em;color:var(--nacht);margin:0 0 10px;}
+.wk-lede{font-size:15.6px;line-height:1.55;color:var(--leise);margin:0;
+  max-width:52ch;}
+.wk-h2{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--nacht);
+  margin:0 0 5px;}
+.wk-sub{font-size:14.2px;line-height:1.55;color:var(--leise);margin:0 0 13px;
+  max-width:58ch;}
+.wk-ab{margin-top:34px;padding-top:22px;border-top:1px solid var(--linie);}
+
+/* ── Die Liste ─────────────────────────────────────────────── */
+.wk-karten{display:grid;gap:10px;}
+@media(min-width:660px){.wk-karten{grid-template-columns:1fr 1fr;}}
+.wk-k{display:block;width:100%;text-align:left;cursor:pointer;
+  background:var(--papier);border:1px solid var(--linie);border-radius:15px;
+  padding:16px 17px;font:inherit;color:inherit;
+  transition:transform .13s ease, border-color .13s ease;}
+.wk-k:hover{transform:translateY(-2px);border-color:var(--linie-stark);}
+.wk-k:focus-visible{outline:2px solid var(--messing);outline-offset:2px;}
+.wk-k-n{font-family:var(--serif);font-size:21px;font-weight:500;
+  color:var(--nacht);line-height:1.18;margin-bottom:2px;}
+.wk-k-m{font-family:var(--mono);font-size:11.8px;color:var(--messing);
+  margin-bottom:9px;}
+.wk-k-s{font-size:14px;line-height:1.5;color:var(--leise);}
+.wk-k-b{display:flex;gap:4px;margin-top:10px;}
+.wk-k-b i{flex:1;height:5px;border-radius:3px;background:var(--linie);}
+.wk-k-b i.an{background:var(--messing);}
+.wk-leer{background:var(--messing-bg);border-radius:15px;padding:20px;}
+.wk-leer b{display:block;font-family:var(--serif);font-size:20px;
+  font-weight:500;color:var(--nacht);margin-bottom:5px;}
+.wk-leer p{font-size:14.8px;line-height:1.56;margin:0;}
+
+/* ── Die Einzelansicht ─────────────────────────────────────── */
+.wk-zurueck{display:inline-block;margin-top:24px;font-family:var(--mono);
+  font-size:12.4px;color:var(--messing);text-decoration:none;}
+.wk-zurueck:hover{text-decoration:underline;}
+
+.wk-spruenge{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px;}
+.wk-sp{font-size:14px;text-decoration:none;color:var(--nacht);
+  background:var(--messing-bg);border:1px solid var(--linie-stark);
+  border-radius:999px;padding:8px 15px;white-space:nowrap;}
+.wk-sp:hover{background:var(--linie);}
+
+/* Auf einen Blick */
+.wk-blick{display:grid;gap:8px;}
+@media(min-width:600px){.wk-blick{grid-template-columns:1fr 1fr;}}
+.wk-b1{background:var(--papier);border:1px solid var(--linie);
+  border-radius:13px;padding:12px 14px;}
+.wk-b1.weit{grid-column:1/-1;border-left:3px solid var(--messing);
+  background:var(--messing-bg);}
+.wk-b1 .l{font-family:var(--mono);font-size:10.8px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--messing);margin-bottom:3px;}
+.wk-b1 .v{font-family:var(--serif);font-size:18.6px;font-weight:500;
+  color:var(--nacht);line-height:1.26;}
+.wk-b1 .z{font-size:13.6px;line-height:1.5;color:var(--leise);margin-top:3px;}
+
+/* Sitzungen */
+.wk-sitzungen{display:grid;gap:7px;}
+.wk-s1{display:grid;grid-template-columns:27px 1fr;gap:12px;align-items:start;
+  background:var(--papier);border:1px solid var(--linie);border-radius:12px;
+  padding:11px 14px;}
+.wk-s1.leerzeile{opacity:.55;}
+.wk-s1 .n{font-family:var(--mono);font-size:12px;color:var(--messing);
+  background:var(--messing-bg);width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;}
+.wk-s1 .t{font-family:var(--serif);font-size:17px;font-weight:500;
+  color:var(--nacht);line-height:1.24;}
+.wk-s1 .x{font-size:13.8px;line-height:1.52;color:var(--leise);margin-top:3px;
+  white-space:pre-wrap;}
+
+/* Dokumente */
+.wk-dok{display:grid;gap:7px;margin-bottom:11px;}
+.wk-d1{display:flex;align-items:center;gap:10px;background:var(--papier);
+  border:1px solid var(--linie);border-radius:12px;padding:10px 13px;}
+.wk-d1 a{flex:1;font-size:15px;color:var(--nacht);text-decoration:none;
+  font-weight:500;overflow:hidden;text-overflow:ellipsis;}
+.wk-d1 a:hover{color:var(--messing);text-decoration:underline;}
+.wk-d1 .wirt{font-family:var(--mono);font-size:11px;color:var(--leise);
+  white-space:nowrap;}
+.wk-d1 button{background:none;border:none;color:var(--leise);cursor:pointer;
+  font-size:17px;line-height:1;padding:3px 5px;border-radius:6px;}
+.wk-d1 button:hover{background:var(--linie);color:var(--nacht);}
+.wk-dokneu{display:grid;gap:7px;grid-template-columns:1fr;}
+@media(min-width:620px){.wk-dokneu{grid-template-columns:1fr 1.3fr auto;}}
+.wk-dokneu input{font:inherit;font-size:14.6px;padding:10px 13px;
+  border:1px solid var(--linie-stark);border-radius:11px;
+  background:var(--papier);color:var(--tinte);min-width:0;}
+.wk-dokneu input:focus{outline:2px solid var(--messing);outline-offset:1px;}
+.wk-dokneu button{font:inherit;font-size:14.6px;font-weight:500;
+  padding:10px 18px;border:none;border-radius:11px;cursor:pointer;
+  background:var(--nacht);color:var(--creme);white-space:nowrap;}
+.wk-dokneu button:hover{opacity:.9;}
+
+/* Readings */
+.wk-readings{display:grid;gap:7px;}
+.wk-r1{background:var(--papier);border:1px solid var(--linie);
+  border-radius:12px;padding:11px 14px;}
+.wk-r1 .t{font-family:var(--serif);font-size:17px;font-weight:500;
+  color:var(--nacht);}
+.wk-r1 .d{font-family:var(--mono);font-size:11.4px;color:var(--messing);}
+
+/* Notiz */
+#wkmerk{width:100%;font:inherit;font-size:15.4px;line-height:1.6;
+  padding:14px 15px;border:1px solid var(--linie-stark);border-radius:14px;
+  background:var(--papier);color:var(--tinte);resize:vertical;}
+#wkmerk:focus{outline:2px solid var(--messing);outline-offset:1px;}
+.wk-gespeichert{font-family:var(--mono);font-size:11.2px;color:var(--leise);
+  margin-top:6px;min-height:15px;}
+
+.wk-nichts{font-size:14.4px;color:var(--leise);font-style:italic;}
+.wk-fuss{margin-top:46px;padding-top:20px;border-top:1px solid var(--linie);}
+.wk-fuss p{font-size:13.2px;line-height:1.58;color:var(--leise);margin:0;
+  max-width:62ch;}
+@media (prefers-reduced-motion:reduce){.wk-k{transition:none;}}
