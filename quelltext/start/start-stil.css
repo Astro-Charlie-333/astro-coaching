@@ -1,0 +1,178 @@
+/* ── Start ────────────────────────────────────────────────────
+   Die Palette steht in basis.css und wird hier nicht angefasst
+   (ENTWURF Abschnitt 6: „Es braucht keine neue Palette"). Was diese
+   Seite anders macht, ist der Wechsel: grosse ruhige Cremeflaechen und
+   zwei dunkle Bloecke, die etwas Wichtiges tragen — der Kopf und
+   „Was das hier nicht ist".
+
+   Gebaut und angesehen auf 390 Pixeln zuerst. */
+
+/* ── Die Leiste ─────────────────────────────────────────────
+   Auf allen anderen Seiten klebt sie oben, weil man dort zwischen
+   Werkzeugen wechselt. Auf der Tuer klebt sie nicht: Sie wuerde sonst
+   mit ihrer hellen Flaeche quer ueber den dunklen Bloecken liegen und
+   sie oben abschneiden. Hier gehoert sie an den Anfang und dann weg. */
+.ac-leiste{position:static;background:var(--papier);
+  backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:none;}
+.ac-leiste-inner{max-width:760px;padding:18px 20px;}
+.st-leiste-w{margin-left:auto;font-size:14px;color:var(--leise);
+  text-decoration:none;border-bottom:1px solid var(--linie-stark);
+  padding-bottom:2px;white-space:nowrap;}
+.st-leiste-w:hover{color:var(--nacht);border-color:var(--messing);}
+
+/* ── Der Kopf ───────────────────────────────────────────────── */
+.st-kopf{background:var(--nacht);color:#F4F1EA;
+  padding:54px 0 48px;position:relative;overflow:hidden;}
+/* Eine sehr leise Andeutung von Bahnen. Kein Bild, kein Ladefehler. */
+.st-kopf::after{content:"";position:absolute;right:-120px;top:-90px;
+  width:360px;height:360px;border-radius:50%;
+  border:1px solid rgba(232,201,141,.17);
+  box-shadow:0 0 0 58px rgba(232,201,141,.055),
+             0 0 0 128px rgba(232,201,141,.03);
+  pointer-events:none;}
+.st-kopf-in{max-width:760px;margin:0 auto;padding:0 20px;position:relative;}
+.st-wort{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:#E8C98D;margin-bottom:18px;}
+.st-frage{font-family:var(--serif);font-weight:300;
+  font-size:clamp(31px,7.6vw,52px);line-height:1.06;letter-spacing:-.022em;
+  color:#FFFDFA;margin:0 0 20px;max-width:21ch;text-wrap:balance;}
+.st-satz{font-size:clamp(16px,2.9vw,18.5px);line-height:1.6;
+  color:#DCD6CA;max-width:50ch;margin:0 0 26px;}
+.st-knoepfe{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+.st-kn{display:inline-block;text-decoration:none;border-radius:999px;
+  padding:12px 20px;font-size:15px;font-weight:500;
+  transition:transform .14s ease, background .14s ease;}
+.st-kn-1{background:#E8C98D;color:#2B2419;}
+.st-kn-2{background:transparent;color:#EFE9DC;
+  box-shadow:inset 0 0 0 1px rgba(239,233,220,.4);}
+.st-kn:hover{transform:translateY(-1px);}
+.st-kn-1:hover{background:#F0D7A4;}
+.st-kn-2:hover{background:rgba(239,233,220,.1);}
+.st-rolle{font-size:14.4px;line-height:1.62;color:#BDB6A8;max-width:52ch;
+  margin:0;padding-top:20px;border-top:1px solid rgba(244,241,234,.16);}
+
+/* ── Fliessender Teil ───────────────────────────────────────── */
+.st-wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.st-ab{padding:50px 0 4px;}
+.st-ue{margin-bottom:22px;}
+.st-ue-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--messing);margin-bottom:8px;}
+.st-h2{font-family:var(--serif);font-weight:500;
+  font-size:clamp(24px,5vw,33px);line-height:1.1;letter-spacing:-.015em;
+  color:var(--nacht);margin:0 0 9px;text-wrap:balance;}
+.st-h3{font-family:var(--serif);font-weight:500;font-size:21px;
+  color:var(--nacht);margin:0 0 12px;}
+.st-sub{font-size:15.8px;line-height:1.62;color:var(--leise);
+  max-width:58ch;margin:0;}
+
+/* Die drei Linsen */
+.st-linsen{display:grid;gap:12px;}
+@media(min-width:680px){.st-linsen{grid-template-columns:repeat(3,1fr);}}
+.st-li{background:var(--papier);border:1px solid var(--linie);
+  border-radius:16px;padding:20px;border-top:3px solid var(--messing);}
+.st-li-f{font-family:var(--serif);font-size:20px;font-weight:500;
+  color:var(--nacht);line-height:1.2;margin-bottom:5px;}
+.st-li-n{font-family:var(--mono);font-size:11.4px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--messing);margin-bottom:11px;}
+.st-li-d{font-size:14.8px;line-height:1.6;margin:0;}
+
+/* Die Angebote */
+.st-ang{display:grid;gap:14px;}
+.st-a{background:var(--papier);border:1px solid var(--linie);
+  border-radius:18px;padding:22px 20px;}
+.st-a-n{font-family:var(--serif);font-size:clamp(21px,4vw,25px);
+  font-weight:500;color:var(--nacht);line-height:1.16;margin-bottom:4px;}
+.st-a-art{font-family:var(--mono);font-size:11.8px;color:var(--messing);
+  margin-bottom:13px;}
+.st-a-f{font-size:15.4px;line-height:1.58;margin:0 0 14px;
+  padding-left:13px;border-left:2px solid var(--linie-stark);}
+.st-a-l{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px;}
+.st-a-l li{position:relative;padding-left:21px;font-size:14.8px;
+  line-height:1.56;}
+.st-a-l li::before{content:"";position:absolute;left:3px;top:8px;
+  width:7px;height:7px;border-radius:50%;background:var(--messing);}
+.st-a-nicht{font-size:13.8px;line-height:1.56;color:var(--leise);
+  padding-top:12px;border-top:1px solid var(--linie);margin:0;}
+
+/* Der Ablauf */
+.st-schritte{list-style:none;counter-reset:st;margin:0;padding:0;
+  display:grid;gap:11px;}
+.st-schritte li{counter-increment:st;display:grid;
+  grid-template-columns:34px 1fr;gap:14px;align-items:start;
+  background:var(--papier);border:1px solid var(--linie);
+  border-radius:14px;padding:15px 17px;}
+.st-schritte li::before{content:counter(st);font-family:var(--mono);
+  font-size:13px;color:var(--messing);background:var(--messing-bg);
+  width:28px;height:28px;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;}
+.st-s-t{font-family:var(--serif);font-size:18.4px;font-weight:500;
+  color:var(--nacht);line-height:1.22;margin-bottom:3px;}
+.st-s-d{font-size:14.8px;line-height:1.58;margin:0;}
+.st-nach{font-size:15px;line-height:1.62;color:var(--leise);
+  max-width:58ch;margin:16px 0 0;}
+
+/* Die Tuer */
+.st-wege{display:grid;gap:10px;}
+@media(min-width:620px){.st-wege{grid-template-columns:repeat(3,1fr);}}
+.st-w{display:block;text-decoration:none;background:var(--messing-bg);
+  border:1px solid var(--linie-stark);border-radius:14px;padding:16px 17px;
+  transition:transform .14s ease;}
+.st-w:hover{transform:translateY(-2px);}
+.st-w-t{font-family:var(--serif);font-size:18px;font-weight:500;
+  color:var(--nacht);line-height:1.2;margin-bottom:3px;}
+.st-w-d{font-size:13.8px;line-height:1.5;color:var(--leise);}
+
+/* Wer ich bin */
+.st-ich p{font-size:15.8px;line-height:1.66;max-width:62ch;margin:0 0 12px;}
+.st-ich p:last-child{margin-bottom:0;}
+
+/* ── Was das hier nicht ist: der zweite dunkle Block ────────── */
+.st-nicht{background:var(--nacht);color:#E8E3D9;margin-top:54px;
+  padding:48px 0 44px;}
+.st-nicht-in{max-width:760px;margin:0 auto;padding:0 20px;}
+.st-h2-hell{color:#FFFDFA;}
+.st-sub-hell{color:#C3BCAE;margin-bottom:24px;}
+.st-np{display:grid;gap:10px;margin-bottom:26px;}
+.st-n1{background:rgba(244,241,234,.07);border-radius:13px;padding:15px 17px;}
+.st-n1 b{display:block;font-family:var(--serif);font-size:18.6px;
+  font-weight:500;color:#FFFDFA;margin-bottom:4px;}
+.st-n1 span{font-size:14.8px;line-height:1.58;color:#D3CCBE;}
+.st-krise{border:1px solid rgba(232,201,141,.42);border-radius:14px;
+  padding:17px 18px;}
+.st-krise b{display:block;font-family:var(--serif);font-size:19px;
+  font-weight:500;color:#E8C98D;margin-bottom:6px;}
+.st-krise p{font-size:14.8px;line-height:1.6;color:#D8D1C3;margin:0 0 12px;
+  max-width:58ch;}
+.st-krise dl{margin:0;display:grid;gap:7px;}
+.st-krise dt{font-size:14px;font-weight:500;color:#F2EDE2;}
+.st-krise dd{margin:0 0 3px;font-family:var(--mono);font-size:13.4px;
+  color:#E8C98D;}
+
+/* Kontakt */
+.st-k{background:var(--papier);border:1px solid var(--linie);
+  border-radius:18px;padding:22px 20px;}
+.st-k-a{display:inline-block;font-family:var(--mono);font-size:clamp(15px,3.4vw,19px);
+  color:var(--nacht);text-decoration:none;background:var(--messing-bg);
+  border-radius:11px;padding:12px 17px;word-break:break-all;}
+.st-k-a:hover{background:var(--linie);}
+.st-luecke{border:1px dashed var(--messing);border-radius:16px;
+  padding:19px 20px;background:var(--messing-bg);}
+.st-luecke b{display:block;font-family:var(--serif);font-size:19px;
+  font-weight:500;color:var(--nacht);margin-bottom:5px;}
+.st-luecke p{font-size:14.6px;line-height:1.58;margin:0;color:var(--leise);}
+
+/* Ehrlichkeit */
+.st-ehr{margin-top:14px;padding-bottom:10px;}
+.st-ehr-l{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
+.st-ehr-l li{font-size:14.6px;line-height:1.6;color:var(--leise);
+  padding-left:15px;border-left:2px solid var(--linie-stark);
+  max-width:64ch;}
+
+/* Fuss */
+.st-fuss{padding:34px 0 60px;margin-top:24px;
+  border-top:1px solid var(--linie);}
+.st-fuss-m{font-family:var(--serif);font-size:19px;font-weight:500;
+  color:var(--nacht);margin-bottom:5px;}
+.st-fuss-z{font-size:13.8px;line-height:1.56;color:var(--leise);margin:0;}
+
+@media (prefers-reduced-motion:reduce){.st-kn,.st-w{transition:none;}}

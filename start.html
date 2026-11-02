@@ -1,0 +1,743 @@
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schwerkraft &middot; Coaching mit Mandy Netta</title>
+<meta name="description" content="Coaching in Berlin, bei dem das Geburtsbild als Landkarte dient und nicht als Befund. Keine Vorhersage, keine Therapie, erstes Gespr&auml;ch kostenlos.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* ── Start ────────────────────────────────────────────────────
+   Die Palette steht in basis.css und wird hier nicht angefasst
+   (ENTWURF Abschnitt 6: „Es braucht keine neue Palette"). Was diese
+   Seite anders macht, ist der Wechsel: grosse ruhige Cremeflaechen und
+   zwei dunkle Bloecke, die etwas Wichtiges tragen — der Kopf und
+   „Was das hier nicht ist".
+
+   Gebaut und angesehen auf 390 Pixeln zuerst. */
+
+/* ── Die Leiste ─────────────────────────────────────────────
+   Auf allen anderen Seiten klebt sie oben, weil man dort zwischen
+   Werkzeugen wechselt. Auf der Tuer klebt sie nicht: Sie wuerde sonst
+   mit ihrer hellen Flaeche quer ueber den dunklen Bloecken liegen und
+   sie oben abschneiden. Hier gehoert sie an den Anfang und dann weg. */
+.ac-leiste{position:static;background:var(--papier);
+  backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:none;}
+.ac-leiste-inner{max-width:760px;padding:18px 20px;}
+.st-leiste-w{margin-left:auto;font-size:14px;color:var(--leise);
+  text-decoration:none;border-bottom:1px solid var(--linie-stark);
+  padding-bottom:2px;white-space:nowrap;}
+.st-leiste-w:hover{color:var(--nacht);border-color:var(--messing);}
+
+/* ── Der Kopf ───────────────────────────────────────────────── */
+.st-kopf{background:var(--nacht);color:#F4F1EA;
+  padding:54px 0 48px;position:relative;overflow:hidden;}
+/* Eine sehr leise Andeutung von Bahnen. Kein Bild, kein Ladefehler. */
+.st-kopf::after{content:"";position:absolute;right:-120px;top:-90px;
+  width:360px;height:360px;border-radius:50%;
+  border:1px solid rgba(232,201,141,.17);
+  box-shadow:0 0 0 58px rgba(232,201,141,.055),
+             0 0 0 128px rgba(232,201,141,.03);
+  pointer-events:none;}
+.st-kopf-in{max-width:760px;margin:0 auto;padding:0 20px;position:relative;}
+.st-wort{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:#E8C98D;margin-bottom:18px;}
+.st-frage{font-family:var(--serif);font-weight:300;
+  font-size:clamp(31px,7.6vw,52px);line-height:1.06;letter-spacing:-.022em;
+  color:#FFFDFA;margin:0 0 20px;max-width:21ch;text-wrap:balance;}
+.st-satz{font-size:clamp(16px,2.9vw,18.5px);line-height:1.6;
+  color:#DCD6CA;max-width:50ch;margin:0 0 26px;}
+.st-knoepfe{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
+.st-kn{display:inline-block;text-decoration:none;border-radius:999px;
+  padding:12px 20px;font-size:15px;font-weight:500;
+  transition:transform .14s ease, background .14s ease;}
+.st-kn-1{background:#E8C98D;color:#2B2419;}
+.st-kn-2{background:transparent;color:#EFE9DC;
+  box-shadow:inset 0 0 0 1px rgba(239,233,220,.4);}
+.st-kn:hover{transform:translateY(-1px);}
+.st-kn-1:hover{background:#F0D7A4;}
+.st-kn-2:hover{background:rgba(239,233,220,.1);}
+.st-rolle{font-size:14.4px;line-height:1.62;color:#BDB6A8;max-width:52ch;
+  margin:0;padding-top:20px;border-top:1px solid rgba(244,241,234,.16);}
+
+/* ── Fliessender Teil ───────────────────────────────────────── */
+.st-wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.st-ab{padding:50px 0 4px;}
+.st-ue{margin-bottom:22px;}
+.st-ue-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--messing);margin-bottom:8px;}
+.st-h2{font-family:var(--serif);font-weight:500;
+  font-size:clamp(24px,5vw,33px);line-height:1.1;letter-spacing:-.015em;
+  color:var(--nacht);margin:0 0 9px;text-wrap:balance;}
+.st-h3{font-family:var(--serif);font-weight:500;font-size:21px;
+  color:var(--nacht);margin:0 0 12px;}
+.st-sub{font-size:15.8px;line-height:1.62;color:var(--leise);
+  max-width:58ch;margin:0;}
+
+/* Die drei Linsen */
+.st-linsen{display:grid;gap:12px;}
+@media(min-width:680px){.st-linsen{grid-template-columns:repeat(3,1fr);}}
+.st-li{background:var(--papier);border:1px solid var(--linie);
+  border-radius:16px;padding:20px;border-top:3px solid var(--messing);}
+.st-li-f{font-family:var(--serif);font-size:20px;font-weight:500;
+  color:var(--nacht);line-height:1.2;margin-bottom:5px;}
+.st-li-n{font-family:var(--mono);font-size:11.4px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--messing);margin-bottom:11px;}
+.st-li-d{font-size:14.8px;line-height:1.6;margin:0;}
+
+/* Die Angebote */
+.st-ang{display:grid;gap:14px;}
+.st-a{background:var(--papier);border:1px solid var(--linie);
+  border-radius:18px;padding:22px 20px;}
+.st-a-n{font-family:var(--serif);font-size:clamp(21px,4vw,25px);
+  font-weight:500;color:var(--nacht);line-height:1.16;margin-bottom:4px;}
+.st-a-art{font-family:var(--mono);font-size:11.8px;color:var(--messing);
+  margin-bottom:13px;}
+.st-a-f{font-size:15.4px;line-height:1.58;margin:0 0 14px;
+  padding-left:13px;border-left:2px solid var(--linie-stark);}
+.st-a-l{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px;}
+.st-a-l li{position:relative;padding-left:21px;font-size:14.8px;
+  line-height:1.56;}
+.st-a-l li::before{content:"";position:absolute;left:3px;top:8px;
+  width:7px;height:7px;border-radius:50%;background:var(--messing);}
+.st-a-nicht{font-size:13.8px;line-height:1.56;color:var(--leise);
+  padding-top:12px;border-top:1px solid var(--linie);margin:0;}
+
+/* Der Ablauf */
+.st-schritte{list-style:none;counter-reset:st;margin:0;padding:0;
+  display:grid;gap:11px;}
+.st-schritte li{counter-increment:st;display:grid;
+  grid-template-columns:34px 1fr;gap:14px;align-items:start;
+  background:var(--papier);border:1px solid var(--linie);
+  border-radius:14px;padding:15px 17px;}
+.st-schritte li::before{content:counter(st);font-family:var(--mono);
+  font-size:13px;color:var(--messing);background:var(--messing-bg);
+  width:28px;height:28px;border-radius:50%;display:flex;
+  align-items:center;justify-content:center;}
+.st-s-t{font-family:var(--serif);font-size:18.4px;font-weight:500;
+  color:var(--nacht);line-height:1.22;margin-bottom:3px;}
+.st-s-d{font-size:14.8px;line-height:1.58;margin:0;}
+.st-nach{font-size:15px;line-height:1.62;color:var(--leise);
+  max-width:58ch;margin:16px 0 0;}
+
+/* Die Tuer */
+.st-wege{display:grid;gap:10px;}
+@media(min-width:620px){.st-wege{grid-template-columns:repeat(3,1fr);}}
+.st-w{display:block;text-decoration:none;background:var(--messing-bg);
+  border:1px solid var(--linie-stark);border-radius:14px;padding:16px 17px;
+  transition:transform .14s ease;}
+.st-w:hover{transform:translateY(-2px);}
+.st-w-t{font-family:var(--serif);font-size:18px;font-weight:500;
+  color:var(--nacht);line-height:1.2;margin-bottom:3px;}
+.st-w-d{font-size:13.8px;line-height:1.5;color:var(--leise);}
+
+/* Wer ich bin */
+.st-ich p{font-size:15.8px;line-height:1.66;max-width:62ch;margin:0 0 12px;}
+.st-ich p:last-child{margin-bottom:0;}
+
+/* ── Was das hier nicht ist: der zweite dunkle Block ────────── */
+.st-nicht{background:var(--nacht);color:#E8E3D9;margin-top:54px;
+  padding:48px 0 44px;}
+.st-nicht-in{max-width:760px;margin:0 auto;padding:0 20px;}
+.st-h2-hell{color:#FFFDFA;}
+.st-sub-hell{color:#C3BCAE;margin-bottom:24px;}
+.st-np{display:grid;gap:10px;margin-bottom:26px;}
+.st-n1{background:rgba(244,241,234,.07);border-radius:13px;padding:15px 17px;}
+.st-n1 b{display:block;font-family:var(--serif);font-size:18.6px;
+  font-weight:500;color:#FFFDFA;margin-bottom:4px;}
+.st-n1 span{font-size:14.8px;line-height:1.58;color:#D3CCBE;}
+.st-krise{border:1px solid rgba(232,201,141,.42);border-radius:14px;
+  padding:17px 18px;}
+.st-krise b{display:block;font-family:var(--serif);font-size:19px;
+  font-weight:500;color:#E8C98D;margin-bottom:6px;}
+.st-krise p{font-size:14.8px;line-height:1.6;color:#D8D1C3;margin:0 0 12px;
+  max-width:58ch;}
+.st-krise dl{margin:0;display:grid;gap:7px;}
+.st-krise dt{font-size:14px;font-weight:500;color:#F2EDE2;}
+.st-krise dd{margin:0 0 3px;font-family:var(--mono);font-size:13.4px;
+  color:#E8C98D;}
+
+/* Kontakt */
+.st-k{background:var(--papier);border:1px solid var(--linie);
+  border-radius:18px;padding:22px 20px;}
+.st-k-a{display:inline-block;font-family:var(--mono);font-size:clamp(15px,3.4vw,19px);
+  color:var(--nacht);text-decoration:none;background:var(--messing-bg);
+  border-radius:11px;padding:12px 17px;word-break:break-all;}
+.st-k-a:hover{background:var(--linie);}
+.st-luecke{border:1px dashed var(--messing);border-radius:16px;
+  padding:19px 20px;background:var(--messing-bg);}
+.st-luecke b{display:block;font-family:var(--serif);font-size:19px;
+  font-weight:500;color:var(--nacht);margin-bottom:5px;}
+.st-luecke p{font-size:14.6px;line-height:1.58;margin:0;color:var(--leise);}
+
+/* Ehrlichkeit */
+.st-ehr{margin-top:14px;padding-bottom:10px;}
+.st-ehr-l{list-style:none;margin:0;padding:0;display:grid;gap:11px;}
+.st-ehr-l li{font-size:14.6px;line-height:1.6;color:var(--leise);
+  padding-left:15px;border-left:2px solid var(--linie-stark);
+  max-width:64ch;}
+
+/* Fuss */
+.st-fuss{padding:34px 0 60px;margin-top:24px;
+  border-top:1px solid var(--linie);}
+.st-fuss-m{font-family:var(--serif);font-size:19px;font-weight:500;
+  color:var(--nacht);margin-bottom:5px;}
+.st-fuss-z{font-size:13.8px;line-height:1.56;color:var(--leise);margin:0;}
+
+@media (prefers-reduced-motion:reduce){.st-kn,.st-w{transition:none;}}
+</style>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="start.html">Schwerkraft</a>
+<!-- Keine Werkzeugleiste auf der T&uuml;r. Die f&uuml;nf Links sind f&uuml;r Leute
+     gemacht, die das Werkzeug schon benutzen; wer hier zuerst landet,
+     kennt keinen davon. Das Werkzeug wird weiter unten vorgestellt, mit
+     Erkl&auml;rung. Dass diese Seite kein ac-nav hat, ist Absicht &mdash; damit
+     bleibt die Navigation auf allen anderen Seiten unver&auml;ndert gleich. -->
+<a class="st-leiste-w" href="#sttuer">Dein Bild ansehen</a>
+</div></div>
+
+<!-- Der erste Bildschirm macht eine Aussage, statt die Seite
+     anzuk&uuml;ndigen (ENTWURF Abschnitt 6 und 8.6). Dunkel, weil die
+     dunklen Fl&auml;chen das St&auml;rkste sind, was diese Gestaltung hat. -->
+<header class="st-kopf">
+  <div class="st-kopf-in">
+    <div class="st-wort" id="stwort"></div>
+    <h1 class="st-frage" id="stfrage"></h1>
+    <p class="st-satz" id="stsatz"></p>
+    <div class="st-knoepfe">
+      <a class="st-kn st-kn-1" href="#sttuer">Erst mal dein Bild ansehen</a>
+      <a class="st-kn st-kn-2" href="#stabmachen">Wie das abl&auml;uft</a>
+    </div>
+    <p class="st-rolle" id="strolle"></p>
+  </div>
+</header>
+
+<main class="st-wrap">
+
+<!-- Wie ich arbeite: drei Linsen, drei Karten -->
+<section class="st-ab" id="stmethode">
+  <div class="st-ue">
+    <div class="st-ue-k">Wie ich arbeite</div>
+    <h2 class="st-h2">Dasselbe Leben, dreimal angesehen</h2>
+    <p class="st-sub">Jede Sitzung liegt auf einer dieser drei Fragen. Die
+    dritte ist die, an der sich entscheidet, ob es etwas gebracht hat.</p>
+  </div>
+  <div class="st-linsen" id="stlinsen"></div>
+</section>
+
+<!-- Was es gibt: zwei Angebote, je mit Inhalt und Grenze -->
+<section class="st-ab" id="stangebot">
+  <div class="st-ue">
+    <div class="st-ue-k">Was es gibt</div>
+    <h2 class="st-h2">Zwei Wege, nicht f&uuml;nf</h2>
+    <p class="st-sub">Beide fangen mit demselben Telefonat an, und das
+    kostet nichts.</p>
+  </div>
+  <div class="st-ang" id="stang"></div>
+</section>
+
+<!-- Wie wir das abmachen: der Ablauf statt einer Zahl -->
+<section class="st-ab" id="stabmachen">
+  <div class="st-ue">
+    <div class="st-ue-k">Der Ablauf</div>
+    <h2 class="st-h2" id="stabtitel"></h2>
+  </div>
+  <ol class="st-schritte" id="stschritte"></ol>
+  <p class="st-nach" id="stabnach"></p>
+</section>
+
+<!-- Die T&uuml;r, die nichts kostet -->
+<section class="st-ab" id="sttuer">
+  <div class="st-ue">
+    <div class="st-ue-k">Ohne mich</div>
+    <h2 class="st-h2" id="sttuertitel"></h2>
+    <p class="st-sub" id="sttuertext"></p>
+  </div>
+  <div class="st-wege" id="stwege"></div>
+</section>
+
+<!-- Wer ich bin -->
+<section class="st-ab" id="stich">
+  <div class="st-ue">
+    <div class="st-ue-k">Hinter der Seite</div>
+    <h2 class="st-h2" id="stichtitel"></h2>
+  </div>
+  <div class="st-ich" id="stichtext"></div>
+</section>
+
+</main>
+
+<!-- Was das hier nicht ist: der zweite dunkle Block. Er steht absichtlich
+     vor dem Kontakt und nicht im Kleingedruckten. -->
+<section class="st-nicht" id="stnicht">
+  <div class="st-nicht-in">
+    <h2 class="st-h2 st-h2-hell" id="stnichttitel"></h2>
+    <p class="st-sub st-sub-hell" id="stnichtsub"></p>
+    <div class="st-np" id="stnp"></div>
+    <div class="st-krise" id="stkrise"></div>
+  </div>
+</section>
+
+<main class="st-wrap">
+
+<!-- Kontakt. Die Adresse steht an einer Stelle in start-daten.js. -->
+<section class="st-ab" id="stkontakt">
+  <div class="st-ue">
+    <div class="st-ue-k">Wenn du magst</div>
+    <h2 class="st-h2">Schreib mir zwei S&auml;tze</h2>
+    <p class="st-sub">Worum es geht, und ob du eher an das Einmalige oder
+    an die Begleitung denkst. Mehr braucht es nicht f&uuml;r den Anfang.</p>
+  </div>
+  <div id="stkbox"></div>
+</section>
+
+<!-- Der Ehrlichkeitsabschnitt. REGELN.md Abschnitt 7. -->
+<section class="st-ab st-ehr" id="stehrlich">
+  <h2 class="st-h3" id="stehrtitel"></h2>
+  <div id="stehr"></div>
+</section>
+
+<footer class="st-fuss">
+  <div class="st-fuss-m" id="stfussmarke"></div>
+  <p class="st-fuss-z">Das Werkzeug auf dieser Seite hei&szlig;t
+  <a href="index.html">Astro-Charlie</a> und ist frei benutzbar.</p>
+</footer>
+
+</main>
+
+<script>
+/* ── Start: der Inhalt der öffentlichen Seite ─────────────────
+   Mandy am 2.11.: „SCHWERKRAFT ist auf jeden Fall der Name."
+
+   Dies ist die Tür. Die einzige Seite, die jemand sieht, der Mandy
+   nicht kennt — und die einzige, die bisher komplett fehlte
+   (ENTWURF-NEUE-SEITE.md Abschnitt 3).
+
+   Warum der Text hier als Daten steht und nicht als HTML: So prüft
+   bau-start.py den Text und nicht das Markup. Und geprüft werden muss
+   hier mehr als sonst, weil zwei Dinge gelten, die Mandy selbst
+   gesetzt hat:
+
+   1. „keine Dringlichkeitsthemen oder sowas Sales Person mäßiges nee
+      nee. Das bin ich als Mensch nicht." (1.11.)
+   2. Keine Preise auf der Seite. „können wir das pricing noch
+      ausklammern?" (2.11.) — Damit darf aber auch kein
+      „Investition auf Anfrage" entstehen; siehe S_ABMACHEN.
+
+   Beides steht als Prüfung im Bau, nicht als Vorsatz hier. */
+
+var S_MARKE = {
+  wort: 'Schwerkraft',
+  zusatz: 'Coaching · Mandy Netta',
+  /* Die Frage, die die ganze Seite beantwortet. Sie ist zugleich die
+     Spannung im Namen: der Himmel zieht, der Boden hält. */
+  frage: 'Was ist bei dir angelegt — und was machst du am Dienstag damit?',
+  satz: 'Ich arbeite mit Menschen an dem, was sich bei ihnen immer wieder '
+      + 'gleich zuspitzt. Das Geburtsbild benutze ich dabei als Landkarte, '
+      + 'um schneller an die richtigen Fragen zu kommen — nicht, um dir zu '
+      + 'sagen, wer du bist.',
+  rolle: 'Ich bin Coachin, keine Astrologin. Der Unterschied ist nicht '
+       + 'Bescheidenheit: Eine Astrologin deutet dein Bild. Ich stelle dir '
+       + 'Fragen daraus, und was davon stimmt, entscheidest du.'
+};
+
+/* ── Wie ich arbeite: drei Linsen ──────────────────────────────
+   Dieselben drei wie in der Begleitung (begleit-daten.js C_METHODE) —
+   hier in der zweiten Person und ohne Werkstattsprache. Eine Seite je
+   Thema heißt auch: eine Methode, zwei Adressaten. */
+var S_LINSEN = [
+  {n:'Der Bauplan', frage:'Was ist angelegt?',
+   d:'Dein Geburtsbild sagt, welche Fragen bei dir wahrscheinlich etwas '
+   + 'aufmachen und in welchem Lebensbereich sie sitzen. Es ist eine '
+   + 'Vermutung, mit der wir arbeiten — und die du jederzeit streichen '
+   + 'kannst, wenn sie nicht stimmt.'},
+  {n:'Die private Logik', frage:'Wofür ist das gut?',
+   d:'Jedes Muster, das sich jahrelang hält, bringt etwas ein — meistens '
+   + 'Schutz vor etwas, das noch unangenehmer wäre. Diese Frage kommt aus '
+   + 'der Individualpsychologie und ist der Teil der Arbeit, der am '
+   + 'häufigsten etwas verändert.'},
+  {n:'Die Landung', frage:'Was tust du am Dienstag?',
+   d:'Hier hören die meisten Angebote auf, und hier entscheidet sich, ob '
+   + 'es etwas gebracht hat. Eine Einsicht ohne Handlung ist in zwei '
+   + 'Wochen weg. Jede Sitzung endet deshalb mit etwas Kleinem, das du '
+   + 'tatsächlich machst.'}
+];
+
+/* ── Was es gibt ───────────────────────────────────────────────
+   Zwei Dinge, nicht fünf. „dabei" ist Pflicht: jedes Angebot sagt,
+   was drin ist, sonst ist es ein Versprechen ohne Inhalt. */
+var S_ANGEBOT = [
+  {n:'Ein Blick auf dein Bild', art:'einmalig, rund 90 Minuten',
+   fuer:'Wenn du wissen willst, was in deinem Bild angelegt ist, und '
+      + 'erst mal nichts weiter.',
+   dabei:['Ein Gespräch über die drei, vier Stellen in deinem Bild, an '
+        + 'denen bei dir am meisten hängt',
+          'Eine schriftliche Zusammenfassung danach, in normalem Deutsch',
+          'Zugang zu deinem Bild in diesem Werkzeug, dauerhaft'],
+   nicht:'Keine Vorhersage, kein Jahresausblick, keine Entscheidung, die '
+       + 'ich für dich treffe.'},
+  {n:'Die Begleitung', art:'sechs Sitzungen über etwa drei Monate',
+   fuer:'Wenn sich etwas Konkretes verändern soll und du weißt, dass du '
+      + 'das allein schon ein paar Mal versucht hast.',
+   dabei:['Sechs Sitzungen mit einem Bogen: ankommen, dein Bild, dein '
+        + 'Muster, der Gewinn darin, die Landung, der Abschluss',
+          'Zwischen den Sitzungen etwas zum Ausprobieren — klein genug, '
+        + 'dass du es wirklich machst',
+          'Nach der vierten Sitzung sage ich dir ehrlich, ob das etwas '
+        + 'bringt oder ob du etwas anderes brauchst'],
+   nicht:'Keine Therapie und kein Ersatz dafür. Wenn du in Behandlung '
+       + 'bist, läuft das daneben, nicht stattdessen.'}
+];
+
+/* ── Wie wir das abmachen ──────────────────────────────────────
+   Hier standen im Entwurf Zahlen („Was es kostet. Zahlen, keine
+   Investition auf Anfrage."). Mandy will die Preise noch nicht
+   festlegen. Das Problem daran ist nicht die fehlende Zahl, sondern
+   dass an ihrer Stelle leicht eine Nebelformel entsteht — und die
+   verlagert die unangenehme Arbeit auf die Person, die liest.
+
+   Deshalb hier: kein Preis, aber ein nachprüfbarer Ablauf. Wer liest,
+   weiß, was als Nächstes passiert, was es kostet (nichts) und wie man
+   wieder herauskommt (indem man nichts tut). */
+var S_ABMACHEN = {
+  titel: 'Wie wir das abmachen',
+  schritte: [
+   ['Du schreibst mir', 'Zwei Sätze reichen. Worum es geht und ob du '
+     + 'eher an das Einmalige oder an die Begleitung denkst.'],
+   ['Wir telefonieren, etwa zwanzig Minuten',
+    'Das kostet nichts. Ich frage, worum es geht, und sage dir, ob ich '
+    + 'die Richtige dafür bin. Manchmal ist die Antwort nein — dann sage '
+    + 'ich dir, was ich stattdessen kenne.'],
+   ['Danach sage ich dir, was es kostet',
+    'Im Gespräch, mit einer Zahl, bevor irgendetwas anfängt. Ich arbeite '
+    + 'daran, das nach Einkommen zu staffeln; bis das steht, bespreche '
+    + 'ich es mit jedem einzeln.'],
+   ['Du sagst ja oder nein',
+    'Nein ist eine vollständige Antwort. Du musst sie nicht begründen, '
+    + 'und ich melde mich danach nicht wieder.']],
+  nachsatz: 'Es gibt hier nichts, was nur diese Woche gilt, und keine '
+   + 'Liste, auf die du dich setzen musst. Wenn jetzt nicht der Zeitpunkt '
+   + 'ist, ist es in einem halben Jahr auch noch dieselbe Arbeit.'
+};
+
+/* ── Wer ich bin ───────────────────────────────────────────────
+   Kurz, ohne Heldenreise (ENTWURF Abschnitt 3, Punkt 5). Nur, was
+   Mandy selbst gesagt hat, und nichts über ihre Person, was sie nicht
+   selbst öffentlich machen wollte. */
+var S_ICH = {
+  titel: 'Wer ich bin',
+  text: ['Ich heiße Mandy Netta, bin 39 und arbeite in Berlin.',
+   'Vor diesem hier waren es rund zehn Jahre in Unternehmen: sechseinhalb '
+   + 'davon bei McFIT Models, danach im Vertrieb eines '
+   + 'Coaching-Unternehmens, im Social-Media- und Influencer-Marketing und '
+   + 'in der Beratung von Coaches. Das heißt vor allem: Ich habe viel '
+   + 'gesehen, wie in dieser Branche verkauft wird. Deshalb findest du '
+   + 'auf dieser Seite keinen Countdown.',
+   'Ich arbeite besonders gern mit neurodivergenten Menschen — mit '
+   + 'Leuten also, bei denen die üblichen Ratschläge regelmäßig nicht '
+   + 'greifen, weil sie für andere Köpfe gemacht sind.'],
+  /* Gilt für die ganze Seite: zweite Person Singular. Der Absatz
+     darüber hat beim ersten Entwurf „Sie" gesagt — die Prüfung fängt
+     das, siehe bau-start.py. */
+  anrede: 'du'
+};
+
+/* ── Was das hier nicht ist ────────────────────────────────────
+   Derselbe Inhalt wie C_GRENZEN in der Begleitung, nur nach außen
+   gedreht. Im Entwurf steht dazu: „Dieser Abschnitt verkauft besser
+   als jeder Claim, weil ihn sonst niemand hat." Er steht hier nicht,
+   weil er verkauft, sondern weil er wahr ist. */
+var S_NICHT = {
+  titel: 'Was das hier nicht ist',
+  sub: 'Der Teil, den du vor dem Schreiben lesen solltest.',
+  punkte: [
+   ['Keine Therapie', 'Ich behandle nichts und diagnostiziere nichts. '
+     + 'Wenn etwas behandelt werden muss, gehört es zu jemandem, der das '
+     + 'darf — und ich sage es dir, wenn ich den Eindruck habe.'],
+   ['Keine Vorhersage', 'Ich sage dir nicht, ob die Beziehung hält, ob du '
+     + 'den Job bekommst oder wann es besser wird. Auch nicht als '
+     + 'Vermutung, auch nicht, wenn du darum bittest.'],
+   ['Keine Gesundheits-, Rechts- oder Geldberatung',
+    'Unabhängig davon, was in einem Bild steht.'],
+   ['Nichts über andere', 'Ich deute keine Bilder von Menschen, die nicht '
+     + 'dabei sind und nicht gefragt wurden.'],
+   ['Kein Beweis', 'Astrologie hat keinen Wirksamkeitsnachweis. Ich '
+     + 'behandle sie als Sprache, in der sich über Muster gut reden '
+     + 'lässt, nicht als Messverfahren. Wo dein Erleben und das Bild sich '
+     + 'widersprechen, hat dein Erleben recht.']],
+  krise: {titel:'Wenn es dringend ist',
+   text:'Wenn du daran denkst, dir etwas zu tun, oder gerade in Gefahr '
+     + 'bist, bin ich die falsche Adresse — nicht aus Unwilligkeit, '
+     + 'sondern weil es Stellen gibt, die das können und rund um die Uhr '
+     + 'da sind.',
+   stellen:[['Telefonseelsorge', '0800 111 0 111 · 0800 111 0 222 · '
+     + 'kostenfrei und anonym, Tag und Nacht'],
+    ['Ärztlicher Bereitschaftsdienst', '116 117'],
+    ['Notruf', '112']]}
+};
+
+/* ── Der Weg hinein, der nichts kostet ────────────────────────
+   Entwurf Abschnitt 3, Punkt 7. Das Werkzeug gibt es längst; es war
+   nur nie als Eingang kenntlich. */
+var S_TUER = {
+  titel: 'Ein Anfang, der nichts kostet',
+  text: 'Du kannst dein Bild hier ansehen, ohne mit mir zu sprechen und '
+    + 'ohne etwas anzugeben außer Geburtstag, Uhrzeit und Ort. Es bleibt '
+    + 'in deinem Browser. Das Werkzeug heißt Astro-Charlie, ich habe es '
+    + 'selbst gebaut, und es erklärt jeden Begriff, den es benutzt.',
+  wege: [['uebersicht.html', 'Dein Bild ansehen',
+          'Was bei dir angelegt ist, Feld für Feld'],
+         ['index.html', 'Was gerade läuft',
+          'Die Tage, an denen dein Bild diesen Monat getroffen wird'],
+         ['wissen.html', 'Nachlesen',
+          'Die Begriffe, ohne Vorwissen erklärt']]
+};
+
+/* ── Kontakt ───────────────────────────────────────────────────
+   Mandy am 2.11.: „Muss noch eine e-mail adresse dafür erstellen."
+
+   Die Adresse steht an genau einer Stelle — hier. Solange sie null
+   ist, zeigt die Seite an der Stelle eine sichtbare Lücke statt einer
+   erfundenen Adresse, und bau-start.py sagt es im Bau als Hinweis.
+   Eine erfundene oder private Adresse wäre schlimmer als eine Lücke:
+   Die Lücke sieht nur Mandy, denn die Seite ist nirgends verlinkt. */
+var S_KONTAKT = {
+  mail: null,
+  lueckeTitel: 'Hier fehlt noch die Adresse',
+  luecke: 'Sobald die Mailadresse für Schwerkraft steht, kommt sie in '
+    + 'start-daten.js an eine Stelle (S_KONTAKT.mail) — und erscheint '
+    + 'dann hier und im Impressum.'
+};
+
+/* ── Der Ehrlichkeitsabschnitt ────────────────────────────────
+   REGELN.md: Was nicht belegbar ist, steht entweder nicht da oder mit
+   dem Hinweis, dass es nicht belegbar ist. Auf dieser Seite ist das
+   keine Fußnote, sondern Teil des Angebots. */
+var S_EHRLICH = {
+  titel: 'Woran du mich messen kannst',
+  punkte: [
+   'Die Fragen, die ich stelle, kommen teils aus der '
+   + 'Individualpsychologie — einer psychologischen Schule mit '
+   + 'Geschichte — und teils aus der astrologischen Überlieferung, die '
+   + 'keinen Wirksamkeitsnachweis hat. Ich sage dir in der Sitzung, was '
+   + 'woher kommt.',
+   'Rechnen kann dieses Werkzeug: Positionen, Häuser, exakte Tage. Das '
+   + 'ist Astronomie und nachprüfbar. Was diese Positionen bedeuten, ist '
+   + 'Deutung und nicht nachprüfbar.',
+   'Ich fange gerade an und arbeite mit meinen ersten Klient:innen. Das '
+   + 'sage ich dir, bevor du dich entscheidest, und nicht danach.']
+};
+
+/* ── Start: setzt den Inhalt aus start-daten.js in die Seite ──
+   Kein Rechnen, keine Profile, kein localStorage. Diese Seite ist die
+   einzige, die ohne Geburtsdaten vollständig funktioniert — wer hier
+   landet, hat noch nichts eingegeben und soll auch nichts müssen. */
+(function(){
+  'use strict';
+
+  function el(i){ return document.getElementById(i); }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function setz(i, t){ var e=el(i); if(e) e.textContent=t; }
+  function html(i, t){ var e=el(i); if(e) e.innerHTML=t; }
+
+  /* ── Kopf ────────────────────────────────────────────────── */
+  setz('stwort', S_MARKE.wort + ' · ' + S_MARKE.zusatz);
+  setz('stfrage', S_MARKE.frage);
+  setz('stsatz', S_MARKE.satz);
+  setz('strolle', S_MARKE.rolle);
+  setz('stfussmarke', S_MARKE.wort + ' — ' + S_MARKE.zusatz);
+
+  /* ── Die drei Linsen ─────────────────────────────────────── */
+  html('stlinsen', S_LINSEN.map(function(l){
+    return '<div class="st-li">'
+      + '<div class="st-li-f">' + esc(l.frage) + '</div>'
+      + '<div class="st-li-n">' + esc(l.n) + '</div>'
+      + '<p class="st-li-d">' + esc(l.d) + '</p></div>';
+  }).join(''));
+
+  /* ── Die Angebote ────────────────────────────────────────── */
+  html('stang', S_ANGEBOT.map(function(a){
+    return '<div class="st-a">'
+      + '<div class="st-a-n">' + esc(a.n) + '</div>'
+      + '<div class="st-a-art">' + esc(a.art) + '</div>'
+      + '<p class="st-a-f">' + esc(a.fuer) + '</p>'
+      + '<ul class="st-a-l">' + a.dabei.map(function(d){
+          return '<li>' + esc(d) + '</li>'; }).join('') + '</ul>'
+      + '<p class="st-a-nicht">' + esc(a.nicht) + '</p></div>';
+  }).join(''));
+
+  /* ── Der Ablauf ──────────────────────────────────────────── */
+  setz('stabtitel', S_ABMACHEN.titel);
+  html('stschritte', S_ABMACHEN.schritte.map(function(s){
+    return '<li><div><div class="st-s-t">' + esc(s[0]) + '</div>'
+      + '<p class="st-s-d">' + esc(s[1]) + '</p></div></li>';
+  }).join(''));
+  setz('stabnach', S_ABMACHEN.nachsatz);
+
+  /* ── Die Tür, die nichts kostet ──────────────────────────── */
+  setz('sttuertitel', S_TUER.titel);
+  setz('sttuertext', S_TUER.text);
+  html('stwege', S_TUER.wege.map(function(w){
+    return '<a class="st-w" href="' + esc(w[0]) + '">'
+      + '<div class="st-w-t">' + esc(w[1]) + '</div>'
+      + '<div class="st-w-d">' + esc(w[2]) + '</div></a>';
+  }).join(''));
+
+  /* ── Wer ich bin ─────────────────────────────────────────── */
+  setz('stichtitel', S_ICH.titel);
+  html('stichtext', S_ICH.text.map(function(p){
+    return '<p>' + esc(p) + '</p>'; }).join(''));
+
+  /* ── Was das hier nicht ist ──────────────────────────────── */
+  setz('stnichttitel', S_NICHT.titel);
+  setz('stnichtsub', S_NICHT.sub);
+  html('stnp', S_NICHT.punkte.map(function(p){
+    return '<div class="st-n1"><b>' + esc(p[0]) + '</b>'
+      + '<span>' + esc(p[1]) + '</span></div>';
+  }).join(''));
+  var k = S_NICHT.krise;
+  html('stkrise', '<b>' + esc(k.titel) + '</b>'
+    + '<p>' + esc(k.text) + '</p><dl>'
+    + k.stellen.map(function(s){
+        return '<dt>' + esc(s[0]) + '</dt><dd>' + esc(s[1]) + '</dd>';
+      }).join('') + '</dl>');
+
+  /* ── Kontakt ─────────────────────────────────────────────────
+     Solange keine Adresse eingetragen ist, steht hier eine sichtbare
+     Lücke. Keine erfundene Adresse, kein Formular ins Nichts. */
+  if(S_KONTAKT.mail){
+    html('stkbox', '<div class="st-k"><a class="st-k-a" href="mailto:'
+      + esc(S_KONTAKT.mail) + '">' + esc(S_KONTAKT.mail) + '</a></div>');
+  } else {
+    html('stkbox', '<div class="st-luecke"><b>'
+      + esc(S_KONTAKT.lueckeTitel) + '</b><p>'
+      + esc(S_KONTAKT.luecke) + '</p></div>');
+  }
+
+  /* ── Ehrlichkeit ─────────────────────────────────────────── */
+  setz('stehrtitel', S_EHRLICH.titel);
+  html('stehr', '<ul class="st-ehr-l">' + S_EHRLICH.punkte.map(function(p){
+    return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>');
+
+})();
+
+</script>
+</body></html>
