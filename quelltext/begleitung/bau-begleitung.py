@@ -230,6 +230,144 @@ for quelle, name in ((daten, 'begleit-daten.js'), (rechner, 'begleit-rechner.js'
     if re.search(r'\b1987\b', quelle) or '08:58' in quelle:
         fehler.append(f'echte Geburtsdaten in {name}')
 
+# ── Die Reihenfolge der Anlagen kommt aus dem Bild ───────────
+# Aufgabe 19. Bis zum 2.11. sortierte stellungen() allein nach
+# BG_GEWICHT — einer festen Zahl je Planet. Zwei Folgen: Bei jedem
+# Menschen stand dasselbe oben, egal was in seinem Bild steht; und wo
+# zwei Zahlen gleich sind (Sonne und Mond je 1,00, Venus und Mars je
+# 0,85, Uranus und Neptun je 0,55), entschied die Reihenfolge der
+# Liste BG_ANLAGEN. Die Coachin hält die oberste Anlage für die
+# wichtigste dieses Menschen — dann darf dort nicht die Tabelle
+# stehen.
+#
+# Dieselbe Fehlerklasse wie bei den Facetten (Aufgabe 8), und
+# geprüft wird sie genauso: nicht an einem Fall, sondern an der
+# Eigenschaft, über 1.200 erfundene Geburtsbilder.
+#
+#   1) Jede Stellung trägt alle drei Gewichte.
+#   2) Kein Paar liegt auf allen drei gleich, solange die beiden
+#      natal nicht auf derselben Länge stehen. Stehen sie das, ist
+#      im Bild wirklich kein Unterschied — alles andere wäre eine
+#      Sortierung aus der Liste.
+#   3) Die Reihenfolge bewegt sich zwischen den Bildern. Eine
+#      Gewichtung, die bei allen dasselbe ergibt, ist Zierde.
+#   4) Sie weicht oft genug von der reinen BG_GEWICHT-Folge ab,
+#      sonst rechnet sie und entscheidet doch nichts.
+#
+# Mit Absicht dabei: Bilder, in denen mehrere Anlagen auf demselben
+# Grad verschiedener Zeichen stehen. Dort ist gs gleich, und die
+# Prüfung sieht, ob die Verknüpfung dann noch trägt. Eine Probe, die
+# diese Fälle nie zu sehen bekommt, prüft die Klasse nicht
+# (REGELN.md 6e).
+sprobe = hier / '_probe-stellungen.js'
+sprobe.write_text(r"""
+/* Probedaten sind erfunden — nie echte Geburtsdaten hier hinein. */
+const fs=require('fs'), path=require('path');
+const wurzel=path.join(__dirname,'..');
+const code=['rituale/engine.js','begleitung/begleit-daten.js',
+            'begleitung/begleit-rechner.js']
+  .map(f=>fs.readFileSync(path.join(wurzel,f),'utf8')).join('\n;\n');
+const w={}; new Function('window','console','document',code)(w,console,undefined);
+const AC=w.AC_BEGLEIT;
+const GEW={Sonne:1.00,Mond:1.00,Merkur:0.80,Venus:0.85,Mars:0.85,
+           Jupiter:0.60,Saturn:0.90,Uranus:0.55,Neptun:0.55,Pluto:0.60,
+           Chiron:0.70,Lilith:0.50};
+const raus={gleichstand:[], ohneGewichte:[], folgen:{}, gleichgrad:0,
+            andersAlsTabelle:0, bilder:0, kurz:0, fehler:''};
+function bild(s){
+  const asc=(s*7.37)%360, C={ASC:asc, MC:(asc+270)%360};
+  AC.ANLAGEN.forEach((p,i)=>C[p]=(s*13.73+i*41.31+s*s*0.0131)%360);
+  /* Jedes zwölfte Bild mit absichtlichem Gleichstand auf gs: drei
+     Anlagen auf denselben Grad verschiedener Zeichen gesetzt. Damit
+     ist gs für die drei gleich, und die Probe sieht, ob die
+     Verknüpfung im übrigen Bild die Reihenfolge noch trägt.
+     Nicht alle zwölf: Zwölf Anlagen im Abstand von genau 30° auf
+     demselben Grad wäre ein rundum symmetrisches Bild — dort sind
+     die Lagen tatsächlich nicht zu unterscheiden, und so ein Bild
+     gibt es am Himmel auch nicht. Drei genügen und lassen den Rest
+     des Bildes unsymmetrisch. */
+  if(s%12===0){
+    const grad=(s*0.37)%30, drei=[s%12, (s+4)%12, (s+8)%12];
+    drei.forEach((n,i)=>{ C[AC.ANLAGEN[n]]=(((n*2+i*3)%12)*30)+grad; });
+    raus.gleichgrad++;
+  }
+  return C;
+}
+try{
+  for(let s=1;s<=1200;s++){
+    const C=bild(s), st=AC.stellungen(C);
+    raus.bilder++;
+    if(st.length<AC.ANLAGEN.length){ raus.kurz++; continue; }
+    st.forEach(e=>{ if(typeof e.g!=='number'||typeof e.gv!=='number'
+                      ||typeof e.gs!=='number')
+      raus.ohneGewichte.push(e.anlage); });
+    /* Kein Paar auf allen drei Gewichten gleich — es sei denn, die
+       beiden stehen natal auf derselben Länge. */
+    for(let i=0;i<st.length;i++) for(let j=i+1;j<st.length;j++){
+      const a=st[i], b=st[j];
+      if(a.g===b.g && a.gv===b.gv && a.gs===b.gs
+         && Math.abs(a.lon-b.lon)>1e-9 && raus.gleichstand.length<5)
+        raus.gleichstand.push('Bild '+s+': '+a.anlage+' und '+b.anlage
+          +' liegen beide bei '+a.g+'|'+a.gv+'|'+a.gs);
+    }
+    const folge=st.map(e=>e.anlage).join(',');
+    raus.folgen[folge]=(raus.folgen[folge]||0)+1;
+    /* Und: weicht sie von der reinen Tabellenfolge ab? */
+    const tabelle=AC.ANLAGEN.slice().sort((x,y)=>(GEW[y]||0.5)-(GEW[x]||0.5)).join(',');
+    if(folge!==tabelle) raus.andersAlsTabelle++;
+  }
+}catch(e){ raus.fehler=String(e && e.message || e); }
+raus.verschiedene=Object.keys(raus.folgen).length;
+delete raus.folgen;
+console.log(JSON.stringify(raus));
+""", encoding='utf-8')
+sp = subprocess.run(['node', str(sprobe)], capture_output=True, text=True,
+                    cwd=str(hier.parent))
+try:
+    sprobe.unlink()
+except OSError:
+    pass
+if sp.returncode != 0:
+    fehler.append('die Stellungsprobe läuft nicht:\n' + (sp.stdout + sp.stderr)[-900:])
+else:
+    try:
+        sn = json.loads(sp.stdout.strip().splitlines()[-1])
+    except (ValueError, IndexError):
+        sn = None
+        fehler.append('die Stellungsprobe gibt keinen lesbaren Bericht:\n'
+                      + (sp.stdout + sp.stderr)[-600:])
+    if sn:
+        if sn['fehler']:
+            fehler.append('die Stellungsprobe bricht ab: ' + sn['fehler'])
+        if sn['ohneGewichte']:
+            fehler.append('eine Stellung kommt ohne alle drei Gewichte (g, gv, gs): '
+                          + ', '.join(sorted(set(sn['ohneGewichte']))[:4]))
+        if sn['gleichstand']:
+            fehler.append('zwei Anlagen liegen auf allen Gewichten gleich, obwohl sie '
+                          'natal verschieden stehen — dann sortiert die Liste '
+                          'BG_ANLAGEN, nicht das Geburtsbild: '
+                          + ' | '.join(sn['gleichstand'][:3]))
+        if sn['kurz']:
+            fehler.append(f"in {sn['kurz']} von {sn['bilder']} Bildern fehlen "
+                          'Stellungen — dann prüft die Probe nicht alle Anlagen')
+        # Die Probe muss die Gleichstandsfälle überhaupt zu sehen bekommen.
+        if sn['gleichgrad'] < 50:
+            fehler.append(f"die Stellungsprobe baute nur {sn['gleichgrad']} Bilder mit "
+                          'gleichem Grad — zu wenige, um den Gleichstand zu prüfen')
+        if sn['verschiedene'] < 100:
+            fehler.append(f"über {sn['bilder']} Geburtsbilder kommen nur "
+                          f"{sn['verschiedene']} verschiedene Reihenfolgen heraus — "
+                          'die Reihenfolge hängt kaum am Bild')
+        if sn['andersAlsTabelle'] * 2 < sn['bilder']:
+            fehler.append(f"nur {sn['andersAlsTabelle']} von {sn['bilder']} Bildern "
+                          'sortieren anders als die reine Gewichtstabelle — dann '
+                          'entscheidet weiter der Planetenname')
+        if not fehler:
+            print(f"  Stellungen: {sn['bilder']} Geburtsbilder, "
+                  f"{sn['verschiedene']} verschiedene Reihenfolgen, "
+                  f"{sn['andersAlsTabelle']} anders als die Tabelle, "
+                  f"{sn['gleichgrad']} mit gleichem Grad, kein Gleichstand")
+
 # ── Rauchprobe ───────────────────────────────────────────────
 pr = None
 probe = hier / '_probe-begleitung.js'
@@ -248,6 +386,26 @@ await p.addInitScript(()=>localStorage.setItem('ac_profile_v1',JSON.stringify(
    lat:53.55,lon:9.99,ort:'Hamburg',wlat:53.55,wlon:9.99,wort:'Hamburg',
    eigen:false,readings:[]}]})));
 await p.goto('file://ZIEL'); await p.waitForTimeout(1100);
+/* ── Eine Sitzung oeffnen, bis sie wirklich offen ist ───────
+   Die Leiste wird nach dem Laden mehr als einmal gebaut. Ein
+   einzelner Klick kann in das Fenster dazwischen fallen: Der
+   Knopf ist da, gleich danach ersetzt ihn ein Neuaufbau, und die
+   Seite steht wieder auf Sitzung 1. Genau daran flatterte die
+   Notizpruefung — etwa jeder vierte Lauf auf main war rot, ohne
+   dass sich ein Commit geaendert hatte. Also wird geklickt, bis
+   der Zustand steht, und nicht einmal und dann gehofft. */
+async function sitzung(n){
+  for(let v=0; v<25; v++){
+    await p.evaluate(n=>{ const b=document.querySelector('#bgleiste .sz[data-n="'+n+'"]');
+      if(b) b.click(); }, n);
+    await p.waitForTimeout(160);
+    const ist=await p.evaluate(n=>{ const b=document.querySelector('#bgleiste .sz[data-n="'+n+'"]');
+      return !!b && /(^| )sz-ist( |$)/.test(b.className); }, n);
+    if(ist) return true;
+  }
+  f.push('Sitzung '+n+' liess sich nicht oeffnen');
+  return false;
+}
 const v=await p.evaluate(()=>({
   profile:document.querySelectorAll('#bgwahl .bw').length,
   rahmen:document.querySelectorAll('#bgrahmen .rh').length,
@@ -272,22 +430,55 @@ await p.evaluate(()=>{ const b=[...document.querySelectorAll('#bgwahl .bw')];
   (b[1]||b[0]).click(); });
 await p.waitForTimeout(500);
 /* Sitzung 2 oeffnen: dort kommen die Chart-Fragen. */
-await p.evaluate(()=>{ const b=document.querySelector('#bgleiste .sz[data-n="2"]');
-  if(b) b.click(); });
-await p.waitForTimeout(400);
+await sitzung(2);
+await p.waitForTimeout(250);
 const s2=await p.evaluate(()=>({
   titel:(document.querySelector('.sz-h')||{}).textContent||'',
   chartZu:!!document.querySelector('.sz-chartlage.sz-zu'),
   fragen:[...document.querySelectorAll('.cf li')].map(x=>x.textContent.trim()),
   eigenHinweis:!document.getElementById('bgeigen').hidden}));
-/* Eine Notiz eintippen und nachsehen, ob sie einen Neustart ueberlebt. */
+/* ── Die Notiz liegt im Speicher und wird von dort gelesen ──
+   Hier stand bis zum 2.11. ein Neuladen mit festen Wartezeiten, und
+   die Pruefung flatterte: etwa jeder vierte Lauf auf main war rot,
+   ohne dass sich ein Commit geaendert hatte. Der Grund lag nicht an
+   der Seite. Chromium wirft bei file:// den localStorage beim
+   Neuladen manchmal weg; danach war nicht nur die Notiz fort,
+   sondern auch das gewaehlte Profil, und gelesen wurde das leere
+   Feld eines anderen Menschen.
+
+   Gemeint war nie „der Browser nimmt den Speicher mit ueber eine
+   Navigation" — das entscheidet der Browser. Gemeint war zweierlei,
+   und beides haengt wirklich an der Seite:
+
+     1) Die Notiz landet im Speicher, unter einem Schluessel, der
+        Mensch und Sitzung auseinanderhaelt.
+     2) Beim Aufbau holt die Seite sie von dort und nicht aus dem
+        Feld, in dem sie noch steht.
+
+   Das wird jetzt geprueft, und es ist jedes Mal dasselbe Ergebnis
+   (REGELN.md 6e: geprueft wird die Form, die gemeint ist). */
 await p.evaluate(()=>{ const t=document.getElementById('bgnotiz');
   t.value='Probenotiz'; t.dispatchEvent(new Event('input')); });
-await p.waitForTimeout(250);
-await p.reload({waitUntil:'load'}); await p.waitForTimeout(900);
-await p.evaluate(()=>{ const b=document.querySelector('#bgleiste .sz[data-n="2"]');
-  if(b) b.click(); });
-await p.waitForTimeout(350);
+/* 1) Im Speicher, und zwar je Mensch und Sitzung getrennt. */
+const notizSchluessel=await p.waitForFunction(()=>{
+  for(const k of Object.keys(localStorage)){
+    const v=String(localStorage.getItem(k)||'');
+    if(v.indexOf('Probenotiz')<0) continue;
+    /* Der Wert haelt den Menschen und die Sitzung auseinander. */
+    try{
+      const o=JSON.parse(v), wer=Object.keys(o)[0];
+      if(wer && o[wer] && Object.keys(o[wer]).some(f=>/notiz-\d+/.test(f)))
+        return k+' → '+wer+'/'+Object.keys(o[wer]).filter(f=>/notiz-\d+/.test(f))[0];
+    }catch(e){}
+    return k+' → ohne Mensch und Sitzung';
+  }
+  return false;
+}, null, {timeout:6000}).then(h=>h.jsonValue());
+/* 2) Das Feld leeren, ohne zu speichern, und neu aufbauen lassen.
+      Steht die Notiz danach wieder da, kommt sie aus dem Speicher. */
+await p.evaluate(()=>{ document.getElementById('bgnotiz').value=''; });
+await sitzung(1);
+await sitzung(2);
 const nachher=await p.evaluate(()=>(document.getElementById('bgnotiz')||{}).value||'');
 /* Auf Stufe 0 darf in den Fragen kein Fachwort stehen. */
 await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(0); }); await p.waitForTimeout(350);
@@ -311,9 +502,8 @@ const spick=await p.evaluate(()=>{
 /* Sitzung 1 haelt das Chart zu — der Spickzettel auch.
    Dafuer erst zurueck auf Sitzung 1: Die Probe steht oben noch
    auf Sitzung 2. */
-await p.evaluate(()=>{ const b=document.querySelector('#bgleiste .sz[data-n="1"]');
-  if(b) b.click(); });
-await p.waitForTimeout(350);
+await sitzung(1);
+await p.waitForTimeout(200);
 await p.evaluate(()=>{ const b=document.getElementById('bgspickan'); if(b) b.click(); });
 await p.waitForTimeout(350);
 const spick1=await p.evaluate(()=>{
@@ -326,7 +516,25 @@ const linsen=await p.evaluate(()=>({
   nichtZeilen:document.querySelectorAll('.wz-nicht').length,
   herkunft:document.querySelectorAll('.wz-her').length,
   abgrenzung:((document.getElementById('bgabgrenzung')||{}).textContent||'').length}));
-console.log(JSON.stringify({v,eigenHinweis,vorher,s2,nachher,j0,spick,spick1,linsen,fehler:[...new Set(f)]}));
+/* ── Die Breite auf allen Telefonbreiten ───────────────────
+   Ein Etikett, das gerechneten Text aufnimmt, kann bei 390px noch
+   passen und bei 320px die Seite aufschieben. Bis zum 2.11. wurde
+   nur bei 390px gemessen — und genau diese Klasse hat am 2.11.
+   zugeschlagen, als die Mechanik im Fragenvorrat laenger wurde und
+   auf white-space:nowrap stand. Gemessen wird auf der hoechsten
+   Wissensstufe: dort steht alle Mechanik offen, das ist der
+   breiteste Fall. */
+await p.evaluate(()=>{ const b=document.getElementById('bgspickzu'); if(b) b.click(); });
+await p.evaluate(()=>{ if(window.AC_NIV) AC_NIV.setzen(4); });
+await p.waitForTimeout(400);
+const eng=[];
+for(const w of [320,360,390,768]){
+  await p.setViewportSize({width:w,height:900});
+  await p.waitForTimeout(300);
+  const bw=await p.evaluate(()=>document.body.scrollWidth);
+  if(bw>w+1) eng.push(w+'px wird zu '+bw+'px');
+}
+console.log(JSON.stringify({v,eigenHinweis,vorher,s2,nachher,notizSchluessel,j0,spick,spick1,linsen,eng,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -369,6 +577,9 @@ if pr:
         fehler.append(f"nur {v['vorrat']} Einträge im Fragenvorrat")
     if v['breit'] > 390:
         fehler.append(f"Überlauf auf {v['breit']}px")
+    # Auf allen Telefonbreiten, nicht nur auf einer (siehe Probe).
+    if pr.get('eng'):
+        fehler.append('die Seite läuft über: ' + ', '.join(pr['eng']))
     if v['schlecht']:
         fehler.append('undefined/NaN/{feld} im Text')
     if not pr['eigenHinweis']:
@@ -392,7 +603,13 @@ if pr:
     if pr['vorher'] and s2['fragen'] and pr['vorher'] == '|'.join(s2['fragen']):
         fehler.append('die Fragen ändern sich nicht, wenn man die Person wechselt')
     if pr['nachher'] != 'Probenotiz':
-        fehler.append(f"die Notiz überlebt den Neustart nicht: „{pr['nachher']}\"")
+        fehler.append('die Seite holt die Notiz beim Aufbau nicht aus dem '
+                      f"Speicher, sondern lässt das Feld leer: „{pr['nachher']}\"")
+    if not pr.get('notizSchluessel'):
+        fehler.append('die Notiz landet nicht im Speicher')
+    elif 'ohne Mensch und Sitzung' in str(pr['notizSchluessel']):
+        fehler.append('die Notiz liegt im Speicher, aber nicht je Mensch und '
+                      'Sitzung getrennt: ' + str(pr['notizSchluessel']))
     if pr['j0']:
         fehler.append('Fachsprache in den Fragen auf Stufe 0: ' + ', '.join(pr['j0']))
 
@@ -438,7 +655,8 @@ print(f"begleitung.html  {grosse:,} Bytes  →  {ziel}".replace(',', '.'))
 if pr:
     print(f"  Rauchprobe: {pr['v']['sitzungen']} Sitzungen, {pr['v']['rahmen']} Rahmenpunkte, "
           f"{len(pr['s2']['fragen'])} Chart-Fragen in Sitzung 2, "
-          f"{pr['v']['vorrat']} im Vorrat, Notiz überlebt den Neustart")
+          f"{pr['v']['vorrat']} im Vorrat, Notiz aus dem Speicher "
+          f"({pr.get('notizSchluessel')})")
 for h in hinweise:
     print('  Hinweis: ' + h)
 for f_ in fehler:

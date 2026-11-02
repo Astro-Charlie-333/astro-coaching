@@ -164,8 +164,15 @@
 .vf summary::-webkit-details-marker{display:none;}
 .vf-t{font-family:var(--serif,Fraunces,Georgia,serif);font-size:16.4px;font-weight:500;
  color:var(--nacht,#2E3A5C);}
+/* Das Etikett trug bis zum 2.11. nur „Sonne · 7. Haus" und stand
+   deshalb auf nowrap. Seit die Mechanik dort auch sagt, woran die
+   Reihenfolge hängt, ist es mehrzeilig — und nowrap schob die Seite
+   auf 686px. Ein Etikett, das gerechneten Text aufnimmt, darf nicht
+   auf eine Zeile festgenagelt werden. */
 .vf-h{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
- color:var(--leise,#6B6259);white-space:nowrap;}
+ color:var(--leise,#6B6259);text-align:right;overflow-wrap:anywhere;
+ flex:0 1 auto;min-width:0;}
+.vf-t{flex:1 1 auto;min-width:0;}
 .vf ul{list-style:none;margin:0;padding:0 14px 12px;display:grid;gap:7px;}
 .vf li{font-size:15px;line-height:1.56;color:var(--tinte,#231F1A);padding-left:12px;
  border-left:2px solid var(--messing,#9A7235);}

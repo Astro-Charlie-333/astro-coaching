@@ -135,14 +135,35 @@ function leisteBauen(){
   });
 }
 
+/* ── Woran die Reihenfolge einer Stellung hängt ──────────────
+   Reiht die Bruchstücke aus C_STELL_TECH hintereinander, die auf
+   diese Stellung zutreffen. Hier wird nichts formuliert; die
+   Wortwahl steht in begleit-daten.js, die Tatsachen kommen aus
+   begleit-rechner.js. Sichtbar erst ab Wissensstufe 2. */
+function kommaZahl(n, stellen){
+  return String(n.toFixed(stellen)).replace('.', ',');
+}
+
+function stellTech(s){
+  var T = window.C_STELL_TECH; if(!T) return '';
+  var teile = [T.feld.replace('{anlage}', s.anlage).replace('{haus}', s.haus)];
+  teile.push(T.grad.replace('{grad}', kommaZahl(s.grad, 1)));
+  if(s.winkelfeld) teile.push(T.winkelfeld);
+  if(s.eigenherr) teile.push(T.eigenherr);
+  if(s.chartherr) teile.push(T.chartherr);
+  if(s.herrnah) teile.push(T.herrnah);
+  teile.push(T.verknuepft.replace('{gv}', kommaZahl(s.gv, 2)));
+  return teile.join(' · ');
+}
+
 function fragenBlock(f){
   if(!f) return '';
   var h = ['<div class="sz-chart"><div class="sz-chart-t">Fragen aus seinem Bild</div>'];
   f.stellungen.forEach(function(s){
     h.push('<div class="cf"><div class="cf-th">' + esc(s.thema) + '</div><ul>' +
       s.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
-      '</ul><div class="cf-tech ac-tech" data-ab="2">' + esc(s.anlage) +
-      ' im ' + s.haus + '. Haus</div></div>');
+      '</ul><div class="cf-tech ac-tech" data-ab="2">' +
+      esc(stellTech(s)) + '</div></div>');
   });
   if(f.spannung){
     var sp = f.spannung;
@@ -286,7 +307,7 @@ function vorratBauen(){
   var st = AC_BEGLEIT.stellungen(P), sp = AC_BEGLEIT.spannungen(P, 4);
   var h = st.map(function(s){
     return '<details class="vf"><summary><span class="vf-t">' + esc(s.thema) + '</span>' +
-      '<span class="vf-h ac-tech" data-ab="2">' + esc(s.anlage) + ' · ' + s.haus + '. Haus</span>' +
+      '<span class="vf-h ac-tech" data-ab="2">' + esc(stellTech(s)) + '</span>' +
       '</summary><ul>' + s.fragen.map(function(q){
         return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></details>';
   });

@@ -27,21 +27,6 @@ Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 19 · Die Begleitung sortiert für alle Menschen gleich
-Gefunden beim Bauen am 30.10. `begleit-rechner.js` sortiert die Anlagen
-eines Menschen nach `BG_GEWICHT` — einer festen Zahl je Planet. Sonne und
-Mond stehen dort beide auf 1,00, Venus und Mars beide auf 0,85, Uranus und
-Neptun beide auf 0,55. Zwei Folgen: Die Reihenfolge ist bei jedem Menschen
-dieselbe, egal was in seinem Bild steht; und wo zwei Zahlen gleich sind,
-entscheidet die Reihenfolge der Liste `BG_ANLAGEN`. Dieselbe Fehlerklasse
-wie bei den Facetten (Aufgabe 8, erledigt), nur eine Seite weiter — und
-hier wiegt sie mehr, weil die Coachin die oberste Anlage für die wichtigste
-dieses Menschen hält.
-**Fertig, wenn:** die Reihenfolge der Anlagen von der natalen Lage abhängt
-(nicht allein vom Planetennamen), zwei erfundene Geburtsbilder nachweislich
-verschiedene Reihenfolgen zeigen, kein Paar auf allen gerechneten Gewichten
-gleich liegt, und `bau-begleitung.py` beides prüft.
-
 ### 31 · „Jupiter auf dein Mond" — die gebauten Überschriften beugen nicht
 Gefunden im Gestaltungs-Durchgang vom 30.10. zu `index.html`
 (`GESTALTERIN.md`, Befund 30.10-1). Die Köpfe in „Was dein Bild gerade
@@ -418,9 +403,107 @@ wörtlich gleiche Absätze ab einer bestimmten Länge vergleicht, die
 bekannten und gewollten Dopplungen namentlich eingetragen sind, und eine
 neue Dopplung den Bau bricht.
 
+### 35 · Die Symbole im Repo sind nicht die, die der Bau erzeugt
+Gefunden beim Erledigen von Aufgabe 19 am 2.11. `bau-app.py` erzeugt
+`symbol-180.png`, `symbol-192.png`, `symbol-512.png` und
+`symbol-maskierbar-512.png` jedes Mal bitgleich — aber anders als die
+vier Dateien, die im Repo liegen. Jeder vollständige Lauf von
+`pruefe-alles.py` macht den Arbeitsbaum damit schmutzig, und zwar an
+Dateien, die mit der Aufgabe des Tages nichts zu tun haben. Wer das nicht
+weiß, nimmt sie in seinen Pull Request mit oder wirft sie weg — beides
+blind. Vermutlich wurden sie einmal mit einer anderen Bibliotheksfassung
+gebaut.
+**Fertig, wenn:** ein frischer Lauf von `pruefe-alles.py` auf `main` keine
+geänderte Datei hinterlässt, die vier Symbole also dem entsprechen, was
+der Bau hier erzeugt — und `bau-app.py` abbricht, wenn ein ausgeliefertes
+Symbol von dem abweicht, das es gerade gebaut hat.
+
+### 36 · Die Herrscherliste steht zehnmal im Quelltext
+Gefunden beim Erledigen von Aufgabe 19 am 2.11., als eine elfte Kopie
+dazugekommen wäre. `['Mars','Venus','Merkur','Mond','Sonne','Merkur',
+'Venus','Mars','Jupiter','Saturn','Saturn','Jupiter']` steht Zeichen für
+Zeichen gleich in `bereich-rechner.js`, `dossier-daten.js`,
+`zeit-rechner.js`, `analyse/engine.js`, `zauber-person.js`,
+`karte-daten.js`, `geist-app.js`, `ich-daten.js`, `_taste-haeufig.js` und
+jetzt auch in `begleit-rechner.js`. Dieselbe Fehlerklasse wie bei den
+Engine-Kopien (Aufgabe 11), nur dass hier niemand verhindert, dass die
+zehn auseinanderlaufen: Eine geänderte Zuordnung an einer Stelle bliebe
+an neun anderen stehen, und das fällt erst auf, wenn zwei Seiten
+verschiedene Herren nennen.
+**Fertig, wenn:** die Zuordnung an genau einer Stelle steht, die übrigen
+Seiten sie von dort laden, der Neubau bitgleiche Seiten erzeugt, und
+`pruefe-alles.py` abbricht, sobald irgendwo im Quelltext eine zweite
+Zwölferliste mit diesen Namen auftaucht.
+
+### 37 · Gerechnete Zahlen stehen mit Punkt statt mit Komma
+Gefunden beim Erledigen von Aufgabe 19 am 2.11. `REGELN.md` Abschnitt 4
+verlangt „Zahlen mit Komma, nicht mit Punkt: 2,5 Grad". Die Anzeigen
+schreiben aber `x.ab.toFixed(1) + '°'` — in `begleit-app.js` an drei
+Stellen, und `toFixed` liefert immer einen Punkt. Sichtbar wird das ab
+Wissensstufe 2 in jedem Winkel-Etikett: „3.2°" statt „3,2°". Eine Regel,
+die in `REGELN.md` steht und nirgends geprüft wird, ist eine Bitte.
+**Fertig, wenn:** keine ausgelieferte Seite eine Dezimalzahl mit Punkt im
+sichtbaren Text zeigt, die Umwandlung an einer Stelle liegt, die alle
+Anzeigen benutzen, und eine gemeinsame Prüfung — nicht je `bau-*.py` eine
+eigene — abbricht, sobald im erzeugten Text eine Ziffer, ein Punkt und
+wieder eine Ziffer aufeinanderfolgen.
+
 ---
 
 ## Erledigt
+
+* **2026-11-02** · Die Begleitung sortiert jetzt je Mensch (Aufgabe 19,
+  „Die Begleitung sortiert für alle Menschen gleich" — die Nummer 19
+  steht in dieser Liste zweimal, gemeint ist diese).
+  `begleit-rechner.js` sortierte die Anlagen eines Menschen nach
+  `BG_GEWICHT` — einer festen Zahl je Planet. Damit stand bei jedem
+  Menschen dasselbe oben, egal was in seinem Bild steht, und wo zwei
+  Zahlen gleich sind (Sonne und Mond je 1,00, Venus und Mars je 0,85,
+  Uranus und Neptun je 0,55), entschied die Reihenfolge der Liste
+  `BG_ANLAGEN`. Die Coachin hält die oberste Anlage für die wichtigste
+  dieses Menschen; dort stand die Tabelle.
+  Jetzt tragen drei Gewichte die Reihenfolge, und nur das erste hat
+  überhaupt mit dem Planetennamen zu tun: das Grundgewicht, aufgerechnet
+  mit dem, was die natale Lage dazu sagt (Winkelfeld, das Feld gehört der
+  Anlage selbst, sie herrscht über das Feld des Auftretens, der Herr des
+  Feldes berührt sie im Winkel); wie dicht die Anlage im Bild mit allem
+  anderen verknüpft ist; und wie weit vorn sie in ihrem Feld steht. Der
+  letzte Wert ist stetig, deshalb unterscheiden sich zwei Anlagen fast
+  immer schon dort. Bleiben zwei auf allen drei gleich, entscheidet die
+  natale Länge — aus der Reihenfolge von `BG_ANLAGEN` kommt die
+  Sortierung in keinem Fall mehr.
+  Die dauerhafte Prüfung in `bau-begleitung.py` prüft nicht den
+  Einzelfall, sondern die Eigenschaft, über 1.200 erfundene
+  Geburtsbilder: Jede Stellung trägt alle drei Gewichte; kein Paar liegt
+  auf allen drei gleich, solange die beiden natal nicht auf derselben
+  Länge stehen; es kommen mindestens hundert verschiedene Reihenfolgen
+  heraus; und mindestens die Hälfte der Bilder sortiert anders als die
+  reine Gewichtstabelle. Alle vier wurden gegengeprüft, indem die alte
+  Sortierung kurz wieder eingesetzt wurde — jede schlägt an. Bei den 1.200
+  Bildern sind hundert mit Absicht dabei, in denen drei Anlagen auf
+  demselben Grad verschiedener Zeichen stehen; zwölf im Abstand von genau
+  30° wären ein rundum symmetrisches Bild, in dem die Lagen tatsächlich
+  nicht zu unterscheiden sind, und so ein Bild gibt es am Himmel nicht.
+  Auf Wissensstufe 2 sagt das Etikett im Fragenvorrat jetzt, woran die
+  Reihenfolge hängt, statt nur Planet und Haus zu nennen.
+
+  Zwei Nebenfunde, beide im Zug mitgenommen, weil beide den Bau betrafen:
+  Das Etikett stand auf `white-space:nowrap` und schob die Seite auf
+  686px, sobald mehr darin stand — die Rauchprobe misst die Breite jetzt
+  auf 320, 360, 390 und 768px und auf der höchsten Wissensstufe, nicht
+  mehr nur auf 390px. Und die Prüfung „die Notiz überlebt den Neustart"
+  flatterte: etwa jeder vierte Lauf auf `main` war rot, ohne dass sich ein
+  Commit geändert hatte. Chromium wirft bei `file://` den `localStorage`
+  beim Neuladen manchmal weg; danach war nicht nur die Notiz fort, sondern
+  auch das gewählte Profil, und gelesen wurde das leere Feld eines anderen
+  Menschen. Gemeint war nie „der Browser nimmt den Speicher mit über eine
+  Navigation" — das entscheidet der Browser. Geprüft wird jetzt, was an
+  der Seite hängt: dass die Notiz im Speicher landet, getrennt je Mensch
+  und Sitzung, und dass die Seite sie beim Aufbau von dort holt und nicht
+  aus dem Feld, in dem sie noch steht. Zehn Läufe hintereinander grün,
+  und beide Teile schlagen an, wenn man den Lesepfad oder den Schlüssel
+  kaputt macht. Dieselbe Lehre wie `REGELN.md` 6e, und der Nachsatz
+  dorthin: eine Prüfung, die an der Uhr hängt, prüft die Uhr.
 
 * **2026-10-31** · Die Sätze aus der Anzeige geholt (Aufgabe 9).
   `bereich-app.js` schrieb zwanzig Texte selbst: die fünf Blockköpfe, die
