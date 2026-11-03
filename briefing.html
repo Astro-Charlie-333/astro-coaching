@@ -136,6 +136,20 @@ a{color:var(--nacht);}
  .ac-nav a{padding:7px 9px;font-size:13px;}
  .ac-nav a::after{left:9px;right:9px;}
 }
+/* Auf schmalen Geraeten bekommt die Navigation eine eigene Zeile.
+   Vorher rutschte sie neben der Marke um und haengte den letzten
+   Punkt rechts unter die anderen — das sah nach Fehler aus, nicht
+   nach Absicht. Dazu bricht „Astro-Charlie" nicht mehr mitten im
+   Namen. Geprueft auf 390 Pixeln. */
+@media(max-width:620px){
+ .ac-leiste-inner{flex-wrap:wrap;row-gap:3px;padding:12px 16px 7px;}
+ .ac-marke{white-space:nowrap;}
+ .ac-nav{margin-left:0;width:100%;gap:1px;flex-wrap:nowrap;}
+ .ac-nav a{padding:6px 10px;font-size:13.5px;}
+ .ac-nav a:first-child{padding-left:0;}
+ .ac-nav a::after{left:10px;right:10px;}
+ .ac-nav a:first-child::after{left:0;}
+}
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
 /* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
@@ -152,7 +166,7 @@ a{color:var(--nacht);}
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="index.html">Jetzt</a><a href="bereiche.html">Bereiche</a><a href="uebersicht.html">Ich</a><a href="profile.html" class="ist">Profile</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html" class="ist">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 <div class="wrap">
 

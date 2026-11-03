@@ -118,21 +118,81 @@ if tot:
 else:
     print('  keine toten Verweise')
 
-# 2 · einheitliche Navigation
-navs = {}
+# 2 · die vier Türen
+# Schritt 2 aus ENTWURF-NEUE-SEITE.md: Start · Dein Bild · Jetzt · Wissen.
+# Vorher stand hier nur ein Bericht mit dem Vermerk „Keine harte
+# Fehlermeldung", weil die Navigationen tatsächlich auseinanderliefen.
+# Seit dem Umbau sind alle gleich — also wird es ab jetzt geprüft. Was
+# einmal aufgeräumt ist und nicht geprüft wird, läuft wieder
+# auseinander (REGELN.md 6c).
+#
+# Bereiche und Profile sind absichtlich nicht dabei. Beide bleiben
+# erreichbar: aus dem Text heraus, und wer kein Profil hat, bekommt auf
+# „Jetzt" und „Dein Bild" einen eigenen Hinweis mit Link darauf. Die
+# Prüfung darunter hält genau das fest.
+TUEREN = (('start.html', 'Start'), ('uebersicht.html', 'Dein Bild'),
+          ('index.html', 'Jetzt'), ('wissen.html', 'Wissen'))
+abweichend = []
 for s in seiten:
     t = s.read_text(encoding='utf-8', errors='replace')
     m = re.search(r'<nav class="ac-nav">(.*?)</nav>', t, re.S)
-    if m:
-        eintraege = tuple(re.findall(r'href="([a-z0-9._-]+\.html)"', m.group(1)))
-        navs.setdefault(eintraege, []).append(s.name)
-if len(navs) > 1:
-    print(f'  {len(navs)} verschiedene Navigationen:')
-    for eintraege, wo in sorted(navs.items(), key=lambda x: -len(x[1])):
-        print(f'      {len(wo):3}× {" ".join(eintraege)}')
-    # Keine harte Fehlermeldung: alte Bibliotheksseiten haben eigene Navigationen.
+    if not m:
+        continue
+    paare = tuple(re.findall(r'href="([a-z0-9._-]+\.html)"[^>]*>([^<]*)</a>',
+                             m.group(1)))
+    if paare != TUEREN:
+        abweichend.append((s.name, paare))
+if abweichend:
+    print(f'  {len(abweichend)} Seiten mit abweichender Navigation:')
+    for name, paare in abweichend[:8]:
+        print(f'      {name}: ' + ' · '.join(w for _, w in paare))
+    fehlgeschlagen.append('Navigation weicht ab')
 else:
-    print('  Navigation überall gleich')
+    print('  vier Türen, überall dieselben')
+
+# 2a · und ein Weg zum Profil, obwohl es nicht mehr im Menü steht
+# Ohne Geburtsdaten ist das ganze Werkzeug leer. Solange „Profile" im
+# Menü stand, war der Weg dahin selbstverständlich; jetzt hängt er an
+# einem Hinweis im Text, und der muss auf den beiden Seiten stehen, auf
+# denen jemand ohne Profil landet.
+ohne_weg = []
+for name in ['index.html', 'uebersicht.html']:
+    p = wiki / name
+    if not p.exists():
+        continue
+    t = p.read_text(encoding='utf-8', errors='replace')
+    nav = re.search(r'<nav class="ac-nav">.*?</nav>', t, re.S)
+    ohne_nav = t.replace(nav.group(0), '') if nav else t
+    if 'profile.html' not in ohne_nav:
+        ohne_weg.append(name)
+if ohne_weg:
+    print('  KEIN WEG ZUM PROFIL auf: ' + ', '.join(ohne_weg))
+    print('      (Profile steht nicht mehr im Menü — der Hinweis im Text')
+    print('       ist damit der einzige Weg dorthin und muss bleiben)')
+    fehlgeschlagen.append('kein Weg zum Profil')
+else:
+    print('  der Weg zum Profil steht im Text, nicht nur im Menü')
+
+# 2b · die Leiste sieht überall gleich aus
+# Beim Umbau auf vier Türen kam heraus: Die 108 Handarbeitsseiten
+# tragen jede eine eingefrorene Kopie von basis.css. Eine Änderung dort
+# erreicht nur die gebauten Seiten — die Leiste lief deshalb auf den
+# alten Seiten anders um als auf den neuen, und das fiel niemandem auf,
+# weil es niemand verglichen hat. Geprüft wird an der schmalsten
+# Regel, weil genau die zuletzt dazukam.
+MARKE = '.ac-nav{margin-left:0;width:100%'
+alte_leiste = [s.name for s in seiten
+               if '.ac-leiste{' in s.read_text(encoding='utf-8', errors='replace')
+               and MARKE not in s.read_text(encoding='utf-8', errors='replace')]
+if alte_leiste:
+    print(f'  {len(alte_leiste)} SEITEN MIT ALTER LEISTE:')
+    for z in alte_leiste[:8]:
+        print(f'      {z}')
+    print('      (jede Handarbeitsseite hat ihre eigene Kopie von basis.css —')
+    print('       eine Änderung dort muss bei allen nachgezogen werden)')
+    fehlgeschlagen.append('Leiste läuft auseinander')
+else:
+    print('  die Leiste ist auf allen Seiten dieselbe')
 
 # 2b · die Startseite heißt „Jetzt"
 # Am 28.10. umbenannt: Sie hieß „Heute" und zeigte zehn Tage — der Name
