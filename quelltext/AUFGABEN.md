@@ -97,6 +97,29 @@ auf Fall und Geschlecht wie in `bau-heute.py` an einer von allen
 `bau-*.py` benutzten Stelle steht, und ein von Hand eingesetztes „dein"
 in jeder dieser Dateien den Bau abbricht.
 
+### 39 · Die Sperre gegen doppelte Absätze sitzt je Bereich statt je Seite
+Befund der Gestalterin vom 2026-11-03 (`bereiche.html`, erster Befund —
+derselbe Absatz steht in bis zu fünf Bereichen). Unter „1 · Was ist los"
+steht derselbe Absatz bei Liebe, Beruf, Geld, Selbstwert und Sinn und
+Richtung wörtlich gleich; über alle zehn Bereiche gezählt sind es 21
+verschiedene Absätze, zehn davon in mehr als einem Bereich. Ursache ist
+`var gesehen = {}` in `bereich-rechner.js`: Die Sperre hält fest, dass
+derselbe Wanderer **in einem Bereich** nur einmal vorkommt, aber der Satz
+hängt am Wanderer und der Bereich am getroffenen Haus — derselbe Wanderer
+läuft also durch mehrere Bereiche und trägt überall denselben Satz. Genau
+die Fehlerklasse aus `REGELN.md` Abschnitt 6f. **Nicht** dieselbe Aufgabe
+wie 33: Dort geht es um den Handgriff in Block 2 und darum, was er
+behauptet; hier um Block 1 und darum, dass er sich wiederholt. Das
+Klappelement „Was sonst noch läuft" samt Zähler steht zwei Blöcke tiefer
+schon bereit und kann die verdeckten Vorgänge aufnehmen.
+**Fertig, wenn:** kein gebauter Absatz aus Block 1 auf einer Seite in mehr
+als einem Bereich offen steht (der stärkste Vorgang eines Bereichs bleibt
+offen, auch wenn er anderswo schon stand, damit kein Bereich leer ist),
+der offen stehende Vorgang nennt, in welchen Bereichen er sonst noch
+wirkt, und `bau-bereiche.py` abbricht, sobald zwei Bereiche derselben
+Seite einen Absatz Wort für Wort teilen — mit festen Beispielen geprüft,
+wie `REGELN.md` Abschnitt 6e es verlangt, nicht gegen den Himmel des Tages.
+
 ---
 
 ## Was nicht gemacht wird

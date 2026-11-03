@@ -213,3 +213,115 @@ dessen 30 Pixel. Keine neue Farbe, keine neue Schrift, kein neuer Baustein:
 dieselben zwei Texte, die Größen vertauscht. Nebenbei werden rund 190 Pixel
 frei, und alles darunter rückt um eine Zeile hoch.
 
+
+### 03.11.2026 · `bereiche.html` — die Lebensbereiche
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil. Seitenhöhe bei 390: 6.896 Pixel auf Stufe 0, 7.425 auf
+Stufe 2. Keine Fehler in der Konsole, nichts läuft über den Rand.
+
+Was trägt: Der erste Bildschirm hält auf dem Telefon, was er soll. Nach
+der Überschrift und zwei Zeilen Erklärung steht „Dein Umfeld ist gerade
+dein lautester Bereich", und direkt darunter der Handgriff — der Verlust,
+den der Durchgang vom 30.10. auf „Jetzt" beschrieben hat, wiederholt sich
+hier nicht. Und „Auf einen Blick" ist das beste Stück der Seite: zehn
+Bereiche nach Lautstärke, Balken links, Stufenwort rechts, in zwei
+Sekunden gelesen. Es ist das Einzige auf dieser Seite, das ein Bild ist
+und kein Absatz. Die beiden Befunde handeln davon, dass der Text darunter
+sich wiederholt — und dass genau dieses eine Bild sich nicht verschicken
+lässt.
+
+#### 03.11-1 · Derselbe Absatz steht in bis zu fünf Bereichen
+
+**Zitat:** Unter „1 · Was ist los" steht bei **Liebe**, **Beruf**,
+**Geld**, **Selbstwert** und **Sinn und Richtung** Wort für Wort derselbe
+Absatz: „Etwas verwandelt sich von Grund auf. Nicht ein Teil davon — das
+Ganze. Am Anfang merkt man nur, dass das Alte nicht mehr geht; was
+stattdessen kommt, zeigt sich erst später." Bei **Beruf**, **Gesundheit**
+und **Selbstwert** dreimal: „Das läuft seit Jahren leise mit. Es verändert
+sich in so kleinen Schritten, dass du es erst im Rückblick siehst."
+Durchgezählt über alle zehn Bereiche: 21 verschiedene Absätze, **zehn
+davon in mehr als einem Bereich**. Dazu stehen die drei bis fünf Absätze
+je Bereich flach untereinander, ohne Verbindung: Bei Freunde sagt der
+zweite „Etwas wird größer und leichter. Türen gehen auf", der dritte
+„Etwas wird ernst … Es fühlt sich schwer an". Dass das drei verschiedene
+Vorgänge sind, steht nur auf Stufe 2 im Kasten „Woran das abgelesen ist".
+Auf Stufe 0 ist der erste als „Das stärkste gerade" markiert und die
+übrigen gar nicht.
+
+**Kosten:** Der Stimmen-Test, und er fällt genau an der Stelle durch, an
+der die Seite selbst zum Tippen auffordert: „Tipp einen an — dann steht er
+darunter ausführlich." Wer das tut, tippt Liebe, dann Beruf, dann Geld und
+liest dreimal denselben Satz über etwas, das sich von Grund auf
+verwandelt. Beim zweiten Mal weiß sie, dass hier nicht über sie
+geschrieben, sondern eingesetzt wurde — dafür braucht sie keine zwei
+Sekunden, sie hat den Absatz ja eben erst gelesen. Teurer ist, was das mit
+der Seite selbst macht: „Zehn Lebensbereiche, sortiert nach dem, wo gerade
+am meisten passiert" verspricht, dass die Bereiche sich unterscheiden.
+Trägt die Hälfte denselben Absatz, ist die Sortierung Zierde, und aus zehn
+Bereichen werden zehn Kacheln mit fünf Texten. Das trifft denselben Punkt
+wie der Kauf-Test: Der Knopf „Tiefgang zu diesem Bereich" steht unter
+einem Text, den sie gerade zum dritten Mal gelesen hat. Niemand kauft die
+ausführliche Fassung von etwas, das sich schon in der kurzen wiederholt.
+
+**Vorschlag:** Die Sperre, die es schon gibt, zieht um. In
+`bereich-rechner.js` hält `var gesehen = {}` fest, dass derselbe Wanderer
+**in einem Bereich** nur einmal vorkommt; der Kommentar daneben nennt den
+Grund: „Sonst steht dieselbe Beschreibung zweimal untereinander." Der Satz
+hängt aber am Wanderer, der Bereich am getroffenen Haus — also läuft
+derselbe Wanderer durch fünf Bereiche und trägt fünfmal denselben Satz.
+`gesehen` zählt künftig über alle zehn Bereiche der Seite statt je
+Bereich: Ein Vorgang steht offen in dem Bereich, in dem er am lautesten
+ist, und rutscht in den übrigen in das Klappelement „Was sonst noch
+läuft", das zwei Blöcke tiefer ohnehin schon steht und seine Zahl
+mitführt. Damit kein Bereich leer dasteht, bleibt der stärkste Vorgang
+eines Bereichs immer offen, auch wenn er anderswo schon stand. Im Bereich,
+der ihn offen trägt, kommt eine Zeile dazu, die nennt, wo er sonst noch
+wirkt — „Dasselbe trägt gerade auch Beruf, Geld und Selbstwert." Das ist
+dieselbe Lehre wie `REGELN.md` Abschnitt 6f: Jeder Schlüssel, der in einem
+gebauten Text landet, braucht seine eigene Sperre. Und die Zeile ist
+nebenbei genau der Vorsprung aus `PRODUKT.md` Abschnitt 3 — dass eine
+Sache hinter fünf Bereichen steckt, ist handhabbar; fünfmal derselbe
+Absatz ist es nicht.
+
+#### 03.11-2 · Die einzige Karte, die fotografiert würde, trägt weder Namen noch Datum
+
+**Zitat:** „Auf einen Blick" — der Kasten mit den zehn Bereichen, bei 390
+Pixeln 358 breit und 436 hoch. Im Rahmen steht nichts als die zehn Zeilen.
+Wofür „Still" und „Viel los" stehen, steht **darunter und außerhalb**:
+„Was heißen die vier Stufen?" ist ein zugeklapptes `details` bei Pixel
+1.057 — im Quelltext steht der Grund dafür als Kommentar, „Die Skala
+einmal erklären, zugeklappt." Für wen gerechnet wurde, steht **darüber und
+außerhalb**: „Gerechnet für Teska Vohwinkel", 11,5 Pixel JetBrains Mono,
+bei Pixel 269. Ein Datum steht nirgends: In 1.059 Wörtern Seitentext kommt
+der laufende Tag kein einziges Mal vor, und das Feld „Stichtag" wird leer
+ausgeliefert.
+
+**Kosten:** Der Screenshot-Test, und zwar an dem einen Gegenstand dieser
+Seite, der ihn bestehen könnte. Alles andere hier ist Fließtext; dieser
+Kasten ist ein Bild, passt in einen Bildschirm und sagt etwas über sie.
+Von hier wird das Bild gemacht. Bei der Freundin kommen dann zehn Wörter
+mit Balken an. Sie kann nicht sehen, wessen Leben das ist, wann das galt,
+und was „Still" heißt — alle drei Antworten liegen außerhalb des
+Ausschnitts, zwei davon hinter einem Klick. `PRODUKT.md` Abschnitt 2
+verlangt für genau diese Nutzung drei Sachen, und die Karte hat keine
+davon: Name, Zeitraum, was es heißt. Das fehlende Datum kostet doppelt:
+Ein Bild ohne Datum ist in drei Wochen nicht mehr einzuordnen, und eine
+Seite, die in jeder zweiten Zeile „gerade" und „jetzt" sagt, ohne je zu
+nennen, welcher Tag gemeint ist, lässt offen, ob sie heute gerechnet hat
+oder vor einem halben Jahr. Für eine Plattform, deren Markenkern die
+Ehrlichkeit über die eigenen Grenzen ist, ist der fehlende Stichtag die
+teuerste Auslassung auf dieser Seite.
+
+**Vorschlag:** Der Kasten bekommt eine Fußzeile, und sie besteht aus
+Texten, die schon auf der Seite stehen und nur umziehen. „Gerechnet für
+Teska Vohwinkel" wandert von Pixel 269 unter die zehn Zeilen **in den
+Rahmen**, in seinen 11,5 Pixeln JetBrains Mono, und bekommt den Stichtag
+angehängt, der heute nur als leeres Eingabefeld vorkommt — eine Zeile:
+„Gerechnet für Teska Vohwinkel · 3. November 2026". Darunter, noch im
+Rahmen, verliert „Was heißen die vier Stufen?" sein `details` und steht
+offen: die vier Stufenwörter mit ihren Sätzen, in der Größe der
+Stufenwörter. Keine neue Farbe, keine neue Schrift, kein neuer Baustein —
+dieselben Texte, nur innerhalb des Rahmens statt darüber und darunter.
+Danach ist der Ausschnitt, den jemand fotografiert, derselbe wie der, den
+sie auf dem Telefon sieht.
