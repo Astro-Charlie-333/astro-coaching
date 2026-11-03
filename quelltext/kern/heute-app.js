@@ -510,15 +510,22 @@ function bahnSatz(t){
          (t.art === 'hart' ? W.hart : W.weich);
 }
 /* Zwei Register: Auf Stufe 0 und 1 „Saturn auf deiner Sonne", ab
-   Stufe 2 „Saturn Konjunktion deine Sonne". Dieselbe Aussage, und
-   die erste braucht keine Vorbildung. */
+   Stufe 2 „Saturn in Konjunktion zu deiner Sonne". Dieselbe
+   Aussage, und die erste braucht keine Vorbildung.
+
+   Gebeugt wird hier nichts. Die Anzeige holt den Fall bei der
+   Formel und das Geschlecht beim Punkt und lässt `B_BEUGE` das
+   Wort bilden — sonst steht in der nächsten Vorlage wieder ein
+   festes „dein". */
 function bahnTitel(t){
-  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
-  var wort = B_WINKELWORT[t.aspekt] || 'bei';
-  return '<span data-bis="1">' + esc(t.wanderer + ' ' + wort + ' ' +
-           (Z.laie || Z.kurz)) + '</span>' +
-         '<span class="ac-tech" data-ab="2">' + esc(t.wanderer + ' ' + t.aspekt +
-           ' ' + Z.kurz) + '</span>';
+  var W = B_WINKELWORT[t.aspekt] || B_WINKELNOT;
+  var laie = t.wanderer + ' ' + W.wort + ' ' +
+             B_BEUGE(B_PUNKT(t.ziel, true), W.fall);
+  var tech = t.wanderer + ' ' + B_WINKELTECH.vor + ' ' + t.aspekt + ' ' +
+             B_WINKELTECH.nach + ' ' +
+             B_BEUGE(B_PUNKT(t.ziel, false), B_WINKELTECH.fall);
+  return '<span data-bis="1">' + esc(laie) + '</span>' +
+         '<span class="ac-tech" data-ab="2">' + esc(tech) + '</span>';
 }
 /* Der Balken zeigt, wie nah der Winkel steht — nicht, wie wichtig
    er ist. Das sagt die Legende auch so. */
@@ -527,7 +534,6 @@ function naeheBalken(t){
          (Math.max(3, t.naehe * 100)).toFixed(0) + '%"></i></div>';
 }
 function trefferKarte(t, gross){
-  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
   var B = beiDir(P[t.ziel]);
   var h = ['<article class="tr' + (gross ? ' tr-gross' : '') +
            (t.art === 'hart' ? ' tr-hart' : ' tr-weich') + '">'];
@@ -625,7 +631,6 @@ function strahlBauen(){
       h.push('<div class="st-m">' + esc(ST_MONAT[d.getMonth()]) + ' ' + d.getFullYear() + '</div>');
     }
     var tage = tagesAbstand(x.jd);
-    var Z = B_ZIEL[x.ziel] || {kurz:x.ziel};
     var B = beiDir(P[x.ziel]);
     var dg = (x.durchgaenge > 1 && B_DURCHGANG[x.durchgang])
       ? (B_DURCHGANG[x.durchgang][x.durchgaenge === 3 ? 'von3' : 'von2'] || '') : '';

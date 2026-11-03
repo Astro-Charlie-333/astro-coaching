@@ -32,6 +32,151 @@ for _s in ['bis morgen', 'noch bis morgen', 'noch drei Tage',
 for _s in ['bis 14. November', 'bis 3.12.', 'noch bis 1. Januar']:
     assert _datum_ohne_jahr(_s), 'Datumsregel findet das Datum nicht: ' + _s
 
+# ── Die Beugung der gebauten Überschriften ──────────────────────────
+# Aufgabe 31: Bis zum 2.11. stand auf der Startseite „Jupiter auf dein
+# Mond", „Mars quer zu dein Mars", „Saturn gegenüber dein Auftreten".
+# Elf Köpfe, keiner richtig.
+#
+# Die Fehlerklasse ist nicht „es fehlt ein n". Sie ist: Eine Vorlage
+# setzt ein Wort ein, dessen Gestalt von zwei Angaben abhängt — dem Fall,
+# den die Formel verlangt, und dem Geschlecht des Punktes dahinter — und
+# kennt keine von beiden. Deshalb prüft diese Regel beide Angaben und
+# nicht ein Wort, das meistens dabeisteht (REGELN.md 6e, Regel 1).
+#
+# Eine Prüfung auf „steht da ‚dein' vor einem großen Wort" wäre genau
+# dieser Fehler noch einmal: „auf deine Venus" und „auf dein Auftreten"
+# sind richtig — weiblicher Akkusativ und sächlicher Akkusativ heißen so.
+_DEIN = {'nom': {'m': 'dein',  'w': 'deine', 's': 'dein'},
+         'akk': {'m': 'deinen', 'w': 'deine', 's': 'dein'},
+         'dat': {'m': 'deinem', 'w': 'deiner', 's': 'deinem'}}
+
+# Welchen Fall eine Formel verlangt, steht in den Daten — aber ob diese
+# Angabe stimmt, ist keine Sache der Daten, sondern des Deutschen. Stünde
+# es nur dort, ließe sich die Prüfung dadurch abstellen, dass man den Fall
+# verstellt: Daten und Prüfung wären sich einig und beide falsch.
+# Deshalb hier, am Verhältniswort, das den Fall regiert — dem letzten Wort
+# der Formel.
+_PRAEPFALL = {'auf': 'akk',        # auf die Frage wohin
+              'gegenüber': 'dat', 'zu': 'dat', 'mit': 'dat',
+              'von': 'dat', 'bei': 'dat', 'an': 'dat'}
+
+
+def _regierter_fall(formel):
+    """Der Fall, den die Formel verlangt — oder None, wenn ihr letztes
+    Wort hier nicht steht. Dann ist die Formel neu und ihr Fall ungeklärt;
+    das gehört gemeldet und nicht geraten."""
+    return _PRAEPFALL.get(formel.rsplit(' ', 1)[-1])
+
+
+assert _regierter_fall('auf') == 'akk'
+assert _regierter_fall('gegenüber') == 'dat'
+assert _regierter_fall('quer zu') == 'dat'
+assert _regierter_fall('im Einklang mit') == 'dat'
+assert _regierter_fall('in Reichweite von') == 'dat'
+assert _regierter_fall('in Konjunktion zu') == 'dat'
+assert _regierter_fall('längs über') is None
+
+# Dasselbe für die andere Hälfte: Das Geschlecht eines Punktes steht in
+# den Daten, aber ob „Mond" männlich ist, entscheidet nicht die Datei.
+# Stünde es nur dort, ginge Nummer 2 derselben Probe durch — Daten und
+# Prüfung einig, beide falsch. Hier steht das Wort mit Geschlecht und,
+# wo es sich beugt, mit seinen Formen: Nominativ ist der Schlüssel,
+# dahinter Akkusativ und Dativ. Ein neuer Punkt kommt hier nicht vorbei,
+# ohne dass jemand sein Geschlecht genannt hat.
+_WORTFORMEN = {
+    'Sonne':             ('w', 'Sonne', 'Sonne'),
+    'Mond':              ('m', 'Mond', 'Mond'),
+    'Merkur':            ('m', 'Merkur', 'Merkur'),
+    'Venus':             ('w', 'Venus', 'Venus'),
+    'Mars':              ('m', 'Mars', 'Mars'),
+    'Jupiter':           ('m', 'Jupiter', 'Jupiter'),
+    'Saturn':            ('m', 'Saturn', 'Saturn'),
+    'Uranus':            ('m', 'Uranus', 'Uranus'),
+    'Neptun':            ('m', 'Neptun', 'Neptun'),
+    'Pluto':             ('m', 'Pluto', 'Pluto'),
+    # Schwach gebeugt: der Aszendent, den Aszendenten, dem Aszendenten.
+    'Aszendent':         ('m', 'Aszendenten', 'Aszendenten'),
+    'MC':                ('s', 'MC', 'MC'),
+    'Auftreten':         ('s', 'Auftreten', 'Auftreten'),
+    # Das Eigenschaftswort beugt mit: der öffentlichen Seite.
+    'öffentliche Seite': ('w', 'öffentliche Seite', 'öffentlichen Seite'),
+}
+
+
+def _beugung_fehler(titel, formeln, punkte):
+    """Was an einer gebauten Überschrift grammatisch nicht aufgeht — oder None.
+
+    `formeln`: Formel → Fall, etwa {'auf': 'akk', 'gegenüber': 'dat'}.
+    `punkte`:  Hauptwort im Nominativ → (Geschlecht, {Fall: Hauptwort}),
+               beides aus `bahn-daten.js`, nicht hier noch einmal gepflegt.
+
+    Steht in der Überschrift keine der Formeln, ist sie nicht Sache dieser
+    Prüfung und kommt ohne Befund zurück.
+    """
+    # Die längste zuerst: „in Reichweite von" enthält kein „auf", aber
+    # „quer zu" und „zu" würden sich sonst in die Quere kommen.
+    for formel in sorted(formeln, key=len, reverse=True):
+        marke = ' ' + formel + ' '
+        i = titel.find(marke)
+        if i < 0:
+            continue
+        fall = formeln[formel]
+        rest = titel[i + len(marke):].strip()
+        if ' ' not in rest:
+            return f'„{titel}": hinter „{formel}" steht kein Punkt'
+        dein, hauptwort = rest.split(' ', 1)
+        # Welcher Punkt gemeint ist, verrät das Hauptwort — in jeder
+        # Gestalt, die er annehmen kann.
+        for nom, (g, beugt) in punkte.items():
+            formen = {nom} | set(beugt.values())
+            if hauptwort not in formen:
+                continue
+            soll = _DEIN[fall][g] + ' ' + (beugt.get(fall) or nom)
+            if rest != soll:
+                return (f'„{titel}": hinter „{formel}" steht {fall.upper()}, '
+                        f'also „{soll}" und nicht „{dein} {hauptwort}"')
+            return None
+        return f'„{titel}": „{hauptwort}" ist kein Punkt aus den Daten'
+    return None
+
+
+# Die Regel gegen feste Beispiele, bevor die erste Seite gebaut wird:
+# Welche Überschriften der Himmel heute hergibt, ist Zufall — ob die Regel
+# taugt, darf davon nicht abhängen (REGELN.md 6e, Regel 2).
+_PB = {'Mond': ('m', {}), 'Venus': ('w', {}),
+       'Aszendent': ('m', {'akk': 'Aszendenten', 'dat': 'Aszendenten'}),
+       'Auftreten': ('s', {}),
+       'öffentliche Seite': ('w', {'dat': 'öffentlichen Seite'})}
+_FB = {'auf': 'akk', 'gegenüber': 'dat', 'quer zu': 'dat',
+       'im Einklang mit': 'dat', 'in Reichweite von': 'dat',
+       'in Konjunktion zu': 'dat'}
+for _t in ['Jupiter auf deinen Mond',
+           'Mars auf deine Venus',            # weiblicher Akkusativ, richtig
+           'Saturn auf dein Auftreten',       # sächlicher Akkusativ, richtig
+           'Saturn gegenüber deinem Auftreten',
+           'Mars quer zu deinem Mond',
+           'Neptun im Einklang mit deiner Venus',
+           'Pluto in Reichweite von deiner Venus',
+           'Mars auf deinen Aszendenten',
+           'Venus gegenüber deiner öffentlichen Seite',
+           'Venus auf deine öffentliche Seite',
+           'Jupiter in Konjunktion zu deinem Mond',
+           'Jupiter ohne Formel dein Mond']:  # keine Formel, nichts zu prüfen
+    assert _beugung_fehler(_t, _FB, _PB) is None, \
+        'Beugungsregel schlägt falsch an: ' + _t + ' → ' + str(_beugung_fehler(_t, _FB, _PB))
+for _t in ['Jupiter auf dein Mond',
+           'Mars quer zu dein Mond',
+           'Saturn gegenüber dein Auftreten',
+           'Jupiter in Reichweite von deine Venus',
+           'Pluto im Einklang mit dein Mond',
+           'Mars gegenüber deinem Aszendent',
+           'Venus gegenüber deine öffentliche Seite',
+           'Jupiter in Konjunktion zu dein Mond']:
+    assert _beugung_fehler(_t, _FB, _PB), 'Beugungsregel findet den Fehler nicht: ' + _t
+assert _beugung_fehler('Jupiter auf deinen Saturn', _FB, _PB), \
+    'ein Punkt, den es in den Daten nicht gibt, muss auffallen'
+
+
 hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
@@ -203,6 +348,28 @@ const tr=await p.evaluate(()=>{
     mehrStrahl:!document.getElementById('htstrahlmehr').hidden};
 });
 
+/* Aufgabe 31: die Beugung der Köpfe, beide Register getrennt.
+   innerText zeigt immer nur das Register der eingestellten Stufe —
+   geprüft gehören beide, sonst bleibt die Stufe-2-Fassung ungesehen.
+   Die Tabellen kommen aus bahn-daten.js und nicht aus einer zweiten
+   Liste in bau-heute.py: eine Angabe, eine Stelle. */
+const bg=await p.evaluate(()=>{
+  const paare=e=>({s0:((e.querySelector('[data-bis="1"]')||{}).textContent||'').trim(),
+                   s2:((e.querySelector('.ac-tech')||{}).textContent||'').trim()});
+  const punkte={};
+  Object.keys(B_ZIEL).forEach(k=>{
+    [B_ZIEL[k], B_ZIEL[k].laie].forEach(z=>{
+      if(z && z.wort) punkte[z.wort]=[z.g, z.beugt||{}]; });
+  });
+  const formeln={};
+  Object.keys(B_WINKELWORT).forEach(a=>{
+    formeln[B_WINKELWORT[a].wort]=B_WINKELWORT[a].fall;
+    formeln[B_WINKELTECH.vor+' '+a+' '+B_WINKELTECH.nach]=B_WINKELTECH.fall;
+  });
+  return {punkte:punkte, formeln:formeln,
+          koepfe:[...document.querySelectorAll('.tr-n, .st-n')].map(paare)};
+});
+
 /* Schlaf und Bewegung: die Trennung von Gemessenem und
    Ueberliefertem ist hier die ganze Prüfung. */
 const kp=await p.evaluate(()=>{
@@ -359,9 +526,13 @@ const einer=await p.evaluate(()=>({
 await p.evaluate(()=>{ window.AC_WAHL.setzen([]); });
 await p.waitForTimeout(800);
 const zurueck=await p.evaluate(()=>document.querySelectorAll('.ht-b').length);
-console.log(JSON.stringify({v,k,kapZurueck,j0,n0,th,kp,tr,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
+console.log(JSON.stringify({v,k,kapZurueck,j0,n0,th,kp,tr,bg,t0,t3,lauf,wo,auf,wahl,einer,zurueck,fehler:[...new Set(f)]}));
 await b.close();})();
-""".replace('ZIEL', str(ziel)), encoding='utf-8')
+""".replace('file://ZIEL', 'file://' + str(ziel)), encoding='utf-8')
+# Die Einsetzung greift auf die ganze Adresse und nicht auf das Wort
+# „ZIEL": Seit die Rauchprobe B_ZIEL aus der Seite liest, stünde sonst
+# mitten im Skript „B_/pfad/zu/index.html". Dieselbe Fehlerklasse wie
+# in REGELN.md 6e — ein Allerweltswort als Schlüssel.
 try:
     r = subprocess.run(['node', str(probe)], capture_output=True, text=True, timeout=180)
     pr = json.loads(r.stdout.strip().splitlines()[-1]) if r.returncode == 0 else None
@@ -503,6 +674,49 @@ if pr:
     if len(_winkel) < 2:
         fehler.append('die Trefferliste kennt offenbar nur einen Winkel — '
                       f'gefunden: {", ".join(sorted(_winkel)) or "keiner"}')
+    # Aufgabe 31: Die Köpfe sind die Karten, von denen jemand einen
+    # Screenshot macht. Ein falsch gebeugtes „dein" steht dort in der
+    # größten Schrift der Seite.
+    bg = pr['bg']
+    _punkte = {w: (g, b) for w, (g, b) in bg['punkte'].items()}
+    if len(_punkte) < 12:
+        fehler.append('die Punkte tragen kein Geschlecht mehr — '
+                      f"gefunden: {len(_punkte)}")
+    for _wort, (_g, _beugt) in sorted(_punkte.items()):
+        if _wort not in _WORTFORMEN:
+            fehler.append(f'„{_wort}" ist neu — Geschlecht und Formen '
+                          'gehören in _WORTFORMEN')
+            continue
+        _sg, _sakk, _sdat = _WORTFORMEN[_wort]
+        if _g != _sg:
+            fehler.append(f'„{_wort}" ist {_sg}, in den Daten steht {_g}')
+        for _fall, _soll in (('akk', _sakk), ('dat', _sdat)):
+            _ist = _beugt.get(_fall) or _wort
+            if _ist != _soll:
+                fehler.append(f'„{_wort}" heißt im {_fall.upper()} „{_soll}", '
+                              f'in den Daten „{_ist}"')
+    if len(bg['formeln']) < 10:
+        fehler.append('die Verbindungsformeln tragen keinen Fall mehr — '
+                      f"gefunden: {len(bg['formeln'])}")
+    for _formel, _fall in sorted(bg['formeln'].items()):
+        _soll = _regierter_fall(_formel)
+        if _soll is None:
+            fehler.append(f'„{_formel}": welchen Fall das verlangt, steht '
+                          'nirgends — Verhältniswort in _PRAEPFALL eintragen')
+        elif _soll != _fall:
+            fehler.append(f'„{_formel}" verlangt {_soll.upper()}, '
+                          f'in den Daten steht {_fall.upper()}')
+    if not bg['koepfe']:
+        fehler.append('keine einzige gebaute Überschrift zum Prüfen gefunden')
+    for _k in bg['koepfe']:
+        for _reg, _t in (('Stufe 0', _k['s0']), ('Stufe 2', _k['s2'])):
+            if not _t:
+                fehler.append(f'eine Überschrift hat kein Register {_reg}')
+                continue
+            _f = _beugung_fehler(_t, bg['formeln'], _punkte)
+            if _f:
+                fehler.append(f'{_reg}: {_f}')
+
     if not tr['schnellGetrennt']:
         fehler.append('die schnellen Wanderer stehen nicht getrennt — dann steht '
                       'Pluto auf dem MC neben dem Mond auf Merkur')
