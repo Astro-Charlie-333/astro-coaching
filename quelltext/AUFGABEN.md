@@ -27,26 +27,6 @@ Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 31 · „Jupiter auf dein Mond" — die gebauten Überschriften beugen nicht
-Gefunden im Gestaltungs-Durchgang vom 30.10. zu `index.html`
-(`GESTALTERIN.md`, Befund 30.10-1). Die Köpfe in „Was dein Bild gerade
-trifft", „Die nächsten zwölf Monate" und „Was gerade läuft" setzen immer
-ein unflektiertes `dein` oder `deine` ein: „Jupiter auf dein Mond", „Mars
-quer zu dein Mars", „Jupiter in Reichweite von deine Sonne", „Saturn
-gegenüber dein Auftreten" — elf verschiedene, keine richtige. Auf Stufe 2
-dasselbe („Jupiter Konjunktion dein Mond"). Die Vorlage kennt weder den
-Fall, den die Präposition verlangt, noch das Geschlecht des Punktes
-dahinter. Es trifft die größten Überschriften der Seite und damit die
-Karten, die am ehesten fotografiert werden.
-**Fertig, wenn:** jeder Punkt in den Daten sein grammatisches Geschlecht
-trägt und jede Verbindungsformel ihren Fall, die elf Überschriften auf
-`index.html` mit einem erfundenen Profil korrekt gebeugt dastehen („auf
-deinen Mond", „quer zu deinem Mars", „von deiner Sonne", „gegenüber deinem
-Auftreten") — auf Stufe 0 und auf Stufe 2 — und `bau-heute.py` abbricht,
-sobald im erzeugten Text auf „auf", „quer zu", „im Einklang mit",
-„gegenüber" oder „in Reichweite von" ein unflektiertes `dein` oder `deine`
-vor einem großgeschriebenen Wort folgt.
-
 ### 32 · Die Grenze im Bereich Gesundheit liegt zugeklappt
 Befund der Prüferin vom 2026-10-30 (Die Begleitete, erster Befund — die
 Grenzen kommen zuerst). Die Sätze „Hier wird nichts über deinen Körper
@@ -97,6 +77,25 @@ in sechs Ordnern einzeln — wie bei der Stufe-0-Prüfung (Aufgabe 25).
 Stelle steht, die alle `bau-*.py` benutzen, jede `*-app.js` sie besteht,
 und ein eingebauter Satz in jeder dieser Dateien den Bau abbricht —
 geprüft in allen drei Anführungsarten.
+
+### 38 · Dieselbe Beugung fehlt in den anderen Anzeigen
+Gefunden beim Erledigen von Aufgabe 31 am 3.11. Die Startseite setzt
+„dein" jetzt über `B_BEUGE` zusammen und wird darauf geprüft. Die
+übrigen Anzeigen setzen es weiter fest ein: `beziehung-app.js` hat
+dafür ein eigenes `ohneDein` und schreibt die Form von Hand,
+`niveau/wortwahl.js` trägt in `PLANET[k].kurz(n)` ein festes „dein"
+beziehungsweise „deine" samt einer Ersetzung, die daraus wieder einen
+Satzanfang macht, und `tief-bauer.js` und `reading-app.js` setzen diese
+Zeichenketten in Vorlagen ein. Solange jede Anzeige ihr eigenes „dein"
+mitbringt, steht derselbe Fehler nur noch nicht dort, wo ihn jemand
+sieht — dieselbe Fehlerklasse in sechs Ordnern einzeln, wie bei der
+Stufe-0-Prüfung (Aufgabe 25) und bei Aufgabe 34.
+**Fertig, wenn:** die Punkte ihr Geschlecht an einer Stelle tragen, die
+alle Anzeigen benutzen, kein `*-app.js` und kein `*-bauer.js` mehr ein
+festes „dein" oder „deine" vor einem Punktnamen schreibt, die Prüfung
+auf Fall und Geschlecht wie in `bau-heute.py` an einer von allen
+`bau-*.py` benutzten Stelle steht, und ein von Hand eingesetztes „dein"
+in jeder dieser Dateien den Bau abbricht.
 
 ---
 
@@ -451,6 +450,38 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-03** · Die gebauten Überschriften beugen jetzt (Aufgabe 31).
+  Auf der Startseite stand „Jupiter auf dein Mond", „Mars quer zu dein
+  Mars", „Saturn gegenüber dein Auftreten" — elf Köpfe in den drei
+  größten Abschnitten, keiner richtig, und auf Stufe 2 dasselbe. Die
+  Vorlage setzte immer dasselbe „dein" oder „deine" ein; sie kannte
+  weder den Fall, den die Formel verlangt, noch das Geschlecht des
+  Punktes dahinter. Es traf genau die Karten, von denen jemand einen
+  Screenshot macht (`PRODUKT.md` 2, Punkt 3).
+  Beides steht jetzt in `bahn-daten.js`: das Geschlecht am Punkt, der
+  Fall an der Formel. `B_BEUGE` ist die einzige Stelle, die „dein" und
+  das Hauptwort zusammensetzt; die Anzeige beugt nichts mehr selbst. Wo
+  sich das Hauptwort mitbeugt, steht das dabei — „auf deinen
+  Aszendenten", „gegenüber deiner öffentlichen Seite". Das
+  Fachregister heißt jetzt „Jupiter in Konjunktion zu deinem Mond"
+  statt „Jupiter Konjunktion dein Mond": zwei Nominative nebeneinander
+  sagten nicht, was wozu steht (`REGELN.md` 6d).
+  Dauerhafte Prüfung in `bau-heute.py`: Die Rauchprobe liest beide
+  Register jeder Überschrift und die Tabellen aus den Daten und
+  verlangt zu Fall und Geschlecht genau eine Gestalt. Eine Prüfung auf
+  „da steht ‚dein' vor einem großen Wort" wäre derselbe Fehler noch
+  einmal gewesen — „auf deine Venus" und „auf dein Auftreten" sind
+  richtig. Damit sich die Prüfung nicht durch Verstellen der Daten
+  abschalten lässt, steht das Deutsche daneben und nicht darin:
+  `_PRAEPFALL` am Verhältniswort, `_WORTFORMEN` am Wort, beide mit
+  festen Beispielen vor dem ersten Bau (`REGELN.md` 6e). Vier Proben:
+  Fall verstellt, Geschlecht verstellt, Beugung entfernt, festes „dein"
+  in der Anzeige — jede bricht den Bau.
+  Dabei aufgefallen und mitgenommen: Die Rauchprobe setzte ihre Adresse
+  über `.replace('ZIEL', …)` ein. Seit sie `B_ZIEL` aus der Seite liest,
+  stand mitten im Skript „B_/pfad/zu/index.html". Jetzt greift die
+  Einsetzung auf die ganze Adresse.
 
 * **2026-11-02** · Die Begleitung sortiert jetzt je Mensch (Aufgabe 19,
   „Die Begleitung sortiert für alle Menschen gleich" — die Nummer 19

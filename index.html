@@ -4148,34 +4148,96 @@ window.AC_BAHN = {
    dritte wäre schlecht. Zusammengesetzt sind es 42 Texte, und jeder
    einzelne davon kann gut sein. */
 
+/* ── Beugung ──────────────────────────────────────────────────
+   Bis zum 2.11. setzten die Überschriften immer dasselbe „dein"
+   oder „deine" ein: „Jupiter auf dein Mond", „Mars quer zu dein
+   Mars", „Saturn gegenüber dein Auftreten". Elf Köpfe auf der
+   Startseite, keiner richtig — und es sind genau die Karten, von
+   denen jemand einen Screenshot macht (PRODUKT.md 2, Punkt 3).
+
+   Der Grund war nicht ein vergessenes Wort, sondern eine fehlende
+   Angabe: Die Vorlage kannte weder den Fall, den die Formel
+   verlangt, noch das Geschlecht des Punktes dahinter. Beides steht
+   jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
+   Formel — und die Anzeige setzt nur noch zusammen. */
+
+/* „dein" in den drei Fällen, die hier vorkommen. Mehr braucht es
+   nicht: Ein Genitiv steht in keiner dieser Formeln. */
+var B_DEIN = {
+ m:{nom:'dein',  akk:'deinen', dat:'deinem'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem'}};
+
 /* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
-   entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch. */
+   entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
+
+   `g`     — das grammatische Geschlecht: m, w oder s.
+   `wort`  — das Hauptwort ohne „dein", damit die Beugung davor
+             passen kann.
+   `beugt` — nur dort, wo sich das Hauptwort selbst ändert: „dem
+             Aszendenten", „der öffentlichen Seite". Deutsche
+             Substantive stehen im Singular sonst in allen drei
+             Fällen gleich, deshalb ist das die Ausnahme.
+   `laie`  — derselbe Punkt in Alltagssprache, mit eigenem
+             Geschlecht: „dein Aszendent" ist männlich, „dein
+             Auftreten" sächlich. */
 var B_ZIEL = {
- Sonne:  {kurz:'deine Sonne',   was:'wofür du gehalten werden willst'},
- Mond:   {kurz:'dein Mond',     was:'was du brauchst, damit es sich sicher anfühlt'},
- Merkur: {kurz:'dein Merkur',   was:'wie du denkst und was du mit anderen ausmachst'},
- Venus:  {kurz:'deine Venus',   was:'was dir nah ist und was du dir wert bist'},
- Mars:   {kurz:'dein Mars',     was:'womit du anfängst und wofür du kämpfst'},
- Jupiter:{kurz:'dein Jupiter',  was:'wo du dir etwas zutraust'},
- Saturn: {kurz:'dein Saturn',   was:'wo du dich zusammenreißt und streng mit dir bist'},
- Uranus: {kurz:'dein Uranus',   was:'wo du nicht mitmachst, wie man es macht'},
- Neptun: {kurz:'dein Neptun',   was:'wofür du dich begeisterst, ohne es prüfen zu wollen'},
- Pluto:  {kurz:'dein Pluto',    was:'wo es bei dir um alles oder nichts geht'},
- ASC:    {kurz:'dein Aszendent',laie:'dein Auftreten',
+ Sonne:  {g:'w', wort:'Sonne',   was:'wofür du gehalten werden willst'},
+ Mond:   {g:'m', wort:'Mond',    was:'was du brauchst, damit es sich sicher anfühlt'},
+ Merkur: {g:'m', wort:'Merkur',  was:'wie du denkst und was du mit anderen ausmachst'},
+ Venus:  {g:'w', wort:'Venus',   was:'was dir nah ist und was du dir wert bist'},
+ Mars:   {g:'m', wort:'Mars',    was:'womit du anfängst und wofür du kämpfst'},
+ Jupiter:{g:'m', wort:'Jupiter', was:'wo du dir etwas zutraust'},
+ Saturn: {g:'m', wort:'Saturn',  was:'wo du dich zusammenreißt und streng mit dir bist'},
+ Uranus: {g:'m', wort:'Uranus',  was:'wo du nicht mitmachst, wie man es macht'},
+ Neptun: {g:'m', wort:'Neptun',  was:'wofür du dich begeisterst, ohne es prüfen zu wollen'},
+ Pluto:  {g:'m', wort:'Pluto',   was:'wo es bei dir um alles oder nichts geht'},
+ ASC:    {g:'m', wort:'Aszendent',
+          beugt:{akk:'Aszendenten', dat:'Aszendenten'},
+          laie:{g:'s', wort:'Auftreten'},
           was:'wie du ankommst, bevor du etwas gesagt hast'},
- MC:     {kurz:'dein MC',       laie:'deine öffentliche Seite',
+ MC:     {g:'s', wort:'MC',
+          laie:{g:'w', wort:'öffentliche Seite',
+                beugt:{dat:'öffentlichen Seite'}},
           was:'wohin du öffentlich gehst und wofür man dich kennt'}};
+
+/* Den Punkt in der Sprache holen, die zur Stufe gehört. Gibt es
+   kein Alltagswort, steht dort der Name — „dein Mond" ist auf
+   Stufe 0 kein Fachwort (REGELN.md 2a). */
+function B_PUNKT(k, laie){
+  var z = B_ZIEL[k];
+  if(!z) return {g:'m', wort:String(k)};
+  if(laie && z.laie) return z.laie;
+  return z;
+}
+
+/* Setzt „dein" und das Hauptwort im verlangten Fall zusammen.
+   Die einzige Stelle, an der das passiert. */
+function B_BEUGE(p, fall){
+  var d = (B_DEIN[p.g] || B_DEIN.m)[fall] || B_DEIN.m.nom;
+  var w = (p.beugt && p.beugt[fall]) || p.wort;
+  return d + ' ' + w;
+}
 
 /* Die Winkel in zwei Registern. „Konjunktion" verschlüsselt einen
    Rechenweg und bleibt auf Stufe 0 draußen (REGELN.md 2a); „auf"
-   sagt dasselbe und braucht keine Vorbildung. Ab Stufe 2 steht der
-   Fachname daneben, weil er ab dort der genauere ist. */
+   sagt dasselbe und braucht keine Vorbildung.
+
+   Jede Formel trägt den Fall, den sie verlangt: „auf" steht hier
+   auf die Frage wohin und zieht den Akkusativ, „zu", „mit", „von"
+   und „gegenüber" ziehen den Dativ. */
 var B_WINKELWORT = {
- 'Konjunktion':'auf',
- 'Opposition':'gegenüber',
- 'Quadrat':'quer zu',
- 'Trigon':'im Einklang mit',
- 'Sextil':'in Reichweite von'};
+ 'Konjunktion':{wort:'auf',               fall:'akk'},
+ 'Opposition' :{wort:'gegenüber',         fall:'dat'},
+ 'Quadrat'    :{wort:'quer zu',           fall:'dat'},
+ 'Trigon'     :{wort:'im Einklang mit',   fall:'dat'},
+ 'Sextil'     :{wort:'in Reichweite von', fall:'dat'}};
+var B_WINKELNOT = {wort:'bei', fall:'dat'};
+
+/* Ab Stufe 2 steht der Fachname. „Jupiter Konjunktion dein Mond"
+   waren zwei Nominative nebeneinander und sagten nicht, was wozu
+   steht; „in Konjunktion zu deinem Mond" sagt es. */
+var B_WINKELTECH = {vor:'in', nach:'zu', fall:'dat'};
 
 /* Was ein laufender Planet mit dem macht, was er berührt.
    `tut` ist ein Verb mit offener Stelle dahinter, `hart` und
@@ -4768,15 +4830,22 @@ function bahnSatz(t){
          (t.art === 'hart' ? W.hart : W.weich);
 }
 /* Zwei Register: Auf Stufe 0 und 1 „Saturn auf deiner Sonne", ab
-   Stufe 2 „Saturn Konjunktion deine Sonne". Dieselbe Aussage, und
-   die erste braucht keine Vorbildung. */
+   Stufe 2 „Saturn in Konjunktion zu deiner Sonne". Dieselbe
+   Aussage, und die erste braucht keine Vorbildung.
+
+   Gebeugt wird hier nichts. Die Anzeige holt den Fall bei der
+   Formel und das Geschlecht beim Punkt und lässt `B_BEUGE` das
+   Wort bilden — sonst steht in der nächsten Vorlage wieder ein
+   festes „dein". */
 function bahnTitel(t){
-  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
-  var wort = B_WINKELWORT[t.aspekt] || 'bei';
-  return '<span data-bis="1">' + esc(t.wanderer + ' ' + wort + ' ' +
-           (Z.laie || Z.kurz)) + '</span>' +
-         '<span class="ac-tech" data-ab="2">' + esc(t.wanderer + ' ' + t.aspekt +
-           ' ' + Z.kurz) + '</span>';
+  var W = B_WINKELWORT[t.aspekt] || B_WINKELNOT;
+  var laie = t.wanderer + ' ' + W.wort + ' ' +
+             B_BEUGE(B_PUNKT(t.ziel, true), W.fall);
+  var tech = t.wanderer + ' ' + B_WINKELTECH.vor + ' ' + t.aspekt + ' ' +
+             B_WINKELTECH.nach + ' ' +
+             B_BEUGE(B_PUNKT(t.ziel, false), B_WINKELTECH.fall);
+  return '<span data-bis="1">' + esc(laie) + '</span>' +
+         '<span class="ac-tech" data-ab="2">' + esc(tech) + '</span>';
 }
 /* Der Balken zeigt, wie nah der Winkel steht — nicht, wie wichtig
    er ist. Das sagt die Legende auch so. */
@@ -4785,7 +4854,6 @@ function naeheBalken(t){
          (Math.max(3, t.naehe * 100)).toFixed(0) + '%"></i></div>';
 }
 function trefferKarte(t, gross){
-  var Z = B_ZIEL[t.ziel] || {kurz:t.ziel};
   var B = beiDir(P[t.ziel]);
   var h = ['<article class="tr' + (gross ? ' tr-gross' : '') +
            (t.art === 'hart' ? ' tr-hart' : ' tr-weich') + '">'];
@@ -4883,7 +4951,6 @@ function strahlBauen(){
       h.push('<div class="st-m">' + esc(ST_MONAT[d.getMonth()]) + ' ' + d.getFullYear() + '</div>');
     }
     var tage = tagesAbstand(x.jd);
-    var Z = B_ZIEL[x.ziel] || {kurz:x.ziel};
     var B = beiDir(P[x.ziel]);
     var dg = (x.durchgaenge > 1 && B_DURCHGANG[x.durchgang])
       ? (B_DURCHGANG[x.durchgang][x.durchgaenge === 3 ? 'von3' : 'von2'] || '') : '';
