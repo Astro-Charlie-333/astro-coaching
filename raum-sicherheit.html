@@ -1,14 +1,147 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sicherheit & Fallenlassen · Themenraum · Astro-Charlie</title>
+<title>Sicherheit & Fallenlassen · Themenraum · Astro-Charlie &middot; Themenraum &middot; Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="coach.js" defer></script>
-<script src="fortschritt.js"></script>
-<script src="kleine-punkte.js"></script>
+<script src="fortschritt.js" defer></script>
+<script src="kleine-punkte.js" defer></script>
 <script src="raum.js"></script>
 <script src="format.js" defer></script>
-<style>*{box-sizing:border-box;margin:0;padding:0;}
+<script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+/* Auf schmalen Geraeten bekommt die Navigation eine eigene Zeile.
+   Vorher rutschte sie neben der Marke um und haengte den letzten
+   Punkt rechts unter die anderen — das sah nach Fehler aus, nicht
+   nach Absicht. Dazu bricht „Astro-Charlie" nicht mehr mitten im
+   Namen. Geprueft auf 390 Pixeln. */
+@media(max-width:620px){
+ .ac-leiste-inner{flex-wrap:wrap;row-gap:3px;padding:12px 16px 7px;}
+ .ac-marke{white-space:nowrap;}
+ .ac-nav{margin-left:0;width:100%;gap:1px;flex-wrap:nowrap;}
+ .ac-nav a{padding:6px 10px;font-size:13.5px;}
+ .ac-nav a:first-child{padding-left:0;}
+ .ac-nav a::after{left:10px;right:10px;}
+ .ac-nav a:first-child::after{left:0;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -147,6 +280,9 @@ a{color:var(--nacht);}
 .fa-wozu p:last-child{margin-bottom:0;}
 .fa-wozu-f{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--nacht);line-height:1.45;}
 
+.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
+ margin-bottom:18px;font-size:14.8px;line-height:1.65;}
+
 .rm-adler{background:var(--messing-bg);border-radius:14px;padding:15px 17px;margin-bottom:16px;
  font-size:14.6px;line-height:1.65;}
 
@@ -164,9 +300,6 @@ body.fmt-visuell .fa-visuell{display:grid;grid-template-columns:230px 1fr;gap:18
 .fa-vchips .vc.weich{border-color:#C6D7E2;background:#EDF4F8;color:#2F5E78;}
 .fa-vchips .vc.achs{border-color:var(--messing);background:var(--messing-bg);color:#6B4A18;}
 body.fmt-visuell .fa-frage{display:none;}
-
-.rm-hinweis{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:14px;padding:16px 18px;
- margin-bottom:18px;font-size:14.8px;line-height:1.65;}
 
 .ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
  backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
@@ -215,30 +348,32 @@ body.fmt-visuell .fa-frage{display:none;}
 @media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
 /* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
    nach der Raster- und Flexspalten ihre Breite berechnen. */
-</style><script src="niveau.js" defer></script>
-<script src="wortwahl.js" defer></script>
+</style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html" class="ist">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
+
 <div class="wrap">
 
 <div class="eyebrow">Themenraum</div>
 <h1>Sicherheit & Fallenlassen.</h1>
+
 <div class="rm-tuer">
   <div class="rm-frage">&bdquo;Was brauche ich, um mich fallen lassen zu können?&ldquo;</div>
   <p>Die Frage wird meistens anders gestellt — nach Technik, nach Tipps, nach dem, was angeblich gut sein soll. Die nützlichere Frage ist eine andere: <b>Was brauchst du, um dich sicher zu fühlen?</b> Wer sich nicht sicher fühlt, kann sich nicht fallen lassen, und daran ändert keine Technik etwas. Zehn Facetten: was Sicherheit für dich bedeutet, ob du Nein sagen kannst, wie dein Begehren überhaupt anspringt, was dir gefällt, was dich zuverlässig bremst, warum Loslassen schwerfällt, wie du darüber sprichst, wie präsent du im Körper bist und was du hinterher brauchst.</p>
 </div>
-<div class="rm-hinweis"><b>Wie dieser Raum gebaut ist:</b> Er beschreibt <b>Bedingungen und Vorlieben, keine Anleitungen</b>. Es geht darum, wie dein Begehren funktioniert, was es bremst und was du brauchst — nicht darum, was man tun sollte. Wo Fachwissen einfließt, das nicht aus der Astrologie stammt, steht das ausdrücklich dabei. <br><br><b>Und eine klare Grenze:</b> Wenn du Übergriffe oder Gewalt erlebt hast, hilft dir kein Chart und keine Übung auf dieser Seite. Das ist keine Frage von Mustern, sondern etwas, das Begleitung braucht — und das ist behandelbar. Wenn beim Lesen etwas hochkommt, hör auf und sprich mit einer Therapeutin. Beim <a href="https://www.hilfetelefon.de" target="_blank" rel="noopener">Hilfetelefon Gewalt gegen Frauen</a> gibt es rund um die Uhr kostenlos und anonym Beratung: <b>116 016</b>.</div>
+
 <div id="raum"></div>
 
 <div class="weiter"><a href="raeume.html"><span class="lbl">&larr; Zur&uuml;ck</span><span class="ttl">Alle R&auml;ume</span></a><a href="raum-naehe.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Nähe</span></a></div>
 <div class="foot">Themenraum Sicherheit & Fallenlassen &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
 </div>
+
 <script>
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
@@ -296,7 +431,47 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
  return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
 
 
-var RAUM = {
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+var R_RAEUME = {};
+R_RAEUME['sicherheit'] = {
+  adler: false,
+  zeitschiene: false,
+  titel: "Sicherheit & Fallenlassen · Themenraum · Astro-Charlie",
+  h1: "Sicherheit & Fallenlassen.",
+  frage: "&bdquo;Was brauche ich, um mich fallen lassen zu können?&ldquo;",
+  intro: "Die Frage wird meistens anders gestellt — nach Technik, nach Tipps, nach dem, was angeblich gut sein soll. Die nützlichere Frage ist eine andere: <b>Was brauchst du, um dich sicher zu fühlen?</b> Wer sich nicht sicher fühlt, kann sich nicht fallen lassen, und daran ändert keine Technik etwas. Zehn Facetten: was Sicherheit für dich bedeutet, ob du Nein sagen kannst, wie dein Begehren überhaupt anspringt, was dir gefällt, was dich zuverlässig bremst, warum Loslassen schwerfällt, wie du darüber sprichst, wie präsent du im Körper bist und was du hinterher brauchst.",
+  weiter: "<div class=\"weiter\"><a href=\"raeume.html\"><span class=\"lbl\">&larr; Zur&uuml;ck</span><span class=\"ttl\">Alle R&auml;ume</span></a><a href=\"raum-naehe.html\" class=\"nx\"><span class=\"lbl\">Passt dazu &rarr;</span><span class=\"ttl\">Nähe</span></a></div>",
+  fuss: "Themenraum Sicherheit & Fallenlassen &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie.",
+  def: (function(){ var RAUM = {
  name:'Sicherheit & Fallenlassen',
  slug:'sicherheit',
  sortierTitel:'Wo es dir schwerfällt, dich sicher zu fühlen',
@@ -785,8 +960,14 @@ var RAUM = {
    vorsicht:'Wenn regelmäßig starke Traurigkeit, Scham oder Panik danach auftreten, ist das kein Coaching-Thema. Das kann viele Ursachen haben, auch zurückliegende Erfahrungen, und gehört freundlich an eine Fachperson weitergegeben.'}}
 
  ]
+}; 
+    return {RAUM:RAUM, WOZU:(typeof WOZU!=='undefined')?WOZU:{}}; })()
 };
-/* ── Seite bauen ──────────────────────────────────────── */
+/* Der Motor aller Themenraeume.
+   Vorher stand dieser Code zwoelfmal da, einmal je Raumseite.
+   Die Himmelsrechnung ist hier herausgenommen: sie kommt jetzt
+   aus rituale/engine.js, wie auf jeder anderen Seite auch.
+   Was bleibt, ist das Bauen der Seite. */
 function bauen(){
   var box=document.getElementById('raum');
   var p=null;
@@ -800,8 +981,7 @@ function bauen(){
   var P=AC_RAUM.chart(p);
   var res=AC_RAUM.auswerten(P, RAUM);
   var voll=AC_P.zeigeNamen();
-
-  /* Sortierung */
+  
   var h='<div class="rm-sortierung"><h3>'+(RAUM.sortierTitel||'Wo dein Thema bei dir sitzt')+'</h3>'+
     '<div class="hint">'+res.length+' Facetten, gewichtet nach deinem Chart — nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe.</div>';
   res.forEach(function(r){
@@ -817,8 +997,7 @@ function bauen(){
   if(leise.length) h+='Dagegen ist <b>'+leise[leise.length-1].fc.name+'</b> bei dir auffällig ruhig. '+
     'Das ist selbst eine Aussage: Dort liegt dein Thema nicht, auch wenn du dort zuerst gesucht hättest. ';
   h+='Fang oben an. Die unteren kannst du später aufklappen.</div></div>';
-
-  /* Facetten */
+  
   res.forEach(function(r,i){
     var texte=AC_RAUM.text(r,P);
     var istLaut=r.rel>=62;
@@ -828,7 +1007,6 @@ function bauen(){
       '<div class="fa-inhalt">'+
       '<div class="fa-frage">'+r.fc.frage+'</div>'+
       (r.fc.worum? '<div class="fa-worum">'+r.fc.worum+'</div>' : '');
-
     h+='<div class="fa-visuell">'+
       (window.AC_RAUM&&AC_RAUM.miniRad? AC_RAUM.miniRad(P,r.fc.anker,r.f,r.rel):'')+
       '<div class="fa-vtext"><b>'+r.fc.name+'</b><p>'+r.fc.frage+'</p>'+
@@ -841,14 +1019,13 @@ function bauen(){
     if(texte.length) texte.forEach(function(t){ h+='<p>'+t+'</p>'; });
     else h+='<p>Zu dieser Facette findet sich in deinem Chart kein deutlicher Anker. Das heißt nicht, dass das Thema fehlt — nur dass es bei dir nicht strukturell angelegt ist. Wenn es sich trotzdem wichtig anfühlt, kommt es aus der Biografie, nicht aus dem Chart.</p>';
     h+='</div>';
-
-    /* Rohdaten zum Nachprüfen */
+    
     var d=[];
     r.f.planeten.forEach(function(x){ d.push(x.p+' im '+x.haus+'. Haus'); });
     r.f.herrscher.forEach(function(x){ d.push('Herrscher '+x.haus+'. Haus: '+x.p+' im '+x.inHaus+'.'); });
     r.f.aspekte.slice(0,3).forEach(function(x){ d.push(x.a+' '+x.typ+' '+x.b+' '+x.o.toFixed(1)+'°'); });
     r.f.achsnah.forEach(function(x){ d.push(x.p+' auf '+x.zu+'-Grad ('+x.o.toFixed(1)+'°)'); });
-    /* Datenpaket für die visuelle Ansicht */
+    
     var vis={rel:r.rel, haeuser:(r.fc.anker.haeuser||[]),
       planeten:r.f.planeten.map(function(x){return [x.p,x.haus];}),
       herrscher:r.f.herrscher.map(function(x){return [x.haus,x.p,x.inHaus];}),
@@ -856,10 +1033,8 @@ function bauen(){
       achsnah:r.f.achsnah.map(function(x){return [x.p,x.zu];})};
     h+='<div class="fa-vis" data-vis=\''+JSON.stringify(vis).replace(/'/g,'&#39;')+'\'></div>';
     if(d.length) h+='<div class="fa-block"><span class="lab">Zum Nachprüfen</span><div class="fa-daten">'+d.join('<br>')+'</div></div>';
-
     h+='<div class="fa-block"><span class="lab">Was du diese Woche tun kannst</span>'+
       '<div class="fa-ueb"><b>'+r.fc.uebung[0]+'</b><p>'+r.fc.uebung[1]+'</p></div></div>';
-
     if(r.fc.wozuFrage){
       h+='<div class="fa-wozu"><span class="lab">Und wozu ist das gut?</span>'+
         '<p>'+(r.fc.wozuSchutz||'')+'</p>'+
@@ -868,21 +1043,16 @@ function bauen(){
     h+=''+
       '<div class="fa-rueck"><div class="rf">'+r.fc.rueckfrage+'</div>'+
       '<div class="fa-wahl" data-f="'+r.fc.id+'"></div></div>';
-
     h+='<details class="fa-coach"><summary>Für die Arbeit mit anderen — Gesprächsleitfaden</summary>'+
       '<ul>'+r.fc.coach.fragen.map(function(q){return '<li>'+q+'</li>';}).join('')+'</ul>'+
       '<div class="warn"><b>Vorsicht:</b> '+r.fc.coach.vorsicht+'</div></details>';
-
     h+='</div></details>';
   });
-
   h+='<div class="tip" style="margin-top:20px;"><b>Wie du diesen Raum benutzt:</b> Nicht alles auf einmal. '+
     'Nimm die oberste Facette, mach die Übung, und komm in ein paar Tagen zur Rückfrage zurück. '+
     'Ein Raum ist kein Text zum Durchlesen, sondern eine Woche Arbeit.</div>';
-
   box.innerHTML=h;
-
-  /* Rückfragen anschließen */
+  
   Array.prototype.forEach.call(box.querySelectorAll('.fa-wahl'),function(w){
     var fid=w.getAttribute('data-f');
     [['ja','Ja'],['teils','Ein bisschen'],['nein','Nein'],['spaeter','Später'] ].forEach(function(o){
@@ -892,16 +1062,93 @@ function bauen(){
         Array.prototype.forEach.call(w.children,function(c){c.setAttribute('aria-pressed','false');});
         b.setAttribute('aria-pressed','true');
         try{
-          if(window.AC_WEG) AC_WEG.notieren({schluessel:'raum-selbstwert-'+fid,
-            titel:'Selbstwert · '+fid, planet:'', punkt:'', art:'uebung', antwort:o[0], chips:[]});
+          if(window.AC_WEG) AC_WEG.notieren({schluessel:'raum-'+RAUM.slug+'-'+fid,
+            titel:RAUM.name+' · '+fid, planet:'', punkt:'', art:'uebung', antwort:o[0], chips:[]});
         }catch(e){}
       });
       w.appendChild(b);
     });
   });
 }
-bauen();
+/* Kein Aufruf hier: bauen() startet die Seite, sobald RAUM und WOZU
+   gesetzt sind und AC_RAUM bereitsteht. Vorher stand hier ein
+   Aufruf — der lief los, bevor es einen Raum gab, warf, und brach
+   damit den ganzen Block ab. */
+/* Nur die Versorgungsseite bringt dieses Element mit; der Block
+   prueft das selbst und tut sonst nichts. */
+(function(){
+  var box=document.getElementById('zeitschiene'); if(!box) return;
+  var p=null; try{ p=window.AC_P?AC_P.aktives():null; }catch(e){}
+  if(!p){ box.innerHTML='<div class="zs-box"><h3>Wann Struktur bei dir leichter fällt</h3>'+
+    '<div class="sub4">Leg unter <a href="profile.html">Profile</a> ein Chart an — dann rechne ich hier aus, '+
+    'welche Phasen dir in den nächsten zwölf Monaten entgegenkommen und welche nicht.</div></div>'; return; }
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd0=jdFromUT(y,mo,d,ut), T0=(jd0-2451545)/36525, a=angles(jd0,p.lat,p.lon);
+  var R={Sonne:sunLon(T0),Mond:moonLon(T0),Merkur:geo('Merkur',T0),Venus:geo('Venus',T0),Mars:geo('Mars',T0),
+   Saturn:geo('Saturn',T0),ASC:a.asc,MC:a.mc};
+  var asc6=(Math.floor(a.asc/30)+5)%12*30+15;   /* Mitte des 6. Hauses */
+  function nrm2(x){x=x%360;return x<0?x+360:x;}
+  function heute(){var n=new Date();
+    return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+  function dtxt(j){var dd=new Date((j-2440587.5)*86400000);
+    var M=['Jan','Feb','März','Apr','Mai','Juni','Juli','Aug','Sep','Okt','Nov','Dez'];
+    return M[dd.getUTCMonth()]+' '+dd.getUTCFullYear();}
 
+  var JN=heute(), funde=[];
+  /* Jupiter und Saturn über 6. Haus / Radix-Saturn / Radix-Mond */
+  [['Jupiter','leichter','Jupiter berührt deinen Alltagsbereich — Struktur aufzubauen kostet in dieser Phase weniger Überwindung als sonst. Gute Zeit, etwas zu etablieren, das danach von allein läuft.'],
+   ['Saturn','schwerer','Saturn berührt deinen Alltagsbereich. Das fühlt sich zäh an und ist trotzdem die haltbarste Phase: Was du hier aufbaust, trägt lange. Erwarte nur keine Leichtigkeit dabei.'],
+   ['Uranus','schwerer','Uranus berührt deinen Alltagsbereich — Routinen reißen häufiger ab als sonst. Setz in dieser Zeit auf Wiederaufnehmen statt auf Durchhalten.'],
+   ['Neptun','schwerer','Neptun berührt deinen Alltagsbereich. Struktur verschwimmt, du überschätzt leicht, was du schaffst. Weniger vornehmen ist hier kein Rückschritt.']
+  ].forEach(function(x){
+    var k=x[0], vorher=null;
+    for(var t=0;t<400;t+=4){
+      var j=JN+t, l=geo(k,(j-2451545)/36525);
+      var d1=Math.abs(nrm2(l-asc6+180)-180);
+      var nah=(d1<9);
+      if(nah&&!vorher) funde.push({jd:j, art:x[1], t:k+' im Alltagsbereich', p:x[2]});
+      vorher=nah;
+    }
+  });
+  /* Saturn-Kontakt zum Radix-Mond */
+  (function(){
+    var vorher=null;
+    for(var t=0;t<400;t+=4){
+      var j=JN+t, l=geo('Saturn',(j-2451545)/36525);
+      var s=Math.abs(nrm2(l-R.Mond+180)-180);
+      var nah=[0,90,180].some(function(w){return Math.abs(s-w)<3;});
+      if(nah&&!vorher) funde.push({jd:j, art:'schwerer', t:'Saturn auf deinem Mond',
+        p:'Eine Phase, in der Versorgung und Selbstfürsorge schwerer fallen und mehr Disziplin verlangen als sonst. Kein guter Zeitpunkt für neue Vorsätze — ein sehr guter, um Bestehendes zu vereinfachen.'});
+      vorher=nah;
+    }
+  })();
+  funde.sort(function(x,y){return x.jd-y.jd;});
+  funde=funde.slice(0,5);
 
+  var h='<div class="zs-box"><h3>Wann Struktur bei dir leichter fällt</h3>'+
+    '<div class="sub4">Aus den kommenden zwölf Monaten. Der Sinn ist nicht Vorhersage, sondern Entlastung: '+
+    'Es gibt Phasen, in denen es objektiv zäher läuft — und dann bist du nicht faul, sondern in einer zähen Phase.</div>';
+  if(!funde.length) h+='<p style="margin:0;font-size:15px;line-height:1.65;">In den nächsten zwölf Monaten berührt '+
+    'kein langsamer Planet deinen Alltagsbereich. Das heißt: keine besonderen Hürden, aber auch kein Rückenwind — '+
+    'es liegt ganz bei dir und deinen Mechanismen.</p>';
+  else funde.forEach(function(x){
+    h+='<div class="zs-z '+x.art+'"><div class="zs-dat">ab '+dtxt(x.jd)+'<br><span style="color:var(--leise)">'+
+      (x.art==='leichter'?'leichter':'zäher')+'</span></div><div><b>'+x.t+'</b><p>'+x.p+'</p></div></div>';
+  });
+  h+='<div class="zs-fuss">Das sind grobe Zeiträume, keine Termine — langsame Planeten wirken über Monate. '+
+    'Und sie beschreiben Tendenzen, nicht Schicksal: In einer zähen Phase geht trotzdem etwas, es fühlt sich nur teurer an.</div></div>';
+  box.innerHTML=h;
+})();
+
+var R = R_RAEUME['sicherheit'];
+var RAUM = R.def.RAUM, WOZU = R.def.WOZU;
+function losLegen(){
+  if(!window.AC_RAUM) return setTimeout(losLegen, 20);
+  bauen();
+}
+if(document.readyState === 'loading')
+  document.addEventListener('DOMContentLoaded', losLegen);
+else losLegen();
 </script>
 </body></html>
