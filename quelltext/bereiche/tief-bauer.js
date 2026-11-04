@@ -195,6 +195,9 @@
   function bereich(b, stufe){
     var T = bD().BER[b.k], L = bD().LAUT[b.laut];
     var TI = bD().TIEF, W = bD().WID, FR = (bD().FRAGEN || {})[b.k];
+    /* Die Grenze liegt seit dem 4.11. in B_GRENZE: auf der Seite
+       steht sie offen, hier geht sie weiter mit in die Datei. */
+    var GRB = (bD().GRENZE || {})[b.k];
     var f = F(), tech = (stufe >= 2);
     if(!T) return '';
     var z = [], i;
@@ -285,7 +288,9 @@
     if(FR){
       for(i=0;i<FR.fragen.length;i++) z.push('— ' + FR.fragen[i]);
       z.push('');
-      z.push(TI.grenzeVor + ' ' + FR.grenze);
+    }
+    if(GRB && GRB.satz){
+      z.push(TI.grenzeVor + ' ' + GRB.satz);
     }
 
     return z.join('\n');

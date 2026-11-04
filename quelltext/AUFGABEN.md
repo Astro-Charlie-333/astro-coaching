@@ -27,25 +27,6 @@ Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 32 · Die Grenze im Bereich Gesundheit liegt zugeklappt
-Befund der Prüferin vom 2026-10-30 (Die Begleitete, erster Befund — die
-Grenzen kommen zuerst). Die Sätze „Hier wird nichts über deinen Körper
-festgestellt, und nichts hier ersetzt eine Behandlung" und „Bei allem
-Körperlichen gehört eine Fachperson gefragt" stehen in einem
-Klappabschnitt, der zugeklappt ausgeliefert wird und „Mit jemand anderem
-darüber sprechen" heißt. Im sichtbaren Text der Bereichsseite kommt kein
-Hinweis auf Behandlung, Therapie oder Fachperson vor, während offen
-dasteht, dass der Körper „Aufmerksamkeit verlangt" und „etwas ernst
-wird". `PRODUKT.md` Abschnitt 5 verlangt, dass das **dabei**steht;
-`REGELN.md` Abschnitt 1 klappt die Sicht der Coachin zu, nicht die
-Grenze. Auf „Jetzt" steht der vergleichbare Satz zu Kosmetischem offen im
-Text — die Plattform kann es also, nur an der teuersten Stelle nicht.
-**Fertig, wenn:** die Grenzsätze eines Bereichs ohne Aufklappen sichtbar
-sind (die Gesprächsfragen dürfen gefaltet bleiben), das in den Daten
-getrennt liegt und nicht in der Anzeige, und `bau-bereiche.py` abbricht,
-wenn in einem Bereich mit Körper- oder Psychebezug der Grenzsatz fehlt
-oder nur in einem zugeklappten Element steht.
-
 ### 33 · Aufgabe 17 greift zu kurz: der Preissatz steht auch in den Bereichen
 Befund der Prüferin vom 2026-10-30 (zweiter Befund). „Was du in diesem
 Fenster nicht fragst, musst du später teurer verhandeln" steht auf
@@ -119,6 +100,22 @@ der offen stehende Vorgang nennt, in welchen Bereichen er sonst noch
 wirkt, und `bau-bereiche.py` abbricht, sobald zwei Bereiche derselben
 Seite einen Absatz Wort für Wort teilen — mit festen Beispielen geprüft,
 wie `REGELN.md` Abschnitt 6e es verlangt, nicht gegen den Himmel des Tages.
+
+### 40 · Dieselbe Grenze fehlt den anderen rechnenden Seiten offen
+Gefunden beim Erledigen von Aufgabe 32 am 4.11. `bereiche.html` zeigt
+die Grenze seit heute offen und wird darauf geprüft. Die übrigen
+rechnenden Seiten tun das nicht: Der Monatsbericht trägt nur einen
+Hinweiskasten für die Coachin (Aufgabe 10 sagt es für den Brief), und
+auf der Ich-Seite steht der Grenzabschnitt unter einer eigenen
+Überschrift, ohne dass eine Prüfung festhält, dass er offen steht.
+Solange jede Seite ihre Grenze selbst setzt, steht derselbe Fehler nur
+noch nicht dort, wo ihn jemand sieht — dieselbe Fehlerklasse in
+mehreren Ordnern einzeln, wie bei Aufgabe 25, 34 und 38.
+**Fertig, wenn:** die Prüfung „der Grenzsatz steht offen und nicht in
+einem zugeklappten Element" an einer Stelle steht, die alle
+`bau-*.py` benutzen, jede rechnende Seite sie besteht, und ein in eine
+Klappe geschobener Grenzsatz in jeder dieser Seiten den Bau abbricht —
+gemessen am gezeichneten Ergebnis, nicht an den Daten.
 
 ---
 
@@ -473,6 +470,32 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-04** · Die Grenze steht offen, nicht hinter einem Klick
+  (Aufgabe 32). „Hier wird nichts über deinen Körper festgestellt, und
+  nichts hier ersetzt eine Behandlung" lag als letzte Zeile in der
+  Schublade „Mit jemand anderem darüber sprechen" — und die wird
+  zugeklappt ausgeliefert. Im Bereich Gesundheit stand damit offen,
+  dass der Körper „Aufmerksamkeit verlangt", während der Satz, dass
+  eine Fachperson gefragt gehört, einen Klick entfernt war.
+  `PRODUKT.md` 5 verlangt, dass das **dabei**steht; `REGELN.md` 1
+  klappt die Sicht der Coachin zu, nicht die Grenze.
+  Die Grenze liegt jetzt in einem eigenen Block `B_GRENZE` statt in
+  `B_FRAGEN`: Was dort steht, steht offen; was in `B_FRAGEN` steht,
+  darf gefaltet bleiben. Die Trennung liegt damit in den Daten, die
+  Anzeige entscheidet nichts mehr. `mensch` sagt je Bereich, ob er am
+  Körper oder an der Psyche hängt — bei Gesundheit, Freude,
+  Selbstwert und Umbruch. Selbstwert nannte bisher niemanden und hat
+  den Satz dazubekommen.
+  Dauerhafte Prüfung in `bau-bereiche.py`, an zwei Stellen, weil zwei
+  Dinge schiefgehen können: in den Daten, ob der Satz da ist und bei
+  Körper- oder Psychebezug auch nennt, wen man stattdessen fragt
+  (`_nennt_menschen`, mit festen Beispielen nach `REGELN.md` 6e) — und
+  in der Rauchprobe am gezeichneten Ergebnis, auf Stufe 0 und ohne
+  vorher irgendetwas aufzuklappen, ob er dort ohne Klick zu lesen ist.
+  Die Probe dagegen: die Grenze zurück in die Klappe geschoben, und
+  der Bau bricht in allen zehn Bereichen ab. Eine Prüfung, die nur die
+  Daten liest, hätte den Fehler nie gefunden — der Satz stand ja da.
 
 * **2026-11-03** · Die gebauten Überschriften beugen jetzt (Aufgabe 31).
   Auf der Startseite stand „Jupiter auf dein Mond", „Mars quer zu dein

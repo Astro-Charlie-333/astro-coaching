@@ -247,6 +247,26 @@
     }
     h.push('</div>');
 
+    /* Was dieser Bereich nicht weiß. Die Grenze steht offen, über
+       der Schublade und ohne Klick: PRODUKT.md Abschnitt 5 verlangt,
+       dass es dabeisteht, und REGELN.md Abschnitt 1 klappt die Sicht
+       der Coachin zu, nicht die Grenze.
+
+       Bis zum 4.11. war sie die letzte Zeile in der zugeklappten
+       Schublade. Offen stand damit, dass etwas „Aufmerksamkeit
+       verlangt"; der Satz, dass hier nichts festgestellt wird und
+       eine Fachperson gefragt gehört, lag hinter einem Klick — und
+       zwar genau im Bereich Gesundheit.
+
+       Diese Stelle entscheidet nichts darüber, welcher Satz offen
+       steht. Sie zeichnet, was in B_GRENZE liegt; gefaltet wird nur,
+       was in B_FRAGEN liegt. */
+    var GR = (bD().GRENZE || {}), GRB = GR[b.k];
+    if(GRB && GRB.satz){
+      h.push('<p class="b-grenze"><b class="b-grenzevor">' + esc(GR.vor) +
+             '</b> ' + esc(GRB.satz) + '</p>');
+    }
+
     /* Mit jemand anderem darüber sprechen. Die zweite Sicht aus
        REGELN.md Abschnitt 1: Dieselbe Seite muss einer Coachin
        erlauben, mit einem Menschen zu arbeiten — Gesprächsfragen und
@@ -256,13 +276,13 @@
        stehen im Quelltext und sind es auch wert, gefunden zu werden;
        die Klappe hält sie aus dem Weg, sie hält sie nicht zurück.
 
-       Die drei Fragen und die Grenze gingen bisher nur in den
-       Tiefgang, also in eine Datei, die jemand erst anfordern muss.
+       Die drei Fragen gingen bisher nur in den Tiefgang, also in
+       eine Datei, die jemand erst anfordern muss.
        Wer die Seite liest, bekam den Teil nie zu sehen, der aus dem
        Befund ein Gespräch macht. Gezeichnet wird hier, geschrieben
        wird in bereich-daten.js. */
     var FR = (bD().FRAGEN || {})[b.k], RH = (bD().FRAGEN || {}).rahmen;
-    if(FR && RH && FR.fragen && FR.grenze){
+    if(FR && RH && FR.fragen){
       h.push('<details class="b-gespr"><summary>' + esc(RH.titel) + '</summary>');
       h.push('<div class="b-gesprin">');
       h.push('<p class="b-gesprvor">' + esc(RH.vor) + '</p>');
@@ -270,7 +290,6 @@
       for(var qi=0; qi<FR.fragen.length; qi++)
         h.push('<li>' + esc(FR.fragen[qi]) + '</li>');
       h.push('</ul>');
-      h.push('<p class="b-gesprg">' + esc(RH.grenzeVor) + ' ' + esc(FR.grenze) + '</p>');
       h.push('</div></details>');
     }
 

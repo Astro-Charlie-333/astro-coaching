@@ -733,8 +733,13 @@ CHARTS.forEach((pd, ci) => {
     p(wo + ': der Bereich hat Gesprächsfragen', !!FR);
     if(FR){
       FR.fragen.forEach(f => p(wo + ': Frage steht im Tiefgang', t0.indexOf(f) >= 0));
-      p(wo + ': die Grenze steht im Tiefgang', t0.indexOf(FR.grenze) >= 0);
     }
+    /* Die Grenze liegt seit dem 4.11. in B_GRENZE: auf der Seite
+       steht sie offen, in den Tiefgang geht sie weiter mit. */
+    const GRB = (BD.GRENZE || {})[b.k];
+    p(wo + ': der Bereich hat eine Grenze', !!(GRB && GRB.satz));
+    if(GRB && GRB.satz)
+      p(wo + ': die Grenze steht im Tiefgang', t0.indexOf(GRB.satz) >= 0);
     p(wo + ': auf Stufe 0 kein Fachwort im Bereich',
       jargonIn(t0).length === 0, jargonIn(t0).join(', '));
     p(wo + ': ab Stufe 2 ist der Bereich länger', t3.length > t0.length);
@@ -749,7 +754,7 @@ const DIAGNOSE = ['Diagnose','diagnos','Störung','Syndrom','krank','Krankheit',
   'Burnout','therapieren','behandeln','leidest','Patient','Befund'];
 const FRBER = Object.keys(BD.BER || {});
 FRBER.forEach(bk => {
-  const FR = BD.FRAGEN[bk] || {fragen:[], grenze:''};
+  const FR = BD.FRAGEN[bk] || {fragen:[]};
   p('Fragen ' + bk + ': vorhanden', !!BD.FRAGEN[bk]);
   p('Fragen ' + bk + ': genau drei', FR.fragen.length === 3, String(FR.fragen.length));
   p('Fragen ' + bk + ': keine zweimal', new Set(FR.fragen).size === 3);
@@ -760,18 +765,43 @@ FRBER.forEach(bk => {
     p('Fragen ' + bk + '/' + i + ': keine Diagnose',
       !DIAGNOSE.some(d => f.indexOf(d) >= 0), f);
   });
-  p('Grenze ' + bk + ': vorhanden und lang genug', FR.grenze.length >= 60,
-    String(FR.grenze.length));
-  p('Grenze ' + bk + ': endet mit Punkt', /\.$/.test(FR.grenze.trim()));
-  p('Grenze ' + bk + ': ohne Fachwort', jargonIn(FR.grenze).length === 0,
-    jargonIn(FR.grenze).join(', '));
-  p('Grenze ' + bk + ': keine Diagnose',
-    !DIAGNOSE.some(d => FR.grenze.indexOf(d) >= 0));
+  p('Fragen ' + bk + ': keine Grenze mehr in B_FRAGEN',
+    !(BD.FRAGEN[bk] || {}).grenze);
 });
+
+/* ── 18a. Die Grenze eines Bereichs ──────────────────────────
+   Sie liegt seit dem 4.11. in B_GRENZE und nicht mehr in der
+   zugeklappten Schublade: PRODUKT.md Abschnitt 5 verlangt, dass es
+   dabeisteht. `mensch` sagt, dass der Bereich am Körper oder an der
+   Psyche hängt — dann muss der Satz auch nennen, wen man fragt. */
+const nenntMenschen = t => ['Fachperson','Fachleute','Fachmann','Fachfrau',
+  'Ärzt','Therapeut','ein Mensch gefragt','einem Menschen gesprochen',
+  'einen Menschen gefragt','Mensch gehört gefragt'].some(w => t.indexOf(w) >= 0);
+p('die Ansage der Grenze ist lang genug',
+  ((BD.GRENZE || {}).vor || '').length >= 15, (BD.GRENZE || {}).vor);
+FRBER.forEach(bk => {
+  const G = (BD.GRENZE || {})[bk] || {satz:''};
+  p('Grenze ' + bk + ': vorhanden und lang genug', G.satz.length >= 60,
+    String(G.satz.length));
+  p('Grenze ' + bk + ': endet mit Punkt', /\.$/.test(G.satz.trim()));
+  p('Grenze ' + bk + ': ohne Fachwort', jargonIn(G.satz).length === 0,
+    jargonIn(G.satz).join(', '));
+  p('Grenze ' + bk + ': keine Diagnose',
+    !DIAGNOSE.some(d => G.satz.indexOf(d) >= 0));
+  p('Grenze ' + bk + ': mensch ist gesetzt', typeof G.mensch === 'boolean');
+  if(G.mensch)
+    p('Grenze ' + bk + ': nennt, wen man fragt', nenntMenschen(G.satz), G.satz);
+});
+p('Gesundheit hängt am Körper', ((BD.GRENZE || {}).gesundheit || {}).mensch === true);
+p('mindestens ein Bereich hängt am Körper oder an der Psyche',
+  FRBER.some(k => (((BD.GRENZE || {})[k]) || {}).mensch === true));
+p('nenntMenschen schlägt bei einem Satz ohne Gegenüber nicht an',
+  !nenntMenschen('Diese Seite stellt nichts über dich fest.') &&
+  !nenntMenschen('Nichts hier ersetzt eine Behandlung.'));
 p('alle zehn Bereiche haben Gesprächsfragen',
   FRBER.length === 10 && FRBER.every(k => !!BD.FRAGEN[k]), String(FRBER.length));
 p('keine zwei Bereiche haben dieselbe Grenze',
-  new Set(FRBER.map(k => (BD.FRAGEN[k] || {}).grenze)).size === 10);
+  new Set(FRBER.map(k => ((BD.GRENZE || {})[k] || {}).satz)).size === 10);
 let alleFragen = [];
 FRBER.forEach(k => { alleFragen = alleFragen.concat((BD.FRAGEN[k] || {}).fragen || []); });
 p('keine Frage kommt in zwei Bereichen vor',
@@ -786,8 +816,9 @@ p('die Schublade sagt, wofür die Fragen da sind',
   (RH.vor || '').length >= 80, String((RH.vor || '').length));
 p('die Schublade sagt, dass die Antworten nicht hier stehen',
   (RH.vor || '').indexOf('Antwort') >= 0);
-p('die Schublade kündigt die Grenze an', (RH.grenzeVor || '').length >= 15, RH.grenzeVor);
-['titel', 'vor', 'grenzeVor'].forEach(f => {
+p('die Schublade kündigt die Grenze nicht mehr an — sie steht offen',
+  !RH.grenzeVor);
+['titel', 'vor'].forEach(f => {
   p('Rahmen ' + f + ': ohne Fachwort', jargonIn(RH[f] || '').length === 0,
     jargonIn(RH[f] || '').join(', '));
   p('Rahmen ' + f + ': keine Diagnose',

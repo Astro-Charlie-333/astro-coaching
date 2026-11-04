@@ -458,26 +458,12 @@ else:
             lay_texte.append((f'B_FRAGEN.{b}.frage{i}', f_))
             alle_fragen.append(f_)
         fragen_je[b] = fr
-        gr = feld(blk, 'grenze')
-        if not gr:
-            fehler.append(f'Bereich {b}: die Grenze fehlt — dann sagt der '
-                          'Tiefgang nicht, was er über diesen Bereich nicht weiß')
-        else:
-            if len(gr) < 60:
-                fehler.append(f'Grenze {b}: nur {len(gr)} Zeichen — zu dünn')
-            if not gr.rstrip().endswith('.'):
-                fehler.append(f'Grenze {b}: endet ohne Punkt')
-            for d in DIAGNOSE:
-                if d in gr:
-                    fehler.append(f'Grenze {b} stellt eine Diagnose ("{d}")')
-            lay_texte.append((f'B_FRAGEN.{b}.grenze', gr))
-            alle_grenzen.append(gr)
-            grenze_je[b] = gr
+        if 'grenze' in blk:
+            fehler.append(f'Bereich {b}: die Grenze steht wieder in B_FRAGEN — '
+                          'sie gehört nach B_GRENZE, weil B_FRAGEN zugeklappt '
+                          'ausgeliefert wird')
     if len(set(alle_fragen)) != len(alle_fragen):
         fehler.append('dieselbe Gesprächsfrage steht in zwei Bereichen')
-    if len(set(alle_grenzen)) != len(alle_grenzen):
-        fehler.append('dieselbe Grenze steht in zwei Bereichen — dann ist sie '
-                      'allgemein und sagt über den Bereich nichts')
 
     # ── Der Rahmen der Schublade ───────────────────────────────
     # Die Fehlerklasse, die hier unmöglich wird: Die Fragen stehen in
@@ -497,7 +483,7 @@ else:
     else:
         rblk = klammerblock(fra_block, m_rah.end() - 1)
         rah_texte = {}
-        for name, mind in (('titel', 20), ('vor', 80), ('grenzeVor', 15)):
+        for name, mind in (('titel', 20), ('vor', 80)):
             v = feld(rblk, name)
             if not v:
                 fehler.append(f'B_FRAGEN.rahmen.{name} fehlt')
@@ -512,6 +498,10 @@ else:
         # Die Schublade sagt, dass sie Fragen bringt und keine
         # Antworten. Ohne diesen Satz ist sie eine Deutung in
         # Fragezeichen — PRODUKT.md Abschnitt 5.
+        if 'grenzeVor' in rblk:
+            fehler.append('B_FRAGEN.rahmen.grenzeVor steht wieder da — die '
+                          'Grenze wird nicht mehr in der Schublade angekündigt, '
+                          'sie steht offen (B_GRENZE.vor)')
         if 'vor' in rah_texte and 'Antwort' not in rah_texte['vor']:
             fehler.append('B_FRAGEN.rahmen.vor sagt nicht, dass die Antworten '
                           'nicht hier stehen — dann liest die Schublade sich '
@@ -538,6 +528,132 @@ else:
     if '.rahmen' not in app:
         fehler.append('bereich-app.js holt den Rahmen der Schublade nicht aus '
                       'B_FRAGEN — dann zeichnet die Seite die Coachin-Sicht nicht')
+
+# ── Die Grenze eines Bereichs ──────────────────────────────────
+# Die Fehlerklasse, die hier unmöglich wird: ein Grenzsatz, den man
+# erst aufklappen muss. Bis zum 4.11. lag die Grenze als letzte Zeile
+# in der Schublade „Mit jemand anderem darüber sprechen", und die wird
+# zugeklappt ausgeliefert. Im Bereich Gesundheit stand damit offen,
+# dass der Körper „Aufmerksamkeit verlangt" — und hinter einem Klick,
+# dass hier nichts festgestellt wird und eine Fachperson gefragt
+# gehört. PRODUKT.md Abschnitt 5 verlangt, dass das dabeisteht;
+# REGELN.md Abschnitt 1 klappt die Sicht der Coachin zu, nicht die
+# Grenze.
+#
+# Geprüft wird an zwei Stellen, weil zwei Dinge schiefgehen können:
+# hier, ob der Satz in den Daten steht und was er sagt — und weiter
+# unten in der Rauchprobe, ob er auf der gezeichneten Seite ohne
+# einen Klick zu lesen ist. Eine Prüfung, die nur die Daten liest,
+# hätte den Fehler vom 4.11. nicht gefunden: der Satz stand ja da.
+
+
+def _nennt_menschen(satz):
+    """Sagt der Satz, wen man stattdessen fragt?
+
+    Geprüft wird die Form, die gemeint ist (REGELN.md Abschnitt 6e):
+    eine Person, an die der Satz verweist — nicht irgendein Wort, das
+    meistens dabeisteht. „Behandlung" allein ist keine: eine
+    Behandlung ist eine Sache, kein Gegenüber.
+    """
+    for w in ('Fachperson', 'Fachleute', 'Fachmann', 'Fachfrau', 'Ärzt',
+              'Therapeut', 'ein Mensch gefragt', 'einem Menschen gesprochen',
+              'einen Menschen gefragt', 'Mensch gehört gefragt'):
+        if w in satz:
+            return True
+    return False
+
+
+assert _nennt_menschen('Bei allem Körperlichen gehört eine Fachperson gefragt, '
+                       'die dich untersuchen kann.')
+assert _nennt_menschen('Wird es schwer, gehört ein Mensch gefragt und nicht '
+                       'eine Seite gelesen.')
+assert _nennt_menschen('Bleibt es hart, gehört darüber mit einem Menschen '
+                       'gesprochen und nicht nur hier gelesen.')
+assert _nennt_menschen('Dann gehören Ärztin oder Arzt gefragt.')
+# Und was durchfallen muss: ein Satz, der nur die Grenze nennt und
+# niemanden, an den er weitergibt. Genau das stand bis zum 4.11. bei
+# Selbstwert.
+assert not _nennt_menschen('Diese Seite stellt nichts über dich fest. Sie '
+                           'beschreibt ein Muster und misst keinen Wert.')
+assert not _nennt_menschen('Nichts hier ersetzt eine Behandlung.')
+assert not _nennt_menschen('Über deine Lage sagt diese Rechnung nichts.')
+
+grenze_je, grenze_mensch, grenze_vor = {}, {}, ''
+m_gre = re.search(r"var B_GRENZE = \{", daten)
+if not m_gre:
+    fehler.append('B_GRENZE fehlt — dann hat kein Bereich eine Grenze, und '
+                  'PRODUKT.md Abschnitt 3 nennt genau diese Ehrlichkeit den '
+                  'Markenkern')
+else:
+    gre_block = klammerblock(daten, m_gre.end() - 1)
+    grenze_vor = feld(gre_block, 'vor')
+    if not grenze_vor:
+        fehler.append('B_GRENZE.vor fehlt — dann steht der Grenzsatz ohne '
+                      'Ansage im Text')
+    else:
+        if len(grenze_vor) < 15:
+            fehler.append(f'B_GRENZE.vor nur {len(grenze_vor)} Zeichen — zu dünn')
+        lay_texte.append(('B_GRENZE.vor', grenze_vor))
+    alle_grenzen = []
+    for b in BEREICHE:
+        mb = re.search(r"^\s{4}" + b + r":\s*\{", gre_block, re.M)
+        if not mb:
+            fehler.append(f'Bereich {b}: keine Grenze in B_GRENZE')
+            continue
+        blk = klammerblock(gre_block, mb.end() - 1)
+        gr = feld(blk, 'satz')
+        mm = re.search(r"mensch:\s*(true|false)", blk)
+        if not mm:
+            fehler.append(f'Grenze {b}: mensch fehlt — dann weiß keine Prüfung, '
+                          'ob dieser Bereich am Körper oder an der Psyche hängt')
+        else:
+            grenze_mensch[b] = (mm.group(1) == 'true')
+        if not gr:
+            fehler.append(f'Bereich {b}: der Grenzsatz fehlt — dann sagt die '
+                          'Seite nicht, was sie über diesen Bereich nicht weiß')
+            continue
+        if len(gr) < 60:
+            fehler.append(f'Grenze {b}: nur {len(gr)} Zeichen — zu dünn')
+        if not gr.rstrip().endswith('.'):
+            fehler.append(f'Grenze {b}: endet ohne Punkt')
+        for d in DIAGNOSE:
+            if d in gr:
+                fehler.append(f'Grenze {b} stellt eine Diagnose ("{d}")')
+        # PRODUKT.md Abschnitt 5: Wo es um Körper oder Psyche geht,
+        # genügt es nicht zu sagen, was die Seite nicht weiß. Dann
+        # gehört dabei, wen man stattdessen fragt.
+        if grenze_mensch.get(b) and not _nennt_menschen(gr):
+            fehler.append(f'Grenze {b}: dieser Bereich hängt am Körper oder an '
+                          'der Psyche, aber der Satz nennt niemanden, den man '
+                          'stattdessen fragt (PRODUKT.md Abschnitt 5)')
+        lay_texte.append((f'B_GRENZE.{b}.satz', gr))
+        alle_grenzen.append(gr)
+        grenze_je[b] = gr
+    if len(set(alle_grenzen)) != len(alle_grenzen):
+        fehler.append('dieselbe Grenze steht in zwei Bereichen — dann ist sie '
+                      'allgemein und sagt über den Bereich nichts')
+    if not any(grenze_mensch.values()):
+        fehler.append('kein Bereich ist in B_GRENZE als Körper- oder '
+                      'Psychebezug geführt — dann prüft mensch nichts')
+    # Gesundheit hängt am Körper. Das ist keine Geschmacksfrage.
+    if grenze_mensch.get('gesundheit') is False:
+        fehler.append('B_GRENZE.gesundheit.mensch steht auf false — der Bereich '
+                      'Gesundheit hängt am Körper')
+    # Und die Texte bleiben Text: steht einer wörtlich in der Anzeige,
+    # ist er dort beim nächsten Umbau geändert und von keiner Prüfung
+    # gesehen. PRODUKT.md Abschnitt 7.
+    app_nackt2 = re.sub(r'^\s*//.*$', ' ',
+                        re.sub(r'/\*.*?\*/', ' ', app, flags=re.S), flags=re.M)
+    for t in list(alle_grenzen) + ([grenze_vor] if grenze_vor else []):
+        if t in app_nackt2:
+            fehler.append('ein Grenzsatz steht wörtlich in bereich-app.js — '
+                          'er gehört in bereich-daten.js')
+    if '.GRENZE' not in app:
+        fehler.append('bereich-app.js holt die Grenze nicht aus B_GRENZE — dann '
+                      'zeichnet die Seite sie nicht')
+    if '.GRENZE' not in bauer:
+        fehler.append('tief-bauer.js holt die Grenze nicht aus B_GRENZE — dann '
+                      'fehlt sie im Tiefgang')
 
 # ── Kein Schalter, der Freischalten vortäuscht ─────────────────
 # PRODUKT.md Abschnitt 4: Die Seite hat keinen Server, alles im
@@ -950,7 +1066,8 @@ NEG = re.compile(r'(?<![A-Za-zÄÖÜäöüß])(nicht|kein|keine|keinen|keiner|ke
 # Ausgenommen sind die Felder, deren Aufgabe das Verneinen IST: die
 # Grenzen der Methode, die Haftungssätze, der ehrliche Teil. Dort ist
 # "sie kennt keine Konten, keine Verträge" der Inhalt, nicht die Ausrede.
-GRENZFELD = ('.grenze', '.fuss', 'B_EHRLICH', 'B_WID.', '.fragenVor', '.ehrlich')
+GRENZFELD = ('.grenze', 'B_GRENZE', '.fuss', 'B_EHRLICH', 'B_WID.',
+             '.fragenVor', '.ehrlich')
 for wo, text in lay_texte:
     if any(g in wo for g in GRENZFELD):
         continue
@@ -1111,7 +1228,7 @@ const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
   doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
   folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,techJeBereich:[],
-  nach:[],gespr:[],
+  nach:[],gespr:[],grenze:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
   wahl:{knoepfe:0,alleAn:'',tipp:''},
   einer:{bereiche:0,ueber:0,name:'',tipp:'',gespeichert:[],eigenerSchluessel:[]},
@@ -1315,6 +1432,32 @@ notiz.nach=Object.values(await proBereich(()=>{
     duenn:a.filter(x=>
       ((x.querySelector('.b-nachw')||{}).innerText||'').trim().length<60
       || ((x.querySelector('.b-nachn')||{}).innerText||'').trim().length<4).length};
+})).filter(Boolean);
+
+/* Die Grenze eines Bereichs: offen, ohne einen Klick.
+
+   Gemessen wird am gezeichneten Ergebnis und auf Stufe 0, und zwar
+   ohne vorher irgendetwas aufzuklappen. Genau das ist die
+   Fehlerklasse vom 4.11.: Der Satz stand in den Daten, er stand auch
+   auf der Seite — nur hinter einer Klappe. Eine Prüfung, die die
+   Daten liest oder die erst alles öffnet, hätte ihn gesehen und
+   gemeldet, es sei alles in Ordnung. */
+notiz.grenze=Object.values(await proBereich(()=>{
+  const d=document.querySelector('.b-ber');
+  if(!d) return null;
+  const g=[...d.querySelectorAll('.b-grenze')];
+  const o={k:(d.id||'').replace(/^ber-/,''),
+    name:((d.querySelector('.b-name')||{}).textContent||'?').trim(),
+    anzahl:g.length};
+  if(!g.length) return o;
+  o.text=(g[0].innerText||'').trim();
+  /* Drei verschiedene Weisen, denselben Satz unlesbar zu machen:
+     in einer Klappe, ausgeblendet, oder zugeklappt oberhalb. */
+  o.inKlappe=g.some(e=>!!e.closest('details'));
+  o.sichtbar=g.every(e=>e.offsetParent!==null);
+  o.hoehe=Math.round(g[0].getBoundingClientRect().height);
+  o.vor=((g[0].querySelector('.b-grenzevor')||{}).innerText||'').trim();
+  return o;
 })).filter(Boolean);
 
 /* Mit jemand anderem darüber sprechen: die zweite Sicht aus
@@ -1727,16 +1870,10 @@ else:
             if soll_f and {_s(x) for x in fr} != soll_f:
                 fehler.append(f'Bereich {wer}: die Schublade zeigt nicht die drei '
                               'Fragen dieses Bereichs')
-            if e.get('grenzen') != 1:
-                fehler.append(f"Bereich {wer}: {e.get('grenzen')} Grenzen in der "
-                              'Schublade statt genau einer')
-            elif not e.get('grenzeSicht'):
-                fehler.append(f'Bereich {wer}: die Grenze ist nach dem '
-                              'Aufklappen nicht sichtbar')
-            soll_g = _s(grenze_je.get(e.get('k'), ''))
-            if soll_g and soll_g not in _s(e.get('grenze')):
-                fehler.append(f'Bereich {wer}: unter den Fragen steht nicht die '
-                              'Grenze dieses Bereichs')
+            if e.get('grenzen'):
+                fehler.append(f"Bereich {wer}: die Grenze steht wieder in der "
+                              'Schublade — sie gehört offen davor, nicht hinter '
+                              'einen Klick (PRODUKT.md Abschnitt 5)')
             if len(_s(e.get('vor'))) < 80:
                 fehler.append(f'Bereich {wer}: die Schublade sagt nicht, wofür '
                               'die Fragen da sind')
@@ -1746,6 +1883,46 @@ else:
             for d in DIAGNOSE:
                 if d in (e.get('text') or ''):
                     fehler.append(f'Bereich {wer}: die Schublade stellt eine '
+                                  f'Diagnose ("{d}")')
+
+        # ── Die Grenze steht offen ─────────────────────────────
+        # Gemessen am gezeichneten Ergebnis, auf Stufe 0, ohne etwas
+        # aufzuklappen. Ein Satz, den man erst öffnen muss, steht
+        # nicht dabei — und PRODUKT.md Abschnitt 5 verlangt, dass er
+        # dabeisteht.
+        gre = n['grenze']
+        if len(gre) != 10:
+            fehler.append(f'{len(gre)} statt 10 Bereiche mit einer Grenze auf '
+                          'der Seite')
+        for e in gre:
+            wer = e.get('name') or e.get('k') or '?'
+            koerper = grenze_mensch.get(e.get('k'), False)
+            if e.get('anzahl') != 1:
+                fehler.append(f"Bereich {wer}: {e.get('anzahl')} Grenzsätze auf "
+                              'der Seite statt genau einem' +
+                              (' — und dieser Bereich hängt am Körper oder an '
+                               'der Psyche' if koerper else ''))
+                continue
+            if e.get('inKlappe'):
+                fehler.append(f'Bereich {wer}: die Grenze steckt in einer Klappe '
+                              '— ein Satz, den man erst aufklappen muss, steht '
+                              'nicht dabei (PRODUKT.md Abschnitt 5)')
+            if not e.get('sichtbar'):
+                fehler.append(f'Bereich {wer}: die Grenze ist auf Stufe 0 nicht '
+                              'sichtbar')
+            if not e.get('hoehe'):
+                fehler.append(f'Bereich {wer}: die Grenze hat keine Höhe — sie '
+                              'steht im Markup und nicht auf der Seite')
+            soll_g = _s(grenze_je.get(e.get('k'), ''))
+            if soll_g and soll_g not in _s(e.get('text')):
+                fehler.append(f'Bereich {wer}: offen steht nicht die Grenze '
+                              'dieses Bereichs')
+            if _s(grenze_vor) and _s(e.get('vor')) != _s(grenze_vor):
+                fehler.append(f'Bereich {wer}: die Grenze wird nicht angesagt '
+                              '(B_GRENZE.vor fehlt im gezeichneten Satz)')
+            for d in DIAGNOSE:
+                if d in (e.get('text') or ''):
+                    fehler.append(f'Bereich {wer}: die Grenze stellt eine '
                                   f'Diagnose ("{d}")')
 
         if n['stufe0']:
