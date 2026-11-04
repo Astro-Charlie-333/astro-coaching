@@ -3228,79 +3228,118 @@ window.AC_LB = {
   var B_FRAGEN = {
     rahmen: {
       titel:'Mit jemand anderem darüber sprechen',
-      vor:'Drei Fragen, die du mitnehmen kannst — zu einer Coachin, in eine Therapie, oder zu jemandem, dem du vertraust. Die Antworten stehen nicht hier, und das ist der Sinn der Fragen.',
-      grenzeVor:'Und was dieser Bereich über dich nicht weiß:'
+      vor:'Drei Fragen, die du mitnehmen kannst — zu einer Coachin, in eine Therapie, oder zu jemandem, dem du vertraust. Die Antworten stehen nicht hier, und das ist der Sinn der Fragen.'
     },
     liebe: {
       fragen:[
         'Wann hast du zuletzt etwas gewollt und es auch gesagt?',
         'Woran merkst du, dass du dich in einer Verbindung kleiner machst?',
-        'Was müsste jemand tun, damit du ihm glaubst?'],
-      grenze:'Ob eine bestimmte Beziehung trägt, steht hier nicht. Die Rechnung kennt deine Anlage, nicht den Menschen neben dir — und über ihn sagt sie ohnehin nichts, solange er nicht selbst gefragt wurde.'
+        'Was müsste jemand tun, damit du ihm glaubst?']
     },
     beruf: {
       fragen:[
         'Was von deiner Arbeit ist in den letzten zwei Jahren wirklich fertig geworden?',
         'Wofür möchtest du gelten, und wofür kennt man dich bisher?',
-        'Was hält dich an deiner Stelle — das Gute daran oder die Kosten des Gehens?'],
-      grenze:'Ob ein Wechsel richtig ist, entscheidet dein Leben und nicht diese Rechnung. Sie sagt, wo gerade Bewegung liegt, nicht, wohin du gehen sollst.'
+        'Was hält dich an deiner Stelle — das Gute daran oder die Kosten des Gehens?']
     },
     gesundheit: {
       fragen:[
         'Woran merkst du zuerst, dass du über deine Kraft gehst?',
         'Welche Routine hält bei dir auch an einem schlechten Tag?',
-        'Was tust du, wenn der Körper nicht mehr mitmacht, und was davon hilft wirklich?'],
-      grenze:'Hier wird nichts über deinen Körper festgestellt, und nichts hier ersetzt eine Behandlung. Bei allem Körperlichen gehört eine Fachperson gefragt, die dich untersuchen kann — diese Seite kann das nicht und soll es nicht.'
+        'Was tust du, wenn der Körper nicht mehr mitmacht, und was davon hilft wirklich?']
     },
     geld: {
       fragen:[
         'Wann hast du zuletzt eine Zahl genannt, ohne sie vorher kleiner zu machen?',
         'Was wäre genug, und woran würdest du es merken?',
-        'Welche Ausgabe schützt dich wirklich, und welche beruhigt dich nur?'],
-      grenze:'Über deine Lage sagt diese Rechnung nichts. Sie kennt keine Konten, keine Verträge und keine Preise, und sie ist keine Beratung.'
+        'Welche Ausgabe schützt dich wirklich, und welche beruhigt dich nur?']
     },
     familie: {
       fragen:[
         'In welche Rolle rutschst du, sobald du zu Hause bist?',
         'Was von deinem Zuhause hast du selbst gewählt?',
-        'Welches Gespräch mit wem schiebst du seit Jahren vor dir her?'],
-      grenze:'Was einen anderen in deiner Familie bewegt, steht hier nicht. Über Menschen, die nicht selbst gefragt wurden, sagt diese Seite nichts.'
+        'Welches Gespräch mit wem schiebst du seit Jahren vor dir her?']
     },
     freunde: {
       fragen:[
         'Bei wem musst du dich nicht erklären?',
         'Wo bleibst du dabei, obwohl es längst nicht mehr stimmt?',
-        'Wann hast du zuletzt selbst gefragt, ob jemand Zeit hat?'],
-      grenze:'Ob eine Freundschaft hält, lässt sich hier nicht ablesen. Die Rechnung sagt, wo bei dir Bewegung liegt, nicht, wer bleibt.'
+        'Wann hast du zuletzt selbst gefragt, ob jemand Zeit hat?']
     },
     freude: {
       fragen:[
         'Was tust du, wenn niemand zusieht und es keinen Nutzen hat?',
         'Wann hast du zuletzt etwas angefangen, ohne es zu Ende bringen zu müssen?',
-        'Was hast du als Kind gern gemacht, und seit wann nicht mehr?'],
-      grenze:'Dass Freude fehlt, kann viele Gründe haben, und dieser Bereich nennt keinen davon. Hält es länger an und wird es schwer, gehört ein Mensch gefragt und nicht eine Seite gelesen.'
+        'Was hast du als Kind gern gemacht, und seit wann nicht mehr?']
     },
     selbstwert: {
       fragen:[
         'Woran misst du gerade, ob du genug bist?',
         'Wessen Stimme hörst du, wenn du streng mit dir wirst?',
-        'Was würdest du einem Menschen sagen, der dir erzählt, was du dir erzählst?'],
-      grenze:'Diese Seite stellt nichts über dich fest. Sie beschreibt ein Muster und misst keinen Wert; wie du dich siehst, ist hier nicht nachlesbar.'
+        'Was würdest du einem Menschen sagen, der dir erzählt, was du dir erzählst?']
     },
     sinn: {
       fragen:[
         'Welche Überzeugung von dir hat die letzten fünf Jahre überlebt?',
         'Wohin willst du, wenn niemand fragt, ob das vernünftig ist?',
-        'Was glaubst du, weil du es selbst gesehen hast, und was, weil es dir gesagt wurde?'],
-      grenze:'Wohin dein Weg geht, sagt diese Rechnung nicht. Sie sagt, wann die Frage laut wird, nicht, was die Antwort ist.'
+        'Was glaubst du, weil du es selbst gesehen hast, und was, weil es dir gesagt wurde?']
     },
     umbruch: {
       fragen:[
         'Was ist gerade zu Ende, auch wenn es noch steht?',
         'Was willst du mitnehmen, und was lässt du bewusst zurück?',
-        'Wer weiß, dass es dir gerade so geht?'],
-      grenze:'Dass etwas laut ist, heißt nicht, dass es schlimm wird, und kein Datum hier ist ein Ereignis. Wird ein Umbruch zu viel, gehört ein Mensch gefragt und nicht eine Seite gelesen.'
+        'Wer weiß, dass es dir gerade so geht?']
     }
+  };
+
+  /* ── Die Grenze eines Bereichs ───────────────────────────────
+     Was dieser Bereich über einen Menschen nicht weiß. PRODUKT.md
+     Abschnitt 3 nennt diese Ehrlichkeit den Markenkern, Abschnitt 5
+     macht sie zur Pflicht: keine Diagnose, kein Ersatz für
+     Behandlung, und im Zweifel steht dabei, dass ein Mensch gefragt
+     gehört.
+
+     Warum das hier steht und nicht mehr in B_FRAGEN: Bis zum 4.11.
+     lag die Grenze als letzte Zeile in der Schublade „Mit jemand
+     anderem darüber sprechen" — und die wird zugeklappt
+     ausgeliefert. Auf der Seite stand damit offen, dass der Körper
+     „Aufmerksamkeit verlangt", während der Satz, dass hier nichts
+     festgestellt wird und eine Fachperson gefragt gehört, hinter
+     einem Klick lag. REGELN.md Abschnitt 1 klappt die Sicht der
+     Coachin zu, nicht die Grenze.
+
+     Die Trennung liegt deshalb in den Daten und nicht in der
+     Anzeige: Was hier steht, steht offen; was in B_FRAGEN steht,
+     darf gefaltet bleiben. Die Anzeige liest das ab und entscheidet
+     nichts.
+
+     `mensch` sagt, dass dieser Bereich am Körper oder an der Psyche
+     hängt. Dann genügt es nicht, die Grenze zu nennen — der Satz
+     muss auch sagen, wen man stattdessen fragt. `bau-bereiche.py`
+     prüft beides und bricht ab, wenn ein solcher Satz fehlt oder
+     nur in einem zugeklappten Element steht. */
+  var B_GRENZE = {
+    vor:'Was dieser Bereich über dich nicht weiß:',
+    liebe: { mensch:false,
+      satz:'Ob eine bestimmte Beziehung trägt, steht hier nicht. Die Rechnung kennt deine Anlage, nicht den Menschen neben dir — und über ihn sagt sie ohnehin nichts, solange er nicht selbst gefragt wurde.' },
+    beruf: { mensch:false,
+      satz:'Ob ein Wechsel richtig ist, entscheidet dein Leben und nicht diese Rechnung. Sie sagt, wo gerade Bewegung liegt, nicht, wohin du gehen sollst.' },
+    gesundheit: { mensch:true,
+      satz:'Hier wird nichts über deinen Körper festgestellt, und nichts hier ersetzt eine Behandlung. Bei allem Körperlichen gehört eine Fachperson gefragt, die dich untersuchen kann — diese Seite kann das nicht und soll es nicht.' },
+    geld: { mensch:false,
+      satz:'Über deine Lage sagt diese Rechnung nichts. Sie kennt keine Konten, keine Verträge und keine Preise, und sie ist keine Beratung.' },
+    familie: { mensch:false,
+      satz:'Was einen anderen in deiner Familie bewegt, steht hier nicht. Über Menschen, die nicht selbst gefragt wurden, sagt diese Seite nichts.' },
+    freunde: { mensch:false,
+      satz:'Ob eine Freundschaft hält, lässt sich hier nicht ablesen. Die Rechnung sagt, wo bei dir Bewegung liegt, nicht, wer bleibt.' },
+    freude: { mensch:true,
+      satz:'Dass Freude fehlt, kann viele Gründe haben, und dieser Bereich nennt keinen davon. Hält es länger an und wird es schwer, gehört ein Mensch gefragt und nicht eine Seite gelesen.' },
+    selbstwert: { mensch:true,
+      satz:'Diese Seite stellt nichts über dich fest. Sie beschreibt ein Muster und misst keinen Wert; wie du dich siehst, ist hier nicht nachlesbar. Bleibt das Urteil über dich selbst hart, gehört darüber mit einem Menschen gesprochen und nicht nur hier gelesen.' },
+    sinn: { mensch:false,
+      satz:'Wohin dein Weg geht, sagt diese Rechnung nicht. Sie sagt, wann die Frage laut wird, nicht, was die Antwort ist.' },
+    umbruch: { mensch:true,
+      satz:'Dass etwas laut ist, heißt nicht, dass es schlimm wird, und kein Datum hier ist ein Ereignis. Wird ein Umbruch zu viel, gehört ein Mensch gefragt und nicht eine Seite gelesen.' }
   };
 
   /* ── Der Tiefgang ────────────────────────────────────────────
@@ -3477,7 +3516,7 @@ window.AC_LB = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH, SEITE:B_SEITE,
-    WID:B_WID, FRAGEN:B_FRAGEN, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
+    WID:B_WID, FRAGEN:B_FRAGEN, GRENZE:B_GRENZE, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
     RAUM:B_RAUM
   };
 

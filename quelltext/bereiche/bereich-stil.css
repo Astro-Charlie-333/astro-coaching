@@ -223,7 +223,7 @@
    "Zum Nachlesen" darunter, nur als Klappe. Die Zusammenfassung
    trägt das Messing, damit man sie findet, ohne dass sie den fünf
    Blöcken darüber die Aufmerksamkeit nimmt. */
-.b-gespr{margin-top:18px;padding-top:14px;border-top:1px dashed var(--linie);}
+.b-gespr{margin-top:14px;}
 .b-gespr > summary{cursor:pointer;list-style:none;font-family:var(--sans,system-ui);
  font-size:13.5px;letter-spacing:.02em;color:var(--messing,#9A7235);padding:2px 0;}
 .b-gespr > summary::-webkit-details-marker{display:none;}
@@ -235,4 +235,10 @@
 .b-gesprf li{background:var(--papier);border:1px solid var(--linie);border-radius:12px;
  padding:11px 14px;margin-bottom:7px;font-family:'Fraunces',Georgia,serif;
  font-size:15.5px;line-height:1.55;color:var(--nacht);}
-.b-gesprg{font-size:13px!important;line-height:1.6;color:var(--leise);margin:0;}
+/* Die Grenze steht offen, über der Schublade. Ruhig gesetzt, aber
+   lesbar: sie soll nicht lauter sein als der Bereich und auch nicht
+   so leise, dass man sie überliest. Keine neue Farbe, keine neue
+   Schrift — nur die vorhandenen. */
+.b-grenze{margin:14px 0 0;font-size:14px!important;line-height:1.65;
+ color:var(--leise);max-width:640px;}
+.b-grenzevor{font-weight:400;color:var(--nacht);}
