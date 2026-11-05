@@ -482,19 +482,28 @@ wieder eine Ziffer aufeinanderfolgen.
 
 ## Erledigt
 
-* **2026-11-05** · Die vier Symbole sind die, die der Bau erzeugt
-  (Aufgabe 35). Sie lagen seit einer älteren Bibliotheksfassung im Repo
-  und wurden von jedem vollständigen Lauf überschrieben — der
-  Arbeitsbaum war danach an Dateien schmutzig, die mit der Aufgabe des
-  Tages nichts zu tun hatten. Die gebauten Bytes sind jetzt
-  eingecheckt; zweimal gebaut ergibt bitgleich dasselbe.
-  Dauerhafte Prüfung in `bau-app.py`: Es überschreibt ein
-  ausgeliefertes Symbol nicht mehr, sondern vergleicht und bricht bei
-  Abweichung ab. Eine Abweichung ist damit eine Nachricht und kein
-  stiller Diff — entweder ist die Gestaltung geändert (dann einmal
-  `--symbole-neu` und die Dateien mitnehmen), oder die Umgebung baut
-  anders als die, aus der die Dateien stammen. Die Probe dagegen: ein
-  Byte an `symbol-180.png` angehängt, und der Bau bricht ab.
+* **2026-11-05** · Ein vollständiger Lauf lässt die vier Symbole in Ruhe
+  (Aufgabe 35). Jeder Lauf hat den Arbeitsbaum an diesen vier Dateien
+  schmutzig gemacht, obwohl sie mit der Aufgabe des Tages nichts zu tun
+  hatten — wer das nicht wusste, nahm sie blind mit oder warf sie blind
+  weg.
+  Der erste Versuch war falsch und ist auf GitHub rot geworden: Ich habe
+  die hier gebauten Bytes eingecheckt, in der Annahme, die Dateien im
+  Repo seien veraltet. Der Bauserver hat dann genau die alten Bytes
+  erzeugt und die neuen abgelehnt. Die Ursache ist nicht das Bild,
+  sondern der Packer — `zlib.compress` liefert je nach Fassung andere
+  Bytes bei bitgleichen Bildpunkten, hier zlib-ng, dort das gewöhnliche
+  zlib. Die Dateien im Repo waren immer richtig.
+  `bau-app.py` überschreibt ein ausgeliefertes Symbol jetzt nicht mehr,
+  sondern vergleicht Kopf und Bildpunkte (`png_pixel`, beide Seiten durch
+  dieselbe Funktion). Damit ist die geprüfte Form die gemeinte — das
+  Bild, nicht der Packer, `REGELN.md` 6e — und der Lauf lässt die
+  Dateien in jeder Umgebung in Ruhe. `--symbole-neu` bleibt der Weg für
+  eine absichtliche Gestaltungsänderung.
+  Die Probe dagegen, in beide Richtungen: dieselben Bildpunkte mit
+  anderer Packstufe geschrieben (5.821 statt 3.967 Bytes) gehen durch;
+  ein einziger geänderter Bildpunkt bricht den Bau ab. Die erste Hälfte
+  ist der Fehler, den die Bytefassung gemacht hat.
 
 * **2026-11-05** · Ein Handgriff verspricht nichts mehr — und die Regel
   dafür steht an einer Stelle (Aufgabe 33). Unter „Was du tun kannst"

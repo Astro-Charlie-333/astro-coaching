@@ -61,6 +61,39 @@ def png(groesse, pixel):
             + block(b'IEND', b''))
 
 
+def png_pixel(rohdatei):
+    """Die Bildpunkte aus einer PNG-Datei, die dieses Skript geschrieben hat.
+
+    Warum das nötig ist (AUFGABEN 35, 5.11.): Ein Vergleich der Dateibytes
+    prüft nicht das Bild, sondern den Packer. `zlib.compress` liefert je
+    nach Fassung andere Bytes — hier zlib-ng, auf dem Bauserver das
+    gewöhnliche zlib — bei bitgleichen Bildpunkten. Eine Prüfung auf die
+    Bytes schlägt dann in der einen Umgebung an und in der anderen nicht,
+    und beides sagt nichts über das Symbol.
+
+    Also wird die Form geprüft, die gemeint ist: Kopf und Bildpunkte
+    (REGELN.md 6e). Beide Seiten gehen durch dieselbe Funktion, damit kein
+    Unterschied aus dem Vergleich selbst entsteht.
+    """
+    if rohdatei[:8] != b'\x89PNG\r\n\x1a\n':
+        raise ValueError('keine PNG-Datei')
+    kopf, idat, i = None, bytearray(), 8
+    while i + 8 <= len(rohdatei):
+        laenge = struct.unpack('>I', rohdatei[i:i + 4])[0]
+        typ = rohdatei[i + 4:i + 8]
+        daten = rohdatei[i + 8:i + 8 + laenge]
+        if typ == b'IHDR':
+            kopf = daten
+        elif typ == b'IDAT':
+            idat += daten
+        elif typ == b'IEND':
+            break
+        i += 12 + laenge
+    if kopf is None:
+        raise ValueError('PNG ohne IHDR')
+    return kopf, zlib.decompress(bytes(idat))
+
+
 def symbol(groesse, maskierbar=False):
     flaeche, ring, kern = (farbe(d['farbe_flaeche']), farbe(d['farbe_ring']),
                            farbe(d['farbe_kern']))
@@ -92,17 +125,21 @@ def symbol(groesse, maskierbar=False):
 
 SYMBOLE = [('symbol-192.png', 192, False), ('symbol-512.png', 512, False),
            ('symbol-180.png', 180, False), ('symbol-maskierbar-512.png', 512, True)]
-# Fehlerklasse vom 2.11. (AUFGABEN 35): Die vier Symbole im Repo waren
-# nicht die, die dieser Bau erzeugt — vermutlich einmal mit einer anderen
-# Bibliotheksfassung gebaut. Jeder vollständige Lauf hat den Arbeitsbaum
-# damit an Dateien schmutzig gemacht, die mit der Aufgabe des Tages nichts
-# zu tun hatten, und wer das nicht wusste, nahm sie blind in seinen Pull
-# Request mit oder warf sie blind weg.
+# Fehlerklasse vom 2.11. (AUFGABEN 35): Jeder vollständige Lauf hat den
+# Arbeitsbaum an diesen vier Dateien schmutzig gemacht, obwohl sie mit der
+# Aufgabe des Tages nichts zu tun hatten — wer das nicht wusste, nahm sie
+# blind in seinen Pull Request mit oder warf sie blind weg.
 #
-# Die Rechnung ist bitgleich, also ist eine Abweichung immer eine
-# Nachricht: Entweder hat sich die Gestaltung geändert — dann sagt man
-# das mit --symbole-neu — oder die Umgebung baut anders als die, aus der
-# die ausgelieferten Dateien stammen. Beides will man wissen, und beides
+# Die Ursache ist nicht das Bild, sondern der Packer: `zlib.compress`
+# liefert je nach Fassung andere Bytes bei bitgleichen Bildpunkten. Am
+# 5.11. hat genau das die Prüfung auf GitHub rot gemacht, nachdem die
+# hier gebauten Bytes eingecheckt waren — dort ist das gewöhnliche zlib
+# am Werk, in der Arbeitsumgebung zlib-ng.
+#
+# Also wird nicht überschrieben und nicht auf Bytes verglichen, sondern
+# auf das Bild. Eine Abweichung ist dann eine Nachricht: Entweder hat
+# sich die Gestaltung geändert — das sagt man mit --symbole-neu — oder
+# diese Umgebung zeichnet anders. Beides will man wissen, und beides
 # sieht man nicht, wenn der Bau die Datei einfach überschreibt.
 symbole_neu = '--symbole-neu' in sys.argv
 for name, groesse, maskierbar in SYMBOLE:
@@ -111,13 +148,17 @@ for name, groesse, maskierbar in SYMBOLE:
     if not datei.exists() or symbole_neu:
         datei.write_bytes(gebaut)
         continue
-    if datei.read_bytes() != gebaut:
+    try:
+        war, ist = png_pixel(datei.read_bytes()), png_pixel(gebaut)
+    except (ValueError, zlib.error) as e:
+        fehler.append(f'{name} ist nicht lesbar: {e}')
+        continue
+    if war != ist:
         fehler.append(
-            f'{name} weicht von dem ab, was der Bau hier erzeugt '
-            f'({len(datei.read_bytes())} statt {len(gebaut)} Bytes). '
+            f'{name} zeigt nicht das, was der Bau hier zeichnet. '
             'Ist die Gestaltung absichtlich geändert: einmal mit '
             '--symbole-neu bauen und die vier Dateien mit einchecken. '
-            'Sonst baut diese Umgebung anders als die, aus der die '
+            'Sonst zeichnet diese Umgebung anders als die, aus der die '
             'ausgelieferten Symbole stammen — dann gehört das geklärt '
             'und nicht überschrieben.')
 
