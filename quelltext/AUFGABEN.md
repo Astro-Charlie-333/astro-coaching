@@ -426,21 +426,6 @@ wörtlich gleiche Absätze ab einer bestimmten Länge vergleicht, die
 bekannten und gewollten Dopplungen namentlich eingetragen sind, und eine
 neue Dopplung den Bau bricht.
 
-### 35 · Die Symbole im Repo sind nicht die, die der Bau erzeugt
-Gefunden beim Erledigen von Aufgabe 19 am 2.11. `bau-app.py` erzeugt
-`symbol-180.png`, `symbol-192.png`, `symbol-512.png` und
-`symbol-maskierbar-512.png` jedes Mal bitgleich — aber anders als die
-vier Dateien, die im Repo liegen. Jeder vollständige Lauf von
-`pruefe-alles.py` macht den Arbeitsbaum damit schmutzig, und zwar an
-Dateien, die mit der Aufgabe des Tages nichts zu tun haben. Wer das nicht
-weiß, nimmt sie in seinen Pull Request mit oder wirft sie weg — beides
-blind. Vermutlich wurden sie einmal mit einer anderen Bibliotheksfassung
-gebaut.
-**Fertig, wenn:** ein frischer Lauf von `pruefe-alles.py` auf `main` keine
-geänderte Datei hinterlässt, die vier Symbole also dem entsprechen, was
-der Bau hier erzeugt — und `bau-app.py` abbricht, wenn ein ausgeliefertes
-Symbol von dem abweicht, das es gerade gebaut hat.
-
 ### 36 · Die Herrscherliste steht zehnmal im Quelltext
 Gefunden beim Erledigen von Aufgabe 19 am 2.11., als eine elfte Kopie
 dazugekommen wäre. `['Mars','Venus','Merkur','Mond','Sonne','Merkur',
@@ -474,6 +459,20 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-05** · Die vier Symbole sind die, die der Bau erzeugt
+  (Aufgabe 35). Sie lagen seit einer älteren Bibliotheksfassung im Repo
+  und wurden von jedem vollständigen Lauf überschrieben — der
+  Arbeitsbaum war danach an Dateien schmutzig, die mit der Aufgabe des
+  Tages nichts zu tun hatten. Die gebauten Bytes sind jetzt
+  eingecheckt; zweimal gebaut ergibt bitgleich dasselbe.
+  Dauerhafte Prüfung in `bau-app.py`: Es überschreibt ein
+  ausgeliefertes Symbol nicht mehr, sondern vergleicht und bricht bei
+  Abweichung ab. Eine Abweichung ist damit eine Nachricht und kein
+  stiller Diff — entweder ist die Gestaltung geändert (dann einmal
+  `--symbole-neu` und die Dateien mitnehmen), oder die Umgebung baut
+  anders als die, aus der die Dateien stammen. Die Probe dagegen: ein
+  Byte an `symbol-180.png` angehängt, und der Bau bricht ab.
 
 * **2026-11-05** · Ein Handgriff verspricht nichts mehr — und die Regel
   dafür steht an einer Stelle (Aufgabe 33). Unter „Was du tun kannst"
