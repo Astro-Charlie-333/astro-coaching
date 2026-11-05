@@ -3,6 +3,11 @@
 """Setzt index.html neu zusammen."""
 import pathlib, re, sys, subprocess, json
 
+# Die gemeinsamen Prüfungen. Sie stehen in rituale/pruefwerk.py an
+# einer Stelle, nicht je bau-*.py eine eigene Fassung (AUFGABEN 33).
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / 'rituale'))
+import pruefwerk
+
 # Für die Reihenfolgeprüfung im Wochenausblick: ein Datum über den
 # Jahreswechsel hinweg ist nur dann sortiert, wenn der Monat zählt.
 _MONFOLGE = {m: i for i, m in enumerate(
@@ -228,6 +233,25 @@ ziel.write_text(html, encoding='utf-8')
 fehler, hinweise = [], []
 koerper = lies(hier / 'heute-koerper.html')
 app = lies(hier / 'heute-app.js')
+
+# ── Ein Handgriff verspricht nichts ───────────────────────────
+# Dieselbe Regel wie auf der Bereichsseite, aus derselben Datei
+# (AUFGABEN 33). „Heute" zeigt dieselben Handgriffe, also muss hier
+# dasselbe anschlagen — und zwar auch ohne Browser.
+fehler += pruefwerk.pruefe_handgriffe(lies(ber / 'bereich-daten.js'))
+
+# Und die Gegenprobe gegen die Fehlerklasse, die eine Datenprüfung
+# nicht sieht: eine Anzeige, die ihren Handgriff selbst mitbringt.
+# Bis zum 5.11. stand in handgriff() genau das — zwei Sätze, die in
+# keiner Datendatei standen und deshalb von keiner Prüfung gelesen
+# wurden. Gemessen wird am Rückgabewert: er kommt aus den Daten oder
+# er kommt nicht durch.
+for _m in re.finditer(r'function handgriff\(.*?\n\}', app, re.S):
+    for _r in re.findall(r'return\s+([^;]+);', _m.group(0)):
+        if "'" in _r or '"' in _r or '`' in _r:
+            fehler.append('handgriff() in heute-app.js gibt einen eigenen Satz '
+                          'zurück statt eines aus bereich-daten.js: '
+                          f'„{_r.strip()[:60]}" — dann liest ihn keine Prüfung')
 
 # Deutsche Substantive bleiben groß — toLowerCase macht daraus Unsinn.
 if '.toLowerCase(' in app:
@@ -557,6 +581,9 @@ if pr:
         fehler.append('ein Bereich steht zweimal im Kurzblick: ' + ', '.join(v['bnamen']))
     if len(set(v['btext'])) != len(v['btext']):
         fehler.append('derselbe Handgriff steht mehrfach im Kurzblick')
+    # Und am gezeichneten Ergebnis, nicht nur an den Daten: Was hier
+    # steht, hat ein Mensch vor sich.
+    fehler += pruefwerk.pruefe_gezeichnete_handgriffe(v['btext'], '„Heute"')
     if v['btexte'] < v['bereiche']:
         fehler.append('nicht jeder Bereich im Kurzblick sagt, was zu tun ist')
     if v['radfelder'] != 12: fehler.append('Rad unvollständig')

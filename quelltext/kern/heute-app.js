@@ -942,16 +942,17 @@ function bisWann(b, jd){
 }
 
 /* Der Handgriff eines Bereichs — nie zweimal derselbe in der Liste. */
+/* Kein Satz steht hier. Die Handgriffe liegen in bereich-daten.js —
+   an einer Stelle für „Heute" und für die Bereichsseite. Wer einen
+   Handgriff ändert, ändert ihn damit für beide Seiten auf einmal, und
+   die gemeinsame Prüfung (rituale/pruefwerk.py) liest genau dort. */
 function handgriff(b, schon){
-  if(b.laut===0 || !b.laeuft.length)
-    return 'Hier arbeitet gerade nichts gegen dich. Wenn du in diesem Bereich etwas '+
-           'vorhast, ist jetzt der Moment, es selbst anzufangen.';
+  if(b.laut===0 || !b.laeuft.length) return AC_BDAT.LEER.tun;
   for(var i=0;i<b.laeuft.length;i++){
     var W=AC_BDAT.WAND[b.laeuft[i].wanderer];
     if(W && !schon[W.tun]){ schon[W.tun]=true; return W.tun; }
   }
-  return 'Was hier läuft, läuft wie in den Bereichen darüber — '+
-         'auf der Bereichsseite steht, was es hier bedeutet.';
+  return AC_BDAT.LEER.tunWieOben;
 }
 
 function lautesterBereich(){

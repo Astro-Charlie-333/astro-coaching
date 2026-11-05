@@ -8,6 +8,11 @@ Wer das verletzt, kommt nicht durch den Bau.
 """
 import pathlib, re, sys, subprocess, json
 
+# Die gemeinsamen Prüfungen. Sie stehen in rituale/pruefwerk.py an
+# einer Stelle, nicht je bau-*.py eine eigene Fassung (AUFGABEN 33).
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / 'rituale'))
+import pruefwerk
+
 hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
@@ -373,7 +378,10 @@ if not m_leer:
 else:
     lblk = klammerblock(daten, m_leer.end() - 1)
     for name, mind in (('keinVorgang', 100), ('keinFenster', 25),
-                       ('tun', 100), ('nutzen', 60), ('natalLeer', 120)):
+                       ('tun', 100), ('nutzen', 60), ('natalLeer', 120),
+                       # Der Verweis nach oben stand bis zum 5.11. in
+                       # heute-app.js und wurde von keiner Prüfung gelesen.
+                       ('tunWieOben', 60)):
         v = feld(lblk, name)
         if not v:
             fehler.append(f'B_LEER.{name} fehlt')
@@ -383,7 +391,8 @@ else:
         lay_texte.append((f'B_LEER.{name}', v))
     # Fehlerklasse: derselbe Platzhalter stand in app und in daten.
     # Steht er noch in app, laufen zwei Fassungen auseinander.
-    for name in ('keinVorgang', 'keinFenster', 'tun', 'nutzen', 'natalLeer'):
+    for name in ('keinVorgang', 'keinFenster', 'tun', 'nutzen',
+                 'natalLeer', 'tunWieOben'):
         v = feld(lblk, name)
         if v and v[:40] in app:
             fehler.append(f'B_LEER.{name} steht wörtlich auch in bereich-app.js '
@@ -1077,6 +1086,13 @@ for wo, text in lay_texte:
             fehler.append(f'{n} Verneinungen in einem Satz ({wo}) — der Satz sagt vor allem, '
                           f'was er nicht meint: "{satz[:90]}…"')
 
+# 2a · Ein Handgriff verspricht nichts — die gemeinsame Regel.
+#      Sie liegt in rituale/pruefwerk.py, weil „Heute" dieselben
+#      Handgriffe zeigt und dieselbe Prüfung braucht. Die Regel wird
+#      dort gegen feste Beispiele gehalten (REGELN.md 6e), also schlägt
+#      sie an der Regel fehl und nicht an der Seite des Tages.
+fehler += pruefwerk.pruefe_handgriffe(daten)
+
 # 3 · Ein Handgriff ist eine Handlung. Fängt er mit einer Verneinung
 #     an, verbietet er etwas, statt etwas zu sagen.
 for wo, text in lay_texte:
@@ -1228,7 +1244,7 @@ const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
   doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
   folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,techJeBereich:[],
-  nach:[],gespr:[],grenze:[],
+  nach:[],gespr:[],grenze:[],tunGezeichnet:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
   wahl:{knoepfe:0,alleAn:'',tipp:''},
   einer:{bereiche:0,ueber:0,name:'',tipp:'',gespeichert:[],eigenerSchluessel:[]},
@@ -1320,6 +1336,15 @@ notiz.doppelt=[].concat(...Object.values(await proBereich(()=>{
   });
   return raus;
 })));
+
+/* Was unter „Was du tun kannst" wirklich auf der Seite steht.
+   An den Daten gemessen reicht nicht: Ein Handgriff kann auch aus
+   einer Anzeige kommen, die ihren Satz selbst mitbringt — dann steht
+   er in keiner Datendatei (AUFGABEN 33). Hier zählt, was ein Mensch
+   vor sich hat. */
+notiz.tunGezeichnet=[...new Set([].concat(...Object.values(
+  await proBereich(()=>[...document.querySelectorAll('.b-tun, .b-tat')]
+    .map(x=>(x.innerText||'').trim()).filter(s=>s.length>20)))))];
 
 /* Die Facetten müssen vom Chart sortiert sein, nicht von der
    Textdatei. Prüfung: zwei verschiedene Geburtsbilder dürfen nicht
@@ -1770,6 +1795,13 @@ else:
                           'Markenleiste — der Sprung sieht aus, als hätte er nicht gegriffen')
         if a['hoehe'] > 9000:
             fehler.append(f"die Seite ist {a['hoehe']} Pixel hoch — da sieht niemand durch")
+
+        # Dieselbe Regel wie auf den Daten, am gezeichneten Ergebnis.
+        if not n['tunGezeichnet']:
+            fehler.append('kein einziger Handgriff auf der gezeichneten Seite '
+                          '— dann prüft die Regel darunter ins Leere')
+        fehler += pruefwerk.pruefe_gezeichnete_handgriffe(
+            n['tunGezeichnet'], '„Bereiche"')
 
         if n['doppelt']:
             fehler.append('derselbe Satz steht zweimal in einem Bereich: '

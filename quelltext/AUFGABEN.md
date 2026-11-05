@@ -27,24 +27,6 @@ Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 33 · Aufgabe 17 greift zu kurz: der Preissatz steht auch in den Bereichen
-Befund der Prüferin vom 2026-10-30 (zweiter Befund). „Was du in diesem
-Fenster nicht fragst, musst du später teurer verhandeln" steht auf
-`bereiche.html` in fünf von zehn Bereichen, „Was dabei wegbricht, hat nur
-so ausgesehen, als trüge es" in zwei weiteren — zusammen sieben von zehn,
-sichtbar auf Stufe 0 ohne Aufklappen. Dieselbe Fehlerklasse wie Aufgabe
-17, aber 17 ist auf „Heute" zugeschnitten („kein Handgriff auf „Heute"",
-Prüfung in `bau-heute.py`). So gefasst bleibt die Seite mit der größeren
-Reichweite stehen. Gehört mit 17 in einen Zug; zweimal anfassen wäre
-doppelte Arbeit.
-**Fertig, wenn:** kein Handgriff auf „Heute" **und** keiner in den
-Bereichen eine Folge in der Zukunft behauptet oder einen Preis auf
-Nichthandeln setzt, die Handgriffe dafür nur an einer Stelle in den Daten
-geändert werden mussten, und eine gemeinsame Prüfung — nicht je
-`bau-*.py` eine eigene — abbricht, sobald ein Handgriff eine Zukunftsform
-mit Folge oder ein Wort wie „teurer", „musst du später" oder „sonst"
-enthält.
-
 ### 34 · Dieselbe Prüfung fehlt in den anderen Anzeigen
 Gefunden beim Erledigen von Aufgabe 9 am 31.10. `bereich-app.js` ist jetzt
 satzfrei und wird darauf geprüft; `wahl-app.js` wird seit dem 22.10. lose
@@ -116,6 +98,23 @@ einem zugeklappten Element" an einer Stelle steht, die alle
 `bau-*.py` benutzen, jede rechnende Seite sie besteht, und ein in eine
 Klappe geschobener Grenzsatz in jeder dieser Seiten den Bau abbricht —
 gemessen am gezeichneten Ergebnis, nicht an den Daten.
+
+### 41 · Die Handgriffregel liest nur Felder, die „tun" heißen
+Gefunden beim Erledigen von Aufgabe 33 am 5.11. Die gemeinsame Regel in
+`rituale/pruefwerk.py` sammelt die Handgriffe über den Feldnamen ein
+(`tun`, `tunWieOben`). Auf der Seite steht aber noch ein zweiter Satz
+unter der Zeile „Ein Handgriff dazu:": `tief-bauer.js` setzt dort
+`B_BER[*].meistern` und `B_FACET[*].meistern` ein — zweiundsechzig
+Texte, die als Handgriff ausgeliefert und von der Regel nicht gelesen
+werden. Heute gehen alle zweiundsechzig durch; das ist Glück und keine
+Prüfung. Dieselbe Fehlerklasse wie in `REGELN.md` Abschnitt 6f: Die
+Sperre sitzt am Feldnamen, der Satz hängt aber an der Stelle, an der er
+erscheint.
+**Fertig, wenn:** jeder Text, der auf einer Seite unter „Ein Handgriff
+dazu:" oder „Was du tun kannst" landet, durch `handgriff_tadel` geht —
+unabhängig davon, wie sein Feld heißt —, die Zuordnung an einer Stelle
+steht und nicht je Datei, und ein Preissatz in `meistern` den Bau
+abbricht, geprüft am gezeichneten Ergebnis.
 
 ---
 
@@ -225,6 +224,11 @@ die Aussage rechnerisch ist, dass die Deutung nicht überprüft ist, dass
 das eigene Erleben Vorrang hat), beides aus den Datendateien kommt, und
 der Bau abbricht, wenn der Abschnitt fehlt oder ein Handgriff eine
 Zukunftsform mit Folge enthält.
+
+**Die Handgriffe sind seit dem 5.11. erledigt** (Aufgabe 33): Sie liegen
+an einer Stelle in `bereich-daten.js`, und `rituale/pruefwerk.py` bricht
+den Bau ab, sobald einer eine Folge in der Zukunft behauptet. Offen
+bleibt hier nur noch der Ehrlichkeitsabschnitt auf „Heute".
 
 ### 18 · Die Startseite ohne Profil sagt nicht, wofür sie da ist
 Befund der Prüferin vom 2026-10-23 (Die Suchende, zweiter Befund). Wer
@@ -470,6 +474,36 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-05** · Ein Handgriff verspricht nichts mehr — und die Regel
+  dafür steht an einer Stelle (Aufgabe 33). Unter „Was du tun kannst"
+  stand in sieben von zehn Bereichen und im Kurzblick auf „Jetzt" ein
+  Satz, der eine Zukunft behauptet und einen Preis darauf setzt: „Was du
+  in diesem Fenster nicht fragst, musst du später teurer verhandeln",
+  „Was dabei wegbricht, hat nur so ausgesehen, als trüge es", „Die
+  Kraft, die das Festhalten kostet, brauchst du nachher". `PRODUKT.md` 5
+  schließt beides aus. Vier Handgriffe sind umgeschrieben, und zwar an
+  **einer** Stelle: Beide Seiten holen sie aus `B_WAND[*].tun` und
+  `B_LEER` in `bereich-daten.js`. `heute-app.js` brachte zwei eigene
+  Sätze mit — die liegen jetzt auch dort (`LEER.tun`,
+  `LEER.tunWieOben`), weil ein Satz im Bauwerk von keiner Prüfung
+  gelesen wird.
+  Die dauerhafte Prüfung steht neu in `rituale/pruefwerk.py`, nicht je
+  `bau-*.py` eine eigene: `handgriff_tadel` kennt drei Formen — ein
+  Preis auf das Nichthandeln („Was du … nicht …, musst du …", „teurer",
+  „sonst"), eine Folge jenseits des Fensters (eine Zeitverschiebung und
+  eine Behauptung darüber, was dann ist) und eine Vorhersage darüber,
+  was der Handgriff hervorbringt („Was dabei …"). Fünfzehn feste
+  Beispiele laufen beim Import, nach `REGELN.md` 6e — sieben, die
+  anschlagen müssen, acht, die durchgehen müssen, darunter der
+  Vergleich „leichter als sonst" und die Aufzählung „was sonst noch
+  läuft". `bau-bereiche.py` und `bau-heute.py` prüfen damit die Daten
+  **und** das gezeichnete Ergebnis.
+  Die Probe dagegen, dreimal: der Preissatz zurück in die Daten, und
+  beide Bauten brechen ab — an den Daten und an der Seite. Ein eigener
+  Satz zurück in `handgriff()`, und `bau-heute.py` bricht zweimal ab:
+  einmal, weil die Anzeige einen Satz zurückgibt, der in keiner
+  Datendatei steht, einmal an dem Satz selbst.
 
 * **2026-11-04** · Die Grenze steht offen, nicht hinter einem Klick
   (Aufgabe 32). „Hier wird nichts über deinen Körper festgestellt, und

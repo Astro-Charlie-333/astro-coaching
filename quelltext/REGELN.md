@@ -171,6 +171,24 @@ Darin steht mindestens:
 
 Ein Bau, der fehlschlägt, liefert nicht aus. `sys.exit(1)`.
 
+### Eine Prüfung, die zwei Seiten angeht, steht in `rituale/pruefwerk.py`
+
+Seit dem 5.11. gibt es einen gemeinsamen Ort für Prüfungen, die mehr als
+eine Seite betreffen. Vorher stand dieselbe Regel in jedem `bau-*.py`
+einzeln — und war damit in fünf von sechs Ordnern veraltet, sobald sie
+einmal verschärft wurde.
+
+```python
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / 'rituale'))
+import pruefwerk
+fehler += pruefwerk.pruefe_handgriffe(daten)
+```
+
+Die festen Beispiele einer Regel stehen als `assert` **in** dieser Datei
+und laufen beim Import, also bevor die erste Seite gebaut wird
+(Abschnitt 6e). Wer eine Regel verschärft, verschärft sie für alle
+Seiten auf einmal und merkt sofort, wenn sie zu weit greift.
+
 ### Die goldene Regel für Fehler
 
 > Jeder gemeldete Fehler wird mit einer dauerhaften Prüfung beantwortet,
