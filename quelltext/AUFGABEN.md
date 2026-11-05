@@ -116,6 +116,28 @@ unabhängig davon, wie sein Feld heißt —, die Zuordnung an einer Stelle
 steht und nicht je Datei, und ein Preissatz in `meistern` den Bau
 abbricht, geprüft am gezeichneten Ergebnis.
 
+### 42 · Die Selbstübernahme schluckt einen zweiten Commit
+Gefunden am 5.11. Pull Request #54 ging mit einem Commit auf, die
+Selbstübernahme wurde beim Öffnen scharfgeschaltet, und als die Prüfung
+grün war, hat sie zusammengefasst und übernommen — drei Minuten später.
+Ein zweiter Commit, der in dieser Zeit auf denselben Zweig gepusht
+wurde, war danach **nicht** auf `main`: Die Zusammenfassung lief auf dem
+Stand, den die Prüfung gesehen hatte. Der Push ist durchgegangen, die
+Übernahme hat nichts gemeldet, und auf `main` fehlte Arbeit, die als
+abgeliefert galt. Nur weil der Arbeitsbaum danach noch schmutzig war,
+ist es aufgefallen.
+Das ist keine Fehlbedienung, sondern die Bauart: `REGELN.md` 6c schaltet
+die Übernahme beim Öffnen scharf, damit sie das Zeitfenster trifft — und
+genau deshalb kann sie zuschlagen, während noch gearbeitet wird. Wer
+nachträglich etwas auf einen offenen Aufgabenzweig pusht, muss damit
+rechnen, dass es verschwindet.
+**Fertig, wenn:** entweder die Selbstübernahme einen Zweig stehen lässt,
+dessen Spitze die geprüfte Fassung nicht ist, oder `REGELN.md` 6c in
+einem Satz sagt, dass ein Aufgabenzweig nach dem Öffnen des Pull
+Requests nicht mehr angefasst wird und Nachträge einen eigenen Pull
+Request brauchen — und ein Lauf, der das verletzt, beim Abliefern
+auffällt statt hinterher.
+
 ---
 
 ## Was nicht gemacht wird
@@ -426,21 +448,6 @@ wörtlich gleiche Absätze ab einer bestimmten Länge vergleicht, die
 bekannten und gewollten Dopplungen namentlich eingetragen sind, und eine
 neue Dopplung den Bau bricht.
 
-### 35 · Die Symbole im Repo sind nicht die, die der Bau erzeugt
-Gefunden beim Erledigen von Aufgabe 19 am 2.11. `bau-app.py` erzeugt
-`symbol-180.png`, `symbol-192.png`, `symbol-512.png` und
-`symbol-maskierbar-512.png` jedes Mal bitgleich — aber anders als die
-vier Dateien, die im Repo liegen. Jeder vollständige Lauf von
-`pruefe-alles.py` macht den Arbeitsbaum damit schmutzig, und zwar an
-Dateien, die mit der Aufgabe des Tages nichts zu tun haben. Wer das nicht
-weiß, nimmt sie in seinen Pull Request mit oder wirft sie weg — beides
-blind. Vermutlich wurden sie einmal mit einer anderen Bibliotheksfassung
-gebaut.
-**Fertig, wenn:** ein frischer Lauf von `pruefe-alles.py` auf `main` keine
-geänderte Datei hinterlässt, die vier Symbole also dem entsprechen, was
-der Bau hier erzeugt — und `bau-app.py` abbricht, wenn ein ausgeliefertes
-Symbol von dem abweicht, das es gerade gebaut hat.
-
 ### 36 · Die Herrscherliste steht zehnmal im Quelltext
 Gefunden beim Erledigen von Aufgabe 19 am 2.11., als eine elfte Kopie
 dazugekommen wäre. `['Mars','Venus','Merkur','Mond','Sonne','Merkur',
@@ -474,6 +481,29 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-05** · Ein vollständiger Lauf lässt die vier Symbole in Ruhe
+  (Aufgabe 35). Jeder Lauf hat den Arbeitsbaum an diesen vier Dateien
+  schmutzig gemacht, obwohl sie mit der Aufgabe des Tages nichts zu tun
+  hatten — wer das nicht wusste, nahm sie blind mit oder warf sie blind
+  weg.
+  Der erste Versuch war falsch und ist auf GitHub rot geworden: Ich habe
+  die hier gebauten Bytes eingecheckt, in der Annahme, die Dateien im
+  Repo seien veraltet. Der Bauserver hat dann genau die alten Bytes
+  erzeugt und die neuen abgelehnt. Die Ursache ist nicht das Bild,
+  sondern der Packer — `zlib.compress` liefert je nach Fassung andere
+  Bytes bei bitgleichen Bildpunkten, hier zlib-ng, dort das gewöhnliche
+  zlib. Die Dateien im Repo waren immer richtig.
+  `bau-app.py` überschreibt ein ausgeliefertes Symbol jetzt nicht mehr,
+  sondern vergleicht Kopf und Bildpunkte (`png_pixel`, beide Seiten durch
+  dieselbe Funktion). Damit ist die geprüfte Form die gemeinte — das
+  Bild, nicht der Packer, `REGELN.md` 6e — und der Lauf lässt die
+  Dateien in jeder Umgebung in Ruhe. `--symbole-neu` bleibt der Weg für
+  eine absichtliche Gestaltungsänderung.
+  Die Probe dagegen, in beide Richtungen: dieselben Bildpunkte mit
+  anderer Packstufe geschrieben (5.821 statt 3.967 Bytes) gehen durch;
+  ein einziger geänderter Bildpunkt bricht den Bau ab. Die erste Hälfte
+  ist der Fehler, den die Bytefassung gemacht hat.
 
 * **2026-11-05** · Ein Handgriff verspricht nichts mehr — und die Regel
   dafür steht an einer Stelle (Aufgabe 33). Unter „Was du tun kannst"
