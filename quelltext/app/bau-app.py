@@ -92,8 +92,34 @@ def symbol(groesse, maskierbar=False):
 
 SYMBOLE = [('symbol-192.png', 192, False), ('symbol-512.png', 512, False),
            ('symbol-180.png', 180, False), ('symbol-maskierbar-512.png', 512, True)]
+# Fehlerklasse vom 2.11. (AUFGABEN 35): Die vier Symbole im Repo waren
+# nicht die, die dieser Bau erzeugt — vermutlich einmal mit einer anderen
+# Bibliotheksfassung gebaut. Jeder vollständige Lauf hat den Arbeitsbaum
+# damit an Dateien schmutzig gemacht, die mit der Aufgabe des Tages nichts
+# zu tun hatten, und wer das nicht wusste, nahm sie blind in seinen Pull
+# Request mit oder warf sie blind weg.
+#
+# Die Rechnung ist bitgleich, also ist eine Abweichung immer eine
+# Nachricht: Entweder hat sich die Gestaltung geändert — dann sagt man
+# das mit --symbole-neu — oder die Umgebung baut anders als die, aus der
+# die ausgelieferten Dateien stammen. Beides will man wissen, und beides
+# sieht man nicht, wenn der Bau die Datei einfach überschreibt.
+symbole_neu = '--symbole-neu' in sys.argv
 for name, groesse, maskierbar in SYMBOLE:
-    (wiki / name).write_bytes(symbol(groesse, maskierbar))
+    gebaut = symbol(groesse, maskierbar)
+    datei = wiki / name
+    if not datei.exists() or symbole_neu:
+        datei.write_bytes(gebaut)
+        continue
+    if datei.read_bytes() != gebaut:
+        fehler.append(
+            f'{name} weicht von dem ab, was der Bau hier erzeugt '
+            f'({len(datei.read_bytes())} statt {len(gebaut)} Bytes). '
+            'Ist die Gestaltung absichtlich geändert: einmal mit '
+            '--symbole-neu bauen und die vier Dateien mit einchecken. '
+            'Sonst baut diese Umgebung anders als die, aus der die '
+            'ausgelieferten Symbole stammen — dann gehört das geklärt '
+            'und nicht überschrieben.')
 
 # ── Manifest ──────────────────────────────────────────────────
 manifest = {
