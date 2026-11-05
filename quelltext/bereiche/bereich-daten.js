@@ -167,7 +167,7 @@
     Pluto: {
       was:'Etwas verwandelt sich von Grund auf. Nicht ein Teil davon — das Ganze. Am Anfang merkt man nur, dass das Alte nicht mehr geht; was stattdessen kommt, zeigt sich erst später.',
       tempo:'Das arbeitet über Jahre und kommt meist in zwei oder drei Wellen.',
-      tun:'Lass gehen, was ohnehin geht. Die Kraft, die das Festhalten kostet, brauchst du nachher.',
+      tun:'Lass gehen, was ohnehin geht. Festhalten kostet hier gerade mehr Kraft als Loslassen.',
       nutzen:'Das ist das Fenster für eine Sache, die du schon lange ändern willst und bisher nie durchgezogen hast. Der Widerstand dagegen ist jetzt am schwächsten.',
       tech:'Pluto'
     },
@@ -188,14 +188,14 @@
     Saturn: {
       was:'Etwas wird ernst. Es verlangt eine Entscheidung, eine Grenze oder eine Rechnung, die offen ist. Es fühlt sich schwer an, und was dabei herauskommt, hält.',
       tempo:'Rund ein halbes bis ein ganzes Jahr, in zwei oder drei Anläufen.',
-      tun:'Nimm dir die Sache vor, die du aufschiebst. Was dabei wegbricht, hat nur so ausgesehen, als trüge es.',
+      tun:'Nimm dir die Sache vor, die du aufschiebst. Eine reicht, und sie darf klein sein.',
       nutzen:'Das beste Fenster für etwas Verbindliches: eine Zusage, ein Vertrag, eine Struktur, eine Absage. Gerade weil es schwerfällt, hält es nachher.',
       tech:'Saturn'
     },
     Jupiter: {
       was:'Etwas wird größer und leichter. Türen gehen auf, Menschen sagen ja, und es kostet weniger Überredung als üblich.',
       tempo:'Rund ein Jahr, mit einer deutlichen Spitze darin.',
-      tun:'Fragen. Jetzt. Was du in diesem Fenster nicht fragst, musst du später teurer verhandeln.',
+      tun:'Frag nach dem, was du willst, und nenne es beim Namen. Zustimmung kostet dieser Tage weniger Überredung als üblich.',
       nutzen:'Das Fenster zum Ausweiten: anbieten, bewerben, veröffentlichen, vorstellen, mehr verlangen.',
       tech:'Jupiter'
     },
@@ -481,8 +481,9 @@
   var B_LEER = {
     keinVorgang:'Hier zieht gerade nichts an dir. So ist es die meiste Zeit und an den meisten Stellen des Lebens — es brennt selten überall auf einmal.',
     keinFenster:'Nichts, was in nächster Zeit zu Ende geht.',
-    tun:'Fang hier selbst etwas an. Von außen kommt gerade kein Anstoß, und genau das ist die Gelegenheit: Du hast freie Hand und baust in Ruhe, was später tragen soll.',
+    tun:'Fang hier selbst etwas an. Von außen kommt gerade kein Anstoß — du hast freie Hand, musst dich mit niemandem abstimmen und arbeitest in deinem Tempo.',
     nutzen:'Nimm die Ruhe für das, was später Kraft kostet: vorbereiten, sortieren, den Termin machen.',
+    tunWieOben:'Was hier läuft, läuft wie in den Bereichen darüber. Auf der Bereichsseite steht, was es an dieser Stelle bedeutet.',
     natalLeer:'Hier ist dir nichts in die Wiege gelegt. Es zieht dich von selbst woandershin, und was an dieser Stelle entsteht, entsteht, weil du es machst. Das kostet mehr Absicht und wird dafür wirklich deins.'
   };
 

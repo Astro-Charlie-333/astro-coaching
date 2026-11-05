@@ -4,3 +4,7 @@ quelltext/wiki
 
 # Playwright, von der Prüfung installiert.
 node_modules/
+
+# Von den gemeinsamen Prüfungen (rituale/pruefwerk.py) angelegt, sobald
+# ein bau-*.py sie importiert. Erzeugnis, kein Quelltext.
+__pycache__/
