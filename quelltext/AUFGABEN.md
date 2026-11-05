@@ -116,6 +116,28 @@ unabhängig davon, wie sein Feld heißt —, die Zuordnung an einer Stelle
 steht und nicht je Datei, und ein Preissatz in `meistern` den Bau
 abbricht, geprüft am gezeichneten Ergebnis.
 
+### 42 · Die Selbstübernahme schluckt einen zweiten Commit
+Gefunden am 5.11. Pull Request #54 ging mit einem Commit auf, die
+Selbstübernahme wurde beim Öffnen scharfgeschaltet, und als die Prüfung
+grün war, hat sie zusammengefasst und übernommen — drei Minuten später.
+Ein zweiter Commit, der in dieser Zeit auf denselben Zweig gepusht
+wurde, war danach **nicht** auf `main`: Die Zusammenfassung lief auf dem
+Stand, den die Prüfung gesehen hatte. Der Push ist durchgegangen, die
+Übernahme hat nichts gemeldet, und auf `main` fehlte Arbeit, die als
+abgeliefert galt. Nur weil der Arbeitsbaum danach noch schmutzig war,
+ist es aufgefallen.
+Das ist keine Fehlbedienung, sondern die Bauart: `REGELN.md` 6c schaltet
+die Übernahme beim Öffnen scharf, damit sie das Zeitfenster trifft — und
+genau deshalb kann sie zuschlagen, während noch gearbeitet wird. Wer
+nachträglich etwas auf einen offenen Aufgabenzweig pusht, muss damit
+rechnen, dass es verschwindet.
+**Fertig, wenn:** entweder die Selbstübernahme einen Zweig stehen lässt,
+dessen Spitze die geprüfte Fassung nicht ist, oder `REGELN.md` 6c in
+einem Satz sagt, dass ein Aufgabenzweig nach dem Öffnen des Pull
+Requests nicht mehr angefasst wird und Nachträge einen eigenen Pull
+Request brauchen — und ein Lauf, der das verletzt, beim Abliefern
+auffällt statt hinterher.
+
 ---
 
 ## Was nicht gemacht wird
