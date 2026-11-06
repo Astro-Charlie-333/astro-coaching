@@ -1,7 +1,23 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Die Häuser</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
+<title>Die 12 H&auml;user &middot; Lebensb&uuml;hnen, Achsen, Systeme &middot; Astro-Charlie</title>
+<meta name="description" content="Die zwölf Lebensbereiche mit ihrer Frage, die sechs Paare und wo bei dir viel los ist.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="begriffe.js" defer></script>
+<script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -121,56 +137,523 @@ a{color:var(--nacht);}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
-/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
-   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
-@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
-/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
-   nach der Raster- und Flexspalten ihre Breite berechnen. */
-</style><script src="begriffe.js" defer></script>
-<script src="niveau.js" defer></script>
-<script src="wortwahl.js" defer></script>
+
+/* Häuserseite. Farben aus der SCHWERKRAFT-Palette wie die Mondseite.
+   Das Rad ist das Bild der Seite; Karten darunter, Paare als Waage. */
+.hz-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left,0px)) 80px max(18px,env(safe-area-inset-right,0px))}
+.hz-kopf{padding:52px 0 8px;display:grid;gap:12px}
+.hz-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.hz-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.08;color:#2E3A5C;margin:0;letter-spacing:-.01em}
+.hz-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
+.hz-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
+.hz-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:8px 0 0}
+.hz-text{margin:0;max-width:64ch;line-height:1.6}
+.hz-klein{font-size:.88rem;color:#6B6259;margin:0}
+.hz-teil{padding-top:60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.hz-teil>*{min-width:0}
+.hz-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem}
+.hz-profil a,.hz-wrap a{color:#2E3A5C}
+
+.hz-rad-box{max-width:420px;width:100%;margin:0 auto}
+.hz-rad-box svg{width:100%;height:auto;display:block}
+.hz-rad-box g[role=button]{cursor:pointer}
+.hz-rad-box g[role=button]:focus{outline:none}
+.hz-rad-box g[role=button]:focus-visible path{stroke:#9A7235;stroke-width:3}
+
+.hz-buehnen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+.hz-buehne{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer}
+.hz-buehne.voll{border-color:#D9C29A}
+.hz-buehne.an{border:2px solid #2E3A5C;padding:15px}
+.hz-nr{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:2rem;color:#9A7235;line-height:1}
+.hz-inh{display:grid;gap:5px;min-width:0}
+.hz-inh h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:#2E3A5C;margin:0}
+.hz-inh p{margin:0;font-size:.93rem;line-height:1.5}
+.hz-tech{font-family:'JetBrains Mono',monospace;font-size:.72rem!important;color:#9A7235}
+.hz-stich{color:#6B6259;font-size:.86rem!important}
+.hz-frage{font-style:italic;color:#2E3A5C;border-left:2px solid #9A7235;padding-left:10px}
+.hz-bei{font-size:.86rem!important;color:#7A5A27;background:#F5ECDD;border-radius:8px;padding:6px 9px}
+.hz-buehne:not(.voll) .hz-bei{background:#F0EDE9;color:#6B6259}
+.hz-bei-tech{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;color:#6B6259}
+
+.hz-ecken{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.hz-ecken div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:2px}
+.hz-ecken b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:#2E3A5C}
+.hz-ecken span{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#9A7235}
+.hz-ecken p{margin:4px 0 0;font-size:.9rem}
+
+.hz-achsen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px}
+.hz-achse{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.hz-achse h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.hz-achse p{margin:0;font-size:.93rem;line-height:1.5}
+.hz-waage{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:6px;align-items:stretch}
+.hz-waage .s{border-radius:10px;padding:10px;background:#F0EDE9;display:grid;gap:2px;text-align:center}
+.hz-waage .s.voll{background:#F5ECDD;box-shadow:inset 0 -3px 0 #9A7235}
+.hz-waage .s b{font-size:.88rem;font-weight:600;color:#2E3A5C;line-height:1.25}
+.hz-waage .s span{font-family:'Fraunces',Georgia,serif;font-size:1.3rem;color:#9A7235}
+.hz-waage .mitte{display:grid;place-items:center;color:#9A7235;font-size:1.2rem}
+.hz-achse .prinzip{color:#3C352E}
+.hz-achse .hz-bei{font-size:.9rem;color:#7A5A27;background:#F5ECDD;border-radius:8px;padding:8px 10px}
+.hz-achse.keine .hz-bei{background:#F0EDE9;color:#6B6259}
+
+.hz-schritte,.hz-liste{margin:0;padding-left:1.3em;display:grid;gap:8px;line-height:1.55}
+.hz-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.hz-zwei>div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:6px}
+.hz-zwei b{font-family:'Fraunces',Georgia,serif;font-weight:500;color:#2E3A5C;font-size:1.05rem}
+.hz-zwei p{margin:0;font-size:.93rem;line-height:1.5}
+.hz-beispiel{display:grid;gap:10px;background:#FCF7EF;border-radius:14px;padding:16px}
+.hz-beispiel>p{margin:0;line-height:1.55}
+.hz-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.hz-karten div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:4px}
+.hz-karten b{color:#2E3A5C}
+.hz-karten p{margin:0;font-size:.9rem;line-height:1.5}
+.hz-tabbox{overflow-x:auto;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA}
+.hz-tab{border-collapse:collapse;width:100%;font-size:.9rem;min-width:460px}
+.hz-tab th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#6B6259;font-weight:500;padding:9px 10px;border-bottom:1px solid #EBE1D2}
+.hz-tab td{padding:9px 10px;border-bottom:1px solid #F0EAE0}
+.hz-quiz{display:grid;gap:12px}
+.hz-q{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:10px}
+.hz-q>p{margin:0;font-weight:500}
+.hz-opts{display:grid;gap:6px}
+.hz-opts button{font:inherit;text-align:left;border:1px solid #EBE1D2;background:#FCF7EF;border-radius:10px;padding:9px 12px;cursor:pointer;color:inherit}
+.hz-opts button.richtig{background:#EAF2EC;border-color:#3F7352}
+.hz-opts button.falsch{background:#F6E6E1;border-color:#8C4A3C}
+.hz-expl{margin:0;font-size:.92rem;line-height:1.5;color:#3C352E}
+
+.hz-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.hz-ehrlich p{margin:0}
+.hz-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;margin-top:28px}
+.hz-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.hz-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+body.niv-0 .hz-weiter a[data-ab="1"]{display:none}
+.hz-wrap [hidden]{display:none!important}
+.hz-wrap a:focus-visible,.hz-wrap button:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+</style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
-<div class="wrap">
-<a class="back" href="grundlagen.html">&larr; Grundlagen</a>
-<div class="eyebrow">Grundlagen · Baustein 3</div>
-<h1>Die 12 <em>Häuser.</em></h1>
-<p class="lede">Die Häuser zeigen das WO — die Lebensbereiche, in denen die Planeten wirken. Das Rad des Lebens.</p>
-<div class="tip"><b>Alles auf einer Seite:</b> Unter <a href="bausteine.html">Die Bausteine</a> stehen Planeten, Zeichen und Häuser zusammen — mit Rad zum Antippen, Schattenseiten und deiner eigenen Stellung zu jedem Eintrag. Diese Seite hier bleibt als ausführliche Einzeldarstellung.</div>
-<div class="tip"><b>Die Häuser sind das WO</b> — in welchem Lebensbereich sich ein Planet auswirkt. Sie entstehen aus der genauen Geburtszeit (darum ist die Uhrzeit so wichtig).</div>
-<h2>Die 12 Häuser</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">1</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">1. Haus — Selbst</b><br><span style="font-size:13.5px;color:var(--soft);">Wer du bist, dein Auftreten, dein Körper. Der Aszendent.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">2</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">2. Haus — Werte & Besitz</b><br><span style="font-size:13.5px;color:var(--soft);">Geld, Selbstwert, Ressourcen, was dir wichtig ist.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">3</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">3. Haus — Kommunikation</b><br><span style="font-size:13.5px;color:var(--soft);">Denken, Reden, Lernen, Geschwister, nahes Umfeld.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">4</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">4. Haus — Zuhause & Wurzeln</b><br><span style="font-size:13.5px;color:var(--soft);">Familie, Herkunft, Heimat, inneres Fundament. Der IC.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">5</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">5. Haus — Kreativität & Liebe</b><br><span style="font-size:13.5px;color:var(--soft);">Selbstausdruck, Romantik, Spiel, Kinder, Freude.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">6</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">6. Haus — Alltag & Gesundheit</b><br><span style="font-size:13.5px;color:var(--soft);">Arbeit, Routine, Körper, Dienst, das Praktische.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">7</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">7. Haus — Beziehung</b><br><span style="font-size:13.5px;color:var(--soft);">Partnerschaft, das Du, enge Bindung. Der Deszendent.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">8</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">8. Haus — Tiefe & Wandlung</b><br><span style="font-size:13.5px;color:var(--soft);">Intimität, Krisen, Transformation, geteilte Ressourcen.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">9</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">9. Haus — Sinn & Weite</b><br><span style="font-size:13.5px;color:var(--soft);">Philosophie, Reisen, Glaube, Studium, Horizont.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">10</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">10. Haus — Berufung</b><br><span style="font-size:13.5px;color:var(--soft);">Beruf, Wirken, Ruf, Lebensziel. Der MC.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">11</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">11. Haus — Gemeinschaft</b><br><span style="font-size:13.5px;color:var(--soft);">Freunde, Netzwerke, Gruppen, Zukunft, Visionen.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="width:32px;height:32px;border-radius:8px;background:var(--water);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;flex-shrink:0;">12</span>
-<div><b style="font-family:Fraunces,serif;font-size:16px;">12. Haus — Rückzug & Seele</b><br><span style="font-size:13.5px;color:var(--soft);">Unbewusstes, Spiritualität, Verborgenes, Rückzug.</span></div></div>
-<div class="tip"><b>Die vier Ecken (Achsen) sind am wichtigsten:</b> 1. Haus (Selbst/Aszendent), 4. Haus (Wurzeln/IC), 7. Haus (Beziehung/Deszendent), 10. Haus (Berufung/MC). Planeten nah an diesen Punkten wirken besonders stark.</div>
-<div class="weiter"><a href="zeichen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Zeichen</span></a><a href="aspekte.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die Aspekte</span></a></div>
-<div class="foot">Grundlagen · Die Häuser · Deine Astro-Lernplattform. Im Whole-Sign-System füllt ein Zeichen genau ein Haus.</div>
-</div></body></html>
+<div class="hz-wrap">
+
+<header class="hz-kopf">
+  <div class="hz-eyebrow">Wissen &middot; Die Bausteine</div>
+  <h1 class="hz-h1">Die zw&ouml;lf Lebensb&uuml;hnen.</h1>
+  <p class="hz-lede">Dein Leben spielt auf zw&ouml;lf B&uuml;hnen: vom eigenen Auftreten &uuml;ber Zuhause und Beziehung bis zum R&uuml;ckzug. Wo bei dir viel los ist, zeigt dein Geburtsbild. Wie die B&uuml;hnen bei dir verteilt sind, h&auml;ngt an der genauen Geburtszeit.</p>
+  <p class="hz-lede ac-tech" data-ab="1">In der Fachsprache hei&szlig;en die B&uuml;hnen H&auml;user. Sie sind das Wo: in welchem Lebensbereich ein Planet wirkt. Diese Plattform rechnet mit Whole Sign, also ein Zeichen pro Haus.</p>
+  <div class="hz-profil" id="hzprofil"></div>
+</header>
+
+<!-- 1 · Die zwölf Bühnen -->
+<section class="hz-teil" id="buehnen" aria-labelledby="hz-h-buehnen">
+  <div class="hz-eyebrow">Die zw&ouml;lf</div>
+  <h2 id="hz-h-buehnen" class="hz-h2">Jede B&uuml;hne mit ihrer Frage</h2>
+  <p class="hz-text">Eine leere B&uuml;hne ist nicht schlecht. Dort l&auml;uft es nur leiser. Wo bei dir etwas steht, liegt Energie und Thema.</p>
+  <div class="hz-rad-box"><svg id="hzrad" viewBox="0 0 400 400" role="group" aria-label="Die zw&ouml;lf B&uuml;hnen als Rad"></svg></div>
+  <div class="hz-buehnen" id="hzbuehnen"></div>
+</section>
+
+<!-- 2 · Die vier Ecken (ab Stufe 1) -->
+<section class="hz-teil ac-tech" data-ab="1" id="ecken" aria-labelledby="hz-h-ecken">
+  <div class="hz-eyebrow">Die vier Ecken</div>
+  <h2 id="hz-h-ecken" class="hz-h2">Wo das Rad am st&auml;rksten ist</h2>
+  <p class="hz-text">Vier Punkte teilen das Rad in Viertel. Planeten nah an ihnen wirken besonders deutlich.</p>
+  <div class="hz-ecken">
+    <div><b>Aszendent</b><span>Beginn des 1. Hauses</span><p>Wie du auftrittst und in Situationen hineingehst.</p></div>
+    <div><b>IC</b><span>Spitze des 4. Hauses</span><p>Wurzeln, Herkunft, das Private.</p></div>
+    <div><b>Deszendent</b><span>Beginn des 7. Hauses</span><p>Was du im Gegen&uuml;ber suchst.</p></div>
+    <div><b>MC</b><span>Spitze des 10. Hauses</span><p>Wof&uuml;r du nach au&szlig;en stehst.</p></div>
+  </div>
+  <p class="hz-klein">Nach Whole Sign kann das MC auch im 9. oder 11. Haus liegen. Mehr dazu unten unter <a href="#systeme">Whole Sign oder Placidus</a>.</p>
+</section>
+
+<!-- 3 · Die sechs Paare -->
+<section class="hz-teil" id="achsen" aria-labelledby="hz-h-achsen">
+  <div class="hz-eyebrow">Gegen&uuml;ber geh&ouml;rt zusammen</div>
+  <h2 id="hz-h-achsen" class="hz-h2">Sechs Paare wie zwei Waagschalen</h2>
+  <p class="hz-text">Jede B&uuml;hne hat ein Gegen&uuml;ber. Kippt die eine Seite, liegt der Ausgleich auf der anderen.</p>
+  <div class="hz-achsen" id="hzachsen"></div>
+</section>
+
+<!-- 4 · Fürs Reading (ab Stufe 2) -->
+<section class="hz-teil ac-tech" data-ab="2" id="reading" aria-labelledby="hz-h-reading">
+  <div class="hz-eyebrow">F&uuml;r Readings</div>
+  <h2 id="hz-h-reading" class="hz-h2">Mit den H&auml;usern ins Gespr&auml;ch</h2>
+  <ol class="hz-schritte">
+    <li>Frag zuerst, welcher Lebensbereich die Person gerade besch&auml;ftigt. Dann geh zum passenden Haus.</li>
+    <li>Nutze die Frage des Hauses als T&uuml;r&ouml;ffner, nicht als Diagnose.</li>
+    <li>Stehen Planeten im Haus, wird das Thema lebendig. Ist es leer, schau, wo sein Herrscher steht. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
+    <li>Lies das gegen&uuml;berliegende Haus immer mit. Die Achse geh&ouml;rt zusammen.</li>
+  </ol>
+</section>
+
+<!-- 5 · Whole Sign oder Placidus (ab Stufe 2) -->
+<section class="hz-teil ac-tech" data-ab="2" id="systeme" aria-labelledby="hz-h-systeme">
+  <div class="hz-eyebrow">Die Systemfrage</div>
+  <h2 id="hz-h-systeme" class="hz-h2">Whole Sign oder Placidus?</h2>
+  <p class="hz-text">Zwei Systeme, dasselbe Chart, manchmal verschiedene Antworten.</p>
+  <div class="hz-zwei">
+    <div><b>Whole Sign</b><p>Das Zeichen deines Aszendenten ist das ganze 1. Haus, das n&auml;chste Zeichen das 2. und so weiter. Zw&ouml;lf Zeichen, zw&ouml;lf H&auml;user, saubere Deckung. Der Aszendentengrad zeigt nur, wo im ersten Haus du stehst.</p></div>
+    <div><b>Placidus</b><p>Die H&auml;user werden nach der Zeit berechnet, die ein Grad braucht, um vom Horizont zum Meridian zu wandern. Dadurch sind H&auml;user verschieden gro&szlig;, ein Zeichen kann sich &uuml;ber zwei H&auml;user verteilen.</p></div>
+  </div>
+  <p class="hz-text"><b>Die praktische Folge:</b> Nach Whole Sign f&auml;llt das MC nicht automatisch auf die 10. Hausspitze, es kann im 9., 10. oder 11. Haus liegen. Nach Placidus ist das MC per Definition die 10. Spitze. Das ist der h&auml;ufigste Grund, warum dieselbe Person in beiden Systemen verschiedene Berufsaussagen bekommt.</p>
+  <h3 class="hz-h3">Wann es keinen Unterschied macht</h3>
+  <ul class="hz-liste">
+    <li>Bei allem ohne H&auml;user: Zeichen, Aspekte, Orben, Transite nach Grad.</li>
+    <li>Bei Planeten mitten in einem Zeichen, deren Haus in beiden Systemen gleich ausf&auml;llt. Das ist die Mehrheit.</li>
+    <li>Nah am &Auml;quator, wo Placidus-H&auml;user fast gleich gro&szlig; sind. Je weiter n&ouml;rdlich, desto st&auml;rker die Verzerrung. In Berlin, Kyiv oder Stockholm sind Unterschiede die Regel.</li>
+  </ul>
+  <h3 class="hz-h3">Ein Beispiel</h3>
+  <div class="hz-beispiel" id="hzbeispiel"></div>
+  <h3 class="hz-h3">Wenn beide sich widersprechen</h3>
+  <div class="hz-karten">
+    <div><b>Beide notieren, nicht w&auml;hlen</b><p>Ein Planet auf einer Hausgrenze geh&ouml;rt zu beiden Bereichen. Das ist keine Unsch&auml;rfe, das ist die Information.</p></div>
+    <div><b>Die Person fragen</b><p>&bdquo;F&uuml;hlst du dich mehr in Gruppen zuhause oder eher im Beruf?&ldquo; Ihre Antwort entscheidet, nicht dein System.</p></div>
+    <div><b>Best&auml;tigung suchen</b><p>Sagt der Rest des Charts dasselbe? Zwei unabh&auml;ngige Hinweise schlagen jede Systemfrage.</p></div>
+    <div><b>Ein System als Standard</b><p>Wechsle nicht mitten in einer Deutung. Wer je nach Wunschergebnis das System tauscht, deutet nichts mehr.</p></div>
+  </div>
+  <div class="hz-tabbox"><table class="hz-tab">
+    <tr><th>Frage</th><th>Eher Whole Sign</th><th>Eher Placidus</th></tr>
+    <tr><td>Grundthema eines Lebensbereichs</td><td>klar und ganzheitlich</td><td>&ndash;</td></tr>
+    <tr><td>Transite &uuml;ber Hausspitzen</td><td>&ndash;</td><td>feiner aufgel&ouml;st</td></tr>
+    <tr><td>Traditionelle Techniken, Profektionen</td><td>daf&uuml;r gebaut</td><td>&ndash;</td></tr>
+    <tr><td>Aszendent und MC als genaue Punkte</td><td>&ndash;</td><td>Achsen sind Spitzen</td></tr>
+    <tr><td>Geburtsorte in hohen Breiten</td><td>stabil</td><td>stark verzerrt</td></tr>
+  </table></div>
+  <h3 class="hz-h3">&Uuml;bung</h3>
+  <div class="hz-quiz" id="hzquiz"></div>
+</section>
+
+<section class="hz-ehrlich" aria-labelledby="hz-h-ehrlich">
+  <h2 id="hz-h-ehrlich" class="hz-h3">Was gerechnet ist und was Deutung</h2>
+  <p>Wo bei dir etwas steht, rechnet dein Browser aus dem aktiven Profil. Gespeichert wird dabei nichts Neues. Was &uuml;ber Bedeutung dasteht, ist &Uuml;berlieferung und eine Einladung zum Nachdenken, kein Befund.</p>
+</section>
+
+<nav class="hz-weiter" aria-label="Weiterlesen">
+  <a href="haeuser-karte.html"><span>Als Bild</span>Die &Uuml;bersicht als Rad</a>
+  <a href="zeichen.html"><span>Baustein</span>Die 12 Zeichen</a>
+  <a href="herrscher.html" data-ab="1"><span>Vertiefung</span>Herrscher &amp; Dispositoren</a>
+</nav>
+
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* Texte der Häuserseite. Zusammengelegt am 6.11.2026 aus haeuser.html,
+   haeuser-lebensbuehnen.html, haus-achsen.html und haeusersysteme.html.
+
+   Was hier NICHT mehr steht: haus-achsen.html hatte unter „Dein Chart"
+   eine feste Deutung eines einzelnen Geburtsbilds, die jede Besucherin
+   als ihre eigene las. „Bei dir" wird jetzt aus dem aktiven Profil
+   gerechnet (haeuser-app.js), und hier stehen nur Prinzipien. */
+
+/* Die zwölf Bereiche. name: kurz, wie in der Navigation · titel: die
+   Bühne · was: wofür sie steht · stich: Stichworte · frage: zum
+   Nachdenken und als Türöffner im Reading · ecke: Achsenpunkt am Anfang */
+var HZ_HAUS = [
+ {name:'Selbst', titel:'Selbst & Auftreten', was:'Wie du dich zeigst, dein Körper, dein erster Eindruck, dein Ich.',
+  stich:'Auftreten, Körper, Temperament', frage:'Wie trittst du in einen Raum, und passt das zu dem, wer du innen bist?', ecke:'Aszendent'},
+ {name:'Werte', titel:'Werte & Selbstwert', was:'Geld, Besitz, Ressourcen und tiefer: dein Selbstwert, was dir wirklich wichtig ist.',
+  stich:'Geld, Besitz, Talente', frage:'Woran machst du deinen Wert fest, und stimmt das für dich?', ecke:''},
+ {name:'Sprache', titel:'Kommunikation & Umfeld', was:'Denken, Reden, Lernen, Geschwister, dein nahes Alltagsumfeld.',
+  stich:'Denken, Lernen, Geschwister, Nachbarschaft', frage:'Wie sprichst du mit der Welt, und wie mit dir selbst?', ecke:''},
+ {name:'Zuhause', titel:'Wurzeln & Zuhause', was:'Familie, Herkunft, Heimat, dein innerstes Fundament.',
+  stich:'Familie, Herkunft, Wohnen', frage:'Wo fühlst du dich zuhause, bei wem, an welchem Ort in dir?', ecke:'IC'},
+ {name:'Ausdruck', titel:'Liebe & Kreativität', was:'Selbstausdruck, Romantik, Spiel, Freude, Kinder, alles Schöpferische.',
+  stich:'Spiel, Romantik, Kinder, Kreativität', frage:'Wo darfst du spielen, strahlen und einfach Freude haben?', ecke:''},
+ {name:'Alltag', titel:'Alltag & Gesundheit', was:'Arbeit, Routine, Körper, Dienst, das tägliche Kleine.',
+  stich:'Routinen, Arbeitsalltag, Gesundheit', frage:'Dienen deine täglichen Routinen dir, oder dienst du ihnen?', ecke:''},
+ {name:'Beziehung', titel:'Beziehung & das Du', was:'Partnerschaft, enge Bindungen, was du im Gegenüber suchst.',
+  stich:'Partnerschaft, Verträge, offene Gegner', frage:'Was suchst du im anderen, und suchst du es vielleicht auch in dir?', ecke:'Deszendent'},
+ {name:'Tiefe', titel:'Tiefe & Wandlung', was:'Intimität, Krisen, Wandlung, geteilte Ressourcen, das Verborgene.',
+  stich:'Intimität, gemeinsames Geld, Krisen', frage:'Was in dir will sich wandeln, und wovor hast du dabei Angst?', ecke:''},
+ {name:'Sinn', titel:'Sinn & Weite', was:'Philosophie, Reisen, Glaube, Studium, der große Horizont.',
+  stich:'Reisen, Studium, Glaube, Weltbild', frage:'Was gibt deinem Leben Sinn und Weite?', ecke:''},
+ {name:'Beruf', titel:'Berufung & Wirken', was:'Beruf, Ruf, öffentliches Wirken, dein Lebensweg nach außen.',
+  stich:'Beruf, Ruf, Ziele', frage:'Wofür möchtest du gesehen werden, was ist dein Beitrag?', ecke:'MC'},
+ {name:'Gruppen', titel:'Gemeinschaft & Vision', was:'Freunde, Netzwerke, Gruppen, Zukunft, deine Ideale.',
+  stich:'Freundschaft, Netzwerke, Zukunftspläne', frage:'Zu welcher Gemeinschaft gehörst du, und welche Zukunft willst du mitgestalten?', ecke:''},
+ {name:'Rückzug', titel:'Rückzug & Seele', was:'Unbewusstes, Spiritualität, Verborgenes, Rückzug, Auflösung.',
+  stich:'Stille, Unbewusstes, Spiritualität', frage:'Was brauchst du an Stille und Rückzug, und gönnst du dir das?', ecke:''}
+];
+
+/* Die sechs Achsen. a, b: Bereiche (0-basiert) · name: das Paar ·
+   zuvielA: wenn die Seite a überdreht, wohin der Ausgleich geht ·
+   zuvielB: umgekehrt */
+var HZ_ACHSEN = [
+ {a:0, b:6, name:'Ich & Du',
+  zuvielA:'Wer zu sehr im eigenen Ich steckt, findet den Ausgleich im Du: den anderen einbeziehen, Verbindung statt Alleingang.',
+  zuvielB:'Wer sich im Du verliert, kommt über das eigene Ich zurück: Was will ich, unabhängig von dir?'},
+ {a:1, b:7, name:'Mein & Unser',
+  zuvielA:'Wer zu sehr am Eigenen und an Sicherheit festhält, findet den Ausgleich im Teilen und Sich-Einlassen.',
+  zuvielB:'Wer sich in Intensität und Verschmelzung verliert, findet Boden im Eigenen: dein Wert bleibt, auch wenn du dich öffnest.'},
+ {a:2, b:8, name:'Nah & Weit',
+  zuvielA:'Wer sich im Kleinklein und im Zerdenken verliert, findet den Ausgleich im großen Sinn und in der Weite.',
+  zuvielB:'Wer abhebt in große Ideen, erdet sich über das Konkrete: ein Gespräch, ein Buch, der nächste Schritt.'},
+ {a:3, b:9, name:'Innen & Außen',
+  zuvielA:'Wer zu sehr im Nest und im Rückzug bleibt, findet den Ausgleich im Rausgehen und Sichtbarwerden.',
+  zuvielB:'Wer sich im Außen verausgabt, heilt über das Zuhause: Wurzeln, Familie, ein Ort, an dem nichts geleistet werden muss.'},
+ {a:4, b:10, name:'Ich-Freude & Wir-Vision',
+  zuvielA:'Wer nur um das eigene Herz und das eigene Drama kreist, findet den Ausgleich im Größeren: Gemeinschaft und Vision.',
+  zuvielB:'Wer sich in der Gruppe verliert, kommt über das eigene Herz zurück: Was macht mir Freude, ganz allein?'},
+ {a:5, b:11, name:'Konkret & Diffus',
+  zuvielA:'Wer sich im Alltag aufreibt, mit Perfektion und Kontrolle, findet Entlastung im Loslassen und in der Stille.',
+  zuvielB:'Wer von Grübeln, Überwältigung und Auflösung geflutet wird, findet Halt im Konkreten: Körper, Routine, der nächste kleine Schritt.'}
+];
+
+/* Whole Sign oder Placidus: das Beispiel ist ein erfundenes Geburtsbild.
+   Die Werte prüft bau-haeuser.py beim Bauen gegen engine.js. */
+var HZ_BEISPIEL = {datum:'14.10.1994', zeit:'13:05', ort:'Hamburg',
+  p:{y:1994, mo:10, d:14, h:13, mi:5, tz:2, lat:53.55, lon:9.99},
+  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage', wsHaus:11, plHaus:10, abstand:18};
+
+var HZ_QUIZ = [
+ {q:'Ein Planet steht nach Whole Sign im 10. und nach Placidus im 9. Haus. Was machst du im Reading?',
+  o:['Ein System auswählen und dabei bleiben','Beide Bedeutungen ansprechen und nachfragen'], r:1,
+  e:'Auf einer Hausgrenze gehört der Planet zu beiden Bereichen. Berufung und Sinnsuche liegen ohnehin nah beieinander. Die Person weiß meistens sofort, welche Beschreibung sie stärker erkennt. Für die eigene Systematik bleibst du trotzdem bei einem Standardsystem.'},
+ {q:'Bei welchem Geburtsort weichen die Systeme am stärksten voneinander ab?',
+  o:['Quito, Ecuador (0° Breite)','Stockholm (59° Breite)'], r:1,
+  e:'Je weiter vom Äquator entfernt, desto ungleichmäßiger fallen die Placidus-Häuser aus. In hohen Breiten werden einzelne Häuser sehr groß. Am Äquator sind beide Systeme fast deckungsgleich.'}
+];
+
+/* Häuserseite: Anzeige und „bei dir" aus dem aktiven Profil.
+   Gerechnet wird gegen rituale/engine.js (chartVon, haus, SIGNS). */
+(function(){
+var el=function(id){return document.getElementById(id);};
+var NS='http://www.w3.org/2000/svg';
+function hzSvg(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+
+function hzProfil(){ try{ var a=AC_P.alle(); return AC_P.aktives()||AC_P.eigenes()||a[0]||null; }catch(e){ return null; } }
+var P=hzProfil(), C=null;
+if(P){ try{ C=chartVon(P); }catch(e){ C=null; } }
+
+/* Pro Bereich (0–11): Zeichen und Planeten bei dir */
+var BEI=[];
+for(var i=0;i<12;i++) BEI.push({zeichen:null,pl:[]});
+if(C){
+  var asc=Math.floor(C.ASC/30);
+  for(var j=0;j<12;j++) BEI[j].zeichen=SIGNS[(asc+j)%12];
+  PL.forEach(function(k){ BEI[haus(C,C[k])-1].pl.push(k); });
+}
+var hzWahl=0;
+
+function hzProfilZeile(){
+  var b=el('hzprofil');
+  if(!C){
+    b.innerHTML='Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> siehst du hier, auf welchen B&uuml;hnen bei dir viel los ist.';
+    return;
+  }
+  var name='das aktive Profil'; try{ name=AC_P.anzeige(P,AC_P.zeigeNamen()); }catch(e){}
+  var voll=BEI.filter(function(x){return x.pl.length;}).length;
+  b.innerHTML='F&uuml;r <b></b>: Auf '+voll+' von zw&ouml;lf B&uuml;hnen ist bei dir etwas los. Wechseln unter <a href="profile.html">Profile</a>.';
+  b.querySelector('b').textContent=name;
+}
+
+/* Das Rad: zwölf Felder, die belebten gefüllt */
+function hzRad(){
+  var s=el('hzrad'); while(s.firstChild) s.removeChild(s.firstChild);
+  var cx=200,cy=200,R=180,r=78;
+  for(var i=0;i<12;i++){
+    /* Bereich 1 links (wo der Aszendent steht), dann gegen den Uhrzeigersinn
+       nach unten: die 4 unten, die 7 rechts, die 10 oben. Wie im Geburtsbild. */
+    var a0=(180-i*30)*Math.PI/180, a1=(180-(i+1)*30)*Math.PI/180;
+    var p=function(a,rr){return [cx+rr*Math.cos(a), cy+rr*Math.sin(a)];};
+    var A=p(a0,R),B=p(a1,R),Cc=p(a1,r),D=p(a0,r);
+    var voll=BEI[i].pl.length>0, an=i===hzWahl;
+    var g=hzSvg('g',{role:'button',tabindex:0,'aria-label':(i+1)+': '+HZ_HAUS[i].titel+(voll?', bei dir belebt':''),'aria-pressed':String(an)});
+    g.appendChild(hzSvg('path',{d:'M'+A+' A'+R+' '+R+' 0 0 0 '+B+' L'+Cc+' A'+r+' '+r+' 0 0 1 '+D+' Z',
+      fill:an?'#2E3A5C':(voll?'#F5ECDD':'#FFFDFA'),stroke:'#EBE1D2','stroke-width':1.5}));
+    var m=p((a0+a1)/2,(R+r)/2+20), n=p((a0+a1)/2,(R+r)/2-16);
+    var t1=hzSvg('text',{x:m[0],y:m[1]+5,'text-anchor':'middle','font-size':17,'font-family':'Fraunces, Georgia, serif',fill:an?'#FCF7EF':'#2E3A5C'});
+    t1.textContent=String(i+1); g.appendChild(t1);
+    var t2=hzSvg('text',{x:n[0],y:n[1]+4,'text-anchor':'middle','font-size':11.5,'font-family':'DM Sans, system-ui, sans-serif',fill:an?'#E8C98D':'#6B6259'});
+    t2.textContent=HZ_HAUS[i].name; g.appendChild(t2);
+    if(voll){ for(var k=0;k<BEI[i].pl.length&&k<5;k++){
+      var q=p((a0+a1)/2+(k-(Math.min(BEI[i].pl.length,5)-1)/2)*0.09,R-12);
+      g.appendChild(hzSvg('circle',{cx:q[0],cy:q[1],r:3.5,fill:an?'#E8C98D':'#9A7235'})); } }
+    (function(i){ function w(){ hzWahl=i; hzRad(); var c=el('hzbuehnen').children[i]; if(c){ c.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'}); } }
+      g.addEventListener('click',w);
+      g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); w(); var n2=el('hzrad').querySelectorAll('g[role=button]')[i]; if(n2) n2.focus(); } }); })(i);
+    s.appendChild(g);
+  }
+  var mitte=hzSvg('text',{x:cx,y:cy+5,'text-anchor':'middle','font-size':13,'font-family':'DM Sans, system-ui, sans-serif',fill:'#6B6259'});
+  mitte.textContent=C?'Punkte: bei dir belebt':'Tippe eine Bühne an';
+  s.appendChild(mitte);
+  Array.prototype.forEach.call(el('hzbuehnen').children,function(c,i){ c.classList.toggle('an',i===hzWahl); });
+}
+
+function hzBuehnen(){
+  var box=el('hzbuehnen'); box.innerHTML='';
+  HZ_HAUS.forEach(function(h,i){
+    var k=document.createElement('article'); k.className='hz-buehne'+(BEI[i].pl.length?' voll':'');
+    k.innerHTML='<div class="hz-nr"></div><div class="hz-inh"><h3></h3><p class="hz-tech ac-tech" data-ab="1"></p><p></p><p class="hz-stich"></p><p class="hz-frage"></p><p class="hz-bei"></p><p class="hz-bei-tech ac-tech" data-ab="1"></p></div>';
+    k.querySelector('.hz-nr').textContent=String(i+1);
+    k.querySelector('h3').textContent=h.titel;
+    k.querySelector('.hz-tech').textContent=(i+1)+'. Haus'+(h.ecke?' · beginnt mit dem '+h.ecke:'');
+    k.querySelectorAll('p')[1].textContent=h.was;
+    k.querySelector('.hz-stich').textContent=h.stich;
+    k.querySelector('.hz-frage').textContent=h.frage;
+    var bei=k.querySelector('.hz-bei'), bt=k.querySelector('.hz-bei-tech');
+    if(C){
+      bei.textContent=BEI[i].pl.length?(BEI[i].pl.length===1?'Bei dir belebt: Hier steht eine Kraft.':'Bei dir belebt: Hier stehen '+BEI[i].pl.length+' Kräfte.'):'Bei dir eine leise Bühne.';
+      bt.textContent='Zeichen: '+BEI[i].zeichen+(BEI[i].pl.length?' · Planeten: '+BEI[i].pl.join(', '):' · ohne Planeten');
+    } else { bei.remove(); bt.remove(); }
+    k.addEventListener('click',function(){ hzWahl=i; hzRad(); });
+    box.appendChild(k);
+  });
+}
+
+function hzAchsen(){
+  var box=el('hzachsen'); box.innerHTML='';
+  HZ_ACHSEN.forEach(function(x){
+    var A=HZ_HAUS[x.a], B=HZ_HAUS[x.b], na=BEI[x.a].pl.length, nb=BEI[x.b].pl.length;
+    var k=document.createElement('article'); k.className='hz-achse';
+    k.innerHTML='<div class="hz-waage"><div class="s a"><b></b><span></span></div><div class="mitte" aria-hidden="true">&harr;</div><div class="s b"><b></b><span></span></div></div>'+
+      '<h3></h3><p class="prinzip"></p><p class="prinzip"></p><p class="hz-bei"></p><p class="hz-bei-tech ac-tech" data-ab="1"></p>';
+    var sa=k.querySelector('.s.a'), sb=k.querySelector('.s.b');
+    sa.querySelector('b').textContent=A.titel; sb.querySelector('b').textContent=B.titel;
+    sa.querySelector('span').textContent=(x.a+1)+''; sb.querySelector('span').textContent=(x.b+1)+'';
+    k.querySelector('h3').textContent=x.name;
+    var pr=k.querySelectorAll('.prinzip'); pr[0].textContent=x.zuvielA; pr[1].textContent=x.zuvielB;
+    var bei=k.querySelector('.hz-bei'), bt=k.querySelector('.hz-bei-tech');
+    if(C){
+      if(na) sa.classList.add('voll'); if(nb) sb.classList.add('voll');
+      var satz;
+      if(!na&&!nb) satz='Bei dir sind beide Seiten leise. Dieses Paar läuft im Hintergrund.';
+      else if(na&&nb) satz='Bei dir sind beide Seiten belebt. Ein lebendiges Spannungsfeld: Du pendelst zwischen '+A.titel+' und '+B.titel+'.';
+      else { var voll=na?A:B, leer=na?B:A;
+        satz='Bei dir liegt das Gewicht auf '+voll.titel+'. Wenn diese Seite überdreht, liegt der Ausgleich in '+leer.titel+'.'; }
+      bei.textContent=satz;
+      bt.textContent=(x.a+1)+'. Haus '+BEI[x.a].zeichen+(na?' mit '+BEI[x.a].pl.join(', '):', leer')+
+        ' · '+(x.b+1)+'. Haus '+BEI[x.b].zeichen+(nb?' mit '+BEI[x.b].pl.join(', '):', leer');
+      k.classList.add(na&&nb?'beide':(na||nb?'eine':'keine'));
+    } else { bei.remove(); bt.remove(); }
+    box.appendChild(k);
+  });
+}
+
+function hzBeispiel(){
+  var b=HZ_BEISPIEL, box=el('hzbeispiel');
+  box.innerHTML='<p class="hz-klein"></p><div class="hz-zwei"><div><b>Whole Sign</b><p></p></div><div><b>Placidus</b><p></p></div></div><p></p>';
+  var ps=box.querySelectorAll('p');
+  ps[0].textContent='Ein erfundenes Geburtsbild: '+b.datum+', '+b.zeit+' Uhr, '+b.ort+'. Aszendent '+b.asc+', MC '+b.mc+', Sonne '+b.sonne+'.';
+  ps[1].textContent='Waage ist ab Schütze das elfte Zeichen. Die Sonne steht im '+b.wsHaus+'. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit. Das MC fällt hier ebenfalls ins 11. Haus.';
+  ps[2].textContent='Die Sonne steht '+b.abstand+' Bogenminuten hinter dem MC, also im '+b.plHaus+'. Haus: Beruf, Wirken, Sichtbarkeit.';
+  ps[3].textContent='Beides ist rechnerisch richtig, und beides beschreibt dieselbe Person: jemanden, dessen Beruf in Gruppen und Netzwerken stattfindet. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.';
+}
+
+function hzQuiz(){
+  var box=el('hzquiz'); box.innerHTML='';
+  HZ_QUIZ.forEach(function(it){
+    var d=document.createElement('div'); d.className='hz-q';
+    var p=document.createElement('p'); p.textContent=it.q; d.appendChild(p);
+    var o=document.createElement('div'); o.className='hz-opts';
+    var ex=document.createElement('p'); ex.className='hz-expl'; ex.textContent=it.e; ex.hidden=true;
+    it.o.forEach(function(lab,j){
+      var b=document.createElement('button'); b.type='button'; b.textContent=lab;
+      b.addEventListener('click',function(){
+        Array.prototype.forEach.call(o.children,function(x,i){ x.className=i===it.r?'richtig':''; x.setAttribute('aria-pressed','false'); });
+        if(j!==it.r) b.className='falsch';
+        b.setAttribute('aria-pressed','true'); ex.hidden=false;
+      });
+      o.appendChild(b);
+    });
+    d.appendChild(o); d.appendChild(ex); box.appendChild(d);
+  });
+}
+
+function hzLos(){ hzProfilZeile(); hzBuehnen(); hzRad(); hzAchsen(); hzBeispiel(); hzQuiz(); }
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',hzLos); else hzLos();
+})();
+
+</script>
+</body></html>
