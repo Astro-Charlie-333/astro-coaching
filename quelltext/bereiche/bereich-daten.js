@@ -508,6 +508,14 @@
     woche:'Woche', wochen:'Wochen',
     einMonat:'Monat', vieleMonate:'Monate',
     einJahr:'etwa ein Jahr', vieleJahre:'etwa {n} Jahre',
+    /* Derselbe Vorgang zieht meist in mehrere Lebensbereiche.
+       Welche das sind, rechnet bereich-rechner.js (seitenweit);
+       hier steht der Satz dazu. Er hängt an dem Absatz, der offen
+       steht, und nennt nur die anderen Bereiche — die Liste ist
+       deshalb in jedem Bereich eine andere. Genau daran liegt es,
+       dass zwei offene Absätze desselben Vorgangs nie wortgleich
+       sind (AUFGABEN 39). */
+    auchIn:'Dasselbe zieht gerade auch an: {liste}.',
     /* Das Fenster eines Vorgangs */
     fensterOffen:'Das läuft noch über Jahre hinaus — ein Ende ist in dieser Rechnung nicht in Sicht.',
     fensterKurz:'Noch {d}.',

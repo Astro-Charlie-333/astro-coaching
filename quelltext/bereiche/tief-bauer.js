@@ -74,6 +74,28 @@
      gesehen sammelt die Arten, die in diesem Bereich schon erklärt
      wurden. Zwei Vorgänge derselben Art bekommen den Zusatz nur
      einmal — sonst steht zweimal wörtlich derselbe Satz da. */
+  /* Was derselbe Vorgang sonst noch berührt. Die Liste rechnet
+     bereich-rechner.js; leer heißt: er steht nur hier.
+
+     Zwei Vorgänge eines Bereichs können in dieselben anderen
+     Bereiche wirken. Dann stünde die Liste zweimal wörtlich
+     untereinander — und zweimal derselbe Satz in einem Bereich ist
+     seit dem 26.10. verboten. Also wie beim Zusatz: einmal je
+     Bereich und Liste. Der stärkste Vorgang eines Bereichs steht
+     immer vorn und bekommt den Satz deshalb immer; nur ein
+     nachrangiger kann ihn verlieren. Das ist genau der Fall, in dem
+     ein anderer Bereich denselben Vorgang nicht offen zeigt — die
+     beiden Absätze bleiben also auch dann verschieden. */
+  function auchSatz(v, gesehen){
+    if(!v || !v.auchIn || !v.auchIn.length) return '';
+    var liste = v.auchIn.join(', '), schl = 'auch:' + liste;
+    if(gesehen){
+      if(gesehen[schl]) return '';
+      gesehen[schl] = true;
+    }
+    return ' ' + fuellen(F().auchIn, { liste:liste });
+  }
+
   function vorgangSatz(v, gesehen){
     var W = bD().WAND[v.wanderer];
     if(!W) return null;
@@ -91,7 +113,7 @@
         rw = ' ' + bD().DURCH.rueck;
         if(gesehen) gesehen.rueck = true;
       }
-      return { was: W.was + rahmen + rw,
+      return { was: W.was + rahmen + rw + auchSatz(v, gesehen),
                tun: W.tun, nutzen: W.nutzen, tempo: W.tempo };
     }
     var A = bD().ART[v.art], zusatz = '';
@@ -99,7 +121,7 @@
       zusatz = ' ' + A.wie;
       if(gesehen) gesehen[v.art] = true;
     }
-    return { was: W.was + zusatz,
+    return { was: W.was + zusatz + auchSatz(v, gesehen),
              tun: W.tun, nutzen: W.nutzen, tempo: W.tempo };
   }
 
