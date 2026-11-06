@@ -325,3 +325,113 @@ Stufenwörter. Keine neue Farbe, keine neue Schrift, kein neuer Baustein —
 dieselben Texte, nur innerhalb des Rahmens statt darüber und darunter.
 Danach ist der Ausschnitt, den jemand fotografiert, derselbe wie der, den
 sie auf dem Telefon sieht.
+
+
+### 06.11.2026 · `uebersicht.html` — Ich
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit sechs
+erfundenen Profilen. Seitenhöhe bei 390: 4.939 Pixel auf Stufe 0, 5.970 auf
+Stufe 2; bei 1280 sind es 3.829 und 4.605. Nichts läuft über den Rand, keine
+Fehler in der Konsole. Eine Einschränkung, damit sie nicht als Befund
+durchgeht: In dieser Umgebung sind die Schriften von Google gesperrt, die
+Seite zeichnet also mit Ersatzschriften. Gemessen und beurteilt wurden
+Hierarchie, Größen, Abstände und Reihenfolge — nicht das Schriftbild.
+
+Was trägt: „Was an dir auffällt" ist die beste Idee der ganzen Plattform.
+Eine Zahl, wie häufig eine Anlage überhaupt vorkommt, daneben ein Punktfeld,
+das sie zeigt, darunter der Satz und ein Handgriff — und die Unterzeile sagt
+dazu, woher die Zahl kommt: „abgezählt an 10.000 erfundenen Geburtsbildern,
+nicht geschätzt." Das ist „Gerechnet, nicht behauptet" aus `PRODUKT.md`
+Abschnitt 3, und zwar als Bild. Co-Star und The Pattern haben nichts
+dergleichen. Die beiden Befunde handeln davon, dass der Abschnitt mehr
+verspricht, als er zeigt — und dass er auf dem Telefon zu spät kommt.
+
+#### 06.11-1 · Ein Satz über dem Abschnitt macht drei Versprechen und hält keines
+
+**Zitat:** Über den Karten steht, 16 Pixel: **„Das ist die auffälligste von
+vier Stellen. Alle vier stehen gleich darunter, jede mit einem Handgriff
+dazu."** Darunter als Unterzeile: „Vier Stellen, an denen dein Bild von den
+meisten abweicht."
+
+Nachgezählt an sechs erfundenen Profilen: **Fünf von sechs zeigen drei
+Karten, nicht vier.** In **allen sechs** trägt genau eine Karte keinen
+Handgriff — immer dieselbe: „2 deiner Anlagen liefen bei deiner Geburt
+rückwärts. Das ist der Normalfall; auffällig wäre erst keine oder mehr als
+vier." Sie steht mit 21 bis 24 von 100 in der Liste und ist die einzige, die
+nichts zum Tun sagt. Bei einem der sechs Profile ist sie die **erste** Karte,
+also die dunkle: 24 in 30 Pixeln, das Punktfeld in Messing, und als einziger
+Satz auf der am stärksten gestalteten Fläche der Seite „Das ist der
+Normalfall." Bei demselben Profil beschreibt der Vorspann darüber nicht diese
+Karte, sondern die zweite — und nennt sie trotzdem „die auffälligste".
+
+**Kosten:** Der Kauf-Test, und er fällt an der Stelle durch, an der die Seite
+ihr bestes Argument hat. Sie zählt mit: vier angekündigt, drei da. Sie liest
+die Karte ohne Handgriff und merkt, dass „jede mit einem Handgriff dazu" eine
+Behauptung war. Und in der Fassung, in der die Normalfall-Karte oben steht,
+ist das Erste, was die Seite groß über sie sagt, dass an ihr nichts
+Besonderes ist — unter der Überschrift „Was an dir auffällt". Das ist genau
+der Vorsprung aus `PRODUKT.md` Abschnitt 3, rückwärts: Beschreiben können es
+andere auch, handhabbar wird es durch den Handgriff, und die eine Karte ohne
+Handgriff bekommt die größte Fläche. Teurer ist, was es mit der Zahl macht.
+Die Zahl trägt diese Seite, weil sie belegt ist. Steht sie über einem Satz,
+der selbst sagt, dass er nichts bedeutet, lernt die Leserin im dritten
+Kasten, dass „von 100 Menschen" Zierde ist — und entwertet damit rückwirkend
+die 9, die zwei Karten weiter oben stand und die stimmt. Für eine Plattform,
+deren Markenkern die Ehrlichkeit über die eigenen Grenzen ist, ist ein
+mitgezähltes Nichts die teuerste Art, sie zu verlieren.
+
+**Vorschlag:** Drei Änderungen an vorhandenen Texten, keine neue Fläche.
+Erstens: Der Satz über dem Abschnitt nennt die Zahl, die wirklich dasteht,
+statt „vier" — er zählt die gezeichneten Karten. Zweitens: In „Was an dir
+auffällt" steht nur, was einen Handgriff hat. Drittens: Die Normalfall-Karte
+verschwindet nicht, sondern zieht in das Klappelement „Was diese Zahlen
+taugen", das zwei Blöcke tiefer ohnehin schon steht — dort gehört nach
+`REGELN.md` Abschnitt 4 hin, „wie häufig die Aussage rechnerisch überhaupt
+ist", und genau das ist dieser Satz. Dazu, nach der goldenen Regel aus
+`REGELN.md` Abschnitt 5 und der Form aus Abschnitt 6e, eine Prüfung, die die
+Klasse unmöglich macht: Der Bau bricht ab, wenn eine Karte unter „Was an dir
+auffällt" keinen Handgriff trägt, oder wenn eine Zahl im Abschnittssatz nicht
+der Zahl der gezeichneten Karten entspricht — gemessen am gezeichneten
+Ergebnis, nicht an den Daten, und gegen feste Beispiele gehalten, weil die
+Eingabe je Geburtsbild eine andere ist.
+
+#### 06.11-2 · Der erste Bildschirm gehört einem Bild, das auf Stufe 0 niemand lesen kann
+
+**Zitat:** Auf dem Telefon steht ab Pixel 471 das Radbild, 320 mal 320 Pixel
+— **38 Prozent des ersten Bildschirms**. Darin: die Ziffern 1 bis 12, zwölf
+Tierkreiszeichen, zehn Planetenzeichen, „AC" und „MC". Auf **Stufe 0 ist es
+dasselbe Bild wie auf Stufe 2**, Pixel für Pixel. Lesbar ist darunter nur die
+Legende: „dein Geburtsbild · wo die Planeten heute stehen". Die
+Wissensstand-Leiste, in der steht „Keine Ahnung von Astrologie. Alles in
+Alltagssprache. Keine Fachbegriffe, keine Grade, keine Planetennamen",
+beginnt bei Pixel 864 — **zwanzig Pixel unter der Kante** des Bildschirms.
+„Was an dir auffällt" fängt bei 1.123 an, die erste Zahl bei 1.305.
+
+**Kosten:** Der Drei-Sekunden-Test. Nach drei Sekunden auf dem Telefon hat
+sie einen sechszeiligen Satz angelesen, ihren eigenen Namen samt Geburtszeit
+gelesen, und darunter ein Diagramm vor sich, das sie nicht entziffern kann —
+und das, ohne es zu wollen, die eine Botschaft sendet, gegen die diese
+Plattform gebaut ist: dass Astrologie Hausaufgaben sind. Von der Zahl, die
+der Grund wäre weiterzuwischen, ist nichts zu sehen; sie beginnt eineinhalb
+Bildschirme tiefer. Der Satz, der ihr sagt, dass sie das Diagramm nicht
+verstehen muss, liegt zwanzig Pixel zu tief, um sie zu beruhigen. Bei 1.280
+Pixeln stellt sich die Frage nicht: Dort steht das Rad neben dem Vorspann,
+„Was an dir auffällt" liegt bei 737 und die erste Zahl bei 1.101, beides im
+Bild — der Verlust ist ein reiner Telefon-Verlust, also der, der zählt. Dazu
+kommt, dass das Rad an seinem Platz nichts erklärt: Der einzige Abschnitt der
+Seite, der benutzt, was es zeigt, sind „Die zwölf Felder deines Lebens" — und
+der steht 3.200 Pixel weiter unten.
+
+**Vorschlag:** Das Rad zieht um, auf schmalen Bildschirmen, und zwar genau
+dorthin, wo es gebraucht wird: direkt über „Die zwölf Felder deines Lebens".
+Dieselben zwölf Sektoren, dieselben zwölf Nummern, eine Bildschirmhöhe
+auseinander statt 3.200 Pixel. Bei 1.280 bleibt alles, wie es ist — dort
+steht es neben dem Vorspann und kostet nichts. Keine neue Farbe, keine neue
+Schrift, kein neuer Baustein: dasselbe Bild, weiter unten. Nachgemessen, was
+das freimacht: Die Wissensstand-Leiste rückt von 864 auf 479 und steht damit
+im ersten Bildschirm, „Was an dir auffällt" von 1.123 auf 738 — also
+ebenfalls hinein —, die erste Zahl von 1.305 auf 920 und damit an die Kante,
+und die Seite wird von 4.939 auf 4.554 Pixel kürzer. Der erste Bildschirm
+trägt danach: den Satz, für wen gerechnet wurde, den Hinweis, dass es ohne
+Vorkenntnis geht, und die Überschrift des Abschnitts, der das Besondere
+dieser Seite ist.

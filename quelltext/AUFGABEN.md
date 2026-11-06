@@ -145,6 +145,25 @@ Sätze dafür aus `bereich-daten.js` kommen, und `bau-bereiche.py` am
 gezeichneten Ergebnis abbricht, wenn eine dieser Zeilen nur eine Dauer
 trägt.
 
+### 45 · „Was an dir auffällt" zählt mit, was nicht auffällt
+Gefunden im Gestaltungs-Durchgang vom 06.11. zu `uebersicht.html`
+(Befund 06.11-1). Über dem Abschnitt steht „Das ist die auffälligste von
+vier Stellen. Alle vier stehen gleich darunter, jede mit einem Handgriff
+dazu." An sechs erfundenen Profilen nachgezählt: fünf zeigen drei Karten,
+und in allen sechs trägt genau eine Karte keinen Handgriff — die mit
+„2 deiner Anlagen liefen bei deiner Geburt rückwärts. Das ist der
+Normalfall." Bei einem der Profile steht genau diese Karte oben und
+bekommt die dunkle Fläche. Die Zahl „von 100 Menschen" ist das belegte
+Pfund dieser Seite; über einem Satz, der selbst sagt, dass er nichts
+bedeutet, entwertet sie die Karten, bei denen sie stimmt.
+**Fertig, wenn:** unter „Was an dir auffällt" nur Karten mit einem
+Handgriff stehen, der Satz darüber die Zahl der wirklich gezeichneten
+Karten nennt statt „vier", der Normalfall-Satz in „Was diese Zahlen
+taugen" steht, und `bau-ich.py` am gezeichneten Ergebnis abbricht, sobald
+eine Karte ohne Handgriff in dem Abschnitt landet oder die genannte Zahl
+von der gezeichneten abweicht — gegen feste Beispiele gehalten wie
+`_datum_ohne_jahr` in `bau-heute.py`.
+
 ---
 
 ## Was nicht gemacht wird
