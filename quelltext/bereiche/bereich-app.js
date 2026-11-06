@@ -114,6 +114,14 @@
     h.push('<p class="b-worum">' + esc(T.worum) + '</p>');
 
     var top = b.laeuft.slice(0, 3), gesehen = {};
+    /* Welche dieser Vorgänge in Block 1 offen stehen, entscheidet
+       der Rechner (seitenweit): derselbe Absatz steht auf einer
+       Seite in nur einem Bereich offen. Die übrigen behalten ihr
+       Zeitfenster in Block 3 unter „Was sonst noch läuft" — es
+       verschwindet also nichts, es wiederholt sich nur nichts.
+       Platz eins bleibt immer offen, zeige ist deshalb nie leer,
+       solange top es nicht ist. */
+    var zeige = top.filter(function(v){ return v.zeigen !== false; });
 
     /* ── 1. Was ist los ─────────────────────────────────── */
     h.push('<div class="b-blk"><h4>' + esc(SE().bloecke[0]) + '</h4>');
@@ -134,11 +142,11 @@
         (b.kapitel.l2 ? ' \u2192 ' + ZN_()[b.kapitel.l2.zeichen] +
           (b.kapitel.l2.gipfel ? ' ' + SE().tech.gipfel : '') : ''));
     }
-    if(!top.length){
+    if(!zeige.length){
       h.push('<p>' + esc(bD().LEER.keinVorgang) + '</p>');
     } else {
-      for(var i=0;i<top.length;i++){
-        var v = top[i], S = vorgangSatz(v, b, gesehen);
+      for(var i=0;i<zeige.length;i++){
+        var v = zeige[i], S = vorgangSatz(v, b, gesehen);
         if(!S) continue;
         h.push('<div class="b-vor' + (i === 0 ? ' b-haupt' : '') + '">');
         if(i === 0) h.push('<span class="b-marke">' + esc(SE().marke) + '</span>');
@@ -152,11 +160,14 @@
 
     /* ── 2. Was du tun kannst ───────────────────────────── */
     h.push('<div class="b-blk"><h4>' + esc(SE().bloecke[1]) + '</h4>');
-    if(top.length){
-      var S0 = vorgangSatz(top[0], b);
+    /* Der Handgriff gehört zu dem Vorgang, der oben beschrieben
+       steht. Ein Handgriff zu einem Absatz, den dieser Bereich
+       nicht zeigt, wäre eine Antwort auf eine ungestellte Frage. */
+    if(zeige.length){
+      var S0 = vorgangSatz(zeige[0], b);
       h.push('<p class="b-tun">' + esc(S0 ? S0.tun : '') + '</p>');
-      if(top.length > 1){
-        var S1 = vorgangSatz(top[1], b);
+      if(zeige.length > 1){
+        var S1 = vorgangSatz(zeige[1], b);
         if(S1 && S1.tun !== (S0 && S0.tun)) h.push('<p>' + esc(S1.tun) + '</p>');
       }
     } else {

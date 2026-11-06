@@ -1212,6 +1212,113 @@ else:
                   f"{fn['leerAnders']} davon anders sortiert als die Textdatei, "
                   'kein Gleichstand')
 
+# ── 6g · Ein Absatz aus Block 1 steht nur in einem Bereich ─────
+# Befund der Gestalterin vom 2026-11-03: Unter „1 · Was ist los"
+# stand derselbe Absatz bei Liebe, Beruf, Geld, Selbstwert und Sinn
+# und Richtung wörtlich gleich — über alle zehn Bereiche gezählt
+# einundzwanzig verschiedene Absätze, zehn davon in mehr als einem
+# Bereich. Wer die Seite durchblättert, liest fünfmal dasselbe und
+# hält es für fünf Befunde.
+#
+# Die Ursache ist die Fehlerklasse aus REGELN.md Abschnitt 6f: Die
+# Sperre in bereich-rechner.js saß je Bereich (`var gesehen = {}`),
+# der Absatz steht aber auf der Seite. Dazu hängt der Absatz nicht
+# am einzelnen Vorgang, sondern am Wanderer — zwei verschiedene
+# Vorgänge desselben Wanderers tragen Wort für Wort denselben Text.
+# Eine Sperre auf dem Vorgang hätte die Dopplung durchgelassen.
+#
+# Geprüft wird die Form, nicht ein Textstück (REGELN.md 6e): die
+# Regel steht in einer eigenen Funktion mit festen Beispielen
+# darunter und bekommt weiter unten das gezeichnete Ergebnis von
+# drei verschiedenen Geburtsbildern zu sehen. Der Himmel des Tages
+# entscheidet damit nicht, ob die Prüfung etwas prüft.
+
+
+def _absatz_doppelt(je_bereich):
+    """Welche Absätze stehen auf einer Seite in mehr als einem Bereich?
+
+    je_bereich bildet den Bereichsnamen auf die Absätze ab, die in
+    Block 1 dieses Bereichs **offen** stehen. Zurück kommt eine Liste
+    von (Absatz, Bereichsnamen) für jeden Absatz, der in zwei oder
+    mehr Bereichen offen steht.
+
+    Verglichen wird auf gleichen Leerraum normalisiert: Ein Umbruch
+    mehr ist kein Unterschied, den ein Mensch sieht. Kurze Zeilen
+    bleiben draußen — zwei Bereiche dürfen „Noch zwei Wochen." zu
+    Recht beide nennen; was sich wiederholen darf, ist eine Angabe,
+    kein Absatz.
+    """
+    wo = {}
+    for name in sorted(je_bereich):
+        for roh in je_bereich[name]:
+            s = ' '.join(str(roh).split())
+            if len(s) < 40:
+                continue
+            wo.setdefault(s, [])
+            if name not in wo[s]:
+                wo[s].append(name)
+    return [(s, wo[s]) for s in sorted(wo) if len(wo[s]) > 1]
+
+
+# Die festen Beispiele (REGELN.md Abschnitt 6e). Was anschlagen muss:
+_FALL_ROH = ('Etwas wird ernst. Es verlangt eine Entscheidung, eine Grenze '
+             'oder eine Rechnung, die offen ist.')
+assert _absatz_doppelt({'Liebe': [_FALL_ROH], 'Geld': [_FALL_ROH]})
+# Auch über fünf Bereiche — der Fall vom 2026-11-03.
+assert len(_absatz_doppelt({'Liebe': [_FALL_ROH], 'Beruf': [_FALL_ROH],
+                            'Geld': [_FALL_ROH], 'Selbstwert': [_FALL_ROH],
+                            'Sinn und Richtung': [_FALL_ROH]})[0][1]) == 5
+# Und wenn sich nur der Umbruch unterscheidet, ist es dieselbe Dopplung.
+assert _absatz_doppelt({'Liebe': [_FALL_ROH],
+                        'Geld': [_FALL_ROH.replace('. ', '.\n')]})
+#
+# Was durchgehen muss: derselbe Vorgang, aber mit der Zeile, die sagt,
+# wohin er sonst noch zieht. Genau dafür steht sie da.
+assert not _absatz_doppelt({
+    'Liebe': [_FALL_ROH + ' Dasselbe zieht gerade auch an: Geld.'],
+    'Geld':  [_FALL_ROH + ' Dasselbe zieht gerade auch an: Liebe.']})
+# Zwei Absätze in *einem* Bereich sind nicht die Sache dieser Regel —
+# dagegen steht die Prüfung „derselbe Satz zweimal in einem Bereich".
+assert not _absatz_doppelt({'Liebe': [_FALL_ROH, _FALL_ROH]})
+# Eine kurze Angabe darf sich wiederholen.
+assert not _absatz_doppelt({'Liebe': ['Noch zwei Wochen.'],
+                            'Geld': ['Noch zwei Wochen.']})
+# Und eine leere Seite ist keine Dopplung.
+assert not _absatz_doppelt({})
+assert not _absatz_doppelt({'Liebe': [], 'Geld': []})
+
+
+# Die Seite muss die Sperre auch wirklich mitbringen: Die Zuteilung
+# gehört in den Rechner, der Satz dazu in die Daten, das Zeichnen in
+# die Anzeige. Fehlt ein Stück, prüft die Regel oben ins Leere.
+if 'function seitenweit(' not in rechner:
+    fehler.append('bereich-rechner.js hat keine seitenweite Sperre — dann '
+                  'sitzt die Sperre wieder je Bereich (REGELN.md 6f)')
+if 'function absatzSchluessel(' not in rechner:
+    fehler.append('bereich-rechner.js nennt den Schlüssel des Absatzes nicht '
+                  'an einer Stelle')
+if 'seitenweit(out)' not in rechner:
+    fehler.append('blatt() ruft seitenweit() nicht auf — dann wird zugeteilt, '
+                  'aber nichts angewandt')
+m_auch = re.search(r"auchIn:'([^']+)'", daten)
+AUCH_VOR = ''
+if not m_auch or '{liste}' not in m_auch.group(1):
+    fehler.append('B_FORM.auchIn fehlt in bereich-daten.js oder hat kein '
+                  '{liste} — dann nennt der offene Absatz die anderen '
+                  'Bereiche nicht, und zwei offene Absätze desselben '
+                  'Vorgangs sind wieder wortgleich')
+else:
+    # Der Anfang des Satzes, vor der Liste. Gesucht wird weiter unten
+    # danach, und zwar mit dem, was in den Daten steht — nicht mit
+    # einem hier abgeschriebenen Textstück (REGELN.md Abschnitt 6e).
+    AUCH_VOR = m_auch.group(1).split('{liste}')[0].strip()
+    if len(AUCH_VOR) < 12:
+        fehler.append('B_FORM.auchIn sagt vor der Liste zu wenig, um auf der '
+                      'gezeichneten Seite wiedererkannt zu werden')
+if 'v.zeigen !== false' not in app:
+    fehler.append('bereich-app.js zeichnet alle drei Vorgänge, statt die '
+                  'Zuteilung des Rechners zu befolgen')
+
 # ── 7 · Rauchprobe im Browser ──────────────────────────────────
 probe = hier / '_probe-bereich.js'
 probe.write_text(r"""
@@ -1242,7 +1349,7 @@ const leerDatei=()=>({name:'',laenge:0,fehler:NICHT,jargon:[],
   fehlendeTeile:['(ungelaufen)'],schlecht:''});
 const notiz={
   start:{facs:[],bereiche:0,offen:0,ueber:0,bloecke:0,haupt:0,ehrlich:0,kopf:'',breit:0},
-  doppelt:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
+  doppelt:[],absaetze:[],facAnzahl:[],facAlleDrei:false,facAnders:0,facDoppelt:[],
   folge:[],gleich:false,stufe0:[],techSichtbar0:99,techSichtbar3:0,techJeBereich:[],
   nach:[],gespr:[],grenze:[],tunGezeichnet:[],
   stichtagWirkt:false,personWirkt:false,vorGeburt:'',zurueck:0,ohneProfil:'',
@@ -1336,6 +1443,33 @@ notiz.doppelt=[].concat(...Object.values(await proBereich(()=>{
   });
   return raus;
 })));
+
+/* Und auf einer Seite steht kein Absatz aus Block 1 in zwei
+   Bereichen offen (AUFGABEN 39, Regel _absatz_doppelt weiter oben).
+   Gemessen am gezeichneten Ergebnis und an drei verschiedenen
+   Geburtsbildern: An den Daten gemessen wäre nichts zu sehen — der
+   Absatz steht genau einmal in bereich-daten.js und wird erst beim
+   Zeichnen vervielfacht. */
+async function absaetze(){
+  return proBereich(()=>{
+    const d=document.querySelector('.b-ber');
+    if(!d) return {name:'?', ps:[]};
+    return { name:(d.querySelector('.b-name')||{}).textContent||'?',
+             ps:[...d.querySelectorAll('.b-in .b-vor p')]
+                 .map(e=>(e.innerText||'').trim()).filter(Boolean) };
+  });
+}
+async function personWechsel(nr){
+  await p.evaluate(x=>{const bs=[...document.querySelectorAll('#bpersonen button')];
+    if(bs[x]) bs[x].click();}, nr);
+  await p.waitForTimeout(700);
+}
+notiz.absaetze=[];
+for(const nr of [0,7,13]){
+  await personWechsel(nr);
+  notiz.absaetze.push({ person:nr, je:Object.values(await absaetze()) });
+}
+await personWechsel(0);
 
 /* Was unter „Was du tun kannst" wirklich auf der Seite steht.
    An den Daten gemessen reicht nicht: Ein Handgriff kann auch aus
@@ -1806,6 +1940,37 @@ else:
         if n['doppelt']:
             fehler.append('derselbe Satz steht zweimal in einem Bereich: '
                           + ' | '.join(n['doppelt'][:4]))
+
+        # Dieselbe Regel wie oben, am gezeichneten Ergebnis. Und ein
+        # Wort dazu, warum hier gezählt wird: Eine Prüfung, die nichts
+        # zu sehen bekommt, ist grün, ohne etwas zu prüfen
+        # (REGELN.md 6e, Nachsatz).
+        if len(n['absaetze']) != 3:
+            fehler.append('die Absätze wurden nicht an drei Geburtsbildern '
+                          f"gemessen, sondern an {len(n['absaetze'])}")
+        for lauf in n['absaetze']:
+            je = {}
+            for b in lauf['je']:
+                je.setdefault(b['name'], []).extend(b['ps'])
+            mit = [k for k in je if je[k]]
+            if len(je) != 10:
+                fehler.append(f"Geburtsbild {lauf['person']}: nur {len(je)} von 10 "
+                              'Bereichen gemessen')
+            if len(mit) < 5:
+                fehler.append(f"Geburtsbild {lauf['person']}: nur {len(mit)} Bereiche "
+                              'mit einem Absatz in Block 1 — dann prüft die Regel '
+                              'darunter ins Leere')
+            for s, wo in _absatz_doppelt(je)[:3]:
+                fehler.append('derselbe Absatz steht offen in '
+                              + ', '.join(wo) + f": \"{s[:60]}…\"")
+            # Und der offene Absatz sagt, wohin derselbe Vorgang sonst
+            # noch zieht — sonst fehlt die Auskunft, und zwei offene
+            # Absätze desselben Vorgangs wären wieder wortgleich.
+            if AUCH_VOR and not any(AUCH_VOR in s
+                                    for k in je for s in je[k]):
+                fehler.append(f"Geburtsbild {lauf['person']}: kein offener Absatz "
+                              'nennt die anderen Bereiche, in die derselbe '
+                              'Vorgang zieht')
 
         if not n['facAlleDrei']:
             fehler.append('nicht jeder Bereich zeigt drei Facetten: '

@@ -60,29 +60,6 @@ auf Fall und Geschlecht wie in `bau-heute.py` an einer von allen
 `bau-*.py` benutzten Stelle steht, und ein von Hand eingesetztes „dein"
 in jeder dieser Dateien den Bau abbricht.
 
-### 39 · Die Sperre gegen doppelte Absätze sitzt je Bereich statt je Seite
-Befund der Gestalterin vom 2026-11-03 (`bereiche.html`, erster Befund —
-derselbe Absatz steht in bis zu fünf Bereichen). Unter „1 · Was ist los"
-steht derselbe Absatz bei Liebe, Beruf, Geld, Selbstwert und Sinn und
-Richtung wörtlich gleich; über alle zehn Bereiche gezählt sind es 21
-verschiedene Absätze, zehn davon in mehr als einem Bereich. Ursache ist
-`var gesehen = {}` in `bereich-rechner.js`: Die Sperre hält fest, dass
-derselbe Wanderer **in einem Bereich** nur einmal vorkommt, aber der Satz
-hängt am Wanderer und der Bereich am getroffenen Haus — derselbe Wanderer
-läuft also durch mehrere Bereiche und trägt überall denselben Satz. Genau
-die Fehlerklasse aus `REGELN.md` Abschnitt 6f. **Nicht** dieselbe Aufgabe
-wie 33: Dort geht es um den Handgriff in Block 2 und darum, was er
-behauptet; hier um Block 1 und darum, dass er sich wiederholt. Das
-Klappelement „Was sonst noch läuft" samt Zähler steht zwei Blöcke tiefer
-schon bereit und kann die verdeckten Vorgänge aufnehmen.
-**Fertig, wenn:** kein gebauter Absatz aus Block 1 auf einer Seite in mehr
-als einem Bereich offen steht (der stärkste Vorgang eines Bereichs bleibt
-offen, auch wenn er anderswo schon stand, damit kein Bereich leer ist),
-der offen stehende Vorgang nennt, in welchen Bereichen er sonst noch
-wirkt, und `bau-bereiche.py` abbricht, sobald zwei Bereiche derselben
-Seite einen Absatz Wort für Wort teilen — mit festen Beispielen geprüft,
-wie `REGELN.md` Abschnitt 6e es verlangt, nicht gegen den Himmel des Tages.
-
 ### 40 · Dieselbe Grenze fehlt den anderen rechnenden Seiten offen
 Gefunden beim Erledigen von Aufgabe 32 am 4.11. `bereiche.html` zeigt
 die Grenze seit heute offen und wird darauf geprüft. Die übrigen
@@ -137,6 +114,36 @@ einem Satz sagt, dass ein Aufgabenzweig nach dem Öffnen des Pull
 Requests nicht mehr angefasst wird und Nachträge einen eigenen Pull
 Request brauchen — und ein Lauf, der das verletzt, beim Abliefern
 auffällt statt hinterher.
+
+### 43 · Die Aufgaben 34 und 38 sind in einem Tag nicht zu schaffen
+Gefunden am 2026-11-06, als sie als oberste freie Aufgaben dran waren.
+Beide verlangen, dass **jede** `*-app.js` eine Prüfung besteht. Mit der
+Regel aus `bau-bereiche.py` über alle zwanzig Anzeigen gezählt: zwei
+sind sauber (`offline-app.js` und `bereich-app.js`, null Treffer), drei
+sind nah dran (`start-app.js` 1, `wahl-app.js` 2, `monat-app.js` 3), und
+die fünfzehn übrigen tragen zusammen 1258 Zeichenketten, die nach
+Sprache aussehen — `zahlen-app.js` 194, `geist-app.js` 174,
+`heute-app.js` 160, `zeit-app.js` 115, `zauber-app.js` und
+`dossier-app.js` je 97. Das ist kein Tageswerk, und eine halb
+umgezogene Anzeige liefert nicht aus. So wie die Aufgaben dastehen,
+werden sie jeden Morgen übersprungen, und das ist die schlechteste Art,
+eine Aufgabe nicht zu machen.
+**Fertig, wenn:** 34 und 38 je Anzeige in eigene Aufgaben zerlegt sind,
+in der Reihenfolge der Anzeigen, die ein Mensch am häufigsten vor sich
+hat — mit der gemeinsamen Prüfstelle als erster Aufgabe und einer Liste,
+welche Anzeige noch aussteht, damit man den Fortschritt sieht.
+
+### 44 · Was weggeklappt wurde, sagt nicht, worum es geht
+Gefunden beim Erledigen von Aufgabe 39 am 2026-11-06. Ein Vorgang, der
+in einem anderen Bereich stärker zieht, steht dort offen und hier nur
+noch mit seinem Zeitfenster unter „Was sonst noch läuft" — also mit
+Tempo und Datum, aber ohne ein Wort darüber, was da läuft und wo man es
+nachlesen kann. Wer die Klappe öffnet, findet eine Dauer ohne Sache.
+**Fertig, wenn:** jede Zeile unter „Was sonst noch läuft" neben dem
+Zeitfenster den Bereich nennt, in dem derselbe Vorgang offen steht, die
+Sätze dafür aus `bereich-daten.js` kommen, und `bau-bereiche.py` am
+gezeichneten Ergebnis abbricht, wenn eine dieser Zeilen nur eine Dauer
+trägt.
 
 ---
 
@@ -481,6 +488,35 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-06** · Derselbe Absatz steht nur noch in einem Bereich
+  (Aufgabe 39). Unter „1 · Was ist los" stand bei einem Probebild
+  derselbe Absatz in bis zu vier Bereichen wörtlich gleich. Wer die
+  Seite durchblättert, liest viermal dasselbe und hält es für vier
+  Befunde — und ein Screenshot davon belegt nur, dass die Seite
+  nichts Eigenes über diesen Bereich zu sagen hat (`PRODUKT.md`
+  Abschnitt 2, Punkt 3).
+  Die Ursache war die Fehlerklasse aus `REGELN.md` 6f: Die Sperre in
+  `bereich-rechner.js` saß je Bereich, der Absatz steht aber auf der
+  Seite. Und sie hätte auch je Vorgang nicht gereicht — der Absatz
+  hängt am Wanderer, zwei verschiedene Vorgänge desselben Wanderers
+  tragen denselben Text. Jetzt sitzt die Sperre auf dem Wanderer, an
+  einer Stelle (`absatzSchluessel`), und zwar eine Ebene höher:
+  `seitenweit()` lässt den Absatz dort offen, wo er am stärksten
+  zieht. Der stärkste Vorgang eines Bereichs bleibt immer offen,
+  damit kein Bereich leer dasteht; sein Zeitfenster behalten auch die
+  übrigen unter „Was sonst noch läuft".
+  Dazu die Auskunft, die vorher fehlte: Ein offener Absatz nennt die
+  anderen Bereiche, in die derselbe Vorgang zieht. Das ist zugleich
+  der Grund, warum zwei offene Absätze desselben Vorgangs nie
+  wortgleich sind — jede Liste lässt den eigenen Bereich weg.
+  Geprüft an drei Stellen: die Regel `_absatz_doppelt` in
+  `bau-bereiche.py` mit neun festen Beispielen (`REGELN.md` 6e), das
+  gezeichnete Ergebnis von drei verschiedenen Geburtsbildern in der
+  Rauchprobe, und `seitenweit()` selbst in `_test-bereich.js` gegen
+  von Hand gebaute Bereiche. Alle drei schlagen an, wenn man die
+  Zuteilung, den Aufruf oder den Satz entfernt — ausprobiert, nicht
+  vermutet.
 
 * **2026-11-05** · Ein vollständiger Lauf lässt die vier Symbole in Ruhe
   (Aufgabe 35). Jeder Lauf hat den Arbeitsbaum an diesen vier Dateien

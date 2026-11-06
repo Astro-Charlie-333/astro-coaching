@@ -859,6 +859,109 @@ const satzImBauer = [];
 p('kein Satz in tief-bauer.js', satzImBauer.length === 0,
   satzImBauer.slice(0, 3).join(' | '));
 
+/* ── 21. Ein Absatz aus Block 1 steht nur in einem Bereich ───
+   AUFGABEN 39. Der Absatz hängt am Wanderer, der Bereich am
+   getroffenen Haus — derselbe Wanderer landet also in mehreren
+   Bereichen und trug dort wörtlich denselben Text. Geprüft wird
+   hier an von Hand gebauten Bereichen, nicht am Himmel des Tages
+   (REGELN.md Abschnitt 6e). */
+function mkV(w, g, zusatz){
+  const o = { wanderer:w, bGewicht:g, form:'aspekt', art:'spannung' };
+  for(const s in (zusatz||{})) o[s] = zusatz[s];
+  return o;
+}
+function mkB(k, name, laeuft){ return { k:k, name:name, laeuft:laeuft }; }
+
+/* a) Derselbe Wanderer auf Platz eins in zwei Bereichen: beide
+      bleiben offen — sonst stünde ein Bereich leer da —, und jede
+      Liste nennt den anderen Bereich. Damit sind die beiden Absätze
+      nicht mehr wortgleich. */
+let S1 = AC.seitenweit([
+  mkB('liebe', 'Liebe', [mkV('Saturn', 0.9)]),
+  mkB('geld',  'Geld',  [mkV('Saturn', 0.8)])
+]);
+p('Platz eins bleibt in beiden Bereichen offen',
+  S1[0].laeuft[0].zeigen === true && S1[1].laeuft[0].zeigen === true);
+p('jede Liste nennt nur den anderen Bereich',
+  S1[0].laeuft[0].auchIn.join() === 'Geld' &&
+  S1[1].laeuft[0].auchIn.join() === 'Liebe',
+  JSON.stringify([S1[0].laeuft[0].auchIn, S1[1].laeuft[0].auchIn]));
+
+/* b) Ein nachrangiger Platz weicht dem Bereich, in dem derselbe
+      Wanderer stärker zieht. */
+let S2 = AC.seitenweit([
+  mkB('liebe', 'Liebe', [mkV('Saturn', 0.9), mkV('Mars', 0.4)]),
+  mkB('geld',  'Geld',  [mkV('Jupiter', 0.7), mkV('Saturn', 0.3)])
+]);
+p('der schwaechere Platz wird zugeklappt',
+  S2[1].laeuft[1].zeigen === false);
+p('der staerkere Platz bleibt offen',
+  S2[0].laeuft[0].zeigen === true);
+p('ein zugeklappter Platz traegt keine Liste',
+  S2[1].laeuft[1].auchIn.length === 0);
+
+/* c) Zwei *verschiedene* Vorgänge desselben Wanderers tragen Wort
+      für Wort denselben Absatz — eine Sperre auf dem Vorgang hätte
+      das durchgelassen. Deshalb sitzt sie auf dem Wanderer. */
+p('der Schluessel des Absatzes ist der Wanderer',
+  AC.absatzSchluessel(mkV('Saturn', 0.5, { form:'durchgang', haus:7 })) ===
+  AC.absatzSchluessel(mkV('Saturn', 0.5, { art:'leicht' })));
+let S3 = AC.seitenweit([
+  mkB('liebe', 'Liebe', [mkV('Saturn', 0.9, { art:'leicht' })]),
+  mkB('geld',  'Geld',  [mkV('Mars', 0.8), mkV('Saturn', 0.5,
+                         { form:'durchgang', haus:2 })])
+]);
+p('auch ein anderer Vorgang desselben Wanderers weicht',
+  S3[1].laeuft[1].zeigen === false);
+
+/* d) Was Block 1 ohnehin nicht zeigt, nimmt niemandem den Absatz
+      weg und steht selbst nicht offen. */
+let S4 = AC.seitenweit([
+  mkB('liebe', 'Liebe', [mkV('Mars', 0.9), mkV('Venus', 0.5),
+                         mkV('Merkur', 0.4), mkV('Saturn', 0.99)]),
+  mkB('geld',  'Geld',  [mkV('Saturn', 0.2)])
+]);
+p('Platz vier steht nicht offen', S4[0].laeuft[3].zeigen === false);
+p('Platz vier nimmt keinem Bereich den Absatz weg',
+  S4[1].laeuft[0].zeigen === true);
+
+/* e) Und kein Bereich verliert seinen letzten Absatz. */
+const S5 = AC.seitenweit(['liebe','beruf','geld','familie','freunde']
+  .map((k, i) => mkB(k, 'B' + i, [mkV('Saturn', 1 - i/10)])));
+p('jeder Bereich behaelt mindestens einen offenen Absatz',
+  S5.every(b => b.laeuft.some(v => v.zeigen)));
+
+/* f) Am echten Blatt: auf einer Seite kein Absatz zweimal offen.
+      Gezählt wird, was vorgangSatz() daraus macht — denn das ist
+      der Text, den ein Mensch liest. */
+[JETZT, JETZT + 400, JETZT + 2000].forEach(jd => {
+  const Bx = AC.blatt(C, jd);
+  const offen = {};
+  Bx.bereiche.forEach(b => {
+    const ges = {};
+    b.laeuft.slice(0, 3).forEach(v => {
+      if(v.zeigen === false) return;
+      const S = TI.vorgangSatz(v, ges);
+      if(!S) return;
+      (offen[S.was] = offen[S.was] || []).push(b.name);
+    });
+  });
+  const zwei = Object.keys(offen).filter(s => offen[s].length > 1);
+  p('kein Absatz steht auf einer Seite zweimal offen (jd ' + Math.round(jd) + ')',
+    zwei.length === 0, zwei.map(s => offen[s].join('/') + ': ' + s.slice(0, 50)).join(' | '));
+  p('jeder laufende Bereich hat einen offenen Absatz (jd ' + Math.round(jd) + ')',
+    Bx.bereiche.every(b => !b.laeuft.length ||
+      b.laeuft.slice(0, 3).some(v => v.zeigen !== false)));
+});
+
+/* g) Zweimal dieselbe Liste in einem Bereich wird nicht zweimal
+      gesagt — sonst stünde derselbe Satz zweimal untereinander. */
+const gesX = {};
+const a1 = TI.vorgangSatz(mkV('Saturn', 0.9, { auchIn:['Geld'] }), gesX);
+const a2 = TI.vorgangSatz(mkV('Mars', 0.8, { auchIn:['Geld'] }), gesX);
+p('dieselbe Liste wird in einem Bereich nur einmal genannt',
+  /Geld/.test(a1.was) && !/Geld/.test(a2.was), a2.was.slice(-60));
+
 /* ── 15. Keine echten Geburtsdaten in dieser Datei ──────────── */
 const selbst = fs.readFileSync(__filename, 'utf8');
 p('keine echten Geburtsdaten in der Pruefdatei',

@@ -2618,6 +2618,87 @@ window.AC_LB = {
              drin:!!HR.imBereich, nah:nah };
   }
 
+  /* ── Derselbe Vorgang in mehreren Bereichen ───────────────────
+     Der Absatz in Block 1 hängt am Wanderer. Der Bereich hängt am
+     getroffenen Haus. Ein Wanderer trifft Häuser in mehreren
+     Bereichen — und trug damit bis zum 2026-11-06 in bis zu fünf
+     Bereichen wörtlich denselben Absatz.
+
+     Die Sperre in fuerBereich() hilft dagegen nicht: Sie sitzt je
+     Bereich, der Absatz steht aber auf der Seite. Genau die
+     Fehlerklasse aus REGELN.md Abschnitt 6f — jeder Schlüssel, der
+     in einem gebauten Text landet, braucht seine eigene Sperre.
+     Also eine zweite Sperre, eine Ebene höher.
+
+     Je Vorgang bleibt der Absatz dort offen, wo er am stärksten
+     zieht. In den übrigen Bereichen rutscht er aus Block 1 heraus;
+     sein Zeitfenster steht weiter unter „Was sonst noch läuft".
+
+     Zwei Ausnahmen, beide gewollt:
+
+       · Der stärkste Vorgang eines Bereichs bleibt immer offen.
+         Sonst stünde ein Bereich ohne einen einzigen Absatz da, und
+         ein leerer Bereich ist schlechter als ein wiederholter.
+       · Jeder offen stehende Absatz nennt die anderen Bereiche, in
+         die derselbe Vorgang hineinwirkt. Das ist die Auskunft, die
+         vorher fehlte — dass etwas nicht nur hier zieht —, und
+         zugleich der Grund, warum zwei offene Absätze desselben
+         Vorgangs nie Wort für Wort gleich sind: jede Liste lässt den
+         eigenen Bereich weg und nennt den anderen.
+
+     Gerechnet wird hier, formuliert in bereich-daten.js, gezeichnet
+     in bereich-app.js. Diese Stelle entscheidet nur, was offen
+     steht. */
+  var BLOCK1 = 3;                    /* so viele Vorgänge zeigt Block 1 */
+
+  /* Woran der Absatz hängt — und damit der Schlüssel, auf dem die
+     Sperre sitzt. Er ist absichtlich *nicht* der einzelne Vorgang:
+     Zwei verschiedene Vorgänge desselben Wanderers tragen Wort für
+     Wort denselben Absatz, weil der Text in bereich-daten.js allein
+     unter B_WAND[wanderer].was steht. Eine Sperre auf dem Vorgang
+     hätte die Dopplung am 2026-11-06 durchgelassen — geprüft, nicht
+     vermutet. Kommt der Absatz später aus mehr als einem Feld, wird
+     dieser Schlüssel breiter, und zwar hier an einer Stelle. */
+  function absatzSchluessel(v){ return v.wanderer; }
+
+  function seitenweit(bereiche){
+    var i, n, u, b, v, heim = {}, wirkt = {};
+
+    /* Erst sammeln: wohin wirkt welcher Vorgang, und wo zieht er am
+       stärksten. Nur die Plätze, die Block 1 überhaupt zeigt, können
+       Heimat werden — ein Vorgang auf Platz vier steht nirgends
+       offen und darf den Absatz niemandem wegnehmen. */
+    for(i=0;i<bereiche.length;i++){
+      b = bereiche[i];
+      for(n=0;n<b.laeuft.length;n++){
+        v = b.laeuft[n];
+        var s = absatzSchluessel(v);
+        if(s === undefined || s === null) continue;
+        if(!wirkt[s]) wirkt[s] = [];
+        if(wirkt[s].indexOf(b.name) < 0) wirkt[s].push(b.name);
+        if(n >= BLOCK1) continue;
+        if(!heim[s] || v.bGewicht > heim[s].g) heim[s] = { k:b.k, g:v.bGewicht };
+      }
+    }
+
+    /* Dann zuteilen. */
+    for(i=0;i<bereiche.length;i++){
+      b = bereiche[i];
+      for(n=0;n<b.laeuft.length;n++){
+        v = b.laeuft[n];
+        var sk = absatzSchluessel(v);
+        v.auchIn = [];
+        if(n >= BLOCK1 || sk === undefined || sk === null){ v.zeigen = false; continue; }
+        var h = heim[sk];
+        v.zeigen = (n === 0) || !h || h.k === b.k;
+        if(!v.zeigen) continue;
+        for(u=0;u<wirkt[sk].length;u++)
+          if(wirkt[sk][u] !== b.name) v.auchIn.push(wirkt[sk][u]);
+      }
+    }
+    return bereiche;
+  }
+
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
      Z und tage sind freiwillig: ohne sie rechnet die Seite nur mit
      Transiten, mit ihnen kommt das Kapitel dazu. */
@@ -2634,7 +2715,7 @@ window.AC_LB = {
                     Überblick und Tiefgang nie verschiedene zeigen. */
                  wid:widersprueche(C, B, L, K, N) });
     }
-    return { jd:jd, bereiche:out, alle:V };
+    return { jd:jd, bereiche:seitenweit(out), alle:V };
   }
 
   window.AC_BER = {
@@ -2645,6 +2726,8 @@ window.AC_LB = {
     fenster: fenster, hausDurchgang: hausDurchgang,
     vorgaenge: vorgaenge, fuerBereich: fuerBereich,
     lautstaerke: lautstaerke, kapitel: kapitel, natal: natal,
+    seitenweit: seitenweit, BLOCK1: BLOCK1,
+    absatzSchluessel: absatzSchluessel,
     facetten: facetten, herrGewicht: herrGewicht, buendelung: buendelung,
     widersprueche: widersprueche, blatt: blatt
   };
@@ -3161,6 +3244,14 @@ window.AC_LB = {
     woche:'Woche', wochen:'Wochen',
     einMonat:'Monat', vieleMonate:'Monate',
     einJahr:'etwa ein Jahr', vieleJahre:'etwa {n} Jahre',
+    /* Derselbe Vorgang zieht meist in mehrere Lebensbereiche.
+       Welche das sind, rechnet bereich-rechner.js (seitenweit);
+       hier steht der Satz dazu. Er hängt an dem Absatz, der offen
+       steht, und nennt nur die anderen Bereiche — die Liste ist
+       deshalb in jedem Bereich eine andere. Genau daran liegt es,
+       dass zwei offene Absätze desselben Vorgangs nie wortgleich
+       sind (AUFGABEN 39). */
+    auchIn:'Dasselbe zieht gerade auch an: {liste}.',
     /* Das Fenster eines Vorgangs */
     fensterOffen:'Das läuft noch über Jahre hinaus — ein Ende ist in dieser Rechnung nicht in Sicht.',
     fensterKurz:'Noch {d}.',
