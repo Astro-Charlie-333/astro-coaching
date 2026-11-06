@@ -1,0 +1,159 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="mo-wrap">
+
+<header class="mo-kopf">
+  <div class="mo-eyebrow">Wissen &middot; Der Mond</div>
+  <h1 class="mo-h1">Der Mond im Takt.</h1>
+  <p class="mo-lede">Rund alle 29&frac12; Tage wird der Mond voll und wieder dunkel. Hier siehst du, wo er gerade steht, wann die n&auml;chsten Neu- und Vollmonde und Finsternisse kommen und welche davon dich wirklich betreffen.</p>
+</header>
+
+<!-- 1 · Gerade jetzt. Die dunkle Fläche der Seite. -->
+<section class="mo-jetzt" id="jetzt" aria-labelledby="mo-h-jetzt">
+  <div class="mo-jetzt-bild"><svg id="mojetztsvg" viewBox="0 0 120 120" role="img" aria-label="Der Mond heute"></svg></div>
+  <div class="mo-jetzt-text">
+    <div class="mo-eyebrow hell">Gerade jetzt</div>
+    <h2 id="mo-h-jetzt" class="mo-jetzt-name"><span id="mojetztname">&mdash;</span></h2>
+    <p id="mojetzttext"></p>
+    <p class="mo-jetzt-tun" id="mojetzttun"></p>
+    <div class="mo-naechste" id="monaechste"></div>
+    <p class="ac-tech mo-jetzt-tech" data-ab="2" id="mojetzttech"></p>
+  </div>
+</section>
+
+<!-- 2 · Der ganze Zyklus in acht Stationen -->
+<section class="mo-teil" id="zyklus" aria-labelledby="mo-h-zyklus">
+  <div class="mo-eyebrow">Der Rhythmus</div>
+  <h2 id="mo-h-zyklus" class="mo-h2">Acht Stationen von dunkel zu voll und zur&uuml;ck</h2>
+  <p class="mo-text">Acht statt vier Phasen machen den Zyklus im Alltag brauchbar. Tippe eine an.</p>
+  <div class="mo-rad-box"><svg id="morad" viewBox="0 0 640 190" role="group" aria-label="Die acht Mondphasen"></svg></div>
+  <div class="mo-phase" id="mophase" aria-live="polite">
+    <h3 id="mophasename"></h3>
+    <p class="ac-tech mo-klein" data-ab="2" id="mophasemeta"></p>
+    <p id="mophasetext"></p>
+    <p class="mo-tun" id="mophasetun"></p>
+  </div>
+</section>
+
+<!-- 3 · Deine Termine -->
+<section class="mo-teil" id="termine" aria-labelledby="mo-h-termine">
+  <div class="mo-eyebrow">Deine Termine</div>
+  <h2 id="mo-h-termine" class="mo-h2">Welche Termine dich betreffen</h2>
+  <p class="mo-text">Ein Neumond ist f&uuml;r alle Menschen derselbe. Ob er dich etwas angeht, h&auml;ngt davon ab, ob er einen Punkt in deinem Geburtsbild genau trifft. Das passiert vier- bis achtmal im Jahr. Alle anderen Termine sind allgemeines Mondwetter.</p>
+  <div class="mo-profil" id="moprofil"></div>
+  <div class="mo-liste" id="moliste"></div>
+
+  <div class="ac-tech mo-tech" data-ab="2" id="motech">
+    <h3 class="mo-h3">Alle Termine mit Grad und Haus</h3>
+    <p class="mo-klein" id="motabkopf"></p>
+    <div class="mo-asc" id="moascbox" hidden>
+      <label for="moasc">Ohne Profil: Dein Aszendent</label>
+      <select id="moasc"></select>
+    </div>
+    <div class="mo-filter" id="mofilter" role="group" aria-label="Termine filtern"></div>
+    <div class="mo-tabbox"><table class="mo-tab" id="motab"></table></div>
+  </div>
+</section>
+
+<!-- 4 · Die vier Arten -->
+<section class="mo-teil" id="arten" aria-labelledby="mo-h-arten">
+  <div class="mo-eyebrow">Die vier Arten</div>
+  <h2 id="mo-h-arten" class="mo-h2">Neumond, Vollmond, Finsternis</h2>
+  <p class="mo-text">Der Unterschied liegt weniger in der Bedeutung als in der Reichweite: Ein Neu- oder Vollmond ist Monatsrhythmus, eine Finsternis ein Halbjahresthema.</p>
+  <div class="mo-arten" id="moarten"></div>
+</section>
+
+<!-- 5 · Geburtsmondphase -->
+<section class="mo-teil" id="geburt" aria-labelledby="mo-h-geburt">
+  <div class="mo-eyebrow">Du selbst</div>
+  <h2 id="mo-h-geburt" class="mo-h2">In welcher Mondphase du geboren bist</h2>
+  <p class="mo-text">Wie voll der Mond bei deiner Geburt war, beschreibt, wie du grunds&auml;tzlich an Dinge herangehst: ob du eher anf&auml;ngst, aufbaust, erntest oder abschlie&szlig;t.</p>
+  <div class="mo-geburt">
+    <svg id="mogebsvg" viewBox="0 0 120 120" role="img" aria-label="Der Mond bei deiner Geburt"></svg>
+    <div class="mo-geburt-text">
+      <div class="mo-gebquelle" id="mogebquelle"></div>
+      <h3 id="mogebname"></h3>
+      <p id="mogebtext"></p>
+      <p class="mo-tun" id="mogebfrage"></p>
+      <p class="ac-tech mo-klein" data-ab="2" id="mogebtech"></p>
+    </div>
+  </div>
+  <div class="mo-gebform" id="mogebform" hidden>
+    <label for="mogd">Geburtsdatum</label><input id="mogd" type="date">
+    <label for="mogt">Uhrzeit, grob reicht</label><input id="mogt" type="time" value="12:00">
+  </div>
+</section>
+
+<!-- 6 · Wie du damit arbeitest -->
+<section class="mo-teil" id="arbeit" aria-labelledby="mo-h-arbeit">
+  <div class="mo-eyebrow">Im Alltag</div>
+  <h2 id="mo-h-arbeit" class="mo-h2">Wie du damit arbeitest</h2>
+  <div class="mo-karten">
+    <div class="mo-karte"><b>Mit zweien anfangen</b><p>Du musst nicht acht Phasen beachten. Am Neumond etwas beginnen, am Vollmond anschauen, was daraus geworden ist. Der Rest kommt von selbst.</p></div>
+    <div class="mo-karte"><b>Die abnehmende H&auml;lfte ernst nehmen</b><p>Der am h&auml;ufigsten &uuml;bersprungene Teil. Zwei Wochen Aufr&auml;umen und Runterfahren geh&ouml;ren zum Zyklus. Das ist keine verlorene Zeit.</p></div>
+    <div class="mo-karte"><b>Auf dich beziehen</b><p>Wichtig wird ein Termin erst, wenn er einen Punkt bei dir trifft. Sonst ist er allgemeines Wetter. Die Liste oben zeigt dir, welche das sind.</p></div>
+  </div>
+  <div class="mo-hinweis"><b>F&uuml;r AuDHS und sensible Menschen:</b> Der Mondrhythmus gibt Struktur ohne Zwang. Er erlaubt ausdr&uuml;cklich, dass nicht jeder Tag gleich leistungsf&auml;hig ist, und macht aus Phasen niedriger Energie einen normalen Teil des Zyklus statt eines Versagens.</div>
+  <div class="mo-grenze"><b>Die Grenze:</b> Der Mondrhythmus ist ein Angebot, kein Gesetz. Sobald er Druck macht, etwa mit &bdquo;ich h&auml;tte am Neumond anfangen m&uuml;ssen&ldquo;, arbeitet er gegen dich. Dann lieber weglassen. Ein Werkzeug, das Schuldgef&uuml;hle macht, ist kein gutes Werkzeug.</div>
+</section>
+
+<!-- 7 · Für die Arbeit mit anderen (ab Stufe 2) -->
+<section class="mo-teil ac-tech" data-ab="2" id="pruefen" aria-labelledby="mo-h-pruefen">
+  <div class="mo-eyebrow">F&uuml;r Readings</div>
+  <h2 id="mo-h-pruefen" class="mo-h2">Was du pr&uuml;fst, in dieser Reihenfolge</h2>
+  <ol class="mo-schritte">
+    <li><b>Gradtreffer.</b> Trifft die Lunation einen Punkt eng genug? Bei Sonne, Mond, Aszendent und MC bis 4&deg;, bei Merkur, Venus und Mars bis 3&deg;, bei den langsamen Planeten 2 bis 2,5&deg;. Wenn nein, lies nur das Hausthema.</li>
+    <li><b>Das Haus.</b> Der Lebensbereich ist der Schauplatz. Bei Vollmonden und Mondfinsternissen immer das gegen&uuml;berliegende Haus mitlesen. Die Achse geh&ouml;rt zusammen.</li>
+    <li><b>Der Punkt.</b> Ein getroffener Planet sagt, welche Funktion betroffen ist. Sonne, Mond, Aszendent und MC wiegen am schwersten.</li>
+    <li><b>Der Herrscher.</b> Wer beherrscht das Zeichen der Lunation, und wo steht er im Chart? Dorthin l&auml;uft das Thema weiter. Siehe <a href="herrscher.html">Herrscher &amp; Dispositoren</a>.</li>
+    <li><b>Die Ebene.</b> Radix vor Solar Return vor Haus vor Progression. Ebenen best&auml;tigen einander, sie ersetzen sich nicht.</li>
+    <li><b>Der R&uuml;ckblick.</b> Bei Finsternissen: Wann lief dieselbe Serie zuletzt &uuml;ber diese Achse? Vor rund neunzehn Jahren, die vorige Station vor eineinhalb Jahren. Frag, was damals los war.</li>
+    <li><b>Der Ausl&ouml;ser.</b> Finsternisse z&uuml;nden selten am Tag selbst. Meist braucht es einen schnellen Planeten, der Wochen sp&auml;ter &uuml;ber denselben Grad l&auml;uft.</li>
+  </ol>
+  <div class="mo-hinweis"><b>F&uuml;rs Reading:</b> Sag nie, was passieren wird, sondern welche Art von Bewegung dran ist. &bdquo;Etwas kommt zum Abschluss&ldquo; ist brauchbar, &bdquo;du verlierst deinen Job&ldquo; nicht. Und wenn kein Gradtreffer vorliegt, sag genau das. Das schafft mehr Vertrauen als eine gro&szlig;e Ansage auf d&uuml;nner Datenlage.</div>
+
+  <h3 class="mo-h3">Nachschlagen: jede Kombination</h3>
+  <p class="mo-text">Unabh&auml;ngig von einem Chart: Was eine Lunation in einem Zeichen und einem Haus grunds&auml;tzlich bedeutet. 576 Kombinationen.</p>
+  <div class="mo-kombi">
+    <div class="mo-kwahl">
+      <label for="mokart">Art</label><select id="mokart"></select>
+      <label for="mokzeichen">Zeichen</label><select id="mokzeichen"></select>
+      <label for="mokhaus">Haus</label><select id="mokhaus"></select>
+    </div>
+    <div class="mo-ktext" id="moktext" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 8 · Die Zahlen dahinter (ab Stufe 3) -->
+<section class="mo-teil ac-tech" data-ab="3" id="zahlen" aria-labelledby="mo-h-zahlen">
+  <div class="mo-eyebrow">Die Zahlen</div>
+  <h2 id="mo-h-zahlen" class="mo-h2">Was dahinter steht</h2>
+  <div class="mo-tabbox"><table class="mo-tab">
+    <tr><th>Gr&ouml;&szlig;e</th><th>Wert</th><th>Warum das z&auml;hlt</th></tr>
+    <tr><td>Synodischer Monat</td><td class="mono">29,53 Tage</td><td>Neumond zu Neumond, der Zyklus dieser Seite</td></tr>
+    <tr><td>Siderischer Monat</td><td class="mono">27,32 Tage</td><td>Einmal durch alle Zeichen, daher rund 13&deg; pro Tag</td></tr>
+    <tr><td>Eine Phase</td><td class="mono">rund 3,7 Tage</td><td>29,53 geteilt durch acht</td></tr>
+    <tr><td>Mond pro Zeichen</td><td class="mono">rund 2,3 Tage</td><td>Warum sich Stimmungen alle zwei bis drei Tage verschieben</td></tr>
+  </table></div>
+</section>
+
+<section class="mo-ehrlich" aria-labelledby="mo-h-ehrlich">
+  <h2 id="mo-h-ehrlich" class="mo-h3">Was gerechnet ist und was Deutung</h2>
+  <p>Die Termine sind astronomisch gerechnet, die Uhrzeiten in Berliner Ortszeit mit Sommer- und Winterzeit. Die Phase von heute und deine Geburtsmondphase rechnet dein Browser, gespeichert wird dabei nichts. Alles, was &uuml;ber Bedeutung dasteht, ist &Uuml;berlieferung und beschreibt eine Art von Bewegung, nie ein Ereignis.</p>
+  <p class="ac-tech" data-ab="2">Rechnung der Termine mit der Swiss Ephemeris, Grade auf die Bogenminute. H&auml;user nach Whole Sign, Phasen in acht Stufen nach Dane Rudhyar.</p>
+  <p class="mo-klein" id="mostand"></p>
+</section>
+
+<nav class="mo-weiter" aria-label="Weiterlesen">
+  <a href="finsternisse.html"><span>Weiter</span>Finsternisse lesen</a>
+  <a href="rituale.html"><span>Praxis</span>Rituale und was sie wirklich tun</a>
+  <a href="mondknoten.html" data-ab="1"><span>Verwandt</span>Die Mondknoten</a>
+</nav>
+
+</div>

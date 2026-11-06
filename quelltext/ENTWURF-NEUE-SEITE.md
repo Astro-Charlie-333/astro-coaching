@@ -148,7 +148,7 @@ die fünf Wissensstufen, die Prüfungen. Daran wird nichts neu erfunden.
 | aus | wird |
 |---|---|
 | 12 × `raum-*.html` | die Texte wandern in `bereiche.html`, die Seiten gehen |
-| `lunationen` + `mondzyklen` + `mondphasen-rhythmus` | **eine** Mondseite |
+| `lunationen` + `mondzyklen` + `mondphasen-rhythmus` | **eine** Mondseite — erledigt 6.11.: `mond.html`, gebaut aus `quelltext/mond/` |
 | 5 Häuserseiten | **eine**, gebaut |
 | 11 Planetenseiten | **eine** Planetenseite mit allen, gebaut |
 | 3 Readingseiten + 4 Coachingseiten | sind längst in `begleitung.html` |
