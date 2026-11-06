@@ -334,3 +334,162 @@ wie es `AUFGABEN.md` 31 für die Überschriften schon vorhat: derselbe
 Vorgang heißt im Beruf „lass den Vertrag gegenlesen" und in Gesundheit
 „lass die Entscheidung über deinen Körper von jemandem gegenlesen, der
 nicht beteiligt ist". Und es steht einer da, nicht drei — der lauteste.
+
+---
+
+### 2026-11-06 · Die Andersgebaute
+
+Dritter Durchgang. Zuletzt war die Begleitete dran, also die Nächste aus
+`PRODUKT.md` Abschnitt 2: neurodivergent, an einem schlechten Tag. Wenig
+Kapazität, bricht schnell ab, und mit einer Lebenserfahrung aus
+Erklärungen, die nicht gepasst haben. Zusätzlich gemessen an den Grenzen
+aus Abschnitt 5.
+
+**Zur Lage dieses Durchgangs:** `astro-charlie-333.github.io` war aus der
+Umgebung dieses Durchgangs zum dritten Mal nicht erreichbar — der
+Netzübergang hat die Adresse abgelehnt (403 auf CONNECT, im Protokoll des
+Übergangs als Richtlinienablehnung vermerkt, Eintrag vom 06.11. 08:53).
+Nicht umgangen. Geprüft wurde deshalb wieder der ausgelieferte Stand aus
+`main` (`887e554`, 06.11.), lokal ausgeliefert und im Browser
+durchgegangen — dieselben Dateien, die GitHub Pages ausliefert, aber nicht
+die Adresse selbst. Kein Quelltext gelesen, nur der Bildschirm. Wer die
+Befunde nachstellt, nutzt die echte Adresse; weicht sie vom Stand aus
+`main` ab, gilt sie.
+
+Profil für den Durchgang: erfunden (17.09.1993, 11:25, Kassel). Beide
+Breiten, Stufe 0 von Hand gesetzt, bevor die erste Seite gelesen wurde.
+
+**Zwei Sachen, die ausdrücklich keine Befunde sind,** weil sie bereits
+stehen: der Auslieferzustand „Mittel" (23.10.) und die Dezimalpunkte in
+den Winkel-Etiketten (Aufgabe 37). Und eine Sache, die ich beim ersten
+Anlauf für einen Befund hielt: Das Profil ließ sich nicht speichern, weil
+ich „Kassel" getippt und den Vorschlag nicht angetippt hatte. Der Satz
+„Bitte einen Geburtsort aus der Liste wählen." steht rot direkt unter dem
+Knopf, auf beiden Breiten sichtbar, ohne Scrollen. Das hat mich aufgehalten
+und nichts gekostet.
+
+---
+
+### Bibliothek → Suche „ADHS" · die erste Seite, die ich finde, handelt davon, wie man mir etwas verkauft
+
+**Rolle:** Die Andersgebaute, Telefon (390) und Rechner (1440), Stufe 0,
+Ansicht „Für mich".
+**Gesehen:** Die Suche in `wissen.html` findet zu „ADHS", „Autismus" und
+„neurodivergent" je vier Treffer, in dieser Reihenfolge: „Für anders
+verdrahtete Köpfe", „Neurodivergentes Erleben im Chart", „ADHS, Autismus
+und beides", „Der Weg zur Abklärung". Dieselbe Reihenfolge steht im Regal
+„Vertiefung" unter der Gruppe „Anders verdrahtete Köpfe". Die erste
+Seite ist mit „DEINE NISCHE" überschrieben und beginnt: „Dein Herzstück:
+wie Astrologie neurodivergenten Menschen Selbstverständnis schenkt". Weiter
+unten: „Du sagst nie »dein Chart zeigt, dass du ADHS hast«", „Du arbeitest
+nur mit Menschen, die sich selbst schon so verstehen", und als Letztes vor
+dem Fuß: „Dein Vorteil: Du bist selbst anders verdrahtet und hast dich
+durch Astrologie besser verstehen gelernt. Das macht dich glaubwürdig wie
+kein Zertifikat … und genau das suchen Menschen, die sich endlich
+verstanden fühlen wollen." Die zweite Seite genauso: „Deine Haltung als
+Coachin: … Frag nicht »hast du vielleicht ADHS?«". Der Fuß beider Seiten
+lautet „Deine Nische · … · Deine Astro-Lernplattform". Die dritte und die
+vierte Seite sind an mich geschrieben und gut — „ADHS, Autismus und
+beides" erklärt ruhig, sagt „Fast jeder findet sich in solchen
+Beschreibungen ein Stück weit wieder — das ist normal und bedeutet nichts",
+und verweist auf die Fachperson. Nur stehen sie an dritter und vierter
+Stelle. Die Umschaltung „Für mich / Als Coachin" über der Suche ändert an
+der Trefferliste nichts: beide Ansichten zeigen dieselben vier, beide
+melden „89 Seiten"; umgeschaltet wird anderes (im Coach-Modus kommt etwa
+das Dossier dazu).
+**Gestolpert:** Ich suche das eine Wort, zu dem ich etwas über mich finden
+will, und die Seite, die aufgeht, erklärt jemand anderem, dass ich eine
+Nische bin.
+**Was es kostet:** Abbruch, und zwar bei genau der Besucherin, für die
+diese vier Seiten gebaut wurden. Zwei Wege. Entweder ich merke, dass ich
+mitlese, was nicht für mich geschrieben ist — dann bin ich wieder an der
+Stelle, an der ich mein Leben lang stehe: besprochen, nicht angesprochen.
+Oder ich lese „Das macht dich glaubwürdig wie kein Zertifikat" auf mich
+und verstehe nicht, wovon die Seite redet. `REGELN.md` Abschnitt 1 sagt,
+die Sicht der Coachin wird zugeklappt angeboten, nie im Vordergrund; hier
+ist sie nicht zugeklappt, sondern die ganze Seite, und sie steht in der
+Ansicht „Für mich" vor den beiden Seiten, die für mich sind. Eine Grenze
+im Sinne von Abschnitt 5 ist nicht verletzt — beide Seiten sagen deutlich
+und mehrfach, dass Astrologie nicht diagnostiziert und Diagnosen zu
+Fachleuten gehören. Teuer ist nicht, was dort steht, sondern an wen es
+gerichtet ist.
+**Vorschlag:** Die beiden Seiten gehören in die Ansicht „Als Coachin" und
+aus der Trefferliste von „Für mich" heraus. Reihenfolge der Gruppe dann:
+„ADHS, Autismus und beides" zuerst, „Der Weg zur Abklärung" danach. Wenn
+sie in beiden Ansichten bleiben sollen, braucht die Seite oben dieselbe
+Kennzeichnung, die die Plattform sonst benutzt — und die Anrede muss sich
+mit der Ansicht ändern, statt in „Für mich" von „deiner Nische" zu
+sprechen.
+
+---
+
+### „Jetzt" · die Einstellung, die mir den Tag rettet, liegt am Fuß der Wand, die sie verhindern würde
+
+**Rolle:** Die Andersgebaute, Telefon (390), Stufe 0, nach dem Anlegen des
+Profils.
+**Gesehen:** `index.html` ist auf Stufe 0 am Telefon 13.502 Pixel hoch —
+rund sechzehn Bildschirme, ohne eine Stelle, an der etwas zugeklappt wäre
+(zwölf Klappabschnitte, null offen, alle im unteren Drittel). Ganz unten,
+bei 13.306 Pixeln, liegt hinter dem zugeklappten „Seite einstellen" ein
+Block, der genau für mich gebaut ist: „Wie viel geht heute? Danach richtet
+sich, wie viel diese Seite zeigt. Es wird nichts mitgeschrieben und nichts
+gezählt — morgen fragt sie wieder neu. · Wenig — ein Satz · Mittel — das
+Wichtigste · Viel — alles". Er wirkt auch: nachgemessen schrumpft die
+Seite nach „Wenig" von 13.502 auf 6.700 Pixel. Ausgeliefert wird sie ohne
+eine gewählte Stufe, also vollständig.
+**Gestolpert:** Um an die Einstellung zu kommen, die mir die lange Seite
+erspart, muss ich die lange Seite zu Ende scrollen.
+**Was es kostet:** Abbruch, bevor ich irgendetwas von der Plattform gesehen
+habe — und ein Abbruch, den die Seite selbst schon lösen kann. Das ist der
+Grund, warum er teuer ist: Hier fehlt nichts, es steht nur am falschen
+Ende. An einem schlechten Tag scrolle ich keine sechzehn Bildschirme, um
+herauszufinden, ob weiter unten noch etwas kommt. Der Satz „Es wird nichts
+mitgeschrieben und nichts gezählt" ist dabei das Beste, was ich auf der
+ganzen Plattform gelesen habe — er nimmt genau die Angst weg, die
+Werkzeuge dieser Art sonst machen. Nur liest ihn niemand, der ihn braucht.
+Verwandt mit dem Befund vom 23.10. zur Stufenleiste, aber nicht derselbe:
+dort ging es um den Auslieferzustand der Wissensstufe, hier um einen
+zweiten, eigenen Schalter, der ausgeliefert gar nicht gesetzt ist.
+**Vorschlag:** „Wie viel geht heute?" gehört über den ersten langen
+Abschnitt, nicht unter den letzten — am Telefon in Sichtweite der Begrüßung.
+Entweder offen, oder als eine Zeile, die sagt, was dahinter liegt („Heute
+weniger anzeigen"). Was unten bleiben darf, ist die Bereichsauswahl.
+
+---
+
+### Die zwölf Themenräume · die Zeile „keine Planetennamen" steht einen Fingerbreit über „dein Merkur in Waage"
+
+**Rolle:** Die Andersgebaute, Telefon (390) und Rechner (1440), Stufe 0.
+**Gesehen:** Auf `raum-anders-verdrahtet.html` steht oben die
+Stufenleiste mit „Neu" gewählt und daneben die Erklärung dazu: „Keine
+Ahnung von Astrologie. Alles in Alltagssprache. Keine Fachbegriffe, keine
+Grade, keine Planetennamen — nur, worum es geht." Rund 150 Pixel darunter,
+am Telefon im selben Bild: „Vorgeschlagen, weil dein Merkur in Waage steht
+— Luft mag den Überblick und ermüdet an Länge." Und offen im ersten
+Abschnitt, unter „UND DAS STEHT BEI DIR IM CHART": „Der Herrscher deines
+12. Hauses ist Venus im 10. Haus." Nichts davon liegt in einem
+Klappabschnitt. Nachgemessen gilt das für alle zwölf Räume: In jedem sind
+auf Stufe 0 „Haus", „Häuser", „Aspekt" und „Herrscher" im sichtbaren Text,
+dazu je nach Raum Planetennamen; `raum-naehe.html` zeigt zusätzlich
+„Quadrat" und „Opposition". Das Umschalten zwischen „Neu" und „Mittel"
+ändert den sichtbaren Text dieser Seiten um acht Zeichen — auf
+`index.html` und `bereiche.html` sind es zur selben Zeit rund 1.800 und
+800. Die Leiste ist also da und tut dort nichts.
+**Gestolpert:** Ich stelle ein, dass ich nichts von Astrologie weiß, die
+Seite bestätigt mir das mit einem eigenen Satz, und der nächste Satz
+rechnet mir vor, warum sie mir eine kurze Ansicht vorschlägt.
+**Was es kostet:** Nicht sofort Abbruch — aber Raten, und zwar an der
+teuersten Stelle. Die Themenräume sind das Einzige auf der Plattform, das
+wirklich für mich gebaut ist: „Kurz / Ausführlich / Visuell", „Fang oben
+an. Die unteren kannst du später aufklappen", und nach jeder Facette „Ja ·
+Ein bisschen · Nein · Später". Das ist gut gemacht und hat mich gehalten.
+Dann steht im Kasten, der mir sagen soll, was bei mir los ist, ein Satz,
+den ich nicht lesen kann — und ich weiß nicht, ob ich etwas verpasse oder
+ob es egal ist. Was `PRODUKT.md` Abschnitt 3 verspricht („Niemand muss
+erst eine Sprache lernen"), wird hier ausdrücklich zugesagt und auf
+derselben Bildschirmhöhe gebrochen. Fehlerklasse von Aufgabe 25 und 27,
+nur auf zwölf Seiten, die dort nicht genannt sind.
+**Vorschlag:** Kein Vorschlag zur Formulierung — das entscheidet, wer die
+Räume geschrieben hat. Was aus meiner Sicht gelten muss: Entweder die
+zwölf Räume richten sich nach der Leiste, oder sie zeigen sie nicht. Eine
+Leiste, die etwas zusagt und nichts tut, ist schlimmer als keine.

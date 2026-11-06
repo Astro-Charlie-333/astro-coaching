@@ -164,6 +164,48 @@ eine Karte ohne Handgriff in dem Abschnitt landet oder die genannte Zahl
 von der gezeichneten abweicht — gegen feste Beispiele gehalten wie
 `_datum_ohne_jahr` in `bau-heute.py`.
 
+### 46 · Die Nischenseiten sprechen die Besucherin als Coachin an
+Gefunden im Prüfdurchgang vom 06.11. als Die Andersgebaute (Befund
+06.11-1). Wer in `wissen.html` nach „ADHS", „Autismus" oder
+„neurodivergent" sucht, bekommt vier Treffer; die ersten beiden sind
+`neurodivergente-astrologie.html` und `neurodivergenz-vertiefung.html`,
+und beide sind an Mandy geschrieben: „DEINE NISCHE", „Dein Herzstück",
+„Deine Haltung als Coachin", „Dein Vorteil: Du bist selbst anders
+verdrahtet … glaubwürdig wie kein Zertifikat". Die beiden Seiten, die an
+die Besucherin gerichtet sind — `audhs-verstehen.html` und
+`diagnose-weg.html` —, stehen dahinter. Die Umschaltung „Für mich / Als
+Coachin" ändert daran nichts: beide Ansichten melden 89 Seiten und zeigen
+dieselbe Trefferliste. `REGELN.md` Abschnitt 1 verlangt, dass die Sicht
+der Coachin zugeklappt angeboten wird und nie im Vordergrund steht; hier
+ist sie nicht zugeklappt, sondern die ganze Seite, und sie steht in „Für
+mich" vor dem, was für die Besucherin da ist. Betroffen ist die Rolle,
+für die diese vier Seiten überhaupt gebaut wurden.
+**Fertig, wenn:** in der Ansicht „Für mich" weder Suche noch Regal eine
+Seite zeigt, die die Leserin als Coachin anspricht, die Gruppe „Anders
+verdrahtete Köpfe" dort mit `audhs-verstehen.html` beginnt, jede Seite
+ihre Ansicht aus derselben Quelle bezieht wie die Zählung darüber (keine
+zweite Liste), und `pruefe-alles.py` am gerenderten Text abbricht, sobald
+eine Seite in der Ansicht „Für mich" eine Coach-Anrede enthält — geprüft
+an einer Form, nicht an einem Wort, und gegen feste Beispiele gehalten
+wie `_datum_ohne_jahr` in `bau-heute.py`.
+
+### 47 · „Wie viel geht heute?" steht am Fuß der Seite, die es kürzen soll
+Gefunden im Prüfdurchgang vom 06.11. als Die Andersgebaute (Befund
+06.11-2). `index.html` ist auf Stufe 0 am Telefon (390) 13.502 Pixel hoch,
+mit zwölf Klappabschnitten, von denen keiner offen ist. Der Block „Wie
+viel geht heute? · Wenig — ein Satz · Mittel — das Wichtigste · Viel —
+alles" liegt bei 13.306 Pixeln hinter dem zugeklappten „Seite einstellen"
+und ist ausgeliefert nicht gesetzt. Er wirkt: nach „Wenig" schrumpft die
+Seite auf 6.700 Pixel. Wer ihn braucht, muss dafür genau das tun, wovor er
+schützt. Nicht dasselbe wie der Befund vom 23.10. zur Stufenleiste — das
+ist ein zweiter, eigener Schalter.
+**Fertig, wenn:** „Wie viel geht heute?" am Telefon ohne Scrollen
+erreichbar ist (offen oder als eine Zeile, die sagt, was dahinter liegt),
+die Bereichsauswahl unten bleiben darf, die Einstellung weiterhin nichts
+mitschreibt und täglich neu fragt, und `bau-heute.py` am gerenderten
+Ergebnis abbricht, sobald der Block bei 390 Pixeln Breite tiefer als eine
+Bildschirmhöhe liegt.
+
 ---
 
 ## Was nicht gemacht wird
