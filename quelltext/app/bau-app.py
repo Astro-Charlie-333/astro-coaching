@@ -222,12 +222,17 @@ for schluessel in ('titel', 'ueberschrift', 'lage', 'was_geht', 'handgriff', 'gr
     elif len(wert) < 40 or not wert.rstrip().endswith('.'):
         fehler.append(f'Text zu kurz oder ohne Punkt: ohne_netz.{schluessel}')
 
-# 2 · In offline-app.js steht kein Satz. Fehlerklasse wie bei monat-app.js:
-#     ein Satz in der Anzeige, den niemand in den Daten sucht.
-for s in re.findall(r"'([^'\n]{12,})'|\"([^\"\n]{12,})\"", lies(hier / 'offline-app.js')):
-    text = s[0] or s[1]
-    if ' ' in text:
-        fehler.append('Satz in offline-app.js statt in app-daten.json: ' + text[:40])
+# 2 · In offline-app.js steht kein Satz. Fehlerklasse wie bei
+#     monat-app.js: ein Satz in der Anzeige, den niemand in den Daten
+#     sucht. Die Regel steht seit dem 7.11. in rituale/pruefwerk.py
+#     (Aufgabe 43) — vorher stand hier eine eigene, lose Fassung, die
+#     erst ab zwölf Zeichen hinsah.
+sys.path.insert(0, str(hier.parent / 'rituale'))
+import pruefwerk
+fehler += pruefwerk.pruefe_anzeige_satzfrei(
+    lies(hier / 'offline-app.js'), 'offline-app.js', 'app-daten.json')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(
+    lies(hier / 'offline-app.js'), 'offline-app.js')
 
 # 3 · Die IDs, die das Skript sucht, gibt es im Körper.
 koerper = lies(hier / 'offline-koerper.html')

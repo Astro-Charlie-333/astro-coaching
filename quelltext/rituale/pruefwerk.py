@@ -190,3 +190,182 @@ def pruefe_gezeichnete_handgriffe(texte, woher='der Seite'):
         if tadel:
             fehler.append(f'Handgriff auf {woher} {tadel}')
     return fehler
+
+
+# ═══════════════════════════════════════════════════════════════
+#  In einer Anzeige steht kein Satz
+#
+#  `PRODUKT.md` Abschnitt 7: Rechnen, Texte und Anzeige bleiben
+#  getrennt, und kein Text wandert in die Anzeige. Ein Satz, der in
+#  einer `*-app.js` steht, wandert beim Umzug nach Stufe 3 nicht mit,
+#  wird beim nächsten Umbau nebenbei geändert und von keiner Prüfung
+#  gesehen. Genau so entstand „liegt auf deinen Ausdruck".
+#
+#  Bis heute stand diese Regel zweimal: streng in `bau-bereiche.py`
+#  für `bereich-app.js`, lose daneben für `wahl-app.js` — und für die
+#  zwanzig übrigen Anzeigen gar nicht. Das ist die Fehlerklasse aus
+#  `REGELN.md` Abschnitt 6c: Was verlässlich sein soll, gehört an eine
+#  Stelle. Hier ist sie.
+#
+#  Geprüft wird die Form, nicht ein Wort (`REGELN.md` 6e): Jede
+#  Zeichenkette wird vom Markup befreit; was dann noch nach Sprache
+#  aussieht, ist ein Satz. Nach Sprache sieht es aus, wenn zwei Wörter
+#  nebeneinanderstehen oder ein Wort ein Satzzeichen trägt. Technische
+#  Zeichenketten — IDs, Klassen, Auswahlausdrücke, Typen — haben kein
+#  Leerzeichen, keinen Großbuchstaben und keinen Umlaut; ein deutscher
+#  Satz hat immer eines davon.
+#
+#  Alle drei Anführungsarten werden gelesen. Eine Prüfung, die nur die
+#  einfache Anführung sieht, lässt sich mit einem Anführungszeichen
+#  umgehen — dann steht derselbe Fehler nur an einer Stelle, an die
+#  niemand sieht.
+_ENTITAET = {'&middot;': '·', '&mdash;': '—',
+             '&ndash;': '–', '&amp;': '&', '&lt;': '<', '&gt;': '>',
+             '&quot;': '"', '&nbsp;': ' ', '&hellip;': '…'}
+_SATZZEICHEN = '.,:;!?…—·()'
+_WORT = r'[A-Za-zÄÖÜäöüß]{2,}(?:-[A-Za-zÄÖÜäöüß0-9]+)*'
+# Keine Sprache, sondern eine Anweisung an den Browser. Die Ausnahme
+# steht als vollständige Zeichenkette da, nicht als enthaltenes Wort —
+# sonst wäre sie ein Schlupfloch.
+_DIREKTIVEN = {'use strict', 'use asm'}
+# Die drei Anführungsarten in einem Durchgang. Die Reihenfolge ist
+# gleichgültig: `finditer` läuft von links, und an einer Stelle greift
+# nur die Art, die dort wirklich beginnt — ein Apostroph in einer
+# doppelt angeführten Zeichenkette wird also mitgelesen und nicht als
+# Beginn einer neuen gezählt.
+_LITERAL = re.compile(r"'((?:[^'\\\n]|\\.)*)'"
+                      r'|"((?:[^"\\\n]|\\.)*)"'
+                      r'|`((?:[^`\\]|\\.)*)`')
+
+
+def nur_code(t):
+    """Kommentare und Suchmuster weg — in einem Kommentar darf stehen,
+    warum hier kein Satz steht, und /&/g ist kein Text."""
+    t = re.sub(r'/\*.*?\*/', ' ', t, flags=re.S)
+    t = re.sub(r'(?m)^\s*//.*$', ' ', t)
+    return re.sub(r'(?<=[(,])\s*/(?:[^/\\\n]|\\.)*/[gimsuy]*', ' ', t)
+
+
+def satz_darin(lit):
+    """Was von einer Zeichenkette übrig bleibt, wenn man das Markup
+    abzieht — oder None, wenn nichts nach Sprache aussieht."""
+    if lit.strip() in _DIREKTIVEN:
+        return None
+    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
+    for k, v in _ENTITAET.items():
+        rest = rest.replace(k, v)
+    rest = re.sub(r'&[a-zA-Z]+;|&#\d+;', ' ', rest)
+    if (' ' not in rest and not re.search(r'[A-ZÄÖÜ]', rest)
+            and not re.search(r'[äöüßÄÖÜ]', rest)):
+        return None          # eine technische Zeichenkette
+    w = re.findall(_WORT, rest)
+    if len(w) >= 2 or (w and re.search('[' + re.escape(_SATZZEICHEN) + ']',
+                                       rest)):
+        return rest.strip()
+    return None
+
+
+def saetze_in_anzeige(code):
+    """Jede Zeichenkette einer Anzeige, die nach Sprache aussieht,
+    als (Zeile, Text). Leere Liste heißt: diese Anzeige ist satzfrei."""
+    code = nur_code(code)
+    raus = []
+    for m in _LITERAL.finditer(code):
+        lit = m.group(1) or m.group(2) or m.group(3) or ''
+        gefunden = satz_darin(lit)
+        if gefunden:
+            raus.append((code.count('\n', 0, m.start()) + 1, gefunden))
+    return raus
+
+
+def pruefe_anzeige_satzfrei(code, anzeige, daten):
+    """Bricht ab, sobald in `anzeige` ein Satz steht. `daten` ist die
+    Datei, in die er gehört — die Meldung soll den Weg zeigen."""
+    return [f'Satz in {anzeige} statt in {daten} (Zeile {z}): "{t[:70]}"'
+            for z, t in saetze_in_anzeige(code)]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Die Eingabe dieser Regel ändert sich mit jeder Anzeige, die
+# umzieht. Diese Zeilen laufen beim Import — bricht die Regel, bricht
+# sie hier und nicht an der Anzeige des Tages.
+for _s in ['Noch kein Profil angelegt.',
+           'Hier legst du eins an',
+           'Was du tun kannst',
+           'dein Mond.',
+           'Das Muster',
+           'Reading für',
+           '. Haus',
+           '#berwahl, .bw-leiste',
+           'Jan.']:
+    assert satz_darin(_s), f'müsste anschlagen: {_s}'
+for _s in ['use strict',
+           'nivleiste',
+           '#berwahl',
+           'ac-tech',
+           'data-ab',
+           'div',
+           'aria-expanded',
+           '</span>',
+           '<span class="x"></span>',
+           '',
+           ' ']:
+    assert not satz_darin(_s), \
+        f'müsste durchgehen: {_s} → {satz_darin(_s)}'
+# Und alle drei Anführungsarten werden gelesen, sonst ist die Regel
+# mit einem Anführungszeichen abstellbar.
+assert len(saetze_in_anzeige(
+    "var a='Noch kein Profil angelegt.';\n"
+    'var b="Hier legst du eins an";\n'
+    'var c=`Was du tun kannst`;\n')) == 3
+# Ein Kommentar darf sagen, warum hier kein Satz steht.
+assert saetze_in_anzeige("// Hier steht kein Satz, weil er in die Daten gehört.\n"
+                         "var a='nivleiste';\n") == []
+# Ein Apostroph in einer doppelt angeführten Zeichenkette verschiebt
+# die Zählung nicht.
+assert len(saetze_in_anzeige('var a="das geht\'s nicht";var b=\'nivleiste\';')) == 1
+del _s
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Eine Anzeige schreibt „dein" nicht selbst
+#
+#  Aufgabe 38: Die Punkte tragen ihr Geschlecht in `bahn-daten.js`,
+#  und `B_BEUGE` setzt „dein" im verlangten Fall davor — an einer
+#  Stelle. Wo eine Anzeige die Form von Hand hinschreibt, steht
+#  „liegt auf deinen Ausdruck" nur noch nicht da, wo es jemand sieht.
+#
+#  Gezählt wird, was in den Zeichenketten der Anzeige steht, nicht im
+#  Code: `ohneDein` ist ein Name und kein Text, `B_DEIN` eine Tabelle.
+#  Geprüft wird also die Form „dieses Wort steht in einem Text, den
+#  die Anzeige selbst mitbringt".
+_DEINFORM = re.compile(r'(?<![A-Za-zÄÖÜäöüß])[Dd]ein(?:e|em|en|er|es)?'
+                       r'(?![A-Za-zÄÖÜäöüß])')
+
+
+def deins_in_anzeige(code):
+    """Jedes von Hand geschriebene „dein" in den Zeichenketten einer
+    Anzeige, als (Zeile, Wort)."""
+    code = nur_code(code)
+    raus = []
+    for m in _LITERAL.finditer(code):
+        lit = m.group(1) or m.group(2) or m.group(3) or ''
+        zeile = code.count('\n', 0, m.start()) + 1
+        raus += [(zeile, d.group(0)) for d in _DEINFORM.finditer(lit)]
+    return raus
+
+
+def pruefe_anzeige_ohne_dein(code, anzeige):
+    """Bricht ab, sobald `anzeige` „dein" selbst hinschreibt."""
+    return [f'„{w}" von Hand in {anzeige} (Zeile {z}) — die Form gehört '
+            'an die eine Stelle, die das Geschlecht des Punktes kennt '
+            '(B_BEUGE in bahn-daten.js)'
+            for z, w in deins_in_anzeige(code)]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+assert [w for _, w in deins_in_anzeige("var a='auf deinen Mond';")] == ['deinen']
+assert deins_in_anzeige("var ohneDein = 1; var B_DEIN = {};") == []
+assert deins_in_anzeige("var a='deinstalliert';") == []
+assert deins_in_anzeige("// auf deinen Mond\nvar a='nivleiste';") == []
+assert [w for _, w in deins_in_anzeige('var a="deine Venus";')] == ['deine']

@@ -687,6 +687,141 @@ elif weg_tafel:
 else:
     print(f'  die fünf Winkel an {len(mit_tafel)} eingetragenen Stellen')
 
+# 13 · wie weit die Anzeigen aus dem Satzgeschäft heraus sind
+# Aufgabe 43 vom 7.11.: Aufgabe 34 („in dieser Anzeige steht kein
+# Satz") und Aufgabe 38 („die Anzeige schreibt ‚dein' nicht selbst")
+# verlangen beide, dass *jede* der zweiundzwanzig Anzeigen eine
+# Prüfung besteht. Zusammen sind das über 1300 Zeichenketten — kein
+# Tageswerk, und eine halb umgezogene Anzeige liefert nicht aus.
+# Deshalb sind beide Aufgaben je Anzeige zerlegt (AUFGABEN.md).
+#
+# Diese Prüfung ist die Liste dazu, und sie steht hier statt in
+# AUFGABEN.md, weil eine Liste in einem Dokument driftet
+# (REGELN.md 6c: was verlässlich sein soll, gehört in die Maschine).
+# Sie bricht in beide Richtungen, dieselbe Bauart wie HANDARBEIT:
+#
+#   mehr als eingetragen → eine Anzeige hat Text dazubekommen,
+#                          den niemand gesehen hat
+#   weniger             → eine Anzeige ist weitergekommen, der
+#                          Eintrag beschreibt sie nicht mehr
+#
+# So kann die Liste nur schrumpfen, und wie weit es ist, steht nicht
+# in einem Satz, sondern wird bei jedem Lauf nachgezählt. Ist eine
+# Zeile auf (0, 0), gehört in das `bau-*.py` dieser Anzeige der
+# dauerhafte Riegel (`pruefwerk.pruefe_anzeige_satzfrei` und
+# `pruefwerk.pruefe_anzeige_ohne_dein`) — danach fällt die Zeile hier
+# weg. `bereich-app.js` hat ihn seit dem 7.11.
+sys.path.insert(0, str(hier / 'rituale'))
+import pruefwerk
+ANZEIGEN = {
+    # Anzeige                      (Sätze, „dein" von Hand)
+    'kern/heute-app.js':           (160, 8),
+    'bereiche/wahl-app.js':        (1, 0),
+    'kern/ich-app.js':             (40, 2),
+    'monat/monat-app.js':          (2, 0),
+    'bez/beziehung-app.js':        (83, 14),
+    'zeit/zeit-app.js':            (115, 6),
+    'karte/karte-app.js':          (44, 5),
+    'mond/mond-app.js':            (76, 8),
+    'zahlen/zahlen-app.js':        (194, 13),
+    'haeuser/haeuser-app.js':      (41, 0),
+    'rituale/zauber-app.js':       (97, 18),
+    'geist/geist-app.js':          (174, 31),
+    'dossier/dossier-app.js':      (97, 4),
+    'analyse/analyse-app.js':      (29, 1),
+    'begleitung/begleit-app.js':   (20, 0),
+    'ereignis/ereignis-app.js':    (28, 10),
+    'oph/oph-app.js':              (65, 4),
+    'niveau/reading-app.js':       (70, 14),
+    'werkstatt/werkstatt-app.js':  (39, 2),
+}
+# Diese drei sind durch und werden von ihrem eigenen bau-*.py
+# gehalten; sie stehen hier nur, damit auffällt, wenn eine davon
+# zurückfällt und keinen Riegel hat.
+FERTIG = {'bereiche/bereich-app.js', 'start/start-app.js',
+          'app/offline-app.js'}
+
+# Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
+# entscheidet diese Regel — und sie steht in einer eigenen Funktion
+# mit festen Beispielen darunter (REGELN.md 6e), damit aus der Sperre
+# nicht beim nächsten Umbau lautlos eine halbe wird, die nur noch
+# Zuwachs sieht.
+def _steht_anders(ist, eingetragen):
+    if ist > eingetragen:
+        return 'gewachsen'
+    if ist < eingetragen:
+        return 'ueberholt'
+    return None
+
+
+assert _steht_anders((2, 0), (2, 0)) is None
+assert _steht_anders((3, 0), (2, 0)) == 'gewachsen'
+assert _steht_anders((2, 1), (2, 0)) == 'gewachsen'
+assert _steht_anders((1, 0), (2, 0)) == 'ueberholt'
+assert _steht_anders((2, 0), (2, 1)) == 'ueberholt'
+assert _steht_anders((0, 0), (1, 0)) == 'ueberholt'
+
+gezaehlt, offen_s, offen_d = {}, 0, 0
+for a in sorted(hier.glob('*/*-app.js')):
+    name = a.relative_to(hier).as_posix()
+    quell = a.read_text(encoding='utf-8')
+    s = len(pruefwerk.saetze_in_anzeige(quell))
+    d = len(pruefwerk.deins_in_anzeige(quell))
+    gezaehlt[name] = (s, d)
+    offen_s += s
+    offen_d += d
+fehlt_liste = sorted(set(gezaehlt) - set(ANZEIGEN) - FERTIG)
+gibt_nicht  = sorted((set(ANZEIGEN) | FERTIG) - set(gezaehlt))
+gewachsen = sorted(n for n, z in gezaehlt.items()
+                   if _steht_anders(z, ANZEIGEN.get(n, (0, 0))) == 'gewachsen')
+geschrumpft = sorted(n for n, z in gezaehlt.items()
+                     if n in ANZEIGEN
+                     and _steht_anders(z, ANZEIGEN[n]) == 'ueberholt')
+durch = sorted(n for n, z in gezaehlt.items() if z == (0, 0))
+print(f'  {len(durch)} von {len(gezaehlt)} Anzeigen ohne eigenen Satz, '
+      f'{offen_s} Sätze und {offen_d} mal „dein" offen')
+if fehlt_liste:
+    print('  ANZEIGE NICHT IN DER LISTE: ' + ', '.join(fehlt_liste))
+    print('      (jede *-app.js steht in ANZEIGEN mit ihrem Stand oder,')
+    print('       wenn sie durch ist und einen Riegel hat, in FERTIG)')
+    fehlgeschlagen.append('Anzeige nicht in der Liste')
+if gibt_nicht:
+    print('  EINGETRAGENE ANZEIGE FEHLT: ' + ', '.join(gibt_nicht))
+    fehlgeschlagen.append('eingetragene Anzeige fehlt')
+if gewachsen:
+    print('  ANZEIGE HAT TEXT DAZUBEKOMMEN:')
+    for n in gewachsen[:8]:
+        print(f'      {n}: {gezaehlt[n]} statt {ANZEIGEN.get(n, (0, 0))}')
+    print('      (ein Satz gehört in die Datendatei der Seite, nicht in')
+    print('       die Anzeige — PRODUKT.md Abschnitt 7)')
+    fehlgeschlagen.append('Anzeige hat Text dazubekommen')
+# Und „fertig" heißt: ein bau-*.py hält sie. Ohne diese Zeile wäre
+# FERTIG eine Behauptung — eine Anzeige könnte dort stehen und beim
+# nächsten Umbau wieder Sätze bekommen, ohne dass etwas abbricht.
+# Dieselbe Lehre wie REGELN.md 6c: eine Zusage, an die sich jemand
+# erinnern muss, ist keine Automatik.
+_RIEGEL = re.compile(r"pruefe_anzeige_satzfrei\(\s*[^,]+,\s*'([^']+)'")
+verriegelt = set()
+for b in sorted(hier.glob('*/bau-*.py')):
+    for name in _RIEGEL.findall(b.read_text(encoding='utf-8')):
+        verriegelt.add(name)
+ohne_riegel = sorted(n for n in FERTIG
+                     if n.rsplit('/', 1)[-1] not in verriegelt)
+if ohne_riegel:
+    print('  ALS FERTIG GEFÜHRT, ABER OHNE RIEGEL: ' + ', '.join(ohne_riegel))
+    print('      (das bau-*.py dieser Anzeige ruft')
+    print('       pruefwerk.pruefe_anzeige_satzfrei nicht auf — dann hält')
+    print('       die Anzeige nur die Absicht)')
+    fehlgeschlagen.append('Anzeige ohne Riegel')
+if geschrumpft:
+    print('  EINTRAG ÜBERHOLT:')
+    for n in geschrumpft[:8]:
+        print(f'      {n}: {gezaehlt[n]} statt {ANZEIGEN[n]}')
+    print('      (die Anzeige ist weiter als die Liste — Zahl nachziehen,')
+    print('       und bei (0, 0) den Riegel ins bau-*.py und die Zeile')
+    print('       nach FERTIG)')
+    fehlgeschlagen.append('Eintrag überholt')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:

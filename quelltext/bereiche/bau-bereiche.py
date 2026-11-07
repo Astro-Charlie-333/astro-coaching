@@ -922,59 +922,18 @@ for k in sorted(RAUM_SEITEN):
 # statt ihn zu zeichnen. PRODUKT.md Abschnitt 7 verlangt das
 # Gegenteil — ein Satz, der in der Anzeige steht, wandert beim
 # Umzug nicht mit, wird beim nächsten Umbau nebenbei geändert und
-# von keiner Prüfung gesehen. Beim Tiefgang war das längst
-# erzwungen, bei der Seite nicht.
+# von keiner Prüfung gesehen.
 #
-# Geprüft wird nicht der Fall, sondern die Klasse: Jede Zeichenkette
-# in bereich-app.js wird vom Markup befreit; was dann noch nach Sprache
-# aussieht, bricht den Bau ab. Nach Sprache sieht es aus, wenn zwei
-# Wörter nebeneinanderstehen oder ein Wort ein Satzzeichen trägt.
-# Technische Zeichenketten — IDs, Klassen, Auswahlausdrücke, Typen —
-# haben kein Leerzeichen, keinen Großbuchstaben und keinen Umlaut;
-# ein deutscher Satz hat immer eines davon.
-ENTITAET = {'&middot;':'\u00b7', '&mdash;':'\u2014', '&ndash;':'\u2013',
-            '&amp;':'&', '&lt;':'<', '&gt;':'>', '&quot;':'"',
-            '&nbsp;':' ', '&hellip;':'\u2026'}
-SATZZEICHEN = '.,:;!?\u2026\u2014\u00b7()'
-WORT = r'[A-Za-zÄÖÜäöüß]{2,}(?:-[A-Za-zÄÖÜäöüß0-9]+)*'
-
-def nur_code(t):
-    """Kommentare und Suchmuster weg — in einem Kommentar darf stehen,
-    warum hier kein Satz steht, und /&/g ist kein Text."""
-    t = re.sub(r'/\*.*?\*/', ' ', t, flags=re.S)
-    t = re.sub(r'(?m)^\s*//.*$', ' ', t)
-    return re.sub(r'(?<=[(,])\s*/(?:[^/\\\n]|\\.)*/[gimsuy]*', ' ', t)
-
-def satz_darin(lit):
-    """Was von einer Zeichenkette übrig bleibt, wenn man das Markup
-    abzieht — oder None, wenn nichts nach Sprache aussieht."""
-    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
-    for k, v in ENTITAET.items():
-        rest = rest.replace(k, v)
-    rest = re.sub(r'&[a-zA-Z]+;|&#\d+;', ' ', rest)
-    if (' ' not in rest and not re.search(r'[A-ZÄÖÜ]', rest)
-            and not re.search(r'[äöüßÄÖÜ]', rest)):
-        return None          # eine technische Zeichenkette
-    w = re.findall(WORT, rest)
-    if len(w) >= 2 or (w and re.search('[' + re.escape(SATZZEICHEN) + ']', rest)):
-        return rest.strip()
-    return None
-
-app_code = nur_code(app)
-for lit in re.findall(r"'((?:[^'\\\n]|\\.)*)'", app_code):
-    gefunden = satz_darin(lit)
-    if gefunden:
-        fehler.append('Satz in bereich-app.js statt in bereich-daten.js: '
-                      f'"{gefunden[:70]}"')
-# Und kein Ausweichen auf die andere Anführung: jedes " und jeder
-# Backtick in dieser Datei steht innerhalb einer einfach
-# angeführten Markup-Zeichenkette. Steht einer draußen, ist es eine
-# zweite Art, Text unterzubringen, an der die Prüfung oben vorbeiläuft.
-draussen = re.sub(r"'(?:[^'\\\n]|\\.)*'", ' ', app_code)
-for z, wie in (('"', 'doppelte Anführungszeichen'), ('`', 'Backticks')):
-    if z in draussen:
-        fehler.append(f'{wie} in bereich-app.js außerhalb einer '
-                      'Markup-Zeichenkette — Text gehört in bereich-daten.js')
+# Die Regel selbst steht seit dem 7.11. in rituale/pruefwerk.py
+# (Aufgabe 43). Vorher stand sie hier — und galt damit für genau
+# eine der zweiundzwanzig Anzeigen. Sie liest alle drei
+# Anführungsarten, das vorherige Ausweichen auf " und ` ist damit
+# nicht mehr möglich und braucht keine eigene Prüfung.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(
+    app, 'bereich-app.js', 'bereich-daten.js')
+# Derselbe Code ohne Kommentare — darunter prüft noch eine engere
+# Regel, dass keine der fünf Blocküberschriften dort wieder auftaucht.
+app_code = pruefwerk.nur_code(app)
 
 # die fünf Blöcke müssen in der festgelegten Reihenfolge erscheinen.
 # Sie heißen jetzt in bereich-daten.js; geprüft wird beides: wie sie
