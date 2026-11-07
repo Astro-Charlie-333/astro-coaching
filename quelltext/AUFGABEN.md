@@ -22,43 +22,144 @@ dann `REGELN.md` (wie). Nach jeder Arbeit:
 Die Glyphen rendern als Emoji statt als Schriftzeichen; es fehlt `︎`.
 **Fertig, wenn:** die Seite die Zeichen einfarbig zeigt.
 
+*Steht seit Wochen oben und wird jeden Morgen übersprungen: `strategie/`
+ist ein privater Ordner, den die tägliche Arbeit nicht anfasst
+(`REGELN.md` Abschnitt 6). Mandy macht das selbst oder verschiebt die
+Seite — sonst blockiert die Zeile die Liste von oben, dieselbe Art, eine
+Aufgabe nicht zu machen wie bei Aufgabe 43.*
+
 ### 7 · Netlify statt GitHub Pages
 Vorbereitet, aber nicht umgestellt.
 **Fertig, wenn:** die Seite unter der Netlify-Adresse läuft und die alte
 Adresse weiterleitet.
 
-### 34 · Dieselbe Prüfung fehlt in den anderen Anzeigen
-Gefunden beim Erledigen von Aufgabe 9 am 31.10. `bereich-app.js` ist jetzt
-satzfrei und wird darauf geprüft; `wahl-app.js` wird seit dem 22.10. lose
-geprüft (drei Wörter in einer Zeichenkette, Markup abgezogen, nur einfache
-Anführung). Die übrigen Anzeigen werden gar nicht geprüft: `ich-app.js` und
-`heute-app.js` tragen noch Sätze (Aufgaben 20 und 28 sagen es für einzelne
-Stellen), und keine der Prüfungen sieht doppelte Anführungszeichen oder
-Backticks, mit denen sich jede davon umgehen lässt. Dieselbe Fehlerklasse,
-in sechs Ordnern einzeln — wie bei der Stufe-0-Prüfung (Aufgabe 25).
-**Fertig, wenn:** die Prüfung „in dieser Anzeige steht kein Satz" an einer
-Stelle steht, die alle `bau-*.py` benutzen, jede `*-app.js` sie besteht,
-und ein eingebauter Satz in jeder dieser Dateien den Bau abbricht —
-geprüft in allen drei Anführungsarten.
+*Wird ebenfalls jeden Morgen übersprungen: Der Schritt braucht Mandys
+Netlify-Konto und die Adressumstellung, also etwas außerhalb des
+Repositoriums. Die Anleitung dazu liegt in `NETLIFY-ANLEITUNG.md`.*
 
-### 38 · Dieselbe Beugung fehlt in den anderen Anzeigen
-Gefunden beim Erledigen von Aufgabe 31 am 3.11. Die Startseite setzt
-„dein" jetzt über `B_BEUGE` zusammen und wird darauf geprüft. Die
-übrigen Anzeigen setzen es weiter fest ein: `beziehung-app.js` hat
-dafür ein eigenes `ohneDein` und schreibt die Form von Hand,
-`niveau/wortwahl.js` trägt in `PLANET[k].kurz(n)` ein festes „dein"
-beziehungsweise „deine" samt einer Ersetzung, die daraus wieder einen
-Satzanfang macht, und `tief-bauer.js` und `reading-app.js` setzen diese
-Zeichenketten in Vorlagen ein. Solange jede Anzeige ihr eigenes „dein"
-mitbringt, steht derselbe Fehler nur noch nicht dort, wo ihn jemand
-sieht — dieselbe Fehlerklasse in sechs Ordnern einzeln, wie bei der
-Stufe-0-Prüfung (Aufgabe 25) und bei Aufgabe 34.
-**Fertig, wenn:** die Punkte ihr Geschlecht an einer Stelle tragen, die
-alle Anzeigen benutzen, kein `*-app.js` und kein `*-bauer.js` mehr ein
-festes „dein" oder „deine" vor einem Punktnamen schreibt, die Prüfung
-auf Fall und Geschlecht wie in `bau-heute.py` an einer von allen
-`bau-*.py` benutzten Stelle steht, und ein von Hand eingesetztes „dein"
-in jeder dieser Dateien den Bau abbricht.
+### 34 · Die Anzeigen kommen aus dem Satzgeschäft heraus
+Hier steckt seit dem 2026-11-07 auch die frühere Aufgabe 38 („dieselbe
+Beugung fehlt in den anderen Anzeigen"). Beide betrafen dieselben
+zweiundzwanzig Dateien; sie zweimal anzufassen wäre doppelte Arbeit.
+
+Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
+`pruefwerk.pruefe_anzeige_satzfrei` liest alle drei Anführungsarten,
+`pruefwerk.pruefe_anzeige_ohne_dein` findet jedes von Hand
+geschriebene „dein". Drei Anzeigen sind durch und verriegelt
+(`bereich-app.js`, `start-app.js`, `offline-app.js`).
+
+Die neunzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
+der ein Mensch sie vor sich hat: zuerst die vier Türen der Navigation
+(`index.html` ist „Jetzt", `uebersicht.html` ist „Dein Bild"), dann
+die Seiten, die ein Profil rechnen, zuletzt die Werkzeuge der
+Coachin. **Wie weit es ist, steht nicht hier, sondern in
+`pruefe-alles.py`, Querprüfung 13** — dort wird bei jedem Lauf
+nachgezählt, und die Liste bricht in beide Richtungen. Eine Liste in
+einem Dokument driftet; diese kann nur schrumpfen.
+
+Für jede der Aufgaben 48 bis 66 gilt dasselbe, deshalb steht es
+einmal hier. **Fertig, wenn:** die Sätze dieser Anzeige in ihrer
+`*-daten.js` stehen, die Anzeige „dein" nicht mehr selbst schreibt
+(sondern `B_BEUGE` aus `bahn-daten.js` lässt), ihr `bau-*.py` beide
+Regeln aus `pruefwerk` aufruft, ein von Hand eingesetzter Satz und
+ein von Hand eingesetztes „dein" den Bau abbrechen — in allen drei
+Anführungsarten geprüft —, und die Zeile in `ANZEIGEN` nach `FERTIG`
+gewandert ist. Bricht eine Anzeige dabei auf, wird sie nicht halb
+abgeliefert: lieber zwei Tage für eine große Anzeige als eine, die
+zur Hälfte umgezogen ist. Der zweite Tag baut dann auf dem offenen
+Pull Request des ersten auf — und weil die Querprüfung bei jedem Lauf
+nachzählt, fällt ein halber Umzug beim Abliefern auf und nicht
+hinterher.
+
+Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
+von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
+abschätzen kann — gezählt wird in `pruefe-alles.py`.
+
+### 48 · `heute-app.js` (160, 8)
+`index.html`, die Tür „Jetzt" — die Seite, die ein Mensch am
+häufigsten vor sich hat. Gehört in einen Zug mit Aufgabe 17, 18, 21
+und 47, die alle dieselbe Seite betreffen; zweimal anfassen wäre
+doppelte Arbeit.
+
+### 49 · `wahl-app.js` (1, 0)
+Die Bereichsleiste, auf jeder Seite mit Bereichen. Bis auf einen
+Auswahlausdruck durch; die lose Fassung der Regel in
+`bau-bereiche.py` entfällt dabei.
+
+### 50 · `ich-app.js` (40, 2)
+`uebersicht.html`, die Tür „Dein Bild". Gehört in einen Zug mit
+Aufgabe 45, die dieselbe Seite betrifft.
+
+### 51 · `monat-app.js` (2, 0)
+Der Monatsbericht. Fast durch; gehört in einen Zug mit Aufgabe 10,
+12 und 13.
+
+### 52 · `beziehung-app.js` (83, 14)
+`beziehung.html` — „nicht du, sondern ihr beide", der Vorsprung aus
+`PRODUKT.md` Abschnitt 3. Die Anzeige bringt ein eigenes `ohneDein`
+mit und schreibt die Form von Hand; das fällt mit weg.
+
+### 53 · `zeit-app.js` (115, 6)
+`zeiten.html`, der Zeitstrahl.
+
+### 54 · `karte-app.js` (44, 5)
+`haeuser-karte.html`, die zwölf Lebensbühnen.
+
+### 55 · `mond-app.js` (76, 8)
+`mond.html` mit den Mondphasen — Neumond und Vollmond sind die
+Namen, unter denen die halbe Zielgruppe das Thema kennt
+(`REGELN.md` 2a).
+
+### 56 · `zahlen-app.js` (194, 13)
+`zahlen.html`, die größte der Anzeigen. Zwei Tage sind hier besser
+als ein halber Umzug.
+
+### 57 · `haeuser-app.js` (41, 0)
+`haeuser-lebensbuehnen.html`.
+
+### 58 · `zauber-app.js` (97, 18)
+`zauber.html`, die Rituale.
+
+### 59 · `geist-app.js` (174, 31)
+`geistfuehrung.html`. Trägt die meisten „dein" von Hand — hier zeigt
+sich, ob `B_BEUGE` für alle Fälle reicht.
+
+### 60 · `dossier-app.js` (97, 4)
+`dossier.html`, der Bestandsbericht.
+
+### 61 · `analyse-app.js` (29, 1)
+`analyse.html`. Gehört in einen Zug mit Aufgabe 9.
+
+### 62 · `begleit-app.js` (20, 0)
+`begleitung.html`.
+
+### 63 · `ereignis-app.js` (28, 10)
+`ereignisse-lesen.html`.
+
+### 64 · `oph-app.js` (65, 4)
+`ophiuchus.html`.
+
+### 65 · `reading-app.js` (70, 14)
+`reading.html` — das Werkzeug, mit dem die Coachin einen Tiefgang
+herausgibt (`PRODUKT.md` Abschnitt 4, Weg 1). `niveau/wortwahl.js`
+trägt in `PLANET[k].kurz(n)` ein festes „dein" samt einer
+Ersetzung, die daraus wieder einen Satzanfang macht; das gehört mit
+in diesen Zug, weil `reading-app.js` und `tief-bauer.js` diese
+Zeichenketten in Vorlagen einsetzen.
+
+### 66 · `werkstatt-app.js` (39, 2)
+`werkstatt.html`.
+
+### 67 · `tief-bauer.js` schreibt „dein" selbst
+Der Rest der früheren Aufgabe 38. `tief-bauer.js` ist keine Anzeige
+und steht deshalb nicht in `ANZEIGEN`, setzt aber dieselben
+Zeichenketten in Vorlagen ein — solange es „dein" von Hand schreibt,
+bringt der Tiefgang die Form mit, die `B_BEUGE` gerade abgeschafft
+hat.
+**Fertig, wenn:** `tief-bauer.js` kein festes „dein" oder „deine"
+mehr vor einem Punktnamen schreibt, `bau-bereiche.py`
+`pruefwerk.pruefe_anzeige_ohne_dein` auch darauf anwendet, und ein
+von Hand eingesetztes „dein" in dieser Datei den Bau abbricht.
 
 ### 40 · Dieselbe Grenze fehlt den anderen rechnenden Seiten offen
 Gefunden beim Erledigen von Aufgabe 32 am 4.11. `bereiche.html` zeigt
@@ -69,7 +170,8 @@ auf der Ich-Seite steht der Grenzabschnitt unter einer eigenen
 Überschrift, ohne dass eine Prüfung festhält, dass er offen steht.
 Solange jede Seite ihre Grenze selbst setzt, steht derselbe Fehler nur
 noch nicht dort, wo ihn jemand sieht — dieselbe Fehlerklasse in
-mehreren Ordnern einzeln, wie bei Aufgabe 25, 34 und 38.
+mehreren Ordnern einzeln, wie bei Aufgabe 25 und 34 (dort
+steckt seit dem 7.11. auch die frühere Aufgabe 38).
 **Fertig, wenn:** die Prüfung „der Grenzsatz steht offen und nicht in
 einem zugeklappten Element" an einer Stelle steht, die alle
 `bau-*.py` benutzen, jede rechnende Seite sie besteht, und ein in eine
@@ -114,24 +216,6 @@ einem Satz sagt, dass ein Aufgabenzweig nach dem Öffnen des Pull
 Requests nicht mehr angefasst wird und Nachträge einen eigenen Pull
 Request brauchen — und ein Lauf, der das verletzt, beim Abliefern
 auffällt statt hinterher.
-
-### 43 · Die Aufgaben 34 und 38 sind in einem Tag nicht zu schaffen
-Gefunden am 2026-11-06, als sie als oberste freie Aufgaben dran waren.
-Beide verlangen, dass **jede** `*-app.js` eine Prüfung besteht. Mit der
-Regel aus `bau-bereiche.py` über alle zwanzig Anzeigen gezählt: zwei
-sind sauber (`offline-app.js` und `bereich-app.js`, null Treffer), drei
-sind nah dran (`start-app.js` 1, `wahl-app.js` 2, `monat-app.js` 3), und
-die fünfzehn übrigen tragen zusammen 1258 Zeichenketten, die nach
-Sprache aussehen — `zahlen-app.js` 194, `geist-app.js` 174,
-`heute-app.js` 160, `zeit-app.js` 115, `zauber-app.js` und
-`dossier-app.js` je 97. Das ist kein Tageswerk, und eine halb
-umgezogene Anzeige liefert nicht aus. So wie die Aufgaben dastehen,
-werden sie jeden Morgen übersprungen, und das ist die schlechteste Art,
-eine Aufgabe nicht zu machen.
-**Fertig, wenn:** 34 und 38 je Anzeige in eigene Aufgaben zerlegt sind,
-in der Reihenfolge der Anzeigen, die ein Mensch am häufigsten vor sich
-hat — mit der gemeinsamen Prüfstelle als erster Aufgabe und einer Liste,
-welche Anzeige noch aussteht, damit man den Fortschritt sieht.
 
 ### 44 · Was weggeklappt wurde, sagt nicht, worum es geht
 Gefunden beim Erledigen von Aufgabe 39 am 2026-11-06. Ein Vorgang, der
@@ -549,6 +633,38 @@ wieder eine Ziffer aufeinanderfolgen.
 ---
 
 ## Erledigt
+
+* **2026-11-07** · Die Aufgaben 34 und 38 sind in Tageswerke zerlegt
+  (Aufgabe 43). Beide verlangten, dass **jede** der zweiundzwanzig
+  Anzeigen eine Prüfung besteht — zusammen über 1300 Zeichenketten,
+  kein Tageswerk. So wie sie dastanden, wurden sie jeden Morgen
+  übersprungen, und das ist die schlechteste Art, eine Aufgabe nicht
+  zu machen.
+  Die Regel stand vorher zweimal: streng in `bau-bereiche.py` für
+  `bereich-app.js`, lose daneben für `wahl-app.js` und für
+  `offline-app.js`, die erst ab zwölf Zeichen hinsah — und für die
+  neunzehn übrigen Anzeigen gar nicht. Jetzt steht sie einmal, in
+  `rituale/pruefwerk.py`: `pruefe_anzeige_satzfrei` liest alle drei
+  Anführungsarten (das Ausweichen auf `"` und Backtick braucht
+  deshalb keine eigene Prüfung mehr), `pruefe_anzeige_ohne_dein`
+  findet jedes von Hand geschriebene „dein". Beide gegen feste
+  Beispiele gehalten (`REGELN.md` 6e), die beim Import laufen —
+  darunter die Ausnahme für die Browseranweisung `use strict`, die
+  kein Satz ist.
+  Der Fortschritt steht nicht in dieser Datei, sondern in
+  `pruefe-alles.py` als Querprüfung 13, weil eine Liste in einem
+  Dokument driftet (`REGELN.md` 6c). Sie zählt bei jedem Lauf nach
+  und bricht in fünf Richtungen: eine Anzeige hat Text dazubekommen,
+  eine Anzeige ist weiter als ihr Eintrag, eine `*-app.js` steht
+  nicht in der Liste, eine eingetragene Anzeige gibt es nicht mehr,
+  und eine als fertig geführte Anzeige hat keinen Riegel in ihrem
+  `bau-*.py`. Die letzte Richtung ist die wichtigste: ohne sie wäre
+  „fertig" eine Behauptung.
+  Auf der Seite sieht man davon nichts — dafür steht am Ende jedes
+  Prüflaufs, wie weit es ist: heute 3 von 22 Anzeigen ohne eigenen
+  Satz, 1375 Sätze und 140 mal „dein" offen. `start-app.js` und
+  `offline-app.js` haben ihren Riegel heute bekommen; sie erfüllten
+  beide Regeln schon.
 
 * **2026-11-06** · Derselbe Absatz steht nur noch in einem Bereich
   (Aufgabe 39). Unter „1 · Was ist los" stand bei einem Probebild

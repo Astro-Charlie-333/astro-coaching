@@ -39,6 +39,16 @@ koerper = lies(hier / 'start-koerper.html')
 daten = lies(hier / 'start-daten.js')
 app = lies(hier / 'start-app.js')
 
+# In start-app.js steht kein Satz, und sie schreibt „dein" nicht
+# selbst. Die Regeln stehen in rituale/pruefwerk.py (Aufgabe 43);
+# start-app.js war die erste Anzeige, die beide schon erfüllte —
+# der Riegel hält sie dabei.
+sys.path.insert(0, str(rit))
+import pruefwerk
+startfehler = (pruefwerk.pruefe_anzeige_satzfrei(
+                   app, 'start-app.js', 'start-daten.js')
+               + pruefwerk.pruefe_anzeige_ohne_dein(app, 'start-app.js'))
+
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Schwerkraft &middot; Coaching mit Mandy Netta</title>
@@ -57,7 +67,7 @@ html = html.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html')
                     .read_text(encoding='utf-8'), 1)
 ziel.write_text(html, encoding='utf-8')
 
-fehler, hinweise = [], []
+fehler, hinweise = list(startfehler), []
 
 # ── Die IDs, die das Skript füllt, gibt es auch ──────────────
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
