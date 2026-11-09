@@ -17,14 +17,8 @@ function jetztJD(){ var n=new Date();
    n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600); }
 function tageBis(jd){ return Math.round(jd-jetztJD()); }
 
-var H_SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion',
- 'Schütze','Steinbock','Wassermann','Fische'];
-var H_HAUS=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Herkunft',
- 'Ausdruck und Lust','Alltag und Körper','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite',
- 'Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
-var H_GEN={Sonne:'der Sonne',Mond:'des Mondes',Merkur:'des Merkur',Venus:'der Venus',
- Mars:'des Mars',Jupiter:'des Jupiter',Saturn:'des Saturn'};
-var PN=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+/* H_SIGNS, H_HAUS, H_GEN, H_MONAT, H_WOKURZ und H_WOLANG stehen in
+   heute-daten.js. Hier steht kein Text — auch keine Namensliste. */
 
 function chartVon(p){
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
@@ -57,9 +51,10 @@ function jetztBauen(p){
   var jd=jetztJD(), n=new Date();
   el('httag').textContent=n.toLocaleDateString('de-DE',
     {weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  var std=n.getHours();
-  var gruss=std<5?'Noch wach':(std<11?'Guten Morgen':(std<18?'Guten Tag':'Guten Abend'));
-  el('htgruss').innerHTML=gruss+', <em>'+esc(AC_P.anzeige(p,true))+'</em>.';
+  var std=n.getHours(), G=H_SEITE.gruss;
+  var gruss=std<5?G.nacht:(std<11?G.morgen:(std<18?G.tag:G.abend));
+  el('htgruss').innerHTML=tf(G.zeile,
+    {gruss:esc(gruss), name:esc(AC_P.anzeige(p,true))});
 
   var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e){}
   var mz=zI(Q.Mond), mh=haus(P,Q.Mond);
@@ -73,25 +68,24 @@ function jetztBauen(p){
 
   /* Darunter der ruhige Hintergrundsatz: welcher Bereich getönt ist. */
   var B=bereichZuHaus(mh);
-  var satz='Im Hintergrund liegt deine Aufmerksamkeit die nächsten zwei Tage bei einem Thema: <b>'+
-    esc(B?B.name:H_HAUS[mh-1])+'</b>.';
+  var satz=tf(H_SEITE.hintergrund,{thema:esc(B?B.name:H_HAUS[mh-1])});
   if(B&&window.AC_BDAT&&AC_BDAT.BER[B.k])
-    satz+=' Also: '+esc(AC_BDAT.BER[B.k].worum);
-  if(ol&&ol.leer) satz+=' Dazu kommt: bis '+uhr(ol.bis)+
-    ' lohnt sich nichts, was ein Ergebnis haben soll — Angefangenes bleibt heute eher liegen.';
+    satz+=' '+tf(H_SEITE.alsoDazu,{satz:esc(AC_BDAT.BER[B.k].worum)});
+  if(ol&&ol.leer) satz+=' '+tf(H_SEITE.ohneLauf,{uhr:uhr(ol.bis)});
   el('htsatz').innerHTML=satz;
-  el('httech').innerHTML='<div class="ac-tech ht-techzeile" data-ab="2">Der Mond steht in '+
-    H_SIGNS[mz]+' '+gradKurz(Q.Mond)+
-    ' und läuft durch das '+mh+'. Haus — '+H_HAUS[mh-1]+
-    (ol&&ol.leer?'. Mond ohne Lauf bis '+uhr(ol.bis):'')+'.</div>';
+  el('httech').innerHTML='<div class="ac-tech ht-techzeile" data-ab="2">'+
+    tf(H_SEITE.techMond,{zeichen:H_SIGNS[mz], grad:gradKurz(Q.Mond), haus:mh,
+       name:H_HAUS[mh-1],
+       nachsatz:(ol&&ol.leer?tf(H_SEITE.techOhneLauf,{uhr:uhr(ol.bis)}):'')})+
+    '</div>';
 
   /* Die Kacheln sind der Maschinenraum. Sie stehen jetzt in der
      Einstellleiste unten statt im Kopf. */
-  var f=[];
-  if(st&&!st.polar) f.push(['Stunde',st.herr,'bis '+uhr(st.bis)]);
-  if(st&&!st.polar) f.push(['Tag',st.tagesherr,n.toLocaleDateString('de-DE',{weekday:'long'})]);
-  f.push(['Mond',H_SIGNS[mz],gradKurz(Q.Mond)]);
-  f.push(['Dein Haus',mh+'. Haus',H_HAUS[mh-1]]);
+  var f=[], K=H_SEITE.kachel;
+  if(st&&!st.polar) f.push([K.stunde,st.herr,tf(K.bis,{uhr:uhr(st.bis)})]);
+  if(st&&!st.polar) f.push([K.tag,st.tagesherr,n.toLocaleDateString('de-DE',{weekday:'long'})]);
+  f.push([K.mond,H_SIGNS[mz],gradKurz(Q.Mond)]);
+  f.push([K.haus,tf(H_SEITE.hausNr,{n:mh}),H_HAUS[mh-1]]);
   el('htfakten').innerHTML='<div class="ac-tech" data-ab="2"><div class="ht-fin">'+
     f.map(function(x){
       return '<div class="ht-f"><div class="l">'+x[0]+'</div><div class="v">'+esc(x[1])+
@@ -113,11 +107,12 @@ function tagesAbstand(jd){
   return Math.round((a-b)/86400000);
 }
 function wann(jd){
-  var t=tagesAbstand(jd);
-  if(t<=0) return 'Heute';
-  if(t===1) return 'Morgen';
-  if(t===2) return 'Übermorgen';
-  return 'Am ' + datVon(jd).toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
+  var t=tagesAbstand(jd), W=H_SEITE.wann;
+  if(t<=0) return W.heute;
+  if(t===1) return W.morgen;
+  if(t===2) return W.uebermorgen;
+  return tf(W.am, {tag:datVon(jd).toLocaleDateString('de-DE',
+    {weekday:'long',day:'numeric',month:'long'})});
 }
 var AUFMACHER=null;
 function aufmacherBauen(jd){
@@ -133,7 +128,7 @@ function aufmacherBauen(jd){
       '<div class="ht-auf-w">'+esc(wann(x.jd))+', '+esc(uhr(x.jd))+'</div>'+
       '<h2 class="ht-auf-t">'+esc(x.tt)+'</h2>'+
       '<p class="ht-auf-x">'+x.tx+'</p>'+
-      (x.mit?'<div class="ht-auf-m"><b>Dafür brauchst du</b> '+esc(x.mit)+'</div>':'')+
+      (x.mit?'<div class="ht-auf-m"><b>'+esc(H_SEITE.mitVor)+'</b> '+esc(x.mit)+'</div>':'')+
       (x.tech?'<div class="ac-tech ht-auf-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
       '</div>';
     return;
@@ -143,11 +138,11 @@ function aufmacherBauen(jd){
   var B=lautesterBereich();
   if(!B){ z.innerHTML=''; return; }
   z.innerHTML='<div class="ht-auf-k ht-auf-ruhig">'+
-    '<div class="ht-auf-w">Kein fester Termin in den nächsten Tagen</div>'+
+    '<div class="ht-auf-w">'+esc(H_SEITE.aufRuhig)+'</div>'+
     '<h2 class="ht-auf-t">'+esc(B.name)+'</h2>'+
     '<p class="ht-auf-x">'+esc(B.satz)+'</p>'+
-    (B.tun?'<div class="ht-auf-m"><b>Was du tun kannst</b> '+esc(B.tun)+'</div>':'')+
-    (B.bis?'<div class="ht-auf-bis">Läuft noch bis '+esc(B.bis)+'</div>':'')+
+    (B.tun?'<div class="ht-auf-m"><b>'+esc(H_SEITE.tunVor)+'</b> '+esc(B.tun)+'</div>':'')+
+    (B.bis?'<div class="ht-auf-bis">'+esc(tf(H_SEITE.bisVor,{bis:B.bis}))+'</div>':'')+
     '</div>';
 }
 
@@ -170,23 +165,22 @@ function ereignisse(jd){
 
   /* Planetenstunde endet — reine Mechanik, erst ab Stufe 2 */
   var st=null; try{ st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon); }catch(e2){}
-  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis), tag:'heute', ab:2, rang:0,
-    tt:'Die Stunde '+(H_GEN[st.herr]||st.herr)+' endet',
-    tx:'Planetenstunden sind der kleinste Taktgeber, den die Überlieferung kennt. '+
-       'Wenn du etwas unter '+st.herr+' stellen willst, ist jetzt das Fenster.',
-    wo:'zauber.html|Planetenstunden heute'});
+  if(st&&!st.polar) e.push({jd:st.bis, jetzt:true, wann:uhr(st.bis),
+    tag:H_SEITE.heuteKlein, ab:2, rang:0,
+    tt:tf(H_EREIGNIS.stunde.tt,{herr:(H_GEN[st.herr]||st.herr)}),
+    tx:tf(H_EREIGNIS.stunde.tx,{planet:st.herr}),
+    wo:H_EREIGNIS.stunde.wo});
 
   /* Mond wechselt das Zeichen und damit dein Haus */
   var zw=null; try{ zw=AC_HIMMEL.naechsterZeichenwechsel(jd); }catch(e2){}
   if(zw){
     var neuH=haus(P, zw.zeichen*30+1), nB=bereichZuHaus(neuH);
     e.push({jd:zw.jd, wann:uhr(zw.jd), tag:tagKurz(zw.jd), rang:1,
-      tt:'Die Aufmerksamkeit wandert zu: '+(nB?nB.name:H_HAUS[neuH-1]),
-      tx:'Für die nächsten zweieinhalb Tage ist das der Bereich, in dem du am ehesten '+
-         'etwas merkst. Kein großer Einschnitt — eher eine Tönung.',
-      tech:'Der Mond wechselt in '+H_SIGNS[zw.zeichen]+' und damit in dein '+
-           neuH+'. Haus, '+H_HAUS[neuH-1]+'.',
-      wo:'bereiche.html|Den Bereich ansehen'});
+      tt:tf(H_EREIGNIS.mond.tt,{bereich:(nB?nB.name:H_HAUS[neuH-1])}),
+      tx:H_EREIGNIS.mond.tx,
+      tech:tf(H_EREIGNIS.mond.tech,{zeichen:H_SIGNS[zw.zeichen], haus:neuH,
+                                    name:H_HAUS[neuH-1]}),
+      wo:H_EREIGNIS.mond.wo});
   }
 
   /* Lunationen mit Ritualfenster */
@@ -195,40 +189,31 @@ function ereignisse(jd){
     var ml=moonLon((l.jd-2451545)/36525);
     var h=haus(P,ml), lB=bereichZuHaus(h);
     var lN=lB?lB.name:H_HAUS[h-1];
+    var A=H_LUN[l.art==='neu'?'neu':'voll'];
     e.push({jd:l.jd, wann:uhr(l.jd), tag:tagKurz(l.jd), rang:4,
-      tt:(l.art==='neu'?'Neumond':'Vollmond')+' — bei dir im Bereich '+lN,
-      tech:(l.art==='neu'?'Neumond':'Vollmond')+' in '+H_SIGNS[zI(ml)]+
-           ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
-      tx:(l.art==='neu'
-        ? 'Ein guter Zeitpunkt, in diesem Bereich etwas zu <b>beginnen</b> statt abzuschließen. '+
-          'Was jetzt anfängt, hat bis zum Vollmond Zeit, sich zu zeigen.'
-        : 'Hier wird sichtbar, was vor zwei Wochen angelegt wurde. Ein guter Zeitpunkt, '+
-          'in diesem Bereich etwas <b>abzuschließen</b> statt Neues anzufangen.'),
-      mit:(l.art==='neu'
-        ? 'Kerze, Zettel und Stift. Einen Satz aufschreiben, was bis zum Vollmond passiert sein soll.'
-        : 'Eine Kerze, und etwas, das weg darf. Nicht mehr.'),
-      wo:'rituale.html|Das ganze Ritual'});
+      tt:tf(H_EREIGNIS.lunation.tt,{art:A.name, bereich:lN}),
+      tech:tf(H_EREIGNIS.lunation.tech,{art:A.name, zeichen:H_SIGNS[zI(ml)],
+                                        haus:h, name:H_HAUS[h-1]}),
+      tx:A.tx, mit:A.mit,
+      wo:H_EREIGNIS.lunation.wo});
   });
 
   /* Stationen: Planeten, die drehen */
   var stn=[]; try{ stn=AC_BOARD.stationen(jd, 21)||[]; }catch(e2){}
   stn.forEach(function(s2){
     var h=haus(P,s2.lon), sB=bereichZuHaus(h), sN=sB?sB.name:H_HAUS[h-1];
-    e.push({jd:s2.jd, wann:tageBis(s2.jd)<=0?'heute':'in '+tageBis(s2.jd)+' T.', tag:tagKurz(s2.jd),
-      rang:5,
-      /* Der Name zuerst. „Es wird zäher: Kommunikation" ist dieselbe
-         Information wie „Merkur wird rückläufig" — nur dass niemand
-         sie wiedererkennt. Mandy am 28.10.: „Das sind die themen die
-         es spannend machen." */
-      tt:s2.planet+(s2.direkt?' läuft wieder direkt':' wird rückläufig')+' — '+sN,
-      tech:s2.planet+(s2.direkt?' läuft wieder direkt':' wird rückläufig')+
-           ', in deinem '+h+'. Haus — '+H_HAUS[h-1]+'.',
-      tx:(s2.direkt
-         ? 'Was in diesem Bereich seit Wochen zäh war, nimmt wieder Fahrt auf. '+
-           'Nicht sofort, aber merklich.'
-         : 'In diesem Bereich wird es für eine Weile mühsamer. Nichts Neues anfangen, '+
-           'was dort ohnehin hängt — überarbeiten ja.'),
-      wo:'bereiche.html#ber-'+(sB?sB.k:'')+'|Den Bereich ansehen'});
+    /* Der Name zuerst. „Es wird zäher: Kommunikation" ist dieselbe
+       Information wie „Merkur wird rückläufig" — nur dass niemand
+       sie wiedererkennt. Mandy am 28.10.: „Das sind die themen die
+       es spannend machen." Die Sätze stehen in heute-daten.js. */
+    var S=H_EREIGNIS.station;
+    e.push({jd:s2.jd, tag:tagKurz(s2.jd), rang:5,
+      wann:tageBis(s2.jd)<=0?H_SEITE.heuteKlein:tf(S.inTagen,{n:tageBis(s2.jd)}),
+      tt:tf(s2.direkt?S.ttDirekt:S.ttRueck,{planet:s2.planet, bereich:sN}),
+      tech:tf(s2.direkt?S.techDirekt:S.techRueck,{planet:s2.planet, haus:h,
+                                                 name:H_HAUS[h-1]}),
+      tx:(s2.direkt?S.txDirekt:S.txRueck),
+      wo:tf(S.wo,{k:(sB?sB.k:'')})});
   });
 
   /* Aspekte, die in diesem Zeitraum genau aufgehen.
@@ -268,12 +253,13 @@ function ereignisse(jd){
     if(proB[c.nm]) return;
     proB[c.nm]=true;
     var v=c.v;
-    e.push({jd:v.f.exakt, wann:'genau', tag:tagKurz(v.f.exakt), rang:3,
-      tt:c.nm+': der deutlichste Tag',
-      tx:c.satz+' An diesem Tag steht der Winkel auf den Grad genau — davor baut '+
-         'es sich auf, danach lässt es nach.',
-      tech:v.wanderer+' '+(ASP_NAME[v.aspekt]||v.aspekt)+' '+v.ziel+', exakt',
-      wo:'bereiche.html#ber-'+(c.B?c.B.k:'')+'|Den Bereich ansehen'});
+    var X=H_EREIGNIS.exakt;
+    e.push({jd:v.f.exakt, wann:X.wann, tag:tagKurz(v.f.exakt), rang:3,
+      tt:tf(X.tt,{bereich:c.nm}),
+      tx:tf(X.tx,{satz:c.satz}),
+      tech:tf(X.tech,{wanderer:v.wanderer, aspekt:aspektName(v.aspekt),
+                      ziel:v.ziel}),
+      wo:tf(X.wo,{k:(c.B?c.B.k:'')})});
   });
 
   e.sort(function(a,b){ return a.jd-b.jd; });
@@ -305,7 +291,7 @@ function beiDirZeile(lng){
   var b=beiDir(lng); if(!b) return '';
   return '<div class="th-z"><b>'+esc(T_KOPF.beiDirVor)+'</b>'+
     (b.bereich
-      ? '<a href="bereiche.html#ber-'+esc(b.bereich.k)+'">'+esc(b.name)+' →</a>'
+      ? '<a href="'+esc(H_SEITE.berZiel)+esc(b.bereich.k)+'">'+esc(b.name)+' →</a>'
       : esc(b.name))+'</div>';
 }
 
@@ -333,7 +319,7 @@ function spanneBalken(von, bis, jd){
 function nochWie(bis, jd){
   var t=tagesAbstand(bis);
   if(t<=0) return T_KOPF.nochEinTag;
-  if(t===1) return 'noch 1 Tag';
+  if(t===1) return T_KOPF.nochEinenTag;
   return tf(T_KOPF.nochTage,{n:t});
 }
 
@@ -357,8 +343,8 @@ function themaKarte(o){
   if(o.schnitt) h.push('<div class="th-schnitt"><b>'+esc(o.schnitt.titel)+'</b>'+
     '<p>'+esc(o.schnitt.text)+'</p>'+
     '<p class="th-grenze">'+esc(T_SCHNITT.grenze)+'</p>'+
-    '<details class="th-dazu"><summary>Was daran belegt ist</summary><p>'+
-    esc(T_SCHNITT.beleg)+'</p></details></div>');
+    '<details class="th-dazu"><summary>'+esc(T_SCHNITT.belegTitel)+
+    '</summary><p>'+esc(T_SCHNITT.beleg)+'</p></details></div>');
   if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
   if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
                     '</summary><p>'+esc(o.dazu)+'</p></details>');
@@ -380,17 +366,15 @@ function themenBauen(){
     if(!D.schnell){ langsam.push(D.name.replace(' rückläufig','')); return; }
     var sp=rueckSpanne(k,jd);
     karten.push({gross:true, planet:k, name:D.name,
-      marke:sp?nochWie(sp.bis,jd):'läuft',
+      marke:sp?nochWie(sp.bis,jd):T_KOPF.laeuft,
       spanne:sp?(monatTag(sp.von)+' – '+monatTag(sp.bis)):'',
       bahn:sp?spanneBalken(sp.von,sp.bis,jd):'',
       was:D.was, tut:D.tut, felder:D.felder, gut:D.gut, dazu:D.dazu,
       schnitt:(window.T_SCHNITT?T_SCHNITT[k]:null),
       beiDir:beiDirZeile(lon(k,jd)),
-      tech:k+' rückläufig in '+H_SIGNS[zI(lon(k,jd))]+
-           /* Das Zeichen der Station nur, wenn es ein anderes ist —
-              sonst steht zweimal dasselbe Wort in einer Zeile. */
-           (sp && zI(sp.lon)!==zI(lon(k,jd))
-             ? ', rückwärts aus '+H_SIGNS[zI(sp.lon)]:'')});
+      tech:tf(T_KOPF.techRueck,{planet:k, zeichen:H_SIGNS[zI(lon(k,jd))],
+        aus:(sp && zI(sp.lon)!==zI(lon(k,jd))
+              ? tf(T_KOPF.techRueckAus,{zeichen:H_SIGNS[zI(sp.lon)]}) : '')})});
   });
 
   /* 2 · Der nächste Neumond und der nächste Vollmond — beide
@@ -404,19 +388,19 @@ function themenBauen(){
     var nm=D.name, tut=D.tut, dazu='';
     if(fi){
       var F=T_FINSTERNIS[fi.art];
-      nm=F.name+(fi.sicher?'':' (möglich)');
+      nm=F.name+(fi.sicher?'':T_FINSTERNIS.moeglich);
       tut=F.tut+(fi.sicher?'':' '+T_FINSTERNIS.vielleicht);
       dazu=T_FINSTERNIS.dazu;
     }
     var t=tagesAbstand(l.jd);
     karten.push({gross:!!fi, name:nm,
-      marke:(t<=0?'heute':t===1?'morgen':tf(T_KOPF.inTagen,{n:t})),
-      spanne:wochentagDatum(l.jd)+', '+uhr(l.jd)+' — '+
-             tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]}),
+      marke:(t<=0?T_KOPF.heute:t===1?T_KOPF.morgen:tf(T_KOPF.inTagen,{n:t})),
+      spanne:tf(T_MOND.spanne,{tag:wochentagDatum(l.jd), uhr:uhr(l.jd),
+        zeichen:tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]})}),
       was:D.was, tut:tut, felder:D.felder, gut:D.gut, dazu:dazu,
       beiDir:beiDirZeile(ml),
-      tech:(art==='neu'?'Neumond':'Vollmond')+' auf '+gr(ml)+' '+H_SIGNS[zI(ml)]+
-           (fi?', '+fi.knoten.toFixed(1)+'° vom Mondknoten':'')});
+      tech:tf(T_MOND.tech,{art:D.name, grad:gr(ml), zeichen:H_SIGNS[zI(ml)],
+        knoten:(fi?tf(T_MOND.techKnoten,{ab:fi.knoten.toFixed(1)}):'')})});
   });
 
   /* 2b · Die Saturnrückkehr. Steht ganz oben, wenn sie läuft: Für
@@ -436,8 +420,9 @@ function themenBauen(){
         spanne:(alter!==null?tf(T_SATURN.nummer,{welche:welche, alter:alter}):''),
         was:T_SATURN.was, tut:T_SATURN.tut, gut:T_SATURN.gut, dazu:T_SATURN.dazu,
         beiDir:beiDirZeile(sg),
-        tech:'Saturn auf '+gr(lon('Saturn',jd))+' '+H_SIGNS[zI(lon('Saturn',jd))]+
-             ', dein Saturn auf '+gr(sg)+' '+H_SIGNS[zI(sg)]+' — '+ab.toFixed(1)+'° Abstand'});
+        tech:tf(T_SATURN.tech,{grad:gr(lon('Saturn',jd)),
+          zeichen:H_SIGNS[zI(lon('Saturn',jd))], gradN:gr(sg),
+          zeichenN:H_SIGNS[zI(sg)], ab:ab.toFixed(1)})});
     }
   }
 
@@ -446,13 +431,13 @@ function themenBauen(){
   if(kz){
     var tk=tagesAbstand(kz.jd);
     karten.push({planet:kz.planet, name:tf(T_SONNE.kazimi.name,{planet:kz.planet}),
-      marke:(tk<=0?'heute':tk===1?'morgen':tf(T_KOPF.inTagen,{n:tk})),
-      spanne:wochentagDatum(kz.jd)+', gegen '+uhr(kz.jd),
+      marke:(tk<=0?T_KOPF.heute:tk===1?T_KOPF.morgen:tf(T_KOPF.inTagen,{n:tk})),
+      spanne:tf(T_SONNE.kazimi.spanne,{tag:wochentagDatum(kz.jd), uhr:uhr(kz.jd)}),
       was:tf(T_SONNE.kazimi.was,{planet:kz.planet}),
       tut:T_SONNE.kazimi.tut, gut:T_SONNE.kazimi.gut, dazu:T_SONNE.kazimi.dazu,
       beiDir:beiDirZeile(kz.lon),
-      tech:kz.planet+' in Konjunktion mit der Sonne, Abstand unter '+
-           (AC_HIMMEL.GRENZEN.kazimi*60).toFixed(0)+'′'});
+      tech:tf(T_SONNE.kazimi.tech,{planet:kz.planet,
+        min:(AC_HIMMEL.GRENZEN.kazimi*60).toFixed(0)})});
   }
   /* Sonnennähe gehört zum Planeten, nicht neben ihn. Ohne diese
      Zusammenlegung stünde Merkur dreimal untereinander: einmal
@@ -467,12 +452,14 @@ function themenBauen(){
        großen Karte zur Rückläufigkeit. */
     var schon=null, i;
     for(i=0;i<karten.length;i++) if(karten[i].planet===s.planet){ schon=karten[i]; break; }
-    if(schon){ schon.auch=tf(D.name,{planet:s.planet})+': '+tf(D.was,{planet:s.planet}); return; }
+    if(schon){ schon.auch=tf(T_SONNE.auch,{name:tf(D.name,{planet:s.planet}),
+                 was:tf(D.was,{planet:s.planet})}); return; }
     if(s.art==='strahlen') return;          /* zu fein für eine eigene Karte */
-    karten.push({planet:s.planet, name:tf(D.name,{planet:s.planet}), marke:'läuft',
+    karten.push({planet:s.planet, name:tf(D.name,{planet:s.planet}),
+      marke:T_KOPF.laeuft,
       was:tf(D.was,{planet:s.planet}), tut:D.tut, gut:D.gut, dazu:D.dazu,
       beiDir:beiDirZeile(lon(s.planet,jd)),
-      tech:s.planet+' '+s.ab.toFixed(1)+'° von der Sonne'});
+      tech:tf(T_SONNE.techNah,{planet:s.planet, ab:s.ab.toFixed(1)})});
   });
 
   ziel.innerHTML = karten.length ? karten.map(themaKarte).join('')
@@ -542,16 +529,18 @@ function trefferKarte(t, gross){
   h.push(naeheBalken(t));
   h.push('<p class="tr-s">' + esc(bahnSatz(t)) + '</p>');
   var unten = [];
-  if(B) unten.push('<a class="tr-ber" href="bereiche.html#ber-' +
+  if(B) unten.push('<a class="tr-ber" href="' + esc(H_SEITE.berZiel) +
                    esc(B.bereich ? B.bereich.k : '') + '">' + esc(B.name) + ' →</a>');
   if(gross && B_TEMPO[t.tempo])
     unten.push('<span class="tr-t">' + esc(B_TEMPO[t.tempo].satz) + '</span>');
   if(t.rueckwaerts) unten.push('<span class="tr-r">' + esc(B_KOPF.rueck) + '</span>');
   h.push('<div class="tr-unten">' + unten.join('') + '</div>');
-  h.push('<div class="tr-tech ac-tech" data-ab="2">' + esc(t.wanderer) + ' ' +
-         gr(lon(t.wanderer, jetztJD())) + ' ' + H_SIGNS[zI(lon(t.wanderer, jetztJD()))] +
-         ' ' + t.aspekt + ' ' + t.ziel + ' ' + gr(P[t.ziel]) + ' ' +
-         H_SIGNS[zI(P[t.ziel])] + ', Orbis ' + t.ab.toFixed(2) + '°</div>');
+  h.push('<div class="tr-tech ac-tech" data-ab="2">' +
+         tf(B_KOPF.tech, {wanderer:esc(t.wanderer),
+           grad:gr(lon(t.wanderer, jetztJD())),
+           zeichen:H_SIGNS[zI(lon(t.wanderer, jetztJD()))],
+           aspekt:esc(t.aspekt), ziel:esc(t.ziel), gradZ:gr(P[t.ziel]),
+           zeichenZ:H_SIGNS[zI(P[t.ziel])], ab:t.ab.toFixed(2)}) + '</div>');
   h.push('</article>');
   return h.join('');
 }
@@ -605,8 +594,6 @@ function trefferBauen(){
    Zeitachse unlesbar, eine stehende liest sich wie eine Liste mit
    Ordnung. Monate als Marken, jeder Eintrag aufklappbar. */
 var ST_ZEIGE = 6, ST_ALLE = false;
-var ST_MONAT = ['Januar','Februar','März','April','Mai','Juni','Juli',
-                'August','September','Oktober','November','Dezember'];
 
 function strahlBauen(){
   var ziel = el('htstrahl'); if(!ziel || !window.AC_BAHN || !P) return;
@@ -628,7 +615,7 @@ function strahlBauen(){
     var d = datVon(x.jd), mk = d.getFullYear() + '-' + d.getMonth();
     if(mk !== letzterMonat){
       letzterMonat = mk;
-      h.push('<div class="st-m">' + esc(ST_MONAT[d.getMonth()]) + ' ' + d.getFullYear() + '</div>');
+      h.push('<div class="st-m">' + esc(H_MONAT[d.getMonth()]) + ' ' + d.getFullYear() + '</div>');
     }
     var tage = tagesAbstand(x.jd);
     var B = beiDir(P[x.ziel]);
@@ -637,9 +624,10 @@ function strahlBauen(){
     h.push('<details class="st-e' + (x.art === 'hart' ? ' st-hart' : ' st-weich') + '">');
     h.push('<summary><span class="st-d">' + d.getDate() + '.</span>' +
       '<span class="st-n">' + bahnTitel(x) + '</span>' +
-      '<span class="st-w">' + (tage === 0 ? esc(B_STRAHL.heute)
-        : tage < 31 ? 'in ' + tage + ' T.'
-        : 'in ' + Math.round(tage / 30.44) + ' Mon.') + '</span></summary>');
+      '<span class="st-w">' + esc(tage === 0 ? B_STRAHL.heute
+        : tage < 31 ? tf(B_STRAHL.inTagen, {n:tage})
+        : tf(B_STRAHL.inMonaten, {n:Math.round(tage / 30.44)})) +
+      '</span></summary>');
     /* Ein rückläufiger Wanderer kreuzt dieselbe Stelle bis zu
        dreimal. Beim zweiten und dritten Mal denselben Absatz noch
        einmal hinzuschreiben, wäre Füllmaterial — dort zählt nur,
@@ -650,13 +638,14 @@ function strahlBauen(){
     else if(schon)      h.push('<p class="st-schon">' + esc(B_STRAHL.steht) + '</p>');
     else                h.push('<p>' + esc(bahnSatz(x)) + '</p>');
     if(dg) h.push('<p class="st-dg">' + esc(dg) + '</p>');
-    if(B) h.push('<a class="tr-ber" href="bereiche.html#ber-' +
+    if(B) h.push('<a class="tr-ber" href="' + esc(H_SEITE.berZiel) +
                  esc(B.bereich ? B.bereich.k : '') + '">' + esc(B.name) + ' →</a>');
-    h.push('<div class="tr-tech ac-tech" data-ab="2">' + esc(x.wanderer) + ' ' +
-      esc(x.aspekt) + ' ' + esc(x.ziel) + ' exakt am ' +
-      esc(datVon(x.jd).toLocaleDateString('de-DE')) +
-      (x.rueckwaerts ? ', rückläufig' : '') +
-      (x.durchgaenge > 1 ? ', Durchgang ' + x.durchgang + ' von ' + x.durchgaenge : '') +
+    h.push('<div class="tr-tech ac-tech" data-ab="2">' +
+      tf(B_STRAHL.tech, {wanderer:esc(x.wanderer), aspekt:esc(x.aspekt),
+        ziel:esc(x.ziel), datum:esc(datVon(x.jd).toLocaleDateString('de-DE')),
+        rueck:(x.rueckwaerts ? B_STRAHL.techRueck : ''),
+        durchgang:(x.durchgaenge > 1
+          ? tf(B_STRAHL.techDurchgang, {n:x.durchgang, alle:x.durchgaenge}) : '')}) +
       '</div></div></details>');
   });
   h.push('<p class="st-legende">' + esc(B_STRAHL.legende) + '</p>');
@@ -734,16 +723,17 @@ function koerperBauen(){
 
   h.push('<div class="kp-kopf"><span class="kp-vor">'+esc(T_KOERPER.heuteVor)+'</span>'+
     '<b>'+esc(E.name)+'mond</b>'+
-    (B?'<span class="kp-ber">bei dir im Bereich '+esc(B.name)+'</span>':'')+'</div>');
+    (B?'<span class="kp-ber">'+
+       esc(tf(T_KOERPER.imBereich,{bereich:B.name}))+'</span>':'')+'</div>');
 
   h.push('<div class="kp-zwei">');
   h.push('<div class="kp-k"><div class="kp-t">'+esc(T_KOERPER.schlafVor)+'</div>'+
     '<p>'+esc(E.schlaf)+'</p>'+
-    (vv?'<p class="kp-mess">Dazu kommt das Einzige hier, was gemessen ist: '+
-        (vv.tage===0?'Heute ist Vollmond.':'In '+vv.tage+' Tag'+(vv.tage===1?'':'en')+
-         ' ist Vollmond.')+' In den Nächten davor schlafen Menschen im Schnitt etwas '+
-        'später ein und kürzer — ein kleiner Effekt, der umso kleiner wird, je mehr '+
-        'künstliches Licht da ist.</p>':'')+'</div>');
+    (vv?'<p class="kp-mess">'+esc(T_KOERPER.messVor)+' '+
+        esc(vv.tage===0?T_KOERPER.messHeute
+           :vv.tage===1?T_KOERPER.messEinTag
+           :tf(T_KOERPER.messTage,{n:vv.tage}))+' '+
+        esc(T_KOERPER.messNach)+'</p>':'')+'</div>');
   h.push('<div class="kp-k"><div class="kp-t">'+esc(T_KOERPER.bewegungVor)+'</div>'+
     '<p>'+esc(E.bewegung)+'</p></div>');
   h.push('</div>');
@@ -754,11 +744,17 @@ function koerperBauen(){
     tr.slice(0,2).forEach(function(t){
       h.push('<div class="kp-tr"><b>'+esc(t.D.was)+'</b>'+
         '<p>'+esc(t.D.tut)+'</p><p class="kp-rat">'+esc(t.D.rat)+'</p>'+
-        '<div class="kp-tech ac-tech" data-ab="2">Mond '+gr(lon('Mond',jd))+' '+
-        H_SIGNS[zI(lon('Mond',jd))]+', dein '+t.k+' auf '+gr(P[t.k])+' '+
-        H_SIGNS[zI(P[t.k])]+' im '+haus(P,P[t.k])+'. Haus'+
-        (t.genau?' — '+(t.winkel||'Konjunktion')+', '+t.ab.toFixed(1)+'° Abstand'
-                :', beide im '+haus(P,lon('Mond',jd))+'. Haus')+
+        '<div class="kp-tech ac-tech" data-ab="2">'+
+        esc(tf(T_KOERPER.tech,{grad:gr(lon('Mond',jd)),
+          zeichen:H_SIGNS[zI(lon('Mond',jd))],
+          /* Nicht „dein Venus": das Geschlecht des Punktes steht in
+             bahn-daten.js, und B_BEUGE bildet das Wort daraus. */
+          dein:B_BEUGE(B_PUNKT(t.k,false),'nom'),
+          gradN:gr(P[t.k]), zeichenN:H_SIGNS[zI(P[t.k])], haus:haus(P,P[t.k]),
+          nachsatz:(t.genau
+            ? tf(T_KOERPER.techWinkel,{winkel:(t.winkel||T_KOERPER.techWinkelNot),
+                                       ab:t.ab.toFixed(1)})
+            : tf(T_KOERPER.techHaus,{haus:haus(P,lon('Mond',jd))}))}))+
         '</div></div>');
     });
     h.push('</div>');
@@ -789,8 +785,6 @@ function koerperBauen(){
    nicht angehängt, sondern in einer Zeile genannt.
    ENTWURF-JETZT.md Abschnitt 3. */
 var WO_TAGE=7;
-var WO_KURZ=['So','Mo','Di','Mi','Do','Fr','Sa'];
-var WO_LANG=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 
 /* Kalendertage, über die Sommerzeit hinweg: nicht 86400000
    addieren, sondern den Tag im Konstruktor weiterzählen. */
@@ -799,7 +793,7 @@ function wocheGerippe(){
   for(i=0;i<WO_TAGE;i++){
     var d=new Date(n.getFullYear(), n.getMonth(), n.getDate()+i);
     t.push({d:d, id:'wt-'+d.getMonth()+'-'+d.getDate(),
-            kurz:WO_KURZ[d.getDay()], lang:WO_LANG[d.getDay()],
+            kurz:H_WOKURZ[d.getDay()], lang:H_WOLANG[d.getDay()],
             zahl:d.getDate(), ist:(i===0), posten:[], gewicht:0});
   }
   return t;
@@ -809,26 +803,21 @@ function wocheGerippe(){
    das Gewicht ist die Summe der Ränge an diesem Tag. */
 function wocheForm(t){
   var mit=t.filter(function(x){ return x.posten.length; });
-  if(!mit.length)
-    return 'Diese Woche ist nichts mit festem Termin dabei. Das kommt vor — und es '+
-           'heißt, die Reihenfolge bestimmst du selbst.';
+  if(!mit.length) return H_WOCHE.leer;
   var max=t[0], i;
   for(i=0;i<t.length;i++) if(t[i].gewicht>max.gewicht) max=t[i];
   /* Ein „schwerster Tag", der aus einer einzigen leisen Sache
      besteht, ist eine Behauptung. Unter dem Schwellenwert sagt die
      Woche lieber, dass wenig los ist. */
   if(max.gewicht<4)
-    return 'Diese Woche ist ruhig: '+(mit.length===1?'an einem Tag':'an '+mit.length+' Tagen')+
-           ' steht etwas mit festem Termin an, und nichts davon wiegt schwer.';
+    return tf(H_WOCHE.ruhig,{tage:(mit.length===1
+      ? H_WOCHE.ruhigEinTag : tf(H_WOCHE.ruhigTage,{n:mit.length}))});
   var schwer=t.filter(function(x){ return x.gewicht===max.gewicht; });
-  if(schwer.length>2)
-    return 'Diese Woche verteilt sich: an '+mit.length+' von sieben Tagen steht etwas '+
-           'mit festem Termin an, und kein Tag sticht heraus.';
-  var wort=(max.ist?'heute':max.lang), ix=t.indexOf(max);
-  if(ix<=1) return 'Das Gewicht der Woche liegt vorn: '+wort+'. Danach wird es ruhiger.';
-  if(ix>=5) return 'Die Woche fängt ruhig an und wird nach hinten dichter. Der schwerste '+
-                   'Tag ist '+wort+'.';
-  return 'Der schwerste Tag der Woche ist '+wort+'. Davor und danach ist Platz.';
+  if(schwer.length>2) return tf(H_WOCHE.verteilt,{n:mit.length});
+  var wort=(max.ist?H_SEITE.heuteKlein:max.lang), ix=t.indexOf(max);
+  if(ix<=1) return tf(H_WOCHE.vorn,{tag:wort});
+  if(ix>=5) return tf(H_WOCHE.hinten,{tag:wort});
+  return tf(H_WOCHE.mitte,{tag:wort});
 }
 
 /* Das Band: sieben Tage auf einen Blick. Ein Tag mit Termin ist
@@ -856,7 +845,7 @@ function postenHtml(x){
     return '<div class="we we-oben">'+
       '<div class="wann"><b>'+esc(x.wann)+'</b></div>'+
       '<div class="tt">'+esc(x.tt)+'</div>'+
-      '<div class="tx">Steht oben, ganz am Anfang der Seite.</div></div>';
+      '<div class="tx">'+esc(H_SEITE.stehtOben)+'</div></div>';
   var wo='';
   if(x.wo){ var t=x.wo.split('|'); wo='<span class="wo"><a href="'+t[0]+'">'+t[1]+' →</a></span>'; }
   /* ab: ganze Einträge, die nur Mechanik sind, erscheinen erst
@@ -867,7 +856,8 @@ function postenHtml(x){
     '<div class="wann"><b>'+esc(x.wann)+'</b></div>'+
     '<div class="tt">'+esc(x.tt)+'</div><div class="tx">'+x.tx+'</div>'+
     (x.tech?'<div class="ac-tech" data-ab="2">'+esc(x.tech)+'</div>':'')+
-    (x.mit?'<div class="mit"><b>Dafür brauchst du</b>'+esc(x.mit)+'</div>':'')+wo+'</div>';
+    (x.mit?'<div class="mit"><b>'+esc(H_SEITE.mitVor)+'</b>'+esc(x.mit)+'</div>':'')+
+    wo+'</div>';
 }
 
 function wocheBauen(){
@@ -888,7 +878,7 @@ function wocheBauen(){
     ? mit.map(function(x){
         var dat=x.d.toLocaleDateString('de-DE',{day:'numeric',month:'long'});
         return '<section class="wo-grp" id="'+x.id+'">'+
-          '<h3 class="wo-gh"><b>'+esc(x.ist?'Heute':x.lang)+'</b>'+
+          '<h3 class="wo-gh"><b>'+esc(x.ist?H_SEITE.wann.heute:x.lang)+'</b>'+
           '<span>'+esc(dat)+'</span></h3>'+
           x.posten.map(postenHtml).join('')+'</section>';
       }).join('')
@@ -903,9 +893,10 @@ function wocheBauen(){
        13. November vor dem 9. */
     danach.sort(function(a,b){ return (b.rang-a.rang)||(a.jd-b.jd); });
     danach=danach.slice(0,3).sort(function(a,b){ return a.jd-b.jd; });
-    dz.innerHTML='<b>Danach schon in Sicht:</b> '+danach.map(function(x){
-      return esc(x.tt)+' am '+esc(datVon(x.jd).toLocaleDateString('de-DE',
-        {day:'numeric',month:'long'}));
+    dz.innerHTML='<b>'+esc(H_WOCHE.danachVor)+'</b> '+danach.map(function(x){
+      return tf(H_WOCHE.danachEintrag,{titel:esc(x.tt),
+        datum:esc(datVon(x.jd).toLocaleDateString('de-DE',
+          {day:'numeric',month:'long'}))});
     }).join(' · ')+'.';
     dz.hidden=false;
   }else{ dz.innerHTML=''; dz.hidden=true; }
@@ -932,13 +923,13 @@ function bisWann(b, jd){
      draußen sagt die Dauer mehr als der Tag. Und ab einem Jahr ist
      ein tagesgenaues Datum falsche Genauigkeit: Was so lange läuft,
      ist eine Welle und kein Fenster. (REGELN.md §4) */
-  if(t>365) return 'läuft noch Jahre — eine lange Welle, kein Fenster';
-  if(f.bisOffen) return 'mindestens bis ' + dat;
-  if(t===0) return 'nur noch heute';
-  if(t===1) return 'bis morgen';
-  if(t<=28) return 'bis ' + dat + ', noch ' + t + ' Tage';
-  if(t<=70) return 'noch etwa ' + Math.round(t/7) + ' Wochen, bis ' + dat;
-  return 'noch etwa ' + Math.round(t/30) + ' Monate, bis ' + dat;
+  if(t>365) return H_FENSTER.jahre;
+  if(f.bisOffen) return tf(H_FENSTER.mindestens, {datum:dat});
+  if(t===0) return H_FENSTER.heute;
+  if(t===1) return H_FENSTER.morgen;
+  if(t<=28) return tf(H_FENSTER.tage, {datum:dat, n:t});
+  if(t<=70) return tf(H_FENSTER.wochen, {n:Math.round(t/7), datum:dat});
+  return tf(H_FENSTER.monate, {n:Math.round(t/30), datum:dat});
 }
 
 /* Der Handgriff eines Bereichs — nie zweimal derselbe in der Liste. */
@@ -995,10 +986,8 @@ function bereicheBauen(p){
   if(hin){
     var n=bs.length;
     if(n<Bl.bereiche.length){
-      hin.textContent='Du siehst '+n+' von '+Bl.bereiche.length+' Bereichen. '+
-        'Die übrigen sind ausgeblendet. Gerechnet werden sie weiter — dort kann also '+
-        'einiges los sein, ohne dass du es hier siehst. '+
-        'Unter „Seite einstellen\u201c kannst du das ändern.';
+      hin.textContent=tf(H_SEITE.ausgeblendet,
+        {zahl:n, alle:Bl.bereiche.length});
       hin.hidden=false;
     } else { hin.textContent=''; hin.hidden=true; }
   }
@@ -1016,14 +1005,15 @@ function bereicheBauen(p){
     /* Der erste bekommt Gewicht. Eine Liste, in der alles gleich
        aussieht, sagt nicht, womit man anfangen soll. */
     var gross=(i===0);
-    return '<a class="ht-b'+(gross?' ht-b-gross':'')+'" href="bereiche.html#ber-'+esc(b.k)+'">'+
+    return '<a class="ht-b'+(gross?' ht-b-gross':'')+'" href="'+
+      esc(H_SEITE.berZiel)+esc(b.k)+'">'+
       '<span class="ht-bp" style="background:'+L.farbe+'"></span>'+
       '<span class="ht-bn">'+esc(b.name)+'</span>'+
       '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
       '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
-      '<span class="ht-bz"><span class="ht-bz-l">Was du tun kannst</span>'+
+      '<span class="ht-bz"><span class="ht-bz-l">'+esc(H_SEITE.tunVor)+'</span>'+
       '<span class="ht-bt">'+esc(tun)+'</span></span>'+
-      (bis?'<span class="ht-bbis"><span class="ht-bz-l">Wie lange</span>'+
+      (bis?'<span class="ht-bbis"><span class="ht-bz-l">'+esc(H_SEITE.langeVor)+'</span>'+
            '<span class="ht-bbis-v">'+esc(bis)+'</span></span>':'')+
       '</a>';
   }).join('');
@@ -1060,23 +1050,22 @@ function laufSatz(v){
   var A = AC_BDAT.ART[v.art];
   return A ? (W.was + ' ' + A.wie) : W.was;
 }
-/* Der Rechner schreibt die Aspekte klein. Im Deutschen sind das
-   Substantive. Eine Liste statt einer Umschaltung: toLowerCase und
-   Verwandte sind in diesem Projekt verboten, und zwar zu Recht. */
-var ASP_NAME = { konjunktion:'Konjunktion', opposition:'Opposition',
-  quadrat:'Quadrat', trigon:'Trigon', sextil:'Sextil' };
-function aspektName(k){ return ASP_NAME[k] || k; }
+/* Die Liste der Aspektnamen steht in heute-daten.js — hier steht
+   kein Text. Warum eine Liste und keine Umschaltung, steht dort. */
+function aspektName(k){ return H_ASP[k] || k; }
 
 function laufTech(v){
   if(v.form === 'durchgang')
-    return v.wanderer + ' läuft durch das ' + v.haus + '. Haus' +
-           (v.rueck ? ', rückläufig' : '');
-  var t = v.wanderer + ' ' + aspektName(v.aspekt) + ' ' +
-          (v.zielArt === 'achse' ? v.ziel : 'Radix-' + v.ziel);
-  t += ', ' + v.ab.toFixed(1).replace('.', ',') + '° vom genauen Stand';
-  t += v.zu ? ', zulaufend' : ', weggehend';
-  if(v.rueck) t += ', rückläufig';
-  return t;
+    return tf(H_LAUF.techDurchgang,
+      {wanderer:v.wanderer, haus:v.haus,
+       rueck:(v.rueck ? H_LAUF.techRueck : '')});
+  return tf(H_LAUF.techAspekt,
+    {wanderer:v.wanderer, aspekt:aspektName(v.aspekt),
+     ziel:(v.zielArt === 'achse' ? v.ziel
+           : tf(H_LAUF.techRadix, {ziel:v.ziel})),
+     ab:v.ab.toFixed(1).replace('.', ','),
+     zu:(v.zu ? H_LAUF.techZu : H_LAUF.techWeg),
+     rueck:(v.rueck ? H_LAUF.techRueck : '')});
 }
 function laufBauen(p){
   var ziel = el('htlauf');
@@ -1113,8 +1102,7 @@ function laufBauen(p){
     });
   }
   if(!vs.length){
-    ziel.innerHTML = '<p class="ht-nix">Gerade trifft nichts Größeres auf dein ' +
-      'Geburtsbild. Das ist der Normalfall und kommt häufiger vor als das Gegenteil.</p>';
+    ziel.innerHTML = '<p class="ht-nix">' + esc(H_LAUF.nix) + '</p>';
     return;
   }
   ziel.innerHTML = vs.map(function(v, i){
@@ -1122,18 +1110,19 @@ function laufBauen(p){
     var satz = laufSatz(v);
     if(!satz) return '';
     var st = fensterStand(v.f, jd);
-    var h = ['<a class="lf' + (i === 0 ? ' lf-haupt' : '') + '" href="bereiche.html#ber-' +
-             esc(B ? B.k : '') + '">'];
+    var h = ['<a class="lf' + (i === 0 ? ' lf-haupt' : '') + '" href="' +
+             esc(H_SEITE.berZiel) + esc(B ? B.k : '') + '">'];
     h.push('<div class="lf-kopf">');
     h.push('<span class="lf-ber">' + esc(B ? B.name : H_HAUS[(v.haeuser && v.haeuser[0] || 1)-1]) + '</span>');
     if(v.f && v.f.exakt){
       var t = tagesAbstand(v.f.exakt);
       h.push('<span class="lf-wann">' +
-        (t === 0 ? 'heute genau' : t === 1 ? 'morgen genau'
-         : t > 0 ? 'genau am ' + esc(monatTag(v.f.exakt))
-         : 'genau war am ' + esc(monatTag(v.f.exakt))) + '</span>');
+        (t === 0 ? esc(H_LAUF.heuteGenau) : t === 1 ? esc(H_LAUF.morgenGenau)
+         : tf(t > 0 ? H_LAUF.genauAm : H_LAUF.genauWar,
+              {datum:esc(monatTag(v.f.exakt))})) + '</span>');
     } else if(v.f && v.f.bis){
-      h.push('<span class="lf-wann">bis ' + esc(monatTag(v.f.bis)) + '</span>');
+      h.push('<span class="lf-wann">' +
+        tf(H_LAUF.bis, {datum:esc(monatTag(v.f.bis))}) + '</span>');
     }
     h.push('</div>');
     h.push('<p class="lf-was">' + esc(satz) + '</p>');
@@ -1156,12 +1145,13 @@ function laufBauen(p){
         if(n && n !== eigener && orte.indexOf(n) < 0) orte.push(n);
       });
       if(orte.length)
-        h.push('<p class="lf-auch">Dasselbe wirkt gerade auch auf: ' +
-               esc(orte.join(', ')) + '</p>');
+        h.push('<p class="lf-auch">' +
+               tf(H_LAUF.auch, {liste:esc(orte.join(', '))}) + '</p>');
     }
     h.push('<p class="lf-tech ac-tech" data-ab="2">' + esc(laufTech(v)) +
-      (w.length ? ' · dazu ' + esc(String(w.length)) + ' weitere mit ' +
-                  esc(v.wanderer) : '') + '</p>');
+      (w.length ? tf(H_LAUF.techWeitere,
+                     {n:esc(String(w.length)), wanderer:esc(v.wanderer)})
+                : '') + '</p>');
     h.push('</a>');
     return h.join('');
   }).join('');
@@ -1187,11 +1177,11 @@ function kapSetzen(s){
 }
 function kapBauen(){
   var a=kapHeute();
-  el('htkapr').innerHTML=[['wenig','ein Satz'],['mittel','das Wichtigste'],['viel','alles']]
-    .map(function(x){
-      return '<button type="button" class="kb'+(a===x[0]?' ist':'')+'" data-k="'+x[0]+'">'+
-        '<span class="n">'+x[0].charAt(0).toUpperCase()+x[0].slice(1)+'</span>'+
-        '<span class="u">'+x[1]+'</span></button>'; }).join('');
+  el('htkapr').innerHTML=H_KAP.map(function(x){
+      return '<button type="button" class="kb'+(a===x.k?' ist':'')+
+        '" data-k="'+esc(x.k)+'">'+
+        '<span class="n">'+esc(x.n)+'</span>'+
+        '<span class="u">'+esc(x.u)+'</span></button>'; }).join('');
   Array.prototype.forEach.call(el('htkapr').querySelectorAll('.kb'),function(b){
     b.addEventListener('click',function(){ kapSetzen(b.getAttribute('data-k')); });
   });
@@ -1212,20 +1202,23 @@ function anwenden(){
 function stellBauen(){
   var u=el('htstellu'); if(!u) return;
   var t=[];
-  try{ if(window.AC_NIV) t.push(['Neu','Wenig','Mittel','Viel','Pro'][AC_NIV.stufe()]); }catch(e){}
+  /* Die Namen der fünf Stufen stehen in niveau.js. Eine zweite
+     Liste hier wäre dieselbe Angabe an zwei Stellen. */
+  try{ if(window.AC_NIV) t.push(AC_NIV.name(AC_NIV.stufe())); }catch(e){}
   try{ if(window.AC_WAHL){ var g=AC_WAHL.gewaehlte&&AC_WAHL.gewaehlte();
-    t.push(g&&g.length?g.length+' von zehn Bereichen':'alle zehn Bereiche'); } }catch(e){}
-  var k=kapHeute(); if(k) t.push('heute: '+k);
-  u.textContent=t.join(' · ');
+    t.push(g&&g.length?tf(H_STELL.bereicheTeil,{n:g.length})
+                      :H_STELL.bereicheAlle); } }catch(e){}
+  var k=kapHeute(); if(k) t.push(tf(H_STELL.kapazitaet,{k:k}));
+  u.textContent=t.join(H_STELL.trenner);
 }
 
 /* ── Start ────────────────────────────────────────────────── */
 (function(){
   var p=profil();
   if(!p){
-    el('htinhalt').innerHTML='<div class="ht-leer">Noch kein Profil angelegt. '+
-      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und Geburtsort '+
-      'kann diese Seite den Himmel nicht auf dich beziehen.</div>';
+    el('htinhalt').innerHTML='<div class="ht-leer">'+esc(H_SEITE.ohneProfilVor)+' '+
+      '<a href="'+esc(H_SEITE.ohneProfilDatei)+'">'+esc(H_SEITE.ohneProfilLink)+'</a> '+
+      esc(H_SEITE.ohneProfilNach)+'</div>';
     var j=el('htjetzt'); if(j) j.hidden=true;
     return;
   }

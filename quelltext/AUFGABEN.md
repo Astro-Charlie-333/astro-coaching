@@ -45,19 +45,20 @@ zweiundzwanzig Dateien; sie zweimal anzufassen wäre doppelte Arbeit.
 Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
 `pruefwerk.pruefe_anzeige_satzfrei` liest alle drei Anführungsarten,
 `pruefwerk.pruefe_anzeige_ohne_dein` findet jedes von Hand
-geschriebene „dein". Drei Anzeigen sind durch und verriegelt
-(`bereich-app.js`, `start-app.js`, `offline-app.js`).
+geschriebene „dein". Vier Anzeigen sind durch und verriegelt
+(`bereich-app.js`, `start-app.js`, `offline-app.js` und seit dem
+2026-11-09 `heute-app.js`).
 
-Die neunzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
-der ein Mensch sie vor sich hat: zuerst die vier Türen der Navigation
-(`index.html` ist „Jetzt", `uebersicht.html` ist „Dein Bild"), dann
+Die achtzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
+der ein Mensch sie vor sich hat: zuerst die Türen der Navigation
+(`uebersicht.html` ist „Dein Bild"), dann
 die Seiten, die ein Profil rechnen, zuletzt die Werkzeuge der
 Coachin. **Wie weit es ist, steht nicht hier, sondern in
 `pruefe-alles.py`, Querprüfung 13** — dort wird bei jedem Lauf
 nachgezählt, und die Liste bricht in beide Richtungen. Eine Liste in
 einem Dokument driftet; diese kann nur schrumpfen.
 
-Für jede der Aufgaben 48 bis 66 gilt dasselbe, deshalb steht es
+Für jede der Aufgaben 49 bis 66 gilt dasselbe, deshalb steht es
 einmal hier. **Fertig, wenn:** die Sätze dieser Anzeige in ihrer
 `*-daten.js` stehen, die Anzeige „dein" nicht mehr selbst schreibt
 (sondern `B_BEUGE` aus `bahn-daten.js` lässt), ihr `bau-*.py` beide
@@ -74,12 +75,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 48 · `heute-app.js` (160, 8)
-`index.html`, die Tür „Jetzt" — die Seite, die ein Mensch am
-häufigsten vor sich hat. Gehört in einen Zug mit Aufgabe 17, 18, 21
-und 47, die alle dieselbe Seite betreffen; zweimal anfassen wäre
-doppelte Arbeit.
 
 ### 49 · `wahl-app.js` (1, 0)
 Die Bereichsleiste, auf jeder Seite mit Bereichen. Bis auf einen
@@ -630,9 +625,67 @@ Anzeigen benutzen, und eine gemeinsame Prüfung — nicht je `bau-*.py` eine
 eigene — abbricht, sobald im erzeugten Text eine Ziffer, ein Punkt und
 wieder eine Ziffer aufeinanderfolgen.
 
+### 68 · Die Verweisprüfung steht zehnmal und sieht jedes Mal anders hin
+Gefunden beim Erledigen von Aufgabe 48 am 2026-11-09. „Verweis ins Leere"
+steht in zehn `bau-*.py` einzeln, und keine zwei Fassungen prüfen
+dasselbe: Sieben suchen `href="…"`, zwei davon mit schließendem
+Anführungszeichen und eine mit Punkt im Namen; vier lesen nur den Körper,
+drei auch die Anzeige, eine die Daten. Ein Dateiname, der nicht in einem
+`href`-Attribut steht — `wo:'zauber.html|Planetenstunden heute'`, oder
+`ohneProfilDatei` in einer Datendatei —, kommt an keiner dieser Fassungen
+vorbei. Genau das ist bei Aufgabe 48 passiert: Vier Seitennamen wanderten
+aus `heute-app.js` in `heute-daten.js`, und die Prüfung in
+`bau-heute.py` wäre grün geblieben, weil ihr Fall nicht mehr bei ihr
+vorbeikommt. Sie ist dort seit dem 2026-11-09 auf die gemeinte Form
+umgestellt (jeder Seitenname, wo immer er steht, mit festen Beispielen
+darunter) — in den neun übrigen Ordnern steht die alte Fassung. Dieselbe
+Fehlerklasse wie bei Aufgabe 40 und 41: eine Regel, die je Datei gepflegt
+wird, ist in acht von neun Ordnern veraltet, sobald sie einmal verschärft
+wurde.
+**Fertig, wenn:** die Regel in `rituale/pruefwerk.py` steht, jedes
+`bau-*.py` sie von dort holt, jede gebaute Seite sie besteht, ein
+Seitenname ins Leere in **jeder** dieser Seiten den Bau abbricht — auch
+wenn er nicht in einem `href`-Attribut steht —, und eine Gegenprobe
+festhält, dass die Regel pro Seite überhaupt etwas findet, damit ihr Grün
+eine Aussage bleibt.
+
 ---
 
 ## Erledigt
+
+* **2026-11-09** · `heute-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 48, aus 34 und 38). Die Anzeige der Tür „Jetzt" — die Seite,
+  die ein Mensch am häufigsten vor sich hat — trug einhundertsechzig
+  Zeichenketten und achtmal ein von Hand geschriebenes „dein". Sie
+  stehen jetzt in `kern/heute-daten.js`, zusammen mit den Listen, die
+  vorher im Code standen: die zwölf Zeichen, die zwölf Häuser, der
+  zweite Fall der Planeten, Monate, Wochentage und die Aspektnamen. Was
+  in die Abschnitte der Themenseite gehörte, ist dort gelandet, wo der
+  Abschnitt schon seine Texte hat (`themen-daten.js`, `bahn-daten.js`),
+  und nicht in einer zweiten Liste daneben.
+  Dabei ist ein Fehler aufgefallen, den keine Prüfung gesehen hat: Die
+  Mechanikzeile unter „Schlaf und Bewegung" setzte „dein" selbst vor den
+  Punktnamen und schrieb damit „dein Venus" und „dein Sonne". Die Form
+  bildet jetzt `B_BEUGE` aus `bahn-daten.js` — eine Stelle, die das
+  Geschlecht des Punktes kennt. Genau diese Fehlerklasse ist der Grund
+  für Aufgabe 38.
+  Dauerhaft wird das von zwei Riegeln in `bau-heute.py` gehalten:
+  `pruefwerk.pruefe_anzeige_satzfrei` und
+  `pruefwerk.pruefe_anzeige_ohne_dein`. Nachgewiesen an vier
+  Gegenproben — ein Satz in jeder der drei Anführungsarten und ein
+  „dein" von Hand brechen den Bau.
+  Dazu eine dritte Prüfung, weil der Umzug eine bestehende leerlaufen
+  ließ: „Verweis ins Leere" suchte `href="…"` in Körper und Anzeige, und
+  die vier Seitennamen waren gerade in die Datendatei gewandert. Sie
+  prüft jetzt die gemeinte Form — jeden Seitennamen, wo immer er steht,
+  mit festen Beispielen darunter (`REGELN.md` 6e) — und zählt nach, dass
+  sie überhaupt etwas findet. Dass dieselbe lose Fassung noch in neun
+  anderen Ordnern steht, ist Aufgabe 68.
+  Auf der Seite sieht man davon nichts: Der Text ist Wort für Wort
+  derselbe, nachgewiesen durch einen Vergleich des gezeichneten
+  Seitentexts vor und nach dem Umzug. Offen sind jetzt 1215 Sätze und
+  132 mal „dein" in 18 Anzeigen; `heute-app.js` steht in Querprüfung 13
+  unter `FERTIG`.
 
 * **2026-11-07** · Die Aufgaben 34 und 38 sind in Tageswerke zerlegt
   (Aufgabe 43). Beide verlangten, dass **jede** der zweiundzwanzig

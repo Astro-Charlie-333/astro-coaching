@@ -179,7 +179,8 @@ var B_KOPF = {
  mehrVor:'Alle Berührungen anzeigen',
  wenigerVor:'Weniger anzeigen',
  schnellTitel:'Dazu heute, nur für Stunden',
- schnellSub:'Mond, Merkur, Venus und Sonne ziehen schnell vorbei. Sie machen den Tag, nicht den Abschnitt.'};
+ schnellSub:'Mond, Merkur, Venus und Sonne ziehen schnell vorbei. Sie machen den Tag, nicht den Abschnitt.',
+ tech:'{wanderer} {grad} {zeichen} {aspekt} {ziel} {gradZ} {zeichenZ}, Orbis {ab}°'};
 
 var B_STRAHL = {
  titel:'Die nächsten zwölf Monate',
@@ -191,4 +192,9 @@ var B_STRAHL = {
  weniger:'Weniger anzeigen',
  legende:'Gerechnet ist der Tag, an dem der Winkel genau aufgeht. Was er bedeutet, ist Deutung — und die prüfst du an dir.',
  wieder:'Dieselbe Begegnung noch einmal — was sie heißt, steht beim ersten Mal.',
- steht:'Läuft schon. Steht oben unter „Was dein Bild gerade trifft".'};
+ steht:'Läuft schon. Steht oben unter „Was dein Bild gerade trifft".',
+ inTagen:'in {n} T.',
+ inMonaten:'in {n} Mon.',
+ tech:'{wanderer} {aspekt} {ziel} exakt am {datum}{rueck}{durchgang}',
+ techRueck:', rückläufig',
+ techDurchgang:', Durchgang {n} von {alle}'};
