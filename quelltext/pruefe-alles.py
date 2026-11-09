@@ -715,7 +715,6 @@ sys.path.insert(0, str(hier / 'rituale'))
 import pruefwerk
 ANZEIGEN = {
     # Anzeige                      (Sätze, „dein" von Hand)
-    'kern/heute-app.js':           (160, 8),
     'bereiche/wahl-app.js':        (1, 0),
     'kern/ich-app.js':             (40, 2),
     'monat/monat-app.js':          (2, 0),
@@ -739,7 +738,7 @@ ANZEIGEN = {
 # gehalten; sie stehen hier nur, damit auffällt, wenn eine davon
 # zurückfällt und keinen Riegel hat.
 FERTIG = {'bereiche/bereich-app.js', 'start/start-app.js',
-          'app/offline-app.js'}
+          'app/offline-app.js', 'kern/heute-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

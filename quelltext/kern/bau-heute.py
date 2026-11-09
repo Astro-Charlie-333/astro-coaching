@@ -221,6 +221,8 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + lies(hier / 'themen-daten.js') + "\n"
         + lies(hier / 'bahn-rechner.js') + "\n"
         + lies(hier / 'bahn-daten.js') + "\n"
+        # Die Sätze der Seite vor der Anzeige, die sie holt.
+        + lies(hier / 'heute-daten.js') + "\n"
         + lies(hier / 'heute-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -233,6 +235,24 @@ ziel.write_text(html, encoding='utf-8')
 fehler, hinweise = [], []
 koerper = lies(hier / 'heute-koerper.html')
 app = lies(hier / 'heute-app.js')
+daten = [lies(hier / 'heute-daten.js'), lies(hier / 'themen-daten.js'),
+         lies(hier / 'bahn-daten.js')]
+
+# ── In heute-app.js steht kein Satz, und sie beugt „dein" nicht ──
+# Aufgabe 48 (aus 34 und 38). Bis zum 2026-11-09 standen hier
+# einhundertsechzig Zeichenketten und achtmal ein von Hand
+# geschriebenes „dein" — auf der Seite, die ein Mensch am häufigsten
+# vor sich hat. Die Regeln stehen in rituale/pruefwerk.py an einer
+# Stelle (Aufgabe 43); ab hier hält der Riegel sie.
+#
+# Was dieser Riegel verhindert, ist nicht ein Tippfehler, sondern eine
+# Bauart: Ein Satz in der Anzeige wandert beim Umzug nach Stufe 3 nicht
+# mit (PRODUKT.md Abschnitt 7), und ein „dein" in der Anzeige kennt das
+# Geschlecht des Punktes nicht — so entstand „dein Venus" in der
+# Mechanikzeile von „Schlaf und Bewegung". Die Form bildet jetzt
+# B_BEUGE aus bahn-daten.js.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'heute-app.js', 'heute-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'heute-app.js')
 
 # ── Ein Handgriff verspricht nichts ───────────────────────────
 # Dieselbe Regel wie auf der Bereichsseite, aus derselben Datei
@@ -275,7 +295,38 @@ auf, zu = len(re.findall(r'<div\b', koerper)), len(re.findall(r'</div>', koerper
 if auf != zu:
     fehler.append(f'div-Bilanz: {auf} auf, {zu} zu')
 
-for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper + app))):
+# ── Jede genannte Seite gibt es ────────────────────────────────
+# Bis zum 2026-11-09 suchte diese Prüfung nach `href="…"` und las nur
+# `koerper + app`. Beides war zu eng, und Aufgabe 48 hat es sichtbar
+# gemacht: Seit die Dateinamen beim Text in `heute-daten.js` stehen —
+# als `ohneProfilDatei` und als `wo:'zauber.html|…'` —, kam kein
+# einziger davon mehr an dieser Prüfung vorbei. Sie wäre grün geblieben,
+# weil ihr Fall nicht mehr bei ihr vorbeikommt (REGELN.md 6e, umgekehrt).
+#
+# Geprüft wird jetzt die Form, die gemeint ist: der Name einer Seite,
+# wo immer er steht. Nicht das Attribut, das meistens davorsteht.
+def _seitennamen(text):
+    """Jede Seite, die irgendwo genannt wird — in einem Attribut, in
+    einer Zeichenkette, mit Sprungmarke oder mit Beschriftung."""
+    return set(re.findall(r'\b([a-z0-9][a-z0-9_-]*\.html)\b', text))
+
+
+assert _seitennamen('<a href="bereiche.html#ber-x">') == {'bereiche.html'}
+assert _seitennamen("wo:'zauber.html|Planetenstunden heute'") == {'zauber.html'}
+assert _seitennamen("datei:'profile.html',") == {'profile.html'}
+assert _seitennamen('siehe themen-daten.js') == set()
+assert _seitennamen('kein Verweis hier') == set()
+assert _seitennamen("'a.html' und \"b.html\"") == {'a.html', 'b.html'}
+
+_verweise = _seitennamen(koerper + app + '\n'.join(daten))
+# Und die Gegenprobe, dass sie überhaupt etwas findet: Die Seite nennt
+# die vier Türen und die Bereichsseite. Findet die Regel weniger als
+# fünf Seiten, sucht sie an der falschen Stelle — dann ist ihr Grün
+# keine Aussage.
+if len(_verweise) < 5:
+    fehler.append(f'die Verweisprüfung findet nur {len(_verweise)} Seiten — '
+                  'die Startseite nennt mehr, also sucht sie falsch')
+for href in sorted(_verweise):
     if not (wiki / href).exists():
         fehler.append('Verweis ins Leere: ' + href)
 

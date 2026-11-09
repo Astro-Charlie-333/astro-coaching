@@ -125,7 +125,10 @@ var T_MOND = {
    ['Schlaf','In den Nächten davor schlafen Menschen messbar etwas später ein und kürzer. Der Effekt ist klein und hängt offenbar am Licht — mehr dazu unter „Schlaf und Bewegung".']],
   gut:'Abschließen statt anfangen. Und: eine Nacht darüber schlafen, bevor du etwas davon abschickst.'},
  inZeichen:'im Zeichen {zeichen}',
- beiDir:'Bei dir fällt er in den Bereich {bereich}.'};
+ beiDir:'Bei dir fällt er in den Bereich {bereich}.',
+ spanne:'{tag}, {uhr} — {zeichen}',
+ tech:'{art} auf {grad} {zeichen}{knoten}',
+ techKnoten:', {ab}° vom Mondknoten'};
 
 /* Finsternisse. Eine Lunation nahe am Mondknoten. Die Erzählung
    drumherum ist groß; die ehrliche Fassung ist kleiner und
@@ -135,14 +138,21 @@ var T_FINSTERNIS = {
   tut:'Ein Neumond mit mehr Gewicht. Was hier anfängt, fängt meist nicht sanft an — es wird eher etwas weggenommen, damit Platz entsteht.'},
  mond:{name:'Mondfinsternis',
   tut:'Ein Vollmond mit mehr Gewicht. Etwas kommt zum Ende, und zwar schneller, als dir lieb ist.'},
+ moeglich:' (möglich)',
  vielleicht:'Knapp an der Grenze — ob daraus eine Finsternis wird, hängt an Bruchteilen eines Grades. Hier steht deshalb „möglich" und nicht „ist".',
  dazu:'Finsternissen wird nachgesagt, dass sie Schicksal machen. Was sich nachrechnen lässt: Sie kommen in Serien, immer paarweise, zweimal im Jahr. Was sie bei dir bedeuten, weißt nur du — und erst hinterher.'};
 
 /* Kazimi und Verbrennung. Das Thema, das in Mandys Aufzählung
    stand und auf der Seite komplett fehlte. */
 var T_SONNE = {
+ /* Die Zeile, mit der Sonnennähe an die Karte des Planeten
+    gehängt wird, statt neben ihr zu stehen. */
+ auch:'{name}: {was}',
+ techNah:'{planet} {ab}° von der Sonne',
  kazimi:{
   name:'Kazimi — {planet} im Herzen der Sonne',
+  spanne:'{tag}, gegen {uhr}',
+  tech:'{planet} in Konjunktion mit der Sonne, Abstand unter {min}′',
   was:'{planet} steht der Sonne so nah, dass zwischen beiden weniger als ein Drittel Grad liegt. Das dauert ein paar Stunden und kommt für jeden Planeten höchstens ein- bis dreimal im Jahr vor.',
   tut:'Die Überlieferung hält das für die stärkste Stellung, die ein Planet überhaupt haben kann: Der Planet sitzt im Thron statt im Feuer. Praktisch heißt das, dass das Thema dieses Planeten für ein paar Stunden ungewöhnlich klar dasteht.',
   gut:'Ein kleines Zeitfenster, in dem sich das Thema des Planeten gut ansehen lässt. Mehr muss man damit nicht machen.',
@@ -186,6 +196,7 @@ var T_SCHNITT = {
  Mars:{
   titel:'Nichts, was schneidet',
   text:'Für alles, was schneidet, gilt in der Überlieferung dasselbe: aufschiebbare Eingriffe lieber aufschieben, bis Mars wieder vorwärts läuft. Mars ist in dieser Lehre die Klinge, und rückwärts heißt: zweimal ansetzen.'},
+ belegTitel:'Was daran belegt ist',
  grenze:'Das gilt für Verschiebbares. Was medizinisch nötig ist, entscheidet deine Ärztin — nach dem Befund, nicht nach dem Himmel. Diese Seite ersetzt keine Beratung und rät nie davon ab, einen Termin wahrzunehmen.',
  beleg:'Das ist eine alte Wahlregel, keine gemessene Wirkung. Es gibt keine Studie, die zeigt, dass kosmetische Eingriffe zu diesen Zeiten schlechter ausgehen. Was die Regel beschreibt, ist etwas anderes und durchaus nachvollziehbar: dass man den eigenen Geschmack in bestimmten Phasen schlechter einschätzt.'};
 
@@ -202,7 +213,8 @@ var T_SATURN = {
  erste:'die erste', zweite:'die zweite', dritte:'die dritte',
  nummer:'{welche} — du bist {alter}',
  naht:'Beginnt {wann}',
- laeuft:'Läuft gerade'};
+ laeuft:'Läuft gerade',
+ tech:'Saturn auf {grad} {zeichen}, dein Saturn auf {gradN} {zeichenN} — {ab}° Abstand'};
 
 /* Die Überschriften des Abschnitts. */
 var T_KOPF = {
@@ -215,7 +227,15 @@ var T_KOPF = {
  inTagen:'in {n} Tagen',
  beiDirVor:'Bei dir',
  gutVor:'Gut dafür',
- dazuVor:'Was oft zu groß erzählt wird'};
+ dazuVor:'Was oft zu groß erzählt wird',
+ nochEinenTag:'noch 1 Tag',
+ laeuft:'läuft',
+ heute:'heute',
+ morgen:'morgen',
+ techRueck:'{planet} rückläufig in {zeichen}{aus}',
+ /* Das Zeichen der Station nur, wenn es ein anderes ist — sonst
+    steht zweimal dasselbe Wort in einer Zeile. */
+ techRueckAus:', rückwärts aus {zeichen}'};
 
 /* ── Schlaf und Bewegung ──────────────────────────────────────
    Mandy am 28.10.:
@@ -261,6 +281,19 @@ var T_KOERPER = {
  gemessen:'Nur der Zusammenhang zwischen Mondphase und Schlaf, und auch der ist klein und umstritten. In den Nächten vor dem Vollmond schlafen Menschen etwas später ein und etwas kürzer — in einer argentinischen Feldstudie ohne elektrisches Licht rund 22 Minuten später und 25 Minuten kürzer, in der Stadt nur noch 9 und 11 Minuten. Je mehr künstliches Licht, desto kleiner der Effekt; das spricht dafür, dass es am Licht liegt und nicht am Mond als solchem. Eine Laborarbeit von 2013 fand Ähnliches, ließ sich aber nicht wiederholen.',
  ueberliefertTitel:'Was Überlieferung ist',
  ueberliefert:'Alles andere hier. Dass ein Erdmond zu ruhigem Training passt und ein Feuermond zu schnellem, dass ein Mond über deinem Mars sich anders anfühlt — das sind alte Zuordnungen, keine Messungen. Sie taugen als Vorschlag, den du an dir selbst prüfst. Merkst du nichts davon, hat dein Erleben recht.',
+ imBereich:'bei dir im Bereich {bereich}',
+ messVor:'Dazu kommt das Einzige hier, was gemessen ist:',
+ messHeute:'Heute ist Vollmond.',
+ messEinTag:'In 1 Tag ist Vollmond.',
+ messTage:'In {n} Tagen ist Vollmond.',
+ messNach:'In den Nächten davor schlafen Menschen im Schnitt etwas später ein und kürzer — ein kleiner Effekt, der umso kleiner wird, je mehr künstliches Licht da ist.',
+ /* {dein} kommt aus B_BEUGE: „deine Venus", nicht „dein Venus".
+    Welches Geschlecht der Punkt hat, steht in bahn-daten.js und
+    nicht hier noch einmal. */
+ tech:'Mond {grad} {zeichen}, {dein} auf {gradN} {zeichenN} im {haus}. Haus{nachsatz}',
+ techWinkel:' — {winkel}, {ab}° Abstand',
+ techWinkelNot:'Konjunktion',
+ techHaus:', beide im {haus}. Haus',
  selbstVor:'Prüf es an dir',
  selbst:'Das Interessante daran ist nicht, ob die Zuordnung stimmt, sondern ob sie bei dir stimmt. Notier dir zwei Monate lang in einem Satz, wie du geschlafen hast und wonach dir war. Danach weißt du mehr über dich, als jede Tabelle dir sagen kann.'};
 
