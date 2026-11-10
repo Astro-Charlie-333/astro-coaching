@@ -435,3 +435,134 @@ und die Seite wird von 4.939 auf 4.554 Pixel kürzer. Der erste Bildschirm
 trägt danach: den Satz, für wen gerechnet wurde, den Hinweis, dass es ohne
 Vorkenntnis geht, und die Überschrift des Abschnitts, der das Besondere
 dieser Seite ist.
+
+
+### 10.11.2026 · `zeiten.html` — die langen Kapitel
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil, dazu die Stufen 1, 3 und 4 im Textvergleich.
+Seitenhöhe bei 390: 6.656 Pixel auf Stufe 0 **und** auf Stufe 2, 6.824 auf
+Stufe 3; bei 1280 sind es 4.490. Keine Fehler in der Konsole, nichts läuft
+über den Rand. Dieselbe Einschränkung wie am 06.11.: In dieser Umgebung
+sind die Schriften von Google gesperrt, die Seite zeichnet mit
+Ersatzschriften. Beurteilt wurden Hierarchie, Größen, Abstände und
+Reihenfolge — nicht das Schriftbild.
+
+Was trägt: „Dein ganzes Leben auf einen Blick" ist bei 1280 das beste Bild
+der ganzen Plattform. Fünf Zeilen, ein ganzes Leben von der Geburt bis 90
+in einem Rahmen, Gold für laut, Grün für mittel, Grau für leise, die
+Rauten für die großen Schnitte und eine senkrechte Linie, die „du bist
+hier · 32" sagt. Keine der beiden Apps auf ihrem Telefon zeigt ihr das.
+Und der dunkle Kasten „Was das taugt — und was nicht" ist der ehrlichste
+Text, der mir hier bisher untergekommen ist: „Ein Drittel von allem ist
+Hochphase", „Es ist nicht überprüft", „Die Geburtszeit entscheidet mit".
+Das ist der Markenkern aus `PRODUKT.md` Abschnitt 3, ausgeschrieben. Die
+beiden Befunde handeln davon, dass der Schalter über alldem nichts tut —
+und dass das gute Bild auf dem Telefon die falsche Hälfte zeigt.
+
+#### 10.11-1 · Der Wissensstand-Schalter ändert 93 Pixel, und alle liegen in ihm selbst
+
+**Zitat:** Die Leiste steht bei Pixel 398, ist 147 Pixel hoch und damit
+der zweite Gegenstand auf einem 844 Pixel hohen Bildschirm. Auf **Neu**
+steht darin: „Keine Ahnung von Astrologie. Alles in Alltagssprache. Keine
+Fachbegriffe, keine Grade, keine Planetennamen — nur, worum es geht." Auf
+**Mittel** steht dort: „Häuser und Aspekte sagen mir was."
+
+Das ist der ganze Unterschied. Ich habe die beiden Seiten Pixel für Pixel
+verglichen, über die volle Höhe von 6.656 Pixeln: Das einzige Rechteck, in
+dem sich etwas ändert, liegt zwischen Pixel 437 und Pixel 530 — **innerhalb
+der Leiste**. Im Text sind es 6.467 Zeichen auf Stufe 0 gegen 6.459 auf
+Stufe 2, und die acht Zeichen Unterschied sind die Beschreibung der Leiste.
+Tippt man eine Bereichszeile auf, kommt genau **ein Satz** dazu: „Das
+Zeichen steht dem rechten Winkel nach. Vier von zwölf Zeichen tun das."
+Stufe 1 ändert nichts. Stufe 3 schaltet eine Zeile frei („Eros · Paulus /
+Olympiodor"), Stufe 4 zwanzig Zeichen.
+
+In die andere Richtung steht auf Stufe 0 reichlich, was dort nicht
+hingehört: 39 Tierkreiszeichen im sichtbaren Text und 56 Glyphen im
+Quelltext. Neun Karten unter „Was als Nächstes kommt" enden alle neun auf
+denselben Nachsatz — „Der Abschnitt trägt das Zeichen Zwillinge." — ohne
+ein Wort dazu, was Zwillinge heißt. Im Balkenbild tragen acht Balken statt
+eines Wortes nur noch ein Zeichen: ♎︎ ♐︎ ♓︎ ♉︎ ♉︎ ♋︎ ♉︎ ♍︎.
+
+**Kosten:** Der Kauf-Test, an der Stelle, an der die Seite ihr Versprechen
+abgibt. „Verständlich auf jeder Stufe — wer mehr wissen will, dreht hoch"
+ist einer der vier Vorsprünge aus `PRODUKT.md` Abschnitt 3. Hier ist der
+Knopf dafür groß, schön und gleich oben, und er ist leer. Wer ihn drückt,
+sieht die Beschriftung des Knopfes sich ändern und sonst nichts — das ist
+die eine Art von Enttäuschung, die man nicht mehr zurücknehmen kann, weil
+sie nicht vom Inhalt handelt, sondern von der Glaubwürdigkeit der
+Bedienung. Teurer ist die andere Richtung: Dieselbe Leiste verspricht
+„keine Fachbegriffe", und 14 Pixel darunter steht „Löwe", und neunmal
+weiter unten steht „Der Abschnitt trägt das Zeichen Zwillinge", und im Bild
+stehen acht Balken, die nur noch ♉︎ sagen. Eine 28-Jährige, die mit Co-Star
+groß geworden ist, kennt „Zwillinge" — aber sie liest hier einen Satz, der
+ihr etwas über die nächsten zwei Jahre sagen will und mit einem Wort endet,
+das nichts dazutut. `REGELN.md` Abschnitt 2a nennt den Preis für die
+Erlaubnis, einen Namen zu nennen: Er wird **auf derselben Karte** erklärt,
+bevor etwas über seine Wirkung dasteht. Neun Karten nennen, keine erklärt.
+
+**Vorschlag:** Die Alltagssprache ist bereits da und wird nur nicht
+benutzt. In `zeit-daten.js` trägt jedes der zwölf Zeichen ein `bild`:
+Zwillinge → „verbinden, reden, vieles gleichzeitig", Fische → „auflösen und
+loslassen", Steinbock → „aufbauen und tragen". „Wo du gerade stehst" zeigt
+dieses `bild` schon — „Löwe — zeigen und gesehen werden". Die neun Karten
+unter „Was als Nächstes kommt" tun es ihm nach: Aus „Der Abschnitt trägt
+das Zeichen Zwillinge." wird „Der Abschnitt steht auf Verbinden, Reden,
+vieles gleichzeitig." Der bloße Zeichenname zieht dahinter in ein
+`ac-tech`-Element mit `data-ab="2"` — damit hat der Schalter zum ersten Mal
+auf dieser Seite etwas zu schalten, und zwar neunmal. Keine neue Farbe,
+keine neue Schrift, kein neuer Baustein: ein Feld, das schon in der
+Datendatei steht, an einer zweiten Stelle gelesen. Dazu, nach der goldenen
+Regel aus `REGELN.md` Abschnitt 5, eine Prüfung, die die Klasse abstellt:
+Der Bau bricht ab, wenn in einem auf Stufe 0 sichtbaren Text ein
+Zeichenname oder ein Tierkreisglyph steht, ohne dass auf derselben Karte
+das `bild` dieses Zeichens vorkommt — gemessen am gezeichneten Ergebnis und
+gegen feste Beispiele gehalten, weil die Eingabe je Geburtsbild eine
+andere ist.
+
+#### 10.11-2 · Das beste Bild der Seite öffnet auf der Hälfte, die vorbei ist
+
+**Zitat:** Der Rahmen von „Dein ganzes Leben auf einen Blick" ist bei 390
+Pixeln **354 Pixel breit und zeigt 354 von 720 Pixeln — 49 Prozent.** Er
+wird beim Laden nicht verschoben, er steht auf Anschlag links. Die
+Alterachse darin: Geburt bei Pixel 104, zehn Jahre sind 64,7 Pixel. Sichtbar
+ist damit **Geburt bis Alter 38**; Alter 38 bis 90 liegen außerhalb. Die
+Linie, die „du bist hier · 32" sagt, liegt bei Pixel 321, die Beschriftung
+ist 69 Pixel breit, der Rahmen endet bei 354: **36 der 69 Pixel sind
+abgeschnitten.** Auf dem Telefon steht dort „du bist h". Die Legende —
+„Hochphase — Hier ist viel los", „Mittlere Phase", „Ruhige Phase", „Großer
+Schnitt" — steht unter dem Rahmen und außerhalb. Der Name steht bei Pixel
+1.467, der Rahmen bei 3.894: **2.427 Pixel, knapp drei Bildschirme
+auseinander.**
+
+**Kosten:** Der Screenshot-Test, an dem einen Gegenstand dieser Seite, der
+ihn bestehen könnte, und davor schon der Drei-Sekunden-Test für diesen
+Abschnitt. Die Seite heißt „Wann bei dir **was los ist**" und nennt ihre
+drei Versprechen im zweiten Absatz: wo du gerade stehst, was als Nächstes
+kommt, und warum. Das Bild, das diese drei zusammen beantwortet, geht auf
+dem Telefon mit der Kindheit auf. Was sie sieht, sind ihre ersten
+achtunddreißig Jahre, davon sechs, an die sie sich nicht erinnert — und
+ganz rechts, halb abgeschnitten, die Stelle, an der sie steht. Alles, wofür
+sie die Seite geöffnet hat, liegt hinter einer Wischbewegung, auf die ein
+Hinweis erst **unter** dem Bild folgt. Bei 1.280 Pixeln stellt sich die
+Frage nicht: Dort steht das ganze Leben im Rahmen, die Linie in der Mitte,
+die Legende direkt darunter — es ist dasselbe Bild und es trägt. Der
+Verlust ist ein reiner Telefon-Verlust, also der, der zählt. Wird davon ein
+Bild gemacht, kommt bei der Freundin ein Diagramm ohne Namen, ohne Datum,
+ohne Legende und ohne Zukunft an, mit einem abgeschnittenen Wort am Rand.
+`PRODUKT.md` Abschnitt 2 nennt das Teilen von Screenshots eine
+Bauentscheidung, keine Geschmacksfrage.
+
+**Vorschlag:** Der Rahmen wird beim Laden verschoben, statt auf Anschlag
+links zu stehen: `scrollLeft` wird so gesetzt, dass die Linie „du bist
+hier" auf **einem Drittel** der sichtbaren Breite liegt statt am rechten
+Rand. Nachgemessen für dieses Profil: aus 312 minus 118 wird ein
+Startwert von 194, und sichtbar ist danach Alter 14 bis 69 statt Geburt bis
+38 — also die letzten Jahre, an die sie sich erinnert, und die nächsten
+dreißig, um die es geht. Dazu wechselt die Beschriftung der Linie die
+Seite, sobald rechts von ihr weniger als ihre eigene Breite übrig ist: Sie
+steht dann links der Linie und wird nicht mehr abgeschnitten. Keine neue
+Farbe, keine neue Schrift, kein neuer Baustein — dasselbe Bild, eine
+Startposition und eine Seitenwahl. Bei 1.280 ändert sich nichts, weil dort
+nichts zu schieben ist.
