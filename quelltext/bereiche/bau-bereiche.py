@@ -764,12 +764,16 @@ if 'AC_WAHL' not in app:
 if "addEventListener('ac-bereiche'" not in app:
     fehler.append('die Seite zeichnet sich nach einer Änderung der '
                   'Auswahl nicht neu')
-# In wahl-app.js steht kein Satz — dieselbe Regel wie im Monatsbericht.
-for lit in re.findall(r"'((?:[^'\\\n]|\\.)*)'",
-                      re.sub(r'/\*.*?\*/', ' ', wapp, flags=re.S)):
-    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
-    if len(re.findall(r'[A-Za-zÄÖÜäöüß]{3,}', rest)) >= 3:
-        fehler.append(f'Text in wahl-app.js statt in wahl-daten.js: "{lit[:60]}"')
+# ── In wahl-app.js steht kein Satz ────────────────────────────
+# Aufgabe 49 (aus 34 und 38). Hier stand bis zum 2026-11-10 eine
+# lose Fassung derselben Regel: nur die einfache Anführung, und
+# angeschlagen hat sie erst ab drei Wörtern. Ein Satz mit zwei
+# Wörtern ging durch, und ein Satz in doppelter Anführung auch.
+# Die strenge Fassung steht an einer Stelle (Aufgabe 43) und liest
+# alle drei Anführungsarten; ab hier hält der Riegel die Leiste.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(
+    wapp, 'wahl-app.js', 'wahl-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(wapp, 'wahl-app.js')
 # Die Sätze der Leiste: vollständig, ohne Fachwort, und der Satz über
 # eine getroffene Auswahl muss sagen, dass Ausgeblendetes nicht
 # dasselbe ist wie Ruhe.

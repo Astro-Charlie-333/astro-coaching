@@ -37,6 +37,56 @@ for _s in ['bis morgen', 'noch bis morgen', 'noch drei Tage',
 for _s in ['bis 14. November', 'bis 3.12.', 'noch bis 1. Januar']:
     assert _datum_ohne_jahr(_s), 'Datumsregel findet das Datum nicht: ' + _s
 
+# ── Kein Text steht zweimal in der Terminliste ──────────────────────
+# Am 2026-11-10 war `main` rot, ohne dass sich ein Commit geändert
+# hatte: Merkur und Venus drehten in derselben Woche wieder vorwärts,
+# in zwei verschiedenen Bereichen. Die Überschriften waren verschieden
+# („Merkur läuft wieder direkt — Selbstwert" und „Venus läuft wieder
+# direkt — Gesundheit"), der Satz darunter war wortgleich: Er hing am
+# Schlüssel „dreht vor- oder rückwärts", die Überschrift am Bereich.
+# Genau die Fehlerklasse aus REGELN.md 6f, nur eine Zeile tiefer.
+#
+# Zwei Antworten darauf. Erstens nennt jeder dieser Sätze seit dem
+# 2026-11-10 seinen Bereich (`heute-daten.js`) — eine Karte, die
+# weitergeschickt wird, muss allein stehen können (PRODUKT.md
+# Abschnitt 2, Punkt 3). Zweitens diese Prüfung: Sie zählt *alle*
+# Volltexte der Liste, nicht nur den des Aufmachers. Die alte Fassung
+# hat die Dopplung nur gefunden, weil Merkur zufällig oben stand.
+def _doppelter_volltext(texte):
+    """Der erste Text, der in der Terminliste zweimal steht — oder
+    None. Verglichen wird der ganze Text mit vereinheitlichtem
+    Leerraum: Zwei Karten dürfen sich ähneln, aber nicht wortgleich
+    sein. Leere Texte sind keine Dopplung; ob eine Karte überhaupt
+    einen Text trägt, prüft eine andere Regel."""
+    gesehen = set()
+    for roh in texte:
+        k = ' '.join(str(roh).split())
+        if not k:
+            continue
+        if k in gesehen:
+            return k
+        gesehen.add(k)
+    return None
+
+
+# Feste Beispiele (REGELN.md 6e): Die Eingabe dieser Regel ist der
+# Himmel des Tages, also darf sie nicht am Himmel geprüft werden.
+assert _doppelter_volltext([]) is None
+assert _doppelter_volltext(['Hier wird es zäh.', 'Hier wird es leicht.']) is None
+assert _doppelter_volltext(['Hier wird es zäh.', 'Hier wird es zäh.']) \
+    == 'Hier wird es zäh.'
+assert _doppelter_volltext(['Hier  wird es zäh.', 'Hier wird es zäh.']) \
+    == 'Hier wird es zäh.'
+assert _doppelter_volltext(['', '', '  ']) is None
+# Der Fall vom 2026-11-10, vorher und nachher:
+assert _doppelter_volltext(
+    ['Was hier seit Wochen zäh war, nimmt wieder Fahrt auf.',
+     'Was hier seit Wochen zäh war, nimmt wieder Fahrt auf.']) is not None
+assert _doppelter_volltext(
+    ['Selbstwert: was hier seit Wochen zäh war, nimmt wieder Fahrt auf.',
+     'Gesundheit: was hier seit Wochen zäh war, nimmt wieder Fahrt auf.']) is None
+
+
 # ── Die Beugung der gebauten Überschriften ──────────────────────────
 # Aufgabe 31: Bis zum 2.11. stand auf der Startseite „Jupiter auf dein
 # Mond", „Mars quer zu dein Mars", „Saturn gegenüber dein Auftreten".
@@ -365,7 +415,10 @@ const v=await p.evaluate(()=>({
   radfelder:document.querySelectorAll('.kr-haus').length,
   transit:document.querySelectorAll('.kr-tk').length,
   kap:document.querySelectorAll('.kb').length,
-  schlecht:/undefined|NaN|\[object|Invalid/.test(document.body.innerText),
+  /* Dazu die ungefüllte Lücke: Eine Vorlage, die „{bereich}" auf die
+     Seite schreibt, ist derselbe Fehler wie „undefined" — ein Wort,
+     das die Anzeige nicht eingesetzt hat. */
+  schlecht:/undefined|NaN|\[object|Invalid|\{[a-z]+\}/.test(document.body.innerText),
   breit:document.body.scrollWidth}));
 /* Was gerade läuft: der neue Abschnitt vom 28.10. */
 const lauf=await p.evaluate(()=>({
@@ -640,7 +693,7 @@ if pr:
     if v['radfelder'] != 12: fehler.append('Rad unvollständig')
     if v['transit'] < 8:     fehler.append(f'nur {v["transit"]} Transitpunkte')
     if v['kap'] != 3:        fehler.append('Kapazitätsschalter fehlt')
-    if v['schlecht']:        fehler.append('undefined/NaN/Invalid im Text')
+    if v['schlecht']:        fehler.append('undefined/NaN/Invalid oder eine ungefüllte Lücke im Text')
     if v['breit'] > 390:     fehler.append(f'Überlauf auf {v["breit"]}px')
     if not k['wocheWeg']:
         fehler.append('„Wenig" blendet die Terminliste nicht aus')
@@ -941,8 +994,14 @@ if pr:
     for _t, _n in _Counter(a['wochentitel']).items():
         if _n > 1 and _t != a['titel']:
             fehler.append(f'Titel steht {_n}× in der Terminliste: ' + repr(_t))
-    if a['titel'] and a['text'] in a['volltexte']:
-        fehler.append('der Aufmachertext steht wortgleich noch einmal in der Terminliste')
+    # Der Aufmacher steht mit in diesem Topf: dass sein Text unten noch
+    # einmal auftaucht, ist derselbe Fehler wie zwei gleiche Karten
+    # weiter unten — und nicht länger der einzige, der auffällt.
+    _dop = _doppelter_volltext(
+        list(a['volltexte']) + ([a['text']] if a['titel'] else []))
+    if _dop:
+        fehler.append('derselbe Text steht zweimal in der Terminliste: '
+                      + repr(_dop[:70]))
     # „Heute" muss zum Kalendertag passen, nicht zur Stundendifferenz
     if a['wann'].lower().startswith('heute'):
         if ', ' in a['wann']:

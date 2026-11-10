@@ -4552,13 +4552,13 @@ var H_WOLANG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag',
 var H_LUN = {
  neu:{
   name:'Neumond',
-  tx:'Ein guter Zeitpunkt, in diesem Bereich etwas zu <b>beginnen</b> statt abzuschließen. '+
-     'Was jetzt anfängt, hat bis zum Vollmond Zeit, sich zu zeigen.',
+  tx:'{bereich}: ein guter Zeitpunkt, hier etwas zu <b>beginnen</b> statt '+
+     'abzuschließen. Was jetzt anfängt, hat bis zum Vollmond Zeit, sich zu zeigen.',
   mit:'Kerze, Zettel und Stift. Einen Satz aufschreiben, was bis zum Vollmond passiert sein soll.'},
  voll:{
   name:'Vollmond',
-  tx:'Hier wird sichtbar, was vor zwei Wochen angelegt wurde. Ein guter Zeitpunkt, '+
-     'in diesem Bereich etwas <b>abzuschließen</b> statt Neues anzufangen.',
+  tx:'{bereich}: hier wird sichtbar, was vor zwei Wochen angelegt wurde. Ein '+
+     'guter Zeitpunkt, etwas <b>abzuschließen</b> statt Neues anzufangen.',
   mit:'Eine Kerze, und etwas, das weg darf. Nicht mehr.'}};
 
 /* ── Band 1 · Jetzt ──────────────────────────────────────────── */
@@ -4639,9 +4639,14 @@ var H_EREIGNIS = {
   ttRueck:'{planet} wird rückläufig — {bereich}',
   techDirekt:'{planet} läuft wieder direkt, in deinem {haus}. Haus — {name}.',
   techRueck:'{planet} wird rückläufig, in deinem {haus}. Haus — {name}.',
-  txDirekt:'Was in diesem Bereich seit Wochen zäh war, nimmt wieder Fahrt auf. '+
+  /* Der Bereich steht im Satz, nicht nur in der Überschrift. Am
+     2026-11-10 drehten Merkur und Venus in derselben Woche, in zwei
+     verschiedenen Bereichen — zwei Karten mit wortgleichem Text.
+     Der Satz hing an „direkt oder rückläufig", die Überschrift am
+     Bereich: dieselbe Fehlerklasse wie in REGELN.md 6f. */
+  txDirekt:'{bereich}: was hier seit Wochen zäh war, nimmt wieder Fahrt auf. '+
            'Nicht sofort, aber merklich.',
-  txRueck:'In diesem Bereich wird es für eine Weile mühsamer. Nichts Neues anfangen, '+
+  txRueck:'{bereich}: hier wird es für eine Weile mühsamer. Nichts Neues anfangen, '+
           'was dort ohnehin hängt — überarbeiten ja.',
   inTagen:'in {n} T.',
   wo:'bereiche.html#ber-{k}|Den Bereich ansehen'},
@@ -4920,7 +4925,7 @@ function ereignisse(jd){
       tt:tf(H_EREIGNIS.lunation.tt,{art:A.name, bereich:lN}),
       tech:tf(H_EREIGNIS.lunation.tech,{art:A.name, zeichen:H_SIGNS[zI(ml)],
                                         haus:h, name:H_HAUS[h-1]}),
-      tx:A.tx, mit:A.mit,
+      tx:tf(A.tx,{bereich:lN}), mit:A.mit,
       wo:H_EREIGNIS.lunation.wo});
   });
 
@@ -4938,7 +4943,7 @@ function ereignisse(jd){
       tt:tf(s2.direkt?S.ttDirekt:S.ttRueck,{planet:s2.planet, bereich:sN}),
       tech:tf(s2.direkt?S.techDirekt:S.techRueck,{planet:s2.planet, haus:h,
                                                  name:H_HAUS[h-1]}),
-      tx:(s2.direkt?S.txDirekt:S.txRueck),
+      tx:tf(s2.direkt?S.txDirekt:S.txRueck,{bereich:sN}),
       wo:tf(S.wo,{k:(sB?sB.k:'')})});
   });
 

@@ -45,11 +45,11 @@ zweiundzwanzig Dateien; sie zweimal anzufassen wäre doppelte Arbeit.
 Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
 `pruefwerk.pruefe_anzeige_satzfrei` liest alle drei Anführungsarten,
 `pruefwerk.pruefe_anzeige_ohne_dein` findet jedes von Hand
-geschriebene „dein". Vier Anzeigen sind durch und verriegelt
-(`bereich-app.js`, `start-app.js`, `offline-app.js` und seit dem
-2026-11-09 `heute-app.js`).
+geschriebene „dein". Fünf Anzeigen sind durch und verriegelt
+(`bereich-app.js`, `start-app.js`, `offline-app.js`, seit dem
+2026-11-09 `heute-app.js` und seit dem 2026-11-10 `wahl-app.js`).
 
-Die achtzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
+Die siebzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
 der ein Mensch sie vor sich hat: zuerst die Türen der Navigation
 (`uebersicht.html` ist „Dein Bild"), dann
 die Seiten, die ein Profil rechnen, zuletzt die Werkzeuge der
@@ -58,7 +58,7 @@ Coachin. **Wie weit es ist, steht nicht hier, sondern in
 nachgezählt, und die Liste bricht in beide Richtungen. Eine Liste in
 einem Dokument driftet; diese kann nur schrumpfen.
 
-Für jede der Aufgaben 49 bis 66 gilt dasselbe, deshalb steht es
+Für jede der Aufgaben 50 bis 66 gilt dasselbe, deshalb steht es
 einmal hier. **Fertig, wenn:** die Sätze dieser Anzeige in ihrer
 `*-daten.js` stehen, die Anzeige „dein" nicht mehr selbst schreibt
 (sondern `B_BEUGE` aus `bahn-daten.js` lässt), ihr `bau-*.py` beide
@@ -75,11 +75,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 49 · `wahl-app.js` (1, 0)
-Die Bereichsleiste, auf jeder Seite mit Bereichen. Bis auf einen
-Auswahlausdruck durch; die lose Fassung der Regel in
-`bau-bereiche.py` entfällt dabei.
 
 ### 50 · `ich-app.js` (40, 2)
 `uebersicht.html`, die Tür „Dein Bild". Gehört in einen Zug mit
@@ -649,9 +644,74 @@ wenn er nicht in einem `href`-Attribut steht —, und eine Gegenprobe
 festhält, dass die Regel pro Seite überhaupt etwas findet, damit ihr Grün
 eine Aussage bleibt.
 
+### 69 · Die Lücke in einer Vorlage fällt erst auf, wenn sie erscheint
+Gefunden beim Erledigen von Aufgabe 49 am 2026-11-10. Die Sätze der
+Terminliste nennen seither ihren Bereich, also tragen die Vorlagen in
+`heute-daten.js` eine Lücke mehr. Ob die Anzeige sie füllt, merkt heute
+nur die Rauchprobe — und die sieht allein die Karten, die der Himmel
+dieses Tages hergibt. Die beiden Mondsätze waren am 2026-11-10 gar nicht
+auf der Seite; dass „{bereich}" dort nicht stehen bleibt, ist an vier
+verstellten Tagen von Hand nachgesehen worden und von keiner Prüfung.
+Dieselbe Fehlerklasse wie `REGELN.md` 6e: Eine Prüfung, deren Eingabe
+der Tag bestimmt, prüft an den meisten Tagen nichts.
+**Fertig, wenn:** jede Vorlage in `heute-daten.js`, die als Kartentext
+auf die Seite geht, an ihrer Einsetzstelle in `heute-app.js` mit allen
+ihren Lücken gefüllt wird, die Zuordnung an einer Stelle steht und nicht
+je Vorlage, und eine Vorlage, die eine Lücke dazubekommt, ohne dass die
+Anzeige sie füllt, den Bau abbricht — gegen feste Beispiele gehalten wie
+`_datum_ohne_jahr`, also unabhängig davon, welcher Tag ist.
+
 ---
 
 ## Erledigt
+
+* **2026-11-10** · `wahl-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 49, aus 34 und 38) — und die Prüfung, die sie festhielt,
+  hat gelernt, was ein Auswahlausdruck ist. In der Bereichsleiste
+  stand kein Satz mehr, nur noch `'#berwahl, .bw-leiste'`: eine
+  Anweisung an den Browser, die sich in keine Datendatei verschieben
+  lässt. Gezählt wurde sie trotzdem, weil die Regel in
+  `rituale/pruefwerk.py` eine technische Zeichenkette an „kein
+  Leerzeichen, kein Großbuchstabe, kein Umlaut" erkannte — und eine
+  *Liste* von Auswahlausdrücken trägt Komma und Leerzeichen. Sie
+  erkennt jetzt diese Form: zwei oder mehr durch Komma getrennte
+  Teile, jeder mit `#`, `.` oder `[` davor. Daran kommt kein
+  deutscher Satz vorbei, und die festen Beispiele halten das fest —
+  „Liebe, Beruf" und „#berwahl, Beruf" schlagen weiter an, eine
+  Farbe wie `#FCF7EF` auch.
+  Dafür hält die Leiste nun den strengen Riegel: die lose Fassung in
+  `bau-bereiche.py` las nur die einfache Anführung und schlug erst ab
+  drei Wörtern an — ein zweiwortiger Satz ging durch, ein Satz in
+  doppelter Anführung auch. An ihrer Stelle stehen
+  `pruefwerk.pruefe_anzeige_satzfrei` und
+  `pruefwerk.pruefe_anzeige_ohne_dein`, nachgewiesen an vier
+  Gegenproben: ein Satz in jeder der drei Anführungsarten und ein
+  „dein" von Hand brechen den Bau. Damit sind fünf der
+  zweiundzwanzig Anzeigen durch und verriegelt.
+
+* **2026-11-10** · Zwei Karten der Terminliste trugen wortgleich
+  denselben Satz. `main` war an diesem Morgen rot, ohne dass sich ein
+  Commit geändert hatte: Merkur und Venus drehten in derselben Woche
+  wieder vorwärts, in zwei verschiedenen Bereichen. Die
+  Überschriften waren verschieden („Merkur läuft wieder direkt —
+  Selbstwert" und „Venus läuft wieder direkt — Gesundheit"), der
+  Satz darunter war derselbe — er hing am Schlüssel „dreht vor- oder
+  rückwärts", die Überschrift am Bereich. Das ist `REGELN.md` 6f,
+  eine Zeile tiefer: jeder Schlüssel, der in einem gebauten Text
+  landet, braucht seine eigene Sperre.
+  Die Antwort ist keine Sperre, sondern der Bereich im Satz: Die
+  vier Sätze zu Rückläufigkeit und Lunation in `kern/heute-daten.js`
+  nennen jetzt den Bereich, um den es geht. Eine Karte, die
+  weitergeschickt wird, muss allein stehen können (`PRODUKT.md`
+  Abschnitt 2, Punkt 3) — vorher stand „in diesem Bereich" ohne den
+  Bereich.
+  Dauerhaft gehalten wird es von einer Prüfung, die *alle* Volltexte
+  der Terminliste zählt und nicht nur den des Aufmachers: die alte
+  Fassung hat die Dopplung an diesem Tag nur gefunden, weil Merkur
+  zufällig oben stand. Sie steht in einer eigenen Funktion mit acht
+  festen Beispielen darunter (`REGELN.md` 6e) und misst am
+  gezeichneten Ergebnis. Dazu sieht die Rauchprobe eine ungefüllte
+  Lücke wie „{bereich}" jetzt als denselben Fehler wie „undefined".
 
 * **2026-11-09** · `heute-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 48, aus 34 und 38). Die Anzeige der Tür „Jetzt" — die Seite,

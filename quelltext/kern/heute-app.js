@@ -194,7 +194,7 @@ function ereignisse(jd){
       tt:tf(H_EREIGNIS.lunation.tt,{art:A.name, bereich:lN}),
       tech:tf(H_EREIGNIS.lunation.tech,{art:A.name, zeichen:H_SIGNS[zI(ml)],
                                         haus:h, name:H_HAUS[h-1]}),
-      tx:A.tx, mit:A.mit,
+      tx:tf(A.tx,{bereich:lN}), mit:A.mit,
       wo:H_EREIGNIS.lunation.wo});
   });
 
@@ -212,7 +212,7 @@ function ereignisse(jd){
       tt:tf(s2.direkt?S.ttDirekt:S.ttRueck,{planet:s2.planet, bereich:sN}),
       tech:tf(s2.direkt?S.techDirekt:S.techRueck,{planet:s2.planet, haus:h,
                                                  name:H_HAUS[h-1]}),
-      tx:(s2.direkt?S.txDirekt:S.txRueck),
+      tx:tf(s2.direkt?S.txDirekt:S.txRueck,{bereich:sN}),
       wo:tf(S.wo,{k:(sB?sB.k:'')})});
   });
 
