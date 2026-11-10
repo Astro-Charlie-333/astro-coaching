@@ -661,6 +661,26 @@ je Vorlage, und eine Vorlage, die eine Lücke dazubekommt, ohne dass die
 Anzeige sie füllt, den Bau abbricht — gegen feste Beispiele gehalten wie
 `_datum_ohne_jahr`, also unabhängig davon, welcher Tag ist.
 
+### 70 · Auf `zeiten.html` nennen neun Karten ein Zeichen und erklären keines
+Aus dem Gestaltungsdurchgang vom 2026-11-10 (Befund 10.11-1). Alle neun
+Karten unter „Was als Nächstes kommt" enden auf „Der Abschnitt trägt das
+Zeichen X." — auch auf Stufe 0, auch ohne ein Wort dazu, was X heißt. Im
+Balkenbild tragen acht Balken statt eines Wortes nur das Glyph. Dabei steht
+die Alltagssprache längst da: `zeit-daten.js` gibt jedem Zeichen ein `bild`
+(„verbinden, reden, vieles gleichzeitig"), und „Wo du gerade stehst" zeigt
+es schon. `REGELN.md` Abschnitt 2a verlangt die Erklärung auf derselben
+Karte, bevor etwas über die Wirkung dasteht. Nebenwirkung: Weil kein
+Zeichenname auf dieser Seite in `ac-tech` steht, ändert der
+Wissensstand-Schalter auf der ganzen Seite nichts außer seiner eigenen
+Beschriftung — gemessen über 6.656 Pixel Seitenhöhe.
+**Fertig, wenn:** jede der neun Karten das `bild` ihres Zeichens in
+Alltagssprache trägt, der bloße Zeichenname und das Glyph nur noch in
+`ac-tech` mit `data-ab="2"` stehen, und `bau-zeit.py` den Bau abbricht,
+sobald im auf Stufe 0 gezeichneten Ergebnis ein Zeichenname oder ein
+Tierkreisglyph ohne das zugehörige `bild` auf derselben Karte vorkommt —
+gegen feste Beispiele gehalten wie `_datum_ohne_jahr`, also unabhängig
+davon, welches Geburtsbild gerechnet wird.
+
 ---
 
 ## Erledigt
