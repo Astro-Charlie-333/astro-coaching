@@ -228,6 +228,35 @@ _WORT = r'[A-Za-zÄÖÜäöüß]{2,}(?:-[A-Za-zÄÖÜäöüß0-9]+)*'
 # steht als vollständige Zeichenkette da, nicht als enthaltenes Wort —
 # sonst wäre sie ein Schlupfloch.
 _DIREKTIVEN = {'use strict', 'use asm'}
+# ── Ein Auswahlausdruck ist keine Sprache ──────────────────────
+# Der Absatz darüber stimmt für ein einzelnes technisches Wort:
+# `#berwahl` trägt kein Leerzeichen und fällt durch. Für eine *Liste*
+# von Auswahlausdrücken stimmt er nicht — `#berwahl, .bw-leiste`
+# trägt Komma und Leerzeichen und sieht damit aus wie Sprache. Das
+# war die letzte Zeichenkette in `wahl-app.js` (Aufgabe 49): keine,
+# die in eine Datendatei gehört, sondern eine Anweisung an den
+# Browser. Ein Satz lässt sich dorthin nicht verschieben, also muss
+# die Regel ihn erkennen, statt die Anzeige sich zu verbiegen.
+#
+# Erkannt wird die Form, nicht das Komma (REGELN.md 6e): mehrere
+# durch Komma getrennte Teile, und **jeder** Teil beginnt mit einem
+# Auswahlzeichen (`#`, `.` oder `[`). Daran kommt kein deutscher Satz
+# vorbei — „Liebe, Beruf" hat dieselbe Satzform, aber keinen Teil mit
+# Auswahlzeichen. Und ein einzelnes `#FCF7EF` bleibt draußen: eine
+# Farbe ist kein Auswahlausdruck, sondern Gestaltung in einer
+# Anzeige, und die soll gemeldet werden.
+_AUSWAHLZEICHEN = r'(?:[#.][A-Za-z_][A-Za-z0-9_-]*|\[[^\],]+\])'
+_AUSWAHLTEIL = re.compile(_AUSWAHLZEICHEN
+                          + r'(?:[\s>+~]+' + _AUSWAHLZEICHEN + r')*')
+
+
+def auswahlliste(s):
+    """Ob `s` eine Liste von Auswahlausdrücken ist — zwei oder mehr
+    Teile, jeder mit Auswahlzeichen. Nur dann ist das Komma Technik
+    und nicht Sprache."""
+    teile = [t.strip() for t in s.split(',')]
+    return (len(teile) >= 2
+            and all(_AUSWAHLTEIL.fullmatch(t) for t in teile))
 # Die drei Anführungsarten in einem Durchgang. Die Reihenfolge ist
 # gleichgültig: `finditer` läuft von links, und an einer Stelle greift
 # nur die Art, die dort wirklich beginnt — ein Apostroph in einer
@@ -250,6 +279,8 @@ def satz_darin(lit):
     """Was von einer Zeichenkette übrig bleibt, wenn man das Markup
     abzieht — oder None, wenn nichts nach Sprache aussieht."""
     if lit.strip() in _DIREKTIVEN:
+        return None
+    if auswahlliste(lit.strip()):
         return None
     rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
     for k, v in _ENTITAET.items():
@@ -296,12 +327,17 @@ for _s in ['Noch kein Profil angelegt.',
            'Das Muster',
            'Reading für',
            '. Haus',
-           '#berwahl, .bw-leiste',
+           'Liebe, Beruf',
+           '#berwahl, Beruf',
+           '#FCF7EF',
            'Jan.']:
     assert satz_darin(_s), f'müsste anschlagen: {_s}'
 for _s in ['use strict',
            'nivleiste',
            '#berwahl',
+           '#berwahl, .bw-leiste',
+           '.bw-leiste, .bw-tipp',
+           '#berwahl .bw-knoepfe, .bw-leiste',
            'ac-tech',
            'data-ab',
            'div',
