@@ -95,13 +95,15 @@ function kopfSatz(M){
 
 function kopfBauen(p, M){
   /* Eine Zeile, die man vorlesen kann. "21.6.1996 · 14:40 · Berlin"
-     ist eine Datenzeile; hier steht ein Mensch. */
-  var MON=['Januar','Februar','März','April','Mai','Juni','Juli','August',
-           'September','Oktober','November','Dezember'];
-  el('ichname').textContent = AC_P.anzeige(p,true) + ', geboren am ' +
-    p.d + '. ' + MON[p.mo-1] + ' ' + p.y + ' um ' +
-    ('0'+p.h).slice(-2) + ':' + ('0'+p.mi).slice(-2) +
-    (p.ort ? ' in ' + p.ort : '') + '.';
+     ist eine Datenzeile; hier steht ein Mensch. Die Zeile selbst
+     steht in ich-daten.js — hier werden nur die Werte eingesetzt. */
+  el('ichname').textContent = fuellen(I_GEBOREN, {
+    name:  AC_P.anzeige(p,true),
+    tag:   p.d,
+    monat: I_MONATE[p.mo-1],
+    jahr:  p.y,
+    zeit:  ('0'+p.h).slice(-2) + ':' + ('0'+p.mi).slice(-2),
+    ort:   (p.ort ? fuellen(I_GEBOREN_ORT, {ort:p.ort}) : '')});
   el('ichdat').textContent='';
   el('ichleit').textContent=kopfSatz(M);
   el('ichleitzu').textContent=I_KOPF.nach;
@@ -121,11 +123,13 @@ function dreiBauen(){
     if(d.k==='ASC'){
       var herr=I_HERR[z], hH=haus(P,P[herr]);
       bereich=fuellen(I_DREI_WIRKUNG,{bereich:bereichName(hH)});
-      tech=I_SIGNS[z]+' '+gradKurz(l)+' · Herrscher '+herr+' im '+hH+'. Haus';
+      tech=fuellen(I_DREI_TECH_ASC,{zeichen:I_SIGNS[z], grad:gradKurz(l),
+                                    herr:herr, haus:hH});
     } else {
       var h=haus(P,l);
       bereich=fuellen(I_DREI_BEREICH,{bereich:bereichName(h)});
-      tech=I_SIGNS[z]+' '+gradKurz(l)+' · '+h+'. Haus, '+I_HAUS[h-1].k;
+      tech=fuellen(I_DREI_TECH,{zeichen:I_SIGNS[z], grad:gradKurz(l),
+                                haus:h, bereich:I_HAUS[h-1].k});
     }
     return '<div><div class="rolle">'+esc(d.rolle)+'</div><div class="wert">'+
       esc(d.was)+'<span class="zu">'+esc(bereich)+'</span>'+
@@ -204,14 +208,15 @@ function heuteBauen(){
   var hs=Object.keys(treffer).map(Number).sort(function(a,b){
     return treffer[b].length-treffer[a].length; });
   var box=el('ichheute');
-  if(!hs.length){ box.innerHTML='<p class="nix">Gerade steht nichts in deinen Häusern.</p>'; return; }
+  if(!hs.length){ box.innerHTML='<p class="nix">'+esc(I_HEUTE.nix)+'</p>'; return; }
   var oben=hs.slice(0,3);
-  box.innerHTML='<div class="k">Heute auf deinem Chart</div>'+
+  box.innerHTML='<div class="k">'+esc(I_HEUTE.titel)+'</div>'+
     '<p>'+oben.map(function(h){
       return '<a href="#h'+h+'" data-h="'+h+'">'+I_HAUS[h-1].k+'</a>'+
-        '<span class="ac-tech" data-ab="2"> ('+h+'. Haus: '+treffer[h].join(', ')+')</span>';
+        '<span class="ac-tech" data-ab="2">'+
+          esc(fuellen(I_HEUTE.tech,{haus:h, punkte:treffer[h].join(', ')}))+'</span>';
     }).join(' · ')+'</p>'+
-    '<p style="margin-bottom:0"><a href="index.html">Was das heute konkret heißt →</a></p>';
+    '<p style="margin-bottom:0"><a href="index.html">'+esc(I_HEUTE.mehr)+'</a></p>';
   Array.prototype.forEach.call(box.querySelectorAll('a[data-h]'),function(a){
     a.addEventListener('click',function(ev){
       ev.preventDefault();
@@ -234,12 +239,20 @@ function fuellen(form, werte){
 function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
 
 /* Hundert Punkte, davon n hell. Man kann sie abzählen — genau das
-   ist der Unterschied zwischen "selten" und einer Zahl. */
+   ist der Unterschied zwischen "selten" und einer Zahl.
+
+   Die Maße stehen als Zahlen und nicht mitten in der Zeichenkette,
+   damit jedes Stück Auszeichnung darin ganz ist: ein halb offenes
+   Attribut trägt Wort und Dezimalpunkt und sieht für die
+   Satzprüfung aus wie Sprache. */
+var FELD_RAND=6, FELD_SCHRITT=10.8, FELD_PUNKT=3.1;
 function punktfeld(m){
   var a = m.anteil;
   var h = ['<div class="au-zahl">'];
   if(a === null || a === undefined){
-    h.push('<div class="au-ohne">bei jedem Menschen<br>woanders</div>');
+    /* Roh eingesetzt: der Umbruch gehört zum Text und steht in
+       ich-daten.js, damit die Anzeige ihn nicht selbst setzt. */
+    h.push('<div class="au-ohne">'+I_AUF.feldOhne+'</div>');
     h.push('</div>');
     return h.join('');
   }
@@ -248,11 +261,13 @@ function punktfeld(m){
   h.push('<svg class="au-feld" viewBox="0 0 104 104" aria-hidden="true">');
   for(var r=0;r<10;r++) for(var c=0;c<10;c++){
     var nr = r*10 + c;
-    h.push('<circle cx="'+(6+c*10.8).toFixed(1)+'" cy="'+(6+r*10.8).toFixed(1)+'" r="3.1" class="'+
-           (nr < voll ? 'an' : 'aus')+'"/>');
+    h.push('<circle cx="'+(FELD_RAND+c*FELD_SCHRITT).toFixed(1)+
+           '" cy="'+(FELD_RAND+r*FELD_SCHRITT).toFixed(1)+
+           '" r="'+FELD_PUNKT+'" class="'+(nr < voll ? 'an' : 'aus')+'"/>');
   }
   h.push('</svg>');
-  h.push('<div class="au-z"><b>'+(p<1?'<1':p)+'</b><span>von 100 Menschen</span></div>');
+  h.push('<div class="au-z"><b>'+(p<1?'<1':p)+'</b><span>'+
+         esc(I_AUF.feldVon)+'</span></div>');
   h.push('</div>');
   return h.join('');
 }
@@ -273,30 +288,33 @@ function merkmalText(m){
     return { satz:fuellen(form,{bereich:bereichName(m.haus),zahl:m.zahl}),
              zusatz:fuellen(I_AUF.spLeer,{zahl:m.leereFelder}),
              tun:(m.zahl===1?I_AUF.spTunEins:I_AUF.spTun),
-             tech:m.haus+'. Haus, natal darin: '+m.punkte.join(', ') };
+             tech:fuellen(I_AUF.techSp,{haus:m.haus,
+                                        punkte:m.punkte.join(', ')}) };
   }
   if(m.art==='kette'){
     return { satz:(m.eigen?I_AUF.ketteEigen
                           :fuellen(I_AUF.kette,{nach:bereichName(m.nachHaus)})),
              zusatz:'',
              tun:(m.eigen?I_AUF.ketteTunEigen:I_AUF.ketteTun),
-             tech:'Herrscher des '+m.vonHaus+'. Hauses ist '+m.herr+
-                  ', steht im '+m.nachHaus+'. Haus' };
+             tech:fuellen(I_AUF.techKette,{von:m.vonHaus, herr:m.herr,
+                                           nach:m.nachHaus}) };
   }
   if(m.art==='winkel'){
     return { satz:fuellen(m.hart?I_AUF.winkelHart:I_AUF.winkelWeich,
                rollenWerte(m)),
              zusatz:(m.stufe==='eng'?I_AUF.winkelEng:''),
              tun:(m.hart?I_AUF.winkelHartTun:I_AUF.winkelWeichTun),
-             tech:m.a+' '+m.typ+' '+m.b+', Orbis '+kz(m.orb,2)+'°' };
+             tech:fuellen(I_AUF.techWinkel,{a:m.a, typ:m.typ, b:m.b,
+                                           orb:kz(m.orb,2)}) };
   }
   if(m.art==='rueck'){
     var f=(m.zahl===0)?I_AUF.rueckKeine:(m.zahl>=4?I_AUF.rueckViel:I_AUF.rueckWenig);
     return { satz:fuellen(f,{zahl:m.zahl}), zusatz:'',
              tun:(m.zahl===0?I_AUF.rueckTunKeine
                             :(m.zahl>=4?I_AUF.rueckTunViel:'')),
-             tech:(m.welche.length?'Rückläufig bei Geburt: '+m.welche.join(', ')
-                                  :'Kein Punkt rückläufig bei Geburt') };
+             tech:(m.welche.length
+                   ? fuellen(I_AUF.techRueck,{welche:m.welche.join(', ')})
+                   : I_AUF.techRueckKeine) };
   }
   return null;
 }
@@ -352,9 +370,10 @@ function haeuserBauen(){
           I_HAUS[n-1].k+'</span>'+
         '<span class="ze ac-tech" data-ab="2"><b>'+I_SIGNS[z]+'</b>'+
           (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
-        '<span class="herr ac-tech" data-ab="2">Herrscher '+herr+
-          ' steht im '+hH+'. Haus'+
-          (heut.length?' · heute hier: '+heut.join(', '):'')+'</span>'+
+        '<span class="herr ac-tech" data-ab="2">'+
+          fuellen(I_HAUS_TECH.herr,{herr:herr, haus:hH})+
+          (heut.length?fuellen(I_HAUS_TECH.heute,
+                               {punkte:heut.join(', ')}):'')+'</span>'+
       '</span>'+
       '</button><div class="hdetail" id="d'+n+'" hidden></div>';
   }
@@ -371,8 +390,8 @@ function detailBauen(n){
     return P[k]!==undefined&&haus(P,P[k])===n; });
   var heut=PNAMEN.filter(function(k){ return Q[k]!==undefined&&haus(P,Q[k])===n; });
 
-  var h='<h4>'+n+'. Haus — '+H.k+'</h4><p>'+H.t+'</p>';
-  h+='<p><b>Die Frage, die es aufmacht:</b> '+H.f+'</p>';
+  var h='<h4>'+fuellen(I_HDETAIL.titel,{nr:n, name:H.k})+'</h4><p>'+H.t+'</p>';
+  h+='<p><b>'+I_HDETAIL.frage+'</b> '+H.f+'</p>';
   if(bew.length){
     h+='<div class="stell ac-tech" data-ab="2">'+bew.map(function(k){
       var rw=(PNAMEN.indexOf(k)>=0&&rueck(k,P._jd));
@@ -380,31 +399,28 @@ function detailBauen(n){
         '<span>'+(I_PLANET[k]||'')+'</span></div>';
     }).join('')+'</div>';
   } else {
-    h+='<p class="ac-tech" data-ab="2">Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. '+
-      'Ein leeres Haus heißt nicht, dass das Thema fehlt. Es heißt, dass es anderswo entschieden wird:</p>';
+    h+='<p class="ac-tech" data-ab="2">'+I_HDETAIL.leer+'</p>';
   }
   h+='<p class="ac-tech" data-ab="2">'+I_KETTE.replace('{h}',herr)
       .replace('{hs}',herr+' ('+stellung(P[herr])+')')
       .replace('{n}',hH)+'</p>';
   if(I_MIT[I_SIGNS[z]])
-    h+='<p class="ac-tech" data-ab="2">Modern wird '+I_SIGNS[z]+' auch '+I_MIT[I_SIGNS[z]]+' zugeordnet — '+
-      stellung(P[I_MIT[I_SIGNS[z]]])+', '+haus(P,P[I_MIT[I_SIGNS[z]]])+'. Haus.</p>';
+    h+='<p class="ac-tech" data-ab="2">'+fuellen(I_HDETAIL.modern,
+      {zeichen:I_SIGNS[z], planet:I_MIT[I_SIGNS[z]],
+       stellung:stellung(P[I_MIT[I_SIGNS[z]]]),
+       haus:haus(P,P[I_MIT[I_SIGNS[z]]])})+'</p>';
   if(heut.length)
-    h+='<p class="ac-tech" data-ab="2"><b>Heute hier:</b> '+heut.map(function(k){
-      return k+' '+stellung(Q[k]); }).join(', ')+'. '+
-      '<a href="index.html">Was das heißt →</a></p>';
+    h+='<p class="ac-tech" data-ab="2"><b>'+I_HDETAIL.heute+'</b> '+
+      heut.map(function(k){ return k+' '+stellung(Q[k]); }).join(', ')+'. '+
+      '<a href="index.html">'+I_HDETAIL.mehr+'</a></p>';
 
-  var weiter=[];
-  if(n===10||n===6) weiter.push(['raum-berufung.html','Berufung']);
-  if(n===2||n===1) weiter.push(['raum-selbstwert.html','Selbstwert']);
-  if(n===7||n===5||n===8) weiter.push(['raum-naehe.html','Nähe']);
-  if(n===4||n===3) weiter.push(['raum-herkunft.html','Herkunft']);
-  if(n===12) weiter.push(['geistfuehrung.html','Mit wem du arbeitest']);
-  if(n===11) weiter.push(['raum-zugehoerigkeit.html','Zugehörigkeit']);
-  if(n===9) weiter.push(['geistfuehrung.html','Glaube und Lehre']);
-  weiter.push(['haeuser.html','Alle Häuser']);
+  /* Welches Haus wohin weiterführt, steht in ich-daten.js — eine
+     Kette von zwölf if-Zeilen in der Anzeige wäre eine zweite
+     Liste, die auseinanderläuft. */
+  var weiter=I_WEITER.filter(function(w){ return w.h.indexOf(n)>=0; })
+                     .concat([I_WEITER_ALLE]);
   h+='<div class="hd-weiter">'+weiter.map(function(w){
-    return '<a href="'+w[0]+'">'+w[1]+' →</a>'; }).join('')+'</div>';
+    return '<a href="'+w.s+'">'+w.t+' →</a>'; }).join('')+'</div>';
   return h;
 }
 
@@ -441,8 +457,9 @@ function aspekteBauen(){
     return '<div class="ia '+x.art+'">'+
       '<div class="f">'+esc(d.thema)+'</div>'+
       (d.text?'<div class="d">'+esc(d.text)+'</div>':'')+
-      '<div class="o ac-tech" data-ab="2">'+x.a+' '+x.typ+' '+x.b+
-        ' · Orbis '+kz(x.o,2)+'° · '+(x.art==='hart'?'fordernd':'fließend')+'</div>'+
+      '<div class="o ac-tech" data-ab="2">'+fuellen(I_ASP_TECHZEILE,
+        {a:x.a, typ:x.typ, b:x.b, orb:kz(x.o,2),
+         art:(x.art==='hart'?I_ASP_ART.hart:I_ASP_ART.weich)})+'</div>'+
       '</div>';
   }).join('');
   el('ichaspsub').innerHTML=esc(fuellen(I_ASP_SUB,{zahl:zeig.length}))+
@@ -466,9 +483,8 @@ function indexBauen(){
 (function(){
   var p=profil();
   if(!p){
-    el('ichinhalt').innerHTML='<div class="ich-leer">Noch kein Profil angelegt. '+
-      '<a href="profile.html">Hier legst du eins an</a> — mit Geburtsdatum, -zeit und -ort. '+
-      'Ohne die Zeit gibt es keine Häuser, und ohne Häuser ist diese Seite leer.</div>';
+    el('ichinhalt').innerHTML='<div class="ich-leer">'+
+      fuellen(I_LEER,{link:'<a href="profile.html">'+I_LEER_LINK+'</a>'})+'</div>';
     return;
   }
   P=chartVon(p); Q=jetztChart();

@@ -715,14 +715,17 @@ sys.path.insert(0, str(hier / 'rituale'))
 import pruefwerk
 ANZEIGEN = {
     # Anzeige                      (Sätze, „dein" von Hand)
-    'kern/ich-app.js':             (40, 2),
+    # karte und haeuser sind am 2026-11-11 von allein gesunken, ohne
+    # dass sie jemand angefasst hat: Die Regel hat gelernt, dass
+    # (prefers-reduced-motion: reduce) eine Medienabfrage ist und
+    # kein Satz (Aufgabe 50).
     'monat/monat-app.js':          (2, 0),
     'bez/beziehung-app.js':        (83, 14),
     'zeit/zeit-app.js':            (115, 6),
-    'karte/karte-app.js':          (44, 5),
+    'karte/karte-app.js':          (42, 5),
     'mond/mond-app.js':            (76, 8),
     'zahlen/zahlen-app.js':        (194, 13),
-    'haeuser/haeuser-app.js':      (41, 0),
+    'haeuser/haeuser-app.js':      (40, 0),
     'rituale/zauber-app.js':       (97, 18),
     'geist/geist-app.js':          (174, 31),
     'dossier/dossier-app.js':      (97, 4),
@@ -738,7 +741,7 @@ ANZEIGEN = {
 # zurückfällt und keinen Riegel hat.
 FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'start/start-app.js', 'app/offline-app.js',
-          'kern/heute-app.js'}
+          'kern/heute-app.js', 'kern/ich-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
@@ -799,18 +802,32 @@ if gewachsen:
 # nächsten Umbau wieder Sätze bekommen, ohne dass etwas abbricht.
 # Dieselbe Lehre wie REGELN.md 6c: eine Zusage, an die sich jemand
 # erinnern muss, ist keine Automatik.
-_RIEGEL = re.compile(r"pruefe_anzeige_satzfrei\(\s*[^,]+,\s*'([^']+)'")
-verriegelt = set()
+#
+# Und zwar *beide* Riegel. Bis zum 2026-11-11 suchte diese Prüfung nur
+# nach pruefe_anzeige_satzfrei — damit war sie selbst die halbe Sperre,
+# vor der REGELN.md 6f warnt: „fertig" heißt zwei Zusagen (kein Satz,
+# kein „dein" von Hand), und gehalten wurde nur die erste. Aufgefallen
+# ist es beim Erledigen von Aufgabe 50: bereich-app.js stand seit dem
+# 7.11. in FERTIG und hatte den „dein"-Riegel nie.
+_RIEGEL = {
+    'satzfrei': re.compile(r"pruefe_anzeige_satzfrei\(\s*[^,]+,\s*'([^']+)'"),
+    'ohne_dein': re.compile(r"pruefe_anzeige_ohne_dein\(\s*[^,]+,\s*'([^']+)'"),
+}
+verriegelt = {art: set() for art in _RIEGEL}
 for b in sorted(hier.glob('*/bau-*.py')):
-    for name in _RIEGEL.findall(b.read_text(encoding='utf-8')):
-        verriegelt.add(name)
-ohne_riegel = sorted(n for n in FERTIG
-                     if n.rsplit('/', 1)[-1] not in verriegelt)
+    quell = b.read_text(encoding='utf-8')
+    for art, muster in _RIEGEL.items():
+        verriegelt[art].update(muster.findall(quell))
+ohne_riegel = sorted(
+    f'{n} (ohne {art})'
+    for n in FERTIG for art in sorted(_RIEGEL)
+    if n.rsplit('/', 1)[-1] not in verriegelt[art])
 if ohne_riegel:
     print('  ALS FERTIG GEFÜHRT, ABER OHNE RIEGEL: ' + ', '.join(ohne_riegel))
     print('      (das bau-*.py dieser Anzeige ruft')
-    print('       pruefwerk.pruefe_anzeige_satzfrei nicht auf — dann hält')
-    print('       die Anzeige nur die Absicht)')
+    print('       pruefwerk.pruefe_anzeige_satzfrei und')
+    print('       pruefwerk.pruefe_anzeige_ohne_dein nicht beide auf —')
+    print('       dann hält die Anzeige nur die Absicht)')
     fehlgeschlagen.append('Anzeige ohne Riegel')
 if geschrumpft:
     print('  EINTRAG ÜBERHOLT:')
