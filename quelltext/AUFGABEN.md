@@ -679,6 +679,68 @@ Tierkreisglyph ohne das zugehörige `bild` auf derselben Karte vorkommt —
 gegen feste Beispiele gehalten wie `_datum_ohne_jahr`, also unabhängig
 davon, welches Geburtsbild gerechnet wird.
 
+### 71 · Vier Fassungen sagen über den Forschungsstand vier verschiedene Dinge
+Aus der Recherche vom 2026-11-11 (Spur A, erster Fund). Der Satz, den
+`REGELN.md` Abschnitt 4 verlangt — „dass die Deutung nicht überprüft
+ist" —, steht im Auslieferstand viermal und jedes Mal anders:
+`bereich-daten.js` („keinen Beleg dafür, dass daraus Ereignisse
+folgen", auf `bereiche.html` und `index.html`), `ich-daten.js`
+(„ist Deutung und nicht überprüft", auf `uebersicht.html`),
+`zeit-koerper.html` („nie ernsthaft untersucht worden") und
+`zeit-app.js` („Das Verfahren ist nicht überprüft") auf `zeiten.html`.
+Keine der vier nennt eine Quelle. Für die Aussage auf
+`uebersicht.html` ist „nicht überprüft" sachlich falsch in die
+schonende Richtung: Der Schluss von einer Geburtsstellung auf einen
+Charakterzug ist der am häufigsten geprüfte Anspruch des Feldes und
+wiederholt negativ ausgefallen (Dean und Kelly 2003, Effektstärke
+0,00 ± 0,03 an 2.101 Menschen und 110 Merkmalen). Für die Transite,
+die diese Plattform wirklich rechnet, ist die Lage umgekehrt dünn.
+Drei Handarbeitsseiten können es längst besser und nennen eine Quelle
+(`mond.html` Rotton und Kelly 1985, `berufe.html` „wiederholt negativ
+ausgefallen", `zahlen.html` Hines). Aufgabe 10 und Aufgabe 17 nennen
+die alte Formulierung beide als Fertig-Kriterium und würden sie in
+zwei weitere Seiten tragen; deshalb vor diesen beiden.
+**Fertig, wenn:** die Aussage über den Forschungsstand an genau einer
+Stelle steht, je Verfahren getrennt (Geburtsstellung gegen
+Charakterzug, laufende Transite, zodiakale Freilassung) und jeweils
+mit Quelle, die vier vorhandenen Fassungen und die Zeile in
+`REGELN.md` Abschnitt 4 von dort kommen, auf `uebersicht.html` statt
+„nicht überprüft" steht, dass geprüft wurde und negativ ausfiel, und
+`pruefe-alles.py` abbricht, sobald eine ausgelieferte Seite eine
+eigene, nicht von dort stammende Aussage über den Forschungsstand
+trägt — gegen feste Beispiele gehalten, also unabhängig davon, welche
+Seite gerade gebaut wird.
+
+### 72 · Der Handgriff nennt nicht, wann er zu tun ist
+Aus der Recherche vom 2026-11-11 (Spur A, zweiter Fund). `REGELN.md`
+Abschnitt 3 verlangt „ein Handgriff, nicht fünf", und
+`pruefwerk.handgriff_tadel` hält diese Form mit vier Verboten: kein
+Preis, keine Folge nach dem Fenster, keine Vorhersage des Ertrags.
+Keine Regel verlangt, dass etwas darin steht. Von den zehn echten
+Handgriffen in `bereich-daten.js` nennt einer die Situation, in der
+gehandelt wird; fünf nennen die Zeit mit einem unbestimmten Wort
+(„gerade", „dieser Tage", „in diesen Wochen"). Die größte
+Zusammenfassung dazu (Sheeran, Listroma und Gollwitzer 2025, 642
+Prüfungen) trennt genau hier: ein an eine Bedingung gehängter Plan
+d = 0,43, ein bloßes Zeitfenster d = 0,29; und sie empfiehlt
+ausdrücklich, die Situation vorzugeben statt sie der Person zu
+überlassen. Unabhängig von jeder Effektstärke verlangt `REGELN.md`
+Abschnitt 6d schon heute, dass ein eingesetzter Halbsatz etwas
+bezeichnet, das man sich vorstellen kann. **Hängt an Aufgabe 41:**
+Solange nicht entschieden ist, welche Texte Handgriffe sind, verlangt
+eine neue Regel in 62 `meistern`-Fällen zu viel oder bei den zehn zu
+wenig.
+**Fertig, wenn:** jeder der zehn Handgriffe in `bereich-daten.js` die
+Situation nennt, in der die Handlung zu tun ist — eine
+wiedererkennbare Gelegenheit, kein Zeitfenster und kein „gerade" —,
+die Anforderung neben `handgriff_tadel` in `rituale/pruefwerk.py`
+steht und mit festen Beispielen unterlegt ist (welche durchgehen,
+welche anschlagen müssen, nach `REGELN.md` Abschnitt 6e), ein
+Handgriff ohne Situationshälfte den Bau abbricht, und die Prüfung
+nachzählt und ausgibt, wie viele der 62 `meistern`-Texte sie heute
+nicht bestehen würden — damit der Rückstand sichtbar ist, ohne
+Aufgabe 41 zu blockieren.
+
 ---
 
 ### 68 · Die Satzprüfung liest die Rechner nicht

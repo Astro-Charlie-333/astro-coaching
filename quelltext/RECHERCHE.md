@@ -357,3 +357,267 @@ Mehrfachanmeldungen weglassen, solange sie nicht von der Ambulanz selbst
 belegt sind. Und viertens altert eine heute datierte Berichtigung genauso
 wie der Satz, den sie ersetzt: Ohne jemanden, der die Seite alle paar Monate
 nachliest, verschiebt der Fund das Veralten nur um einen Schritt.
+
+### 2026-11-11 · Spur A · „Nicht überprüft" ist die schonendere Aussage — und zwei offene Aufgaben tragen sie weiter
+
+**Gesehen:** `REGELN.md` Abschnitt 4 verlangt von jeder rechnenden Seite
+unter anderem den Satz, „dass die Deutung nicht überprüft ist". Im
+Auslieferstand steht dieser Gedanke in vier Fassungen, jede in einer
+eigenen Datei:
+
+* `quelltext/bereiche/bereich-daten.js` (`B_EHRLICH`), ausgeliefert auf
+  `bereiche.html` und `index.html`: „Die Rechnung ja, die Deutung nicht.
+  Es gibt keinen Beleg dafür, dass daraus Ereignisse folgen."
+* `quelltext/kern/ich-daten.js`, ausgeliefert auf `uebersicht.html`:
+  „… dass daraus ein bestimmter Zug folgt, ist Deutung und nicht
+  überprüft."
+* `quelltext/zeit/zeit-koerper.html`, ausgeliefert auf `zeiten.html`:
+  „Es gibt keinen Beleg dafür, dass dieses Verfahren Ereignisse
+  vorhersagt, und es ist nie ernsthaft untersucht worden."
+* `quelltext/zeit/zeit-app.js`, ausgeliefert auf derselben Seite:
+  „Das Verfahren ist nicht überprüft."
+
+Keine dieser vier nennt eine Quelle. Im Wurzelordner liegen 130
+HTML-Seiten; fünf tragen einen Abschnitt „Was das taugt — und was
+nicht" (nachgezählt im Repo, Stand dieses Commits).
+
+Für mindestens eine der vier Aussagen ist „nicht überprüft" sachlich
+zu schonend. Die Aussage auf `uebersicht.html` betrifft den Schluss von
+einer Geburtsstellung auf einen Charakterzug — und das ist der
+am häufigsten geprüfte Anspruch des ganzen Feldes. Dean und Kelly
+berichten in `Journal of Consciousness Studies` 10 (6–7), S. 175–198
+(2003): 2.101 Menschen, zwischen dem 3. und 9. März 1958 in London
+geboren, im Schnitt 4,8 Minuten auseinander, erhoben mit elf, sechzehn
+und dreiundzwanzig Jahren in einer Untersuchung, die nichts mit
+Astrologie zu tun hatte; geprüft wurden 110 Merkmale. Die astrologische
+Effektstärke war 0,00 ± 0,03. Fünf der 110 Korrelationen waren bei
+p = 0,05 signifikant, erwartet waren nach Zufall etwa 5,5. Dieselbe
+Arbeit fasst über vierzig kontrollierte Untersuchungen zur Trefferquote
+von Astrologinnen zusammen — knapp 700 Astrologinnen, etwa 1.150
+Geburtsbilder, mittlere Effektstärke 0,051 (SD 0,118, p = 0,66) — und
+die Übereinstimmung der Astrologinnen untereinander mit 0,101, von den
+Autoren „essentially no agreement at all" genannt. Die Zahl aller
+empirischen Untersuchungen zur Astrologie liege über fünfhundert
+(`journalpsyche.org/articles/0xc062.pdf`).
+
+Dass es dabei einen Streitstand gibt, gehört dazu. Die bekannteste
+Einzeluntersuchung ist Shawn Carlson, „A double-blind test of
+astrology", `Nature` 318 (6045), S. 419–425, 5. Dezember 1985
+(`link.springer.com/article/10.1038/318419a0`; den Volltext habe ich
+nicht gelesen, er liegt hinter einer Anmeldung). Suitbert Ertel hat sie
+im `Journal of Scientific Exploration` 23 (2) neu ausgewertet — die
+Seite der Zeitschrift nennt im Zitatblock 2010, in den Metadaten 2009.
+Er hält Carlson vor, der Aufbau habe „violated the demands of
+fairness", und berichtet aus der Neuauswertung eine Zuordnung besser
+als der Zufall mit p = 0,054 in der dreifachen Zwangswahl und p = 0,04
+bei einer Zehnpunkt-Bewertung. Sein eigener Schluss: das reiche nicht,
+um Astrologie als belegt zu behandeln, wohl aber, um Carlsons negatives
+Urteil als nicht gerechtfertigt zu zeigen
+(`journalofscientificexploration.org/index.php/jse/article/view/99`;
+auch hier habe ich nur die Seite der Zeitschrift gelesen, nicht die
+Arbeit).
+
+Für das, was diese Plattform tatsächlich rechnet — laufende Transite
+gegen das Radix —, ist die Lage dünner als für Geburtsbild und
+Charakter. Eine Sammlung von 91 Kurzfassungen aus vier astrologischen
+Fachzeitschriften (37 `Correlation`, 22 `APP`, 18 `AinO`, 14 `Kosmos`,
+überwiegend 1980 bis 2000) führt mehrere Transit-Untersuchungen:
+Kindesentführungen mit 25 beobachteten Mars-Saturn-Transiten gegen 19,3
+erwartete, nicht signifikant, das stärkste Einzelergebnis bei p = 0,10;
+gewaltsame Todesfälle, deren Folgeuntersuchung an 1.500 Fällen keinen
+signifikanten Zusammenhang fand; Arbeitsunfälle mit einem Verhältnis
+von etwa 1,38 bei 15 Grad Orbis, deren schwedische Folgeuntersuchung
+„total non-significance" ergab
+(`astrology-and-science.com/d-rese2.htm`, abgerufen 2026-11-11). Diese
+Seite trägt keinen Verfassernamen und kein Datum und steht auf einer
+Netzpräsenz der skeptischen Seite; die Untersuchungen selbst sind in
+den Zeitschriften der Astrologinnen erschienen.
+
+Das Entscheidende: Die Plattform kann die stärkere Aussage längst. Sie
+steht dreimal im Haus, nur nicht in den Ehrlichkeitsabschnitten der
+rechnenden Seiten. `mond.html` schreibt zum Vollmond: „Eine große
+Auswertung von Studien fand dafür keinen Beleg (Rotton und Kelly,
+1985)" — eine echte Arbeit, von der CMAJ als Rotton und Kelly, „Much
+ado about the full moon: a meta analysis of lunar-lunacy research",
+`Psychological Bulletin` 97 (2), S. 286–306, 1985 geführt, 37 Studien,
+Mondphasen erklärten höchstens ein Prozent der Streuung
+(`cmaj.ca/custom-print/140324`). `berufe.html` schreibt:
+„Untersuchungen dazu sind wiederholt negativ ausgefallen."
+`zahlen.html` schreibt über die Biorhythmen, Terence Hines habe über
+hundert Studien durchgesehen, und nennt das Verfahren „überprüft und
+widerlegt".
+
+**Heißt für uns:** „Nicht überprüft" klingt wie eine offene Frage.
+„Geprüft und negativ ausgefallen" ist eine andere Aussage, und für den
+Teil, um den es auf `uebersicht.html` geht, die zutreffende. Der
+Unterschied ist genau der, den `PRODUKT.md` Abschnitt 3 den Markenkern
+nennt, und `REGELN.md` Abschnitt 7 verlangt ihn ausdrücklich: Was nicht
+belegbar ist, steht als nicht belegbar da. Eine Formulierung, die den
+Forschungsstand freundlicher darstellt, als er ist, ist dieselbe Art
+Fehler wie eine, die ihn verschweigt — nur schwerer zu bemerken, weil
+sie ehrlich klingt.
+
+Dazu kommt, dass der Satz gerade im Begriff ist, sich zu vermehren.
+Aufgabe 10 und Aufgabe 17 nennen „dass die Deutung nicht überprüft ist"
+beide als Fertig-Kriterium: der Monatsbericht und „Heute" sollen ihn
+bekommen. Wer die Formulierung ändern will, ändert sie günstiger vor
+diesen beiden als danach.
+
+**Vorschlag:** Die Aussage über den Forschungsstand an eine Stelle
+legen, nach Verfahren unterschieden, mit Quelle — und die vier
+vorhandenen Fassungen von dort holen. Siehe Aufgabe 71.
+
+**Dagegen spricht:** „Widerlegt" wäre für diese Plattform zu stark. Was
+geprüft wurde, ist überwiegend nicht, was sie tut: Geburtsbild gegen
+Charakter und die Trefferquote von Astrologinnen, nicht laufende
+Transite gegen das Radix. Für die Transite habe ich drei kleine
+Untersuchungen auf einer unsignierten, undatierten Seite gefunden und
+sonst nichts; daraus folgt kein Urteil, sondern der Satz, dass es kaum
+Untersuchungen gibt. Eine Formulierung, die das nicht trennt, tauscht
+eine zu freundliche Aussage gegen eine zu harte.
+
+Zweitens ist der Streitstand echt. Ertels Neuauswertung ist
+veröffentlicht, und ihre beiden Ergebnisse weisen in die andere
+Richtung (p = 0,054 und p = 0,04). Dean ist auf der skeptischen Seite
+Partei, und die Sammlung, aus der ich die Transit-Untersuchungen habe,
+steht auf seiner eigenen Netzpräsenz, ohne Verfasser und ohne Datum.
+Ich habe keine der Arbeiten im Volltext gelesen, sondern
+Zusammenfassungen und Übersichten; wer den Satz schreibt, sollte
+mindestens Dean und Kelly 2003 selbst gelesen haben.
+
+Drittens arbeitet der Ehrlichkeitsabschnitt heute, weil er kurz ist:
+vier Fragen, vier Antworten, in der Sprache der Seite. Ein Satz mit
+Zeitschrift, Jahrgang und Effektstärke ist genau das, worüber die
+Besucherin hinwegliest — und `PRODUKT.md` Abschnitt 2 sagt, dass diese
+Zielgruppe ein Format erkennt. Eine Quellenangabe kann Vertrauen
+herstellen oder wie ein Beipackzettel wirken; welches von beidem, hängt
+am Satzbau und nicht an der Entscheidung.
+
+Viertens, und am ernstesten: Die Seite rechnet weiter. Ein Satz, der
+auf derselben Seite sagt, dass das Verfahren geprüft und negativ
+ausgefallen ist, steht neben einer Sortierung, die behauptet, hier sei
+es gerade laut. Das ist zu verantworten — `bereiche.html` sagt bereits,
+was es stattdessen kann, nämlich einem Jahr eine Gliederung geben —,
+aber es ist ein schmaler Grat, und für die Begleitete, die das Werkzeug
+zwischen zwei Sitzungen benutzt, kann der stärkere Satz entweder die
+Voraussetzung sein, es überhaupt zu benutzen, oder der Grund, es
+zuzumachen. Welches davon, weiß ich nicht; ich habe keine Nutzerin
+gefragt.
+
+Und fünftens erzeugt die Aufgabe keine Seite. Sie fasst vier Textstellen
+und eine Zeile in `REGELN.md` an. Die offenen Aufgaben 10, 17 und 18
+betreffen Seiten, die jede sieht.
+
+### 2026-11-11 · Spur A · Der Handgriff hat die richtige Form; die Wirkung sitzt in der Hälfte, die fehlt
+
+**Gesehen:** `REGELN.md` Abschnitt 3 verlangt von jedem Bereich als
+zweite der fünf Fragen „Was du tun kannst — ein Handgriff, nicht fünf".
+Das ist dieselbe Form, die die Coaching- und
+Verhaltensänderungsforschung seit Jahrzehnten untersucht, dort unter
+dem Namen Wenn-dann-Plan. Gollwitzer und Sheeran haben 94 unabhängige
+Prüfungen zusammengefasst und eine Effektstärke von d = 0,65 berichtet
+(`Advances in Experimental Social Psychology` 38, S. 69–119, 2006;
+`kops.uni-konstanz.de/handle/123456789/10973`).
+
+Diese Zahl ist überholt. Die heute größte Zusammenfassung — Sheeran,
+Listroma und Gollwitzer, „The when and how of planning", `European
+Review of Social Psychology` 36 (1), S. 162–194, 2025 — wertet 642
+unabhängige Prüfungen aus 294 Berichten aus und kommt auf d = 0,36
+(95-Prozent-Intervall 0,33 bis 0,40), nach Korrektur für
+Veröffentlichungsverzerrung 0,35, in einer robusten bayesschen
+Auswertung 0,15 (0,08 bis 0,22). Die Autoren nennen die
+Veröffentlichungsverzerrung erheblich und mahnen zur Vorsicht. Für
+unsere Frage zählen vor allem die Unterschiede innerhalb dieser Zahl:
+
+* Wenn-dann-Pläne, die an eine Bedingung hängen: d = 0,43. Terminpläne,
+  die nur ein Zeitfenster nennen: d = 0,29.
+* Nur eine Zeit genannt: d = 0,25. Zeit und Ort: d = 0,46. Zeit, Ort und
+  dazu, wie und wie lange gehandelt wird: d = 0,24 — die Autoren
+  schreiben, das halbiere die Wirkung gegenüber Zeit und Ort.
+* Bei starkem, selbst getragenem Ziel: d = 0,79 gegen schwaches.
+* Im Labor d = 0,49, im Feld d = 0,27; an objektiven Maßen d = 0,43, an
+  Selbstauskunft d = 0,28.
+* Dort, wo die Teilnehmenden die Situation selbst bestimmten (20
+  Prüfungen), nur d = 0,16. Die Autoren empfehlen deshalb, die Situation
+  vorzugeben oder eine kuratierte Auswahl anzubieten
+  (`kops.uni-konstanz.de/server/api/core/bitstreams/d703c468-46e9-47fc-8900-d32d7d19c8d9/content`).
+
+Bei uns sieht das so aus. `rituale/pruefwerk.py` prüft an einer Stelle,
+was ein Handgriff **nicht** darf: keinen Preis aufmachen, keine Folge
+nach dem Fenster behaupten, nicht vorhersagen, was er hervorbringt.
+Vier Verbote, mit festen Beispielen darunter. Keine Regel verlangt,
+dass etwas darin **steht**. `bereich-daten.js` trägt zehn echte
+Handgriffe — neun Wanderer und den stillen Bereich; `tunWieOben`
+verweist nur, `tunVor` ist eine Beschriftung. Einer der zehn nennt die
+Situation, in der gehandelt wird: „Die Energie in etwas Körperliches
+stecken, bevor sie in ein Gespräch gerät. Dann das Gespräch führen."
+Fünf der zehn nennen die Zeit mit einem unbestimmten Wort — „gerade",
+„dieser Tage", „diese Tage", „in diesen Wochen". Nach Aufgabe 41 landen
+unter derselben Zeile noch 62 `meistern`-Texte; dreizehn davon nennen
+eine Bedingung, elf davon mit „bevor" („Hilfe holen, bevor es dringend
+wird"), und auch die sind eher eine Bedingung als eine Situation, die
+man wiedererkennt (nachgezählt im Repo, Stand dieses Commits).
+
+**Heißt für uns:** Die Bauentscheidung war richtig, und zwar aus dem
+Grund, den die Forschung angibt: ein Handgriff, nicht fünf. Was sie
+dazusagt, ist, in welcher Hälfte die Wirkung sitzt — in der Situation,
+nicht in der Handlung. Und sie sagt genau das über die Hälfte, die wir
+heute weglassen: Ein Fenster von Wochen ist ein Terminplan (d = 0,29),
+eine wiedererkennbare Situation ist ein Wenn-dann-Plan (d = 0,43). Die
+eine Sache, die die Autoren ausdrücklich empfehlen — die Situation
+vorzugeben, statt sie der Person zu überlassen —, ist etwas, das eine
+Seite kann und ein Mensch allein für sich schlechter hinbekommt.
+
+Dazu kommt ein Argument, das ohne jede Effektstärke trägt: `REGELN.md`
+Abschnitt 6d verlangt, dass jeder eingesetzte Halbsatz etwas bezeichnet,
+das man sich vorstellen kann. „Zeig dich. Schick die Mail" bezeichnet
+weniger als „bevor sie in ein Gespräch gerät". Die Regel steht schon da;
+die Forschung ist der Grund, an dieser Stelle nachzusehen.
+
+**Vorschlag:** Die zehn Handgriffe in `bereich-daten.js` um die
+Situationshälfte ergänzen und die Anforderung neben `handgriff_tadel`
+stellen. Siehe Aufgabe 72.
+
+**Dagegen spricht:** Die Zahlen gelten für Menschen, die sich selbst
+einen Plan für ein Ziel bilden, das sie schon haben — nicht für eine
+Besucherin, die einen Satz liest. Der stärkste Unterschied in der
+ganzen Auswertung ist die Motivation (d = 0,79 bei starkem Ziel), und
+den bringt eine Seite nicht mit. Feld statt Labor halbiert den Effekt
+schon ohne uns. Was die Forschung stützt, ist also die **Form**, nicht
+die Erwartung, dass ein Satz auf einer Seite etwas bewegt. Das ist
+ohnehin nichts, was die Plattform behaupten darf: `pruefwerk` bricht
+den Bau ab, sobald ein Handgriff vorhersagt, was er hervorbringt.
+
+Zweitens hat die Form dokumentierte Kosten, und sie treffen unsere
+Leute. Parks-Stamm und Gollwitzer („Goal implementation: The benefits
+and costs of if-then planning", in Moskowitz (Hrsg.), *The psychology
+of goals*, Guilford Press 2009, S. 362–391) berichten: Wer eine
+Situation festlegt, erkennt andere, gleich gute Gelegenheiten
+schlechter; wer einen schlechten Plan hat, hält länger daran fest; bei
+Häfner (2000) nutzten 34 Prozent mit Wenn-dann-Plan eine unerwartete
+Gelegenheit gegen 57 Prozent ohne; und bei Powers u. a. (2005) machten
+sozial vorgeschriebene Perfektionistinnen nach einem Wenn-dann-Plan
+weniger Fortschritt und berichteten mehr negative Stimmung. Das letzte
+ist der ernsteste Einwand. `PRODUKT.md` Abschnitt 2 nennt die
+Andersgebaute, die ihr Leben lang Erklärungen bekommen hat, die nicht
+passten, und verbietet jeden Ratschlag, der Überforderung zum
+Charakterfehler macht. Ein Satz, der eine Situation vorschreibt, ist
+näher an dieser Grenze als einer, der eine Handlung nennt.
+
+Drittens ist die Aufgabe größer, als sie klingt, und hängt an einer
+anderen. Zehn Texte sind schnell geschrieben, aber nach Aufgabe 41
+gehören 62 weitere in dieselbe Zeile; solange nicht entschieden ist,
+welche Texte Handgriffe sind, verlangt eine neue Regel entweder zu
+wenig oder in 62 Fällen zu viel. Vorher gebaut, verriegelt sie den
+kleineren Teil und macht den größeren später teurer.
+
+Viertens kostet die Situationshälfte Länge, und Länge ist hier nicht
+frei: `PRODUKT.md` Abschnitt 2 sagt, dass die Karten abfotografiert und
+weitergeschickt werden und allein stehen müssen. Zwei Halbsätze mehr auf
+jeder Karte sind gegen diese Nutzung gerechnet nicht umsonst.
+
+Und fünftens habe ich keine der vier Arbeiten im Volltext gelesen,
+sondern die Zusammenfassungen und die Kapitelfassung bei KOPS. Die Zahl
+d = 0,36 steht gegen d = 0,15 in derselben Arbeit, je nach
+Auswertungsverfahren; wer sich darauf stützt, sollte wissen, dass die
+Spanne so breit ist.
