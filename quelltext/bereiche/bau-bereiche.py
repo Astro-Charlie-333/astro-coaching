@@ -935,6 +935,14 @@ for k in sorted(RAUM_SEITEN):
 # nicht mehr möglich und braucht keine eigene Prüfung.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(
     app, 'bereich-app.js', 'bereich-daten.js')
+# Und die zweite Hälfte desselben Riegels. Sie fehlte hier bis zum
+# 2026-11-11, aufgefallen beim Erledigen von Aufgabe 50: Die Anzeige
+# stand seit dem 7.11. als fertig in pruefe-alles.py, aber nur der
+# Satzriegel hielt sie. Ein von Hand geschriebenes „dein" wäre
+# zurückgekommen, ohne dass etwas abbricht — die Querprüfung zählte
+# zwar nach, hat aber nur nach dem einen Aufruf gesucht. Seit heute
+# verlangt sie beide.
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'bereich-app.js')
 # Derselbe Code ohne Kommentare — darunter prüft noch eine engere
 # Regel, dass keine der fünf Blocküberschriften dort wieder auftaucht.
 app_code = pruefwerk.nur_code(app)

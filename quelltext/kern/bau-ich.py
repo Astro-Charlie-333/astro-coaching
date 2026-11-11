@@ -7,6 +7,9 @@ hier = pathlib.Path(__file__).parent
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
 
+sys.path.insert(0, str(rit))
+import pruefwerk
+
 
 def lies(p):
     return p.read_text(encoding='utf-8')
@@ -86,6 +89,36 @@ ziel.write_text(html, encoding='utf-8')
 koerper = lies(hier / 'ich-koerper.html')
 app = lies(hier / 'ich-app.js')
 daten = lies(hier / 'ich-daten.js')
+
+# ── In ich-app.js steht kein Satz, und sie beugt „dein" nicht ──
+# Aufgabe 50 (aus 34 und 38). Bis zum 2026-11-11 standen hier vierzig
+# Zeichenketten und zweimal ein von Hand geschriebenes „dein" — auf
+# der Seite, die hinter der Tür „Dein Bild" liegt.
+#
+# Was der Riegel verhindert, ist nicht ein Tippfehler, sondern eine
+# Bauart: Ein Satz in der Anzeige wandert beim Umzug nach Stufe 3
+# nicht mit (PRODUKT.md Abschnitt 7), und ein „dein" in der Anzeige
+# kennt das Geschlecht des Punktes nicht. Beide Regeln stehen an einer
+# Stelle (rituale/pruefwerk.py, Aufgabe 43); ab hier halten sie diese
+# Anzeige.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'ich-app.js', 'ich-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'ich-app.js')
+
+# Und die Gegenprobe gegen die Fehlerklasse, die ein grüner Riegel
+# nicht ausschließt: dass er heute nur nichts zu finden hatte
+# (REGELN.md 6e, Nachsatz). Geprüft wird an dieser Datei und in allen
+# drei Anführungsarten — ein Satz, der in doppelten oder schrägen
+# Anführungszeichen durchgeht, wäre das Schlupfloch, über das die
+# Sätze einzeln zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Heute auf deinem Chart' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'ich-app.js', 'ich-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'auf deinen Mond' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'ich-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
 rechner = lies(hier / 'ich-rechner.js')
 
 # ── Die Texte des neuen Abschnitts ─────────────────────────────

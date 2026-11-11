@@ -158,7 +158,24 @@ var I_AUF={
   'Hier steht nichts über deine Zukunft und nichts über deinen Wert. Es steht da, wo dein Bild von den meisten abweicht, und was man damit anfangen kann.',
   'Erkennst du dich nicht wieder, hat dein Erleben Vorrang. Die Rechnung kennt die Uhr deiner Geburt, nicht dein Leben.'
  ],
- tunVor:'Ein Handgriff dazu:'};
+ tunVor:'Ein Handgriff dazu:',
+
+ /* Die zwei Worte am Punktfeld. Hundert Punkte, davon so viele
+    hell, wie Menschen es haben — die Zahl daneben ist das belegte
+    Pfund dieser Seite (PRODUKT.md Abschnitt 3), und beschriftet
+    gehört sie hier und nicht in der Anzeige. */
+ feldOhne:'bei jedem Menschen<br>woanders',
+ feldVon:'von 100 Menschen',
+
+ /* Die Mechanik zu jedem Befund. Sie wartet in ac-tech und
+    erscheint erst ab Wissensstufe 2 — deshalb darf hier stehen,
+    was auf Stufe 0 nicht stehen dürfte. Vorlagen, nicht Sätze:
+    die Anzeige setzt nur noch die gerechneten Werte ein. */
+ techSp:'{haus}. Haus, natal darin: {punkte}',
+ techKette:'Herrscher des {von}. Hauses ist {herr}, steht im {nach}. Haus',
+ techWinkel:'{a} {typ} {b}, Orbis {orb}°',
+ techRueck:'Rückläufig bei Geburt: {welche}',
+ techRueckKeine:'Kein Punkt rückläufig bei Geburt'};
 
 /* ── Der Satz, mit dem die Seite anfängt ──────────────────────
    Bis zum 27.10. begann die Seite mit dem Chartrad: Maschinenraum
@@ -174,6 +191,14 @@ var I_AUF={
    Ein Befund ohne Form hier führt nicht: 'rueckWenig' ist der
    Normalfall und sagt über diesen Menschen nichts, also rutscht
    der nächste Befund nach vorn. */
+/* Die Zeile über dem Leitsatz. „21.6.1996 · 14:40 · Berlin" ist
+   eine Datenzeile; hier steht ein Mensch, und deshalb steht der
+   Satz dazu hier und nicht in der Anzeige. */
+var I_MONATE=['Januar','Februar','März','April','Mai','Juni','Juli','August',
+ 'September','Oktober','November','Dezember'];
+var I_GEBOREN='{name}, geboren am {tag}. {monat} {jahr} um {zeit}{ort}.';
+var I_GEBOREN_ORT=' in {ort}';
+
 var I_KOPF={
  spViel:'Bei dir sammelt sich auffällig viel an einer einzigen Stelle deines Lebens: {bereich}. Dieser Bereich bekommt Gewicht, ob du ihn willst oder nicht.',
  spZwei:'Am dichtesten ist es bei dir an einer Stelle: {bereich}. Etwas mehr Gewicht als der Rest, aber kein Übergewicht.',
@@ -200,6 +225,46 @@ var I_DREI=[
 ];
 var I_DREI_BEREICH='Liegt bei dir im Bereich: {bereich}';
 var I_DREI_WIRKUNG='Entscheidet sich bei dir im Bereich: {bereich}';
+/* Dieselbe Zeile für wen, der es ablesen will — ab Stufe 2. */
+var I_DREI_TECH='{zeichen} {grad} · {haus}. Haus, {bereich}';
+var I_DREI_TECH_ASC='{zeichen} {grad} · Herrscher {herr} im {haus}. Haus';
+
+/* ── Die Brücke zu „Jetzt" ────────────────────────────────────
+   Drei Lebensbereiche, in denen heute etwas steht. Mehr nicht:
+   was es heißt, steht auf der Startseite, und dorthin führt die
+   letzte Zeile. */
+var I_HEUTE={
+ titel:'Heute auf deinem Chart',
+ nix:'Gerade steht nichts in deinen Häusern.',
+ tech:' ({haus}. Haus: {punkte})',
+ mehr:'Was das heute konkret heißt →'};
+
+/* ── Die zwölf Häuser: Aufschrift und aufgeklappt ─────────────
+   Die Vorlagen der Mechanikzeilen. Alles, was hier „Haus" oder
+   „Herrscher" sagt, wartet in ac-tech. */
+var I_HAUS_TECH={
+ herr:'Herrscher {herr} steht im {haus}. Haus',
+ heute:' · heute hier: {punkte}'};
+var I_HDETAIL={
+ titel:'{nr}. Haus — {name}',
+ frage:'Die Frage, die es aufmacht:',
+ leer:'Kein Planet steht hier — das ist der Normalfall, es gibt zehn Planeten und zwölf Häuser. Ein leeres Haus heißt nicht, dass das Thema fehlt. Es heißt, dass es anderswo entschieden wird:',
+ modern:'Modern wird {zeichen} auch {planet} zugeordnet — {stellung}, {haus}. Haus.',
+ heute:'Heute hier:',
+ mehr:'Was das heißt →'};
+
+/* Wohin ein aufgeklapptes Haus weiterführt. Jedes Haus trifft
+   höchstens einen Eintrag, und die Reihenfolge hier ist die
+   Reihenfolge auf der Seite. */
+var I_WEITER=[
+ {h:[10,6],  s:'raum-berufung.html',       t:'Berufung'},
+ {h:[2,1],   s:'raum-selbstwert.html',     t:'Selbstwert'},
+ {h:[7,5,8], s:'raum-naehe.html',          t:'Nähe'},
+ {h:[4,3],   s:'raum-herkunft.html',       t:'Herkunft'},
+ {h:[12],    s:'geistfuehrung.html',       t:'Mit wem du arbeitest'},
+ {h:[11],    s:'raum-zugehoerigkeit.html', t:'Zugehörigkeit'},
+ {h:[9],     s:'geistfuehrung.html',       t:'Glaube und Lehre'}];
+var I_WEITER_ALLE={s:'haeuser.html', t:'Alle Häuser'};
 
 /* Die Überschrift über den Sprungmarken. Die Marken selbst
    entstehen aus den Abschnitten der Seite, nicht aus einer
@@ -217,6 +282,17 @@ var I_SPRUNG_TITEL='Auf dieser Seite';
    Auswahl, die sich nicht als Ganzes ausgibt. */
 var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Rot fordert, grün fließt — keins von beidem ist gut oder schlecht.';
 var I_ASP_TECH='Gerechnet sind {gesamt} Aspekte. Hier stehen die {zahl} engsten zwischen zwei Planeten; Aspekte auf Aszendent und MC stehen auf der Achsenseite.';
+/* Die Formel unter einer Karte — ab Stufe 2. „fordernd" und
+   „fließend" sind Sprache und standen bis zum 2026-11-11 in der
+   Anzeige; keins von beidem ist gut oder schlecht. */
+var I_ASP_TECHZEILE='{a} {typ} {b} · Orbis {orb}° · {art}';
+var I_ASP_ART={hart:'fordernd', weich:'fließend'};
+
+/* ── Ohne Profil ──────────────────────────────────────────────
+   Der einzige Zustand, in dem diese Seite nichts rechnen kann.
+   Er sagt, was fehlt und warum — nicht nur, dass etwas fehlt. */
+var I_LEER='Noch kein Profil angelegt. {link} — mit Geburtsdatum, -zeit und -ort. Ohne die Zeit gibt es keine Häuser, und ohne Häuser ist diese Seite leer.';
+var I_LEER_LINK='Hier legst du eins an';
 
 /* Index: alles, was es auf dieser Plattform gibt, mit einem Satz dazu.
    Die Bauprüfung schlägt an, wenn eine Seite fehlt — so kann der Index

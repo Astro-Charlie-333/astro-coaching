@@ -257,6 +257,85 @@ def auswahlliste(s):
     teile = [t.strip() for t in s.split(',')]
     return (len(teile) >= 2
             and all(_AUSWAHLTEIL.fullmatch(t) for t in teile))
+
+
+# ── Eine Medienabfrage ist keine Sprache ───────────────────────
+# Dieselbe Klasse wie die Auswahlliste darüber, und derselbe Grund
+# (Aufgabe 50): `(prefers-reduced-motion: reduce)` fragt den Browser,
+# ob dieser Mensch Bewegung abgestellt hat. Sie steht in `ich-app.js`,
+# `karte-app.js` und `haeuser-app.js` — und sie trägt Leerzeichen,
+# Doppelpunkt und zwei Wörter, sieht also aus wie Sprache. Verschieben
+# lässt sie sich nicht: `matchMedia` verlangt genau diese Zeichenkette,
+# und eine Datendatei kennt keinen Browser.
+#
+# Erkannt wird die Form, nicht das Wort (REGELN.md 6e): jede Bedingung
+# geklammert, alles klein, kein Umlaut — und das Merkmal vor dem
+# Doppelpunkt aus einem **aufgezählten** Satz. Dass die Merkmale hier
+# einzeln stehen und nicht als Muster, ist der Punkt: `(liebe: beruf)`
+# hat dieselbe Form und ist Sprache. Wer ein Merkmal braucht, das hier
+# fehlt, trägt es ein und sieht dabei, dass er eine Sperre anfasst.
+_MEDIENTYP = {'all', 'screen', 'print', 'speech', 'not', 'only'}
+_MEDIENMERKMAL = {
+    'width', 'min-width', 'max-width',
+    'height', 'min-height', 'max-height',
+    'orientation', 'aspect-ratio', 'min-aspect-ratio', 'max-aspect-ratio',
+    'resolution', 'min-resolution', 'max-resolution',
+    'color', 'monochrome', 'hover', 'any-hover', 'pointer', 'any-pointer',
+    'display-mode', 'forced-colors', 'scripting', 'update',
+    'prefers-color-scheme', 'prefers-contrast',
+    'prefers-reduced-motion', 'prefers-reduced-transparency'}
+_MEDIENWERT = re.compile(r'[a-z0-9]+(?:[-./][a-z0-9]+)*')
+_MEDIENBEDINGUNG = re.compile(r'\(\s*([a-z-]+)\s*(?::\s*([^()]+?)\s*)?\)')
+
+
+def medienfrage(s):
+    """Ob `s` eine Medienabfrage ist. Nur dann sind Doppelpunkt und
+    Leerzeichen darin Technik und nicht Sprache."""
+    s = s.strip()
+    if not s or re.search(r'[A-ZÄÖÜäöüß]', s):
+        return False
+    teile = [t.strip() for t in re.split(r',|\band\b|\bor\b', s) if t.strip()]
+    bedingungen = 0
+    for t in teile:
+        woerter = t.split()
+        if woerter and all(w in _MEDIENTYP for w in woerter):
+            continue                      # „screen", „only print"
+        m = _MEDIENBEDINGUNG.fullmatch(t)
+        if not m or m.group(1) not in _MEDIENMERKMAL:
+            return False
+        wert = m.group(2)
+        if wert is not None and not all(_MEDIENWERT.fullmatch(w)
+                                        for w in wert.split()):
+            return False
+        bedingungen += 1
+    return bedingungen > 0
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+for _m in ['(prefers-reduced-motion: reduce)',
+           '(prefers-color-scheme: dark)',
+           '(max-width: 600px)',
+           '(min-resolution: 2dppx)',
+           'screen and (min-width: 48em)',
+           'only screen and (max-width: 32rem)',
+           '(hover: hover) and (pointer: fine)',
+           '(orientation: portrait)',
+           '(display-mode: standalone)',
+           '(min-aspect-ratio: 16/9)']:
+    assert medienfrage(_m), f'ist eine Medienabfrage: {_m}'
+# Und was dieselbe Form hat, aber Sprache ist. Ohne diese Zeilen wäre
+# die Regel ein Loch: eine Klammer und ein Doppelpunkt sind billig.
+for _m in ['(liebe: beruf)',
+           '(zeit: jetzt)',
+           '(Was du tun kannst: jetzt)',
+           'Gerade steht nichts in deinen Häusern.',
+           'bei jedem Menschen woanders',
+           'prefers-reduced-motion: reduce',
+           '(prefers-reduced-motion: reduce) und dein Mond',
+           'Liebe, Beruf',
+           '']:
+    assert not medienfrage(_m), f'ist keine Medienabfrage: {_m}'
+del _m
 # Die drei Anführungsarten in einem Durchgang. Die Reihenfolge ist
 # gleichgültig: `finditer` läuft von links, und an einer Stelle greift
 # nur die Art, die dort wirklich beginnt — ein Apostroph in einer
@@ -281,6 +360,8 @@ def satz_darin(lit):
     if lit.strip() in _DIREKTIVEN:
         return None
     if auswahlliste(lit.strip()):
+        return None
+    if medienfrage(lit.strip()):
         return None
     rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
     for k, v in _ENTITAET.items():
@@ -405,3 +486,8 @@ assert deins_in_anzeige("var ohneDein = 1; var B_DEIN = {};") == []
 assert deins_in_anzeige("var a='deinstalliert';") == []
 assert deins_in_anzeige("// auf deinen Mond\nvar a='nivleiste';") == []
 assert [w for _, w in deins_in_anzeige('var a="deine Venus";')] == ['deine']
+# Alle drei Anführungsarten, sonst ist auch diese Regel mit einem
+# Anführungszeichen abstellbar — die Satzregel darüber hat dieses
+# Beispiel seit dem 7.11., hier fehlte es bis zum 2026-11-11.
+assert [w for _, w in deins_in_anzeige('var a=`deinem Mond`;')] == ['deinem']
+assert len(deins_in_anzeige("var a='dein';\nvar b=\"deine\";\nvar c=`deinen`;\n")) == 3

@@ -47,9 +47,11 @@ Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
 `pruefwerk.pruefe_anzeige_ohne_dein` findet jedes von Hand
 geschriebene „dein". Fünf Anzeigen sind durch und verriegelt
 (`bereich-app.js`, `start-app.js`, `offline-app.js`, seit dem
-2026-11-09 `heute-app.js` und seit dem 2026-11-10 `wahl-app.js`).
+2026-11-09 `heute-app.js`, seit dem 2026-11-10 `wahl-app.js` und seit
+dem 2026-11-11 `ich-app.js`). Seit dem 2026-11-11 verlangt die
+Querprüfung **beide** Riegel je Anzeige, nicht nur den Satzriegel.
 
-Die siebzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
+Die sechzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
 der ein Mensch sie vor sich hat: zuerst die Türen der Navigation
 (`uebersicht.html` ist „Dein Bild"), dann
 die Seiten, die ein Profil rechnen, zuletzt die Werkzeuge der
@@ -58,7 +60,7 @@ Coachin. **Wie weit es ist, steht nicht hier, sondern in
 nachgezählt, und die Liste bricht in beide Richtungen. Eine Liste in
 einem Dokument driftet; diese kann nur schrumpfen.
 
-Für jede der Aufgaben 50 bis 66 gilt dasselbe, deshalb steht es
+Für jede der Aufgaben 51 bis 66 gilt dasselbe, deshalb steht es
 einmal hier. **Fertig, wenn:** die Sätze dieser Anzeige in ihrer
 `*-daten.js` stehen, die Anzeige „dein" nicht mehr selbst schreibt
 (sondern `B_BEUGE` aus `bahn-daten.js` lässt), ihr `bau-*.py` beide
@@ -75,10 +77,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 50 · `ich-app.js` (40, 2)
-`uebersicht.html`, die Tür „Dein Bild". Gehört in einen Zug mit
-Aufgabe 45, die dieselbe Seite betrifft.
 
 ### 51 · `monat-app.js` (2, 0)
 Der Monatsbericht. Fast durch; gehört in einen Zug mit Aufgabe 10,
@@ -683,7 +681,73 @@ davon, welches Geburtsbild gerechnet wird.
 
 ---
 
+### 68 · Die Satzprüfung liest die Rechner nicht
+Aufgefallen beim Erledigen von Aufgabe 50 am 2026-11-11. Die beiden
+Regeln aus `pruefwerk` halten jetzt sechs Anzeigen — aber sie werden
+nur auf `*-app.js` angewandt. Neben jeder Anzeige liegt ein
+`*-rechner.js`, und der ist für einen Satz genauso erreichbar: Wer
+einen Text aus der Anzeige entfernt bekommt, kann ihn eine Datei
+weiter wieder hineinschreiben, und dort liest ihn keine der beiden
+Regeln. `bau-ich.py` hat dafür eine eigene, lose Fassung („drei Wörter
+oder mehr in einfacher Anführung") — dieselbe Bauart, die in
+`bau-bereiche.py` bis zum 2026-11-10 stand und die Aufgabe 49
+ersetzen musste: sie liest eine von drei Anführungsarten und schlägt
+unter drei Wörtern nicht an. Dieselbe Fehlerklasse in mehreren Ordnern
+einzeln, wie bei Aufgabe 25, 34 und 40.
+**Fertig, wenn:** `pruefwerk.pruefe_anzeige_satzfrei` auch auf jedes
+`*-rechner.js` angewandt wird, die lose Fassung in `bau-ich.py`
+dadurch wegfällt, ein Satz in jeder der drei Anführungsarten in einem
+Rechner den Bau abbricht, und `pruefe-alles.py` nachzählt, welche
+Rechner noch Sätze tragen — in beide Richtungen brechend, wie
+Querprüfung 13.
+
 ## Erledigt
+
+* **2026-11-11** · `ich-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 50, aus 34 und 38) — und die Querprüfung hält jetzt beide
+  Riegel statt einem. In der Anzeige hinter der Tür „Dein Bild"
+  standen vierzig Zeichenketten und zweimal „dein" von Hand: die
+  Zeile, die diesen Menschen vorstellt, die Brücke zu „Jetzt", die
+  Beschriftung des Punktfelds, die Mechanik zu jedem Befund, die
+  zwölf Häuser mit allem, was aufgeklappt darunter steht, und der
+  Zustand ohne Profil. Alle sind Vorlagen in `ich-daten.js`; die
+  Anzeige setzt nur noch Werte ein. Nachgewiesen ist, dass sich auf
+  der Seite nichts geändert hat: drei erfundene Profile, alles
+  aufgeklappt, der gezeichnete Text vorher und nachher Zeichen für
+  Zeichen gleich.
+  Zwei Zeichenketten ließen sich nicht verschieben, und sie zeigen
+  zwei verschiedene Antworten auf dieselbe Frage.
+  `(prefers-reduced-motion: reduce)` fragt den Browser, ob dieser
+  Mensch Bewegung abgestellt hat — `matchMedia` verlangt genau diese
+  Zeichenkette, und eine Datendatei kennt keinen Browser. Hier musste
+  die Regel lernen, wie eine Medienabfrage aussieht, so wie bei
+  Aufgabe 49 der Auswahlausdruck: jede Bedingung geklammert, alles
+  klein, und das Merkmal vor dem Doppelpunkt aus einem aufgezählten
+  Satz. Dass die Merkmale einzeln dastehen und nicht als Muster, ist
+  der Punkt — „(liebe: beruf)" hat dieselbe Form und ist Sprache,
+  und die festen Beispiele halten das fest. Es betrifft nicht nur
+  diese Seite: `karte-app.js` und `haeuser-app.js` tragen dieselbe
+  Abfrage und sind beim ersten Lauf danach von allein um drei Zeilen
+  gesunken, ohne dass sie jemand angefasst hat — die Querprüfung hat
+  das gemeldet, weil sie in beide Richtungen bricht. Sie kommen damit
+  später nicht daran hängen.
+  `" r="3.1" class="` dagegen war ein halb offenes Attribut mitten in
+  einer Zeichenkette — ein Wort und ein Dezimalpunkt, und fertig ist
+  der Satz. Dort hat sich die Anzeige verbogen und nicht die Regel:
+  die drei Maße des Punktfelds stehen jetzt als Zahlen oben, und
+  jedes Stück Auszeichnung darin ist wieder ganz. Eine Regel, die
+  Attributstücke durchlässt, wäre ein Loch; eine Zahl mit einem Namen
+  ist ohnehin besser zu lesen.
+  Dabei aufgefallen und mitgenommen: `bereich-app.js` stand seit dem
+  2026-11-07 als fertig in `pruefe-alles.py`, hatte aber nur den
+  Satzriegel. Der „dein"-Riegel fehlte, und die Querprüfung hat es
+  nicht gemerkt, weil sie nur nach dem einen Aufruf suchte — sie war
+  selbst die halbe Sperre, vor der `REGELN.md` 6f warnt. „Fertig"
+  heißt zwei Zusagen; jetzt verlangt sie beide, und der fehlende
+  Aufruf ist nachgetragen. Dazu hatte die „dein"-Regel kein festes
+  Beispiel in schräger Anführung — mit einem Anführungszeichen wäre
+  sie abstellbar gewesen. Sechs der zweiundzwanzig Anzeigen sind
+  durch und verriegelt.
 
 * **2026-11-10** · `wahl-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 49, aus 34 und 38) — und die Prüfung, die sie festhielt,
