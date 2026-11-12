@@ -153,6 +153,7 @@ die fünf Wissensstufen, die Prüfungen. Daran wird nichts neu erfunden.
 | 11 Planetenseiten | **eine** Planetenseite mit allen, gebaut — erledigt 12.11.: `planeten.html` aus `quelltext/planeten/` (zehn Seiten); `planeten-in-haeusern.html` bleibt als eigenes Werkzeug |
 | 3 Readingseiten + 4 Coachingseiten | sind längst in `begleitung.html` |
 | 5 Leitfäden (Übersicht, Mond, Merkur, Mars, Fundament) | **eine**, gebaut — erledigt 12.11.: `leitfaden.html` aus `quelltext/leitfaden/`, mit Feld für das aktive Profil; `nd-leitfaden.html` gehört zu den Neurodivergenz-Seiten |
+| 5 Seiten zu ADHS, Autismus und Neurodivergenz (audhs-verstehen, diagnose-weg, nd-leitfaden, neurodivergente-astrologie, neurodivergenz-vertiefung) | **eine**, gebaut — erledigt 13.11.: `anders-verdrahtet.html` aus `quelltext/nd/`; der Themenraum `raum-anders-verdrahtet.html` bleibt der Lebensbereich |
 
 Das sind rund **40 Seiten weniger**, ohne dass ein einziger guter Satz
 verlorengeht.
