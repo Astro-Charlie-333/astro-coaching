@@ -258,6 +258,13 @@ a{color:var(--nacht);}
 .wk-fuss p{font-size:13.2px;line-height:1.58;color:var(--leise);margin:0;
   max-width:62ch;}
 @media (prefers-reduced-motion:reduce){.wk-k{transition:none;}}
+
+/* Deine Arbeitsseiten */
+.wk-arbeit{margin-top:48px;display:grid;gap:12px}
+.wk-arbeit-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.wk-arbeit-l a{display:grid;gap:3px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA;text-decoration:none;color:#2E3A5C}
+.wk-arbeit-l b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem}
+.wk-arbeit-l span{font-size:.86rem;color:#6B6259}
 </style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -283,6 +290,18 @@ a{color:var(--nacht);}
     <p>Menschen legst du unter <a href="profile.html">Profile</a> an &mdash;
     mit Geburtsdatum, Uhrzeit und Ort. Danach stehen sie hier.</p>
   </div>
+  <!-- Deine Arbeitsseiten. Sie stehen nur hier, nicht in der Bibliothek
+       (pruefe-alles.py hält das fest): Material für dich, nicht für
+       Besucherinnen. -->
+  <nav class="wk-arbeit" aria-labelledby="wk-h-arbeit">
+    <h2 class="wk-h2" id="wk-h-arbeit">Deine Arbeitsseiten</h2>
+    <div class="wk-arbeit-l">
+      <a href="angebote-struktur.html"><b>Deine Angebote</b><span>Formate und Preise strukturieren</span></a>
+      <a href="ueber-mich-vorlage.html"><b>Deine &Uuml;ber-mich-Seite</b><span>Vorlage f&uuml;r die eigene Darstellung</span></a>
+      <a href="learning-seite.html"><b>Die Learning-Seite</b><span>Aus eigenen Erkenntnissen ein Format machen</span></a>
+      <a href="konzept-plattform.html"><b>Konzept Klientinnen-Plattform</b><span>F&uuml;r den Moment, wenn Klientinnen danach fragen</span></a>
+    </div>
+  </nav>
 </div>
 
 <!-- Die Einzelansicht. Alles zu einem Menschen auf einem Blatt. -->
