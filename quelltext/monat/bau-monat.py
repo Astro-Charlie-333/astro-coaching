@@ -31,6 +31,12 @@ rit  = hier.parent / 'rituale'
 
 lies = lambda p: p.read_text(encoding='utf-8')
 
+# Die Prüfungen, die mehr als eine Seite angehen, stehen an einer
+# Stelle (REGELN.md Abschnitt 5). Ihre festen Beispiele laufen beim
+# Import, also bevor diese Seite gebaut wird.
+sys.path.insert(0, str(rit))
+import pruefwerk
+
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monatsbericht &middot; Coach-Ansicht &middot; Astro-Charlie</title>
@@ -74,10 +80,6 @@ rechner = lies(hier / 'monat-rechner.js')
 def ohne_kommentare(t):
     t = re.sub(r'/\*.*?\*/', ' ', t, flags=re.S)
     return re.sub(r'^\s*//.*$', ' ', t, flags=re.M)
-
-
-def literale(t):
-    return re.findall(r"'((?:[^'\\\n]|\\.)*)'", ohne_kommentare(t))
 
 
 # ── 1 · Verdrahtung ────────────────────────────────────────────
@@ -132,19 +134,40 @@ for name in ('helio', 'sunLon', 'moonLon', 'placidus', 'angles', 'jdFromUT'):
 if 'ELEM' in rechner and 'ELEM=' in rechner.replace(' ', ''):
     fehler.append('eigene Bahnelemente im Rechner — die stehen in rituale/engine.js')
 
-# ── 4 · In der Anzeige steht kein Satz ─────────────────────────
+# ── 4 · In der Anzeige steht kein Satz, und kein „dein" ────────
 #     Fehlerklasse: sobald Prosa in monat-app.js steht, wird sie dort
-#     aus Bruchstücken zusammengesetzt, und die Fügung bricht.
-#     Geprüft wird nach dem Entfernen der HTML-Teile: drei Wörter
-#     hintereinander sind ein Satzanfang und gehören in monat-daten.js.
-for lit in literale(app):
-    # Auch ein abgeschnittenes Tag ist Auszeichnung, kein Satz:
-    # '<p class="x" data-art="' endet mitten im Tag.
-    rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
-    woerter = re.findall(r'[A-Za-zÄÖÜäöüß]{3,}', rest)
-    if len(woerter) >= 3:
-        fehler.append('Text in der Anzeige statt in monat-daten.js: '
-                      f'"{lit[:60]}" ({", ".join(woerter[:4])})')
+#     aus Bruchstücken zusammengesetzt, und die Fügung bricht — so
+#     entsteht „Der Schwerpunkt liegt auf deinen Ausdruck". Und ein
+#     „dein", das die Anzeige selbst hinschreibt, kennt das Geschlecht
+#     der Anlage nicht; die Form gehört an die eine Stelle, die es
+#     kennt (B_BEUGE in bahn-daten.js).
+#
+#     Bis heute stand hier eine eigene Fassung der Satzregel: drei
+#     Wörter ab drei Buchstaben, und nur in einfachen Anführungs-
+#     zeichen. Sie war schwächer als die gemeinsame in zwei Richtungen
+#     — „mb-roh an" kam durch, und ein Satz in doppelten oder schrägen
+#     Anführungszeichen auch. Genau davor warnt REGELN.md Abschnitt 5:
+#     dieselbe Regel in jedem bau-*.py einzeln ist in fünf von sechs
+#     Ordnern veraltet, sobald sie einmal verschärft wird. Ab hier
+#     halten beide Riegel aus rituale/pruefwerk.py diese Anzeige.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'monat-app.js', 'monat-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'monat-app.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner Riegel
+#     nicht ausschließt: dass er heute nur nichts zu finden hatte
+#     (REGELN.md 6e, Nachsatz). Geprüft wird an dieser Datei und in
+#     allen drei Anführungsarten — ein Satz, der in doppelten oder
+#     schrägen Anführungszeichen durchgeht, wäre das Schlupfloch, über
+#     das die Sätze einzeln zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Der Brief für diesen Monat' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'monat-app.js', 'monat-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'auf deinen Mond' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'monat-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
 
 # ── 5 · Die Sätze aus monat-daten.js holen ─────────────────────
 hol = hier / '_hol-daten.js'

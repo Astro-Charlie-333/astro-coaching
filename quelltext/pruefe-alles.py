@@ -718,10 +718,10 @@ ANZEIGEN = {
     # karte und haeuser sind am 2026-11-11 von allein gesunken, ohne
     # dass sie jemand angefasst hat: Die Regel hat gelernt, dass
     # (prefers-reduced-motion: reduce) eine Medienabfrage ist und
-    # kein Satz (Aufgabe 50).
-    'monat/monat-app.js':          (2, 0),
+    # kein Satz (Aufgabe 50). zeit ebenso am 2026-11-12: „zt-bt
+    # zt-gly" ist eine Klassenliste (Aufgabe 51).
     'bez/beziehung-app.js':        (83, 14),
-    'zeit/zeit-app.js':            (115, 6),
+    'zeit/zeit-app.js':            (114, 6),
     'karte/karte-app.js':          (42, 5),
     'mond/mond-app.js':            (76, 8),
     'zahlen/zahlen-app.js':        (194, 13),
@@ -736,12 +736,13 @@ ANZEIGEN = {
     'niveau/reading-app.js':       (70, 14),
     'werkstatt/werkstatt-app.js':  (39, 2),
 }
-# Diese drei sind durch und werden von ihrem eigenen bau-*.py
+# Diese sieben sind durch und werden von ihrem eigenen bau-*.py
 # gehalten; sie stehen hier nur, damit auffällt, wenn eine davon
 # zurückfällt und keinen Riegel hat.
 FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'start/start-app.js', 'app/offline-app.js',
-          'kern/heute-app.js', 'kern/ich-app.js'}
+          'kern/heute-app.js', 'kern/ich-app.js',
+          'monat/monat-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
