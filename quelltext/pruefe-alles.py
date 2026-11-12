@@ -837,6 +837,47 @@ if geschrumpft:
     print('       nach FERTIG)')
     fehlgeschlagen.append('Eintrag überholt')
 
+# 14 · Mandys Arbeitsseiten stehen nur in der Werkstatt
+# Am 12.11. aus der Bibliothek genommen (Schritt 5 aus
+# ENTWURF-NEUE-SEITE.md): Material für die Coachin, nicht für
+# Besucherinnen. Ohne diese Prüfung kommt beim nächsten Umbau ein
+# Weiter-Pfeil oder ein Regal zurück, und die Seite steht wieder im
+# Schaufenster. Erlaubt ist ein Verweis nur aus der Werkstatt und von
+# einer Arbeitsseite auf die andere.
+WERKSTATT_SEITEN = {'angebote-struktur.html', 'ueber-mich-vorlage.html',
+                    'learning-seite.html', 'konzept-plattform.html'}
+_quell_ok = WERKSTATT_SEITEN | {'werkstatt.html'}
+
+
+def _arbeitsseiten_offen(seite, text):
+    """Welche Arbeitsseiten `seite` verlinkt, obwohl sie es nicht darf."""
+    if seite in _quell_ok:
+        return set()
+    return {z for z in re.findall(r'''["']([a-z0-9-]+\.html)''', text)
+            if z in WERKSTATT_SEITEN}
+
+
+assert _arbeitsseiten_offen('wissen.html', '<a href="learning-seite.html">') == {'learning-seite.html'}
+assert _arbeitsseiten_offen('uebersicht.html', "{s:'angebote-struktur.html'}") == {'angebote-struktur.html'}
+assert _arbeitsseiten_offen('werkstatt.html', '<a href="learning-seite.html">') == set()
+assert _arbeitsseiten_offen('angebote-struktur.html', '<a href="ueber-mich-vorlage.html">') == set()
+assert _arbeitsseiten_offen('wissen.html', '<a href="organizer.html">') == set()
+
+offen = {}
+for s in seiten:
+    for z in _arbeitsseiten_offen(s.name, s.read_text(encoding='utf-8', errors='replace')):
+        offen.setdefault(z, []).append(s.name)
+fehlt_werkstatt = sorted(z for z in WERKSTATT_SEITEN
+                         if z not in (wiki / 'werkstatt.html').read_text(encoding='utf-8'))
+if offen or fehlt_werkstatt:
+    for z, von in sorted(offen.items()):
+        print(f'  ARBEITSSEITE IM SCHAUFENSTER: {z}  ←  {", ".join(von[:3])}')
+    for z in fehlt_werkstatt:
+        print(f'  ARBEITSSEITE NICHT IN DER WERKSTATT: {z}')
+    fehlgeschlagen.append('Arbeitsseite außerhalb der Werkstatt')
+else:
+    print(f'  {len(WERKSTATT_SEITEN)} Arbeitsseiten nur in der Werkstatt')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:

@@ -350,7 +350,6 @@ var I_INDEX=[
   {s:'coaching.html', t:'Coaching', w:'Wie eine Stunde aufgebaut ist.'},
   {s:'klientinnen-fragen.html', t:'Klientinnenfragen', w:'Was oft gefragt wird und was du antworten kannst.'},
   {s:'haltung-ethik.html', t:'Haltung und Ethik', w:'Die Linien, hinter die du nicht gehst.'},
-  {s:'angebote-struktur.html', t:'Dein Angebot', w:'Wie du es zuschneidest und was es kostet.'},
   {s:'briefing.html', t:'Briefing', w:'Was du vor einer Stunde parat haben willst.'},
   {s:'monatsbericht.html', t:'Monatsbericht', w:'Ein fertiger Text pro Person und Monat, in deiner Sprache.'},
   {s:'berufe.html', t:'Berufe im Chart', w:'Welche Felder zu welchen Stellungen passen.'},
