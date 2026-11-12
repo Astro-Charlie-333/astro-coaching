@@ -336,6 +336,67 @@ for _m in ['(liebe: beruf)',
            '']:
     assert not medienfrage(_m), f'ist keine Medienabfrage: {_m}'
 del _m
+# ── Eine Klassenliste ist keine Sprache ────────────────────────
+# Die dritte dieser Art, und derselbe Grund wie bei den beiden
+# darüber (Aufgabe 51): `ta.className = 'mb-roh an'` setzt zwei
+# Klassen an ein Element. Das war die letzte Zeichenkette in
+# `monat-app.js` — keine, die in eine Datendatei gehört, sondern eine
+# Anweisung an den Browser. Eine *einzelne* Klasse fällt schon durch
+# (`mb-roh` trägt kein Leerzeichen und keinen Großbuchstaben); zwei
+# durch ein Leerzeichen getrennte tragen eines und sehen damit aus wie
+# Sprache. Verschieben lässt sich so eine Zeichenkette nicht: eine
+# Datendatei kennt keine Stilvorlage.
+#
+# Erkannt wird die Form, nicht das Leerzeichen (REGELN.md 6e), und
+# die Teile werden **aufgezählt** wie die Merkmale der Medienabfrage:
+# jeder Teil ist entweder mit Bindestrich geschrieben — so benennt
+# dieses Projekt seine Klassen (`mb-roh`, `bw-leiste`, `ac-tech`,
+# `ist-falsch`) — oder eine der vier bloßen Zustandsklassen, die es
+# wirklich gibt. Daran kommt kein deutscher Satz vorbei:
+# „alles-oder-nichts denken" hat einen Bindestrich, aber „denken" ist
+# weder das eine noch das andere. Wer eine fünfte Zustandsklasse
+# braucht, trägt sie ein und sieht dabei, dass er eine Sperre anfasst.
+_KLASSE = re.compile(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)+')
+_ZUSTANDSKLASSE = {'an', 'auf', 'ist', 'voll'}
+
+
+def klassenliste(s):
+    """Ob `s` eine Liste von CSS-Klassen ist — zwei oder mehr Teile,
+    mindestens einer mit Bindestrich, die übrigen aufgezählt. Nur dann
+    ist das Leerzeichen darin Technik und nicht Sprache."""
+    teile = s.split()
+    return (len(teile) >= 2
+            and all(_KLASSE.fullmatch(t) or t in _ZUSTANDSKLASSE
+                    for t in teile)
+            and any('-' in t for t in teile))
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+for _k in ['mb-roh an',
+           'mb-leer mb-roh',
+           'bw-leiste an',
+           'ist-falsch ist-richtig',
+           'hz-opts auf',
+           'mo-chip mo-klein ist',
+           'ac-tech voll']:
+    assert klassenliste(_k), f'ist eine Klassenliste: {_k}'
+# Und was dieselbe Form hat, aber Sprache ist. Ohne diese Zeilen wäre
+# die Regel ein Loch: ein Leerzeichen und ein Bindestrich sind billig.
+for _k in ['alles-oder-nichts denken',
+           'nicht an-deiner stelle',
+           'ohne dein zutun',
+           'Was du tun kannst',
+           'dein Mond.',
+           'Das Muster',
+           'Liebe, Beruf',
+           'mb-roh',
+           'an',
+           'an auf',
+           '']:
+    assert not klassenliste(_k), f'ist keine Klassenliste: {_k}'
+del _k
+
+
 # Die drei Anführungsarten in einem Durchgang. Die Reihenfolge ist
 # gleichgültig: `finditer` läuft von links, und an einer Stelle greift
 # nur die Art, die dort wirklich beginnt — ein Apostroph in einer
@@ -362,6 +423,8 @@ def satz_darin(lit):
     if auswahlliste(lit.strip()):
         return None
     if medienfrage(lit.strip()):
+        return None
+    if klassenliste(lit.strip()):
         return None
     rest = re.sub(r'</?[a-zA-Z][^>]*>?', ' ', lit)
     for k, v in _ENTITAET.items():

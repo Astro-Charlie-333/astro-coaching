@@ -78,10 +78,6 @@ Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
 
-### 51 · `monat-app.js` (2, 0)
-Der Monatsbericht. Fast durch; gehört in einen Zug mit Aufgabe 10,
-12 und 13.
-
 ### 52 · `beziehung-app.js` (83, 14)
 `beziehung.html` — „nicht du, sondern ihr beide", der Vorsprung aus
 `PRODUKT.md` Abschnitt 3. Die Anzeige bringt ein eigenes `ohneDein`
@@ -277,6 +273,32 @@ die Bereichsauswahl unten bleiben darf, die Einstellung weiterhin nichts
 mitschreibt und täglich neu fragt, und `bau-heute.py` am gerenderten
 Ergebnis abbricht, sobald der Block bei 390 Pixeln Breite tiefer als eine
 Bildschirmhöhe liegt.
+
+### 73 · Fünf Riegel haben keine Gegenprobe
+Gefunden beim Erledigen von Aufgabe 51 am 2026-11-12. Sieben Anzeigen
+stehen in `FERTIG`, und alle sieben rufen beide Riegel aus `pruefwerk`
+auf. Aber nur zwei der Bauskripte prüfen danach, ob der Riegel
+überhaupt noch etwas sieht: `bau-ich.py` seit dem 2026-11-11 und
+`bau-monat.py` seit heute setzen einen Satz und ein „dein" probehalber
+ein — in allen drei Anführungsarten — und brechen ab, wenn der Riegel
+schweigt. Die fünf übrigen Anzeigen haben das nicht: `bau-app.py`,
+`bau-start.py`, `bau-heute.py` und `bau-bereiche.py` mit seinen beiden.
+Deren Grün sagt also nur, dass heute nichts dastand, nicht dass die
+Regel greift — genau der Nachsatz zu `REGELN.md` 6e. Dieselbe
+Fehlerklasse wie bei der Querprüfung 13 vor dem 2026-11-11: eine
+Zusage, die gehalten aussieht und nicht gehalten wird.
+Und die Gegenprobe gehört nicht siebenmal abgeschrieben: in zwei
+Dateien steht sie heute Zeile für Zeile gleich, also driftet sie
+beim nächsten Umbau auseinander — dieselbe Klasse wie die eigene
+Satzregel, die heute aus `bau-monat.py` herausgefallen ist.
+**Fertig, wenn:** die Gegenprobe in `rituale/pruefwerk.py` steht und
+nicht in den Bauskripten, jeder Aufruf von
+`pruefe_anzeige_satzfrei` und `pruefe_anzeige_ohne_dein` sie
+mitbringt, ohne dass ein Bauskript daran denken muss, eine
+abgeschwächte Regel in jeder dieser sieben Anzeigen den Bau abbricht —
+in allen drei Anführungsarten geprüft —, und die beiden
+abgeschriebenen Fassungen in `bau-ich.py` und `bau-monat.py`
+weg sind.
 
 ---
 
@@ -764,6 +786,38 @@ Rechner noch Sätze tragen — in beide Richtungen brechend, wie
 Querprüfung 13.
 
 ## Erledigt
+
+* **2026-11-12** · `monat-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 51, aus 34 und 38) — die siebte von zweiundzwanzig
+  Anzeigen. Zu verschieben war nichts: Die beiden Zeichenketten, die
+  die Querprüfung gezählt hat, waren `'mb-roh an'` — zwei Klassen an
+  einem Textfeld, damit der Rohtext des Briefs zum Kopieren
+  aufklappt. Keine, die in eine Datendatei gehört; eine Datendatei
+  kennt keine Stilvorlage. Also musste die Regel lernen, wie eine
+  Klassenliste aussieht, so wie bei Aufgabe 49 der Auswahlausdruck
+  und bei Aufgabe 50 die Medienabfrage. Die dritte dieser Art, und
+  sie ist nach demselben Muster aufgezählt: jeder Teil entweder mit
+  Bindestrich — so benennt dieses Projekt seine Klassen — oder eine
+  der vier bloßen Zustandsklassen, die es wirklich gibt. Daran kommt
+  kein deutscher Satz vorbei; „alles-oder-nichts denken" hat einen
+  Bindestrich, aber „denken" ist weder das eine noch das andere, und
+  elf feste Beispiele halten das fest. `zeit-app.js` ist davon von
+  allein um einen Satz gesunken (`'zt-bt zt-gly'`), ohne dass sie
+  jemand angefasst hat.
+  Der eigentliche Fund steckte daneben: `bau-monat.py` trug seit dem
+  Umzug der Seite **seine eigene Fassung** der Satzregel — drei
+  Wörter ab drei Buchstaben, und nur in einfachen Anführungszeichen.
+  Sie war in zwei Richtungen schwächer als die gemeinsame: „mb-roh
+  an" kam durch, und jeder Satz in doppelten oder schrägen
+  Anführungszeichen auch. Genau davor warnt `REGELN.md` Abschnitt 5.
+  Sie ist weg; die Seite hält jetzt beide Riegel aus
+  `rituale/pruefwerk.py`, und eine Gegenprobe setzt in allen drei
+  Anführungsarten probehalber einen Satz und ein „dein" ein und
+  bricht ab, wenn ein Riegel schweigt. Nachgewiesen am gebauten
+  Brief: 1904 Prüfungen, Rauchprobe grün, die Seite Zeichen für
+  Zeichen wie vorher. Offen bleiben fünfzehn Anzeigen, 1168 Sätze
+  und 130 mal „dein" — und die neue Aufgabe 73, weil vier der
+  Bauskripte ihren Riegel ohne Gegenprobe führen.
 
 * **2026-11-11** · `ich-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 50, aus 34 und 38) — und die Querprüfung hält jetzt beide
