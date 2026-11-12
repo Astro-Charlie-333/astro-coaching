@@ -42,6 +42,7 @@ BAUTEN = [
     ('mond/bau-mond.py',      'Mond'),
     ('haeuser/bau-haeuser.py', 'Haeuser'),
     ('planeten/bau-planeten.py', 'Planeten'),
+    ('leitfaden/bau-leitfaden.py', 'Leitfaden'),
     ('rituale/bau-zauber.py', 'Zauber'),
     ('niveau/bau-reading.py', 'Reading'),
     ('karte/bau-karte.py',    'Karte'),
@@ -306,9 +307,7 @@ HANDARBEIT = {
     'haltung-ethik.html', 'haltung.html',
     'herrscher.html', 'kleine-punkte.html', 'klientinnen-fragen.html',
     'konzept-plattform.html', 'learning-seite.html',
-    'lebens-kompass.html', 'leitfaden-fundament.html',
-    'leitfaden-mars.html', 'leitfaden-merkur.html',
-    'leitfaden-mond.html', 'leitfaden.html', 'lilith-arbeit.html',
+    'lebens-kompass.html', 'lilith-arbeit.html',
     'linien-lesen.html', 'mein-chart.html',
     'menschen-lesen.html', 'methoden.html', 'mondknoten-coaching.html',
     'mondknoten.html',
@@ -740,7 +739,8 @@ ANZEIGEN = {
 FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'start/start-app.js', 'app/offline-app.js',
           'kern/heute-app.js', 'kern/ich-app.js',
-          'monat/monat-app.js', 'planeten/planeten-app.js'}
+          'monat/monat-app.js', 'planeten/planeten-app.js',
+          'leitfaden/leitfaden-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

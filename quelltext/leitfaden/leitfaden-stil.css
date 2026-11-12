@@ -1,0 +1,69 @@
+/* Coaching-Leitfaden. Palette wie die übrigen gebauten Seiten
+   (basis.css). Oben das Feld für einen Menschen, dann die Grundidee,
+   darunter die Kompasse zum Nachschlagen. */
+.lf-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+.lf-kopf{padding:52px 0 8px;display:grid;gap:12px}
+.lf-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.lf-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2rem,6.4vw,3.1rem);line-height:1.1;color:#2E3A5C;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lf-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
+.lf-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
+.lf-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:10px 0 0}
+.lf-text{margin:0;max-width:64ch;line-height:1.6}
+.lf-klein{font-size:.88rem;color:#6B6259;margin:0;line-height:1.55}
+.lf-teil{padding-top:60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.lf-teil>*{min-width:0}
+.lf-wrap a{color:#2E3A5C}
+.lf-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem;margin:0}
+
+/* Das Feld für einen Menschen */
+.lf-felder{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.lf-feld{background:#2E3A5C;color:#F3EFE6;border-radius:16px;padding:18px 20px;display:grid;gap:8px;align-content:start;min-width:0}
+.lf-feld .lab{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.35rem;color:#fff;margin:0}
+.lf-feld .um{font-size:.88rem;color:#C9D0E2;margin:0}
+.lf-feld .tech{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#E8C98D;margin:0}
+.lf-feld dl{margin:4px 0 0;display:grid;gap:8px}
+.lf-feld dt{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#E8C98D}
+.lf-feld dd{margin:2px 0 0;line-height:1.5;font-size:.95rem}
+.lf-feld dd.frage{font-style:italic;color:#fff}
+
+/* Grundidee */
+.lf-schritte{margin:0;padding-left:1.3em;display:grid;gap:10px;line-height:1.55}
+.lf-grundsatz{background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px;line-height:1.55}
+.lf-hinweis{margin-top:60px;background:#FFFDFA;border:1px dashed #DDD0BC;border-radius:14px;padding:18px 20px;display:grid;gap:12px;justify-items:start}
+.lf-hinweis p{margin:0;line-height:1.55}
+.lf-hinweis button{font:inherit;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:8px 14px;cursor:pointer;color:#2E3A5C}
+
+.lf-drei{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.lf-drei div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:4px}
+.lf-drei span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#9A7235}
+.lf-drei p{margin:0;font-size:.93rem;line-height:1.5}
+
+/* Kompasse */
+.lf-kompass{display:grid;gap:14px}
+.lf-warum{background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px;line-height:1.55;margin:0}
+.lf-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.lf-k{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.lf-k.lf-k-bei{border:2px solid #9A7235;padding:13px 15px}
+.lf-k-kopf{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.lf-k-kopf .gl{border-radius:8px;width:30px;height:30px;display:grid;place-items:center;font-size:1.15rem}
+.lf-k-kopf b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem;color:#2E3A5C}
+.lf-k dl{margin:0;display:grid;gap:6px}
+.lf-k dt{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#6B6259}
+.lf-k dd{margin:1px 0 0;font-size:.92rem;line-height:1.5}
+.lf-k dd.frage{font-style:italic;color:#2E3A5C}
+.lf-k .nk{font-size:.82rem;color:#7A5A27;margin:0}
+.lf-el{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
+.lf-chip{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 8px;background:#9A7235;color:#FFFDFA}
+.lf-el.feuer,.lf-k.feuer .gl{background:#FBE3DA;color:#A05A3A}
+.lf-el.erde,.lf-k.erde .gl{background:#E8EDDC;color:#3D6B62}
+.lf-el.luft,.lf-k.luft .gl{background:#DEEBF1;color:#2E3A5C}
+.lf-el.wasser,.lf-k.wasser .gl{background:#E6E1F0;color:#6A4A62}
+
+.lf-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.lf-ehrlich p{margin:0}
+.lf-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-top:28px}
+.lf-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.lf-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+body.niv-0 .lf-weiter a[data-ab="1"]{display:none}
+.lf-wrap [hidden]{display:none!important}
+.lf-wrap a:focus-visible,.lf-wrap button:focus-visible{outline:2px solid #9A7235;outline-offset:2px}

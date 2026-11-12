@@ -18,6 +18,9 @@ var NS = 'http://www.w3.org/2000/svg';
 function plSvg(t, a){ var e = document.createElementNS(NS, t); for(var k in a) e.setAttribute(k, a[k]); return e; }
 function plEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 function plFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+/* Zeichen für Textdarstellung (U+FE0E), sonst malen manche Systeme
+   die Symbole als farbige Emoji. */
+var PL_TEXTFORM = String.fromCharCode(0xFE0E);
 var ruhig = function(){ return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'; };
 
 function plProfil(){ try{ var a = AC_P.alle(); return AC_P.aktives() || AC_P.eigenes() || a[0] || null; }catch(e){ return null; } }
@@ -49,7 +52,7 @@ function plBahn(){
     var g = plSvg('g', {role:'button', tabindex:0, 'aria-label':k + ': ' + K.titel,
                         'aria-pressed':String(plIndex(k) === plWahl), 'class':plIndex(k) === plWahl ? 'an' : ''});
     g.appendChild(plSvg('circle', {cx:x, cy:y, r:12, 'class':'punkt'}));
-    var t = plSvg('text', {x:x, y:y + 0.5, 'class':'glyph'}); t.textContent = K.gl; g.appendChild(t);
+    var t = plSvg('text', {x:x, y:y + 0.5, 'class':'glyph'}); t.textContent = K.gl + PL_TEXTFORM; g.appendChild(t);
     var w = function(){ plWahl = plIndex(k); plMarkiere(true); };
     g.addEventListener('click', w);
     g.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); w(); } });
@@ -74,7 +77,7 @@ function plKarten(){
     k.innerHTML = '<div class="pl-gl" aria-hidden="true"></div><div class="pl-inh"><h3></h3><p class="pl-name"></p>'
       + '<p class="pl-gruppe ac-tech" data-ab="1"></p><p class="pl-was"></p><p class="pl-frage"></p>'
       + '<div class="pl-bei"><p class="pl-bei-kopf"></p><p class="pl-bei-text"></p><p class="pl-bei-tech ac-tech" data-ab="1"></p></div></div>';
-    k.querySelector('.pl-gl').textContent = K.gl;
+    k.querySelector('.pl-gl').textContent = K.gl + PL_TEXTFORM;
     k.querySelector('h3').textContent = K.titel;
     k.querySelector('.pl-name').textContent = K.k;
     k.querySelector('.pl-gruppe').textContent = PL_GRUPPE[K.gruppe];
@@ -106,7 +109,7 @@ function plZeichen(){
     var d = document.createElement('article');
     d.className = 'pl-z ' + PL_ELEMENT[i % 4] + (i === bei ? ' pl-z-bei' : '');
     d.innerHTML = '<div class="pl-z-kopf"><span class="gl" aria-hidden="true"></span><b></b><span class="pl-el"></span></div><p></p>';
-    d.querySelector('.gl').textContent = GLZ[i];
+    d.querySelector('.gl').textContent = GLZ[i] + PL_TEXTFORM;
     d.querySelector('b').textContent = name;
     var e = d.querySelector('.pl-el'); e.textContent = PL_ZART[i]; e.classList.add(PL_ELEMENT[i % 4]);
     d.querySelector('p').textContent = Z.z[i];

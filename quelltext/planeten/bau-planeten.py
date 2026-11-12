@@ -259,6 +259,10 @@ const an=await p.evaluate(()=>{ const g=document.querySelectorAll('#plbahn g[rol
   const i=PL_KRAFT.findIndex(x=>x.k===k); return {g:g.getAttribute('aria-pressed'), c:document.querySelectorAll('#plkarten .pl-karte')[i].classList.contains('an'),
   n:document.querySelectorAll('#plkarten .pl-karte.an').length}; });
 if(an.g!=='true'||!an.c||an.n!==1) f.push('ein Klick auf eine Bahn markiert die Karte nicht');
+await p.evaluate(()=>AC_NIV.setzen(2)); await p.waitForTimeout(200);
+const emoji=await p.evaluate(()=>{ const t=document.body.innerText+[...document.querySelectorAll('svg text')].map(x=>x.textContent).join(' ');
+  return (t.match(/[\u2600-\u26FF](?!\uFE0E)/g)||[]).slice(0,5).join(' '); });
+if(emoji) f.push('Symbole ohne Textform (U+FE0E), sie erscheinen als Emoji: '+emoji);
 await stufe0(p,'ohne Profil');
 await p.evaluate(()=>document.getElementById('plstufe').click()); await p.waitForTimeout(300);
 const s1=await p.evaluate(()=>({n:document.body.classList.contains('niv-1'), z:document.getElementById('zeichen').checkVisibility(), h:document.querySelector('.pl-hinweis').checkVisibility()}));
