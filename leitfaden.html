@@ -1,7 +1,23 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coaching-Leitfaden: Menschen ansprechen</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
+<title>Menschen ansprechen &middot; Coaching-Leitfaden &middot; Astro-Charlie</title>
+<meta name="description" content="Wie du jemanden abholst: in welchem Ton, wie du erklärst, wie er ins Tun kommt und was er schon mitbringt.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="begriffe.js" defer></script>
+<script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -19,6 +35,7 @@
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
 h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
@@ -32,7 +49,10 @@ p{margin-bottom:12px;}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
 .foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
 .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
-.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
 a{color:var(--ind);}
 
 .weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
@@ -117,48 +137,631 @@ a{color:var(--nacht);}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
-/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
-   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
-@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
-/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
-   nach der Raster- und Flexspalten ihre Breite berechnen. */
-</style><script src="begriffe.js" defer></script>
-<script src="niveau.js" defer></script>
-<script src="wortwahl.js" defer></script>
+
+/* Coaching-Leitfaden. Palette wie die übrigen gebauten Seiten
+   (basis.css). Oben das Feld für einen Menschen, dann die Grundidee,
+   darunter die Kompasse zum Nachschlagen. */
+.lf-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+.lf-kopf{padding:52px 0 8px;display:grid;gap:12px}
+.lf-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.lf-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2rem,6.4vw,3.1rem);line-height:1.1;color:#2E3A5C;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lf-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
+.lf-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
+.lf-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:10px 0 0}
+.lf-text{margin:0;max-width:64ch;line-height:1.6}
+.lf-klein{font-size:.88rem;color:#6B6259;margin:0;line-height:1.55}
+.lf-teil{padding-top:60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.lf-teil>*{min-width:0}
+.lf-wrap a{color:#2E3A5C}
+.lf-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem;margin:0}
+
+/* Das Feld für einen Menschen */
+.lf-felder{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.lf-feld{background:#2E3A5C;color:#F3EFE6;border-radius:16px;padding:18px 20px;display:grid;gap:8px;align-content:start;min-width:0}
+.lf-feld .lab{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.35rem;color:#fff;margin:0}
+.lf-feld .um{font-size:.88rem;color:#C9D0E2;margin:0}
+.lf-feld .tech{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#E8C98D;margin:0}
+.lf-feld dl{margin:4px 0 0;display:grid;gap:8px}
+.lf-feld dt{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#E8C98D}
+.lf-feld dd{margin:2px 0 0;line-height:1.5;font-size:.95rem}
+.lf-feld dd.frage{font-style:italic;color:#fff}
+
+/* Grundidee */
+.lf-schritte{margin:0;padding-left:1.3em;display:grid;gap:10px;line-height:1.55}
+.lf-grundsatz{background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px;line-height:1.55}
+.lf-hinweis{margin-top:60px;background:#FFFDFA;border:1px dashed #DDD0BC;border-radius:14px;padding:18px 20px;display:grid;gap:12px;justify-items:start}
+.lf-hinweis p{margin:0;line-height:1.55}
+.lf-hinweis button{font:inherit;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:8px 14px;cursor:pointer;color:#2E3A5C}
+
+.lf-drei{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.lf-drei div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:4px}
+.lf-drei span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#9A7235}
+.lf-drei p{margin:0;font-size:.93rem;line-height:1.5}
+
+/* Kompasse */
+.lf-kompass{display:grid;gap:14px}
+.lf-warum{background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px;line-height:1.55;margin:0}
+.lf-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.lf-k{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.lf-k.lf-k-bei{border:2px solid #9A7235;padding:13px 15px}
+.lf-k-kopf{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.lf-k-kopf .gl{border-radius:8px;width:30px;height:30px;display:grid;place-items:center;font-size:1.15rem}
+.lf-k-kopf b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem;color:#2E3A5C}
+.lf-k dl{margin:0;display:grid;gap:6px}
+.lf-k dt{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#6B6259}
+.lf-k dd{margin:1px 0 0;font-size:.92rem;line-height:1.5}
+.lf-k dd.frage{font-style:italic;color:#2E3A5C}
+.lf-k .nk{font-size:.82rem;color:#7A5A27;margin:0}
+.lf-el{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
+.lf-chip{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 8px;background:#9A7235;color:#FFFDFA}
+.lf-el.feuer,.lf-k.feuer .gl{background:#FBE3DA;color:#A05A3A}
+.lf-el.erde,.lf-k.erde .gl{background:#E8EDDC;color:#3D6B62}
+.lf-el.luft,.lf-k.luft .gl{background:#DEEBF1;color:#2E3A5C}
+.lf-el.wasser,.lf-k.wasser .gl{background:#E6E1F0;color:#6A4A62}
+
+.lf-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.lf-ehrlich p{margin:0}
+.lf-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-top:28px}
+.lf-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.lf-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+body.niv-0 .lf-weiter a[data-ab="1"]{display:none}
+.lf-wrap [hidden]{display:none!important}
+.lf-wrap a:focus-visible,.lf-wrap button:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+</style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
-<div class="wrap"><div class="eyebrow">Coaching-Leitfaden</div>
-<h1>Jeden Menschen <em>richtig ansprechen.</em></h1>
-<p class="lede">Das Herzstück deiner Arbeit: die Verknüpfung von Astrologie und Gesprächsführung. Jeder Mensch fühlt, denkt und handelt anders — also musst du auch anders mit ihm reden. Diese Leitfäden zeigen dir, wie du jeden Wesenstyp abholst, zum Denken anregst und begleitest.</p>
-<div class="tip"><b>Die Grundidee:</b> Ein Reading ist keine Einbahnstraße, in der du deutest. Es ist ein Gespräch, das du an den Menschen anpasst. Das Chart sagt dir nicht nur, WER jemand ist — es sagt dir auch, WIE du mit ihm sprechen musst, damit er sich öffnet, versteht und reflektiert. Das ist der Unterschied zwischen »Astrologie aufsagen« und echtem Coaching.</div>
-<h2>Die Ansprech-Kompasse</h2>
-<a href="leitfaden-mond.html" class="card" style="display:block;text-decoration:none;color:inherit;padding:16px 18px;margin-bottom:10px;">
-<b style="font-family:Fraunces,serif;font-size:17px;color:var(--ind);">☽ Den Mond ansprechen</b><br>
-<span style="color:var(--soft);font-size:13.5px;">Wie jemand fühlt & sicher wird — der emotionale Ton, in dem du sprechen musst.</span></a>
-<a href="leitfaden-merkur.html" class="card" style="display:block;text-decoration:none;color:inherit;padding:16px 18px;margin-bottom:10px;">
-<b style="font-family:Fraunces,serif;font-size:17px;color:var(--ind);">☿ Den Merkur ansprechen</b><br>
-<span style="color:var(--soft);font-size:13.5px;">Wie jemand denkt — wie du erklären und fragen musst, damit er dich versteht.</span></a>
-<a href="leitfaden-mars.html" class="card" style="display:block;text-decoration:none;color:inherit;padding:16px 18px;margin-bottom:10px;">
-<b style="font-family:Fraunces,serif;font-size:17px;color:var(--ind);">♂ Den Mars ansprechen</b><br>
-<span style="color:var(--soft);font-size:13.5px;">Wie jemand handelt — wie du motivierst und ins Tun bringst.</span></a>
-<a href="leitfaden-fundament.html" class="card" style="display:block;text-decoration:none;color:inherit;padding:16px 18px;margin-bottom:10px;">
-<b style="font-family:Fraunces,serif;font-size:17px;color:var(--ind);">☋ Das Fundament (Südknoten & IC)</b><br>
-<span style="color:var(--soft);font-size:13.5px;">Was jemand schon mitbringt — wo du ihn wertschätzend abholst.</span></a>
-<h2>So verknüpfst du alles im Reading</h2>
-<div class="card">
-<p style="font-size:14px;">Ein Beispiel, wie die Teile zusammenspielen — bei einem Menschen mit <b>Steinbock-Mond, Fische-Merkur, Widder-Mars</b>:</p>
-<p style="font-size:14px;color:var(--soft);"><b style="color:var(--ind);">Emotionaler Ton (Mond Steinbock):</b> ruhig, verlässlich, kein Druck aufs Fühlen — erst Sicherheit geben.<br>
-<b style="color:var(--ind);">Erklär-Stil (Merkur Fische):</b> bildhaft, intuitiv, sanft — nicht mit harter Logik kommen.<br>
-<b style="color:var(--ind);">Motivation (Mars Widder):</b> am Ende der mutige Sofort-Schritt — »was könntest du gleich morgen tun?«</p>
-<p style="font-size:14px;">Also: Du beginnst behutsam und sicher (Steinbock-Mond), erklärst bildhaft und weich (Fische-Merkur), und schließt mit einem mutigen, konkreten Handlungsimpuls (Widder-Mars). <b>Denselben Menschen sprichst du völlig anders an als jemanden mit Widder-Mond, Jungfrau-Merkur, Fische-Mars.</b> Das ist die Kunst.</p></div>
-<div class="tip"><b>Der Grundsatz bleibt:</b> Du passt deinen STIL an den Menschen an — aber du manipulierst nicht. Du triffst nur den Ton, in dem sich jemand am ehesten verstanden und sicher fühlt, damit er sich selbst besser erkennen kann. Immer im Dienst seiner Selbsterkenntnis, nie um ihn zu lenken.</div>
-<div class="weiter"><a href="coaching.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Coaching & Astrologie</span></a><a href="grenzen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Wann du nicht deutest</span></a></div>
-<div class="foot">Coaching-Leitfaden · Deine Astro-Lernplattform. Die Verknüpfung von Astrologie und Gesprächsführung — das, was dein Coaching einzigartig macht.</div>
-</div></body></html>
+<div class="lf-wrap">
+
+<header class="lf-kopf">
+  <div class="lf-eyebrow">Coaching-Leitfaden</div>
+  <h1 class="lf-h1">Jeden Menschen so ansprechen, dass er sich &ouml;ffnet.</h1>
+  <p class="lf-lede">Jeder Mensch f&uuml;hlt, denkt und handelt anders. Also braucht auch jeder ein anderes Gespr&auml;ch: einen anderen Ton, eine andere Art zu erkl&auml;ren, einen anderen Weg ins Tun. Diese Seite zeigt dir, wie du jemanden abholst, zum Nachdenken bringst und begleitest.</p>
+  <p class="lf-lede" data-ab="1">Daf&uuml;r liest du vier Stellen im Geburtsbild: den Mond f&uuml;r den Ton, den Merkur f&uuml;rs Erkl&auml;ren, den Mars f&uuml;rs Handeln, und S&uuml;dknoten und IC f&uuml;r das, was jemand schon mitbringt.</p>
+  <div id="nivleiste"></div>
+</header>
+
+<!-- 1 · Für das aktive Profil -->
+<section class="lf-teil" id="profil" aria-labelledby="lf-h-profil">
+  <div class="lf-eyebrow">F&uuml;r einen Menschen</div>
+  <h2 id="lf-h-profil" class="lf-h2">Wie du diesen Menschen ansprichst</h2>
+  <p class="lf-profil" id="lfprofil"></p>
+  <div class="lf-felder" id="lffelder"></div>
+</section>
+
+<!-- 2 · Die Grundidee -->
+<section class="lf-teil" id="grundidee" aria-labelledby="lf-h-grundidee">
+  <div class="lf-eyebrow">Die Grundidee</div>
+  <h2 id="lf-h-grundidee" class="lf-h2">Ein Reading ist ein Gespr&auml;ch, keine Einbahnstra&szlig;e</h2>
+  <p class="lf-text">Du deutest nicht ins Leere. Du f&uuml;hrst ein Gespr&auml;ch und passt es an den Menschen an, der vor dir sitzt. Das Geburtsbild sagt dir nicht nur, wer jemand ist, sondern auch, wie du mit ihm sprechen kannst, damit er sich &ouml;ffnet, versteht und nachdenkt. Das ist der Unterschied zwischen etwas aufsagen und echtem Coaching.</p>
+  <ol class="lf-schritte">
+    <li><b>Zuerst Sicherheit.</b> Bevor jemand nachdenkt oder sich &ouml;ffnet, muss er sich sicher f&uuml;hlen. Triffst du den Ton, &ouml;ffnet sich der Rest von allein. Verfehlst du ihn, macht der Mensch zu, egal wie klug deine Deutung ist.</li>
+    <li><b>Dann verst&auml;ndlich.</b> Dieselbe Deutung, anders erkl&auml;rt, kommt v&ouml;llig anders an. Manche wollen das gro&szlig;e Bild, andere die genaue Struktur.</li>
+    <li><b>Am Ende ins Tun.</b> Coaching endet oft im Handeln. Jeder kommt anders in Bewegung: mit einem mutigen Sofort-Schritt, mit einem langen Plan oder aus innerer Inspiration.</li>
+    <li><b>Und abholen, wo jemand steht.</b> Jeder Mensch bringt schon etwas mit, bevor du ein Wort sagst. Wer das sieht, w&uuml;rdigt es, statt etwas beizubringen, das l&auml;ngst da ist.</li>
+  </ol>
+  <div class="lf-grundsatz"><b>Der Grundsatz:</b> Du passt deinen Stil an den Menschen an, aber du lenkst ihn nicht. Du triffst nur den Ton, in dem er sich am ehesten verstanden und sicher f&uuml;hlt, damit er sich selbst besser erkennen kann. Immer im Dienst seiner Selbsterkenntnis, nie, um ihn irgendwohin zu schieben.</div>
+</section>
+
+<div class="lf-hinweis" data-bis="0">
+  <p>Darunter stehen die vier Kompasse zum Nachschlagen: jede Stelle durch alle zw&ouml;lf Sternzeichen. Daf&uuml;r braucht es die Fachnamen. Die Seite zeigt sie ab der Stufe &bdquo;Wenig&ldquo;.</p>
+  <button type="button" id="lfstufe">Auf &bdquo;Wenig&ldquo; stellen</button>
+</div>
+
+<!-- 3 · Ein Beispiel (ab Stufe 1) -->
+<section class="lf-teil" data-ab="1" id="beispiel" aria-labelledby="lf-h-beispiel">
+  <div class="lf-eyebrow">Wie alles zusammenspielt</div>
+  <h2 id="lf-h-beispiel" class="lf-h2">Ein erfundenes Beispiel</h2>
+  <p class="lf-text">Ein Mensch mit Steinbock-Mond, Fische-Merkur und Widder-Mars:</p>
+  <div class="lf-drei">
+    <div><span>Ton &middot; Mond im Steinbock</span><p>Ruhig, verl&auml;sslich, kein Druck aufs F&uuml;hlen. Erst Sicherheit geben.</p></div>
+    <div><span>Erkl&auml;ren &middot; Merkur in den Fischen</span><p>Bildhaft, intuitiv, sanft. Nicht mit harter Logik kommen.</p></div>
+    <div><span>Ins Tun &middot; Mars im Widder</span><p>Am Ende der mutige Sofort-Schritt: &bdquo;Was k&ouml;nntest du gleich morgen tun?&ldquo;</p></div>
+  </div>
+  <p class="lf-text">Du beginnst behutsam und sicher, erkl&auml;rst bildhaft und weich und schlie&szlig;t mit einem mutigen, konkreten Handlungsimpuls. Denselben Menschen sprichst du v&ouml;llig anders an als jemanden mit Widder-Mond, Jungfrau-Merkur und Fische-Mars.</p>
+</section>
+
+<!-- 4–6 · Die drei Kompasse (ab Stufe 1) -->
+<section class="lf-teil" data-ab="1" id="mond" aria-labelledby="lf-h-mond">
+  <div class="lf-eyebrow" id="lfkmond"></div>
+  <h2 id="lf-h-mond" class="lf-h2"></h2>
+  <div class="lf-kompass" data-k="Mond"></div>
+</section>
+<section class="lf-teil" data-ab="1" id="merkur" aria-labelledby="lf-h-merkur">
+  <div class="lf-eyebrow" id="lfkmerkur"></div>
+  <h2 id="lf-h-merkur" class="lf-h2"></h2>
+  <div class="lf-kompass" data-k="Merkur"></div>
+</section>
+<section class="lf-teil" data-ab="1" id="mars" aria-labelledby="lf-h-mars">
+  <div class="lf-eyebrow" id="lfkmars"></div>
+  <h2 id="lf-h-mars" class="lf-h2"></h2>
+  <div class="lf-kompass" data-k="Mars"></div>
+</section>
+
+<!-- 7 · Das Fundament (ab Stufe 1) -->
+<section class="lf-teil" data-ab="1" id="fundament" aria-labelledby="lf-h-fundament">
+  <div class="lf-eyebrow">Das Fundament &middot; S&uuml;dknoten und IC</div>
+  <h2 id="lf-h-fundament" class="lf-h2">Was jemand schon mitbringt</h2>
+  <p class="lf-text">S&uuml;dknoten und IC zeigen, was ein Mensch als Fundament schon in sich tr&auml;gt: angeborene Talente, Vertrautes, den Boden, auf dem er steht. Wenn du wei&szlig;t, worauf jemand steht, kannst du ihn w&uuml;rdigend abholen, statt ihm etwas beizubringen, das er l&auml;ngst kann, oder ihn dort zu fordern, wo er noch keinen Boden hat.</p>
+  <h3 class="lf-h3">Der IC, das innere Fundament</h3>
+  <p class="lf-text">Der IC (Imum Coeli, Beginn des 4. Hauses) zeigt Wurzeln, Zuhause und Herkunft. Sein Zeichen sagt, aus welcher inneren Erde jemand kommt: was Halt gibt, wo die Basis liegt. Ein Krebs-IC hat ein tief emotionales Fundament, ein Steinbock-IC ein strukturiertes, ein Widder-IC ein k&auml;mpferisch-selbstst&auml;ndiges. Frag im Reading behutsam nach der Herkunft. Dort liegt oft der Schl&uuml;ssel zum Menschen.</p>
+  <h3 class="lf-h3">Der S&uuml;dknoten: angeborene Gaben und Muster</h3>
+  <p class="lf-klein">Was jemand schon kann, und wo er sich auch verstecken kann. Dazu, wohin sein Wachstum zeigt.</p>
+  <div class="lf-karten" id="lfsk"></div>
+  <div class="lf-grundsatz"><b>F&uuml;rs Coaching:</b> Nutze den S&uuml;dknoten, um Menschen ihre schon vorhandenen St&auml;rken zu spiegeln: &bdquo;Das kannst du von Natur aus.&ldquo; Das gibt Sicherheit. Und nutze den Nordknoten, um behutsam die Wachstumsrichtung zu zeigen: &bdquo;Und hier wartet dein n&auml;chster Schritt.&ldquo; Nie als Muss, immer als Einladung.</div>
+</section>
+
+<section class="lf-ehrlich" aria-labelledby="lf-h-ehrlich">
+  <h2 id="lf-h-ehrlich" class="lf-h3">Was das taugt, und was nicht</h2>
+  <p>Die vier Stellen rechnet dein Browser aus dem aktiven Profil. Gespeichert wird dabei nichts Neues.<span data-ab="2"> Der S&uuml;dknoten ist der mittlere Knoten, wie &uuml;berall auf der Plattform.</span></p>
+  <p>Was &uuml;ber Ton und Stil dasteht, ist Erfahrung aus der Praxis und &Uuml;berlieferung, nicht &uuml;berpr&uuml;ft. Jede dieser Stellungen teilt sich ein Zw&ouml;lftel aller Menschen. Sie gibt dir eine erste Vermutung, wie du jemanden erreichst, keine Gebrauchsanweisung f&uuml;r einen Menschen.</p>
+  <p>Der Mensch vor dir hat Vorrang vor der Seite. Wenn er anders reagiert, als hier steht, folgst du ihm und nicht dem Kompass.</p>
+</section>
+
+<nav class="lf-weiter" aria-label="Weiterlesen">
+  <a href="begleitung.html"><span>Werkzeug</span>Die Begleitung</a>
+  <a href="grenzen.html"><span>Weiter</span>Wann du nicht deutest</a>
+  <a href="haltung.html"><span>Vertiefung</span>Haltung &amp; Methode</a>
+  <a href="mondknoten-coaching.html" data-ab="1"><span>Vertiefung</span>Die Mondknoten f&uuml;rs Coaching</a>
+</nav>
+
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* ───────────────────────────────────────────────────────────────
+   leitfaden-daten.js — alle Sätze der Seite „Menschen ansprechen".
+
+   Schritt 4 aus ENTWURF-NEUE-SEITE.md, als Teil von Schritt 5
+   nachgeholt: leitfaden.html und die vier Einzelseiten zu Mond,
+   Merkur, Mars und dem Fundament werden eine Seite. Die Texte je
+   Zeichen kommen unverändert aus den Einzelseiten. Aus „Wächst
+   Richtung" ist nur die Klammer „(Nordknoten …)" herausgelöst (nk):
+   Sie nennt ein Zeichen und erscheint erst ab Stufe 1.
+
+   Die Anzeige (leitfaden-app.js) schreibt keinen Satz selbst.
+   Reihenfolge der zwölf Einträge wie SIGNS in engine.js.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Die drei Kompasse. `label` und `um` sind Alltagssprache und stehen
+   auch auf Stufe 0 im Feld für das aktive Profil. */
+var LF_KOMPASS = {
+ Mond:{label:"Der Ton", um:"Wie sich jemand sicher fühlt", titel:"Den Mond ansprechen", kompass:"dein Gefühls-Kompass",
+  kurz:"Der Mond zeigt, wie ein Mensch fühlt und wie er getröstet und sicher werden will. Er bestimmt, in welchem emotionalen Ton du sprechen musst, damit sich jemand geöffnet und gehalten fühlt statt bedrängt.",
+  warum:"Bevor jemand nachdenkt oder sich öffnet, muss er sich sicher fühlen. Der Mond sagt dir, was Sicherheit für diesen Menschen bedeutet. Triffst du den Mond-Ton, öffnet sich der Rest von allein. Verfehlst du ihn, macht der Mensch zu — egal wie klug deine Deutung ist.",
+  k:[
+   {bringt:"Schnelle, direkte Gefühle; Ungeduld; braucht Selbstständigkeit",
+    sprich:"Direkt, ehrlich, auf den Punkt. Kein langes Drumherum — das langweilt und frustriert sie.",
+    frage:"Was willst du wirklich, wenn du ehrlich zu dir bist?",
+    vermeide:"Sie mit endlosem Nachfühlen aufzuhalten oder emotional einzuengen."},
+   {bringt:"Ruhe, Beständigkeit, Sinnlichkeit; braucht Sicherheit",
+    sprich:"Langsam, warm, geduldig. Gib ihr Zeit, nichts überstürzen. Konkrete, greifbare Bilder.",
+    frage:"Was gibt dir echte Sicherheit — und was raubt sie dir?",
+    vermeide:"Druck, Hektik, sie zu schnellen Entscheidungen drängen."},
+   {bringt:"Denkt Gefühle, redet sie sich von der Seele; wechselhaft",
+    sprich:"Im Gespräch, mit Worten, gern spielerisch. Lass sie reden, dabei ordnet sie sich.",
+    frage:"Wenn du es in Worte fasst — was passiert da eigentlich in dir?",
+    vermeide:"Schweigen aushalten müssen oder rein körperlich-emotionale Ansätze ohne Sprache."},
+   {bringt:"Tiefe, sofortige Gefühle; braucht Nest & Sicherheit; sehr sensibel",
+    sprich:"Sanft, umsorgend, sicher. Erst Geborgenheit schaffen, dann öffnet sie sich. Nie forsch.",
+    frage:"Wo fühlst du dich zuhause — bei wem, an welchem Ort in dir?",
+    vermeide:"Kühle, Sachlichkeit, Konfrontation ohne emotionale Sicherheit."},
+   {bringt:"Warme, großzügige, offene Gefühle; braucht Anerkennung",
+    sprich:"Herzlich, wertschätzend, sie sehen. Anerkenne, was sie gibt und ist, dann blüht sie auf.",
+    frage:"Wo darfst du strahlen — und wo hältst du dich klein?",
+    vermeide:"Sie zu übersehen, kleinzureden oder nüchtern-distanziert zu sein."},
+   {bringt:"Zurückhaltende, prüfende Gefühle; Selbstkritik; zeigt Liebe durch Tun",
+    sprich:"Praktisch, konkret, ohne Pathos. Hilf ihr, freundlicher mit sich zu sein.",
+    frage:"Was wäre, wenn 'gut genug' wirklich genug wäre?",
+    vermeide:"Übertriebene Gefühlsduselei oder sie noch kritischer machen."},
+   {bringt:"Fühlt über Harmonie & Beziehung; meidet Konflikt; unentschlossen",
+    sprich:"Ausgeglichen, fair, verbindend. Hilf ihr, die eigene Stimme im Miteinander zu finden.",
+    frage:"Was würdest du wollen, wenn du nur an DICH denken dürftest?",
+    vermeide:"Sie in Konflikt zu drängen oder ihr die Harmonie zu nehmen, bevor sie bereit ist."},
+   {bringt:"Intensive, tiefe, alles-oder-nichts-Gefühle; braucht Vertrauen; testet",
+    sprich:"Echt, tief, ohne Oberflächlichkeit. Halte den Blick aus. Vertrauen langsam verdienen.",
+    frage:"Was schützt du da so tief, dass du es kaum jemandem zeigst?",
+    vermeide:"Small Talk, Oberflächlichkeit, sie zu drängen oder ihr Vertrauen zu verspielen."},
+   {bringt:"Freie, optimistische, weite Gefühle; braucht Bewegungsfreiheit",
+    sprich:"Offen, ehrlich, mit Sinn und Weite. Humor hilft. Kein Klammern, kein Einengen.",
+    frage:"Wohin will dein Herz eigentlich — was ist deine größere Sehnsucht?",
+    vermeide:"Emotionale Enge, Klammern, sie festlegen wollen."},
+   {bringt:"Kontrollierte, vorsichtige Gefühle; öffnet sich langsam; zeigt Liebe durch Verlässlichkeit",
+    sprich:"Ruhig, sachlich-warm, verlässlich. Kein Druck aufs Fühlen. Struktur gibt Sicherheit.",
+    frage:"Was müsstest du wissen, um dich sicher genug zu fühlen, dich zu zeigen?",
+    vermeide:"Sie zu schnellem emotionalem Öffnen drängen oder Gefühle einzufordern."},
+   {bringt:"Distanzierte, freiheitsliebende Gefühle; beobachtet statt badet; braucht Raum",
+    sprich:"Sachlich, respektvoll, mit Freiraum. Ideen und Muster ansprechen, nicht nur Gefühle.",
+    frage:"Was fühlst du, wenn du es dir mal von außen anschaust?",
+    vermeide:"Zu viel emotionale Nähe einfordern oder ihr den Freiraum nehmen."},
+   {bringt:"Grenzenlose, mitfühlende, durchlässige Gefühle; nimmt fremdes auf; braucht Rückzug",
+    sprich:"Sanft, einfühlsam, bildhaft. Hilf ihr zu unterscheiden: Was ist meins, was fremd?",
+    frage:"Welches Gefühl gehört gerade wirklich zu DIR — und welches hast du aufgenommen?",
+    vermeide:"Harte Sachlichkeit, sie überfluten, klare Grenzen einreißen."}]},
+ Merkur:{label:"Das Erklären", um:"Wie jemand denkt und versteht", titel:"Den Merkur ansprechen", kompass:"dein Erklär-Kompass",
+  kurz:"Merkur zeigt, wie ein Mensch denkt, lernt und Information aufnimmt. Er bestimmt, WIE du erklären und Fragen stellen musst, damit dein Gegenüber dich wirklich versteht und mitdenkt.",
+  warum:"Dieselbe Deutung, unterschiedlich erklärt, kommt völlig anders an. Ein Schütze-Merkur will das große Bild, ein Jungfrau-Merkur die genaue Struktur. Sprichst du in seinem Denkstil, versteht er dich mühelos. Sprichst du dagegen, prallt alles ab.",
+  k:[
+   {bringt:"Schnelles, direktes Denken; ungeduldig mit Details",
+    sprich:"Komm auf den Punkt, keine langen Erklärungen. Sag das Wichtigste zuerst.",
+    frage:"Was ist dein erster, ehrlicher Impuls dazu?",
+    vermeide:"Weitschweifige Erklärungen, zu viele Details, langsames Herantasten."},
+   {bringt:"Langsames, gründliches, praktisches Denken; braucht Zeit",
+    sprich:"Ruhig, konkret, mit greifbaren Beispielen. Lass ihm Zeit zu verdauen.",
+    frage:"Wie fühlt sich das ganz praktisch für dich an?",
+    vermeide:"Ihn hetzen, abstrakte Theorie, zu schneller Themenwechsel."},
+   {bringt:"Schnelles, vielseitiges, verbindendes Denken; liebt Austausch",
+    sprich:"Im lebendigen Dialog, mit Ideen und Verknüpfungen. Er denkt beim Reden.",
+    frage:"Was verbindet sich für dich gerade — was fällt dir dazu alles ein?",
+    vermeide:"Monolog halten, ihn nicht zu Wort kommen lassen, ein Thema totreiten."},
+   {bringt:"Denken über Gefühl & Erinnerung; nimmt Worte persönlich",
+    sprich:"Behutsam, warm, mit Rücksicht. Verknüpfe Gedanken mit Gefühl.",
+    frage:"Woran erinnert dich das — wann hast du das schon mal gespürt?",
+    vermeide:"Kühle Sachlichkeit, harte Konfrontation, Worte die verletzen könnten."},
+   {bringt:"Großzügiges, überzeugtes Denken; steht stolz zu Ideen",
+    sprich:"Wertschätzend, lass ihm seine Sicht. Bestärke, bevor du hinterfragst.",
+    frage:"Was ist DEINE Überzeugung dazu — wofür stehst du?",
+    vermeide:"Ihn bloßstellen, seine Ideen kleinreden, ihn belehren."},
+   {bringt:"Präzises, analytisches, detailgenaues Denken; neigt zu Kritik",
+    sprich:"Klar, strukturiert, genau. Er schätzt Sorgfalt und Logik.",
+    frage:"Was sagt dir dein genauer Blick — was stimmt hier, was nicht?",
+    vermeide:"Ungenauigkeit, Schwammigkeit, oder ihn in seiner Kritik noch bestärken."},
+   {bringt:"Abwägendes, faires Denken; sieht beide Seiten; entscheidet schwer",
+    sprich:"Ausgewogen, hilf ihm, sich zu entscheiden statt ewig abzuwägen.",
+    frage:"Wenn du dich entscheiden MÜSSTEST — wohin neigt es sich?",
+    vermeide:"Ihn mit noch mehr Optionen überfluten oder zu schnell drängen."},
+   {bringt:"Tiefes, forschendes, durchdringendes Denken; wittert Verborgenes",
+    sprich:"Ehrlich, tief, ohne Ausweichen. Er merkt sofort, wenn du etwas beschönigst.",
+    frage:"Was ist die Wahrheit darunter, die du dir kaum eingestehst?",
+    vermeide:"Beschönigen, ausweichen, oberflächlich bleiben — er durchschaut es."},
+   {bringt:"Großes, ehrliches Denken in Bögen; sucht Sinn statt Details",
+    sprich:"Mit Weite, Sinn und dem großen Bild. Details langweilen ihn.",
+    frage:"Was bedeutet das im größeren Zusammenhang für dich?",
+    vermeide:"Kleinteiligkeit, Detailversessenheit, den Sinn verlieren."},
+   {bringt:"Strukturiertes, ernstes, zielorientiertes Denken; realistisch",
+    sprich:"Sachlich, strukturiert, mit klarem Ziel. Er nimmt Dinge ernst.",
+    frage:"Was wäre der realistische, tragfähige nächste Schritt?",
+    vermeide:"Schwärmerei ohne Substanz, unrealistische Luftschlösser."},
+   {bringt:"Originelles, unabhängiges, vorausschauendes Denken; quer",
+    sprich:"Mit Ideen, Mustern, Zukunft. Lass ihn quer denken, das liebt er.",
+    frage:"Was, wenn man es ganz anders sehen würde als alle?",
+    vermeide:"Konventionelles Schema, ihn in Normen zwingen, Autorität ausspielen."},
+   {bringt:"Bildhaftes, intuitives, verschwommenes Denken; hellsichtig",
+    sprich:"Bildhaft, intuitiv, sanft. Nimm auch das Unausgesprochene wahr.",
+    frage:"Was spürst du, auch wenn du es noch nicht in Worte fassen kannst?",
+    vermeide:"Harte Logik einfordern, ihn festnageln, das Intuitive abtun."}]},
+ Mars:{label:"Ins Tun", um:"Wie jemand in Bewegung kommt", titel:"Den Mars ansprechen", kompass:"dein Motivations-Kompass",
+  kurz:"Mars zeigt, wie ein Mensch Energie einsetzt, handelt und zur Umsetzung kommt. Er bestimmt, wie du jemanden motivierst und ins Tun bringst — ohne ihn zu überfordern oder auszubremsen.",
+  warum:"Coaching endet oft im Handeln. Aber jeder kommt anders ins Tun: Ein Widder-Mars braucht den mutigen Sofort-Schritt, ein Steinbock-Mars den langfristigen Plan, ein Fische-Mars die innere Inspiration. Triffst du seinen Antriebs-Stil, kommt er in Bewegung. Sonst bleibt es bei guten Vorsätzen.",
+  k:[
+   {bringt:"Schnelle, direkte, mutige Tatkraft; startet gern",
+    sprich:"Ermutige zum Losgehen. Er handelt sofort, wenn er brennt.",
+    frage:"Was ist der eine mutige Schritt, den du sofort tun könntest?",
+    vermeide:"Ihn ausbremsen, endlos planen, seine Energie zerreden."},
+   {bringt:"Langsame, beharrliche, ausdauernde Kraft; braucht Anlauf",
+    sprich:"Gib ihm Zeit zum Loslegen — dann bleibt er unaufhaltsam dran.",
+    frage:"Was ist der erste, kleine, machbare Schritt für dich?",
+    vermeide:"Ihn drängen, überstürzen, oder mittendrin das Ziel ändern."},
+   {bringt:"Wendige, vielseitige, verbale Energie; verzettelt sich",
+    sprich:"Hilf ihm zu fokussieren. Er hat viele Ideen, braucht Bündelung.",
+    frage:"Welche EINE Sache von allen willst du wirklich angehen?",
+    vermeide:"Ihn mit noch mehr Optionen überladen, Fokusverlust bestärken."},
+   {bringt:"Indirekte, schützende, gefühlsgeleitete Kraft; zieht sich zurück",
+    sprich:"Verbinde Handeln mit Gefühl und Sicherheit. Er handelt aus dem Bauch.",
+    frage:"Wofür — oder für wen — lohnt es sich für dich, aktiv zu werden?",
+    vermeide:"Frontale Konfrontation, ihn zum aggressiven Vorgehen drängen."},
+   {bringt:"Stolze, großzügige, präsente Tatkraft; braucht Anerkennung",
+    sprich:"Ermutige mit Anerkennung. Er handelt für Ehre und wenn er gesehen wird.",
+    frage:"Wo willst du wirklich glänzen — was wäre dein großer Auftritt?",
+    vermeide:"Seine Bemühung übersehen, ihn kleinhalten."},
+   {bringt:"Präzise, effiziente, dienende Energie; verliert sich in Details",
+    sprich:"Hilf ihm, ins Tun zu kommen statt ewig zu optimieren.",
+    frage:"Was wäre 'gut genug', um einfach mal anzufangen?",
+    vermeide:"Perfektionismus bestärken, ihn in Detail-Grübeln lassen."},
+   {bringt:"Abwägende Energie über Beziehung; Unentschlossenheit bremst",
+    sprich:"Hilf ihm, sich zu entscheiden und dann zu handeln.",
+    frage:"Was würdest du tun, wenn du niemandem gefallen müsstest?",
+    vermeide:"Ihn in Entscheidungslähmung lassen, noch mehr abwägen."},
+   {bringt:"Strategische, intensive, unaufhaltsame Kraft; alles oder nichts",
+    sprich:"Nimm seine Tiefe ernst. Er geht ganz oder gar nicht.",
+    frage:"Worauf bist du bereit, deine ganze Kraft zu setzen?",
+    vermeide:"Halbe Sachen vorschlagen, seine Intensität kleinreden."},
+   {bringt:"Begeisterte, weite, freiheitsliebende Energie; überschätzt sich",
+    sprich:"Kanalisiere die Begeisterung in konkrete Ziele.",
+    frage:"Was ist dein großes Ziel — und was der erste Schritt dahin?",
+    vermeide:"Ihn einengen oder die Begeisterung bremsen, ohne zu lenken."},
+   {bringt:"Disziplinierte, ausdauernde, zielstrebige Kraft; der Marathonläufer",
+    sprich:"Gib ihm Struktur und langfristige Ziele. Er baut solide.",
+    frage:"Wo willst du in einem Jahr stehen — und was baust du dafür heute?",
+    vermeide:"Chaotisches Vorgehen, Ziellosigkeit, Ungeduld einfordern."},
+   {bringt:"Unabhängige, originelle Energie für die Sache; rebelliert gegen Zwang",
+    sprich:"Gib ihm Freiheit und einen Sinn. Er handelt für Ideen, nicht auf Befehl.",
+    frage:"Für welche Sache lohnt es sich für dich, aufzustehen?",
+    vermeide:"Ihm Vorschriften machen, Autorität ausüben, ihn zwingen."},
+   {bringt:"Indirekte, fließende, intuitive Kraft; meidet direkten Kampf",
+    sprich:"Verbinde Handeln mit Inspiration und Gefühl. Kein Druck.",
+    frage:"Wozu fühlst du dich innerlich hingezogen — was zieht dich?",
+    vermeide:"Harte Zielvorgaben, ihn zu direktem Kampf drängen, Druck."}]}};
+
+/* Das Fundament: Südknoten durch die zwölf Zeichen. */
+var LF_SK = [
+  {bringt:"Angeborene Selbstständigkeit, Mut, Ich-Kraft. Kann für sich einstehen, ist es gewohnt, allein voranzugehen.",
+   waechst:"Wachstum liegt oft im Sich-Einlassen, Kooperieren, Zulassen von anderen.",
+   nk:"Waage"},
+  {bringt:"Angeborene Beständigkeit, Bodenständigkeit, Sinn für das Eigene und Sichere.",
+   waechst:"Wachstum oft im Loslassen, in Tiefe, im Teilen und in der Wandlung.",
+   nk:"Skorpion"},
+  {bringt:"Angeborene Neugier, Wortgewandtheit, Vielseitigkeit. Sammelt leicht Wissen und Kontakte.",
+   waechst:"Wachstum oft im Vertiefen, im großen Sinn, in echter Überzeugung.",
+   nk:"Schütze"},
+  {bringt:"Angeborene Fürsorglichkeit, emotionale Tiefe, Nestwärme. Kann gut umsorgen und nähren.",
+   waechst:"Wachstum oft im Verantwortung-Übernehmen, in der Welt Struktur bauen.",
+   nk:"Steinbock"},
+  {bringt:"Angeborene Wärme, Ausdruckskraft, Herzlichkeit. Kann strahlen und geben.",
+   waechst:"Wachstum oft im Loslassen des Egos, im Wirken für die Gemeinschaft.",
+   nk:"Wassermann"},
+  {bringt:"Angeborene Sorgfalt, Nützlichkeit, analytisches Können. Dient und verbessert gern.",
+   waechst:"Wachstum oft im Vertrauen, in Hingabe, im Loslassen der Kontrolle.",
+   nk:"Fische"},
+  {bringt:"Angeborene Harmoniefähigkeit, Diplomatie, Beziehungssinn. Kann ausgleichen und verbinden.",
+   waechst:"Wachstum oft im Für-sich-Einstehen, in Mut und Eigenständigkeit.",
+   nk:"Widder"},
+  {bringt:"Angeborene Tiefe, Intensität, Wandlungskraft. Kennt Krisen und Transformation.",
+   waechst:"Wachstum oft im Vereinfachen, in Beständigkeit, im Genießen des Eigenen.",
+   nk:"Stier"},
+  {bringt:"Angeborene Weite, Überzeugung, Sinnsuche. Hat Meinungen und Visionen.",
+   waechst:"Wachstum oft im Zuhören, im Detail, im nahen Austausch.",
+   nk:"Zwillinge"},
+  {bringt:"Angeborene Disziplin, Verantwortung, Struktur. Kann meistern und aufbauen.",
+   waechst:"Wachstum oft im Fühlen, in Fürsorge, im Nähren des Inneren.",
+   nk:"Krebs"},
+  {bringt:"Angeborene Unabhängigkeit, Vision, Andersartigkeit. Denkt fürs Kollektiv.",
+   waechst:"Wachstum oft im Sich-Zeigen, im Herzensausdruck, im Strahlen.",
+   nk:"Löwe"},
+  {bringt:"Angeborene Empathie, Spiritualität, Grenzenlosigkeit. Kann sich hingeben und mitfühlen.",
+   waechst:"Wachstum oft in Klarheit, Struktur, im Erden des Alltags.",
+   nk:"Jungfrau"}];
+
+var LF_FUNDAMENT = {label:'Was mitkommt', um:'Was jemand schon kann und wohin es wachsen will'};
+
+var LF_ELEMENT = ['feuer','erde','luft','wasser'];
+var LF_ELEMENTNAME = ['Feuer','Erde','Luft','Wasser'];
+
+/* Alle Wörter der Anzeige. Lücken {name} werden gefüllt, nie erweitert. */
+var LF_TEXT = {
+ profilOhne:'Mit einem Profil unter <a href="profile.html">Profile</a> steht hier für diesen Menschen, wie du ihn ansprichst: in welchem Ton, wie du erklärst, wie er ins Tun kommt und was er schon mitbringt.',
+ profilMit:'Für {name}. Wechseln unter <a href="profile.html">Profile</a>.',
+ sprich:'So sprichst du',
+ frage:'Gute Frage',
+ vermeide:'Vermeide',
+ bringt:'Bringt mit',
+ bringtSchon:'Bringt schon mit',
+ waechst:'Wächst Richtung',
+ tech:'{punkt} in {zeichen}',
+ techSk:'Südknoten in {zeichen}, Nordknoten in {gegen}',
+ nk:'Nordknoten in {zeichen}',
+ skTitel:'Südknoten in {zeichen}',
+ bei:'Dieses Profil'};
+
+/* ───────────────────────────────────────────────────────────────
+   leitfaden-rechner.js — die vier Stellen, die die Seite für ein
+   Profil braucht. Gerechnet gegen rituale/engine.js (chartVon,
+   nodeLon, jdFromUT). Keine eigene Himmelsrechnung, kein Satz.
+
+   Der Südknoten ist der mittlere Knoten plus 180 Grad, wie überall
+   auf der Plattform.
+   ─────────────────────────────────────────────────────────────── */
+function lfGeburtJD(p){
+  var ut = p.h + p.mi / 60 - p.tz, d = p.d;
+  if(ut < 0){ ut += 24; d -= 1; }
+  if(ut >= 24){ ut -= 24; d += 1; }
+  return jdFromUT(p.y, p.mo, d, ut);
+}
+
+/* Zeichen (0–11) von Mond, Merkur, Mars und Südknoten, dazu die
+   Längen für die Fachzeile. */
+function lfStellen(p){
+  var C = chartVon(p), T = (lfGeburtJD(p) - 2451545) / 36525;
+  var sk = ((nodeLon(T) + 180) % 360 + 360) % 360;
+  var z = function(l){ return Math.floor(l / 30); };
+  return {Mond:z(C.Mond), Merkur:z(C.Merkur), Mars:z(C.Mars), Suedknoten:z(sk), suedknotenLaenge:sk};
+}
+
+/* ───────────────────────────────────────────────────────────────
+   leitfaden-app.js — die Anzeige der Seite „Menschen ansprechen".
+
+   Diese Datei enthält keinen Satz und keine Rechnung. Sätze aus
+   leitfaden-daten.js, Stellen aus leitfaden-rechner.js, Zeichennamen
+   aus rituale/engine.js. bau-leitfaden.py bricht ab, sobald hier ein
+   Satz oder ein „dein" von Hand auftaucht.
+
+   Eigene Namen mit lf bzw. LF davor.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+var T = LF_TEXT;
+var el = function(id){ return document.getElementById(id); };
+function lfEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function lfFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+/* Hängt an ein Symbol das Zeichen für Textdarstellung (U+FE0E), sonst
+   malen manche Systeme die Tierkreiszeichen als farbige Emoji. */
+var LF_TEXTFORM = String.fromCharCode(0xFE0E);
+function lfNeu(tag, klasse, text){ var e = document.createElement(tag); if(klasse) e.className = klasse; if(text !== undefined) e.textContent = text; return e; }
+
+function lfProfil(){ try{ var a = AC_P.alle(); return AC_P.aktives() || AC_P.eigenes() || a[0] || null; }catch(e){ return null; } }
+var P = lfProfil(), S = null;
+if(P){ try{ S = lfStellen(P); }catch(e){ S = null; } }
+
+/* Eine Liste aus Begriff und Text; `frage` setzt die Klasse für die Frage. */
+function lfListe(paare){
+  var dl = document.createElement('dl');
+  paare.forEach(function(p){
+    dl.appendChild(lfNeu('dt', '', p[0]));
+    dl.appendChild(lfNeu('dd', p[2] || '', p[1]));
+  });
+  return dl;
+}
+
+function lfFelder(){
+  var b = el('lfprofil'), box = el('lffelder'); box.innerHTML = '';
+  if(!S){ b.innerHTML = T.profilOhne; return; }
+  var name = ''; try{ name = AC_P.anzeige(P, AC_P.zeigeNamen()); }catch(e){}
+  b.innerHTML = lfFuell(T.profilMit, {name:'<b>' + lfEsc(name) + '</b>'});
+  ['Mond', 'Merkur', 'Mars'].forEach(function(k){
+    var K = LF_KOMPASS[k], c = K.k[S[k]], f = lfNeu('article', 'lf-feld');
+    f.appendChild(lfNeu('h3', 'lab', K.label));
+    f.appendChild(lfNeu('p', 'um', K.um));
+    var t = lfNeu('p', 'tech', lfFuell(T.tech, {punkt:k, zeichen:SIGNS[S[k]]})); t.setAttribute('data-ab', '2'); f.appendChild(t);
+    f.appendChild(lfListe([[T.sprich, c.sprich], [T.frage, c.frage, 'frage'], [T.vermeide, c.vermeide]]));
+    box.appendChild(f);
+  });
+  var s = LF_SK[S.Suedknoten], f = lfNeu('article', 'lf-feld');
+  f.appendChild(lfNeu('h3', 'lab', LF_FUNDAMENT.label));
+  f.appendChild(lfNeu('p', 'um', LF_FUNDAMENT.um));
+  var t = lfNeu('p', 'tech', lfFuell(T.techSk, {zeichen:SIGNS[S.Suedknoten], gegen:SIGNS[(S.Suedknoten + 6) % 12]})); t.setAttribute('data-ab', '2'); f.appendChild(t);
+  f.appendChild(lfListe([[T.bringtSchon, s.bringt], [T.waechst, s.waechst]]));
+  box.appendChild(f);
+}
+
+function lfKopf(i, titel){
+  var d = lfNeu('div', 'lf-k-kopf');
+  d.appendChild(lfNeu('span', 'gl', GLZ[i] + LF_TEXTFORM)).setAttribute('aria-hidden', 'true');
+  d.appendChild(lfNeu('b', '', titel));
+  d.appendChild(lfNeu('span', 'lf-el ' + LF_ELEMENT[i % 4], LF_ELEMENTNAME[i % 4]));
+  return d;
+}
+
+function lfKompasse(){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function(box){
+    var k = box.getAttribute('data-k'), K = LF_KOMPASS[k], low = box.parentNode.id;
+    el('lfk' + low).textContent = K.kompass;
+    box.parentNode.querySelector('h2').textContent = K.titel;
+    box.innerHTML = '';
+    box.appendChild(lfNeu('p', 'lf-text', K.kurz));
+    box.appendChild(lfNeu('p', 'lf-warum', K.warum));
+    var g = lfNeu('div', 'lf-karten');
+    K.k.forEach(function(c, i){
+      var a = lfNeu('article', 'lf-k ' + LF_ELEMENT[i % 4] + (S && S[k] === i ? ' lf-k-bei' : ''));
+      var kopf = lfKopf(i, SIGNS[i]);
+      if(S && S[k] === i) kopf.appendChild(lfNeu('span', 'lf-chip', T.bei));
+      a.appendChild(kopf);
+      a.appendChild(lfListe([[T.bringt, c.bringt], [T.sprich, c.sprich], [T.frage, c.frage, 'frage'], [T.vermeide, c.vermeide]]));
+      g.appendChild(a);
+    });
+    box.appendChild(g);
+  });
+}
+
+function lfSuedknoten(){
+  var g = el('lfsk'); g.innerHTML = '';
+  LF_SK.forEach(function(c, i){
+    var a = lfNeu('article', 'lf-k ' + LF_ELEMENT[i % 4] + (S && S.Suedknoten === i ? ' lf-k-bei' : ''));
+    var kopf = lfKopf(i, lfFuell(T.skTitel, {zeichen:SIGNS[i]}));
+    if(S && S.Suedknoten === i) kopf.appendChild(lfNeu('span', 'lf-chip', T.bei));
+    a.appendChild(kopf);
+    a.appendChild(lfListe([[T.bringtSchon, c.bringt], [T.waechst, c.waechst]]));
+    a.appendChild(lfNeu('p', 'nk', lfFuell(T.nk, {zeichen:c.nk})));
+    g.appendChild(a);
+  });
+}
+
+function lfLos(){
+  lfFelder(); lfKompasse(); lfSuedknoten();
+  el('lfstufe').addEventListener('click', function(){ if(window.AC_NIV) AC_NIV.setzen(1); });
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', lfLos); else lfLos();
+})();
+
+</script>
+</body></html>
