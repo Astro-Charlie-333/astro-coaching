@@ -1,7 +1,23 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Die Planeten</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
+<title>Die zehn Planeten &middot; in den Zeichen &middot; Zyklen &middot; Astro-Charlie</title>
+<meta name="description" content="Zehn Kräfte in dir: was jede bedeutet, wie sie durch die zwölf Zeichen geht und wann die großen Zyklen wiederkommen.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="begriffe.js" defer></script>
+<script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
   --linie:#EBE1D2; --linie-stark:#DDD0BC;
@@ -121,52 +137,1065 @@ a{color:var(--nacht);}
 }
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
-/* Lange deutsche Komposita sprengen am Handy schmale Spalten auf.
-   Silbentrennung wo möglich, harter Umbruch als Rückfall. */
-@media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
-/* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
-   nach der Raster- und Flexspalten ihre Breite berechnen. */
-</style><script src="begriffe.js" defer></script>
-<script src="niveau.js" defer></script>
-<script src="wortwahl.js" defer></script>
+
+/* Planetenseite. Palette wie Mond- und Häuserseite (basis.css).
+   Das Bild der Seite sind zehn Kreisbahnen: innen die schnellen,
+   außen die langsamen Kräfte. Darunter Karten, dann das Nachschlagen. */
+.pl-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+.pl-kopf{padding:52px 0 8px;display:grid;gap:12px}
+.pl-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.pl-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.08;color:#2E3A5C;margin:0;letter-spacing:-.01em}
+.pl-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
+.pl-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
+.pl-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:10px 0 0}
+.pl-text{margin:0;max-width:64ch;line-height:1.6}
+.pl-klein{font-size:.88rem;color:#6B6259;margin:0;line-height:1.55}
+.pl-teil{padding-top:60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.pl-teil>*{min-width:0}
+.pl-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem}
+.pl-wrap a{color:#2E3A5C}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* Die Bahnen */
+.pl-bahn-box{max-width:440px;width:100%;margin:0 auto}
+.pl-bahn-box svg{width:100%;height:auto;display:block}
+.pl-bahn-box .pl-ring{fill:none;stroke:#EBE1D2;stroke-width:1}
+.pl-bahn-box .pl-ring-licht{stroke:#D9C29A}
+.pl-bahn-box g[role=button]{cursor:pointer}
+.pl-bahn-box g[role=button]:focus{outline:none}
+.pl-bahn-box .punkt{fill:#FFFDFA;stroke:#2E3A5C;stroke-width:1.2}
+.pl-bahn-box .glyph{fill:#2E3A5C;font-size:14px;font-family:'DM Sans',system-ui,sans-serif;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.pl-bahn-box g.an .punkt{fill:#2E3A5C}
+.pl-bahn-box g.an .glyph{fill:#FCF7EF}
+.pl-bahn-box g[role=button]:focus-visible .punkt{stroke:#9A7235;stroke-width:3}
+.pl-bahn-box .mitte{fill:#6B6259;font-size:12px;font-family:'DM Sans',system-ui,sans-serif;text-anchor:middle}
+.pl-bahn-box .erde{fill:#9A7235}
+
+/* Die Karten */
+.pl-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.pl-karte{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer;scroll-margin-top:24px}
+.pl-karte.an{border:2px solid #2E3A5C;padding:15px}
+.pl-gl{font-size:1.9rem;line-height:1;color:#9A7235;text-align:center;padding-top:2px}
+.pl-inh{display:grid;gap:5px;min-width:0}
+.pl-inh h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.pl-inh p{margin:0;font-size:.93rem;line-height:1.5}
+.pl-name{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;letter-spacing:.06em;color:#9A7235}
+.pl-gruppe{font-size:.8rem!important;color:#6B6259}
+.pl-frage{font-style:italic;color:#2E3A5C;border-left:2px solid #9A7235;padding-left:10px}
+.pl-bei{background:#F5ECDD;border-radius:10px;padding:9px 11px;display:grid;gap:4px;margin-top:4px}
+.pl-bei-kopf{font-size:.78rem!important;font-weight:600;color:#7A5A27}
+.pl-bei-text{font-size:.9rem!important}
+.pl-bei-tech{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;color:#6B6259}
+
+/* Hinweis auf Stufe 0 */
+.pl-hinweis{margin-top:60px;background:#FFFDFA;border:1px dashed #DDD0BC;border-radius:14px;padding:18px 20px;display:grid;gap:12px;justify-items:start}
+.pl-hinweis p{margin:0;line-height:1.55}
+.pl-hinweis button,.pl-tabs button{font:inherit;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:8px 14px;cursor:pointer;color:#2E3A5C}
+
+/* Durch die Zeichen */
+.pl-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.pl-tabs button[aria-selected=true]{background:#2E3A5C;color:#FCF7EF;border-color:#2E3A5C}
+.pl-zkopf{display:grid;gap:6px;background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px}
+.pl-zkopf p{margin:0;line-height:1.55}
+.pl-zkopf .kurz{font-family:'Fraunces',Georgia,serif;font-size:1.1rem;color:#2E3A5C}
+.pl-zeichen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:10px}
+.pl-z{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px 16px;display:grid;gap:6px;min-width:0}
+.pl-z.pl-z-bei{border:2px solid #9A7235;padding:13px 15px}
+.pl-z-kopf{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.pl-z-kopf .gl{font-size:1.3rem}
+.pl-z-kopf b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem;color:#2E3A5C}
+.pl-z p{margin:0;font-size:.92rem;line-height:1.5}
+.pl-z .wuerde{font-size:.82rem;color:#7A5A27}
+.pl-chip{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
+.pl-chip.pl-chip-bei{background:#9A7235;color:#FFFDFA}
+.pl-el{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
+.pl-el.feuer,.pl-z.feuer .gl{background:#FBE3DA;color:#A05A3A}
+.pl-el.erde,.pl-z.erde .gl{background:#E8EDDC;color:#3D6B62}
+.pl-el.luft,.pl-z.luft .gl{background:#DEEBF1;color:#2E3A5C}
+.pl-el.wasser,.pl-z.wasser .gl{background:#E6E1F0;color:#6A4A62}
+.pl-z .gl{border-radius:8px;width:30px;height:30px;display:grid;place-items:center}
+
+/* Zyklen */
+.pl-kern{background:#F5ECDD;border-radius:12px;padding:14px 16px;line-height:1.55}
+.pl-jahr{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pl-jahr label{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:#6B6259}
+.pl-jahr input{font:inherit;width:120px;padding:8px 10px;border:1px solid #DDD0BC;border-radius:10px;background:#FFFDFA}
+.pl-tabbox{overflow-x:auto;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA}
+.pl-tab{border-collapse:collapse;width:100%;font-size:.9rem;min-width:460px}
+.pl-tab th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#6B6259;font-weight:500;padding:9px 10px;border-bottom:1px solid #EBE1D2}
+.pl-tab.pl-schmal{min-width:0}
+.pl-bahnwer{text-align:center}
+.pl-tab td{padding:9px 10px;border-bottom:1px solid #F0EAE0;vertical-align:top}
+.pl-tab tr.vorbei td{color:#9A9088}
+.pl-tab tr.naechstes td{background:#F5ECDD}
+.pl-tab .was{display:block;font-size:.84rem;color:#6B6259;margin-top:2px}
+.pl-tab tr.vorbei .was{color:#A9A097}
+.pl-marke{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;background:#2E3A5C;color:#FCF7EF;border-radius:999px;padding:2px 7px;margin-left:6px;white-space:nowrap}
+.pl-schritte,.pl-liste{margin:0;padding-left:1.3em;display:grid;gap:8px;line-height:1.55}
+
+/* Übung */
+.pl-quiz{display:grid;gap:12px}
+.pl-q{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:10px}
+.pl-q>p{margin:0;font-weight:500}
+.pl-opts{display:grid;gap:6px}
+.pl-opts button{font:inherit;text-align:left;border:1px solid #EBE1D2;background:#FCF7EF;border-radius:10px;padding:9px 12px;cursor:pointer;color:inherit}
+.pl-opts button.richtig{background:#EAF2EC;border-color:#3F7352}
+.pl-opts button.falsch{background:#F6E6E1;border-color:#8C4A3C}
+.pl-expl{margin:0;font-size:.92rem;line-height:1.5;color:#3C352E}
+
+.pl-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.pl-ehrlich p{margin:0}
+.pl-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-top:28px}
+.pl-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.pl-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+body.niv-0 .pl-weiter a[data-ab="1"]{display:none}
+.pl-wrap [hidden]{display:none!important}
+.pl-wrap a:focus-visible,.pl-wrap button:focus-visible,.pl-wrap input:focus-visible,.pl-karte:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+</style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
 <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
-<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
 </div></div>
 
-<div class="wrap">
-<a class="back" href="grundlagen.html">&larr; Grundlagen</a>
-<div class="eyebrow">Grundlagen · Baustein 1</div>
-<h1>Die 10 <em>Planeten.</em></h1>
-<p class="lede">Die Planeten sind die Schauspieler deines Charts — jeder eine Grundkraft, ein Antrieb, eine Funktion deiner Psyche.</p>
-<div class="tip"><b>Alles auf einer Seite:</b> Unter <a href="bausteine.html">Die Bausteine</a> stehen Planeten, Zeichen und Häuser zusammen — mit Rad zum Antippen, Schattenseiten und deiner eigenen Stellung zu jedem Eintrag. Diese Seite hier bleibt als ausführliche Einzeldarstellung.</div>
-<div class="tip"><b>Die Planeten sind das WAS</b> — welche Kraft in dir wirkt. Die ersten sieben (Sonne bis Saturn) sind die persönlichen und sozialen Planeten, die dich individuell prägen. Die letzten drei (Uranus, Neptun, Pluto) bewegen sich so langsam, dass sie ganze Generationen prägen — bei ihnen zählt vor allem das <i>Haus</i>, in dem sie stehen.</div>
-<h2>Die 10 Planeten</h2><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">☉</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Sonne</b><br><span style="font-size:13.5px;color:var(--soft);">Kern, Identität, Wille, Lebenskraft. Wer du im Innersten bist.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">☽</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Mond</b><br><span style="font-size:13.5px;color:var(--soft);">Gefühl, Bedürfnis, Instinkt. Wie du fühlst und was dich sicher macht.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">☿</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Merkur</b><br><span style="font-size:13.5px;color:var(--soft);">Denken, Reden, Lernen. Deine geistige Verdrahtung.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♀</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Venus</b><br><span style="font-size:13.5px;color:var(--soft);">Liebe, Werte, Anziehung, Genuss. Wie du liebst und was du schätzt.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♂</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Mars</b><br><span style="font-size:13.5px;color:var(--soft);">Antrieb, Energie, Wille, Begehren. Wie du handelst und kämpfst.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♃</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Jupiter</b><br><span style="font-size:13.5px;color:var(--soft);">Wachstum, Glück, Sinn, Weite. Wo du dich ausdehnst.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♄</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Saturn</b><br><span style="font-size:13.5px;color:var(--soft);">Struktur, Verantwortung, Grenzen, Reife. Wo du lernst und meisterst.</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♅</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Uranus</b><br><span style="font-size:13.5px;color:var(--soft);">Erneuerung, Freiheit, Umbruch. Wo du anders bist (Generationenplanet).</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♆</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Neptun</b><br><span style="font-size:13.5px;color:var(--soft);">Traum, Auflösung, Spiritualität. Wo Grenzen verschwimmen (Generationenplanet).</span></div></div><div class="card" style="padding:14px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;">
-<span style="font-size:24px;color:var(--ind);flex-shrink:0;">♇</span>
-<div><b style="font-family:Fraunces,serif;font-size:17px;">Pluto</b><br><span style="font-size:13.5px;color:var(--soft);">Wandlung, Macht, Tiefe. Wo du tief umgebaut wirst (Generationenplanet).</span></div></div>
-<div class="tip"><b>Merkhilfe:</b> Sonne & Mond sind die zwei Lichter — das Wichtigste. Merkur, Venus, Mars sind die persönlichen Planeten (schnell, individuell). Jupiter & Saturn die gesellschaftlichen. Uranus, Neptun, Pluto die Generationenplaneten (langsam, kollektiv).</div>
-<div class="weiter"><a href="grundlagen.html"><span class="lbl">&larr; Vorher</span><span class="ttl">Die Grundlagen</span></a><a href="zeichen.html" class="nx"><span class="lbl">Weiter &rarr;</span><span class="ttl">Die Zeichen</span></a></div>
-<div class="foot">Grundlagen · Die Planeten · Deine Astro-Lernplattform.</div>
-</div></body></html>
+<div class="pl-wrap">
+
+<header class="pl-kopf">
+  <div class="pl-eyebrow">Wissen &middot; Die Bausteine</div>
+  <h1 class="pl-h1">Zehn Kr&auml;fte in dir.</h1>
+  <p class="pl-lede">Jeder Mensch tr&auml;gt dieselben zehn Kr&auml;fte: wie er f&uuml;hlt, denkt, liebt, anf&auml;ngt, w&auml;chst und sich h&auml;lt. Wie sie klingen, ist bei jedem anders. Dein Geburtsbild zeigt, wie es bei dir ist.</p>
+  <p class="pl-lede" data-ab="1">In der Fachsprache hei&szlig;en die Kr&auml;fte Planeten. Sie sind das Was. Das Zeichen sagt, wie eine Kraft sich ausdr&uuml;ckt, das Haus, wo im Leben sie wirkt.</p>
+  <div id="nivleiste"></div>
+  <div class="pl-profil" id="plprofil"></div>
+</header>
+
+<!-- 1 · Die zehn Kräfte -->
+<section class="pl-teil" id="kraefte" aria-labelledby="pl-h-kraefte">
+  <div class="pl-eyebrow">Die zehn</div>
+  <h2 id="pl-h-kraefte" class="pl-h2">Jede Kraft mit ihrer Frage</h2>
+  <p class="pl-text">Innen die schnellen Kr&auml;fte, au&szlig;en die langsamen. Die Punkte stehen dort, wo die Kr&auml;fte gerade am Himmel sind, mit einem Profil dort, wo sie bei der Geburt standen.</p>
+  <div class="pl-bahn-box"><svg id="plbahn" viewBox="0 0 400 400" role="group" aria-label="Die zehn Kr&auml;fte als Kreise"></svg></div>
+  <p class="pl-klein pl-bahnwer" id="plbahnwer"></p>
+  <p class="pl-klein" data-ab="1"><b>Merkhilfe:</b> Sonne und Mond sind die zwei Lichter. Merkur, Venus und Mars sind die pers&ouml;nlichen Planeten, schnell und individuell. Jupiter und Saturn die gesellschaftlichen. Uranus, Neptun und Pluto die Generationenplaneten: so langsam, dass bei ihnen vor allem das Haus z&auml;hlt.</p>
+  <div class="pl-karten" id="plkarten"></div>
+</section>
+
+<!-- 2 · Durch die zwölf Zeichen (ab Stufe 1) -->
+<div class="pl-hinweis" data-bis="0">
+  <p>Hier steht, wie sich jede Kraft in den zw&ouml;lf Sternzeichen ausdr&uuml;ckt, und weiter unten, wann die gro&szlig;en Zyklen in einem Leben wiederkommen. Beides braucht die Fachnamen der Sternzeichen und der Kr&auml;fte. Die Seite zeigt sie ab der Stufe &bdquo;Wenig&ldquo;.</p>
+  <button type="button" id="plstufe">Auf &bdquo;Wenig&ldquo; stellen</button>
+</div>
+
+<section class="pl-teil" data-ab="1" id="zeichen" aria-labelledby="pl-h-zeichen">
+  <div class="pl-eyebrow">Planeten in den Zeichen</div>
+  <h2 id="pl-h-zeichen" class="pl-h2">Jede Kraft durch die zw&ouml;lf Zeichen</h2>
+  <p class="pl-text">Das Nachschlagewerk f&uuml;rs Deuten. W&auml;hle eine Kraft und geh durch die Zeichen. Die drei langsamen fehlen hier mit Absicht: Sie stehen bei einem ganzen Jahrgang im selben Zeichen.</p>
+  <div class="pl-tabs" role="tablist" aria-label="Planet w&auml;hlen">
+    <button type="button" role="tab" id="zeichen-sonne" data-k="Sonne">&#9737; Sonne</button>
+    <button type="button" role="tab" id="zeichen-mond" data-k="Mond">&#9789; Mond</button>
+    <button type="button" role="tab" id="zeichen-merkur" data-k="Merkur">&#9791; Merkur</button>
+    <button type="button" role="tab" id="zeichen-venus" data-k="Venus">&#9792; Venus</button>
+    <button type="button" role="tab" id="zeichen-mars" data-k="Mars">&#9794; Mars</button>
+    <button type="button" role="tab" id="zeichen-jupiter" data-k="Jupiter">&#9795; Jupiter</button>
+    <button type="button" role="tab" id="zeichen-saturn" data-k="Saturn">&#9796; Saturn</button>
+  </div>
+  <div class="pl-zkopf" id="plzkopf"></div>
+  <p class="pl-klein">Farbe = Element: <span class="pl-el feuer">Feuer</span> <span class="pl-el erde">Erde</span> <span class="pl-el luft">Luft</span> <span class="pl-el wasser">Wasser</span></p>
+  <div class="pl-zeichen" id="plzeichen"></div>
+  <p class="pl-klein">Ein Planet im Zeichen ist nie die ganze Aussage. Lies ihn immer mit dem Haus und den Winkeln zu anderen Planeten zusammen. Daf&uuml;r gibt es das Werkzeug <a href="planeten-in-haeusern.html">Planet, Zeichen, Haus</a>.</p>
+</section>
+
+<!-- 3 · Die Zyklen (ab Stufe 1) -->
+<section class="pl-teil" data-ab="1" id="zyklen" aria-labelledby="pl-h-zyklen">
+  <div class="pl-eyebrow">Planetenzyklen</div>
+  <h2 id="pl-h-zyklen" class="pl-h2">Wann ein Thema wiederkommt</h2>
+  <p class="pl-text">Jeder Planet kehrt in festen Abst&auml;nden an dieselbe Stelle zur&uuml;ck. Diese R&uuml;ckkehr ist das st&auml;rkste Timing-Werkzeug der Astrologie und braucht kaum Deutung: Wenn du wei&szlig;t, wann ein Planet zuletzt dort war, wei&szlig;t du, welches Thema gerade wieder anklopft. Und du hast eine Zeugin: dich selbst.</p>
+  <div class="pl-kern"><b>Der Kern in einem Satz:</b> Ein Zyklus wiederholt das Thema, nicht das Ereignis. Wer beim letzten Jupiter-Durchgang umgezogen ist, zieht diesmal nicht zwingend wieder um. Es geht aber wieder um Raum, Zuhause und Ausdehnung.</div>
+
+  <h3 class="pl-h3">Deine Zyklen</h3>
+  <p class="pl-klein" id="plzyklenwer"></p>
+  <div class="pl-jahr" id="pljahrbox">
+    <label for="pljahr">Geburtsjahr</label>
+    <input id="pljahr" type="number" inputmode="numeric" min="1900" max="2030" placeholder="1985">
+  </div>
+  <div class="pl-tabbox"><table class="pl-tab pl-schmal" id="plzyklen"></table></div>
+
+  <h3 class="pl-h3">Die Umlaufzeiten</h3>
+  <div class="pl-tabbox"><table class="pl-tab">
+    <tr><th>Planet</th><th>Umlauf</th><th>Was wiederkehrt</th></tr>
+    <tr><td>Mond</td><td class="mono">27,3 Tage</td><td>Stimmungslagen, der emotionale Grundton</td></tr>
+    <tr><td>Sonne</td><td class="mono">1 Jahr</td><td>Der Jahresbogen, dein Solar Return</td></tr>
+    <tr><td>Merkur, Venus</td><td class="mono">ca. 1 Jahr</td><td>Denken und Beziehungsstil, mit R&uuml;ckl&auml;ufigkeiten</td></tr>
+    <tr><td>Mars</td><td class="mono">2 Jahre</td><td>Antrieb, &Auml;rger, Durchsetzung: der k&uuml;rzeste greifbare Zyklus</td></tr>
+    <tr><td>Jupiter</td><td class="mono">11,9 Jahre</td><td>Wachstum, Weite, wo du dich ausdehnst</td></tr>
+    <tr><td>Saturn</td><td class="mono">29,5 Jahre</td><td>Struktur, Reife, Verantwortung</td></tr>
+    <tr><td>Mondknoten</td><td class="mono">18,6 Jahre</td><td>Richtung, Lebensweg, l&auml;uft r&uuml;ckw&auml;rts</td></tr>
+    <tr><td>Chiron</td><td class="mono">ca. 50 Jahre</td><td>Die Wunde, die zum K&ouml;nnen wird</td></tr>
+    <tr><td>Uranus</td><td class="mono">84 Jahre</td><td>Befreiung, Bruch, Eigenst&auml;ndigkeit</td></tr>
+    <tr><td>Neptun</td><td class="mono">165 Jahre</td><td>Aufl&ouml;sung, Sehnsucht: nie eine volle R&uuml;ckkehr</td></tr>
+    <tr><td>Pluto</td><td class="mono">248 Jahre</td><td>Verwandlung, Macht: nie eine volle R&uuml;ckkehr</td></tr>
+  </table></div>
+
+  <div class="ac-tech" data-ab="2">
+    <h3 class="pl-h3">Vorsicht bei der Uranus-Opposition</h3>
+    <p class="pl-text">Uranus l&auml;uft auf einer stark elliptischen Bahn und braucht f&uuml;r manche Zeichen sieben Jahre, f&uuml;r andere nur vier. Dadurch verschiebt sich das Alter je nach Generation um mehrere Jahre. Mit einem Profil rechnet die Seite das Datum aus, statt es nachzuschlagen.</p>
+    <div class="pl-tabbox"><table class="pl-tab">
+      <tr><th>Uranus im Radix</th><th>Opposition mit etwa</th></tr>
+      <tr><td>L&ouml;we, Jungfrau</td><td class="mono">40&ndash;41</td></tr>
+      <tr><td>Waage, Skorpion</td><td class="mono">42&ndash;43</td></tr>
+      <tr><td>Sch&uuml;tze, Steinbock</td><td class="mono">44&ndash;45</td></tr>
+    </table></div>
+
+    <h3 class="pl-h3">Die R&uuml;ckblick-Methode</h3>
+    <p class="pl-klein">Wie du einen Zyklus im Reading benutzt. Bei dir selbst funktioniert es genauso.</p>
+    <ol class="pl-schritte">
+      <li><b>Den laufenden Transit bestimmen.</b> Welcher Planet ber&uuml;hrt gerade welchen Punkt? Nimm nur einen, den engsten.</li>
+      <li><b>Die Umlaufzeit abziehen.</b> Jupiter minus 12 Jahre, Saturn minus 29, Mars minus 2, Mondknoten minus 18,5. Das ergibt ein konkretes Jahr.</li>
+      <li><b>Fragen, nicht behaupten.</b> &bdquo;Was war damals los?&ldquo; Diese Frage &ouml;ffnet mehr als jede Deutung, und du bekommst gleich die Best&auml;tigung oder Korrektur deiner Lesart.</li>
+      <li><b>Das Thema herausschälen, nicht das Ereignis.</b> Nicht &bdquo;damals ein Umzug, also jetzt wieder&ldquo;, sondern: Worum ging es im Kern? Raum, Zugeh&ouml;rigkeit, Neuanfang?</li>
+      <li><b>Den Unterschied benennen.</b> Was kannst du heute, was du damals nicht konntest? Genau darin liegt der Fortschritt. Der Zyklus kommt wieder, du bist eine andere.</li>
+    </ol>
+    <p class="pl-text"><b>Warum das im Coaching so stark wirkt:</b> Du sagst der Person nichts &uuml;ber ihre Zukunft. Du gibst ihr ein Jahr, sie liefert die Geschichte, und ihr seht gemeinsam das Muster. Das ist keine Prognose, sondern Erinnerungsarbeit mit Struktur, und sie ist &uuml;berpr&uuml;fbar: Passt deine Zuordnung nicht, sagt die Person es dir sofort.</p>
+  </div>
+
+  <h3 class="pl-h3">Die Grenze</h3>
+  <ul class="pl-liste">
+    <li>Ein Zyklus sagt kein Ereignis voraus. Er beschreibt eine Art von Aufgabe.</li>
+    <li>Er sagt nichts &uuml;ber gut oder schlecht. Derselbe Jupiter-Durchgang kann Wachstum bedeuten oder &Uuml;berma&szlig;.</li>
+    <li>Er ist keine Entschuldigung. &bdquo;Das ist gerade mein Saturn&ldquo; erkl&auml;rt eine Schwierigkeit, es erledigt sie nicht.</li>
+  </ul>
+</section>
+
+<!-- 4 · Übung (ab Stufe 1) -->
+<section class="pl-teil" data-ab="1" id="uebung" aria-labelledby="pl-h-uebung">
+  <div class="pl-eyebrow">&Uuml;bung</div>
+  <h2 id="pl-h-uebung" class="pl-h2">Vier Entscheidungen</h2>
+  <p class="pl-klein">Die Erkl&auml;rung erscheint nach jeder Antwort.</p>
+  <div class="pl-quiz" id="plquiz"></div>
+</section>
+
+<section class="pl-ehrlich" aria-labelledby="pl-h-ehrlich">
+  <h2 id="pl-h-ehrlich" class="pl-h3">Was das taugt, und was nicht</h2>
+  <p>Wo die Kr&auml;fte bei dir stehen und wann sie zur&uuml;ckkehren, rechnet dein Browser aus dem aktiven Profil. Gespeichert wird dabei nichts Neues. Die Rechnung ist auf wenige Bogenminuten genau, die Termine auf etwa einen Monat.</p>
+  <p>Was &uuml;ber Bedeutung dasteht, ist &Uuml;berlieferung, nicht &uuml;berpr&uuml;ft. Jeder Mensch tr&auml;gt alle zehn Kr&auml;fte, und jede Stellung kommt bei vielen Menschen vor: Bei den drei langsamen teilt sie ein ganzer Jahrgang. Dass ein Zyklus wiederkommt, ist kein Versprechen, dass etwas gut wird, und keine Warnung, dass es schwer wird.</p>
+  <p>Dein eigenes Erleben hat Vorrang vor dieser Seite. Wenn ein Satz nicht passt, gilt deiner.</p>
+</section>
+
+<nav class="pl-weiter" aria-label="Weiterlesen">
+  <a href="planeten-in-haeusern.html" data-ab="1"><span>Werkzeug</span>Planet, Zeichen, Haus</a>
+  <a href="haeuser.html"><span>Baustein</span>Die zw&ouml;lf Lebensb&uuml;hnen</a>
+  <a href="zeichen.html" data-ab="1"><span>Baustein</span>Die 12 Zeichen</a>
+  <a href="retrograde.html" data-ab="1"><span>Vertiefung</span>R&uuml;ckl&auml;ufige Planeten</a>
+</nav>
+
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* ── Die Worte für das, was dein Bild trifft ──────────────────
+   Mandy am 29.10.: „die Textblöcke sind noch zu bla in teile. Also
+   deine Sprachwahl ist noch immer nicht passend genug."
+
+   Der Grund dafür ist derselbe wie bei dem Satz über die Umrisse
+   (REGELN.md Abschnitt 6d): Ein Satz aus zwei Bausteinen wird nur
+   dann konkret, wenn **beide** Bausteine etwas bezeichnen, das man
+   sich vorstellen kann — und wenn am Ende eine Folge steht.
+
+   Hier sind es drei Bausteine:
+
+     ZIEL     — was dieser Punkt in deinem Leben ist. Kein
+                Planetenname, sondern das, worum es geht.
+     WANDERER — was der laufende Planet damit macht. Ein Verb.
+     FOLGE    — was dabei herauskommt. Unterschiedlich für harte
+                und weiche Winkel.
+
+   Daraus: „Saturn prüft gerade, wofür du gehalten werden willst.
+   Was davon nur Anspruch war, hält diese Zeit nicht."
+
+   Zehn Wanderer mal zwölf Ziele ergeben 120 Paare; einzeln
+   geschrieben wären sie in zwei Jahren noch nicht fertig und jedes
+   dritte wäre schlecht. Zusammengesetzt sind es 42 Texte, und jeder
+   einzelne davon kann gut sein. */
+
+/* ── Beugung ──────────────────────────────────────────────────
+   Bis zum 2.11. setzten die Überschriften immer dasselbe „dein"
+   oder „deine" ein: „Jupiter auf dein Mond", „Mars quer zu dein
+   Mars", „Saturn gegenüber dein Auftreten". Elf Köpfe auf der
+   Startseite, keiner richtig — und es sind genau die Karten, von
+   denen jemand einen Screenshot macht (PRODUKT.md 2, Punkt 3).
+
+   Der Grund war nicht ein vergessenes Wort, sondern eine fehlende
+   Angabe: Die Vorlage kannte weder den Fall, den die Formel
+   verlangt, noch das Geschlecht des Punktes dahinter. Beides steht
+   jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
+   Formel — und die Anzeige setzt nur noch zusammen. */
+
+/* „dein" in den drei Fällen, die hier vorkommen. Mehr braucht es
+   nicht: Ein Genitiv steht in keiner dieser Formeln. */
+var B_DEIN = {
+ m:{nom:'dein',  akk:'deinen', dat:'deinem'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem'}};
+
+/* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
+   entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
+
+   `g`     — das grammatische Geschlecht: m, w oder s.
+   `wort`  — das Hauptwort ohne „dein", damit die Beugung davor
+             passen kann.
+   `beugt` — nur dort, wo sich das Hauptwort selbst ändert: „dem
+             Aszendenten", „der öffentlichen Seite". Deutsche
+             Substantive stehen im Singular sonst in allen drei
+             Fällen gleich, deshalb ist das die Ausnahme.
+   `laie`  — derselbe Punkt in Alltagssprache, mit eigenem
+             Geschlecht: „dein Aszendent" ist männlich, „dein
+             Auftreten" sächlich. */
+var B_ZIEL = {
+ Sonne:  {g:'w', wort:'Sonne',   was:'wofür du gehalten werden willst'},
+ Mond:   {g:'m', wort:'Mond',    was:'was du brauchst, damit es sich sicher anfühlt'},
+ Merkur: {g:'m', wort:'Merkur',  was:'wie du denkst und was du mit anderen ausmachst'},
+ Venus:  {g:'w', wort:'Venus',   was:'was dir nah ist und was du dir wert bist'},
+ Mars:   {g:'m', wort:'Mars',    was:'womit du anfängst und wofür du kämpfst'},
+ Jupiter:{g:'m', wort:'Jupiter', was:'wo du dir etwas zutraust'},
+ Saturn: {g:'m', wort:'Saturn',  was:'wo du dich zusammenreißt und streng mit dir bist'},
+ Uranus: {g:'m', wort:'Uranus',  was:'wo du nicht mitmachst, wie man es macht'},
+ Neptun: {g:'m', wort:'Neptun',  was:'wofür du dich begeisterst, ohne es prüfen zu wollen'},
+ Pluto:  {g:'m', wort:'Pluto',   was:'wo es bei dir um alles oder nichts geht'},
+ ASC:    {g:'m', wort:'Aszendent',
+          beugt:{akk:'Aszendenten', dat:'Aszendenten'},
+          laie:{g:'s', wort:'Auftreten'},
+          was:'wie du ankommst, bevor du etwas gesagt hast'},
+ MC:     {g:'s', wort:'MC',
+          laie:{g:'w', wort:'öffentliche Seite',
+                beugt:{dat:'öffentlichen Seite'}},
+          was:'wohin du öffentlich gehst und wofür man dich kennt'}};
+
+/* Den Punkt in der Sprache holen, die zur Stufe gehört. Gibt es
+   kein Alltagswort, steht dort der Name — „dein Mond" ist auf
+   Stufe 0 kein Fachwort (REGELN.md 2a). */
+function B_PUNKT(k, laie){
+  var z = B_ZIEL[k];
+  if(!z) return {g:'m', wort:String(k)};
+  if(laie && z.laie) return z.laie;
+  return z;
+}
+
+/* Setzt „dein" und das Hauptwort im verlangten Fall zusammen.
+   Die einzige Stelle, an der das passiert. */
+function B_BEUGE(p, fall){
+  var d = (B_DEIN[p.g] || B_DEIN.m)[fall] || B_DEIN.m.nom;
+  var w = (p.beugt && p.beugt[fall]) || p.wort;
+  return d + ' ' + w;
+}
+
+/* Die Winkel in zwei Registern. „Konjunktion" verschlüsselt einen
+   Rechenweg und bleibt auf Stufe 0 draußen (REGELN.md 2a); „auf"
+   sagt dasselbe und braucht keine Vorbildung.
+
+   Jede Formel trägt den Fall, den sie verlangt: „auf" steht hier
+   auf die Frage wohin und zieht den Akkusativ, „zu", „mit", „von"
+   und „gegenüber" ziehen den Dativ. */
+var B_WINKELWORT = {
+ 'Konjunktion':{wort:'auf',               fall:'akk'},
+ 'Opposition' :{wort:'gegenüber',         fall:'dat'},
+ 'Quadrat'    :{wort:'quer zu',           fall:'dat'},
+ 'Trigon'     :{wort:'im Einklang mit',   fall:'dat'},
+ 'Sextil'     :{wort:'in Reichweite von', fall:'dat'}};
+var B_WINKELNOT = {wort:'bei', fall:'dat'};
+
+/* Ab Stufe 2 steht der Fachname. „Jupiter Konjunktion dein Mond"
+   waren zwei Nominative nebeneinander und sagten nicht, was wozu
+   steht; „in Konjunktion zu deinem Mond" sagt es. */
+var B_WINKELTECH = {vor:'in', nach:'zu', fall:'dat'};
+
+/* Was ein laufender Planet mit dem macht, was er berührt.
+   `tut` ist ein Verb mit offener Stelle dahinter, `hart` und
+   `weich` sind die Folgen — die eine für Konjunktion, Opposition
+   und Quadrat, die andere für Trigon und Sextil. */
+var B_WAND = {
+ Mond:{tut:'streift gerade',
+   hart:'Für ein paar Stunden liegt das näher an der Oberfläche als sonst. Es geht vorbei, bevor du etwas daraus machen musst.',
+   weich:'Ein paar Stunden, in denen das leichter von der Hand geht. Nichts, worauf man planen kann — aber brauchbar, wenn es gerade ansteht.'},
+ Merkur:{tut:'bringt gerade zur Sprache',
+   hart:'Es wird darüber geredet, und zwar nicht unbedingt so, wie du es gern hättest. Ein Gespräch, eine Nachricht, ein Satz, der hängen bleibt.',
+   weich:'Es lässt sich in diesen Tagen leichter aussprechen als sonst. Wenn etwas gesagt werden muss, ist jetzt der günstigere Moment.'},
+ Venus:{tut:'macht gerade weicher',
+   hart:'Du willst, dass es angenehm bleibt, und gibst dabei schneller nach, als du es später gutheißt.',
+   weich:'Es fällt leichter, sich darüber zu einigen. Gut für ein Gespräch, das sonst zäh wird.'},
+ Sonne:{tut:'beleuchtet gerade',
+   hart:'Ein paar Tage lang steht das im Mittelpunkt, ob du willst oder nicht. Danach ist es wieder eines unter vielen.',
+   weich:'Ein paar Tage, in denen das sichtbar wird, ohne dass du drängen musst.'},
+ Mars:{tut:'bringt gerade in Bewegung',
+   hart:'Die Sache wird schnell heiß. Entweder du packst sie an, oder sie kommt als Gereiztheit bei jemandem heraus, der nichts dafür kann.',
+   weich:'Du kommst hier gerade leicht in Bewegung. Was du jetzt anfängst, fängt wirklich an.'},
+ Jupiter:{tut:'macht gerade größer',
+   hart:'Es wird mehr, als hineinpasst. Das fühlt sich gut an und wird erst später zum Problem — meist, wenn der Kalender es einholt.',
+   weich:'Hier geht in diesen Monaten mehr als sonst. Türen gehen auf, und es kostet weniger Überredung als üblich.'},
+ Saturn:{tut:'prüft gerade',
+   hart:'Was daran nur Anspruch war, hält diese Zeit nicht. Was echt ist, steht hinterher fester als vorher — aber es dauert, und es fühlt sich zwischendurch nach Rückschritt an.',
+   weich:'Hier lässt sich gerade etwas festmachen, das sonst nicht hält. Keine aufregende Zeit, aber eine, nach der etwas steht.'},
+ Uranus:{tut:'reißt gerade auf',
+   hart:'Das verträgt gerade keine Fortsetzung wie bisher. Entweder du änderst es, oder es wird von außen geändert — das ist der unangenehmere Weg.',
+   weich:'Hier ist gerade Luft für etwas, das du sonst nicht gewagt hättest. Der Widerstand dagegen ist kleiner als üblich.'},
+ Neptun:{tut:'macht gerade unscharf',
+   hart:'Die Umrisse verschwimmen: Du siehst hier gerade schlechter, was wirklich ist und was du dir dazudenkst. Das ist der Moment, in dem man jemanden fragt, der nicht beteiligt ist.',
+   weich:'Hier darf gerade etwas offen bleiben, ohne dass es schadet. Gut für alles, was nicht entschieden werden muss.'},
+ Pluto:{tut:'baut gerade um',
+   hart:'Das geht nicht in Schritten, die du dir aussuchst, und es dauert Jahre statt Wochen. Was dabei verschwindet, war meistens schon vorher geborgt.',
+   weich:'Hier bekommst du in diesen Jahren mehr Gewicht, ohne dass du dafür lauter werden musst.'}};
+
+/* Die drei Tempi. Daraus entsteht die Angabe, wie lange das gilt —
+   ohne sie ist „Saturn auf deiner Sonne" ein Satz ohne Zeitraum. */
+var B_TEMPO = {
+ schnell:{name:'Stunden', satz:'Das ist morgen vorbei.'},
+ mittel: {name:'Tage',    satz:'Das zieht ein paar Tage.'},
+ langsam:{name:'Monate',  satz:'Das ist keine Stimmung, das ist ein Abschnitt.'}};
+
+/* Mehrfachdurchgänge. Ein rückläufiger Wanderer kreuzt dieselbe
+   Stelle bis zu dreimal — und die drei Termine fühlen sich
+   unterschiedlich an. Das ist eine der Sachen, die fast keine App
+   zeigt, obwohl sie leicht zu rechnen ist. */
+var B_DURCHGANG = {
+ 1: {von3:'Das erste von drei Malen. Jetzt zeigt sich, worum es geht; entschieden wird es noch nicht.',
+     von2:'Das erste von zwei Malen. Jetzt kommt das Thema auf den Tisch.'},
+ 2: {von3:'Das zweite von drei Malen, rückwärts. Jetzt geht es noch einmal von innen durch — unangenehmer als beim ersten Mal und meist der Teil, an dem sich etwas dreht.',
+     von2:'Das zweite und letzte Mal. Jetzt steht es fest.'},
+ 3: {von3:'Das dritte und letzte Mal. Was beim zweiten Durchgang klar geworden ist, wird jetzt gemacht.'}};
+
+var B_KOPF = {
+ titel:'Was dein Bild gerade trifft',
+ sub:'Welche Punkte bei dir berührt werden, von wem, und wie nah das dran ist.',
+ nix:'Gerade steht nichts innerhalb der Orbis-Grenzen auf deinem Bild. Das ist selten und hält nie lange.',
+ nahVor:'Abstand',
+ exaktVor:'Genau am',
+ laeuftVor:'Gilt für',
+ rueck:'läuft rückwärts',
+ mehrVor:'Alle Berührungen anzeigen',
+ wenigerVor:'Weniger anzeigen',
+ schnellTitel:'Dazu heute, nur für Stunden',
+ schnellSub:'Mond, Merkur, Venus und Sonne ziehen schnell vorbei. Sie machen den Tag, nicht den Abschnitt.',
+ tech:'{wanderer} {grad} {zeichen} {aspekt} {ziel} {gradZ} {zeichenZ}, Orbis {ab}°'};
+
+var B_STRAHL = {
+ titel:'Die nächsten zwölf Monate',
+ sub:'Die langsamen Wanderer auf deinem Bild, mit dem Tag, an dem der Winkel genau aufgeht. Tipp eine Zeile an, dann steht da, was sie heißt.',
+ nix:'In den nächsten zwölf Monaten geht kein Winkel der langsamen Wanderer auf deinem Bild genau auf. Das kommt vor — dann sind die Jahre davor und danach die dichteren.',
+ heute:'heute',
+ jetztMarke:'Hier stehst du',
+ mehr:'Noch {n} weitere anzeigen',
+ weniger:'Weniger anzeigen',
+ legende:'Gerechnet ist der Tag, an dem der Winkel genau aufgeht. Was er bedeutet, ist Deutung — und die prüfst du an dir.',
+ wieder:'Dieselbe Begegnung noch einmal — was sie heißt, steht beim ersten Mal.',
+ steht:'Läuft schon. Steht oben unter „Was dein Bild gerade trifft".',
+ inTagen:'in {n} T.',
+ inMonaten:'in {n} Mon.',
+ tech:'{wanderer} {aspekt} {ziel} exakt am {datum}{rueck}{durchgang}',
+ techRueck:', rückläufig',
+ techDurchgang:', Durchgang {n} von {alle}'};
+
+/* ───────────────────────────────────────────────────────────────
+   planeten-daten.js — alle Sätze der Planetenseite.
+
+   Schritt 4 aus ENTWURF-NEUE-SEITE.md, dritter Teil: planeten.html,
+   planeten-in-zeichen.html, die sieben planet-*.html und
+   planetenzyklen.html werden eine Seite. Die Texte „Planet im
+   Zeichen" kommen unverändert aus den sieben Einzelseiten; der Satz
+   „Hier ist … zuhause" steht getrennt (wuerde), weil er ohne das
+   Zeichen daneben nichts sagt und auf Stufe 0 nicht erscheint.
+
+   Die Anzeige (planeten-app.js) schreibt keinen Satz und kein
+   „dein" selbst. Lücken heißen {name} und werden nur gefüllt.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Die zehn Kräfte. `titel` und `was` sind Alltagssprache und stehen
+   auf Stufe 0 vor dem Namen (REGELN.md 2a: ein Name nur mit
+   Erklärung auf derselben Karte). */
+var PL_KRAFT = [
+ {k:'Sonne',   gl:'☉', gruppe:'licht', titel:'Der Kern',
+  was:'Wofür du dich lebendig fühlst und wofür du gesehen werden willst. Dein Wille und deine Lebenskraft.',
+  frage:'Wobei fühlst du dich so lebendig, dass du die Zeit vergisst?'},
+ {k:'Mond',    gl:'☽', gruppe:'licht', titel:'Das Gefühl',
+  was:'Was du brauchst, um dich sicher zu fühlen, und wie du getröstet werden willst. Deine verletzliche Seite.',
+  frage:'Was hilft dir, wenn es dir nicht gut geht, und wer darf das wissen?'},
+ {k:'Merkur',  gl:'☿', gruppe:'persoenlich', titel:'Das Denken',
+  was:'Wie du denkst, lernst und redest. Wie du Dinge mit anderen ausmachst.',
+  frage:'Wie lernst du am leichtesten: lesen, reden oder ausprobieren?'},
+ {k:'Venus',   gl:'♀', gruppe:'persoenlich', titel:'Die Liebe',
+  was:'Wie du liebst, was dich anzieht und was dir etwas wert ist, du selbst eingeschlossen.',
+  frage:'Woran merkst du, dass dir etwas guttut und nicht nur gefällt?'},
+ {k:'Mars',    gl:'♂', gruppe:'persoenlich', titel:'Der Antrieb',
+  was:'Womit du anfängst, wofür du kämpfst und wie du dich durchsetzt. Deine Energie und deine Wut.',
+  frage:'Wofür setzt du dich ein, auch wenn es Ärger gibt?'},
+ {k:'Jupiter', gl:'♃', gruppe:'gesellschaftlich', titel:'Das Wachstum',
+  was:'Wo du dir etwas zutraust, großzügig bist und an das Gute glaubst.',
+  frage:'Wo hast du einmal mehr gewagt, als du dir zugetraut hast, und was kam dabei heraus?'},
+ {k:'Saturn',  gl:'♄', gruppe:'gesellschaftlich', titel:'Die Reife',
+  was:'Wo du dich anstrengst, streng mit dir bist und mit der Zeit Können aufbaust.',
+  frage:'Wo verlangst du von dir mehr als von anderen?'},
+ {k:'Uranus',  gl:'♅', gruppe:'generation', titel:'Der Aufbruch',
+  was:'Wo du nicht mitmachst, wie man es macht. Freiheit, plötzliche Wendungen, Erneuerung.',
+  frage:'Wo in deinem Leben brauchst du mehr Luft?'},
+ {k:'Neptun',  gl:'♆', gruppe:'generation', titel:'Die Sehnsucht',
+  was:'Wo Grenzen verschwimmen: Träume, Hingabe und Spiritualität, aber auch Täuschung.',
+  frage:'Wofür begeisterst du dich, ohne es prüfen zu wollen?'},
+ {k:'Pluto',   gl:'♇', gruppe:'generation', titel:'Die Wandlung',
+  was:'Wo es um alles oder nichts geht. Macht, Tiefe und der Umbau von Grund auf.',
+  frage:'Was hast du schon einmal ganz losgelassen, und was ist danach gewachsen?'}];
+
+/* Die vier Gruppen, als kleiner Hinweis auf der Karte (ab Stufe 1). */
+var PL_GRUPPE = {
+ licht:'Eins der zwei Lichter',
+ persoenlich:'Persönlicher Planet',
+ gesellschaftlich:'Gesellschaftlicher Planet',
+ generation:'Generationenplanet'};
+
+/* Element und Art der zwölf Zeichen, in der Reihenfolge von SIGNS. */
+var PL_ZART = ['Feuer · Kardinal','Erde · Fix','Luft · Veränderlich','Wasser · Kardinal',
+ 'Feuer · Fix','Erde · Veränderlich','Luft · Kardinal','Wasser · Fix',
+ 'Feuer · Veränderlich','Erde · Kardinal','Luft · Fix','Wasser · Veränderlich'];
+var PL_ELEMENT = ['feuer','erde','luft','wasser'];
+
+/* Planet im Zeichen: sieben Kräfte durch zwölf Zeichen. Reihenfolge
+   der zwölf Texte wie SIGNS in engine.js. */
+var PL_ZEICHEN = {
+ Sonne:{
+  kurz:"Der Kern · Identität, Wille, Lebenskraft",
+  tip:"Die Sonne ist, wer du im Innersten bist — dein Wesenskern, dein Wille, das, worauf du hinstrahlst. Sie zeigt, wodurch du dich lebendig fühlst.",
+  z:[
+   "Ein Kern aus Mut und Aufbruch. Will vorangehen, anfangen, wagen. Lebendig durch Tat, Initiative, den ersten Schritt. Direkt und unabhängig.",
+   "Ein Kern aus Ruhe und Beständigkeit. Will Sicherheit, Genuss, etwas Bleibendes. Lebendig durch Verlässlichkeit, Sinnlichkeit, das Konkrete. Geduldig und fest.",
+   "Ein Kern aus Neugier und Austausch. Will lernen, reden, verbinden, verstehen. Lebendig durch Vielfalt, Sprache, Bewegung des Geistes. Wandelbar und wach.",
+   "Ein Kern aus Gefühl und Fürsorge. Will Nähe, Zuhause, Geborgenheit. Lebendig durch emotionale Verbindung, Schützen und Genährtwerden. Sensibel und treu.",
+   "Ein Kern aus Wärme und Ausdruck. Will strahlen, schaffen, gesehen werden, geben. Lebendig durch Kreativität, Herz, großzügige Präsenz. Stolz und warmherzig.",
+   "Ein Kern aus Klarheit und Dienst. Will verbessern, verstehen, nützlich sein. Lebendig durch Sinn, Handwerk, das Feine im Detail. Bescheiden und gewissenhaft.",
+   "Ein Kern aus Harmonie und Beziehung. Will Ausgleich, Schönheit, das Miteinander. Lebendig durch Verbindung, Fairness, Ästhetik. Diplomatisch und zugewandt.",
+   "Ein Kern aus Tiefe und Intensität. Will Wahrheit, Wandlung, echtes Erleben. Lebendig durch Tiefe, Leidenschaft, das Verborgene. Intensiv und loyal.",
+   "Ein Kern aus Sinn und Weite. Will verstehen, wachsen, hinaus. Lebendig durch Freiheit, Bedeutung, den großen Horizont. Optimistisch und ehrlich.",
+   "Ein Kern aus Verantwortung und Aufbau. Will meistern, erreichen, etwas Solides schaffen. Lebendig durch Struktur, Ziele, Beständigkeit. Ernst und ausdauernd.",
+   "Ein Kern aus Freiheit und Vision. Will erneuern, anders sein, für die Zukunft wirken. Lebendig durch Ideen, Gemeinschaft, Unabhängigkeit. Originell und weit.",
+   "Ein Kern aus Mitgefühl und Traum. Will auflösen, verbinden, fühlen, hingeben. Lebendig durch Kunst, Spiritualität, grenzenlose Empathie. Weich und durchlässig."],
+  wuerde:["","","","","","","","","","","",""]},
+ Mond:{
+  kurz:"Das Gefühl · Bedürfnis, Instinkt, Geborgenheit",
+  tip:"Der Mond ist dein Gefühlsleben — wie du fühlst, was du zum Sich-sicher-Fühlen brauchst, wie du getröstet werden willst. Deine innere, verletzliche Seite.",
+  z:[
+   "Fühlt schnell, direkt, feurig. Braucht Bewegung und Selbstständigkeit, um sich sicher zu fühlen. Reagiert impulsiv, ist schnell aufgebracht und schnell wieder gut. Mag keine emotionale Enge.",
+   "Fühlt ruhig, beständig, sinnlich. Braucht Sicherheit, Verlässlichkeit, körperliche Geborgenheit (Essen, Berührung, Natur). Lässt sich Zeit mit Gefühlen, bleibt dann treu. Mag keine Hektik.",
+   "Fühlt über Denken und Reden. Braucht Austausch, um Gefühle zu verarbeiten — spricht sie sich von der Seele. Wechselhaft, neugierig, mag geistige Anregung. Kann Gefühle zerreden.",
+   "Fühlt tief, unmittelbar, fürsorglich. Braucht Nest, Nähe, Vertrautheit. Nimmt Stimmungen auf wie ein Schwamm, umsorgt andere, kann sich zurückziehen ins Schneckenhaus.",
+   "Fühlt warm, großzügig, dramatisch. Braucht Anerkennung, Zuneigung, das Gefühl, besonders zu sein. Zeigt Gefühle offen und herzlich. Verletzt, wenn übersehen. Liebt es, zu verwöhnen.",
+   "Fühlt zurückhaltend, prüfend, dienend. Braucht Ordnung und Nützlich-sein, um sich sicher zu fühlen. Zeigt Liebe durch praktische Hilfe. Neigt zu Selbstkritik und Sorge.",
+   "Fühlt über Harmonie und Beziehung. Braucht Frieden, Ausgleich, ein Gegenüber. Unwohl bei Streit und Alleinsein. Sucht Fairness, kann eigene Bedürfnisse hinter die des anderen stellen.",
+   "Fühlt intensiv, tief, alles-oder-nichts. Braucht emotionale Tiefe und absolutes Vertrauen. Schützt sein Innerstes, testet, bevor es sich öffnet. Loyal bis in den Tod, verzeiht Verrat schwer.",
+   "Fühlt frei, optimistisch, weit. Braucht Bewegungsfreiheit und Sinn, um sich wohlzufühlen. Mag keine emotionale Enge oder Klammern. Sucht Abenteuer auch im Gefühl. Ehrlich bis unverblümt.",
+   "Fühlt kontrolliert, vorsichtig, erdig. Braucht Struktur und Verlässlichkeit. Öffnet sich erst, wenn es sicher ist — prüft Gefühle, bevor es sie zeigt. Zeigt Liebe durch Dableiben und Verantwortung, nicht durch Worte.",
+   "Fühlt distanziert, freiheitsliebend, über den Kopf. Braucht Raum und Unabhängigkeit. Beobachtet Gefühle eher, als in ihnen zu baden. Wirkt kühl, ist aber loyal auf seine eigene, freie Art.",
+   "Fühlt grenzenlos, mitfühlend, durchlässig. Braucht Rückzug und Auflösung, nimmt fremde Gefühle als eigene auf. Zutiefst empathisch, kann sich verlieren. Sucht Schönheit, Kunst, Spiritualität als Halt."],
+  wuerde:["","","","Hier ist der Mond zuhause.","","","","","","","",""]},
+ Merkur:{
+  kurz:"Das Denken · Reden, Lernen, Wahrnehmen",
+  tip:"Merkur ist, wie du denkst, redest, lernst und Informationen verarbeitest. Deine geistige Verdrahtung und dein Kommunikationsstil.",
+  z:[
+   "Denkt schnell, direkt, entschlossen. Sagt, was es denkt, ohne Umschweife. Schnelle Auffassung, aber ungeduldig mit Details. Redet gern zuerst, denkt manchmal danach.",
+   "Denkt langsam, gründlich, praktisch. Braucht Zeit, bleibt dann fest bei seinem Urteil. Konkret statt abstrakt. Sagt weniger, meint es ernst. Ungern gehetzt.",
+   "Denkt schnell, vielseitig, verbindend. Liebt Sprache, Information, Austausch. Springt zwischen Themen, sammelt Wissen, redet gern und viel. Kann oberflächlich werden.",
+   "Denkt über Gefühl und Erinnerung. Verknüpft Wissen mit Emotion, hat ein gutes Gedächtnis für Persönliches. Kommuniziert einfühlsam, indirekt, schützend. Nimmt Worte persönlich.",
+   "Denkt großzügig, überzeugt, dramatisch. Spricht mit Wärme und Autorität, gern vor Publikum. Steht zu seinen Ideen mit Stolz. Kann stur auf der eigenen Sicht beharren.",
+   "Denkt präzise, analytisch, detailgenau. Sieht das Kleingedruckte, ordnet, unterscheidet. Kommuniziert klar und nützlich. Neigt zu Kritik und Grübeln.",
+   "Denkt abwägend, fair, in Beziehungen. Sieht immer beide Seiten (kann schwer entscheiden). Kommuniziert diplomatisch, höflich, ausgleichend. Sucht die faire, schöne Formulierung.",
+   "Denkt tief, forschend, durchdringend. Will hinter die Fassade, wittert Verborgenes. Kommuniziert intensiv, manchmal sparsam-strategisch. Ein Detektiv-Geist, misstrauisch gegenüber Oberflächen.",
+   "Denkt groß, ehrlich, in Bögen. Sucht Wahrheit und Sinn statt Details. Spricht direkt, überzeugt, manchmal taktlos. Liebt Ideen und Philosophie. Verliert sich im großen Ganzen.",
+   "Denkt strukturiert, ernst, zielorientiert. Realistisch, vorsichtig, gründlich. Spricht überlegt und verantwortungsvoll. Nimmt Dinge (und sich) ernst, kann pessimistisch wirken.",
+   "Denkt originell, unabhängig, vorausschauend. Sieht Muster und Zukunft, denkt gern gegen den Strom. Kommuniziert sachlich, ideenreich, manchmal distanziert. Der Erfinder-Geist.",
+   "Denkt bildhaft, intuitiv, verschwommen. Nimmt mehr wahr, als sich in Worte fassen lässt. Kommuniziert poetisch, einfühlsam, indirekt. Kann unlogisch wirken, ist aber oft hellsichtig."],
+  wuerde:["","","Hier ist Merkur zuhause.","","","Hier ist Merkur zuhause.","","","","","",""]},
+ Venus:{
+  kurz:"Die Liebe und Werte · Was du anziehst, genießt, schätzt",
+  tip:"Venus ist, wie du liebst, was dich anzieht, was du schön findest und wertschätzt. Dein Stil in Beziehung, Genuss und Ästhetik.",
+  z:[
+   "Liebt feurig, direkt, erobernd. Verliebt sich schnell, will Leidenschaft und Eroberung. Zeigt Zuneigung mutig und offen. Mag die Jagd, kann schnell das Interesse verlieren.",
+   "Liebt sinnlich, treu, beständig. Genießt Berührung, Schönheit, Gemütlichkeit. Baut Liebe langsam auf, bleibt dann verlässlich. Zeigt Zuneigung körperlich und durch Fürsorge. Kann besitzergreifend sein.",
+   "Liebt verspielt, geistig, abwechslungsreich. Braucht Gespräch, Witz, geistige Anregung in der Liebe. Charmant und flirty. Kann Bindung scheuen, wenn's langweilig wird.",
+   "Liebt fürsorglich, tief, nestbauend. Zeigt Zuneigung durch Umsorgen und Schützen. Braucht emotionale Sicherheit, sucht Zuhause und Familie. Sensibel, klammert bei Unsicherheit.",
+   "Liebt großzügig, warm, dramatisch. Will bewundert werden und verwöhnt großzügig zurück. Romantisch, treu, stolz. Braucht Aufmerksamkeit und Loyalität. Verletzt, wenn übersehen.",
+   "Liebt bescheiden, dienend, praktisch. Zeigt Zuneigung durch kleine hilfreiche Taten. Zurückhaltend im Zeigen, wählerisch. Sucht das Echte, nicht das Große. Neigt zu Kritik.",
+   "Liebt harmonisch, romantisch, partnerschaftlich. Sucht Ausgleich, Schönheit, ein echtes Gegenüber. Charmant, fair, beziehungsorientiert. Meidet Konflikt, kann sich verlieren.",
+   "Liebt intensiv, tief, alles-oder-nichts. Will Verschmelzung, Wahrheit, absolute Hingabe. Leidenschaftlich und loyal, aber eifersüchtig und kontrollierend, wenn verunsichert. Kein halbes Ding.",
+   "Liebt frei, abenteuerlich, ehrlich. Braucht Raum und gemeinsame Weite. Zeigt Zuneigung offen und optimistisch. Mag keine Enge, sucht Wachstum in der Liebe. Kann bindungsscheu sein.",
+   "Liebt ernst, treu, beständig. Zeigt Zuneigung durch Verlässlichkeit, nicht durch große Worte. Baut langsam, bleibt dann. Sucht Sicherheit vor Romantik. Wirkt reserviert, ist tief loyal.",
+   "Liebt frei, freundschaftlich, unkonventionell. Braucht Unabhängigkeit und geistige Verbindung. Sieht den Partner als Freund. Zeigt Zuneigung unkonventionell, wirkt distanziert, ist treu auf freie Art.",
+   "Liebt hingebungsvoll, romantisch, grenzenlos. Verschmilzt gern, idealisiert, gibt sich ganz. Zutiefst empathisch und zärtlich. Kann sich verlieren oder Illusionen aufsitzen. Sucht Seelenliebe."],
+  wuerde:["","","","","","","Hier ist Venus zuhause.","","","","",""]},
+ Mars:{
+  kurz:"Der Antrieb · Energie, Wille, Begehren",
+  tip:"Mars ist deine Tatkraft, dein Antrieb, wie du kämpfst, dich durchsetzt und begehrst. Deine Energie und wie du sie einsetzt.",
+  z:[
+   "Handelt schnell, direkt, mutig. Geht frontal vor, liebt Herausforderung, startet gern. Kämpferisch und impulsiv. Kann aggressiv oder ungeduldig werden.",
+   "Handelt langsam, beharrlich, ausdauernd. Setzt sich still aber unaufhaltsam durch. Braucht Zeit zum Loslegen, bleibt dann dran bis zum Ende. Sinnlich im Begehren. Stur, wenn gedrängt.",
+   "Handelt vielseitig, wendig, verbal. Setzt sich mit Worten durch, kämpft mit Argumenten. Energie springt zwischen Vielem. Kann sich verzetteln, verliert Fokus. Flink, aber unstet.",
+   "Handelt indirekt, schützend, gefühlsgeleitet. Setzt sich für Liebste ein, kämpft aus dem Bauch. Energie schwankt mit der Stimmung. Zieht sich bei Angriff ins Schneckenhaus zurück, statt frontal zu kämpfen.",
+   "Handelt stolz, großzügig, dramatisch. Setzt sich mit Präsenz und Herz durch. Braucht Anerkennung fürs Tun. Kämpft für Ehre und Liebste. Kann herrschsüchtig oder theatralisch werden.",
+   "Handelt präzise, effizient, dienend. Setzt sich durch gründliche, gute Arbeit durch. Energie fließt ins Verbessern und Ordnen. Kann sich in Details oder Selbstkritik verlieren.",
+   "Handelt abwägend, fair, über Beziehung. Setzt sich diplomatisch durch, meidet offenen Kampf. Energie kann durch Unentschlossenheit gebremst werden. Kämpft für Gerechtigkeit und Ausgleich.",
+   "Handelt strategisch, intensiv, unaufhaltsam. Setzt sich mit stiller Macht und Ausdauer durch. Energie tief und kontrolliert. Kämpft verdeckt, nachtragend, aber extrem willensstark. Alles oder nichts.",
+   "Handelt begeistert, weit, freiheitsliebend. Setzt sich mit Optimismus und Überzeugung durch. Energie braucht Ziel und Sinn. Kämpft für Ideale. Kann sich verzetteln oder überschätzen.",
+   "Handelt diszipliniert, ausdauernd, zielstrebig. Setzt sich durch Beharrlichkeit und Struktur durch. Energie kontrolliert und langfristig. Der Marathonläufer — unaufhaltsam, geduldig.",
+   "Handelt unabhängig, originell, für die Sache. Setzt sich unkonventionell durch, kämpft für Ideen und Gemeinschaft. Energie stoßweise, eigenwillig. Mag keine Befehle, rebelliert gegen Zwang.",
+   "Handelt indirekt, fließend, intuitiv. Setzt sich sanft oder verdeckt durch, meidet direkten Kampf. Energie schwankt, folgt Gefühl und Inspiration. Stark in Kunst/Spiritualität, kann sich verlieren."],
+  wuerde:["Hier ist Mars zuhause.","","","","","","","","","Hier ist Mars stark.","",""]},
+ Jupiter:{
+  kurz:"Das Wachstum · Glück, Sinn, Expansion",
+  tip:"Jupiter zeigt, wo du wächst, Glück und Fülle findest, wo du großzügig und optimistisch bist. Dein Bereich der Weite und des Vertrauens.",
+  z:[
+   "Wächst durch Mut und Initiative. Glück durch Vorangehen, Neues wagen, Unabhängigkeit. Großzügiger, begeisterter Pionier. Kann übermütig oder überstürzt werden.",
+   "Wächst durch Beständigkeit und Genuss. Glück durch materielle Sicherheit, Sinnlichkeit, das Konkrete. Großzügig mit Ressourcen. Kann in Bequemlichkeit oder Übermaß kippen.",
+   "Wächst durch Lernen und Austausch. Glück durch Wissen, Kontakte, Vielfalt. Großzügig mit Ideen und Worten. Kann sich verzetteln oder oberflächlich bleiben.",
+   "Wächst durch Fürsorge und Nähe. Glück durch Familie, Zuhause, emotionale Verbindung. Großzügig im Umsorgen. Nährt und wird genährt.",
+   "Wächst durch Ausdruck und Großzügigkeit. Glück durch Kreativität, Bühne, Herzlichkeit. Großzügig, warmherzig, inspirierend. Kann übertreiben oder eitel werden.",
+   "Wächst durch Dienst und Verbesserung. Glück durch Nützlich-sein, Handwerk, Sorgfalt. Großzügig mit Hilfe. Kann sich in Details oder Bescheidenheit verlieren.",
+   "Wächst durch Beziehung und Harmonie. Glück durch Partnerschaft, Schönheit, Ausgleich. Großzügig, fair, verbindend. Sucht Wachstum durch das Miteinander.",
+   "Wächst durch Tiefe und Wandlung. Glück durch echtes Erleben, Transformation, Intensität. Großzügig mit Loyalität. Wächst durch Krisen, die zu Tiefe führen.",
+   "Wächst durch Sinn und Weite. Glück durch Reisen, Philosophie, Freiheit, den großen Horizont. Großzügig, optimistisch, weise. Kann maßlos werden.",
+   "Wächst durch Struktur und Verantwortung. Glück durch Erreichtes, Meisterschaft, langfristigen Aufbau. Großzügig durch Verlässlichkeit. Erdet den Optimismus, wächst langsam aber solide.",
+   "Wächst durch Vision und Gemeinschaft. Glück durch Ideen, Freiheit, Zukunft, das Kollektiv. Großzügig mit Idealen. Wächst über Andersartigkeit und Fortschritt.",
+   "Wächst durch Mitgefühl und Hingabe. Glück durch Spiritualität, Kunst, grenzenlose Empathie. Großzügig bis zur Selbstaufgabe. Wächst über Auflösung und Verbindung."],
+  wuerde:["","","","Hier ist Jupiter stark.","","","","","Hier ist Jupiter zuhause.","","","Hier ist Jupiter stark."]},
+ Saturn:{
+  kurz:"Die Struktur · Verantwortung, Grenzen, Reife",
+  tip:"Saturn zeigt, wo du lernst, reifst, dich anstrengst — dein Bereich der Herausforderung, Disziplin und langfristigen Meisterschaft. Der strenge Lehrer.",
+  z:[
+   "Lernaufgabe: gesunde Durchsetzung und Geduld. Ringt mit Ungeduld und Impulsivität. Reift, indem es lernt, Energie bewusst und ausdauernd zu lenken statt zu verpuffen.",
+   "Lernaufgabe: echter Selbstwert und Sicherheit von innen. Ringt mit Angst um materielle Sicherheit und Festhalten. Reift durch das Vertrauen, dass Wert nicht von Besitz abhängt.",
+   "Lernaufgabe: Konzentration und tiefes Denken. Ringt mit Zerstreuung und Selbstzweifeln beim Reden/Lernen. Reift, indem es Wissen vertieft statt nur zu streuen.",
+   "Lernaufgabe: emotionale Sicherheit und Grenzen. Ringt mit alter Verletzlichkeit, Angst vor Nähe oder Zurückweisung. Reift, indem es lernt, sich selbst zu nähren und Gefühle zu halten.",
+   "Lernaufgabe: echtes Selbstvertrauen und Ausdruck. Ringt mit Angst, gesehen zu werden, oder Anerkennungshunger. Reift, indem es die eigene Kreativität ernst nimmt, ohne Applaus zu brauchen.",
+   "Lernaufgabe: Selbstannahme trotz Unvollkommenheit. Ringt mit Perfektionismus, Selbstkritik, Sorge. Reift, indem es lernt, gut genug sein zu lassen und sich selbst zu dienen.",
+   "Lernaufgabe: echte, gleichwürdige Beziehung. Ringt mit Abhängigkeit, Konfliktscheu, Sich-Verlieren. Reift, indem es lernt, in Verbindung sich selbst treu zu bleiben.",
+   "Lernaufgabe: Vertrauen und Loslassen von Kontrolle. Ringt mit Machtthemen, Misstrauen, Angst vor Verrat. Reift, indem es lernt, sich verletzlich zu zeigen und zu vertrauen.",
+   "Lernaufgabe: gelebter Sinn statt bloßer Überzeugung. Ringt mit Dogmatismus oder Rastlosigkeit. Reift, indem es Weisheit erdet und aus Erfahrung statt Meinung schöpft.",
+   "Lernaufgabe: Meisterschaft ohne Verhärtung. Ringt mit Härte, Pflichtgefühl, Angst vor Versagen. Reift, indem es Verantwortung mit Wärme und Selbstmitgefühl verbindet.",
+   "Lernaufgabe: Zugehörigkeit trotz Andersartigkeit. Ringt mit Isolation oder Rebellion um ihrer selbst willen. Reift, indem es Freiheit und Gemeinschaft versöhnt.",
+   "Lernaufgabe: gesunde Grenzen bei aller Offenheit. Ringt mit Verwirrung, Flucht, Selbstaufgabe. Reift, indem es lernt, mitzufühlen ohne sich zu verlieren, und Träume zu erden."],
+  wuerde:["","","","","","","","","","Hier ist Saturn zuhause.","Hier ist Saturn stark.",""]}};
+
+/* Die drei langsamen Kräfte stehen bei allen Menschen eines
+   Jahrgangs im selben Zeichen. Bei ihnen sagt das Zeichen wenig über
+   eine Person. */
+var PL_AUSSEN = 'Diese Kraft bewegt sich so langsam, dass alle Menschen deines Jahrgangs sie ähnlich tragen. Persönlich wird sie durch den Lebensbereich, in dem sie bei dir steht.';
+
+/* Die Zyklen, die für ein Profil gerechnet werden (planeten-rechner.js).
+   Die Rückkehr ist ein Name, der hier erklärt wird (REGELN.md 2a). */
+var PL_ZYKLUS = {
+ Jupiter:{titel:'Jupiter-Rückkehr',
+   was:'Jupiter steht wieder dort, wo er bei deiner Geburt stand. Neue Weite, ein neuer Anlauf: Wo willst du wachsen?'},
+ Saturn1:{titel:'Erste Saturn-Rückkehr',
+   was:'Saturn kommt zum ersten Mal an seinen Platz zurück. Erwachsenwerden im echten Sinn: Was nicht trägt, fällt.'},
+ Saturn2:{titel:'Zweite Saturn-Rückkehr',
+   was:'Saturn kehrt zum zweiten Mal zurück. Ernte und Bilanz: Was bleibt, und was darfst du ablegen?'},
+ Uranus:{titel:'Uranus-Opposition',
+   was:'Uranus steht seinem Platz bei deiner Geburt gegenüber. Die Lebensmitte: Freiheit gegen das, was geworden ist.'}};
+
+/* Ohne Profil: die Lebensmarken nach dem Alter. Sie gelten für alle
+   Menschen; die Uranus-Marke schwankt je nach Jahrgang. */
+var PL_MARKEN = [
+ {a:12,t:'Jupiter-Rückkehr',d:'Neue Weite, erster eigener Anlauf'},
+ {a:24,t:'Jupiter-Rückkehr',d:'Raum für das eigene Leben'},
+ {a:29,t:'Erste Saturn-Rückkehr',d:'Erwachsenwerden: was nicht trägt, fällt'},
+ {a:36,t:'Jupiter-Rückkehr',d:'Ausdehnung auf gefestigter Basis'},
+ {a:37,t:'Mondknoten-Rückkehr',d:'Bin ich auf meinem Weg?'},
+ {a:42,t:'Uranus-Opposition (ungefähr)',d:'Freiheit gegen das Gewordene. Das Alter schwankt je nach Jahrgang zwischen 40 und 45.'},
+ {a:44,t:'Saturn-Opposition',d:'Halbzeit: Hält die Struktur?'},
+ {a:48,t:'Jupiter-Rückkehr',d:'Neue Weite, oft beruflich'},
+ {a:50,t:'Chiron-Rückkehr',d:'Aus der Wunde wird Können für andere'},
+ {a:56,t:'Mondknoten-Rückkehr',d:'Die dritte Richtungsfrage'},
+ {a:59,t:'Zweite Saturn-Rückkehr',d:'Bilanz und Ernte'},
+ {a:60,t:'Jupiter-Rückkehr',d:'Der fünfte Wachstumszyklus'}];
+
+/* Übung zu den Zyklen, unverändert aus planetenzyklen.html, dazu
+   eine Frage zu den Kräften selbst. */
+var PL_QUIZ = [
+ {q:'Was sagt ein Planet in einem Geburtsbild?',
+  o:['Welche Kraft wirkt: Gefühl, Denken, Liebe, Antrieb','In welchem Lebensbereich etwas passiert'],r:0,
+  e:'Der Planet ist das Was. Das Zeichen sagt, wie diese Kraft sich ausdrückt, das Haus, auf welcher Lebensbühne. Erst alle drei zusammen beschreiben einen Menschen.'},
+ {q:'Beim letzten Jupiter-Durchgang durch das 4. Haus ist jemand umgezogen. Jupiter läuft jetzt wieder durch das 4. Haus. Was sagst du im Reading?',
+  o:['„Du wirst wieder umziehen."','„Es geht wieder um Zuhause und Raum. In welcher Form?"'],r:1,
+  e:'Der Zyklus wiederholt das Thema, nicht das Ereignis. Es kann diesmal ein Umbau sein, ein Familienthema, ein neues Verhältnis zur eigenen Herkunft. Eine Ereignis-Prognose ist nicht nur unseriös, sie verschließt auch den Blick für das, was tatsächlich passiert.'},
+ {q:'Welcher Zyklus eignet sich am besten, um im Coaching schnell ein überprüfbares Muster zu finden?',
+  o:['Mars, 2 Jahre','Neptun, 165 Jahre'],r:0,
+  e:'Kurze Zyklen sind im Gespräch überprüfbar: An zwei Jahre zurück erinnert sich jeder. Neptun kehrt in einem Menschenleben nie zurück. Er beschreibt Generationen, keine Biografie.'},
+ {q:'Eine Klientin ist 29 und beschreibt, dass gerade alles zusammenbricht. Was ist die hilfreichste Frage?',
+  o:['„Was hält davon nicht mehr, und wusstest du das schon vorher?"','„Wann ist es endlich vorbei?"'],r:0,
+  e:'Die Saturn-Rückkehr entfernt, was nicht getragen hat, meistens Dinge, die man selbst längst geahnt hat. Die Frage nach dem Ende vertröstet nur. Die Frage nach dem, was ohnehin nicht mehr hielt, gibt der Person ihre Handlungsfähigkeit zurück.'}];
+
+/* Alle Wörter der Anzeige. Lücken {name} werden gefüllt, nie erweitert. */
+var PL_TEXT = {
+ profilOhne:'Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> steht bei jeder Kraft, wie sie bei dir aussieht.',
+ profilMit:'Für {name}: Bei jeder Kraft steht, wie sie bei dir aussieht. Wechseln unter <a href="profile.html">Profile</a>.',
+ beiKopf:'So zeigt sich {wer}',
+ beiTech:'{planet} in {zeichen} · {haus}. Haus',
+ zeichenBei:'Bei dir',
+ bahnHeute:'Der Himmel heute',
+ bahnGeburt:'Bei der Geburt',
+ bahnTipp:'Tippe eine Kraft an',
+ zyklenMit:'Gerechnet für {name}. Die Monate stimmen auf etwa einen Monat genau.',
+ zyklenOhne:'Ohne Profil rechnet die Seite nach dem Geburtsjahr, auf etwa ein Jahr genau.',
+ jahrFehler:'Bitte ein Jahr zwischen 1900 und 2030 eingeben.',
+ alterJetzt:'Im Jahr {jahr} etwa {alter} Jahre alt.',
+ mitAlter:'mit {alter}',
+ vorbei:'vorbei',
+ naechstes:'als Nächstes',
+ spalteJahr:'Jahr',
+ spalteAlter:'Alter',
+ spalteZyklus:'Zyklus'};
+
+/* ───────────────────────────────────────────────────────────────
+   planeten-rechner.js — wann die großen Zyklen eines Menschen
+   wiederkommen. Gerechnet gegen rituale/engine.js (chartVon, lon,
+   jdFromUT). Keine eigene Himmelsrechnung, kein Satz.
+
+   Eine Rückkehr ist der Moment, in dem der laufende Planet wieder
+   über die Stelle geht, an der er bei der Geburt stand. Wegen der
+   Rückläufigkeit passiert das oft dreimal in wenigen Monaten; gezählt
+   wird der erste Übergang jeder solchen Gruppe.
+   ─────────────────────────────────────────────────────────────── */
+var PL_JAHR = 365.25;
+
+/* Julianisches Datum der Geburt, mit derselben Tageskorrektur wie
+   chartVon in engine.js. */
+function plGeburtJD(p){
+  var ut = p.h + p.mi / 60 - p.tz, d = p.d;
+  if(ut < 0){ ut += 24; d -= 1; }
+  if(ut >= 24){ ut -= 24; d += 1; }
+  return jdFromUT(p.y, p.mo, d, ut);
+}
+
+function plAbstand(a, b){ return ((a - b) % 360 + 540) % 360 - 180; }
+
+/* Alle ersten Übergänge von Planet k über den Punkt ziel zwischen
+   von und bis. Ein neuer Übergang zählt erst, wenn seit dem letzten
+   mindestens `pause` Tage vergangen sind. */
+function plUebergaenge(k, ziel, von, bis, pause){
+  var raus = [], schritt = 4, vor = plAbstand(lon(k, von), ziel), jd = von, letzt = -1e9;
+  while(jd < bis){
+    var nach = plAbstand(lon(k, jd + schritt), ziel);
+    if(vor <= 0 && nach > 0 && Math.abs(nach - vor) < 90){
+      var a = jd, b = jd + schritt;
+      for(var i = 0; i < 30; i++){
+        var m = (a + b) / 2;
+        if(plAbstand(lon(k, m), ziel) <= 0) a = m; else b = m;
+      }
+      if(a - letzt > pause){ raus.push(a); }
+      letzt = a;
+    }
+    vor = nach; jd += schritt;
+  }
+  return raus;
+}
+
+/* Die Zyklen eines Profils bis zum 95. Lebensjahr. */
+function plZyklen(p){
+  var C = chartVon(p), jb = plGeburtJD(p), ende = jb + 95 * PL_JAHR, raus = [];
+  var alter = function(jd){ return Math.floor((jd - jb) / PL_JAHR); };
+  plUebergaenge('Jupiter', C.Jupiter, jb + 300, ende, 2000).forEach(function(jd, i){
+    raus.push({art:'Jupiter', n:i + 1, jd:jd, alter:alter(jd)});
+  });
+  plUebergaenge('Saturn', C.Saturn, jb + 3000, ende, 6000).slice(0, 2).forEach(function(jd, i){
+    raus.push({art:'Saturn' + (i + 1), n:i + 1, jd:jd, alter:alter(jd)});
+  });
+  var opp = plUebergaenge('Uranus', (C.Uranus + 180) % 360, jb + 9000, ende, 3000)[0];
+  if(opp) raus.push({art:'Uranus', n:1, jd:opp, alter:alter(opp)});
+  raus.sort(function(x, y){ return x.jd - y.jd; });
+  return raus;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   planeten-app.js — die Anzeige der Planetenseite.
+
+   Diese Datei enthält keinen Satz und keine Rechnung. Sie holt
+   Sätze aus planeten-daten.js, Zyklen aus planeten-rechner.js, den
+   Himmel aus rituale/engine.js und setzt zusammen. „dein" setzt
+   B_BEUGE aus kern/bahn-daten.js — bau-planeten.py bricht ab, sobald
+   hier ein Satz oder ein „dein" von Hand auftaucht.
+
+   Eigene Namen mit pl bzw. PL davor, damit nichts mit der Engine
+   kollidiert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+var T = PL_TEXT;
+var el = function(id){ return document.getElementById(id); };
+var NS = 'http://www.w3.org/2000/svg';
+function plSvg(t, a){ var e = document.createElementNS(NS, t); for(var k in a) e.setAttribute(k, a[k]); return e; }
+function plEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function plFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+var ruhig = function(){ return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'; };
+
+function plProfil(){ try{ var a = AC_P.alle(); return AC_P.aktives() || AC_P.eigenes() || a[0] || null; }catch(e){ return null; } }
+var P = plProfil(), C = null, ZYK = [];
+if(P){ try{ C = chartVon(P); ZYK = plZyklen(P); }catch(e){ C = null; ZYK = []; } }
+function plName(){ var n = ''; try{ n = AC_P.anzeige(P, AC_P.zeigeNamen()); }catch(e){} return n; }
+
+/* Reihenfolge der Bahnen: innen die schnellen, außen die langsamen. */
+var BAHN = ['Mond', 'Merkur', 'Venus', 'Sonne', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptun', 'Pluto'];
+var plWahl = 0, plZWahl = 'Sonne';
+function plIndex(k){ for(var i = 0; i < PL_KRAFT.length; i++) if(PL_KRAFT[i].k === k) return i; return 0; }
+
+function plProfilZeile(){
+  var b = el('plprofil');
+  b.innerHTML = C ? plFuell(T.profilMit, {name:'<b>' + plEsc(plName()) + '</b>'}) : T.profilOhne;
+}
+
+function plBahn(){
+  var s = el('plbahn'); while(s.firstChild) s.removeChild(s.firstChild);
+  var cx = 200, cy = 200, jd = heuteJD();
+  s.appendChild(plSvg('circle', {cx:cx, cy:cy, r:5, 'class':'erde'}));
+  BAHN.forEach(function(k, i){
+    var r = 30 + i * 17;
+    s.appendChild(plSvg('circle', {cx:cx, cy:cy, r:r, 'class':(k === 'Sonne' || k === 'Mond') ? 'pl-ring pl-ring-licht' : 'pl-ring'}));
+  });
+  BAHN.forEach(function(k, i){
+    var r = 30 + i * 17, l = C ? C[k] : lon(k, jd), a = l * Math.PI / 180;
+    var x = cx - r * Math.cos(a), y = cy + r * Math.sin(a), K = PL_KRAFT[plIndex(k)];
+    var g = plSvg('g', {role:'button', tabindex:0, 'aria-label':k + ': ' + K.titel,
+                        'aria-pressed':String(plIndex(k) === plWahl), 'class':plIndex(k) === plWahl ? 'an' : ''});
+    g.appendChild(plSvg('circle', {cx:x, cy:y, r:12, 'class':'punkt'}));
+    var t = plSvg('text', {x:x, y:y + 0.5, 'class':'glyph'}); t.textContent = K.gl; g.appendChild(t);
+    var w = function(){ plWahl = plIndex(k); plMarkiere(true); };
+    g.addEventListener('click', w);
+    g.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); w(); } });
+    s.appendChild(g);
+  });
+  el('plbahnwer').textContent = C ? T.bahnGeburt : T.bahnHeute;
+}
+
+function plMarkiere(springen){
+  Array.prototype.forEach.call(el('plbahn').querySelectorAll('g[role=button]'), function(g){
+    var an = g.getAttribute('aria-label').split(':')[0] === PL_KRAFT[plWahl].k;
+    g.setAttribute('aria-pressed', String(an)); g.setAttribute('class', an ? 'an' : '');
+  });
+  Array.prototype.forEach.call(el('plkarten').children, function(c, i){ c.classList.toggle('an', i === plWahl); });
+  if(springen){ var c = el('plkarten').children[plWahl]; if(c) c.scrollIntoView({behavior:ruhig(), block:'nearest'}); }
+}
+
+function plKarten(){
+  var box = el('plkarten'); box.innerHTML = '';
+  PL_KRAFT.forEach(function(K, i){
+    var k = document.createElement('article'); k.className = 'pl-karte'; k.id = 'kraft-' + i;
+    k.innerHTML = '<div class="pl-gl" aria-hidden="true"></div><div class="pl-inh"><h3></h3><p class="pl-name"></p>'
+      + '<p class="pl-gruppe ac-tech" data-ab="1"></p><p class="pl-was"></p><p class="pl-frage"></p>'
+      + '<div class="pl-bei"><p class="pl-bei-kopf"></p><p class="pl-bei-text"></p><p class="pl-bei-tech ac-tech" data-ab="1"></p></div></div>';
+    k.querySelector('.pl-gl').textContent = K.gl;
+    k.querySelector('h3').textContent = K.titel;
+    k.querySelector('.pl-name').textContent = K.k;
+    k.querySelector('.pl-gruppe').textContent = PL_GRUPPE[K.gruppe];
+    k.querySelector('.pl-was').textContent = K.was;
+    k.querySelector('.pl-frage').textContent = K.frage;
+    var bei = k.querySelector('.pl-bei');
+    if(C){
+      var zi = Math.floor(C[K.k] / 30);
+      bei.querySelector('.pl-bei-kopf').textContent = plFuell(T.beiKopf, {wer:B_BEUGE(B_PUNKT(K.k), 'nom')});
+      bei.querySelector('.pl-bei-text').textContent = PL_ZEICHEN[K.k] ? PL_ZEICHEN[K.k].z[zi] : PL_AUSSEN;
+      bei.querySelector('.pl-bei-tech').textContent = plFuell(T.beiTech, {planet:K.k, zeichen:SIGNS[zi], haus:haus(C, C[K.k])});
+    } else { bei.remove(); }
+    k.addEventListener('click', function(){ plWahl = i; plMarkiere(false); });
+    box.appendChild(k);
+  });
+}
+
+function plZeichen(){
+  var Z = PL_ZEICHEN[plZWahl];
+  Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function(b){
+    b.setAttribute('aria-selected', String(b.getAttribute('data-k') === plZWahl));
+  });
+  el('plzkopf').innerHTML = '<p class="kurz"></p><p></p>';
+  el('plzkopf').children[0].textContent = Z.kurz;
+  el('plzkopf').children[1].textContent = Z.tip;
+  var box = el('plzeichen'); box.innerHTML = '';
+  var bei = C ? Math.floor(C[plZWahl] / 30) : -1;
+  SIGNS.forEach(function(name, i){
+    var d = document.createElement('article');
+    d.className = 'pl-z ' + PL_ELEMENT[i % 4] + (i === bei ? ' pl-z-bei' : '');
+    d.innerHTML = '<div class="pl-z-kopf"><span class="gl" aria-hidden="true"></span><b></b><span class="pl-el"></span></div><p></p>';
+    d.querySelector('.gl').textContent = GLZ[i];
+    d.querySelector('b').textContent = name;
+    var e = d.querySelector('.pl-el'); e.textContent = PL_ZART[i]; e.classList.add(PL_ELEMENT[i % 4]);
+    d.querySelector('p').textContent = Z.z[i];
+    if(Z.wuerde[i]){ var w = document.createElement('p'); w.className = 'wuerde'; w.textContent = Z.wuerde[i]; d.appendChild(w); }
+    if(i === bei){ var c = document.createElement('span'); c.className = 'pl-chip pl-chip-bei'; c.textContent = T.zeichenBei; d.querySelector('.pl-z-kopf').appendChild(c); }
+    box.appendChild(d);
+  });
+}
+
+function plZeile(tab, zellen, klasse){
+  var tr = document.createElement('tr'); if(klasse) tr.className = klasse;
+  zellen.forEach(function(z){ var td = document.createElement('td'); td.innerHTML = z; tr.appendChild(td); });
+  tab.appendChild(tr);
+}
+function plKopfzeile(tab){
+  var tr = document.createElement('tr');
+  [T.spalteJahr, T.spalteAlter, T.spalteZyklus].forEach(function(s){ var th = document.createElement('th'); th.textContent = s; tr.appendChild(th); });
+  tab.appendChild(tr);
+}
+function plMarke(an){ return an ? '<span class="pl-marke">' + plEsc(T.naechstes) + '</span>' : ''; }
+
+function plZyklenAnzeige(){
+  var tab = el('plzyklen'); tab.innerHTML = ''; plKopfzeile(tab);
+  if(C){
+    el('pljahrbox').hidden = true;
+    el('plzyklenwer').textContent = plFuell(T.zyklenMit, {name:plName()});
+    var jetzt = heuteJD(), naechst = -1;
+    ZYK.forEach(function(z, i){ if(naechst < 0 && z.jd >= jetzt) naechst = i; });
+    ZYK.forEach(function(z, i){
+      var d = datVon(z.jd), Z = PL_ZYKLUS[z.art];
+      plZeile(tab, ['<span class="mono">' + plEsc(MN[d.getMonth()] + ' ' + d.getFullYear()) + '</span>',
+                    '<span class="mono">' + z.alter + '</span>',
+                    '<b>' + plEsc(Z.titel) + '</b>' + plMarke(i === naechst) + ((z.art !== 'Jupiter' || i === naechst) ? '<span class="was">' + plEsc(Z.was) + '</span>' : '')],
+              z.jd < jetzt ? 'vorbei' : (i === naechst ? 'naechstes' : ''));
+    });
+    return;
+  }
+  var y = parseInt(el('pljahr').value, 10), heute = new Date().getFullYear(), gut = y >= 1900 && y <= 2030;
+  el('plzyklenwer').textContent = (el('pljahr').value && !gut) ? T.jahrFehler
+    : (gut ? T.zyklenOhne + ' ' + plFuell(T.alterJetzt, {jahr:heute, alter:heute - y}) : T.zyklenOhne);
+  var naechst = -1;
+  if(gut) PL_MARKEN.forEach(function(m, i){ if(naechst < 0 && y + m.a >= heute) naechst = i; });
+  PL_MARKEN.forEach(function(m, i){
+    plZeile(tab, ['<span class="mono">' + (gut ? (y + m.a) : '&ndash;') + '</span>',
+                  '<span class="mono">' + m.a + '</span>',
+                  '<b>' + plEsc(m.t) + '</b>' + plMarke(i === naechst) + '<span class="was">' + plEsc(m.d) + '</span>'],
+            gut && y + m.a < heute ? 'vorbei' : (i === naechst ? 'naechstes' : ''));
+  });
+}
+
+function plQuiz(){
+  var box = el('plquiz'); box.innerHTML = '';
+  PL_QUIZ.forEach(function(it){
+    var d = document.createElement('div'); d.className = 'pl-q';
+    var p = document.createElement('p'); p.textContent = it.q; d.appendChild(p);
+    var o = document.createElement('div'); o.className = 'pl-opts';
+    var ex = document.createElement('p'); ex.className = 'pl-expl'; ex.textContent = it.e; ex.hidden = true;
+    it.o.forEach(function(lab, j){
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = lab;
+      b.addEventListener('click', function(){
+        Array.prototype.forEach.call(o.children, function(x, i){ x.className = i === it.r ? 'richtig' : ''; x.setAttribute('aria-pressed', 'false'); });
+        if(j !== it.r) b.className = 'falsch';
+        b.setAttribute('aria-pressed', 'true'); ex.hidden = false;
+      });
+      o.appendChild(b);
+    });
+    d.appendChild(o); d.appendChild(ex); box.appendChild(d);
+  });
+}
+
+/* Alte Adressen planet-*.html kommen mit #zeichen-<planet> an. */
+function plAnker(){
+  var h = (location.hash || '').slice(1), b = h ? document.getElementById(h) : null;
+  if(b && b.getAttribute('data-k')){
+    plZWahl = b.getAttribute('data-k'); plZeichen();
+    var s = el('zeichen'); if(s && s.checkVisibility && s.checkVisibility()) s.scrollIntoView({behavior:'auto', block:'start'});
+  }
+}
+
+function plLos(){
+  plProfilZeile(); plKarten(); plBahn(); plMarkiere(false); plZeichen(); plZyklenAnzeige(); plQuiz();
+  Array.prototype.forEach.call(document.querySelectorAll('[data-k]'), function(b){
+    b.addEventListener('click', function(){ plZWahl = b.getAttribute('data-k'); plZeichen(); });
+  });
+  el('pljahr').addEventListener('input', plZyklenAnzeige);
+  el('plstufe').addEventListener('click', function(){ if(window.AC_NIV) AC_NIV.setzen(1); plAnker(); });
+  window.addEventListener('hashchange', plAnker);
+  plAnker();
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', plLos); else plLos();
+})();
+
+</script>
+</body></html>

@@ -41,6 +41,7 @@ BAUTEN = [
     ('raeume/bau-raeume.py',  'Raeume'),
     ('mond/bau-mond.py',      'Mond'),
     ('haeuser/bau-haeuser.py', 'Haeuser'),
+    ('planeten/bau-planeten.py', 'Planeten'),
     ('rituale/bau-zauber.py', 'Zauber'),
     ('niveau/bau-reading.py', 'Reading'),
     ('karte/bau-karte.py',    'Karte'),
@@ -313,10 +314,7 @@ HANDARBEIT = {
     'mondknoten.html',
     'nd-leitfaden.html', 'neurodivergente-astrologie.html',
     'neurodivergenz-vertiefung.html', 'orbis-gewichtung.html',
-    'organizer.html', 'planet-jupiter.html', 'planet-mars.html',
-    'planet-merkur.html', 'planet-mond.html', 'planet-saturn.html',
-    'planet-sonne.html', 'planet-venus.html',
-    'planeten-in-zeichen.html', 'planeten.html', 'planetenzyklen.html',
+    'organizer.html',
     'profektionen.html', 'profil-ansicht.html', 'profile.html',
     'quiz.html', 'raeume.html',                         'reading-ablauf.html', 'reading-gespraech.html', 'retrograde.html',
     'ruhe-schlaf.html', 'sekte.html', 'siderisch.html',
@@ -742,7 +740,7 @@ ANZEIGEN = {
 FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'start/start-app.js', 'app/offline-app.js',
           'kern/heute-app.js', 'kern/ich-app.js',
-          'monat/monat-app.js'}
+          'monat/monat-app.js', 'planeten/planeten-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

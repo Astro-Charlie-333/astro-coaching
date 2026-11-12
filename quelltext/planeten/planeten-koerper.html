@@ -1,0 +1,139 @@
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="pl-wrap">
+
+<header class="pl-kopf">
+  <div class="pl-eyebrow">Wissen &middot; Die Bausteine</div>
+  <h1 class="pl-h1">Zehn Kr&auml;fte in dir.</h1>
+  <p class="pl-lede">Jeder Mensch tr&auml;gt dieselben zehn Kr&auml;fte: wie er f&uuml;hlt, denkt, liebt, anf&auml;ngt, w&auml;chst und sich h&auml;lt. Wie sie klingen, ist bei jedem anders. Dein Geburtsbild zeigt, wie es bei dir ist.</p>
+  <p class="pl-lede" data-ab="1">In der Fachsprache hei&szlig;en die Kr&auml;fte Planeten. Sie sind das Was. Das Zeichen sagt, wie eine Kraft sich ausdr&uuml;ckt, das Haus, wo im Leben sie wirkt.</p>
+  <div id="nivleiste"></div>
+  <div class="pl-profil" id="plprofil"></div>
+</header>
+
+<!-- 1 · Die zehn Kräfte -->
+<section class="pl-teil" id="kraefte" aria-labelledby="pl-h-kraefte">
+  <div class="pl-eyebrow">Die zehn</div>
+  <h2 id="pl-h-kraefte" class="pl-h2">Jede Kraft mit ihrer Frage</h2>
+  <p class="pl-text">Innen die schnellen Kr&auml;fte, au&szlig;en die langsamen. Die Punkte stehen dort, wo die Kr&auml;fte gerade am Himmel sind, mit einem Profil dort, wo sie bei der Geburt standen.</p>
+  <div class="pl-bahn-box"><svg id="plbahn" viewBox="0 0 400 400" role="group" aria-label="Die zehn Kr&auml;fte als Kreise"></svg></div>
+  <p class="pl-klein pl-bahnwer" id="plbahnwer"></p>
+  <p class="pl-klein" data-ab="1"><b>Merkhilfe:</b> Sonne und Mond sind die zwei Lichter. Merkur, Venus und Mars sind die pers&ouml;nlichen Planeten, schnell und individuell. Jupiter und Saturn die gesellschaftlichen. Uranus, Neptun und Pluto die Generationenplaneten: so langsam, dass bei ihnen vor allem das Haus z&auml;hlt.</p>
+  <div class="pl-karten" id="plkarten"></div>
+</section>
+
+<!-- 2 · Durch die zwölf Zeichen (ab Stufe 1) -->
+<div class="pl-hinweis" data-bis="0">
+  <p>Hier steht, wie sich jede Kraft in den zw&ouml;lf Sternzeichen ausdr&uuml;ckt, und weiter unten, wann die gro&szlig;en Zyklen in einem Leben wiederkommen. Beides braucht die Fachnamen der Sternzeichen und der Kr&auml;fte. Die Seite zeigt sie ab der Stufe &bdquo;Wenig&ldquo;.</p>
+  <button type="button" id="plstufe">Auf &bdquo;Wenig&ldquo; stellen</button>
+</div>
+
+<section class="pl-teil" data-ab="1" id="zeichen" aria-labelledby="pl-h-zeichen">
+  <div class="pl-eyebrow">Planeten in den Zeichen</div>
+  <h2 id="pl-h-zeichen" class="pl-h2">Jede Kraft durch die zw&ouml;lf Zeichen</h2>
+  <p class="pl-text">Das Nachschlagewerk f&uuml;rs Deuten. W&auml;hle eine Kraft und geh durch die Zeichen. Die drei langsamen fehlen hier mit Absicht: Sie stehen bei einem ganzen Jahrgang im selben Zeichen.</p>
+  <div class="pl-tabs" role="tablist" aria-label="Planet w&auml;hlen">
+    <button type="button" role="tab" id="zeichen-sonne" data-k="Sonne">&#9737; Sonne</button>
+    <button type="button" role="tab" id="zeichen-mond" data-k="Mond">&#9789; Mond</button>
+    <button type="button" role="tab" id="zeichen-merkur" data-k="Merkur">&#9791; Merkur</button>
+    <button type="button" role="tab" id="zeichen-venus" data-k="Venus">&#9792; Venus</button>
+    <button type="button" role="tab" id="zeichen-mars" data-k="Mars">&#9794; Mars</button>
+    <button type="button" role="tab" id="zeichen-jupiter" data-k="Jupiter">&#9795; Jupiter</button>
+    <button type="button" role="tab" id="zeichen-saturn" data-k="Saturn">&#9796; Saturn</button>
+  </div>
+  <div class="pl-zkopf" id="plzkopf"></div>
+  <p class="pl-klein">Farbe = Element: <span class="pl-el feuer">Feuer</span> <span class="pl-el erde">Erde</span> <span class="pl-el luft">Luft</span> <span class="pl-el wasser">Wasser</span></p>
+  <div class="pl-zeichen" id="plzeichen"></div>
+  <p class="pl-klein">Ein Planet im Zeichen ist nie die ganze Aussage. Lies ihn immer mit dem Haus und den Winkeln zu anderen Planeten zusammen. Daf&uuml;r gibt es das Werkzeug <a href="planeten-in-haeusern.html">Planet, Zeichen, Haus</a>.</p>
+</section>
+
+<!-- 3 · Die Zyklen (ab Stufe 1) -->
+<section class="pl-teil" data-ab="1" id="zyklen" aria-labelledby="pl-h-zyklen">
+  <div class="pl-eyebrow">Planetenzyklen</div>
+  <h2 id="pl-h-zyklen" class="pl-h2">Wann ein Thema wiederkommt</h2>
+  <p class="pl-text">Jeder Planet kehrt in festen Abst&auml;nden an dieselbe Stelle zur&uuml;ck. Diese R&uuml;ckkehr ist das st&auml;rkste Timing-Werkzeug der Astrologie und braucht kaum Deutung: Wenn du wei&szlig;t, wann ein Planet zuletzt dort war, wei&szlig;t du, welches Thema gerade wieder anklopft. Und du hast eine Zeugin: dich selbst.</p>
+  <div class="pl-kern"><b>Der Kern in einem Satz:</b> Ein Zyklus wiederholt das Thema, nicht das Ereignis. Wer beim letzten Jupiter-Durchgang umgezogen ist, zieht diesmal nicht zwingend wieder um. Es geht aber wieder um Raum, Zuhause und Ausdehnung.</div>
+
+  <h3 class="pl-h3">Deine Zyklen</h3>
+  <p class="pl-klein" id="plzyklenwer"></p>
+  <div class="pl-jahr" id="pljahrbox">
+    <label for="pljahr">Geburtsjahr</label>
+    <input id="pljahr" type="number" inputmode="numeric" min="1900" max="2030" placeholder="1985">
+  </div>
+  <div class="pl-tabbox"><table class="pl-tab pl-schmal" id="plzyklen"></table></div>
+
+  <h3 class="pl-h3">Die Umlaufzeiten</h3>
+  <div class="pl-tabbox"><table class="pl-tab">
+    <tr><th>Planet</th><th>Umlauf</th><th>Was wiederkehrt</th></tr>
+    <tr><td>Mond</td><td class="mono">27,3 Tage</td><td>Stimmungslagen, der emotionale Grundton</td></tr>
+    <tr><td>Sonne</td><td class="mono">1 Jahr</td><td>Der Jahresbogen, dein Solar Return</td></tr>
+    <tr><td>Merkur, Venus</td><td class="mono">ca. 1 Jahr</td><td>Denken und Beziehungsstil, mit R&uuml;ckl&auml;ufigkeiten</td></tr>
+    <tr><td>Mars</td><td class="mono">2 Jahre</td><td>Antrieb, &Auml;rger, Durchsetzung: der k&uuml;rzeste greifbare Zyklus</td></tr>
+    <tr><td>Jupiter</td><td class="mono">11,9 Jahre</td><td>Wachstum, Weite, wo du dich ausdehnst</td></tr>
+    <tr><td>Saturn</td><td class="mono">29,5 Jahre</td><td>Struktur, Reife, Verantwortung</td></tr>
+    <tr><td>Mondknoten</td><td class="mono">18,6 Jahre</td><td>Richtung, Lebensweg, l&auml;uft r&uuml;ckw&auml;rts</td></tr>
+    <tr><td>Chiron</td><td class="mono">ca. 50 Jahre</td><td>Die Wunde, die zum K&ouml;nnen wird</td></tr>
+    <tr><td>Uranus</td><td class="mono">84 Jahre</td><td>Befreiung, Bruch, Eigenst&auml;ndigkeit</td></tr>
+    <tr><td>Neptun</td><td class="mono">165 Jahre</td><td>Aufl&ouml;sung, Sehnsucht: nie eine volle R&uuml;ckkehr</td></tr>
+    <tr><td>Pluto</td><td class="mono">248 Jahre</td><td>Verwandlung, Macht: nie eine volle R&uuml;ckkehr</td></tr>
+  </table></div>
+
+  <div class="ac-tech" data-ab="2">
+    <h3 class="pl-h3">Vorsicht bei der Uranus-Opposition</h3>
+    <p class="pl-text">Uranus l&auml;uft auf einer stark elliptischen Bahn und braucht f&uuml;r manche Zeichen sieben Jahre, f&uuml;r andere nur vier. Dadurch verschiebt sich das Alter je nach Generation um mehrere Jahre. Mit einem Profil rechnet die Seite das Datum aus, statt es nachzuschlagen.</p>
+    <div class="pl-tabbox"><table class="pl-tab">
+      <tr><th>Uranus im Radix</th><th>Opposition mit etwa</th></tr>
+      <tr><td>L&ouml;we, Jungfrau</td><td class="mono">40&ndash;41</td></tr>
+      <tr><td>Waage, Skorpion</td><td class="mono">42&ndash;43</td></tr>
+      <tr><td>Sch&uuml;tze, Steinbock</td><td class="mono">44&ndash;45</td></tr>
+    </table></div>
+
+    <h3 class="pl-h3">Die R&uuml;ckblick-Methode</h3>
+    <p class="pl-klein">Wie du einen Zyklus im Reading benutzt. Bei dir selbst funktioniert es genauso.</p>
+    <ol class="pl-schritte">
+      <li><b>Den laufenden Transit bestimmen.</b> Welcher Planet ber&uuml;hrt gerade welchen Punkt? Nimm nur einen, den engsten.</li>
+      <li><b>Die Umlaufzeit abziehen.</b> Jupiter minus 12 Jahre, Saturn minus 29, Mars minus 2, Mondknoten minus 18,5. Das ergibt ein konkretes Jahr.</li>
+      <li><b>Fragen, nicht behaupten.</b> &bdquo;Was war damals los?&ldquo; Diese Frage &ouml;ffnet mehr als jede Deutung, und du bekommst gleich die Best&auml;tigung oder Korrektur deiner Lesart.</li>
+      <li><b>Das Thema herausschälen, nicht das Ereignis.</b> Nicht &bdquo;damals ein Umzug, also jetzt wieder&ldquo;, sondern: Worum ging es im Kern? Raum, Zugeh&ouml;rigkeit, Neuanfang?</li>
+      <li><b>Den Unterschied benennen.</b> Was kannst du heute, was du damals nicht konntest? Genau darin liegt der Fortschritt. Der Zyklus kommt wieder, du bist eine andere.</li>
+    </ol>
+    <p class="pl-text"><b>Warum das im Coaching so stark wirkt:</b> Du sagst der Person nichts &uuml;ber ihre Zukunft. Du gibst ihr ein Jahr, sie liefert die Geschichte, und ihr seht gemeinsam das Muster. Das ist keine Prognose, sondern Erinnerungsarbeit mit Struktur, und sie ist &uuml;berpr&uuml;fbar: Passt deine Zuordnung nicht, sagt die Person es dir sofort.</p>
+  </div>
+
+  <h3 class="pl-h3">Die Grenze</h3>
+  <ul class="pl-liste">
+    <li>Ein Zyklus sagt kein Ereignis voraus. Er beschreibt eine Art von Aufgabe.</li>
+    <li>Er sagt nichts &uuml;ber gut oder schlecht. Derselbe Jupiter-Durchgang kann Wachstum bedeuten oder &Uuml;berma&szlig;.</li>
+    <li>Er ist keine Entschuldigung. &bdquo;Das ist gerade mein Saturn&ldquo; erkl&auml;rt eine Schwierigkeit, es erledigt sie nicht.</li>
+  </ul>
+</section>
+
+<!-- 4 · Übung (ab Stufe 1) -->
+<section class="pl-teil" data-ab="1" id="uebung" aria-labelledby="pl-h-uebung">
+  <div class="pl-eyebrow">&Uuml;bung</div>
+  <h2 id="pl-h-uebung" class="pl-h2">Vier Entscheidungen</h2>
+  <p class="pl-klein">Die Erkl&auml;rung erscheint nach jeder Antwort.</p>
+  <div class="pl-quiz" id="plquiz"></div>
+</section>
+
+<section class="pl-ehrlich" aria-labelledby="pl-h-ehrlich">
+  <h2 id="pl-h-ehrlich" class="pl-h3">Was das taugt, und was nicht</h2>
+  <p>Wo die Kr&auml;fte bei dir stehen und wann sie zur&uuml;ckkehren, rechnet dein Browser aus dem aktiven Profil. Gespeichert wird dabei nichts Neues. Die Rechnung ist auf wenige Bogenminuten genau, die Termine auf etwa einen Monat.</p>
+  <p>Was &uuml;ber Bedeutung dasteht, ist &Uuml;berlieferung, nicht &uuml;berpr&uuml;ft. Jeder Mensch tr&auml;gt alle zehn Kr&auml;fte, und jede Stellung kommt bei vielen Menschen vor: Bei den drei langsamen teilt sie ein ganzer Jahrgang. Dass ein Zyklus wiederkommt, ist kein Versprechen, dass etwas gut wird, und keine Warnung, dass es schwer wird.</p>
+  <p>Dein eigenes Erleben hat Vorrang vor dieser Seite. Wenn ein Satz nicht passt, gilt deiner.</p>
+</section>
+
+<nav class="pl-weiter" aria-label="Weiterlesen">
+  <a href="planeten-in-haeusern.html" data-ab="1"><span>Werkzeug</span>Planet, Zeichen, Haus</a>
+  <a href="haeuser.html"><span>Baustein</span>Die zw&ouml;lf Lebensb&uuml;hnen</a>
+  <a href="zeichen.html" data-ab="1"><span>Baustein</span>Die 12 Zeichen</a>
+  <a href="retrograde.html" data-ab="1"><span>Vertiefung</span>R&uuml;ckl&auml;ufige Planeten</a>
+</nav>
+
+</div>

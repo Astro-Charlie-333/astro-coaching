@@ -1,0 +1,113 @@
+/* Planetenseite. Palette wie Mond- und Häuserseite (basis.css).
+   Das Bild der Seite sind zehn Kreisbahnen: innen die schnellen,
+   außen die langsamen Kräfte. Darunter Karten, dann das Nachschlagen. */
+.pl-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+.pl-kopf{padding:52px 0 8px;display:grid;gap:12px}
+.pl-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.pl-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.08;color:#2E3A5C;margin:0;letter-spacing:-.01em}
+.pl-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
+.pl-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
+.pl-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:10px 0 0}
+.pl-text{margin:0;max-width:64ch;line-height:1.6}
+.pl-klein{font-size:.88rem;color:#6B6259;margin:0;line-height:1.55}
+.pl-teil{padding-top:60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.pl-teil>*{min-width:0}
+.pl-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem}
+.pl-wrap a{color:#2E3A5C}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* Die Bahnen */
+.pl-bahn-box{max-width:440px;width:100%;margin:0 auto}
+.pl-bahn-box svg{width:100%;height:auto;display:block}
+.pl-bahn-box .pl-ring{fill:none;stroke:#EBE1D2;stroke-width:1}
+.pl-bahn-box .pl-ring-licht{stroke:#D9C29A}
+.pl-bahn-box g[role=button]{cursor:pointer}
+.pl-bahn-box g[role=button]:focus{outline:none}
+.pl-bahn-box .punkt{fill:#FFFDFA;stroke:#2E3A5C;stroke-width:1.2}
+.pl-bahn-box .glyph{fill:#2E3A5C;font-size:14px;font-family:'DM Sans',system-ui,sans-serif;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.pl-bahn-box g.an .punkt{fill:#2E3A5C}
+.pl-bahn-box g.an .glyph{fill:#FCF7EF}
+.pl-bahn-box g[role=button]:focus-visible .punkt{stroke:#9A7235;stroke-width:3}
+.pl-bahn-box .mitte{fill:#6B6259;font-size:12px;font-family:'DM Sans',system-ui,sans-serif;text-anchor:middle}
+.pl-bahn-box .erde{fill:#9A7235}
+
+/* Die Karten */
+.pl-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.pl-karte{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer;scroll-margin-top:24px}
+.pl-karte.an{border:2px solid #2E3A5C;padding:15px}
+.pl-gl{font-size:1.9rem;line-height:1;color:#9A7235;text-align:center;padding-top:2px}
+.pl-inh{display:grid;gap:5px;min-width:0}
+.pl-inh h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.pl-inh p{margin:0;font-size:.93rem;line-height:1.5}
+.pl-name{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;letter-spacing:.06em;color:#9A7235}
+.pl-gruppe{font-size:.8rem!important;color:#6B6259}
+.pl-frage{font-style:italic;color:#2E3A5C;border-left:2px solid #9A7235;padding-left:10px}
+.pl-bei{background:#F5ECDD;border-radius:10px;padding:9px 11px;display:grid;gap:4px;margin-top:4px}
+.pl-bei-kopf{font-size:.78rem!important;font-weight:600;color:#7A5A27}
+.pl-bei-text{font-size:.9rem!important}
+.pl-bei-tech{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;color:#6B6259}
+
+/* Hinweis auf Stufe 0 */
+.pl-hinweis{margin-top:60px;background:#FFFDFA;border:1px dashed #DDD0BC;border-radius:14px;padding:18px 20px;display:grid;gap:12px;justify-items:start}
+.pl-hinweis p{margin:0;line-height:1.55}
+.pl-hinweis button,.pl-tabs button{font:inherit;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:8px 14px;cursor:pointer;color:#2E3A5C}
+
+/* Durch die Zeichen */
+.pl-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.pl-tabs button[aria-selected=true]{background:#2E3A5C;color:#FCF7EF;border-color:#2E3A5C}
+.pl-zkopf{display:grid;gap:6px;background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px}
+.pl-zkopf p{margin:0;line-height:1.55}
+.pl-zkopf .kurz{font-family:'Fraunces',Georgia,serif;font-size:1.1rem;color:#2E3A5C}
+.pl-zeichen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:10px}
+.pl-z{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px 16px;display:grid;gap:6px;min-width:0}
+.pl-z.pl-z-bei{border:2px solid #9A7235;padding:13px 15px}
+.pl-z-kopf{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.pl-z-kopf .gl{font-size:1.3rem}
+.pl-z-kopf b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem;color:#2E3A5C}
+.pl-z p{margin:0;font-size:.92rem;line-height:1.5}
+.pl-z .wuerde{font-size:.82rem;color:#7A5A27}
+.pl-chip{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
+.pl-chip.pl-chip-bei{background:#9A7235;color:#FFFDFA}
+.pl-el{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
+.pl-el.feuer,.pl-z.feuer .gl{background:#FBE3DA;color:#A05A3A}
+.pl-el.erde,.pl-z.erde .gl{background:#E8EDDC;color:#3D6B62}
+.pl-el.luft,.pl-z.luft .gl{background:#DEEBF1;color:#2E3A5C}
+.pl-el.wasser,.pl-z.wasser .gl{background:#E6E1F0;color:#6A4A62}
+.pl-z .gl{border-radius:8px;width:30px;height:30px;display:grid;place-items:center}
+
+/* Zyklen */
+.pl-kern{background:#F5ECDD;border-radius:12px;padding:14px 16px;line-height:1.55}
+.pl-jahr{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pl-jahr label{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:#6B6259}
+.pl-jahr input{font:inherit;width:120px;padding:8px 10px;border:1px solid #DDD0BC;border-radius:10px;background:#FFFDFA}
+.pl-tabbox{overflow-x:auto;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA}
+.pl-tab{border-collapse:collapse;width:100%;font-size:.9rem;min-width:460px}
+.pl-tab th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#6B6259;font-weight:500;padding:9px 10px;border-bottom:1px solid #EBE1D2}
+.pl-tab.pl-schmal{min-width:0}
+.pl-bahnwer{text-align:center}
+.pl-tab td{padding:9px 10px;border-bottom:1px solid #F0EAE0;vertical-align:top}
+.pl-tab tr.vorbei td{color:#9A9088}
+.pl-tab tr.naechstes td{background:#F5ECDD}
+.pl-tab .was{display:block;font-size:.84rem;color:#6B6259;margin-top:2px}
+.pl-tab tr.vorbei .was{color:#A9A097}
+.pl-marke{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;background:#2E3A5C;color:#FCF7EF;border-radius:999px;padding:2px 7px;margin-left:6px;white-space:nowrap}
+.pl-schritte,.pl-liste{margin:0;padding-left:1.3em;display:grid;gap:8px;line-height:1.55}
+
+/* Übung */
+.pl-quiz{display:grid;gap:12px}
+.pl-q{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:10px}
+.pl-q>p{margin:0;font-weight:500}
+.pl-opts{display:grid;gap:6px}
+.pl-opts button{font:inherit;text-align:left;border:1px solid #EBE1D2;background:#FCF7EF;border-radius:10px;padding:9px 12px;cursor:pointer;color:inherit}
+.pl-opts button.richtig{background:#EAF2EC;border-color:#3F7352}
+.pl-opts button.falsch{background:#F6E6E1;border-color:#8C4A3C}
+.pl-expl{margin:0;font-size:.92rem;line-height:1.5;color:#3C352E}
+
+.pl-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.pl-ehrlich p{margin:0}
+.pl-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px;margin-top:28px}
+.pl-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.pl-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+body.niv-0 .pl-weiter a[data-ab="1"]{display:none}
+.pl-wrap [hidden]{display:none!important}
+.pl-wrap a:focus-visible,.pl-wrap button:focus-visible,.pl-wrap input:focus-visible,.pl-karte:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
