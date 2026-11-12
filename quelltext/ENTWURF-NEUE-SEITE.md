@@ -150,7 +150,7 @@ die fünf Wissensstufen, die Prüfungen. Daran wird nichts neu erfunden.
 | 12 × `raum-*.html` | die Texte wandern in `bereiche.html`, die Seiten gehen |
 | `lunationen` + `mondzyklen` + `mondphasen-rhythmus` | **eine** Mondseite — erledigt 6.11.: `mond.html`, gebaut aus `quelltext/mond/` |
 | 5 Häuserseiten | **eine**, gebaut — erledigt 6.11.: `haeuser.html` aus `quelltext/haeuser/` (vier Seiten); `haeuser-karte.html` bleibt als eigenes Werkzeug |
-| 11 Planetenseiten | **eine** Planetenseite mit allen, gebaut |
+| 11 Planetenseiten | **eine** Planetenseite mit allen, gebaut — erledigt 12.11.: `planeten.html` aus `quelltext/planeten/` (zehn Seiten); `planeten-in-haeusern.html` bleibt als eigenes Werkzeug |
 | 3 Readingseiten + 4 Coachingseiten | sind längst in `begleitung.html` |
 
 Das sind rund **40 Seiten weniger**, ohne dass ein einziger guter Satz
