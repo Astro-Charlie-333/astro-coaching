@@ -1,0 +1,884 @@
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anders verdrahtet &middot; ADHS, Autismus, Abkl&auml;rung, Alltag &middot; Astro-Charlie</title>
+<meta name="description" content="ADHS, Autismus und beides verstehen, der Weg zur Abklärung in Deutschland, und wie man das Leben so einrichtet, dass die eigene Bauweise ein Vorteil wird.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<script src="fortschritt.js" defer></script>
+<script src="begriffe.js" defer></script>
+<script src="niveau.js" defer></script>
+<script src="wortwahl.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+/* Auf schmalen Geraeten bekommt die Navigation eine eigene Zeile.
+   Vorher rutschte sie neben der Marke um und haengte den letzten
+   Punkt rechts unter die anderen — das sah nach Fehler aus, nicht
+   nach Absicht. Dazu bricht „Astro-Charlie" nicht mehr mitten im
+   Namen. Geprueft auf 390 Pixeln. */
+@media(max-width:620px){
+ .ac-leiste-inner{flex-wrap:wrap;row-gap:3px;padding:12px 16px 7px;}
+ .ac-marke{white-space:nowrap;}
+ .ac-nav{margin-left:0;width:100%;gap:1px;flex-wrap:nowrap;}
+ .ac-nav a{padding:6px 10px;font-size:13.5px;}
+ .ac-nav a:first-child{padding-left:0;}
+ .ac-nav a::after{left:10px;right:10px;}
+ .ac-nav a:first-child::after{left:0;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* Anders verdrahtet. Palette wie die übrigen gebauten Seiten
+   (basis.css), dazu die zwei Farben der Überschneidungsgrafik:
+   Rost für ADHS, Blau für Autismus. Drei lange Abschnitte, deshalb
+   oben eine Sprungleiste. */
+.nd-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+.nd-kopf{padding:52px 0 8px;display:grid;gap:14px}
+.nd-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.nd-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.1rem,6.6vw,3.2rem);line-height:1.08;color:#2E3A5C;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.nd-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
+.nd-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.6rem,4.4vw,2.1rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
+.nd-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.22rem;color:#2E3A5C;margin:14px 0 0}
+.nd-text{margin:0;max-width:66ch;line-height:1.62}
+.nd-klein{font-size:.88rem;color:#6B6259;margin:0;line-height:1.55}
+.nd-leise{color:#6B6259}
+.nd-teil{padding-top:64px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;scroll-margin-top:12px}
+.nd-teil>*{min-width:0}
+.nd-wrap a{color:#2E3A5C}
+.nd-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem;margin:0}
+.nd-grenze{background:#FBEFE6;border-left:3px solid #A05A3A;border-radius:10px;padding:14px 16px;line-height:1.55}
+.nd-kasten{background:#FCF7EF;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px;line-height:1.55}
+.nd-akut{background:#EDF0F6;border-left-color:#2E3A5C}
+.nd-stand{font-size:.86rem;color:#6B6259;margin:0;border:1px dashed #DDD0BC;border-radius:10px;padding:10px 12px}
+.nd-inhalt{display:flex;flex-wrap:wrap;gap:8px}
+.nd-inhalt a{font-size:.9rem;border:1px solid #DDD0BC;border-radius:999px;padding:6px 12px;text-decoration:none;background:#FFFDFA}
+body.niv-0 .nd-inhalt a[data-ab="1"],body.niv-0 .nd-weiter a[data-ab="1"]{display:none}
+
+/* Verstehen */
+.nd-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.nd-begriff{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:18px;display:grid;gap:8px;align-content:start}
+.nd-begriff.adhs{border-top:4px solid #C98A6B}
+.nd-begriff.aut{border-top:4px solid #7FA2BE}
+.nd-begriff h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.4rem;color:#2E3A5C;margin:0}
+.nd-begriff span{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#6B6259;letter-spacing:.04em}
+.nd-begriff p{margin:0;line-height:1.55;font-size:.95rem}
+.nd-begriff ul{margin:0;padding-left:1.15em;display:grid;gap:4px;font-size:.92rem}
+.nd-venn{max-width:560px;width:100%;margin:0 auto}
+.nd-venn svg{width:100%;height:auto;display:block}
+.nd-tabbox{overflow-x:auto;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA}
+.nd-tab{border-collapse:collapse;width:100%;font-size:.9rem;min-width:520px}
+.nd-tab th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#6B6259;font-weight:500;padding:9px 10px;border-bottom:1px solid #EBE1D2}
+.nd-tab td{padding:9px 10px;border-bottom:1px solid #F0EAE0;vertical-align:top}
+.nd-tab td:first-child{font-weight:500;color:#2E3A5C}
+.nd-schritte{margin:0;padding-left:1.3em;display:grid;gap:10px;line-height:1.55}
+.nd-irrtum{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.nd-irrtum div,.nd-vier div,.nd-stellungen div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px 16px;display:grid;gap:6px;align-content:start}
+.nd-irrtum b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem;color:#8C4A3C}
+.nd-irrtum p,.nd-vier p,.nd-stellungen p{margin:0;font-size:.92rem;line-height:1.5}
+.nd-vier,.nd-stellungen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.nd-vier b,.nd-stellungen b{color:#2E3A5C}
+
+/* Der Weg */
+.nd-weg{margin:0;padding:0;list-style:none;counter-reset:weg;display:grid;gap:14px}
+.nd-weg>li{counter-increment:weg;position:relative;background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px 18px 16px 62px;display:grid;gap:8px;min-width:0}
+.nd-weg>li::before{content:counter(weg);position:absolute;left:16px;top:14px;width:32px;height:32px;border-radius:50%;background:#2E3A5C;color:#FCF7EF;display:grid;place-items:center;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.nd-weg h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:4px 0 0}
+.nd-weg p{margin:0;line-height:1.55;font-size:.95rem}
+.nd-weg ul{margin:0;padding-left:1.15em;display:grid;gap:4px;font-size:.93rem}
+@media (max-width:480px){.nd-weg>li{padding:56px 16px 16px}.nd-weg>li::before{top:14px}}
+.nd-check{display:grid;gap:6px}
+.nd-c{display:flex;gap:10px;align-items:flex-start;background:#FFFDFA;border:1px solid #EBE1D2;border-radius:10px;padding:10px 12px;cursor:pointer}
+.nd-c input{margin-top:3px;accent-color:#2E3A5C;width:18px;height:18px;flex:none}
+
+/* Leben */
+.nd-bereiche{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
+.nd-bereich{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px 18px;display:grid;gap:12px;align-content:start;min-width:0}
+.nd-bkopf{display:flex;gap:12px;align-items:center}
+.nd-icon{width:40px;height:40px;border-radius:50%;background:#F5ECDD;color:#9A7235;display:grid;place-items:center;font-size:1.2rem;flex:none}
+.nd-bkopf h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:0}
+.nd-bfrage{margin:0;font-style:italic;color:#6B6259;font-size:.92rem}
+.nd-zeile{display:grid;gap:4px}
+.nd-zeile p{margin:0;font-size:.94rem;line-height:1.55}
+.nd-lab{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+.nd-sache{background:#F5ECDD;border-radius:10px;padding:10px 12px}
+.nd-tech{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;color:#6B6259}
+.nd-finder{background:#2E3A5C;color:#F3EFE6;border-radius:16px;padding:20px;display:grid;gap:14px}
+.nd-finder .nd-h3{color:#fff;margin:0}
+.nd-finder .nd-klein{color:#C9D0E2}
+.nd-hf-frage{display:grid;gap:6px}
+.nd-hf-t{font-weight:600;color:#fff}
+.nd-finder textarea{font:inherit;width:100%;border:1px solid #4A5680;border-radius:10px;padding:10px 12px;background:#24304F;color:#fff;resize:vertical}
+.nd-finder textarea::placeholder{color:#9AA4C4}
+.nd-chips{display:flex;flex-wrap:wrap;gap:6px}
+.nd-chips .nd-klein{flex-basis:100%}
+.nd-chips button,.nd-hf-los button{font:inherit;border:1px solid #4A5680;background:transparent;color:#F3EFE6;border-radius:999px;padding:6px 12px;cursor:pointer}
+.nd-chips button[aria-pressed=true]{background:#E8C98D;border-color:#E8C98D;color:#2E3A5C}
+.nd-hf-los{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.nd-hf-los button{background:#E8C98D;color:#2E3A5C;border-color:#E8C98D;font-weight:600}
+.nd-hf-los button:disabled{opacity:.5;cursor:not-allowed}
+.nd-hf-erg{background:#FFFDFA;color:#231F1A;border-radius:12px;padding:16px;display:grid;gap:10px}
+.nd-hf-erg h4{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.nd-hf-erg p{margin:0;line-height:1.55}
+
+.nd-hinweis{margin-top:64px;background:#FFFDFA;border:1px dashed #DDD0BC;border-radius:14px;padding:18px 20px;display:grid;gap:12px;justify-items:start}
+.nd-hinweis p{margin:0;line-height:1.55}
+.nd-hinweis button{font:inherit;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:8px 14px;cursor:pointer;color:#2E3A5C}
+.nd-coach{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:12px 16px}
+.nd-coach summary{cursor:pointer;font-weight:600;color:#2E3A5C}
+.nd-coach>div{display:grid;gap:10px;margin-top:10px}
+.nd-coach p{margin:0;line-height:1.55;font-size:.95rem}
+
+.nd-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.nd-ehrlich p{margin:0}
+.nd-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:10px;margin-top:28px}
+.nd-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
+.nd-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+.nd-wrap [hidden]{display:none!important}
+.nd-wrap a:focus-visible,.nd-wrap button:focus-visible,.nd-wrap textarea:focus-visible,.nd-c input:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+</style>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="index.html">Astro-Charlie</a>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="nd-wrap">
+
+<header class="nd-kopf">
+  <div class="nd-eyebrow">Wissen &middot; Anders verdrahtet</div>
+  <h1 class="nd-h1">Anders verdrahtet verstehen und leben.</h1>
+  <p class="nd-lede">ADHS, Autismus und beides: was gemeint ist, wie der Weg zu einer Abkl&auml;rung praktisch aussieht, und wie man das Leben so einrichtet, dass die eigene Bauweise ein Vorteil wird. Mit oder ohne Diagnose.</p>
+  <div class="nd-grenze"><b>Die Grenze vorweg, weil sie &uuml;berall gilt:</b> Diese Seite ist Orientierung, keine Diagnose und keine Checkliste. Fast alle finden sich in solchen Beschreibungen ein St&uuml;ck weit wieder. Entscheidend ist, ob ein Muster seit der Kindheit besteht und in mehreren Lebensbereichen Schwierigkeiten macht. Das kann nur eine Fachperson einsch&auml;tzen. Ein Geburtsbild kann nichts davon feststellen.</div>
+  <nav class="nd-inhalt" aria-label="Auf dieser Seite">
+    <a href="#verstehen">Verstehen</a><a href="#abklaerung">Der Weg zur Abkl&auml;rung</a><a href="#leben">Anders verdrahtet leben</a><a href="#chart" data-ab="1">Im Geburtsbild</a>
+  </nav>
+  <div id="nivleiste"></div>
+  <p class="nd-profil" id="ndprofil"></p>
+</header>
+
+<!-- 1 · Verstehen -->
+<section class="nd-teil" id="verstehen" aria-labelledby="nd-h-verstehen">
+  <div class="nd-eyebrow">Verstehen</div>
+  <h2 id="nd-h-verstehen" class="nd-h2">ADHS, Autismus und beides</h2>
+  <p class="nd-text">Zwei Begriffe, die oft in einen Topf geworfen werden, obwohl sie Verschiedenes beschreiben. Und eine Kombination, die es offiziell erst seit gut zehn Jahren geben darf.</p>
+  <div class="nd-zwei">
+    <div class="nd-begriff adhs">
+      <h3>ADHS</h3><span>Aufmerksamkeitsdefizit-/Hyperaktivit&auml;tsst&ouml;rung</span>
+      <p>Beschreibt vor allem Schwierigkeiten mit Aufmerksamkeitssteuerung, Impulskontrolle und Aktivit&auml;tsniveau. Nicht &bdquo;zu wenig Aufmerksamkeit&ldquo;, sondern eine Aufmerksamkeit, die sich schlecht bewusst lenken l&auml;sst: mal gar nicht, mal stundenlang auf eine Sache.</p>
+      <ul><li>Schwer anzufangen, auch bei wichtigen Dingen</li><li>Ein Zeitgef&uuml;hl, das nicht verl&auml;sslich arbeitet</li><li>Innere Unruhe, die nicht sichtbar sein muss</li><li>Starke Reaktion auf Zur&uuml;ckweisung</li><li>Interesse als Schalter, nicht als Wille</li></ul>
+    </div>
+    <div class="nd-begriff aut">
+      <h3>Autismus</h3><span>Autismus-Spektrum-St&ouml;rung, ASS</span>
+      <p>Beschreibt eine andere Art, soziale Information zu verarbeiten, dazu ein Bed&uuml;rfnis nach Gleichf&ouml;rmigkeit und eine abweichende Reizverarbeitung. Nicht fehlendes Interesse an Menschen, sondern ein anderer Zugang zu ihnen.</p>
+      <ul><li>Soziale Regeln werden gelernt statt gesp&uuml;rt</li><li>Ver&auml;nderung kostet &uuml;berdurchschnittlich viel</li><li>Reize wirken st&auml;rker oder schw&auml;cher als bei anderen</li><li>Tiefe, dauerhafte Spezialinteressen</li><li>Ersch&ouml;pfung nach sozialen Situationen</li></ul>
+    </div>
+  </div>
+
+  <h3 class="nd-h3">Wo sich beides &uuml;berschneidet</h3>
+  <div class="nd-venn"><svg viewBox="0 0 560 240" role="img" aria-label="&Uuml;berschneidung von ADHS und Autismus">
+    <circle cx="205" cy="120" r="108" fill="#F3DED2" fill-opacity=".78" stroke="#D4A891"/>
+    <circle cx="355" cy="120" r="108" fill="#D8E3ED" fill-opacity=".78" stroke="#9FBACE"/>
+    <text x="128" y="60" font-size="16" fill="#8A4326" font-family="Fraunces,Georgia,serif">ADHS</text>
+    <text x="405" y="60" font-size="16" fill="#2E4E68" font-family="Fraunces,Georgia,serif">Autismus</text>
+    <text x="112" y="112" font-size="12" fill="#6B4A3A">Impulsivit&auml;t</text>
+    <text x="112" y="132" font-size="12" fill="#6B4A3A">Reizsuche</text>
+    <text x="112" y="152" font-size="12" fill="#6B4A3A">Zeitblindheit</text>
+    <text x="398" y="112" font-size="12" fill="#2E4E68">Routinebedarf</text>
+    <text x="398" y="132" font-size="12" fill="#2E4E68">soziale Regeln</text>
+    <text x="398" y="152" font-size="12" fill="#2E4E68">Reizempfindlich</text>
+    <text x="280" y="96" font-size="11.5" fill="#4A4038" text-anchor="middle">&Uuml;berlastung</text>
+    <text x="280" y="116" font-size="11.5" fill="#4A4038" text-anchor="middle">Ersch&ouml;pfung</text>
+    <text x="280" y="136" font-size="11.5" fill="#4A4038" text-anchor="middle">Maskieren</text>
+    <text x="280" y="156" font-size="11.5" fill="#4A4038" text-anchor="middle">Reizfilter</text>
+  </svg></div>
+  <p class="nd-klein">In der Mitte liegt, was sich von au&szlig;en gleich anf&uuml;hlt und trotzdem verschiedene Ursachen hat.</p>
+  <p class="nd-text">Bis 2013 durfte man beide Diagnosen nicht gleichzeitig stellen, die Handb&uuml;cher schlossen es aus. Heute ist die Kombination anerkannt und gilt als h&auml;ufig. Im deutschen Sprachraum kursieren daf&uuml;r die K&uuml;rzel AuDHS oder AutADHS. Offizielle Diagnosen sind das nicht, sondern eine Sprechweise f&uuml;r zwei Diagnosen nebeneinander.</p>
+  <div class="nd-kasten"><b>Warum die Kombination besonders anstrengend ist:</b> Die beiden Seiten wollen Gegens&auml;tzliches. Der eine Teil braucht Neues, Tempo und Abwechslung, der andere Gleichf&ouml;rmigkeit, Ruhe und Vorhersehbarkeit, und zwar gleichzeitig. Das ist kein Widerspruch im Verhalten, sondern ein dauerhafter innerer Zielkonflikt. Wer das erlebt, h&auml;lt sich oft f&uuml;r widerspr&uuml;chlich oder unzuverl&auml;ssig. Es ist aber schlicht die Bauweise.</div>
+
+  <h3 class="nd-h3">Dieselbe Schwierigkeit, verschiedene Gr&uuml;nde</h3>
+  <p class="nd-text">Vieles sieht von au&szlig;en gleich aus und kommt von woanders. Deshalb hilft dieselbe Strategie bei der einen und bei der anderen nicht.</p>
+  <div class="nd-tabbox"><table class="nd-tab">
+    <tr><th>Das zeigt sich so</th><th>Bei ADHS eher</th><th>Bei Autismus eher</th></tr>
+    <tr><td>Termin vergessen</td><td>Zeitgef&uuml;hl und Arbeitsged&auml;chtnis</td><td>Der Ablauf war unklar oder wurde ge&auml;ndert</td></tr>
+    <tr><td>Gespr&auml;ch unterbrochen</td><td>Der Impuls war schneller als die Bremse</td><td>Der richtige Moment war nicht erkennbar</td></tr>
+    <tr><td>Party verlassen</td><td>Langweilig geworden, Reizsuche woanders</td><td>Zu viele Reize, Kapazit&auml;t am Ende</td></tr>
+    <tr><td>Plan nicht eingehalten</td><td>Interesse gekippt, Antrieb weg</td><td>Etwas Unvorhergesehenes hat alles blockiert</td></tr>
+    <tr><td>Stundenlang vertieft</td><td>Hyperfokus, oft wechselndes Thema</td><td>Spezialinteresse, meist &uuml;ber Jahre stabil</td></tr>
+    <tr><td>Kein Blickkontakt</td><td>Die Aufmerksamkeit springt ab</td><td>Blickkontakt kostet Verarbeitungskapazit&auml;t</td></tr>
+  </table></div>
+
+  <h3 class="nd-h3">Warum es bei Frauen so sp&auml;t erkannt wird</h3>
+  <ol class="nd-schritte">
+    <li><b>Die Forschung begann bei Jungen.</b> Die Beschreibungen, nach denen bis heute erkannt wird, stammen &uuml;berwiegend aus Untersuchungen an hyperaktiven Jungen im Grundschulalter. Wer nicht so aussieht, f&auml;llt durch das Raster.</li>
+    <li><b>Anpassung wird fr&uuml;her gelernt.</b> M&auml;dchen werden st&auml;rker zu R&uuml;cksicht und Angepasstheit erzogen. Das Ergebnis ist eine gut funktionierende Au&szlig;enschicht und ein Innenleben, das niemand sieht. Dieses dauerhafte Anpassen ist keine Charakterst&auml;rke, sondern ein erheblicher Energieverbrauch.</li>
+    <li><b>Es zeigt sich nach innen statt nach au&szlig;en.</b> Statt St&ouml;rung im Unterricht: Tagtr&auml;umen, Gr&uuml;beln, Selbstzweifel, Ersch&ouml;pfung. Das f&auml;llt niemandem auf au&szlig;er der Person selbst, die es f&uuml;r ein pers&ouml;nliches Versagen h&auml;lt.</li>
+    <li><b>Es wird anders benannt.</b> Viele bekommen &uuml;ber Jahre andere Etiketten: Ersch&ouml;pfung, Angst, depressive Episode, Pers&ouml;nlichkeitsst&ouml;rung. Manche davon treffen zus&auml;tzlich zu. Fehlt aber die Grundlage, hilft die Behandlung nur begrenzt.</li>
+  </ol>
+  <p class="nd-text">Und ein Hinweis, der selten gemacht wird: Bei Frauen schwanken die Beschwerden h&auml;ufig mit dem Zyklus, weil die beteiligten Botenstoffe hormonabh&auml;ngig sind. Wer eine Abkl&auml;rung macht, notiert am besten &uuml;ber einige Wochen, wie es geht. Das wird in der Diagnostik ernst genommen, und kaum jemand bringt es mit.</p>
+
+  <h3 class="nd-h3">F&uuml;nf verbreitete Irrt&uuml;mer</h3>
+  <div class="nd-irrtum">
+    <div><b>&bdquo;Das w&auml;chst sich aus.&ldquo;</b><p>Bei einem gro&szlig;en Teil bleibt es bis ins Erwachsenenalter bestehen und &auml;ndert nur sein Erscheinungsbild: Aus sichtbarer Unruhe wird innere.</p></div>
+    <div><b>&bdquo;Du kannst dich ja stundenlang konzentrieren.&ldquo;</b><p>Genau das geh&ouml;rt dazu. Das Problem ist nicht die Menge an Aufmerksamkeit, sondern dass sie sich nicht bewusst lenken l&auml;sst.</p></div>
+    <div><b>&bdquo;Autismus hei&szlig;t, keine Gef&uuml;hle zu haben.&ldquo;</b><p>Oft ist das Gegenteil der Fall. Anders ist der Ausdruck, nicht das Empfinden.</p></div>
+    <div><b>&bdquo;Du wirkst aber gar nicht so.&ldquo;</b><p>Das ist meistens eine Aussage &uuml;ber die Anpassungsleistung, nicht &uuml;ber den Zustand. Je besser sie funktioniert, desto teurer ist sie.</p></div>
+    <div><b>&bdquo;Das ist doch nur ein Trend.&ldquo;</b><p>Dass mehr Menschen davon erfahren und sich erkennen, ist keine Mode, sondern eine Nachholbewegung. Gleichzeitig stimmt: Ein Selbsttest im Netz ersetzt keine Abkl&auml;rung.</p></div>
+  </div>
+
+  <h3 class="nd-h3">Was eine Diagnose bringt, und was nicht</h3>
+  <div class="nd-vier">
+    <div><b>Sie erkl&auml;rt r&uuml;ckwirkend</b><p>Viele beschreiben, dass sich damit dreißig Jahre neu sortieren. Das allein ver&auml;ndert schon etwas, auch ohne Behandlung.</p></div>
+    <div><b>Sie &ouml;ffnet Zug&auml;nge</b><p>Behandlung, Nachteilsausgleich, Anpassungen am Arbeitsplatz: Vieles davon setzt einen schriftlichen Befund voraus.</p></div>
+    <div><b>Sie ist kein Freifahrtschein</b><p>Sie erkl&auml;rt Schwierigkeiten, nimmt aber niemandem die Verantwortung f&uuml;r das eigene Verhalten ab.</p></div>
+    <div><b>Sie ist keine Voraussetzung</b><p>Alles, was gegen &Uuml;berlastung hilft, darfst du auch ohne Diagnose tun. Du musst dir nichts verdienen.</p></div>
+  </div>
+</section>
+
+<!-- 2 · Der Weg zur Abklärung -->
+<section class="nd-teil" id="abklaerung" aria-labelledby="nd-h-abklaerung">
+  <div class="nd-eyebrow">Wegweiser</div>
+  <h2 id="nd-h-abklaerung" class="nd-h2">Der Weg zur Abkl&auml;rung</h2>
+  <p class="nd-text">Wer dem Verdacht nachgehen will, scheitert selten am Mut und oft an der Un&uuml;bersichtlichkeit. So l&auml;uft es in Deutschland tats&auml;chlich ab, mit realistischen Wartezeiten, den Unterlagen, die man braucht, und ein paar Wegen, die schneller sind als der offensichtliche.</p>
+  <p class="nd-stand">Stand November 2026. Die Anmeldetage der Berliner Ambulanz sind nachgepr&uuml;ft, Wartezeiten und Kosten nicht. Zust&auml;ndigkeiten &auml;ndern sich: Bitte pr&uuml;f die Angaben selbst nach, bevor du dich darauf verl&auml;sst, besonders bei allem, was Geld betrifft. Das hier ist Orientierung, kein medizinischer oder rechtlicher Rat.</p>
+  <div class="nd-zwei">
+    <div class="nd-kasten"><b>Ein Online-Selbsttest ist keine Diagnose.</b> Er darf ein Anlass sein, genauer hinzuschauen, mehr nicht. Kein Fragebogen kann eine Abkl&auml;rung ersetzen, weil es nicht um einzelne Merkmale geht, sondern um ein Muster seit der Kindheit.</div>
+    <div class="nd-kasten"><b>Du brauchst keine Diagnose, um dir zu helfen.</b> Andere Arbeitszeiten, weniger Reize, Werkzeuge wie unter <a href="methoden.html">Methoden f&uuml;r den Moment</a> darfst du sofort nutzen. Die Abkl&auml;rung braucht es f&uuml;r das, was einen Befund voraussetzt.</div>
+  </div>
+  <ol class="nd-weg">
+    <li><h3>Sammeln, bevor du telefonierst</h3>
+      <p>Der Schritt, den fast alle &uuml;berspringen, und der am meisten bringt. Eine Abkl&auml;rung schaut zwingend in die Kindheit zur&uuml;ck. Je mehr du mitbringst, desto schneller und sicherer geht es.</p>
+      <ul><li>Alte Zeugnisse, vor allem die Bemerkungen der Lehrkr&auml;fte. Oft das wertvollste Material &uuml;berhaupt.</li><li>Fr&uuml;here Befunde und Arztberichte, auch solche mit anderen Etiketten</li><li>Jemanden, der dich als Kind kannte und Fragen beantworten kann</li><li>Ein Tagebuch &uuml;ber zwei bis vier Wochen: wann es kippt, was es kostet, was hilft. Bei Frauen den Zyklus mit notieren.</li></ul></li>
+    <li><h3>Die Haus&auml;rztin als Startpunkt</h3>
+      <p>Sie stellt die Diagnose nicht, kann aber &uuml;berweisen. Bring die Unterlagen mit und sag klar, was du willst: eine &Uuml;berweisung zur Abkl&auml;rung mit eindeutiger Fragestellung. Eine &Uuml;berweisung ist nicht &uuml;berall n&ouml;tig, macht aber vieles leichter.</p>
+      <p>Wenn sie abwinkt (&bdquo;das haben doch heute alle&ldquo;, &bdquo;Sie wirken nicht so&ldquo;): Das kommt vor, weil Erwachsenen-Diagnostik ein junges Feld ist. Du kannst h&ouml;flich auf der &Uuml;berweisung bestehen, die Praxis wechseln oder direkt bei einer Ambulanz anfragen.</p></li>
+    <li><h3>Die richtige Stelle finden</h3>
+      <p>Diagnostizieren d&uuml;rfen Fach&auml;rztinnen f&uuml;r Psychiatrie und Psychotherapie, Neurologinnen und spezialisierte Ambulanzen. Entscheidend ist die Erfahrung mit Erwachsenen, und bei Autismus der Zugang zu den standardisierten Verfahren.</p>
+      <div class="nd-tabbox"><table class="nd-tab">
+        <tr><th>Stelle</th><th>Was du wissen solltest</th><th>Wartezeit</th></tr>
+        <tr><td>Spezialambulanz an einer Uniklinik</td><td>Oft die beste Qualit&auml;t, h&auml;ufig die l&auml;ngste Warteliste</td><td>Monate bis Jahre</td></tr>
+        <tr><td>Psychiatrische Institutsambulanz</td><td>Teilweise ohne &Uuml;berweisung zug&auml;nglich</td><td>Monate</td></tr>
+        <tr><td>Fachpraxis mit Kassenzulassung</td><td>Vorher fragen, ob Erwachsene abgekl&auml;rt werden</td><td>Monate</td></tr>
+        <tr><td>Privatpraxis als Selbstzahlerin</td><td>Deutlich schneller, daf&uuml;r selbst zu tragen</td><td>Wochen</td></tr>
+      </table></div>
+      <p>Realistisch: Bei ADHS liegen die Wartezeiten in gro&szlig;en St&auml;dten oft bei mehreren Monaten. Bei Autismus ist es deutlich schlechter, dort sind ein bis zwei Jahre &uuml;blich, und viele Wartelisten sind zeitweise geschlossen.</p>
+      <p>In Berlin nimmt die Spezialambulanz f&uuml;r Soziale Interaktion an der Humboldt-Universit&auml;t Anmeldungen zur Autismus-Diagnostik nur an bestimmten Tagen an: jeweils am ersten Mittwoch eines Quartals, &uuml;ber ein Online-Formular und mit begrenzten Pl&auml;tzen. Den Tag im Kalender eintragen und an diesem Tag anmelden.</p></li>
+    <li><h3>Parallel anfragen, nicht nacheinander</h3>
+      <p>Der h&auml;ufigste Fehler ist, eine Stelle anzuschreiben und zu warten. Melde dich gleichzeitig &uuml;berall an, wo es geht, und sag ab, sobald ein Termin sicher ist. Das ist nicht unh&ouml;flich, sondern die einzige realistische Strategie.</p>
+      <p>F&uuml;hr dabei ein Anrufprotokoll: Datum, Stelle, Antwort, genannte Wartezeit. Wenn die gesetzliche Versorgung eine notwendige Leistung nicht in zumutbarer Zeit bereitstellt, kommt unter bestimmten Voraussetzungen eine Kostenerstattung durch die Krankenkasse in Betracht. Daf&uuml;r braucht es dokumentierte Absagen. Wichtig: das vorher mit der Kasse kl&auml;ren, nicht hinterher.</p>
+      <p>Die Terminservicestelle der Kassen&auml;rztlichen Vereinigung unter <b>116 117</b> vermittelt Facharzttermine. Sie ist keine Abk&uuml;rzung zur Spezialdiagnostik, aber ein Anruf kostet nichts und bringt manchmal einen Namen, den man selbst nicht gefunden h&auml;tte.</p></li>
+    <li><h3>Was bei der Abkl&auml;rung passiert</h3>
+      <p>Eine seri&ouml;se Abkl&auml;rung ist kein einzelner Test. &Uuml;blich sind mehrere Termine &uuml;ber insgesamt mehrere Stunden.</p>
+      <ul><li>Ausf&uuml;hrliche Anamnese zu Kindheit, Schule, Beruf, Alltag, Beziehungen</li><li>Fremdanamnese, wenn m&ouml;glich, deshalb die Person aus dem ersten Schritt</li><li>Standardisierte Verfahren: bei ADHS etwa ein strukturiertes Interview und Frageb&ouml;gen, die auch die Kindheit erfassen, bei Autismus vor allem die Beobachtung ADOS-2 und das Interview ADI-R</li><li>Abgrenzung: Schilddr&uuml;se, Schlafst&ouml;rungen, Depression, Angst, Traumafolgen und anderes k&ouml;nnen &auml;hnlich aussehen</li><li>Abschlussgespr&auml;ch und schriftlicher Befund</li></ul>
+      <p>Wichtig: Die standardisierten Verfahren k&ouml;nnen bei Frauen und bei Menschen mit ausgepr&auml;gter Anpassungsleistung zu niedrig ausfallen. Ein unauff&auml;lliges Ergebnis schlie&szlig;t deshalb nichts sicher aus. Du darfst nachfragen, widersprechen und eine Zweitmeinung einholen.</p></li>
+    <li><h3>Danach</h3>
+      <p>Der schriftliche Befund geh&ouml;rt dir. Er ist die Grundlage f&uuml;r Behandlung, Anpassungen am Arbeitsplatz und gegebenenfalls Antr&auml;ge. Lass dir im Abschlussgespr&auml;ch erkl&auml;ren, was du nicht verstehst.</p>
+      <p>Und falls die Diagnose nicht gestellt wird: Das entwertet nichts von dem, was du erlebst. Die Schwierigkeiten bleiben real, und die Frage wird eine andere: woher sie sonst kommen und was hilft.</p></li>
+  </ol>
+  <h3 class="nd-h3">Deine Liste zum Abhaken</h3>
+  <p class="nd-klein">Wird im Browser gespeichert, nur auf diesem Ger&auml;t.</p>
+  <div class="nd-check" id="ndcheck"></div>
+  <div class="nd-kasten"><b>Und zum Schluss das Wichtigste:</b> Dieser Weg ist lang, f&uuml;r alle. Wenn es z&auml;h wird, liegt das am System und nicht an dir. Die Versorgungslage ist schlecht, besonders f&uuml;r Erwachsene und besonders bei Autismus. Dass du dranbleiben musst, ist kein Zeichen, dass der Verdacht falsch ist.</div>
+  <div class="nd-kasten nd-akut"><b>Wenn es dir gerade sehr schlecht geht</b> und du nicht bis zu einem Termin warten kannst: Das hat Vorrang vor der Abkl&auml;rung. Wende dich an deine Haus&auml;rztin, an eine psychiatrische Ambulanz in deiner N&auml;he oder in einer akuten Krise an den &auml;rztlichen Bereitschaftsdienst unter <b>116 117</b> oder die Telefonseelsorge unter <b>0800 111 0 111</b>.</div>
+</section>
+
+<!-- 3 · Anders verdrahtet leben -->
+<section class="nd-teil" id="leben" aria-labelledby="nd-h-leben">
+  <div class="nd-eyebrow">Leitfaden</div>
+  <h2 id="nd-h-leben" class="nd-h2">Anders verdrahtet leben</h2>
+  <p class="nd-text">Nicht &bdquo;wie werde ich normaler&ldquo;, sondern: Wie richte ich mein Leben so ein, dass meine Bauweise ein Vorteil wird? Sechs Bereiche, jeweils mit dem, was dein Geburtsbild dazu sagt, der Haltung dahinter und einer konkreten Sache. Was hier steht, sind Belastungs- und Funktionsmuster. Sie sind n&uuml;tzlich, egal ob eine Diagnose vorliegt, ansteht oder nie kommt.</p>
+  <div class="nd-kasten"><b>Die Haltung, auf der alles steht.</b> Adlers Kompensationsgedanke, positiv gewendet: Wo sich jemand unterlegen f&uuml;hlt, entsteht &uuml;berdurchschnittliche Energie. Bei anders verdrahteten Menschen ist das Alltag: Die meisten haben sich in genau den Bereichen F&auml;higkeiten erarbeitet, die ihnen schwerfallen. Die Frage ist deshalb nicht, was fehlt, sondern wof&uuml;r es gut ist und wie man es einsetzt. Mehr dazu unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
+  <div class="nd-bereiche" id="ndbereiche"></div>
+
+  <h3 class="nd-h3">Die Passionsfrage</h3>
+  <p class="nd-text">Die &uuml;bliche Berufungsberatung fragt &bdquo;Was macht dir Freude?&ldquo;. Bei vielen anders verdrahteten Menschen funktioniert das schlecht, weil Interesse schwankt und Begeisterung kein verl&auml;ssliches Signal ist. Das bessere Signal ist der Hyperfokus. Nicht &bdquo;Was macht Spa&szlig;?&ldquo;, sondern: Wobei vergisst du zu essen?</p>
+  <div class="nd-finder">
+    <h3 class="nd-h3">Der Hyperfokus-Finder</h3>
+    <p class="nd-klein">Drei Fragen. Stichworte sind besser als S&auml;tze. Nichts davon wird gespeichert.</p>
+    <div id="ndhf"></div>
+    <div class="nd-chips" id="ndhfchips" role="group" aria-label="Bedingungen"></div>
+    <div class="nd-hf-los"><button type="button" id="ndhfgo">Auswertung zeigen</button><span class="nd-klein" id="ndhfhint"></span></div>
+    <div id="ndhferg" aria-live="polite"></div>
+  </div>
+  <div class="nd-kasten">Und der Teil, den andere weglassen: Nicht jede Passion muss ein Beruf werden. Manchmal ist die tragf&auml;higere L&ouml;sung ein ruhiger Job, der das Spezialinteresse finanziert, statt es zu verbrauchen. Wer sein Liebstes zum Broterwerb macht, verliert es manchmal dabei, und bei schwankender Energie ist das Risiko h&ouml;her.</div>
+</section>
+
+<!-- 4 · Im Geburtsbild (ab Stufe 1) -->
+<div class="nd-hinweis" data-bis="0">
+  <p>Darunter steht, welche Stellungen im Geburtsbild sich mit anders verdrahtetem Erleben decken k&ouml;nnen. Daf&uuml;r braucht es Fachnamen. Die Seite zeigt sie ab der Stufe &bdquo;Wenig&ldquo;.</p>
+  <button type="button" id="ndstufe">Auf &bdquo;Wenig&ldquo; stellen</button>
+</div>
+<section class="nd-teil" data-ab="1" id="chart" aria-labelledby="nd-h-chart">
+  <div class="nd-eyebrow">Im Geburtsbild</div>
+  <h2 id="nd-h-chart" class="nd-h2">Was das Geburtsbild dazu geben kann</h2>
+  <div class="nd-grenze"><b>Bitte zuerst lesen:</b> Astrologie kann Neurodivergenz nicht diagnostizieren, nicht nachweisen und nicht vorhersagen. Es gibt kein &bdquo;ADHS-Placement&ldquo; und kein &bdquo;Autismus-Haus&ldquo;. Menschen mit denselben Stellungen sind v&ouml;llig verschieden. Was hier steht, hilft nur Menschen, die sich selbst schon als anders verdrahtet verstehen, eine zus&auml;tzliche, entlastende Sprache f&uuml;r ihr Erleben zu finden.</div>
+  <p class="nd-text">Viele anders verdrahtete Menschen sind mit dem Gef&uuml;hl aufgewachsen, falsch zu sein: zu viel, zu sensibel, zu sprunghaft, zu intensiv. Die Astrologie bietet einen anderen Rahmen.</p>
+  <div class="nd-vier">
+    <div><b>Nicht wertend</b><p>Ein Geburtsbild kennt kein &bdquo;gest&ouml;rt&ldquo;, nur Anlagen, St&auml;rken und Spannungsfelder. Das entlastet.</p></div>
+    <div><b>Struktur und System</b><p>Viele anders verdrahtete K&ouml;pfe lieben Systeme, Muster und Kategorien. Astrologie ist ein reiches, in sich stimmiges System, das Halt und Ordnung geben kann.</p></div>
+    <div><b>Selbstverst&auml;ndnis statt Selbstkritik</b><p>&bdquo;Ich bin sprunghaft, weil ich falsch bin&ldquo; wird zu &bdquo;Ich habe eine bewegliche Art zu denken, das ist kein Defekt&ldquo;.</p></div>
+    <div><b>Sprache f&uuml;r das Andere</b><p>Astrologie gibt Worte f&uuml;r Erfahrungen, die vorher formlos waren, und das Gef&uuml;hl, gesehen zu werden.</p></div>
+  </div>
+  <h3 class="nd-h3">Stellungen, die sich mit dem Erleben decken k&ouml;nnen</h3>
+  <p class="nd-klein">&bdquo;Decken k&ouml;nnen&ldquo; hei&szlig;t: Wer sich schon als anders verdrahtet versteht, erkennt sich hier oft wieder. Es hei&szlig;t nicht, dass diese Stellungen Neurodivergenz verursachen oder anzeigen.</p>
+  <div class="nd-stellungen">
+    <div><b>Uranus, das Anderssein</b><p>Betont, an Sonne, Mond, Merkur oder Aszendent, oder im 1. oder 3. Haus. Uranus ist das Aus-der-Norm-Fallen, das Elektrisch-Sprunghafte, das Unkonventionelle. Er gibt dem Erleben, anders verdrahtet zu sein, ein stimmiges, w&uuml;rdevolles Bild: nicht falsch, sondern anders. Uranus-Merkur-Kontakte k&ouml;nnen sich mit schnellem, assoziativem Denken decken.</p></div>
+    <div><b>Merkur, Denken und Reizverarbeitung</b><p>In den Zwillingen, an Uranus, im 3. Haus oder stark aktiviert. Ein sehr schneller, aktiver Merkur kann sich mit vielspurigem, springendem Denken decken, mit Ablenkbarkeit und gleichzeitigem Ideenreichtum: &bdquo;Mein Kopf ist nie aus.&ldquo;</p></div>
+    <div><b>Neptun, Reizoffenheit und Empathie</b><p>Betont oder an pers&ouml;nlichen Planeten. Neptun ist Durchl&auml;ssigkeit, tiefe Empathie. Kann sich mit Hochsensibilit&auml;t decken: dem &Uuml;berflutet-Werden von Reizen, dem Aufsaugen fremder Stimmungen, dem Mitf&uuml;hlen bis zur Ersch&ouml;pfung.</p></div>
+    <div><b>Wasser und Feuer, die Intensit&auml;t</b><p>Viel Wasser (Krebs, Skorpion, Fische): reizoffen, empfindsam, emotional durchl&auml;ssig. Viel Feuer oder ein betonter Mars: Impulsivit&auml;t, Bewegungsdrang, das Immer-an-Sein, das k&ouml;rperlich-unruhige Erleben.</p></div>
+    <div><b>Das 12. Haus, das reiche Innenleben</b><p>Betont mit pers&ouml;nlichen Planeten. Das Anders-Erleben der Welt, ein hoher R&uuml;ckzugsbedarf, das &Uuml;berflutet-Werden in Reizumgebungen und ein intensives Innenleben.</p></div>
+    <div><b>Luft, der springende Geist</b><p>Viel Luft oder ein aktiver Merkur kann sich mit schnellem, assoziativem, vielspurigem Denken decken. Uranus- oder Wassermann-Themen spiegeln oft den Wunsch, nicht in Normen zu passen.</p></div>
+  </div>
+  <div class="nd-grenze"><b>Zum Thema Abh&auml;ngigkeiten, mit besonderer Vorsicht.</b> Klassisch werden Neptun, das 12. Haus und Pluto oder das 8. Haus mit Suchtthemen in Verbindung gebracht. Das ist keine Vorhersage und kein Marker. Millionen Menschen mit starkem Neptun leben v&ouml;llig suchtfrei. Sucht entsteht aus einem Zusammenspiel von Genetik, Erlebtem, Umst&auml;nden und Neurobiologie, nie aus einem Geburtsbild. Ein Suchtthema geh&ouml;rt zu Fachleuten: &Auml;rztinnen, Suchtberatung, Therapie.</div>
+
+  <details class="nd-coach">
+    <summary>F&uuml;r die Arbeit mit anderen</summary>
+    <div>
+      <p><b>Die Grenze, die alle sch&uuml;tzt:</b> Du sagst nie &bdquo;Dein Geburtsbild zeigt, dass du ADHS hast&ldquo; oder &bdquo;dass du autistisch bist&ldquo;. Neurodivergenz wird fachlich diagnostiziert, nicht astrologisch. Du arbeitest mit Menschen, die sich selbst schon so verstehen, und gibst ihnen zus&auml;tzliches Selbstverst&auml;ndnis, als Erg&auml;nzung, nie als Ersatz f&uuml;r Fachleute.</p>
+      <p><b>Die Haltung:</b> Frag nicht &bdquo;Hast du vielleicht ADHS?&ldquo;. Arbeite mit dem, was der Mensch selbst &uuml;ber sich wei&szlig;. Und bei allem, was Richtung ernster Belastung, Sucht oder Diagnose geht, verweist du freundlich und klar an Fachleute. Sprich Suchtthemen nicht von dir aus an und stelle nie astrologische Prognosen dazu.</p>
+      <p><b>Eigene Erfahrung:</b> Wenn du selbst anders verdrahtet bist und dich &uuml;ber die Astrologie besser verstehen gelernt hast, sprichst du aus dem Erleben, nicht aus der Ferne. Das macht glaubw&uuml;rdig wie kein Zertifikat, und es ist trotzdem keine Fachkunde f&uuml;r Diagnosen.</p>
+    </div>
+  </details>
+</section>
+
+<section class="nd-ehrlich" aria-labelledby="nd-h-ehrlich">
+  <h2 id="nd-h-ehrlich" class="nd-h3">Was das taugt, und was nicht</h2>
+  <p>Was in den sechs Bereichen &uuml;ber dein Geburtsbild steht, rechnet dein Browser aus dem aktiven Profil. Gespeichert wird dabei nichts Neues, und was du in den Hyperfokus-Finder schreibst, verl&auml;sst diese Seite nicht.</p>
+  <p>Die Zuordnungen von Stellungen zu Erleben sind &Uuml;berlieferung und Erfahrung aus der Praxis, nicht &uuml;berpr&uuml;ft. Jede Stellung kommt bei sehr vielen Menschen vor, die nichts davon erleben. Das Wissen &uuml;ber ADHS und Autismus und den Weg zur Abkl&auml;rung ist sorgf&auml;ltig zusammengetragen, aber keine fachliche Beratung.</p>
+  <p>Dein eigenes Erleben hat Vorrang vor dieser Seite. Wenn etwas nicht passt, gilt deins.</p>
+</section>
+
+<nav class="nd-weiter" aria-label="Weiterlesen">
+  <a href="raum-anders-verdrahtet.html"><span>Themenraum</span>Anders verdrahtet</a>
+  <a href="methoden.html"><span>Werkzeug</span>Methoden f&uuml;r den Moment</a>
+  <a href="organizer.html"><span>Werkzeug</span>Der Organizer</a>
+  <a href="ruhe-schlaf.html" data-ab="1"><span>Vertiefung</span>Ruhe und Schlaf im Chart</a>
+</nav>
+
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* ───────────────────────────────────────────────────────────────
+   nd-daten.js — alle Sätze, die die Anzeige auf der Seite „Anders
+   verdrahtet verstehen und leben" einsetzt.
+
+   Fünf Seiten werden eine (Schritt 5 aus ENTWURF-NEUE-SEITE.md):
+   audhs-verstehen, diagnose-weg, nd-leitfaden, neurodivergente-
+   astrologie und neurodivergenz-vertiefung. Was fest dasteht, steht
+   im Körper; hier steht nur, was aus dem Profil gerechnet oder aus
+   Eingaben zusammengesetzt wird.
+
+   Die sechs Bereiche kommen aus nd-leitfaden.html. Dort sagte jeder
+   Satz „Saturn im 4. Haus", auch auf Stufe 0. Jetzt gibt es zwei
+   Register: `laie` steht immer da und nennt keine Fachbegriffe,
+   `tech` steht ab Stufe 2 daneben. Jeder eingesetzte Satz endet mit
+   einer Folge (REGELN.md 6d).
+
+   Lücken heißen {name} und werden nur gefüllt.
+   ─────────────────────────────────────────────────────────────── */
+
+var ND_MODUS = ['kardinal', 'fix', 'veränderlich'];
+var ND_ELEMENT = ['Feuer', 'Erde', 'Luft', 'Wasser'];
+
+var ND_BEREICH = [
+ {k:'struktur', icon:'⚙', titel:'Struktur', frage:'Welches System hält bei mir wirklich?',
+  laie:'Struktur, die trägt, baust du am leichtesten im Bereich „{feld}“.',
+  modus:{kardinal:'Du startest gut und verlierst die Lust. Bau Neustarts ein, statt auf Durchhalten zu setzen.',
+         fix:'Der Aufbau ist bei dir zäh, das Halten dagegen leicht. Plan mehr Zeit für den Anfang ein.',
+         'veränderlich':'Du brauchst Abwechslung innerhalb der Struktur. Starre Pläne scheitern bei dir an Langeweile, nicht an Disziplin.'},
+  tech:'Saturn im {haus}. Haus · Mond {modus}',
+  adler:'Ein gescheitertes System ist kein Charakterurteil. Frag stattdessen: Wozu war es gut, dass es nicht hielt? Oft schützt das Scheitern davor, sich festzulegen. Das ist eine Information, keine Schwäche.',
+  tun:'Häng eine neue Gewohnheit an eine bestehende an, statt sie neu zu terminieren. Bei schwankender Energie ist das der Mechanismus, der am zuverlässigsten funktioniert.'},
+ {k:'lernen', icon:'◈', titel:'Lernen', frage:'In welchem Format nehme ich überhaupt auf?',
+  element:{Erde:'Du nimmst am besten auf, was konkret und greifbar ist, Schritt für Schritt. Abstraktes musst du dir erst übersetzen.',
+           Luft:'Du brauchst erst das große Bild, dann die Details. Umgekehrt ermüdet es dich.',
+           Feuer:'Du nimmst schnell und zielgerichtet auf. Bevor du zuhörst, musst du wissen, wofür etwas gut ist.',
+           Wasser:'Du nimmst bildhaft und über Stimmung auf. Reine Aufzählungen rutschen durch, Geschichten bleiben.'},
+  tech:'Merkur in {zeichen} · {haus}. Haus · {element}',
+  adler:'Ein Format zu brauchen ist keine Sonderbehandlung. Wozu war die Anpassung gut? Meistens hat sie Konflikte vermieden und dabei jahrelang Kraft gekostet, die woanders gefehlt hat.',
+  tun:'Probier eine Sache, die du verstehen musst, in drei Formaten: lesen, jemandem erzählen, aufzeichnen. Das Format, das am wenigsten anstrengt, darfst du ab jetzt einfordern.'},
+ {k:'emotionen', icon:'◐', titel:'Emotionen', frage:'Warum trifft mich alles doppelt?',
+  wasser:'Dein innerer Reizfilter ist durchlässig: Du nimmst Stimmungen auf, auch fremde, und hältst sie für deine.',
+  sonst:'Du brauchst Sicherheit im Bereich „{feld}“. Fehlt die, steigt dein Grundpegel, und alles wird anstrengender als nötig.',
+  kontakt:'Dazu ist die Grenze zwischen deinen Gefühlen und denen anderer besonders dünn, also lohnt es sich doppelt, zu fragen, wessen Gefühl gerade spricht.',
+  tech:'Mond in {zeichen} · {haus}. Haus',
+  techKontakt:' · enger Kontakt zu Neptun',
+  adler:'Feinfühligkeit ist keine Störung, sondern ein Messinstrument mit hoher Auflösung. Wozu ist sie gut? Du merkst Dinge früh. Das Problem ist nicht das Merken, sondern dass dir niemand beigebracht hat, es zu sortieren.',
+  tun:'Frag dich einmal täglich: Ist dieses Gefühl meins? Nicht analysieren, nur zuordnen. Bei vielen Menschen sinkt die Grundlast damit innerhalb von zwei Wochen spürbar.'},
+ {k:'kommunikation', icon:'❋', titel:'Kommunikation', frage:'Warum werde ich so oft falsch verstanden?',
+  gleich:'Wie du wirkst und wie du denkst, passt zusammen. Das erspart dir viel Übersetzungsarbeit.',
+  anders:'Du wirkst anders, als du denkst. Diese Lücke überbrückst du im Gespräch selbst, und das ist ein guter Teil der Erschöpfung nach sozialen Situationen.',
+  tech:'Aszendent in {asc} · Merkur in {merkur}',
+  adler:'Missverstanden zu werden ist kein Beweis für Unzulänglichkeit. Wozu ist das Erklären gut? Es sichert Zugehörigkeit. Die Frage ist, bei wem du es nicht tun musst, und ob du davon genug hast.',
+  tun:'Sag einmal in dieser Woche zuerst, was du brauchst, statt zu erklären, warum. Ein Satz, keine Begründung. Der Reflex, nachzuschieben, ist die eigentliche Übung.'},
+ {k:'energie', icon:'▲', titel:'Energie', frage:'Warum geht mal alles und dann gar nichts?',
+  element:{Feuer:'Deine Energie kommt schnell und stoßweise, also plan in Spurts statt in gleichmäßigen Blöcken.',
+           Erde:'Deine Energie kommt langsam und hält dann lange, also gib dem Anlaufen mehr Zeit als dem Rest.',
+           Luft:'Deine Energie hängt am geistigen Reiz, also startest du nicht, solange dich nichts interessiert.',
+           Wasser:'Deine Energie folgt der Stimmung, nicht dem Plan, also hält ein Plan nur, wenn er die Stimmung mitdenkt.'},
+  kontakt:'Dazu geht ein Teil deiner Kraft ins Bremsen statt ins Tun. Deshalb fühlt sich ein normaler Tag an wie anderthalb, und das ist keine Einbildung.',
+  tech:'Mars in {zeichen} · {haus}. Haus',
+  techKontakt:' · enger Kontakt zu Saturn',
+  adler:'Schwankende Kapazität ist keine Unzuverlässigkeit. Wozu ist das Aufschieben gut? Was nicht angefangen ist, kann nicht misslingen. Das schützt, und es kostet die Erfahrung, dass es meistens gutgeht.',
+  tun:'Nimm dir bewusst nur ein Fünftel vor. Fünf Minuten statt einer halben Stunde. Ziel ist nicht die Leistung, sondern die Erfahrung, dass Anfangen billig war.'},
+ {k:'reize', icon:'◍', titel:'Reize', frage:'Was genau überlastet mich?',
+  h12:'Ein Teil deiner Kräfte arbeitet unsichtbar: Du verbrauchst Kraft, ohne es zu bemerken, und merkst es erst, wenn nichts mehr geht.',
+  h6:'Belastung sammelt sich bei dir im Alltag an, nicht in großen Ereignissen, also entlasten dich kleine Pausen mehr als ein freies Wochenende.',
+  keine:'Überlastung entsteht bei dir eher aus der Situation als aus einem festen Muster. Das ist eine gute Nachricht, macht es aber schwerer vorherzusehen.',
+  tech:'12. Haus: {h12} · 6. Haus: {h6}',
+  leer:'leer',
+  adler:'Über die Grenze zu gehen hat einen Zweck: Man muss nicht absagen und niemanden enttäuschen. Was würdest du absagen müssen, wenn du deine Grenze ernst nimmst?',
+  tun:'Notier eine Woche lang jeden Tag eine Uhrzeit: den Moment, an dem es kippt. Nur die Zahl. Danach kennst du dein Muster, ohne darüber nachgedacht zu haben.'}];
+
+/* Der Hyperfokus-Finder, aus nd-leitfaden.html. */
+var ND_HF = [
+ {id:'vergessen', t:'Wobei vergisst du zu essen?',
+  h:'Nicht, was Spaß macht, sondern wobei die Zeit tatsächlich verschwindet. Auch wenn es peinlich klingt.',
+  lab:'Dein Hyperfokus',
+  folge:'Das ist die verlässlichste Spur, die du hast, verlässlicher als jedes Interessensprofil, weil sie sich nicht erfragen, nur beobachten lässt.'},
+ {id:'selbst', t:'Was hast du dir beigebracht, ohne dass es jemand verlangt hat?',
+  h:'Das zeigt echtes Interesse, nicht anerzogenes.',
+  lab:'Selbst beigebracht',
+  folge:'Was man sich ohne Auftrag aneignet, ist echtes Interesse. Und es ist meistens die Fähigkeit, die man für selbstverständlich hält.'},
+ {id:'aerger', t:'Was ärgert dich so sehr, dass du es besser machen willst?',
+  h:'Bei vielen anders verdrahteten Menschen ist Gerechtigkeitssinn der stärkere Antrieb als Freude.',
+  lab:'Dein Ärger',
+  folge:'Ärger ist ein stärkerer Antrieb als Begeisterung, weil er nicht schwankt. Zeigen Hyperfokus und Ärger auf dasselbe, hast du eine ungewöhnlich klare Richtung.'}];
+var ND_HF_CHIPS = ['allein', 'mit anderen', 'am Rechner', 'mit den Händen', 'draußen', 'im Gespräch', 'im Kopf', 'strukturiert', 'chaotisch'];
+
+/* Die Liste zum Abhaken, aus diagnose-weg.html. Der Speicherschlüssel
+   bleibt derselbe, damit Häkchen, die schon gesetzt sind, bleiben. */
+var ND_CHECK_SCHLUESSEL = 'ac_diagnoseweg';
+var ND_CHECK = [
+ ['zeugnisse', 'Alte Zeugnisse herausgesucht'],
+ ['befunde', 'Frühere Befunde und Arztberichte gesammelt'],
+ ['person', 'Jemanden gefragt, der mich als Kind kannte'],
+ ['tagebuch', 'Zwei bis vier Wochen Tagebuch geführt'],
+ ['hausarzt', 'Termin bei der Hausärztin gemacht'],
+ ['ueberweisung', 'Überweisung mit klarer Fragestellung erhalten'],
+ ['liste', 'Liste möglicher Stellen erstellt'],
+ ['parallel', 'Überall gleichzeitig angefragt'],
+ ['protokoll', 'Anrufprotokoll angelegt'],
+ ['kasse', 'Bei der Krankenkasse nach Kostenerstattung gefragt'],
+ ['termin', 'Termin zur Abklärung steht']];
+
+/* Alle übrigen Wörter der Anzeige. */
+var ND_TEXT = {
+ profilOhne:'Mit einem Profil unter <a href="profile.html">Profile</a> steht in den sechs Bereichen, was dein Geburtsbild dazu sagt.',
+ profilMit:'Gerechnet für {name}. Wechseln unter <a href="profile.html">Profile</a>.',
+ bereichOhne:'Mit einem Profil steht hier, was dein Geburtsbild zu diesem Bereich sagt.',
+ labBild:'Was dein Geburtsbild dazu sagt',
+ labHaltung:'Die Haltung dazu',
+ labSache:'Eine Sache',
+ hfPlatz:'Stichworte reichen',
+ hfChipsFrage:'Wie sieht es dabei aus? Mehrfach antippen: Das beschreibt die Bedingungen, unter denen es funktioniert.',
+ hfFehlt:'Mindestens eine Frage beantworten',
+ hfTitel:'Was daraus folgt',
+ hfZitat:'„{text}“.',
+ hfChipsLab:'Die Bedingungen',
+ hfChipsFolge:'{liste}. Das ist der praktisch wichtigste Teil: Dieselbe Tätigkeit unter falschen Bedingungen fühlt sich an wie eine andere Tätigkeit.',
+ hfBildLab:'Dein Geburtsbild dazu',
+ hfBild:'Leicht fällt dir etwas im Bereich „{feldJ}“. Wirksam sein willst du im Bereich „{feldS}“. Liegt dein Hyperfokus in einem davon, ist das ein starker Hinweis. Wenn nicht, gewinnt trotzdem der Hyperfokus: Er ist gelebte Erfahrung, das Geburtsbild nur eine Rechnung.',
+ hfBildTech:'Jupiter im {hj}. Haus · Sonne im {hs}. Haus',
+ hfSchluss:'Und die Frage, die jetzt dran ist: Muss das ein Beruf werden? Manchmal ist die bessere Antwort nein, siehe den Hinweis darunter.',
+ trenner:', '};
+
+/* ───────────────────────────────────────────────────────────────
+   nd-rechner.js — die Stellen, die die sechs Bereiche und der
+   Hyperfokus-Finder brauchen. Gerechnet gegen rituale/engine.js
+   (chartVon, haus). Keine eigene Himmelsrechnung, kein Satz.
+
+   Bis zum 12.11. trug nd-leitfaden.html eine eigene Kopie der
+   ganzen Himmelsrechnung. Jetzt rechnet es gegen die eine.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Winkelabstand zweier Längen, 0 bis 180 Grad. */
+function ndAbstand(a, b){ return Math.abs(((a - b + 180) % 360 + 360) % 360 - 180); }
+
+/* Enger Kontakt wie in der alten Seite: auf, quer oder gegenüber,
+   mit 6 Grad Spielraum (quer beim Mond 5). */
+function ndKontakt(a, b, querOrbis){
+  var d = ndAbstand(a, b);
+  return d <= 6 || Math.abs(d - 90) <= querOrbis || Math.abs(d - 180) <= 6;
+}
+
+function ndStellen(p){
+  var C = chartVon(p), z = function(l){ return Math.floor(l / 30); };
+  var PL = ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptun', 'Pluto'];
+  var h6 = [], h12 = [];
+  PL.forEach(function(k){ var h = haus(C, C[k]); if(h === 12) h12.push(k); if(h === 6) h6.push(k); });
+  return {
+    saturnHaus:haus(C, C.Saturn), mondModus:z(C.Mond) % 3,
+    merkurZ:z(C.Merkur), merkurHaus:haus(C, C.Merkur),
+    mondZ:z(C.Mond), mondHaus:haus(C, C.Mond), mondNeptun:ndKontakt(C.Mond, C.Neptun, 5),
+    ascZ:z(C.ASC),
+    marsZ:z(C.Mars), marsHaus:haus(C, C.Mars), marsSaturn:ndKontakt(C.Mars, C.Saturn, 6),
+    h6:h6, h12:h12,
+    jupiterHaus:haus(C, C.Jupiter), sonneHaus:haus(C, C.Sonne)};
+}
+
+/* ───────────────────────────────────────────────────────────────
+   nd-app.js — die Anzeige der Seite „Anders verdrahtet verstehen
+   und leben".
+
+   Diese Datei enthält keinen Satz und keine Rechnung. Sätze aus
+   nd-daten.js, Stellen aus nd-rechner.js, Lebensbereiche (HT) und
+   Zeichen aus rituale/engine.js. bau-nd.py bricht ab, sobald hier
+   ein Satz oder ein „dein" von Hand auftaucht.
+
+   Was jemand in den Hyperfokus-Finder schreibt, wird nur als Text
+   eingesetzt (textContent), nie als HTML, und nicht gespeichert.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+var T = ND_TEXT;
+var el = function(id){ return document.getElementById(id); };
+function ndEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function ndFuell(v, w){ return String(v).replace(/\{([a-zA-Z0-9]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+function ndNeu(tag, klasse, text){ var e = document.createElement(tag); if(klasse) e.className = klasse; if(text !== undefined) e.textContent = text; return e; }
+
+function ndProfil(){ try{ var a = AC_P.alle(); return AC_P.aktives() || AC_P.eigenes() || a[0] || null; }catch(e){ return null; } }
+var P = ndProfil(), S = null;
+if(P){ try{ S = ndStellen(P); }catch(e){ S = null; } }
+var feld = function(h){ return HT[h - 1]; };
+
+/* Was das Geburtsbild zu einem Bereich sagt: [Alltagssprache, Fachzeile]. */
+function ndBild(B){
+  var s = S, el4 = function(zi){ return ND_ELEMENT[zi % 4]; };
+  if(B.k === 'struktur'){
+    var m = ND_MODUS[s.mondModus];
+    return [ndFuell(B.laie, {feld:feld(s.saturnHaus)}) + ' ' + B.modus[m], ndFuell(B.tech, {haus:s.saturnHaus, modus:m})];
+  }
+  if(B.k === 'lernen'){
+    return [B.element[el4(s.merkurZ)], ndFuell(B.tech, {zeichen:SIGNS[s.merkurZ], haus:s.merkurHaus, element:el4(s.merkurZ)})];
+  }
+  if(B.k === 'emotionen'){
+    var t = el4(s.mondZ) === ND_ELEMENT[3] ? B.wasser : ndFuell(B.sonst, {feld:feld(s.mondHaus)});
+    return [t + (s.mondNeptun ? ' ' + B.kontakt : ''),
+            ndFuell(B.tech, {zeichen:SIGNS[s.mondZ], haus:s.mondHaus}) + (s.mondNeptun ? B.techKontakt : '')];
+  }
+  if(B.k === 'kommunikation'){
+    return [s.ascZ % 4 === s.merkurZ % 4 ? B.gleich : B.anders, ndFuell(B.tech, {asc:SIGNS[s.ascZ], merkur:SIGNS[s.merkurZ]})];
+  }
+  if(B.k === 'energie'){
+    return [B.element[el4(s.marsZ)] + (s.marsSaturn ? ' ' + B.kontakt : ''),
+            ndFuell(B.tech, {zeichen:SIGNS[s.marsZ], haus:s.marsHaus}) + (s.marsSaturn ? B.techKontakt : '')];
+  }
+  var teile = [];
+  if(s.h12.length) teile.push(B.h12);
+  if(s.h6.length) teile.push(B.h6);
+  return [teile.length ? teile.join(' ') : B.keine,
+          ndFuell(B.tech, {h12:s.h12.length ? s.h12.join(T.trenner) : B.leer, h6:s.h6.length ? s.h6.join(T.trenner) : B.leer})];
+}
+
+function ndZeile(lab, text, klasse){
+  var d = ndNeu('div', klasse || 'nd-zeile');
+  d.appendChild(ndNeu('span', 'nd-lab', lab));
+  if(text !== undefined) d.appendChild(ndNeu('p', '', text));
+  return d;
+}
+
+function ndBereiche(){
+  var box = el('ndbereiche'); box.innerHTML = '';
+  ND_BEREICH.forEach(function(B){
+    var a = ndNeu('article', 'nd-bereich');
+    var kopf = ndNeu('div', 'nd-bkopf');
+    kopf.appendChild(ndNeu('span', 'nd-icon', B.icon)).setAttribute('aria-hidden', 'true');
+    var tt = ndNeu('div');
+    tt.appendChild(ndNeu('h3', '', B.titel)); tt.appendChild(ndNeu('p', 'nd-bfrage', B.frage));
+    kopf.appendChild(tt); a.appendChild(kopf);
+    var z = ndZeile(T.labBild);
+    if(S){
+      var b = ndBild(B);
+      z.appendChild(ndNeu('p', '', b[0]));
+      var t = ndNeu('p', 'nd-tech', b[1]); t.setAttribute('data-ab', '2'); z.appendChild(t);
+    } else { z.appendChild(ndNeu('p', 'nd-leise', T.bereichOhne)); }
+    a.appendChild(z);
+    a.appendChild(ndZeile(T.labHaltung, B.adler));
+    a.appendChild(ndZeile(T.labSache, B.tun, 'nd-zeile nd-sache'));
+    box.appendChild(a);
+  });
+}
+
+/* Hyperfokus-Finder */
+var ndAnt = {}, ndChips = [];
+function ndHfPruef(){
+  var voll = ND_HF.some(function(q){ return (ndAnt[q.id] || '').trim().length > 1; });
+  el('ndhfgo').disabled = !voll;
+  el('ndhfhint').textContent = voll ? '' : T.hfFehlt;
+}
+function ndHf(){
+  var box = el('ndhf'); box.innerHTML = '';
+  ND_HF.forEach(function(q, i){
+    var d = ndNeu('div', 'nd-hf-frage');
+    var lab = ndNeu('label', 'nd-hf-t', q.t); lab.setAttribute('for', 'ndhf' + q.id);
+    d.appendChild(lab);
+    d.appendChild(ndNeu('p', 'nd-klein', q.h));
+    var ta = document.createElement('textarea'); ta.id = 'ndhf' + q.id; ta.rows = 2; ta.placeholder = T.hfPlatz;
+    ta.addEventListener('input', function(){ ndAnt[q.id] = ta.value; ndHfPruef(); });
+    d.appendChild(ta); box.appendChild(d);
+  });
+  var cb = el('ndhfchips'); cb.innerHTML = '';
+  cb.appendChild(ndNeu('p', 'nd-klein', T.hfChipsFrage));
+  ND_HF_CHIPS.forEach(function(g){
+    var b = ndNeu('button', '', g); b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function(){
+      var i = ndChips.indexOf(g);
+      if(i < 0) ndChips.push(g); else ndChips.splice(i, 1);
+      b.setAttribute('aria-pressed', String(i < 0));
+    });
+    cb.appendChild(b);
+  });
+  ndHfPruef();
+}
+function ndHfAuswerten(){
+  var box = el('ndhferg'); box.innerHTML = '';
+  var e = ndNeu('div', 'nd-hf-erg');
+  e.appendChild(ndNeu('h4', '', T.hfTitel));
+  ND_HF.forEach(function(q){
+    var a = (ndAnt[q.id] || '').trim(); if(!a) return;
+    var p = ndNeu('p'); p.appendChild(ndNeu('b', '', q.lab));
+    p.appendChild(document.createTextNode(' ' + ndFuell(T.hfZitat, {text:a}) + ' ' + q.folge));
+    e.appendChild(p);
+  });
+  if(ndChips.length){
+    var p = ndNeu('p'); p.appendChild(ndNeu('b', '', T.hfChipsLab));
+    p.appendChild(document.createTextNode(' ' + ndFuell(T.hfChipsFolge, {liste:ndChips.join(T.trenner)})));
+    e.appendChild(p);
+  }
+  if(S){
+    var p = ndNeu('p'); p.appendChild(ndNeu('b', '', T.hfBildLab));
+    p.appendChild(document.createTextNode(' ' + ndFuell(T.hfBild, {feldJ:feld(S.jupiterHaus), feldS:feld(S.sonneHaus)})));
+    e.appendChild(p);
+    var t = ndNeu('p', 'nd-tech', ndFuell(T.hfBildTech, {hj:S.jupiterHaus, hs:S.sonneHaus})); t.setAttribute('data-ab', '2'); e.appendChild(t);
+  }
+  e.appendChild(ndNeu('p', 'nd-leise', T.hfSchluss));
+  box.appendChild(e);
+  try{ if(window.AC_WEG) AC_WEG.notieren({schluessel:'hyperfokus', titel:'Hyperfokus-Finder', art:'werkzeug', antwort:'ja', chips:ndChips.slice(), notiz:(ndAnt.vergessen || '')}); }catch(x){}
+}
+
+/* Liste zum Abhaken */
+function ndLade(){ try{ return JSON.parse(localStorage.getItem(ND_CHECK_SCHLUESSEL) || '{}') || {}; }catch(e){ return {}; } }
+function ndSichere(s){ try{ localStorage.setItem(ND_CHECK_SCHLUESSEL, JSON.stringify(s)); }catch(e){} }
+function ndCheck(){
+  var s = ndLade(), box = el('ndcheck'); box.innerHTML = '';
+  ND_CHECK.forEach(function(p){
+    var l = ndNeu('label', 'nd-c'), i = document.createElement('input');
+    i.type = 'checkbox'; i.id = 'ndc' + p[0]; i.checked = !!s[p[0]];
+    i.addEventListener('change', function(){ var t = ndLade(); t[p[0]] = i.checked; ndSichere(t); });
+    l.appendChild(i); l.appendChild(ndNeu('span', '', p[1])); box.appendChild(l);
+  });
+}
+
+function ndLos(){
+  var b = el('ndprofil');
+  if(S){ var n = ''; try{ n = AC_P.anzeige(P, AC_P.zeigeNamen()); }catch(e){} b.innerHTML = ndFuell(T.profilMit, {name:'<b>' + ndEsc(n) + '</b>'}); }
+  else b.innerHTML = T.profilOhne;
+  ndBereiche(); ndHf(); ndCheck();
+  el('ndhfgo').addEventListener('click', ndHfAuswerten);
+  el('ndstufe').addEventListener('click', function(){ if(window.AC_NIV) AC_NIV.setzen(1); });
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ndLos); else ndLos();
+})();
+
+</script>
+</body></html>

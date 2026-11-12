@@ -242,7 +242,7 @@ R_RAEUME['anders-verdrahtet'] = {
   h1: "Anders verdrahtet.",
   frage: "„Warum ist der Alltag für mich so anstrengend?\"",
   intro: "Manche Menschen verbrauchen für ganz normale Tage mehr Kraft als andere — und halten das lange für einen Charakterfehler. Dieser Raum schaut sich an, wie dein Kopf Informationen verarbeitet, was dich überlastet, wie deine Energie ankommt und was dich tatsächlich auflädt. Sieben Facetten, gewichtet nach deinem Chart.",
-  weiter: "<div class=\"weiter\"><a href=\"raeume.html\"><span class=\"lbl\">&larr; Zur&uuml;ck</span><span class=\"ttl\">Alle R&auml;ume</span></a><a href=\"audhs-verstehen.html\" class=\"nx\"><span class=\"lbl\">Weiter &rarr;</span><span class=\"ttl\">ADHS, Autismus und beides</span></a></div>",
+  weiter: "<div class=\"weiter\"><a href=\"raeume.html\"><span class=\"lbl\">&larr; Zur&uuml;ck</span><span class=\"ttl\">Alle R&auml;ume</span></a><a href=\"anders-verdrahtet.html#verstehen\" class=\"nx\"><span class=\"lbl\">Weiter &rarr;</span><span class=\"ttl\">ADHS, Autismus und beides</span></a></div>",
   fuss: "Themenraum Anders verdrahtet &middot; Gewichtung aus deinem Chart, im Browser gerechnet. Selbstarbeit und Coaching &mdash; keine Therapie und keine Diagnostik.",
   def: (function(){ var RAUM = {
  name:'Anders verdrahtet',

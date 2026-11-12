@@ -43,6 +43,7 @@ BAUTEN = [
     ('haeuser/bau-haeuser.py', 'Haeuser'),
     ('planeten/bau-planeten.py', 'Planeten'),
     ('leitfaden/bau-leitfaden.py', 'Leitfaden'),
+    ('nd/bau-nd.py',          'Verdrahtet'),
     ('rituale/bau-zauber.py', 'Zauber'),
     ('niveau/bau-reading.py', 'Reading'),
     ('karte/bau-karte.py',    'Karte'),
@@ -297,10 +298,10 @@ else:
 HANDARBEIT = {
     'achsen.html', 'angebote-struktur.html', 'ankommen.html',
     'aspekt-muster.html', 'aspekte-lesen.html', 'aspekte.html',
-    'asteroiden.html', 'astrokartographie.html', 'audhs-verstehen.html',
+    'asteroiden.html', 'astrokartographie.html',
     'bausteine.html', 'bazi.html', 'berufe.html', 'briefing.html',
     'chart-lesen.html', 'chart-rechner.html', 'coaching-verbinden.html',
-    'coaching.html', 'dating-muster.html', 'diagnose-weg.html',
+    'coaching.html', 'dating-muster.html',
     'element-mix.html', 'erinnerung.html', 'faden.html',
     'finsternisse.html', 'fragen-schatzkiste.html', 'glossar.html',
     'grade.html', 'grenzen.html', 'grundlagen.html',
@@ -310,9 +311,7 @@ HANDARBEIT = {
     'lebens-kompass.html', 'lilith-arbeit.html',
     'linien-lesen.html', 'mein-chart.html',
     'menschen-lesen.html', 'methoden.html', 'mondknoten-coaching.html',
-    'mondknoten.html',
-    'nd-leitfaden.html', 'neurodivergente-astrologie.html',
-    'neurodivergenz-vertiefung.html', 'orbis-gewichtung.html',
+    'mondknoten.html', 'orbis-gewichtung.html',
     'organizer.html',
     'profektionen.html', 'profil-ansicht.html', 'profile.html',
     'quiz.html', 'raeume.html',                         'reading-ablauf.html', 'reading-gespraech.html', 'retrograde.html',
@@ -740,7 +739,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'start/start-app.js', 'app/offline-app.js',
           'kern/heute-app.js', 'kern/ich-app.js',
           'monat/monat-app.js', 'planeten/planeten-app.js',
-          'leitfaden/leitfaden-app.js'}
+          'leitfaden/leitfaden-app.js', 'nd/nd-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
