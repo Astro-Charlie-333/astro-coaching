@@ -176,3 +176,187 @@ var BK_DATEI_SCHRIFT = 'https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wg
 
 /* Der Kopf jeder Datei. */
 var BK_DATEI_ANFANG = '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
+
+/* ═══ Zweite Lieferung, 13.11.: Haltepunkte, Wochenstruktur und die
+   beiden Termin-Vorbereitungen. ═══════════════════════════════════ */
+
+BK_BAUSTEINE.push(
+ {k:'halt', chart:true, titel:'Haltepunkte bei Gedankenschleifen', kurz:'Etwas zum Festhalten, wenn Angst um Arbeit, Selbstwert oder eine ausbleibende Nachricht im Kreis läuft.',
+  datei:'Haltepunkte'},
+ {k:'woche', chart:true, titel:'Wochenstruktur bei schwankender Energie', kurz:'Eine Woche, die mit guten und schlechten Tagen rechnet. Energiestufen, Puffer und ein persönlicher Rhythmus.',
+  datei:'Wochenstruktur'},
+ {k:'termin', chart:false, titel:'Termin-Vorbereitung ADHS', kurz:'Typische Merkmale ankreuzen, Leidensdruck einschätzen, Fragen für das Gespräch. Zum Ausfüllen auf dem Handy.',
+  datei:'Termin-ADHS'},
+ {k:'termin2', chart:false, titel:'Termin-Vorbereitung AuDHS', kurz:'Dasselbe für ADHS und Autismus gemeinsam, mit Maskieren, Reizen und Zyklus. Für Frauen geschrieben.',
+  datei:'Termin-AuDHS'});
+
+/* Die drei Arten, nach denen manche Teile wählen. Reihenfolge wie z % 3. */
+var BK_MODUS = ['kardinal', 'fix', 'veränderlich'];
+
+/* ── Haltepunkte ──────────────────────────────────────────── */
+var BK_HALT = {
+ titel:'Deine Haltepunkte',
+ lede:'Für Momente, in denen ein Gedanke im Kreis läuft: Angst um Arbeit und Geld, das Gefühl, nicht genug zu sein, das Warten auf eine Nachricht. Du musst die Schleife nicht lösen. Es reicht, einen Haltepunkt zu finden.',
+ geruestTitel:'Wenn die Schleife startet',
+ geruest:[
+  ['Benennen', 'Sag dir leise: Ich bin gerade in einer Schleife. Was man benennt, verliert einen Teil seiner Macht.'],
+  ['Atmen', 'Vier Zähler ein, sechs aus, fünfmal. Das längere Ausatmen holt den Körper aus dem Alarm.'],
+  ['Boden', 'Spür die Füße auf dem Boden und die Hände auf den Oberschenkeln. Du bist hier, nicht in der Zukunft, vor der du Angst hast.'],
+  ['Fragen', 'Nimm eine der drei Fragen unten. Nur eine.'],
+  ['Ein Schritt', 'Tu die kleinste Sache, die in deiner Hand liegt. Eine Mail, ein Glas Wasser, ein Spaziergang. Handeln unterbricht Kreisen.']],
+ teile:[
+  {k:'mond', kopf:'Was dich auffängt', punkt:'Mond', texte:{
+    Feuer:'Dich fängt Bewegung auf, nicht Nachdenken. Steh auf, geh ein paar Schritte, mach etwas mit Schwung. Danach siehst du klarer.',
+    Erde:'Dich fängt Verlässliches auf: eine warme Tasse, deine gewohnte Ecke, ein Ablauf, den du kennst. Sicherheit kommt bei dir über das Vertraute.',
+    Luft:'Dich fängt ein Gespräch auf oder ein Satz auf Papier. Sobald der Gedanke draußen ist, wird er kleiner.',
+    Wasser:'Dich fängt auf, wenn das Gefühl da sein darf. Leg eine Hand aufs Herz und sag dir: Das ist gerade schwer, und das darf so sein.'}},
+  {k:'sonne', kopf:'Woran du dich erinnern kannst', punkt:'Sonne', texte:{
+    Feuer:'Du hast schon oft angefangen, wo andere gezögert haben. Mut ist bei dir keine Laune, sondern ein Grundzug, auch wenn er sich heute leise anfühlt.',
+    Erde:'Du hast schon vieles Stück für Stück aufgebaut. Was du anfasst, bekommt Bestand, auch wenn es langsamer geht, als du es dir wünschst.',
+    Luft:'Du findest Lösungen, indem du Dinge verbindest: Menschen, Ideen, Wege. Das hat dich schon oft weitergebracht, und es wird es wieder tun.',
+    Wasser:'Du spürst, was andere übersehen. Das macht dich verletzlich, und es ist zugleich deine größte Stärke.'}},
+  {k:'saturn', kopf:'Was deine Angst schützen will', punkt:'Saturn', texte:{
+    Feuer:'Deine Angst will verhindern, dass du dich blamierst, wenn du vorangehst. Sie meint es gut und übertreibt. Du darfst trotzdem gehen, einfach etwas langsamer.',
+    Erde:'Deine Angst will verhindern, dass dir der Boden wegbricht: Geld, Sicherheit, Verlässlichkeit. Frag sie, was heute konkret fehlt, statt was irgendwann fehlen könnte.',
+    Luft:'Deine Angst will verhindern, dass du falsch verstanden oder ausgeschlossen wirst. Frag dich: Wessen Urteil fürchte ich gerade, und ist das wirklich so wichtig?',
+    Wasser:'Deine Angst will verhindern, dass du verlassen oder verletzt wirst. Sie erinnert dich an alte Wunden, nicht an das, was heute passiert.'}}],
+ fragenTitel:'Drei Fragen',
+ fragen:[
+  'Wozu könnte das, was gerade passiert, gut sein?',
+  'Was davon ist meine Aufgabe, und was ist die Aufgabe von jemand anderem?',
+  'Was ist der kleinste Schritt, der jetzt in meiner Hand liegt?'],
+ schleifenTitel:'Wenn es um diese Themen kreist',
+ schleifen:[
+  ['Angst um Arbeit und Geld', 'Schreib auf, was diese Woche konkret ansteht, nicht was in einem Jahr sein könnte. Die Angst lebt in der Zukunft, handeln kannst du nur heute.'],
+  ['Ich bin nicht genug', 'Dein Wert hängt nicht an deiner Leistung von heute. Nenn drei Dinge, die du in letzter Zeit geschafft hast, auch kleine.'],
+  ['Warten auf eine Nachricht', 'Was ein anderer Mensch tut oder nicht tut, liegt bei ihm. Leg das Handy für eine Stunde weg und tu etwas, das nur dir gehört.']],
+ satzTitel:'Ein Satz zum Festhalten',
+ saetze:{
+  Feuer:'Ich muss nicht alles heute lösen. Ich gehe den nächsten Schritt.',
+  Erde:'Ich habe Boden unter den Füßen. Das hier geht vorbei.',
+  Luft:'Ein Gedanke ist ein Gedanke, keine Wahrheit.',
+  Wasser:'Ich darf fühlen, was ich fühle, und trotzdem sicher sein.'},
+ schluss:'Haltepunkte ersetzen keine Hilfe, wenn es dauerhaft schwer bleibt. Dann ist ein Gespräch mit deiner Hausärztin oder einer Therapeutin der nächste gute Schritt.'};
+
+/* ── Wochenstruktur ───────────────────────────────────────── */
+var BK_WOCHE = {
+ titel:'Deine Woche',
+ lede:'Eine Woche, die damit rechnet, dass nicht jeder Tag gleich ist. Statt eines starren Plans gibt es Aufgaben für jede Energiestufe, feste Anker und Puffer. Dazu, wie dein Rhythmus nach deinem Geburtsbild am ehesten funktioniert.',
+ stufenTitel:'Drei Energiestufen',
+ stufen:[
+  ['Hoch', 'Aufgaben, die Anlauf brauchen: Neues anfangen, schwierige Gespräche, kreative Arbeit. Nicht verplanen, sondern nutzen, wenn es so weit ist.'],
+  ['Mittel', 'Routine: Mails, Erledigungen, Dinge, die du kennst. Das meiste in einer Woche gehört hierher.'],
+  ['Niedrig', 'Eine Liste mit Dingen, die auch müde gehen: sortieren, einkaufen, eine Rechnung bezahlen. So zählt auch ein schlechter Tag.']],
+ geruestTitel:'Das Gerüst der Woche',
+ geruest:[
+  ['Nur 60 Prozent', 'Plane nur gut die Hälfte deiner Zeit fest ein. Der Rest fängt auf, was dazwischenkommt.'],
+  ['Ein Puffertag', 'Ein Tag pro Woche ohne Termine. Er ist kein Faulenzen, sondern der Grund, warum der Rest hält.'],
+  ['Feste Anker', 'Aufstehen, Essen, Licht aus jeden Tag ungefähr gleich. Anker halten die Woche zusammen, wenn die Energie schwankt.'],
+  ['Am Sonntag', 'Drei Fragen: Was hat gut funktioniert? Was hat Kraft gekostet? Was lasse ich nächste Woche weg?']],
+ teile:[
+  {k:'mars', kopf:'Wie deine Energie kommt', punkt:'Mars', texte:{
+    Feuer:'Deine Energie kommt in Schüben. Plane in kurzen Spurts mit Pausen dazwischen, statt in gleichmäßigen Blöcken.',
+    Erde:'Deine Energie kommt langsam und hält dann lange. Gib Anfängen mehr Zeit und nutze die Tage, an denen es läuft, für das Große.',
+    Luft:'Deine Energie hängt am Interesse. Wechsle zwischen Aufgaben, statt eine einzige den ganzen Tag zu machen.',
+    Wasser:'Deine Energie folgt der Stimmung. Entscheide morgens, welche Stufe heute ist, und wähle die Aufgaben danach.'}},
+  {k:'mond', kopf:'Wie viel Struktur dir guttut', punkt:'Mond', nach:'modus', texte:{
+    kardinal:'Du startest gern und verlierst dann die Lust. Bau jede Woche einen kleinen Neustart ein, zum Beispiel am Mittwoch, statt auf Durchhalten zu setzen.',
+    fix:'Du brauchst feste Abläufe, die sich nicht ständig ändern. Halte die Grundform der Woche gleich und ändere nur, was wirklich muss.',
+    'veränderlich':'Du brauchst Abwechslung in der Struktur. Plane Themen pro Tag, nicht feste Uhrzeiten, und tausch Tage, wenn es passt.'}},
+  {k:'merkur', kopf:'Wie du planst', punkt:'Merkur', texte:{
+    Feuer:'Plane kurz: drei Ziele für die Woche, mehr nicht. Lange Listen bremsen dich aus.',
+    Erde:'Plane schriftlich, mit Kalender und Liste zum Abhaken. Was auf Papier steht, gibt dir Ruhe.',
+    Luft:'Plane locker, etwa als Notiz oder Skizze, und lass Raum für Ideen. Zu starre Pläne machst du ohnehin wieder neu.',
+    Wasser:'Plane am Abend vorher für den nächsten Tag, nicht für die ganze Woche. So passt der Plan zu dem, wie es dir wirklich geht.'}}],
+ satzTitel:'Ein Satz für die Woche',
+ saetze:{
+  Feuer:'Ein guter Tag zählt, ein schwacher Tag auch.',
+  Erde:'Langsam ist auch eine Geschwindigkeit.',
+  Luft:'Ich darf umplanen. Das ist kein Scheitern.',
+  Wasser:'Ich höre auf meine Energie und nicht nur auf meinen Plan.'},
+ punktSatz:'Sonne',
+ schluss:'Keine Woche läuft nach Plan. Das Ziel ist nicht, den Plan zu erfüllen, sondern freundlicher mit den Schwankungen umzugehen.'};
+
+/* ── Termin-Vorbereitungen ────────────────────────────────── */
+/* Aus den beiden Seiten für Stefan vom 13.11., ohne Skript: Kästchen
+   und Skalen funktionieren in der Datei von selbst, gespeichert wird
+   nichts. Die Kriterien folgen den gängigen Diagnosekriterien für
+   Erwachsene; seit 2013 dürfen ADHS und Autismus gemeinsam
+   diagnostiziert werden. */
+var BK_STUFEN = ['gar nicht', 'etwas', 'deutlich', 'stark', 'sehr stark'];
+
+var BK_TERMIN = {
+ titel:'Für deinen Termin',
+ lede:'Im Gespräch selbst fällt einem oft nur die Hälfte ein. Kreuz vorher in Ruhe an, was du kennst, schätz ein, wie sehr es dich belastet, und nimm die Seite mit ins Gespräch.',
+ vorabTitel:'Wichtig vorab',
+ vorab:'Das hier ist kein Test und keine Diagnose. Fast jeder Mensch erkennt sich in einigen Punkten wieder. Die Seite hilft dir nur, deine Erfahrungen in Worte zu fassen. Ob es ADHS ist, klärt die Fachperson. Was du hier ankreuzt, wird nirgends gespeichert.',
+ vierTitel:'Vier Fragen stehen hinter jeder Abklärung',
+ vier:[
+  ['Seit der Kindheit', 'Mehrere Merkmale gab es schon vor dem 12. Lebensjahr, auch wenn es damals niemand so genannt hat.'],
+  ['Dauerhaft', 'Nicht nur in einer stressigen Phase, sondern seit mindestens einem halben Jahr und eigentlich schon immer.'],
+  ['In mehreren Bereichen', 'Zum Beispiel bei der Arbeit und zuhause, nicht nur an einem Ort oder bei einer Person.'],
+  ['Mit Leidensdruck', 'Es beeinträchtigt dich spürbar: im Beruf, in Beziehungen, im Alltag oder in deinem Selbstwert.']],
+ gruppenTitel:'Was davon kennst du?',
+ gruppenHinweis:'Kreuz nur an, was dich wirklich oft betrifft. Und unter jeder Gruppe, ob es schon in der Schulzeit so war.',
+ kind:'War schon in der Schulzeit so',
+ gruppen:[
+  {t:'Aufmerksamkeit', m:[['Ich schweife ab', 'In Gesprächen, beim Lesen, in Meetings.'], ['Ich komme schwer ins Anfangen', 'Auch bei wichtigen Dingen, oft erst kurz vor der Frist.'], ['Ich bringe Dinge nicht zu Ende', 'Viele angefangene Projekte, der letzte Schritt fehlt.'], ['Ich verliere und vergesse Dinge', 'Schlüssel, Rückrufe, Termine.'], ['Ich mache Flüchtigkeitsfehler', 'Nicht aus Unwissen, sondern weil ein Detail durchrutscht.'], ['Ich bin leicht abzulenken', 'Geräusche, Benachrichtigungen, ein eigener Gedanke.']]},
+  {t:'Hyperfokus und Interesse', m:[['Bei Interesse versinke ich', 'Stundenlang, ich vergesse Zeit, Essen und Pausen.'], ['Langweiliges geht kaum', 'Egal, wie wichtig es ist.'], ['Ich brauche Druck oder Neues', 'Erst kurz vor knapp komme ich in Gang.']]},
+  {t:'Innere Unruhe', m:[['Mein Kopf ist nie still', 'Besonders abends beim Einschlafen.'], ['Ich fühle mich getrieben', 'Wie von einem Motor, auch wenn ich müde bin.'], ['Stillsitzen kostet mich viel', 'In Meetings, im Wartezimmer, im Kino.'], ['Ich rede viel oder unterbreche', 'Der Gedanke muss raus, bevor er weg ist.']]},
+  {t:'Impulsivität', m:[['Ich entscheide vorschnell', 'Käufe, Zusagen, Projekte, und bereue es danach.'], ['Warten fällt mir schwer', 'In Schlangen, auf Antworten, auf Ergebnisse.'], ['Ich sage Dinge, bevor ich nachdenke', 'Und merke erst danach, wie es angekommen ist.']]},
+  {t:'Gefühle', m:[['Meine Stimmung kippt schnell', 'Mehrmals am Tag, oft wegen Kleinigkeiten.'], ['Kritik und Zurückweisung treffen mich stark', 'Eine ausbleibende Nachricht beschäftigt mich stundenlang.'], ['Ich bin schnell überfordert', 'Wenn zu viel gleichzeitig kommt, geht nichts mehr.']]},
+  {t:'Zeit und Alltag', m:[['Mein Zeitgefühl ist unzuverlässig', 'Ich unterschätze, wie lange etwas dauert.'], ['Briefe, Rechnungen, Fristen bleiben liegen', 'Obwohl ich weiß, dass es wichtig ist.'], ['Systeme halten bei mir nicht lange', 'Kalender, Apps, Listen: nach ein paar Wochen vergessen.'], ['Ich bin oft erschöpft vom Ausgleichen', 'Ich funktioniere nach außen, aber es kostet mich mehr als andere.']]}],
+ bereicheTitel:'Wie sehr belastet es dich?',
+ bereicheHinweis:'Ein Beispiel aus letzter Zeit hilft der Fachperson mehr als jede allgemeine Beschreibung.',
+ bereiche:[['arbeit', 'Arbeit'], ['geld', 'Geld und Papierkram'], ['beziehung', 'Beziehungen'], ['alltag', 'Alltag und Haushalt'], ['schlaf', 'Schlaf und Erholung'], ['selbst', 'Selbstwert und Stimmung']],
+ beispiel:'Ein Beispiel',
+ saetzeTitel:'Sätze, mit denen du anfangen kannst',
+ saetze:['Seit ich denken kann, fällt mir schwer, …', 'Am meisten kostet mich gerade …', 'Von außen sieht man das nicht, weil ich …', 'Ausprobiert habe ich schon …', 'Von heute wünsche ich mir …'],
+ fragenTitel:'Fragen, die du stellen kannst',
+ fragen:['Wie geht es nach heute weiter, und wie viele Termine braucht die Abklärung?', 'Welche Fragebögen kommen noch, und soll jemand dazukommen, der mich als Kind kannte?', 'Was könnte es außer ADHS noch sein, und wie wird das ausgeschlossen?', 'Welche Unterstützung gibt es, mit und ohne Diagnose?', 'Was kann ich bis zum nächsten Termin selbst tun?'],
+ mitTitel:'Was du mitbringen kannst',
+ mit:['Alte Schulzeugnisse, vor allem die Bemerkungen der Lehrkräfte', 'Frühere Befunde, Arztberichte, Medikamentenliste', 'Wenn möglich: jemand, der dich als Kind kannte', 'Diese Seite, ausgefüllt'],
+ schluss:'Egal, was dabei herauskommt: Dass dich das Kraft kostet, ist echt.'};
+
+var BK_TERMIN2 = {
+ titel:'Wenn beides zusammenkommt',
+ lede:'ADHS und Autismus gleichzeitig, bei Frauen oft erst spät erkannt, weil sich vieles nach innen zeigt und gut überspielt wird. Kreuz vor deinem Termin in Ruhe an, was du kennst, und nimm die Seite mit ins Gespräch.',
+ vorabTitel:'Wichtig vorab',
+ vorab:'Das hier ist kein Test und keine Diagnose. AuDHS ist auch keine eigene Diagnose, sondern ein Wort für zwei Diagnosen nebeneinander: ADHS und Autismus. Seit 2013 dürfen beide gleichzeitig gestellt werden. Was davon zutrifft, klärt die Fachperson. Was du hier ankreuzt, wird nirgends gespeichert.',
+ vierTitel:'Vier Fragen stehen hinter jeder Abklärung',
+ vier:[
+  ['Seit der Kindheit', 'Vieles gab es schon in der Kindheit. Bei Autismus zählt ausdrücklich auch, was du damals schon überspielt hast.'],
+  ['Dauerhaft', 'Nicht nur in einer stressigen Phase, sondern eigentlich schon immer.'],
+  ['In mehreren Bereichen', 'Zum Beispiel bei der Arbeit und zuhause, nicht nur an einem Ort.'],
+  ['Mit Leidensdruck', 'Auch wenn du nach außen funktionierst: Was es dich kostet, zählt.']],
+ gruppenTitel:'Was davon kennst du?',
+ gruppenHinweis:'Kreuz nur an, was dich wirklich oft betrifft. Und unter jeder Gruppe, ob es schon in der Schulzeit so war.',
+ kind:'War schon in der Schulzeit so',
+ gruppen:[
+  {t:'Aufmerksamkeit und Antrieb', m:[['Ich schweife ab', 'In Gesprächen, beim Lesen, in Meetings.'], ['Ich komme schwer ins Anfangen', 'Oft erst kurz vor der Frist.'], ['Ich vergesse und verliere Dinge', 'Termine, Rückrufe, Schlüssel.'], ['Mein Zeitgefühl ist unzuverlässig', 'Ich unterschätze, wie lange etwas dauert.'], ['Mein Kopf ist nie still', 'Gedanken laufen parallel, besonders abends.'], ['Ich handle schnell aus dem Impuls', 'Zusagen, Käufe, Projekte.']]},
+  {t:'Menschen und Gespräche', m:[['Soziale Regeln habe ich gelernt, nicht gespürt', 'Ich beobachte, wie andere es machen.'], ['Small Talk kostet mich viel', 'Tiefe Gespräche fallen mir leichter.'], ['Zwischentöne verunsichern mich', 'Ich frage mich hinterher, wie etwas gemeint war.'], ['Ich werde als zu direkt erlebt', 'Obwohl ich nur ehrlich sein wollte.'], ['Nach Treffen brauche ich lange Erholung', 'Auch nach schönen Abenden.']]},
+  {t:'Routinen und Interessen', m:[['Planänderungen werfen mich um', 'Auch kleine, kurzfristige.'], ['Feste Abläufe geben mir Halt', 'Gleiche Wege, gleiche Reihenfolge.'], ['Ich habe tiefe, langjährige Interessen', 'Themen, über die ich sehr viel weiß.']]},
+  {t:'Reize', m:[['Geräusche, Licht oder Gerüche sind schnell zu viel', 'Großraumbüro, Supermarkt, mehrere Gespräche.'], ['Kleidung oder Berührung stören mich stark', 'Etiketten, Nähte, unerwartete Berührung.'], ['Bei Überreizung geht plötzlich nichts mehr', 'Ich ziehe mich zurück oder werde reizbar.']]},
+  {t:'Der innere Widerspruch', m:[['Ich brauche Routine und langweile mich darin', 'Ohne Struktur geht es nicht, mit Struktur werde ich unruhig.'], ['Ich suche Reize und halte sie nicht aus', 'Erst will ich raus, dann ist es sofort zu viel.'], ['Ich will spontan sein und hasse Planänderungen', 'Von mir aus ja, von anderen nein.']]},
+  {t:'Maskieren und Erschöpfung', m:[['Ich bereite Gespräche vor', 'Ich lege mir Sätze zurecht und probe Telefonate.'], ['Ich passe mich an, bis ich nicht mehr weiß, wer ich bin', 'Je nach Gegenüber eine andere Version von mir.'], ['Nach außen funktioniere ich, zuhause breche ich ein', 'Andere sehen nur den ersten Teil.'], ['Ich hatte Phasen völliger Erschöpfung', 'Ohne dass es von außen erklärbar war.'], ['Ich habe früher andere Erklärungen bekommen', 'Zum Beispiel Angst, Depression oder „zu sensibel".'], ['Vor der Periode wird alles stärker', 'Konzentration, Reizempfindlichkeit, Stimmung.']]},
+  {t:'Gefühle', m:[['Zurückweisung trifft mich sehr stark', 'Eine ausbleibende Antwort beschäftigt mich lange.'], ['Gefühle spüre ich stark, kann sie aber schwer benennen', 'Ich merke, dass etwas los ist, aber nicht genau was.'], ['Ungerechtigkeit lässt mich nicht los', 'Auch wenn es mich nicht selbst betrifft.']]}],
+ bereicheTitel:'Wie sehr belastet es dich?',
+ bereicheHinweis:'Ein Beispiel aus letzter Zeit hilft der Fachperson mehr als jede allgemeine Beschreibung.',
+ bereiche:[['arbeit', 'Arbeit'], ['beziehung', 'Freundschaften und Beziehungen'], ['alltag', 'Alltag und Haushalt'], ['reize', 'Reize und Erholung'], ['koerper', 'Schlaf, Körper und Zyklus'], ['selbst', 'Selbstwert und Identität']],
+ beispiel:'Ein Beispiel',
+ saetzeTitel:'Sätze, mit denen du anfangen kannst',
+ saetze:['Seit ich denken kann, fällt mir schwer, …', 'Von außen wirke ich …, innen ist es …', 'Nach sozialen Situationen brauche ich …', 'Ich bereite Gespräche vor, indem ich …', 'Von heute wünsche ich mir …'],
+ fragenTitel:'Fragen, die du stellen kannst',
+ fragen:['Werden beide Seiten abgeklärt, ADHS und Autismus, oder nur eine? Wo kann ich die andere abklären lassen?', 'Wie berücksichtigen Sie, dass Frauen oft maskieren, wenn die Tests unauffällig sind?', 'Wie geht es nach heute weiter, und wie viele Termine braucht die Abklärung?', 'Was könnte es sonst noch sein, und wie wird das unterschieden?', 'Welche Unterstützung gibt es, mit und ohne Diagnose?'],
+ mitTitel:'Was du mitbringen kannst',
+ mit:['Alte Schulzeugnisse, vor allem die Bemerkungen der Lehrkräfte', 'Frühere Befunde und Diagnosen, auch mit anderen Etiketten', 'Notizen über ein bis zwei Zyklen: wann es schwerer wird', 'Zwei, drei Beispiele, wo du maskierst und was es dich kostet', 'Diese Seite, ausgefüllt'],
+ schluss:'Egal, was dabei herauskommt: Dass dich das Kraft kostet, ist echt.'};
+
+/* Bausteine der Datei, die mehr sind als Text: Kästchen und Skalen.
+   Sie funktionieren ohne Skript. {…} wird mit geschütztem Text gefüllt. */
+var BK_FORM = {
+ kreuz:'<label class="kreuz"><input type="checkbox"><span><b>{a}</b> {b}</span></label>',
+ kind:'<label class="kreuz kind"><input type="checkbox"><span>{a}</span></label>',
+ stufe:'<label class="stufe"><input type="radio" name="{name}"><span>{a}</span></label>',
+ feld:'<textarea rows="2" aria-label="{a}" placeholder="{a}"></textarea>'};
+var BK_DATEI_STIL_FORM = ".gruppe{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;overflow:hidden}.gruppe h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:19px;color:#2E3A5C;margin:0;padding:14px 16px 8px}.kreuz{display:flex;gap:12px;align-items:flex-start;padding:10px 16px;border-top:1px solid #EBE1D2;cursor:pointer}.kreuz input{width:20px;height:20px;margin:2px 0 0;accent-color:#2E3A5C;flex:none}.kreuz span{font-size:15px}.kreuz b{display:block}.kind{background:#FCF7EF;color:#6B6259;border-top-style:dashed}.skala{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin:8px 0}.stufe{display:grid;place-items:center;text-align:center;font-size:12px;padding:9px 2px;border:1px solid #EBE1D2;border-radius:10px;background:#FCF7EF;cursor:pointer}.stufe input{position:absolute;opacity:0}.stufe:has(input:checked){background:#2E3A5C;color:#FCF7EF;border-color:#2E3A5C}textarea{font:inherit;font-size:15px;width:100%;box-sizing:border-box;border:1px solid #EBE1D2;border-radius:10px;padding:8px 10px;background:#FCF7EF}.vierer{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}.vierer div{background:#FFFDFA;border:1px solid #EBE1D2;border-top:3px solid #9A7235;border-radius:12px;padding:12px 14px}.vierer b{display:block;font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:18px;color:#2E3A5C}.anfang{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:300;color:#2E3A5C;font-size:18px;background:#FFFDFA;border:1px solid #EBE1D2;border-left:3px solid #9A7235;border-radius:10px;padding:10px 14px}";
