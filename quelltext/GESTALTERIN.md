@@ -566,3 +566,140 @@ steht dann links der Linie und wird nicht mehr abgeschnitten. Keine neue
 Farbe, keine neue Schrift, kein neuer Baustein — dasselbe Bild, eine
 Startposition und eine Seitenwahl. Bei 1.280 ändert sich nichts, weil dort
 nichts zu schieben ist.
+
+
+### 13.11.2026 · `profile.html` — Profile
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil — dazu in beiden Modi („Für mich selbst" und „Als
+Coachin"), mit drei, neun und vierzehn Profilen und einmal ganz ohne.
+Seitenhöhe bei 390: 3.896 Pixel auf Stufe 0 **und** auf Stufe 2, 4.618 im
+Coach-Modus, 7.550 mit vierzehn Profilen; bei 1280 sind es 2.728. Keine
+Fehler in der Konsole, nichts läuft über den Rand. Dieselbe Einschränkung
+wie am 06.11. und 10.11.: In dieser Umgebung sind die Schriften von Google
+gesperrt, die Seite zeichnet mit Ersatzschriften. Beurteilt wurden
+Hierarchie, Größen, Abstände und Reihenfolge — nicht das Schriftbild.
+
+Eine Sache vorweg, damit sie nicht als Befund missverstanden wird: Der
+Wissensstand-Schalter ändert auf dieser Seite nichts außer seiner eigenen
+Beschriftung. Der Unterschied zwischen Stufe 0 und Stufe 2 misst
+302 × 95 Pixel und liegt vollständig in der Leiste selbst. Auf
+`zeiten.html` war genau das am 10.11. ein Befund; hier ist es keiner.
+Diese Seite verwaltet Geburtsdaten und deutet nichts — es gibt nichts zu
+schalten. Sie ist der Ort, an dem man die Stufe einstellt, nicht der, an
+dem sie wirkt.
+
+Was trägt: Die sechs Karten, die im Coach-Modus aufgehen — „Die
+Begleitung", „Dossier", „Roter Faden", „Monatsbericht", „Wann du nicht
+deutest", „Deine Haltung" —, sind die bestgemachten Gegenstände der Seite.
+Name und ein Satz, der sagt, was man davon hat („Fertiger Text pro Person
+und Monat — zum Kopieren und Verschicken"); jede steht allein. „Sichern
+und übertragen" samt dem Datenschutz-Kasten ist ehrlich und brauchbar:
+Dass die Profile beim Löschen des Browserspeichers weg sind, steht da,
+bevor es jemandem passiert, und der Hinweis auf Einwilligung und
+Datenschutzerklärung nimmt die Coachin ernst — das ist der Markenkern aus
+`PRODUKT.md` Abschnitt 3 an der Stelle, an der er etwas kostet. Das
+Löschen fragt mit Namen nach („Profil ‚Juna Birkholz' wirklich löschen?
+Das lässt sich nicht rückgängig machen."), und der Zustand ohne Profile
+sagt in zwei Sätzen, was zu tun ist. Die beiden Befunde handeln davon,
+dass man von alldem auf dem Telefon zuerst nichts sieht — und dass die
+Liste, um die es auf dieser Seite geht, sich nicht lesen lässt.
+
+#### 13.11-1 · Eine Seite namens „Profile" zeigt auf dem Telefon kein Profil
+
+**Zitat:** Bei 390 Pixeln steht als Erstes ein blauer Kasten, 282 Pixel
+hoch, mit der Überschrift **„Wie du die Plattform benutzt"** (Pixel 146),
+dem Satz „Der Schalter ändert nur, was dir zusätzlich angeboten wird" und
+zwei Knöpfen „Für mich selbst / Als Coachin". Erst darunter beginnt die
+Seite: h1 „Deine Profile." bei Pixel 456, Einleitung, Wissensstand-Leiste
+bei 713, Haken „Vollständige Namen anzeigen" bei 888, Zwischentitel
+„Profile" bei 997 — **die erste Profilkarte bei Pixel 1.048.** Der
+Bildschirm ist 844 Pixel hoch. Im Coach-Modus wächst derselbe Kasten auf
+**1.004 Pixel**, weil die sechs Werkzeugkarten darin aufgehen: Die h1
+steht dann bei 1.178, die erste Profilkarte bei **1.769**, und die einzige
+Überschrift auf dem ersten Bildschirm lautet „Wie du die Plattform
+benutzt".
+
+**Kosten:** Der Drei-Sekunden-Test, und im Coach-Modus fällt er zweimal
+durch. Wer diese Seite öffnet, hat einen von zwei Gründen: eine Person
+anlegen oder eine andere aktiv setzen. Nach drei Sekunden auf dem Telefon
+hat sie stattdessen eine Moduswahl gelesen, die sie einmal im Leben
+trifft, und zwei Einstellungen, die sie danach nie wieder anfasst. Die
+Coachin, die zwischen zwei Sitzungen umschaltet, wischt jedes Mal an einem
+1.004 Pixel hohen Kasten vorbei, den sie längst kennt — drei Einstellungen
+vor dem Gegenstand. Bei 1.280 steht die erste Karte bei 780 und ist am
+unteren Rand noch zu sehen; im Coach-Modus auch dort erst bei 1.126. Der
+Verlust ist überwiegend ein Telefon-Verlust, also der, der zählt. Und er
+trifft das Gute mit: Die sechs Werkzeugkarten sind gut gemacht, aber sie
+sind ein Menü, und ein Menü, das die Liste um zwei Bildschirme nach unten
+schiebt, steht an der falschen Stelle.
+
+**Vorschlag:** Die Reihenfolge wird umgedreht — Gegenstand vor
+Einstellung. Nach h1 und Einleitung kommt sofort „Profile" mit der Liste;
+der blaue Kasten, die Wissensstand-Leiste und der Namen-Haken wandern
+gemeinsam unter die Liste, vor „Profil anlegen". Rechnerisch steht die
+erste Karte danach bei rund 420 statt 1.048 Pixeln und damit auf dem
+ersten Bildschirm, im Coach-Modus ebenso, weil der Kasten dann unterhalb
+aufgeht. Damit der Modus trotzdem auffindbar bleibt, steht an seiner
+heutigen Stelle eine einzelne Zeile in der Größe der Einleitung: „Du
+arbeitest gerade **für dich selbst** — umstellen", mit Sprung zum Kasten.
+Keine neue Farbe, keine neue Schrift, kein neuer Baustein: dieselben vier
+Blöcke, andere Reihenfolge.
+
+#### 13.11-2 · In der Liste, die die Seite ausmacht, sieht jede Karte aus wie jede andere
+
+**Zitat:** Eine Profilkarte ist bei 390 Pixeln **338 × 257 Pixel** groß.
+Davon trägt der Name 21 Pixel (16,5 Pixel DM Sans — dieselbe Größe wie der
+Fließtext darüber) und die Datumszeile 21 Pixel. Die übrigen **144 Pixel
+sind Bedienung**: ein Knopfblock von 70 Pixeln mit vier Knöpfen zu je 32
+Pixeln Höhe, die auf dem Telefon in zwei Reihen umbrechen, und darunter 74
+Pixel, in denen **„READINGS & NOTIZEN (0)"** in 10 Pixeln steht und ein
+Knopf „+ Reading hinzufügen". Das auffälligste Element der Karte ist der
+Kreis links: 42 Pixel, dunkel, zwei Buchstaben. In der Voreinstellung der
+Seite — der Haken „Vollständige Namen anzeigen" ist **aus**, und der Text
+daneben empfiehlt das ausdrücklich — bildet er diese zwei Buchstaben aus
+dem Kürzel. Trägt man als Kürzel ein, was das Feld selbst vorschlägt
+(`placeholder="z. B. Klientin 04"`), steht in **jedem** Kreis dasselbe.
+Mit neun Profilen nachgestellt: LM, KL, KL, KL, KL, KL, KL, KL, KL. Mit
+vierzehn Profilen ist die Liste 3.727 Pixel lang — viereinhalb
+Telefonbildschirme —, alphabetisch sortiert, ohne Suchfeld.
+
+**Kosten:** Der Jahreszahl-Test, und davor ein ganz praktischer Verlust.
+Die Karte gibt ihr auffälligstes Element an die Information, die am
+wenigsten unterscheidet, und mehr als die Hälfte ihrer Höhe an eine Zeile,
+die „(0)" sagt. Wer vierzehn Menschen verwaltet, scrollt an vierzehn
+gleich großen Kästen vorbei, in denen vierzehnmal „READINGS & NOTIZEN (0)"
+steht, und sucht den richtigen am Geburtsdatum — weil Kreis, Knöpfe und
+Kartenhöhe bei allen gleich sind und der Name, das Einzige, was
+unterscheidet, in der Größe des Fließtexts dasteht. Gleich große Zeilen,
+jede mit demselben Satz Knöpfe, nichts, was ins Auge springt: Das ist der
+Rhythmus einer Verwaltungstabelle von 2014. Wer eigene Kürzel vergibt,
+umgeht den gleichen Kreis — aber die Seite schlägt das Gegenteil vor, und
+eine Voreinstellung, die man unterlaufen muss, damit die Liste lesbar
+bleibt, ist keine. Es trifft ausgerechnet die Coachin, die Einzige der
+fünf Menschen aus `PRODUKT.md` Abschnitt 2, die diese Seite oft öffnet.
+Dazu die Knopfgrößen: „Das bin ich" (98 × 32) und „Löschen" (82 × 32)
+stehen mit 6 Pixeln Abstand nebeneinander und unterscheiden sich nur in
+der Randfarbe. Dass das Löschen mit Namen nachfragt, fängt den Fehlgriff
+ab — aber ein Daumen ist 44 Pixel breit, nicht 32.
+
+**Vorschlag:** Drei Änderungen an derselben Karte, alle ohne neue Farbe
+und ohne neue Schrift.
+
+1. Der Kreis bekommt etwas zu unterscheiden. Statt der ersten zwei Zeichen
+   der Anzeige (`.slice(0,2)`) bildet er aus jedem Wort den
+   Anfangsbuchstaben und hängt eine Ziffernfolge am Ende an: „Lioba
+   Meerwald" → LM, „Klientin 04" → **K04**, „Klientin 12" → K12. Aus neun
+   gleichen Kreisen werden neun verschiedene.
+2. Der Readings-Block erscheint nur, wenn es Readings gibt. Bei null steht
+   dort nichts, und „+ Reading hinzufügen" rückt in den Knopfblock
+   darüber. Die Karte wird damit von 257 auf rund 185 Pixel kürzer, die
+   Liste mit vierzehn Profilen um gut tausend Pixel.
+3. Der Name steigt in der Hierarchie: von 16,5 auf 21 Pixel, die
+   Datumszeile bleibt bei 13. Damit hat die Karte einen Größensprung statt
+   einer Fläche gleich großer Zeilen, und der 42-Pixel-Kreis steht neben
+   etwas, das ihm standhält.
+
+Ab welcher Zahl ein Suchfeld dazugehört, ist eine zweite Frage und gehört
+nicht in diese Karte. Mit vierzehn Profilen ist die Liste lang, aber
+lesbar, sobald die Karten kürzer sind und die Kreise sich unterscheiden.

@@ -327,6 +327,36 @@ Erklärung auf derselben Karte vorkommt — gegen feste Beispiele
 gehalten, also unabhängig davon, welcher Tag und welches Geburtsbild
 gerechnet wird.
 
+
+### 75 · Auf `profile.html` beginnt die Profilliste erst unterhalb des ersten Bildschirms
+Aus dem Gestaltungsdurchgang vom 2026-11-13 (Befund 13.11-1). Bei 390
+Pixeln Breite steht über der Liste erst der Moduskasten „Wie du die
+Plattform benutzt" (282 Pixel hoch), dann h1 und Einleitung, dann die
+Wissensstand-Leiste, dann der Haken „Vollständige Namen anzeigen" — die
+erste Profilkarte beginnt bei Pixel 1.048, der Bildschirm ist 844 Pixel
+hoch. Im Coach-Modus gehen in demselben Kasten sechs Werkzeugkarten auf,
+er wird 1.004 Pixel hoch, und die erste Karte rutscht auf 1.769; dort ist
+auch die h1 der Seite nicht mehr im ersten Bild. Bei 1.280 steht die Karte
+bei 780 (Coach-Modus: 1.126). Drei Einstellungen stehen vor dem
+Gegenstand, obwohl die Seite nur zwei Gründe hat, geöffnet zu werden:
+jemanden anlegen oder jemanden aktiv setzen. Vorschlag aus dem Durchgang:
+Kasten, Stufenleiste und Namen-Haken wandern gemeinsam unter die Liste,
+vor „Profil anlegen"; an ihrer Stelle bleibt eine Zeile, die den
+eingestellten Modus nennt und zu ihnen springt.
+**Fertig, wenn:** bei 390 Pixeln Breite die erste Profilkarte — und ohne
+Profile der Hinweis „Noch keine Profile." — in **beiden** Modi oberhalb
+von Pixel 844 beginnt, der Moduskasten samt Stufenleiste und Namen-Haken
+unterhalb der Liste steht, an der bisherigen Stelle eine Zeile den
+eingestellten Modus nennt und dorthin springt, und `pruefe-alles.py` eine
+Querprüfung bekommt, die genau das nachmisst: Seite mit erfundenem Profil
+bei 390 laden, in beiden Modi und mit null und mit drei Profilen, und
+abbrechen, sobald der erste Gegenstand der Liste unterhalb von 844 Pixeln
+anfängt. Nach der goldenen Regel aus `REGELN.md` Abschnitt 5 ist die
+Prüfung der eigentliche Teil: `profile.html` ist Handarbeit und hat kein
+`bau-*.py`, also gehört sie nach `pruefe-alles.py` — gemessen am
+gezeichneten Ergebnis, nicht am Quelltext, weil die Höhe des Kastens vom
+Modus abhängt.
+
 ---
 
 ## Was nicht gemacht wird
