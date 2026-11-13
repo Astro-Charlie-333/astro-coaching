@@ -80,13 +80,15 @@ eval(fs.readFileSync(process.argv[2],'utf8')); eval(fs.readFileSync(process.argv
 const f=[], E=BK_ELEMENT;
 if(E.join()!=='Feuer,Erde,Luft,Wasser') f.push('Elemente in falscher Reihenfolge');
 const satz=(t,wo)=>{ if(!t||!/[.?]$/.test(t.trim())) f.push(wo+': kein ganzer Satz: „'+String(t).slice(0,40)+'"'); };
-[['Abend',BK_ABEND],['Morgen',BK_MORGEN]].forEach(([n,D])=>{
+[['Abend',BK_ABEND],['Morgen',BK_MORGEN],['Halt',BK_HALT],['Woche',BK_WOCHE]].forEach(([n,D])=>{
   ['titel','lede','geruestTitel','satzTitel','schluss'].forEach(x=>{ if(!D[x]) f.push(n+': '+x+' fehlt'); });
   if(D.geruest.length<4) f.push(n+': das Gerüst ist zu kurz');
   D.geruest.forEach(z=>satz(z[1],n+', Gerüst '+z[0]));
-  D.teile.forEach(t=>{ if(!['Sonne','Mond','Merkur','Mars','Aszendent'].includes(t.punkt)) f.push(n+': '+t.k+' nennt einen Punkt, den der Rechner nicht liefert');
-    if(Object.keys(t.texte).sort().join()!==E.slice().sort().join()) f.push(n+', '+t.kopf+': nicht alle vier Elemente');
-    E.forEach(e=>{ satz(t.texte[e],n+', '+t.kopf+', '+e); if((t.texte[e]||'').length<60) f.push(n+', '+t.kopf+', '+e+': zu kurz'); }); });
+  D.teile.forEach(t=>{ if(!['Sonne','Mond','Merkur','Mars','Saturn','Aszendent'].includes(t.punkt)) f.push(n+': '+t.k+' nennt einen Punkt, den der Rechner nicht liefert');
+    const K=t.nach==='modus'?BK_MODUS:E;
+    if(Object.keys(t.texte).sort().join()!==K.slice().sort().join()) f.push(n+', '+t.kopf+': nicht alle '+K.length+' Varianten');
+    K.forEach(e=>{ satz(t.texte[e],n+', '+t.kopf+', '+e); if((t.texte[e]||'').length<60) f.push(n+', '+t.kopf+', '+e+': zu kurz'); }); });
+  (D.fragen||[]).forEach(x=>satz(x,n+', Frage')); (D.schleifen||[]).forEach(x=>satz(x[1],n+', '+x[0])); (D.stufen||[]).forEach(x=>satz(x[1],n+', '+x[0]));
   if(Object.keys(D.saetze).sort().join()!==E.slice().sort().join()) f.push(n+': nicht alle vier Sätze');
   E.forEach(e=>satz(D.saetze[e],n+', Satz '+e)); });
 satz(BK_ABEND.rueckzug,'Abend, Rückzug');
@@ -98,7 +100,17 @@ if(dosis) f.push('Arzt: Dosierung oder Grenzwert im Text: „'+dosis[0]+'"');
 if(!/keine (medizinische )?Beratung|keine medizinische Beratung/.test(A.vorab)) f.push('Arzt: der Hinweis, dass es keine Beratung ist, fehlt');
 A.quellen.forEach(q=>{ if(!/^https:\/\//.test(q[1])) f.push('Arzt: Quelle ohne Adresse'); });
 BK_BAUSTEINE.forEach(b=>{ if(!b.titel||!b.kurz||!b.datei) f.push('Baustein '+b.k+' unvollständig'); });
-if(BK_BAUSTEINE.map(b=>b.k).join()!=='abend,morgen,arzt') f.push('die drei Bausteine stimmen nicht');
+if(BK_BAUSTEINE.map(b=>b.k).join()!=='abend,morgen,arzt,halt,woche,termin,termin2') f.push('die sieben Bausteine stimmen nicht');
+if(BK_MODUS.join()!=='kardinal,fix,veränderlich') f.push('die drei Arten in falscher Reihenfolge');
+[['ADHS',BK_TERMIN],['AuDHS',BK_TERMIN2]].forEach(([n,D])=>{
+  ['titel','lede','vorab','vierTitel','gruppenTitel','kind','bereicheTitel','beispiel','saetzeTitel','fragenTitel','mitTitel','schluss'].forEach(x=>{ if(!D[x]) f.push('Termin '+n+': '+x+' fehlt'); });
+  if(D.vier.length!==4) f.push('Termin '+n+': nicht vier Fragen');
+  D.gruppen.forEach(g=>{ if(!g.t||g.m.length<3) f.push('Termin '+n+': Gruppe '+g.t+' zu klein'); g.m.forEach(m=>{ if(!m[0]||!m[1]) f.push('Termin '+n+': leerer Punkt in '+g.t); }); });
+  if(new Set(D.bereiche.map(b=>b[0])).size!==D.bereiche.length) f.push('Termin '+n+': zwei Bereiche mit demselben Schlüssel, die Skalen würden sich gegenseitig abwählen');
+  D.fragen.forEach(x=>{ if(!/\?$/.test(x)) f.push('Termin '+n+': Frage ohne Fragezeichen'); });
+  if(!/keine Diagnose/.test(D.vorab)) f.push('Termin '+n+': der Hinweis, dass es keine Diagnose ist, fehlt');
+  const dz=JSON.stringify(D).match(/\d[\d.,]*\s*(mg|µg|mcg|IE|IU|ng\/ml|nmol)/i); if(dz) f.push('Termin '+n+': Dosierung „'+dz[0]+'"'); });
+if(BK_STUFEN.length!==5) f.push('die Skala hat nicht fünf Stufen');
 const L={fuer:['name'],fachzeile:['element','punkt','zeichen'],dateiName:['art','name']};
 for(const k in BK_TEXT){ const ist=(BK_TEXT[k].match(/\{([a-zA-Z]+)\}/g)||[]).map(x=>x.slice(1,-1)).sort().join();
   const s=(L[k]||[]).slice().sort().join(); if(ist!==s) f.push('BK_TEXT.'+k+': Lücken {'+ist+'} statt {'+s+'}'); }
@@ -150,7 +162,7 @@ const p0=await c0.newPage(); p0.on('pageerror',e=>f.push('Skriptfehler ohne Prof
 await p0.goto('file://ZIEL'); await p0.waitForTimeout(500);
 const a=await p0.evaluate(()=>({h:!document.getElementById('bkhinweis').hidden, k:document.querySelectorAll('[data-art]').length}));
 if(!a.h) f.push('ohne Profile fehlt der Hinweis auf Profile');
-if(a.k!==3) f.push(a.k+' statt 3 Bausteine');
+if(a.k!==7) f.push(a.k+' statt 7 Bausteine');
 /* B · zwei erfundene Profile, eins ohne Ort, eins mit Namen, der HTML enthält */
 const c=await b.newContext({viewport:{width:390,height:844}, acceptDownloads:true});
 await c.addInitScript(()=>{ if(sessionStorage.getItem('gesetzt')) return; sessionStorage.setItem('gesetzt','1');
@@ -192,6 +204,27 @@ await p.click('#bkliste .bk-zknoepfe button:nth-child(4)'); await p.waitForTimeo
 if((await p.evaluate(()=>AC_P.bausteine('p1').length))!==1) f.push('Entfernen löscht ohne Rückfrage');
 await p.click('#bkliste .bk-zknoepfe button:text("Ja")'); await p.waitForTimeout(150);
 if((await p.evaluate(()=>AC_P.bausteine('p1').length))!==0) f.push('Entfernen nach Rückfrage wirkt nicht');
+for(const art of ['halt','woche']){
+  await p.click('[data-art='+art+']'); await p.waitForTimeout(400);
+  const ok=await p.evaluate((art)=>{ const S=bkStellen(AC_P.alle()[0]), D={halt:BK_HALT,woche:BK_WOCHE}[art], d=document.getElementById('bkvorschau').srcdoc;
+    const fehlt=D.teile.filter(t=>{ const s=S[t.punkt], x=t.nach==='modus'?t.texte[BK_MODUS[s.z%3]]:t.texte[BK_ELEMENT[s.el]]; return d.indexOf(x.replace(/&/g,'&amp;').replace(/"/g,'&quot;'))<0; }).length;
+    return {fehlt, grund:document.querySelectorAll('#bkgrund li').length===D.teile.length+1}; }, art);
+  if(ok.fehlt) f.push(art+': '+ok.fehlt+' Teile passen nicht zum Geburtsbild');
+  if(!ok.grund) f.push(art+': die Grundlage für Mandy ist unvollständig'); }
+for(const [art,name] of [['termin','BK_TERMIN'],['termin2','BK_TERMIN2']]){
+  await p.click('[data-art='+art+']'); await p.waitForTimeout(400);
+  const t=await p.evaluate((name)=>{ const D=window[name]||eval(name), d=document.getElementById('bkvorschau').srcdoc;
+    const doc=document.getElementById('bkvorschau').contentDocument;
+    return {k:(d.match(/type="checkbox"/g)||[]).length, kSoll:D.gruppen.reduce((a,g)=>a+g.m.length+1,0),
+      r:(d.match(/type="radio"/g)||[]).length, rSoll:D.bereiche.length*5, s:/<script/i.test(d),
+      klick:(()=>{ const i=doc&&doc.querySelector('input[type=radio]'); if(!i) return false; i.click(); return i.checked; })()}; }, name);
+  if(t.k!==t.kSoll) f.push(art+': '+t.k+' statt '+t.kSoll+' Kästchen');
+  if(t.r!==t.rSoll) f.push(art+': '+t.r+' statt '+t.rSoll+' Stufen');
+  await p.waitForTimeout(1600);
+  const hh=await p.evaluate(()=>{ const fr=document.getElementById('bkvorschau'); return [fr.getBoundingClientRect().height, fr.contentDocument.documentElement.scrollHeight]; });
+  if(Math.abs(hh[0]-hh[1])>40) f.push(art+': die Vorschau ist '+Math.round(hh[0])+' statt '+hh[1]+' Pixel hoch, der Rest ist abgeschnitten');
+  if(t.s) f.push(art+': die Datei enthält ein Skript');
+  if(!t.klick) f.push(art+': die Skala lässt sich in der Datei nicht anklicken'); }
 await p.click('[data-art=morgen]'); await p.waitForTimeout(400);
 const r2=await p.evaluate(()=>{ const S=bkStellen(AC_P.alle()[0]); return document.getElementById('bkvorschau').srcdoc.indexOf(BK_MORGEN.saetze[BK_ELEMENT[S.Sonne.el]])>=0; });
 if(!r2) f.push('Morgenroutine: der Satz passt nicht zur Sonne');
@@ -224,4 +257,4 @@ if fehler:
     for f in fehler:
         print('      FEHLER: ' + f)
     sys.exit(1)
-print(f'      baukasten.html: {len(html)//1024} KB, drei Bausteine')
+print(f'      baukasten.html: {len(html)//1024} KB, sieben Bausteine')

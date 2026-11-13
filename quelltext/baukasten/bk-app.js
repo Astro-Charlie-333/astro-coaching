@@ -27,15 +27,22 @@ function bkProfil(){ var a = bkProfile(); for(var i = 0; i < a.length; i++) if(a
 function bkVorname(p){ var n = String(p.name || p.alias || '').trim(); return n ? n.split(/\s+/)[0] : ''; }
 
 /* ── Modell ─────────────────────────────────────────────── */
-function bkFach(punkt, s){ return bkFuell(T.fachzeile, {punkt:punkt, zeichen:SIGNS[s.z], element:BK_ELEMENT[s.el]}); }
+function bkFach(punkt, s, nachArt){ return bkFuell(T.fachzeile, {punkt:punkt, zeichen:SIGNS[s.z], element:nachArt ? BK_MODUS[s.z % 3] : BK_ELEMENT[s.el]}); }
+function bkWahl(t, s){ return t.nach === 'modus' ? t.texte[BK_MODUS[s.z % 3]] : t.texte[BK_ELEMENT[s.el]]; }
+var BK_ROUTINE = {abend:BK_ABEND, morgen:BK_MORGEN, halt:BK_HALT, woche:BK_WOCHE};
+var BK_TERMINE = {termin:BK_TERMIN, termin2:BK_TERMIN2};
 
 function bkRoutine(D, S){
-  var b = [{typ:'zeiten', titel:D.geruestTitel, zeilen:D.geruest}];
+  var b = [];
+  if(D.stufen) b.push({typ:'werte', titel:D.stufenTitel, zeilen:D.stufen});
+  b.push({typ:'zeiten', titel:D.geruestTitel, zeilen:D.geruest});
   D.teile.forEach(function(t){
-    var s = S[t.punkt], text = t.texte[BK_ELEMENT[s.el]];
+    var s = S[t.punkt], text = bkWahl(t, s);
     if(D.rueckzug && t.k === 'mond' && S.h12) text = text + ' ' + D.rueckzug;
-    b.push({typ:'teil', titel:t.kopf, text:text, fach:bkFach(t.punkt, s)});
+    b.push({typ:'teil', titel:t.kopf, text:text, fach:bkFach(t.punkt, s, t.nach === 'modus')});
   });
+  if(D.fragen) b.push({typ:'liste', titel:D.fragenTitel, punkte:D.fragen, nummer:true});
+  if(D.schleifen) b.push({typ:'werte', titel:D.schleifenTitel, zeilen:D.schleifen});
   var sp = D.punktSatz || 'Mond';
   b.push({typ:'satz', titel:D.satzTitel, text:D.saetze[BK_ELEMENT[S[sp].el]], fach:bkFach(sp, S[sp])});
   return {titel:D.titel, lede:D.lede, bloecke:b, schluss:D.schluss};
@@ -52,11 +59,22 @@ function bkArzt(){
     {typ:'quellen', titel:D.quellenTitel, links:D.quellen}]};
 }
 
+function bkTermin(D){
+  return {titel:D.titel, lede:D.lede, schluss:D.schluss, bloecke:[
+    {typ:'vorab', titel:D.vorabTitel, text:D.vorab},
+    {typ:'vier', titel:D.vierTitel, zeilen:D.vier},
+    {typ:'gruppen', titel:D.gruppenTitel, hinweis:D.gruppenHinweis, gruppen:D.gruppen, kind:D.kind},
+    {typ:'skalen', titel:D.bereicheTitel, hinweis:D.bereicheHinweis, bereiche:D.bereiche, feld:D.beispiel},
+    {typ:'anfaenge', titel:D.saetzeTitel, punkte:D.saetze},
+    {typ:'liste', titel:D.fragenTitel, punkte:D.fragen, nummer:true},
+    {typ:'liste', titel:D.mitTitel, punkte:D.mit}]};
+}
+
 function bkModell(art, p){
   if(art === 'arzt') return bkArzt();
-  if(!bkHatChart(p)) return null;
-  var S = bkStellen(p);
-  return bkRoutine(art === 'abend' ? BK_ABEND : BK_MORGEN, S);
+  if(BK_TERMINE[art]) return bkTermin(BK_TERMINE[art]);
+  if(!BK_ROUTINE[art] || !bkHatChart(p)) return null;
+  return bkRoutine(BK_ROUTINE[art], bkStellen(p));
 }
 
 /* ── Aus dem Modell ein Dokument ────────────────────────── */
@@ -78,6 +96,18 @@ function bkBlock(b, fach){
   } else if(b.typ === 'liste'){
     var t = b.nummer ? 'ol' : 'ul';
     h += '<h2>' + bkEsc(b.titel) + '</h2><' + t + '>' + b.punkte.map(function(x){ return '<li>' + bkEsc(x) + '</li>'; }).join('') + '</' + t + '>';
+  } else if(b.typ === 'vier'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2><div class="vierer">' + b.zeilen.map(function(z){ return '<div><b>' + bkEsc(z[0]) + '</b><p>' + bkEsc(z[1]) + '</p></div>'; }).join('') + '</div>';
+  } else if(b.typ === 'gruppen'){
+    h = '<section><h2>' + bkEsc(b.titel) + '</h2><p class="klein">' + bkEsc(b.hinweis) + '</p></section>' + b.gruppen.map(function(g){
+      return '<section class="gruppe"><h3>' + bkEsc(g.t) + '</h3>' + g.m.map(function(m){ return bkFuell(BK_FORM.kreuz, {a:bkEsc(m[0]), b:bkEsc(m[1])}); }).join('')
+        + bkFuell(BK_FORM.kind, {a:bkEsc(b.kind)}) + '</section>'; }).join('') + '<section>';
+  } else if(b.typ === 'skalen'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2><p class="klein">' + bkEsc(b.hinweis) + '</p>' + b.bereiche.map(function(x){
+      return '<div class="wert"><b>' + bkEsc(x[1]) + '</b><div class="skala">' + BK_STUFEN.map(function(s){ return bkFuell(BK_FORM.stufe, {name:bkEsc('s-' + x[0]), a:bkEsc(s)}); }).join('')
+        + '</div>' + bkFuell(BK_FORM.feld, {a:bkEsc(b.feld)}) + '</div>'; }).join('');
+  } else if(b.typ === 'anfaenge'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2>' + b.punkte.map(function(x){ return '<p class="anfang">' + bkEsc(x) + '</p>'; }).join('');
   } else if(b.typ === 'quellen'){
     h += '<h2>' + bkEsc(b.titel) + '</h2><ul class="klein">' + b.links.map(function(q){ return '<li><a href="' + bkEsc(q[1]) + '">' + bkEsc(q[0]) + '</a></li>'; }).join('') + '</ul>';
   }
@@ -87,7 +117,7 @@ function bkBlock(b, fach){
 function bkDokument(m, p, fach){
   var fuer = p && bkVorname(p) ? bkFuell(T.fuer, {name:bkVorname(p)}) : '';
   return BK_DATEI_ANFANG
-    + '<title>' + bkEsc(m.titel) + '</title><link rel="stylesheet" href="' + bkEsc(BK_DATEI_SCHRIFT) + '"><style>' + BK_DATEI_STIL + '</style></head><body><main>'
+    + '<title>' + bkEsc(m.titel) + '</title><link rel="stylesheet" href="' + bkEsc(BK_DATEI_SCHRIFT) + '"><style>' + BK_DATEI_STIL + BK_DATEI_STIL_FORM + '</style></head><body><main>'
     + (fuer ? '<p class="ey">' + bkEsc(fuer) + '</p>' : '')
     + '<h1>' + bkEsc(m.titel) + '</h1><p class="lede">' + bkEsc(m.lede) + '</p>'
     + m.bloecke.map(function(b){ return bkBlock(b, fach); }).join('')
@@ -117,12 +147,12 @@ function bkKarten(){
 
 function bkGrundlage(p){
   var box = el('bkgrund'); box.innerHTML = '';
-  if(zustand.art === 'arzt' || !bkHatChart(p)){ box.hidden = true; return; }
-  var S = bkStellen(p), D = zustand.art === 'abend' ? BK_ABEND : BK_MORGEN;
+  if(!BK_ROUTINE[zustand.art] || !bkHatChart(p)){ box.hidden = true; return; }
+  var S = bkStellen(p), D = BK_ROUTINE[zustand.art];
   box.hidden = false;
   box.appendChild(bkNeu('span', 'bk-lab', T.aus));
   var ul = document.createElement('ul');
-  D.teile.forEach(function(t){ ul.appendChild(bkNeu('li', '', t.kopf + ': ' + bkFach(t.punkt, S[t.punkt]))); });
+  D.teile.forEach(function(t){ ul.appendChild(bkNeu('li', '', t.kopf + ': ' + bkFach(t.punkt, S[t.punkt], t.nach === 'modus'))); });
   var sp = D.punktSatz || 'Mond';
   ul.appendChild(bkNeu('li', '', D.satzTitel + ': ' + bkFach(sp, S[sp])));
   box.appendChild(ul);
@@ -139,8 +169,10 @@ function bkZeigen(){
   el('bkwerk').hidden = !m;
   bkGrundlage(p);
   if(m){
+    var hoehe = function(){ try{ var d = fr.contentDocument; if(d && d.documentElement) fr.style.height = (d.documentElement.scrollHeight + 4) + 'px'; }catch(e){} };
+    fr.onload = hoehe;
     fr.srcdoc = bkDokument(m, p, el('bkfach').checked);
-    fr.onload = function(){ try{ fr.style.height = (fr.contentDocument.documentElement.scrollHeight + 4) + 'px'; }catch(e){} };
+    setTimeout(hoehe, 400); setTimeout(hoehe, 1500);
   }
   bkListe();
 }
