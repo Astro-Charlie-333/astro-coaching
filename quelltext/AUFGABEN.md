@@ -357,6 +357,73 @@ Prüfung der eigentliche Teil: `profile.html` ist Handarbeit und hat kein
 gezeichneten Ergebnis, nicht am Quelltext, weil die Höhe des Kastens vom
 Modus abhängt.
 
+### 76 · `beziehung.html` sagt, wie der andere Mensch ist, und nicht, was das taugt
+Befund der Prüferin vom 2026-11-13 (Das Gegenüber-Paar, erster Befund —
+Grenzen kommen zuerst). Die Seite spricht vier Abschnitte lang im
+Indikativ über den zweiten Menschen („Jonte streitet so: Laut und
+grundsätzlich", „Was danebengeht: Bohren"), und auf der ganzen Seite —
+mit allen Elementen aufgeklappt nachgemessen — kommen „Was das taugt",
+„Erleben", „Vorrang", „nicht überprüft", „häufig" und „gefragt" kein
+einziges Mal vor. Die zwei Sätze, die dastehen, relativieren die
+Beziehung („kein Urteil über eine Beziehung"), nicht die Person, über die
+geredet wird. `PRODUKT.md` Abschnitt 5 schließt „Aussagen über eine
+dritte Person, die nicht gefragt wurde" aus; `REGELN.md` Abschnitt 4
+verlangt von jeder rechnenden Seite den Abschnitt „Was das taugt — und
+was nicht" mit vier Punkten. `bereiche.html` und `uebersicht.html` haben
+ihn, `synastrie.html` — wohin diese Seite als „DIE THEORIE" verweist —
+nicht. Dazu steht unter der Deutung „Text kopieren": Was hier entsteht,
+wird nach `PRODUKT.md` Abschnitt 2, Punkt 3 weitergeschickt, und
+weitergeschickt wird dann ein Urteil über jemanden ohne den Satz, der ihm
+widersprechen lässt.
+
+Die Aufgabe hängt an Aufgabe 40 und schärft sie: Dort soll geprüft
+werden, dass der Grenzsatz **offen** steht statt zugeklappt. Auf dieser
+Seite gibt es keinen, den man aufklappen könnte — die Prüfung ginge grün
+durch, ohne etwas gesehen zu haben. Das ist der Nachsatz zu `REGELN.md`
+Abschnitt 6e.
+**Fertig, wenn:** `beziehung.html` den Abschnitt „Was das taugt — und was
+nicht" offen trägt, mit den vier Punkten aus `REGELN.md` Abschnitt 4 und
+einem fünften, der nur für zwei Menschen gilt — dass der andere Mensch zu
+sich selbst das letzte Wort hat und sein Erleben vor der Seite steht —,
+derselbe Satz in dem Text steht, den „Text kopieren" ausgibt, die Prüfung
+aus Aufgabe 40 zuerst verlangt, **dass** es den Abschnitt gibt, bevor sie
+prüft, dass er offen steht, und `bau-bez.py` abbricht, wenn er fehlt oder
+in ein Klappelement wandert — gemessen am gezeichneten Ergebnis, gegen
+feste Beispiele gehalten.
+
+### 77 · Die Beziehungsart ändert die Deutung nicht, verspricht aber Genauigkeit
+Befund der Prüferin vom 2026-11-13 (Das Gegenüber-Paar, zweiter Befund).
+Die Seite verspricht oben „für die Beziehung, die ihr wirklich habt. Eine
+Mutter liest man anders als eine Freundin", im Ergebnis „Stell oben die
+Art ein, die wirklich zutrifft — dann wird es deutlich genauer", und im
+Fuß „Gewichtet nach Beziehungsart". Gemessen über alle neun Arten, jede
+einzeln angetippt: Es ändern sich zwei Sätze und die Reihenfolge der vier
+Karten. Die Kartentexte sind in sieben von neun Arten dieselbe Menge,
+Wort für Wort; Liebe/Partnerschaft, Geschwister, Arbeit/Kollegin und
+Sonstige liefern sogar dieselben Zeilen in derselben Zahl. Deshalb steht
+in der Deutung für **Mutter**, **Vater**, **Arbeit/Kollegin** und
+**Tier** wörtlich „Das ist der Kontakt, der Freundschaften lange hält"
+und „wissen, dass eine Trennung bei diesem Kontakt überdurchschnittlich
+lange nachwirkt". „Wie du … erreichst", „Wie ihr miteinander redet",
+„Wenn es Streit gibt" und „Wenn du helfen willst" sind in allen neun
+Arten identisch. Der Schalter THEMA daneben tut dagegen wirklich etwas —
+er tauscht Abschnitte aus —, es gibt also keinen Grund anzunehmen, dass
+der eine wirkt und der andere nur sortiert. Fehlerklasse aus `REGELN.md`
+Abschnitt 5, dort schon mit einem Beispiel geführt: „die Auswahl »Als«
+muss die Befunde wirklich ändern".
+**Fertig, wenn:** jeder Kartentext nach Beziehungsart gebeugt wird — kein
+ausgelieferter Satz trägt ein Wort, das zur eingestellten Art nicht passt
+(„Freundschaften" und „Trennung" nicht unter Mutter, Vater,
+Arbeit/Kollegin oder Tier) —, zwei verschiedene Beziehungsarten nie
+dieselbe Menge Kartentexte ergeben, und `bau-bez.py` beides abbricht:
+sobald zwei Arten denselben Textkörper liefern und sobald ein Wort aus
+der Sperrliste einer Art in deren Deutung erscheint. Die Beispiele stehen
+als `assert` in `rituale/pruefwerk.py` und laufen vor dem ersten Bau
+(`REGELN.md` Abschnitt 6e), damit die Prüfung nicht davon abhängt, welche
+zwei Geburtsbilder gerade gerechnet werden. Bleibt die Beugung aus, ist
+die Aufgabe nicht erledigt, indem das Versprechen umformuliert wird —
+dann ist es eine andere Aufgabe und wird als solche eingetragen.
+
 ---
 
 ## Was nicht gemacht wird

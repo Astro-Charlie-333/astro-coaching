@@ -493,3 +493,188 @@ nur auf zwölf Seiten, die dort nicht genannt sind.
 Räume geschrieben hat. Was aus meiner Sicht gelten muss: Entweder die
 zwölf Räume richten sich nach der Leiste, oder sie zeigen sie nicht. Eine
 Leiste, die etwas zusagt und nichts tut, ist schlimmer als keine.
+
+---
+
+### 2026-11-13 · Das Gegenüber-Paar
+
+Vierter Durchgang. Zuletzt war die Andersgebaute dran, also die Nächste
+aus `PRODUKT.md` Abschnitt 2: zwei Menschen, die verstehen wollen, warum
+sie sich immer an derselben Stelle verfehlen. Ich bin die, die die Seite
+aufmacht; das Gegenüber sitzt nicht daneben.
+
+**Zur Lage dieses Durchgangs:** `astro-charlie-333.github.io` war aus der
+Umgebung dieses Durchgangs zum vierten Mal nicht erreichbar — der
+Netzübergang hat die Adresse abgelehnt (403 auf CONNECT, im Protokoll des
+Übergangs als Richtlinienablehnung vermerkt, Eintrag vom 13.11. 08:53).
+Nicht umgangen. Geprüft wurde deshalb wieder der ausgelieferte Stand aus
+`main` (`77c5fa2`, 13.11.), lokal ausgeliefert und im Browser
+durchgegangen — dieselben Dateien, die GitHub Pages ausliefert, aber nicht
+die Adresse selbst. Kein Quelltext gelesen, nur der Bildschirm. Wer die
+Befunde nachstellt, nutzt die echte Adresse; weicht sie vom Stand aus
+`main` ab, gilt sie.
+
+Zwei Profile für den Durchgang, beide erfunden: Mara Lindt (22.07.1994,
+09:15, Bremen) und Jonte Rieck (03.12.1991, 18:40, Freiburg). Beide
+Breiten, Stufe 0 von Hand gesetzt, bevor die erste Seite gelesen wurde.
+
+**Drei Sachen, die ausdrücklich keine Befunde sind,** weil sie bereits
+stehen: der Leerzustand von „Jetzt" (23.10., Aufgabe 18), der
+Auslieferzustand „Mittel" (23.10.) und die Fachsprache auf Stufe 0. Zur
+letzten eine Zahl, weil sie auf `beziehung.html` besonders deutlich ist:
+Zwischen „Neu" und „Mittel" ändern sich hier 238 Zeichen, und auf Stufe 0
+stehen sichtbar „Aszendent" (zweimal), „Konjunktion", „Opposition", „7°",
+„5°", „Synastrie" und sechs Tierkreiszeichen. Das ist die Fehlerklasse von
+Aufgabe 16, 25, 27 und 74 — dieselbe Seite, dieselbe Klasse, also keine
+neue Zeile.
+
+**Und eine Sache, die gut ist und genannt gehört:** Der Schalter THEMA
+(Komplett · Kommunikation · Nähe · Reibung · Alltag · Unterstützen) tut
+wirklich etwas — er tauscht die Abschnitte aus, nicht nur ihre
+Reihenfolge, und „Reibung und Konflikt" macht aus 4.751 Zeichen 1.888.
+Genau das, womit ich als Paar etwas anfangen kann. Dass der Schalter
+direkt daneben es nicht tut, fällt nur deshalb so auf.
+
+---
+
+### `beziehung.html` · die Seite sagt vier Absätze lang, wie Jonte ist — und nirgends, dass Jonte das anders sehen darf
+
+**Rolle:** Das Gegenüber-Paar, Telefon (390) und Rechner (1440), Stufe 0.
+**Gesehen:** Die Deutung spricht durchgehend im Indikativ über den
+zweiten Menschen: „Jonte streitet so: Laut und grundsätzlich. Aus dem
+Thema wird schnell eine Weltanschauung.", „Was ankommt: Über
+Verlässlichkeit und Diskretion.", „Was danebengeht: Bohren. Fragen bringen
+hier gar nichts.", „Jonte fühlt sich klein gemacht". Darunter steht
+„Text kopieren" und „Drucken". Auf der ganzen Seite — mit allen Elementen
+aufgeklappt nachgemessen, es gibt ohnehin keinen Klappabschnitt — kommen
+die Wörter „Was das taugt", „Erleben", „Vorrang", „nicht überprüft",
+„häufig", „selten" und „gefragt" kein einziges Mal vor. Was dasteht, sind
+zwei Sätze über die Beziehung: „Was hier steht, beschreibt eine Anlage —
+keine Schuld und keine Prognose." und „Ein harter Kontakt ist kein Urteil
+über eine Beziehung, und ein weicher ist keine Garantie." Zum Vergleich,
+beide am selben Tag nachgelesen: `bereiche.html` trägt den Abschnitt „Was
+das taugt — und was nicht" mit „Dann stimmt dein Erleben und nicht die
+Seite. Deine Lage hat immer Vorrang."; `uebersicht.html` trägt „Erkennst
+du dich nicht wieder, hat dein Erleben Vorrang", dazu „ist Deutung und
+nicht überprüft" und eine abgezählte Häufigkeit („an 10.000 erfundenen
+Geburtsbildern, nicht geschätzt"). `synastrie.html`, wohin die Seite als
+„DIE THEORIE" verweist, trägt nichts davon.
+**Gestolpert:** Die beiden Sätze, die dastehen, relativieren die
+Beziehung. Keiner relativiert die Person, über die geredet wird.
+**Was es kostet:** Das Teuerste, was diese Seite falsch machen kann, und
+es trifft genau die Stelle, an der zwei Menschen sich verfehlen. Ich
+komme mit der Frage, warum wir immer an derselben Stelle aneinander
+vorbeireden, und bekomme vier Absätze darüber, wie Jonte ist — von einer
+Rechnung, die Jonte nie gefragt hat. `PRODUKT.md` Abschnitt 5 schließt
+genau das aus: „Keine Aussage über eine dritte Person, die nicht gefragt
+wurde." Der Satz, der das auffangen würde, ist der vierte Punkt aus
+`REGELN.md` Abschnitt 4 — das eigene Erleben hat Vorrang —, und er müsste
+hier zweimal gelten: für mich und für ihn. Auf den Seiten über mich
+selbst steht er. Auf der Seite über einen anderen fehlt er. Dazu der
+Knopf „Text kopieren": Nach `PRODUKT.md` Abschnitt 2, Punkt 3 wird das
+hier nicht gelesen und weggelegt, sondern weitergeschickt — und was
+ankommt, ist „die Seite sagt, du streitest laut und grundsätzlich", ohne
+einen Satz, der Jonte widersprechen lässt. Es ist auch der Markenkern aus
+`PRODUKT.md` Abschnitt 3, der ausgerechnet auf der Seite fehlt, auf der
+er am meisten zu tragen hätte.
+**Vorschlag:** `beziehung.html` bekommt den Abschnitt, den `REGELN.md`
+Abschnitt 4 von jeder rechnenden Seite verlangt, offen und nicht
+gefaltet, mit den vier Punkten und einem fünften, der nur hier gilt:
+*Der andere Mensch hat zu sich selbst das letzte Wort. Wenn Jonte das
+anders erlebt, hat Jonte recht und nicht die Seite.* Derselbe Satz
+gehört in das, was „Text kopieren" ausgibt. Und: Aufgabe 40 verlangt eine
+Prüfung, dass der Grenzsatz **offen** steht statt zugeklappt — auf dieser
+Seite gibt es keinen, den man aufklappen könnte, die Prüfung ginge also
+grün durch, ohne etwas gesehen zu haben. Das ist der Nachsatz zu
+`REGELN.md` Abschnitt 6e. Die Prüfung muss zuerst verlangen, dass es den
+Abschnitt gibt.
+
+---
+
+### `beziehung.html` · ich stelle die Beziehungsart ein, die Seite verspricht „deutlich genauer" — und schreibt denselben Text
+
+**Rolle:** Das Gegenüber-Paar, Telefon (390) und Rechner (1440), Stufe 0.
+**Gesehen:** Oben steht als Versprechen der Seite: „Zwei Profile
+nebeneinander — und zwar für die Beziehung, die ihr wirklich habt. Eine
+Mutter liest man anders als eine Freundin und eine Kollegin anders als
+eine Partnerin." Solange nichts eingestellt ist, steht im Ergebnis:
+„Ohne festgelegte Beziehungsart wird allgemein gelesen. Stell oben die
+Art ein, die wirklich zutrifft — dann wird es deutlich genauer." Im Fuß:
+„Gewichtet nach Beziehungsart." Nachgemessen über alle neun Arten, jede
+einzeln angetippt: Es ändern sich genau zwei Sätze (die Zeile „Darum geht
+es hier …" und ein Rahmensatz) und die Reihenfolge der vier Karten. Die
+Kartentexte selbst sind in **sieben von neun** Arten dieselbe Menge, Wort
+für Wort; nur „Freundschaft" und „Eigenes Kind" tauschen eine Karte aus.
+Vier Arten — Liebe/Partnerschaft, Geschwister, Arbeit/Kollegin und
+Sonstige — liefern sogar dieselben Zeilen in derselben Zahl. Dadurch
+steht in der Deutung für **Mutter** wörtlich: „Das ist der Kontakt, der
+Freundschaften lange hält" und „wissen, dass eine Trennung bei diesem
+Kontakt überdurchschnittlich lange nachwirkt". Dieselben zwei Sätze
+stehen in Vater, Arbeit/Kollegin und Tier. Auch „Wie du Jonte erreichst",
+„Wie ihr miteinander redet", „Wenn es Streit gibt" und „Wenn du helfen
+willst" sind in allen neun Arten identisch.
+**Gestolpert:** Ich tue, was die Seite mir sagt — die Art einstellen, die
+wirklich zutrifft —, und das Ergebnis ist derselbe Text in anderer
+Reihenfolge.
+**Was es kostet:** Zwei Wege, beide teuer. Entweder ich merke es nicht:
+Dann lese ich über meine Mutter einen Satz über Trennung und einen über
+Freundschaften, und der Handgriff, den ich mitnehme, ist für eine
+Beziehung geschrieben, die ich nicht habe. Oder ich merke es — und dann
+ist das Versprechen weg, das die Seite in ihren ersten drei Zeilen gibt,
+und mit ihm der Vorsprung aus `PRODUKT.md` Abschnitt 3: Beschreiben
+können es The Pattern und Co-Star auch; handhabbar wird es erst, wenn der
+Handgriff zu der Beziehung passt, die ich wirklich habe. Dass der Schalter
+daneben (THEMA) wirklich etwas tut, macht es schlimmer, nicht besser — ich
+habe keinen Grund anzunehmen, dass der eine wirkt und der andere nicht.
+Und es ist eine Fehlerklasse, für die `REGELN.md` Abschnitt 5 schon ein
+Beispiel führt: „die Auswahl »Als« muss die Befunde wirklich ändern".
+**Vorschlag:** Entweder die Kartentexte werden nach Beziehungsart
+gebeugt — derselbe Kontakt heißt bei Mutter nicht „der Kontakt, der
+Freundschaften lange hält", sondern etwas, das zwischen Mutter und Kind
+vorkommt —, oder die Seite hört auf, Genauigkeit zu versprechen, die sie
+nicht liefert, und sagt, was wirklich passiert: dass die Art die
+Reihenfolge gewichtet. Das Erste ist das Richtige; das Zweite wäre
+wenigstens wahr. Geprüft wird es an der Fehlerklasse, nicht am Fall: Kein
+Kartentext darf ein Wort tragen, das zu der eingestellten Beziehungsart
+nicht passt, und zwei verschiedene Arten dürfen nicht dieselbe Menge
+Kartentexte ergeben.
+
+---
+
+### `beziehung.html` · die beiden Namensreihen zeigen nichts an, und der erste Tipp löscht die Deutung
+
+**Rolle:** Das Gegenüber-Paar, Telefon (390), Stufe 0, mit zwei Profilen.
+**Gesehen:** Über dem Ergebnis stehen zwei Reihen, „ZWISCHEN" und „UND",
+in beiden dieselben zwei Knöpfe: „M. L. (ich)" und „J. R.". Beim Laden
+ist **keiner** der vier markiert — nachgemessen `aria-pressed="false"`
+bei allen vieren, heller Hintergrund, während „Neu" und „Komplett" in
+denselben Leisten dunkel ausgefüllt sind. Darunter läuft trotzdem eine
+vollständige Deutung mit der Überschrift „Mara und Jonte". Weiter unten
+sagt die Seite: „Gelesen wird das nur in diese Richtung: Es beschreibt,
+was du bei Jonte auslöst — nicht, was Jonte bei dir auslöst. Dafür
+müsstest du die beiden Profile oben tauschen." Tippe ich daraufhin in der
+Reihe „ZWISCHEN" auf „J. R.", wird J. R. in **beiden** Reihen markiert,
+die ganze Deutung verschwindet und an ihrer Stelle steht ein gestrichelter
+Kasten mit einem Satz: „Bitte zwei verschiedene Profile wählen." Welche
+der beiden fast gleich aussehenden Reihen ich ändern muss, steht nicht
+dabei. Tippe ich danach in der Reihe „UND" auf „M. L. (ich)", kommt die
+Deutung zurück, jetzt als „Jonte und Mara" — und sie ist wirklich
+gedreht, bis in den Grundton („Du bist Feuer, Mara ist Wasser").
+**Gestolpert:** Ich mache genau das, wozu die Seite mich auffordert, und
+der erste Tipp nimmt mir alles weg, was ich gerade gelesen habe.
+**Was es kostet:** Nicht endgültiger Abbruch — aber Raten an der Stelle,
+an der mein Anliegen sitzt. Die Gegenrichtung *ist* die Frage, mit der ein
+Paar herkommt: Was löse ich bei ihm aus, was löst er bei mir aus, und wo
+treffen sich die beiden. Die Seite kann das, und sie macht es gut. Nur
+steht zwischen mir und der Antwort ein Zustand, den der Bildschirm nicht
+zeigt (welcher Mensch steht auf welcher Seite?) und eine Fehlermeldung,
+die nicht sagt, was ich tun soll. Am Telefon stehen die beiden Reihen
+untereinander und unterscheiden sich nur durch die Wörter „ZWISCHEN" und
+„UND" in kleiner Schrift.
+**Vorschlag:** Beim Laden markieren, was ohnehin gerechnet wird — in
+„ZWISCHEN" das eigene Profil, in „UND" das andere. Und ein Tipp, der zwei
+gleiche Profile ergäbe, löscht die Deutung nicht, sondern tauscht die
+beiden: Wer in „ZWISCHEN" auf J. R. tippt, bekommt „ZWISCHEN J. R. · UND
+M. L." und die gedrehte Deutung — also genau den Tausch, zu dem die Seite
+auffordert, in einem Schritt statt in zwei. Bleibt die Fehlermeldung,
+sagt sie, welche Reihe zu ändern ist.
