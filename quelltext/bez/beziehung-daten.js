@@ -323,3 +323,173 @@ var ROLLENSATZ={
  tier:'Beim Tier geht es nicht um Verstehen, sondern um Passung: Dein Tempo gegen sein Tempo, deine Reizschwelle gegen seine.',
  sonstige:'Ohne festgelegte Beziehungsart wird allgemein gelesen. Stell oben die Art ein, die wirklich zutrifft \u2014 dann wird es deutlich genauer.'
 };
+
+/* ── Die Sätze dieser Seite ─────────────────────────────
+   Aufgabe 52 (aus 34 und 38). Bis zum 2026-11-13 standen alle
+   dreiundachtzig Zeichenketten in `beziehung-app.js`, mitten
+   zwischen der Rechnung und dem Zusammensetzen der Auszeichnung.
+   Sie stehen jetzt hier, und die Anzeige setzt nur noch Werte ein
+   (`BZ_FUELL`). `bau-bez.py` bricht ab, sobald wieder ein Satz in
+   der Anzeige steht — in allen drei Anführungsarten.
+
+   Eine Vorlage, in die etwas eingesetzt wird, endet mit einer
+   Folge und nicht mit zwei Zuständen (REGELN.md 6d). */
+var BZ_T={
+
+ /* Die Auswahl oben */
+ wahlA:'Zwischen', wahlB:'und', wahlEigen:' (ich)',
+ labRolle:'Beziehung', labThema:'Thema',
+
+ /* Kopf */
+ kicker:'{rolle} · {thema}',
+ paar:'{a} und {b}',
+ einleitung:'Darum geht es hier: {was}. Was hier steht, beschreibt eine '+
+  'Anlage — keine Schuld und keine Prognose.',
+
+ /* Ohne Geburtszeit */
+ ohneZeitUnd:' und ',
+ ohneZeit:'<b>Ohne Geburtszeit bei {wer}.</b> Die Zeichen der Planeten '+
+  'stimmen trotzdem — Häuser und Aszendent fehlen, weil die sich '+
+  'stündlich ändern.',
+ mondOffen:' Und der Mond wechselt an diesem Tag das Zeichen: er steht '+
+  'entweder in {z1} oder in {z2}. Lies beide Fassungen und nimm die, '+
+  'die passt.',
+
+ /* Der Grundton */
+ grundTitel:'Der Grundton',
+ grundSonne:'Sonne in {z} · ',
+ grundMond:'Mond in {z}',
+ grundAsc:' · {z}-Aszendent',
+ grundGleich:'Ihr seid vom selben Schlag — beide {el}. Das macht vieles '+
+  'selbstverständlich und sorgt dafür, dass euch dieselben Dinge fehlen.',
+ grundVerschieden:'Du bist {ea}, {b} ist {eb}. Das ist der Grund für die '+
+  'meisten kleinen Missverständnisse zwischen euch — und auch dafür, '+
+  'dass ihr euch gegenseitig etwas beibringen könnt.',
+ elemente:['Feuer','Erde','Luft','Wasser'],
+
+ /* Beim Tier */
+ tierTitel:'Was für ein Typ {b} ist',
+ tierHinweis:'Beim Tier ist der Mond das Interessanteste — Temperament, '+
+  'Rhythmus, Reizschwelle. Sonne und Aszendent, die bei Menschen so viel '+
+  'tragen, sagen hier wenig. <b>Und dazugesagt:</b> Für Tiere gibt es '+
+  'keine gewachsene astrologische Tradition — die klassischen Texte '+
+  'handeln von Menschen. Was hier steht, ist eine Temperamentsskizze, '+
+  'keine Deutung, und sie ersetzt keine Tierärztin.',
+
+ /* Wie du diesen Menschen erreichst */
+ erreichenTitel:'Wie du {b} erreichst',
+ erreichenJa:'<b>Was ankommt:</b> {t}',
+ erreichenNein:'<b>Was danebengeht:</b> {t}',
+ erreichenHinweis:'Das liest sich am Mond ab — dem Teil, der zuerst '+
+  'reagiert, bevor jemand nachdenkt.',
+
+ /* Wie ihr redet */
+ redenTitel:'Wie ihr miteinander redet',
+ redenB:'<b>Bei {b} funktioniert:</b> {ja} <b>Nicht:</b> {nein}',
+ redenA:'<b>Du selbst redest so:</b> {a} — das ist genau dann ein Problem, '+
+  'wenn es nicht zu dem passt, was oben steht.',
+
+ /* Die Kontakte zwischen den beiden Bildern */
+ kontakteTitel:'Die stärksten Verbindungen',
+ kontakteTitelReibung:'Wo es hakt',
+ kontakteTitelNaehe:'Was leicht geht',
+ ktKopf:'{a} {pa} trifft {b} {pb}',
+ ktKopfTech:'{a} {pa} {typ} {b} {pb}',
+ ktOrb:' ({orb}°)',
+ ktHart:'Reibung', ktWeich:'leicht',
+ ktWasPassiert:'Was passiert',
+ ktWasAnkommt:'Was ankommt',
+ ktWasHilft:'Was hilft',
+ /* Steht kein Handelnder fest, spricht der Satz das Paar an. */
+ ktNiemand:'ihr',
+
+ /* Streit */
+ streitTitel:'Wenn es Streit gibt',
+ streitB:'<b>{b} streitet so:</b> {t}',
+ streitHilft:'<b>Was hilft:</b> {t}',
+ streitEltern:'Bei Eltern lohnt die Frage, wie alt dieses Muster ist. '+
+  'Vieles davon war mit zwölf richtig und ist mit vierzig nur noch '+
+  'Gewohnheit.',
+
+ /* Helfen */
+ helfenTitel:'Wenn du helfen willst',
+ helfenHinweis:'Und der unbequeme Teil: Die meisten Menschen helfen so, '+
+  'wie sie selbst geholfen bekommen wollen. Deins wäre „{a}“ — {folge}',
+ helfenGleich:'hier passt das ausnahmsweise zusammen.',
+ helfenAnders:'das ist nicht dasselbe.',
+
+ /* Was du beim anderen berührst.
+    „Deine Planeten" ist hier keine Beugung an einem einzelnen Punkt,
+    sondern ein fester Plural — es sind immer alle fünf. Was an einem
+    einzelnen Punkt hängt, bildet `B_BEUGE` (`ktKopf`, `haeuserZeile`). */
+ haeuserTitel:'Was du bei {b} berührst',
+ haeuserVor:'Deine Planeten fallen in {bs} Lebensbereiche. Das sagt, '+
+  'welches Thema du bei {b} berührst, ohne etwas dafür zu tun — und zwar '+
+  'immer dasselbe, in jeder Begegnung:',
+ haeuserZeile:'<b>{punkt}</b> fällt in {bs} Bereich <b>{bereich}</b>',
+ haeuserHaus:' ({h}. Haus)',
+ haeuserHinweis:'Gelesen wird das nur in diese Richtung: Es beschreibt, '+
+  'was du bei {b} auslöst — nicht, was {b} bei dir auslöst. Dafür '+
+  'müsstest du die beiden Profile oben tauschen.',
+
+ /* Was gerade läuft */
+ jetztTitel:'Was gerade zwischen euch läuft',
+ jetztLeer:'Gerade berührt kein langsamer Planet eure Charts eng genug, '+
+  'um daraus etwas zu lesen. Das ist der Normalzustand und keine Lücke — '+
+  'die meiste Zeit ist am Himmel nichts Besonderes los.',
+ jetztVor:'Was im Moment von außen dazukommt, eng gerechnet:',
+ jetztZeile:'<li>{was} — {folge}</li>',
+ /* Wessen Bild getroffen wird, steht als Name im Satz und nicht
+    davor: „Jupiter berührt gerade Jonas' Struktur". Bis zum
+    2026-11-13 stand hier „Jonas: Dein Jupiter berührt gerade dein
+    Saturn" — die Zeile nannte Jonas und sprach dann die Leserin an.
+    `bau-bez.py` lässt keine Vorlage mehr durch, die beides tut. */
+ jetztWas:'{wander} berührt gerade {bs} {punkt}',
+ jetztWasTech:'{wander} {typ} {bs} {punkt}',
+ jetztHart:'das ist der Punkt, an dem es zwischen euch gerade schneller '+
+  'eng wird, als es müsste.',
+ jetztWeich:'da geht gerade mehr als sonst, wenn ihr es nutzt.',
+ jetztHinweis:'Transite sind Wetter, kein Klima. Sie erklären, warum etwas '+
+  '<i>gerade jetzt</i> hochkommt — nicht, warum es überhaupt da ist.',
+
+ /* Der Fuß und die leeren Zustände */
+ fuss:'Beziehungsbilder beschreiben, womit zwei Menschen ausgestattet '+
+  'sind — nicht, was sie daraus machen. Ein harter Kontakt ist kein '+
+  'Urteil über eine Beziehung, und ein weicher ist keine Garantie.',
+ leerZwei:'<b>Dafür braucht es zwei Profile.</b><br><br>Unter '+
+  '<a href="profile.html">Profile</a> einen zweiten Menschen — oder ein '+
+  'Tier — anlegen, dann entsteht hier die Gegenüberstellung.',
+ leerGleich:'Bitte zwei verschiedene Profile wählen.',
+ kopiert:'Kopiert.'
+};
+
+/* ── Die Punkte in Alltagssprache ───────────────────────
+   Die Überschrift eines Kontakts nennt auf Stufe 0 keinen
+   Planetennamen, sondern das, worum es geht: „Mandys Wesenskern
+   trifft Lukas' Gefühl". Dafür braucht es das Hauptwort **ohne**
+   Besitzwort — davor steht hier ein Name und nicht „dein".
+
+   `g` ist das Geschlecht, damit `B_BEUGE` daraus „dein Gefühl" und
+   „deine Zuneigung" bilden kann, wo die Seite von einem selbst
+   spricht. Bis zum 2026-11-13 stand dafür eine eigene Tabelle
+   `PGENUS` in der Anzeige und ein `ohneDein`, das das Besitzwort
+   mit einem Suchmuster wieder abschnitt — zwei von Hand gepflegte
+   Grammatikregeln an einer Stelle, an die niemand schaut.
+
+   Dass hier dasselbe Wort steht wie in `niveau/wortwahl.js`, ist
+   nicht Absicht, sondern geprüft: `bau-bez.py` hält jede Zeile
+   gegen `PLANET[k].kurz(0)` und bricht ab, sobald eine der beiden
+   Dateien sich bewegt. Eine Kopie, die driften kann, wäre hier der
+   Fehler — eine, die nicht driften kann, ist eine Angabe. */
+var BZ_PUNKT={
+ Sonne:  {g:'m', wort:'Wesenskern'},
+ Mond:   {g:'s', wort:'Gefühl'},
+ Merkur: {g:'s', wort:'Denken'},
+ Venus:  {g:'w', wort:'Zuneigung'},
+ Mars:   {g:'m', wort:'Antrieb'},
+ Jupiter:{g:'s', wort:'Vertrauen'},
+ Saturn: {g:'w', wort:'Struktur'},
+ Uranus: {g:'m', wort:'Freiheitsdrang'},
+ Neptun: {g:'w', wort:'Sehnsucht'},
+ Pluto:  {g:'w', wort:'Tiefe'}
+};

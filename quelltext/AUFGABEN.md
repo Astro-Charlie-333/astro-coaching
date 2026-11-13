@@ -45,13 +45,19 @@ zweiundzwanzig Dateien; sie zweimal anzufassen wäre doppelte Arbeit.
 Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
 `pruefwerk.pruefe_anzeige_satzfrei` liest alle drei Anführungsarten,
 `pruefwerk.pruefe_anzeige_ohne_dein` findet jedes von Hand
-geschriebene „dein". Fünf Anzeigen sind durch und verriegelt
-(`bereich-app.js`, `start-app.js`, `offline-app.js`, seit dem
-2026-11-09 `heute-app.js`, seit dem 2026-11-10 `wahl-app.js` und seit
-dem 2026-11-11 `ich-app.js`). Seit dem 2026-11-11 verlangt die
+geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
+`start-app.js`, `offline-app.js`, `heute-app.js` (2026-11-09),
+`wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
+`monat-app.js` (2026-11-12) und `beziehung-app.js` (2026-11-13);
+dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
+Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
+`pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
+„fünf", nannte sechs Namen und meinte sieben Anzeigen — eine Zahl, die
+von Hand nachgezogen werden muss, stimmt nach dem zweiten Mal nicht
+mehr. Seit dem 2026-11-11 verlangt die
 Querprüfung **beide** Riegel je Anzeige, nicht nur den Satzriegel.
 
-Die sechzehn übrigen stehen einzeln darunter, in der Reihenfolge, in
+Die übrigen stehen einzeln darunter, in der Reihenfolge, in
 der ein Mensch sie vor sich hat: zuerst die Türen der Navigation
 (`uebersicht.html` ist „Dein Bild"), dann
 die Seiten, die ein Profil rechnen, zuletzt die Werkzeuge der
@@ -77,11 +83,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 52 · `beziehung-app.js` (83, 14)
-`beziehung.html` — „nicht du, sondern ihr beide", der Vorsprung aus
-`PRODUKT.md` Abschnitt 3. Die Anzeige bringt ein eigenes `ohneDein`
-mit und schreibt die Form von Hand; das fällt mit weg.
 
 ### 53 · `zeit-app.js` (115, 6)
 `zeiten.html`, der Zeitstrahl.
@@ -299,6 +300,32 @@ abgeschwächte Regel in jeder dieser sieben Anzeigen den Bau abbricht —
 in allen drei Anführungsarten geprüft —, und die beiden
 abgeschriebenen Fassungen in `bau-ich.py` und `bau-monat.py`
 weg sind.
+
+### 74 · Auf `beziehung.html` nennt „Was gerade läuft" einen Planeten und erklärt ihn nicht
+Gefunden beim Erledigen von Aufgabe 52 am 2026-11-13. Die Zeile heißt
+auf Stufe 0 „Neptun berührt gerade Jonas' Struktur — da geht gerade mehr
+als sonst, wenn ihr es nutzt." Der getroffene Punkt steht seither in
+Alltagssprache; der laufende Planet steht als bloßer Name da, ohne ein
+Wort dazu, was er ist. `REGELN.md` Abschnitt 2a erlaubt den Namen auf
+Stufe 0 — aber nur mit der Erklärung auf derselben Karte, und vor der
+Wirkung. Hier steht keine, und es ist genau die Zeile, von der jemand
+einen Screenshot macht (`PRODUKT.md` 2, Punkt 3).
+
+Vorher stand dort „Dein Neptun berührt gerade dein Saturn", also
+zweimal ein Name und zweimal ein falsches „dein" — der Fund ist älter
+als der Umzug, nur sichtbar geworden ist er dabei. Die Worte liegen
+schon fertig in `kern/bahn-daten.js`: `B_WAND` gibt jedem Wanderer ein
+Verb und für harte und weiche Winkel je eine Folge, und `B_ZIEL` sagt,
+was der getroffene Punkt im Leben ist. Beide Dateien liegen seit heute
+mit auf der Seite.
+**Fertig, wenn:** die Zeile auf Stufe 0 statt des Planetennamens das
+Verb und die Folge aus `B_WAND` trägt — oder den Namen mit seiner
+Erklärung davor —, der bloße Name und der Winkel erst ab Stufe 2 in
+`ac-tech` mit `data-ab="2"` stehen, und `bau-bez.py` den Bau abbricht,
+sobald im auf Stufe 0 gezeichneten Abschnitt ein Planetenname ohne
+Erklärung auf derselben Karte vorkommt — gegen feste Beispiele
+gehalten, also unabhängig davon, welcher Tag und welches Geburtsbild
+gerechnet wird.
 
 ---
 
@@ -681,6 +708,15 @@ je Vorlage, und eine Vorlage, die eine Lücke dazubekommt, ohne dass die
 Anzeige sie füllt, den Bau abbricht — gegen feste Beispiele gehalten wie
 `_datum_ohne_jahr`, also unabhängig davon, welcher Tag ist.
 
+*Seit dem 2026-11-13 gibt es diese Prüfung einmal, in `bau-bez.py`: sie
+liest jeden `BZ_FUELL`-Aufruf mit der Klammer statt mit einem
+Suchmuster und hält die Schlüssel gegen die Lücken genau dieser
+Vorlage. Die erste Fassung sammelte alle Schlüssel in einen Topf — und
+ließ „{wer}" durch, weil ein anderer Abschnitt ein `wer` einsetzt.
+Dieselbe Falle wie in `REGELN.md` 6e. Wer Aufgabe 69 macht, nimmt sie
+von dort und legt sie nach `rituale/pruefwerk.py`, statt sie ein
+zweites Mal zu erfinden.*
+
 ### 70 · Auf `zeiten.html` nennen neun Karten ein Zeichen und erklären keines
 Aus dem Gestaltungsdurchgang vom 2026-11-10 (Befund 10.11-1). Alle neun
 Karten unter „Was als Nächstes kommt" enden auf „Der Abschnitt trägt das
@@ -786,6 +822,68 @@ Rechner noch Sätze tragen — in beide Richtungen brechend, wie
 Querprüfung 13.
 
 ## Erledigt
+
+* **2026-11-13** · `beziehung-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 52, aus 34 und 38) — die achte von zweiundzwanzig Anzeigen
+  und die größte bisher: dreiundachtzig Zeichenketten und vierzehnmal
+  „dein" von Hand. Sie stehen jetzt als Vorlagen in `BZ_T` in
+  `beziehung-daten.js`; die Anzeige setzt nur noch Werte ein
+  (`BZ_FUELL`). Die beiden Grammatikregeln, die die Anzeige selbst
+  mitbrachte, sind weg: `PGENUS` (eine zweite Geschlechtertabelle für
+  die Planeten) und `ohneDein` (ein Suchmuster, das das Besitzwort
+  hinterher wieder abschnitt). An ihrer Stelle steht `BZ_PUNKT` —
+  Hauptwort und Geschlecht je Punkt —, und `B_BEUGE` aus
+  `kern/bahn-daten.js` bildet daraus „dein Gefühl" und „deine
+  Zuneigung". Dafür liegt `bahn-daten.js` seit heute mit auf der Seite,
+  und weil damit zwei Dateien mehr denselben Namensraum teilen, prüft
+  `bau-bez.py` jetzt auch auf Namenskollisionen; die drei Funktionen
+  der Anzeige, die `engine.js` verdeckten (`chartVon`, `haus`, `nrm`),
+  heißen jetzt `bzChart`, `bzHaus` und `bzNrm`.
+
+  Dass `BZ_PUNKT` dasselbe Wort nennt wie `niveau/wortwahl.js`, ist
+  keine Absicht, sondern geprüft: Der Bau hält jede der zehn Zeilen
+  gegen `PLANET[k].kurz(0)` und `kurz(1)` und bricht ab, sobald sich
+  eine der beiden Dateien bewegt. Eine Kopie, die driften kann, wäre
+  hier der Fehler gewesen; eine, die nicht driften kann, ist eine
+  Angabe.
+
+  Zwei Funde fielen beim Umzug heraus, und beide sind mit einer
+  dauerhaften Prüfung beantwortet:
+
+  **„Jonas: Dein Jupiter berührt gerade dein Saturn."** Die Zeile
+  nannte einen der beiden Menschen und sprach danach die Leserin an —
+  „dein" galt nicht ihr, sondern Jonas. Der Riegel aus `pruefwerk`
+  findet das nicht, weil die Vorlage in der Datendatei steht und dort
+  stehen darf. Die Zeile heißt jetzt „Jupiter berührt gerade Jonas'
+  Struktur", und `bau-bez.py` lässt keine Vorlage mehr durch, die einen
+  Namen als Besitz vor einen Punkt setzt und gleichzeitig „dein" sagt.
+  Geprüft wird die Form und nicht eine Liste von Vorlagennamen, die
+  veraltet: erkannt wird sie an ihren Platzhaltern.
+
+  **Ein `toLowerCase` auf deutschem Text**, mitten in der Anzeige —
+  verboten seit `REGELN.md` Abschnitt 4 und in neun Bauskripten
+  geprüft, nur in diesem nicht (Aufgabe 19). Er machte aus „Auf
+  Augenhöhe und ohne Konvention" ein kleines „auf". Mit dem Satz ist er
+  weggefallen, und die Prüfung steht jetzt auch hier.
+
+  Dazu eine Prüfung, die beim Umzug ihren eigenen Fehler gezeigt hat:
+  Jeder Platzhalter einer Vorlage muss an *dieser* Vorlage gefüllt
+  werden. Die erste Fassung sammelte alle Schlüssel aller Einsetzungen
+  in einen Topf — und ließ „{wer}" durch, weil ein anderer Abschnitt
+  ein `wer` einsetzt. Auf der Seite stand daraufhin „{wer}: Neptun
+  berührt gerade Struktur". Genau der Fall aus `REGELN.md` 6e: geprüft
+  war ein Wort, das meistens dabeisteht, und nicht die Form. Die zweite
+  Fassung liest die Klammer, nicht ein Suchmuster, und bricht in beide
+  Richtungen — fehlender Wert wie überschüssiger. Aufgabe 69 kann sie
+  übernehmen.
+
+  Nachgewiesen an der gebauten Seite: der volle Lauf grün, 86.401
+  Bytes, und die Rauchprobe gegen die Fassung von gestern auf allen
+  fünf Stufen, mit einem Profil ohne Geburtszeit und mit der Rolle
+  „Tier" — Zeichen für Zeichen gleich bis auf die drei Stellen, die
+  sich ändern sollten. Offen bleiben vierzehn Anzeigen, 1085 Sätze und
+  116 mal „dein", und die neue Aufgabe 74: auf Stufe 0 steht in „Was
+  gerade läuft" ein Planetenname ohne Erklärung.
 
 * **2026-11-12** · `monat-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 51, aus 34 und 38) — die siebte von zweiundzwanzig
