@@ -119,6 +119,42 @@
       });
       sichere(d);
     },
+    /* Bausteine: was Mandy im Baukasten für diesen Menschen erstellt hat
+       (baukasten.html). Gespeichert wird nur Art, Datum, Freigabe und
+       Notiz; der Inhalt entsteht jedes Mal neu aus dem Geburtsbild, damit
+       eine verbesserte Vorlage auch alte Zuweisungen besser macht. */
+    bausteine:function(pid){
+      var p=lade().liste.filter(function(x){return x.id===pid;})[0];
+      return (p&&p.bausteine)?p.bausteine:[];
+    },
+    bausteinHinzu:function(pid,art,notiz){
+      var d=lade(), neuB=null;
+      d.liste.forEach(function(p){
+        if(p.id===pid){
+          p.bausteine=p.bausteine||[];
+          neuB={id:'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),
+            art:art, notiz:notiz||'', frei:false, datum:new Date().toISOString().slice(0,10)};
+          p.bausteine.push(neuB);
+        }
+      });
+      sichere(d); return neuB;
+    },
+    bausteinAendern:function(pid,bid,werte){
+      var d=lade();
+      d.liste.forEach(function(p){
+        if(p.id===pid&&p.bausteine) p.bausteine.forEach(function(b){
+          if(b.id===bid){ if('frei' in werte) b.frei=!!werte.frei; if('notiz' in werte) b.notiz=String(werte.notiz||''); }
+        });
+      });
+      sichere(d);
+    },
+    bausteinLoeschen:function(pid,bid){
+      var d=lade();
+      d.liste.forEach(function(p){
+        if(p.id===pid&&p.bausteine) p.bausteine=p.bausteine.filter(function(b){return b.id!==bid;});
+      });
+      sichere(d);
+    },
     readingLoeschen:function(pid,rid){
       var d=lade();
       d.liste.forEach(function(p){

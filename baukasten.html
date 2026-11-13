@@ -1,0 +1,739 @@
+<!DOCTYPE html><html lang="de"><head>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF7EF">
+<link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
+<link rel="apple-touch-icon" href="symbol-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Astro-Charlie">
+<script src="app-start.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Baukasten &middot; Werkstatt &middot; Astro-Charlie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="profil.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
+  --linie:#EBE1D2; --linie-stark:#DDD0BC;
+  --nacht:#2E3A5C; --messing:#9A7235;
+  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
+  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --sans:'DM Sans',system-ui,-apple-system,sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
+  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
+  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
+  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
+  --flow:#3D6B62; --tense:#A05A3A;
+}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+.back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
+.back:hover{text-decoration:underline;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1 em{font-style:italic;}
+.lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
+h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+.sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
+p{margin-bottom:12px;}
+.tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
+.tip b{color:var(--ink);}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;}
+.foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
+.pill.fire{background:#FBE3DA;color:var(--fire);}
+.pill.earth{background:#E8EDDC;color:var(--earth);}
+.pill.air{background:#DEEBF1;color:var(--air);}
+.pill.water{background:#E6E1F0;color:var(--water);}
+a{color:var(--ind);}
+
+.weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
+@media(max-width:560px){.weiter{grid-template-columns:1fr;}}
+.weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+ padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
+.weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
+.weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .nx{text-align:right;}
+.weiter .end{grid-column:1/-1;text-align:center;}
+
+/* — vereinheitlichte Typografie — */
+body{font-family:var(--sans)!important;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
+h1{font-weight:300!important;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
+.eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--messing);font-weight:500;}
+.back,.zurueck{font-family:var(--sans)!important;font-size:14px;color:var(--leise);text-decoration:none;}
+.back:hover,.zurueck:hover{color:var(--nacht);}
+a{color:var(--nacht);}
+.tip{background:var(--messing-bg)!important;border-left:3px solid var(--messing)!important;}
+.foot{color:var(--leise);}
+.weiter a{background:var(--papier);border-color:var(--linie);}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+
+
+
+.ac-tool{margin-left:auto;font-family:var(--sans);font-size:14px;color:var(--nacht);text-decoration:none;
+ border:1px solid var(--linie);border-radius:18px;padding:6px 14px;}
+.ac-tool:hover{background:var(--nacht-bg);}
+
+
+
+
+
+@media(max-width:560px){.ac-nav a{padding:5px 9px;font-size:13px;}}
+
+.ac-begriff{color:var(--nacht);text-decoration:none;border-bottom:1px dotted var(--messing);}
+.ac-begriff:hover{border-bottom-style:solid;background:var(--messing-bg);}
+.ac-begriff::after{content:'↗';font-size:.72em;vertical-align:2px;margin-left:2px;color:var(--messing);}
+
+.ac-leiste{border-bottom:1px solid var(--linie);background:rgba(253,251,247,.88);
+ backdrop-filter:saturate(140%) blur(9px);-webkit-backdrop-filter:saturate(140%) blur(9px);
+ position:sticky;top:0;z-index:40;}
+.ac-leiste-inner{max-width:1020px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:13px;}
+.ac-leiste-inner svg{flex:none;}
+.ac-marke{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--tinte);
+ text-decoration:none;letter-spacing:-.01em;line-height:1;}
+.ac-marke:hover{color:var(--nacht);}
+.ac-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;align-items:center;}
+.ac-nav a{position:relative;font-family:var(--sans);font-size:14px;color:var(--leise);
+ text-decoration:none;padding:9px 14px;border-radius:0;letter-spacing:.005em;}
+.ac-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:4px;height:1.5px;
+ background:var(--nacht);transform:scaleX(0);transform-origin:left;transition:transform .18s ease;}
+.ac-nav a:hover{color:var(--nacht);background:none;}
+.ac-nav a:hover::after{transform:scaleX(1);}
+.ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
+.ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+@media(max-width:700px){
+ .ac-leiste-inner{padding:13px 18px;gap:9px;}
+ .ac-marke{font-size:17px;}
+ .ac-nav a{padding:7px 9px;font-size:13px;}
+ .ac-nav a::after{left:9px;right:9px;}
+}
+/* Auf schmalen Geraeten bekommt die Navigation eine eigene Zeile.
+   Vorher rutschte sie neben der Marke um und haengte den letzten
+   Punkt rechts unter die anderen — das sah nach Fehler aus, nicht
+   nach Absicht. Dazu bricht „Astro-Charlie" nicht mehr mitten im
+   Namen. Geprueft auf 390 Pixeln. */
+@media(max-width:620px){
+ .ac-leiste-inner{flex-wrap:wrap;row-gap:3px;padding:12px 16px 7px;}
+ .ac-marke{white-space:nowrap;}
+ .ac-nav{margin-left:0;width:100%;gap:1px;flex-wrap:nowrap;}
+ .ac-nav a{padding:6px 10px;font-size:13.5px;}
+ .ac-nav a:first-child{padding-left:0;}
+ .ac-nav a::after{left:10px;right:10px;}
+ .ac-nav a:first-child::after{left:0;}
+}
+.wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
+
+
+/* Baukasten. Werkstatt-Ton: ruhig, Arbeitsfläche, nummerierte Schritte. */
+.bk-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
+.bk-kopf{padding:48px 0 4px;display:grid;gap:12px}
+.bk-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
+.bk-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.2rem);line-height:1.08;color:#2E3A5C;margin:0}
+.bk-lede{font-size:1.05rem;line-height:1.6;max-width:62ch;margin:0}
+.bk-zurueck{margin:0;font-size:.92rem}
+.bk-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.5rem;color:#2E3A5C;margin:0;display:flex;align-items:center;gap:10px}
+.bk-h2 span{width:30px;height:30px;border-radius:50%;background:#2E3A5C;color:#FCF7EF;display:grid;place-items:center;font-size:1rem}
+.bk-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.bk-teil{padding-top:40px;display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+.bk-teil>*{min-width:0}
+.bk-wrap a{color:#2E3A5C}
+.bk-lab{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#6B6259}
+.bk-wrap select{font:inherit;padding:10px 12px;border:1px solid #DDD0BC;border-radius:10px;background:#FFFDFA;max-width:420px;width:100%}
+.bk-hinweis{margin:0;background:#FBEFE6;border-left:3px solid #A05A3A;border-radius:10px;padding:12px 14px}
+.bk-leise{margin:0;color:#6B6259;font-size:.92rem;line-height:1.55}
+.bk-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.bk-karte{font:inherit;text-align:left;cursor:pointer;background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;gap:6px;color:#231F1A}
+.bk-karte b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:#2E3A5C}
+.bk-karte span{font-size:.9rem;color:#6B6259;line-height:1.5}
+.bk-karte[aria-pressed=true]{border:2px solid #2E3A5C;padding:15px;background:#F5ECDD}
+.bk-werk{display:grid;gap:12px}
+.bk-grund{background:#F5ECDD;border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.bk-grund ul{margin:0;padding-left:1.1em;font-size:.92rem;display:grid;gap:3px}
+.bk-check{display:flex;gap:10px;align-items:center;font-size:.93rem;cursor:pointer}
+.bk-check input{width:18px;height:18px;accent-color:#2E3A5C}
+.bk-rahmen{position:relative;border:1px dashed #DDD0BC;border-radius:16px;overflow:hidden;background:#FCF7EF}
+.bk-rahmen iframe{display:block;width:100%;height:900px;border:0}
+.bk-rahmen>.bk-chip{position:absolute;top:10px;right:10px;z-index:1}
+.bk-chip{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;background:#F7EFE1;color:#7A5A27;border:1px solid #E6D3B2}
+.bk-chip-frei{background:#E3EEEA;color:#2E6A61;border-color:#BFD6CE}
+.bk-aktion{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bk-aktion button{font:inherit;font-weight:600;border-radius:999px;padding:10px 18px;cursor:pointer;border:1px solid #2E3A5C}
+#bkzuweisen{background:#2E3A5C;color:#FCF7EF}
+#bkdatei{background:#FFFDFA;color:#2E3A5C}
+#bkstatus{font-size:.9rem;color:#2E6A61}
+.bk-liste{display:grid;gap:8px}
+.bk-zeile{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.bk-zkopf{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.bk-zkopf b{color:#2E3A5C}
+.bk-datum{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#6B6259}
+.bk-zknoepfe{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.bk-zknoepfe button{font:inherit;font-size:.85rem;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:5px 12px;cursor:pointer;color:#2E3A5C}
+.bk-frage{font-size:.88rem;color:#A05A3A}
+.bk-ehrlich{margin-top:56px;padding:18px 20px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.bk-ehrlich p{margin:0}
+.bk-wrap [hidden]{display:none!important}
+.bk-wrap button:focus-visible,.bk-wrap select:focus-visible,.bk-wrap a:focus-visible,.bk-check input:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+</style>
+</head><body>
+<div class="ac-leiste"><div class="ac-leiste-inner">
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<a class="ac-marke" href="werkstatt.html">Werkstatt</a>
+<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+</div></div>
+
+<div class="bk-wrap">
+
+<header class="bk-kopf">
+  <div class="bk-eyebrow">Nur f&uuml;r dich &middot; nichts davon verl&auml;sst diesen Browser</div>
+  <h1 class="bk-h1">Baukasten</h1>
+  <p class="bk-lede">W&auml;hle einen Menschen und einen Baustein. Die Seite entsteht aus seinem Geburtsbild, du siehst sie als Entwurf, und erst wenn sie passt, weist du sie zu oder l&auml;dst sie als Datei zum Verschicken herunter.</p>
+  <p class="bk-zurueck"><a href="werkstatt.html">&larr; Zur&uuml;ck zu deinen Leuten</a></p>
+</header>
+
+<section class="bk-teil" aria-labelledby="bk-h-1">
+  <h2 class="bk-h2" id="bk-h-1"><span>1</span> F&uuml;r wen</h2>
+  <label class="bk-lab" for="bkprofil">Profil</label>
+  <select id="bkprofil"></select>
+  <p class="bk-hinweis" id="bkhinweis" hidden></p>
+</section>
+
+<section class="bk-teil" aria-labelledby="bk-h-2">
+  <h2 class="bk-h2" id="bk-h-2"><span>2</span> Was</h2>
+  <div class="bk-karten" id="bkkarten"></div>
+</section>
+
+<section class="bk-teil" aria-labelledby="bk-h-3">
+  <h2 class="bk-h2" id="bk-h-3"><span>3</span> Entwurf</h2>
+  <p class="bk-leise" id="bkleer"></p>
+  <p class="bk-hinweis" id="bkchart" hidden></p>
+  <div id="bkwerk" class="bk-werk" hidden>
+    <div class="bk-grund" id="bkgrund" hidden></div>
+    <label class="bk-check" for="bkfach"><input type="checkbox" id="bkfach"> Fachbegriffe mit in die Datei (Mond in Krebs und so weiter)</label>
+    <div class="bk-rahmen"><span class="bk-chip">Entwurf</span><iframe id="bkvorschau" title="Vorschau der Datei"></iframe></div>
+    <div class="bk-aktion">
+      <button type="button" id="bkzuweisen"></button>
+      <button type="button" id="bkdatei"></button>
+      <span id="bkstatus" role="status"></span>
+    </div>
+  </div>
+</section>
+
+<section class="bk-teil" aria-labelledby="bk-h-4">
+  <h2 class="bk-h2" id="bk-h-4">Schon zugewiesen</h2>
+  <p class="bk-leise">Gespeichert wird nur, welcher Baustein wann zugewiesen wurde und ob er freigegeben ist. Der Inhalt entsteht beim &Ouml;ffnen neu, so profitieren auch alte Zuweisungen von verbesserten Vorlagen. Die Zuweisungen gehen mit, wenn du deine Profile unter <a href="profile.html">Profile</a> sicherst.</p>
+  <div class="bk-liste" id="bkliste"></div>
+</section>
+
+<section class="bk-ehrlich" aria-labelledby="bk-h-e">
+  <h2 class="bk-h3" id="bk-h-e">Was das taugt</h2>
+  <p>Die Routinen w&auml;hlen ihre pers&ouml;nlichen Teile nach dem Element von Mond, Merkur, Mars, Sonne und Aszendent: vier Varianten je Teil, nicht mehr. Das Ger&uuml;st darum herum ist allgemeines Wissen &uuml;ber Angst und Schlaf und gilt f&uuml;r fast alle. Der Arztbesuch-Baustein h&auml;ngt nicht am Geburtsbild und enth&auml;lt bewusst keine Dosierungen.</p>
+  <p>Du kennst den Menschen. Wenn eine Variante nicht passt, schick sie nicht.</p>
+</section>
+
+</div>
+
+<script>
+var RAD=Math.PI/180;
+function norm(x){x=x%360;return x<0?x+360:x;}
+function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+ return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24;}
+var ELEM={Merkur:[0.38709927,0.20563593,7.00497902,252.25032350,77.45779628,48.33076593,0.00000037,0.00001906,-0.00594749,149472.67411175,0.16047689,-0.12534081],
+Venus:[0.72333566,0.00677672,3.39467605,181.97909950,131.60246718,76.67984255,0.00000390,-0.00004107,-0.00078890,58517.81538729,0.00268329,-0.27769418],
+Erde:[1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0],
+Mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
+Jupiter:[5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106],
+Saturn:[9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794],
+Uranus:[19.18916464,0.04725744,0.77263783,313.23810451,170.95427630,74.01692503,-0.00196176,-0.00004397,-0.00242939,428.48202785,0.40805281,0.04240589],
+Neptun:[30.06992276,0.00859048,1.77004347,-55.12002969,44.96476227,131.78422574,0.00026291,0.00005105,0.00035372,218.45945325,-0.32241464,-0.00508664],
+Pluto:[39.48211675,0.24882730,17.14001206,238.92903833,224.06891629,110.30393684,-0.00031596,0.00005170,0.00004818,145.20780515,-0.04062942,-0.01183482]};
+function helio(n,T){var e=ELEM[n];var a=e[0]+e[6]*T,ec=e[1]+e[7]*T,I=(e[2]+e[8]*T)*RAD,
+ L=e[3]+e[9]*T,wb=e[4]+e[10]*T,Om=e[5]+e[11]*T;var M=((norm(L-wb)+180)%360)-180;
+ var Mr=M*RAD,E=Mr+ec*Math.sin(Mr);
+ for(var i=0;i<12;i++){var dE=(E-ec*Math.sin(E)-Mr)/(1-ec*Math.cos(E));E-=dE;if(Math.abs(dE)<1e-11)break;}
+ var xp=a*(Math.cos(E)-ec),yp=a*Math.sqrt(1-ec*ec)*Math.sin(E),w=(wb-Om)*RAD,O=Om*RAD;
+ var x=(Math.cos(w)*Math.cos(O)-Math.sin(w)*Math.sin(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.cos(O)-Math.cos(w)*Math.sin(O)*Math.cos(I))*yp;
+ var y=(Math.cos(w)*Math.sin(O)+Math.sin(w)*Math.cos(O)*Math.cos(I))*xp+(-Math.sin(w)*Math.sin(O)+Math.cos(w)*Math.cos(O)*Math.cos(I))*yp;
+ return [x,y];}
+function prec(T){return 1.3969712*T+0.0003086*T*T;}
+function sunLon(T){var e=helio('Erde',T);return norm(Math.atan2(-e[1],-e[0])/RAD+prec(T));}
+function geo(n,T){var p=helio(n,T),e=helio('Erde',T);return norm(Math.atan2(p[1]-e[1],p[0]-e[0])/RAD+prec(T));}
+function moonLon(T){var Lp=218.3164477+481267.88123421*T-0.0015786*T*T,D=297.8501921+445267.1114034*T-0.0018819*T*T,
+ M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.2720950+483202.0175233*T-0.0036539*T*T,
+ A1=(119.75+131.849*T)*RAD,A2=(53.09+479264.290*T)*RAD;
+ D*=RAD;M*=RAD;Mp*=RAD;F*=RAD;var s=0,e1=1-0.002516*T;
+ var t=[[6288774,0,0,1,0],[1274027,2,0,-1,0],[658314,2,0,0,0],[213618,0,0,2,0],[-185116,0,1,0,0],[-114332,0,0,0,2],
+ [58793,2,-1,-1,0],[57066,2,-1,0,0],[53322,2,0,1,0],[45758,2,-1,1,0],[-40923,0,1,-1,0],[-34720,1,0,0,0],
+ [-30383,0,1,1,0],[15327,2,0,-2,0],[-12528,0,0,1,2],[10980,0,0,1,-2],[10675,4,0,-1,0],[10034,0,0,3,0],
+ [8548,4,0,-2,0],[-7888,2,1,-1,0],[-6766,2,1,0,0],[-5163,1,0,-1,0],[4987,1,1,0,0],[4036,2,-1,1,0],
+ [3994,2,0,2,0],[3861,4,0,0,0],[3665,2,0,-3,0],[-2689,0,1,-2,0],[-2602,2,0,-1,2],[2390,2,-1,-2,0],
+ [-2348,1,0,1,0],[2236,2,-2,0,0],[-2120,0,1,2,0],[-2069,0,2,0,0],[2048,2,-2,-1,0],[-1773,2,0,1,-2],
+ [-1595,2,0,0,2],[1215,4,-1,-1,0],[-1110,0,0,2,2]];
+ for(var i=0;i<t.length;i++){var f=t[i][0]*(Math.abs(t[i][2])===1?e1:(Math.abs(t[i][2])===2?e1*e1:1));
+  s+=f*Math.sin(t[i][1]*D+t[i][2]*M+t[i][3]*Mp+t[i][4]*F);}
+ s+=3958*Math.sin(A1)+1962*Math.sin(Lp*RAD-F)+318*Math.sin(A2);
+ return norm(Lp+s/1000000);}
+function nodeLon(T){return norm(125.0445479-1934.1362891*T+0.0020754*T*T);}
+function epsOf(T){return 23.439291-0.0130042*T-1.64e-7*T*T;}
+function gmst(jd){var T=(jd-2451545)/36525;return norm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T);}
+function angles(jd,lat,lon){var T=(jd-2451545)/36525,e=epsOf(T)*RAD,phi=lat*RAD,ramc=norm(gmst(jd)+lon)*RAD;
+ var mc=norm(Math.atan2(Math.sin(ramc),Math.cos(ramc)*Math.cos(e))/RAD);
+ var asc=norm(Math.atan2(Math.cos(ramc),-(Math.sin(ramc)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+ return {asc:asc,mc:mc,ramc:norm(ramc/RAD),eps:epsOf(T)};}
+function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
+ function cusp(off,fac){var ra=norm(ramc+off);
+  for(var i=0;i<30;i++){var dec=Math.atan(Math.tan(e)*Math.sin(ra*RAD));
+   var s=Math.tan(phi)*Math.tan(dec); s=Math.max(-1,Math.min(1,s));
+   var ad=Math.asin(s)/RAD, nra=norm(ramc+off+fac*ad);
+   if(Math.abs(nra-ra)<1e-9)break; ra=nra;}
+  return norm(Math.atan2(Math.sin(ra*RAD),Math.cos(ra*RAD)*Math.cos(e))/RAD);}
+ return [cusp(30,1/3),cusp(60,2/3),cusp(120,2/3),cusp(150,1/3)];}
+
+
+var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
+ 'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
+var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
+function nrm(x){x=x%360;return x<0?x+360:x;}
+var gewaehlt=null, tagOffset=0;
+
+function heuteJD(){var n=new Date();
+ return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),12);}
+function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
+function lon(k,jd){var T=(jd-2451545)/36525;
+ if(k==='Sonne') return sunLon(T); if(k==='Mond') return moonLon(T); return geo(k,T);}
+function rueck(k,jd){ if(k==='Sonne'||k==='Mond') return false; return nrm(lon(k,jd+1)-lon(k,jd-1))>180; }
+
+function chartVon(p){
+  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
+  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),Mars:geo('Mars',T),
+   Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),
+   Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+}
+function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+
+
+/* ───────────────────────────────────────────────────────────────
+   bk-daten.js — alle Sätze des Baukastens.
+
+   Mandy am 13.11.: Themen, Checklisten und Routinen „so einbauen, dass
+   ich sie Profilen individualisiert zuweisen kann … angepasst auf das
+   Chart … erst mal nur meine Sichtweise … dann kann ich was anklicken,
+   erstelle xyz, und dann wird es dem jeweiligen Profil zugewiesen".
+
+   Jeder Baustein hat ein festes Gerüst, das für alle gilt, und Teile,
+   die aus dem Geburtsbild gewählt werden. Gewählt wird nach dem Element
+   (Feuer, Erde, Luft, Wasser) eines Punkts — vier Texte je Teil, mehr
+   behauptet die Seite nicht. Die Fachzeile („Mond in Krebs") steht im
+   Entwurf für Mandy und nur auf Wunsch in der Datei für die Klientin.
+
+   Die Anzeige (bk-app.js) schreibt keinen Satz und kein „dein" selbst.
+   ─────────────────────────────────────────────────────────────── */
+
+var BK_ELEMENT = ['Feuer', 'Erde', 'Luft', 'Wasser'];
+
+/* Die Bausteine. `chart: true` heißt: braucht ein Profil mit Geburtsbild. */
+var BK_BAUSTEINE = [
+ {k:'abend', chart:true, titel:'Abendroutine bei Angst', kurz:'Runterkommen, wenn der Kopf abends nicht aufhört. Ein Gerüst für alle, dazu, was diesen Menschen beruhigt.',
+  datei:'Abendroutine'},
+ {k:'morgen', chart:true, titel:'Morgenroutine bei Angst', kurz:'Gut in den Tag kommen, wenn die Angst schon beim Aufwachen da ist. Gerüst plus persönlicher Start.',
+  datei:'Morgenroutine'},
+ {k:'arzt', chart:false, titel:'Was beim Arztbesuch ansprechen', kurz:'ADHS und AuDHS: welche Werte man prüfen lassen kann, wenn ein Mangel vermutet wird, und welche Fragen helfen. Ohne Dosierungen.',
+  datei:'Arztbesuch'}];
+
+/* ── Abendroutine ─────────────────────────────────────────── */
+var BK_ABEND = {
+ titel:'Deine Abendroutine',
+ lede:'Für Abende, an denen der Kopf nicht aufhören will. Oben das Gerüst, das bei fast allen hilft, darunter, was dich nach deinem Geburtsbild am ehesten beruhigt. Nimm, was passt, und lass den Rest weg.',
+ geruestTitel:'Das Gerüst',
+ geruest:[
+  ['90 Minuten vorher', 'Licht runter, Bildschirme weg oder auf warmes Licht. Das Gehirn braucht das Signal, dass der Tag vorbei ist.'],
+  ['60 Minuten vorher', 'Der Sorgenzettel: Schreib alles auf, was kreist, und zu jedem Punkt einen kleinen nächsten Schritt für morgen. Dann den Zettel zuklappen. Die Sorgen sind nicht weg, aber sie haben einen Platz.'],
+  ['30 Minuten vorher', 'Dein persönliches Runterkommen, siehe unten.'],
+  ['Im Bett', 'Zehnmal atmen: vier Zähler ein, sechs aus. Das längere Ausatmen sagt dem Nervensystem, dass es sicher ist.'],
+  ['Wenn die Angst kommt', 'Fünf Dinge, die du siehst, vier, die du hörst, drei, die du spürst, zwei, die du riechst, eins, das du schmeckst. Das holt dich aus dem Kopf zurück in den Raum.']],
+ teile:[
+  {k:'mond', kopf:'Was dich beruhigt', punkt:'Mond', texte:{
+    Feuer:'Du kommst über kurze, klare Rituale zur Ruhe, nicht über lange Abläufe. Eine Kerze, ein Satz, ein Lied: fertig. Je einfacher, desto eher machst du es wirklich.',
+    Erde:'Du beruhigst dich über den Körper und über Wiederholung. Jeden Abend dieselbe Reihenfolge, etwas Warmes zu trinken, eine schwere Decke. Dein System liebt das Vorhersehbare.',
+    Luft:'Dich beruhigt, wenn Gedanken eine Form bekommen. Aufschreiben, eine ruhige Stimme hören, ein Hörbuch, das du schon kennst. Leere Stille ist für dich eher laut.',
+    Wasser:'Dich beruhigt, was weich ist und Gefühle fließen lässt. Warmes Wasser, leise Musik ohne Text, einmal weinen dürfen. Gefühle, die raus dürfen, halten dich nicht mehr wach.'}},
+  {k:'mars', kopf:'Wohin mit der Energie', punkt:'Mars', texte:{
+    Feuer:'Dein Körper braucht vorher einen kurzen, kräftigen Abschluss: zehn Minuten zügig gehen, Treppen, Kniebeugen. Danach sinkt der Pegel schneller.',
+    Erde:'Deine Energie entlädt sich langsam. Dehnen, Füße massieren, etwas mit den Händen tun. Kein Sport kurz vor dem Schlafen, eher am frühen Abend.',
+    Luft:'Bei dir sitzt die Unruhe im Kopf, nicht in den Beinen. Ein kurzer Spaziergang ohne Handy oder ein Gespräch, das den Tag abschließt, hilft mehr als Training.',
+    Wasser:'Deine Energie hängt an der Stimmung. Wenn etwas dich aufgewühlt hat, schreib es auf oder sprich es aus, bevor du dich hinlegst. Sonst arbeitet es im Liegen weiter.'}},
+  {k:'merkur', kopf:'Gegen das Gedankenkarussell', punkt:'Merkur', texte:{
+    Feuer:'Gib deinen Gedanken ein Ziel: drei Punkte für morgen, mehr nicht. Ein Plan beruhigt dich mehr als Grübeln.',
+    Erde:'Mach aus dem Kreisen eine Liste mit Häkchen. Was erledigt ist, wird abgehakt, was offen ist, bekommt einen Tag. Ordnung auf Papier macht Ordnung im Kopf.',
+    Luft:'Sprich die Gedanken laut aus oder schreib sie ohne Pause auf, bis nichts mehr kommt. Bei dir hilft es, sie aus dem Kopf zu holen, nicht, sie wegzudrücken.',
+    Wasser:'Frag bei jedem Gedanken: Ist das mein Gefühl oder das von jemand anderem? Vieles, was abends kreist, gehört gar nicht dir.'}}],
+ rueckzug:'Dazu brauchst du wahrscheinlich mehr Rückzug, als du dir zugestehst. Eine halbe Stunde ganz allein, ohne Nachrichten, ist kein Luxus, sondern Pflege.',
+ satzTitel:'Ein Satz für den Abend',
+ saetze:{
+  Feuer:'Ich habe heute genug getan. Morgen ist ein neuer Anfang.',
+  Erde:'Ich bin sicher. Mein Körper darf jetzt schwer werden.',
+  Luft:'Meine Gedanken dürfen bis morgen warten. Sie gehen nicht verloren.',
+  Wasser:'Ich darf fühlen, was ich fühle. Und dann darf ich loslassen.'},
+ schluss:'Eine Routine wirkt nicht beim ersten Mal. Gib ihr zwei Wochen, bevor du entscheidest, ob sie hilft. Und wenn die Angst über Wochen nicht besser wird, sprich mit deiner Hausärztin darüber.'};
+
+/* ── Morgenroutine ────────────────────────────────────────── */
+var BK_MORGEN = {
+ titel:'Deine Morgenroutine',
+ lede:'Für Morgen, an denen die Angst schon beim Aufwachen da ist. Oben das Gerüst, das bei fast allen hilft, darunter, wie du nach deinem Geburtsbild am besten in den Tag kommst.',
+ geruestTitel:'Das Gerüst',
+ geruest:[
+  ['Die ersten 20 Minuten', 'Kein Handy. Nachrichten und Mails bestimmen sonst, wie dein Tag sich anfühlt, bevor du selbst da bist.'],
+  ['Licht', 'Vorhang auf oder kurz ans Fenster. Tageslicht hilft dem Körper, wach zu werden und abends wieder müde.'],
+  ['Wasser', 'Ein Glas Wasser, bevor der Kaffee kommt.'],
+  ['Der Körper', 'Zwei Minuten bewegen, siehe unten. Angst sitzt im Körper, und Bewegung baut sie ab.'],
+  ['Die kleinste Aufgabe', 'Mach als Erstes etwas, das in fünf Minuten erledigt ist. Ein erledigter Punkt am Morgen nimmt der Angst die Größe.']],
+ teile:[
+  {k:'asc', kopf:'Wie du in den Tag startest', punkt:'Aszendent', texte:{
+    Feuer:'Du kommst über einen schnellen, klaren Start in Gang. Aufstehen, kalt waschen, raus. Langes Liegenbleiben macht die Angst bei dir größer.',
+    Erde:'Du brauchst einen langsamen, immer gleichen Start. Plane morgens zehn Minuten mehr ein, als du denkst. Hetze ist für dich der schnellste Weg in die Angst.',
+    Luft:'Du startest gut mit etwas für den Kopf: drei Seiten schreiben, ein kurzer Podcast, ein Gedanke für den Tag. Dann erst die Pflichten.',
+    Wasser:'Du wachst über Gefühl auf, nicht über Pläne. Nimm dir zwei Minuten, um zu spüren, wie es dir geht, bevor du in den Tag gehst. Ignorieren macht es bei dir lauter.'}},
+  {k:'mars', kopf:'Bewegung, die passt', punkt:'Mars', texte:{
+    Feuer:'Kurz und kräftig: ein paar Hampelmänner, eine Runde um den Block, schnelle Musik. Zwei Minuten reichen, Hauptsache intensiv.',
+    Erde:'Langsam und körperlich: dehnen, Schultern kreisen, barfuß stehen. Ein Gefühl von Boden unter den Füßen.',
+    Luft:'Bewegung mit frischer Luft: Fenster auf und tief atmen, ein kurzer Weg zum Bäcker. Luft im Raum ist für dich Luft im Kopf.',
+    Wasser:'Sanft und fließend: ein paar ruhige Bewegungen, warmes Duschen, Musik, die zur Stimmung passt. Nichts, das sich wie Pflicht anfühlt.'}},
+  {k:'mond', kopf:'Wenn du mit Angst aufwachst', punkt:'Mond', texte:{
+    Feuer:'Steh auf, statt im Bett zu grübeln. Bewegung unterbricht die Schleife bei dir schneller als jedes Nachdenken.',
+    Erde:'Leg eine Hand auf den Bauch und spür das Gewicht deines Körpers auf der Matratze. Sicherheit kommt bei dir über das Spüren.',
+    Luft:'Schreib die Angst in einem Satz auf. Was auf dem Papier steht, verliert im Kopf an Größe.',
+    Wasser:'Sag dir: Das ist ein Gefühl, keine Tatsache. Gefühle kommen und gehen, auch dieses.'}}],
+ satzTitel:'Ein Satz für den Morgen',
+ saetze:{
+  Feuer:'Ich fange an. Der Rest kommt mit.',
+  Erde:'Schritt für Schritt. Ich habe Zeit.',
+  Luft:'Ich muss heute nicht alles wissen, nur den nächsten Schritt.',
+  Wasser:'Ich bin hier, so wie ich bin, und das reicht.'},
+ punktSatz:'Sonne',
+ schluss:'Eine Routine wirkt nicht beim ersten Mal. Gib ihr zwei Wochen, bevor du entscheidest, ob sie hilft. Und wenn die Angst über Wochen nicht besser wird, sprich mit deiner Hausärztin darüber.'};
+
+/* ── Arztbesuch ───────────────────────────────────────────── */
+/* Stand 13.11.2026. Grundlage: die Labordiagnostik-Empfehlungen einer
+   ärztlich geführten ADHS-Spezialambulanz (Mai 2026) und eine Studie
+   zu Eisen, Magnesium, Vitamin D und Zink bei Kindern mit ADHS-Symptomen
+   (2016). Bewusst keine Dosierungen und keine Grenzwerte: Die gehören in
+   die Hand der Ärztin, die den Befund kennt. */
+var BK_ARZT = {
+ titel:'Was du beim Arztbesuch ansprechen kannst',
+ lede:'Bei ADHS und AuDHS wird oft geraten, Nahrungsergänzung zu nehmen. Sinnvoll ist das nur, wenn wirklich etwas fehlt, und das zeigt nur eine Blutuntersuchung. Hier steht, welche Werte du ansprechen kannst, warum, und welche Fragen helfen.',
+ vorabTitel:'Vorab',
+ vorab:'Das hier ist keine medizinische Beratung und kein Behandlungsplan. Nimm keine Nahrungsergänzung auf Verdacht und keine Mischpräparate, die versprechen, ADHS zu bessern. Für solche Mischungen gibt es ohne nachgewiesenen Mangel keinen Beleg. Dosierung und Dauer gehören in die Hand deiner Ärztin.',
+ werteTitel:'Werte, nach denen du fragen kannst',
+ werte:[
+  ['Schilddrüse (TSH)', 'Eine Überfunktion kann Unruhe und Konzentrationsprobleme machen, die wie ADHS aussehen. Deshalb wird sie zur Abgrenzung geprüft, besonders vor Medikamenten.'],
+  ['Eisenspeicher (Ferritin) mit Blutbild', 'Ein leerer Eisenspeicher macht müde und unkonzentriert. In Studien hatten Kinder mit ADHS-Symptomen häufiger niedrige Werte. Frag, ob dazu ein Entzündungswert (CRP) bestimmt wird, weil eine Entzündung das Ferritin höher aussehen lässt, als es ist.'],
+  ['Vitamin D', 'Niedrige Werte sind in Deutschland im Winter häufig und können mit Müdigkeit und Stimmung zusammenhängen. Zusätzliches Vitamin D hilft nur, wenn wirklich ein Mangel besteht.'],
+  ['Vitamin B12 und Folsäure', 'Ein Mangel macht erschöpft und unkonzentriert. Das Risiko ist höher bei veganer Ernährung, nach Magen-Operationen und bei manchen Medikamenten.'],
+  ['Magnesium und Zink', 'In Studien bei Kindern mit ADHS-Symptomen teils niedriger. Der Blutwert zeigt bei Magnesium nur einen Teil des Speichers. Frag, ob eine Messung bei dir aussagekräftig ist.'],
+  ['Omega-3-Fettsäuren', 'Werden nicht routinemäßig gemessen. Studien zeigen bei ADHS höchstens kleine Effekte. Frag, ob es für dich überhaupt sinnvoll ist, bevor du Geld dafür ausgibst.']],
+ medikamentTitel:'Wenn Medikamente infrage kommen',
+ medikament:'Vor Medikamenten gegen ADHS werden üblicherweise Blutdruck und Puls gemessen, je nach Vorgeschichte auch ein EKG geschrieben. Erwähne Herzprobleme in der Familie, Schlafprobleme und alles, was du sonst einnimmst, auch Nahrungsergänzung.',
+ fragenTitel:'Fragen, die du stellen kannst',
+ fragen:[
+  'Welche dieser Werte sind bei mir sinnvoll, und warum?',
+  'Zahlt das die Krankenkasse, oder entstehen Kosten für mich?',
+  'Wenn ein Wert niedrig ist: Was ist die Ursache, und wie behandeln wir das?',
+  'Wann kontrollieren wir den Wert wieder?',
+  'Passt das zu dem, was ich sonst nehme?'],
+ mitTitel:'Was du mitbringen kannst',
+ mit:[
+  'Eine Liste von allem, was du einnimmst, auch Nahrungsergänzung',
+  'Frühere Blutwerte, wenn du welche hast',
+  'Notizen über zwei bis vier Wochen: Müdigkeit, Schlaf, Konzentration, bei Frauen den Zyklus',
+  'Wie du dich ernährst, zum Beispiel vegetarisch oder vegan'],
+ kosten:'Manche Werte zahlt die Kasse nur bei begründetem Verdacht. Frag vorher, ob Kosten entstehen.',
+ quellenTitel:'Grundlage',
+ quellen:[
+  ['ADHS-Spezialambulanz Hamburg: ADHS und Schilddrüse, Eisen, Vitamine (Mai 2026)', 'https://adhs-spezialambulanz.de/blog/adhs-schilddruese-eisen-vitamine'],
+  ['Studie: Eisen-, Magnesium-, Vitamin-D- und Zinkmangel bei Kindern mit ADHS-Symptomen (2016)', 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4928738/']],
+ schluss:'Nahrungsergänzung ersetzt keine Behandlung. Sie gleicht im besten Fall aus, was fehlt, und das ist schon viel.'};
+
+/* Fußzeile jeder Datei, die an eine Klientin geht. */
+var BK_FUSS = 'Erstellt für dich von Mandy Netta. Keine medizinische oder psychotherapeutische Beratung.';
+
+/* Alle übrigen Wörter der Anzeige. */
+var BK_TEXT = {
+ keinProfil:'Noch kein Profil angelegt. Leg unter <a href="profile.html">Profile</a> einen Menschen mit Geburtsdaten an.',
+ brauchtChart:'Dieser Baustein braucht ein Geburtsbild. Das gewählte Profil hat keine vollständigen Geburtsdaten.',
+ fuer:'Für {name}',
+ entwurf:'Entwurf',
+ frei:'Freigegeben',
+ aus:'Aus dem Geburtsbild',
+ fachzeile:'{punkt} in {zeichen} · {element}',
+ zuweisen:'Diesem Profil zuweisen',
+ zugewiesen:'Zugewiesen. Steht unten in der Liste.',
+ datei:'Als Datei herunterladen',
+ kopiert:'Kopiert.',
+ kopierenNicht:'Kopieren ging nicht. Markiere den Text in der Vorschau und kopiere ihn von Hand.',
+ listeLeer:'Diesem Profil ist noch nichts zugewiesen.',
+ oeffnen:'Öffnen',
+ freigeben:'Freigeben',
+ zurueck:'Zurück auf Entwurf',
+ entfernen:'Entfernen',
+ sicher:'Wirklich entfernen?',
+ ja:'Ja',
+ nein:'Nein',
+ dateiName:'{art}-{name}',
+ waehle:'Wähle oben einen Baustein.'};
+
+/* Aussehen der Datei, die an eine Klientin geht: eigenständig, ohne
+   Skript, in den Farben der Plattform. */
+var BK_DATEI_STIL = "body{margin:0;background:#FCF7EF;color:#231F1A;font:16px/1.65 'DM Sans',system-ui,-apple-system,sans-serif;padding:32px max(18px,env(safe-area-inset-left,0px)) 56px}main{max-width:680px;margin:0 auto;display:grid;gap:22px}.ey{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#9A7235;margin:0}h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(32px,8vw,46px);line-height:1.08;color:#2E3A5C;margin:0}h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:24px;color:#2E3A5C;margin:8px 0 0}p{margin:0}.lede{font-size:17px}.box{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px 18px;display:grid;gap:10px}.zeit{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr);gap:4px 14px;padding:10px 0;border-top:1px solid #EBE1D2}.zeit:first-child{border-top:0}.zeit b{color:#9A7235;font-weight:600}.teil{background:#FFFDFA;border:1px solid #EBE1D2;border-left:3px solid #9A7235;border-radius:12px;padding:14px 16px;display:grid;gap:6px}.teil h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:19px;color:#2E3A5C;margin:0}.fach{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:#6B6259}.satz{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:300;font-size:24px;line-height:1.35;color:#2E3A5C;background:#F7EFE1;border-radius:14px;padding:20px}.vorab{background:#F7EFE1;border-left:3px solid #9A7235;border-radius:10px;padding:14px 16px}ul,ol{margin:0;padding-left:1.2em;display:grid;gap:6px}.wert{display:grid;gap:4px;padding:10px 0;border-top:1px solid #EBE1D2}.wert:first-child{border-top:0}.wert b{color:#2E3A5C}.klein{font-size:13px;color:#6B6259}a{color:#2E3A5C}footer{margin-top:20px;border-top:1px solid #EBE1D2;padding-top:14px;font-size:13px;color:#6B6259}@media(max-width:480px){.zeit{grid-template-columns:1fr}}";
+
+/* Schriften der Datei. Ohne Netz fällt sie auf Systemschriften zurück. */
+var BK_DATEI_SCHRIFT = 'https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=JetBrains+Mono&display=swap';
+
+/* Der Kopf jeder Datei. */
+var BK_DATEI_ANFANG = '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
+
+/* ───────────────────────────────────────────────────────────────
+   bk-rechner.js — die Punkte, nach denen der Baukasten wählt.
+   Gerechnet gegen rituale/engine.js (chartVon, haus). Kein Satz.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Hat das Profil, was ein Geburtsbild braucht? */
+function bkHatChart(p){
+  return !!(p && p.y && p.mo && p.d && p.lat !== undefined && p.lat !== null && p.lon !== undefined && p.lon !== null);
+}
+
+/* Zeichen (0–11) und Element (0–3, Feuer Erde Luft Wasser) der
+   Punkte, dazu, ob im 12. Haus ein persönlicher Planet steht. */
+function bkStellen(p){
+  var C = chartVon({y:p.y, mo:p.mo, d:p.d, h:p.h || 0, mi:p.mi || 0, tz:p.tz || 0, lat:p.lat, lon:p.lon});
+  var punkt = function(l){ var z = Math.floor((((l % 360) + 360) % 360) / 30); return {z:z, el:z % 4}; };
+  var h12 = ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars'].some(function(k){ return haus(C, C[k]) === 12; });
+  return {Sonne:punkt(C.Sonne), Mond:punkt(C.Mond), Merkur:punkt(C.Merkur), Mars:punkt(C.Mars),
+          Aszendent:punkt(C.ASC), h12:h12};
+}
+
+/* ───────────────────────────────────────────────────────────────
+   bk-app.js — die Anzeige des Baukastens.
+
+   Keine Sätze, keine Rechnung. Sätze aus bk-daten.js, Stellen aus
+   bk-rechner.js, Profile und Zuweisungen über profil.js (AC_P).
+   bau-baukasten.py bricht ab, sobald hier ein Satz oder ein „dein" von
+   Hand auftaucht.
+
+   Ein Baustein entsteht als ein Modell (Titel, Blöcke). Aus dem Modell
+   wird ein eigenständiges HTML-Dokument; dasselbe Dokument steht in der
+   Vorschau und geht als Datei an die Klientin. Was Mandy sieht, ist
+   also genau das, was verschickt wird.
+   ─────────────────────────────────────────────────────────────── */
+(function(){
+'use strict';
+var T = BK_TEXT;
+var el = function(id){ return document.getElementById(id); };
+function bkEsc(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function bkFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+function bkNeu(tag, klasse, text){ var e = document.createElement(tag); if(klasse) e.className = klasse; if(text !== undefined) e.textContent = text; return e; }
+function bkDef(art){ for(var i = 0; i < BK_BAUSTEINE.length; i++) if(BK_BAUSTEINE[i].k === art) return BK_BAUSTEINE[i]; return null; }
+
+var zustand = {pid:null, art:null};
+
+function bkProfile(){ try{ return AC_P.alle() || []; }catch(e){ return []; } }
+function bkProfil(){ var a = bkProfile(); for(var i = 0; i < a.length; i++) if(a[i].id === zustand.pid) return a[i]; return null; }
+function bkVorname(p){ var n = String(p.name || p.alias || '').trim(); return n ? n.split(/\s+/)[0] : ''; }
+
+/* ── Modell ─────────────────────────────────────────────── */
+function bkFach(punkt, s){ return bkFuell(T.fachzeile, {punkt:punkt, zeichen:SIGNS[s.z], element:BK_ELEMENT[s.el]}); }
+
+function bkRoutine(D, S){
+  var b = [{typ:'zeiten', titel:D.geruestTitel, zeilen:D.geruest}];
+  D.teile.forEach(function(t){
+    var s = S[t.punkt], text = t.texte[BK_ELEMENT[s.el]];
+    if(D.rueckzug && t.k === 'mond' && S.h12) text = text + ' ' + D.rueckzug;
+    b.push({typ:'teil', titel:t.kopf, text:text, fach:bkFach(t.punkt, s)});
+  });
+  var sp = D.punktSatz || 'Mond';
+  b.push({typ:'satz', titel:D.satzTitel, text:D.saetze[BK_ELEMENT[S[sp].el]], fach:bkFach(sp, S[sp])});
+  return {titel:D.titel, lede:D.lede, bloecke:b, schluss:D.schluss};
+}
+
+function bkArzt(){
+  var D = BK_ARZT;
+  return {titel:D.titel, lede:D.lede, schluss:D.schluss, bloecke:[
+    {typ:'vorab', titel:D.vorabTitel, text:D.vorab},
+    {typ:'werte', titel:D.werteTitel, zeilen:D.werte, nach:D.kosten},
+    {typ:'text', titel:D.medikamentTitel, text:D.medikament},
+    {typ:'liste', titel:D.fragenTitel, punkte:D.fragen, nummer:true},
+    {typ:'liste', titel:D.mitTitel, punkte:D.mit},
+    {typ:'quellen', titel:D.quellenTitel, links:D.quellen}]};
+}
+
+function bkModell(art, p){
+  if(art === 'arzt') return bkArzt();
+  if(!bkHatChart(p)) return null;
+  var S = bkStellen(p);
+  return bkRoutine(art === 'abend' ? BK_ABEND : BK_MORGEN, S);
+}
+
+/* ── Aus dem Modell ein Dokument ────────────────────────── */
+function bkBlock(b, fach){
+  var h = '<section class="box">';
+  if(b.typ === 'zeiten'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2>' + b.zeilen.map(function(z){ return '<div class="zeit"><b>' + bkEsc(z[0]) + '</b><p>' + bkEsc(z[1]) + '</p></div>'; }).join('');
+  } else if(b.typ === 'teil'){
+    h = '<section class="teil"><h3>' + bkEsc(b.titel) + '</h3><p>' + bkEsc(b.text) + '</p>' + (fach ? '<p class="fach">' + bkEsc(b.fach) + '</p>' : '');
+  } else if(b.typ === 'satz'){
+    h = '<section><h2>' + bkEsc(b.titel) + '</h2></section><section class="satz">' + bkEsc(b.text) + (fach ? '<p class="fach">' + bkEsc(b.fach) + '</p>' : '');
+  } else if(b.typ === 'vorab'){
+    h = '<section class="vorab"><p><b>' + bkEsc(b.titel) + '</b></p><p>' + bkEsc(b.text) + '</p>';
+  } else if(b.typ === 'werte'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2>' + b.zeilen.map(function(z){ return '<div class="wert"><b>' + bkEsc(z[0]) + '</b><p>' + bkEsc(z[1]) + '</p></div>'; }).join('')
+      + (b.nach ? '<p class="klein">' + bkEsc(b.nach) + '</p>' : '');
+  } else if(b.typ === 'text'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2><p>' + bkEsc(b.text) + '</p>';
+  } else if(b.typ === 'liste'){
+    var t = b.nummer ? 'ol' : 'ul';
+    h += '<h2>' + bkEsc(b.titel) + '</h2><' + t + '>' + b.punkte.map(function(x){ return '<li>' + bkEsc(x) + '</li>'; }).join('') + '</' + t + '>';
+  } else if(b.typ === 'quellen'){
+    h += '<h2>' + bkEsc(b.titel) + '</h2><ul class="klein">' + b.links.map(function(q){ return '<li><a href="' + bkEsc(q[1]) + '">' + bkEsc(q[0]) + '</a></li>'; }).join('') + '</ul>';
+  }
+  return h + '</section>';
+}
+
+function bkDokument(m, p, fach){
+  var fuer = p && bkVorname(p) ? bkFuell(T.fuer, {name:bkVorname(p)}) : '';
+  return BK_DATEI_ANFANG
+    + '<title>' + bkEsc(m.titel) + '</title><link rel="stylesheet" href="' + bkEsc(BK_DATEI_SCHRIFT) + '"><style>' + BK_DATEI_STIL + '</style></head><body><main>'
+    + (fuer ? '<p class="ey">' + bkEsc(fuer) + '</p>' : '')
+    + '<h1>' + bkEsc(m.titel) + '</h1><p class="lede">' + bkEsc(m.lede) + '</p>'
+    + m.bloecke.map(function(b){ return bkBlock(b, fach); }).join('')
+    + '<p>' + bkEsc(m.schluss) + '</p><footer>' + bkEsc(BK_FUSS) + '</footer></main></body></html>';
+}
+
+/* ── Oberfläche ─────────────────────────────────────────── */
+function bkProfilwahl(){
+  var a = bkProfile(), s = el('bkprofil');
+  s.innerHTML = '';
+  if(!a.length){ el('bkhinweis').innerHTML = T.keinProfil; el('bkhinweis').hidden = false; s.disabled = true; return; }
+  var akt = null; try{ akt = AC_P.aktives(); }catch(e){}
+  if(!zustand.pid) zustand.pid = (akt || a[0]).id;
+  var voll = false; try{ voll = AC_P.zeigeNamen(); }catch(e){}
+  a.forEach(function(p){ var o = bkNeu('option', '', AC_P.anzeige(p, voll)); o.value = p.id; o.selected = p.id === zustand.pid; s.appendChild(o); });
+}
+
+function bkKarten(){
+  var box = el('bkkarten'); box.innerHTML = '';
+  BK_BAUSTEINE.forEach(function(B){
+    var b = bkNeu('button', 'bk-karte'); b.type = 'button'; b.setAttribute('aria-pressed', String(zustand.art === B.k)); b.setAttribute('data-art', B.k);
+    b.appendChild(bkNeu('b', '', B.titel)); b.appendChild(bkNeu('span', '', B.kurz));
+    b.addEventListener('click', function(){ zustand.art = B.k; bkZeigen(); });
+    box.appendChild(b);
+  });
+}
+
+function bkGrundlage(p){
+  var box = el('bkgrund'); box.innerHTML = '';
+  if(zustand.art === 'arzt' || !bkHatChart(p)){ box.hidden = true; return; }
+  var S = bkStellen(p), D = zustand.art === 'abend' ? BK_ABEND : BK_MORGEN;
+  box.hidden = false;
+  box.appendChild(bkNeu('span', 'bk-lab', T.aus));
+  var ul = document.createElement('ul');
+  D.teile.forEach(function(t){ ul.appendChild(bkNeu('li', '', t.kopf + ': ' + bkFach(t.punkt, S[t.punkt]))); });
+  var sp = D.punktSatz || 'Mond';
+  ul.appendChild(bkNeu('li', '', D.satzTitel + ': ' + bkFach(sp, S[sp])));
+  box.appendChild(ul);
+}
+
+function bkZeigen(){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-art]'), function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-art') === zustand.art)); });
+  var p = bkProfil(), m = zustand.art ? bkModell(zustand.art, p) : null, fr = el('bkvorschau');
+  el('bkstatus').textContent = '';
+  el('bkleer').hidden = !!zustand.art;
+  el('bkleer').textContent = T.waehle;
+  el('bkchart').hidden = !(zustand.art && !m);
+  el('bkchart').textContent = T.brauchtChart;
+  el('bkwerk').hidden = !m;
+  bkGrundlage(p);
+  if(m){
+    fr.srcdoc = bkDokument(m, p, el('bkfach').checked);
+    fr.onload = function(){ try{ fr.style.height = (fr.contentDocument.documentElement.scrollHeight + 4) + 'px'; }catch(e){} };
+  }
+  bkListe();
+}
+
+function bkDatei(art, p, fach){
+  var m = bkModell(art, p); if(!m) return;
+  var B = bkDef(art), name = bkFuell(T.dateiName, {art:B.datei, name:bkVorname(p) || p.id}).replace(/[^A-Za-z0-9ÄÖÜäöüß_-]+/g, '-');
+  var blob = new Blob([bkDokument(m, p, fach)], {type:'text/html'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name + '.html';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 300);
+}
+
+function bkListe(){
+  var box = el('bkliste'); box.innerHTML = '';
+  var p = bkProfil(); if(!p){ return; }
+  var L = []; try{ L = AC_P.bausteine(p.id); }catch(e){}
+  if(!L.length){ box.appendChild(bkNeu('p', 'bk-leise', T.listeLeer)); return; }
+  L.slice().reverse().forEach(function(b){
+    var B = bkDef(b.art); if(!B) return;
+    var z = bkNeu('div', 'bk-zeile');
+    var k = bkNeu('div', 'bk-zkopf');
+    k.appendChild(bkNeu('b', '', B.titel));
+    k.appendChild(bkNeu('span', 'bk-datum', b.datum));
+    k.appendChild(bkNeu('span', b.frei ? 'bk-chip bk-chip-frei' : 'bk-chip', b.frei ? T.frei : T.entwurf));
+    z.appendChild(k);
+    var w = bkNeu('div', 'bk-zknoepfe');
+    var knopf = function(text, f){ var x = bkNeu('button', '', text); x.type = 'button'; x.addEventListener('click', f); w.appendChild(x); return x; };
+    knopf(T.oeffnen, function(){ zustand.art = b.art; bkZeigen(); el('bkwerk').scrollIntoView({block:'start'}); });
+    knopf(T.datei, function(){ bkDatei(b.art, p, el('bkfach').checked); });
+    knopf(b.frei ? T.zurueck : T.freigeben, function(){ AC_P.bausteinAendern(p.id, b.id, {frei:!b.frei}); bkListe(); });
+    var weg = knopf(T.entfernen, function(){
+      weg.hidden = true;
+      var frage = bkNeu('span', 'bk-frage', T.sicher);
+      var ja = bkNeu('button', '', T.ja); ja.type = 'button';
+      var nein = bkNeu('button', '', T.nein); nein.type = 'button';
+      ja.addEventListener('click', function(){ AC_P.bausteinLoeschen(p.id, b.id); bkListe(); });
+      nein.addEventListener('click', function(){ bkListe(); });
+      w.appendChild(frage); w.appendChild(ja); w.appendChild(nein);
+    });
+    z.appendChild(w); box.appendChild(z);
+  });
+}
+
+function bkLos(){
+  bkProfilwahl(); bkKarten();
+  el('bkprofil').addEventListener('change', function(){ zustand.pid = el('bkprofil').value; bkZeigen(); });
+  el('bkfach').addEventListener('change', bkZeigen);
+  el('bkzuweisen').addEventListener('click', function(){
+    var p = bkProfil(); if(!p || !zustand.art) return;
+    AC_P.bausteinHinzu(p.id, zustand.art, '');
+    el('bkstatus').textContent = T.zugewiesen; bkListe();
+  });
+  el('bkdatei').addEventListener('click', function(){ var p = bkProfil(); if(p && zustand.art) bkDatei(zustand.art, p, el('bkfach').checked); });
+  el('bkzuweisen').textContent = T.zuweisen;
+  el('bkdatei').textContent = T.datei;
+  bkZeigen();
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bkLos); else bkLos();
+})();
+
+</script>
+</body></html>

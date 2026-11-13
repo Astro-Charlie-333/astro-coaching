@@ -44,6 +44,7 @@ BAUTEN = [
     ('planeten/bau-planeten.py', 'Planeten'),
     ('leitfaden/bau-leitfaden.py', 'Leitfaden'),
     ('nd/bau-nd.py',          'Verdrahtet'),
+    ('baukasten/bau-baukasten.py', 'Baukasten'),
     ('rituale/bau-zauber.py', 'Zauber'),
     ('niveau/bau-reading.py', 'Reading'),
     ('karte/bau-karte.py',    'Karte'),
@@ -740,6 +741,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'kern/heute-app.js', 'kern/ich-app.js',
           'monat/monat-app.js', 'planeten/planeten-app.js',
           'leitfaden/leitfaden-app.js', 'nd/nd-app.js',
+          'baukasten/bk-app.js',
           'bez/beziehung-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
@@ -845,7 +847,8 @@ if geschrumpft:
 # Schaufenster. Erlaubt ist ein Verweis nur aus der Werkstatt und von
 # einer Arbeitsseite auf die andere.
 WERKSTATT_SEITEN = {'angebote-struktur.html', 'ueber-mich-vorlage.html',
-                    'learning-seite.html', 'konzept-plattform.html'}
+                    'learning-seite.html', 'konzept-plattform.html',
+                    'baukasten.html'}
 _quell_ok = WERKSTATT_SEITEN | {'werkstatt.html'}
 
 

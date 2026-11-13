@@ -93,10 +93,14 @@ for feld in ['name', 'alias', 'ort', 'wort']:
 
 # ── 2 · Die Tür bleibt still ─────────────────────────────────
 # Verlinkt irgendeine andere ausgelieferte Seite hierher, steht der
-# Arbeitsplatz im Schaufenster. Die Seite selbst darf sich verlinken.
+# Arbeitsplatz im Schaufenster. Die Seite selbst darf sich verlinken,
+# und Seiten hinter derselben Tür dürfen zurückführen: der Baukasten
+# (13.11.). Dass der Baukasten seinerseits nirgends öffentlich verlinkt
+# ist, hält Querprüfung 14 in pruefe-alles.py fest.
+HINTER_DER_TUER = {'werkstatt.html', 'baukasten.html'}
 verlinkt = []
 for s in sorted(wiki.glob('*.html')):
-    if s.name == 'werkstatt.html':
+    if s.name in HINTER_DER_TUER:
         continue
     if 'werkstatt.html' in s.read_text(encoding='utf-8', errors='replace'):
         verlinkt.append(s.name)
