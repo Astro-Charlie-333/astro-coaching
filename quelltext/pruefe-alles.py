@@ -716,7 +716,6 @@ ANZEIGEN = {
     # (prefers-reduced-motion: reduce) eine Medienabfrage ist und
     # kein Satz (Aufgabe 50). zeit ebenso am 2026-11-12: „zt-bt
     # zt-gly" ist eine Klassenliste (Aufgabe 51).
-    'bez/beziehung-app.js':        (83, 14),
     'zeit/zeit-app.js':            (114, 6),
     'karte/karte-app.js':          (42, 5),
     'mond/mond-app.js':            (76, 8),
@@ -732,14 +731,16 @@ ANZEIGEN = {
     'niveau/reading-app.js':       (70, 14),
     'werkstatt/werkstatt-app.js':  (39, 2),
 }
-# Diese sieben sind durch und werden von ihrem eigenen bau-*.py
-# gehalten; sie stehen hier nur, damit auffällt, wenn eine davon
-# zurückfällt und keinen Riegel hat.
+# Diese sind durch und werden von ihrem eigenen bau-*.py gehalten;
+# sie stehen hier nur, damit auffällt, wenn eine davon zurückfällt und
+# keinen Riegel hat. Wie viele es sind, zählt die Zeile unten nach —
+# eine Zahl in einem Satz driftet (REGELN.md 6c).
 FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'start/start-app.js', 'app/offline-app.js',
           'kern/heute-app.js', 'kern/ich-app.js',
           'monat/monat-app.js', 'planeten/planeten-app.js',
-          'leitfaden/leitfaden-app.js', 'nd/nd-app.js'}
+          'leitfaden/leitfaden-app.js', 'nd/nd-app.js',
+          'bez/beziehung-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

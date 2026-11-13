@@ -1,5 +1,11 @@
-/* ── Zwei Charts nebeneinander ─────────────────────────── */
-function nrm(x){x=x%360;return x<0?x+360:x;}
+/* ── Zwei Charts nebeneinander ─────────────────────────────────
+   Diese Datei rechnet und setzt zusammen. Sie schreibt keinen Satz:
+   alle Texte stehen in `beziehung-daten.js` (`BZ_T`), und „dein"
+   bildet `B_BEUGE` aus `kern/bahn-daten.js` — die eine Stelle, die
+   das Geschlecht eines Punktes kennt (Aufgabe 52, aus 34 und 38).
+   `bau-bez.py` bricht ab, sobald hier wieder ein Satz oder ein von
+   Hand geschriebenes „dein" steht, in allen drei Anführungsarten. */
+function bzNrm(x){x=x%360;return x<0?x+360:x;}
 function el(i){ return document.getElementById(i); }
 function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
  return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
@@ -8,13 +14,21 @@ function gross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 var W=window.AC_WORT;
 /* „Mandys", „Lukas'" — deutsche Besitzform */
 function bes(n){ return /[sxzß]$/i.test(n) ? n+"'" : n+'s'; }
-/* Genus der Planeten — „dein Mond", aber „deine Sonne" */
-var PGENUS={Sonne:'deine',Mond:'dein',Merkur:'dein',Venus:'deine',Mars:'dein',
- Jupiter:'dein',Saturn:'dein',Uranus:'dein',Neptun:'dein',Pluto:'dein',
- Chiron:'dein',Lilith:'deine'};
-function meinPlanet(k){ return (PGENUS[k]||'dein')+' '+k; }
-/* „dein Wesenskern" → „Wesenskern" */
-function ohneDein(s){ return s.replace(/^(deine|dein|die|der|das)\s+/i,''); }
+
+/* Setzt Werte in eine Vorlage aus BZ_T ein. Hier entsteht kein
+   Text, nur die Einsetzung. */
+function BZ_FUELL(form, werte){
+  var s=String(form||'');
+  for(var k in werte) if(werte.hasOwnProperty(k))
+    s=s.split('{'+k+'}').join(String(werte[k]));
+  return s;
+}
+/* Das Hauptwort eines Punktes ohne Besitzwort — davor steht ein
+   Name. Auf Stufe 0 das Alltagswort, darüber der Planetenname. */
+function bzWort(k,n){ return n<=0 ? (BZ_PUNKT[k]||B_PUNKT(k)).wort : B_PUNKT(k).wort; }
+/* Derselbe Punkt, wenn die Seite von einem selbst spricht. */
+function bzMein(k,n){ return B_BEUGE(n<=0?(BZ_PUNKT[k]||B_PUNKT(k)):B_PUNKT(k),'nom'); }
+
 var ZN=W.ZEICHEN.map(function(z){return z.n;});
 var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 var ASPW=[[0,'Konjunktion','w'],[60,'Sextil','w'],[90,'Quadrat','h'],[120,'Trigon','w'],[180,'Opposition','h']];
@@ -30,7 +44,7 @@ function rolleSetzen(id,v){ var r=rollen(); if(v) r[id]=v; else delete r[id];
 
 /* ── Charts ───────────────────────────────────────────── */
 function hatZeit(p){ return !(p.h===undefined||p.h===null||p.ohneZeit); }
-function chartVon(p){
+function bzChart(p){
   var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
   if(!hatZeit(p)){ ut=12-(p.tz||0); }
   if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
@@ -42,15 +56,15 @@ function chartVon(p){
   /* Ohne Zeit: wandert der Mond an diesem Tag über eine Zeichengrenze? */
   if(!hatZeit(p)){
     var j0=jdFromUT(p.y,p.mo,p.d,0-(p.tz||0)), j1=j0+1;
-    var z0=Math.floor(nrm(moonLon((j0-2451545)/36525))/30);
-    var z1=Math.floor(nrm(moonLon((j1-2451545)/36525))/30);
+    var z0=Math.floor(bzNrm(moonLon((j0-2451545)/36525))/30);
+    var z1=Math.floor(bzNrm(moonLon((j1-2451545)/36525))/30);
     C._mondUnsicher=(z0!==z1);
     C._mondZeichen=[z0,z1];
   }
   return C;
 }
-function haus(C,l){ return C.ASC===undefined?0:((Math.floor(l/30)-Math.floor(C.ASC/30))%12+12)%12+1; }
-function zi(l){ return Math.floor(nrm(l)/30); }
+function bzHaus(C,l){ return C.ASC===undefined?0:((Math.floor(l/30)-Math.floor(C.ASC/30))%12+12)%12+1; }
+function zi(l){ return Math.floor(bzNrm(l)/30); }
 function paarKey(a,b){ return [a,b].sort().join('|'); }
 
 /* Kontakte zwischen zwei Charts */
@@ -92,7 +106,7 @@ function kontaktText(k,R,nA,nB){
   else { tuer=nB; empf=nA; }
   /* {A}s / {B}s zuerst — sonst entsteht „Alexs" statt „Alex'". */
   function fuell(x){
-    var A=tuer||'ihr', B=empf||'ihr';
+    var A=tuer||BZ_T.ktNiemand, B=empf||BZ_T.ktNiemand;
     return String(x)
       .replace(/\{A\}s/g, esc(bes(A))).replace(/\{B\}s/g, esc(bes(B)))
       .replace(/\{A\}/g, esc(A)).replace(/\{B\}/g, esc(B));
@@ -109,10 +123,10 @@ function vorname(p){ return (p.name||'').trim().split(/\s+/)[0]||pName(p); }
 function wahlBauen(){
   ['bzA','bzB'].forEach(function(id,i){
     var box=el(id), l=alle();
-    box.innerHTML='<span class="lab">'+(i?'und':'Zwischen')+'</span>';
+    box.innerHTML='<span class="lab">'+(i?BZ_T.wahlB:BZ_T.wahlA)+'</span>';
     l.forEach(function(p){
       var b=document.createElement('button'); b.type='button';
-      b.textContent=pName(p)+(p.eigen?' (ich)':'');
+      b.textContent=pName(p)+(p.eigen?BZ_T.wahlEigen:'');
       b.setAttribute('aria-pressed', (i?bId:aId)===p.id);
       b.addEventListener('click',function(){
         if(i){ bId=p.id; var r=rolleVon(p.id); if(r) rolle=r; }
@@ -124,11 +138,11 @@ function wahlBauen(){
   });
 }
 function steuerBauen(){
-  var h='<div class="bz-zeile"><span class="lab">Beziehung</span><div class="chips">';
+  var h='<div class="bz-zeile"><span class="lab">'+BZ_T.labRolle+'</span><div class="chips">';
   Object.keys(ROLLE).forEach(function(k){
     h+='<button type="button" class="chip" data-r="'+k+'" aria-pressed="'+(rolle===k)+'">'+ROLLE[k].n+'</button>';
   });
-  h+='</div></div><div class="bz-zeile"><span class="lab">Thema</span><div class="chips">';
+  h+='</div></div><div class="bz-zeile"><span class="lab">'+BZ_T.labThema+'</span><div class="chips">';
   Object.keys(THEMA).forEach(function(k){
     h+='<button type="button" class="chip" data-t="'+k+'" aria-pressed="'+(thema===k)+'">'+THEMA[k].n+'</button>';
   });
@@ -152,68 +166,63 @@ function abschnitt(id, titel, inhalt, zeig){
 }
 
 function bauen(pa,pb){
-  var A=chartVon(pa), B=chartVon(pb), R=ROLLE[rolle], Z=THEMA[thema].zeig;
+  var A=bzChart(pa), B=bzChart(pb), R=ROLLE[rolle], Z=THEMA[thema].zeig;
   var nA=vorname(pa), nB=vorname(pb);
   var n=AC_NIV.stufe();
   var tier=!!R.tier;
   var h='';
 
   /* Kopf */
-  h+='<div class="bz-kopf"><div class="bz-k">'+esc(R.n)+' · '+esc(THEMA[thema].n)+'</div>'+
-    '<h2>'+esc(nA)+' und '+esc(nB)+'</h2>'+
-    '<p class="bz-ein">Darum geht es hier: '+esc(R.was)+'. '+
-    'Was hier steht, beschreibt eine Anlage — keine Schuld und keine Prognose.</p>'+
+  h+='<div class="bz-kopf"><div class="bz-k">'+
+    esc(BZ_FUELL(BZ_T.kicker,{rolle:R.n, thema:THEMA[thema].n}))+'</div>'+
+    '<h2>'+BZ_FUELL(BZ_T.paar,{a:esc(nA), b:esc(nB)})+'</h2>'+
+    '<p class="bz-ein">'+esc(BZ_FUELL(BZ_T.einleitung,{was:R.was}))+'</p>'+
     (ROLLENSATZ[rolle]?'<p class="bz-rolle">'+ROLLENSATZ[rolle]+'</p>':'')+'</div>';
 
   if(!B._zeit || !A._zeit){
     var ohne=[]; if(!A._zeit) ohne.push(nA); if(!B._zeit) ohne.push(nB);
-    h+='<div class="bz-hin"><b>Ohne Geburtszeit bei '+esc(ohne.join(' und '))+'.</b> '+
-      'Die Zeichen der Planeten stimmen trotzdem — Häuser und Aszendent fehlen, '+
-      'weil die sich stündlich ändern.'+
-      ((B._mondUnsicher||A._mondUnsicher)?' Und der Mond wechselt an diesem Tag das Zeichen: '+
-        'er steht entweder in '+ZN[(B._mondUnsicher?B:A)._mondZeichen[0]]+' oder in '+
-        ZN[(B._mondUnsicher?B:A)._mondZeichen[1]]+'. Lies beide Fassungen und nimm die, die passt.':'')+
+    var unsicher=(B._mondUnsicher?B:A);
+    h+='<div class="bz-hin">'+
+      BZ_FUELL(BZ_T.ohneZeit,{wer:esc(ohne.join(BZ_T.ohneZeitUnd))})+
+      ((B._mondUnsicher||A._mondUnsicher)
+        ? BZ_FUELL(BZ_T.mondOffen,{z1:ZN[unsicher._mondZeichen[0]],
+                                   z2:ZN[unsicher._mondZeichen[1]]})
+        : '')+
       '</div>';
   }
 
   /* Grundton */
   var ga=zi(A.Sonne), gb=zi(B.Sonne), ma=zi(A.Mond), mb=zi(B.Mond);
-  var el4=['Feuer','Erde','Luft','Wasser'];
-  var ea=el4[ga%4], eb=el4[gb%4];
-  var grund='<div class="bz-paar">'+
-    '<div class="bzp"><b>'+esc(nA)+'</b>'+(tier?'':'Sonne in '+ZN[ga]+' · ')+'Mond in '+ZN[ma]+
-      (A.ASC!==undefined?' · '+ZN[zi(A.ASC)]+'-Aszendent':'')+'</div>'+
-    '<div class="bzp"><b>'+esc(nB)+'</b>'+(tier?'':'Sonne in '+ZN[gb]+' · ')+'Mond in '+ZN[mb]+
-      (B.ASC!==undefined?' · '+ZN[zi(B.ASC)]+'-Aszendent':'')+'</div></div>';
+  var ea=BZ_T.elemente[ga%4], eb=BZ_T.elemente[gb%4];
+  function grundZeile(name,C,sz,mz){
+    return '<div class="bzp"><b>'+esc(name)+'</b>'+
+      (tier?'':BZ_FUELL(BZ_T.grundSonne,{z:ZN[sz]}))+
+      BZ_FUELL(BZ_T.grundMond,{z:ZN[mz]})+
+      (C.ASC!==undefined?BZ_FUELL(BZ_T.grundAsc,{z:ZN[zi(C.ASC)]}):'')+'</div>';
+  }
+  var grund='<div class="bz-paar">'+grundZeile(nA,A,ga,ma)+grundZeile(nB,B,gb,mb)+'</div>';
   grund+='<p>'+(ea===eb
-    ? 'Ihr seid vom selben Schlag — beide '+ea+'. Das macht vieles selbstverständlich und sorgt dafür, dass euch dieselben Dinge fehlen.'
-    : 'Du bist '+ea+', '+esc(nB)+' ist '+eb+'. Das ist der Grund für die meisten kleinen Missverständnisse zwischen euch — und auch dafür, dass ihr euch gegenseitig etwas beibringen könnt.')+'</p>';
-  h+=abschnitt('grund','Der Grundton', grund, Z);
+    ? esc(BZ_FUELL(BZ_T.grundGleich,{el:ea}))
+    : BZ_FUELL(BZ_T.grundVerschieden,{ea:ea, b:esc(nB), eb:eb}))+'</p>';
+  h+=abschnitt('grund',BZ_T.grundTitel, grund, Z);
 
   /* Wie du sie erreichst */
   if(tier){
-    h+=abschnitt('erreichen','Was für ein Typ '+esc(nB)+' ist',
-      '<p>'+TIER_MOND[mb]+'</p>'+
-      '<p class="bz-leise">Beim Tier ist der Mond das Interessanteste — Temperament, Rhythmus, '+
-      'Reizschwelle. Sonne und Aszendent, die bei Menschen so viel tragen, sagen hier wenig. '+
-      '<b>Und dazugesagt:</b> Für Tiere gibt es keine gewachsene astrologische Tradition — '+
-      'die klassischen Texte handeln von Menschen. Was hier steht, ist eine Temperamentsskizze, '+
-      'keine Deutung, und sie ersetzt keine Tierärztin.</p>', Z);
+    h+=abschnitt('erreichen',BZ_FUELL(BZ_T.tierTitel,{b:esc(nB)}),
+      '<p>'+TIER_MOND[mb]+'</p><p class="bz-leise">'+BZ_T.tierHinweis+'</p>', Z);
   } else {
-    h+=abschnitt('erreichen','Wie du '+esc(nB)+' erreichst',
-      '<p><b>Was ankommt:</b> '+ERREICHEN[mb][0]+'</p>'+
-      '<p><b>Was danebengeht:</b> '+ERREICHEN[mb][1]+'</p>'+
-      '<p class="bz-leise">Das liest sich am Mond ab — dem Teil, der zuerst reagiert, '+
-      'bevor jemand nachdenkt.</p>', Z);
+    h+=abschnitt('erreichen',BZ_FUELL(BZ_T.erreichenTitel,{b:esc(nB)}),
+      '<p>'+BZ_FUELL(BZ_T.erreichenJa,{t:ERREICHEN[mb][0]})+'</p>'+
+      '<p>'+BZ_FUELL(BZ_T.erreichenNein,{t:ERREICHEN[mb][1]})+'</p>'+
+      '<p class="bz-leise">'+BZ_T.erreichenHinweis+'</p>', Z);
   }
 
   /* Reden */
   if(!tier){
     var rb=zi(B.Merkur), ra=zi(A.Merkur);
-    h+=abschnitt('reden','Wie ihr miteinander redet',
-      '<p><b>Bei '+esc(nB)+' funktioniert:</b> '+REDEN[rb][0]+' <b>Nicht:</b> '+REDEN[rb][1]+'</p>'+
-      '<p><b>Du selbst redest so:</b> '+REDEN[ra][0].replace(/^./,function(c){return c.toLowerCase();})+
-      ' — das ist genau dann ein Problem, wenn es nicht zu dem passt, was oben steht.</p>', Z);
+    h+=abschnitt('reden',BZ_T.redenTitel,
+      '<p>'+BZ_FUELL(BZ_T.redenB,{b:esc(nB), ja:REDEN[rb][0], nein:REDEN[rb][1]})+'</p>'+
+      '<p>'+BZ_FUELL(BZ_T.redenA,{a:REDEN[ra][0]})+'</p>', Z);
   }
 
   /* Kontakte */
@@ -230,70 +239,65 @@ function bauen(pa,pb){
   if(gezeigt.length){
     var kt=gezeigt.map(function(x){
       var kopf = n<=1
-        ? esc(bes(nA))+' '+gross(ohneDein(W.PLANET[x.k.a].kurz(Math.min(n,1))))+
-          ' trifft '+esc(bes(nB))+' '+ohneDein(W.PLANET[x.k.b].kurz(Math.min(n,1)))
-        : esc(bes(nA))+' '+x.k.a+' '+x.k.typ+' '+esc(bes(nB))+' '+x.k.b+
-          (n>=3?' ('+x.k.orb.toFixed(1)+'°)':'');
+        ? BZ_FUELL(BZ_T.ktKopf,{a:esc(bes(nA)), pa:gross(bzWort(x.k.a,n)),
+                                b:esc(bes(nB)), pb:bzWort(x.k.b,n)})
+        : BZ_FUELL(BZ_T.ktKopfTech,{a:esc(bes(nA)), pa:x.k.a, typ:x.k.typ,
+                                    b:esc(bes(nB)), pb:x.k.b})+
+          (n>=3?BZ_FUELL(BZ_T.ktOrb,{orb:x.k.orb.toFixed(1)}):'');
       return '<div class="bz-kt '+(x.k.art==='h'?'hart':'weich')+'">'+
         '<div class="kt-kopf">'+kopf+'<span class="kt-m">'+
-        (x.k.art==='h'?'Reibung':'leicht')+'</span></div>'+
+        (x.k.art==='h'?BZ_T.ktHart:BZ_T.ktWeich)+'</span></div>'+
         '<div class="kt-drei">'+
-          '<div class="kt-s"><span class="kt-l">Was passiert</span>'+x.t.tut+'</div>'+
-          '<div class="kt-s"><span class="kt-l">Was ankommt</span>'+x.t.an+'</div>'+
-          '<div class="kt-s hilft"><span class="kt-l">Was hilft</span>'+x.t.hilft+'</div>'+
+          '<div class="kt-s"><span class="kt-l">'+BZ_T.ktWasPassiert+'</span>'+x.t.tut+'</div>'+
+          '<div class="kt-s"><span class="kt-l">'+BZ_T.ktWasAnkommt+'</span>'+x.t.an+'</div>'+
+          '<div class="kt-s hilft"><span class="kt-l">'+BZ_T.ktWasHilft+'</span>'+x.t.hilft+'</div>'+
         '</div></div>';
     }).join('');
-    h+=abschnitt('kontakte', thema==='reibung'?'Wo es hakt':(thema==='naehe'?'Was leicht geht':'Die stärksten Verbindungen'), kt, Z);
+    h+=abschnitt('kontakte', thema==='reibung'?BZ_T.kontakteTitelReibung
+      :(thema==='naehe'?BZ_T.kontakteTitelNaehe:BZ_T.kontakteTitel), kt, Z);
   }
 
   /* Streit */
   if(!tier){
     var sb=zi(B.Mars);
-    h+=abschnitt('streit','Wenn es Streit gibt',
-      '<p><b>'+esc(nB)+' streitet so:</b> '+STREIT[sb][0]+'</p>'+
-      '<p><b>Was hilft:</b> '+STREIT[sb][1]+'</p>'+
-      (R.eltern?'<p class="bz-leise">Bei Eltern lohnt die Frage, wie alt dieses Muster ist. '+
-        'Vieles davon war mit zwölf richtig und ist mit vierzig nur noch Gewohnheit.</p>':''), Z);
+    h+=abschnitt('streit',BZ_T.streitTitel,
+      '<p>'+BZ_FUELL(BZ_T.streitB,{b:esc(nB), t:STREIT[sb][0]})+'</p>'+
+      '<p>'+BZ_FUELL(BZ_T.streitHilft,{t:STREIT[sb][1]})+'</p>'+
+      (R.eltern?'<p class="bz-leise">'+BZ_T.streitEltern+'</p>':''), Z);
   }
 
   /* Helfen */
   if(!tier){
-    h+=abschnitt('helfen','Wenn du helfen willst',
+    h+=abschnitt('helfen',BZ_T.helfenTitel,
       '<p>'+HELFEN[mb]+'</p>'+
-      '<p class="bz-leise">Und der unbequeme Teil: Die meisten Menschen helfen so, '+
-      'wie sie selbst geholfen bekommen wollen. Deins wäre „'+HELFEN[ma]+'“ — '+
-      (ma===mb?'hier passt das ausnahmsweise zusammen.':'das ist nicht dasselbe.')+'</p>', Z);
+      '<p class="bz-leise">'+BZ_FUELL(BZ_T.helfenHinweis,
+        {a:HELFEN[ma], folge:(ma===mb?BZ_T.helfenGleich:BZ_T.helfenAnders)})+'</p>', Z);
   }
 
   /* Planeten im Haus des anderen */
   if(B.ASC!==undefined){
     var ih=[];
     ['Sonne','Mond','Venus','Mars','Saturn'].forEach(function(k){
-      var hs=haus(B,A[k]);
+      var hs=bzHaus(B,A[k]);
       if(hs) ih.push({k:k,h:hs});
     });
     if(ih.length){
-      var iht='<p>Deine Planeten fallen in '+esc(bes(nB))+' Lebensbereiche. Das sagt, '+
-        'welches Thema du bei '+esc(nB)+' berührst, ohne etwas dafür zu tun — '+
-        'und zwar immer dasselbe, in jeder Begegnung:</p><ul class="bz-liste">'+
+      var iht='<p>'+BZ_FUELL(BZ_T.haeuserVor,{bs:esc(bes(nB)), b:esc(nB)})+'</p>'+
+        '<ul class="bz-liste">'+
         ih.slice(0,5).map(function(x){
-          return '<li><b>'+(n<=1?gross(W.PLANET[x.k].kurz(Math.min(n,1))):gross(meinPlanet(x.k)))+
-            '</b> fällt in '+esc(bes(nB))+' Bereich <b>'+INHAUS[x.h-1]+'</b>'+
-            (n>=2?' ('+x.h+'. Haus)':'')+'.</li>';
+          return '<li>'+BZ_FUELL(BZ_T.haeuserZeile,
+              {punkt:gross(bzMein(x.k,n)), bs:esc(bes(nB)), bereich:INHAUS[x.h-1]})+
+            (n>=2?BZ_FUELL(BZ_T.haeuserHaus,{h:x.h}):'')+'.</li>';
         }).join('')+'</ul>'+
-        '<p class="bz-leise">Gelesen wird das nur in diese Richtung: Es beschreibt, '+
-        'was du bei '+esc(nB)+' auslöst — nicht, was '+esc(nB)+' bei dir auslöst. '+
-        'Dafür müsstest du die beiden Profile oben tauschen.</p>';
-      h+=abschnitt('haeuser','Was du bei '+esc(nB)+' berührst', iht, Z);
+        '<p class="bz-leise">'+BZ_FUELL(BZ_T.haeuserHinweis,{b:esc(nB)})+'</p>';
+      h+=abschnitt('haeuser',BZ_FUELL(BZ_T.haeuserTitel,{b:esc(nB)}), iht, Z);
     }
   }
 
   /* Was gerade läuft */
-  h+=abschnitt('jetzt','Was gerade zwischen euch läuft', jetztText(A,B,nA,nB,R,n), Z);
+  h+=abschnitt('jetzt',BZ_T.jetztTitel, jetztText(A,B,nA,nB,R,n), Z);
 
-  h+='<div class="bz-fuss">Beziehungsbilder beschreiben, womit zwei Menschen ausgestattet sind — '+
-    'nicht, was sie daraus machen. Ein harter Kontakt ist kein Urteil über eine Beziehung, '+
-    'und ein weicher ist keine Garantie.</div>';
+  h+='<div class="bz-fuss">'+BZ_T.fuss+'</div>';
   return h;
 }
 
@@ -319,32 +323,27 @@ function jetztText(A,B,nA,nB,R,n){
     });
   });
   treffer.sort(function(a,b){return a.orb-b.orb;});
-  if(!treffer.length) return '<p>Gerade berührt kein langsamer Planet eure Charts eng genug, '+
-    'um daraus etwas zu lesen. Das ist der Normalzustand und keine Lücke — '+
-    'die meiste Zeit ist am Himmel nichts Besonderes los.</p>';
+  if(!treffer.length) return '<p>'+BZ_T.jetztLeer+'</p>';
   var l=treffer.slice(0,3).map(function(x){
-    var hart=(x.art==='h');
-    return '<li><b>'+esc(x.wen)+':</b> '+
-      (n<=1? gross(W.PLANET[x.t].kurz(1))+' berührt gerade '+W.PLANET[x.k].kurz(1)
-           : x.t+' '+x.typ+' '+x.k+(n>=3?' ('+x.orb.toFixed(1)+'°)':''))+' — '+
-      (hart?'das ist der Punkt, an dem es zwischen euch gerade schneller eng wird, als es müsste.'
-           :'da geht gerade mehr als sonst, wenn ihr es nutzt.')+'</li>';
+    /* Der Besitz steht als Name da und nicht als „dein": die Zeile
+       spricht über einen der beiden, nicht über die Leserin. */
+    var was = n<=1
+      ? BZ_FUELL(BZ_T.jetztWas,{wander:x.t, bs:esc(bes(x.wen)), punkt:bzWort(x.k,n)})
+      : BZ_FUELL(BZ_T.jetztWasTech,{wander:x.t, typ:x.typ, bs:esc(bes(x.wen)), punkt:x.k})+
+        (n>=3?BZ_FUELL(BZ_T.ktOrb,{orb:x.orb.toFixed(1)}):'');
+    return BZ_FUELL(BZ_T.jetztZeile,
+      {was:was, folge:(x.art==='h'?BZ_T.jetztHart:BZ_T.jetztWeich)});
   }).join('');
-  return '<p>Was im Moment von außen dazukommt, eng gerechnet:</p><ul class="bz-liste">'+l+'</ul>'+
-    '<p class="bz-leise">Transite sind Wetter, kein Klima. Sie erklären, warum etwas '+
-    '<i>gerade jetzt</i> hochkommt — nicht, warum es überhaupt da ist.</p>';
+  return '<p>'+BZ_T.jetztVor+'</p><ul class="bz-liste">'+l+'</ul>'+
+    '<p class="bz-leise">'+BZ_T.jetztHinweis+'</p>';
 }
 
 function zeigen(){
   var l=alle(), box=el('bzinhalt');
-  if(l.length<2){
-    box.innerHTML='<div class="bz-leer"><b>Dafür braucht es zwei Profile.</b><br><br>'+
-      'Unter <a href="profile.html">Profile</a> einen zweiten Menschen — oder ein Tier — anlegen, '+
-      'dann entsteht hier die Gegenüberstellung.</div>'; return;
-  }
+  if(l.length<2){ box.innerHTML='<div class="bz-leer">'+BZ_T.leerZwei+'</div>'; return; }
   if(!aId) aId=(l.filter(function(p){return p.eigen;})[0]||l[0]).id;
   if(!bId) bId=(l.filter(function(p){return p.id!==aId;})[0]||l[1]).id;
-  if(aId===bId){ box.innerHTML='<div class="bz-leer">Bitte zwei verschiedene Profile wählen.</div>'; return; }
+  if(aId===bId){ box.innerHTML='<div class="bz-leer">'+BZ_T.leerGleich+'</div>'; return; }
   var pa=l.filter(function(p){return p.id===aId;})[0];
   var pb=l.filter(function(p){return p.id===bId;})[0];
   if(!pa||!pb){ box.innerHTML=''; return; }
@@ -360,8 +359,8 @@ function kopieren(){
   try{ document.execCommand('copy'); }catch(e){}
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t);
   ta.remove();
-  var e=el('bzecho'); e.textContent='Kopiert.';
-  setTimeout(function(){ if(e.textContent==='Kopiert.') e.textContent=''; },3500);
+  var e=el('bzecho'); e.textContent=BZ_T.kopiert;
+  setTimeout(function(){ if(e.textContent===BZ_T.kopiert) e.textContent=''; },3500);
 }
 
 function start(){
