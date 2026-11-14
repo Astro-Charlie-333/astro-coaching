@@ -4,6 +4,8 @@
 import pathlib, re, sys, json, subprocess, html as _html
 
 hier = pathlib.Path(__file__).parent
+sys.path.insert(0, str(hier.parent / 'rituale'))
+import pruefwerk
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
 
@@ -173,6 +175,45 @@ for m in re.finditer(r"'((?:[^'\\]|\\.){25,})'", daten):
 for ph in ('{A}', '{B}', 'TODO', 'XXX', 'Lorem'):
     if ph in daten or ph in koerper:
         fehler.append('unausgefüllter Platzhalter: ' + ph)
+
+# ── 6a · Die Anzeige schreibt keinen Satz und kein „dein" ─────
+#     Aufgabe 53, aus 34 und 38: Die Sätze dieser Seite stehen in
+#     zeit-daten.js (ZT_T), die Anzeige rechnet und setzt zusammen.
+#     Was in zeit-app.js steht, zieht beim Umzug in eine andere
+#     Umgebung nicht mit (PRODUKT.md Abschnitt 7) — und genau
+#     deshalb ist das hier eine Sperre und kein Vorsatz.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'zeit-app.js', 'zeit-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'zeit-app.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei
+#     Anführungsarten — ein Satz, der in doppelten oder schrägen
+#     Anführungszeichen durchgeht, wäre das Loch, über das die
+#     Sätze einzeln zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Erst ein Profil und ein Stichtag.' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'zeit-app.js', 'zeit-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'bis zu deinem Kapitel' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'zeit-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+# ── 6b · Jede Lücke einer Vorlage wird auch gefüllt ───────────
+#     Die Sätze stehen jetzt als Vorlagen in ZT_T, und ztFuell
+#     ersetzt nur, was es findet: eine Lücke, die kein Aufruf
+#     füllt, erscheint als „{bis}" auf der Seite. Die Rauchprobe
+#     findet das nur an dem Tag, an dem die Vorlage vorkommt
+#     (REGELN.md 6e) — hier wird es unabhängig vom Himmel geprüft.
+_LUECKE = re.compile(r'\{([a-zA-Z][a-zA-Z0-9]*)\}')
+_luecken = set(_LUECKE.findall(daten))
+_gefuellt = set(re.findall(r'\b([a-zA-Z][a-zA-Z0-9]*)\s*:', app))
+_ohne = sorted(_luecken - _gefuellt)
+if _ohne:
+    fehler.append('Vorlagenlücke in zeit-daten.js, die niemand füllt: '
+                  + ', '.join('{%s}' % x for x in _ohne))
 
 # ── 7 · Keine echten Geburtsdaten ─────────────────────────────
 for muster, was in ((r'\b1987\b', 'Geburtsjahr'), (r'\b08:58\b', 'Geburtszeit')):

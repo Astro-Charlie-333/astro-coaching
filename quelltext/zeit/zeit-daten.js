@@ -382,3 +382,188 @@ var ZT_FIRDARIA={
  'Aufsteigender Knoten':{t:'Drei Jahre, in denen etwas zunimmt und über das übliche Maß hinauswächst — im Guten wie im Anstrengenden.'},
  'Absteigender Knoten':{t:'Zwei Jahre, in denen etwas abnimmt und sich auflöst. Eine Zeit zum Abschließen, nicht zum Anfangen.'}
 };
+
+/* ── Die Wörter der Anzeige ──────────────────────────────────
+   Aufgabe 53, aus Aufgabe 34: Die Anzeige rechnet und setzt
+   zusammen — geschrieben wird hier. Ein Satz, der in
+   `zeit-app.js` steht, zieht beim nächsten Umzug nicht mit
+   (PRODUKT.md Abschnitt 7); `bau-zeit.py` bricht deshalb ab,
+   sobald dort einer auftaucht.
+
+   „dein" steht hier in gewachsenen Sätzen und nicht als Beugung
+   an einem einzelnen Punktnamen — dieselbe Lage wie in
+   `monat-daten.js`. Wo eine Seite „dein" vor einen Punkt setzt,
+   dessen Geschlecht wechselt, bildet die Form `B_BEUGE` aus
+   `bahn-daten.js`; diese Seite nennt keinen solchen Punkt.      */
+var ZT_T={
+
+ /* Dauer, zweimal: „in drei Jahren" und „noch drei Jahre". Die
+    Beugung hing vorher an einer Kette von Ersetzungen in der
+    Anzeige, und zwei Glieder darin waren wirkungslos.           */
+ dauer:{tag:'{n} Tagen',      tagA:'{n} Tage',
+        einMon:'einem Monat', einMonA:'einen Monat',
+        mon:'{n} Monaten',    monA:'{n} Monate',
+        jahr:'{n} Jahren',    jahrA:'{n} Jahre'},
+
+ /* Die Leiste oben */
+ keinProfil:'Noch kein Profil angelegt. <a href="profile.html">Hier anlegen</a> '+
+   '&mdash; diese Seite braucht unbedingt die <b>Geburtszeit</b>.',
+ eigen:' (ich)',
+ varianten:[{v:'paulus', n:'Paulus / Olympiodor'},
+            {v:'alt',    n:'Die andere &Uuml;berlieferung'}],
+
+ /* Was die vier kleinen Bilder zeigen — für die Vorlesehilfe.
+    Diese Wörter werden als Text in ein Bild gesetzt, nicht in die
+    Seite: dort bleibt „&auml;" stehen, wie es dasteht.           */
+ bildKapitel:'Ein Lebensstrahl, in Kapitel geteilt',
+ bildLaengen:'Die festen Jahreszahlen der zwölf Zeichen',
+ bildPunkt:'Die zwölf Zeichen, vier davon laut',
+ bildFuenf:'Fünf Bereiche mit verschiedenen lauten Zeiten',
+ bildLinie:'Alle fünf Lebensbereiche über das ganze Leben',
+ marke:'▼ dein Punkt',
+ laut:'laut',
+ hier:'du bist hier',
+ hierAlter:'du bist hier · {alter}',
+ achseGeburt:'Geburt',
+ achseAlter:'Alter',
+ genauer:'Genauer',
+
+ /* Wenn nichts zu rechnen ist. Jede dieser Stellen sagt, was
+    fehlt und wo man es nachträgt — nicht nur, dass es fehlt.    */
+ ohneRechnung:'Ohne Profil mit Geburtszeit l&auml;sst sich nichts rechnen. '+
+   '<a href="profile.html">Profil anlegen</a>.',
+ vorGeburt:'<b>Der Stichtag liegt vor der Geburt.</b> Die Reihe f&auml;ngt mit dem '+
+   'ersten Lebenstag an. Stell den Tag weiter nach hinten.',
+ zuWeit:'<b>Der Stichtag liegt zu weit in der Zukunft.</b> '+
+   'Die Seite rechnet hundert Jahre ab Geburt.',
+ ohneStichtag:'Erst ein Profil und ein Stichtag.',
+ nichtsAendert:'In den n&auml;chsten Jahrzehnten &auml;ndert sich in keinem '+
+   'Bereich etwas.',
+ ohneLinie:'Keine Linie ohne Profil.',
+ ohneTabelle:'Ohne Profil keine Tabelle.',
+ ohneWeitere:'Ohne Profil nicht zu rechnen.',
+ ohnePlanet:'F&uuml;r diesen Bereich fehlt ein Planet im Chart.',
+ ohneStufe:'&ndash;',
+
+ /* A · Wo du gerade stehst */
+ zeileNoch:'noch {dauer} &middot; bis {bis}',
+ zeileDarin:'darin gerade <b>{kapitel}</b>, '+
+   '<em style="color:{farbe}">{stufe}</em>, bis {bis}',
+
+ /* Womit gerechnet wird — damit ein falsches Profil auffällt */
+ gerechnet:'{datum} &middot; {zeit} Uhr &middot; {ort} &middot; UTC{vz}',
+ ortFehlt:'Ort nicht hinterlegt',
+ stimmtDas:'<b>Stimmt das?</b> Die ganze Seite h&auml;ngt daran. ',
+ sommerzeit:'Dieses Datum liegt in der Sommerzeit &mdash; dann muss hier bei '+
+   'Mitteleuropa <b>UTC+2</b> stehen, nicht +1. ',
+ aendern:'Wenn etwas nicht stimmt, &auml;nder es bei den '+
+   '<a href="profile.html">Profilen</a> &mdash; eine Stunde Unterschied '+
+   'verschiebt alle Jahreszahlen hier erheblich.',
+
+ /* B · Was als Nächstes kommt */
+ erWann:'in {dauer}',
+ erSchnitt:'<b>Gro&szlig;er Schnitt bei {bereich}</b>',
+ erKapitel:'<b>{bereich}:</b> neues Kapitel <b>{kapitel}</b> &mdash; {wird}',
+ erWird:{winkel:'und es wird <b>laut</b>',
+         folgend:'mittlere Lautst&auml;rke',
+         fallend:'und es wird <b>leise</b>'},
+ erKapitelU:'F&uuml;r die n&auml;chsten {jahre} Jahre. {bild}',
+ erWechsel:'<b>{bereich}</b> wird {richtung} &mdash; dann {stufe}',
+ erLauter:'<b>lauter</b>',
+ erRuhiger:'<b>ruhiger</b>',
+ erFolge:{winkel:'Ab hier passiert hier wieder mehr',
+          folgend:'Ab hier l&auml;uft es ruhiger weiter',
+          fallend:'Ab hier wird es still'},
+ erBis:' und h&auml;lt bis {bis}',
+ erWechselU:'{folge}{bis}. Der Abschnitt tr&auml;gt das Zeichen {kapitel}.',
+
+ /* C · Die Lebenslinie und ihre Legende */
+ legende:'<b>{name}</b> &mdash; {satz}',
+ legendeSchnitt:'<b>Gro&szlig;er Schnitt</b>',
+
+ /* Das aufgeklappte Kapitel */
+ laeuftGerade:'l&auml;uft gerade',
+ detailWann:'{von} bis {bis} &middot; dein Alter {a1} bis {a2} '+
+   '&middot; {jahre} Kapiteljahre',
+ handgriff:'Ein Handgriff',
+ grosserSchnitt:'gro&szlig;er Schnitt',
+ detailTech:'Zeichen {kapitel}, {jahre} allgemeine Jahre, Herr {herr} '+
+   '&middot; {nr}. Zeichen vom Gl&uuml;ckspunkt aus.',
+ spalte:{darin:'Abschnitt darin', abschnitt:'Abschnitt',
+         von:'Von', bis:'Bis', alter:'Alter',
+         lautstaerke:'Lautst&auml;rke'},
+
+ /* H · Jahresthema und Planetenabschnitt */
+ jahresLab:'Das [[Jahresthema]]',
+ jahresWann:'Dein {jahr}. Lebensjahr &middot; {haus}. Haus',
+ jahresTech:' &middot; {zeichen} &middot; Jahresherr {herr}',
+ jahresHerr:'Der Jahresherr <b>{herr}</b> f&uuml;hrt dieses Jahr. Wo er in '+
+   'deinem Chart steht und wie es ihm dort geht, f&auml;rbt das ganze Jahr ein.',
+ firdariaLab:'Dein [[Planetenabschnitt]]',
+ firdariaWann:'Alter {von} bis {bis}',
+ firdariaDarin:' &middot; darin {herr}',
+ firdariaUnter:'Darin: {herr}',
+ firdariaEnde:'Reihe durchlaufen',
+ firdariaEndeT:'Dieses Verfahren deckt 75 Jahre ab. Danach sind sich die '+
+   'Quellen uneins, ob es von vorn beginnt oder endet &mdash; die Seite '+
+   'rechnet es nicht weiter, statt sich auf eine Lesart festzulegen.',
+ firdariaTech:'Klassisch: Firdaria, Reihenfolge nach {geburt}geburt.',
+ tag:'Tag', nacht:'Nacht',
+
+ /* Die Einleitungen der drei Abschnitte */
+ einJetzt:'Fünf Bereiche, fünf Zeilen. Jede zeigt dein gerade laufendes '+
+   '[[Kapitel]] und darunter den [[Unterabschnitt]], der gerade darin läuft. '+
+   '[[Hochphase|Laut]] heißt: Da passiert viel — nicht automatisch Gutes. '+
+   'Tipp eine Zeile an für das Ganze.',
+ einNaechst:'Alle fünf Bereiche in einer Liste, nach Datum sortiert. Das hier '+
+   'ist die Antwort auf „wann kommen die [[Hochphase|Hochphasen]]".',
+ einLinie:'Jede Zeile ein Bereich, jeder Balken ein [[Kapitel]]. <b>Gold</b> '+
+   'ist laut, <b>grün</b> mittel, <b>grau</b> leise. Der schmale Streifen '+
+   'unter jedem Balken zeigt die lauten '+
+   '[[Unterabschnitt|Unterabschnitte]] darin, die Rauten den '+
+   '[[Der große Schnitt|großen Schnitt]]. Die senkrechte Linie bist du heute.',
+ zeitwarnung:'Alle Startpunkte hängen am [[Aszendent|Aszendenten]], und der '+
+   'wandert in vier Minuten um ein Grad. Eine Stunde Unterschied verschiebt '+
+   'die Punkte um bis zu ein halbes Zeichen — und damit die ganze Reihe. Was '+
+   'oben unter „Gerechnet mit" steht, sollte stimmen.',
+
+ /* Der Bericht zum Mitnehmen. Reiner Text, keine Entitäten. */
+ bericht:{
+  ohneProfil:'Kein Profil aktiv.',
+  kopf:'WANN BEI DIR WAS LOS IST — {name}',
+  stichtag:'Stichtag {tag} · Alter {alter}',
+  jetzt:'  Jetzt: {stufe} — {satz}',
+  kapitel:'  Kapitel {kapitel} ({bild}), {von} bis {bis}',
+  text:'  {t}',
+  handgriff:'  Handgriff: {t}',
+  gipfelKopf:'  Nächste laute Zeiten:',
+  gipfel:'    {von} – {bis}  {kapitel}{jetzt}',
+  laeuft:'  (läuft jetzt)',
+  schnittKopf:'  Große Schnitte:',
+  schnitt:'    {von}  Alter {alter}',
+  jahresKopf:'JAHRESTHEMA',
+  jahres:'  {name} ({haus}. Haus) · Jahresherr {herr}',
+  firdariaKopf:'PLANETENABSCHNITT',
+  firdaria:'  {herr}{unter}',
+  firdariaUnter:' / {herr}',
+  grenzenKopf:'GRENZEN',
+  grenzen:['  Laut heißt: es passiert viel. Nicht: es wird gut.',
+           '  Ein Drittel aller Abschnitte ist rechnerisch laut.',
+           '  Das Verfahren ist nicht überprüft. Prüf es rückwärts am eigenen Leben.',
+           '  Alles hängt am Aszendenten — eine ungenaue Geburtszeit verschiebt alles.']},
+ kopiert:'Zeitplan kopiert, {n} Zeichen.'
+};
+
+/* ── Die Farben der Bilder ───────────────────────────────────
+   Standen bis zum 2026-11-14 in der Anzeige verstreut, und
+   dieselbe Farbe bedeutete an vier Stellen nichts Gemeinsames:
+   der Streifen unter einem Balken und die Altersachse trugen
+   beide „#DDD0BC", ohne dass irgendwo stand, dass das dasselbe
+   Grau sein soll. Die Lautstärken haben ihre Farbe in ZT_STUFE;
+   das hier ist der Rest.                                       */
+var ZT_FARBE={
+ balken:'#DDD0BC',      /* ein Balken ohne eigene Lautstärke */
+ balkenHell:'#EBE1D2',  /* der hellere Wechsel, die leere Spur */
+ achse:'#DDD0BC',       /* Achse und Achsenstriche */
+ merk:'#A05A3A'         /* heute, der große Schnitt, was läuft */
+};
