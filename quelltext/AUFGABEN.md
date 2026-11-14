@@ -48,7 +48,8 @@ Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
 geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `start-app.js`, `offline-app.js`, `heute-app.js` (2026-11-09),
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
-`monat-app.js` (2026-11-12) und `beziehung-app.js` (2026-11-13);
+`monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13) und
+`zeit-app.js` (2026-11-14);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -83,9 +84,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 53 · `zeit-app.js` (115, 6)
-`zeiten.html`, der Zeitstrahl.
 
 ### 54 · `karte-app.js` (44, 5)
 `haeuser-karte.html`, die zwölf Lebensbühnen.
@@ -423,6 +421,50 @@ als `assert` in `rituale/pruefwerk.py` und laufen vor dem ersten Bau
 zwei Geburtsbilder gerade gerechnet werden. Bleibt die Beugung aus, ist
 die Aufgabe nicht erledigt, indem das Versprechen umformuliert wird —
 dann ist es eine andere Aufgabe und wird als solche eingetragen.
+
+---
+
+### 78 · `toUpperCase` steht in keiner Prüfung
+Gefunden beim Erledigen von Aufgabe 53 am 2026-11-14. `REGELN.md`
+Abschnitt 4 verbietet `toLowerCase` auf deutschem Text, und jedes
+`bau-*.py` prüft das. Dieselbe Falle in der anderen Richtung prüft
+niemand: `toUpperCase` macht aus „ß" ein „SS" und aus „Maß" ein „MASS".
+Dass das bekannt ist, steht in `kern/heute-daten.js` als Kommentar —
+„toUpperCase auf deutschem Text ist dieselbe Falle wie toLowerCase" —
+und daneben die Beschriftung, die deshalb von Hand dasteht. Ein
+Kommentar ist aber keine Automatik (`REGELN.md` Abschnitt 6c): vier
+Anzeigen schreiben weiter Überschriften mit `toUpperCase`
+(`zeit-app.js`, `zahlen-app.js` zweimal, `analyse-app.js` zweimal,
+`bereiche/tief-bauer.js`), und grün sind sie nur, weil in keinem der
+betroffenen Namen heute ein „ß" vorkommt — genau der Fall aus
+Abschnitt 6e.
+
+**Fertig, wenn:** die Prüfung neben `toLowerCase` auch `toUpperCase`
+auf Text anschlägt, sie in `rituale/pruefwerk.py` mit festen Beispielen
+steht (ein Name mit „ß" muss anschlagen, `zahlen-rechner.js` auf einem
+Buchstabenschlüssel darf durchgehen), und die betroffenen Überschriften
+ihre große Fassung in der Datendatei stehen haben, nicht in einer
+Umwandlung.
+
+### 79 · Der Satzriegel sieht die Farben in `style` nicht
+Ebenfalls am 2026-11-14 gefunden. `pruefwerk.saetze_in_anzeige` schlägt
+bei einer Farbe wie `'#DDD0BC'` an — richtig, Farben gehören nicht in
+die Anzeige. Steht dieselbe Farbe aber in einem vollständigen
+Attribut (`'<p style="color:#6B6259">'`), zieht die Regel das Markup ab
+und findet nichts. Eine Anzeige kann also satzfrei sein und ihre
+Gestaltung weiter selbst mitbringen; `zeit-app.js` hat nach dem Umzug
+noch neun solche Stellen, `zahlen-app.js` 22, `mond-app.js` 13,
+`haeuser-app.js` 11. Dass es ausgerechnet vier Farben erwischt hat, lag
+an den Ziffern: `#DDD0BC` zerfällt in zwei Buchstabengruppen und sieht
+damit aus wie Sprache, `#EBE1D2` nicht.
+
+**Fertig, wenn:** eine Farbe in einem `style`-Attribut einer Anzeige den
+Bau abbricht, die Regel in `rituale/pruefwerk.py` mit festen Beispielen
+steht (eine Farbe im Attribut schlägt an, eine Klassenangabe ohne Farbe
+geht durch), und die neun Stellen in `zeit-app.js` ihre Farbe aus
+`zeit-stil.css` oder `ZT_FARBE` holen. Für `zahlen`, `mond` und
+`haeuser` gehört es in deren Umzug (Aufgaben 55, 56, 57), nicht
+hierher.
 
 ---
 
@@ -919,6 +961,53 @@ Rechner noch Sätze tragen — in beide Richtungen brechend, wie
 Querprüfung 13.
 
 ## Erledigt
+
+* **2026-11-14** · `zeit-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 53, aus 34 und 38) — die neunte von zweiundzwanzig Anzeigen
+  und mit 114 Zeichenketten die größte bisher. Sie stehen jetzt als
+  Vorlagen in `ZT_T` in `zeit-daten.js`; die Anzeige setzt nur noch
+  Werte ein (`ztFuell`). Die sechs „dein" von Hand sind mit ihren
+  Sätzen umgezogen: keines davon beugt ein Besitzwort an einen
+  Punktnamen, dessen Geschlecht wechselt, deshalb bleibt es Prosa in
+  der Datendatei und `bahn-daten.js` muss nicht mit auf die Seite —
+  dieselbe Lage wie bei `monat-app.js`.
+
+  Drei Sachen sind dabei aufgebrochen und mitgeändert worden, weil sie
+  Teil derselben Sache waren:
+
+  * Die Beugung der Dauer hing an einer Kette von vier Ersetzungen
+    (`ztDauer(…).replace(/n$/,'')…`), die aus „in drei Jahren" ein
+    „noch drei Jahre" schnitt. Zwei der vier Glieder waren wirkungslos
+    — `.replace(/Jahre$/,'Jahre')` ersetzt etwas durch sich selbst.
+    Jetzt stehen beide Fälle als eigene Vorlagen in `ZT_T.dauer`, und
+    `ztDauer(jahre, akk)` wählt.
+  * Ein Stück Attributkette (`'" aria-expanded="false" aria-controls="'`)
+    sah für den Riegel aus wie Sprache und war keine. Verschieben
+    ließ sie sich nicht — eine Datendatei kennt kein Markup. Statt die
+    Regel aufzuweichen, baut `ztTag(name, attr, innen)` das Element
+    jetzt aus Namen und Attributen, statt es zusammenzukleben; das
+    Auszeichnen und das Entschärfen sitzen damit an einer Stelle.
+  * Neun Farben standen in der Anzeige verstreut, vier davon zweimal
+    dasselbe Grau, ohne dass irgendwo stand, dass es dasselbe sein
+    soll. Sie heißen jetzt in `ZT_FARBE` (`balken`, `balkenHell`,
+    `achse`, `merk`).
+
+  Gehalten wird das von `bau-zeit.py`: beide Regeln aus `pruefwerk`,
+  und dazu die Gegenprobe in allen drei Anführungsarten — ein Riegel,
+  der heute nichts findet, hat noch nichts bewiesen (`REGELN.md`
+  Abschnitt 6e). Neu dazu kommt eine Prüfung, die es vorher auf keiner
+  Seite gab: **jede Lücke einer Vorlage muss auch gefüllt werden.** Mit
+  Vorlagen entsteht eine Fehlerklasse, die es vorher nicht gab — eine
+  Lücke, die kein Aufruf füllt, erscheint als `{bis}` auf der Seite,
+  und zwar nur an den Tagen, an denen diese Vorlage überhaupt vorkommt.
+  Die Prüfung vergleicht die Lücken in `zeit-daten.js` gegen die
+  Namen, die `zeit-app.js` einsetzt, und ist damit vom Himmel des Tages
+  unabhängig.
+
+  Gegengeprobt wurde der Umzug an der Seite selbst: der angezeigte Text
+  ist über drei Profile, drei Wissensstufen, das aufgeklappte Kapitel
+  und den Bericht zum Mitnehmen Zeichen für Zeichen derselbe wie vorher.
+  Ein Umzug, der die Seite ändert, ist kein Umzug.
 
 * **2026-11-13** · `beziehung-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 52, aus 34 und 38) — die achte von zweiundzwanzig Anzeigen

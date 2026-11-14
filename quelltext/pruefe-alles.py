@@ -716,8 +716,8 @@ ANZEIGEN = {
     # dass sie jemand angefasst hat: Die Regel hat gelernt, dass
     # (prefers-reduced-motion: reduce) eine Medienabfrage ist und
     # kein Satz (Aufgabe 50). zeit ebenso am 2026-11-12: „zt-bt
-    # zt-gly" ist eine Klassenliste (Aufgabe 51).
-    'zeit/zeit-app.js':            (114, 6),
+    # zt-gly" ist eine Klassenliste (Aufgabe 51) — und am
+    # 2026-11-14 ganz heruntergezogen (Aufgabe 53).
     'karte/karte-app.js':          (42, 5),
     'mond/mond-app.js':            (76, 8),
     'zahlen/zahlen-app.js':        (194, 13),
@@ -742,7 +742,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'monat/monat-app.js', 'planeten/planeten-app.js',
           'leitfaden/leitfaden-app.js', 'nd/nd-app.js',
           'baukasten/bk-app.js',
-          'bez/beziehung-app.js'}
+          'bez/beziehung-app.js', 'zeit/zeit-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
