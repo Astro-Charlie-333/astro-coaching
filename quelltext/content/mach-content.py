@@ -44,6 +44,137 @@ if luecken:
 
 SPRECHTEMPO = 2.2          # Wörter je Sekunde, ruhig gesprochen
 
+# Zeichennamen gebeugt. „Vollmond in Zwillinge" stand wochenlang so im
+# Entwurf: Die Rechnung liefert den Namen im Nominativ, und eingesetzt
+# nach „in" oder „durch" muss er in den Dativ bzw. Akkusativ. In
+# Tabellenspalten bleibt der Nominativ richtig — dort steht der Name
+# als Beschriftung, nicht in einem Satz. Darum wird hier gebeugt und
+# nicht in der Rechnung.
+ZEICHEN_FALL = {
+    'Widder':     ('im Widder',         'durch den Widder'),
+    'Stier':      ('im Stier',          'durch den Stier'),
+    'Zwillinge':  ('in den Zwillingen', 'durch die Zwillinge'),
+    'Krebs':      ('im Krebs',          'durch den Krebs'),
+    'Löwe':       ('im Löwen',          'durch den Löwen'),
+    'Jungfrau':   ('in der Jungfrau',   'durch die Jungfrau'),
+    'Waage':      ('in der Waage',      'durch die Waage'),
+    'Skorpion':   ('im Skorpion',       'durch den Skorpion'),
+    'Schütze':    ('im Schützen',       'durch den Schützen'),
+    'Steinbock':  ('im Steinbock',      'durch den Steinbock'),
+    'Wassermann': ('im Wassermann',     'durch den Wassermann'),
+    'Fische':     ('in den Fischen',    'durch die Fische'),
+}
+MONATE = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
+          'August', 'September', 'Oktober', 'November', 'Dezember']
+
+
+def gebeugt(name, fall=0):
+    """„Zwillinge" → „in den Zwillingen" (fall 0) bzw. „durch die Zwillinge"."""
+    if name not in ZEICHEN_FALL:
+        print(f'Unbekannter Zeichenname „{name}" — die Beugungsliste in '
+              'mach-content.py kennt ihn nicht. Lieber abbrechen als ihn '
+              'ungebeugt in einen Beitrag schreiben.')
+        sys.exit(1)
+    return ZEICHEN_FALL[name][fall]
+
+
+def deutsch(iso):
+    """2026-11-16 → „16. November 2026"."""
+    j, m, t = (int(x) for x in iso.split('-'))
+    return f'{t}. {MONATE[m - 1]} {j}'
+
+
+def wortfolgen(satz, n=4):
+    """Alle Folgen von n Wörtern, kleingeschrieben — zum Vergleichen."""
+    w = re.findall(r'\w+', satz.lower())
+    return {tuple(w[i:i + n]) for i in range(len(w) - n + 1)}
+
+
+def einzelsaetze(block):
+    return [x.strip() for x in re.split(r'(?<=[.!?])\s+', block.strip()) if x.strip()]
+
+
+def ohne_wiederholung(spaeter, frueher):
+    """Streicht aus `spaeter` die Sätze, die `frueher` schon sagt.
+
+    Die Textbausteine der Plattform überschneiden sich stellenweise:
+    Jupiters „was" endet auf „es kostet weniger Überredung als üblich",
+    sein „tun" sagt dasselbe noch einmal mit anderen Wörtern. Im
+    Karussell stand das dann auf Bild 2 und auf dem Handgriff-Bild —
+    dieselbe Aussage zweimal, und keine der beiden exakt gleich, also
+    ging die Prüfung auf wörtliche Dopplungen daran vorbei.
+
+    Gestrichen wird nur, wenn mindestens ein Satz übrig bleibt: ein
+    leeres Karussellbild ist schlimmer als ein doppelter Satz.
+    """
+    hat = wortfolgen(frueher)
+    behalten = [s for s in einzelsaetze(spaeter) if not (wortfolgen(s) & hat)]
+    return ' '.join(behalten) if behalten else spaeter.strip()
+
+
+def ungebeugte(roh):
+    """Zeichennamen, die ungebeugt hinter „in" oder „durch" stehen.
+
+    Tabellenzeilen bleiben außen vor: dort ist der Name eine
+    Spaltenbeschriftung und im Nominativ richtig.
+    """
+    saetze = '\n'.join(zl for zl in roh.splitlines()
+                       if not zl.lstrip().startswith('|'))
+    return [z for z in ZEICHEN_FALL
+            if re.search(r'\b(?:in|durch)\s+' + re.escape(z) + r'\b', saetze)]
+
+
+def selbsttest():
+    """Prüft die Prüfung — sonst merkt niemand, wenn sie stumpf wird.
+
+    Die Fehlerklasse ist echt: „Vollmond in Zwillinge" stand so im
+    Entwurf, weil die Rechnung den Nominativ liefert. Wenn jemand das
+    Muster unten umbaut, soll es hier auffallen und nicht in einem
+    Beitrag.
+    """
+    proben = [
+        ('Vollmond in Zwillinge — 24. November',        ['Zwillinge']),
+        ('Vollmond in den Zwillingen — 24. November',   []),
+        ('Jupiter läuft gerade durch Löwe.',            ['Löwe']),
+        ('Jupiter läuft gerade durch den Löwen.',       []),
+        ('Uranus steht gerade in den Zwillingen.',      []),
+        ('Neumond in Fische',                           ['Fische']),
+        ('Saturn steht in Widder',                      ['Widder']),
+        ('Saturn steht im Widder',                      []),
+        ('| Jupiter | Löwe | 28. Juli 2027 |',          []),
+    ]
+    for probe, soll in proben:
+        ist = ungebeugte(probe)
+        if ist != soll:
+            print(f'Der Selbsttest der Beugungsprüfung schlägt fehl:\n'
+                  f'  Probe:    {probe!r}\n'
+                  f'  erwartet: {soll}\n'
+                  f'  bekommen: {ist}')
+            sys.exit(1)
+    doppelt = ohne_wiederholung(
+        'Zustimmung kostet dieser Tage weniger Überredung als üblich. Frag nach.',
+        'Türen gehen auf, und es kostet weniger Überredung als üblich.')
+    if doppelt != 'Frag nach.':
+        print('Der Selbsttest der Wiederholungsprüfung schlägt fehl:\n'
+              f'  erwartet: „Frag nach."\n  bekommen: „{doppelt}"')
+        sys.exit(1)
+    einzeln = ohne_wiederholung('Frag nach dem, was du willst.',
+                                'Etwas wird größer und leichter.')
+    if einzeln != 'Frag nach dem, was du willst.':
+        print(f'Die Wiederholungsprüfung streicht zu viel: „{einzeln}"')
+        sys.exit(1)
+    if ohne_wiederholung('Alles doppelt.', 'Alles doppelt.') != 'Alles doppelt.':
+        print('Die Wiederholungsprüfung macht ein Bild leer, statt zu behalten.')
+        sys.exit(1)
+
+    for name, (dativ, akkusativ) in ZEICHEN_FALL.items():
+        if ungebeugte(f'Vollmond {dativ}.') or ungebeugte(f'Jupiter läuft {akkusativ}.'):
+            print(f'Die Beugung von „{name}" fällt in die eigene Prüfung.')
+            sys.exit(1)
+
+
+selbsttest()
+
 
 def sekunden(text):
     return round(len(text.split()) / SPRECHTEMPO)
@@ -67,7 +198,7 @@ if A['art'] == 'station':
     nutzen = satzende(A['nutzen'])
 elif A['art'] == 'lunation':
     art = 'Neumond' if A['mondart'] == 'neu' else 'Vollmond'
-    titel = f"{art} in {A['zeichenName']} — {A['datum']['kurz']}"
+    titel = f"{art} {gebeugt(A['zeichenName'])} — {A['datum']['kurz']}"
     aufreisser = f"{art} am {A['datum']['kurz']}."
     # „Ein guter Zeitpunkt" wertet ein Datum, das noch nicht da ist —
     # genau das, was die Regeln als Zukunftsversprechen ausschließen.
@@ -90,19 +221,43 @@ elif A['art'] == 'lunation':
               if A['mondart'] == 'neu'
               else 'Eine, die du schon dreimal verschoben hast, ist die richtige.')
 else:
-    titel = f"{A['planet']} steht in {A['zeichenName']}"
-    aufreisser = f"{A['planet']} läuft gerade durch {A['zeichenName']}."
-    uebersetzung = satzende(A['was'])
+    titel = f"{A['planet']} steht {gebeugt(A['zeichenName'])}"
+    # Rückläufig heißt nicht „läuft durch" — der Planet steht dann im
+    # Zeichen, geht darin aber zurück. Vorher stand in jeder stillen
+    # Woche „läuft gerade durch", auch bei einem rückläufigen Wanderer.
+    aufreisser = (f"{A['planet']} steht gerade {gebeugt(A['zeichenName'])}."
+                  if A.get('rueck') else
+                  f"{A['planet']} läuft gerade {gebeugt(A['zeichenName'], 1)}.")
+    # Ein Dauerstand hat kein Datum, an dem er anfängt — also sagt der
+    # Beitrag das, statt eine Woche so klingen zu lassen wie ein Termin.
+    # Das Ende steht fest und ist gerechnet; das ist das Datum, das hier
+    # ehrlich hingehört.
+    dauer = (f"Das ist kein Tag, sondern ein Zeitraum: Er läuft noch bis zum "
+             f"{A['bis']['kurz']} {A['bis']['jahr']}."
+             if A.get('bis') else 'Das ist kein Tag, sondern ein Zeitraum.')
+    uebersetzung = satzende(A['was']) + ' ' + dauer
     handgriff = satzende(A['tun'])
     nutzen = satzende(A['nutzen'])
+
+# Handgriff und Nutzen dürfen nicht wiederholen, was die Übersetzung
+# schon gesagt hat — siehe ohne_wiederholung().
+handgriff = ohne_wiederholung(handgriff, uebersetzung)
+nutzen = ohne_wiederholung(nutzen, uebersetzung + ' ' + handgriff)
 
 bilder = [
     ('1 · Aufhänger', aufreisser + '\n\nWas das für dich heißt, hängt von deinem Aszendenten ab.'),
     ('2 · Übersetzung', uebersetzung),
 ]
 for x in A['proAszendent']:
+    # Zehn Bereiche auf zwölf Häuser: zwei Aszendenten landen im selben
+    # Bereich. Einer davon über das Kernfeld, einer über ein Nebenfeld —
+    # ohne diesen Satz sind die beiden Bilder Wort für Wort gleich und
+    # sehen wie ein Versehen aus.
+    rand = ('' if x.get('kern') else
+            '\n\nBei diesem Aszendenten trifft es den Bereich am Rand, '
+            'nicht in der Mitte.')
     bilder.append((f"Aszendent {x['aszendent']}",
-                   f"**{x['bereich']}**\n\n{x['worum']}"))
+                   f"**{x['bereich']}**\n\n{x['worum']}{rand}"))
 bilder.append(('Vorletztes · Handgriff', handgriff + '\n\n' + nutzen))
 bilder.append(('Letztes · Hinweis',
                'Auf der Seite steht, wie lange das bei dir läuft und was dein '
@@ -126,7 +281,9 @@ reel = [
      f"{B['frage']} Aus dem Bauch beantwortet man das jeden Tag anders. "
      f"Ausrechnen kann man die Antwort nicht — aber man kann ausrechnen, "
      f"wo gerade am meisten zusammenkommt."),
-    ('Was man sieht',
+    # Abschnitt hieß „Was man sieht" wie die Spalte daneben — in der
+    # Tabelle stand die Überschrift dann zweimal nebeneinander.
+    ('Die Liste',
      'Bildschirm: erst ab der Bereichsliste aufnehmen — die Eingabefelder '
      'mit den Geburtsdaten nicht mitfilmen',
      f"Zehn Lebensbereiche, gegeneinander sortiert. Welcher bei dir oben "
@@ -149,6 +306,9 @@ z.append(f"# Beiträge · {D['woche']}")
 z.append('')
 z.append(f"Erzeugt am {D['erzeugt']}. Gerechnet, nicht erfunden — "
          f"die Daten kommen aus derselben Engine wie die Plattform.")
+z.append('')
+z.append(f"Gilt für Montag, {deutsch(D['wocheVon'])}, bis Sonntag, "
+         f"{deutsch(D['wocheBis'])}.")
 z.append('')
 z.append('Vor dem Produzieren: `content/CONTENT-REGELN.md` lesen. '
          'Besonders die Regel, dass der Titel den Fachbegriff nennen darf, der Rest nicht.')
@@ -232,7 +392,11 @@ z.append('')
 z.append('---')
 z.append('')
 
-z.append('## Zum Nachschlagen · was sonst noch läuft')
+z.append('## Zum Nachschlagen · die nächsten gut zwei Wochen')
+z.append('')
+z.append('Diese Vorschau reicht weiter als die Woche oben. Was hier mit Datum '
+         'steht und nach dem ' + deutsch(D['wocheBis']) + ' liegt, ist noch '
+         'nicht dran — es wird der Aufhänger der Woche, in der es stattfindet.')
 z.append('')
 z.append('| Wanderer | Zeichen | noch bis |')
 z.append('|---|---|---|')
@@ -243,7 +407,7 @@ z.append('')
 if D['lunationen']:
     z.append('**Mondphasen:** ' + ' · '.join(
         f"{'Neumond' if l['art'] == 'neu' else 'Vollmond'} am {l['datum']['kurz']} "
-        f"in {l['zeichenName']}" for l in D['lunationen']))
+        f"{gebeugt(l['zeichenName'])}" for l in D['lunationen']))
     z.append('')
 if D['stationen']:
     z.append('**Wendepunkte:** ' + ' · '.join(
@@ -370,6 +534,39 @@ for platzhalter in ('None', 'null', 'undefined'):
 m = re.search(r'\d\.\d', text)
 if m and 'Uhr' not in text[max(0, m.start()-20):m.start()+20]:
     fehler.append(f'Dezimalpunkt statt Komma: „{m.group(0)}"')
+
+# 8 · Zeichennamen müssen gebeugt sein, wenn sie in einem Satz stehen.
+#     „Vollmond in Zwillinge" ist die Fehlerklasse: Die Rechnung liefert
+#     den Nominativ, und wer ihn direkt hinter „in" oder „durch" setzt,
+#     schreibt falsches Deutsch in einen Beitrag, der seriös wirken soll.
+#     In Tabellenzeilen steht der Name als Beschriftung — die bleiben außen vor.
+for z_name in ungebeugte(text):
+    fehler.append(f'„{z_name}" steht ungebeugt in einem Satz — '
+                  f'richtig wäre „{gebeugt(z_name)}" bzw. '
+                  f'„{gebeugt(z_name, 1)}"')
+
+# 8a · Keine sinngleiche Wiederholung im Karussell. Prüfung 4c findet nur
+#      wörtliche Dopplungen; diese hier findet dieselbe Aussage in anderen
+#      Worten. Die zwölf Aszendentenbilder sind absichtlich parallel und
+#      bleiben außen vor.
+rahmen = [(n, t) for n, t in bilder if not n.startswith('Aszendent')]
+for i, (n1, t1) in enumerate(rahmen):
+    for n2, t2 in rahmen[i + 1:]:
+        for s1 in saetze(t1):
+            for s2 in saetze(t2):
+                gemeinsam = wortfolgen(s1) & wortfolgen(s2)
+                if gemeinsam:
+                    folge = ' '.join(sorted(gemeinsam)[0])
+                    fehler.append(f'„{n1}" und „{n2}" sagen dasselbe '
+                                  f'(„…{folge}…")')
+
+# 9 · Der Aufhänger muss in der Woche liegen, für die der Entwurf gilt.
+#     Sonst steht im Montagsbeitrag ein Termin, der erst in der Woche
+#     danach stattfindet — und taucht dort ein zweites Mal auf.
+if A['art'] in ('station', 'lunation'):
+    if not (D['wocheVon'] <= A['datum']['iso'] <= D['wocheBis']):
+        fehler.append(f"der Aufhänger liegt am {A['datum']['iso']}, der Entwurf "
+                      f"gilt aber für {D['wocheVon']} bis {D['wocheBis']}")
 
 print(f"{ziel.name}  {len(text):,} Zeichen  →  {ziel}")
 print(f"  Karussell mit {len(bilder)} Bildern · Reel {gesamt} s · ein Einzelbild")

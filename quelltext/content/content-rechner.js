@@ -122,6 +122,33 @@ const n = new Date();
 const jd = jdFromUT(n.getUTCFullYear(), n.getUTCMonth()+1, n.getUTCDate(),
                     n.getUTCHours() + n.getUTCMinutes()/60);
 
+/* ── Welche Woche dieser Entwurf ist ────────────────────────
+   Der Entwurf wird sonntags erzeugt und gilt für die Woche danach.
+   Also: die ISO-Woche, in der *morgen* liegt. Läuft das Skript an
+   einem Werktag nachgezogen, bleibt es bei der laufenden Woche.
+
+   Vorher stand hier eine Näherungsformel (Tage seit 1. Januar durch
+   sieben). Deren Wochengrenze lag zwischen Freitag und Samstag, und
+   am Jahreswechsel zählte sie das Kalenderjahr statt des ISO-Jahres.
+   Für den Dateinamen ging das meistens gut aus; als Fenster für die
+   Frage „liegt dieses Datum in der Woche?" ist es nicht brauchbar. */
+function isoWoche(d){
+  const t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  const versatz = (new Date(t).getUTCDay() + 6) % 7;      /* Mo=0 … So=6 */
+  const montag = new Date(t - versatz * 86400000);
+  const donnerstag = new Date(montag.getTime() + 3 * 86400000);
+  const jan1 = Date.UTC(donnerstag.getUTCFullYear(), 0, 1);
+  return { jahr: donnerstag.getUTCFullYear(),
+           nr: Math.floor((donnerstag - jan1) / 86400000 / 7) + 1,
+           montag };
+}
+const W = isoWoche(new Date(n.getTime() + 86400000));
+const woche = `${W.jahr}-KW${String(W.nr).padStart(2, '0')}`;
+const sonntag = new Date(W.montag.getTime() + 6 * 86400000);
+const jdWocheAb = jdFromUT(W.montag.getUTCFullYear(), W.montag.getUTCMonth() + 1,
+                           W.montag.getUTCDate(), 0);
+const jdWocheBis = jdWocheAb + 7;
+
 /* ── 1 · Wo die langsamen Wanderer stehen ───────────────────── */
 const LANGSAM = ['Jupiter','Saturn','Uranus','Neptun','Pluto'];
 const stand = LANGSAM.map(k => {
@@ -155,6 +182,13 @@ function nachAszendent(l){
     const h = hausBei(i, l), B = bereichZuHaus(h);
     const T = B ? DAT.BER[B.k] : null;
     return { aszendent:asz, haus:h,
+             /* Trifft der Durchgang das Kernfeld des Bereichs oder ein
+                Nebenfeld? lebensbereiche.js sagt: das erste Haus eines
+                Bereichs ist das Kernfeld und wiegt beim Rechnen doppelt.
+                Zehn Bereiche auf zwölf Häuser heißt zwangsläufig, dass
+                zwei Aszendenten denselben Bereich bekommen — ohne diese
+                Unterscheidung stehen im Karussell zwei gleiche Bilder. */
+             kern: B ? B.haeuser[0] === h : null,
              bereich: B ? B.name : null,
              bereichK: B ? B.k : null,
              worum: T ? T.worum : null,
@@ -164,10 +198,23 @@ function nachAszendent(l){
 
 /* Der stärkste Vorgang der Woche — nach dieser Rangfolge:
    ein Wendepunkt schlägt eine Lunation, eine Lunation schlägt
-   den reinen Dauerstand. */
+   den reinen Dauerstand.
+
+   Gewählt wird nur aus dem, was *in dieser Woche* liegt. Die Listen
+   oben reichen 16 Tage voraus, weil die Vorschau unten am Entwurf
+   das braucht — als Aufhänger war diese Spanne aber zu weit: Ein
+   Vollmond neun Tage später wurde zum Montagsbeitrag einer Woche,
+   in der er nicht stattfindet, und eine Woche danach noch einmal.
+   Derselbe Vorgang zweimal, und beide Male zu früh. Der Takt in
+   CONTENT-REGELN.md sagt „was diese Woche ansteht" — also genau
+   dieses Fenster. */
+const inWoche = x => x.jd >= jdWocheAb && x.jd < jdWocheBis;
+const wStationen = stationen.filter(inWoche);
+const wLunationen = lunationen.filter(inWoche);
+
 let aufhaenger = null;
-if(stationen.length){
-  const s = stationen[0];
+if(wStationen.length){
+  const s = wStationen[0];
   aufhaenger = {
     art:'station', planet:s.planet, datum:s.datum,
     zeichenName:s.zeichenName, direkt:s.direkt,
@@ -176,16 +223,25 @@ if(stationen.length){
     nutzen: DAT.WAND[s.planet] ? DAT.WAND[s.planet].nutzen : '',
     proAszendent: nachAszendent(lon(s.planet, s.jd))
   };
-} else if(lunationen.length){
-  const l = lunationen[0];
+} else if(wLunationen.length){
+  const l = wLunationen[0];
   aufhaenger = {
     art:'lunation', mondart:l.art, datum:l.datum, zeichenName:l.zeichenName,
     proAszendent: nachAszendent(lon('Mond', l.jd))
   };
 } else {
-  const s = stand[0];
+  /* Keine Woche ohne Aufhänger: dann trägt der Dauerstand. Genommen
+     wird der Wanderer, dessen Zeichenwechsel am nächsten liegt — der
+     einzige Dauerstand, zu dem ein Datum in Sichtweite gehört. Eine
+     Rotation nach Wochennummer wäre abwechslungsreicher, holt aber
+     Pluto mit einem Wechsel in siebzehn Jahren in einen Beitrag,
+     der von dieser Woche handeln soll. */
+  const s = stand.slice().sort((a, b) =>
+    (a.tageNoch === null) - (b.tageNoch === null) ||
+    (a.tageNoch || 0) - (b.tageNoch || 0))[0];
   aufhaenger = {
     art:'stand', planet:s.planet, zeichenName:s.zeichenName, bis:s.bis,
+    rueck:s.rueck,
     was: DAT.WAND[s.planet] ? DAT.WAND[s.planet].was : '',
     tun: DAT.WAND[s.planet] ? DAT.WAND[s.planet].tun : '',
     nutzen: DAT.WAND[s.planet] ? DAT.WAND[s.planet].nutzen : '',
@@ -205,14 +261,10 @@ const bereiche = AC.BEREICHE.map(B => {
    Das Material, aus dem die stärksten Beiträge werden. */
 const ehrlich = DAT.EHRLICH.map(e => ({ frage:e.f, antwort:e.a }));
 
-const woche = (() => {
-  const d = new Date(n.getTime());
-  const start = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const nr = Math.ceil((((d - start) / 86400000) + start.getUTCDay() + 1) / 7);
-  return `${d.getUTCFullYear()}-KW${String(nr).padStart(2, '0')}`;
-})();
-
 console.log(JSON.stringify({
   erzeugt: n.toISOString().slice(0, 16).replace('T', ' '),
-  woche, stand, lunationen, stationen, aufhaenger, bereiche, ehrlich
+  woche,
+  wocheVon: W.montag.toISOString().slice(0, 10),
+  wocheBis: sonntag.toISOString().slice(0, 10),
+  stand, lunationen, stationen, aufhaenger, bereiche, ehrlich
 }, null, 1));
