@@ -140,3 +140,112 @@ var K_RESO={
   t:'Zwischen diesem Zeichen und dem natürlichen Zeichen dieses Hauses besteht kein klassischer Winkel.',
   folge:'Darum färben sie sich, ohne sich zu verstärken oder zu stören. Dieser Bereich ist bei dir unauffällig — was nicht heißt, dass er unwichtig wäre.'}
 };
+
+/* ── Alle Sätze dieser Seite ──────────────────────────────────
+   Aufgabe 54, aus 34: Bis zum 2026-11-14 standen diese
+   zweiundvierzig Zeichenketten in `karte-app.js`, zwischen der
+   Rechnung. Was dort steht, zieht beim Umzug in eine andere
+   Umgebung nicht mit (PRODUKT.md Abschnitt 7) — die Anzeige
+   rechnet jetzt, setzt zusammen und schreibt nichts.
+
+   Die Lücken heißen `{so}` und werden von `kFuell` gefüllt.
+   `bau-karte.py` zählt nach, dass jede Lücke, die hier steht,
+   auch wirklich gefüllt wird: eine, die niemand füllt, stünde
+   sonst als „{haus}" auf der Seite.
+
+   „dein" steht hier in gewachsenen Sätzen („deine Stellung",
+   „Dein Chart") und nicht als Beugung vor einem Punkt, dessen
+   Geschlecht wechselt — dieselbe Lage wie in `zeit-daten.js`.
+   Wo eine Seite „dein" vor einen solchen Punkt setzt, bildet die
+   Form `B_BEUGE` aus `bahn-daten.js`; diese Seite nennt keinen.  */
+var K_T={
+
+ /* 1 · Das Rad */
+ radLabel:'Deine zwölf Häuser mit den Zeichen, die darauf sitzen',
+ radFeld:'{h}. Haus, {zeichen}',
+ radMitte:'tipp ein Haus an',
+ radMitteOhne:'Beispielchart',
+ radMitte2:'außen der Stil, innen der Bereich',
+ radAchse:{ASC:'AC', MC:'MC'},
+
+ /* 2 · Die Matrix */
+ mxRahmen:'<table class="kk-mx"><thead><tr>{ecke}{koepfe}</tr></thead>'+
+   '<tbody>{zeilen}</tbody></table>',
+ mxEcke:'<th class="ecke"><span>Planet</span><span>Haus</span></th>',
+ mxKopf:'<th scope="col" data-h="{n}"><b>{n}</b><i>{kurz}</i></th>',
+ mxZeile:'<tr><th scope="row"><span class="g">{gly}</span>{planet}</th>{zellen}</tr>',
+ mxZelle:'<td{ist}><button type="button" data-p="{planet}" data-h="{n}" '+
+   'aria-label="{label}">{inhalt}</button></td>',
+ mxIst:' class="ist"',
+ mxLabel:'{planet} im {n}. Haus',
+ mxLabelMeins:'{planet} im {n}. Haus, deine Stellung',
+ mxPunkt:'<span class="pkt">{gly}</span>',
+
+ /* 3 · Die Zelle unter der Matrix */
+ zelle:'<div class="kk-zelle{meins}">{kopf}{was}<p class="kz-text">{text}</p>'+
+   '{deins}{weiter}</div>',
+ zelleMeins:' meins',
+ zelleKopf:'<div class="kz-kopf"><span class="kz-g">{gly}</span>'+
+   '<span class="kz-t">{planet} im {h}. Haus</span>{marke}</div>',
+ zelleMarke:'<span class="kz-m">deine Stellung</span>',
+ zelleWas:'<p class="kz-was"><b>{planet}</b> ist {was} — {kurz}. '+
+   'Das <b>{h}. Haus</b> ist {haus}.</p>',
+ zelleDeins:'<p class="kz-deins">Bei dir: {planet} in {grad} {zeichen}{rueck}.</p>',
+ zelleWeiter:'<p class="kz-weiter"><a href="planeten-in-haeusern.html">'+
+   'Diese Stellung ganz lesen, mit Zeichen und Blickwinkel →</a></p>',
+ rueck:' ℞',
+
+ /* 4 · Das Hausdetail */
+ detail:'<div class="kk-detail">{kopf}{lang}{frage}{formel}{wirkung}{haken}'+
+   '{reso}{kette}{bewohner}{art}{weiter}</div>',
+ detailKopf:'<div class="kd-kopf"><span class="kd-n">{h}</span>'+
+   '<span class="kd-t"><b>{kurz}</b>{titel}</span>'+
+   '<span class="kd-z" style="background:{farbe}">{gly} {zeichen}</span></div>',
+ detailLang:'<p class="kd-lang">{lang}</p>',
+ detailFrage:'<p class="kd-frage"><b>Die Frage, die es aufmacht:</b> {frage}</p>',
+ detailFormel:'<div class="kd-formel"><span class="a">{kurz}</span>'+
+   '<span class="x">im Stil von</span><span class="b">{zeichen}</span>'+
+   '<span class="x">= {stil}</span></div>',
+ detailWirkung:'<p class="kd-wirkung">{wirkung}</p>',
+ detailHaken:'<p class="kd-haken"><b>Der Haken dabei:</b> {haken}</p>',
+ detailReso:'<div class="kd-reso"><span class="l">{name} &middot; passt der Stil '+
+   'zum Bereich?</span>{text} <b>{folge}</b></div>',
+ detailKette:'<div class="kd-kette"><span class="l">Wo es entschieden wird</span>'+
+   '{zeichen} gehört <b>{herr}</b> — und {herr} steht bei dir in {grad} '+
+   '{herrzeichen}, im <b>{herrhaus}. Haus</b> ({herrkurz}). Dieses Thema wird '+
+   'also dort verhandelt.{modern}</div>',
+ detailModern:' Modern kommt {mit} dazu.',
+ detailBewohner:'<div class="kd-bew"><span class="l">Hier steht etwas</span>'+
+   '<ul>{liste}</ul></div>',
+ detailBewohnerEiner:'<li><b>{planet}</b> {grad} {zeichen}{rueck} — {text}</li>',
+ detailLeer:'<div class="kd-bew leer"><span class="l">Hier steht nichts</span>'+
+   'Das ist der Normalfall — zehn Planeten auf zwölf Häuser. Ein leeres Haus '+
+   'heißt nicht, dass das Thema fehlt; es heißt, dass es über {herr} im '+
+   '{herrhaus}. Haus läuft.</div>',
+ detailArt:'<div class="kd-art"><b>{name}.</b> {text}</div>',
+ detailWeiter:'<div class="kd-weiter">'+
+   '<a href="planeten-in-haeusern.html">Jede Kombination durchspielen</a>'+
+   '<a href="haeuser.html">Alle zwölf Häuser</a>'+
+   '<a href="herrscher.html">Herrscher und Dispositoren</a>{zwoelf}</div>',
+ detailZwoelf:'<a href="geistfuehrung.html">Das 12. Haus als Zugang</a>',
+
+ /* 5 · Der Vergleich */
+ vglZeichen:'<button type="button" class="vz{ist}" data-z="{i}">{gly} {name}</button>',
+ vglHausLabel:'<span class="vl">Auf Haus</span>',
+ vglHaus:'<button type="button" class="vh{marke}" data-h="{n}">{n}</button>',
+ vglZeile:'<div class="vs-zeile">{a}<div class="vs-mitte"><span>{gly}</span>'+
+   '{stil}</div>{b}</div>',
+ vglSeite:'<div class="vs {marke}"><div class="vs-k"><span class="n">{h}</span>'+
+   '<span class="t">{kurz}</span><span class="vs-r">{reso}</span></div>'+
+   '<p class="vs-w">{wirkung}</p><p class="vs-u">{folge}</p>'+
+   '<button type="button" class="vs-mehr" data-h="{h}">Ganz ansehen</button></div>',
+ vglIst:' ist',
+ vglA:' a',
+ vglB:' b',
+
+ /* 6 · Die Leiste oben */
+ wer:'Dein Chart: <b>{name}</b> · Aszendent {zeichen}. '+
+   '<a href="profile.html">wechseln</a>',
+ werOhne:'Noch kein Profil — die Karte zeigt die Häuser allgemein. '+
+   '<a href="profile.html">Profil anlegen</a>, dann steht dein eigenes Chart drin.'
+};

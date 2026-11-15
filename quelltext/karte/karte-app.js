@@ -2,7 +2,13 @@
    Drei Zoomstufen auf einer Seite:
      1 Rad      Haus × Zeichen, rund, weil Häuser ein Kreis sind
      2 Matrix   Planet × Haus, rechteckig, weil es eine Zwei-Wege-Suche ist
-     3 Detail   ausklappbar, aus beiden erreichbar                        */
+     3 Detail   ausklappbar, aus beiden erreichbar
+
+   Hier steht kein Satz. Alle Vorlagen stehen in `K_T` in
+   `karte-daten.js`, und `kFuell` setzt die Lücken. Was in dieser
+   Datei stünde, zöge beim Umzug in eine andere Umgebung nicht mit
+   (PRODUKT.md Abschnitt 7); `bau-karte.py` bricht deshalb ab, sobald
+   hier ein Satz oder ein „dein" auftaucht.                         */
 function nrm(x){x=x%360;return x<0?x+360:x;}
 function el(i){ return document.getElementById(i); }
 function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
@@ -10,6 +16,14 @@ function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,f
 function zI(l){ return Math.floor(nrm(l)/30); }
 function gradKurz(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r),
  m=Math.round((r-g)*60); if(m===60){g++;m=0;} return g+'°'+(m<10?'0':'')+m+'′'; }
+
+/* Die eine Stelle, an der eine Vorlage aus K_T gefüllt wird. */
+function kFuell(form, werte){
+  var s=String(form||'');
+  for(var k in werte) if(werte.hasOwnProperty(k))
+    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
+  return s;
+}
 
 var PN=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',
@@ -48,6 +62,8 @@ function rueck(k,jd){
   if(k==='Sonne'||k==='Mond') return false;
   return nrm(geo(k,(jd+1-2451545)/36525)-geo(k,(jd-1-2451545)/36525))>180;
 }
+/* Das Zeichen hinter dem Grad, mit dem Rückläufigkeitszeichen. */
+function rzeichen(k){ return rueck(k,P._jd)?K_T.rueck:''; }
 function bewohner(h){
   if(!P) return [];
   return PN.filter(function(k){ return haus(P,P[k])===h; });
@@ -56,6 +72,10 @@ function artVon(h){
   for(var i=0;i<K_ART.length;i++) if(K_ART[i].h.indexOf(h)>=0) return K_ART[i];
   return K_ART[0];
 }
+/* Der Wirkungssatz des Zeichens, mit dem Bereich des Hauses darin.
+   {B} ist die eine Lücke, die nicht kFuell füllt: sie steht im
+   Datentext selbst und wird bei jedem Haus anders ersetzt. */
+function wirkungVon(z,h){ return K_ZEICHEN[z].t.replace('{B}', K_BEREICH[h-1]); }
 
 /* ── 1 · Das Rad ──────────────────────────────────────────── */
 function radBauen(){
@@ -73,12 +93,12 @@ function radBauen(){
       p2[0].toFixed(1)+','+p2[1].toFixed(1)+' L'+p3[0].toFixed(1)+','+p3[1].toFixed(1)+
       ' A'+rI+','+rI+' 0 0 1 '+p4[0].toFixed(1)+','+p4[1].toFixed(1)+' Z';
   }
-  var svg=N('svg',{viewBox:'0 0 620 620',role:'img',
-    'aria-label':'Deine zwölf Häuser mit den Zeichen, die darauf sitzen'});
+  var svg=N('svg',{viewBox:'0 0 620 620',role:'img','aria-label':K_T.radLabel});
   for(var i=0;i<12;i++){
     var h=i+1, z=P?zeichenDesHauses(P,h):i, a1=basis+i*30, a2=basis+(i+1)*30;
     var g=N('g',{class:'kk-hs'+(offen===h?' ist':''),'data-h':String(h),
-      tabindex:'0',role:'button','aria-label':h+'. Haus, '+K_ZEICHEN[z].n});
+      tabindex:'0',role:'button',
+      'aria-label':kFuell(K_T.radFeld,{h:h,zeichen:K_ZEICHEN[z].n})});
     /* Zeichenband außen, nach Element gefärbt */
     g.appendChild(N('path',{d:feld(R_A,R_ZI,a1,a2),fill:K_ELFARBE[z%4],
       opacity:'.9',class:'kk-zb'}));
@@ -107,40 +127,41 @@ function radBauen(){
     svg.appendChild(g);
   }
   if(P){
-    [['AC',P.ASC],['MC',P.MC]].forEach(function(x){
+    [['ASC',P.ASC],['MC',P.MC]].forEach(function(x){
       var i1=pos(x[1],R_HI), a1=pos(x[1],R_ZI);
       svg.appendChild(N('line',{x1:i1[0].toFixed(1),y1:i1[1].toFixed(1),
         x2:a1[0].toFixed(1),y2:a1[1].toFixed(1),class:'kk-achse'}));
       var l=pos(x[1],R_HI-14);
       svg.appendChild(N('text',{x:l[0].toFixed(1),y:(l[1]+4).toFixed(1),
-        'text-anchor':'middle',class:'kk-al'}, x[0]));
+        'text-anchor':'middle',class:'kk-al'}, K_T.radAchse[x[0]]));
     });
   }
   svg.appendChild(N('text',{x:'310',y:'300','text-anchor':'middle',class:'kk-mitte'},
-    P?'tipp ein Haus an':'Beispielchart'));
+    P?K_T.radMitte:K_T.radMitteOhne));
   svg.appendChild(N('text',{x:'310',y:'324','text-anchor':'middle',class:'kk-mitte2'},
-    'außen der Stil, innen der Bereich'));
+    K_T.radMitte2));
   el('kkrad').innerHTML=''; el('kkrad').appendChild(svg);
 }
 
 /* ── 2 · Die Matrix ───────────────────────────────────────── */
 function matrixBauen(){
-  var h='<table class="kk-mx"><thead><tr><th class="ecke"><span>Planet</span><span>Haus</span></th>';
-  for(var n=1;n<=12;n++) h+='<th scope="col" data-h="'+n+'"><b>'+n+'</b><i>'+K_HAUS[n-1].k+'</i></th>';
-  h+='</tr></thead><tbody>';
-  PN.forEach(function(k){
-    var meins=P?haus(P,P[k]):0;
-    h+='<tr><th scope="row"><span class="g">'+GLY[k]+'</span>'+k+'</th>';
+  var koepfe='';
+  for(var n=1;n<=12;n++)
+    koepfe+=kFuell(K_T.mxKopf,{n:n,kurz:K_HAUS[n-1].k});
+  var zeilen=PN.map(function(k){
+    var meins=P?haus(P,P[k]):0, zellen='';
     for(var n=1;n<=12;n++){
       var ist=(meins===n);
-      h+='<td'+(ist?' class="ist"':'')+'><button type="button" data-p="'+k+'" data-h="'+n+'"'+
-        ' aria-label="'+k+' im '+n+'. Haus'+(ist?', deine Stellung':'')+'">'+
-        (ist?'<span class="pkt">'+GLY[k]+'</span>':'')+'</button></td>';
+      zellen+=kFuell(K_T.mxZelle,{
+        ist:   ist?K_T.mxIst:'',
+        planet:k, n:n,
+        label: kFuell(ist?K_T.mxLabelMeins:K_T.mxLabel,{planet:k,n:n}),
+        inhalt:ist?kFuell(K_T.mxPunkt,{gly:GLY[k]}):''});
     }
-    h+='</tr>';
-  });
-  h+='</tbody></table>';
-  el('kkmatrix').innerHTML=h;
+    return kFuell(K_T.mxZeile,{gly:GLY[k],planet:k,zellen:zellen});
+  }).join('');
+  el('kkmatrix').innerHTML=kFuell(K_T.mxRahmen,
+    {ecke:K_T.mxEcke,koepfe:koepfe,zeilen:zeilen});
   Array.prototype.forEach.call(el('kkmatrix').querySelectorAll('button'),function(b){
     b.addEventListener('click',function(){
       zelleOeffnen(b.getAttribute('data-p'), +b.getAttribute('data-h')); });
@@ -155,17 +176,17 @@ function zelleOeffnen(pl,h){
   var txt=(D_PH[pl]&&D_PH[pl][h-1])||'';
   var meins=P&&haus(P,P[pl])===h;
   var pd=D_PLANET[pl]||{};
-  el('kkzelle').innerHTML='<div class="kk-zelle'+(meins?' meins':'')+'">'+
-    '<div class="kz-kopf"><span class="kz-g">'+GLY[pl]+'</span>'+
-      '<span class="kz-t">'+esc(pl)+' im '+h+'. Haus</span>'+
-      (meins?'<span class="kz-m">deine Stellung</span>':'')+'</div>'+
-    '<p class="kz-was"><b>'+esc(pl)+'</b> ist '+esc(pd.was||'')+' — '+esc(pd.kurz||'')+
-      '. Das <b>'+h+'. Haus</b> ist '+esc(K_HAUS[h-1].t.replace(/\.$/,''))+'.</p>'+
-    '<p class="kz-text">'+txt+'</p>'+
-    (meins&&P?'<p class="kz-deins">Bei dir: '+esc(pl)+' in '+gradKurz(P[pl])+' '+
-      K_ZEICHEN[zI(P[pl])].n+(rueck(pl,P._jd)?' ℞':'')+'.</p>':'')+
-    '<p class="kz-weiter"><a href="planeten-in-haeusern.html">Diese Stellung ganz lesen, '+
-      'mit Zeichen und Blickwinkel →</a></p></div>';
+  el('kkzelle').innerHTML=kFuell(K_T.zelle,{
+    meins: meins?K_T.zelleMeins:'',
+    kopf:  kFuell(K_T.zelleKopf,{gly:GLY[pl],planet:esc(pl),h:h,
+             marke:meins?K_T.zelleMarke:''}),
+    was:   kFuell(K_T.zelleWas,{planet:esc(pl),was:esc(pd.was||''),
+             kurz:esc(pd.kurz||''),h:h,
+             haus:esc(K_HAUS[h-1].t.replace(/\.$/,''))}),
+    text:  txt,
+    deins: (meins&&P)?kFuell(K_T.zelleDeins,{planet:esc(pl),grad:gradKurz(P[pl]),
+             zeichen:K_ZEICHEN[zI(P[pl])].n,rueck:rzeichen(pl)}):'',
+    weiter:K_T.zelleWeiter});
   el('kkzelle').scrollIntoView({block:'nearest',
     behavior:(window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth')});
 }
@@ -175,49 +196,29 @@ function hausDetail(h){
   var z=P?zeichenDesHauses(P,h):(h-1);
   var Z=K_ZEICHEN[z], H=K_HAUS[h-1], A=artVon(h);
   var herr=K_HERR[z], hH=P?haus(P,P[herr]):null;
-  var bew=bewohner(h);
-  var hh='<div class="kk-detail"><div class="kd-kopf">'+
-    '<span class="kd-n">'+h+'</span>'+
-    '<span class="kd-t"><b>'+esc(H.k)+'</b>'+esc(H.t)+'</span>'+
-    '<span class="kd-z" style="background:'+K_ELFARBE[z%4]+'">'+ZGLY[z]+' '+esc(Z.n)+'</span></div>';
-  hh+='<p class="kd-lang">'+esc(H.lang)+'</p>';
-  hh+='<p class="kd-frage"><b>Die Frage, die es aufmacht:</b> '+esc(H.frage)+'</p>';
-
-  hh+='<div class="kd-formel"><span class="a">'+esc(H.k)+'</span>'+
-      '<span class="x">im Stil von</span><span class="b">'+esc(Z.n)+'</span>'+
-      '<span class="x">= '+esc(Z.stil)+'</span></div>';
-  hh+='<p class="kd-wirkung">'+Z.t.replace('{B}', K_BEREICH[h-1])+'</p>';
-  hh+='<p class="kd-haken"><b>Der Haken dabei:</b> '+esc(Z.haken)+'</p>';
-  var R=K_RESO[resoVon(z,h)];
-  hh+='<div class="kd-reso"><span class="l">'+esc(R.n)+' &middot; passt der Stil zum Bereich?</span>'+
-    esc(R.t)+' <b>'+esc(R.folge)+'</b></div>';
-
-  if(P){
-    hh+='<div class="kd-kette"><span class="l">Wo es entschieden wird</span>'+
-      esc(Z.n)+' gehört <b>'+esc(herr)+'</b> — und '+esc(herr)+' steht bei dir in '+
-      gradKurz(P[herr])+' '+K_ZEICHEN[zI(P[herr])].n+', im <b>'+hH+'. Haus</b> ('+
-      esc(K_HAUS[hH-1].k)+'). Dieses Thema wird also dort verhandelt.'+
-      (K_MIT[Z.n]?' Modern kommt '+K_MIT[Z.n]+' dazu.':'')+'</div>';
-  }
-  if(bew.length){
-    hh+='<div class="kd-bew"><span class="l">Hier steht etwas</span><ul>'+
-      bew.map(function(k){
-        return '<li><b>'+k+'</b> '+gradKurz(P[k])+' '+K_ZEICHEN[zI(P[k])].n+
-          (rueck(k,P._jd)?' ℞':'')+' — '+((D_PH[k]&&D_PH[k][h-1])||'')+'</li>';
-      }).join('')+'</ul></div>';
-  } else if(P){
-    hh+='<div class="kd-bew leer"><span class="l">Hier steht nichts</span>'+
-      'Das ist der Normalfall — zehn Planeten auf zwölf Häuser. Ein leeres Haus heißt nicht, '+
-      'dass das Thema fehlt; es heißt, dass es über '+esc(herr)+' im '+hH+'. Haus läuft.</div>';
-  }
-  hh+='<div class="kd-art"><b>'+esc(A.n)+'.</b> '+esc(A.t)+'</div>';
-  hh+='<div class="kd-weiter">'+
-    '<a href="planeten-in-haeusern.html">Jede Kombination durchspielen</a>'+
-    '<a href="haeuser.html">Alle zwölf Häuser</a>'+
-    '<a href="herrscher.html">Herrscher und Dispositoren</a>'+
-    (h===12?'<a href="geistfuehrung.html">Das 12. Haus als Zugang</a>':'')+
-    '</div></div>';
-  return hh;
+  var bew=bewohner(h), R=K_RESO[resoVon(z,h)];
+  return kFuell(K_T.detail,{
+    kopf:    kFuell(K_T.detailKopf,{h:h,kurz:esc(H.k),titel:esc(H.t),
+               farbe:K_ELFARBE[z%4],gly:ZGLY[z],zeichen:esc(Z.n)}),
+    lang:    kFuell(K_T.detailLang,{lang:esc(H.lang)}),
+    frage:   kFuell(K_T.detailFrage,{frage:esc(H.frage)}),
+    formel:  kFuell(K_T.detailFormel,{kurz:esc(H.k),zeichen:esc(Z.n),stil:esc(Z.stil)}),
+    wirkung: kFuell(K_T.detailWirkung,{wirkung:wirkungVon(z,h)}),
+    haken:   kFuell(K_T.detailHaken,{haken:esc(Z.haken)}),
+    reso:    kFuell(K_T.detailReso,{name:esc(R.n),text:esc(R.t),folge:esc(R.folge)}),
+    kette:   P?kFuell(K_T.detailKette,{zeichen:esc(Z.n),herr:esc(herr),
+               grad:gradKurz(P[herr]),herrzeichen:K_ZEICHEN[zI(P[herr])].n,
+               herrhaus:hH,herrkurz:esc(K_HAUS[hH-1].k),
+               modern:K_MIT[Z.n]?kFuell(K_T.detailModern,{mit:K_MIT[Z.n]}):''}):'',
+    bewohner:bew.length
+               ? kFuell(K_T.detailBewohner,{liste:bew.map(function(k){
+                   return kFuell(K_T.detailBewohnerEiner,{planet:k,
+                     grad:gradKurz(P[k]),zeichen:K_ZEICHEN[zI(P[k])].n,
+                     rueck:rzeichen(k),text:(D_PH[k]&&D_PH[k][h-1])||''});
+                 }).join('')})
+               : (P?kFuell(K_T.detailLeer,{herr:esc(herr),herrhaus:hH}):''),
+    art:     kFuell(K_T.detailArt,{name:esc(A.n),text:esc(A.t)}),
+    weiter:  kFuell(K_T.detailWeiter,{zwoelf:h===12?K_T.detailZwoelf:''})});
 }
 
 function hausOeffnen(h, scrollen){
@@ -235,15 +236,15 @@ function hausOeffnen(h, scrollen){
 function vergleichBauen(){
   var zw=el('kkvglz'), hw=el('kkvglh');
   zw.innerHTML=K_ZEICHEN.map(function(Z,i){
-    return '<button type="button" class="vz'+(i===vglZ?' ist':'')+'" data-z="'+i+'">'+
-      ZGLY[i]+' '+esc(Z.n)+'</button>'; }).join('');
+    return kFuell(K_T.vglZeichen,{ist:i===vglZ?K_T.vglIst:'',i:i,
+      gly:ZGLY[i],name:esc(Z.n)}); }).join('');
   Array.prototype.forEach.call(zw.querySelectorAll('.vz'),function(b){
     b.addEventListener('click',function(){ vglZ=+b.getAttribute('data-z'); vergleichBauen(); }); });
 
-  hw.innerHTML='<span class="vl">Auf Haus</span>'+
+  hw.innerHTML=K_T.vglHausLabel+
     [1,2,3,4,5,6,7,8,9,10,11,12].map(function(n){
-      return '<button type="button" class="vh'+(n===vglA?' a':'')+(n===vglB?' b':'')+
-        '" data-h="'+n+'">'+n+'</button>'; }).join('');
+      return kFuell(K_T.vglHaus,{n:n,
+        marke:(n===vglA?K_T.vglA:'')+(n===vglB?K_T.vglB:'')}); }).join('');
   Array.prototype.forEach.call(hw.querySelectorAll('.vh'),function(b){
     b.addEventListener('click',function(){
       var n=+b.getAttribute('data-h');
@@ -252,20 +253,13 @@ function vergleichBauen(){
       vergleichBauen();
     }); });
 
-  var Z=K_ZEICHEN[vglZ];
   function seite(h,marke){
     var R=K_RESO[resoVon(vglZ,h)];
-    return '<div class="vs '+marke+'"><div class="vs-k"><span class="n">'+h+'</span>'+
-      '<span class="t">'+esc(K_HAUS[h-1].k)+'</span>'+
-      '<span class="vs-r">'+esc(R.n)+'</span></div>'+
-      '<p class="vs-w">'+Z.t.replace('{B}', K_BEREICH[h-1])+'</p>'+
-      '<p class="vs-u">'+esc(R.folge)+'</p>'+
-      '<button type="button" class="vs-mehr" data-h="'+h+'">Ganz ansehen</button></div>';
+    return kFuell(K_T.vglSeite,{marke:marke,h:h,kurz:esc(K_HAUS[h-1].k),
+      reso:esc(R.n),wirkung:wirkungVon(vglZ,h),folge:esc(R.folge)});
   }
-  el('kkvgl').innerHTML=
-    '<div class="vs-zeile">'+seite(vglA,'a')+
-    '<div class="vs-mitte"><span>'+ZGLY[vglZ]+'</span>'+esc(Z.stil)+'</div>'+
-    seite(vglB,'b')+'</div>';
+  el('kkvgl').innerHTML=kFuell(K_T.vglZeile,{a:seite(vglA,'a'),b:seite(vglB,'b'),
+    gly:ZGLY[vglZ],stil:esc(K_ZEICHEN[vglZ].stil)});
   Array.prototype.forEach.call(el('kkvgl').querySelectorAll('.vs-mehr'),function(b){
     b.addEventListener('click',function(){ hausOeffnen(+b.getAttribute('data-h'),true); }); });
 }
@@ -275,11 +269,10 @@ function vergleichBauen(){
   var p=profil();
   if(p){
     P=chartVon(p);
-    el('kkwer').innerHTML='Dein Chart: <b>'+esc(AC_P.anzeige(p,true))+'</b> · '+
-      'Aszendent '+K_ZEICHEN[zI(P.ASC)].n+'. <a href="profile.html">wechseln</a>';
+    el('kkwer').innerHTML=kFuell(K_T.wer,{name:esc(AC_P.anzeige(p,true)),
+      zeichen:K_ZEICHEN[zI(P.ASC)].n});
   } else {
-    el('kkwer').innerHTML='Noch kein Profil — die Karte zeigt die Häuser allgemein. '+
-      '<a href="profile.html">Profil anlegen</a>, dann steht dein eigenes Chart drin.';
+    el('kkwer').innerHTML=K_T.werOhne;
   }
   el('kkvglsub').innerHTML=K_VERGLEICH_TEXT;
   radBauen(); matrixBauen(); vergleichBauen();

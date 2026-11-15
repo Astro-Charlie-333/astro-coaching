@@ -48,8 +48,8 @@ Die gemeinsame Prüfstelle steht seit dem 2026-11-07 (Aufgabe 43):
 geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `start-app.js`, `offline-app.js`, `heute-app.js` (2026-11-09),
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
-`monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13) und
-`zeit-app.js` (2026-11-14);
+`monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
+`zeit-app.js` (2026-11-14) und `karte-app.js` (2026-11-15);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -84,9 +84,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 54 · `karte-app.js` (44, 5)
-`haeuser-karte.html`, die zwölf Lebensbühnen.
 
 ### 55 · `mond-app.js` (76, 8)
 `mond.html` mit den Mondphasen — Neumond und Vollmond sind die
@@ -467,6 +464,22 @@ geht durch), und die neun Stellen in `zeit-app.js` ihre Farbe aus
 hierher.
 
 ---
+
+### 80 · Der Lückenriegel steht nur in `karte` und `zeit`
+Zwei `bau-*.py` prüfen inzwischen, dass jede `{lücke}` einer Vorlage
+auch wirklich gefüllt wird — `bau-zeit.py` seit dem 2026-11-14,
+`bau-karte.py` seit dem 2026-11-15. Es ist zweimal dieselbe Regel in
+zwei Fassungen: die eine liest den Quelltext mitsamt Kommentaren und
+kennt nur Schlüssel, die andere zieht die Kommentare ab und zählt auch
+die Lücke mit, die eine Anzeige selbst ersetzt (`{B}`). Das ist genau
+die Lage, aus der `pruefwerk.py` entstanden ist (REGELN.md 5): Wird
+die Regel einmal verschärft, ist sie in der anderen Fassung veraltet —
+und jede Anzeige, die aus Aufgabe 34 nachkommt, bringt eine dritte mit.
+
+**Fertig, wenn:** die Regel als `pruefwerk.pruefe_vorlagenluecken` an
+einer Stelle steht, ihre festen Beispiele beim Import laufen
+(REGELN.md 6e), `bau-zeit.py` und `bau-karte.py` sie von dort holen,
+und eine Lücke ohne Füller in beiden Seiten den Bau abbricht.
 
 ## Was nicht gemacht wird
 
@@ -961,6 +974,47 @@ Rechner noch Sätze tragen — in beide Richtungen brechend, wie
 Querprüfung 13.
 
 ## Erledigt
+
+* **2026-11-15** · `karte-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 54, aus 34 und 38) — die zehnte von zweiundzwanzig
+  Anzeigen. Die zweiundvierzig Zeichenketten von `haeuser-karte.html`
+  stehen jetzt als Vorlagen in `K_T` in `karte-daten.js`; die Anzeige
+  rechnet, setzt mit `kFuell` ein und schreibt nichts mehr. Die fünf
+  „dein" von Hand sind mit ihren Sätzen umgezogen: keines beugt ein
+  Besitzwort an einen Punktnamen, dessen Geschlecht wechselt
+  („deine Stellung", „Dein Chart"), deshalb bleibt es Prosa in der
+  Datendatei und `bahn-daten.js` muss nicht mit auf die Seite —
+  dieselbe Lage wie bei `zeit-app.js` und `monat-app.js`.
+
+  Zwei Stellen waren dabei nicht bloß Umzug:
+
+  * Die Achsenbeschriftung im Rad kam aus dem Schlüssel selbst
+    (`[['AC',P.ASC],['MC',P.MC]]` — der Name im Code *war* das Wort
+    auf dem Bild). Jetzt heißt der Schlüssel `ASC` wie überall sonst,
+    und `K_T.radAchse` sagt, was dasteht. Das ist derselbe Fall wie
+    REGELN.md 6f, eine Stufe früher: Solange ein Schlüssel zugleich
+    ein Text ist, kann man das eine nicht ändern, ohne das andere zu
+    treffen.
+  * `' class="ist"'` und `'kd-bew leer'` sehen für den Satzriegel aus
+    wie Sprache und sind keine. Statt die Regel aufzuweichen, ist das
+    Markup mit den Vorlagen in die Datendatei gewandert — dort steht
+    es ohnehin schon, weil `K_T` fertige Bausteine hält und nicht
+    Satzfragmente.
+
+  Neu verriegelt in `bau-karte.py`, über den beiden Regeln aus
+  `pruefwerk` hinaus: **jede Lücke einer Vorlage wird auch gefüllt.**
+  Eine, die kein Aufruf füllt, stand sonst als „{herrhaus}" auf der
+  Seite — und die Rauchprobe hat davon nur gesehen, was zufällig
+  gerade offen war (REGELN.md 6e). Geprüft wird jetzt beides: der
+  Quelltext aller Vorlagen auf einmal, unabhängig von Profil und
+  geöffnetem Haus, und das Ergebnis in allen zwölf Detailkästen, allen
+  120 Matrixzellen und allen zwölf Vergleichen — eine Lücke, die ein
+  *Wert* mitbringt, fällt nur dort auf. Gegengeprobt in allen drei
+  Anführungsarten, für Satz und „dein".
+
+  Der angezeigte Text ist über vier Profilzustände, fünf Wissensstufen,
+  alle zwölf geöffneten Häuser, alle 120 Matrixzellen und sechzig
+  Vergleiche Zeichen für Zeichen derselbe wie vorher.
 
 * **2026-11-14** · `zeit-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 53, aus 34 und 38) — die neunte von zweiundzwanzig Anzeigen
