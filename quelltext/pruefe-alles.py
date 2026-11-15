@@ -712,13 +712,13 @@ sys.path.insert(0, str(hier / 'rituale'))
 import pruefwerk
 ANZEIGEN = {
     # Anzeige                      (Sätze, „dein" von Hand)
-    # karte und haeuser sind am 2026-11-11 von allein gesunken, ohne
-    # dass sie jemand angefasst hat: Die Regel hat gelernt, dass
+    # haeuser ist am 2026-11-11 von allein gesunken, ohne dass es
+    # jemand angefasst hat: Die Regel hat gelernt, dass
     # (prefers-reduced-motion: reduce) eine Medienabfrage ist und
-    # kein Satz (Aufgabe 50). zeit ebenso am 2026-11-12: „zt-bt
-    # zt-gly" ist eine Klassenliste (Aufgabe 51) — und am
-    # 2026-11-14 ganz heruntergezogen (Aufgabe 53).
-    'karte/karte-app.js':          (42, 5),
+    # kein Satz (Aufgabe 50). zeit und karte ebenso am 2026-11-12:
+    # „zt-bt zt-gly" ist eine Klassenliste (Aufgabe 51) — und danach
+    # ganz heruntergezogen, zeit am 2026-11-14 (Aufgabe 53), karte am
+    # 2026-11-15 (Aufgabe 54).
     'mond/mond-app.js':            (76, 8),
     'zahlen/zahlen-app.js':        (194, 13),
     'haeuser/haeuser-app.js':      (40, 0),
@@ -742,7 +742,8 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'monat/monat-app.js', 'planeten/planeten-app.js',
           'leitfaden/leitfaden-app.js', 'nd/nd-app.js',
           'baukasten/bk-app.js',
-          'bez/beziehung-app.js', 'zeit/zeit-app.js'}
+          'bez/beziehung-app.js', 'zeit/zeit-app.js',
+          'karte/karte-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

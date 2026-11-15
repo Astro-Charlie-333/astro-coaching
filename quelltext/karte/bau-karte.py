@@ -9,6 +9,8 @@ auseinanderlaufen — und wenn sich dort die Struktur ändert, bricht der Bau.
 import pathlib, re, sys, json, subprocess
 
 hier = pathlib.Path(__file__).parent
+sys.path.insert(0, str(hier.parent / 'rituale'))
+import pruefwerk
 wiki = hier.parent / 'wiki'
 rit  = hier.parent / 'rituale'
 
@@ -102,6 +104,75 @@ for mm in re.finditer(r"\{n:'([^']+)', stil:'[^']*',\n  t:'([^']*)'", daten):
     if '{B}' not in mm.group(2):
         fehler.append(f'{mm.group(1)}: im Wirkungstext fehlt der Platzhalter {{B}}')
 
+# ── Die Anzeige schreibt keinen Satz und kein „dein" ─────────
+#     Aufgabe 54, aus 34 und 38: Die Sätze dieser Seite stehen in
+#     karte-daten.js (K_T), die Anzeige rechnet und setzt zusammen.
+#     Was in karte-app.js steht, zieht beim Umzug in eine andere
+#     Umgebung nicht mit (PRODUKT.md Abschnitt 7) — und genau
+#     deshalb ist das hier eine Sperre und kein Vorsatz.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'karte-app.js', 'karte-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'karte-app.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei
+#     Anführungsarten — ein Satz, der in doppelten oder schrägen
+#     Anführungszeichen durchgeht, wäre das Loch, über das die
+#     Sätze einzeln zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Hier steht nichts.' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'karte-app.js', 'karte-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Stellung' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'karte-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+
+# ── Jede Lücke einer Vorlage wird auch gefüllt ───────────────
+#     Die Sätze stehen jetzt als Vorlagen in K_T, und `kFuell`
+#     ersetzt nur, was es findet: eine Lücke, die kein Aufruf füllt,
+#     erscheint als „{herrhaus}" auf der Seite. Die Rauchprobe
+#     findet das nur an der Stelle, die heute gerendert wird
+#     (REGELN.md 6e) — hier wird es für alle Vorlagen auf einmal
+#     geprüft, unabhängig vom Profil und vom geöffneten Haus.
+#
+#     Gefüllt heißt zweierlei: als Schlüssel in einem kFuell-Aufruf
+#     (`herrhaus:`) oder als Lücke, die die Anzeige selbst ersetzt
+#     (`{B}` steht im Datentext des Zeichens und wird bei jedem Haus
+#     anders eingesetzt). Beides zählt, und zwar nur beides — sonst
+#     wäre die Regel über ein beliebiges Vorkommen abstellbar.
+_LUECKE = re.compile(r'\{([a-zA-Z][a-zA-Z0-9]*)\}')
+
+
+def luecken_ohne_fueller(daten_quell, app_quell):
+    """Welche Lücke aus den Vorlagen niemand füllt. Kommentare zählen
+    nicht mit: dort darf stehen, wie eine Lücke aussieht."""
+    offen = set(_LUECKE.findall(pruefwerk.nur_code(daten_quell)))
+    gefuellt = set(re.findall(r'\b([a-zA-Z][a-zA-Z0-9]*)\s*:', app_quell))
+    gefuellt |= set(re.findall(r"""replace\(\s*['"]\{([a-zA-Z][a-zA-Z0-9]*)\}""",
+                               app_quell))
+    return sorted(offen - gefuellt)
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ──────────────────────
+assert luecken_ohne_fueller("a:'{herr} im {herrhaus}. Haus'",
+                            'kFuell(K_T.a,{herr:x,herrhaus:y})') == []
+assert luecken_ohne_fueller("a:'{herr} im {herrhaus}. Haus'",
+                            'kFuell(K_T.a,{herr:x})') == ['herrhaus']
+assert luecken_ohne_fueller("t:'Du gehst {B} direkt an'",
+                            "K_ZEICHEN[z].t.replace('{B}', K_BEREICH[h-1])") == []
+assert luecken_ohne_fueller("t:'Du gehst {B} direkt an'", 'var B=1;') == ['B']
+assert luecken_ohne_fueller("a:'ohne Luecke'", '') == []
+# Eine Lücke, die in einem Kommentar erklärt wird, ist keine Vorlage.
+assert luecken_ohne_fueller('/* Die Lücken heißen {so}. */\n', '') == []
+
+_ohne = luecken_ohne_fueller(daten, app)
+if _ohne:
+    fehler.append('Vorlagenlücke in karte-daten.js, die niemand füllt: '
+                  + ', '.join('{%s}' % x for x in _ohne))
+
 for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper + app))):
     if not (wiki / href).exists():
         fehler.append('Verweis ins Leere: ' + href)
@@ -162,7 +233,31 @@ const alle=await p.evaluate(()=>{
   }
   return {verteilung:z, leer:leer};
 });
-console.log(JSON.stringify({v,a,c,d,alle,fehler:[...new Set(f)]}));
+// Jeder Kasten, den erst ein Klick zeigt: keine ungefuellte Luecke.
+// Die Pruefung oben liest den Quelltext, diese das Ergebnis — eine
+// Luecke, die ein Wert selbst mitbringt, faellt nur hier auf.
+const roh=await p.evaluate(()=>{
+  const schlimm=/\{[a-zA-Z][a-zA-Z0-9]*\}|undefined|NaN|\[object/;
+  const raus=[];
+  for(let h=1; h<=12; h++){
+    hausOeffnen(h,false);
+    const t=document.getElementById('kkdetail').innerText;
+    const m=t.match(schlimm); if(m) raus.push('Haus '+h+': '+m[0]);
+    hausOeffnen(h,false);
+  }
+  for(const b of document.querySelectorAll('.kk-mx td button')){
+    b.click();
+    const m=document.getElementById('kkzelle').innerText.match(schlimm);
+    if(m) raus.push(b.getAttribute('data-p')+'/'+b.getAttribute('data-h')+': '+m[0]);
+  }
+  for(let zi=0; zi<12; zi++){
+    document.querySelectorAll('.vz')[zi].click();
+    const m=document.getElementById('kkvgl').innerText.match(schlimm);
+    if(m) raus.push('Vergleich '+zi+': '+m[0]);
+  }
+  return [...new Set(raus)];
+});
+console.log(JSON.stringify({v,a,c,d,alle,roh,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 try:
@@ -198,6 +293,9 @@ if pr:
     if len(d['folgen']) != 2 or d['folgen'][0] == d['folgen'][1]:
         fehler.append('der Vergleich zeigt zweimal dieselbe Folge — dann '
                       'unterscheidet sich nur das Substantiv, und der Punkt geht verloren')
+    if pr.get('roh'):
+        fehler.append('ungefüllte Vorlagenlücke im geöffneten Kasten: '
+                      + ', '.join(pr['roh'][:5]))
     al = pr.get('alle', {})
     if al.get('leer'):
         fehler.append('Resonanz ohne Text für: ' + ', '.join(al['leer'][:5]))
