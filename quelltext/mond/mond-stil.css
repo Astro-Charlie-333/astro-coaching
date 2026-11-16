@@ -32,6 +32,9 @@
 .mo-rad-box{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:10px;overflow-x:auto}
 .mo-rad-box>svg{display:block;width:100%;min-width:520px;height:auto}
 .mo-rad-box g[role=button]{cursor:pointer}
+/* Die Beschriftung im Rad: Schrift steht hier, nicht im Skript. */
+.mo-rad-box text.mo-rad-lab{font-family:var(--sans)}
+.mo-rad-box text.mo-rad-rand{font-family:'JetBrains Mono',ui-monospace,monospace}
 .mo-rad-box g[role=button]:focus{outline:none}
 .mo-rad-box g[role=button]:focus-visible circle.ring{stroke:#9A7235;stroke-width:2.5}
 .mo-phase{background:#FFFDFA;border:1px solid #EBE1D2;border-left:3px solid #9A7235;border-radius:12px;padding:18px 20px;display:grid;gap:8px}

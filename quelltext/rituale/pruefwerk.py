@@ -554,3 +554,71 @@ assert [w for _, w in deins_in_anzeige('var a="deine Venus";')] == ['deine']
 # Beispiel seit dem 7.11., hier fehlte es bis zum 2026-11-11.
 assert [w for _, w in deins_in_anzeige('var a=`deinem Mond`;')] == ['deinem']
 assert len(deins_in_anzeige("var a='dein';\nvar b=\"deine\";\nvar c=`deinen`;\n")) == 3
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Jede Lücke einer Vorlage wird auch gefüllt
+#
+#  Sobald die Sätze einer Seite als Vorlagen in der Datendatei
+#  stehen, entsteht eine neue Fehlerklasse: `{bereich}` wird nur
+#  ersetzt, wo es auch eingesetzt wird. Eine Lücke, die niemand
+#  füllt, steht in geschweiften Klammern auf der Seite — und die
+#  Rauchprobe findet sie nur an der Stelle, die heute gerendert
+#  wird (REGELN.md 6e).
+#
+#  Die Regel stand seit dem 2026-11-14 in `bau-zeit.py` und seit dem
+#  2026-11-15 in `bau-karte.py`, in zwei verschiedenen Fassungen: die
+#  eine las den Quelltext mitsamt Kommentaren und kannte nur
+#  Schlüssel, die andere zog die Kommentare ab und zählte auch die
+#  Lücke mit, die eine Anzeige selbst ersetzt. Mit `bau-mond.py` wäre
+#  am 2026-11-16 eine dritte dazugekommen, deshalb steht sie jetzt
+#  hier (Aufgabe 80, REGELN.md 5): Eine Regel in drei bau-*.py ist
+#  nach der ersten Verschärfung in zwei von drei veraltet.
+#
+#  Was dieser Fassung fehlt, steht in Aufgabe 69: Sie sammelt alle
+#  Schlüssel einer Anzeige in einen Topf und lässt deshalb eine Lücke
+#  durch, die ein anderer Abschnitt zufällig gleich benennt. Jede
+#  Seite, die sie aufruft, prüft zusätzlich im Ergebnis, dass keine
+#  geschweifte Klammer auf der Seite steht.
+#
+#  Gefüllt heißt zweierlei: als Schlüssel in einem Füll-Aufruf
+#  (`bereich:`) oder als Lücke, die die Anzeige selbst ersetzt
+#  (`replace('{B}', …)`). Beides zählt, und zwar nur beides —
+#  sonst wäre die Regel über ein beliebiges Vorkommen abstellbar.
+_LUECKE = re.compile(r'\{([a-zA-Z][a-zA-Z0-9]*)\}')
+
+
+def luecken_ohne_fueller(daten_quell, app_quell):
+    """Welche Lücke aus den Vorlagen niemand füllt. Kommentare zählen
+    nicht mit: dort darf stehen, wie eine Lücke aussieht."""
+    offen = set(_LUECKE.findall(nur_code(daten_quell)))
+    gefuellt = set(re.findall(r'\b([a-zA-Z][a-zA-Z0-9]*)\s*:', app_quell))
+    gefuellt |= set(re.findall(r"""replace\(\s*['"]\{([a-zA-Z][a-zA-Z0-9]*)\}""",
+                               app_quell))
+    return sorted(offen - gefuellt)
+
+
+def pruefe_vorlagenluecken(daten_quell, app_quell, daten):
+    """Bricht ab, sobald eine Vorlage eine Lücke trägt, die in der
+    Anzeige nicht gefüllt wird."""
+    ohne = luecken_ohne_fueller(daten_quell, app_quell)
+    if not ohne:
+        return []
+    return ['Vorlagenlücke in %s, die niemand füllt: %s'
+            % (daten, ', '.join('{%s}' % x for x in ohne))]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+assert luecken_ohne_fueller("a:'{herr} im {herrhaus}. Haus'",
+                            'kFuell(K_T.a,{herr:x,herrhaus:y})') == []
+assert luecken_ohne_fueller("a:'{herr} im {herrhaus}. Haus'",
+                            'kFuell(K_T.a,{herr:x})') == ['herrhaus']
+assert luecken_ohne_fueller("t:'Du gehst {B} direkt an'",
+                            "K_ZEICHEN[z].t.replace('{B}', K_BEREICH[h-1])") == []
+assert luecken_ohne_fueller("t:'Du gehst {B} direkt an'", 'var B=1;') == ['B']
+assert luecken_ohne_fueller("a:'ohne Luecke'", '') == []
+# Eine Lücke, die in einem Kommentar erklärt wird, ist keine Vorlage.
+assert luecken_ohne_fueller('/* Die Lücken heißen {so}. */\n', '') == []
+assert pruefe_vorlagenluecken("a:'{herr}'", '', 'x-daten.js') == [
+    'Vorlagenlücke in x-daten.js, die niemand füllt: {herr}']
+assert pruefe_vorlagenluecken("a:'{herr}'", 'moFuell(T.a,{herr:x})', 'x-daten.js') == []

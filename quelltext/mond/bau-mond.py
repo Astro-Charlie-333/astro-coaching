@@ -24,6 +24,8 @@ wird jetzt gegen rituale/engine.js, wie überall.
 import pathlib, re, sys, subprocess, json, datetime
 
 hier = pathlib.Path(__file__).parent
+sys.path.insert(0, str(hier.parent / 'rituale'))
+import pruefwerk
 wiki = hier.parent / 'wiki'
 rit = hier.parent / 'rituale'
 
@@ -38,6 +40,10 @@ texte = lies(hier / 'mond-texte.js')
 termine = lies(hier / 'mond-termine.js')
 stil = lies(hier / 'mond-stil.css')
 engine = lies(rit / 'engine.js')
+# Seit Aufgabe 55 liegt bahn-daten.js mit auf der Seite: Die Anzeige
+# schreibt „dein" nicht mehr selbst, sondern lässt B_BEUGE die Form
+# bilden — „deine Venus", nicht „dein Venus".
+bahn = lies(hier.parent / 'kern' / 'bahn-daten.js')
 
 SKRIPTE = ['profil.js', 'begriffe.js', 'niveau.js', 'wortwahl.js']
 
@@ -53,7 +59,7 @@ kopf = ('<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">\n'
                     for s in SKRIPTE) + '\n<style>\n')
 
 html = (kopf + lies(rit / 'basis.css') + '\n' + stil + '</style>\n</head><body>\n'
-        + koerper + '\n<script>\n' + engine + '\n' + termine + '\n' + texte + '\n'
+        + koerper + '\n<script>\n' + engine + '\n' + bahn + '\n' + termine + '\n' + texte + '\n'
         + app + '\n</script>\n</body></html>\n')
 html = html.replace('<head>', '<head>' + lies(hier.parent / 'app' / 'app-kopf.html'), 1)
 ziel = wiki / 'mond.html'
@@ -100,9 +106,15 @@ for verraeter, was in [('0.38709927', 'Bahnelemente'), ('function sunLon', 'eine
         if verraeter in t:
             fehler.append(f'{name} enthält wieder {was}')
 oben = lambda s: set(re.findall(r'^(?:var|function)\s+([A-Za-z_]\w*)', s, re.M))
-koll = (oben(texte) | oben(termine)) & oben(engine)
+# Seit Aufgabe 55 liegt auch bahn-daten.js auf der Seite. Zwei Dateien,
+# die denselben Namen belegen, sind keine Ordnungsfrage: Die zweite
+# gewinnt lautlos, und welche die zweite ist, entscheidet die
+# Reihenfolge weiter oben.
+fremd = oben(engine) | oben(bahn)
+koll = (oben(texte) | oben(termine)) & fremd
 if koll:
-    fehler.append('Namen kollidieren mit engine.js: ' + ', '.join(sorted(koll)))
+    fehler.append('Namen kollidieren mit engine.js oder bahn-daten.js: '
+                  + ', '.join(sorted(koll)))
 
 # ── 3 · Die Texte sind vollständig ───────────────────────────
 probe_t = r'''
@@ -168,6 +180,79 @@ try:
 finally:
     pt.unlink(missing_ok=True)
 
+# ── 3b · Die Anzeige schreibt keinen Satz und kein „dein" ────
+#     Aufgabe 55, aus 34 und 38: Die Sätze dieser Seite stehen in
+#     mond-texte.js (MT_T), die Anzeige rechnet und setzt mit
+#     `moFuell` ein. Was in mond-app.js steht, zieht beim Umzug in
+#     eine andere Umgebung nicht mit (PRODUKT.md Abschnitt 7) — und
+#     genau deshalb ist das hier eine Sperre und kein Vorsatz.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'mond-app.js', 'mond-texte.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'mond-app.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei Anführungsarten —
+#     ein Satz, der in doppelten oder schrägen Anführungszeichen
+#     durchgeht, wäre das Loch, über das die Sätze einzeln
+#     zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Nächster Vollmond' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'mond-app.js', 'mond-texte.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'dein Venus' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'mond-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+#     Jede Lücke einer Vorlage wird auch gefüllt. Die Regel steht in
+#     rituale/pruefwerk.py, weil sie seit heute zwei Seiten angeht.
+fehler += pruefwerk.pruefe_vorlagenluecken(texte, app, 'mond-texte.js')
+
+#     Und die beiden Listen, die die Anzeige seit Aufgabe 55 nicht
+#     mehr selbst führt, müssen zu den Daten passen. Ohne diese zwei
+#     Prüfungen wäre das Herausziehen ein Tausch: Die Namen stünden
+#     nur an einer anderen Stelle doppelt.
+#
+#     MT_T.artName ist der Schlüssel, unter dem ein Termin seine Art
+#     findet; MT_TYP trägt dieselben vier Wörter als Überschrift.
+#     Laufen sie auseinander, findet moTyp() die Art nicht mehr und
+#     jede Karte zeigt den Neumondtext.
+probe_namen = r'''
+const fs=require('fs'); global.window={};
+eval(fs.readFileSync(process.argv[2],'utf8'));
+const f=[];
+const SOLL=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage',
+ 'Skorpion','Schütze','Steinbock','Wassermann','Fische'];
+/* Die Anzeige liest die Zeichennamen aus MT_ZEICHEN und rechnet den
+   Grad in einen Platz dieser Liste um. Stimmt die Reihenfolge nicht,
+   steht hinter jedem Grad das falsche Zeichen. */
+MT_ZEICHEN.forEach((z,i)=>{ if(z.n!==SOLL[i])
+  f.push('MT_ZEICHEN['+i+'] heißt '+z.n+' statt '+SOLL[i]); });
+if(MT_ZEICHEN.length!==SOLL.length) f.push('MT_ZEICHEN hat nicht zwölf Einträge');
+['NM','VM','NMe','VMe'].forEach(k=>{ if(!MT_T.artName[k])
+  f.push('MT_T.artName fehlt der Schlüssel '+k); });
+const namen=['NM','VM','NMe','VMe'].map(k=>MT_T.artName[k]);
+MT_TYP.forEach(t=>{ if(namen.indexOf(t.k)<0)
+  f.push('MT_TYP nennt die Art '+t.k+', MT_T.artName kennt sie nicht'); });
+namen.forEach(n=>{ if(!MT_TYP.some(t=>t.k===n))
+  f.push('MT_T.artName nennt '+n+', MT_TYP hat keine solche Art'); });
+if(MT_T.monKurz.length!==12) f.push('MT_T.monKurz hat nicht zwölf Monate');
+if(MT_T.wochenKurz.length!==7) f.push('MT_T.wochenKurz hat nicht sieben Tage');
+console.log(JSON.stringify({fehler:f}));
+'''
+pn = hier / '.probe-mond-namen.js'
+pn.write_text(probe_namen, encoding='utf-8')
+try:
+    r = subprocess.run(['node', str(pn), str(hier / 'mond-texte.js')],
+                       capture_output=True, text=True, timeout=60)
+    if r.returncode != 0:
+        fehler.append('Namensprüfung gescheitert: ' + (r.stderr or '')[-300:])
+    else:
+        fehler.extend(json.loads(r.stdout.strip().splitlines()[-1])['fehler'])
+finally:
+    pn.unlink(missing_ok=True)
+
 # ── 4 · Was die alten Seiten falsch hatten, bleibt weg ───────
 # Die Dauer eines Neumonds stand zweimal verschieden da. Eine Form,
 # kein Textstück: „wirkt … vier Wochen" in einem Neumond-Satz.
@@ -179,7 +264,8 @@ for wort in ('vermeide', 'bloß nicht', 'gefährlich'):
             fehler.append(f'„{wort}" in {name} — Angst ist kein Werkzeug (REGELN 2a)')
 
 # ── 5 · Keine echten Geburtsdaten ────────────────────────────
-for name, t in [('mond-app.js', app), ('mond-texte.js', texte), ('mond-koerper.html', koerper)]:
+for name, t in [('mond-app.js', app), ('mond-texte.js', texte),
+                ('mond-koerper.html', koerper), ('bahn-daten.js', bahn)]:
     if re.search(r'\b1987\b', t) or re.search(r'\b08:58\b', t):
         fehler.append(f'{name}: sieht nach echten Geburtsdaten aus')
 
@@ -303,6 +389,39 @@ if(!/Treffer/.test(th)) f.push('mit Profil fehlt die Trefferspalte');
 await q.evaluate(()=>{ const r=document.querySelector('#motab tr.klick'); if(r) r.click(); }); await q.waitForTimeout(200);
 const det=await q.evaluate(()=>(document.querySelector('#motab tr.detail')||{}).textContent||'');
 if(det.length<80) f.push('ein Klick auf einen Termin klappt keine Erklärung auf');
+
+/* Jede Lücke einer Vorlage wird wirklich gefüllt — nicht nur im
+   Quelltext (das prüft pruefwerk.pruefe_luecken), sondern im
+   Ergebnis. Geprüft wird jede aufklappbare Zeile, nicht nur die
+   erste: Welche Lücke eine Erklärung braucht, hängt davon ab, ob
+   der Termin trifft, ob er eine Finsternis ist und ob der
+   Zeichenherrscher im Chart steht. Die alte Fassung hätte eine
+   Lücke nur gefunden, wenn sie zufällig oben stand (REGELN 6f). */
+/* Die Zeile von oben ist noch offen; die Schleife klappt selbst auf
+   und wieder zu und fängt deshalb geschlossen an. */
+await q.evaluate(()=>{ const r=document.querySelector('#motab tr.offen'); if(r) r.click(); });
+await q.waitForTimeout(120);
+const zeilen=await q.evaluate(()=>document.querySelectorAll('#motab tr.klick').length);
+if(zeilen<10) f.push('nur '+zeilen+' aufklappbare Zeilen — zu wenige, um die Vorlagen zu prüfen');
+let aufgeklappt=0;
+for(let i=0;i<zeilen;i++){
+  await q.evaluate(i=>{ const r=document.querySelectorAll('#motab tr.klick')[i]; if(r) r.click(); }, i);
+  const d=await q.evaluate(()=>{ const x=document.querySelector('#motab tr.detail'); return x?x.textContent:''; });
+  if(d.length>80) aufgeklappt++;
+  const luecke=d.match(/\{[a-zA-Z][a-zA-Z0-9]*\}/g);
+  if(luecke) f.push('ungefüllte Vorlagenlücke in einer Erklärung: '+luecke.join(', '));
+  await q.evaluate(i=>{ const r=document.querySelectorAll('#motab tr.klick')[i]; if(r) r.click(); }, i);
+}
+if(aufgeklappt<zeilen) f.push(aufgeklappt+' von '+zeilen+' Zeilen klappen eine Erklärung auf');
+const ganz=await q.evaluate(()=>document.body.innerText);
+const gl=ganz.match(/\{[a-zA-Z][a-zA-Z0-9]*\}/g);
+if(gl) f.push('ungefüllte Vorlagenlücke auf der Seite: '+gl.join(', '));
+/* Und „dein" steht nie ungebeugt vor einem weiblichen Punkt. Der
+   Riegel oben hält die Anzeige satzfrei; diese Zeile hält das
+   Ergebnis. Beides, weil die Form auch aus einer Vorlage kommen
+   könnte, in der jemand „dein {punkt}" schreibt. */
+const schief=ganz.match(/\bdein (?:Sonne|Venus)\b/gi);
+if(schief) f.push('ungebeugtes „dein" vor einem weiblichen Punkt: '+schief.join(', '));
 await ueber(q,'mit Profil');
 console.log(JSON.stringify({fehler:f}));
 await b.close();})();
