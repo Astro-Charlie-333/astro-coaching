@@ -138,40 +138,11 @@ for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
 #     (REGELN.md 6e) — hier wird es für alle Vorlagen auf einmal
 #     geprüft, unabhängig vom Profil und vom geöffneten Haus.
 #
-#     Gefüllt heißt zweierlei: als Schlüssel in einem kFuell-Aufruf
-#     (`herrhaus:`) oder als Lücke, die die Anzeige selbst ersetzt
-#     (`{B}` steht im Datentext des Zeichens und wird bei jedem Haus
-#     anders eingesetzt). Beides zählt, und zwar nur beides — sonst
-#     wäre die Regel über ein beliebiges Vorkommen abstellbar.
-_LUECKE = re.compile(r'\{([a-zA-Z][a-zA-Z0-9]*)\}')
-
-
-def luecken_ohne_fueller(daten_quell, app_quell):
-    """Welche Lücke aus den Vorlagen niemand füllt. Kommentare zählen
-    nicht mit: dort darf stehen, wie eine Lücke aussieht."""
-    offen = set(_LUECKE.findall(pruefwerk.nur_code(daten_quell)))
-    gefuellt = set(re.findall(r'\b([a-zA-Z][a-zA-Z0-9]*)\s*:', app_quell))
-    gefuellt |= set(re.findall(r"""replace\(\s*['"]\{([a-zA-Z][a-zA-Z0-9]*)\}""",
-                               app_quell))
-    return sorted(offen - gefuellt)
-
-
-# ── Die festen Beispiele (REGELN.md 6e) ──────────────────────
-assert luecken_ohne_fueller("a:'{herr} im {herrhaus}. Haus'",
-                            'kFuell(K_T.a,{herr:x,herrhaus:y})') == []
-assert luecken_ohne_fueller("a:'{herr} im {herrhaus}. Haus'",
-                            'kFuell(K_T.a,{herr:x})') == ['herrhaus']
-assert luecken_ohne_fueller("t:'Du gehst {B} direkt an'",
-                            "K_ZEICHEN[z].t.replace('{B}', K_BEREICH[h-1])") == []
-assert luecken_ohne_fueller("t:'Du gehst {B} direkt an'", 'var B=1;') == ['B']
-assert luecken_ohne_fueller("a:'ohne Luecke'", '') == []
-# Eine Lücke, die in einem Kommentar erklärt wird, ist keine Vorlage.
-assert luecken_ohne_fueller('/* Die Lücken heißen {so}. */\n', '') == []
-
-_ohne = luecken_ohne_fueller(daten, app)
-if _ohne:
-    fehler.append('Vorlagenlücke in karte-daten.js, die niemand füllt: '
-                  + ', '.join('{%s}' % x for x in _ohne))
+#     Die Regel selbst steht seit dem 2026-11-16 in
+#     `rituale/pruefwerk.py`, samt ihren festen Beispielen: Seit
+#     `bau-mond.py` dieselbe Prüfung braucht, betrifft sie zwei
+#     Seiten (REGELN.md 5).
+fehler += pruefwerk.pruefe_vorlagenluecken(daten, app, 'karte-daten.js')
 
 for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper + app))):
     if not (wiki / href).exists():

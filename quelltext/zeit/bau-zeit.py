@@ -207,13 +207,16 @@ for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
 #     füllt, erscheint als „{bis}" auf der Seite. Die Rauchprobe
 #     findet das nur an dem Tag, an dem die Vorlage vorkommt
 #     (REGELN.md 6e) — hier wird es unabhängig vom Himmel geprüft.
-_LUECKE = re.compile(r'\{([a-zA-Z][a-zA-Z0-9]*)\}')
-_luecken = set(_LUECKE.findall(daten))
-_gefuellt = set(re.findall(r'\b([a-zA-Z][a-zA-Z0-9]*)\s*:', app))
-_ohne = sorted(_luecken - _gefuellt)
-if _ohne:
-    fehler.append('Vorlagenlücke in zeit-daten.js, die niemand füllt: '
-                  + ', '.join('{%s}' % x for x in _ohne))
+#
+#     Die Regel selbst steht seit dem 2026-11-16 in
+#     `rituale/pruefwerk.py`, samt ihren festen Beispielen
+#     (Aufgabe 80): Drei Seiten brauchen sie, und drei Fassungen
+#     derselben Regel sind nach der ersten Verschärfung zwei
+#     veraltete. Die Fassung dort zieht zusätzlich die Kommentare ab
+#     — eine Lücke, die in einem Kommentar erklärt wird, ist keine
+#     Vorlage — und zählt die Lücke mit, die eine Anzeige selbst
+#     ersetzt.
+fehler += pruefwerk.pruefe_vorlagenluecken(daten, app, 'zeit-daten.js')
 
 # ── 7 · Keine echten Geburtsdaten ─────────────────────────────
 for muster, was in ((r'\b1987\b', 'Geburtsjahr'), (r'\b08:58\b', 'Geburtszeit')):

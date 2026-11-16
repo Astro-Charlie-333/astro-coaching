@@ -49,7 +49,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `start-app.js`, `offline-app.js`, `heute-app.js` (2026-11-09),
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
 `monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
-`zeit-app.js` (2026-11-14) und `karte-app.js` (2026-11-15);
+`zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15) und
+`mond-app.js` (2026-11-16);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -84,11 +85,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 55 · `mond-app.js` (76, 8)
-`mond.html` mit den Mondphasen — Neumond und Vollmond sind die
-Namen, unter denen die halbe Zielgruppe das Thema kennt
-(`REGELN.md` 2a).
 
 ### 56 · `zahlen-app.js` (194, 13)
 `zahlen.html`, die größte der Anzeigen. Zwei Tage sind hier besser
@@ -462,24 +458,6 @@ geht durch), und die neun Stellen in `zeit-app.js` ihre Farbe aus
 `zeit-stil.css` oder `ZT_FARBE` holen. Für `zahlen`, `mond` und
 `haeuser` gehört es in deren Umzug (Aufgaben 55, 56, 57), nicht
 hierher.
-
----
-
-### 80 · Der Lückenriegel steht nur in `karte` und `zeit`
-Zwei `bau-*.py` prüfen inzwischen, dass jede `{lücke}` einer Vorlage
-auch wirklich gefüllt wird — `bau-zeit.py` seit dem 2026-11-14,
-`bau-karte.py` seit dem 2026-11-15. Es ist zweimal dieselbe Regel in
-zwei Fassungen: die eine liest den Quelltext mitsamt Kommentaren und
-kennt nur Schlüssel, die andere zieht die Kommentare ab und zählt auch
-die Lücke mit, die eine Anzeige selbst ersetzt (`{B}`). Das ist genau
-die Lage, aus der `pruefwerk.py` entstanden ist (REGELN.md 5): Wird
-die Regel einmal verschärft, ist sie in der anderen Fassung veraltet —
-und jede Anzeige, die aus Aufgabe 34 nachkommt, bringt eine dritte mit.
-
-**Fertig, wenn:** die Regel als `pruefwerk.pruefe_vorlagenluecken` an
-einer Stelle steht, ihre festen Beispiele beim Import laufen
-(REGELN.md 6e), `bau-zeit.py` und `bau-karte.py` sie von dort holen,
-und eine Lücke ohne Füller in beiden Seiten den Bau abbricht.
 
 ## Was nicht gemacht wird
 
@@ -869,6 +847,17 @@ Dieselbe Falle wie in `REGELN.md` 6e. Wer Aufgabe 69 macht, nimmt sie
 von dort und legt sie nach `rituale/pruefwerk.py`, statt sie ein
 zweites Mal zu erfinden.*
 
+*Dazugekommen am 2026-11-16 (Aufgabe 55): In `pruefwerk` steht jetzt
+`pruefe_luecken` — genau die Topf-Fassung, vor der der Absatz darüber
+warnt. Sie hält `karte-daten.js` und `mond-texte.js` und fängt die
+Lücke, die niemand irgendwo füllt; eine Lücke, die ein anderer
+Abschnitt zufällig gleich benennt, lässt sie durch. Beide Seiten
+prüfen deshalb zusätzlich im Ergebnis, dass keine geschweifte Klammer
+auf der Seite steht. Wer Aufgabe 69 macht, **ersetzt** `pruefe_luecken`
+durch die Fassung aus `bau-bez.py` — sie nicht ein drittes Mal
+erfinden, und die Topf-Fassung nicht neben der genauen stehen
+lassen.*
+
 ### 70 · Auf `zeiten.html` nennen neun Karten ein Zeichen und erklären keines
 Aus dem Gestaltungsdurchgang vom 2026-11-10 (Befund 10.11-1). Alle neun
 Karten unter „Was als Nächstes kommt" enden auf „Der Abschnitt trägt das
@@ -973,7 +962,96 @@ Rechner den Bau abbricht, und `pruefe-alles.py` nachzählt, welche
 Rechner noch Sätze tragen — in beide Richtungen brechend, wie
 Querprüfung 13.
 
+---
+
+### 81 · `mond-app.js` rechnet den Himmel in der Anzeige
+Aufgefallen beim Erledigen von Aufgabe 55 am 2026-11-16. Die Sätze
+sind heraus, die Rechnung ist drin: `moChartJD`, `moSolar` (der
+Solar Return, eine Nullstellensuche über 367 Tage), `moTreffer`,
+`moHaus` und `moElong` stehen in derselben Datei wie `document` und
+`el()`. Der Mondordner hat deshalb kein `mond-rechner.js`, und
+`mond-texte.js` heißt nicht `mond-daten.js` — beides weicht von
+`REGELN.md` Abschnitt 5 ab.
+
+Das ist nicht Ordnungsliebe. `PRODUKT.md` Abschnitt 7 sagt, warum:
+Beim Umzug in Stufe 3 wandern Rechnen, Texte und Prüfungen
+unverändert mit, und nur die Anzeige wird neu gebaut. Eine Rechnung,
+die in der Anzeige steht, wandert nicht mit — sie wird abgeschrieben.
+Vier Monate Arbeit an den Terminen hängen hier an einer Datei, die
+`getElementById` aufruft.
+**Fertig, wenn:** `mond-rechner.js` die Himmels- und Trefferrechnung
+trägt und darin kein `document`, kein `el(` und kein `MT_`-Textschlüssel
+vorkommt, `mond-app.js` nur noch holt und einsetzt, `bau-mond.py`
+beides als dauerhafte Sperre prüft — ein `document` im Rechner und
+eine Rechnung in der Anzeige brechen den Bau —, und der angezeigte
+Text über alle fünf Stufen, beide Profilzustände und alle
+aufklappbaren Terminzeilen derselbe ist wie vorher.
+
 ## Erledigt
+
+* **2026-11-16** · `mond-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 55, aus 34 und 38; dazu Aufgabe 80) — die elfte von
+  zweiundzwanzig Anzeigen.
+  Die sechsundsiebzig Zeichenketten von `mond.html` stehen jetzt als
+  Vorlagen in `MT_T` in `mond-texte.js`; die Anzeige rechnet, setzt mit
+  `moFuell` ein und schreibt nichts mehr.
+
+  Drei der acht „dein" von Hand sind **nicht** bloß umgezogen: Sie
+  beugten ein Besitzwort an einen Punktnamen, dessen Geschlecht
+  wechselt, und standen deshalb falsch auf der Seite — „dein Venus",
+  „Dein Sonne". In dreiunddreißig von hundertvier aufklappbaren
+  Erklärungen. Jetzt liegt `kern/bahn-daten.js` mit auf der Seite und
+  `B_BEUGE` bildet die Form: „deine Venus". Dieselbe Entscheidung wie
+  bei `beziehung-app.js` am 2026-11-13 — und der Grund, warum
+  Aufgabe 38 keine Formsache war: Es sind genau die Kästen, von denen
+  jemand einen Screenshot macht (`PRODUKT.md` 2, Punkt 3).
+
+  Zwei Stellen waren außerdem mehr als Umzug:
+
+  * Die zwölf Zeichennamen und die vier Artnamen standen ein zweites
+    Mal in der Anzeige (`ZN`, `TYPNAME`). Beide Listen kommen jetzt
+    aus den Daten, und `bau-mond.py` hält die Reihenfolge von
+    `MT_ZEICHEN` gegen die zwölf Zeichen ab Widder sowie
+    `MT_T.artName` gegen die Überschriften in `MT_TYP`. Ohne diese
+    zwei Prüfungen wäre das Herausziehen ein Tausch gewesen: dieselbe
+    Dopplung, eine Datei weiter. Dass sie greifen, ist mit vertauschten
+    Namen nachgewiesen.
+  * Die Schriftnamen (`DM Sans`, `JetBrains Mono`) setzte die Anzeige
+    als Attribut an die Beschriftung im Phasenrad. Eine Datendatei
+    kennt keine Stilvorlage, also sind sie nach `mond-stil.css`
+    gewandert; die Anzeige setzt eine Klasse. Dieselbe Schrift, ein
+    Wort anders im berechneten Stil.
+
+  `'auf'` und `'gegenüber'` schrieb die Rechnung selbst in ihr
+  Ergebnis — Wort und Schlüssel in einem, derselbe Fall wie
+  `REGELN.md` 6f. `moTreffer` liefert jetzt den Winkelschlüssel, und
+  das Wort kommt aus `B_WINKELWORT` in `bahn-daten.js`, wo es für alle
+  Seiten steht.
+
+  Gehalten wird das von `pruefwerk.pruefe_anzeige_satzfrei` und
+  `pruefwerk.pruefe_anzeige_ohne_dein` in `bau-mond.py`, jeweils mit
+  der Gegenprobe in allen drei Anführungsarten — ein grüner Riegel
+  heißt sonst nur, dass heute nichts dastand (`REGELN.md` 6e,
+  Nachsatz). Neu dazugekommen ist die Lückenprüfung: Sobald Sätze
+  Vorlagen sind, kann `{bereich}` auf der Seite stehen bleiben. Sie
+  stand in `bau-zeit.py` und `bau-karte.py` in zwei verschiedenen
+  Fassungen; `mond` wäre die dritte geworden. Damit war Aufgabe 80
+  fällig, und sie ist mit erledigt: Die Regel heißt jetzt
+  `pruefwerk.pruefe_vorlagenluecken`, steht an einer Stelle, und alle
+  drei Seiten holen sie von dort — nachgewiesen mit einer Lücke ohne
+  Füller in jeder der drei Datendateien. Weil sie Schlüssel in einen Topf sammelt
+  (die Falle aus Aufgabe 69), prüft die Rauchprobe zusätzlich **jede**
+  der hundertvier aufklappbaren Zeilen auf eine geschweifte Klammer,
+  nicht nur die erste, die zufällig oben steht.
+
+  Nachgewiesen gleich geblieben: 256 abgenommene Zustände — fünf
+  Wissensstufen mit und ohne Profil, alle acht Phasen, alle zwölf
+  Aszendenten, alle vier Filter, hundertvier aufgeklappte
+  Erklärungen, 96 Kombinationen im Nachschlagewerk und vier
+  Geburtsdaten. 215 davon Zeichen für Zeichen identisch; die
+  übrigen 41 sind die dreiunddreißig berichtigten Beugungen, der
+  Schriftname im berechneten Stil und sieben Zustände, in denen der
+  Mond zwischen den beiden Abnahmen weitergelaufen ist.
 
 * **2026-11-15** · `karte-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 54, aus 34 und 38) — die zehnte von zweiundzwanzig

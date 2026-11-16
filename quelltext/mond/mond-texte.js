@@ -572,3 +572,145 @@ var MT_PHASEN = [
  }
 ];
 
+
+/* ── Die Sätze der Anzeige ────────────────────────────────────
+   Aufgabe 55, aus 34 und 38. Bis zum 2026-11-16 standen
+   sechsundsiebzig Zeichenketten in `mond-app.js` — Monatsnamen,
+   Überschriften, die ganze Erklärung unter einer Terminzeile. Was
+   in der Anzeige steht, zieht beim Umzug in eine andere Umgebung
+   nicht mit (PRODUKT.md Abschnitt 7): Rechnen weiß nichts von
+   Sätzen.
+
+   Die Lücken heißen `{so}` und werden von `moFuell` gefüllt.
+   `bau-mond.py` zählt nach, dass jede Lücke, die hier steht, auch
+   wirklich gefüllt wird — eine, die niemand füllt, stünde sonst
+   als „{bereich}" auf der Seite.
+
+   „dein" steht hier in gewachsenen Sätzen („deine Frage", „einen
+   deiner Punkte"). Wo die Seite „dein" vor einen Punkt setzt,
+   dessen Geschlecht wechselt, steht in der Vorlage eine Lücke, und
+   die Form bildet `B_BEUGE` aus `kern/bahn-daten.js`: „deine
+   Venus", nicht „dein Venus". Bis zum 2026-11-16 stand in
+   dreiunddreißig von hundertvier Erklärungen die falsche Form. */
+var MT_T = {
+
+ /* Kalender und Grad. Sprache, auch wenn es nach Technik aussieht:
+    „Jan." ist ein Wort, kein Zahlenformat. */
+ monKurz:['Jan.','Feb.','März','Apr.','Mai','Juni','Juli','Aug.','Sep.','Okt.','Nov.','Dez.'],
+ wochenKurz:['So','Mo','Di','Mi','Do','Fr','Sa'],
+ /* Die vier Arten unter dem Schlüssel, den die Termine tragen.
+    bau-mond.py hält sie gegen die Namen in MT_TYP — zwei Listen
+    derselben vier Wörter driften sonst auseinander. */
+ artName:{NM:'Neumond', VM:'Vollmond',
+          NMe:'Sonnenfinsternis', VMe:'Mondfinsternis'},
+ grad:"{grad}° {zeichen} {min}'",
+ datumKurz:'{t}. {monat}',
+ datumLang:'{t}.{m}.{j}',
+
+ /* 1 · Gerade jetzt */
+ jetztTun:'Was jetzt dran ist: {tun}',
+ naechsteTitel:{NM:'Nächster Neumond', VM:'Nächster Vollmond',
+                F:'Nächste Finsternis'},
+ naechsteArt:'{datum} · {art}',
+ inHeute:'heute',
+ inMorgen:'morgen',
+ inTagen:'in {n} Tagen',
+ jetztTech:'Mond auf {grad} · Abstand zur Sonne {ab}° · Tag {tag} des Zyklus',
+
+ /* 2 · Die acht Stationen */
+ radMarke:'{name}, {wort}',
+ radLinks:'ZUNEHMEND · AUFBAUEN',
+ radRechts:'ABNEHMEND · ABBAUEN',
+ phaseName:'{name}: {wort}',
+ phaseMeta:'{von}° bis {bis}° Abstand zur Sonne · etwa Tag {tagVon} bis {tagBis} des Zyklus',
+ phaseTun:'Was jetzt dran ist:',
+
+ /* 3 · Deine Termine */
+ profilOhne:'Noch kein Profil aktiv. Lege unter <a href="profile.html">Profile</a> '+
+   'eines an, dann stehen hier nur die Termine, die dich betreffen. Bis dahin '+
+   'siehst du die nächsten Termine für alle.',
+ /* Das leere <b> bleibt leer: Der Name eines Profils kommt von der
+    Besucherin und wird als Text eingesetzt, nicht als Markup. */
+ profilMit:'Gerechnet für <b></b>. Wechseln unter <a href="profile.html">Profile</a>.',
+ profilName:'das aktive Profil',
+ keinTreffer:'In den nächsten zwölf Monaten trifft kein Termin einen deiner Punkte '+
+   'genau. Das kommt vor. Dann ist jeder Neu- und Vollmond allgemeines Mondwetter '+
+   'für dich.',
+ mehrZeigen:'Alle {n} zeigen',
+ artZusatz:'{art} ({zusatz})',
+ datumWoche:'{tag} · {zeit}',
+ chipFins:'Halbjahresthema',
+ chipTrifft:'trifft {was}',
+ chipUnd:'und {was}',
+ chipBereich:'Bereich: {bereich}',
+
+ /* 3b · Die Erklärung unter einer Terminzeile (ab Stufe 2).
+    {deinHerr} und {deinPunkt} kommen aus B_BEUGE. */
+ dKopf:'<p><b>{titel}.</b> {text} Bei dir fällt das in <b>{bereich}</b>.',
+ dAchse:' Weil ein Vollmond eine Achse ist, wird gleichzeitig das {n}. Haus '+
+   'gefordert: <b>{bereich}</b>.',
+ dHerr:' {zeichen} wird von <b>{herr}</b> beherrscht, und {deinHerr} steht im '+
+   '{n}. Haus. Was im Bereich {bereich} angestoßen wird, zeigt seine Folgen im '+
+   'Bereich {folge}.',
+ dKopfEnde:'</p>',
+ dKeinTreffer:'<p><b>Kein Gradtreffer.</b> Diese Lunation beleuchtet nur den '+
+   'Bereich {bereich}, ohne einen deiner Punkte eng zu berühren. Das ist der '+
+   'Normalfall: allgemeines Mondwetter.</p>',
+ dNahEng:'Sehr eng, das ist der Kern des Termins.',
+ dNahMittel:'Eng genug, um im Alltag bemerkbar zu sein.',
+ dNahRand:'Am Rand, eher eine Färbung.',
+ dRadix:'<p><b>Radix · {art} {punkt} · {orb}°.</b> {nah} Berührt wird {was}, '+
+   'also {wie}.',
+ dZusammen:' Lunation und Punkt fallen zusammen: Der Punkt ist das Thema.',
+ dGegenueber:' Der Punkt steht gegenüber. Der Anstoß kommt eher von außen, über '+
+   'andere Menschen oder Umstände.',
+ dPunktGleich:' {deinPunkt} steht selbst im {n}. Haus, genau dort, wo die '+
+   'Lunation stattfindet. Doppelte Betonung.',
+ dPunktAnders:' {deinPunkt} steht im {n}. Haus. Was im Bereich {bereich} '+
+   'passiert, greift bei dir in {wo} hinein.',
+ dRadixEnde:' {praxis}</p>',
+ dSR:'<p><b>Solar Return · {art} Jahres-{punkt} · {orb}°.</b> Getroffen wird '+
+   '{was} in deinem Jahreschart. Ein Thema dieses einen Jahres, nicht ein '+
+   'Dauerthema.</p>',
+ dMehrere:'<p><b>Mehrere Punkte gleichzeitig.</b> Das ist selten und macht den '+
+   'Termin überdurchschnittlich wichtig.</p>',
+ dBeide:'<p><b>Beide Ebenen zeigen auf denselben Termin.</b> Ein Dauerthema '+
+   'fällt mit einem Thema dieses Jahres zusammen. Das ist der stärkste Befund.</p>',
+ dFins:'<p>Weil es eine Finsternis ist, läuft das Zeitfenster über rund sechs '+
+   'Monate. Erwarte nichts am Tag selbst.</p>',
+
+ /* 3c · Die Tabelle */
+ tabSpalten:['Datum','Zeit','Art','Grad'],
+ tabHaus:'Haus',
+ tabTreffer:'Treffer',
+ tabHausZelle:'{n}. · {bereich}',
+ tabLeer:'–',
+ trefZelle:'{art} {punkt} {orb}°',
+ trefZelleSR:'SR {art} {punkt}',
+ tabHinweisKlick:'Tippe eine Zeile an, dann steht dort, was der Termin bei dir berührt. ',
+ tabHinweis:'Vergangene Termine des letzten Monats sind grau.',
+ filterNamen:{alle:'Alle', treffer:'Nur meine Treffer', NM:'Neumonde',
+              VM:'Vollmonde', fins:'Finsternisse'},
+ ascLeer:'nicht gewählt',
+
+ /* 4 · Die vier Arten */
+ artTunLabel:'Was dran ist:',
+ artZugrossLabel:'Was oft zu groß erzählt wird:',
+
+ /* 5 · Geburtsmondphase */
+ gebAusProfil:'Aus dem Profil, das gerade aktiv ist.',
+ gebAusDatum:'Aus dem eingegebenen Datum gerechnet.',
+ gebOhne:'Trag dein Geburtsdatum ein oder lege ein Profil an.',
+ gebName:'Geboren bei {name}: {wort}',
+ gebFrageLabel:'Deine Frage:',
+ gebTech:'Abstand Sonne–Mond bei der Geburt: {ab}°',
+
+ /* 6 · Nachschlagen */
+ kombiHausOpt:'{n}. Haus · {bereich}',
+ kombiTitel:'{art} in {zeichen} im {n}. Haus',
+ kombiZeile:'{was}: {text}',
+
+ /* Der Stand der Terminliste */
+ stand:'Termine gerechnet am {am}, sie reichen bis {bis}.',
+ standBis:'{t}. {monat} {jahr}'
+};
