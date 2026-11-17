@@ -245,9 +245,16 @@ _DIREKTIVEN = {'use strict', 'use asm'}
 # Auswahlzeichen. Und ein einzelnes `#FCF7EF` bleibt draußen: eine
 # Farbe ist kein Auswahlausdruck, sondern Gestaltung in einer
 # Anzeige, und die soll gemeldet werden.
+#
+# Die Zeichen eines Teils dürfen auch unmittelbar aneinanderhängen:
+# `.z-zelle[data-z]` ist ein Teil und nicht zwei (Aufgabe 56). Bis
+# zum 2026-11-17 verlangte die Regel zwischen zwei Auswahlzeichen ein
+# Leerzeichen oder einen Nachkommen-Pfeil — damit war ein Klassenname
+# mit angehängter Attributauswahl ein „Satz". Ein deutscher Satz kommt
+# auch so nicht durch: jeder Teil muss mit `#`, `.` oder `[` anfangen.
 _AUSWAHLZEICHEN = r'(?:[#.][A-Za-z_][A-Za-z0-9_-]*|\[[^\],]+\])'
 _AUSWAHLTEIL = re.compile(_AUSWAHLZEICHEN
-                          + r'(?:[\s>+~]+' + _AUSWAHLZEICHEN + r')*')
+                          + r'(?:[\s>+~]*' + _AUSWAHLZEICHEN + r')*')
 
 
 def auswahlliste(s):
@@ -333,6 +340,7 @@ for _m in ['(liebe: beruf)',
            'prefers-reduced-motion: reduce',
            '(prefers-reduced-motion: reduce) und dein Mond',
            'Liebe, Beruf',
+           'Zahl, Bereich[Liebe]',
            '']:
     assert not medienfrage(_m), f'ist keine Medienabfrage: {_m}'
 del _m
@@ -389,6 +397,7 @@ for _k in ['alles-oder-nichts denken',
            'dein Mond.',
            'Das Muster',
            'Liebe, Beruf',
+           'Zahl, Bereich[Liebe]',
            'mb-roh',
            'an',
            'an auf',
@@ -472,6 +481,7 @@ for _s in ['Noch kein Profil angelegt.',
            'Reading für',
            '. Haus',
            'Liebe, Beruf',
+           'Zahl, Bereich[Liebe]',
            '#berwahl, Beruf',
            '#FCF7EF',
            'Jan.']:
@@ -482,6 +492,9 @@ for _s in ['use strict',
            '#berwahl, .bw-leiste',
            '.bw-leiste, .bw-tipp',
            '#berwahl .bw-knoepfe, .bw-leiste',
+           # Klasse und Attributauswahl hängen aneinander (Aufgabe 56)
+           '.z-zelle[data-z], .zl[data-z]',
+           '.z-k.leer, .z-k[data-z]',
            'ac-tech',
            'data-ab',
            'div',

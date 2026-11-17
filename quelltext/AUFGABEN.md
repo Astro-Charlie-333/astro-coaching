@@ -49,8 +49,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `start-app.js`, `offline-app.js`, `heute-app.js` (2026-11-09),
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
 `monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
-`zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15) und
-`mond-app.js` (2026-11-16);
+`zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15),
+`mond-app.js` (2026-11-16) und `zahlen-app.js` (2026-11-17);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -85,10 +85,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 56 · `zahlen-app.js` (194, 13)
-`zahlen.html`, die größte der Anzeigen. Zwei Tage sind hier besser
-als ein halber Umzug.
 
 ### 57 · `haeuser-app.js` (41, 0)
 `haeuser-lebensbuehnen.html`.
@@ -987,7 +983,92 @@ eine Rechnung in der Anzeige brechen den Bau —, und der angezeigte
 Text über alle fünf Stufen, beide Profilzustände und alle
 aufklappbaren Terminzeilen derselbe ist wie vorher.
 
+### 82 · `zahlen.html` zeigt auf Stufe 0 Rahu, Ketu und das Haus
+Gefunden beim Erledigen von Aufgabe 56 am 2026-11-17. `bau-zahlen.py`
+prüft, dass auf Stufe 0 und 1 kein Element mit der Klasse `ac-tech`
+sichtbar ist — und das stimmt. Der Abschnitt „Zahl und Chart" steht
+aber ohne `ac-tech` und ohne `data-ab` offen, und am gezeichneten
+Ergebnis auf Stufe 0 sind sichtbar: **Rahu**, **Ketu**, **Uranus**,
+**Neptun** und **„im 7. Haus"**. `REGELN.md` Abschnitt 2 lässt auf
+Stufe 0 kein Haus zu, und Rahu und Ketu sind nach Abschnitt 2a
+Mechanik und kein Name, unter dem jemand die Sache kennt: Die
+Zuordnung verschlüsselt einen Rechenweg (welcher Mondknoten zu
+welcher Ziffer gehört), den man kennen muss.
+
+Dieselbe Fehlerklasse wie bei Aufgabe 40: Die Prüfung ist da, aber sie
+prüft eine Klasse im Quelltext statt das Wort im gezeichneten
+Ergebnis. `bau-bereiche.py` und `bau-heute.py` tun das seit dem
+2026-10-15 richtig; `REGELN.md` Abschnitt 2 sagt, jede neue Seite
+bekomme dieselbe Prüfung — `zahlen.html` hat sie nie bekommen.
+Betroffen ist die Suchende, die keine Astrologie kennen will und auf
+der ehrlichsten Seite der Plattform als erstes zwei Sanskritnamen
+liest.
+
+**Fertig, wenn:** auf Stufe 0 von `zahlen.html` keines der verbotenen
+Wörter mehr sichtbar ist — gemessen am gerenderten Text und nicht an
+den Daten —, die Wortliste an derselben Stelle steht wie für die
+übrigen Seiten (nicht ein zweites Mal in `bau-zahlen.py`), und ein von
+Hand auf Stufe 0 gestelltes Fachwort den Bau abbricht, gegen feste
+Beispiele gehalten wie `_datum_ohne_jahr` in `bau-heute.py`.
+
 ## Erledigt
+
+* **2026-11-17** · `zahlen-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 56, aus 34 und 38) — die zwölfte von zweiundzwanzig
+  Anzeigen und die größte: 194 Zeichenketten und 13 mal „dein".
+  Sie stehen jetzt als Vorlagen in `Z_T` in `zahlen-texte.js`; die
+  Anzeige rechnet, setzt mit `zFuell` ein und schreibt nichts mehr.
+  Die acht Karten des Blattes (`Z_KARTEN`) waren ebenfalls Text in der
+  Anzeige und liegen jetzt bei den Texten.
+
+  Drei Stellen waren mehr als Umzug:
+
+  * **„deine Jahr", „deine Geburtstag".** Die Legende des Rings, die
+    Vorlesefassung der Segmente, der Kasten im Detail und die schmale
+    Liste setzten alle „deine " vor den Namen der eigenen Zahl — und
+    der wechselt das Geschlecht: *der* Geburtstag, *das* Jahr, *der*
+    Ausdruck. Jetzt trägt `Z_LABEL` das Geschlecht, `B_BEUGE` aus
+    `kern/bahn-daten.js` bildet die Form, und `bahn-daten.js` liegt
+    mit auf der Seite. Dieselbe Entscheidung wie bei `mond-app.js` am
+    2026-11-16.
+  * **Die drei Meisterzahlen lasen eine fremde Variable.** Im Ring
+    hing der Zusatz „deine Zahl" der Kreise in der Mitte an `hat` aus
+    der Segmentschleife darüber — nach ihrem Durchlauf steht dort
+    `9 === Lebenszahl`. Wer die Lebenszahl 9 hatte, bekam alle drei
+    Meisterzahlen als eigene vorgelesen; wer die 11 hatte, seine
+    eigene nicht. Genau `REGELN.md` 6f: Die Sperre saß an der
+    Schleifenvariablen, der Satz hängt aber an der Zahl.
+    Die dauerhafte Antwort ist keine Reparatur dieser Zeile, sondern
+    eine Prüfung am gezeichneten Ring: Die goldene Marke, das
+    Vorlesewort und die Legende sind drei Auskünfte über dieselbe
+    Sache und werden gegeneinander gehalten — an vier erfundenen
+    Profilen, je mit und ohne Namen, und eines davon hat eine
+    Meisterzahl als Lebenszahl, sonst bleiben die Kreise in der Mitte
+    ungeprüft. Die Vergleichsregel steht in `_ring_tadel` mit festen
+    Beispielen (`REGELN.md` 6e), darunter dem Fehler von heute. Dass
+    sie greift, ist mit wiederhergestelltem Fehler nachgewiesen: fünf
+    Meldungen.
+  * **Eine Schule hieß zweierlei.** Auf dem Knopf stand
+    „Chäldäisch", dreimal im Körper „chäldäische Schule", in den
+    Daten „Chaldäische Numerologie". `bau-zahlen.py` hält jetzt jedes
+    Wort auf „-äisch" in Körper und Vorlagen gegen die Schreibweisen,
+    die `zahlen-daten.js` kennt — „hebräisch" geht durch, weil es
+    dort steht, eine erfundene Schreibung nicht.
+
+  Mitgewandert, weil Teil derselben Sache: Die Anzeige trug ihre
+  Farben und Schriftgrößen in `style`-Attributen mit sich; sie stehen
+  jetzt in `zahlen-stil.css`. Die Farbe einer Zahl bleibt in der
+  Vorlage — die kommt aus den Daten.
+
+  Gelockert wurde eine Sperre in `rituale/pruefwerk.py`: Ein
+  Auswahlausdruck wie `.z-zelle[data-z]` galt als Satz, weil die Regel
+  zwischen zwei Auswahlzeichen ein Leerzeichen verlangte. Jetzt dürfen
+  sie aneinanderhängen; dass ein deutscher Satz dadurch nicht
+  durchkommt, halten zwei neue feste Beispiele fest.
+
+  Der angezeigte Text ist über beide Tafeln, fünf Stufen und zwei
+  Profile derselbe wie vorher — bis auf vier Zeilen: die zwei
+  berichtigten Beugungen und die zwei berichtigten Schulnamen.
 
 * **2026-11-16** · `mond-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 55, aus 34 und 38; dazu Aufgabe 80) — die elfte von
