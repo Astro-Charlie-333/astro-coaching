@@ -161,7 +161,9 @@ else:
 # Ohne Geburtsdaten ist das ganze Werkzeug leer. Solange „Profile" im
 # Menü stand, war der Weg dahin selbstverständlich; jetzt hängt er an
 # einem Hinweis im Text, und der muss auf den beiden Seiten stehen, auf
-# denen jemand ohne Profil landet.
+# denen jemand ohne Profil landet. Dass der Weg auch MIT Profil sichtbar
+# ist, prüfen die Rauchproben in bau-heute.py und bau-ich.py (17.11.:
+# vorher gab es ihn nur im Leerzustand, und Mandy fand keinen).
 ohne_weg = []
 for name in ['index.html', 'uebersicht.html']:
     p = wiki / name

@@ -173,6 +173,8 @@
 .ich-kopf{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:40px;
  align-items:center;margin:34px 0 30px;}
 .ich-wer{font-size:13px;color:var(--leise,#6B6259);margin:14px 0 0;}
+.ich-profil{font-size:13px;margin:6px 0 0;}
+.ich-profil a{color:var(--messing,#9A7235);}
 .ich-name{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:300;
  font-size:clamp(14.5px,1.5vw,16px);letter-spacing:.01em;color:var(--messing,#9A7235);
  margin:0 0 10px;}

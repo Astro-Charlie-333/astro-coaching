@@ -443,6 +443,7 @@ await p.addInitScript(()=>localStorage.setItem('ac_profile_v1',JSON.stringify(
   y:1980,mo:7,d:15,h:14,mi:20,tz:1,lat:52.52,lon:13.405,ort:'Berlin',
   wlat:52.52,wlon:13.405,wort:'Berlin',eigen:true,readings:[]}]})));
 await p.goto('file://ZIEL'); await p.waitForTimeout(900);
+if(!(await p.evaluate(()=>[...document.querySelectorAll('a[href="profile.html"]')].some(a=>a.checkVisibility())))) f.push('mit Profil kein sichtbarer Weg zu den Profilen');
 const vor=await p.evaluate(()=>({
   haeuser:document.querySelectorAll('.hz').length,
   radfelder:document.querySelectorAll('.kr-haus').length,

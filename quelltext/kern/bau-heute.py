@@ -403,6 +403,7 @@ await p.addInitScript(()=>{localStorage.removeItem('ac_kap_heute');
   y:1980,mo:7,d:15,h:14,mi:20,tz:1,lat:52.52,lon:13.405,ort:'Berlin',
   wlat:52.52,wlon:13.405,wort:'Berlin',eigen:true,readings:[]}]}));});
 await p.goto('file://ZIEL'); await p.waitForTimeout(1500);
+if(!(await p.evaluate(()=>[...document.querySelectorAll('a[href="profile.html"]')].some(a=>a.checkVisibility())))) f.push('mit Profil kein sichtbarer Weg zu den Profilen');
 const v=await p.evaluate(()=>({
   gruss:(document.getElementById('htgruss')||{}).textContent.trim(),
   satz:(document.getElementById('htsatz')||{}).textContent.trim().length,
