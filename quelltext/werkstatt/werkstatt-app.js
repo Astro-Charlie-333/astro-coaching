@@ -300,14 +300,59 @@
     dokumente(offen);
   });
 
+  /* Readings: ablegen, ansehen, als Datei, löschen. Beschriftungen
+     und die Vorlage der Datei stehen im Körper (data-… und <template>),
+     damit diese Anzeige keinen Satz dazubekommt. */
   function readings(p){
-    var r = AC_P.readings(p.id);
+    var r = AC_P.readings(p.id), box = el('wkreadings'), d = box.dataset;
     el('wkreadingsteil').hidden = false;
-    el('wkreadings').innerHTML = r.length ? r.map(function(x){
+    box.innerHTML = r.length ? r.map(function(x){
       return '<div class="wk-r1"><div class="t">' + esc(x.titel) + '</div>'
-        + '<div class="d">' + esc(x.datum || '') + '</div></div>';
-    }).join('') : '<div class="wk-nichts">Noch keine Readings abgelegt.</div>';
+        + '<div class="d">' + esc(x.datum || '') + '</div>'
+        + '<div class="wk-r-kn">'
+        + '<button type="button" data-r="sehen" data-i="' + esc(x.id) + '">' + esc(d.ansehen) + '</button>'
+        + '<button type="button" data-r="datei" data-i="' + esc(x.id) + '">' + esc(d.datei) + '</button>'
+        + '<button type="button" class="weg" data-r="weg" data-i="' + esc(x.id) + '">' + esc(d.weg) + '</button>'
+        + '</div></div>';
+    }).join('') : '<div class="wk-nichts">' + esc(d.leer) + '</div>';
   }
+  function readingSeite(p, x){
+    var txt = x.text || '';
+    var inhalt = /<[a-z][\s\S]*>/i.test(txt) ? txt
+      : '<p>' + esc(txt).split(/\n\s*\n/).join('</p><p>').replace(/\n/g,'<br>') + '</p>';
+    return el('wkrvorlage').innerHTML
+      .split('{titel}').join(esc(x.titel)).split('{datum}').join(esc(x.datum || ''))
+      .split('{fuss}').join(el('wkrfuss').innerHTML).replace('{text}', inhalt);
+  }
+  el('wkreadings').addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-r]'); if(!b || !offen) return;
+    var art = b.getAttribute('data-r'), id = b.getAttribute('data-i');
+    var x = AC_P.readings(offen.id).filter(function(z){ return z.id===id; })[0];
+    if(!x) return;
+    if(art === 'weg'){
+      if(confirm(el('wkrfrage').dataset.frage)){ AC_P.readingLoeschen(offen.id, id); readings(offen); }
+      return;
+    }
+    var html = readingSeite(offen, x);
+    if(art === 'sehen'){
+      var w = window.open('', '_blank');
+      if(w){ w.document.write(html); w.document.close(); }
+      return;
+    }
+    var blob = new Blob([html], {type:'text/html'}), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (x.titel || 'reading').toLowerCase().replace(/[^a-z0-9äöü]+/g,'-').replace(/^-|-$/g,'') + '.html';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 200);
+  });
+  el('wkrneu').addEventListener('submit', function(ev){
+    ev.preventDefault(); if(!offen) return;
+    var t = el('wkrt').value.trim(), x = el('wkrx').value;
+    if(!t && !x.trim()) return;
+    AC_P.readingHinzu(offen.id, t || 'Reading', x);
+    el('wkrt').value = ''; el('wkrx').value = '';
+    readings(offen);
+  });
 
   var merkUhr = null;
   function merk(p){
@@ -334,5 +379,66 @@
     window.scrollTo(0,0);
   });
 
+  /* ── Anlegen, bearbeiten, löschen ──────────────────────────────
+     Seit dem 18.11. legt die Praxis ihre Klient*innen selbst an. Das
+     Formular ist dasselbe wie auf „Mein Profil" (profil-formular.js). */
+  var form = el('wkform'), ausDetail = null;
+  function formAuf(auf){
+    form.hidden = !auf; el('wkneu').setAttribute('aria-expanded', auf ? 'true' : 'false');
+  }
+  AC_FORM.einbauen(form, {kuerzel:true, notiz:true, eigen:true, eigenVorgabe:false,
+    titelNeu:form.dataset.titelNeu, titelBearb:form.dataset.titelBearb, knopf:form.dataset.knopf,
+    nachSpeichern:function(p){
+      formAuf(false); zeichneListe();
+      if(ausDetail){ var z = ausDetail; ausDetail = null; oeffne(z); }
+      else oeffne(p.id);
+    }});
+  el('wkneu').addEventListener('click', function(){
+    ausDetail = null; AC_FORM.leeren(); formAuf(form.hidden);
+    if(!form.hidden) el('pfname').focus();
+  });
+  el('pfabbrechen').addEventListener('click', function(){
+    formAuf(false);
+    if(ausDetail){ var z = ausDetail; ausDetail = null; oeffne(z); }
+  });
+  el('wkbearb').addEventListener('click', function(){
+    if(!offen) return;
+    ausDetail = offen.id;
+    el('wkdetail').hidden = true; el('wkliste').hidden = false;
+    formAuf(true); AC_FORM.laden(offen.id);
+  });
+  el('wkloeschen').addEventListener('click', function(){
+    if(!offen || !confirm(el('wkloeschen').dataset.frage)) return;
+    AC_P.loesche(offen.id); offen = null;
+    el('wkdetail').hidden = true; el('wkliste').hidden = false;
+    zeichneListe(); window.scrollTo(0,0);
+  });
+
+  /* Die Leiste springt zu Abschnitten der Liste. Steht gerade eine
+     Einzelansicht offen, geht sie dafür zu. */
+  function sprung(){
+    var id = location.hash.slice(1);
+    if(!id || !document.getElementById(id) || el('wkliste').contains(document.getElementById(id)) === false) return;
+    if(!el('wkdetail').hidden){ offen = null; el('wkdetail').hidden = true; el('wkliste').hidden = false; zeichneListe(); }
+    [].slice.call(document.querySelector('.sk-nav').querySelectorAll('a')).forEach(function(a){
+      a.classList.toggle('ist', a.getAttribute('href').split('#')[1] === id); });
+    setTimeout(function(){ document.getElementById(id).scrollIntoView({block:'start'}); }, 0);
+  }
+  window.addEventListener('hashchange', sprung);
+
+  /* Sichern */
+  el('wkexport').addEventListener('click', function(){ AC_P.exportieren(); });
+  el('wkimportbtn').addEventListener('click', function(){ el('wkimportfile').click(); });
+  el('wkimportfile').addEventListener('change', function(ev){
+    var f = ev.target.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try{ var n = AC_P.importieren(r.result, false); el('wkiomeldung').textContent = '+' + n; zeichneListe(); }
+      catch(e){ el('wkiomeldung').textContent = '×'; }
+    };
+    r.readAsText(f); ev.target.value = '';
+  });
+
   zeichneListe();
+  sprung();
 })();

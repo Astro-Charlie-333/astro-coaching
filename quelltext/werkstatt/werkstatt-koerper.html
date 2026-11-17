@@ -1,9 +1,13 @@
-<div class="ac-leiste"><div class="ac-leiste-inner">
-<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
-<a class="ac-marke" href="werkstatt.html">Werkstatt</a>
-<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+<!-- Die Leiste der Praxis. Eigener Look, eigene Ziele; kein ac-nav, damit
+     die vier Türen von Astro-Charlie hier nicht stehen (Mandy, 17.11.:
+     zwei Bereiche, nicht einer). Dieselbe Leiste steht im Baukasten. -->
+<div class="sk-leiste"><div class="sk-leiste-in">
+<a class="sk-marke" href="praxis.html"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#E3B48E" stroke-width="1"/>
+<path d="M4.5 13.5c2 3 13 3 15 0" fill="none" stroke="#C9D4CC" stroke-width="1"/>
+<circle cx="12" cy="16.6" r="2.4" fill="#E3B48E"/></svg>Schwerkraft<span>Praxis</span></a>
+<nav class="sk-nav" aria-label="Praxis"><a href="praxis.html#leute">Klient*innen</a><a href="praxis.html#werkzeuge">Werkzeuge</a><a href="praxis.html#handbuch">Handbuch</a><a href="praxis.html#aussen">Nach au&szlig;en</a></nav>
+<a class="sk-raus" href="index.html">Astro-Charlie &#8599;</a>
 </div></div>
 
 <div class="wk-wrap">
@@ -11,34 +15,93 @@
 <!-- Die Liste. Sie ist die Startansicht; ein Klick oeffnet einen Menschen. -->
 <div id="wkliste">
   <div class="wk-kopf">
-    <div class="wk-eyebrow">Nur f&uuml;r dich &middot; nichts davon verl&auml;sst diesen Browser</div>
-    <h1 class="wk-h1">Deine Leute</h1>
-    <p class="wk-lede" id="wkanzahl"></p>
+    <div class="wk-eyebrow">Schwerkraft &middot; nur f&uuml;r dich &middot; nichts davon verl&auml;sst diesen Browser</div>
+    <h1 class="wk-h1">Deine Praxis</h1>
+    <p class="wk-lede">Deine Klient*innen, deine Werkzeuge, dein Handbuch und was nach au&szlig;en geht &mdash; an einem Ort. Astro-Charlie ist das Werkzeug f&uuml;r alle; das hier ist dein Arbeitsplatz.</p>
   </div>
-  <div class="wk-karten" id="wkkarten"></div>
-  <div class="wk-leer" id="wkleer" hidden>
-    <b>Noch niemand angelegt</b>
-    <p>Menschen legst du unter <a href="profile.html">Profile</a> an &mdash;
-    mit Geburtsdatum, Uhrzeit und Ort. Danach stehen sie hier.</p>
-  </div>
-  <!-- Deine Arbeitsseiten. Sie stehen nur hier, nicht in der Bibliothek
-       (pruefe-alles.py hält das fest): Material für dich, nicht für
-       Besucherinnen. -->
-  <nav class="wk-arbeit" aria-labelledby="wk-h-arbeit">
-    <h2 class="wk-h2" id="wk-h-arbeit">Deine Arbeitsseiten</h2>
+
+  <section class="wk-teil" id="leute" aria-labelledby="wk-h-leute">
+    <div class="wk-teilkopf">
+      <h2 class="wk-h2" id="wk-h-leute">Klient*innen</h2>
+      <button type="button" class="wk-neu" id="wkneu" aria-expanded="false" aria-controls="wkform">+ Klient*in anlegen</button>
+    </div>
+    <p class="wk-sub" id="wkanzahl"></p>
+    <div class="wk-form" id="wkform" hidden data-titel-neu="Klient*in anlegen" data-titel-bearb="Klient*in bearbeiten" data-knopf="Speichern"></div>
+    <div class="wk-karten" id="wkkarten"></div>
+    <div class="wk-leer" id="wkleer" hidden>
+      <b>Noch niemand angelegt</b>
+      <p>Mit &bdquo;Klient*in anlegen&ldquo; tr&auml;gst du Geburtsdatum, Uhrzeit und Ort ein.
+      Danach steht der Mensch hier, mit allem, was du zu ihm sammelst.</p>
+    </div>
+  </section>
+  <!-- Werkzeuge, Handbuch, nach außen. Die Arbeitsseiten stehen nur hier,
+       nicht in der Bibliothek (pruefe-alles.py hält das fest). -->
+  <section class="wk-teil" id="werkzeuge" aria-labelledby="wk-h-werkzeuge">
+    <h2 class="wk-h2" id="wk-h-werkzeuge">Werkzeuge</h2>
+    <p class="wk-sub">Rechnen mit dem Profil, das gerade aktiv ist. Aus einer Klient*in heraus setzt jeder Sprung das Profil vorher richtig.</p>
     <div class="wk-arbeit-l">
-      <a href="baukasten.html"><b>Baukasten</b><span>Routinen und Checklisten f&uuml;r einen Menschen erstellen und zuweisen</span></a>
+      <a href="baukasten.html"><b>Baukasten</b><span>Routinen, Checklisten und Arztbausteine passend zum Bild erstellen und zuweisen</span></a>
+      <a href="begleitung.html"><b>Die Begleitung</b><span>Vom ersten Gespr&auml;ch bis zum Abschluss, mit den Fragen aus dem Bild</span></a>
+      <a href="dossier.html"><b>Dossier</b><span>Kernthemen, was jemand braucht, wo es klemmt, Gespr&auml;chseinstiege</span></a>
+      <a href="faden.html"><b>Roter Faden</b><span>Welches Thema zuerst, und ein Aufbau &uuml;ber f&uuml;nf Gespr&auml;che</span></a>
+      <a href="monatsbericht.html"><b>Monatsbericht</b><span>Fertiger Text pro Mensch und Monat zum Verschicken</span></a>
+      <a href="briefing.html"><b>Reading-Briefing</b><span>Die Vorbereitung auf ein Reading auf einer Seite</span></a>
+      <a href="beziehung.html"><b>Zwischen euch beiden</b><span>Zwei Bilder &uuml;bereinander: Seelenebene, Marker, chinesische Ebene</span></a>
+    </div>
+  </section>
+
+  <section class="wk-teil" id="handbuch" aria-labelledby="wk-h-handbuch">
+    <h2 class="wk-h2" id="wk-h-handbuch">Handbuch</h2>
+    <p class="wk-sub">Wie du arbeitest, wo deine Grenzen sind und welche Fragen tragen.</p>
+    <div class="wk-arbeit-l">
+      <a href="haltung.html"><b>Haltung &amp; Methode</b><span>Das methodische R&uuml;ckgrat hinter allem</span></a>
+      <a href="haltung-ethik.html"><b>Haltung &amp; Ethik</b><span>Was du sagst, und was nicht</span></a>
+      <a href="grenzen.html"><b>Wann du nicht deutest</b><span>Die Grenzen der Arbeit und wann du abgibst</span></a>
+      <a href="methoden.html"><b>Methoden f&uuml;r den Moment</b><span>Was in einer Sitzung konkret hilft</span></a>
+      <a href="coaching.html"><b>Coaching &amp; Astrologie</b><span>Wie beides zusammengeht</span></a>
+      <a href="coaching-verbinden.html"><b>Astrologie &amp; Coaching verbinden</b><span>Vom Bild zur Frage</span></a>
+      <a href="reading-ablauf.html"><b>Der Reading-Ablauf</b><span>Vorher, w&auml;hrenddessen, danach</span></a>
+      <a href="reading-gespraech.html"><b>Ein Reading als Gespr&auml;ch</b><span>Fragen statt Vortrag</span></a>
+      <a href="fragen-schatzkiste.html"><b>Die Fragen-Schatzkiste</b><span>Fragen, die &ouml;ffnen</span></a>
+      <a href="klientinnen-fragen.html"><b>H&auml;ufige Klient*innen-Fragen</b><span>Und wie du darauf antwortest</span></a>
+    </div>
+  </section>
+
+  <section class="wk-teil" id="aussen" aria-labelledby="wk-h-aussen">
+    <h2 class="wk-h2" id="wk-h-aussen">Nach au&szlig;en</h2>
+    <p class="wk-sub">Was Klient*innen von Schwerkraft sehen, und deine Entw&uuml;rfe daf&uuml;r.</p>
+    <div class="wk-arbeit-l">
+      <a href="start.html" class="wk-oeff"><b>Deine Startseite</b><span>Schwerkraft, wie alle sie sehen: Angebote, Ablauf, Kontakt</span></a>
       <a href="angebote-struktur.html"><b>Deine Angebote</b><span>Formate und Preise strukturieren</span></a>
       <a href="ueber-mich-vorlage.html"><b>Deine &Uuml;ber-mich-Seite</b><span>Vorlage f&uuml;r die eigene Darstellung</span></a>
       <a href="learning-seite.html"><b>Die Learning-Seite</b><span>Aus eigenen Erkenntnissen ein Format machen</span></a>
-      <a href="konzept-plattform.html"><b>Konzept Klientinnen-Plattform</b><span>F&uuml;r den Moment, wenn Klientinnen danach fragen</span></a>
+      <a href="konzept-plattform.html"><b>Konzept Klient*innen-Plattform</b><span>F&uuml;r den Moment, wenn Klient*innen danach fragen</span></a>
     </div>
-  </nav>
+  </section>
+
+  <section class="wk-teil" id="sichern" aria-labelledby="wk-h-sichern">
+    <h2 class="wk-h2" id="wk-h-sichern">Sichern und Datenschutz</h2>
+    <p class="wk-sub">Alles liegt nur in diesem Browser. Wechselst du das Ger&auml;t oder l&ouml;schst du den Speicher, ist es weg &mdash; lade dir deshalb regelm&auml;&szlig;ig eine Sicherung herunter.</p>
+    <div class="wk-knoepfe">
+      <button type="button" class="wk-kn" id="wkexport">Sicherung herunterladen</button>
+      <button type="button" class="wk-kn" id="wkimportbtn">Sicherung einspielen</button>
+      <input type="file" id="wkimportfile" accept="application/json" hidden>
+      <span class="wk-meldung" id="wkiomeldung" role="status"></span>
+    </div>
+    <p class="wk-hinweis"><b>Zum Datenschutz:</b> Dass die Daten nur lokal liegen, ist technisch der sauberste Weg &mdash; es geht nichts an Dritte. Trotzdem verarbeitest du personenbezogene Daten: Geburtsdatum, Uhrzeit und Ort sind identifizierend. Du brauchst eine Einwilligung deiner Klient*innen und einen Absatz in deiner Datenschutzerkl&auml;rung. Das K&uuml;rzel-Feld hilft: Trag als Namen nur ein, was du wirklich brauchst.</p>
+  </section>
 </div>
 
 <!-- Die Einzelansicht. Alles zu einem Menschen auf einem Blatt. -->
 <div id="wkdetail" hidden>
-  <a class="wk-zurueck" href="#" id="wkzurueck">&larr; Alle</a>
+  <div class="wk-detailkopf">
+    <a class="wk-zurueck" href="#" id="wkzurueck">&larr; Alle Klient*innen</a>
+    <span class="wk-detailknoepfe">
+      <button type="button" class="wk-kn klein" id="wkbearb">Bearbeiten</button>
+      <button type="button" class="wk-kn klein warn" id="wkloeschen"
+        data-frage="Diesen Menschen mit allen Notizen, Readings und Dokumenten l&ouml;schen? Das l&auml;sst sich nicht r&uuml;ckg&auml;ngig machen.">L&ouml;schen</button>
+    </span>
+  </div>
 
   <div class="wk-kopf">
     <div class="wk-eyebrow" id="wkgeb"></div>
@@ -84,7 +147,22 @@
   <!-- Readings aus dem Profil -->
   <section class="wk-ab" id="wkreadingsteil">
     <h2 class="wk-h2">Readings</h2>
-    <div class="wk-readings" id="wkreadings"></div>
+    <p class="wk-sub">Fertige Readings f&uuml;r diesen Menschen. Text oder HTML einf&uuml;gen; &bdquo;Als Datei&ldquo; macht daraus eine Seite zum Verschicken.</p>
+    <div class="wk-readings" id="wkreadings" data-ansehen="Ansehen" data-datei="Als Datei" data-weg="L&ouml;schen" data-leer="Noch keine Readings abgelegt."></div>
+    <form class="wk-rneu" id="wkrneu">
+      <input type="text" id="wkrt" placeholder="Titel, z. B. Reading November" maxlength="90">
+      <textarea id="wkrx" rows="4" placeholder="Text einf&uuml;gen &mdash; auch HTML m&ouml;glich"></textarea>
+      <button type="submit">Reading ablegen</button>
+    </form>
+    <p class="wk-hidden" id="wkrfrage" hidden data-frage="Dieses Reading l&ouml;schen?"></p>
+    <template id="wkrvorlage"><!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>{titel}</title>
+<style>body{margin:0;background:#F7F5F0;color:#1D2326;font-family:"DM Sans",system-ui,sans-serif;font-size:17px;line-height:1.68;}
+.w{max-width:720px;margin:0 auto;padding:40px 22px 80px;}h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(30px,7vw,44px);line-height:1.08;color:#24382F;margin:0 0 6px;}
+h2{font-family:Georgia,serif;font-weight:400;font-size:23px;margin:34px 0 8px;}p{max-width:64ch;}
+.kopf{font-size:13px;color:#5E625E;margin-bottom:26px;}.fuss{margin-top:44px;padding-top:18px;border-top:1px solid #DFDBD2;font-size:13px;color:#5E625E;line-height:1.6;}</style>
+</head><body><div class="w"><h1>{titel}</h1><div class="kopf">{datum}</div>{text}<div class="fuss">{fuss}</div></div></body></html></template>
+    <p class="wk-hidden" id="wkrfuss" hidden>Ein Geburtsbild beschreibt Muster und M&ouml;glichkeiten &mdash; es sagt nicht, was passieren wird. Bei Fragen zu Gesundheit, Recht oder Geld geh&ouml;rt die Antwort zu einer Fachperson.</p>
   </section>
 
   <!-- Freie Notiz -->
@@ -99,11 +177,9 @@
 </div>
 
 <div class="wk-fuss">
-  <p>Diese Seite steht in keinem Men&uuml;. Alles, was du hier siehst, liegt
-  im Speicher dieses Browsers &mdash; nicht auf einem Server und nicht im
-  Projekt. Wenn du den Browser wechselst oder Daten l&ouml;schst, ist es weg.
-  Unter <a href="profile.html">Profile</a> kannst du alles aus- und wieder
-  einlesen.</p>
+  <p>Diese Praxis steht in keinem Men&uuml; von Astro-Charlie. Alles, was du hier
+  siehst, liegt im Speicher dieses Browsers &mdash; nicht auf einem Server und nicht
+  im Projekt. Speichere dir die Seite als Lesezeichen oder auf dem Homescreen.</p>
 </div>
 
 </div>

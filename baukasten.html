@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Baukasten &middot; Werkstatt &middot; Astro-Charlie</title>
+<title>Baukasten &middot; Praxis &middot; Schwerkraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <style>
@@ -112,6 +112,10 @@ a{color:var(--nacht);}
 .ac-nav a:hover::after{transform:scaleX(1);}
 .ac-nav a.ist{color:var(--nacht);background:none;font-weight:500;}
 .ac-nav a.ist::after{transform:scaleX(1);background:var(--messing);height:2px;}
+.ac-ich{flex:none;margin-left:6px;display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:13px;color:var(--nacht);text-decoration:none;border:1px solid var(--linie);border-radius:999px;padding:6px 13px 6px 11px;white-space:nowrap;}
+.ac-ich::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--messing);}
+.ac-ich:hover{border-color:var(--messing);}
+.ac-ich.ist{background:var(--nacht);border-color:var(--nacht);color:#fff;}
 @media(max-width:700px){
  .ac-leiste-inner{padding:13px 18px;gap:9px;}
  .ac-marke{font-size:17px;}
@@ -127,6 +131,8 @@ a{color:var(--nacht);}
  .ac-leiste-inner{flex-wrap:wrap;row-gap:3px;padding:12px 16px 7px;}
  .ac-marke{white-space:nowrap;}
  .ac-nav{margin-left:0;width:100%;gap:1px;flex-wrap:nowrap;}
+.ac-ich{order:2;margin-left:auto;padding:4px 11px 4px 9px;font-size:12.5px;}
+.ac-nav{order:3;}
  .ac-nav a{padding:6px 10px;font-size:13.5px;}
  .ac-nav a:first-child{padding-left:0;}
  .ac-nav a::after{left:10px;right:10px;}
@@ -135,72 +141,119 @@ a{color:var(--nacht);}
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
 
+/* ── Schwerkraft · die Praxis ───────────────────────────────────
+   Mandy am 17.11.: „ich brauche einen bereich in dem ich alleine
+   arbeiten kann der mit schwerkraft verbunden ist und der andere teil
+   astro charlie ist dann das tool und wissensbereich für User."
+
+   Eigener Look, damit sofort klar ist, wo man ist: Stein statt Creme,
+   Moos statt Nachtblau, Kupfer statt Messing. Dieselben Schriften,
+   damit es eine Familie bleibt. Die Variablen überschreiben die von
+   basis.css, darum wirkt der Look auch auf alles, was darauf aufbaut.
+   Eingebunden von praxis.html und baukasten.html (inline beim Bauen). */
+:root{
+  --bg:#F2F0EB; --creme:#F2F0EB; --papier:#FBFAF7; --tinte:#1D2326; --leise:#5E625E;
+  --linie:#DFDBD2; --linie-stark:#CFC9BD;
+  --nacht:#24382F; --nacht-bg:#E4EAE5;
+  --messing:#A3623A; --messing-bg:#F1E5D9;
+  --teal:#3B6656; --rost:#A3503A;
+  --sk-moos:#24382F; --sk-moos-tief:#1A2A23; --sk-kupfer:#A3623A; --sk-kupfer-hell:#E3B48E;
+}
+body{background:var(--bg);}
+
+.sk-leiste{position:sticky;top:0;z-index:20;background:var(--sk-moos);color:#E6ECE7;
+  border-bottom:1px solid var(--sk-moos-tief);}
+.sk-leiste-in{max-width:1020px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.sk-marke{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:#fff;
+  font-family:var(--serif);font-size:19px;letter-spacing:-.01em;line-height:1;white-space:nowrap;}
+.sk-marke svg{flex:none;}
+.sk-marke span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--sk-kupfer-hell);border:1px solid rgba(227,180,142,.45);border-radius:999px;padding:3px 8px 2px;}
+.sk-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;}
+.sk-nav a{font-family:var(--sans);font-size:14px;color:#C9D4CC;text-decoration:none;padding:8px 12px;border-radius:8px;}
+.sk-nav a:hover{color:#fff;background:rgba(255,255,255,.07);}
+.sk-nav a.ist{color:#fff;box-shadow:inset 0 -2px 0 var(--sk-kupfer-hell);border-radius:0;}
+.sk-raus{font-family:var(--sans);font-size:12.5px;color:var(--sk-moos);background:var(--sk-kupfer-hell);
+  text-decoration:none;border-radius:999px;padding:6px 12px;white-space:nowrap;}
+.sk-raus:hover{background:#fff;}
+@media(max-width:760px){
+  .sk-leiste-in{padding:10px 16px 6px;gap:6px 10px;}
+  .sk-raus{margin-left:auto;}
+  .sk-nav{order:3;width:100%;margin-left:-8px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+  .sk-nav::-webkit-scrollbar{display:none;}
+  .sk-nav a{padding:7px 8px;font-size:13px;white-space:nowrap;}
+}
+@media print{.sk-leiste{display:none;}}
+
 /* Baukasten. Werkstatt-Ton: ruhig, Arbeitsfläche, nummerierte Schritte. */
 .bk-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
 .bk-kopf{padding:48px 0 4px;display:grid;gap:12px}
-.bk-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
-.bk-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.2rem);line-height:1.08;color:#2E3A5C;margin:0}
+.bk-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--messing)}
+.bk-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.2rem);line-height:1.08;color:var(--nacht);margin:0}
 .bk-lede{font-size:1.05rem;line-height:1.6;max-width:62ch;margin:0}
 .bk-zurueck{margin:0;font-size:.92rem}
-.bk-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.5rem;color:#2E3A5C;margin:0;display:flex;align-items:center;gap:10px}
-.bk-h2 span{width:30px;height:30px;border-radius:50%;background:#2E3A5C;color:#FCF7EF;display:grid;place-items:center;font-size:1rem}
-.bk-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.bk-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.5rem;color:var(--nacht);margin:0;display:flex;align-items:center;gap:10px}
+.bk-h2 span{width:30px;height:30px;border-radius:50%;background:var(--nacht);color:var(--bg);display:grid;place-items:center;font-size:1rem}
+.bk-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:var(--nacht);margin:0}
 .bk-teil{padding-top:40px;display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
 .bk-teil>*{min-width:0}
-.bk-wrap a{color:#2E3A5C}
-.bk-lab{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#6B6259}
-.bk-wrap select{font:inherit;padding:10px 12px;border:1px solid #DDD0BC;border-radius:10px;background:#FFFDFA;max-width:420px;width:100%}
-.bk-hinweis{margin:0;background:#FBEFE6;border-left:3px solid #A05A3A;border-radius:10px;padding:12px 14px}
-.bk-leise{margin:0;color:#6B6259;font-size:.92rem;line-height:1.55}
+.bk-wrap a{color:var(--nacht)}
+.bk-lab{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--leise)}
+.bk-wrap select{font:inherit;padding:10px 12px;border:1px solid var(--linie-stark);border-radius:10px;background:var(--papier);max-width:420px;width:100%}
+.bk-hinweis{margin:0;background:#FBEFE6;border-left:3px solid var(--rost);border-radius:10px;padding:12px 14px}
+.bk-leise{margin:0;color:var(--leise);font-size:.92rem;line-height:1.55}
 .bk-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
-.bk-karte{font:inherit;text-align:left;cursor:pointer;background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;gap:6px;color:#231F1A}
-.bk-karte b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:#2E3A5C}
-.bk-karte span{font-size:.9rem;color:#6B6259;line-height:1.5}
-.bk-karte[aria-pressed=true]{border:2px solid #2E3A5C;padding:15px;background:#F5ECDD}
+.bk-karte{font:inherit;text-align:left;cursor:pointer;background:var(--papier);border:1px solid var(--linie);border-radius:14px;padding:16px;display:grid;gap:6px;color:#231F1A}
+.bk-karte b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:var(--nacht)}
+.bk-karte span{font-size:.9rem;color:var(--leise);line-height:1.5}
+.bk-karte[aria-pressed=true]{border:2px solid var(--nacht);padding:15px;background:#F5ECDD}
 .bk-werk{display:grid;gap:12px}
 .bk-grund{background:#F5ECDD;border-radius:12px;padding:12px 14px;display:grid;gap:6px}
 .bk-grund ul{margin:0;padding-left:1.1em;font-size:.92rem;display:grid;gap:3px}
 .bk-check{display:flex;gap:10px;align-items:center;font-size:.93rem;cursor:pointer}
-.bk-check input{width:18px;height:18px;accent-color:#2E3A5C}
-.bk-rahmen{position:relative;border:1px dashed #DDD0BC;border-radius:16px;overflow:hidden;background:#FCF7EF}
+.bk-check input{width:18px;height:18px;accent-color:var(--nacht)}
+.bk-rahmen{position:relative;border:1px dashed var(--linie-stark);border-radius:16px;overflow:hidden;background:var(--bg)}
 .bk-rahmen iframe{display:block;width:100%;height:900px;border:0}
 .bk-rahmen>.bk-chip{position:absolute;top:10px;right:10px;z-index:1}
-.bk-chip{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;background:#F7EFE1;color:#7A5A27;border:1px solid #E6D3B2}
+.bk-chip{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 9px;background:var(--messing-bg);color:#7A5A27;border:1px solid #E6D3B2}
 .bk-chip-frei{background:#E3EEEA;color:#2E6A61;border-color:#BFD6CE}
 .bk-aktion{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.bk-aktion button{font:inherit;font-weight:600;border-radius:999px;padding:10px 18px;cursor:pointer;border:1px solid #2E3A5C}
-#bkzuweisen{background:#2E3A5C;color:#FCF7EF}
-#bkdatei{background:#FFFDFA;color:#2E3A5C}
+.bk-aktion button{font:inherit;font-weight:600;border-radius:999px;padding:10px 18px;cursor:pointer;border:1px solid var(--nacht)}
+#bkzuweisen{background:var(--nacht);color:var(--bg)}
+#bkdatei{background:var(--papier);color:var(--nacht)}
 #bkstatus{font-size:.9rem;color:#2E6A61}
 .bk-liste{display:grid;gap:8px}
-.bk-zeile{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.bk-zeile{background:var(--papier);border:1px solid var(--linie);border-radius:12px;padding:12px 14px;display:grid;gap:8px}
 .bk-zkopf{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
-.bk-zkopf b{color:#2E3A5C}
-.bk-datum{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#6B6259}
+.bk-zkopf b{color:var(--nacht)}
+.bk-datum{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--leise)}
 .bk-zknoepfe{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.bk-zknoepfe button{font:inherit;font-size:.85rem;border:1px solid #DDD0BC;background:#FCF7EF;border-radius:999px;padding:5px 12px;cursor:pointer;color:#2E3A5C}
-.bk-frage{font-size:.88rem;color:#A05A3A}
-.bk-ehrlich{margin-top:56px;padding:18px 20px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.bk-zknoepfe button{font:inherit;font-size:.85rem;border:1px solid var(--linie-stark);background:var(--bg);border-radius:999px;padding:5px 12px;cursor:pointer;color:var(--nacht)}
+.bk-frage{font-size:.88rem;color:var(--rost)}
+.bk-ehrlich{margin-top:56px;padding:18px 20px;border-radius:14px;background:var(--papier);border:1px solid var(--linie);display:grid;gap:8px;font-size:.93rem;line-height:1.55}
 .bk-ehrlich p{margin:0}
 .bk-wrap [hidden]{display:none!important}
-.bk-wrap button:focus-visible,.bk-wrap select:focus-visible,.bk-wrap a:focus-visible,.bk-check input:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+.bk-wrap button:focus-visible,.bk-wrap select:focus-visible,.bk-wrap a:focus-visible,.bk-check input:focus-visible{outline:2px solid var(--messing);outline-offset:2px}
 </style>
 </head><body>
-<div class="ac-leiste"><div class="ac-leiste-inner">
-<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
-<a class="ac-marke" href="werkstatt.html">Werkstatt</a>
-<nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav>
+<!-- Dieselbe Leiste wie die Praxis (werkstatt-koerper.html); der Baukasten
+     ist ein Werkzeug der Praxis, nicht von Astro-Charlie. -->
+<div class="sk-leiste"><div class="sk-leiste-in">
+<a class="sk-marke" href="praxis.html"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#E3B48E" stroke-width="1"/>
+<path d="M4.5 13.5c2 3 13 3 15 0" fill="none" stroke="#C9D4CC" stroke-width="1"/>
+<circle cx="12" cy="16.6" r="2.4" fill="#E3B48E"/></svg>Schwerkraft<span>Praxis</span></a>
+<nav class="sk-nav" aria-label="Praxis"><a href="praxis.html#leute">Klient*innen</a><a href="praxis.html#werkzeuge" class="ist">Werkzeuge</a><a href="praxis.html#handbuch">Handbuch</a><a href="praxis.html#aussen">Nach au&szlig;en</a></nav>
+<a class="sk-raus" href="index.html">Astro-Charlie &#8599;</a>
 </div></div>
 
 <div class="bk-wrap">
 
 <header class="bk-kopf">
-  <div class="bk-eyebrow">Nur f&uuml;r dich &middot; nichts davon verl&auml;sst diesen Browser</div>
+  <div class="bk-eyebrow">Schwerkraft &middot; nur f&uuml;r dich &middot; nichts davon verl&auml;sst diesen Browser</div>
   <h1 class="bk-h1">Baukasten</h1>
   <p class="bk-lede">W&auml;hle einen Menschen und einen Baustein. Die Seite entsteht aus seinem Geburtsbild, du siehst sie als Entwurf, und erst wenn sie passt, weist du sie zu oder l&auml;dst sie als Datei zum Verschicken herunter.</p>
-  <p class="bk-zurueck"><a href="werkstatt.html">&larr; Zur&uuml;ck zu deinen Leuten</a></p>
+  <p class="bk-zurueck"><a href="praxis.html#leute">&larr; Zur&uuml;ck zu deinen Klient*innen</a></p>
 </header>
 
 <section class="bk-teil" aria-labelledby="bk-h-1">

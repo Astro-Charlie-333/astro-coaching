@@ -125,6 +125,39 @@
 /* Deine Arbeitsseiten */
 .wk-arbeit{margin-top:48px;display:grid;gap:12px}
 .wk-arbeit-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
-.wk-arbeit-l a{display:grid;gap:3px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA;text-decoration:none;color:#2E3A5C}
+.wk-arbeit-l a{display:grid;gap:3px;padding:14px 16px;border:1px solid var(--linie);border-radius:12px;background:var(--papier);text-decoration:none;color:var(--nacht)}
+.wk-arbeit-l a:hover{border-color:var(--messing)}
 .wk-arbeit-l b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem}
 .wk-arbeit-l span{font-size:.86rem;color:#6B6259}
+
+/* ── Die Praxis (18.11.) ───────────────────────────────────────
+   Aus der Werkstatt wurde die Praxis von Schwerkraft: Klient*innen,
+   Werkzeuge, Handbuch, nach außen. Farben kommen aus schwerkraft.css. */
+.wk-teil{margin-top:30px;padding-top:22px;border-top:1px solid var(--linie);scroll-margin-top:80px;}
+.wk-teil:first-of-type{border-top:0;padding-top:4px;}
+.wk-teilkopf{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+.wk-neu{font-family:var(--sans);font-size:14px;background:var(--nacht);color:#fff;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;}
+.wk-neu:hover{background:var(--sk-moos-tief,#1A2A23);}
+.wk-neu[aria-expanded="true"]{background:var(--messing);}
+.wk-form{margin:4px 0 16px;}
+.wk-knoepfe{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 12px;}
+.wk-kn{font-family:var(--sans);font-size:14px;background:none;color:var(--nacht);border:1px solid var(--nacht);border-radius:999px;padding:8px 15px;cursor:pointer;}
+.wk-kn:hover{background:var(--nacht-bg);}
+.wk-kn.klein{font-size:13px;padding:6px 12px;}
+.wk-kn.warn{color:var(--rost);border-color:var(--rost);}
+.wk-kn.warn:hover{background:var(--rost);color:#fff;}
+.wk-meldung{font-size:13.5px;color:var(--leise);}
+.wk-hinweis{font-size:13.8px;line-height:1.6;color:var(--leise);background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:10px;padding:12px 14px;margin:6px 0 0;}
+.wk-hinweis b{color:var(--tinte);}
+.wk-arbeit-l a.wk-oeff{border-color:var(--messing);}
+.wk-arbeit-l a.wk-oeff b::after{content:' \2197';color:var(--messing);}
+.wk-detailkopf{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:24px;}
+.wk-detailkopf .wk-zurueck{margin-top:0;}
+.wk-detailknoepfe{display:flex;gap:6px;}
+.wk-r-kn{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.wk-r-kn button{font-family:var(--sans);font-size:12.5px;background:none;border:1px solid var(--linie-stark);border-radius:999px;padding:4px 11px;cursor:pointer;color:var(--nacht);}
+.wk-r-kn button:hover{background:var(--nacht-bg);}
+.wk-r-kn button.weg{color:var(--rost);border-color:var(--rost);}
+.wk-rneu{display:grid;gap:8px;margin-top:12px;}
+.wk-rneu input,.wk-rneu textarea{width:100%;font:inherit;font-size:14.5px;padding:10px 12px;border:1px solid var(--linie);border-radius:10px;background:var(--papier);color:var(--tinte);}
+.wk-rneu button{justify-self:start;font-family:var(--sans);font-size:14px;background:var(--nacht);color:#fff;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;}

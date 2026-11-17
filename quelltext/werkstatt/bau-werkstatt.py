@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Setzt werkstatt.html zusammen — der Arbeitsplatz je Klient:in.
+"""Setzt praxis.html zusammen — die Praxis von Schwerkraft.
+
+Bis zum 18.11. hieß sie Werkstatt (werkstatt.html leitet weiter).
+Mandy am 17.11.: „ich brauche einen bereich in dem ich alleine arbeiten
+kann der mit schwerkraft verbunden ist". Seitdem: eigener Look
+(schwerkraft.css), eigene Leiste, und Klient*innen werden hier
+angelegt, nicht mehr auf der Profilseite für alle.
+
+Vorher: der Arbeitsplatz je Klient:in.
 
 Mandy am 2.11.: „Brauche da eine Übersicht oder sowas wo ich dann alles
 abrufen kann auf einem Blick zum jeweiligen klient*In."
@@ -35,29 +43,45 @@ app = lies(hier / 'werkstatt-app.js')
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Werkstatt &middot; Astro-Charlie</title>
+<title>Praxis &middot; Schwerkraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="staedte.js"></script>
 <script src="profil.js"></script>
+<script src="profil-formular.js"></script>
 <style>
 """
 
-html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'werkstatt-stil.css')
+html = (kopf + lies(rit / 'basis.css') + "\n" + lies(wiki / 'schwerkraft.css') + "\n"
+        + lies(wiki / 'profil-formular.css') + "\n" + lies(hier / 'werkstatt-stil.css')
         + '</style>\n</head><body>\n'
         + koerper + "\n<script>\n"
         + lies(rit / 'engine.js') + "\n" + app
         + "\n</script>\n</body></html>\n")
 
-ziel = wiki / 'werkstatt.html'
+ziel = wiki / 'praxis.html'
 html = html.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html')
                     .read_text(encoding='utf-8'), 1)
 ziel.write_text(html, encoding='utf-8')
+
+# Die alte Adresse leitet weiter — falls ein Lesezeichen darauf zeigt.
+(wiki / 'werkstatt.html').write_text(
+    '<!DOCTYPE html><html lang="de"><head>' + (hier.parent / 'app' / 'app-kopf.html')
+    .read_text(encoding='utf-8') + '<meta charset="UTF-8">\n'
+    '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+    '<meta name="robots" content="noindex, nofollow">\n'
+    '<title>Praxis &middot; Schwerkraft</title>\n'
+    '<meta http-equiv="refresh" content="0; url=praxis.html">\n'
+    '</head><body style="font-family:system-ui,sans-serif;padding:40px 20px">\n'
+    '<p>Die Werkstatt heißt jetzt <a href="praxis.html">Praxis</a>.</p>\n'
+    '</body></html>\n', encoding='utf-8')
 
 fehler, hinweise = [], []
 
 # ── Die IDs, die das Skript sucht, gibt es auch ──────────────
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
 gesucht = set(re.findall(r"""\bel\(['"]([A-Za-z0-9_-]+)['"]\)""", app))
-fehlt = gesucht - ids
+# Die Felder des Formulars legt profil-formular.js an, nicht der Körper
+fehlt = {i for i in gesucht - ids if not i.startswith('pf')}
 if fehlt:
     fehler.append('Skript sucht IDs, die es nicht gibt: ' + ', '.join(sorted(fehlt)))
 
@@ -97,15 +121,15 @@ for feld in ['name', 'alias', 'ort', 'wort']:
 # und Seiten hinter derselben Tür dürfen zurückführen: der Baukasten
 # (13.11.). Dass der Baukasten seinerseits nirgends öffentlich verlinkt
 # ist, hält Querprüfung 14 in pruefe-alles.py fest.
-HINTER_DER_TUER = {'werkstatt.html', 'baukasten.html'}
+HINTER_DER_TUER = {'praxis.html', 'werkstatt.html', 'baukasten.html'}
 verlinkt = []
 for s in sorted(wiki.glob('*.html')):
     if s.name in HINTER_DER_TUER:
         continue
-    if 'werkstatt.html' in s.read_text(encoding='utf-8', errors='replace'):
+    if re.search(r'["\'](praxis|werkstatt)\.html', s.read_text(encoding='utf-8', errors='replace')):
         verlinkt.append(s.name)
 if verlinkt:
-    fehler.append('die Werkstatt ist verlinkt in: ' + ', '.join(verlinkt[:6])
+    fehler.append('die Praxis ist verlinkt in: ' + ', '.join(verlinkt[:6])
                   + ' — sie soll in keinem Menü stehen')
 
 # ── 3 · Die Seite schreibt nicht in den Begleitungsspeicher ──
@@ -232,7 +256,42 @@ const o=await p2.evaluate(()=>({leer:!document.getElementById('wkleer').hidden,
   text:(document.getElementById('wkleer')||{}).innerText||''}));
 if(o.karten!==0) f.push(o.karten+' Karten, obwohl niemand angelegt ist');
 if(!o.leer) f.push('ohne Profile fehlt der Hinweis, wo man Menschen anlegt');
-if(!/Profile/.test(o.text)) f.push('der Leer-Hinweis sagt nicht, wo es weitergeht');
+if(!/anlegen/.test(o.text)) f.push('der Leer-Hinweis sagt nicht, wo es weitergeht');
+
+/* Eine Klient*in in der Praxis anlegen, ohne die Profilseite */
+await p2.click('#wkneu'); await p2.waitForTimeout(150);
+if(await p2.evaluate(()=>document.getElementById('wkform').hidden)) f.push('das Formular geht nicht auf');
+await p2.fill('#pfname','Probe Drei'); await p2.fill('#pfalias','Klientin 03');
+await p2.fill('#pfdate','1991-05-06'); await p2.fill('#pftime','07:30');
+await p2.type('#pfort','Hamburg',{delay:30}); await p2.waitForTimeout(300);
+const ortKnopf=await p2.$('#pfortliste button'); if(ortKnopf) await ortKnopf.click(); else f.push('die Ortssuche liefert nichts');
+await p2.click('#pfspeichern'); await p2.waitForTimeout(300);
+const neu=await p2.evaluate(()=>({n:AC_P.alle().length, detail:!document.getElementById('wkdetail').hidden,
+  name:(document.getElementById('wkname')||{}).textContent||'', form:document.getElementById('wkform').hidden}));
+if(neu.n!==1) f.push('nach dem Anlegen stehen '+neu.n+' Profile da');
+if(!neu.detail||!/Probe Drei/.test(neu.name)) f.push('nach dem Anlegen öffnet die Einzelansicht nicht');
+/* Ein Reading ablegen und wieder löschen */
+await p2.fill('#wkrt','Reading Probe'); await p2.fill('#wkrx','Ein Satz.');
+await p2.click('#wkrneu button'); await p2.waitForTimeout(200);
+if(await p2.evaluate(()=>document.querySelectorAll('.wk-r1').length)!==1) f.push('das Reading wurde nicht abgelegt');
+p2.once('dialog',d=>d.accept()); await p2.click('.wk-r-kn .weg'); await p2.waitForTimeout(200);
+if(await p2.evaluate(()=>AC_P.readings(AC_P.alle()[0].id).length)!==0) f.push('das Reading wurde nicht gelöscht');
+/* Bearbeiten führt zurück in die Einzelansicht */
+await p2.click('#wkbearb'); await p2.waitForTimeout(200);
+if(await p2.inputValue('#pfname')!=='Probe Drei') f.push('Bearbeiten lädt die Daten nicht');
+await p2.fill('#pfname','Probe Vier'); await p2.click('#pfspeichern'); await p2.waitForTimeout(250);
+if(!/Probe Vier/.test(await p2.textContent('#wkname'))) f.push('nach dem Bearbeiten steht der alte Name da');
+/* Die Leiste springt aus der Einzelansicht in einen Abschnitt */
+await p2.click('.sk-nav a[href$="#handbuch"]'); await p2.waitForTimeout(250);
+if(await p2.evaluate(()=>!document.getElementById('wkdetail').hidden)) f.push('der Sprung aus der Leiste lässt die Einzelansicht offen');
+/* Keine Tür von Astro-Charlie, dafür der Weg zurück */
+const lst=await p2.evaluate(()=>({acnav:!!document.querySelector('.ac-nav'), raus:!!document.querySelector('.sk-raus[href="index.html"]')}));
+if(lst.acnav) f.push('in der Praxis steht die Leiste von Astro-Charlie');
+if(!lst.raus) f.push('der Weg zurück zu Astro-Charlie fehlt');
+/* Löschen */
+await p2.click('.wk-k'); await p2.waitForTimeout(200);
+p2.once('dialog',d=>d.accept()); await p2.click('#wkloeschen'); await p2.waitForTimeout(250);
+if(await p2.evaluate(()=>AC_P.alle().length)!==0) f.push('Löschen hat nicht gelöscht');
 
 console.log(JSON.stringify({fehler:f}));
 await b.close();})();
@@ -249,7 +308,7 @@ try:
 except Exception as e:
     fehler.append('Rauchprobe nicht gelaufen: ' + str(e)[:200])
 finally:
-    pp.unlink(missing_ok=True)
+    pp.unlink(missing_ok=True) if not __import__('os').environ.get('BEHALTEN') else None
 
 for h in hinweise:
     print('      Hinweis: ' + h)
@@ -257,4 +316,4 @@ if fehler:
     for f in fehler:
         print('      FEHLER: ' + f)
     sys.exit(1)
-print(f'      werkstatt.html: {len(html)//1024} KB')
+print(f'      praxis.html: {len(html)//1024} KB')
