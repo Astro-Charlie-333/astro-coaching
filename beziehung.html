@@ -12,6 +12,9 @@
 <title>Zwischen euch beiden &middot; Astro-Charlie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
+<script src="kleine-punkte.js"></script>
+<script src="asteroiden.js"></script>
+<script src="bazi.js"></script>
 <script src="niveau.js"></script>
 <script src="wortwahl.js"></script>
 <style>
@@ -212,6 +215,155 @@ a{color:var(--nacht);}
 .kt-s.hilft .kt-l{color:var(--messing,#9A7235);padding-top:1px;}
 .bz-kt.hart .kt-s.hilft{background:#FBEFE6;}
 .bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#A05A3A);}
+
+/* ── Die Seelenebene ──────────────────────────────────────────
+   Der eine dunkle Block der Seite: das Ergebnis. Alles darunter
+   bleibt hell und ruhig. */
+.bz-seele{background:var(--nacht);color:#E3E7F0;border-radius:20px;padding:24px 22px;margin:18px 0 6px;}
+@media(max-width:620px){.bz-seele{padding:20px 16px;border-radius:16px;margin-left:-4px;margin-right:-4px;}}
+.bz-seele h3{font-family:var(--serif);font-weight:300;font-size:clamp(22px,5vw,28px);color:#fff;margin:4px 0 10px;line-height:1.15;}
+.bs-k,.bs-dl,.bs-l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#E8C98D;}
+.bs-vor{font-size:14.6px;line-height:1.65;color:#C9CFDD;margin:0 0 18px;}
+.bs-haupt{display:grid;gap:3px;border-top:1px solid rgba(232,201,141,.35);padding-top:16px;}
+.bs-name{font-family:var(--serif);font-weight:300;font-size:clamp(34px,9vw,48px);line-height:1.05;color:#fff;letter-spacing:-.01em;}
+.bs-kurz{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:#E8C98D;}
+.bs-neben{font-size:14.4px;line-height:1.6;color:#C9CFDD;margin:12px 0 0;}
+.bs-neben b{color:#fff;font-weight:600;}
+.bs-balken{display:grid;gap:9px;margin:20px 0 8px;}
+.bs-zeile{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:4px 12px;align-items:center;}
+.bs-en{font-size:13.6px;color:#E3E7F0;}
+.bs-zeile.haupt .bs-en{color:#fff;font-weight:600;}
+.bs-bar{height:8px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;}
+.bs-bar i{display:block;height:100%;border-radius:5px;background:#8E9AB8;}
+.bs-zeile.haupt .bs-bar i{background:#E8C98D;}
+.bs-p{grid-column:2;font-size:11.5px;color:#AEB6C8;font-family:'JetBrains Mono',monospace;}
+.bs-hin{font-size:12.6px;line-height:1.55;color:#AEB6C8;margin:4px 0 14px;}
+.bs-dicht{font-size:14.6px;line-height:1.65;background:rgba(255,255,255,.06);border-radius:12px;padding:12px 14px;margin:0 0 18px;}
+.bs-dicht b{color:#E8C98D;font-weight:500;}
+.bs-deut{display:grid;gap:12px;}
+.bs-d p,.bs-frage p{font-size:14.8px;line-height:1.7;margin:4px 0 0;color:#E3E7F0;}
+.bs-frage{border-left:2px solid #E8C98D;padding:2px 0 2px 14px;}
+.bs-frage p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;line-height:1.45;color:#fff;}
+.bs-warum{margin-top:16px;display:grid;gap:8px;}
+.bs-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.bs-chip{font-size:13px;color:#fff;text-decoration:none;border:1px solid rgba(232,201,141,.5);border-radius:14px;padding:5px 11px;}
+.bs-chip:hover{background:rgba(232,201,141,.15);}
+.bs-rolle{font-size:13.8px;line-height:1.6;color:#C9CFDD;margin:14px 0 0;}
+@media(max-width:480px){.bs-zeile{grid-template-columns:1fr;}.bs-p{grid-column:1;}}
+
+/* Doppelrad */
+.bs-radbox{display:grid;gap:10px;justify-items:center;}
+.bs-rad{width:100%;max-width:380px;height:auto;}
+.bs-rad .r-aussen{fill:var(--papier);stroke:var(--linie);}
+.bs-rad .r-ring{fill:none;stroke:var(--linie);}
+.bs-rad .r-mitte{fill:none;stroke:var(--linie);stroke-dasharray:2 4;}
+.bs-rad .r-innen{fill:var(--bg);stroke:var(--linie);}
+.bs-rad .r-strich{stroke:var(--linie);}
+.bs-rad .r-achse{stroke:var(--nacht);stroke-width:.7;opacity:.35;}
+.bs-rad .r-z{font-size:13px;fill:var(--messing);text-anchor:middle;dominant-baseline:central;}
+.bs-rad .r-g{font-size:17px;text-anchor:middle;dominant-baseline:central;}
+.bs-rad .r-g.innen,.bs-rad .r-pkt.innen{fill:var(--nacht);}
+.bs-rad .r-g.aussen,.bs-rad .r-pkt.aussen{fill:var(--messing);}
+.bs-rad .r-l{stroke-width:1.7;opacity:.8;}
+.bs-rad .r-l.eng{stroke:var(--messing);}
+.bs-rad .r-l.weich{stroke:var(--teal);}
+.bs-rad .r-l.hart{stroke:var(--rost);stroke-dasharray:5 3;}
+.bs-leg{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:12.8px;color:var(--leise);}
+.bs-leg span{display:inline-flex;align-items:center;gap:6px;}
+.bs-leg .pk{width:10px;height:10px;border-radius:50%;}
+.bs-leg .pk.innen{background:var(--nacht);} .bs-leg .pk.aussen{background:var(--messing);}
+.bs-leg .ln{width:20px;border-top:2px solid;}
+.bs-leg .ln.eng{border-color:var(--messing);} .bs-leg .ln.weich{border-color:var(--teal);}
+.bs-leg .ln.hart{border-color:var(--rost);border-top-style:dashed;}
+
+/* Marker */
+.bs-marker{display:grid;gap:10px;margin:6px 0 10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));align-items:start;}
+.bs-mk{border:1px solid var(--linie);border-radius:14px;padding:14px 15px;background:var(--papier);scroll-margin-top:70px;}
+.bs-mk.eng{border-top:3px solid var(--messing);}
+.bs-mk.weich{border-top:3px solid var(--teal);}
+.bs-mk.hart{border-top:3px solid var(--rost);}
+.bs-mkopf{display:flex;gap:12px;align-items:flex-start;margin-bottom:6px;}
+.bs-mkopf b{display:block;font-family:var(--serif);font-weight:400;font-size:17.5px;color:var(--nacht);line-height:1.25;}
+.bs-n0{display:block;font-size:12.6px;color:var(--leise);margin-top:2px;}
+.bs-dots{display:inline-flex;gap:3px;padding-top:6px;flex:none;}
+.bs-dots i{width:8px;height:8px;border-radius:50%;background:var(--linie);}
+.bs-dots i.an{background:var(--messing);}
+.bs-mk.hart .bs-dots i.an{background:var(--rost);}
+.bs-mk.weich .bs-dots i.an{background:var(--teal);}
+.bz-ab .bs-mk p{font-size:14.6px;line-height:1.65;margin:0 0 6px;}
+.bz-ab .bs-mk p.bs-was{color:var(--leise);font-size:13.8px;}
+.bs-hits{list-style:none;margin:8px 0 4px;padding:0;display:grid;gap:4px;}
+.bs-hits li{font-size:13.6px;line-height:1.5;padding-left:14px;position:relative;}
+.bs-hits li::before{content:'';position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--teal);}
+.bs-hits li.hart::before{background:var(--rost);}
+.bs-hits li.eng::before{background:var(--messing);}
+.bz-ab .bs-mk p.bs-oft{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--leise);margin:6px 0 0;}
+
+/* Häuser in beide Richtungen */
+.bs-haus{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 10px;}
+@media(max-width:560px){.bs-haus{grid-template-columns:1fr;}}
+.bs-hsp{background:var(--bg);border-radius:13px;padding:12px 14px;}
+.bs-hk{font-family:var(--serif);font-size:16px;color:var(--nacht);margin-bottom:6px;}
+.bs-hsp ul{list-style:none;margin:0;padding:0;display:grid;gap:3px;}
+.bs-hsp li{font-size:13.6px;line-height:1.5;color:var(--leise);padding:2px 6px;border-radius:6px;}
+.bs-hsp li b{color:var(--tinte);font-weight:500;}
+.bs-hsp li.tief{background:var(--messing-bg);}
+.bs-hsp li.tief b{color:var(--messing);}
+.bs-spiegel{background:var(--nacht-bg);border-radius:13px;padding:12px 15px;font-size:14.6px;line-height:1.65;}
+
+/* Gemeinsames Bild */
+.bz-ab p.bs-comp{background:var(--messing-bg);border-radius:12px;padding:12px 14px;}
+.bs-cks{display:grid;gap:8px;margin-top:6px;}
+.bs-ck{border-left:3px solid var(--teal);padding:4px 0 4px 13px;}
+.bs-ck.hart{border-left-color:var(--rost);}
+.bs-ck b{font-family:var(--serif);font-weight:400;font-size:16px;color:var(--nacht);}
+.bz-ab .bs-ck p{font-size:14.6px;line-height:1.65;margin:3px 0 0;}
+.bs-tech{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--leise);margin-top:3px;}
+
+/* Chinesische Ebene */
+.bs-cpaar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 12px;}
+@media(max-width:560px){.bs-cpaar{grid-template-columns:1fr;}}
+.bs-ckarte{background:var(--bg);border-radius:14px;padding:14px 15px;display:grid;gap:3px;align-content:start;position:relative;}
+.bs-ctier{position:absolute;right:14px;top:8px;font-size:34px;color:var(--messing);opacity:.55;line-height:1;}
+.bs-ckarte b{font-family:var(--serif);font-weight:400;font-size:18px;color:var(--nacht);}
+.bs-cel{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--messing);margin-bottom:4px;}
+.bz-ab .bs-ckarte p{font-size:14px;line-height:1.6;margin:3px 0 0;}
+.bs-cbez{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px;align-items:center;margin-bottom:12px;}
+@media(max-width:560px){.bs-cbez{grid-template-columns:1fr;justify-items:center;}.bs-cbez>div{justify-self:stretch;}}
+.bs-crad{width:240px;max-width:100%;height:auto;}
+.bs-crad .c-name{font-size:10.5px;fill:var(--leise);text-anchor:middle;dominant-baseline:central;}
+.bs-crad .c-name.an{fill:var(--nacht);font-weight:600;font-size:11.5px;}
+.bs-crad .c-ring{fill:none;stroke:var(--linie);}
+.bs-crad .c-drei{fill:var(--messing-bg);stroke:var(--messing);stroke-width:1;opacity:.9;}
+.bs-crad .c-pkt{fill:var(--papier);stroke:var(--linie);}
+.bs-crad .c-pkt.an{fill:var(--nacht);stroke:var(--nacht);}
+.bs-crad .c-zei{font-size:12px;fill:var(--leise);text-anchor:middle;dominant-baseline:central;}
+.bs-crad .c-zei.an{fill:#fff;font-size:15px;}
+.bs-crad .c-l{stroke-width:2;}
+.bs-crad .c-l.weich,.bs-crad .c-l.eng{stroke:var(--teal);}
+.bs-crad .c-l.hart{stroke:var(--rost);stroke-dasharray:5 3;}
+.bs-crad .c-l.frei{stroke:var(--leise);stroke-dasharray:2 3;}
+.bs-ctitel{display:block;font-family:var(--serif);font-weight:400;font-size:19px;color:var(--teal);margin:4px 0 2px;}
+.bs-ctitel.hart{color:var(--rost);} .bs-ctitel.eng{color:var(--messing);} .bs-ctitel.frei{color:var(--leise);}
+.bs-cblock{border-top:1px solid var(--linie);padding-top:12px;margin-top:12px;}
+.bs-cblock .bs-dl,.bs-cbez .bs-dl{color:var(--messing);}
+
+/* Was das taugt */
+.bs-taugt{margin:0;padding-left:1.1em;display:grid;gap:7px;font-size:14.6px;line-height:1.65;}
+.bs-taugt li:last-child{font-family:var(--serif);font-style:italic;font-size:16.5px;color:var(--nacht);list-style:none;margin-left:-1.1em;margin-top:6px;}
+
+/* Lesen lernen */
+.bz-lesen{margin-top:28px;}
+.bz-lesen details{background:var(--papier);border:1px solid var(--linie);border-radius:16px;padding:0 18px;margin-bottom:10px;scroll-margin-top:70px;}
+.bz-lesen summary{cursor:pointer;padding:16px 0;font-family:var(--serif);font-size:19px;color:var(--nacht);list-style:none;}
+.bz-lesen summary::-webkit-details-marker{display:none;}
+.bz-lesen summary::after{content:'+';float:right;color:var(--messing);}
+.bz-lesen details[open] summary::after{content:'\2212';}
+.bz-lesen .le-in{padding:0 0 16px;display:grid;gap:10px;font-size:15px;line-height:1.7;}
+.bz-lesen .le-in p{margin:0;}
+.bz-lesen ol{margin:0;padding-left:1.2em;display:grid;gap:8px;}
+.bz-lesen .le-merk{background:var(--messing-bg);border-radius:12px;padding:12px 14px;}
+@media print{.bz-seele{background:#fff;color:#000;border:1px solid #ccc;}.bz-lesen{display:none;}}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -224,7 +376,7 @@ a{color:var(--nacht);}
 
 <div class="eyebrow">Zwei Charts</div>
 <h1>Zwischen <em>euch beiden.</em></h1>
-<p class="lede">Zwei Profile nebeneinander &mdash; und zwar f&uuml;r die Beziehung, die ihr wirklich habt. Eine Mutter liest man anders als eine Freundin und eine Kollegin anders als eine Partnerin. Der praktische Teil steht unten: wie du diesen Menschen erreichst, wie ihr redet, was bei Streit hilft.</p>
+<p class="lede">Zwei Profile &uuml;bereinander: welche Seelenebene zwischen euch anklingt, woran man das festmacht, was das gemeinsame Bild sagt und wie die chinesische Astrologie es sieht. Darunter der praktische Teil: wie du diesen Menschen erreichst, wie ihr redet, was bei Streit hilft.</p>
 
 <div class="wahl" id="bzA"></div>
 <div class="wahl" id="bzB"></div>
@@ -238,8 +390,50 @@ a{color:var(--nacht);}
 </div>
 <div class="bz-echo" id="bzecho"></div>
 
-<div class="weiter"><a href="synastrie.html"><span class="lbl">&larr; Die Theorie</span><span class="ttl">Synastrie &mdash; wie zwei Charts gelesen werden</span></a><a href="reading.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Reading nach Wissensstand</span></a></div>
-<div class="foot">Zwischen euch beiden &middot; Kontakte bis 7&deg; bei Konjunktion und Opposition, 5&deg; sonst. Gewichtet nach Beziehungsart.</div>
+<!-- Hier standen bis zum 17.11. zwei eigene Seiten, synastrie.html und
+     synastrie-vertiefung.html. Ihr Inhalt steht jetzt unten; die alten
+     Adressen leiten auf #lesen und #vertiefung weiter. -->
+<section class="bz-lesen" aria-labelledby="h-lesen">
+<div class="eyebrow" id="h-lesen">Selbst lesen lernen</div>
+
+<details id="lesen">
+<summary>Wie man zwei Geburtsbilder liest</summary>
+<div class="le-in">
+<p data-bis="0">Man legt zwei Geburtsbilder &uuml;bereinander und schaut, wo sich die Kr&auml;fte des einen Menschen mit denen des anderen ber&uuml;hren. Ber&uuml;hren sie sich leicht, flie&szlig;t es zwischen euch. Reiben sie sich, entsteht Spannung, und mit ihr Anziehung und Wachstum. Stell oben den Wissensstand auf &bdquo;Wenig&ldquo;, dann steht hier die Anleitung mit den Namen.</p>
+<p data-ab="1">Der Vergleich zweier Geburtsbilder hei&szlig;t <b>Synastrie</b>. Man legt die beiden Bilder &uuml;bereinander und schaut, welche Winkel die Planeten des einen zu denen des anderen bilden. Die Reihenfolge, in der man vorgeht:</p>
+<ol data-ab="1">
+<li><b>Sonne und Mond zueinander.</b> Ber&uuml;hrt die Sonne des einen den Mond des anderen, n&auml;hrt der eine den Kern des anderen. Das wichtigste Zeichen f&uuml;r N&auml;he und Verstehen.</li>
+<li><b>Venus und Mars.</b> Venus steht f&uuml;r die Art zu lieben, Mars f&uuml;r Begehren. Ihre Verbindung zeigt die Anziehung. Ein Trigon knistert m&uuml;helos, ein Quadrat knistert mit Reibung.</li>
+<li><b>Die Achsen.</b> F&auml;llt ein Planet des einen auf Aszendent, Deszendent oder MC des anderen, entsteht sofortige Vertrautheit oder Anziehung auf den ersten Blick.</li>
+<li><b>Saturn.</b> Saturn-Kontakte bringen Ernst und Verbindlichkeit. Sie k&ouml;nnen eine Beziehung erden und halten, oder bremsen und belasten.</li>
+<li><b>Die Mondknoten.</b> Ber&uuml;hrt ein Planet den Mondknoten des anderen, f&uuml;hlt sich die Verbindung bedeutsam an, als w&uuml;rde man einander weiterbringen.</li>
+</ol>
+<p class="le-merk"><b>Harmonie ist nicht alles.</b> Ein Vergleich voller weicher Winkel kann friedlich und trotzdem flach sein. Spannung bringt Reibung, aber auch Lebendigkeit. Die st&auml;rksten Verbindungen mischen beides: genug Fluss f&uuml;r N&auml;he, genug Spannung f&uuml;r Feuer.</p>
+</div>
+</details>
+
+<details id="vertiefung">
+<summary>Die Kontakte im Einzelnen</summary>
+<div class="le-in">
+<p data-bis="0">Was die Seelen-Marker oben bedeuten, steht jeweils direkt auf ihrer Karte. Mit dem Wissensstand &bdquo;Wenig&ldquo; oder h&ouml;her steht hier zus&auml;tzlich, wie Astrologinnen die einzelnen Kontaktarten lesen.</p>
+<div data-ab="1">
+<p><b>Sonne und Mond:</b> eine der tiefsten Verbindungen. Der eine n&auml;hrt den Wesenskern des anderen. Tiefes Verstehen, das Gef&uuml;hl von Zuhause. Klassisch f&uuml;r lange Bindungen.</p>
+<p><b>Venus und Mars:</b> die romantische und erotische Anziehung. Harmonisch flie&szlig;t sie, in Spannung ist sie aufgeladen, oft sehr anziehend, aber nicht immer bequem.</p>
+<p><b>Venus und Venus, Mond und Mond:</b> In gutem Winkel liebt oder f&uuml;hlt man auf &auml;hnliche Weise. In Spannung spricht man verschiedene Sprachen der Liebe, die &uuml;bersetzt werden wollen.</p>
+<p><b>Saturn:</b> Saturn des einen auf einem pers&ouml;nlichen Planeten des anderen bringt Ernst, Verbindlichkeit und Stabilit&auml;t, aber auch Schwere und Lektionen. Oft in Bindungen, die als karmisch empfunden werden.</p>
+<p><b>Mondknoten:</b> Ein Planet auf dem Nordknoten des anderen f&uuml;hlt sich nach Wachstum an, einer auf dem S&uuml;dknoten nach Wiedererkennen aus alter Zeit.</p>
+<p><b>Pluto:</b> Pluto des einen auf einem pers&ouml;nlichen Planeten des anderen bringt Intensit&auml;t, Anziehung und Verwandlung, aber auch Machtthemen. Sehr magnetisch, selten leicht. Nicht zu verwechseln mit &bdquo;beide haben Pluto im selben Zeichen&ldquo;: Das ist Generation, keine Anziehung.</p>
+<p><b>Die kleinen Punkte:</b> Juno zeigt, was jemand in fester Bindung sucht. Chiron ist die alte Wunde und die Gabe daraus. Lilith steht f&uuml;r das Ungez&auml;hmte. Der Vertex gilt als Punkt schicksalhafter Begegnungen. Sie werden hier eng gerechnet, mit h&ouml;chstens 3&deg; Abstand, damit nichts sch&ouml;ngerechnet wird.</p>
+<p><b>Das Composite:</b> Aus beiden Bildern wird jeweils die Mitte genommen. So entsteht ein Bild der Beziehung selbst, wie ein dritter Mensch, mit eigenem Wesen und eigenen Bed&uuml;rfnissen.</p>
+<p class="le-merk"><b>F&uuml;rs Reading:</b> Beschreibe, <i>wie</i> zwei Menschen zusammenwirken, nie, <i>ob</i> sie zusammengeh&ouml;ren. &bdquo;Eure Venus und ihr Mars bilden ein enges Trigon, Anziehung flie&szlig;t bei euch m&uuml;helos.&ldquo; Lass die Menschen selbst erkennen, was das f&uuml;r sie bedeutet. Du bist &Uuml;bersetzerin der Dynamik, nicht Richterin &uuml;ber die Beziehung.</p>
+</div>
+</div>
+</details>
+</section>
+
+<div class="weiter"><a href="dating-muster.html"><span class="lbl">&larr; Passt dazu</span><span class="ttl">Muster im Dating</span></a><a href="reading.html" class="nx"><span class="lbl">Passt dazu &rarr;</span><span class="ttl">Reading nach Wissensstand</span></a></div>
+<div class="foot" data-ab="2">Zwischen euch beiden &middot; Seelen-Marker eng gerechnet (Planeten bis 8&deg;, kleine Punkte bis 3&deg;), verglichen mit 20.000 Zufallspaaren &middot; Chinesische Ebene nach Mondneujahr und BaZi.</div>
+<div class="foot" data-bis="1">Zwischen euch beiden &middot; eng gerechnet und mit 20.000 zuf&auml;llig gerechneten Paaren verglichen &middot; chinesische Ebene nach Mondneujahr und BaZi.</div>
 </div>
 
 <script>
@@ -574,7 +768,8 @@ var ROLLE={
 
 /* Themen: welche Abschnitte gezeigt werden */
 var THEMA={
- komplett:   {n:'Komplett',             zeig:['grund','erreichen','reden','kontakte','streit','helfen','haeuser','jetzt']},
+ komplett:   {n:'Komplett',             zeig:['seele','rad','marker','haeuser','composite','china','grund','erreichen','reden','kontakte','streit','helfen','jetzt','taugt']},
+ seele:      {n:'Seelenebene',          zeig:['seele','rad','marker','haeuser','composite','china','kontakte','taugt']},
  kommunikation:{n:'Kommunikation',      zeig:['reden','kontakte','streit','jetzt']},
  naehe:      {n:'Nähe und Zuneigung', zeig:['grund','erreichen','kontakte','jetzt']},
  reibung:    {n:'Reibung und Konflikt', zeig:['streit','kontakte','jetzt']},
@@ -889,6 +1084,7 @@ var BZ_T={
 
  /* Der Grundton */
  grundTitel:'Der Grundton',
+ grund0:'{ek} im Wesen · {em} im Gefühl',
  grundSonne:'Sonne in {z} · ',
  grundMond:'Mond in {z}',
  grundAsc:' · {z}-Aszendent',
@@ -950,20 +1146,9 @@ var BZ_T={
  helfenGleich:'hier passt das ausnahmsweise zusammen.',
  helfenAnders:'das ist nicht dasselbe.',
 
- /* Was du beim anderen berührst.
-    „Deine Planeten" ist hier keine Beugung an einem einzelnen Punkt,
-    sondern ein fester Plural — es sind immer alle fünf. Was an einem
-    einzelnen Punkt hängt, bildet `B_BEUGE` (`ktKopf`, `haeuserZeile`). */
- haeuserTitel:'Was du bei {b} berührst',
- haeuserVor:'Deine Planeten fallen in {bs} Lebensbereiche. Das sagt, '+
-  'welches Thema du bei {b} berührst, ohne etwas dafür zu tun — und zwar '+
-  'immer dasselbe, in jeder Begegnung:',
- haeuserZeile:'<b>{punkt}</b> fällt in {bs} Bereich <b>{bereich}</b>',
- haeuserHaus:' ({h}. Haus)',
- haeuserHinweis:'Gelesen wird das nur in diese Richtung: Es beschreibt, '+
-  'was du bei {b} auslöst — nicht, was {b} bei dir auslöst. Dafür '+
-  'müsstest du die beiden Profile oben tauschen.',
-
+ /* „Was du beim anderen berührst" stand hier bis zum 17.11. Die
+    Bereiche stehen jetzt in beide Richtungen in beziehung-seele-daten.js
+    (BZS_T.haeuser…). */
  /* Was gerade läuft */
  jetztTitel:'Was gerade zwischen euch läuft',
  jetztLeer:'Gerade berührt kein langsamer Planet eure Charts eng genug, '+
@@ -981,6 +1166,11 @@ var BZ_T={
  jetztHart:'das ist der Punkt, an dem es zwischen euch gerade schneller '+
   'eng wird, als es müsste.',
  jetztWeich:'da geht gerade mehr als sonst, wenn ihr es nutzt.',
+ jetztHinweis0:'Das ist Wetter, kein Klima. Es erklärt, warum etwas '+
+  '<i>gerade jetzt</i> hochkommt, nicht, warum es überhaupt da ist.',
+ jetztLeer0:'Gerade kommt von außen nichts dazu, das eng genug wäre, um daraus etwas zu lesen. '+
+  'Das ist der Normalzustand und keine Lücke.',
+ jetztWas0:'Von außen wird gerade {bs} {punkt} berührt',
  jetztHinweis:'Transite sind Wetter, kein Klima. Sie erklären, warum etwas '+
   '<i>gerade jetzt</i> hochkommt — nicht, warum es überhaupt da ist.',
 
@@ -1025,6 +1215,717 @@ var BZ_PUNKT={
  Neptun: {g:'w', wort:'Sehnsucht'},
  Pluto:  {g:'w', wort:'Tiefe'}
 };
+
+/* ── Beziehung · Die Seelenebene ─────────────────────────────
+   Alle Sätze der Abschnitte Seelenebene, Seelen-Marker, gemeinsames
+   Bild und chinesische Ebene. Die Anzeige (beziehung-app.js) setzt
+   nur ein; was hier steht, ist Text.
+
+   Gilt für alle Texte hier (REGELN.md 2, 2a, 4):
+   * Ruhig, erwachsen, ohne Ausrufezeichen, ohne Versprechen.
+   * Felder ohne „tech" im Namen werden auf Stufe 0 gezeigt und nennen
+     deshalb weder Planeten noch Zeichen noch Häuser. Die Namen stehen
+     in `n` und erscheinen erst ab Stufe 1, die Mechanik ab Stufe 2.
+   * Spirituelle Deutung wird als Deutung gesagt, nicht als Tatsache. */
+
+var BZS_T={
+ /* Seelenebene */
+ seeleKicker:'Die Seelenebene',
+ seeleTitel:'Welche Verbindung das sein könnte',
+ seeleVor:'Die spirituelle Astrologie kennt verschiedene Arten, wie Seelen einander begegnen. Hier stehen die fünf bekanntesten. '+
+  'Ausgezählt ist, welche davon zwischen {a} und {b} am stärksten anklingt, gemessen daran, '+
+  'wie oft dieselben Kontakte bei zufälligen Paaren vorkommen.',
+ seeleHauptVor:'Am stärksten klingt an',
+ seeleNeben:'Dicht dahinter: <b>{name}</b>. Bei euch gehört beides zusammen, und das ist kein Widerspruch: Viele tiefe Verbindungen tragen mehr als eine Ebene.',
+ seeleBalken:'stärker als bei {p} von 100 Paaren',
+ seeleBalkenHinweis:'Jeder Balken zeigt, wie stark eine Ebene bei euch anklingt, verglichen mit 20.000 zufällig gerechneten Paaren. Ein voller Balken heißt: kaum ein Paar hat davon mehr.',
+ seeleDichte:'<b>Wie dicht eure Verbindung ist:</b> dichter als bei {p} von 100 zufälligen Paaren. {folge}',
+ seeleDichteHoch:'Das ist selten. So viele enge Kontakte auf einmal erklären, warum sich diese Begegnung größer anfühlt als andere.',
+ seeleDichteMittel:'Das ist eine lebendige, gut verbundene Mischung, aber nichts Außergewöhnliches.',
+ seeleDichteNiedrig:'Zwischen euch gibt es wenige enge Kontakte. Das heißt nicht, dass nichts da ist, sondern dass diese Verbindung weniger über das Geburtsbild läuft als über das, was ihr miteinander tut.',
+ seeleOhneZeit:'<b>Ohne Geburtszeit bei {wer}</b> fehlen der Schicksalspunkt, die Bereiche und die Ausstrahlung. Die Ebenen sind deshalb vorsichtiger gerechnet als bei vollständigen Daten.',
+ seeleWarum:'Was dafür spricht',
+ labWesen:'Worum es geht',
+ labZeichen:'Woran man es merkt',
+ labAufgabe:'Was diese Verbindung von euch will',
+ labSchatten:'Wo es schwer wird',
+ labFrage:'Eine Frage für euch',
+
+ /* Marker */
+ markerTitel:'Die Seelen-Marker',
+ markerVor:'Woran spirituelle Astrologie eine besondere Verbindung festmacht, einzeln geprüft. Je enger ein Kontakt, desto mehr Punkte. Darunter steht jeweils, wie gewöhnlich er ist.',
+ markerHaeufig:'kommt bei etwa {n} von 10 Paaren vor',
+ markerSelten:'kommt bei weniger als 2 von 10 Paaren vor',
+ markerFehltVor:'Diese Marker gibt es zwischen euch nicht:',
+ markerTreffer:'{a} {pa} und {b} {pb}',
+ markerTrefferTech:'{a} {pa} {typ} {b} {pb}',
+ markerHaus:'{a} {pa} im Bereich {bereich} bei {b}',
+ markerHausTech:' ({h}. Haus)',
+ markerOrb:' ({orb}°)',
+ markerPunkte:'{n} von 5',
+
+ /* Doppelrad */
+ radTitel:'Eure Bilder übereinander',
+ radInnen:'innen',
+ radAussen:'außen',
+ radLinieWeich:'fließende Verbindung',
+ radLinieEng:'Verschmelzen',
+ radLinieHart:'Reibung',
+ radHinweis:'Die Linien zeigen die engsten Seelen-Marker. Gold heißt Verschmelzen, Grün fließen, Rost Reibung.',
+
+ /* Gemeinsames Bild */
+ compTitel:'Das gemeinsame Bild',
+ compVor:'Nimmt man aus beiden Geburtsbildern jeweils die Mitte, entsteht ein drittes Bild: das der Beziehung selbst. '+
+  'Es beschreibt, wozu ihr zusammen da seid, unabhängig davon, wer von euch was mitbringt.',
+ compSonne:'<b>Wozu diese Verbindung da ist:</b> {t}',
+ compMond:'<b>Was sie braucht, um sich sicher zu fühlen:</b> {t}',
+ compTech:'Composite nach der Mittelpunktmethode: Sonne in {zs}, Mond in {zm}{asc}.',
+ compTechAsc:', Aszendent in {z}',
+ compKontakteVor:'Was das gemeinsame Bild am stärksten prägt:',
+ compKontaktTech:'{x} {typ} {y}{orb}',
+
+ /* Chinesische Ebene */
+ chinaTitel:'Die chinesische Ebene',
+ chinaVor:'Die chinesische Astrologie ist eine eigene Sprache. Sie liest nicht die Himmelskörper im Moment der Geburt, '+
+  'sondern Zeichen für Jahr, Monat, Tag und Stunde, gebaut aus zwölf Tieren und fünf Elementen. '+
+  'Hier steht sie als zweite Ebene neben der westlichen. Wo beide dasselbe sagen, ist das Bild besonders deutlich.',
+ chinaJahr:'{yy}-{el} · {tier}',
+ chinaTierZeile:'<b>{tier}:</b> {wesen}',
+ chinaElementZeile:'<b>{el}:</b> {wesen}',
+ chinaAbw:'Im BaZi, das das Jahr erst um den 4. Februar wechseln lässt, gilt für {name} noch das Zeichen {tier}.',
+ chinaGrenz:'{name} ist nahe am chinesischen Neujahr geboren. Das Tier ist auf den Tag genau gerechnet.',
+ chinaTiereTitel:'Eure Jahrestiere',
+ chinaTagTitel:'Eure Tagesmeister',
+ chinaTagVor:'Im BaZi, den Vier Säulen, steht der eigentliche Kern eines Menschen nicht im Jahr, sondern im Tag: der Tagesmeister, ein Element in seiner Yin- oder Yang-Form. Wie zwei Tagesmeister zueinander stehen, gilt als die tiefere Verbindung.',
+ chinaTagZeile:'<b>{name}:</b> {yy}-{el}',
+ chinaPalastTitel:'Der Platz der Partnerschaft',
+ chinaPalastVor:'Das Tier unter dem Tagesmeister heißt im BaZi Palast der Partnerschaft. Es zeigt, was jemand in naher Bindung sucht.',
+ chinaPalastZeile:'<b>{name}:</b> {tier}',
+ chinaTagOhneZeit:'Ohne Geburtszeit kann der Tag bei einer Geburt kurz vor oder nach Mitternacht um eins verrutschen.',
+ chinaEinklang:'<b>Beide Ebenen zusammen:</b> {t}',
+ chinaEinklangHarmonie:'Westlich wie chinesisch zeigt sich vor allem Verbindung. Das ist der seltene Fall, in dem zwei unabhängige Systeme dasselbe sagen.',
+ chinaEinklangSpannung:'Westlich wie chinesisch zeigt sich Anziehung mit Reibung. Beide Systeme beschreiben eine Begegnung, die bewegt und nicht nur beruhigt.',
+ chinaEinklangGemischt:'Die beiden Systeme setzen unterschiedliche Akzente. Das ist häufig und heißt nur, dass jede Sprache eine andere Seite derselben Verbindung beleuchtet.',
+
+ /* Was das taugt */
+ taugtTitel:'Was das taugt, und was nicht',
+ taugt:[
+  'Eine dichte Verbindung ist kein Versprechen, dass es gut wird. Sie zeigt, wie viel zwischen zwei Menschen in Bewegung ist, nicht, wohin es geht.',
+  'Einzelne Marker sind häufig. Bei jedem steht, bei wie vielen von 10 zufälligen Paaren er vorkommt. Aussagekräftig ist erst die Mischung, und wie eng die Kontakte sind.',
+  'Die Seelenebenen sind eine spirituelle Deutung. Sie ist nicht überprüft und lässt sich auch nicht überprüfen. Sie ist eine Sprache, um über eine Verbindung nachzudenken.',
+  'Was ihr erlebt, geht vor. Wenn sich eine Verbindung anders anfühlt, als es hier steht, hat das Erleben recht und nicht die Seite.',
+  'Ob zwei Menschen zueinanderfinden, entscheidet ihr Wille, nicht die Sterne.'
+ ],
+
+ /* Häuser in beide Richtungen */
+ haeuserTitel:'Wo ihr im Leben des anderen landet',
+ haeuserVor:'Jedes Geburtsbild ist wie eine Landkarte mit zwölf Lebensbereichen. Hier steht, in welchen Bereich des anderen eure wichtigsten Kräfte fallen. Dort spürt der andere euch am deutlichsten.',
+ haeuserSpalte:'{a} bei {b}',
+ haeuserZeile:'<b>{punkt}</b> · {bereich}',
+ haeuserHausTech:' ({h}. Haus)',
+ haeuserTiefHinweis:'Hervorgehoben sind die Bereiche für Partnerschaft, Tiefe und das Verborgene. Dort sitzen die Kräfte, die eine Verbindung schicksalhaft wirken lassen.',
+ haeuserJuno:'<b>Spiegel im Spiegel:</b> Euer Bindungswunsch fällt jeweils in den Bereich des anderen für Partnerschaft oder Tiefe. Ihr sucht beide beim anderen etwas Verbindliches. Das ist selten.',
+ haeuserOhneZeit:'Für die Bereiche braucht es die Geburtszeit. Sie fehlt bei {wer}.',
+ /* Gemeinsam mit der chinesischen Ebene */
+ chinaEinklangGrund:'Westlich zeigt sich Spiegel und Reibung, chinesisch vor allem Harmonie. Das passt zusammen: Unter der Reibung liegt eine Verbindung, die im Grund zusammenpasst.'
+};
+
+/* Zeichen für das Doppelrad. Stehen hier, weil sie Zeichen sind und
+   keine Rechnung; die Anzeige hängt das Textzeichen U+FE0E an. */
+var BZS_GL={Sonne:'\u2609',Mond:'\u263D',Merkur:'\u263F',Venus:'\u2640',Mars:'\u2642',Jupiter:'\u2643',
+ Saturn:'\u2644',Uranus:'\u2645',Neptun:'\u2646',Pluto:'\u2647',Nordknoten:'\u260A',Juno:'\u26B5',Chiron:'\u26B7'};
+var BZS_ZGL=['\u2648','\u2649','\u264A','\u264B','\u264C','\u264D','\u264E','\u264F','\u2650','\u2651','\u2652','\u2653'];
+
+/* ── Die fünf Seelenebenen ───────────────────────────────── */
+var BZS_EBENE={
+ seelenverwandt:{name:'Seelenverwandte', kurz:'Ein Wiedererkennen ohne Kampf',
+  wesen:'Seelenverwandte schwingen im selben Takt. Die Begegnung fühlt sich an wie Nachhausekommen: Man muss sich nicht erklären, man wird verstanden. Diese Verbindung ist nicht zum Aufrütteln da, sondern zum Nähren.',
+  zeichen:'Ruhe in der Gegenwart des anderen. Gespräche, die von allein fließen. Das Gefühl, sich schon lange zu kennen.',
+  aufgabe:'Einander Halt geben, damit beide wachsen können. Die Leichtigkeit schützen, statt sie für selbstverständlich zu halten.',
+  schatten:'Weil es so leicht ist, bleibt Wichtiges manchmal unausgesprochen. Und wo nichts reibt, schläft das Wachstum gern ein.',
+  frage:'Wofür nutzt ihr die Ruhe, die ihr einander gebt?'},
+ dualseele:{name:'Dualseele', kurz:'Der Spiegel, der wachrüttelt',
+  wesen:'Die Dualseele, auch Zwillingsflamme genannt, gilt als die Seele, die dich vollständig spiegelt: deine Größe und deine Wunden. Man erkennt eine solche Verbindung nicht an Harmonie, sondern an der Mischung aus tiefer Resonanz und starker Reibung. Sie ist zum Erwachen da, nicht zum Ausruhen.',
+  zeichen:'Sofortige Vertrautheit und gleichzeitig Unruhe. Gefühle, die größer sind als die gemeinsame Zeit. Phasen von Nähe und Rückzug. Das Gefühl, durch diesen Menschen mehr man selbst zu werden.',
+  aufgabe:'Jede Seele zuerst zu sich selbst führen. In der spirituellen Lesart kommen Dualseelen erst gut zusammen, wenn beide ihre eigenen Themen angeschaut haben. Die Verbindung zeigt, was heilen will. Heilen muss es jede Seele selbst.',
+  schatten:'Die Geschichte von der einen Seele kann dazu verführen, Schmerz auszuhalten, der nicht ausgehalten werden muss. Eine Dualseele ist kein Grund zu warten, wenn sich die andere Seite nicht bewegt.',
+  frage:'Was zeigt dir diese Verbindung über dich, und was davon kannst du heute schon für dich tun?'},
+ karmisch:{name:'Karmische Verbindung', kurz:'Eine alte Geschichte, die sich lösen will',
+  wesen:'Karmische Verbindungen tragen das Gefühl, etwas Altes zu Ende zu bringen. Sie wirken schicksalhaft und vertraut, oft auch schwer. Ihr Sinn ist nicht unbedingt, für immer zu bleiben, sondern ein Muster zu erkennen und zu lösen.',
+  zeichen:'Intensität von Anfang an. Themen, die man aus früheren Beziehungen kennt. Ein Sog, der stärker ist als die Vernunft.',
+  aufgabe:'Das Muster benennen, das sich hier wiederholt, und es diesmal anders beantworten. Danach wird die Verbindung leichter, oder sie darf gehen.',
+  schatten:'Der Sog lässt sich leicht mit Liebe verwechseln. Wo eine Verbindung immer wieder dieselbe Wunde öffnet, ruft sie nach Lösung, nicht nach mehr Ausharren.',
+  frage:'Welches alte Muster begegnet dir hier, und wie würdest du es heute beantworten?'},
+ seelenfamilie:{name:'Seelenfamilie', kurz:'Vertraut wie aus einem früheren Zuhause',
+  wesen:'Zur Seelenfamilie gehören Menschen, mit denen man im Geist verwandt ist: dieselbe Sprache, ähnliche Werte, ein selbstverständliches Wohlwollen. Diese Verbindung kann Freundschaft sein, Familie oder Liebe. Ihr Kern ist Vertrautheit ohne Drama.',
+  zeichen:'Ihr könnt stundenlang reden. Ihr freut euch ehrlich übereinander. Auch nach langer Pause ist sofort alles wieder da.',
+  aufgabe:'Einander ermutigen und den eigenen Weg bestärken. Seelenfamilie erinnert daran, wer man eigentlich ist.',
+  schatten:'Weil es so freundschaftlich ist, bleibt manchmal offen, was diese Verbindung eigentlich sein soll.',
+  frage:'Woran erinnert dich dieser Mensch, wenn du dich selbst vergessen hast?'},
+ seelenlehrer:{name:'Seelenlehrer', kurz:'Jemand, der dich weiterbringt',
+  wesen:'Manche Menschen treten in unser Leben, um uns etwas beizubringen. Sie fordern, sie zeigen Grenzen, sie öffnen Türen zu dem, was wir werden können. Die Verbindung muss nicht bequem sein, um wertvoll zu sein.',
+  zeichen:'Respekt, manchmal Ehrfurcht. Das Gefühl, an diesem Menschen zu wachsen. Lektionen, die man erst im Rückblick ganz versteht.',
+  aufgabe:'Annehmen, was gelehrt wird, ohne sich kleinzumachen. Ein Lehrer verdient Dank, nicht Unterwerfung.',
+  schatten:'Wo eine Seite immer die lehrende bleibt, entsteht ein Gefälle. Gute Lehrerverbindungen werden mit der Zeit zur Begegnung auf Augenhöhe.',
+  frage:'Was lernst du gerade durch diesen Menschen, und was lernt er durch dich?'}
+};
+
+/* Je Beziehungsart ein Satz, wie die Ebenen dort zu lesen sind */
+var BZS_ROLLE={
+ freundschaft:'Zwischen Freundinnen und Freunden klingen dieselben Ebenen an, nur ohne Romantik. Eine Dualseele kann auch der eine Mensch sein, der dich spiegelt wie niemand sonst.',
+ familie:'In der Familie liest man die Ebenen als Rollen, die sich Seelen gewählt haben: wer wem etwas beibringt und was sich zwischen den Generationen wiederholt.',
+ kollegin:'Bei der Arbeit zeigt die Seelenebene vor allem, wer wen weiterbringt und wo alte Muster mitspielen.'
+};
+
+/* ── Die Seelen-Marker ───────────────────────────────────────
+   n0 und was und sinn sind Alltagssprache (Stufe 0). n nennt den
+   Namen und steht ab Stufe 1. hart ersetzt sinn, wenn der engste
+   Kontakt in Spannung steht. */
+var BZS_MARKER={
+ lichter:{n0:'Wesenskern und Gefühl berühren sich', n:'Sonne und Mond',
+  was:'Der Wesenskern des einen Menschen trifft das Gefühlsleben des anderen.',
+  sinn:'Das klassische Zeichen einer Seelenverbindung. Der eine nährt den Kern des anderen, und man fühlt sich gesehen, wie man ist.',
+  hart:'Hier steht der Kontakt in Spannung. Die Anziehung ist da, aber das Verstehen muss erarbeitet werden: Was der eine will, trifft beim anderen auf ein Bedürfnis, das gerade etwas anderes braucht.'},
+ spiegel:{n0:'Ihr spiegelt euch', n:'Spiegel: gleiche Sonne, gleicher Mond, gleiche Ausstrahlung',
+  was:'Beide tragen dieselbe Grundenergie an derselben Stelle, oder genau gegenüber.',
+  sinn:'Spiegel sind das Herz der Dualseelen-Idee. Man begegnet sich selbst im anderen, dem Schönen und dem Ungelösten.'},
+ nordknoten:{n0:'Die Lebensrichtung wird berührt', n:'Nordknoten',
+  was:'Ein Punkt, der zeigt, wohin eine Seele in diesem Leben wachsen will, wird vom anderen Menschen berührt.',
+  sinn:'Dieser Mensch verkörpert etwas, auf das die andere Seele zugeht. Solche Begegnungen fühlen sich bedeutsam an, als würde man einander weiterbringen.'},
+ suedknoten:{n0:'Die Herkunft der Seele wird berührt', n:'Südknoten',
+  was:'Ein Punkt für das, was eine Seele schon kann und mitbringt, oft gedeutet als Erinnerung an frühere Leben, wird vom anderen berührt.',
+  sinn:'Das klassische karmische Zeichen. Man fühlt sich sofort vertraut, als kenne man sich von früher. Die Begegnung lädt ein, etwas Altes abzuschließen, statt es zu wiederholen.'},
+ venusmars:{n0:'Zuneigung und Begehren', n:'Venus und Mars',
+  was:'Die Art, wie der eine liebt, trifft die Art, wie der andere begehrt.',
+  sinn:'Das Zeichen für Anziehung und Chemie. Hier fließt sie, ohne dass jemand nachhelfen muss.',
+  hart:'In Spannung knistert es besonders, und es reibt. Anziehung und Streit liegen nah beieinander.'},
+ juno:{n0:'Der Wunsch nach Bindung', n:'Juno',
+  was:'Ein Punkt, der zeigt, was jemand in einer festen Bindung sucht, wird vom anderen berührt oder liegt in dessen Bereich für Partnerschaft oder Tiefe.',
+  sinn:'Ein Zeichen für Verbindlichkeit. Der andere Mensch entspricht dem, was man sich in einer echten Partnerschaft wünscht.'},
+ vertex:{n0:'Der Schicksalspunkt', n:'Vertex',
+  was:'Ein Punkt im Geburtsbild, der für Begegnungen steht, die einem scheinbar zufallen.',
+  sinn:'Berührt ein Mensch diesen Punkt, fühlt sich die Begegnung oft so an: Das musste passieren. Viele Schicksalsbegegnungen beginnen mit einem Zufall.'},
+ chiron:{n0:'Die alte Wunde', n:'Chiron',
+  was:'Ein Punkt für die tiefste Verletzung eines Menschen, und für die Gabe, die daraus wächst.',
+  sinn:'Diese Verbindung berührt alte Wunden, und sie heilt: Allein dadurch, wie der andere ist, wird etwas leichter.',
+  hart:'Diese Verbindung drückt auf eine alte Wunde. Das tut weh und zeigt genau, wo Heilung gebraucht wird.'},
+ saturn:{n0:'Bindung und Prüfung', n:'Saturn',
+  was:'Der Teil, der für Zeit, Verbindlichkeit und Grenzen steht, trifft einen persönlichen Punkt des anderen.',
+  sinn:'Solche Verbindungen halten oft lange. Sie geben Halt und Treue.',
+  hart:'Solche Verbindungen prüfen: Hindernisse, Verzögerungen, Ernst. Was die Prüfung übersteht, ist sehr belastbar.'},
+ pluto:{n0:'Verwandlung', n:'Pluto',
+  was:'Der Teil, der für Tiefe, Macht und Verwandlung steht, trifft einen persönlichen Punkt des anderen.',
+  sinn:'Diese Verbindungen sind magnetisch und lassen niemanden unverändert. Sie gehen dorthin, wo es um alles geht.',
+  hart:'Diese Verbindung ist magnetisch, und Macht, Eifersucht und Kontrolle spielen mit. Ehrlichkeit ist der einzige Weg hindurch.'},
+ reibung:{n0:'Spannung zwischen den Herzen', n:'Spannung der persönlichen Punkte',
+  was:'Wesenskern, Gefühl oder Zuneigung des einen stehen in Spannung zu denen des anderen.',
+  sinn:'Reibung gehört zur Dualseele. Der Spiegel zeigt nicht nur das Schöne, und genau an diesen Stellen wachst ihr aneinander.'},
+ nahferne:{n0:'Nähe und Ferne', n:'Uranus und Neptun',
+  was:'Der Freiheitsdrang oder die Sehnsucht des einen trifft das Herz des anderen.',
+  sinn:'Das typische Hin und Her mancher Seelenverbindungen: plötzliche Nähe, plötzlicher Rückzug, oder ein Nebel, in dem man einander so sieht, wie man es sich wünscht.'},
+ lilith:{n0:'Das Ungezähmte', n:'Lilith',
+  was:'Ein Punkt für das Wilde, Unangepasste und Verdrängte in einem Menschen wird vom anderen berührt.',
+  sinn:'Eine Anziehung, die sich verboten oder unwiderstehlich anfühlen kann. Diese Verbindung weckt, was man sich sonst nicht erlaubt.'},
+ vertraut:{n0:'Geistige Verwandtschaft', n:'Merkur, Mond und Jupiter',
+  was:'Denken, Gefühl und Vertrauen der beiden sprechen dieselbe Sprache.',
+  sinn:'Das Zeichen der Seelenfamilie: leichte Gespräche, ehrliches Wohlwollen, gemeinsamer Humor.'},
+ berufung:{n0:'Der Lebensweg wird berührt', n:'Der Lebenswegpunkt (MC)',
+  was:'Ein persönlicher Punkt des einen liegt dort, wo es beim anderen um Berufung und Sichtbarkeit geht.',
+  sinn:'Dieser Mensch spielt eine Rolle für den Weg des anderen: als Förderer, Spiegel oder Lehrer.'},
+ verborgen:{n0:'Im Verborgenen', n:'Der verborgene Bereich',
+  was:'Wesenskern, Gefühl oder Zuneigung des einen landet beim anderen im Bereich für das Unsichtbare und Spirituelle.',
+  sinn:'Man spürt einander auf einer Ebene, die schwer in Worte zu fassen ist. Klassisch gedeutet als Verbindung aus einem früheren Leben.'},
+ verschmelzung:{n0:'Tiefe und Verschmelzung', n:'Der Bereich der Tiefe',
+  was:'Wesenskern, Gefühl oder Zuneigung des einen landet beim anderen im Bereich für Tiefe, Vertrauen und Verschmelzung.',
+  sinn:'Diese Verbindung geht unter die Oberfläche. Sie verlangt, Kontrolle abzugeben, und belohnt mit einer Nähe, die man selten erlebt.'}
+};
+/* Reihenfolge auf der Seite: erst das Erkennen, dann Anziehung,
+   Schicksal, Wunden, Reibung, Verwandtschaft */
+var BZS_MARKER_FOLGE=['lichter','spiegel','venusmars','nordknoten','suedknoten','vertex','juno','chiron',
+ 'saturn','pluto','lilith','reibung','nahferne','verborgen','verschmelzung','vertraut','berufung'];
+
+/* Die zusätzlichen Punkte: Alltagswort (Stufe 0) und Name.
+   tief: ab welcher Stufe der Name gezeigt wird. */
+var BZS_PKT={
+ Nordknoten:{w0:'Lebensrichtung', n:'Nordknoten', ab:1},
+ Suedknoten:{w0:'Seelenherkunft', n:'Südknoten', ab:1},
+ Chiron:{w0:'alte Wunde', n:'Chiron', ab:1},
+ Lilith:{w0:'Ungezähmtes', n:'Lilith', ab:1},
+ Juno:{w0:'Bindungswunsch', n:'Juno', ab:1},
+ Vertex:{w0:'Schicksalspunkt', n:'Vertex', ab:2},
+ ASC:{w0:'Ausstrahlung', n:'Aszendent', ab:2},
+ DSC:{w0:'Partnerschaftspunkt', n:'Deszendent', ab:2},
+ MC:{w0:'Lebensweg', n:'MC', ab:2}
+};
+
+/* ── Das gemeinsame Bild ────────────────────────────────────
+   Nach dem Zeichen der Mitte beider Sonnen: wozu die Verbindung da ist. */
+var BZS_COMP_SONNE=[
+ 'Diese Verbindung ist zum Aufbrechen da. Zusammen traut ihr euch Dinge, die ihr allein aufgeschoben hättet. Sie lebt von Bewegung und wird matt, wenn nur noch verwaltet wird.',
+ 'Diese Verbindung ist zum Ankommen da. Sie will etwas Festes bauen: Rituale, einen Ort, Verlässlichkeit. Sie wächst langsam und hält dafür lange.',
+ 'Diese Verbindung lebt vom Austausch. Ihr redet, schreibt, denkt laut zusammen, und genau darüber wächst die Nähe. Wird es still zwischen euch, fehlt ihr der Atem.',
+ 'Diese Verbindung ist ein Zuhause. Sie will nähren, schützen, ein Wir schaffen, in dem man weich sein darf. Ihr Thema ist Geborgenheit, und die Angst, sie zu verlieren.',
+ 'Diese Verbindung will gesehen werden und strahlen. Sie macht euch beide mutiger im Ausdruck, großzügiger, verspielter. Sie braucht Anerkennung, auch voneinander.',
+ 'Diese Verbindung ist zum Heilwerden und Ordnen da. Sie zeigt sich in kleinen Diensten, im gemeinsamen Alltag, im Kümmern. Ihr Risiko ist das ständige Verbessern statt Annehmen.',
+ 'Diese Verbindung dreht sich um Gleichgewicht. Sie will Augenhöhe, Schönheit, Fairness. Ihr lernt aneinander, was Partnerschaft wirklich heißt, und wo Harmonie zur Vermeidung wird.',
+ 'Diese Verbindung ist zur Verwandlung da. Sie geht tief, an Stellen, die man sonst niemandem zeigt. Halbe Sachen hält sie nicht aus, und sie lässt euch beide nicht unverändert.',
+ 'Diese Verbindung ist eine gemeinsame Reise. Sie will Sinn, Weite und Wachstum, gern auch wörtlich unterwegs. Eng wird es, wenn jemand sie festhalten will.',
+ 'Diese Verbindung will etwas aufbauen, das bleibt. Sie ist ernst, verbindlich und auf lange Sicht angelegt. Ihre Wärme zeigt sie spät und durch Taten, nicht durch Worte.',
+ 'Diese Verbindung ist eine Freundschaft der Seelen, frei und ungewöhnlich. Sie braucht Raum und eigene Regeln. Sie scheitert nicht an zu wenig Nähe, sondern an zu viel Erwartung.',
+ 'Diese Verbindung ist ein spirituelles Band. Sie spürt mehr, als sie erklärt, und verbindet über Stimmungen, Träume und Mitgefühl. Ihr Thema ist Hingabe, und die Grenze zwischen Hingabe und Selbstaufgabe.'];
+/* Nach dem Element der Mitte beider Monde: was sie emotional braucht */
+var BZS_COMP_MOND=[
+ 'Begeisterung, gemeinsame Abenteuer, das Gefühl, lebendig zu sein. Routine ohne Funken fühlt sich für sie wie Liebesentzug an.',
+ 'Verlässlichkeit, Körperlichkeit, gemeinsame Gewohnheiten. Sie fühlt sich sicher, wenn Worte durch Taten gedeckt sind.',
+ 'Gespräche, Leichtigkeit, Freiraum. Sie fühlt sich sicher, wenn alles gesagt werden darf und niemand festgehalten wird.',
+ 'Tiefe, Rückzugsorte, emotionale Ehrlichkeit. Sie fühlt sich sicher, wenn Gefühle Platz haben, auch die schweren.'];
+var BZS_COMP={
+ band:{n0:'Herz und Wille der Beziehung',
+  w:'Was die Beziehung will und was sie fühlt, passt zusammen. Das gibt ihr eine innere Ruhe, die auch schwere Zeiten trägt.',
+  h:'Was die Beziehung will und was sie braucht, zieht in verschiedene Richtungen. Das hält sie wach und verlangt, dass ihr beides immer wieder neu aushandelt.'},
+ liebe:{n0:'Zuneigung und Begehren der Beziehung',
+  w:'Zuneigung und Begehren arbeiten zusammen. Die Anziehung bleibt lebendig, ohne zu verbrennen.',
+  h:'Zuneigung und Begehren reiben sich. Das hält die Anziehung hoch, und Streit und Nähe liegen oft nah beieinander.'},
+ pruefung:{n0:'Eine Prüfung für die Beziehung',
+  h:'Die Beziehung trifft auf eine Wand aus Zeit, Pflicht oder Vorsicht. Sie wird geprüft, bevor sie sich zeigen darf. Was diese Prüfung übersteht, ist sehr belastbar.'},
+ halt:{n0:'Ein stilles Rückgrat',
+  w:'Die Beziehung hat ein stilles Rückgrat. Verlässlichkeit wächst hier fast von allein, und mit ihr Vertrauen.'},
+ tiefe:{n0:'Verwandlung durch die Beziehung',
+  w:'Die Beziehung verändert euch tief, auf eine Weise, die sich richtig anfühlt.',
+  h:'Die Beziehung hat eine Kraft, die verwandelt und manchmal überwältigt. Macht und Kontrolle wollen hier ehrlich besprochen werden.'},
+ freiheit:{n0:'Freiheit in der Beziehung',
+  h:'Die Beziehung braucht Freiheit und reagiert auf Enge mit Abstand. Sie kommt und geht in Wellen. Feste Formen fallen ihr schwer, eigene Regeln leicht.'},
+ traum:{n0:'Zauber und Nebel',
+  w:'Die Beziehung hat etwas Zauberhaftes, eine Verbundenheit jenseits von Worten.',
+  h:'Die Beziehung hat etwas Zauberhaftes und etwas Nebliges zugleich. Man sieht einander leicht so, wie man es sich wünscht. Klarheit ist hier ein Liebesdienst.'},
+ glueck:{n0:'Rückenwind',
+  w:'Die Beziehung hat Rückenwind. Großzügigkeit und Vertrauen fallen leicht, und sie macht euch beide weiter.'}
+};
+
+/* ── Die chinesische Ebene ──────────────────────────────────── */
+var BZS_TIER=[
+ 'wach, findig und charmant, mit feinem Gespür für Gelegenheiten',
+ 'beständig, geduldig und verlässlich, mit einer stillen Kraft',
+ 'mutig, leidenschaftlich und freiheitsliebend, mit großem Gerechtigkeitssinn',
+ 'sanft, feinfühlig und diplomatisch, mit einem Sinn für Schönheit und Frieden',
+ 'kraftvoll, begeisternd und großzügig, mit dem Mut zu großen Zielen',
+ 'klug, tief und geheimnisvoll, mit starker Intuition',
+ 'lebendig, frei und herzlich, immer in Bewegung',
+ 'weich, kreativ und mitfühlend, mit Sehnsucht nach Geborgenheit',
+ 'witzig, erfinderisch und schnell im Kopf, voller Ideen',
+ 'aufrichtig, genau und fleißig, mit klarem Blick für das Wesentliche',
+ 'treu, ehrlich und beschützend, mit starkem Sinn für Fairness',
+ 'warmherzig, genussvoll und großzügig, mit einem guten Herzen'];
+var BZS_ELEMENT={Holz:'wachsend, großzügig, idealistisch', Feuer:'leidenschaftlich, strahlend, impulsiv',
+ Erde:'geerdet, fürsorglich, verlässlich', Metall:'klar, entschlossen, mit festen Werten',
+ Wasser:'tief, anpassungsfähig, intuitiv'};
+var BZS_SANHE=['das Wasser-Dreieck der Tatkräftigen: Ratte, Drache und Affe',
+ 'das Metall-Dreieck der Beständigen: Schlange, Hahn und Büffel',
+ 'das Feuer-Dreieck der Freiheitsliebenden: Tiger, Pferd und Hund',
+ 'das Holz-Dreieck der Feinfühligen: Schwein, Hase und Ziege'];
+/* Wie zwei Tiere zueinander stehen */
+var BZS_TIERE={
+ gleich:{n:'Dasselbe Tier', ton:'eng',
+  t:'Ihr seid im selben Jahreszeichen geboren. Ihr versteht euch ohne Übersetzung und kennt die Schwächen des anderen, weil es die eigenen sind. Das verbindet, und es verdoppelt manchmal, was ohnehin zu viel ist.'},
+ liuhe:{n:'Geheime Freunde', ton:'weich',
+  t:'Eure Tiere bilden eines der sechs harmonischen Paare. In der chinesischen Tradition ist das die innigste Verbindung zweier Jahreszeichen: still, vertraut, wie füreinander gemacht. Was dem einen Zeichen fehlt, bringt das andere mit.'},
+ sanhe:{n:'Dasselbe Dreieck', ton:'weich',
+  t:'Eure Tiere gehören zum selben Dreieck der Harmonie, {gruppe}. Sie teilen eine Grundhaltung zum Leben und ziehen am selben Strang. Nach chinesischer Lesart eine der glücklichsten Verbindungen.'},
+ chong:{n:'Gegenüber', ton:'hart',
+  t:'Eure Tiere stehen sich im Kreis genau gegenüber. Die Tradition nennt das Zusammenstoß: zwei Temperamente, die sich stark anziehen und reiben. Gegenüberliegende Zeichen ergänzen sich oft, verlangen aber Respekt vor dem ganz anderen Tempo.'},
+ hai:{n:'Verborgene Reibung', ton:'hart',
+  t:'Eure Tiere bilden ein Paar, das in der Tradition als Schaden gilt: nach außen unauffällig, im Inneren kleine Kränkungen, die sich sammeln. Gemeint ist kein Unglück, sondern Missverständnisse, die man früh ansprechen kann.'},
+ neutral:{n:'Freie Verbindung', ton:'frei',
+  t:'Eure Tiere haben keine besondere Beziehung zueinander. Das ist der häufigste Fall und heißt: Hier entscheidet nicht das Zeichen, sondern das, was ihr daraus macht.'}
+};
+/* Der Platz der Partnerschaft, dieselben Beziehungen */
+var BZS_PALAST={
+ gleich:'Eure Partnerschaftsplätze tragen dasselbe Tier. Ihr sucht in naher Bindung dasselbe und erkennt das aneinander.',
+ liuhe:'Eure Partnerschaftsplätze sind geheime Freunde. Im BaZi gilt das als eines der schönsten Zeichen für eine Partnerschaft: Nähe, die sich leicht und selbstverständlich anfühlt.',
+ sanhe:'Eure Partnerschaftsplätze liegen im selben Dreieck der Harmonie. In naher Bindung zieht ihr in dieselbe Richtung.',
+ chong:'Eure Partnerschaftsplätze stehen sich gegenüber. Im BaZi heißt das: Bewegung im Beziehungsleben, starke Anziehung und Unruhe zugleich. Diese Verbindung bleibt nicht stehen.',
+ hai:'Eure Partnerschaftsplätze bilden ein Schadenspaar. In naher Bindung sammeln sich leicht unausgesprochene Kränkungen. Offenheit ist hier das Gegenmittel.',
+ neutral:'Eure Partnerschaftsplätze haben keine besondere Beziehung zueinander. Die Nähe entsteht hier nicht aus dem Zeichen, sondern aus dem Alltag.'
+};
+/* Zwei Tagesmeister. {g} gibt oder bremst, {n} empfängt. */
+var BZS_TAG={
+ wuhe:{n:'Verbundene Tagesmeister', ton:'eng',
+  t:'Eure Tagesmeister bilden eine der fünf klassischen Verbindungen. Im BaZi ist das das stärkste Zeichen für zwei Menschen, die sich anziehen und ergänzen: zwei Kräfte, die zusammen etwas Drittes werden. Es gilt als Zeichen einer tiefen, fast magnetischen Bindung.'},
+ gleich:{n:'Gleiches Element', ton:'eng',
+  t:'Ihr habt denselben Elementkern, {el}. Ihr seid wie Geschwister im Wesen, versteht euch schnell und wollt manchmal denselben Platz.'},
+ naehrt:{n:'{g} nährt {n}', ton:'weich',
+  t:'{gs} Element nährt {ns} Element: {eg} nährt {en}. {g} gibt, stärkt und unterstützt, oft ohne darüber nachzudenken. Für {n} fühlt sich das an wie Rückenwind. Wichtig ist, dass das Geben nicht nur in eine Richtung fließt.'},
+ bremst:{n:'{g} bremst {n}', ton:'hart',
+  t:'{gs} Element bremst {ns} Element: {eg} bremst {en}. Das gibt {n} Halt und Form, kann sich aber auch wie Kontrolle anfühlen. Was als Struktur gemeint ist, darf nicht zur Enge werden.'}
+};
+
+/* Erzeugt von _verteilung-bez.js (20000 Zufallspaare). Nicht von Hand ändern.
+   21 Stützstellen je Größe: 0 %, 5 % … 100 % der Zufallspaare.
+   haeufig: bei wie viel Prozent der Zufallspaare der Marker überhaupt vorkommt. */
+var BZR_VERTEILUNG={"dichte":[2,11,14,15,17,18,19,19,20,21,22,23,24,24,25,26,28,29,31,34,48],"seelenverwandt":[0,0.445,0.872,1.046,1.24,1.456,1.6,1.789,1.937,2.1,2.256,2.4,2.576,2.777,2.99,3.197,3.405,3.729,4.172,4.757,8.327],"dualseele":[0,0.95,1.45,1.787,2.06,2.374,2.731,3.182,3.7,4.174,4.54,4.916,5.252,5.552,5.9,6.253,6.675,7.137,7.733,8.55,12.445],"karmisch":[0,1.378,1.9,2.3,2.603,2.9,3.134,3.4,3.617,3.855,4.081,4.3,4.519,4.8,5.066,5.335,5.656,6.033,6.5,7.226,10.551],"seelenfamilie":[0,0,0.1,0.3,0.527,0.7,0.9,1.2,1.3,1.532,1.8,1.889,2.1,2.373,2.437,2.7,3,3.2,3.5,3.902,5.936],"seelenlehrer":[0,0,0.3,0.6,0.8,1.099,1.2,1.4,1.54,1.6,1.8,2,2.1,2.3,2.5,2.7,2.9,3.2,3.6,4.1,7.36]};
+var BZR_HAEUFIG={"lichter":46,"spiegel":18,"suedknoten":28,"chiron":59,"saturn":65,"pluto":58,"reibung":60,"nahferne":53,"lilith":29,"vertraut":60,"nordknoten":28,"berufung":20,"juno":58,"verschmelzung":40,"venusmars":44,"vertex":39,"verborgen":39};
+
+/* ── Beziehung · Rechner ─────────────────────────────────────
+   Rechnet die Seelenebene zwischen zwei Profilen: Kontakte mit engen
+   Orben, gegenseitige Häuser, das Composite und die chinesische Ebene.
+   Schreibt keinen Satz. Die Namen der Marker und Ebenen sind Schlüssel;
+   was sie bedeuten, steht in beziehung-daten.js.
+
+   Gerechnet wird gegen engine.js (Planeten, Achsen, mittlerer Knoten),
+   kleine-punkte.js (Chiron, mittlere Lilith), asteroiden.js (Juno) und
+   bazi.js (Säulen nach Li Chun). Abweichung zur Schweizer Ephemeride
+   geprüft in _test-bez.js: Planeten unter 0,12°, Achsen und Vertex
+   unter 0,02°. */
+
+var BZR_PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
+var BZR_WINKEL=[[0,'Konjunktion'],[60,'Sextil'],[90,'Quadrat'],[120,'Trigon'],[180,'Opposition']];
+var BZR_HART={90:1,180:1};
+
+function bzrNrm(x){ x=x%360; return x<0?x+360:x; }
+function bzrAbstand(a,b){ return Math.abs(((a-b+540)%360)-180); }
+/* Der engste Winkel unter den erlaubten. max: {0:8, 90:6, ...} */
+function bzrWinkel(a,b,max){
+  if(a===undefined||a===null||b===undefined||b===null) return null;
+  var d=bzrAbstand(a,b), best=null;
+  BZR_WINKEL.forEach(function(w){
+    if(max[w[0]]===undefined) return;
+    var orb=Math.abs(d-w[0]);
+    if(orb<=max[w[0]] && (!best||orb<best.orb))
+      best={w:w[0], typ:w[1], orb:orb, max:max[w[0]], hart:!!BZR_HART[w[0]]};
+  });
+  return best;
+}
+
+/* Der Vertex: Schnitt von Erstvertikal und Ekliptik im Westen. Die
+   Formel des Aszendenten mit der Kobreite liefert eine der beiden
+   Schnittstellen; genommen wird die, die näher am Deszendenten liegt.
+   Gegen pyswisseph geprüft: unter 0,02° auf 300 Zufallsdaten. */
+function bzrVertex(jd,lat,lon){
+  var T=(jd-2451545)/36525, e=epsOf(T)*RAD, r=norm(gmst(jd)+lon+180)*RAD, phi=(90-lat)*RAD;
+  var v=bzrNrm(Math.atan2(Math.cos(r),-(Math.sin(r)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/RAD);
+  var dsc=bzrNrm(angles(jd,lat,lon).asc+180);
+  return bzrAbstand(v,dsc)>90 ? bzrNrm(v+180) : v;
+}
+
+function bzrHatZeit(p){ return !(p.h===undefined||p.h===null||p.ohneZeit); }
+function bzrJD(p){
+  var ut=bzrHatZeit(p)?(p.h+p.mi/60-p.tz):(12-(p.tz||0)), y=p.y, mo=p.mo, d=p.d;
+  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
+  return jdFromUT(y,mo,d,ut);
+}
+
+/* Alle Punkte eines Menschen */
+function bzrBild(p){
+  var jd=bzrJD(p), T=(jd-2451545)/36525, C={_zeit:bzrHatZeit(p), _jd:jd};
+  C.Sonne=sunLon(T); C.Mond=moonLon(T);
+  ['Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'].forEach(function(k){ C[k]=geo(k,T); });
+  C.Nordknoten=nodeLon(T); C.Suedknoten=bzrNrm(C.Nordknoten+180);
+  if(window.chironLon){ var c=chironLon(T); if(c!==null) C.Chiron=c; }
+  if(window.lilithLon) C.Lilith=lilithLon(T);
+  if(window.junoLon){ var j=junoLon(T); if(j!==null) C.Juno=j; }
+  if(C._zeit){
+    var a=angles(jd,p.lat,p.lon);
+    C.ASC=a.asc; C.MC=a.mc; C.DSC=bzrNrm(a.asc+180); C.IC=bzrNrm(a.mc+180);
+    C.Vertex=bzrVertex(jd,p.lat,p.lon);
+  }
+  return C;
+}
+/* Ganze Zeichen als Häuser, wie im Rest der Seite */
+function bzrHaus(C,l){
+  if(C.ASC===undefined||l===undefined) return 0;
+  return ((Math.floor(bzrNrm(l)/30)-Math.floor(C.ASC/30))%12+12)%12+1;
+}
+
+/* ── Die Marker ────────────────────────────────────────────────
+   Je Marker die Punktpaare und die erlaubten Winkel. Geprüft wird in
+   beide Richtungen: Punkt x von A zu Punkt y von B und umgekehrt. */
+var BZR_PERS=['Sonne','Mond','Venus','Mars'];
+var BZR_MARKER=[
+ {k:'lichter',  x:['Sonne'], y:['Mond'], max:{0:8,180:8,90:6,120:6,60:4}},
+ {k:'spiegel',  x:['Sonne','Mond','ASC'], gleich:true, max:{0:8,180:8}, maxGleich:{Mond:{0:8},ASC:{0:5,180:5}}},
+ {k:'nordknoten', x:['Nordknoten'], y:['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','ASC'], max:{0:4}, maxY:{ASC:{0:3}}},
+ {k:'suedknoten', x:['Suedknoten'], y:['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','ASC'], max:{0:4}, maxY:{ASC:{0:3}}},
+ {k:'venusmars',x:['Venus'], y:['Mars'], max:{0:7,180:7,90:6,120:6,60:4}},
+ {k:'juno',     x:['Juno'], y:['Sonne','Mond','Venus','Mars','ASC','DSC'], max:{0:3,180:3,120:1.5}},
+ {k:'juno',     haus:[7,8], y:['Juno']},
+ {k:'vertex',   x:['Vertex'], y:['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','ASC','MC'], max:{0:2.5,180:2.5}},
+ {k:'chiron',   x:['Chiron'], y:['Sonne','Mond','Venus','Mars','ASC'], max:{0:2.5,180:2.5,90:2,120:1.5,60:1.5}},
+ {k:'saturn',   x:['Saturn'], y:['Sonne','Mond','Venus','ASC'], max:{0:3.5,180:3.5,90:3,120:2.5,60:2}},
+ {k:'pluto',    x:['Pluto'], y:['Sonne','Mond','Venus','Mars','ASC'], max:{0:3,180:3,90:2.5,120:2}},
+ {k:'reibung',  x:['Sonne','Mond','Venus'], y:['Sonne','Mond','Venus','Mars'], max:{90:4,180:5}},
+ {k:'nahferne', x:['Uranus','Neptun'], y:['Sonne','Mond','Venus'], max:{0:3,90:2.5,180:3}},
+ {k:'lilith',   x:['Lilith'], y:['Sonne','Mond','Venus','Mars','ASC'], max:{0:3,180:3}},
+ {k:'vertraut', paare:[['Merkur','Merkur'],['Merkur','Mond'],['Jupiter','Sonne'],['Jupiter','Mond'],['Mond','Mond']], max:{0:5,120:4,60:3}},
+ {k:'berufung', x:['MC'], y:['Sonne','Mond','Venus','Jupiter','Saturn'], max:{0:4}},
+ {k:'verborgen', haus:[12], y:['Sonne','Mond','Venus']},
+ {k:'verschmelzung', haus:[8], y:['Sonne','Mond','Venus']}
+];
+
+/* Paare eines Markers als Liste [x,y] */
+function bzrPaare(m){
+  if(m.paare) return m.paare;
+  var out=[];
+  if(m.gleich){ m.x.forEach(function(k){ out.push([k,k]); }); return out; }
+  m.x.forEach(function(a){ m.y.forEach(function(b){ if(a!==b) out.push([a,b]); }); });
+  return out;
+}
+function bzrMax(m,x,y){
+  if(m.gleich && m.maxGleich && m.maxGleich[x]) return m.maxGleich[x];
+  if(m.maxY && m.maxY[y]) return m.maxY[y];
+  return m.max;
+}
+
+/* Treffer eines Markers. A und B sind Bilder; wer: 'A' heißt, der
+   erste Punkt gehört A. */
+function bzrTreffer(m,A,B){
+  var hits=[], schon={};
+  if(m.haus){
+    [[A,B,'A'],[B,A,'B']].forEach(function(s){
+      if(s[1].ASC===undefined) return;
+      m.y.forEach(function(k){
+        var h=bzrHaus(s[1],s[0][k]);
+        if(m.haus.indexOf(h)>=0) hits.push({wer:s[2], x:k, y:'Haus', haus:h, typ:'Haus', orb:0, max:1, hart:false});
+      });
+    });
+    return hits;
+  }
+  bzrPaare(m).forEach(function(p){
+    [[A,B,'A'],[B,A,'B']].forEach(function(s){
+      if(p[0]===p[1] && s[2]==='B') return;            /* gleiche Punkte nur einmal */
+      var w=bzrWinkel(s[0][p[0]], s[1][p[1]], bzrMax(m,p[0],p[1]));
+      if(!w) return;
+      /* Derselbe Kontakt kann über zwei Regeln kommen (A-Sonne zu
+         B-Mond ist B-Mond zu A-Sonne). Gezählt wird er einmal. */
+      var id=s[2]==='A' ? p[0]+'|'+p[1] : p[1]+'|'+p[0];
+      if(schon[id]) return; schon[id]=1;
+      hits.push({wer:s[2], x:p[0], y:p[1], typ:w.typ, w:w.w, orb:w.orb, max:w.max, hart:w.hart});
+    });
+  });
+  hits.sort(function(a,b){ return (a.orb/a.max)-(b.orb/b.max); });
+  return hits;
+}
+
+/* Stärke 0–5: die Enge des besten Treffers, dazu ein Punkt für
+   einen zweiten Treffer. Ein Haustreffer zählt als mittel. */
+function bzrStaerke(hits){
+  if(!hits.length) return 0;
+  var h=hits[0], t=h.typ==='Haus'?0.5:1-h.orb/h.max;
+  var s=1+Math.round(3*t)+(hits.length>=2?1:0);
+  return Math.min(5,s);
+}
+
+/* Das Composite: Mittelpunkte auf dem kürzeren Bogen */
+function bzrMitte(a,b){
+  var d=bzrNrm(b-a);
+  return d<=180 ? bzrNrm(a+d/2) : bzrNrm(b+(360-d)/2);
+}
+function bzrComposite(A,B){
+  var C={};
+  BZR_PL.concat(['ASC','MC','Nordknoten']).forEach(function(k){
+    if(A[k]!==undefined && B[k]!==undefined) C[k]=bzrMitte(A[k],B[k]);
+  });
+  return C;
+}
+var BZR_COMP=[
+ {k:'band',    x:['Sonne'], y:['Mond'], max:{0:6,180:6,90:5,120:5,60:4}},
+ {k:'liebe',   x:['Venus'], y:['Mars'], max:{0:6,180:6,90:5,120:5,60:4}},
+ {k:'pruefung',x:['Saturn'], y:['Sonne','Venus','Mond'], max:{0:5,180:5,90:5}},
+ {k:'halt',    x:['Saturn'], y:['Sonne','Venus','Mond'], max:{120:5,60:4}},
+ {k:'tiefe',   x:['Pluto'], y:['Sonne','Mond','Venus'], max:{0:4,180:4,90:4,120:3,60:3}},
+ {k:'freiheit',x:['Uranus'], y:['Sonne','Mond','Venus'], max:{0:4,180:4,90:4}},
+ {k:'traum',   x:['Neptun'], y:['Sonne','Mond','Venus'], max:{0:4,180:4,90:4,120:3}},
+ {k:'glueck',  x:['Jupiter'], y:['Sonne','Mond','Venus'], max:{0:5,120:5,60:4}}
+];
+function bzrCompositeKontakte(C){
+  var out=[];
+  BZR_COMP.forEach(function(m){
+    m.y.forEach(function(y){
+      var w=bzrWinkel(C[m.x[0]], C[y], m.max);
+      if(w) out.push({k:m.k, x:m.x[0], y:y, typ:w.typ, orb:w.orb, max:w.max, hart:w.hart});
+    });
+  });
+  out.sort(function(a,b){ return (a.orb/a.max)-(b.orb/b.max); });
+  /* je Thema nur der engste */
+  var seen={};
+  return out.filter(function(o){ if(seen[o.k]) return false; seen[o.k]=1; return true; });
+}
+
+/* ── Die Seelenebenen ─────────────────────────────────────────
+   Gewichte je Marker. Was die Ebenen bedeuten, steht in den Daten;
+   hier steht nur, welche Kontakte für welche Ebene sprechen. Die
+   Gewichte folgen der verbreiteten spirituell-astrologischen Lesart
+   und sind keine Messung. */
+var BZR_EBENE={
+ seelenverwandt:{lichterWeich:3, spiegel:1, venusmarsWeich:2, juno:1.5, vertraut:1.5, nordknoten:0.5, compBand:1.5, compHalt:1, compGlueck:1},
+ dualseele:    {lichterEng:3, lichterHart:2, lichterWeich:1, spiegel:2.5, nordknoten:2, vertex:2, juno:1.5, chiron:1.5,
+                reibung:1.5, nahferne:1.5, verborgen:1, verschmelzung:1, saturn:1, lilith:1, venusmarsHart:1.5, venusmarsWeich:0.5, compBand:1, compPruefung:1},
+ karmisch:     {suedknoten:3, saturn:2.5, pluto:2, verborgen:2, verschmelzung:1, lilith:1.5, reibung:1, venusmarsHart:0.5, compPruefung:1.5, compTiefe:1.5},
+ seelenfamilie:{vertraut:3, lichterWeich:1.5, spiegel:1, nordknoten:0.5, compGlueck:1.5, compBand:0.5},
+ seelenlehrer: {saturnWeich:2, chiron:2, berufung:2.5, nordknoten:1.5, vertraut:0.5, compHalt:1}
+};
+var BZR_EBENEN=['seelenverwandt','dualseele','karmisch','seelenfamilie','seelenlehrer'];
+
+/* Die Teilwerte, auf die sich die Gewichte beziehen */
+function bzrTeile(M,comp){
+  var s={}, by={};
+  M.forEach(function(m){ by[m.k]=m; s[m.k]=m.staerke/5; });
+  function teil(k,f){
+    var m=by[k]; if(!m) return 0;
+    var hs=m.hits.filter(f); return hs.length?bzrStaerke(hs)/5:0;
+  }
+  s.lichterEng =teil('lichter',function(h){return h.w===0||h.w===180;});
+  s.lichterHart=teil('lichter',function(h){return h.w===90;});
+  s.lichterWeich=teil('lichter',function(h){return h.w===60||h.w===120||h.w===0;});
+  s.venusmarsWeich=teil('venusmars',function(h){return !h.hart;});
+  s.venusmarsHart =teil('venusmars',function(h){return h.hart;});
+  s.saturnWeich=teil('saturn',function(h){return !h.hart&&h.w!==0;});
+  var c={}; (comp||[]).forEach(function(o){ c[o.k]=1-o.orb/o.max; });
+  s.compBand=c.band||0; s.compPruefung=c.pruefung||0; s.compHalt=c.halt||0;
+  s.compTiefe=c.tiefe||0; s.compGlueck=c.glueck||0;
+  return s;
+}
+function bzrEbenen(M,comp){
+  var s=bzrTeile(M,comp), out={};
+  BZR_EBENEN.forEach(function(e){
+    var g=BZR_EBENE[e], sum=0;
+    for(var k in g) if(g.hasOwnProperty(k)) sum+=g[k]*(s[k]||0);
+    out[e]=sum;
+  });
+  /* Eine Dualseele braucht beides: Resonanz und Reibung. Fehlt eins,
+     ist es eine andere Verbindung, so viel Spiegel auch da ist. */
+  var resonanz=Math.max(s.lichter||0,s.spiegel||0,s.venusmars||0,s.nordknoten||0);
+  var reibung=Math.max(s.reibung||0,s.nahferne||0,s.lichterHart||0,s.venusmarsHart||0,
+                       s.compPruefung||0, (s.saturn||0)-(s.saturnWeich||0));
+  if(resonanz<0.4) out.dualseele*=0.5;
+  if(reibung<0.4) out.dualseele*=0.5;
+  if((s.reibung||0)>=0.8) out.seelenverwandt*=0.85;
+  return out;
+}
+
+/* Perzentil einer Zahl in einer Verteilung aus 21 Stützstellen
+   (0 %, 5 % … 100 %). Ergebnis 0–100. */
+function bzrPerzentil(x,q){
+  if(!q||!q.length) return null;
+  if(x<=q[0]) return 0;
+  if(x>=q[q.length-1]) return 100;
+  for(var i=1;i<q.length;i++){
+    if(x<=q[i]){
+      var t=q[i]===q[i-1]?0.5:(x-q[i-1])/(q[i]-q[i-1]);
+      return Math.round((i-1+t)*100/(q.length-1));
+    }
+  }
+  return 100;
+}
+
+/* Alles zusammen */
+function bzrSeele(pa,pb){
+  var A=bzrBild(pa), B=bzrBild(pb), M=[];
+  var je={};
+  BZR_MARKER.forEach(function(m){
+    var hits=bzrTreffer(m,A,B);
+    if(!hits.length) return;
+    /* zwei Regeln mit demselben Schlüssel sind ein Marker */
+    if(je[m.k]){ je[m.k].hits=je[m.k].hits.concat(hits); je[m.k].staerke=bzrStaerke(je[m.k].hits); return; }
+    je[m.k]={k:m.k, hits:hits, staerke:bzrStaerke(hits)}; M.push(je[m.k]);
+  });
+  var zeit=A._zeit&&B._zeit;
+  var C=bzrComposite(A,B);
+  var ck=bzrCompositeKontakte(C);
+  var E=bzrEbenen(M,ck), V=(typeof BZR_VERTEILUNG!=='undefined')?BZR_VERTEILUNG:{}, P={};
+  var dichte=M.reduce(function(s,m){return s+m.staerke;},0);
+  BZR_EBENEN.forEach(function(e){ P[e]=bzrPerzentil(E[e],V[e]); });
+  var rang=BZR_EBENEN.slice().sort(function(a,b){
+    var d=(P[b]||0)-(P[a]||0); return d!==0?d:E[b]-E[a]; });
+  return {A:A, B:B, marker:M, composite:C, compKontakte:ck, roh:E, perz:P, rang:rang,
+          dichte:dichte, dichtePerz:bzrPerzentil(dichte,V.dichte), zeit:zeit};
+}
+
+/* ── Die chinesische Ebene ────────────────────────────────────
+   Zwei Jahreswechsel: das Mondneujahr, nach dem im Alltag das Tier
+   bestimmt wird, und Li Chun (Sonne auf 315°), nach dem BaZi rechnet.
+   Das Mondneujahr ist der Beginn des zweiten Mondmonats nach dem
+   Monat, in dem die Wintersonnenwende liegt, nach chinesischer Zeit
+   (UTC+8). Einfach „der Neumond zwischen 21.1. und 20.2." stimmt
+   nicht immer: 1985 lag ein Neumond am 21.1., Neujahr war der 20.2. */
+var BZR_SANHE=[[0,4,8],[5,9,1],[2,6,10],[11,3,7]];        /* Wasser, Metall, Feuer, Holz */
+var BZR_SANHE_EL=['Wasser','Metall','Feuer','Holz'];
+var BZR_LIUHE=[[0,1],[2,11],[3,10],[4,9],[5,8],[6,7]];
+var BZR_HAI=[[0,7],[1,6],[2,5],[3,4],[8,11],[9,10]];
+var BZR_EL=['Holz','Feuer','Erde','Metall','Wasser'];
+
+function bzrMondneujahr(y){
+  /* Mitternacht chinesischer Zeit für jeden Tag vom 15.11. des
+     Vorjahres bis zum 15.3.: Neumonde und den Tag der Sonnenwende
+     als Tagesnummer festhalten. */
+  var start=jdFromUT(y-1,11,15,0)-8/24, neu=[], wende=null, vorEl=null, vorSo=null;
+  for(var t=0;t<=121;t++){
+    var T=(start+t-2451545)/36525, so=sunLon(T), el=bzrNrm(moonLon(T)-so);
+    /* zwischen Mitternacht t-1 und t: der Tag ist t-1 */
+    if(vorEl!==null && vorEl>300 && el<60) neu.push(t-1);
+    if(vorSo!==null && wende===null && vorSo<270 && so>=270) wende=t-1;
+    vorEl=el; vorSo=so;
+  }
+  if(wende===null) return null;
+  var i11=-1;
+  for(var i=0;i<neu.length;i++) if(neu[i]<=wende) i11=i;
+  if(i11<0 || !neu[i11+2]) return null;
+  var d=new Date(Date.UTC(y-1,10,15+neu[i11+2]));
+  return {y:d.getUTCFullYear(), mo:d.getUTCMonth()+1, d:d.getUTCDate()};
+}
+function bzrChinaDatum(p){
+  /* Geburtsmoment in chinesischer Zeit */
+  var jd=bzrJD(p)+8/24, z=Math.floor(jd+0.5), f=jd+0.5-z, a=z;
+  if(z>=2299161){ var al=Math.floor((z-1867216.25)/36524.25); a=z+1+al-Math.floor(al/4); }
+  var b=a+1524, c=Math.floor((b-122.1)/365.25), d=Math.floor(365.25*c), e=Math.floor((b-d)/30.6001);
+  var tag=b-d-Math.floor(30.6001*e), mo=e<14?e-1:e-13, jahr=mo>2?c-4716:c-4715;
+  return {y:jahr, mo:mo, d:tag};
+}
+function bzrTierJahr(p){
+  var c=bzrChinaDatum(p), ny=bzrMondneujahr(c.y), jahr=c.y;
+  if(ny && (c.mo<ny.mo || (c.mo===ny.mo && c.d<ny.d))) jahr=c.y-1;
+  return jahr;
+}
+function bzrBeziehungZweig(a,b){
+  if(a===b) return 'gleich';
+  function in_(l){ return l.some(function(x){ return (x[0]===a&&x[1]===b)||(x[0]===b&&x[1]===a); }); }
+  if(in_(BZR_LIUHE)) return 'liuhe';
+  for(var i=0;i<BZR_SANHE.length;i++) if(BZR_SANHE[i].indexOf(a)>=0&&BZR_SANHE[i].indexOf(b)>=0) return 'sanhe';
+  if((a+6)%12===b) return 'chong';
+  if(in_(BZR_HAI)) return 'hai';
+  return 'neutral';
+}
+function bzrSanheGruppe(z){ for(var i=0;i<BZR_SANHE.length;i++) if(BZR_SANHE[i].indexOf(z)>=0) return i; return -1; }
+/* Elemente: wer nährt, wer bremst. */
+function bzrBeziehungElement(ea,eb){
+  var ia=BZR_EL.indexOf(ea), ib=BZR_EL.indexOf(eb);
+  if(ia===ib) return 'gleich';
+  if((ia+1)%5===ib) return 'anaehrtb';
+  if((ib+1)%5===ia) return 'bnaehrta';
+  if((ia+2)%5===ib) return 'abremstb';
+  return 'bbremsta';
+}
+function bzrChina(pa,pb){
+  var B=window.AC_BAZI; if(!B) return null;
+  function eins(p){
+    var s=B.saeulen({y:p.y,mo:p.mo,d:p.d,h:bzrHatZeit(p)?p.h:12,mi:bzrHatZeit(p)?p.mi:0,tz:p.tz||0});
+    var j=bzrTierJahr(p), z=((j-4)%12+12)%12, st=((j-4)%10+10)%10;
+    var c=bzrChinaDatum(p);
+    return {jahr:j, tier:z, stamm:st, element:B.ST_EL[st], yy:B.ST_YY[st],
+            baziTier:s.jahr.z, abweichend:s.jahr.z!==z,
+            grenznah:(c.mo===1&&c.d>=15)||(c.mo===2&&c.d<=25),
+            tag:{s:s.tag.s, z:s.tag.z, el:B.ST_EL[s.tag.s], yy:B.ST_YY[s.tag.s]},
+            tagUnsicher:!bzrHatZeit(p)};
+  }
+  var a=eins(pa), b=eins(pb);
+  var tagStamm=((a.tag.s+5)%10===b.tag.s)?'wuhe':bzrBeziehungElement(a.tag.el,b.tag.el);
+  return {a:a, b:b,
+    tiere:bzrBeziehungZweig(a.tier,b.tier),
+    sanhe:bzrSanheGruppe(a.tier)===bzrSanheGruppe(b.tier)?bzrSanheGruppe(a.tier):-1,
+    jahrElement:bzrBeziehungElement(a.element,b.element),
+    tagStamm:tagStamm,
+    tagGleichPol:a.tag.el===b.tag.el && a.tag.yy===b.tag.yy,
+    palast:bzrBeziehungZweig(a.tag.z,b.tag.z)};
+}
 
 /* ── Zwei Charts nebeneinander ─────────────────────────────────
    Diese Datei rechnet und setzt zusammen. Sie schreibt keinen Satz:
@@ -1198,7 +2099,7 @@ function bauen(pa,pb){
   var nA=vorname(pa), nB=vorname(pb);
   var n=AC_NIV.stufe();
   var tier=!!R.tier;
-  var h='';
+  var h='', teile={};
 
   /* Kopf */
   h+='<div class="bz-kopf"><div class="bz-k">'+
@@ -1219,10 +2120,22 @@ function bauen(pa,pb){
       '</div>';
   }
 
+  /* Die Seelenebene, das Doppelrad, die Marker */
+  var S=null, K=null;
+  if(!tier){
+    S=bzrSeele(pa,pb); K=bzrChina(pa,pb);
+    var rk=R.eltern||R.kind||rolle==='geschwister'?'familie':(rolle==='freundschaft'||rolle==='kollegin'?rolle:null);
+    if(Z.indexOf('seele')>=0) teile.seele=bzsSeele(S,nA,nB,n,R,rk);
+    teile.rad=abschnitt('rad',BZS_T.radTitel, bzsRad(S,nA,nB), Z);
+    teile.marker=abschnitt('marker',BZS_T.markerTitel, bzsMarker(S,nA,nB,n), Z);
+  }
+
   /* Grundton */
   var ga=zi(A.Sonne), gb=zi(B.Sonne), ma=zi(A.Mond), mb=zi(B.Mond);
   var ea=BZ_T.elemente[ga%4], eb=BZ_T.elemente[gb%4];
   function grundZeile(name,C,sz,mz){
+    if(n<=0) return '<div class="bzp"><b>'+esc(name)+'</b>'+
+      BZ_FUELL(BZ_T.grund0,{ek:BZ_T.elemente[sz%4], em:BZ_T.elemente[mz%4]})+'</div>';
     return '<div class="bzp"><b>'+esc(name)+'</b>'+
       (tier?'':BZ_FUELL(BZ_T.grundSonne,{z:ZN[sz]}))+
       BZ_FUELL(BZ_T.grundMond,{z:ZN[mz]})+
@@ -1232,23 +2145,23 @@ function bauen(pa,pb){
   grund+='<p>'+(ea===eb
     ? esc(BZ_FUELL(BZ_T.grundGleich,{el:ea}))
     : BZ_FUELL(BZ_T.grundVerschieden,{ea:ea, b:esc(nB), eb:eb}))+'</p>';
-  h+=abschnitt('grund',BZ_T.grundTitel, grund, Z);
+  teile.grund=abschnitt('grund',BZ_T.grundTitel, grund, Z);
 
   /* Wie du sie erreichst */
   if(tier){
-    h+=abschnitt('erreichen',BZ_FUELL(BZ_T.tierTitel,{b:esc(nB)}),
+    teile.erreichen=abschnitt('erreichen',BZ_FUELL(BZ_T.tierTitel,{b:esc(nB)}),
       '<p>'+TIER_MOND[mb]+'</p><p class="bz-leise">'+BZ_T.tierHinweis+'</p>', Z);
   } else {
-    h+=abschnitt('erreichen',BZ_FUELL(BZ_T.erreichenTitel,{b:esc(nB)}),
+    teile.erreichen=abschnitt('erreichen',BZ_FUELL(BZ_T.erreichenTitel,{b:esc(nB)}),
       '<p>'+BZ_FUELL(BZ_T.erreichenJa,{t:ERREICHEN[mb][0]})+'</p>'+
       '<p>'+BZ_FUELL(BZ_T.erreichenNein,{t:ERREICHEN[mb][1]})+'</p>'+
-      '<p class="bz-leise">'+BZ_T.erreichenHinweis+'</p>', Z);
+      (n>=1?'<p class="bz-leise">'+BZ_T.erreichenHinweis+'</p>':''), Z);
   }
 
   /* Reden */
   if(!tier){
     var rb=zi(B.Merkur), ra=zi(A.Merkur);
-    h+=abschnitt('reden',BZ_T.redenTitel,
+    teile.reden=abschnitt('reden',BZ_T.redenTitel,
       '<p>'+BZ_FUELL(BZ_T.redenB,{b:esc(nB), ja:REDEN[rb][0], nein:REDEN[rb][1]})+'</p>'+
       '<p>'+BZ_FUELL(BZ_T.redenA,{a:REDEN[ra][0]})+'</p>', Z);
   }
@@ -1281,14 +2194,14 @@ function bauen(pa,pb){
           '<div class="kt-s hilft"><span class="kt-l">'+BZ_T.ktWasHilft+'</span>'+x.t.hilft+'</div>'+
         '</div></div>';
     }).join('');
-    h+=abschnitt('kontakte', thema==='reibung'?BZ_T.kontakteTitelReibung
+    teile.kontakte=abschnitt('kontakte', thema==='reibung'?BZ_T.kontakteTitelReibung
       :(thema==='naehe'?BZ_T.kontakteTitelNaehe:BZ_T.kontakteTitel), kt, Z);
   }
 
   /* Streit */
   if(!tier){
     var sb=zi(B.Mars);
-    h+=abschnitt('streit',BZ_T.streitTitel,
+    teile.streit=abschnitt('streit',BZ_T.streitTitel,
       '<p>'+BZ_FUELL(BZ_T.streitB,{b:esc(nB), t:STREIT[sb][0]})+'</p>'+
       '<p>'+BZ_FUELL(BZ_T.streitHilft,{t:STREIT[sb][1]})+'</p>'+
       (R.eltern?'<p class="bz-leise">'+BZ_T.streitEltern+'</p>':''), Z);
@@ -1296,35 +2209,24 @@ function bauen(pa,pb){
 
   /* Helfen */
   if(!tier){
-    h+=abschnitt('helfen',BZ_T.helfenTitel,
+    teile.helfen=abschnitt('helfen',BZ_T.helfenTitel,
       '<p>'+HELFEN[mb]+'</p>'+
       '<p class="bz-leise">'+BZ_FUELL(BZ_T.helfenHinweis,
         {a:HELFEN[ma], folge:(ma===mb?BZ_T.helfenGleich:BZ_T.helfenAnders)})+'</p>', Z);
   }
 
-  /* Planeten im Haus des anderen */
-  if(B.ASC!==undefined){
-    var ih=[];
-    ['Sonne','Mond','Venus','Mars','Saturn'].forEach(function(k){
-      var hs=bzHaus(B,A[k]);
-      if(hs) ih.push({k:k,h:hs});
-    });
-    if(ih.length){
-      var iht='<p>'+BZ_FUELL(BZ_T.haeuserVor,{bs:esc(bes(nB)), b:esc(nB)})+'</p>'+
-        '<ul class="bz-liste">'+
-        ih.slice(0,5).map(function(x){
-          return '<li>'+BZ_FUELL(BZ_T.haeuserZeile,
-              {punkt:gross(bzMein(x.k,n)), bs:esc(bes(nB)), bereich:INHAUS[x.h-1]})+
-            (n>=2?BZ_FUELL(BZ_T.haeuserHaus,{h:x.h}):'')+'.</li>';
-        }).join('')+'</ul>'+
-        '<p class="bz-leise">'+BZ_FUELL(BZ_T.haeuserHinweis,{b:esc(nB)})+'</p>';
-      h+=abschnitt('haeuser',BZ_FUELL(BZ_T.haeuserTitel,{b:esc(nB)}), iht, Z);
-    }
-  }
+  /* Wo ihr im Leben des anderen landet, in beide Richtungen */
+  if(S) teile.haeuser=abschnitt('haeuser',BZS_T.haeuserTitel, bzsHaeuser(S,nA,nB,n), Z);
+
+  /* Das gemeinsame Bild und die chinesische Ebene */
+  if(S) teile.composite=abschnitt('composite',BZS_T.compTitel, bzsComposite(S,n), Z);
+  if(K) teile.china=abschnitt('china',BZS_T.chinaTitel, bzsChina(K,S,nA,nB,R,n), Z);
 
   /* Was gerade läuft */
-  h+=abschnitt('jetzt',BZ_T.jetztTitel, jetztText(A,B,nA,nB,R,n), Z);
+  teile.jetzt=abschnitt('jetzt',BZ_T.jetztTitel, jetztText(A,B,nA,nB,R,n), Z);
+  if(S) teile.taugt=abschnitt('taugt',BZS_T.taugtTitel, bzsTaugt(), Z);
 
+  Z.forEach(function(id){ if(teile[id]) h+=teile[id]; });
   h+='<div class="bz-fuss">'+BZ_T.fuss+'</div>';
   return h;
 }
@@ -1351,11 +2253,13 @@ function jetztText(A,B,nA,nB,R,n){
     });
   });
   treffer.sort(function(a,b){return a.orb-b.orb;});
-  if(!treffer.length) return '<p>'+BZ_T.jetztLeer+'</p>';
+  if(!treffer.length) return '<p>'+(n<=0?BZ_T.jetztLeer0:BZ_T.jetztLeer)+'</p>';
   var l=treffer.slice(0,3).map(function(x){
     /* Der Besitz steht als Name da und nicht als „dein": die Zeile
        spricht über einen der beiden, nicht über die Leserin. */
-    var was = n<=1
+    var was = n<=0
+      ? BZ_FUELL(BZ_T.jetztWas0,{bs:esc(bes(x.wen)), punkt:bzWort(x.k,n)})
+      : n<=1
       ? BZ_FUELL(BZ_T.jetztWas,{wander:x.t, bs:esc(bes(x.wen)), punkt:bzWort(x.k,n)})
       : BZ_FUELL(BZ_T.jetztWasTech,{wander:x.t, typ:x.typ, bs:esc(bes(x.wen)), punkt:x.k})+
         (n>=3?BZ_FUELL(BZ_T.ktOrb,{orb:x.orb.toFixed(1)}):'');
@@ -1363,7 +2267,296 @@ function jetztText(A,B,nA,nB,R,n){
       {was:was, folge:(x.art==='h'?BZ_T.jetztHart:BZ_T.jetztWeich)});
   }).join('');
   return '<p>'+BZ_T.jetztVor+'</p><ul class="bz-liste">'+l+'</ul>'+
-    '<p class="bz-leise">'+BZ_T.jetztHinweis+'</p>';
+    '<p class="bz-leise">'+(n<=0?BZ_T.jetztHinweis0:BZ_T.jetztHinweis)+'</p>';
+}
+
+/* ── Die Seelenebene ──────────────────────────────────────────
+   Rechnet nichts selbst: bzrSeele und bzrChina aus
+   beziehung-rechner.js liefern alles, die Texte stehen in
+   beziehung-seele-daten.js. */
+var BZS_FE=String.fromCharCode(0xFE0E);
+/* Ein Attribut. So beginnt kein Textstück mit einem Anführungszeichen
+   und einer Klassenliste, die der Satzriegel für Sprache hält. */
+function bzsAt(n,v){ return ' '+n+'="'+esc(v)+'"'; }
+function bzsGl(k){ return BZS_GL[k] ? BZS_GL[k]+BZS_FE : ''; }
+
+/* Ein Punkt als Wort, je nach Stufe */
+function bzsWort(k,n){
+  if(BZS_PKT[k]) return n>=BZS_PKT[k].ab ? BZS_PKT[k].n : BZS_PKT[k].w0;
+  return bzWort(k,n);
+}
+function bzsPunkte(s){
+  var h=''; for(var i=1;i<=5;i++) h+='<i class="'+(i<=s?'an':'')+'"></i>';
+  return '<span class="bs-dots" aria-label="'+esc(BZ_FUELL(BZS_T.markerPunkte,{n:s}))+'">'+h+'</span>';
+}
+function bzsNamen(h,nA,nB){ return h.wer==='A' ? [nA,nB] : [nB,nA]; }
+
+/* Eine Treffer-Zeile */
+function bzsTreffer(h,nA,nB,n){
+  var nm=bzsNamen(h,nA,nB);
+  if(h.typ==='Haus'){
+    return BZ_FUELL(BZS_T.markerHaus,{a:esc(bes(nm[0])), pa:bzsWort(h.x,n),
+      bereich:INHAUS[h.haus-1], b:esc(nm[1])})+
+      (n>=2?BZ_FUELL(BZS_T.markerHausTech,{h:h.haus}):'');
+  }
+  if(n<=1) return BZ_FUELL(BZS_T.markerTreffer,{a:esc(bes(nm[0])), pa:bzsWort(h.x,n),
+    b:esc(bes(nm[1])), pb:bzsWort(h.y,n)});
+  return BZ_FUELL(BZS_T.markerTrefferTech,{a:esc(bes(nm[0])), pa:bzsWort(h.x,n), typ:h.typ,
+    b:esc(bes(nm[1])), pb:bzsWort(h.y,n)})+
+    (n>=3?BZ_FUELL(BZS_T.markerOrb,{orb:h.orb.toFixed(1).replace('.',',')}):'');
+}
+
+/* Welche Marker tragen eine Ebene am stärksten */
+var BZS_TEILMARKER={lichterEng:'lichter',lichterHart:'lichter',lichterWeich:'lichter',
+  venusmarsWeich:'venusmars',venusmarsHart:'venusmars',saturnWeich:'saturn'};
+function bzsTraeger(S,e){
+  var g=BZR_EBENE[e], by={}, l=[];
+  S.marker.forEach(function(m){ by[m.k]=m; });
+  Object.keys(g).forEach(function(k){
+    var mk=BZS_TEILMARKER[k]||k, m=by[mk];
+    if(!m || !BZS_MARKER[mk]) return;
+    var ex=l.filter(function(x){return x.k===mk;})[0], w=g[k]*m.staerke;
+    if(ex){ ex.w=Math.max(ex.w,w); } else l.push({k:mk, w:w});
+  });
+  l.sort(function(a,b){return b.w-a.w;});
+  return l.slice(0,4);
+}
+
+function bzsSeele(S,nA,nB,n,R,rollenKey){
+  var haupt=S.rang[0], zweit=S.rang[1], E=BZS_EBENE[haupt];
+  var ph=S.perz[haupt]||0, pz=S.perz[zweit]||0;
+  var h='<div class="bs-k">'+BZS_T.seeleKicker+'</div>'+
+    '<h3>'+BZS_T.seeleTitel+'</h3>'+
+    '<p class="bs-vor">'+esc(BZ_FUELL(BZS_T.seeleVor,{a:nA,b:nB}))+'</p>'+
+    '<div class="bs-haupt"><span class="bs-l">'+BZS_T.seeleHauptVor+'</span>'+
+    '<b class="bs-name">'+E.name+'</b><span class="bs-kurz">'+E.kurz+'</span></div>';
+  if(pz>=ph-8 && pz>=75)
+    h+='<p class="bs-neben">'+BZ_FUELL(BZS_T.seeleNeben,{name:BZS_EBENE[zweit].name})+'</p>';
+  h+='<div class="bs-balken">';
+  S.rang.forEach(function(e){
+    var p=S.perz[e]||0;
+    h+='<div class="bs-zeile'+(e===haupt?' haupt':'')+'"><span class="bs-en">'+BZS_EBENE[e].name+'</span>'+
+      '<span class="bs-bar"><i style="width:'+Math.max(3,p)+'%"></i></span>'+
+      '<span class="bs-p">'+BZ_FUELL(BZS_T.seeleBalken,{p:p})+'</span></div>';
+  });
+  h+='</div><p class="bs-hin">'+BZS_T.seeleBalkenHinweis+'</p>';
+  var dp=S.dichtePerz||0;
+  h+='<p class="bs-dicht">'+BZ_FUELL(BZS_T.seeleDichte,{p:dp,
+    folge:dp>=85?BZS_T.seeleDichteHoch:(dp>=35?BZS_T.seeleDichteMittel:BZS_T.seeleDichteNiedrig)})+'</p>';
+  h+='<div class="bs-deut">'+
+    [['labWesen','wesen'],['labZeichen','zeichen'],['labAufgabe','aufgabe'],['labSchatten','schatten']].map(function(x){
+      return '<div class="bs-d"><span class="bs-dl">'+BZS_T[x[0]]+'</span><p>'+E[x[1]]+'</p></div>';
+    }).join('')+
+    '<div class="bs-frage"><span class="bs-dl">'+BZS_T.labFrage+'</span><p>'+E.frage+'</p></div></div>';
+  var tr=bzsTraeger(S,haupt);
+  if(tr.length){
+    h+='<div class="bs-warum"><span class="bs-dl">'+BZS_T.seeleWarum+'</span><div class="bs-chips">'+
+      tr.map(function(x){ return '<a class="bs-chip" href="#mk-'+x.k+'">'+
+        (n>=1?BZS_MARKER[x.k].n:BZS_MARKER[x.k].n0)+'</a>'; }).join('')+'</div></div>';
+  }
+  if(rollenKey && BZS_ROLLE[rollenKey]) h+='<p class="bs-rolle">'+BZS_ROLLE[rollenKey]+'</p>';
+  if(!S.zeit){
+    var ohne=[]; if(!S.A._zeit) ohne.push(nA); if(!S.B._zeit) ohne.push(nB);
+    h+='<p class="bs-hin">'+BZ_FUELL(BZS_T.seeleOhneZeit,{wer:esc(ohne.join(BZ_T.ohneZeitUnd))})+'</p>';
+  }
+  return '<section class="bz-seele" id="seele">'+h+'</section>';
+}
+
+function bzsMarker(S,nA,nB,n){
+  var by={}; S.marker.forEach(function(m){ by[m.k]=m; });
+  var H=(typeof BZR_HAEUFIG!=='undefined')?BZR_HAEUFIG:{};
+  var h='<p>'+BZS_T.markerVor+'</p><div class="bs-marker">', fehlt=[];
+  BZS_MARKER_FOLGE.forEach(function(k){
+    var m=by[k], T=BZS_MARKER[k];
+    if(!m){ fehlt.push(n>=1?T.n:T.n0); return; }
+    var best=m.hits[0], hart=best.hart&&T.hart;
+    var anteil=H[k]===undefined?null:Math.round(H[k]/10);
+    h+='<div'+bzsAt('class','bs-mk '+(best.typ==='Haus'?'eng':(best.hart?'hart':(best.w===0?'eng':'weich'))))+bzsAt('id','mk-'+k)+'>'+
+      '<div class="bs-mkopf">'+bzsPunkte(m.staerke)+
+        '<div><b>'+(n>=1?T.n:T.n0)+'</b>'+(n>=1?'<span class="bs-n0">'+T.n0+'</span>':'')+'</div></div>'+
+      '<p class="bs-was">'+T.was+'</p>'+
+      '<p>'+(hart?T.hart:T.sinn)+'</p>'+
+      '<ul class="bs-hits">'+m.hits.slice(0,3).map(function(x){
+        return '<li class="'+(x.typ==='Haus'?'eng':(x.hart?'hart':'weich'))+'">'+bzsTreffer(x,nA,nB,n)+'</li>'; }).join('')+'</ul>'+
+      (anteil!==null?'<p class="bs-oft">'+(anteil<2?BZS_T.markerSelten:BZ_FUELL(BZS_T.markerHaeufig,{n:anteil}))+'</p>':'')+
+      '</div>';
+  });
+  h+='</div>';
+  if(fehlt.length) h+='<p class="bz-leise">'+BZS_T.markerFehltVor+' '+esc(fehlt.join(' · '))+'</p>';
+  return h;
+}
+
+/* ── Das Doppelrad ─────────────────────────────────────── */
+var BZS_RADPUNKTE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Nordknoten','Juno','Chiron'];
+function bzsSpreizen(C,keys,gap){
+  var out={}; keys.forEach(function(k){ if(C[k]!==undefined) out[k]=C[k]; });
+  var ks=Object.keys(out);
+  for(var r=0;r<200;r++){
+    ks.sort(function(a,b){return out[a]-out[b];}); var bewegt=false;
+    for(var i=0;i<ks.length;i++){
+      var a=ks[i], b=ks[(i+1)%ks.length], d=bzrNrm(out[b]-out[a]);
+      if(ks.length>1 && d<gap){ out[a]-=(gap-d)/2+0.05; out[b]+=(gap-d)/2+0.05; bewegt=true; }
+    }
+    if(!bewegt) break;
+  }
+  return out;
+}
+function bzsRad(S,nA,nB){
+  var A=S.A, B=S.B, c=170, links=(A.ASC!==undefined?A.ASC:0);
+  function xy(l,r){ var w=(180+(l-links))*Math.PI/180; return [c+r*Math.cos(w), c-r*Math.sin(w)]; }
+  function f(x){ return x.toFixed(1); }
+  var s='<svg viewBox="0 0 340 340" class="bs-rad" role="img" aria-label="'+esc(BZS_T.radTitel)+'">';
+  s+='<circle cx="170" cy="170" r="164" class="r-aussen"/><circle cx="170" cy="170" r="142" class="r-ring"/>'+
+     '<circle cx="170" cy="170" r="112" class="r-mitte"/><circle cx="170" cy="170" r="84" class="r-innen"/>';
+  for(var z=0;z<12;z++){
+    var p1=xy(z*30,142), p2=xy(z*30,164), g=xy(z*30+15,153);
+    s+='<line'+bzsAt('x1',f(p1[0]))+bzsAt('y1',f(p1[1]))+bzsAt('x2',f(p2[0]))+bzsAt('y2',f(p2[1]))+bzsAt('class','r-strich')+'/>'+
+       '<text x="'+f(g[0])+'" y="'+f(g[1])+'" class="r-z">'+BZS_ZGL[z]+BZS_FE+'</text>';
+  }
+  if(A.ASC!==undefined){ var a1=xy(A.ASC,84), a2=xy(A.ASC,164);
+    s+='<line'+bzsAt('x1',f(a1[0]))+bzsAt('y1',f(a1[1]))+bzsAt('x2',f(a2[0]))+bzsAt('y2',f(a2[1]))+bzsAt('class','r-achse')+'/>'; }
+  /* Linien: der engste Treffer je Marker, wenn beide Punkte im Rad stehen */
+  S.marker.forEach(function(m){
+    var h=m.hits.filter(function(x){ return x.typ!=='Haus' &&
+      BZS_RADPUNKTE.indexOf(x.x)>=0 && BZS_RADPUNKTE.indexOf(x.y)>=0; })[0];
+    if(!h) return;
+    var pa=h.wer==='A'?A[h.x]:A[h.y], pb=h.wer==='A'?B[h.y]:B[h.x];
+    if(pa===undefined||pb===undefined) return;
+    var q1=xy(pa,84), q2=xy(pb,84);
+    s+='<line x1="'+f(q1[0])+'" y1="'+f(q1[1])+'" x2="'+f(q2[0])+'" y2="'+f(q2[1])+'" class="r-l '+
+      (h.w===0?'eng':(h.hart?'hart':'weich'))+'"/>';
+  });
+  [[A,98,'innen'],[B,127,'aussen']].forEach(function(x){
+    var C=x[0], sp=bzsSpreizen(C,BZS_RADPUNKTE,10);
+    Object.keys(sp).forEach(function(k){
+      var t=xy(C[k],x[1]===98?84:112), g=xy(sp[k],x[1]);
+      s+='<circle'+bzsAt('cx',f(t[0]))+bzsAt('cy',f(t[1]))+bzsAt('r','2')+bzsAt('class','r-pkt '+x[2])+'/>'+
+         '<text x="'+f(g[0])+'" y="'+f(g[1])+'" class="r-g '+x[2]+'">'+bzsGl(k)+'</text>';
+    });
+  });
+  s+='</svg>';
+  return '<div class="bs-radbox">'+s+'<div class="bs-leg">'+
+    '<span><i class="pk innen"></i>'+esc(BZS_T.radInnen)+': '+esc(nA)+'</span>'+
+    '<span><i class="pk aussen"></i>'+esc(BZS_T.radAussen)+': '+esc(nB)+'</span>'+
+    '<span><i class="ln eng"></i>'+BZS_T.radLinieEng+'</span>'+
+    '<span><i class="ln weich"></i>'+BZS_T.radLinieWeich+'</span>'+
+    '<span><i class="ln hart"></i>'+BZS_T.radLinieHart+'</span></div>'+
+    '<p class="bz-leise">'+BZS_T.radHinweis+'</p></div>';
+}
+
+/* ── Häuser in beide Richtungen ─────────────────────────── */
+var BZS_HPUNKTE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Juno'];
+function bzsHaeuser(S,nA,nB,n){
+  var A=S.A, B=S.B;
+  if(A.ASC===undefined||B.ASC===undefined){
+    var ohne=[]; if(!A._zeit) ohne.push(nA); if(!B._zeit) ohne.push(nB);
+    return '<p class="bz-leise">'+BZ_FUELL(BZS_T.haeuserOhneZeit,{wer:esc(ohne.join(BZ_T.ohneZeitUnd))})+'</p>';
+  }
+  function spalte(X,Y,nx,ny){
+    return '<div class="bs-hsp"><div class="bs-hk">'+esc(BZ_FUELL(BZS_T.haeuserSpalte,{a:nx,b:ny}))+'</div><ul>'+
+      BZS_HPUNKTE.filter(function(k){return X[k]!==undefined;}).map(function(k){
+        var hs=bzrHaus(Y,X[k]);
+        return '<li class="'+([7,8,12].indexOf(hs)>=0?'tief':'')+'">'+
+          BZ_FUELL(BZS_T.haeuserZeile,{punkt:gross(bzsWort(k,n)), bereich:INHAUS[hs-1]})+
+          (n>=2?BZ_FUELL(BZS_T.haeuserHausTech,{h:hs}):'')+'</li>';
+      }).join('')+'</ul></div>';
+  }
+  var h='<p>'+BZS_T.haeuserVor+'</p><div class="bs-haus">'+spalte(A,B,nA,nB)+spalte(B,A,nB,nA)+'</div>'+
+    '<p class="bz-leise">'+BZS_T.haeuserTiefHinweis+'</p>';
+  if(A.Juno!==undefined&&B.Juno!==undefined&&[7,8].indexOf(bzrHaus(B,A.Juno))>=0&&[7,8].indexOf(bzrHaus(A,B.Juno))>=0)
+    h+='<p class="bs-spiegel">'+BZS_T.haeuserJuno+'</p>';
+  return h;
+}
+
+/* ── Das gemeinsame Bild ─────────────────────────────────── */
+function bzsComposite(S,n){
+  var C=S.composite, zs=zi(C.Sonne), zm=zi(C.Mond);
+  var h='<p>'+BZS_T.compVor+'</p>'+
+    '<p class="bs-comp">'+BZ_FUELL(BZS_T.compSonne,{t:BZS_COMP_SONNE[zs]})+'</p>'+
+    '<p class="bs-comp">'+BZ_FUELL(BZS_T.compMond,{t:BZS_COMP_MOND[zm%4]})+'</p>';
+  if(n>=2) h+='<p class="bz-leise">'+BZ_FUELL(BZS_T.compTech,{zs:ZN[zs], zm:ZN[zm],
+    asc:(C.ASC!==undefined?BZ_FUELL(BZS_T.compTechAsc,{z:ZN[zi(C.ASC)]}):'')})+'</p>';
+  var ks=S.compKontakte.slice(0,3).filter(function(o){ var d=BZS_COMP[o.k]; return d&&(o.hart?(d.h||d.w):(d.w||d.h)); });
+  if(ks.length){
+    h+='<p>'+BZS_T.compKontakteVor+'</p><div class="bs-cks">'+ks.map(function(o){
+      var d=BZS_COMP[o.k], t=o.hart?(d.h||d.w):(d.w||d.h);
+      return '<div class="bs-ck '+(o.hart?'hart':'weich')+'"><b>'+d.n0+'</b><p>'+t+'</p>'+
+        (n>=2?'<span class="bs-tech">'+BZ_FUELL(BZS_T.compKontaktTech,{x:o.x, typ:o.typ, y:o.y,
+          orb:(n>=3?BZ_FUELL(BZS_T.markerOrb,{orb:o.orb.toFixed(1).replace('.',',')}):'')})+'</span>':'')+'</div>';
+    }).join('')+'</div>';
+  }
+  return h;
+}
+
+/* ── Die chinesische Ebene ──────────────────────────────── */
+function bzsChinaRad(K){
+  var B=window.AC_BAZI, c=130, s='<svg viewBox="0 0 260 260" class="bs-crad" role="img" aria-label="'+esc(BZS_T.chinaTiereTitel)+'">';
+  function xy(i,r){ var w=(90-i*30)*Math.PI/180; return [c+r*Math.cos(w), c-r*Math.sin(w)]; }
+  function f(x){ return x.toFixed(1); }
+  s+='<circle cx="130" cy="130" r="78" class="c-ring"/>';
+  if(K.sanhe>=0){ var g=BZR_SANHE[K.sanhe].map(function(i){return xy(i,78);});
+    s+='<polygon'+bzsAt('points',g.map(function(p){return f(p[0])+','+f(p[1]);}).join(' '))+bzsAt('class','c-drei')+'/>'; }
+  var pa=xy(K.a.tier,78), pb=xy(K.b.tier,78), ton=BZS_TIERE[K.tiere].ton;
+  if(K.a.tier!==K.b.tier) s+='<line x1="'+f(pa[0])+'" y1="'+f(pa[1])+'" x2="'+f(pb[0])+'" y2="'+f(pb[1])+'" class="c-l '+ton+'"/>';
+  for(var i=0;i<12;i++){
+    var p=xy(i,78), an=(i===K.a.tier||i===K.b.tier);
+    s+='<circle'+bzsAt('cx',f(p[0]))+bzsAt('cy',f(p[1]))+bzsAt('r',an?15:11)+bzsAt('class',an?'c-pkt an':'c-pkt')+'/>'+
+       '<text'+bzsAt('x',f(p[0]))+bzsAt('y',f(p[1]+1))+bzsAt('class',an?'c-zei an':'c-zei')+'>'+B.ZWEIG[i]+'</text>';
+    var q=xy(i,104);
+    s+='<text'+bzsAt('x',f(q[0]))+bzsAt('y',f(q[1]))+bzsAt('class',an?'c-name an':'c-name')+'>'+B.TIER[i]+'</text>';
+  }
+  return s+'</svg>';
+}
+function bzsChina(K,S,nA,nB,R,n){
+  var B=window.AC_BAZI;
+  function karte(x,name){
+    return '<div class="bs-ckarte"><span class="bs-ctier">'+B.ZWEIG[x.tier]+'</span>'+
+      '<b>'+esc(name)+'</b><span class="bs-cel">'+BZ_FUELL(BZS_T.chinaJahr,{yy:x.yy, el:x.element, tier:B.TIER[x.tier]})+'</span>'+
+      '<p>'+BZ_FUELL(BZS_T.chinaTierZeile,{tier:B.TIER[x.tier], wesen:BZS_TIER[x.tier]})+'</p>'+
+      '<p>'+BZ_FUELL(BZS_T.chinaElementZeile,{el:x.element, wesen:BZS_ELEMENT[x.element]})+'</p>'+
+      (x.abweichend?'<p class="bz-leise">'+esc(BZ_FUELL(BZS_T.chinaAbw,{name:name, tier:B.TIER[x.baziTier]}))+'</p>':
+        (x.grenznah?'<p class="bz-leise">'+esc(BZ_FUELL(BZS_T.chinaGrenz,{name:name}))+'</p>':''))+'</div>';
+  }
+  var T=BZS_TIERE[K.tiere];
+  var h='<p>'+BZS_T.chinaVor+'</p><div class="bs-cpaar">'+karte(K.a,nA)+karte(K.b,nB)+'</div>'+
+    '<div class="bs-cbez">'+bzsChinaRad(K)+'<div><span class="bs-dl">'+BZS_T.chinaTiereTitel+'</span>'+
+    '<b class="bs-ctitel '+T.ton+'">'+T.n+'</b><p>'+BZ_FUELL(T.t,{gruppe:(K.sanhe>=0?BZS_SANHE[K.sanhe]:'')})+'</p></div></div>';
+  /* Tagesmeister */
+  var tg, D=BZS_TAG;
+  if(K.tagStamm==='wuhe'||K.tagStamm==='gleich'){
+    tg={n:D[K.tagStamm].n, ton:D[K.tagStamm].ton, t:BZ_FUELL(D[K.tagStamm].t,{el:K.a.tag.el})};
+  } else {
+    var aGibt=(K.tagStamm==='anaehrtb'||K.tagStamm==='abremstb'), art=(K.tagStamm.indexOf('naehrt')>=0)?'naehrt':'bremst';
+    var g=aGibt?nA:nB, nn=aGibt?nB:nA, eg=aGibt?K.a.tag.el:K.b.tag.el, en=aGibt?K.b.tag.el:K.a.tag.el;
+    var w={g:esc(g), n:esc(nn), gs:esc(bes(g)), ns:esc(bes(nn)), eg:eg, en:en};
+    tg={n:BZ_FUELL(D[art].n,w), ton:D[art].ton, t:BZ_FUELL(D[art].t,w)};
+  }
+  h+='<div class="bs-cblock"><span class="bs-dl">'+BZS_T.chinaTagTitel+'</span><p class="bz-leise">'+BZS_T.chinaTagVor+'</p>'+
+    '<p>'+BZ_FUELL(BZS_T.chinaTagZeile,{name:esc(nA), yy:K.a.tag.yy, el:K.a.tag.el})+' &middot; '+
+    BZ_FUELL(BZS_T.chinaTagZeile,{name:esc(nB), yy:K.b.tag.yy, el:K.b.tag.el})+'</p>'+
+    '<b class="bs-ctitel '+tg.ton+'">'+tg.n+'</b><p>'+tg.t+'</p>'+
+    ((K.a.tagUnsicher||K.b.tagUnsicher)?'<p class="bz-leise">'+BZS_T.chinaTagOhneZeit+'</p>':'')+'</div>';
+  /* Palast der Partnerschaft: nur, wo es um Partnerschaft gehen kann */
+  if(R.romantisch||rolle==='sonstige'){
+    h+='<div class="bs-cblock"><span class="bs-dl">'+BZS_T.chinaPalastTitel+'</span><p class="bz-leise">'+BZS_T.chinaPalastVor+'</p>'+
+      '<p>'+BZ_FUELL(BZS_T.chinaPalastZeile,{name:esc(nA), tier:B.TIER[K.a.tag.z]})+' &middot; '+
+      BZ_FUELL(BZS_T.chinaPalastZeile,{name:esc(nB), tier:B.TIER[K.b.tag.z]})+'</p>'+
+      '<b class="bs-ctitel '+BZS_TIERE[K.palast].ton+'">'+BZS_TIERE[K.palast].n+'</b><p>'+BZS_PALAST[K.palast]+'</p></div>';
+  }
+  /* Beide Ebenen nebeneinander */
+  var w0=S.rang[0], chHarm=(T.ton==='weich'||T.ton==='eng'||K.tagStamm==='wuhe'||K.tagStamm==='anaehrtb'||K.tagStamm==='bnaehrta');
+  var chSpann=(T.ton==='hart'||K.tagStamm==='abremstb'||K.tagStamm==='bbremsta');
+  var ek;
+  if((w0==='seelenverwandt'||w0==='seelenfamilie')&&chHarm&&!chSpann) ek=BZS_T.chinaEinklangHarmonie;
+  else if((w0==='dualseele'||w0==='karmisch')&&chSpann) ek=BZS_T.chinaEinklangSpannung;
+  else if(w0==='dualseele'&&chHarm) ek=BZS_T.chinaEinklangGrund;
+  else ek=BZS_T.chinaEinklangGemischt;
+  h+='<p class="bs-spiegel">'+BZ_FUELL(BZS_T.chinaEinklang,{t:ek})+'</p>';
+  return h;
+}
+
+function bzsTaugt(){
+  return '<ul class="bs-taugt">'+BZS_T.taugt.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul>';
 }
 
 function zeigen(){
@@ -1393,6 +2586,10 @@ function kopieren(){
 
 function start(){
   wahlBauen(); steuerBauen(); zeigen();
+  /* Die alten Synastrie-Adressen springen auf eine Klappe: die geht auf */
+  function klappe(){ var d=location.hash&&document.getElementById(location.hash.slice(1));
+    if(d&&d.tagName==='DETAILS') d.open=true; }
+  klappe(); window.addEventListener('hashchange',klappe);
   el('bzkopie').addEventListener('click',kopieren);
   el('bzdruck').addEventListener('click',function(){ window.print(); });
   window.addEventListener('ac-niveau',zeigen);

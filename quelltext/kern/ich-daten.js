@@ -342,8 +342,7 @@ var I_INDEX=[
   {s:'dossier.html', t:'Dossier', w:'Ein Bericht pro Person — und zwar für dein Verhältnis zu ihr.', neu:1},
   {s:'analyse.html', t:'Die Analyse', w:'Thema wählen, ein oder zwei Charts — Kombinationen, Ergebnis, Ansätze, Bericht.', neu:1},
   {s:'beziehung.html', t:'Beziehung', w:'Zwei Charts nebeneinander, nach Beziehungsart ausgewertet.', neu:1},
-  {s:'synastrie.html', t:'Synastrie', w:'Die klassische Paarauswertung.'},
-  {s:'synastrie-vertiefung.html', t:'Synastrie vertieft', w:'Häuserüberlagerung und Komposit.'},
+  {s:'beziehung.html#lesen', t:'Synastrie lesen lernen', w:'Wie man zwei Geburtsbilder liest, und die Kontakte im Einzelnen.'},
   {s:'dating-muster.html', t:'Dating-Muster', w:'Was sich bei dir wiederholt und woran es kippt.'}]},
  {g:'Für deine Arbeit', e:[
   {s:'reading.html', t:'Reading', w:'Dein Chart als Text — in fünf Wissensständen.', neu:1},

@@ -13,7 +13,7 @@
     ['Solar Return','solar-return-light.html'],
     ['Jahreschart','solar-return-light.html'],
     ['Profektion','profektionen.html'],
-    ['Synastrie','synastrie.html'],
+    ['Synastrie','beziehung.html#lesen'],
     ['Astrokartographie','astrokartographie.html'],
     ['Mondknoten','mondknoten.html'],
     ['Nordknoten','mondknoten.html'],

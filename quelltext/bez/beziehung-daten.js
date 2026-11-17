@@ -42,7 +42,8 @@ var ROLLE={
 
 /* Themen: welche Abschnitte gezeigt werden */
 var THEMA={
- komplett:   {n:'Komplett',             zeig:['grund','erreichen','reden','kontakte','streit','helfen','haeuser','jetzt']},
+ komplett:   {n:'Komplett',             zeig:['seele','rad','marker','haeuser','composite','china','grund','erreichen','reden','kontakte','streit','helfen','jetzt','taugt']},
+ seele:      {n:'Seelenebene',          zeig:['seele','rad','marker','haeuser','composite','china','kontakte','taugt']},
  kommunikation:{n:'Kommunikation',      zeig:['reden','kontakte','streit','jetzt']},
  naehe:      {n:'Nähe und Zuneigung', zeig:['grund','erreichen','kontakte','jetzt']},
  reibung:    {n:'Reibung und Konflikt', zeig:['streit','kontakte','jetzt']},
@@ -357,6 +358,7 @@ var BZ_T={
 
  /* Der Grundton */
  grundTitel:'Der Grundton',
+ grund0:'{ek} im Wesen · {em} im Gefühl',
  grundSonne:'Sonne in {z} · ',
  grundMond:'Mond in {z}',
  grundAsc:' · {z}-Aszendent',
@@ -418,20 +420,9 @@ var BZ_T={
  helfenGleich:'hier passt das ausnahmsweise zusammen.',
  helfenAnders:'das ist nicht dasselbe.',
 
- /* Was du beim anderen berührst.
-    „Deine Planeten" ist hier keine Beugung an einem einzelnen Punkt,
-    sondern ein fester Plural — es sind immer alle fünf. Was an einem
-    einzelnen Punkt hängt, bildet `B_BEUGE` (`ktKopf`, `haeuserZeile`). */
- haeuserTitel:'Was du bei {b} berührst',
- haeuserVor:'Deine Planeten fallen in {bs} Lebensbereiche. Das sagt, '+
-  'welches Thema du bei {b} berührst, ohne etwas dafür zu tun — und zwar '+
-  'immer dasselbe, in jeder Begegnung:',
- haeuserZeile:'<b>{punkt}</b> fällt in {bs} Bereich <b>{bereich}</b>',
- haeuserHaus:' ({h}. Haus)',
- haeuserHinweis:'Gelesen wird das nur in diese Richtung: Es beschreibt, '+
-  'was du bei {b} auslöst — nicht, was {b} bei dir auslöst. Dafür '+
-  'müsstest du die beiden Profile oben tauschen.',
-
+ /* „Was du beim anderen berührst" stand hier bis zum 17.11. Die
+    Bereiche stehen jetzt in beide Richtungen in beziehung-seele-daten.js
+    (BZS_T.haeuser…). */
  /* Was gerade läuft */
  jetztTitel:'Was gerade zwischen euch läuft',
  jetztLeer:'Gerade berührt kein langsamer Planet eure Charts eng genug, '+
@@ -449,6 +440,11 @@ var BZ_T={
  jetztHart:'das ist der Punkt, an dem es zwischen euch gerade schneller '+
   'eng wird, als es müsste.',
  jetztWeich:'da geht gerade mehr als sonst, wenn ihr es nutzt.',
+ jetztHinweis0:'Das ist Wetter, kein Klima. Es erklärt, warum etwas '+
+  '<i>gerade jetzt</i> hochkommt, nicht, warum es überhaupt da ist.',
+ jetztLeer0:'Gerade kommt von außen nichts dazu, das eng genug wäre, um daraus etwas zu lesen. '+
+  'Das ist der Normalzustand und keine Lücke.',
+ jetztWas0:'Von außen wird gerade {bs} {punkt} berührt',
  jetztHinweis:'Transite sind Wetter, kein Klima. Sie erklären, warum etwas '+
   '<i>gerade jetzt</i> hochkommt — nicht, warum es überhaupt da ist.',
 
