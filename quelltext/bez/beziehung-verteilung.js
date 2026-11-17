@@ -1,0 +1,5 @@
+/* Erzeugt von _verteilung-bez.js (20000 Zufallspaare). Nicht von Hand ändern.
+   21 Stützstellen je Größe: 0 %, 5 % … 100 % der Zufallspaare.
+   haeufig: bei wie viel Prozent der Zufallspaare der Marker überhaupt vorkommt. */
+var BZR_VERTEILUNG={"dichte":[2,11,14,15,17,18,19,19,20,21,22,23,24,24,25,26,28,29,31,34,48],"seelenverwandt":[0,0.445,0.872,1.046,1.24,1.456,1.6,1.789,1.937,2.1,2.256,2.4,2.576,2.777,2.99,3.197,3.405,3.729,4.172,4.757,8.327],"dualseele":[0,0.95,1.45,1.787,2.06,2.374,2.731,3.182,3.7,4.174,4.54,4.916,5.252,5.552,5.9,6.253,6.675,7.137,7.733,8.55,12.445],"karmisch":[0,1.378,1.9,2.3,2.603,2.9,3.134,3.4,3.617,3.855,4.081,4.3,4.519,4.8,5.066,5.335,5.656,6.033,6.5,7.226,10.551],"seelenfamilie":[0,0,0.1,0.3,0.527,0.7,0.9,1.2,1.3,1.532,1.8,1.889,2.1,2.373,2.437,2.7,3,3.2,3.5,3.902,5.936],"seelenlehrer":[0,0,0.3,0.6,0.8,1.099,1.2,1.4,1.54,1.6,1.8,2,2.1,2.3,2.5,2.7,2.9,3.2,3.6,4.1,7.36]};
+var BZR_HAEUFIG={"lichter":46,"spiegel":18,"suedknoten":28,"chiron":59,"saturn":65,"pluto":58,"reibung":60,"nahferne":53,"lilith":29,"vertraut":60,"nordknoten":28,"berufung":20,"juno":58,"verschmelzung":40,"venusmars":44,"vertex":39,"verborgen":39};
