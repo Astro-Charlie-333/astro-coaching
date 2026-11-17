@@ -455,6 +455,41 @@ geht durch), und die neun Stellen in `zeit-app.js` ihre Farbe aus
 `haeuser` gehört es in deren Umzug (Aufgaben 55, 56, 57), nicht
 hierher.
 
+### 83 · Im Monatsbericht stehen die zwei Daten in der Größe der Füllung
+Aus dem Gestaltungsdurchgang vom 2026-11-17 (Befund 17.11-1) zu
+`monatsbericht.html` — die Seite, die Abschnitt 5 der `GESTALTERIN.md`
+als `monat.html` führt. Unter „Zwei Daten zum Merken" setzt
+`bau-monat.py` beide Lunationen als gewöhnliches `<p>`: „Neumond am
+9. November in deinem Bereich Wert und Besitz. …" und „Vollmond am
+24. November in deinem Bereich Sinn und Weite. …", 16 Pixel DM Sans,
+also dieselbe Größe wie jeder andere Absatz im Brief. Abgesetzt ist im
+ganzen Brief nur zweierlei — der Kasten „Es ist gerade zäh" und der
+Kasten mit der Frage —, und das größte Stück Text auf 2.073 Pixeln Brief
+ist die Anrede mit dem Namen der Empfängerin (23 Pixel auf dem Telefon).
+Die beiden
+Termine sind die einzige Stelle im Brief, die Name, Tag, Bereich und
+Bedeutung trägt, also genau die vier Teile, die `PRODUKT.md` Abschnitt 2
+Punkt 3 für etwas verlangt, das allein stehen können muss; auf
+`index.html` ist dieselbe Information das Beste der Seite. Vorschlag aus
+dem Durchgang: Jede der beiden Angaben wird dreiteilig, aus Werten, die
+in `monat-stil.css` schon stehen — der Tag in der `.zeit`-Behandlung
+(11 Pixel JetBrains Mono, Messing, gesperrt: „9. NOVEMBER"), darunter der
+Name in der Fraunces-Größe der `.anrede` (`clamp(23px,4.4vw,30px)`,
+„Neumond"), darunter wie bisher in 16 Pixeln der Bereich und der Satz.
+Keine neue Farbe, keine
+neue Schrift, keine neue Größe.
+**Fertig, wenn:** im gezeichneten `monatsbericht.html` jede der beiden
+Lunationen aus drei Teilen besteht, der Name in der Fraunces-Größe der
+`.anrede` steht und damit kein Text im Brief außer der Anrede selbst
+größer ist als die beiden Termine, der Tag in der `.zeit`-Behandlung
+darüber steht, „Text kopieren" daraus drei Zeilen statt eines Absatzes
+macht, der Druck den
+Brief weiterhin allein stehen lässt — und `bau-monat.py` nach der
+goldenen Regel aus `REGELN.md` Abschnitt 5 am gezeichneten Ergebnis
+abbricht, sobald eine Lunationsangabe wieder in derselben Schriftgröße
+steht wie der Fließtext des Briefs. Gemessen am Ergebnis, nicht am
+Quelltext, weil die Größen aus der Datei daneben kommen.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich

@@ -703,3 +703,165 @@ und ohne neue Schrift.
 Ab welcher Zahl ein Suchfeld dazugehört, ist eine zweite Frage und gehört
 nicht in diese Karte. Mit vierzehn Profilen ist die Liste lang, aber
 lesbar, sobald die Karten kürzer sind und die Kreise sich unterscheiden.
+
+
+### 17.11.2026 · `monat.html` — der Monat
+
+Die Liste in Abschnitt 5 nennt die Seite `monat.html`; gebaut wird sie von
+`quelltext/monat/bau-monat.py` als **`monatsbericht.html`**. Eine Datei
+`monat.html` gibt es nicht. Angesehen wurde `monatsbericht.html`.
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil — dazu mit zwei und mit fünf erfundenen Profilen, weil
+sich die Bedienleiste mit der Zahl der Profile ändert. Seitenhöhe bei 390:
+3.787 Pixel auf Stufe 0, 3.946 auf Stufe 2, 4.303 mit fünf Profilen; bei
+1280 sind es 2.361 und 2.427. Keine Fehler in der Konsole, nichts läuft
+über den Rand. Dieselbe Einschränkung wie am 06.11., 10.11. und 13.11.:
+In dieser Umgebung sind die Schriften von Google gesperrt, die Seite
+zeichnet mit Ersatzschriften. Beurteilt wurden Hierarchie, Größen,
+Abstände und Reihenfolge — nicht das Schriftbild.
+
+Eine Sache vorweg, damit sie nicht als Befund missverstanden wird: Der
+Wissensstand-Schalter wirkt hier, anders als am 10.11. auf `zeiten.html`.
+Der Unterschied zwischen Stufe 0 und Stufe 2 beträgt 159 Pixel und ist
+genau eine Zeile im Brief: „Hintergrund: Saturn im Quadrat zu deinem
+Merkur im 10. Haus, Orbis 0,0 Grad." Sie steht unter dem Absatz, den sie
+erklärt, nicht davor. Das ist Abschnitt 2 aus `REGELN.md`, wie er gemeint
+ist.
+
+Was trägt: Der Brief ist das Beste auf dieser Seite, und er ist
+geschrieben, nicht gebaut. „hier ist dein Überblick für November. Alles
+darin ist ein **Angebot zum Abgleichen**, keine Vorhersage — nimm mit, was
+dir entspricht, und lass liegen, was nicht passt." Der Stimmen-Test geht
+glatt durch: Die Sätze nennen eine Folge, keine zwei Zustände („Dieser
+Monat verlangt mehr Aufwand für dasselbe Ergebnis. … Was du jetzt
+aufbaust, hält lange — es fühlt sich beim Bauen nur nicht gut an."), und
+wo nichts angelegt ist, steht das da, statt etwas zu erfinden: „In diesem
+Bereich ist bei dir keine deiner Hauptanlagen angelegt. Das macht den
+Monat nicht unwichtig." Der Kasten am Fuß ist die Marke aus `PRODUKT.md`
+Abschnitt 3 an der Stelle, an der sie etwas kostet: „**Und was er nicht
+ist:** eine Prognose. Jeder Satz darin ist eine Möglichkeit, keine Ansage.
+Wenn du merkst, dass jemand Vorhersagen daraus macht, hör damit auf."
+Dass der Druck (`@media print`) Leiste, Knöpfe, h1 und Vorspann ausblendet
+und nur den Brief stehen lässt, ist ebenfalls richtig gedacht.
+
+Die beiden Befunde handeln davon, dass der Brief seine einzigen harten
+Angaben wie Füllung setzt — und dass die Leiste darüber zwei Dinge
+ineinanderflicht, die nichts miteinander zu tun haben.
+
+#### 17.11-1 · Die zwei Daten im Brief stehen in derselben Größe wie die Füllung
+
+**Zitat:** Im Brief, unter dem Zwischentitel „Zwei Daten zum Merken",
+stehen zwei Absätze: **„Neumond am 9. November in deinem Bereich Wert und
+Besitz. Gute Gelegenheit, dort etwas anzufangen oder neu anzusetzen — ohne
+Druck, es ist nur ein günstiger Moment."** und **„Vollmond am 24. November
+in deinem Bereich Sinn und Weite."** Beide sind ein `<p>` in 16 Pixeln DM
+Sans — dieselbe Größe wie „hier ist dein Überblick für November", dieselbe
+wie jeder andere Absatz im Brief. Hervorgehoben ist nur das Datum, fett,
+in denselben 16 Pixeln.
+
+Die Größen im ganzen Brief, von oben: Anrede „Hallo Lioba," 23 Pixel
+Fraunces, Zwischentitel 19 Pixel Fraunces, die Frage 17 Pixel Fraunces,
+Fließtext 16 Pixel, der eingerückte Anlagenabsatz 15,3 Pixel. Auf 2.073
+Pixeln Brief — zweieinhalb Telefonbildschirme — ist das größte Stück Text
+die Anrede, also der eigene Name. Abgesetzt ist genau zweierlei: der
+cremefarbene Kasten „Es ist gerade zäh — und das hat einen Grund." und der
+Kasten mit der Frage „Was ist dir gerade wirklich etwas wert?". Das sind
+der Vorbehalt und die Frage, die man ausdrücklich nicht beantworten muss.
+Die beiden Daten bekommen keinen davon.
+
+**Kosten:** Der Screenshot-Test, und dahinter der Kauf-Test. „Neumond am
+9. November" und „Vollmond am 24. November" sind die einzigen Stellen im
+ganzen Brief, an denen etwas Nachprüfbares mit einem Datum steht — Name,
+Tag, Bereich, was es heißt. Das sind genau die vier Teile, die
+`PRODUKT.md` Abschnitt 2 unter Punkt 3 für eine Karte verlangt, die allein
+stehen können muss, und genau das, was Abschnitt 3 als Vorsprung
+festhält: „wie lange es läuft, mit Datum". Auf `index.html` ist dieselbe
+Sache das Beste der Seite — am 30.10. stand hier, die Karten zu Neumond
+und Vollmond „stehen jede für sich". Im Monatsbericht ist aus derselben
+Information Fließtext geworden. Wer davon ein Bild macht, schickt einer
+Freundin einen grauen Absatz; es gibt keine Stelle, die man fotografieren
+kann, ohne den Rest mitzufotografieren. Und der Brief ist das, was die
+Coachin verschickt: Was sie beim Durchlesen vor dem Verschicken als
+Erstes sieht, ist der Name der Empfängerin in der größten Schrift der
+Seite, und die beiden Termine, die der Empfängerin tatsächlich etwas
+nützen, als Fließtext dazwischen. Der Brief hat nirgends einen
+Größensprung — das Verhältnis zwischen kleinstem und größtem Text beträgt
+1 zu 1,5, über zweieinhalb Bildschirme hinweg. Das ist der
+Jahreszahl-Test: eine gleichmäßige Textspalte ohne Rhythmus.
+
+**Vorschlag:** Jeder der beiden Absätze wird in zwei Teile zerlegt, aus
+vier Werten, die in dieser Seite schon stehen — keine neue Farbe, keine
+neue Schrift, keine neue Größe, kein neuer Baustein:
+
+1. Darüber der Tag in der Behandlung, die zwei Zeilen unter der Anrede
+   ohnehin schon steht (`.zeit`, 11 Pixel JetBrains Mono, Messing,
+   gesperrt): **9. NOVEMBER**.
+2. Darunter der Name in Fraunces in der Größe der Anrede (`.anrede`,
+   `clamp(23px,4.4vw,30px)` — 23 Pixel auf dem Telefon, 30 bei 1.280):
+   **Neumond**.
+3. Darunter, wie bisher in 16 Pixeln, der Bereich und der Satz: „in
+   deinem Bereich **Wert und Besitz**. Gute Gelegenheit, dort etwas
+   anzufangen oder neu anzusetzen — ohne Druck, es ist nur ein günstiger
+   Moment."
+
+Damit stehen im Brief zwei Dinge in der größten Größe statt eines, und
+weil es zwei sind und die Anrede nur eine, gewinnen sie die Seite. Der
+Weg über „Text kopieren" trägt das mit: `mbNurText` macht aus jedem
+Blockende eine Zeile, aus den drei Teilen werden also drei Zeilen statt
+eines Absatzes. Der Druck trägt es ebenfalls, weil er den Brief
+unverändert stehen lässt.
+
+#### 17.11-2 · Profile und Monate stehen auf dem Telefon ineinander
+
+**Zitat:** Über dem Brief steht eine Leiste mit zwei Beschriftungen. Bei
+390 Pixeln und zwei Profilen: **„PROFIL"** bei Pixel 833 links außen,
+daneben „Lioba Meerwald (ich)"; in der Zeile darunter „Juna Birkholz"
+ganz links — und auf **derselben** Zeile, bei Pixel 877, die Beschriftung
+**„MONAT"** mit dem Knopf „dieser". In der Zeile darunter, wieder ganz
+links, „nächster" und „übernächster". Wer die linke Kante von oben nach
+unten liest, liest: Lioba Meerwald · Juna Birkholz · nächster ·
+übernächster.
+
+Mit fünf erfundenen Profilen wird es deutlicher: „MONAT" steht dann bei
+Pixel 921 **am rechten Rand** einer Zeile aus zwei Namen („Maret Kuusk",
+„Ronja Steinbach") und hängt dort allein im Weißraum; die drei Knöpfe, die
+es beschriftet, fangen eine Zeile tiefer bei Pixel 955 ganz links an. Die
+Beschriftung steht also in der Zeile der Namen und ihre Knöpfe in einer
+anderen.
+
+Im Quelltext ist es ein einziger Kasten: `.mb-steuer{display:flex;
+gap:7px;flex-wrap:wrap}`, in den `mbSteuer()` nacheinander die
+Profil-Beschriftung, alle Profilknöpfe, die Monats-Beschriftung und die
+drei Monatsknöpfe schiebt. Die einzige Trennung zwischen den beiden
+Gruppen ist `mk.style.marginLeft = '10px'` — zusammen mit dem Abstand
+also **17 Pixel, gegenüber 7 Pixeln zwischen zwei Knöpfen derselben
+Gruppe**. Bei 1.280 Pixeln fällt davon nichts auf: Dort steht alles in
+einer Zeile, „PROFIL" bei 216 und „MONAT" bei 590, zwei Gruppen sauber
+nebeneinander. Der Verlust ist ein reiner Telefon-Verlust, also der, der
+zählt.
+
+**Kosten:** Zwei Steuerungen, die nichts miteinander zu tun haben, sehen
+auf dem Telefon aus wie eine. Die Coachin, die zwischen zwei Sitzungen
+das Profil wechselt, tippt auf einen Knopf in einer Zeile, die mit Namen
+anfängt, und bekommt einen anderen Monat. Sie merkt es, weil im Brief
+„DEZEMBER 2026" steht — aber sie merkt es erst dort, und beim Verschicken
+unter Zeitdruck möglicherweise gar nicht. Umgekehrt ist die Monatswahl,
+die der Seite ihren Namen gibt, auf dem Telefon nicht als eigene Sache zu
+erkennen: Ihre Beschriftung steht je nach Zahl der Profile mal mitten in
+einer Namenszeile, mal allein am rechten Rand über ihr. Es trifft wieder
+die Coachin, die Einzige der fünf Menschen aus `PRODUKT.md` Abschnitt 2,
+die diese Seite oft öffnet, und es wird mit jedem Profil schlechter. Dazu,
+wie schon am 13.11.: Die Knöpfe sind 37 Pixel hoch, ein Daumen ist 44.
+
+**Vorschlag:** Aus dem einen Kasten werden zwei. `mbSteuer()` legt für
+die Profile und für die Monate je ein eigenes `.mb-steuer` an, beide mit
+demselben `display:flex;gap:7px;flex-wrap:wrap` wie bisher und 10 Pixeln
+Abstand untereinander. Auf dem Telefon stehen danach beide Gruppen
+untereinander, jede mit ihrer Beschriftung ganz links in ihrer ersten
+Zeile; die Monatsknöpfe brauchen eine Zeile und stehen immer zusammen,
+egal wie viele Profile es gibt. Bei 1.280 Pixeln bleibt es bei zwei
+Zeilen statt einer, was dort 44 Pixel kostet und nichts verschlechtert —
+der Brief beginnt heute bei 752 und damit ohnehin unterhalb der Falz.
+`mk.style.marginLeft` entfällt. Keine neue Farbe, keine neue Schrift,
+kein neuer Baustein: derselbe Kasten zweimal.
