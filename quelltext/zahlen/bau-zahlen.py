@@ -18,13 +18,18 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
 """
 
+# Seit Aufgabe 56 liegen zahlen-texte.js (die Sätze) und
+# kern/bahn-daten.js (die Beugung von „dein") mit auf der Seite: Die
+# Anzeige rechnet und setzt ein, sie schreibt nichts mehr.
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'zahlen-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
         + lies(hier / 'zahlen-koerper.html') + "\n<script>\n"
         + lies(rit / 'engine.js') + "\n"
+        + lies(hier.parent / 'kern' / 'bahn-daten.js') + "\n"
         + lies(hier / 'zahlen-rechner.js') + "\n"
         + lies(hier / 'zahlen-daten.js') + "\n"
+        + lies(hier / 'zahlen-texte.js') + "\n"
         + lies(hier / 'zahlen-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -38,7 +43,12 @@ fehler, hinweise = [], []
 koerper = lies(hier / 'zahlen-koerper.html')
 app     = lies(hier / 'zahlen-app.js')
 daten   = lies(hier / 'zahlen-daten.js')
+texte   = lies(hier / 'zahlen-texte.js')
 rechner = lies(hier / 'zahlen-rechner.js')
+bahn    = lies(hier.parent / 'kern' / 'bahn-daten.js')
+
+sys.path.insert(0, str(rit))
+import pruefwerk
 
 # ── 1 · Verdrahtung ────────────────────────────────────────────
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
@@ -61,9 +71,15 @@ for tag in ('section', 'table', 'nav'):
 ERLAUBT = {'nrm'}
 def oben(t):
     return set(re.findall(r'^(?:var|function)\s+([A-Za-z_$][\w$]*)', t, re.M))
-koll = (oben(app) | oben(daten) | oben(rechner)) & oben(lies(rit / 'engine.js')) - ERLAUBT
+# Seit Aufgabe 56 liegt auch bahn-daten.js auf der Seite. Zwei Dateien,
+# die denselben Namen belegen, sind keine Ordnungsfrage: Die zweite
+# gewinnt lautlos, und welche die zweite ist, entscheidet die
+# Reihenfolge im Skriptblock oben.
+fremd = oben(lies(rit / 'engine.js')) | oben(bahn)
+koll = (oben(app) | oben(daten) | oben(texte) | oben(rechner)) & fremd - ERLAUBT
 if koll:
-    fehler.append('Namenskollision mit der Rechen-Engine: ' + ', '.join(sorted(koll)))
+    fehler.append('Namenskollision mit der Rechen-Engine oder bahn-daten.js: '
+                  + ', '.join(sorted(koll)))
 
 # ── 3 · Vollständigkeit der Inhalte ───────────────────────────
 ZAHLEN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33]
@@ -134,13 +150,14 @@ for m in re.finditer(r"\{k:'(\w+)',\s*n:'([^']+)',\s*ruf:", daten):
 
 # ── 4 · Deutsche Textfallen ───────────────────────────────────
 # Kleinschreibung in deutschem Fließtext war bisher immer ein Fehler.
-for block, name in ((daten, 'zahlen-daten'), (app, 'zahlen-app')):
+for block, name in ((daten, 'zahlen-daten'), (app, 'zahlen-app'),
+                    (texte, 'zahlen-texte')):
     for m in re.finditer(r'\.toLowerCase\(\)', block):
         zeile = block[:m.start()].count('\n') + 1
         fehler.append(f'{name}.js Zeile {zeile}: toLowerCase im Text — '
                       'deutsche Substantive bleiben groß')
 # Dezimalpunkt statt Komma, aber nur in den Texten, nicht im Code
-for m in re.finditer(r"'((?:[^'\\]|\\.){25,})'", daten):
+for m in re.finditer(r"'((?:[^'\\]|\\.){25,})'", daten + texte):
     s = m.group(1)
     for d in re.finditer(r'\d\.\d', s):
         if not re.match(r'\d\.\s', s[d.start():]):   # „1. Haus" ist in Ordnung
@@ -154,7 +171,7 @@ for ph in ('{A}', '{B}', '{n}', 'TODO', 'XXX', 'Lorem'):
 # ── 5 · Niemandes echte Daten in dieser Seite ─────────────────
 #    (packen.py prüft das Repo; hier die Seite selbst, inklusive Probe)
 for muster, was in ((r'\b1987\b', 'Geburtsjahr'), (r'\b08:58\b', 'Geburtszeit')):
-    if re.search(muster, koerper + app + daten):
+    if re.search(muster, koerper + app + daten + texte):
         fehler.append(f'echte persönliche Angabe ({was}) im Seitentext')
 
 # ── 6 · Verweise ──────────────────────────────────────────────
@@ -176,6 +193,168 @@ if t.exists():
 else:
     fehler.append('_test-rechner.js fehlt — die Rechnung wäre ungeprüft')
 
+# ── 7a · Eine Schule heißt überall gleich ─────────────────────
+#     Gefunden am 2026-11-17 beim Erledigen von Aufgabe 56: Auf dem
+#     Knopf stand „Chäldäisch", im Körper dreimal „chäldäische
+#     Schule" und in den Daten „Chaldäische Numerologie" — derselbe
+#     Name in zwei Schreibweisen, in drei Dateien von Hand
+#     geschrieben. Dieselbe Fehlerklasse wie REGELN.md 6f: Der Name
+#     landet in einem gebauten Text und hatte keine Sperre.
+#
+#     Geprüft wird die Form und keine Wortliste (REGELN.md 6e): Jedes
+#     Wort auf „-äisch" in Körper und Vorlagen muss mit einem Stamm
+#     dastehen, den zahlen-daten.js kennt. „hebräisch" geht deshalb
+#     durch — es steht in der Beschreibung der Gematrie-Schule —, eine
+#     erfundene Schreibweise nicht. Wer eine Schule umbenennt, benennt
+#     sie in den Daten um, und die Prüfung findet die alte Schreibung.
+def _stamm(w):
+    i = w.lower().find('äisch')
+    return w[:i + 5].lower() if i >= 0 else None
+
+
+def _tafel_tadel(seite, quelle):
+    """Welche Schreibweise auf der Seite steht, die die Daten nicht
+    kennen. Verglichen wird der Stamm bis „äisch", damit die Beugung
+    („-e", „-en") nicht mitzählt."""
+    kennt = {_stamm(w) for w in quelle} - {None}
+    return sorted({_stamm(w) for w in seite} - {None} - kennt)
+
+
+assert _stamm('Chäldäische') == 'chäldäisch'
+assert _stamm('pythagoräischen') == 'pythagoräisch'
+assert _stamm('Lebenszahl') is None
+assert _tafel_tadel(['Chaldäisch', 'pythagoräischen', 'hebräische'],
+                    ['Chaldäische', 'Pythagoräische', 'hebräischen']) == []
+assert _tafel_tadel(['Chäldäisch'], ['Chaldäische']) == ['chäldäisch']
+assert _tafel_tadel([], ['Chaldäische']) == []
+assert _tafel_tadel(['Hebräisch'], ['Chaldäische']) == ['hebräisch']
+
+_ENT = {'&auml;': 'ä', '&ouml;': 'ö', '&uuml;': 'ü', '&szlig;': 'ß',
+        '&Auml;': 'Ä', '&Ouml;': 'Ö', '&Uuml;': 'Ü', '&shy;': ''}
+
+
+def _klartext(s):
+    for k, v in _ENT.items():
+        s = s.replace(k, v)
+    return s
+
+
+_AEISCH = re.compile(r'[A-Za-zÄÖÜäöüß]*äisch[a-zäöüß]*')
+for _w in _tafel_tadel(_AEISCH.findall(_klartext(koerper + texte)),
+                       _AEISCH.findall(_klartext(daten))):
+    fehler.append(f'„{_w}" steht auf der Seite, zahlen-daten.js kennt diese '
+                  'Schreibweise nicht — eine Schule heißt überall gleich')
+
+# ── 7b · Die Anzeige schreibt keinen Satz und kein „dein" ─────
+#     Aufgabe 56, aus 34 und 38: Die Sätze dieser Seite stehen in
+#     zahlen-texte.js (Z_T), die Anzeige rechnet und setzt mit
+#     `zFuell` ein. Was in zahlen-app.js steht, zieht beim Umzug in
+#     eine andere Umgebung nicht mit (PRODUKT.md Abschnitt 7) — und
+#     genau deshalb ist das hier eine Sperre und kein Vorsatz.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'zahlen-app.js', 'zahlen-texte.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'zahlen-app.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei Anführungsarten —
+#     ein Satz, der in doppelten oder schrägen Anführungszeichen
+#     durchgeht, wäre das Loch, über das die Sätze einzeln
+#     zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Deine Lebenszahl ist' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'zahlen-app.js', 'zahlen-texte.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Ausdruck' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'zahlen-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+#     Jede Lücke einer Vorlage wird auch gefüllt. Die Regel steht in
+#     rituale/pruefwerk.py (Aufgabe 55); was ihr fehlt, steht in
+#     Aufgabe 69. Deshalb prüft die Rauchprobe unten zusätzlich am
+#     gezeichneten Ergebnis, dass keine geschweifte Klammer auf der
+#     Seite steht.
+fehler += pruefwerk.pruefe_vorlagenluecken(texte, app, 'zahlen-texte.js')
+
+# ── 7c · Die Texte und die Beugung sind vollständig ───────────
+#     Geprüft wird an den geladenen Werten, nicht am Quelltext: eine
+#     Vorlage, die über drei Zeilen zusammengesetzt ist, sieht im
+#     Quelltext anders aus als auf der Seite.
+hol = hier / '_hol-zahlen.js'
+hol.write_text(
+    "const fs=require('fs'),path=require('path');\n"
+    "function lies(n){return fs.readFileSync(path.join(__dirname,n),'utf8');}\n"
+    "const f=new Function(lies(path.join('..','kern','bahn-daten.js'))+'\\n'+\n"
+    "  lies('zahlen-daten.js')+'\\n'+lies('zahlen-texte.js')+'\\n'+\n"
+    "  'return {T:Z_T, K:Z_KARTEN, L:Z_LABEL, SYS:Z_SYSTEM, NUM:Z_NUM,'+\n"
+    "  ' dein:function(k){return B_BEUGE(Z_LABEL[k],\"nom\");}};');\n"
+    "const r=f();\n"
+    "const dein={}; for(const k in r.L) dein[k]=r.dein(k);\n"
+    "console.log(JSON.stringify({T:r.T,K:r.K,L:r.L,\n"
+    "  SYS:r.SYS.map(s=>({k:s.k,n:s.n})),NUM:r.NUM,dein:dein}));\n",
+    encoding='utf-8')
+D = None
+try:
+    r = subprocess.run(['node', str(hol)], capture_output=True, text=True, timeout=60)
+    if r.returncode == 0 and r.stdout.strip():
+        D = json.loads(r.stdout.strip().splitlines()[-1])
+    else:
+        fehler.append('zahlen-texte.js lässt sich nicht laden: '
+                      + (r.stderr or r.stdout).strip()[-250:])
+except Exception as e:
+    fehler.append('zahlen-texte.js lässt sich nicht laden: ' + str(e)[:200])
+finally:
+    hol.unlink(missing_ok=True)
+
+if D:
+    for k, v in D['T'].items():
+        if isinstance(v, str) and not v.strip():
+            fehler.append(f'Z_T.{k} ist leer')
+    # Die acht Karten des Blattes, mit Name und mit dem Satz, wie die
+    # Zahl zustande kommt.
+    if len(D['K']) != 8:
+        fehler.append(f'{len(D["K"])} statt 8 Karten in Z_KARTEN')
+    for K in D['K']:
+        for feld in ('k', 'n', 'w'):
+            if not str(K.get(feld, '')).strip():
+                fehler.append(f'Z_KARTEN[{K.get("k", "?")}]: Feld {feld} fehlt')
+        if len(str(K.get('w', ''))) < 40:
+            fehler.append(f'Z_KARTEN[{K.get("k", "?")}]: der Satz ist zu dünn')
+    # Jede eigene Zahl, die der Ring vorlesen kann, trägt ihr
+    # Geschlecht — sonst steht „deine Ausdruck" auf der Seite.
+    # Welche es sind, sagt die Anzeige selbst (setz(...,'schluessel')).
+    gebraucht = set(re.findall(r"setz\([^,]+,\s*'(\w+)'\)", app))
+    if not gebraucht:
+        fehler.append('die eigenen Zahlen werden anders eingesammelt — '
+                      'dann prüft diese Regel nichts mehr')
+    for k in sorted(gebraucht - set(D['L'])):
+        fehler.append(f'die Anzeige kennt die eigene Zahl „{k}", '
+                      'Z_LABEL trägt sie nicht — B_BEUGE kann sie nicht beugen')
+    for k, L in D['L'].items():
+        if L.get('g') not in ('m', 'w', 's'):
+            fehler.append(f'Z_LABEL.{k}: Geschlecht „{L.get("g")}" ist keins '
+                          'von m, w, s')
+    # Die Tafelnamen der Knöpfe und die Namen der Schulen kommen aus
+    # zwei Dateien und müssen dieselbe Tafel meinen. Bis zum
+    # 2026-11-17 stand auf dem Knopf „Chäldäisch" und in den Daten
+    # „Chaldäische Numerologie" — zwei Schreibweisen, von keiner
+    # Prüfung gehalten (REGELN.md 6f: jeder Schlüssel, der in einen
+    # gebauten Text landet, braucht seine eigene Sperre).
+    schulen = {s['k']: s['n'] for s in D['SYS']}
+    for k, name in D['T']['sysName'].items():
+        stamm = re.sub(r'isch$', '', name)
+        if k not in schulen:
+            fehler.append(f'Z_T.sysName nennt die Tafel {k}, Z_SYSTEM kennt sie nicht')
+        elif not schulen[k].startswith(stamm):
+            fehler.append(f'Z_T.sysName.{k} heißt „{name}", die Schule aber '
+                          f'„{schulen[k]}" — zwei Schreibweisen derselben Tafel')
+    if len(D['T']['zeichen']) != 12:
+        fehler.append('Z_T.zeichen hat nicht zwölf Zeichen')
+    elif D['T']['zeichen'][0] != 'Widder' or D['T']['zeichen'][11] != 'Fische':
+        fehler.append('Z_T.zeichen läuft nicht ab Widder — die Zuordnung '
+                      'rechnet mit dieser Reihenfolge')
+
 # ── 8 · Rauchprobe: die Seite wirklich bedienen ───────────────
 probe = hier / '_probe-zahlen.js'
 probe.write_text(r"""
@@ -187,7 +366,12 @@ const liste=[
  {id:'p2',name:'Zweite Probe',alias:'ZP',y:1966,mo:2,d:29,h:3,mi:5,tz:1,
   lat:48.14,lon:11.58,ort:'Muenchen',wlat:48.14,wlon:11.58,wort:'Muenchen',eigen:false,readings:[]},
  {id:'p3',name:'Mary Lee Baer',alias:'MB',y:1998,mo:11,d:2,h:19,mi:45,tz:1,
-  lat:53.55,lon:9.99,ort:'Hamburg',wlat:53.55,wlon:9.99,wort:'Hamburg',eigen:false,readings:[]}];
+  lat:53.55,lon:9.99,ort:'Hamburg',wlat:53.55,wlon:9.99,wort:'Hamburg',eigen:false,readings:[]},
+ /* Dieses Datum gibt eine Meisterzahl als Lebenszahl (29 → 11). Ohne
+    ein solches Profil prüft die Ringprobe unten die drei Kreise in
+    der Mitte nie — und genau dort stand der Fehler vom 2026-11-17. */
+ {id:'p4',name:'Vierte Probe',alias:'VP',y:1994,mo:12,d:3,h:6,mi:30,tz:1,
+  lat:50.11,lon:8.68,ort:'Frankfurt',wlat:50.11,wlon:8.68,wort:'Frankfurt',eigen:false,readings:[]}];
 const BREITEN=[320,360,390,600,768,1024,1440,1600];
 (async()=>{
 const b=await chromium.launch(); const f=[]; const notiz={};
@@ -253,6 +437,45 @@ for(const n of [1,2,3,4,5,6,7,8,9,11,22,33]){
   await schlecht('Zahl '+n);
 }
 notiz.detailTitel=titel.size; notiz.detailMin=minB;
+
+/* Der Ring sagt dreimal, welche Zahl mir gehört: die goldene Marke,
+   das Vorlesewort im aria-label und die Legende darunter. Alle drei
+   entstehen an verschiedenen Stellen der Anzeige, also müssen sie
+   gegeneinander gehalten werden. Bis zum 2026-11-17 nahmen die drei
+   Meisterzahlen in der Mitte ihr Vorlesewort von einer
+   Schleifenvariablen der Segmente darüber und sagten „deine Zahl"
+   immer dann, wenn die Lebenszahl 9 war (REGELN.md 6f). */
+async function ringLage(seite){
+  return await seite.evaluate(()=>{
+    const g=[...document.querySelectorAll('.z-ring [data-z]')];
+    const z=e=>+e.getAttribute('data-z');
+    return {
+      dein:g.filter(e=>/(^|[^A-Za-zÄÖÜäöüß])[Dd]ein(e|em|en|er|es)?([^A-Za-zÄÖÜäöüß]|$)/
+            .test(e.getAttribute('aria-label')||'')).map(z).sort((a,b)=>a-b),
+      marke:g.filter(e=>!!e.querySelector('[stroke="#E8C97A"]')).map(z).sort((a,b)=>a-b),
+      legende:[...document.querySelectorAll('#zringleg em')]
+        .map(e=>+e.textContent).sort((a,b)=>a-b),
+      lz:(typeof zBlatt!=='undefined'&&zBlatt)?zBlatt.lebenszahl:null};
+  });
+}
+notiz.ringe=[];
+for(const pid of ['p1','p2','p3','p4']){
+  await p.evaluate(x=>document.querySelector('button[data-p="'+x+'"]').click(), pid);
+  await p.waitForTimeout(260);
+  notiz.ringe.push({pid, ohneName:await ringLage(p)});
+  await p.fill('#zname','Mary Lee Baer'); await p.waitForTimeout(480);
+  notiz.ringe[notiz.ringe.length-1].mitName=await ringLage(p);
+  await p.fill('#zname',''); await p.waitForTimeout(400);
+}
+await p.evaluate(()=>document.querySelector('button[data-p="p1"]').click());
+await p.waitForTimeout(260);
+
+/* Keine ungefüllte Lücke auf der Seite. pruefwerk.pruefe_vorlagenluecken
+   findet die Lücke, die niemand irgendwo füllt; eine, die ein anderer
+   Abschnitt zufällig gleich benennt, erst hier (Aufgabe 69). */
+notiz.klammern=await p.evaluate(()=>{
+  const m=document.body.innerText.match(/\{[a-zA-Z][a-zA-Z0-9]*\}/g);
+  return m?[...new Set(m)]:[];});
 
 /* Name eintragen → Namenszahlen müssen auftauchen */
 await p.fill('#zname','Mary Lee Baer'); await p.waitForTimeout(480);
@@ -372,6 +595,45 @@ console.log(JSON.stringify({notiz,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 
+# Die Regel hinter der Ringprobe, in einer eigenen Funktion mit
+# festen Beispielen darunter (REGELN.md 6e): Die Eingabe hängt am
+# Profil, also muss die Regel gegen Fälle gehalten werden, die
+# durchgehen müssen, und gegen die, die anschlagen müssen. Sonst
+# bricht der Bau am Profil statt an der Regel.
+def _ring_tadel(lage):
+    """Was am Ring nicht zusammenpasst. Drei Auskünfte über dieselbe
+    Sache: die goldene Marke, das Vorlesewort, die Legende."""
+    aus = []
+    dein, marke = lage['dein'], lage['marke']
+    legende, lz = lage['legende'], lage['lz']
+    if dein != legende:
+        aus.append('der Ring liest „dein" bei %s vor, die Legende nennt %s'
+                   % (dein or '—', legende or '—'))
+    if lz is None:
+        if marke:
+            aus.append('ohne Lebenszahl ist %s golden markiert' % marke)
+    elif marke != [lz]:
+        aus.append('golden markiert ist %s, die Lebenszahl ist %s'
+                   % (marke or '—', lz))
+    elif lz not in legende:
+        aus.append('die Lebenszahl %s ist markiert, steht aber nicht in der '
+                   'Legende' % lz)
+    return aus
+
+
+assert _ring_tadel({'dein': [4, 7], 'marke': [4], 'legende': [4, 7], 'lz': 4}) == []
+assert _ring_tadel({'dein': [11], 'marke': [11], 'legende': [11], 'lz': 11}) == []
+assert _ring_tadel({'dein': [], 'marke': [], 'legende': [], 'lz': None}) == []
+# Der Fehler vom 2026-11-17: die drei Meisterzahlen sagen „deine
+# Zahl", weil die Lebenszahl 9 ist — markiert ist nur die 9.
+assert _ring_tadel({'dein': [9, 11, 22, 33], 'marke': [9],
+                    'legende': [9], 'lz': 9})
+# Und die Gegenrichtung: die eigene Meisterzahl wird nicht vorgelesen.
+assert _ring_tadel({'dein': [], 'marke': [11], 'legende': [11], 'lz': 11})
+# Eine Marke ohne Lebenszahl, und eine Marke auf der falschen Zahl.
+assert _ring_tadel({'dein': [], 'marke': [7], 'legende': [], 'lz': None})
+assert _ring_tadel({'dein': [4], 'marke': [7], 'legende': [4], 'lz': 4})
+
 pr = None
 try:
     r = subprocess.run(['node', str(probe)], capture_output=True, text=True, timeout=600)
@@ -422,6 +684,21 @@ if pr:
     if op['detail'] != 8:   fehler.append('ohne Profil fehlen die Bereiche im Detail')
     if not op['adresse']:   fehler.append('ohne Profil rechnet die Hausnummer nicht')
     if op['text'] < 9000:   fehler.append(f'ohne Profil nur {op["text"]} Zeichen Seite')
+    for eintrag in s['ringe']:
+        for wann in ('ohneName', 'mitName'):
+            for x in _ring_tadel(eintrag[wann]):
+                fehler.append(f'Ring bei {eintrag["pid"]} ({wann}): {x}')
+    if len(s['ringe']) < 4:
+        fehler.append('die Ringprobe lief über %d statt 4 Profile — eines davon '
+                      'muss eine Meisterzahl als Lebenszahl haben'
+                      % len(s['ringe']))
+    elif not any(e[w]['lz'] in (11, 22, 33)
+                 for e in s['ringe'] for w in ('ohneName', 'mitName')):
+        fehler.append('kein Probeprofil hat eine Meisterzahl als Lebenszahl — '
+                      'dann sind die drei Kreise in der Mitte ungeprüft')
+    if s['klammern']:
+        fehler.append('ungefüllte Vorlagenlücke auf der Seite: '
+                      + ', '.join(s['klammern'][:6]))
     tech = [x['tech'] for x in s['stufen']]
     tiefe = [x['tiefe'] for x in s['stufen']]
     if not (tech[0] == tech[1] == 0):
@@ -440,6 +717,10 @@ if pr:
     print('    Zusatzangaben je Stufe 0–4: %s  (davon Fachsprache %s)' % (tiefe, tech))
     print('    Seitentext je Stufe: %s Zeichen'
           % [x['sichtbar'] for x in s['stufen']])
+    print('    Ring: Marke, Vorlesewort und Legende an %d Profilen '
+          'gegeneinander gehalten (Lebenszahlen %s, je mit und ohne Namen)'
+          % (len(s['ringe']),
+             ', '.join(str(e['ohneName']['lz']) for e in s['ringe'])))
     print('    Adressen: %s' % ', '.join(
         '%s→%s' % (a['a'], a['urteil'] or ('leer' if a['leer'] else '?')) for a in s['adressen']))
 

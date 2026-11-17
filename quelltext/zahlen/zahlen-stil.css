@@ -288,6 +288,34 @@
  border-radius:16px;padding:17px 19px;font-size:15px;line-height:1.65;color:var(--leise,#6B6259);}
 .z-leer a{color:var(--nacht,#2E3A5C);}
 
+/* ── Was bis zum 2026-11-17 im Skript stand ─────────────────────
+   Aufgabe 56: Die Anzeige trug ihre Farben und Schriftgrößen in
+   style-Attributen mit sich. Eine Farbe ist keine Rechnung und kein
+   Satz; sie gehört hierher, damit die Anzeige beim Umzug in eine
+   andere Umgebung nichts davon mitnimmt (PRODUKT.md Abschnitt 7).
+   Die Farben, die aus den Daten kommen (die Farbe einer Zahl), stehen
+   weiter in den Vorlagen — die kennt das Stilblatt nicht. */
+.z-kartenhinweis{margin:12px 0 0;max-width:68ch;}
+.z-leg i.z-pv{background:var(--messing-bg,#F7EFE1);border-color:var(--messing,#9A7235);}
+.z-leg i.z-pk{background:var(--papier,#FFFDFA);border-color:var(--linie,#EBE1D2);}
+.z-leg i.z-py{background:var(--nacht-bg,#E9EDF4);border-color:var(--nacht,#2E3A5C);}
+.z-dmeta span.z-mmein{background:var(--nacht-bg,#E9EDF4);color:var(--nacht,#2E3A5C);}
+.z-detail>p.z-kasten{border-radius:13px;padding:12px 15px;font-size:14.6px;line-height:1.62;}
+.z-detail>p.z-kasten.gold{background:var(--messing-bg,#F7EFE1);}
+.z-detail>p.z-kasten.blau{background:var(--nacht-bg,#E9EDF4);}
+.z-wrolle{font-family:var(--mono,'JetBrains Mono',monospace);font-size:9.5px;
+ letter-spacing:.12em;text-transform:uppercase;color:var(--messing,#9A7235);
+ display:block;margin-bottom:3px;}
+.z-wname{font-family:var(--serif,Fraunces,Georgia,serif);font-size:20px;font-weight:500;
+ color:var(--nacht,#2E3A5C);}
+.z-wohnerg p.z-wlegende{margin-top:7px;}
+.z-mtab .z-plegende{padding:11px 13px 1px;}
+.z-mtab td b.z-ptraegt{color:var(--gruen,#3F6B4A);}
+.z-ptab .z-keiner{color:var(--rost,#A05A3A);}
+.z-bruecke{margin-top:14px;}
+.z-bmein{border-color:var(--nacht,#2E3A5C);background:var(--nacht-bg,#E9EDF4);}
+.z-bmein .t{color:var(--nacht,#2E3A5C);}
+
 @media print{
  .ac-leiste,.z-sprung,.z-einst,.z-filter,.z-werk,.weiter,.niv-leiste{display:none!important;}
  body{background:#fff;}
