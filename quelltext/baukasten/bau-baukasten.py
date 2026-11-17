@@ -38,12 +38,12 @@ appkopf = lies(hier.parent / 'app' / 'app-kopf.html')
 html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<meta name="robots" content="noindex, nofollow">\n'
-        '<title>Baukasten &middot; Werkstatt &middot; Astro-Charlie</title>\n'
+        '<title>Baukasten &middot; Praxis &middot; Schwerkraft</title>\n'
         '<link rel="preconnect" href="https://fonts.googleapis.com">'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
         '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
         '<script src="profil.js"></script>\n'
-        '<style>\n' + lies(rit / 'basis.css') + '\n' + stil + '</style>\n</head><body>\n'
+        '<style>\n' + lies(rit / 'basis.css') + '\n' + lies(wiki / 'schwerkraft.css') + '\n' + stil + '</style>\n</head><body>\n'
         + koerper + '\n<script>\n' + engine + '\n' + daten + '\n' + rechner + '\n' + app
         + '\n</script>\n</body></html>\n')
 ziel = wiki / 'baukasten.html'

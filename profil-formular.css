@@ -1,0 +1,37 @@
+/* Das Profil-Formular (profil-formular.js). Dieselben Regeln wie in
+   profile.html; hier für die Praxis, die sie beim Bauen einbettet. */
+.ortfeld{position:relative;} .ortfeld input{width:100%;}
+.ortliste{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--papier);
+ border:1px solid var(--linie);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
+ max-height:270px;overflow-y:auto;display:none;}
+.ortliste.auf{display:block;}
+.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;
+ border-bottom:1px solid var(--linie);padding:10px 13px;cursor:pointer;font-family:inherit;
+ font-size:14.5px;color:var(--tinte);line-height:1.35;}
+.ortliste button:last-child{border-bottom:0;}
+.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg);}
+.ortliste .land{font-size:12px;color:var(--leise);}
+.ortok{font-size:12.5px;color:var(--leise);margin-top:5px;}
+.karte{background:var(--papier);border:1px solid var(--linie);border-radius:18px;padding:20px 22px;margin-bottom:14px;}
+.felder{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.felder{grid-template-columns:1fr;}}
+.felder label{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
+.felder input,.felder select,.felder textarea{width:100%;padding:10px 12px;border:1px solid var(--linie);
+ border-radius:11px;background:var(--bg);font-family:var(--sans);font-size:15px;color:var(--tinte);}
+.felder textarea{min-height:70px;resize:vertical;}
+.reihe{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+.b{font-family:var(--sans);font-size:14.5px;border:1px solid var(--nacht);background:var(--nacht);
+ color:#fff;padding:10px 20px;border-radius:22px;cursor:pointer;}
+.b.leer{background:none;color:var(--nacht);}
+.b.leer:hover{background:var(--nacht-bg);}
+.b.klein{font-size:13px;padding:7px 14px;}
+.b.warn{border-color:#A05A3A;color:#A05A3A;background:none;}
+.b.warn:hover{background:#A05A3A;color:#fff;}
+.pf-voll{grid-column:1/-1;}
+.pf-klein{text-transform:none;letter-spacing:0;color:var(--leise);font-size:11.5px;}
+.pf-eigen{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:14px;letter-spacing:0;text-transform:none;color:var(--leise);margin:0;}
+.pf-eigen input{width:17px;height:17px;}
+.pf-fehler{font-size:13.5px;color:var(--rost,#A05A3A);}
+.pf-titel{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--nacht);margin:6px 0 10px;}
+@media(max-width:600px){.felder{grid-template-columns:1fr;}}

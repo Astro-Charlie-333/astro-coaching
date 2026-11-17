@@ -13,8 +13,12 @@
     var d;
     try{ d=JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ d=null; }
     if(!d||!d.liste) d=leer();
-    /* Einmalige Übernahme aus der alten Einzelspeicherung */
-    if(!d.liste.length){
+    /* Einmalige Übernahme aus der alten Einzelspeicherung. Wirklich
+       einmalig: Bis zum 18.11. lief sie bei jeder leeren Liste, und wer
+       das letzte Profil löschte, bekam es aus ac_geburt zurück. */
+    var schon=false; try{ schon=!!localStorage.getItem('ac_geburt_uebernommen'); }catch(e){}
+    if(!d.liste.length && !schon){
+      try{ localStorage.setItem('ac_geburt_uebernommen','1'); }catch(e){}
       try{
         var g=JSON.parse(localStorage.getItem(ALT)||'null');
         if(g && g.y){
@@ -97,6 +101,10 @@
       if(d.eigen===pid) d.eigen=null;
       if(d.aktiv===pid) d.aktiv=d.eigen||(d.liste[0]?d.liste[0].id:null);
       sichere(d);
+      /* Die alte Einzelspeicherung trägt sonst die Daten eines
+         gelöschten Menschen weiter. Neu setzen auf das, was jetzt aktiv ist. */
+      try{ localStorage.setItem('ac_geburt_uebernommen','1'); localStorage.removeItem('ac_geburt'); }catch(e){}
+      if(d.aktiv) this.setzeAktiv(d.aktiv);
     },
     alsEigenes:function(pid){
       var d=lade();

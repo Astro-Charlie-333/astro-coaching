@@ -37,7 +37,7 @@ if not wiki.exists():
 BAUTEN = [
     ('rituale/bau.py',        'Rituale'),
     ('start/bau-start.py',    'Start'),
-    ('werkstatt/bau-werkstatt.py', 'Werkstatt'),
+    ('werkstatt/bau-werkstatt.py', 'Praxis'),
     ('raeume/bau-raeume.py',  'Raeume'),
     ('mond/bau-mond.py',      'Mond'),
     ('haeuser/bau-haeuser.py', 'Haeuser'),
@@ -202,6 +202,26 @@ if alte_leiste:
     fehlgeschlagen.append('Leiste läuft auseinander')
 else:
     print('  die Leiste ist auf allen Seiten dieselbe')
+
+# 2c · „Mein Profil" steht fest in der Leiste
+# Mandy am 17.11.: „finde es noch zu krass unübersichtlich mit wo das
+# profil ist." Seit dem 18.11. steht es auf jeder Seite mit Leiste an
+# derselben Stelle, direkt nach den vier Türen — keine fünfte Tür,
+# sondern das eigene Profil. Geprüft wird Markup und Regel, weil die
+# Handarbeitsseiten ihre eigene Kopie von basis.css tragen.
+ohne_ich = []
+for s in seiten:
+    t = s.read_text(encoding='utf-8', errors='replace')
+    if '<nav class="ac-nav">' not in t:
+        continue
+    if not re.search(r'</nav><a class="ac-ich( ist)?" href="profile\.html"[^>]*>Mein Profil</a>', t) \
+            or '.ac-ich{flex:none' not in t or '.ac-ich{order:2' not in t:
+        ohne_ich.append(s.name)
+if ohne_ich:
+    print(f'  {len(ohne_ich)} Seiten ohne „Mein Profil" in der Leiste: ' + ', '.join(ohne_ich[:8]))
+    fehlgeschlagen.append('„Mein Profil" fehlt in der Leiste')
+else:
+    print('  „Mein Profil" steht auf jeder Seite an derselben Stelle')
 
 # 2b · die Startseite heißt „Jetzt"
 # Am 28.10. umbenannt: Sie hieß „Heute" und zeigte zehn Tage — der Name
@@ -731,7 +751,7 @@ ANZEIGEN = {
     'ereignis/ereignis-app.js':    (28, 10),
     'oph/oph-app.js':              (65, 4),
     'niveau/reading-app.js':       (70, 14),
-    'werkstatt/werkstatt-app.js':  (39, 2),
+    'werkstatt/werkstatt-app.js':  (38, 2),
 }
 # Diese sind durch und werden von ihrem eigenen bau-*.py gehalten;
 # sie stehen hier nur, damit auffällt, wenn eine davon zurückfällt und
@@ -852,7 +872,7 @@ if geschrumpft:
 WERKSTATT_SEITEN = {'angebote-struktur.html', 'ueber-mich-vorlage.html',
                     'learning-seite.html', 'konzept-plattform.html',
                     'baukasten.html'}
-_quell_ok = WERKSTATT_SEITEN | {'werkstatt.html'}
+_quell_ok = WERKSTATT_SEITEN | {'werkstatt.html', 'praxis.html'}
 
 
 def _arbeitsseiten_offen(seite, text):
@@ -874,15 +894,15 @@ for s in seiten:
     for z in _arbeitsseiten_offen(s.name, s.read_text(encoding='utf-8', errors='replace')):
         offen.setdefault(z, []).append(s.name)
 fehlt_werkstatt = sorted(z for z in WERKSTATT_SEITEN
-                         if z not in (wiki / 'werkstatt.html').read_text(encoding='utf-8'))
+                         if z not in (wiki / 'praxis.html').read_text(encoding='utf-8'))
 if offen or fehlt_werkstatt:
     for z, von in sorted(offen.items()):
         print(f'  ARBEITSSEITE IM SCHAUFENSTER: {z}  ←  {", ".join(von[:3])}')
     for z in fehlt_werkstatt:
-        print(f'  ARBEITSSEITE NICHT IN DER WERKSTATT: {z}')
-    fehlgeschlagen.append('Arbeitsseite außerhalb der Werkstatt')
+        print(f'  ARBEITSSEITE NICHT IN DER PRAXIS: {z}')
+    fehlgeschlagen.append('Arbeitsseite außerhalb der Praxis')
 else:
-    print(f'  {len(WERKSTATT_SEITEN)} Arbeitsseiten nur in der Werkstatt')
+    print(f'  {len(WERKSTATT_SEITEN)} Arbeitsseiten nur in der Praxis')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
