@@ -186,6 +186,15 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 .kr-achse{stroke:#F05A28;stroke-width:2.5;}
 .kr-al{fill:#F05A28;font-weight:600;}
 
+/* Die Rubrik-Formen (Midcentury × Art Toy), für Dein Bild und Jetzt */
+.form{flex:none;display:inline-block;}
+.form-halb{width:30px;height:15px;border-radius:30px 30px 0 0;background:#F05A28;}
+.form-zwei{width:16px;height:16px;border-radius:50%;background:#F2B33D;box-shadow:11px 0 0 #1F4FD8;margin-right:11px;}
+.form-stern{color:#F05A28;font-size:24px;line-height:1;}
+.form-eck{width:20px;height:20px;border-radius:5px;background:#11897C;}
+.form-ring{width:22px;height:22px;border-radius:50%;border:6px solid #1F4FD8;box-sizing:border-box;}
+.form-mond{width:22px;height:22px;border-radius:50%;background:#1B1B1B;box-shadow:inset -8px 0 0 #F2B33D;}
+
 /* ── Heute: nach Zeitdruck geordnet ─────────────────────────── */
 .ht-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
 @media(max-width:620px){.ht-wrap{padding:0 17px 70px;}}
@@ -662,6 +671,55 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 /* Auf dem Telefon schiebt das Rad die Woche zwei Bildschirme nach unten */
 @media(max-width:900px){.ht-radmini{max-width:280px;margin:0 auto;}}
 
+/* ═══ 18.11. abends: Midcentury × Art Toy ══════════════════ */
+:root{--ko:#1F4FD8; --or:#F05A28; --se:#F2B33D; --pe:#11897C; --ti:#1B1B1B; --pa:#F6F1E7;}
+.ht-jetzt{background:var(--pa);border-bottom:0;}
+@media(min-width:901px){.ht-jetzt-in{grid-template-columns:minmax(0,1.5fr) minmax(0,340px);padding-top:26px;}}
+.ht-held{position:relative;overflow:hidden;background:var(--ko);color:#fff;border-radius:34px;padding:30px 30px 26px;}
+.ht-held>*{position:relative;}
+.ht-held-k1{position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:var(--or);}
+.ht-held-k2{position:absolute;right:60px;top:104px;width:34px;height:34px;border-radius:50%;background:var(--se);}
+.ht-tag{font-family:var(--serif);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px;color:#CFE0FF;}
+.ht-gruss{color:#fff;font-weight:600!important;padding-right:90px;}
+.ht-gruss em{color:var(--se);font-style:normal;}
+.ht-satz,.ht-satz b{color:#fff;}
+.ht-satz{font-size:clamp(16px,1.8vw,18px);margin-bottom:6px;}
+.ht-auf-k{border:0!important;border-radius:24px;box-shadow:none;color:var(--ti);}
+.ht-auf-w{color:var(--or)!important;}
+.ht-techzeile{background:rgba(255,255,255,.12);border:0;color:#E4ECFF;margin-top:12px;}
+@media(max-width:900px){.ht-held{padding:24px 20px 20px;border-radius:28px;}
+ .ht-held-k1{width:160px;height:160px;right:-60px;top:-60px;} .ht-held-k2{right:44px;top:82px;width:28px;height:28px;}
+ .ht-gruss{padding-right:70px;}}
+
+/* Das kleine Rad hell, ohne dunklen Kasten */
+.ht-radmini{background:none;box-shadow:none;padding:0;max-width:320px;margin:0 auto;}
+.ht-radmini .kr-hf{fill:#FFFFFF;stroke:#E6DECF;}
+.ht-radmini .kr-haus.heut .kr-hf{fill:#DCE6FB;stroke:#E6DECF;}
+.ht-radmini .kr-hz{fill:#8C8273;font-size:17px;}
+.ht-radmini .kr-haus.heut .kr-hz{fill:var(--ko);font-weight:600;}
+.ht-radmini .kr-pg{fill:var(--ti);font-size:24px;}
+.ht-radmini .kr-strich{stroke:#D3C9B6;}
+.ht-radmini .kr-achse{stroke:var(--or);}
+.ht-radmini .kr-al{fill:var(--or);}
+.ht-radmini .kr-tring{stroke:#D3C9B6;}
+.ht-radmini .kr-tk{fill:var(--or);stroke:#fff;stroke-width:2;}
+.ht-radmini .kr-tg{fill:#fff;font-size:13px;}
+.ht-radu a{color:var(--ti);font-weight:500;}
+
+/* Überschriften mit Form */
+.ht-h{display:flex;align-items:center;gap:12px;font-weight:600!important;letter-spacing:-.02em;}
+
+/* Karten: weiß, rund, ohne Rahmen; die Farbe trägt die Art */
+.ht-b,.tr,.th,.ht-wk,.ht-k,.ht-strahl li,.st-z{border-color:transparent;}
+.ht-b,.th{border-radius:24px!important;border:0!important;background:#fff;}
+.th-marke{background:var(--ti)!important;color:#fff!important;border:0!important;border-radius:999px;}
+.th-mehr{margin-top:12px;border-top:1px solid #EFE8DB;padding-top:10px;}
+.th-mehr>summary{cursor:pointer;font-weight:600;color:var(--ti);list-style:none;display:flex;align-items:center;gap:8px;min-height:36px;}
+.th-mehr>summary::-webkit-details-marker{display:none;}
+.th-mehr>summary::before{content:"+";width:26px;height:26px;border-radius:50%;background:var(--pa);display:inline-flex;align-items:center;justify-content:center;font-weight:500;}
+.th-mehr[open]>summary::before{content:"–";}
+@media(max-width:900px){.ht-radmini{max-width:250px;}}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -695,7 +753,10 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 </div></div>
 
 <div class="ht-jetzt" id="htjetzt"><div class="ht-jetzt-in">
-  <div>
+  <!-- 18.11. Midcentury: der Tag in einer blauen Fläche, wie auf Dein Bild -->
+  <div class="ht-held">
+    <span class="ht-held-k1" aria-hidden="true"></span>
+    <span class="ht-held-k2" aria-hidden="true"></span>
     <div class="ht-tag" id="httag"></div>
     <h1 class="ht-gruss" id="htgruss">&nbsp;</h1>
     <div class="ht-auf" id="htaufmacher"></div>
@@ -722,7 +783,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
      Woche". Jetzt steht zuerst ihre Form, dann die Tage.
      ENTWURF-JETZT.md Abschnitt 3. -->
 <div id="htwocheteil">
-  <h2 class="ht-h">Deine Woche</h2>
+  <h2 class="ht-h"><span class="form form-zwei" aria-hidden="true"></span>Deine Woche</h2>
   <p class="ht-sub">Sieben Tage ab heute. Erst die Form der Woche, dann die Tage mit festem Termin. Was eine Vorbereitung braucht, sagt es dazu.</p>
   <p class="wo-form" id="htwoform"></p>
   <nav class="wo-band" id="htwoband" aria-label="Die sieben Tage dieser Woche"></nav>
@@ -735,7 +796,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
      konkret getroffen? Heute ist da angeblich nichts bei mir, aber
      das wage ich zu bezweifeln." Sie hatte recht. -->
 <div id="httrefferteil">
-  <h2 class="ht-h" id="httrefferh"></h2>
+  <h2 class="ht-h"><span class="form form-stern" aria-hidden="true">&#10022;</span><span id="httrefferh"></span></h2>
   <p class="ht-sub" id="httreffersub"></p>
   <div class="ht-treffer" id="httreffer"></div>
   <button type="button" class="tr-mehr" id="httreffermehr" hidden></button>
@@ -743,7 +804,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 </div>
 
 <div id="htbereicheteil">
-  <h2 class="ht-h">Wo gerade am meisten los ist</h2>
+  <h2 class="ht-h"><span class="form form-eck" aria-hidden="true"></span>Wo gerade am meisten los ist</h2>
   <p class="ht-sub">Deine Lebensbereiche, der lauteste zuerst. Zu jedem steht, was los ist, was du tun kannst und bis wann es l&auml;uft.</p>
   <p class="ht-bwhin" id="htbwhin" hidden></p>
   <div class="ht-ber" id="htber"></div>
@@ -759,7 +820,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
      obwohl die Rechnung sie l&auml;ngst kannte: Sie wurden in
      Bereichsnamen &uuml;bersetzt und damit unkenntlich gemacht. -->
 <div id="htthementeil">
-  <h2 class="ht-h" id="htthemenh"></h2>
+  <h2 class="ht-h"><span class="form form-halb" aria-hidden="true"></span><span id="htthemenh"></span></h2>
   <p class="ht-sub" id="htthemensub"></p>
   <div class="ht-themen" id="htthemen"></div>
   <p class="th-langsam" id="htthlangsam"></p>
@@ -767,7 +828,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 
 <!-- Der Zeitstrahl: zwoelf Monate, exakte Tage, aufklappbar. -->
 <div id="htstrahlteil">
-  <h2 class="ht-h" id="htstrahlh"></h2>
+  <h2 class="ht-h"><span class="form form-ring" aria-hidden="true"></span><span id="htstrahlh"></span></h2>
   <p class="ht-sub" id="htstrahlsub"></p>
   <div class="ht-strahl" id="htstrahl"></div>
   <button type="button" class="tr-mehr" id="htstrahlmehr" hidden></button>
@@ -778,7 +839,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
      nebeneinanderstehen &mdash; deshalb stehen sie hier getrennt
      ausgewiesen und nicht vermischt. -->
 <div id="htkoerperteil">
-  <h2 class="ht-h" id="htkoerperh"></h2>
+  <h2 class="ht-h"><span class="form form-mond" aria-hidden="true"></span><span id="htkoerperh"></span></h2>
   <p class="ht-sub" id="htkoerpersub"></p>
   <div class="ht-koerper" id="htkoerper"></div>
 </div>
@@ -4068,6 +4129,7 @@ var T_KOPF = {
  beiDirVor:'Bei dir',
  gutVor:'Gut dafür',
  dazuVor:'Was oft zu groß erzählt wird',
+ mehrVor:'Mehr dazu',
  nochEinenTag:'noch 1 Tag',
  laeuft:'läuft',
  heute:'heute',
@@ -5131,6 +5193,9 @@ function themaKarte(o){
      als ein Absatz: Mandy am 28.10. wollte genau diese Konkretheit
      — „wichtig dass technik kaputt gehen kann oder travel
      Schwierigkeiten". */
+  /* 18.11.: Was danach kommt, liegt hinter „Mehr dazu" — sonst war
+     jede Karte ein ganzer Bildschirm (Mandy: „too much"). */
+  var vorMehr=h.length;
   if(o.felder && o.felder.length)
     h.push('<ul class="th-felder">'+o.felder.map(function(f){
       return '<li><b>'+esc(f[0])+'</b>'+esc(f[1])+'</li>'; }).join('')+'</ul>');
@@ -5144,6 +5209,10 @@ function themaKarte(o){
   if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
   if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
                     '</summary><p>'+esc(o.dazu)+'</p></details>');
+  if(h.length>vorMehr){
+    var rest=h.splice(vorMehr);
+    h.push('<details class="th-mehr"><summary>'+esc(T_KOPF.mehrVor)+'</summary>'+rest.join('')+'</details>');
+  }
   if(o.tech) h.push('<div class="th-tech ac-tech" data-ab="2">'+esc(o.tech)+'</div>');
   h.push('</article>');
   return h.join('');

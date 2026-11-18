@@ -335,6 +335,9 @@ function themaKarte(o){
      als ein Absatz: Mandy am 28.10. wollte genau diese Konkretheit
      — „wichtig dass technik kaputt gehen kann oder travel
      Schwierigkeiten". */
+  /* 18.11.: Was danach kommt, liegt hinter „Mehr dazu" — sonst war
+     jede Karte ein ganzer Bildschirm (Mandy: „too much"). */
+  var vorMehr=h.length;
   if(o.felder && o.felder.length)
     h.push('<ul class="th-felder">'+o.felder.map(function(f){
       return '<li><b>'+esc(f[0])+'</b>'+esc(f[1])+'</li>'; }).join('')+'</ul>');
@@ -348,6 +351,10 @@ function themaKarte(o){
   if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
   if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
                     '</summary><p>'+esc(o.dazu)+'</p></details>');
+  if(h.length>vorMehr){
+    var rest=h.splice(vorMehr);
+    h.push('<details class="th-mehr"><summary>'+esc(T_KOPF.mehrVor)+'</summary>'+rest.join('')+'</details>');
+  }
   if(o.tech) h.push('<div class="th-tech ac-tech" data-ab="2">'+esc(o.tech)+'</div>');
   h.push('</article>');
   return h.join('');

@@ -229,3 +229,23 @@
  .st-schritte li{grid-template-columns:1fr;gap:12px;padding:18px 17px 20px;align-content:start;}
  .st-schritte li::before{width:34px;height:34px;font-size:14px;}
 }
+
+/* 18.11. abends: Midcentury. Der Kopf blau wie auf Dein Bild,
+   „Was das hier nicht ist" schwarz, die Begleitung als blaue Karte. */
+.st-kopf{background:var(--sk-kobalt);}
+.st-wort{color:#CFE0FF;}
+.st-satz{color:#E4ECFF;} .st-rolle{color:#CFE0FF;border-top-color:rgba(255,255,255,.25);}
+.st-kn-1{background:var(--sk-kupfer);color:#fff;} .st-kn-1:hover{background:#D9481C;}
+.st-bahnen .b{stroke:rgba(255,255,255,.35);} .st-bahnen .b2{stroke:rgba(255,255,255,.22);}
+.st-bahnen .hof{fill:rgba(255,255,255,.12);} .st-bahnen .kern{fill:var(--sk-kupfer);}
+.st-bahnen .k1{fill:#fff;} .st-bahnen .k2{fill:var(--sk-kupfer-hell);} .st-bahnen .k3{fill:var(--sk-kupfer);}
+.st-a:nth-child(2){background:var(--sk-kobalt);border-color:var(--sk-kobalt);}
+.st-a:nth-child(2) .st-a-nicht{color:#CFE0FF;}
+.st-a:first-child{border-top:0;}
+.st-li::before{color:var(--sk-kupfer);font-weight:600;}
+.st-li,.st-a,.st-schritte li,.st-k{border:0;border-radius:24px;}
+.st-schritte li::before{background:var(--sk-kupfer);color:#fff;}
+.st-w{background:#fff;border:0;border-radius:22px;}
+.st-nicht{background:var(--nacht);}
+.st-n1{border-radius:20px;}
+.st-h2{font-weight:600;}

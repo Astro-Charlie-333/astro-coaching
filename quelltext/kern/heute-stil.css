@@ -473,3 +473,52 @@
 }
 /* Auf dem Telefon schiebt das Rad die Woche zwei Bildschirme nach unten */
 @media(max-width:900px){.ht-radmini{max-width:280px;margin:0 auto;}}
+
+/* ═══ 18.11. abends: Midcentury × Art Toy ══════════════════ */
+:root{--ko:#1F4FD8; --or:#F05A28; --se:#F2B33D; --pe:#11897C; --ti:#1B1B1B; --pa:#F6F1E7;}
+.ht-jetzt{background:var(--pa);border-bottom:0;}
+@media(min-width:901px){.ht-jetzt-in{grid-template-columns:minmax(0,1.5fr) minmax(0,340px);padding-top:26px;}}
+.ht-held{position:relative;overflow:hidden;background:var(--ko);color:#fff;border-radius:34px;padding:30px 30px 26px;}
+.ht-held>*{position:relative;}
+.ht-held-k1{position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:var(--or);}
+.ht-held-k2{position:absolute;right:60px;top:104px;width:34px;height:34px;border-radius:50%;background:var(--se);}
+.ht-tag{font-family:var(--serif);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px;color:#CFE0FF;}
+.ht-gruss{color:#fff;font-weight:600!important;padding-right:90px;}
+.ht-gruss em{color:var(--se);font-style:normal;}
+.ht-satz,.ht-satz b{color:#fff;}
+.ht-satz{font-size:clamp(16px,1.8vw,18px);margin-bottom:6px;}
+.ht-auf-k{border:0!important;border-radius:24px;box-shadow:none;color:var(--ti);}
+.ht-auf-w{color:var(--or)!important;}
+.ht-techzeile{background:rgba(255,255,255,.12);border:0;color:#E4ECFF;margin-top:12px;}
+@media(max-width:900px){.ht-held{padding:24px 20px 20px;border-radius:28px;}
+ .ht-held-k1{width:160px;height:160px;right:-60px;top:-60px;} .ht-held-k2{right:44px;top:82px;width:28px;height:28px;}
+ .ht-gruss{padding-right:70px;}}
+
+/* Das kleine Rad hell, ohne dunklen Kasten */
+.ht-radmini{background:none;box-shadow:none;padding:0;max-width:320px;margin:0 auto;}
+.ht-radmini .kr-hf{fill:#FFFFFF;stroke:#E6DECF;}
+.ht-radmini .kr-haus.heut .kr-hf{fill:#DCE6FB;stroke:#E6DECF;}
+.ht-radmini .kr-hz{fill:#8C8273;font-size:17px;}
+.ht-radmini .kr-haus.heut .kr-hz{fill:var(--ko);font-weight:600;}
+.ht-radmini .kr-pg{fill:var(--ti);font-size:24px;}
+.ht-radmini .kr-strich{stroke:#D3C9B6;}
+.ht-radmini .kr-achse{stroke:var(--or);}
+.ht-radmini .kr-al{fill:var(--or);}
+.ht-radmini .kr-tring{stroke:#D3C9B6;}
+.ht-radmini .kr-tk{fill:var(--or);stroke:#fff;stroke-width:2;}
+.ht-radmini .kr-tg{fill:#fff;font-size:13px;}
+.ht-radu a{color:var(--ti);font-weight:500;}
+
+/* Überschriften mit Form */
+.ht-h{display:flex;align-items:center;gap:12px;font-weight:600!important;letter-spacing:-.02em;}
+
+/* Karten: weiß, rund, ohne Rahmen; die Farbe trägt die Art */
+.ht-b,.tr,.th,.ht-wk,.ht-k,.ht-strahl li,.st-z{border-color:transparent;}
+.ht-b,.th{border-radius:24px!important;border:0!important;background:#fff;}
+.th-marke{background:var(--ti)!important;color:#fff!important;border:0!important;border-radius:999px;}
+.th-mehr{margin-top:12px;border-top:1px solid #EFE8DB;padding-top:10px;}
+.th-mehr>summary{cursor:pointer;font-weight:600;color:var(--ti);list-style:none;display:flex;align-items:center;gap:8px;min-height:36px;}
+.th-mehr>summary::-webkit-details-marker{display:none;}
+.th-mehr>summary::before{content:"+";width:26px;height:26px;border-radius:50%;background:var(--pa);display:inline-flex;align-items:center;justify-content:center;font-weight:500;}
+.th-mehr[open]>summary::before{content:"–";}
+@media(max-width:900px){.ht-radmini{max-width:250px;}}
