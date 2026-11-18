@@ -35,7 +35,7 @@
   text-transform:uppercase;color:var(--sk-kupfer-hell);margin-bottom:18px;}
 .st-frage{font-family:var(--serif);font-weight:300;
   font-size:clamp(31px,7.6vw,52px);line-height:1.06;letter-spacing:-.022em;
-  color:#FFFDFA;margin:0 0 20px;max-width:21ch;text-wrap:balance;}
+  color:#FFFFFF;margin:0 0 20px;max-width:21ch;text-wrap:balance;}
 .st-satz{font-size:clamp(16px,2.9vw,18.5px);line-height:1.6;
   color:#DCD6CA;max-width:50ch;margin:0 0 26px;}
 .st-knoepfe{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
@@ -130,12 +130,12 @@
 .st-nicht{background:var(--nacht);color:#E8E3D9;margin-top:54px;
   padding:48px 0 44px;}
 .st-nicht-in{max-width:1040px;margin:0 auto;padding:0 20px;}
-.st-h2-hell{color:#FFFDFA;}
+.st-h2-hell{color:#FFFFFF;}
 .st-sub-hell{color:#C3BCAE;margin-bottom:24px;}
 .st-np{display:grid;gap:10px;margin-bottom:26px;}
 .st-n1{background:rgba(244,241,234,.07);border-radius:13px;padding:15px 17px;}
 .st-n1 b{display:block;font-family:var(--serif);font-size:18.6px;
-  font-weight:500;color:#FFFDFA;margin-bottom:4px;}
+  font-weight:500;color:#FFFFFF;margin-bottom:4px;}
 .st-n1 span{font-size:14.8px;line-height:1.58;color:#D3CCBE;}
 .st-krise{border:1px solid rgba(227,180,142,.42);border-radius:14px;
   padding:17px 18px;}

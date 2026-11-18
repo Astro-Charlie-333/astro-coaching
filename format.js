@@ -8,7 +8,7 @@ var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skor
 var GLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',
  Uranus:'♅',Neptun:'♆',Pluto:'♇',ASC:'AC',MC:'MC',Lilith:'⚸',Chiron:'⚷'};
 var HK=['Person','Wert','Sprache','Zuhause','Ausdruck','Alltag','Partnerschaft','Tiefe','Sinn','Beruf','Gruppen','Rückzug'];
-var AFARBE={Konjunktion:'#9A7235',Sextil:'#3E6B8A',Quadrat:'#A5462A',Trigon:'#3E6B8A',Opposition:'#A5462A'};
+var AFARBE={Konjunktion:'#C8441A',Sextil:'#3E6B8A',Quadrat:'#A5462A',Trigon:'#3E6B8A',Opposition:'#A5462A'};
 
 var CSS = `
 .fm-leiste{display:flex;gap:9px;align-items:center;flex-wrap:wrap;background:var(--papier);
@@ -79,7 +79,7 @@ function ring(v){
     var x3=C+RI*Math.cos(a1), y3=C+RI*Math.sin(a1);
     var x4=C+RI*Math.cos(a0), y4=C+RI*Math.sin(a0);
     var hn=i+1;
-    var fill = anker[hn] ? '#2E3A5C' : (belegt[hn] ? '#E4DACB' : '#FFFDFA');
+    var fill = anker[hn] ? '#1B1B1B' : (belegt[hn] ? '#E4DACB' : '#FFFFFF');
     if(anker[hn]&&belegt[hn]) fill='#1F2A47';
     s.appendChild(NS('path',{d:'M'+x1+','+y1+' A'+RA+','+RA+' 0 0 1 '+x2+','+y2+
       ' L'+x3+','+y3+' A'+RI+','+RI+' 0 0 0 '+x4+','+y4+' Z',
@@ -94,13 +94,13 @@ function ring(v){
   pl.forEach(function(p,idx){
     var hn=p[1], am=((hn-1)*30+15-90)*Math.PI/180;
     var r=RI-9-(idx%2)*11;
-    var t=NS('text',{x:C+r*Math.cos(am), y:C+r*Math.sin(am)+5,'text-anchor':'middle','font-size':14,fill:'#2E3A5C'});
+    var t=NS('text',{x:C+r*Math.cos(am), y:C+r*Math.sin(am)+5,'text-anchor':'middle','font-size':14,fill:'#1B1B1B'});
     t.textContent=GLY[p[0]]||p[0]; s.appendChild(t);
   });
   /* Stärke als Ring außen */
   var u=2*Math.PI*62, anteil=Math.max(4,v.rel||0)/100;
-  s.appendChild(NS('circle',{cx:C,cy:C,r:62,fill:'none',stroke:'#EBE1D2','stroke-width':3}));
-  s.appendChild(NS('circle',{cx:C,cy:C,r:62,fill:'none',stroke:'#9A7235','stroke-width':3,
+  s.appendChild(NS('circle',{cx:C,cy:C,r:62,fill:'none',stroke:'#E6DECF','stroke-width':3}));
+  s.appendChild(NS('circle',{cx:C,cy:C,r:62,fill:'none',stroke:'#C8441A','stroke-width':3,
     'stroke-dasharray':(u*anteil)+' '+u,'stroke-linecap':'round',
     transform:'rotate(-90 '+C+' '+C+')'}));
   return s;
@@ -145,7 +145,7 @@ function zeichneVis(el){
     var as=document.createElement('div'); as.className='vis-asp';
     v.aspekte.forEach(function(a){
       var d=document.createElement('div'); d.className='vis-a';
-      d.innerHTML='<i style="background:'+(AFARBE[a[1]]||'#9A7235')+'"></i>'+
+      d.innerHTML='<i style="background:'+(AFARBE[a[1]]||'#C8441A')+'"></i>'+
         (GLY[a[0]]||a[0])+' '+(GLY[a[2]]||a[2])+' '+a[3]+'°';
       as.appendChild(d);
     });

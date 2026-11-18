@@ -44,18 +44,18 @@ if fehler:
 # ── 1 · Stil ────────────────────────────────────────────────
 stil = """
 /* Nachgerüstet: deine eigenen Stellungen */
-.pih-meins{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
+.pih-meins{background:var(--messing-bg,#FCE4D6);border:1px solid var(--messing,#C8441A);
  border-radius:17px;padding:15px 18px;margin:0 0 18px;}
 .pih-meins .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.13em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:9px;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:9px;}
 .pih-meins .reihe{display:flex;flex-wrap:wrap;gap:6px;}
 .pih-meins button{font-family:inherit;font-size:13.4px;padding:7px 13px;border-radius:17px;
- border:1px solid var(--linie-stark,#DDD0BC);background:var(--papier,#FFFDFA);
- color:var(--tinte,#231F1A);cursor:pointer;}
-.pih-meins button:hover{border-color:var(--nacht,#2E3A5C);}
-.pih-meins button .g{color:var(--messing,#9A7235);margin-right:6px;}
-.pih-meins .hin{font-size:13.2px;color:var(--leise,#6B6259);margin-top:9px;}
-.pih-karte{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:17px;
+ border:1px solid var(--linie-stark,#D3C9B6);background:var(--papier,#FFFFFF);
+ color:var(--tinte,#1B1B1B);cursor:pointer;}
+.pih-meins button:hover{border-color:var(--nacht,#1B1B1B);}
+.pih-meins button .g{color:var(--messing,#C8441A);margin-right:6px;}
+.pih-meins .hin{font-size:13.2px;color:var(--leise,#5E584D);margin-top:9px;}
+.pih-karte{background:var(--nacht,#1B1B1B);color:#F4EFE6;border-radius:17px;
  padding:16px 19px;margin:0 0 18px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;}
 .pih-karte p{margin:0;font-size:14.8px;line-height:1.6;flex:1 1 200px;min-width:0;color:rgba(244,239,230,.9);}
 .pih-karte a{color:#E8C97A;}

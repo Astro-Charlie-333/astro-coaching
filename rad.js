@@ -13,7 +13,7 @@ var PERS={Sonne:1,Mond:1,ASC:1,MC:1,Merkur:1,Venus:1,Mars:1};
 var ELFARBE=['#F6E6DE','#EDEFE3','#E9EEF3','#E9E6F0'];
 var ELRAND =['#DCC3B6','#D3D8C2','#C8D6E2','#CFC8DC'];
 var ASPEKTE=[
- {w:0,  n:'Konjunktion', f:'#9A7235', fak:1,   art:'neutral', strich:'none'},
+ {w:0,  n:'Konjunktion', f:'#C8441A', fak:1,   art:'neutral', strich:'none'},
  {w:60, n:'Sextil',      f:'#3E6B8A', fak:0.5, art:'weich',   strich:'5 4'},
  {w:90, n:'Quadrat',     f:'#A5462A', fak:0.8, art:'hart',    strich:'none'},
  {w:120,n:'Trigon',      f:'#3E6B8A', fak:0.8, art:'weich',   strich:'none'},
@@ -97,11 +97,11 @@ window.AC_rad=function(opt){
     var R_AUS=272, R_ZEICH=236, R_TICK=226, R_HAUS=190, R_INNEN=162;
     var R_PL=178, R_PLT=256;
 
-    s.appendChild(NS('circle',{cx:C,cy:C,r:R_AUS,fill:'#FFFDFA',stroke:'#D9CDBC','stroke-width':1.2}));
+    s.appendChild(NS('circle',{cx:C,cy:C,r:R_AUS,fill:'#FFFFFF',stroke:'#D9CDBC','stroke-width':1.2}));
     s.appendChild(NS('circle',{cx:C,cy:C,r:R_ZEICH,fill:'none',stroke:'#D9CDBC','stroke-width':1.2}));
-    s.appendChild(NS('circle',{cx:C,cy:C,r:R_TICK,fill:'none',stroke:'#EBE1D2','stroke-width':.8}));
+    s.appendChild(NS('circle',{cx:C,cy:C,r:R_TICK,fill:'none',stroke:'#E6DECF','stroke-width':.8}));
     s.appendChild(NS('circle',{cx:C,cy:C,r:R_HAUS,fill:'none',stroke:'#D9CDBC','stroke-width':1.2}));
-    s.appendChild(NS('circle',{cx:C,cy:C,r:R_INNEN,fill:'#FCF9F4',stroke:'#EBE1D2','stroke-width':1}));
+    s.appendChild(NS('circle',{cx:C,cy:C,r:R_INNEN,fill:'#FCF9F4',stroke:'#E6DECF','stroke-width':1}));
 
     for(var i=0;i<12;i++){
       var a0=basis+i*30, a1=a0+30, zi=Math.floor(nrm(a0)/30);
@@ -126,7 +126,7 @@ window.AC_rad=function(opt){
       var ah=basis+h*30;
       var r1=pos(ah,R_INNEN), r2=pos(ah,R_HAUS), haupt=(h%3===0);
       s.appendChild(NS('line',{x1:r1[0],y1:r1[1],x2:r2[0],y2:r2[1],
-        stroke:haupt?'#2E3A5C':'#DDD0BC','stroke-width':haupt?1.6:.9}));
+        stroke:haupt?'#1B1B1B':'#D3C9B6','stroke-width':haupt?1.6:.9}));
       var hm=pos(ah+15,(R_INNEN+R_HAUS)/2);
       var ht=NS('text',{x:hm[0],y:hm[1]+4,'text-anchor':'middle','font-size':11.5,fill:'#8B7E6C'});
       ht.textContent=(h+1); s.appendChild(ht);
@@ -135,11 +135,11 @@ window.AC_rad=function(opt){
     [['ASC',P.ASC,'AC','DC'],['MC',P.MC,'MC','IC']].forEach(function(x){
       if(x[1]===undefined) return;
       var g1=pos(x[1],R_INNEN);
-      s.appendChild(NS('line',{x1:C,y1:C,x2:g1[0],y2:g1[1],stroke:'#2E3A5C','stroke-width':1.2,'stroke-opacity':.28}));
+      s.appendChild(NS('line',{x1:C,y1:C,x2:g1[0],y2:g1[1],stroke:'#1B1B1B','stroke-width':1.2,'stroke-opacity':.28}));
       var ha=pos(x[1],R_HAUS), hb=pos(x[1],R_AUS+7);
-      s.appendChild(NS('line',{x1:ha[0],y1:ha[1],x2:hb[0],y2:hb[1],stroke:'#2E3A5C','stroke-width':2}));
+      s.appendChild(NS('line',{x1:ha[0],y1:ha[1],x2:hb[0],y2:hb[1],stroke:'#1B1B1B','stroke-width':2}));
       var lp=pos(x[1],R_AUS+17);
-      var lt=NS('text',{x:lp[0],y:lp[1]+4,'text-anchor':'middle','font-size':12,fill:'#2E3A5C','font-weight':'600'});
+      var lt=NS('text',{x:lp[0],y:lp[1]+4,'text-anchor':'middle','font-size':12,fill:'#1B1B1B','font-weight':'600'});
       lt.textContent=x[2]; s.appendChild(lt);
       var gp=pos(x[1],R_AUS+29);
       var gt=NS('text',{x:gp[0],y:gp[1]+3,'text-anchor':'middle','font-size':9.5,fill:'#8B7E6C'});
@@ -180,7 +180,7 @@ window.AC_rad=function(opt){
         var pa=pos(x.l,radius+(istTransit?-12:12)), pb=pos(x.z,radius+(istTransit?-5:5));
         s.appendChild(NS('line',{x1:pa[0],y1:pa[1],x2:pb[0],y2:pb[1],stroke:'#C9BCA8','stroke-width':.7}));
         var beteiligt = gewaehlt>=0 && (asp[gewaehlt].a===x.k||asp[gewaehlt].b===x.k);
-        if(beteiligt) s.appendChild(NS('circle',{cx:pz[0],cy:pz[1]-5,r:14,fill:'#F7EFE1',stroke:'#9A7235','stroke-width':1.4}));
+        if(beteiligt) s.appendChild(NS('circle',{cx:pz[0],cy:pz[1]-5,r:14,fill:'#FCE4D6',stroke:'#C8441A','stroke-width':1.4}));
         var t=NS('text',{x:pz[0],y:pz[1],'text-anchor':'middle','font-size':20,fill:farbe,
           'fill-opacity':(gewaehlt>=0&&!beteiligt)?.28:1});
         t.textContent=GLY[x.k]||x.k; s.appendChild(t);
@@ -191,7 +191,7 @@ window.AC_rad=function(opt){
         s.appendChild(gt);
       });
     }
-    punkte(P,R_PL,'#2E3A5C',false);
+    punkte(P,R_PL,'#1B1B1B',false);
     if(zwei) punkte(T,R_PLT,'#A5462A',true);
   }
 

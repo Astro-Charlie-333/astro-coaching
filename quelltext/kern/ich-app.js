@@ -105,8 +105,18 @@ function kopfBauen(p, M){
     zeit:  ('0'+p.h).slice(-2) + ':' + ('0'+p.mi).slice(-2),
     ort:   (p.ort ? fuellen(I_GEBOREN_ORT, {ort:p.ort}) : '')});
   el('ichdat').textContent='';
-  el('ichleit').textContent=kopfSatz(M);
-  el('ichleitzu').textContent=I_KOPF.nach;
+  /* Groß steht nur der erste Satz; der zweite läuft klein weiter. */
+  var satz=kopfSatz(M)||'', cut=satz.indexOf('. ');
+  el('ichleit').textContent=cut>0?satz.slice(0,cut+1):satz;
+  el('ichleitzu').textContent=(cut>0?satz.slice(cut+2)+' ':'')+I_KOPF.nach;
+  el('ichauge').textContent=I_KOPF_AUGE;
+  el('ichradfuss').innerHTML=
+    '<span><i class="lf"></i>'+esc(I_RAD_LEG.fliesst)+'</span>'+
+    '<span><i class="lr"></i>'+esc(I_RAD_LEG.reibt)+'</span>'+
+    '<span><i class="lh"></i>'+esc(I_RAD_LEG.heute)+'</span>';
+  el('ichweitert').textContent=I_ZU_JETZT.text;
+  el('ichweiter').setAttribute('href',I_ZU_JETZT.href);
+  el('ichfelderleg').textContent=I_FELDER_LEG;
 }
 
 /* ── Die drei Stellen, die den Grundton setzen ──────────────────
@@ -131,12 +141,14 @@ function dreiBauen(){
       tech=fuellen(I_DREI_TECH,{zeichen:I_SIGNS[z], grad:gradKurz(l),
                                 haus:h, bereich:I_HAUS[h-1].k});
     }
-    return '<article class="dk dk-'+I_DREI.indexOf(d)+'">'+
-      '<span class="dk-gl" aria-hidden="true">'+I_ZGL[z]+'\uFE0E</span>'+
-      '<div class="rolle">'+esc(d.rolle)+'</div>'+
-      '<p class="wert">'+esc(d.was)+'</p>'+
+    return '<details class="dk dk-e'+(z%4)+'"><summary>'+
+      '<span class="dk-kreis" aria-hidden="true">'+I_DREI_ZEICHEN[d.k]+'\uFE0E</span>'+
+      '<span class="dk-t"><span class="dk-l">'+esc(I_DREI_LABEL[d.k])+'</span>'+
+      '<span class="dk-k">'+esc(I_KURZ[d.k][z])+'</span></span>'+
+      '<span class="dk-plus" aria-hidden="true"></span></summary>'+
+      '<div class="dk-mehr"><p class="wert">'+esc(d.was)+'</p>'+
       '<p class="zu">'+esc(bereich)+'</p>'+
-      '<p class="zu ac-tech" data-ab="2">'+esc(tech)+'</p></article>';
+      '<p class="zu ac-tech" data-ab="2">'+esc(tech)+'</p></div></details>';
   }).join('');
 }
 
@@ -158,16 +170,17 @@ function elementBauen(){
   for(var i=1;i<4;i++){ if(sum[i]>sum[max]) max=i; if(sum[i]<sum[min]) min=i; }
   el('ichelemh').textContent=I_ELEM.titel;
   el('ichelemsub').textContent=I_ELEM.sub;
-  var h='<div class="el-balken">';
-  for(var j=0;j<4;j++){
-    h+='<div class="el-z el-'+j+(j===max?' el-max':'')+'">'+
-      '<span class="el-n">'+esc(I_ELEM.namen[j])+'</span>'+
-      '<span class="el-spur"><span class="el-f" style="width:'+Math.max(pr[j],2)+'%"></span></span>'+
+  var reihe=[0,1,2,3].sort(function(x,y){ return sum[y]-sum[x]; });
+  var h='<div class="el-kacheln">';
+  reihe.forEach(function(j,r){
+    h+='<div class="el-k el-'+j+(r===0?' el-gross':'')+(r===3?' el-leise':'')+'">'+
+      '<span class="el-n">'+esc(I_ELEM.namen[j])+
+        (r===3?' <em>· '+esc(I_ELEM_LEISE)+'</em>':'')+'</span>'+
       '<span class="el-p">'+esc(fuellen(I_ELEM.prozent,{p:pr[j]}))+'</span>'+
-      '<span class="el-w">'+esc(I_ELEM.wesen[j])+'</span>'+
+      (r===0?'<span class="el-w">'+esc(I_ELEM.wesen[j])+'</span>':'')+
       '<span class="el-t ac-tech" data-ab="2">'+esc(fuellen(I_ELEM.tech,{punkte:wer[j].join(', ')}))+'</span>'+
       '</div>';
-  }
+  });
   h+='</div><div class="el-satz">'+
     '<p>'+fuellen(I_ELEM.formStark,{el:esc(I_ELEM.namen[max]), text:esc(I_ELEM.stark[max])})+'</p>'+
     (min!==max?'<p>'+fuellen(I_ELEM.formSchwach,{el:esc(I_ELEM.namen[min]), text:esc(I_ELEM.schwach[min])})+'</p>':'')+
@@ -384,6 +397,14 @@ function auffaelligBauen(){
     h.push('</div></article>');
   }
   el('ichauf').innerHTML=h.join('');
+  /* Nur der seltenste Befund steht offen; der Rest auf Antippen. */
+  var anz=el('ichauf').querySelectorAll('.au').length, kn=el('ichaufmehr');
+  kn.hidden=anz<2;
+  kn.textContent=fuellen(I_AUF_MEHR,{n:anz-1});
+  kn.onclick=function(){
+    var zu=el('ichauf').classList.toggle('zu');
+    kn.textContent=zu?fuellen(I_AUF_MEHR,{n:anz-1}):I_AUF_WENIGER;
+  };
   /* Der ehrliche Teil gehört zu jeder rechnenden Ausgabe. */
   var g=['<h3>'+esc(I_AUF.grenzeTitel)+'</h3>'];
   for(var j=0;j<I_AUF.grenzen.length;j++)
@@ -394,20 +415,24 @@ function auffaelligBauen(){
 
 /* ── Die zwölf Häuser ──────────────────────────────────────── */
 function haeuserBauen(){
-  var box=el('ichhaeuser'), h='';
+  var box=el('ichhaeuser'), h='', zahl=[], meist=0;
+  for(var m=1;m<=12;m++){
+    zahl[m]=PNAMEN.filter(function(k){ return P[k]!==undefined&&haus(P,P[k])===m; }).length;
+    if(zahl[m]>zahl[meist]||!meist) meist=m;
+  }
   for(var n=1;n<=12;n++){
     var z=zeichenDesHauses(P,n), herr=I_HERR[z], hH=haus(P,P[herr]);
     var bew=PNAMEN.concat(EXTRA).filter(function(k){
       return P[k]!==undefined&&haus(P,P[k])===n; });
     var heut=PNAMEN.filter(function(k){
       return Q[k]!==undefined&&haus(P,Q[k])===n; });
-    var gl=bew.map(function(k){ return '<i>'+(I_PGL[k]||'')+'</i>'; }).join('');
-    h+='<button type="button" class="hz'+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
+    var gl=bew.map(function(k){ return '<i>'+(I_PGL[k]||'')+'\uFE0E</i>'; }).join('');
+    var art=(n===meist&&zahl[n]>1)?' schwer':(bew.length?' voll':'');
+    h+='<button type="button" class="hz'+art+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
       '<span class="nr">'+n+(heut.length?'<span class="punkt"></span>':'')+'</span>'+
-      '<span class="was">'+esc(I_HAUS[n-1].k)+'</span>'+
-      '<span class="hz-gl" aria-hidden="true">'+(gl||'<i class="leer">·</i>')+'</span>'+
-      '<span class="ze ac-tech" data-ab="2">'+esc(I_ZGL[z])+'\uFE0E '+esc(I_SIGNS[z])+
-        (bew.length?' · '+esc(bew.join(', ')):'')+'</span>'+
+      '<span class="was">'+esc(I_HAUS_KURZ[n-1])+'</span>'+
+      '<span class="hz-gl" aria-hidden="true">'+gl+'</span>'+
+      '<span class="ze ac-tech" data-ab="2">'+esc(I_ZGL[z])+'\uFE0E '+esc(I_SIGNS[z])+'</span>'+
       '<span class="herr ac-tech" data-ab="2">'+
         esc(fuellen(I_HAUS_TECH.herr,{herr:herr, haus:hH}))+'</span>'+
       '</button><div class="hdetail" id="d'+n+'" hidden></div>';

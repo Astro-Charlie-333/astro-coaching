@@ -1,29 +1,29 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chart-Rechner · Astrologie-Lernplattform</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 a{color:var(--ind);}
@@ -55,7 +55,7 @@ td .cell{display:flex;gap:5px;}
 td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
 .arow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 15px;margin-bottom:9px;}
 .arow .top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
-.arow .nm{font-family:'Fraunces',serif;font-size:17px;font-weight:600;}
+.arow .nm{font-family:'Jost',sans-serif;font-size:17px;font-weight:600;}
 .arow .orb{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--soft);margin-left:auto;}
 .arow .txt{font-size:14.5px;color:var(--soft);margin-top:8px;line-height:1.55;}
 .lab2{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
@@ -71,7 +71,7 @@ td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
 #result{display:none;}
 .err{color:var(--tense);font-size:14px;margin-top:8px;}
 #deutung{white-space:pre-wrap;font-size:15.5px;line-height:1.7;}
-#deutung h4{font-family:'Fraunces',serif;font-size:19px;color:var(--ind);margin:18px 0 4px;font-weight:600;}
+#deutung h4{font-family:'Jost',sans-serif;font-size:19px;color:var(--ind);margin:18px 0 4px;font-weight:600;}
 #deutung h4:first-child{margin-top:0;}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--line);
  border-top-color:var(--ind);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:7px;}
@@ -85,7 +85,7 @@ td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
  text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
 
@@ -101,7 +101,7 @@ td .cell select{width:auto;min-width:96px;} td .cell input{width:72px;}
 .hop .num{position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--card);
  border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:11px;
  display:flex;align-items:center;justify-content:center;}
-.hop .pos{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+.hop .pos{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:3px;}
 .hop .weil{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--gold);
  text-transform:uppercase;margin-bottom:6px;}
 .hop .satz{background:var(--bg);border-left:3px solid var(--ind);border-radius:10px;padding:11px 13px;
@@ -137,15 +137,15 @@ a{color:var(--nacht);}
 .ortfeld{position:relative;}
 .ortfeld input{width:100%;}
 .ortliste{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);background:var(--papier,#fff);
- border:1px solid var(--linie,#EBE1D2);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
+ border:1px solid var(--linie,#E6DECF);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
  max-height:270px;overflow-y:auto;display:none;}
 .ortliste.auf{display:block;}
-.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
- padding:10px 13px;cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.35;}
+.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--linie,#E6DECF);
+ padding:10px 13px;cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--tinte,#1B1B1B);line-height:1.35;}
 .ortliste button:last-child{border-bottom:0;}
-.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg,#E9EDF4);}
-.ortok{font-size:12.5px;color:var(--leise,#6B6259);margin-top:5px;line-height:1.45;}
-.ortok b{color:var(--tinte,#231F1A);}
+.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg,#DCE6FB);}
+.ortok{font-size:12.5px;color:var(--leise,#5E584D);margin-top:5px;line-height:1.45;}
+.ortok b{color:var(--tinte,#1B1B1B);}
 
 .ac-profilbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:var(--nacht-bg);
  border:1px solid #D3D9E6;border-radius:14px;padding:10px 15px;margin:16px 0 4px;font-size:14px;}
@@ -226,8 +226,8 @@ a{color:var(--nacht);}
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
@@ -761,7 +761,7 @@ function AC_ortFeld(inputId, listId, statusId){
     inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
     if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
       o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
-      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
+      ' <span style="color:var(--messing,#C8441A)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
     zu();
     try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
   }

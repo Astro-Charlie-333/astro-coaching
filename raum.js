@@ -110,11 +110,11 @@ function miniRad(P, anker, f, prozent){
   /* Häusersektoren */
   for(var h=0;h<12;h++){
     var ist=(haeuser.indexOf(h+1)>=0);
-    o.push('<path d="'+bogen(h,R2,R1)+'" fill="'+(ist?'#E9EDF4':'#FCF9F4')+
-      '" stroke="'+(ist?'#2E3A5C':'#EBE1D2')+'" stroke-width="'+(ist?1.4:.7)+'"/>');
+    o.push('<path d="'+bogen(h,R2,R1)+'" fill="'+(ist?'#DCE6FB':'#FCF9F4')+
+      '" stroke="'+(ist?'#1B1B1B':'#E6DECF')+'" stroke-width="'+(ist?1.4:.7)+'"/>');
     var n=pkt(h,(R1+R2)/2);
     o.push('<text x="'+n[0].toFixed(1)+'" y="'+(n[1]+4).toFixed(1)+'" text-anchor="middle" font-size="11" fill="'+
-      (ist?'#2E3A5C':'#B5A996')+'">'+(h+1)+'</text>');
+      (ist?'#1B1B1B':'#B5A996')+'">'+(h+1)+'</text>');
   }
   /* Planeten der Facette in ihre Häuser setzen */
   var proHaus={};
@@ -124,16 +124,16 @@ function miniRad(P, anker, f, prozent){
     var liste=[]; proHaus[hn].forEach(function(p){ if(liste.indexOf(p)<0) liste.push(p); });
     var p0=pkt(hn-1,R3+14);
     var txt=liste.map(function(p){return GLYM[p]||p.slice(0,2);}).join('');
-    o.push('<text x="'+p0[0].toFixed(1)+'" y="'+(p0[1]+5).toFixed(1)+'" text-anchor="middle" font-size="14" fill="#2E3A5C">'+txt+'</text>');
+    o.push('<text x="'+p0[0].toFixed(1)+'" y="'+(p0[1]+5).toFixed(1)+'" text-anchor="middle" font-size="14" fill="#1B1B1B">'+txt+'</text>');
   });
   /* Mitte: Stärke */
-  o.push('<circle cx="'+C+'" cy="'+C+'" r="'+R3+'" fill="#FFFDFA" stroke="#EBE1D2"/>');
+  o.push('<circle cx="'+C+'" cy="'+C+'" r="'+R3+'" fill="#FFFFFF" stroke="#E6DECF"/>');
   var u=2*Math.PI*(R3-7), anteil=Math.max(0,Math.min(100,prozent))/100;
-  o.push('<circle cx="'+C+'" cy="'+C+'" r="'+(R3-7)+'" fill="none" stroke="#EBE1D2" stroke-width="6"/>');
+  o.push('<circle cx="'+C+'" cy="'+C+'" r="'+(R3-7)+'" fill="none" stroke="#E6DECF" stroke-width="6"/>');
   o.push('<circle cx="'+C+'" cy="'+C+'" r="'+(R3-7)+'" fill="none" stroke="'+
-    (prozent>=62?'#2E3A5C':(prozent<45?'#C9BCA8':'#9A7235'))+'" stroke-width="6" stroke-linecap="round" '+
+    (prozent>=62?'#1B1B1B':(prozent<45?'#C9BCA8':'#C8441A'))+'" stroke-width="6" stroke-linecap="round" '+
     'stroke-dasharray="'+(u*anteil).toFixed(1)+' '+u.toFixed(1)+'" transform="rotate(-90 '+C+' '+C+')"/>');
-  o.push('<text x="'+C+'" y="'+(C+2)+'" text-anchor="middle" font-size="21" fill="#2E3A5C" font-family="Fraunces,Georgia,serif">'+prozent+'</text>');
+  o.push('<text x="'+C+'" y="'+(C+2)+'" text-anchor="middle" font-size="21" fill="#1B1B1B" font-family="Jost,system-ui,sans-serif">'+prozent+'</text>');
   o.push('<text x="'+C+'" y="'+(C+18)+'" text-anchor="middle" font-size="9" fill="#8B7E6C" letter-spacing="1.2">VON 100</text>');
   o.push('</svg>');
   return o.join('');

@@ -11,7 +11,7 @@
 .b-lede{font-size:16.5px;color:var(--leise);max-width:620px;line-height:1.7;margin-bottom:16px;}
 .b-fuer{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;
   color:var(--messing);margin-bottom:12px;}
-.b-oben{font-family:'Fraunces',Georgia,serif;font-size:19.5px;line-height:1.45;
+.b-oben{font-family:'Jost',system-ui,sans-serif;font-size:19.5px;line-height:1.45;
   color:var(--nacht);max-width:640px;margin-bottom:8px;}
 .b-oben.b-leise{font-family:var(--sans);font-size:14.5px;color:var(--leise);}
 .b-hinweis{background:var(--messing-bg);border-left:3px solid var(--messing);border-radius:10px;
@@ -55,7 +55,7 @@
 .b-ber > summary::-webkit-details-marker{display:none;}
 .b-ber > summary:hover{background:var(--creme);}
 .b-punkt{width:10px;height:10px;border-radius:50%;display:block;margin-top:6px;}
-.b-name{font-family:'Fraunces',Georgia,serif;font-size:21px;color:var(--nacht);line-height:1.2;}
+.b-name{font-family:'Jost',system-ui,sans-serif;font-size:21px;color:var(--nacht);line-height:1.2;}
 .b-laut{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;
   text-transform:uppercase;white-space:nowrap;}
 .b-satz{grid-column:2/-1;font-size:14.5px;color:var(--leise);line-height:1.55;margin-top:4px;}
@@ -82,7 +82,7 @@
 .b-kap{background:var(--nacht-bg);border-radius:10px;padding:12px 15px;
   font-size:14px!important;line-height:1.6;color:var(--nacht);}
 .b-kap.b-leise{background:none;padding:0;color:var(--leise);font-size:13.5px!important;}
-.b-tun{font-family:'Fraunces',Georgia,serif;font-size:17px!important;line-height:1.5;
+.b-tun{font-family:'Jost',system-ui,sans-serif;font-size:17px!important;line-height:1.5;
   color:var(--nacht);}
 .b-zeit{list-style:none;margin:0;padding:0;}
 .b-zeit li{font-size:14.5px;line-height:1.6;padding:8px 0 8px 14px;
@@ -99,7 +99,7 @@
 .b-facs{margin-top:4px;}
 .b-fac{padding:12px 0 2px;border-top:1px solid var(--linie);}
 .b-fac:first-child{border-top:none;}
-.b-fac h5{font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:600;
+.b-fac h5{font-family:'Jost',system-ui,sans-serif;font-size:16px;font-weight:600;
   color:var(--nacht);margin:0 0 6px;line-height:1.35;}
 .b-fac p{font-size:14.5px;line-height:1.68;margin-bottom:8px;max-width:640px;}
 .b-facm{font-family:var(--sans);font-size:14px!important;color:var(--messing);
@@ -125,7 +125,7 @@
 /* ── Ehrlich ───────────────────────────────────────────────── */
 .b-ehrlich{background:var(--nacht-bg);border-radius:16px;padding:24px 26px;}
 .b-ehrlich h2{margin-top:0;}
-.b-ehrlich h4{font-family:'Fraunces',Georgia,serif;font-size:16.5px;font-weight:600;
+.b-ehrlich h4{font-family:'Jost',system-ui,sans-serif;font-size:16.5px;font-weight:600;
   color:var(--nacht);margin:18px 0 6px;}
 .b-ehrlich p{font-size:14.5px;line-height:1.68;color:var(--leise);max-width:640px;}
 
@@ -166,7 +166,7 @@
  border:1px solid var(--linie);border-radius:12px;padding:12px 14px;margin-bottom:8px;
  max-width:640px;}
 .b-nachl:hover{border-color:var(--messing);}
-.b-nachn{display:block;font-family:'Fraunces',Georgia,serif;font-size:16px;
+.b-nachn{display:block;font-family:'Jost',system-ui,sans-serif;font-size:16px;
  color:var(--nacht);margin-bottom:3px;}
 .b-nachn::after{content:' \2192';color:var(--messing);}
 .b-nachw{display:block;font-family:var(--sans);font-size:13.5px;line-height:1.6;
@@ -178,24 +178,24 @@
 /* ── Ein Bereich statt zehn ───────────────────────────────── */
 .b-reiter{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;}
 .b-rt{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans,system-ui);
- font-size:13.5px;padding:8px 13px;background:var(--papier,#FFFDFA);color:var(--tinte,#231F1A);
- border:1px solid var(--linie,#EBE1D2);border-radius:18px;cursor:pointer;}
-.b-rt:hover{border-color:var(--nacht,#2E3A5C);}
-.b-rt[aria-selected="true"]{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);
+ font-size:13.5px;padding:8px 13px;background:var(--papier,#FFFFFF);color:var(--tinte,#1B1B1B);
+ border:1px solid var(--linie,#E6DECF);border-radius:18px;cursor:pointer;}
+.b-rt:hover{border-color:var(--nacht,#1B1B1B);}
+.b-rt[aria-selected="true"]{background:var(--nacht,#1B1B1B);border-color:var(--nacht,#1B1B1B);
  color:#fff;}
 .b-rtp{width:7px;height:7px;border-radius:50%;flex:none;}
 .b-rt[aria-selected="true"] .b-rtp{box-shadow:0 0 0 2px rgba(255,255,255,.35);}
 
-.b-ber{display:block;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+.b-ber{display:block;background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);
  border-radius:20px;padding:22px 24px;
  /* Die Markenleiste klebt oben. Ohne diesen Abstand springt ein
     Anker genau hinter sie, und die Überschrift des Bereichs ist
     verdeckt — der Sprung sieht aus, als hätte er nicht gegriffen. */
  scroll-margin-top:var(--ac-sprung, 110px);}
 .b-kopfz{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:8px;}
-.b-ber .b-name{font-family:var(--serif,Fraunces,Georgia,serif);font-size:27px;font-weight:400;
- color:var(--nacht,#2E3A5C);margin:0;line-height:1.15;}
-.b-ber .b-satz{font-size:16.5px;line-height:1.6;color:var(--tinte,#231F1A);margin:0 0 4px;}
+.b-ber .b-name{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:27px;font-weight:400;
+ color:var(--nacht,#1B1B1B);margin:0;line-height:1.15;}
+.b-ber .b-satz{font-size:16.5px;line-height:1.6;color:var(--tinte,#1B1B1B);margin:0 0 4px;}
 @media(max-width:620px){
  .b-ber{padding:18px 16px;}
  .b-ber .b-name{font-size:23px;}
@@ -203,19 +203,19 @@
 }
 
 /* Der Maschinenraum eines Schritts, gesammelt an dessen Ende */
-.b-techblk{margin-top:12px;padding:10px 13px;background:var(--bg,#FCF7EF);
- border-radius:10px;border-left:2px solid var(--linie,#EBE1D2);}
+.b-techblk{margin-top:12px;padding:10px 13px;background:var(--bg,#F6F1E7);
+ border-radius:10px;border-left:2px solid var(--linie,#E6DECF);}
 .b-techlab{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:5px;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:5px;}
 .b-techz{display:block;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;
- line-height:1.55;color:var(--leise,#6B6259);}
+ line-height:1.55;color:var(--leise,#5E584D);}
 .b-techz+.b-techz{margin-top:3px;}
 
 /* Der stärkste Zeitraum vorn */
-.b-zeit-haupt{font-size:15.5px;line-height:1.6;margin:0 0 9px;color:var(--tinte,#231F1A);}
-.b-zeit-haupt b{color:var(--nacht,#2E3A5C);}
+.b-zeit-haupt{font-size:15.5px;line-height:1.6;margin:0 0 9px;color:var(--tinte,#1B1B1B);}
+.b-zeit-haupt b{color:var(--nacht,#1B1B1B);}
 .b-mehrzeit{margin-top:4px;}
-.b-mehrzeit summary{cursor:pointer;font-size:13.5px;color:var(--messing,#9A7235);}
+.b-mehrzeit summary{cursor:pointer;font-size:13.5px;color:var(--messing,#C8441A);}
 .b-mehrzeit .b-zeit{margin-top:9px;}
 
 /* Mit jemand anderem darüber sprechen — die zweite Sicht, zugeklappt.
@@ -225,7 +225,7 @@
    Blöcken darüber die Aufmerksamkeit nimmt. */
 .b-gespr{margin-top:14px;}
 .b-gespr > summary{cursor:pointer;list-style:none;font-family:var(--sans,system-ui);
- font-size:13.5px;letter-spacing:.02em;color:var(--messing,#9A7235);padding:2px 0;}
+ font-size:13.5px;letter-spacing:.02em;color:var(--messing,#C8441A);padding:2px 0;}
 .b-gespr > summary::-webkit-details-marker{display:none;}
 .b-gespr > summary:before{content:'+ ';font-family:var(--mono,'JetBrains Mono',monospace);}
 .b-gespr[open] > summary:before{content:'\2013 ';}
@@ -233,7 +233,7 @@
 .b-gesprvor{font-size:14px!important;line-height:1.6;color:var(--leise);margin-bottom:12px;}
 .b-gesprf{list-style:none;margin:0 0 12px;padding:0;}
 .b-gesprf li{background:var(--papier);border:1px solid var(--linie);border-radius:12px;
- padding:11px 14px;margin-bottom:7px;font-family:'Fraunces',Georgia,serif;
+ padding:11px 14px;margin-bottom:7px;font-family:'Jost',system-ui,sans-serif;
  font-size:15.5px;line-height:1.55;color:var(--nacht);}
 /* Die Grenze steht offen, über der Schublade. Ruhig gesetzt, aber
    lesbar: sie soll nicht lauter sein als der Bereich und auch nicht

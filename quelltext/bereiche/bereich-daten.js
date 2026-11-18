@@ -17,7 +17,7 @@
       satz:'Hier passiert gerade wenig. Das ist keine Vernachlässigung, sondern eine Pause.' },
     { k:'leise',   n:'Leise',        farbe:'#7E95A8',
       satz:'Etwas bewegt sich, aber ohne Druck. Gut für Dinge, die Zeit brauchen.' },
-    { k:'bewegt',  n:'In Bewegung',  farbe:'#9A7235',
+    { k:'bewegt',  n:'In Bewegung',  farbe:'#C8441A',
       satz:'Hier ist etwas im Gang. Entscheidungen, die du jetzt triffst, haben Gewicht.' },
     { k:'viel',    n:'Viel los',     farbe:'#B5502E',
       satz:'Das ist gerade dein lautester Bereich. Hierhin geht die Energie, ob du willst oder nicht.' }

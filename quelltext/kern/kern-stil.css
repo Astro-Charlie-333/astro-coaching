@@ -1,23 +1,42 @@
 /* ── Rad als Bedienfläche ──────────────────────────────────── */
 .kr-huelle{position:relative;}
 .kr-huelle svg{display:block;width:100%;height:auto;}
-.kr-hf{fill:var(--papier,#FFFDFA);stroke:var(--linie,#EBE1D2);stroke-width:1;
+.kr-hf{fill:var(--papier,#FFFFFF);stroke:var(--linie,#E6DECF);stroke-width:1;
  transition:fill .12s ease;}
 .kr-haus.heut .kr-hf{fill:#F3EADA;}
-.kr-haus.ist .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-haus.ist .kr-hf{fill:var(--nacht,#1B1B1B);}
 .kr-haus:hover .kr-hf{fill:#EDE4D4;}
-.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#2E3A5C);}
-.kr-hz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;fill:var(--leise,#6B6259);}
-.kr-haus.heut .kr-hz{fill:var(--messing,#9A7235);font-weight:600;}
+.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#1B1B1B);}
+.kr-hz{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:17px;fill:var(--leise,#5E584D);}
+.kr-haus.heut .kr-hz{fill:var(--messing,#C8441A);font-weight:600;}
 .kr-haus.ist .kr-hz{fill:#fff;font-weight:600;}
 .kr-haus:focus-visible{outline:none;}
-.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#2E3A5C);stroke-width:2.5;}
+.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#1B1B1B);stroke-width:2.5;}
 .kr-zg{font-size:22px;fill:#fff;}
-.kr-pg{font-size:27px;fill:var(--nacht,#2E3A5C);}
-.kr-strich{stroke:var(--linie-stark,#DDD0BC);stroke-width:.9;}
-.kr-achse{stroke:var(--messing,#9A7235);stroke-width:2;}
-.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#9A7235);}
-.kr-tring{fill:none;stroke:var(--linie-stark,#DDD0BC);stroke-width:1;stroke-dasharray:2 4;}
-.kr-tk{fill:var(--messing-bg,#F7EFE1);stroke:var(--messing,#9A7235);stroke-width:1.2;}
-.kr-tg{font-size:14px;fill:var(--messing,#9A7235);}
+.kr-pg{font-size:27px;fill:var(--nacht,#1B1B1B);}
+.kr-strich{stroke:var(--linie-stark,#D3C9B6);stroke-width:.9;}
+.kr-achse{stroke:var(--messing,#C8441A);stroke-width:2;}
+.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#C8441A);}
+.kr-tring{fill:none;stroke:var(--linie-stark,#D3C9B6);stroke-width:1;stroke-dasharray:2 4;}
+.kr-tk{fill:var(--messing-bg,#FCE4D6);stroke:var(--messing,#C8441A);stroke-width:1.2;}
+.kr-tg{font-size:14px;fill:var(--messing,#C8441A);}
 @media (prefers-reduced-motion:reduce){.kr-hf{transition:none;}}
+
+/* 18.11. Midcentury: schwarzer Zeichenring, Planeten als Farbscheiben */
+.kr-zf{fill:#1B1B1B;}
+.kr-zg{font-size:20px;fill:#F6F1E7;}
+.kr-pk{stroke:#FFFFFF;stroke-width:2;}
+.kr-pg{font-size:21px;}
+.kr-hf{fill:#FFFFFF;stroke:#E6DECF;}
+.kr-haus.heut .kr-hf{fill:#DCE6FB;}
+.kr-haus.ist .kr-hf{fill:#1F4FD8;}
+.kr-haus.ist:hover .kr-hf{fill:#1F4FD8;}
+.kr-haus:hover .kr-hf{fill:#F2EBDD;}
+.kr-hz{font-size:15px;font-weight:500;}
+.kr-haus.heut .kr-hz{fill:#1F4FD8;}
+.kr-strich{stroke:#D3C9B6;}
+.kr-asp{stroke-width:1.6;opacity:.8;}
+.kr-asp-w{stroke:#1F4FD8;}
+.kr-asp-h{stroke:#F05A28;}
+.kr-achse{stroke:#F05A28;stroke-width:2.5;}
+.kr-al{fill:#F05A28;font-weight:600;}
