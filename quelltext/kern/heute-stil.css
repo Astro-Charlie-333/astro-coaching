@@ -458,3 +458,18 @@
 .st-legende{font-size:12.8px;line-height:1.5;color:var(--leise,#6B6259);
  margin:14px 0 0;max-width:64ch;}
 .st-i .st-schon{font-style:italic;color:var(--leise,#6B6259);}
+
+/* ── 18.11.: Bereiche als Raster, die Themen dreispaltig ─────── */
+@media(min-width:760px){
+ .ht-ber{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+ .ht-ber>*:first-child{grid-column:1/-1;}
+ .ht-ber>*:first-child:nth-last-child(even)~*:last-child{grid-column:1/-1;}
+}
+@media(min-width:1040px){
+ .ht-themen{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(min-width:760px){
+ .ht-treffer>*:first-child:nth-last-child(even)~*:last-child{grid-column:1/-1;}
+}
+/* Auf dem Telefon schiebt das Rad die Woche zwei Bildschirme nach unten */
+@media(max-width:900px){.ht-radmini{max-width:280px;margin:0 auto;}}

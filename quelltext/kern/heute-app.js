@@ -1028,21 +1028,12 @@ function bereicheBauen(p){
    Die Regel "Inhalt statt Maschinenraum" heißt: nicht damit
    anfangen. Sie heißt nicht: weglassen. Ab Stufe 2 steht der
    Aspekt deshalb im Klartext darunter. */
-var LAUF_ZEIGE = 5;
 
 function monatTag(jd){
   return datVon(jd).toLocaleDateString('de-DE',{day:'numeric',month:'long'});
 }
 /* Wie weit ist das Fenster durch? Gibt null, wenn es keinen Anfang
    hat — dann ist der Balken eine Behauptung und bleibt weg. */
-function fensterStand(f, jd){
-  if(!f || f.von === null || f.von === undefined || !f.bis) return null;
-  var ganz = f.bis - f.von;
-  if(!(ganz > 0)) return null;
-  return { anteil: Math.max(0, Math.min(1, (jd - f.von) / ganz)),
-           exakt: (f.exakt && f.exakt >= f.von && f.exakt <= f.bis)
-                  ? (f.exakt - f.von) / ganz : null };
-}
 function laufSatz(v){
   var W = AC_BDAT.WAND[v.wanderer];
   if(!W) return null;
@@ -1053,109 +1044,6 @@ function laufSatz(v){
 /* Die Liste der Aspektnamen steht in heute-daten.js — hier steht
    kein Text. Warum eine Liste und keine Umschaltung, steht dort. */
 function aspektName(k){ return H_ASP[k] || k; }
-
-function laufTech(v){
-  if(v.form === 'durchgang')
-    return tf(H_LAUF.techDurchgang,
-      {wanderer:v.wanderer, haus:v.haus,
-       rueck:(v.rueck ? H_LAUF.techRueck : '')});
-  return tf(H_LAUF.techAspekt,
-    {wanderer:v.wanderer, aspekt:aspektName(v.aspekt),
-     ziel:(v.zielArt === 'achse' ? v.ziel
-           : tf(H_LAUF.techRadix, {ziel:v.ziel})),
-     ab:v.ab.toFixed(1).replace('.', ','),
-     zu:(v.zu ? H_LAUF.techZu : H_LAUF.techWeg),
-     rueck:(v.rueck ? H_LAUF.techRueck : '')});
-}
-function laufBauen(p){
-  var ziel = el('htlauf');
-  if(!ziel) return;
-  if(!window.AC_BER || !window.AC_BDAT || !BL_ALLE){ ziel.innerHTML = ''; return; }
-  var jd = jetztJD();
-
-  /* Ein Aspekt ist ein Ereignis, ein Hausdurchgang ist Wetter.
-     Dieser Abschnitt handelt von Ereignissen — sonst stehen hier
-     fünf Zeilen "läuft durch das 7. Haus" ohne einen einzigen Tag.
-     Durchgänge füllen nur auf, wenn es zu wenige Aspekte gibt. */
-  var nachGewicht = function(a,b){ return b.gewicht - a.gewicht; };
-  var asp = BL_ALLE.filter(function(v){ return v.form === 'aspekt'; }).sort(nachGewicht);
-  var dur = BL_ALLE.filter(function(v){ return v.form !== 'aspekt'; }).sort(nachGewicht);
-
-  /* Höchstens ein Eintrag je Wanderer. Sonst stehen drei Karten
-     untereinander, die wortwörtlich denselben Satz sagen — der Text
-     hängt am Wanderer, nicht am Ziel. Dieselbe Fehlerklasse, die auf
-     der Bereichsseite schon abgefangen wird.
-     Was ein Wanderer sonst noch berührt, steht als Zeile darunter. */
-  var proWanderer = {}, vs = [];
-  asp.forEach(function(v){
-    var k = v.wanderer;
-    if(proWanderer[k]){ proWanderer[k].weitere.push(v); return; }
-    if(vs.length >= LAUF_ZEIGE) return;
-    proWanderer[k] = { haupt:v, weitere:[] };
-    vs.push(v);
-  });
-  if(vs.length < 3){
-    dur.forEach(function(v){
-      if(vs.length >= 3 || proWanderer[v.wanderer]) return;
-      proWanderer[v.wanderer] = { haupt:v, weitere:[] };
-      vs.push(v);
-    });
-  }
-  if(!vs.length){
-    ziel.innerHTML = '<p class="ht-nix">' + esc(H_LAUF.nix) + '</p>';
-    return;
-  }
-  ziel.innerHTML = vs.map(function(v, i){
-    var B = bereichZuHaus(v.haeuser && v.haeuser[0]);
-    var satz = laufSatz(v);
-    if(!satz) return '';
-    var st = fensterStand(v.f, jd);
-    var h = ['<a class="lf' + (i === 0 ? ' lf-haupt' : '') + '" href="' +
-             esc(H_SEITE.berZiel) + esc(B ? B.k : '') + '">'];
-    h.push('<div class="lf-kopf">');
-    h.push('<span class="lf-ber">' + esc(B ? B.name : H_HAUS[(v.haeuser && v.haeuser[0] || 1)-1]) + '</span>');
-    if(v.f && v.f.exakt){
-      var t = tagesAbstand(v.f.exakt);
-      h.push('<span class="lf-wann">' +
-        (t === 0 ? esc(H_LAUF.heuteGenau) : t === 1 ? esc(H_LAUF.morgenGenau)
-         : tf(t > 0 ? H_LAUF.genauAm : H_LAUF.genauWar,
-              {datum:esc(monatTag(v.f.exakt))})) + '</span>');
-    } else if(v.f && v.f.bis){
-      h.push('<span class="lf-wann">' +
-        tf(H_LAUF.bis, {datum:esc(monatTag(v.f.bis))}) + '</span>');
-    }
-    h.push('</div>');
-    h.push('<p class="lf-was">' + esc(satz) + '</p>');
-    if(st){
-      h.push('<div class="lf-bahn"><i class="lf-jetzt" style="left:' +
-             (st.anteil*100).toFixed(1) + '%"></i>' +
-             (st.exakt !== null ? '<i class="lf-exakt" style="left:' +
-                (st.exakt*100).toFixed(1) + '%"></i>' : '') + '</div>');
-    }
-    /* Was derselbe Wanderer sonst noch berührt — kurz, ohne den
-       Satz zu wiederholen. */
-    var w = proWanderer[v.wanderer] ? proWanderer[v.wanderer].weitere : [];
-    if(w.length){
-      var orte = [], eigener = B ? B.name : null;
-      w.slice(0,4).forEach(function(x){
-        var XB = bereichZuHaus(x.haeuser && x.haeuser[0]);
-        var n = XB ? XB.name : null;
-        /* Den Bereich, auf dem die Karte ohnehin steht, nicht noch
-           einmal aufzählen. */
-        if(n && n !== eigener && orte.indexOf(n) < 0) orte.push(n);
-      });
-      if(orte.length)
-        h.push('<p class="lf-auch">' +
-               tf(H_LAUF.auch, {liste:esc(orte.join(', '))}) + '</p>');
-    }
-    h.push('<p class="lf-tech ac-tech" data-ab="2">' + esc(laufTech(v)) +
-      (w.length ? tf(H_LAUF.techWeitere,
-                     {n:esc(String(w.length)), wanderer:esc(v.wanderer)})
-                : '') + '</p>');
-    h.push('</a>');
-    return h.join('');
-  }).join('');
-}
 
 /* ── Rad ──────────────────────────────────────────────────── */
 function radBauen(){
@@ -1189,7 +1077,7 @@ function kapBauen(){
 /* Bei „wenig" bleiben der Kopf und die Bereiche stehen.
    Weggelassen wird, was Zeit zum Lesen braucht: die Terminliste,
    die ausführlichen Themen und der Abschnitt zu Schlaf und
-   Bewegung. „Was gerade läuft" bleibt — das ist der Kern.
+   Bewegung. „Was dein Bild gerade trifft" bleibt — das ist der Kern.
    Wer wenig Kapazität angibt, hat sie nicht für eine längere
    Seite, sondern für eine kürzere. */
 function anwenden(){
@@ -1223,14 +1111,14 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
+  bereicheBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
   kapBauen(); anwenden(); stellBauen();
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   setInterval(function(){ Q=chartZu(jetztJD()); bereicheBauen(p); jetztBauen(p);
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);
