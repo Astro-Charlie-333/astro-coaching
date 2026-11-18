@@ -126,7 +126,11 @@ verlinkt = []
 for s in sorted(wiki.glob('*.html')):
     if s.name in HINTER_DER_TUER:
         continue
-    if re.search(r'["\'](praxis|werkstatt)\.html', s.read_text(encoding='utf-8', errors='replace')):
+    _t = s.read_text(encoding='utf-8', errors='replace')
+    # Seiten mit der Praxis-Leiste gehören selbst zur Praxis
+    if 'class="sk-leiste"' in _t:
+        continue
+    if re.search(r'["\'](praxis|werkstatt)\.html', _t):
         verlinkt.append(s.name)
 if verlinkt:
     fehler.append('die Praxis ist verlinkt in: ' + ', '.join(verlinkt[:6])

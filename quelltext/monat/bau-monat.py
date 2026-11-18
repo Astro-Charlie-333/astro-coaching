@@ -39,7 +39,7 @@ import pruefwerk
 
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monatsbericht &middot; Coach-Ansicht &middot; Astro-Charlie</title>
+<title>Monatsbericht &middot; Coach-Ansicht &middot; Praxis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <style>
@@ -49,7 +49,7 @@ ber = hier.parent / 'bereiche'
 
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'monat-stil.css')
         + "\n" + lies(ber / 'wahl-stil.css')
-        + '</style><script src="niveau.js" defer></script>\n'
+        + '</style><link rel="stylesheet" href="schwerkraft.css"><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
         + lies(hier / 'monat-koerper.html') + "\n<script>\n"
         + lies(rit / 'engine.js') + "\n"

@@ -873,7 +873,17 @@ if geschrumpft:
 # einer Arbeitsseite auf die andere.
 WERKSTATT_SEITEN = {'angebote-struktur.html', 'ueber-mich-vorlage.html',
                     'learning-seite.html', 'konzept-plattform.html',
-                    'baukasten.html'}
+                    'baukasten.html',
+                    # Seit dem 18.11. auch das Handbuch und die Coach-Werkzeuge
+                    # (Mandy: „ein bereich in dem ich alleine arbeiten kann").
+                    # haltung, grenzen und methoden bleiben draußen: Sie
+                    # erklären auch Nutzerinnen, wie die Seite arbeitet.
+                    'coaching.html', 'coaching-verbinden.html', 'haltung-ethik.html',
+                    'reading-ablauf.html', 'reading-gespraech.html',
+                    'fragen-schatzkiste.html', 'klientinnen-fragen.html',
+                    'werkzeuge.html', 'begleitung.html', 'dossier.html',
+                    'faden.html', 'monatsbericht.html', 'briefing.html',
+                    'profil-ansicht.html'}
 _quell_ok = WERKSTATT_SEITEN | {'werkstatt.html', 'praxis.html'}
 
 
@@ -905,6 +915,21 @@ if offen or fehlt_werkstatt:
     fehlgeschlagen.append('Arbeitsseite außerhalb der Praxis')
 else:
     print(f'  {len(WERKSTATT_SEITEN)} Arbeitsseiten nur in der Praxis')
+
+# Die Leiste der Praxis tragen genau die Seiten der Praxis — keine
+# Arbeitsseite mit den vier Türen, keine öffentliche Seite mit der Praxis-Leiste.
+sk_falsch = []
+for s in seiten:
+    t_ = s.read_text(encoding='utf-8', errors='replace')
+    hat = 'class="sk-leiste"' in t_
+    soll = s.name in WERKSTATT_SEITEN or s.name == 'praxis.html'
+    if hat != soll and '<meta http-equiv="refresh"' not in t_:
+        sk_falsch.append(s.name + (' (ohne Praxis-Leiste)' if soll else ' (Praxis-Leiste außerhalb)'))
+if sk_falsch:
+    print('  LEISTE FALSCH: ' + ', '.join(sk_falsch[:8]))
+    fehlgeschlagen.append('Praxis-Leiste an der falschen Stelle')
+else:
+    print('  die Praxis-Leiste steht genau auf den Seiten der Praxis')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
