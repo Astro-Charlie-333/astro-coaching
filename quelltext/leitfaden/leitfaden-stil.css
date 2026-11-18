@@ -55,9 +55,9 @@
 .lf-el{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
 .lf-chip{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 8px;background:#C8441A;color:#FFFFFF}
 .lf-el.feuer,.lf-k.feuer .gl{background:#FBE3DA;color:#D9481C}
-.lf-el.erde,.lf-k.erde .gl{background:#E8EDDC;color:#11897C}
-.lf-el.luft,.lf-k.luft .gl{background:#DEEBF1;color:#1B1B1B}
-.lf-el.wasser,.lf-k.wasser .gl{background:#E6E1F0;color:#1F4FD8}
+.lf-el.erde,.lf-k.erde .gl{background:#FCEFD2;color:#11897C}
+.lf-el.luft,.lf-k.luft .gl{background:#DCE6FB;color:#1B1B1B}
+.lf-el.wasser,.lf-k.wasser .gl{background:#D7EFEB;color:#1F4FD8}
 
 .lf-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFFFF;border:1px solid #E6DECF;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
 .lf-ehrlich p{margin:0}
