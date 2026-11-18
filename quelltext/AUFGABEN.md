@@ -488,6 +488,51 @@ abbricht, sobald eine Lunationsangabe wieder in derselben Schriftgröße
 steht wie der Fließtext des Briefs. Gemessen am Ergebnis, nicht am
 Quelltext, weil die Größen aus der Datei daneben kommen.
 
+### 85 · „20.000 zufällig gerechnete Paare" sagt nicht, welche Paare
+Siehe Recherche vom 2026-11-18, erster Fund. Die Häufigkeitszahlen sind
+gerechnet und mit festem Startwert wiederholbar — im Markt ist das der
+Vorsprung. Was die Leserin sieht, ist aber nur die Anzahl, nicht die
+Vergleichsgruppe: `beziehung.html` sagt „20.000 zufällig gerechnete
+Paare", abgetastet werden nach `quelltext/bez/_verteilung-bez.js` Paare
+mit höchstens acht Jahren Abstand, Jahrgänge 1950 bis 2005,
+Mitteleuropa, beide mit Geburtszeit. Der Altersabstand ist genau die
+Größe, die bestimmt, wie selten ein Kontakt zwischen zwei langsamen
+Planeten aussieht. Auf `uebersicht.html` dasselbe schwächer: 10.000
+Bilder, Jahrgänge 1930 bis 2010, Tag 1 bis 28, acht Orte. Eine Zahl ohne
+ihre Grundlage ist der Fall aus `REGELN.md` Abschnitt 7.
+**Fertig, wenn:** der auf `beziehung.html` sichtbare Satz zur
+Vergleichsgruppe sagt, woraus sie besteht, der Satz auf `uebersicht.html`
+dasselbe für seine Stichprobe tut, beide Sätze aus `beziehung-daten.js`
+beziehungsweise `ich-daten.js` kommen und nicht aus der Anzeige, die
+Angaben beim Bauen aus denselben Werten entstehen, mit denen abgetastet
+wird — nicht von Hand danebengeschrieben, sonst driftet es beim nächsten
+Lauf —, und `bau-bez.py` und `bau-ich.py` am gezeichneten Ergebnis
+abbrechen, sobald eine Häufigkeitszahl ohne ihre Vergleichsgruppe
+dasteht. Gegen feste Beispiele gehalten wie `_datum_ohne_jahr` in
+`bau-heute.py`, damit die Prüfung nicht davon abhängt, welches
+Geburtsbild gerade gerechnet wird.
+
+### 86 · Auf `beziehung.html` steht nirgends, wessen Daten der zweite Mensch sind
+Siehe Recherche vom 2026-11-18, zweiter Fund. Die Seite wählt in
+`#bzsteuer` ein zweites Profil, sagt vier Abschnitte lang, wie dieser
+Mensch ist, und gibt das über „Text kopieren" und „Drucken" aus dem Haus.
+Dass die Deutung über einen Menschen geht, der sie weder in Auftrag
+gegeben hat noch zu sehen bekommt, steht nirgends — obwohl
+`PRODUKT.md` Abschnitt 5 Aussagen über eine dritte Person, die nicht
+gefragt wurde, ausschließt. Aufgabe 76 bringt den Satz, dass dieser
+Mensch zu sich selbst das letzte Wort hat, in den Ehrlichkeitsabschnitt
+am Ende. Hier geht es um die andere Stelle: den Anfang.
+**Fertig, wenn:** dort, wo das zweite Profil gewählt wird, ein Satz
+steht, dass dies die Geburtsdaten eines anderen Menschen sind und die
+Deutung über ihn ihm gehört — in der Sprache der Seite, ohne Haken und
+ohne Sperre, weil die Seite nicht wissen kann, ob jemand zugestimmt hat,
+und ein Haken nur eine Sicherung vortäuschen würde; der Satz aus
+`beziehung-daten.js` kommt und nicht aus `beziehung-app.js`; er auf
+Stufe 0 offen steht und nicht in einem Klappelement; und `bau-bez.py` am
+gezeichneten Ergebnis abbricht, wenn er fehlt oder in eine Klappe
+wandert. Die Textausgabe von „Text kopieren" gehört zu Aufgabe 76 und
+wird hier nicht mitgemacht.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich
