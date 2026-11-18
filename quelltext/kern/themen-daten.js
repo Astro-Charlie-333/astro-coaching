@@ -229,6 +229,8 @@ var T_KOPF = {
  gutVor:'Gut dafür',
  dazuVor:'Was oft zu groß erzählt wird',
  mehrVor:'Mehr dazu',
+ kurzMehr:'weiterlesen',
+ kurzWeniger:'weniger',
  nochEinenTag:'noch 1 Tag',
  laeuft:'läuft',
  heute:'heute',

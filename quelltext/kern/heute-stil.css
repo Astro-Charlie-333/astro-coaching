@@ -522,3 +522,11 @@
 .th-mehr>summary::before{content:"+";width:26px;height:26px;border-radius:50%;background:var(--pa);display:inline-flex;align-items:center;justify-content:center;font-weight:500;}
 .th-mehr[open]>summary::before{content:"–";}
 @media(max-width:900px){.ht-radmini{max-width:250px;}}
+/* Kurz zuerst */
+.kurz{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ht-auf-x.kurz{-webkit-line-clamp:3;}
+.kurz.kurz-auf{display:block;-webkit-line-clamp:unset;overflow:visible;}
+.kurz-k{display:inline-flex;align-items:center;gap:6px;margin:2px 0 8px;padding:3px 12px;border:0;border-radius:999px;
+ background:var(--pa);color:var(--ti);font:inherit;font-size:13px;font-weight:600;cursor:pointer;min-height:28px;}
+.kurz-k:hover{background:#EDE4D3;}
+.ht-held .kurz-k{background:#F6F1E7;}

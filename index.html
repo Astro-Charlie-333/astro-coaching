@@ -719,6 +719,14 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 .th-mehr>summary::before{content:"+";width:26px;height:26px;border-radius:50%;background:var(--pa);display:inline-flex;align-items:center;justify-content:center;font-weight:500;}
 .th-mehr[open]>summary::before{content:"–";}
 @media(max-width:900px){.ht-radmini{max-width:250px;}}
+/* Kurz zuerst */
+.kurz{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ht-auf-x.kurz{-webkit-line-clamp:3;}
+.kurz.kurz-auf{display:block;-webkit-line-clamp:unset;overflow:visible;}
+.kurz-k{display:inline-flex;align-items:center;gap:6px;margin:2px 0 8px;padding:3px 12px;border:0;border-radius:999px;
+ background:var(--pa);color:var(--ti);font:inherit;font-size:13px;font-weight:600;cursor:pointer;min-height:28px;}
+.kurz-k:hover{background:#EDE4D3;}
+.ht-held .kurz-k{background:#F6F1E7;}
 
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
@@ -4130,6 +4138,8 @@ var T_KOPF = {
  gutVor:'Gut dafür',
  dazuVor:'Was oft zu groß erzählt wird',
  mehrVor:'Mehr dazu',
+ kurzMehr:'weiterlesen',
+ kurzWeniger:'weniger',
  nochEinenTag:'noch 1 Tag',
  laeuft:'läuft',
  heute:'heute',
@@ -5434,7 +5444,7 @@ function trefferBauen(){
     m.hidden = false;
     m.textContent = TR_ALLE ? B_KOPF.wenigerVor
                             : B_KOPF.mehrVor + ' (' + lang.length + ')';
-    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); };
+    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); setTimeout(kuerzen,60); };
   } else { m.hidden = true; }
 
   /* Die schnellen Wanderer getrennt und klein: Sie machen den Tag,
@@ -5521,7 +5531,7 @@ function strahlBauen(){
     m.hidden = false;
     m.textContent = ST_ALLE ? B_STRAHL.weniger
       : tf(B_STRAHL.mehr, {n:(e.length - ST_ZEIGE)});
-    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); };
+    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); setTimeout(kuerzen,60); };
   } else { m.hidden = true; }
 }
 
@@ -5926,7 +5936,7 @@ function kapSetzen(s){
   try{ var n=new Date();
     localStorage.setItem(KAP,JSON.stringify({d:n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate(),s:s}));
   }catch(e){}
-  kapBauen(); anwenden(); stellBauen();
+  kapBauen(); anwenden(); stellBauen(); setTimeout(kuerzen,60);
 }
 function kapBauen(){
   var a=kapHeute();
@@ -5945,6 +5955,30 @@ function kapBauen(){
    Bewegung. „Was dein Bild gerade trifft" bleibt — das ist der Kern.
    Wer wenig Kapazität angibt, hat sie nicht für eine längere
    Seite, sondern für eine kürzere. */
+/* ── Kurz zuerst (18.11.) ───────────────────────────────────
+   Lange Absätze zeigen zwei Zeilen; „weiterlesen" öffnet den Rest.
+   Mandy: „als neurodivergente Person ist das alles too much". */
+var KURZ_WAS='.tr-s, .ht-auf-x, .th-was, .st-dg';
+function kuerzen(){
+  Array.prototype.forEach.call(document.querySelectorAll(KURZ_WAS),function(p){
+    if(p.getAttribute('data-kurz')) return;
+    p.setAttribute('data-kurz','1');
+    p.classList.add('kurz');
+    if(!p.offsetHeight || p.scrollHeight<=p.clientHeight+2){
+      if(p.offsetHeight) p.classList.remove('kurz');
+      else p.removeAttribute('data-kurz');
+      return;
+    }
+    var b=document.createElement('button');
+    b.type='button'; b.className='kurz-k'; b.textContent=T_KOPF.kurzMehr;
+    b.onclick=function(){
+      var auf=p.classList.toggle('kurz-auf');
+      b.textContent=auf?T_KOPF.kurzWeniger:T_KOPF.kurzMehr;
+    };
+    p.parentNode.insertBefore(b,p.nextSibling);
+  });
+}
+
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
   ['htwocheteil','htthementeil','htkoerperteil','htstrahlteil'].forEach(function(i){
@@ -5977,9 +6011,9 @@ function stellBauen(){
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
   bereicheBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
-  kapBauen(); anwenden(); stellBauen();
+  kapBauen(); anwenden(); stellBauen(); setTimeout(kuerzen,60);
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); setTimeout(kuerzen,60); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
