@@ -389,6 +389,64 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
  color:var(--leise);max-width:640px;}
 .b-grenzevor{font-weight:400;color:var(--nacht);}
 
+/* ═══ 18.11.: Kacheln, Kurzfassung, Zeitleiste — Midcentury ═══ */
+.b-kacheln{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;border:0!important;background:none!important;padding:0!important;}
+@media(max-width:900px){.b-kacheln{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.b-kacheln .b-u{display:flex!important;flex-direction:column;align-items:flex-start;gap:6px;min-height:118px;
+  background:#fff;border:0!important;border-radius:22px;padding:14px!important;text-decoration:none;color:#1B1B1B;}
+.b-kacheln .b-u:hover{transform:translateY(-2px);}
+.b-kacheln .b-ubalk{display:none;}
+.b-kacheln .b-un{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.15;}
+.b-kacheln .b-ul{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.b-kacheln .b-unext{margin-top:auto;font-size:12.5px;color:#5E584D;}
+.b-kacheln .b-u[data-laut="3"]{background:#F05A28;color:#fff;} .b-kacheln .b-u[data-laut="3"] .b-ul,.b-kacheln .b-u[data-laut="3"] .b-unext{color:#fff!important;}
+.b-kacheln .b-u[data-laut="2"]{background:#1F4FD8;color:#fff;} .b-kacheln .b-u[data-laut="2"] .b-ul,.b-kacheln .b-u[data-laut="2"] .b-unext{color:#DCE6FB!important;}
+.b-kacheln .b-u[data-laut="1"]{background:#DCE6FB;}
+.b-kacheln .b-u[aria-current="true"],.b-kacheln .b-u.ist{outline:3px solid #1B1B1B;outline-offset:2px;}
+.bk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 6px;}
+@media(max-width:760px){.bk{grid-template-columns:1fr;}}
+.bk-blk{background:#F6F1E7;border-radius:22px;padding:16px 18px;}
+.bk-blk h4{margin:0 0 8px;font-family:var(--serif);font-size:12px!important;letter-spacing:.14em;text-transform:uppercase;font-weight:600!important;color:#5E584D;}
+.bk-blk p{margin:0 0 8px;font-size:15px;line-height:1.55;}
+.bk-gross{font-family:var(--serif);font-size:19px!important;line-height:1.3!important;font-weight:500;}
+.bk-gross b{font-weight:600;}
+.bk-bild{background:#1F4FD8;color:#fff;} .bk-bild h4{color:#DCE6FB;}
+.bk-kommt{grid-column:1/-1;background:#fff;box-shadow:inset 0 0 0 2px #1B1B1B;}
+.bk-schritt{background:#1B1B1B;color:#fff;} .bk-schritt h4{color:#F2B33D;}
+.bk-schritt b{color:#F2B33D;}
+.bk-um{color:#D9D3C7;font-size:14px!important;}
+.bk-zeit{font-size:13.5px!important;color:#5E584D;}
+.bk-art{display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.04em;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:middle;background:#E6DECF;color:#1B1B1B;}
+.bk-leicht .bk-art,.bk-art.bk-leicht{background:#DCE6FB;color:#1F4FD8;}
+.bk-spannung .bk-art,.bk-art.bk-spannung,.bk-gegenueber .bk-art,.bk-art.bk-gegenueber{background:#FCE4D6;color:#C8441A;}
+.bk-zusammen .bk-art,.bk-art.bk-zusammen{background:#1B1B1B;color:#fff;}
+.bk-mond .bk-art{background:#FCEFD2;color:#8A5A00;}
+.bk-leiste{list-style:none;margin:0;padding:0;position:relative;}
+.bk-leiste::before{content:"";position:absolute;left:86px;top:6px;bottom:6px;width:2px;background:#E6DECF;}
+.bk-e{position:relative;display:grid;grid-template-columns:76px minmax(0,1fr);gap:22px;padding:8px 0;}
+.bk-e::before{content:"";position:absolute;left:81px;top:13px;width:12px;height:12px;border-radius:50%;background:#1B1B1B;box-shadow:0 0 0 3px #fff;}
+.bk-leicht::before{background:#1F4FD8;} .bk-spannung::before,.bk-gegenueber::before{background:#F05A28;}
+.bk-mond::before{background:#F2B33D;} .bk-durchgang::before{background:#11897C;}
+.bk-dat{font-family:var(--serif);font-weight:600;font-size:15px;text-align:right;line-height:1.3;}
+.bk-txt b{font-family:var(--serif);font-weight:600;font-size:16px;}
+.bk-satz{display:block;font-size:14px;color:#5E584D;margin-top:2px;}
+.bk-txt .ac-tech{display:block;font-size:11.5px;margin-top:2px;}
+.bk-mon{font-family:var(--serif);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#C8441A;padding:12px 0 2px 108px;}
+.bk-praxis{margin:12px 2px 0;font-size:14px;color:#5E584D;}
+.bk-praxis a{color:#1B1B1B;font-weight:600;}
+@media(max-width:560px){.bk-leiste::before{left:62px;} .bk-e{grid-template-columns:54px minmax(0,1fr);gap:20px;}
+ .bk-e::before{left:57px;} .bk-dat{font-size:13.5px;} .bk-mon{padding-left:82px;}}
+body[data-modus="kurz"] #tiefgang{display:none;}
+.bk-schritt{grid-column:1/-1;}
+body[data-modus="kurz"] #breiter{display:none;}
+@media(max-width:560px){
+ .bk-leiste::before{left:5px;}
+ .bk-e{grid-template-columns:1fr;gap:2px;padding:8px 0 8px 22px;}
+ .bk-e::before{left:0;top:12px;}
+ .bk-dat{text-align:left;font-size:13px;color:#5E584D;}
+ .bk-mon{padding-left:22px;}
+}
+
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
@@ -412,7 +470,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 @media(max-width:620px){.bw-tipp{margin-left:0;max-width:none;}}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
-</head><body>
+</head><body data-modus="kurz">
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
 <circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
@@ -439,7 +497,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
 <!-- Ein Bereich ────────────────────────────────────────── -->
 <section class="b-abschnitt" id="bereiche">
   <h2>Ein Bereich im Einzelnen</h2>
-  <p class="u">Immer dasselbe in derselben Reihenfolge: was los ist, was du tun kannst, wie lange es läuft, wie du es nutzt, und was dein Dauerthema darin ist.</p>
+  <p class="u">Was dein Bild hier sagt, was gerade läuft, was in den nächsten Monaten kommt, und dein nächster Schritt.</p>
   <div class="b-reiter" id="breiter" role="tablist"></div>
   <div id="bliste"></div>
 </section>
@@ -569,6 +627,135 @@ function chartVon(p){
 }
 function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
 
+
+/* Erzeugt von gen-termine.py mit der Swiss Ephemeris am 2026-11-06. Nicht von Hand ändern.
+   Datum und Uhrzeit in Berliner Ortszeit, g = Grad des Mondes
+   in der Ekliptik (0 = 0° Widder), e = Art der Finsternis. */
+var MT_ERSTELLT = "2026-11-06";
+var MT_TERMINE = [{"d": "2026-01-03", "z": "11:02", "t": "VM", "g": 103.033, "e": ""},
+ {"d": "2026-01-18", "z": "20:51", "t": "NM", "g": 298.732, "e": ""},
+ {"d": "2026-02-01", "z": "23:09", "t": "VM", "g": 133.061, "e": ""},
+ {"d": "2026-02-17", "z": "13:01", "t": "NM", "g": 328.829, "e": "ringförmig"},
+ {"d": "2026-03-03", "z": "12:37", "t": "VM", "g": 162.898, "e": "total"},
+ {"d": "2026-03-19", "z": "02:23", "t": "NM", "g": 358.451, "e": ""},
+ {"d": "2026-04-02", "z": "04:11", "t": "VM", "g": 192.353, "e": ""},
+ {"d": "2026-04-17", "z": "13:51", "t": "NM", "g": 27.483, "e": ""},
+ {"d": "2026-05-01", "z": "19:23", "t": "VM", "g": 221.347, "e": ""},
+ {"d": "2026-05-16", "z": "22:01", "t": "NM", "g": 55.961, "e": ""},
+ {"d": "2026-05-31", "z": "10:45", "t": "VM", "g": 249.929, "e": ""},
+ {"d": "2026-06-15", "z": "04:54", "t": "NM", "g": 84.05, "e": ""},
+ {"d": "2026-06-30", "z": "01:56", "t": "VM", "g": 278.247, "e": ""},
+ {"d": "2026-07-14", "z": "11:43", "t": "NM", "g": 111.986, "e": ""},
+ {"d": "2026-07-29", "z": "16:35", "t": "VM", "g": 306.502, "e": ""},
+ {"d": "2026-08-12", "z": "19:36", "t": "NM", "g": 140.033, "e": "total"},
+ {"d": "2026-08-28", "z": "06:18", "t": "VM", "g": 334.902, "e": "partiell"},
+ {"d": "2026-09-11", "z": "05:27", "t": "NM", "g": 168.432, "e": ""},
+ {"d": "2026-09-26", "z": "18:49", "t": "VM", "g": 3.62, "e": ""},
+ {"d": "2026-10-10", "z": "17:50", "t": "NM", "g": 197.361, "e": ""},
+ {"d": "2026-10-26", "z": "05:11", "t": "VM", "g": 32.762, "e": ""},
+ {"d": "2026-11-09", "z": "08:02", "t": "NM", "g": 226.89, "e": ""},
+ {"d": "2026-11-24", "z": "15:53", "t": "VM", "g": 62.336, "e": ""},
+ {"d": "2026-12-09", "z": "01:51", "t": "NM", "g": 256.947, "e": ""},
+ {"d": "2026-12-24", "z": "02:28", "t": "VM", "g": 92.233, "e": ""},
+ {"d": "2027-01-07", "z": "21:24", "t": "NM", "g": 287.304, "e": ""},
+ {"d": "2027-01-22", "z": "13:17", "t": "VM", "g": 122.238, "e": ""},
+ {"d": "2027-02-06", "z": "16:56", "t": "NM", "g": 317.627, "e": "ringförmig"},
+ {"d": "2027-02-21", "z": "00:23", "t": "VM", "g": 152.093, "e": "Halbschatten"},
+ {"d": "2027-03-08", "z": "10:29", "t": "NM", "g": 347.58, "e": ""},
+ {"d": "2027-03-22", "z": "11:43", "t": "VM", "g": 181.585, "e": ""},
+ {"d": "2027-04-07", "z": "01:51", "t": "NM", "g": 16.952, "e": ""},
+ {"d": "2027-04-21", "z": "00:27", "t": "VM", "g": 210.617, "e": ""},
+ {"d": "2027-05-06", "z": "12:58", "t": "NM", "g": 45.709, "e": ""},
+ {"d": "2027-05-20", "z": "12:59", "t": "VM", "g": 239.226, "e": ""},
+ {"d": "2027-06-04", "z": "21:40", "t": "NM", "g": 73.972, "e": ""},
+ {"d": "2027-06-19", "z": "02:44", "t": "VM", "g": 267.557, "e": ""},
+ {"d": "2027-07-04", "z": "05:02", "t": "NM", "g": 101.956, "e": ""},
+ {"d": "2027-07-18", "z": "17:44", "t": "VM", "g": 295.813, "e": "Halbschatten"},
+ {"d": "2027-08-02", "z": "12:05", "t": "NM", "g": 129.917, "e": "total"},
+ {"d": "2027-08-17", "z": "09:28", "t": "VM", "g": 324.197, "e": "Halbschatten"},
+ {"d": "2027-08-31", "z": "19:41", "t": "NM", "g": 158.104, "e": ""},
+ {"d": "2027-09-16", "z": "01:03", "t": "VM", "g": 352.883, "e": ""},
+ {"d": "2027-09-30", "z": "04:36", "t": "NM", "g": 186.724, "e": ""},
+ {"d": "2027-10-15", "z": "15:47", "t": "VM", "g": 21.983, "e": ""},
+ {"d": "2027-10-29", "z": "15:36", "t": "NM", "g": 215.904, "e": ""},
+ {"d": "2027-11-14", "z": "04:25", "t": "VM", "g": 51.521, "e": ""},
+ {"d": "2027-11-28", "z": "04:24", "t": "NM", "g": 245.653, "e": ""},
+ {"d": "2027-12-13", "z": "17:08", "t": "VM", "g": 81.413, "e": ""},
+ {"d": "2027-12-27", "z": "21:12", "t": "NM", "g": 275.838, "e": ""},
+ {"d": "2028-01-12", "z": "05:03", "t": "VM", "g": 111.459, "e": "partiell"},
+ {"d": "2028-01-26", "z": "16:12", "t": "NM", "g": 306.184, "e": "ringförmig"},
+ {"d": "2028-02-10", "z": "16:03", "t": "VM", "g": 141.396, "e": ""},
+ {"d": "2028-02-25", "z": "11:37", "t": "NM", "g": 336.348, "e": ""},
+ {"d": "2028-03-11", "z": "02:06", "t": "VM", "g": 170.987, "e": ""},
+ {"d": "2028-03-26", "z": "06:31", "t": "NM", "g": 6.046, "e": ""},
+ {"d": "2028-04-09", "z": "12:26", "t": "VM", "g": 200.097, "e": ""},
+ {"d": "2028-04-24", "z": "21:46", "t": "NM", "g": 35.147, "e": ""},
+ {"d": "2028-05-08", "z": "21:48", "t": "VM", "g": 228.734, "e": ""},
+ {"d": "2028-05-24", "z": "10:16", "t": "NM", "g": 63.692, "e": ""},
+ {"d": "2028-06-07", "z": "08:08", "t": "VM", "g": 257.028, "e": ""},
+ {"d": "2028-06-22", "z": "20:27", "t": "NM", "g": 91.847, "e": ""},
+ {"d": "2028-07-06", "z": "20:10", "t": "VM", "g": 285.186, "e": "partiell"},
+ {"d": "2028-07-22", "z": "05:01", "t": "NM", "g": 119.846, "e": "total"},
+ {"d": "2028-08-05", "z": "10:09", "t": "VM", "g": 313.436, "e": ""},
+ {"d": "2028-08-20", "z": "12:43", "t": "NM", "g": 147.941, "e": ""},
+ {"d": "2028-09-04", "z": "01:47", "t": "VM", "g": 341.988, "e": ""},
+ {"d": "2028-09-18", "z": "20:23", "t": "NM", "g": 176.359, "e": ""},
+ {"d": "2028-10-03", "z": "18:24", "t": "VM", "g": 10.987, "e": ""},
+ {"d": "2028-10-18", "z": "04:56", "t": "NM", "g": 205.264, "e": ""},
+ {"d": "2028-11-02", "z": "10:17", "t": "VM", "g": 40.484, "e": ""},
+ {"d": "2028-11-16", "z": "14:18", "t": "NM", "g": 234.717, "e": ""},
+ {"d": "2028-12-02", "z": "02:40", "t": "VM", "g": 70.404, "e": ""},
+ {"d": "2028-12-16", "z": "03:06", "t": "NM", "g": 264.645, "e": ""},
+ {"d": "2028-12-31", "z": "17:48", "t": "VM", "g": 100.547, "e": "total"},
+ {"d": "2029-01-14", "z": "18:24", "t": "NM", "g": 294.839, "e": "partiell"},
+ {"d": "2029-01-30", "z": "07:03", "t": "VM", "g": 130.634, "e": ""},
+ {"d": "2029-02-13", "z": "11:31", "t": "NM", "g": 325.008, "e": ""},
+ {"d": "2029-02-28", "z": "18:10", "t": "VM", "g": 160.4, "e": ""},
+ {"d": "2029-03-15", "z": "05:19", "t": "NM", "g": 354.869, "e": ""},
+ {"d": "2029-03-30", "z": "04:26", "t": "VM", "g": 189.677, "e": ""},
+ {"d": "2029-04-13", "z": "23:40", "t": "NM", "g": 24.241, "e": ""},
+ {"d": "2029-04-28", "z": "12:36", "t": "VM", "g": 218.43, "e": ""},
+ {"d": "2029-05-13", "z": "15:42", "t": "NM", "g": 53.083, "e": ""},
+ {"d": "2029-05-27", "z": "20:37", "t": "VM", "g": 246.753, "e": ""},
+ {"d": "2029-06-12", "z": "05:50", "t": "NM", "g": 81.485, "e": "partiell"},
+ {"d": "2029-06-26", "z": "05:22", "t": "VM", "g": 274.831, "e": "total"},
+ {"d": "2029-07-11", "z": "17:51", "t": "NM", "g": 109.629, "e": "partiell"},
+ {"d": "2029-07-25", "z": "15:35", "t": "VM", "g": 302.9, "e": ""},
+ {"d": "2029-08-10", "z": "03:55", "t": "NM", "g": 137.747, "e": ""},
+ {"d": "2029-08-24", "z": "03:51", "t": "VM", "g": 331.204, "e": ""},
+ {"d": "2029-09-08", "z": "12:44", "t": "NM", "g": 166.074, "e": ""},
+ {"d": "2029-09-22", "z": "18:29", "t": "VM", "g": 359.953, "e": ""},
+ {"d": "2029-10-07", "z": "21:14", "t": "NM", "g": 194.806, "e": ""},
+ {"d": "2029-10-22", "z": "11:27", "t": "VM", "g": 29.267, "e": ""},
+ {"d": "2029-11-06", "z": "05:24", "t": "NM", "g": 224.043, "e": ""},
+ {"d": "2029-11-21", "z": "05:02", "t": "VM", "g": 59.126, "e": ""},
+ {"d": "2029-12-05", "z": "15:52", "t": "NM", "g": 253.758, "e": "partiell"},
+ {"d": "2029-12-20", "z": "23:46", "t": "VM", "g": 89.344, "e": "total"},
+ {"d": "2030-01-04", "z": "03:49", "t": "NM", "g": 283.781, "e": ""},
+ {"d": "2030-01-19", "z": "16:54", "t": "VM", "g": 119.618, "e": ""},
+ {"d": "2030-02-02", "z": "17:07", "t": "NM", "g": 313.858, "e": ""},
+ {"d": "2030-02-18", "z": "07:19", "t": "VM", "g": 149.636, "e": ""},
+ {"d": "2030-03-04", "z": "07:34", "t": "NM", "g": 343.727, "e": ""},
+ {"d": "2030-03-19", "z": "18:56", "t": "VM", "g": 179.175, "e": ""},
+ {"d": "2030-04-03", "z": "00:02", "t": "NM", "g": 13.207, "e": ""},
+ {"d": "2030-04-18", "z": "05:20", "t": "VM", "g": 208.152, "e": ""},
+ {"d": "2030-05-02", "z": "16:12", "t": "NM", "g": 42.229, "e": ""},
+ {"d": "2030-05-17", "z": "13:19", "t": "VM", "g": 236.616, "e": ""},
+ {"d": "2030-06-01", "z": "08:21", "t": "NM", "g": 70.832, "e": "ringförmig"},
+ {"d": "2030-06-15", "z": "20:41", "t": "VM", "g": 264.717, "e": "partiell"},
+ {"d": "2030-06-30", "z": "23:34", "t": "NM", "g": 99.145, "e": ""},
+ {"d": "2030-07-15", "z": "04:12", "t": "VM", "g": 292.678, "e": ""},
+ {"d": "2030-07-30", "z": "13:11", "t": "NM", "g": 127.357, "e": ""},
+ {"d": "2030-08-13", "z": "12:44", "t": "VM", "g": 320.751, "e": ""},
+ {"d": "2030-08-29", "z": "01:07", "t": "NM", "g": 155.69, "e": ""},
+ {"d": "2030-09-11", "z": "23:17", "t": "VM", "g": 349.185, "e": ""},
+ {"d": "2030-09-27", "z": "11:54", "t": "NM", "g": 184.347, "e": ""},
+ {"d": "2030-10-11", "z": "12:46", "t": "VM", "g": 18.169, "e": ""},
+ {"d": "2030-10-26", "z": "22:17", "t": "NM", "g": 213.458, "e": ""},
+ {"d": "2030-11-10", "z": "04:30", "t": "VM", "g": 47.775, "e": ""},
+ {"d": "2030-11-25", "z": "07:46", "t": "NM", "g": 243.035, "e": "total"},
+ {"d": "2030-12-09", "z": "23:40", "t": "VM", "g": 77.9, "e": "Halbschatten"},
+ {"d": "2030-12-24", "z": "18:32", "t": "NM", "g": 272.946, "e": ""}];
 
 /* Astro-Charlie · Zeiten — die Rechnung
    ==================================================================
@@ -1639,6 +1826,76 @@ window.AC_LB = {
     return bereiche;
   }
 
+  /* ── Vorschau: was in den nächsten Monaten kommt (18.11.) ─────
+     Mandy: „wo liegen die nächsten Schritte oder Punkte in den
+     kommenden Wochen und Monaten? Wo bewegt sich was?" Die Seite
+     zeigte nur, was heute läuft. Hier wird Woche für Woche
+     vorausgerechnet, mit derselben Rechnung wie heute; jeder Vorgang
+     bekommt das Datum, an dem er am genauesten steht (sonst den Tag,
+     an dem er beginnt). Die schnellen Planeten bleiben draußen — sie
+     wären jede Woche ein neuer Punkt und damit Rauschen. Neu- und
+     Vollmonde kommen aus mond-termine.js, wenn die Seite es lädt. */
+  var VOR_LANGSAM = { Pluto:1, Neptun:1, Uranus:1, Saturn:1, Jupiter:1, Mars:1 };
+  function vorschau(C, jd, wochen){
+    wochen = wochen || 26;
+    var ende = jd + wochen*7, je = {}, i, w, n;
+    for(i=0;i<B_BEREICHE.length;i++) je[B_BEREICHE[i].k] = {};
+    for(w=0; w<=wochen; w++){
+      var t = jd + w*7, V = vorgaenge(C, t);
+      for(i=0;i<B_BEREICHE.length;i++){
+        var B = B_BEREICHE[i], L = fuerBereich(V, B), M = je[B.k];
+        for(n=0;n<L.length;n++){
+          var v = L[n];
+          if(!VOR_LANGSAM[v.wanderer]) continue;
+          var key = v.wanderer+'|'+v.form+'|'+(v.ziel||'')+'|'+(v.aspekt||'')+'|'+(v.haus||'');
+          if(M[key]) continue;
+          var am = (v.f && v.f.exakt) ? v.f.exakt : t;
+          M[key] = { form:v.form, wanderer:v.wanderer, ziel:v.ziel, zielArt:v.zielArt,
+                     aspekt:v.aspekt, art:v.art, haus:v.haus, kern:v.kern,
+                     gewicht:v.bGewicht, am:am, ab:v.ab, start:(w===0 ? null : t),
+                     bis:(v.f && v.f.bis) || null, jetzt:(w===0) };
+        }
+      }
+    }
+    var out = {};
+    for(var k in je){
+      var liste = [];
+      for(var s in je[k]){
+        var e = je[k][s];
+        /* Was heute schon läuft, zählt nur mit einem genauen Tag in
+           der Zukunft; sonst steht es oben unter „Gerade". */
+        if(e.jetzt && !(e.am > jd && e.am <= ende)) continue;
+        if(e.form === 'durchgang' && e.jetzt) continue;
+        if(e.am < jd) e.am = e.start || jd;
+        if(e.am > ende) continue;
+        liste.push(e);
+      }
+      liste.sort(function(a,b){ return b.gewicht - a.gewicht; });
+      out[k] = liste;
+    }
+    return out;
+  }
+
+  /* Neu- und Vollmonde, die in die Felder eines Bereichs fallen.
+     Nur Kernfeld und zweites Feld — das dritte wäre fast jeder Mond. */
+  function monde(C, k, jd, tage){
+    var MT = (typeof window !== 'undefined' && window.MT_TERMINE) ||
+             (typeof MT_TERMINE !== 'undefined' ? MT_TERMINE : null);
+    if(!MT) return [];
+    var B = null; for(var i=0;i<B_BEREICHE.length;i++) if(B_BEREICHE[i].k === k) B = B_BEREICHE[i];
+    if(!B) return [];
+    var out = [];
+    for(var j=0;j<MT.length;j++){
+      var m = MT[j], d = m.d.split('-'), z = (m.z||'12:00').split(':');
+      var mjd = Date.UTC(+d[0], +d[1]-1, +d[2], +z[0]-1, +z[1]) / 86400000 + 2440587.5;
+      if(mjd < jd || mjd > jd + tage) continue;
+      var h = haus(C, m.g), p = B.haeuser.indexOf(h);
+      if(p < 0 || p > 1) continue;
+      out.push({ form:'mond', t:m.t, e:m.e, am:mjd, haus:h, kern:(p === 0), g:m.g });
+    }
+    return out;
+  }
+
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
      Z und tage sind freiwillig: ohne sie rechnet die Seite nur mit
      Transiten, mit ihnen kommt das Kapitel dazu. */
@@ -1669,7 +1926,8 @@ window.AC_LB = {
     seitenweit: seitenweit, BLOCK1: BLOCK1,
     absatzSchluessel: absatzSchluessel,
     facetten: facetten, herrGewicht: herrGewicht, buendelung: buendelung,
-    widersprueche: widersprueche, blatt: blatt
+    widersprueche: widersprueche, blatt: blatt,
+    vorschau: vorschau, monde: monde
   };
 
 })();
@@ -2544,12 +2802,50 @@ window.AC_LB = {
       a:'Dann stimmt dein Erleben und nicht die Seite. Deine Lage hat immer Vorrang. Die Seite kennt nur die Uhr, nicht dein Leben.' }
   ];
 
+  /* ── Die Kurzfassung je Bereich (18.11.) ───────────────────────
+     Mandy: „Was sagen die Bereiche genau, und wo liegen die nächsten
+     Schritte oder Punkte in den kommenden Wochen und Monaten? Wo
+     bewegt sich was, und wie sehen die next steps aus?" Öffentlich
+     steht nur diese Kurzfassung; die ausführliche liegt in der Praxis. */
+  var B_KURZ = {
+    bloecke:{ bild:'Was dein Bild hier sagt', gerade:'Was gerade läuft',
+              kommt:'Die nächsten Monate', schritt:'Dein nächster Schritt',
+              umgang:'Wie du damit umgehst', monat:'Monat für Monat' },
+    bildVor:'Bei dir steht vorn: ',
+    wand:{ Pluto:'tiefe Verwandlung', Neptun:'Auflösung und Sehnsucht', Uranus:'Umbruch und Befreiung',
+           Saturn:'Prüfung und Aufbau', Jupiter:'Wachstum und Rückenwind', Mars:'Antrieb und Reibung',
+           Venus:'Nähe und Genuss', Merkur:'Gespräche und Pläne', Sonne:'Aufmerksamkeit' },
+    ziel:{ Sonne:'dein Kern', Mond:'dein Gefühlsleben', Merkur:'dein Denken und Reden',
+           Venus:'deine Art zu lieben', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
+           Saturn:'deine Verantwortung', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
+           Pluto:'deine Tiefe', ASC:'dein Auftreten', MC:'deine Richtung', sonst:'ein Punkt in deinem Bild',
+           feld:'dieser Bereich' },
+    art:{ zusammen:'direkt', gegenueber:'gegenüber', spannung:'reibt', leicht:'stärkt',
+          durchgang:'zieht durch', mond:'Mond' },
+    titel:'{ziel}: {wand}',
+    mond:{ NM:'Neumond in diesem Bereich', VM:'Vollmond in diesem Bereich', F:'Finsternis in diesem Bereich' },
+    mondWas:{ NM:'Ein guter Tag, um hier etwas anzufangen.', VM:'Hier wird etwas sichtbar oder rund.' },
+    um:'um den {datum}', ab:'ab {datum}',
+    tun:{ leicht:'Rückenwind. Fang an, was du hier sonst aufschiebst.',
+          spannung:'Reibung. Nicht wegdrücken: eine Sache klären, nicht alle.',
+          gegenueber:'Etwas spiegelt dich. Erst zuhören, dann entscheiden.',
+          zusammen:'Volle Ladung auf einen Punkt. Bewusst einsetzen, nicht verteilen.',
+          durchgang:'Ein langes Thema zieht durch. Kleine, regelmäßige Schritte statt eines großen.' },
+    vorbereiten:'Mit Blick auf den {datum}:',
+    leerKommt:'In den nächsten sechs Monaten kommt hier nichts Großes dazu. Gut für Ruhe und Pflege.',
+    mehrKommt:'{n} weitere Punkte',
+    praxis:'Die ausführliche Fassung mit allen Zeiträumen, Monat für Monat, und den Fragen fürs Gespräch gehört in die Begleitung.',
+    praxisLink:'Wie die Begleitung abläuft', praxisDatei:'start.html#stangebot',
+    naechster:'Nächster Punkt: {datum}', keinNaechster:'Ruhig in den nächsten Monaten',
+    kachelVor:'Tipp einen Bereich an.'
+  };
+
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH, SEITE:B_SEITE,
     WID:B_WID, FRAGEN:B_FRAGEN, GRENZE:B_GRENZE, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
-    RAUM:B_RAUM
+    RAUM:B_RAUM, KURZ:B_KURZ
   };
 
 })();
@@ -3187,6 +3483,7 @@ window.AC_WAHL = {
     h.push('</div>');
     h.push('<p class="b-satz">' + esc(T.lautSatz[b.laut]) + '</p>');
     h.push('<div class="b-in">');
+    if(modus() === 'voll') h.push(kurzInhalt(b, true));
 
     /* worum es in diesem Bereich überhaupt geht */
     h.push('<p class="b-worum">' + esc(T.worum) + '</p>');
@@ -3413,6 +3710,132 @@ window.AC_WAHL = {
     return h.join('');
   }
 
+  /* ── Kurzfassung und Vorschau (18.11.) ─────────────────────────
+     Öffentlich (data-modus="kurz") steht je Bereich nur diese Karte:
+     was das Bild hier sagt, was gerade läuft, die nächsten Monate als
+     Zeitleiste, ein nächster Schritt. In der Praxis (data-modus="voll")
+     steht sie über dem ausführlichen Block, die Zeitleiste vollständig
+     und Monat für Monat. */
+  function modus(){
+    try{ return document.body.getAttribute('data-modus') || 'kurz'; }catch(e){ return 'kurz'; }
+  }
+  var VOR = null, VOR_C = null, VOR_JD = null;
+  function KU(){ return bD().KURZ; }
+  function tagMonat(jd){
+    var d = datVon(jd); return d.getUTCDate() + '. ' + MN_()[d.getUTCMonth()];
+  }
+  function gross(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function ereignisse(b, alle){
+    var K = KU(), ev = (VOR && VOR[b.k]) ? VOR[b.k].slice() : [];
+    if(!alle) ev = ev.slice(0, 4);
+    var mo = []; try{ mo = bB().monde(VOR_C, b.k, VOR_JD, 182); }catch(e){}
+    if(!alle) mo = mo.filter(function(m){ return m.kern; }).slice(0, 2);
+    return ev.concat(mo).sort(function(a,b){ return a.am - b.am; });
+  }
+  var SATZ_GESEHEN = {};
+  function ereignisZeile(e){
+    var K = KU(), art, titel, satz;
+    if(e.form === 'mond'){
+      var mk = e.e ? 'F' : e.t;
+      art = 'mond'; titel = K.mond[mk] || K.mond[e.t]; satz = K.mondWas[e.t] || '';
+    } else {
+      art = e.form === 'durchgang' ? 'durchgang' : e.art;
+      var z = e.form === 'durchgang' ? K.ziel.feld : (K.ziel[e.ziel] || K.ziel.sonst);
+      titel = gross(fuell(K.titel, { ziel:z, wand:K.wand[e.wanderer] || '' }));
+      satz = K.tun[art] || '';
+    }
+    /* Derselbe Rat steht je Art nur einmal in der Leiste. */
+    if(satz && SATZ_GESEHEN[satz]) satz = ''; else if(satz) SATZ_GESEHEN[satz] = true;
+    return '<li class="bk-e bk-' + esc(art) + '">' +
+      '<span class="bk-dat">' + esc(tagMonat(e.am)) + '</span>' +
+      '<span class="bk-txt"><b>' + esc(titel) + '</b>' +
+      '<span class="bk-art">' + esc(K.art[art] || '') + '</span>' +
+      (satz ? '<span class="bk-satz">' + esc(satz) + '</span>' : '') +
+      (e.form !== 'mond' && stufe() >= 2 ? '<span class="ac-tech">' + esc(vorgangTech(e)) + '</span>' : '') +
+      '</span></li>';
+  }
+  function naechsterPunkt(b){
+    var ev = ereignisse(b, false);
+    return ev.length ? fuell(KU().naechster, { datum:tagMonat(ev[0].am) }) : KU().keinNaechster;
+  }
+  function kurzInhalt(b, voll){
+    var K = KU(), h = [], zeige = b.laeuft.filter(function(v){ return v.zeigen !== false; });
+    h.push('<div class="bk">');
+    if(!voll){
+    /* 1 · Was dein Bild hier sagt — die Facette, die bei diesem Menschen vorn steht */
+      var FA = fac(b);
+      h.push('<div class="bk-blk bk-bild"><h4>' + esc(K.bloecke.bild) + '</h4>');
+      if(FA.length){
+        h.push('<p class="bk-gross">' + esc(K.bildVor) + '<b>' + esc(FA[0].f.titel) + '</b></p>');
+        h.push('<p>' + esc(FA[0].f.was) + '</p>');
+      } else h.push('<p>' + esc(bD().BER[b.k].worum) + '</p>');
+      h.push('</div>');
+      /* 2 · Was gerade läuft */
+      h.push('<div class="bk-blk bk-jetzt"><h4>' + esc(K.bloecke.gerade) + '</h4>');
+      if(zeige.length){
+        var v = zeige[0], S = vorgangSatz(v, b), art = v.form === 'durchgang' ? 'durchgang' : v.art;
+        var z = v.form === 'durchgang' ? K.ziel.feld : (K.ziel[v.ziel] || K.ziel.sonst);
+        h.push('<p class="bk-gross"><b>' + esc(gross(fuell(K.titel, { ziel:z, wand:K.wand[v.wanderer] || '' }))) +
+               '</b> <span class="bk-art bk-' + esc(art) + '">' + esc(K.art[art] || '') + '</span></p>');
+        if(S) h.push('<p>' + esc(S.was.split('. ')[0].replace(/\.$/, '') + '.') + '</p>');
+        h.push('<p class="bk-zeit">' + esc(fensterZeile(v)) + '</p>');
+      } else h.push('<p>' + esc(bD().LEER.keinVorgang) + '</p>');
+      h.push('</div>');
+    }
+    /* 3 · Die nächsten Monate */
+    var ev = ereignisse(b, !!voll);
+    SATZ_GESEHEN = {};
+    h.push('<div class="bk-blk bk-kommt"><h4>' + esc(voll ? K.bloecke.monat : K.bloecke.kommt) + '</h4>');
+    if(!ev.length) h.push('<p>' + esc(K.leerKommt) + '</p>');
+    else if(!voll){
+      h.push('<ol class="bk-leiste">' + ev.map(ereignisZeile).join('') + '</ol>');
+    } else {
+      var mon = null;
+      h.push('<ol class="bk-leiste bk-voll">');
+      ev.forEach(function(e){
+        var d = datVon(e.am), m = MN_()[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+        if(m !== mon){ h.push('<li class="bk-mon">' + esc(m) + '</li>'); mon = m; }
+        h.push(ereignisZeile(e));
+      });
+      h.push('</ol>');
+    }
+    h.push('</div>');
+    if(!voll){
+    /* 4 · Dein nächster Schritt */
+      h.push('<div class="bk-blk bk-schritt"><h4>' + esc(K.bloecke.schritt) + '</h4>');
+      if(zeige.length){
+        var S0 = vorgangSatz(zeige[0], b);
+        h.push('<p class="bk-gross">' + esc(S0 ? S0.tun : '') + '</p>');
+        if(ev.length && ev[0].form !== 'mond'){
+          var a0 = ev[0].form === 'durchgang' ? 'durchgang' : ev[0].art;
+          h.push('<p>' + fuell(esc(K.vorbereiten), { datum:'<b>' + esc(tagMonat(ev[0].am)) + '</b>' }) + ' ' + esc(K.tun[a0] || '') + '</p>');
+        }
+        if(S0) h.push('<p class="bk-um"><b>' + esc(K.bloecke.umgang) + ':</b> ' + esc(S0.nutzen) + '</p>');
+      } else h.push('<p>' + esc(bD().LEER.tun) + '</p>');
+      h.push('</div>');
+    }
+    h.push('</div>');
+    /* Die Grenze gilt auch in der Kurzfassung: Was am Körper oder an
+       der Psyche hängt, bekommt den Satz, dass hier nichts festgestellt
+       wird — öffentlich erst recht. */
+    if(!voll){
+      var GR = (bD().GRENZE || {}), GRB = GR[b.k];
+      if(GRB && GRB.satz) h.push('<p class="b-grenze"><b class="b-grenzevor">' + esc(GR.vor) +
+             '</b> ' + esc(GRB.satz) + '</p>');
+    }
+    if(!voll) h.push('<p class="bk-praxis">' + esc(K.praxis) + ' <a href="' + esc(K.praxisDatei) + '">' + esc(K.praxisLink) + ' \u2192</a></p>');
+    return h.join('');
+  }
+  function kurzBlock(b){
+    var T = bD().BER[b.k], L = bD().LAUT[b.laut];
+    return '<section class="b-ber b-kurz" id="ber-' + b.k + '">' +
+      '<div class="b-kopfz"><span class="b-punkt" style="background:' + L.farbe + '"></span>' +
+      '<h3 class="b-name">' + esc(b.name) + '</h3>' +
+      '<span class="b-laut" style="color:' + L.farbe + '">' + esc(L.n) + '</span></div>' +
+      '<p class="b-satz">' + esc(T.lautSatz[b.laut]) + '</p>' +
+      kurzInhalt(b, false) + '</section>';
+  }
+
   /* Ende eines Kapitels als Jahr — die Zeitenseite rechnet in
      Tagen seit der Geburt, hier wird daraus ein Datum. */
   var GEB_MS = null;
@@ -3430,14 +3853,15 @@ window.AC_WAHL = {
 
   /* ── Überblick ──────────────────────────────────────────────── */
   function ueberblick(bs){
-    var h = ['<div class="b-ueber">'];
+    var h = ['<div class="b-ueber b-kacheln">'];
     for(var i=0;i<bs.length;i++){
       var b = bs[i], L = bD().LAUT[b.laut];
-      h.push('<a class="b-u" href="#ber-' + b.k + '" data-k="' + b.k + '">');
+      h.push('<a class="b-u" href="#ber-' + b.k + '" data-k="' + b.k + '" data-laut="' + b.laut + '">');
       h.push('<span class="b-ubalk"><i style="width:' + ((b.laut+1)*25) +
              '%;background:' + L.farbe + '"></i></span>');
       h.push('<span class="b-un">' + esc(b.name) + '</span>');
       h.push('<span class="b-ul" style="color:' + L.farbe + '">' + esc(L.n) + '</span>');
+      h.push('<span class="b-unext">' + esc(naechsterPunkt(b)) + '</span>');
       h.push('</a>');
     }
     h.push('</div>');
@@ -3557,6 +3981,7 @@ window.AC_WAHL = {
     }catch(e){ Z = null; }
 
     var Bl = bB().blatt(C, jd, Z, tage);
+    try{ VOR = bB().vorschau(C, jd, 26); VOR_C = C; VOR_JD = jd; }catch(e){ VOR = null; }
 
     /* lauteste zuerst; bei gleicher Lautstärke die mit mehr Vorgängen */
     var bs = Bl.bereiche.slice().sort(function(a,b){
@@ -3604,7 +4029,7 @@ window.AC_WAHL = {
     var zeig = null;
     for(var i=0;i<bs.length;i++) if(bs[i].k === k) zeig = bs[i];
     if(!zeig) zeig = bs[0];
-    ziel.innerHTML = bereichBlock(zeig, true);
+    ziel.innerHTML = modus() === 'voll' ? bereichBlock(zeig, true) : kurzBlock(zeig);
 
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   }

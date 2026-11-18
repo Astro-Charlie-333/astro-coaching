@@ -109,6 +109,7 @@
     h.push('</div>');
     h.push('<p class="b-satz">' + esc(T.lautSatz[b.laut]) + '</p>');
     h.push('<div class="b-in">');
+    if(modus() === 'voll') h.push(kurzInhalt(b, true));
 
     /* worum es in diesem Bereich überhaupt geht */
     h.push('<p class="b-worum">' + esc(T.worum) + '</p>');
@@ -335,6 +336,132 @@
     return h.join('');
   }
 
+  /* ── Kurzfassung und Vorschau (18.11.) ─────────────────────────
+     Öffentlich (data-modus="kurz") steht je Bereich nur diese Karte:
+     was das Bild hier sagt, was gerade läuft, die nächsten Monate als
+     Zeitleiste, ein nächster Schritt. In der Praxis (data-modus="voll")
+     steht sie über dem ausführlichen Block, die Zeitleiste vollständig
+     und Monat für Monat. */
+  function modus(){
+    try{ return document.body.getAttribute('data-modus') || 'kurz'; }catch(e){ return 'kurz'; }
+  }
+  var VOR = null, VOR_C = null, VOR_JD = null;
+  function KU(){ return bD().KURZ; }
+  function tagMonat(jd){
+    var d = datVon(jd); return d.getUTCDate() + '. ' + MN_()[d.getUTCMonth()];
+  }
+  function gross(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function ereignisse(b, alle){
+    var K = KU(), ev = (VOR && VOR[b.k]) ? VOR[b.k].slice() : [];
+    if(!alle) ev = ev.slice(0, 4);
+    var mo = []; try{ mo = bB().monde(VOR_C, b.k, VOR_JD, 182); }catch(e){}
+    if(!alle) mo = mo.filter(function(m){ return m.kern; }).slice(0, 2);
+    return ev.concat(mo).sort(function(a,b){ return a.am - b.am; });
+  }
+  var SATZ_GESEHEN = {};
+  function ereignisZeile(e){
+    var K = KU(), art, titel, satz;
+    if(e.form === 'mond'){
+      var mk = e.e ? 'F' : e.t;
+      art = 'mond'; titel = K.mond[mk] || K.mond[e.t]; satz = K.mondWas[e.t] || '';
+    } else {
+      art = e.form === 'durchgang' ? 'durchgang' : e.art;
+      var z = e.form === 'durchgang' ? K.ziel.feld : (K.ziel[e.ziel] || K.ziel.sonst);
+      titel = gross(fuell(K.titel, { ziel:z, wand:K.wand[e.wanderer] || '' }));
+      satz = K.tun[art] || '';
+    }
+    /* Derselbe Rat steht je Art nur einmal in der Leiste. */
+    if(satz && SATZ_GESEHEN[satz]) satz = ''; else if(satz) SATZ_GESEHEN[satz] = true;
+    return '<li class="bk-e bk-' + esc(art) + '">' +
+      '<span class="bk-dat">' + esc(tagMonat(e.am)) + '</span>' +
+      '<span class="bk-txt"><b>' + esc(titel) + '</b>' +
+      '<span class="bk-art">' + esc(K.art[art] || '') + '</span>' +
+      (satz ? '<span class="bk-satz">' + esc(satz) + '</span>' : '') +
+      (e.form !== 'mond' && stufe() >= 2 ? '<span class="ac-tech">' + esc(vorgangTech(e)) + '</span>' : '') +
+      '</span></li>';
+  }
+  function naechsterPunkt(b){
+    var ev = ereignisse(b, false);
+    return ev.length ? fuell(KU().naechster, { datum:tagMonat(ev[0].am) }) : KU().keinNaechster;
+  }
+  function kurzInhalt(b, voll){
+    var K = KU(), h = [], zeige = b.laeuft.filter(function(v){ return v.zeigen !== false; });
+    h.push('<div class="bk">');
+    if(!voll){
+    /* 1 · Was dein Bild hier sagt — die Facette, die bei diesem Menschen vorn steht */
+      var FA = fac(b);
+      h.push('<div class="bk-blk bk-bild"><h4>' + esc(K.bloecke.bild) + '</h4>');
+      if(FA.length){
+        h.push('<p class="bk-gross">' + esc(K.bildVor) + '<b>' + esc(FA[0].f.titel) + '</b></p>');
+        h.push('<p>' + esc(FA[0].f.was) + '</p>');
+      } else h.push('<p>' + esc(bD().BER[b.k].worum) + '</p>');
+      h.push('</div>');
+      /* 2 · Was gerade läuft */
+      h.push('<div class="bk-blk bk-jetzt"><h4>' + esc(K.bloecke.gerade) + '</h4>');
+      if(zeige.length){
+        var v = zeige[0], S = vorgangSatz(v, b), art = v.form === 'durchgang' ? 'durchgang' : v.art;
+        var z = v.form === 'durchgang' ? K.ziel.feld : (K.ziel[v.ziel] || K.ziel.sonst);
+        h.push('<p class="bk-gross"><b>' + esc(gross(fuell(K.titel, { ziel:z, wand:K.wand[v.wanderer] || '' }))) +
+               '</b> <span class="bk-art bk-' + esc(art) + '">' + esc(K.art[art] || '') + '</span></p>');
+        if(S) h.push('<p>' + esc(S.was.split('. ')[0].replace(/\.$/, '') + '.') + '</p>');
+        h.push('<p class="bk-zeit">' + esc(fensterZeile(v)) + '</p>');
+      } else h.push('<p>' + esc(bD().LEER.keinVorgang) + '</p>');
+      h.push('</div>');
+    }
+    /* 3 · Die nächsten Monate */
+    var ev = ereignisse(b, !!voll);
+    SATZ_GESEHEN = {};
+    h.push('<div class="bk-blk bk-kommt"><h4>' + esc(voll ? K.bloecke.monat : K.bloecke.kommt) + '</h4>');
+    if(!ev.length) h.push('<p>' + esc(K.leerKommt) + '</p>');
+    else if(!voll){
+      h.push('<ol class="bk-leiste">' + ev.map(ereignisZeile).join('') + '</ol>');
+    } else {
+      var mon = null;
+      h.push('<ol class="bk-leiste bk-voll">');
+      ev.forEach(function(e){
+        var d = datVon(e.am), m = MN_()[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+        if(m !== mon){ h.push('<li class="bk-mon">' + esc(m) + '</li>'); mon = m; }
+        h.push(ereignisZeile(e));
+      });
+      h.push('</ol>');
+    }
+    h.push('</div>');
+    if(!voll){
+    /* 4 · Dein nächster Schritt */
+      h.push('<div class="bk-blk bk-schritt"><h4>' + esc(K.bloecke.schritt) + '</h4>');
+      if(zeige.length){
+        var S0 = vorgangSatz(zeige[0], b);
+        h.push('<p class="bk-gross">' + esc(S0 ? S0.tun : '') + '</p>');
+        if(ev.length && ev[0].form !== 'mond'){
+          var a0 = ev[0].form === 'durchgang' ? 'durchgang' : ev[0].art;
+          h.push('<p>' + fuell(esc(K.vorbereiten), { datum:'<b>' + esc(tagMonat(ev[0].am)) + '</b>' }) + ' ' + esc(K.tun[a0] || '') + '</p>');
+        }
+        if(S0) h.push('<p class="bk-um"><b>' + esc(K.bloecke.umgang) + ':</b> ' + esc(S0.nutzen) + '</p>');
+      } else h.push('<p>' + esc(bD().LEER.tun) + '</p>');
+      h.push('</div>');
+    }
+    h.push('</div>');
+    /* Die Grenze gilt auch in der Kurzfassung: Was am Körper oder an
+       der Psyche hängt, bekommt den Satz, dass hier nichts festgestellt
+       wird — öffentlich erst recht. */
+    if(!voll){
+      var GR = (bD().GRENZE || {}), GRB = GR[b.k];
+      if(GRB && GRB.satz) h.push('<p class="b-grenze"><b class="b-grenzevor">' + esc(GR.vor) +
+             '</b> ' + esc(GRB.satz) + '</p>');
+    }
+    if(!voll) h.push('<p class="bk-praxis">' + esc(K.praxis) + ' <a href="' + esc(K.praxisDatei) + '">' + esc(K.praxisLink) + ' \u2192</a></p>');
+    return h.join('');
+  }
+  function kurzBlock(b){
+    var T = bD().BER[b.k], L = bD().LAUT[b.laut];
+    return '<section class="b-ber b-kurz" id="ber-' + b.k + '">' +
+      '<div class="b-kopfz"><span class="b-punkt" style="background:' + L.farbe + '"></span>' +
+      '<h3 class="b-name">' + esc(b.name) + '</h3>' +
+      '<span class="b-laut" style="color:' + L.farbe + '">' + esc(L.n) + '</span></div>' +
+      '<p class="b-satz">' + esc(T.lautSatz[b.laut]) + '</p>' +
+      kurzInhalt(b, false) + '</section>';
+  }
+
   /* Ende eines Kapitels als Jahr — die Zeitenseite rechnet in
      Tagen seit der Geburt, hier wird daraus ein Datum. */
   var GEB_MS = null;
@@ -352,14 +479,15 @@
 
   /* ── Überblick ──────────────────────────────────────────────── */
   function ueberblick(bs){
-    var h = ['<div class="b-ueber">'];
+    var h = ['<div class="b-ueber b-kacheln">'];
     for(var i=0;i<bs.length;i++){
       var b = bs[i], L = bD().LAUT[b.laut];
-      h.push('<a class="b-u" href="#ber-' + b.k + '" data-k="' + b.k + '">');
+      h.push('<a class="b-u" href="#ber-' + b.k + '" data-k="' + b.k + '" data-laut="' + b.laut + '">');
       h.push('<span class="b-ubalk"><i style="width:' + ((b.laut+1)*25) +
              '%;background:' + L.farbe + '"></i></span>');
       h.push('<span class="b-un">' + esc(b.name) + '</span>');
       h.push('<span class="b-ul" style="color:' + L.farbe + '">' + esc(L.n) + '</span>');
+      h.push('<span class="b-unext">' + esc(naechsterPunkt(b)) + '</span>');
       h.push('</a>');
     }
     h.push('</div>');
@@ -479,6 +607,7 @@
     }catch(e){ Z = null; }
 
     var Bl = bB().blatt(C, jd, Z, tage);
+    try{ VOR = bB().vorschau(C, jd, 26); VOR_C = C; VOR_JD = jd; }catch(e){ VOR = null; }
 
     /* lauteste zuerst; bei gleicher Lautstärke die mit mehr Vorgängen */
     var bs = Bl.bereiche.slice().sort(function(a,b){
@@ -526,7 +655,7 @@
     var zeig = null;
     for(var i=0;i<bs.length;i++) if(bs[i].k === k) zeig = bs[i];
     if(!zeig) zeig = bs[0];
-    ziel.innerHTML = bereichBlock(zeig, true);
+    ziel.innerHTML = modus() === 'voll' ? bereichBlock(zeig, true) : kurzBlock(zeig);
 
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   }

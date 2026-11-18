@@ -883,7 +883,9 @@ WERKSTATT_SEITEN = {'angebote-struktur.html', 'ueber-mich-vorlage.html',
                     'fragen-schatzkiste.html', 'klientinnen-fragen.html',
                     'werkzeuge.html', 'begleitung.html', 'dossier.html',
                     'faden.html', 'monatsbericht.html', 'briefing.html',
-                    'profil-ansicht.html'}
+                    'profil-ansicht.html',
+                    # Die Lebensbereiche ausführlich (18.11.); öffentlich steht die Kurzfassung.
+                    'praxis-bereiche.html'}
 _quell_ok = WERKSTATT_SEITEN | {'werkstatt.html', 'praxis.html'}
 
 

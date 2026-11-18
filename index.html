@@ -2841,6 +2841,76 @@ window.AC_LB = {
     return bereiche;
   }
 
+  /* ── Vorschau: was in den nächsten Monaten kommt (18.11.) ─────
+     Mandy: „wo liegen die nächsten Schritte oder Punkte in den
+     kommenden Wochen und Monaten? Wo bewegt sich was?" Die Seite
+     zeigte nur, was heute läuft. Hier wird Woche für Woche
+     vorausgerechnet, mit derselben Rechnung wie heute; jeder Vorgang
+     bekommt das Datum, an dem er am genauesten steht (sonst den Tag,
+     an dem er beginnt). Die schnellen Planeten bleiben draußen — sie
+     wären jede Woche ein neuer Punkt und damit Rauschen. Neu- und
+     Vollmonde kommen aus mond-termine.js, wenn die Seite es lädt. */
+  var VOR_LANGSAM = { Pluto:1, Neptun:1, Uranus:1, Saturn:1, Jupiter:1, Mars:1 };
+  function vorschau(C, jd, wochen){
+    wochen = wochen || 26;
+    var ende = jd + wochen*7, je = {}, i, w, n;
+    for(i=0;i<B_BEREICHE.length;i++) je[B_BEREICHE[i].k] = {};
+    for(w=0; w<=wochen; w++){
+      var t = jd + w*7, V = vorgaenge(C, t);
+      for(i=0;i<B_BEREICHE.length;i++){
+        var B = B_BEREICHE[i], L = fuerBereich(V, B), M = je[B.k];
+        for(n=0;n<L.length;n++){
+          var v = L[n];
+          if(!VOR_LANGSAM[v.wanderer]) continue;
+          var key = v.wanderer+'|'+v.form+'|'+(v.ziel||'')+'|'+(v.aspekt||'')+'|'+(v.haus||'');
+          if(M[key]) continue;
+          var am = (v.f && v.f.exakt) ? v.f.exakt : t;
+          M[key] = { form:v.form, wanderer:v.wanderer, ziel:v.ziel, zielArt:v.zielArt,
+                     aspekt:v.aspekt, art:v.art, haus:v.haus, kern:v.kern,
+                     gewicht:v.bGewicht, am:am, ab:v.ab, start:(w===0 ? null : t),
+                     bis:(v.f && v.f.bis) || null, jetzt:(w===0) };
+        }
+      }
+    }
+    var out = {};
+    for(var k in je){
+      var liste = [];
+      for(var s in je[k]){
+        var e = je[k][s];
+        /* Was heute schon läuft, zählt nur mit einem genauen Tag in
+           der Zukunft; sonst steht es oben unter „Gerade". */
+        if(e.jetzt && !(e.am > jd && e.am <= ende)) continue;
+        if(e.form === 'durchgang' && e.jetzt) continue;
+        if(e.am < jd) e.am = e.start || jd;
+        if(e.am > ende) continue;
+        liste.push(e);
+      }
+      liste.sort(function(a,b){ return b.gewicht - a.gewicht; });
+      out[k] = liste;
+    }
+    return out;
+  }
+
+  /* Neu- und Vollmonde, die in die Felder eines Bereichs fallen.
+     Nur Kernfeld und zweites Feld — das dritte wäre fast jeder Mond. */
+  function monde(C, k, jd, tage){
+    var MT = (typeof window !== 'undefined' && window.MT_TERMINE) ||
+             (typeof MT_TERMINE !== 'undefined' ? MT_TERMINE : null);
+    if(!MT) return [];
+    var B = null; for(var i=0;i<B_BEREICHE.length;i++) if(B_BEREICHE[i].k === k) B = B_BEREICHE[i];
+    if(!B) return [];
+    var out = [];
+    for(var j=0;j<MT.length;j++){
+      var m = MT[j], d = m.d.split('-'), z = (m.z||'12:00').split(':');
+      var mjd = Date.UTC(+d[0], +d[1]-1, +d[2], +z[0]-1, +z[1]) / 86400000 + 2440587.5;
+      if(mjd < jd || mjd > jd + tage) continue;
+      var h = haus(C, m.g), p = B.haeuser.indexOf(h);
+      if(p < 0 || p > 1) continue;
+      out.push({ form:'mond', t:m.t, e:m.e, am:mjd, haus:h, kern:(p === 0), g:m.g });
+    }
+    return out;
+  }
+
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
      Z und tage sind freiwillig: ohne sie rechnet die Seite nur mit
      Transiten, mit ihnen kommt das Kapitel dazu. */
@@ -2871,7 +2941,8 @@ window.AC_LB = {
     seitenweit: seitenweit, BLOCK1: BLOCK1,
     absatzSchluessel: absatzSchluessel,
     facetten: facetten, herrGewicht: herrGewicht, buendelung: buendelung,
-    widersprueche: widersprueche, blatt: blatt
+    widersprueche: widersprueche, blatt: blatt,
+    vorschau: vorschau, monde: monde
   };
 
 })();
@@ -3746,12 +3817,50 @@ window.AC_LB = {
       a:'Dann stimmt dein Erleben und nicht die Seite. Deine Lage hat immer Vorrang. Die Seite kennt nur die Uhr, nicht dein Leben.' }
   ];
 
+  /* ── Die Kurzfassung je Bereich (18.11.) ───────────────────────
+     Mandy: „Was sagen die Bereiche genau, und wo liegen die nächsten
+     Schritte oder Punkte in den kommenden Wochen und Monaten? Wo
+     bewegt sich was, und wie sehen die next steps aus?" Öffentlich
+     steht nur diese Kurzfassung; die ausführliche liegt in der Praxis. */
+  var B_KURZ = {
+    bloecke:{ bild:'Was dein Bild hier sagt', gerade:'Was gerade läuft',
+              kommt:'Die nächsten Monate', schritt:'Dein nächster Schritt',
+              umgang:'Wie du damit umgehst', monat:'Monat für Monat' },
+    bildVor:'Bei dir steht vorn: ',
+    wand:{ Pluto:'tiefe Verwandlung', Neptun:'Auflösung und Sehnsucht', Uranus:'Umbruch und Befreiung',
+           Saturn:'Prüfung und Aufbau', Jupiter:'Wachstum und Rückenwind', Mars:'Antrieb und Reibung',
+           Venus:'Nähe und Genuss', Merkur:'Gespräche und Pläne', Sonne:'Aufmerksamkeit' },
+    ziel:{ Sonne:'dein Kern', Mond:'dein Gefühlsleben', Merkur:'dein Denken und Reden',
+           Venus:'deine Art zu lieben', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
+           Saturn:'deine Verantwortung', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
+           Pluto:'deine Tiefe', ASC:'dein Auftreten', MC:'deine Richtung', sonst:'ein Punkt in deinem Bild',
+           feld:'dieser Bereich' },
+    art:{ zusammen:'direkt', gegenueber:'gegenüber', spannung:'reibt', leicht:'stärkt',
+          durchgang:'zieht durch', mond:'Mond' },
+    titel:'{ziel}: {wand}',
+    mond:{ NM:'Neumond in diesem Bereich', VM:'Vollmond in diesem Bereich', F:'Finsternis in diesem Bereich' },
+    mondWas:{ NM:'Ein guter Tag, um hier etwas anzufangen.', VM:'Hier wird etwas sichtbar oder rund.' },
+    um:'um den {datum}', ab:'ab {datum}',
+    tun:{ leicht:'Rückenwind. Fang an, was du hier sonst aufschiebst.',
+          spannung:'Reibung. Nicht wegdrücken: eine Sache klären, nicht alle.',
+          gegenueber:'Etwas spiegelt dich. Erst zuhören, dann entscheiden.',
+          zusammen:'Volle Ladung auf einen Punkt. Bewusst einsetzen, nicht verteilen.',
+          durchgang:'Ein langes Thema zieht durch. Kleine, regelmäßige Schritte statt eines großen.' },
+    vorbereiten:'Mit Blick auf den {datum}:',
+    leerKommt:'In den nächsten sechs Monaten kommt hier nichts Großes dazu. Gut für Ruhe und Pflege.',
+    mehrKommt:'{n} weitere Punkte',
+    praxis:'Die ausführliche Fassung mit allen Zeiträumen, Monat für Monat, und den Fragen fürs Gespräch gehört in die Begleitung.',
+    praxisLink:'Wie die Begleitung abläuft', praxisDatei:'start.html#stangebot',
+    naechster:'Nächster Punkt: {datum}', keinNaechster:'Ruhig in den nächsten Monaten',
+    kachelVor:'Tipp einen Bereich an.'
+  };
+
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH, SEITE:B_SEITE,
     WID:B_WID, FRAGEN:B_FRAGEN, GRENZE:B_GRENZE, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
-    RAUM:B_RAUM
+    RAUM:B_RAUM, KURZ:B_KURZ
   };
 
 })();
