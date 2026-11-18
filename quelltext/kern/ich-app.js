@@ -144,7 +144,8 @@ function dreiBauen(){
     return '<details class="dk dk-e'+(z%4)+'"><summary>'+
       '<span class="dk-kreis" aria-hidden="true">'+I_DREI_ZEICHEN[d.k]+'\uFE0E</span>'+
       '<span class="dk-t"><span class="dk-l">'+esc(I_DREI_LABEL[d.k])+'</span>'+
-      '<span class="dk-k">'+esc(I_KURZ[d.k][z])+'</span></span>'+
+      '<span class="dk-k">'+esc(I_KURZ[d.k][z])+'</span>'+
+      '<span class="dk-b">'+esc(fuellen(I_DREI_BEI[d.k],{bereich:I_HAUS_KURZ[(d.k==='ASC'?haus(P,P[I_HERR[z]]):haus(P,l))-1]}))+'</span></span>'+
       '<span class="dk-plus" aria-hidden="true"></span></summary>'+
       '<div class="dk-mehr"><p class="wert">'+esc(d.was)+'</p>'+
       '<p class="zu">'+esc(bereich)+'</p>'+

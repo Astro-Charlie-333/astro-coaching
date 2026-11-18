@@ -727,6 +727,14 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
  background:var(--pa);color:var(--ti);font:inherit;font-size:13px;font-weight:600;cursor:pointer;min-height:28px;}
 .kurz-k:hover{background:#EDE4D3;}
 .ht-held .kurz-k{background:#F6F1E7;}
+/* Neumond und Vollmond: was es bei dir heißt, zuerst */
+.th-pers{background:#DCE6FB;border-radius:18px;padding:12px 14px;margin:10px 0 12px;}
+.th-pers b{display:block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#1F4FD8;margin-bottom:2px;}
+.th-pers a,.th-pers span{font-family:var(--serif);font-size:18px;font-weight:600;color:#1B1B1B;text-decoration:none;}
+.th-pers p{margin:6px 0 0;font-size:15px;line-height:1.5;}
+.th-pers .th-pers-t{font-weight:600;}
+.ht-bw{grid-column:2/-1;display:block;margin:2px 0 6px;}
+.ht-bw-t{display:inline-block;background:#DCE6FB;color:#1B1B1B;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:600;margin-top:4px;}
 
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
@@ -4256,6 +4264,42 @@ var T_MONDTREFFER = {
         tut:'Ein weicher Tag. Nähe, Essen, Schönes fallen leichter als Disziplin.',
         rat:'Gut für Bewegung, die sich gut anfühlt, statt für eine, die etwas beweist.'}};
 
+/* 18.11.: Neumond und Vollmond auf dein Bild bezogen. Mandy: „zu
+   allgemein auch bei den Lunationen. Mehr persönlichen Bezug zum
+   Chart." Der Bereich, in den er fällt, bekommt einen eigenen Satz;
+   trifft er einen deiner Hauptpunkte, steht das dabei. */
+var T_MOND_PERS = {
+ vor:'Bei dir',
+ trifft:'Er trifft genau die Stelle in dir, {was}.',
+ tech:'auf deinen {punkt} · {ab}°',
+ neu:[
+  'Etwas an dir neu anfangen: wie du auftrittst, was du anziehst, wie du dich bewegst.',
+  'Ein kleiner Anfang beim Geld oder beim Selbstwert: ein Preis, ein Konto, ein Nein.',
+  'Ein Gespräch anfangen, das du aufschiebst, oder etwas Neues lernen.',
+  'Zuhause etwas neu ordnen: eine Ecke, ein Ritual, ein Anruf in der Familie.',
+  'Etwas nur aus Freude anfangen. Ohne Ziel, nur weil es dir Spaß macht.',
+  'Eine kleine Gewohnheit starten. Eine, nicht fünf.',
+  'In einer Beziehung etwas neu verabreden: Nähe, Zeit, Regeln.',
+  'Etwas Tiefes klären: Vertrauen, gemeinsames Geld, eine Grenze.',
+  'Einen Plan für etwas Weites machen: eine Reise, ein Kurs, eine große Frage.',
+  'Beruflich einen ersten Schritt setzen, den noch niemand sehen muss.',
+  'Menschen schreiben, die zu dir passen. Ein Wunsch für später.',
+  'Ruhe als Anfang: früher schlafen, weniger Termine, mehr Stille.'],
+ voll:[
+  'Du fällst gerade mehr auf als sonst. Schau, wie du ankommst, ohne nachzubessern.',
+  'Beim Geld oder beim Selbstwert zeigt sich, was trägt. Ein ehrlicher Blick reicht.',
+  'Ein Gespräch kommt zum Punkt. Sag den Satz, der noch fehlt.',
+  'Zuhause oder in der Familie wird etwas sichtbar. Nicht alles muss heute gelöst sein.',
+  'Freude, Liebe oder ein Projekt erreicht einen Höhepunkt. Zeig es jemandem.',
+  'Körper und Alltag melden sich. Etwas weglassen statt mehr machen.',
+  'In einer Beziehung wird etwas klar. Erst zuhören, dann entscheiden.',
+  'Etwas Verborgenes kommt hoch. Tief ist in Ordnung, schnell muss es nicht sein.',
+  'Ein Plan oder eine Überzeugung zeigt, ob sie hält. Zieh ein ehrliches Fazit.',
+  'Beruflich wird sichtbar, was du angelegt hast. Nimm Anerkennung an.',
+  'Freundschaften zeigen, wer bleibt. Feier die, die da sind.',
+  'Müdigkeit und Rückzug sind jetzt richtig. Schließ im Stillen ab.']
+};
+
 /* ── Was dein Bild trifft, und wann genau ─────────────────────
    Mandy am 29.10.:
 
@@ -4700,6 +4744,8 @@ var H_LUN = {
 
 /* ── Band 1 · Jetzt ──────────────────────────────────────────── */
 var H_SEITE = {
+ weilVor:'Gerade wirkt',
+ weilDurch:'{wanderer} läuft durch dieses Feld',
  gruss:{nacht:'Noch wach', morgen:'Guten Morgen', tag:'Guten Tag', abend:'Guten Abend',
         zeile:'{gruss}, <em>{name}</em>.'},
 
@@ -5191,12 +5237,36 @@ function nochWie(bis, jd){
   return tf(T_KOPF.nochTage,{n:t});
 }
 
+/* Neumond und Vollmond auf das Bild bezogen (18.11.): Bereich,
+   ein Satz dazu, und ob er einen Hauptpunkt trifft. */
+function lunaPersoenlich(ml, art){
+  if(!P || !window.T_MOND_PERS) return '';
+  var b=beiDir(ml); if(!b) return '';
+  var satz=(T_MOND_PERS[art]||[])[b.haus-1]||'';
+  var orte=[ml]; if(art==='voll') orte.push((ml+180)%360);
+  var treffer=null;
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','ASC','MC'].forEach(function(k){
+    if(P[k]===undefined||!B_ZIEL[k]) return;
+    orte.forEach(function(o){
+      var ab=Math.abs(((o-P[k])%360+540)%360-180);
+      if(ab<=5 && (!treffer||ab<treffer.ab)) treffer={k:k, ab:ab};
+    });
+  });
+  var h='<div class="th-pers"><b>'+esc(T_MOND_PERS.vor)+'</b>'+
+    (b.bereich ? '<a href="'+esc(H_SEITE.berZiel)+esc(b.bereich.k)+'">'+esc(b.name)+' →</a>' : '<span>'+esc(b.name)+'</span>')+
+    '<p>'+esc(satz)+'</p>';
+  if(treffer) h+='<p class="th-pers-t">'+esc(tf(T_MOND_PERS.trifft,{was:B_ZIEL[treffer.k].was}))+
+    ' <span class="ac-tech" data-ab="2">'+esc(tf(T_MOND_PERS.tech,{punkt:B_ZIEL[treffer.k].wort, ab:treffer.ab.toFixed(1)}))+'</span></p>';
+  return h+'</div>';
+}
+
 function themaKarte(o){
   var h=['<article class="th'+(o.gross?' th-gross':'')+'">'];
   h.push('<div class="th-kopf"><h3 class="th-n">'+esc(o.name)+'</h3>'+
          (o.marke?'<span class="th-marke">'+esc(o.marke)+'</span>':'')+'</div>');
   if(o.spanne) h.push('<div class="th-spanne">'+esc(o.spanne)+'</div>');
   if(o.bahn) h.push(o.bahn);
+  if(o.pers) h.push(o.pers);
   if(o.was) h.push('<p class="th-was">'+esc(o.was)+'</p>');
   if(o.tut) h.push('<p class="th-tut">'+esc(o.tut)+'</p>');
   /* Die vier Ecken, an denen es klemmt. Eine Liste sagt hier mehr
@@ -5272,8 +5342,8 @@ function themenBauen(){
       marke:(t<=0?T_KOPF.heute:t===1?T_KOPF.morgen:tf(T_KOPF.inTagen,{n:t})),
       spanne:tf(T_MOND.spanne,{tag:wochentagDatum(l.jd), uhr:uhr(l.jd),
         zeichen:tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]})}),
+      pers:lunaPersoenlich(ml, art),
       was:D.was, tut:tut, felder:D.felder, gut:D.gut, dazu:dazu,
-      beiDir:beiDirZeile(ml),
       tech:tf(T_MOND.tech,{art:D.name, grad:gr(ml), zeichen:H_SIGNS[zI(ml)],
         knoten:(fi?tf(T_MOND.techKnoten,{ab:fi.knoten.toFixed(1)}):'')})});
   });
@@ -5829,6 +5899,24 @@ function lautesterBereich(){
            bis:bisWann(b, jetztJD()) };
 }
 
+/* Was einen Bereich gerade laut macht, beim Namen (18.11.).
+   Mandy: „zu unpersönlich" — „In Bewegung" allein sagt nicht, warum. */
+function weilZeile(b){
+  var L=(b.laeuft||[]).slice().sort(function(x,y){ return (y.gewicht||0)-(x.gewicht||0); });
+  for(var i=0;i<L.length;i++){
+    var v=L[i], titel='';
+    if(v.form==='aspekt' && v.zielArt==='planet' && B_ZIEL[v.ziel]){
+      var asp=v.aspekt?v.aspekt.charAt(0).toUpperCase()+v.aspekt.slice(1):'';
+      titel=bahnTitel({wanderer:v.wanderer, aspekt:asp, ziel:v.ziel});
+    } else if(v.form==='durchgang'){
+      titel=esc(tf(H_SEITE.weilDurch,{wanderer:v.wanderer}));
+    }
+    if(titel) return '<span class="ht-bw"><span class="ht-bz-l">'+esc(H_SEITE.weilVor)+'</span>'+
+      '<span class="ht-bw-t">'+titel+'</span></span>';
+  }
+  return '';
+}
+
 function bereicheBauen(p){
   var ziel=el('htber');
   if(!ziel) return;
@@ -5886,6 +5974,7 @@ function bereicheBauen(p){
       '<span class="ht-bn">'+esc(b.name)+'</span>'+
       '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
       '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
+      weilZeile(b)+
       '<span class="ht-bz"><span class="ht-bz-l">'+esc(H_SEITE.tunVor)+'</span>'+
       '<span class="ht-bt">'+esc(tun)+'</span></span>'+
       (bis?'<span class="ht-bbis"><span class="ht-bz-l">'+esc(H_SEITE.langeVor)+'</span>'+

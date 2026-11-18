@@ -403,3 +403,4 @@ var I_AUF_MEHR='{n} weitere ansehen';
 var I_AUF_WENIGER='Weniger zeigen';
 var I_ZU_JETZT={text:'Was gerade bei dir los ist', href:'index.html'};
 var I_ELEM_LEISE='am leisesten';
+var I_DREI_BEI={Sonne:'Am stärksten bei: {bereich}', Mond:'Am stärksten bei: {bereich}', ASC:'Hängt zusammen mit: {bereich}'};

@@ -278,6 +278,10 @@ body.niv-0 .mo-weiter a[data-ab="1"]{display:none}
 .mo-wrap [hidden]{display:none!important}
 .mo-tab td.mono{white-space:nowrap}
 .mo-tab .detail td>div{position:sticky;left:10px;max-width:min(760px,calc(100vw - 70px))}
+
+/* 18.11.: der persönliche Satz je Termin */
+.mo-bei{background:#DCE6FB;border-radius:14px;padding:9px 12px;margin:8px 0 4px;font-size:14.5px;line-height:1.5;}
+.mo-bei b{color:#1F4FD8;}
 </style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -1574,6 +1578,36 @@ var MT_T = {
  standBis:'{t}. {monat} {jahr}'
 };
 
+/* 18.11.: Was der Termin im Bereich bei dir heißt — ein Satz je
+   Haus, für Neu- und Vollmond. Dieselben Sätze wie auf „Jetzt". */
+var MT_HAUS_TUN = {
+ vor:'In deinem Bereich {bereich}: ',
+ NM:['Etwas an dir neu anfangen: wie du auftrittst, was du anziehst, wie du dich bewegst.',
+  'Ein kleiner Anfang beim Geld oder beim Selbstwert: ein Preis, ein Konto, ein Nein.',
+  'Ein Gespräch anfangen, das du aufschiebst, oder etwas Neues lernen.',
+  'Zuhause etwas neu ordnen: eine Ecke, ein Ritual, ein Anruf in der Familie.',
+  'Etwas nur aus Freude anfangen. Ohne Ziel, nur weil es dir Spaß macht.',
+  'Eine kleine Gewohnheit starten. Eine, nicht fünf.',
+  'In einer Beziehung etwas neu verabreden: Nähe, Zeit, Regeln.',
+  'Etwas Tiefes klären: Vertrauen, gemeinsames Geld, eine Grenze.',
+  'Einen Plan für etwas Weites machen: eine Reise, ein Kurs, eine große Frage.',
+  'Beruflich einen ersten Schritt setzen, den noch niemand sehen muss.',
+  'Menschen schreiben, die zu dir passen. Ein Wunsch für später.',
+  'Ruhe als Anfang: früher schlafen, weniger Termine, mehr Stille.'],
+ VM:['Du fällst gerade mehr auf als sonst. Schau, wie du ankommst, ohne nachzubessern.',
+  'Beim Geld oder beim Selbstwert zeigt sich, was trägt. Ein ehrlicher Blick reicht.',
+  'Ein Gespräch kommt zum Punkt. Sag den Satz, der noch fehlt.',
+  'Zuhause oder in der Familie wird etwas sichtbar. Nicht alles muss heute gelöst sein.',
+  'Freude, Liebe oder ein Projekt erreicht einen Höhepunkt. Zeig es jemandem.',
+  'Körper und Alltag melden sich. Etwas weglassen statt mehr machen.',
+  'In einer Beziehung wird etwas klar. Erst zuhören, dann entscheiden.',
+  'Etwas Verborgenes kommt hoch. Tief ist in Ordnung, schnell muss es nicht sein.',
+  'Ein Plan oder eine Überzeugung zeigt, ob sie hält. Zieh ein ehrliches Fazit.',
+  'Beruflich wird sichtbar, was du angelegt hast. Nimm Anerkennung an.',
+  'Freundschaften zeigen, wer bleibt. Feier die, die da sind.',
+  'Müdigkeit und Rückzug sind jetzt richtig. Schließ im Stillen ab.']
+};
+
 /* Mondseite: Rechnung und Anzeige.
    Gerechnet wird gegen rituale/engine.js (sunLon, moonLon, geo, angles,
    chartVon, nrm, jdFromUT). Hier steht keine eigene Himmelsrechnung;
@@ -1807,6 +1841,12 @@ function moKarte(t,tr){
     p.textContent=typ.alltag;
   }
   inh.appendChild(chips); inh.appendChild(p);
+  if(NAT && window.MT_HAUS_TUN){
+    var hb=moHaus(NAT.ASC,t.g), satz=(MT_HAUS_TUN[t.t==='NM'?'NM':'VM']||[])[hb];
+    if(satz){ var q=document.createElement('p'); q.className='mo-bei';
+      var qb=document.createElement('b'); qb.textContent=moFuell(MT_HAUS_TUN.vor,{bereich:MT_HAUS[hb].kurz});
+      q.appendChild(qb); q.appendChild(document.createTextNode(satz)); inh.appendChild(q); }
+  }
   var f=document.createElement('p'); f.className='mo-klein'; f.textContent=typ.fenster; inh.appendChild(f);
   k.appendChild(dat); k.appendChild(inh);
   return k;

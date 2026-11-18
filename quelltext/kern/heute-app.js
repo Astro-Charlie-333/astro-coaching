@@ -323,12 +323,36 @@ function nochWie(bis, jd){
   return tf(T_KOPF.nochTage,{n:t});
 }
 
+/* Neumond und Vollmond auf das Bild bezogen (18.11.): Bereich,
+   ein Satz dazu, und ob er einen Hauptpunkt trifft. */
+function lunaPersoenlich(ml, art){
+  if(!P || !window.T_MOND_PERS) return '';
+  var b=beiDir(ml); if(!b) return '';
+  var satz=(T_MOND_PERS[art]||[])[b.haus-1]||'';
+  var orte=[ml]; if(art==='voll') orte.push((ml+180)%360);
+  var treffer=null;
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','ASC','MC'].forEach(function(k){
+    if(P[k]===undefined||!B_ZIEL[k]) return;
+    orte.forEach(function(o){
+      var ab=Math.abs(((o-P[k])%360+540)%360-180);
+      if(ab<=5 && (!treffer||ab<treffer.ab)) treffer={k:k, ab:ab};
+    });
+  });
+  var h='<div class="th-pers"><b>'+esc(T_MOND_PERS.vor)+'</b>'+
+    (b.bereich ? '<a href="'+esc(H_SEITE.berZiel)+esc(b.bereich.k)+'">'+esc(b.name)+' →</a>' : '<span>'+esc(b.name)+'</span>')+
+    '<p>'+esc(satz)+'</p>';
+  if(treffer) h+='<p class="th-pers-t">'+esc(tf(T_MOND_PERS.trifft,{was:B_ZIEL[treffer.k].was}))+
+    ' <span class="ac-tech" data-ab="2">'+esc(tf(T_MOND_PERS.tech,{punkt:B_ZIEL[treffer.k].wort, ab:treffer.ab.toFixed(1)}))+'</span></p>';
+  return h+'</div>';
+}
+
 function themaKarte(o){
   var h=['<article class="th'+(o.gross?' th-gross':'')+'">'];
   h.push('<div class="th-kopf"><h3 class="th-n">'+esc(o.name)+'</h3>'+
          (o.marke?'<span class="th-marke">'+esc(o.marke)+'</span>':'')+'</div>');
   if(o.spanne) h.push('<div class="th-spanne">'+esc(o.spanne)+'</div>');
   if(o.bahn) h.push(o.bahn);
+  if(o.pers) h.push(o.pers);
   if(o.was) h.push('<p class="th-was">'+esc(o.was)+'</p>');
   if(o.tut) h.push('<p class="th-tut">'+esc(o.tut)+'</p>');
   /* Die vier Ecken, an denen es klemmt. Eine Liste sagt hier mehr
@@ -404,8 +428,8 @@ function themenBauen(){
       marke:(t<=0?T_KOPF.heute:t===1?T_KOPF.morgen:tf(T_KOPF.inTagen,{n:t})),
       spanne:tf(T_MOND.spanne,{tag:wochentagDatum(l.jd), uhr:uhr(l.jd),
         zeichen:tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]})}),
+      pers:lunaPersoenlich(ml, art),
       was:D.was, tut:tut, felder:D.felder, gut:D.gut, dazu:dazu,
-      beiDir:beiDirZeile(ml),
       tech:tf(T_MOND.tech,{art:D.name, grad:gr(ml), zeichen:H_SIGNS[zI(ml)],
         knoten:(fi?tf(T_MOND.techKnoten,{ab:fi.knoten.toFixed(1)}):'')})});
   });
@@ -961,6 +985,24 @@ function lautesterBereich(){
            bis:bisWann(b, jetztJD()) };
 }
 
+/* Was einen Bereich gerade laut macht, beim Namen (18.11.).
+   Mandy: „zu unpersönlich" — „In Bewegung" allein sagt nicht, warum. */
+function weilZeile(b){
+  var L=(b.laeuft||[]).slice().sort(function(x,y){ return (y.gewicht||0)-(x.gewicht||0); });
+  for(var i=0;i<L.length;i++){
+    var v=L[i], titel='';
+    if(v.form==='aspekt' && v.zielArt==='planet' && B_ZIEL[v.ziel]){
+      var asp=v.aspekt?v.aspekt.charAt(0).toUpperCase()+v.aspekt.slice(1):'';
+      titel=bahnTitel({wanderer:v.wanderer, aspekt:asp, ziel:v.ziel});
+    } else if(v.form==='durchgang'){
+      titel=esc(tf(H_SEITE.weilDurch,{wanderer:v.wanderer}));
+    }
+    if(titel) return '<span class="ht-bw"><span class="ht-bz-l">'+esc(H_SEITE.weilVor)+'</span>'+
+      '<span class="ht-bw-t">'+titel+'</span></span>';
+  }
+  return '';
+}
+
 function bereicheBauen(p){
   var ziel=el('htber');
   if(!ziel) return;
@@ -1018,6 +1060,7 @@ function bereicheBauen(p){
       '<span class="ht-bn">'+esc(b.name)+'</span>'+
       '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
       '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
+      weilZeile(b)+
       '<span class="ht-bz"><span class="ht-bz-l">'+esc(H_SEITE.tunVor)+'</span>'+
       '<span class="ht-bt">'+esc(tun)+'</span></span>'+
       (bis?'<span class="ht-bbis"><span class="ht-bz-l">'+esc(H_SEITE.langeVor)+'</span>'+
