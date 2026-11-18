@@ -228,6 +228,7 @@ var T_KOPF = {
  beiDirVor:'Bei dir',
  gutVor:'Gut dafür',
  dazuVor:'Was oft zu groß erzählt wird',
+ mehrVor:'Mehr dazu',
  nochEinenTag:'noch 1 Tag',
  laeuft:'läuft',
  heute:'heute',
