@@ -217,6 +217,38 @@ var I_KOPF={
    Alltagsbedeutung darunter. Jetzt umgekehrt: erst, worum es im
    Leben geht, dann der Lebensbereich — und die Mechanik wartet. */
 var I_DREI_TITEL='Was dich trägt';
+/* Zeichen fürs Auge. Die Anzeige hängt U+FE0E an, sonst malt das
+   Telefon bunte Emoji statt Linien. */
+var I_ZGL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var I_PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',
+ Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',Chiron:'⚷',Lilith:'⚸'};
+
+/* ── Die vier Elemente (18.11.) ───────────────────────────────
+   Wie sich die Kräfte auf Feuer, Erde, Luft und Wasser verteilen.
+   Gewichtet: Sonne und Mond je 3, Aszendent 2, Merkur, Venus und
+   Mars je 1,5, Jupiter und Saturn je 1, die drei langsamen je 0,5 —
+   sie stehen bei einer ganzen Generation im selben Zeichen. */
+var I_ELEM={
+ titel:'Deine Elemente',
+ sub:'Wie sich die Kräfte in deinem Bild auf die vier Elemente verteilen. Was dich persönlich ausmacht, zählt mehr als das, was du mit deiner ganzen Generation teilst.',
+ namen:['Feuer','Erde','Luft','Wasser'],
+ wesen:['Begeisterung, Mut, Tempo','Körper, Verlässlichkeit, Greifbares','Gedanken, Gespräche, Abstand','Gefühl, Nähe, Gespür'],
+ stark:[
+  'Du kommst über Begeisterung in Gang. Was dich nicht entzündet, bleibt liegen, und was dich entzündet, fängst du sofort an.',
+  'Du brauchst Boden unter den Füßen. Eine Idee wird für dich erst wahr, wenn sie im Alltag funktioniert.',
+  'Du verstehst die Welt, indem du sie durchdenkst und besprichst. Abstand hilft dir, klar zu sehen.',
+  'Du nimmst mehr wahr, als gesagt wird. Stimmungen erreichen dich, bevor jemand sie ausspricht.'],
+ schwach:[
+  'Begeisterung entsteht bei dir eher langsam. Was dich in Gang bringt, ist selten der erste Funke, sondern ein guter Grund.',
+  'Struktur und Routinen kosten dich mehr als andere. Kleine feste Gewohnheiten geben dir den Halt, den du nicht von selbst mitbringst.',
+  'Abstand zu den eigenen Gefühlen fällt dir schwerer. Aufschreiben oder Aussprechen hilft dir, Gedanken zu sortieren.',
+  'Gefühle zeigen sich bei dir eher auf Umwegen. Was du fühlst, merkst du manchmal erst im Körper oder im Nachhinein.'],
+ formStark:'<b>Am stärksten: {el}.</b> {text}',
+ formSchwach:'<b>Am leisesten: {el}.</b> {text}',
+ prozent:'{p} %',
+ tech:'{punkte}'
+};
+var I_ASP_TITEL='Was in dir zusammenhängt';
 var I_DREI_SUB='Drei Stellen, die bei jedem Menschen den Grundton setzen. Bei dir liegen sie in diesen Bereichen.';
 var I_DREI=[
  {rolle:'Antrieb',   k:'Sonne', was:'Worauf du hinauswillst'},

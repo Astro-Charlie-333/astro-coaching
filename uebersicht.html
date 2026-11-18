@@ -216,16 +216,6 @@ a{color:var(--nacht);}
 .ich-radfuss i.a{background:#F3EADA;border:1px solid var(--messing,#9A7235);}
 .ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
 
-.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
-.ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
- padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
-@media(max-width:480px){.ich-drei>div{grid-template-columns:1fr;gap:3px;}}
-.ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
-.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(18px,2.4vw,23px);
- font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.3;letter-spacing:-.012em;}
-.ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
- color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
-
 /* Die Brücke zu Heute */
 .ich-heute{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
  border-radius:17px;padding:16px 19px;}
@@ -238,32 +228,6 @@ a{color:var(--nacht);}
 .ich-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
  font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:58px 0 5px;}
 .ich-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 20px;max-width:62ch;line-height:1.6;}
-
-/* Die zwölf Häuser als Zeilen, nicht als Karten */
-.ich-haeuser{border-top:1px solid var(--linie-stark,#DDD0BC);}
-.hz{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;align-items:baseline;
- width:100%;text-align:left;padding:14px 10px;background:none;border:0;
- border-bottom:1px solid var(--linie,#EBE1D2);
- font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;}
-.hz-inhalt{display:block;min-width:0;}
-.hz:hover{background:var(--papier,#FFFDFA);}
-.hz.ist{background:var(--nacht,#2E3A5C);}
-.hz.ist .nr,.hz.ist .ze,.hz.ist .herr,.hz.ist .was{color:#F4EFE6;}
-.hz.ist .ze b{color:#fff;}
-.hz.ist .bew{color:#E8C97A;}
-.hz:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:-2px;}
-.hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:300;
- color:var(--leise,#6B6259);line-height:1;}
-.hz.heut .nr{color:var(--messing,#9A7235);}
-.hz .ze{display:block;font-size:14.6px;line-height:1.4;min-width:0;margin-top:3px;}
-.hz .ze b{font-weight:500;color:var(--nacht,#2E3A5C);}
-.hz .bew{display:block;font-size:13.6px;color:var(--messing,#9A7235);margin-top:3px;}
-.hz .herr{display:block;font-size:13.6px;color:var(--leise,#6B6259);
- line-height:1.45;min-width:0;margin-top:2px;}
-.hz .was{display:block;font-family:var(--serif,Fraunces,Georgia,serif);
- font-size:17.5px;font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.3;min-width:0;}
-.hz .punkt{display:inline-block;width:6px;height:6px;border-radius:50%;
- background:var(--messing,#9A7235);vertical-align:2px;margin-right:5px;}
 
 /* Aufgeklapptes Haus */
 .hdetail{border-bottom:1px solid var(--linie,#EBE1D2);background:var(--papier,#FFFDFA);
@@ -338,7 +302,7 @@ a{color:var(--nacht);}
 
 
 /* ═══ Kopf: Aussage und Bild nebeneinander ═══════════════════ */
-.ich-kopf{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:40px;
+.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);gap:44px;
  align-items:center;margin:34px 0 30px;}
 .ich-wer{font-size:13px;color:var(--leise,#6B6259);margin:14px 0 0;}
 .ich-profil{font-size:13px;margin:6px 0 0;}
@@ -359,7 +323,7 @@ a{color:var(--nacht);}
 .ich-radfuss i.a{background:var(--messing,#9A7235);}
 @media(max-width:780px){
  .ich-kopf{grid-template-columns:1fr;gap:22px;}
- .ich-kopf-rad{max-width:320px;}
+ .ich-kopf-rad{max-width:360px;margin:0 auto;width:100%;}
 }
 
 /* ═══ Was auffällt: die Zahl ist das Bild ═══════════════════ */
@@ -407,6 +371,94 @@ a{color:var(--nacht);}
 .ich-klein summary{font-size:13.5px;}
 .ich-aufgrenze h3{display:none;}
 .ich-aufgrenze p{font-size:13.5px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 9px;}
+
+/* ═══ 18.11.: Die großen Drei als Karten ════════════════════ */
+.ich-drei{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:6px 0 8px;}
+.dk{position:relative;overflow:hidden;background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie,#EBE1D2);border-radius:18px;padding:20px 20px 18px;min-width:0;}
+.dk-0{background:linear-gradient(160deg,#FBF3E4 0%,var(--papier,#FFFDFA) 70%);}
+.dk-1{background:linear-gradient(160deg,#ECEFF5 0%,var(--papier,#FFFDFA) 70%);}
+.dk-2{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#F4EFE6;}
+.dk-gl{position:absolute;right:14px;top:8px;font-size:60px;line-height:1;
+ color:var(--messing,#9A7235);opacity:.2;font-family:'Segoe UI Symbol','Noto Sans Symbols',serif;}
+.dk-2 .dk-gl{color:#F3C98B;opacity:.35;}
+.dk .rolle{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:12px;}
+.dk-2 .rolle{color:#F3C98B;}
+.dk .wert{position:relative;padding-right:58px;font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(19px,2.1vw,22px);
+ font-weight:400;line-height:1.28;letter-spacing:-.012em;color:var(--nacht,#2E3A5C);margin:0 0 12px;}
+.dk-2 .wert{color:#fff;}
+.dk .zu{font-size:13.8px;line-height:1.5;color:var(--leise,#6B6259);margin:0;}
+.dk-2 .zu{color:rgba(255,255,255,.75);}
+.dk .zu.ac-tech{margin-top:8px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;}
+@media(max-width:760px){.ich-drei{grid-template-columns:1fr;gap:10px;}
+ .dk{padding:15px 16px 14px;} .dk-gl{font-size:54px;} .dk .rolle{margin-bottom:7px;} .dk .wert{margin-bottom:6px;}}
+@media(max-width:560px){.ich-h3{margin-top:26px;} .el-balken{gap:9px;} .el-satz{padding:13px 15px;} .el-satz p{font-size:14.5px;}}
+
+/* ═══ Die vier Elemente ═══════════════════════════════════ */
+.ich-h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:400;
+ color:var(--nacht,#2E3A5C);margin:34px 0 4px;letter-spacing:-.01em;}
+.ich-elem{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px 32px;align-items:start;}
+.el-balken{display:grid;gap:12px;}
+.el-z{display:grid;grid-template-columns:62px minmax(0,1fr) 44px;gap:2px 12px;align-items:center;}
+.el-n{font-size:14px;font-weight:500;color:var(--tinte,#231F1A);}
+.el-spur{height:12px;border-radius:99px;background:var(--linie,#EBE1D2);overflow:hidden;}
+.el-f{display:block;height:100%;border-radius:99px;transition:width .6s ease;}
+.el-0 .el-f{background:#C8643B;} .el-1 .el-f{background:#7C8A4A;}
+.el-2 .el-f{background:#8FA7C4;} .el-3 .el-f{background:#3E6E8E;}
+.el-p{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.5px;text-align:right;color:var(--leise,#6B6259);}
+.el-max .el-p{color:var(--tinte,#231F1A);font-weight:600;}
+.el-w,.el-t{grid-column:2/4;font-size:12.5px;color:var(--leise,#6B6259);line-height:1.35;}
+.el-t{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;}
+.el-satz{background:var(--messing-bg,#F7EFE1);border-radius:16px;padding:16px 18px;}
+.el-satz p{margin:0 0 10px;font-size:15px;line-height:1.6;}
+.el-satz p:last-child{margin:0;}
+.el-satz b{font-weight:600;color:var(--nacht,#2E3A5C);}
+@media(max-width:760px){.ich-elem{grid-template-columns:1fr;}}
+
+/* ═══ Was auffällt: die Nebenbefunde zweispaltig ═════════════ */
+@media(min-width:900px){
+ .ich-auf{grid-template-columns:1fr 1fr;}
+ .ich-auf .au-haupt,.ich-auf .au:last-child:nth-child(even){grid-column:1/-1;}
+ .ich-auf .au:not(.au-haupt){grid-template-columns:96px 1fr;gap:18px;padding:20px;}
+ .ich-auf .au:not(.au-haupt) .au-feld{max-width:96px;}
+ .ich-auf .au:not(.au-haupt) .au-satz{font-size:19px;}
+}
+
+/* ═══ Die zwölf Felder als Kacheln ══════════════════════════ */
+.ich-haeuser{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;grid-auto-flow:dense;}
+@media(max-width:860px){.ich-haeuser{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:560px){.ich-haeuser{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+ .hz{min-height:0;padding:11px 12px 10px;gap:4px;} .hz .nr{font-size:22px;} .hz .was{font-size:15px;}}
+.hz{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+ min-height:104px;padding:14px 14px 12px;text-align:left;cursor:pointer;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ font-family:inherit;font-size:inherit;color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s;}
+.hz:hover{border-color:var(--messing,#9A7235);transform:translateY(-1px);box-shadow:0 6px 18px rgba(46,58,92,.08);}
+.hz:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:2px;}
+.hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:28px;font-weight:300;line-height:1;
+ color:var(--leise,#6B6259);}
+.hz.heut .nr{color:var(--messing,#9A7235);}
+.hz .punkt{display:inline-block;vertical-align:middle;margin:-4px 0 0 7px;width:7px;height:7px;border-radius:50%;
+ background:var(--messing,#9A7235);box-shadow:0 0 0 4px rgba(154,114,53,.16);}
+.hz .was{font-family:var(--serif,Fraunces,Georgia,serif);font-size:16px;line-height:1.25;
+ color:var(--nacht,#2E3A5C);}
+.hz-gl{position:absolute;right:10px;top:10px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px;max-width:58%;}
+.hz-gl i{font-style:normal;font-size:13px;line-height:1;width:22px;height:22px;display:inline-flex;
+ align-items:center;justify-content:center;border-radius:50%;background:var(--nacht-bg,#E8EBF2);
+ color:var(--nacht,#2E3A5C);font-family:'Segoe UI Symbol','Noto Sans Symbols',serif;}
+.hz-gl i.leer{display:none;}
+.hz .ze,.hz .herr{font-size:12px;line-height:1.4;color:var(--leise,#6B6259);}
+.hz .ze{color:var(--tinte,#231F1A);}
+.hz.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
+.hz.ist .nr,.hz.ist .was,.hz.ist .ze,.hz.ist .herr{color:#F4EFE6;}
+.hz.ist .hz-gl i{background:rgba(255,255,255,.14);color:#fff;}
+.ich-haeuser .hdetail{grid-column:1/-1;border:1px solid var(--linie,#EBE1D2);border-radius:16px;margin:0 0 4px;}
+
+/* ═══ Zusammenhänge offen ════════════════════════════════════ */
+#ichasp{margin-bottom:10px;grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:760px){#ichasp{grid-template-columns:1fr;}}
+#kl-asp .ich-asp{margin-top:10px;}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -449,6 +501,19 @@ a{color:var(--nacht);}
 
 <nav class="ich-sprung" id="ichsprung" aria-label="Auf dieser Seite"></nav>
 
+
+
+<!-- Die drei Stellen, die den Grundton setzen ──────────────── -->
+<section class="ich-ab" id="a-drei" data-sprung="Was dich tr&auml;gt">
+  <h2 class="ich-h" id="ichdreih"></h2>
+  <p class="ich-sub" id="ichdreisub"></p>
+  <div class="ich-drei" id="ichdrei"></div>
+  <!-- Die vier Elemente (18.11.): wie sich die Kr&auml;fte verteilen, als Bild -->
+  <h3 class="ich-h3" id="ichelemh"></h3>
+  <p class="ich-sub" id="ichelemsub"></p>
+  <div class="ich-elem" id="ichelem"></div>
+</section>
+
 <!-- Was an dir auff&auml;llt ──────────────────────────────────── -->
 <section class="ich-ab" id="a-auf" data-sprung="Was auff&auml;llt">
   <h2 class="ich-h" id="ichaufh"></h2>
@@ -457,13 +522,6 @@ a{color:var(--nacht);}
   <details class="ich-klappe ich-klein"><summary><span class="kl-t">Was diese Zahlen taugen</span></summary>
     <div class="ich-aufgrenze" id="ichaufgrenze"></div>
   </details>
-</section>
-
-<!-- Die drei Stellen, die den Grundton setzen ──────────────── -->
-<section class="ich-ab" id="a-drei" data-sprung="Was dich tr&auml;gt">
-  <h2 class="ich-h" id="ichdreih"></h2>
-  <p class="ich-sub" id="ichdreisub"></p>
-  <div class="ich-drei" id="ichdrei"></div>
 </section>
 
 <!-- Die zw&ouml;lf Felder, offen ─────────────────────────────── -->
@@ -480,10 +538,13 @@ a{color:var(--nacht);}
 
 <!-- Ab hier das Nachschlagbare ───────────────────────────── -->
 <section class="ich-ab" id="a-zusammen" data-sprung="Was zusammenh&auml;ngt">
-  <details class="ich-klappe" id="kl-asp">
-    <summary><span class="kl-t">Was in dir zusammenh&auml;ngt</span><span class="kl-w">Die Stellen, an denen zwei Antriebe sich begegnen</span></summary>
-    <p class="ich-sub" id="ichaspsub"></p>
-    <div class="ich-asp" id="ichasp"></div>
+  <!-- Die drei engsten offen, der Rest in der Klappe (18.11.) -->
+  <h2 class="ich-h" id="ichasph"></h2>
+  <p class="ich-sub" id="ichaspsub"></p>
+  <div class="ich-asp" id="ichasp"></div>
+  <details class="ich-klappe ich-klein" id="kl-asp">
+    <summary><span class="kl-t">Alle weiteren Zusammenh&auml;nge</span></summary>
+    <div class="ich-asp" id="ichasp2"></div>
   </details>
 </section>
 
@@ -988,6 +1049,38 @@ var I_KOPF={
    Alltagsbedeutung darunter. Jetzt umgekehrt: erst, worum es im
    Leben geht, dann der Lebensbereich — und die Mechanik wartet. */
 var I_DREI_TITEL='Was dich trägt';
+/* Zeichen fürs Auge. Die Anzeige hängt U+FE0E an, sonst malt das
+   Telefon bunte Emoji statt Linien. */
+var I_ZGL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var I_PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',
+ Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',Chiron:'⚷',Lilith:'⚸'};
+
+/* ── Die vier Elemente (18.11.) ───────────────────────────────
+   Wie sich die Kräfte auf Feuer, Erde, Luft und Wasser verteilen.
+   Gewichtet: Sonne und Mond je 3, Aszendent 2, Merkur, Venus und
+   Mars je 1,5, Jupiter und Saturn je 1, die drei langsamen je 0,5 —
+   sie stehen bei einer ganzen Generation im selben Zeichen. */
+var I_ELEM={
+ titel:'Deine Elemente',
+ sub:'Wie sich die Kräfte in deinem Bild auf die vier Elemente verteilen. Was dich persönlich ausmacht, zählt mehr als das, was du mit deiner ganzen Generation teilst.',
+ namen:['Feuer','Erde','Luft','Wasser'],
+ wesen:['Begeisterung, Mut, Tempo','Körper, Verlässlichkeit, Greifbares','Gedanken, Gespräche, Abstand','Gefühl, Nähe, Gespür'],
+ stark:[
+  'Du kommst über Begeisterung in Gang. Was dich nicht entzündet, bleibt liegen, und was dich entzündet, fängst du sofort an.',
+  'Du brauchst Boden unter den Füßen. Eine Idee wird für dich erst wahr, wenn sie im Alltag funktioniert.',
+  'Du verstehst die Welt, indem du sie durchdenkst und besprichst. Abstand hilft dir, klar zu sehen.',
+  'Du nimmst mehr wahr, als gesagt wird. Stimmungen erreichen dich, bevor jemand sie ausspricht.'],
+ schwach:[
+  'Begeisterung entsteht bei dir eher langsam. Was dich in Gang bringt, ist selten der erste Funke, sondern ein guter Grund.',
+  'Struktur und Routinen kosten dich mehr als andere. Kleine feste Gewohnheiten geben dir den Halt, den du nicht von selbst mitbringst.',
+  'Abstand zu den eigenen Gefühlen fällt dir schwerer. Aufschreiben oder Aussprechen hilft dir, Gedanken zu sortieren.',
+  'Gefühle zeigen sich bei dir eher auf Umwegen. Was du fühlst, merkst du manchmal erst im Körper oder im Nachhinein.'],
+ formStark:'<b>Am stärksten: {el}.</b> {text}',
+ formSchwach:'<b>Am leisesten: {el}.</b> {text}',
+ prozent:'{p} %',
+ tech:'{punkte}'
+};
+var I_ASP_TITEL='Was in dir zusammenhängt';
 var I_DREI_SUB='Drei Stellen, die bei jedem Menschen den Grundton setzen. Bei dir liegen sie in diesen Bereichen.';
 var I_DREI=[
  {rolle:'Antrieb',   k:'Sonne', was:'Worauf du hinauswillst'},
@@ -1441,10 +1534,48 @@ function dreiBauen(){
       tech=fuellen(I_DREI_TECH,{zeichen:I_SIGNS[z], grad:gradKurz(l),
                                 haus:h, bereich:I_HAUS[h-1].k});
     }
-    return '<div><div class="rolle">'+esc(d.rolle)+'</div><div class="wert">'+
-      esc(d.was)+'<span class="zu">'+esc(bereich)+'</span>'+
-      '<span class="zu ac-tech" data-ab="2">'+esc(tech)+'</span></div></div>';
+    return '<article class="dk dk-'+I_DREI.indexOf(d)+'">'+
+      '<span class="dk-gl" aria-hidden="true">'+I_ZGL[z]+'\uFE0E</span>'+
+      '<div class="rolle">'+esc(d.rolle)+'</div>'+
+      '<p class="wert">'+esc(d.was)+'</p>'+
+      '<p class="zu">'+esc(bereich)+'</p>'+
+      '<p class="zu ac-tech" data-ab="2">'+esc(tech)+'</p></article>';
   }).join('');
+}
+
+/* ── Die vier Elemente (18.11.) ────────────────────────────────
+   Gewichtet: Sonne und Mond tragen am meisten, die langsamen
+   Planeten teilt man mit der ganzen Generation, darum zählen sie
+   wenig. Ohne Geburtszeit fällt der Aszendent weg. */
+var ELEM_GEW={Sonne:3,Mond:3,ASC:2,Merkur:1.5,Venus:1.5,Mars:1.5,
+  Jupiter:1,Saturn:1,Uranus:0.5,Neptun:0.5,Pluto:0.5};
+function elementBauen(){
+  var sum=[0,0,0,0], wer=[[],[],[],[]], ges=0;
+  for(var k in ELEM_GEW){
+    if(P[k]===undefined||P[k]===null) continue;
+    var e=zI(P[k])%4; sum[e]+=ELEM_GEW[k]; ges+=ELEM_GEW[k]; wer[e].push(k);
+  }
+  if(!ges){ el('ichelem').innerHTML=''; return; }
+  var pr=sum.map(function(s){ return Math.round(s/ges*100); });
+  var max=0, min=0;
+  for(var i=1;i<4;i++){ if(sum[i]>sum[max]) max=i; if(sum[i]<sum[min]) min=i; }
+  el('ichelemh').textContent=I_ELEM.titel;
+  el('ichelemsub').textContent=I_ELEM.sub;
+  var h='<div class="el-balken">';
+  for(var j=0;j<4;j++){
+    h+='<div class="el-z el-'+j+(j===max?' el-max':'')+'">'+
+      '<span class="el-n">'+esc(I_ELEM.namen[j])+'</span>'+
+      '<span class="el-spur"><span class="el-f" style="width:'+Math.max(pr[j],2)+'%"></span></span>'+
+      '<span class="el-p">'+esc(fuellen(I_ELEM.prozent,{p:pr[j]}))+'</span>'+
+      '<span class="el-w">'+esc(I_ELEM.wesen[j])+'</span>'+
+      '<span class="el-t ac-tech" data-ab="2">'+esc(fuellen(I_ELEM.tech,{punkte:wer[j].join(', ')}))+'</span>'+
+      '</div>';
+  }
+  h+='</div><div class="el-satz">'+
+    '<p>'+fuellen(I_ELEM.formStark,{el:esc(I_ELEM.namen[max]), text:esc(I_ELEM.stark[max])})+'</p>'+
+    (min!==max?'<p>'+fuellen(I_ELEM.formSchwach,{el:esc(I_ELEM.namen[min]), text:esc(I_ELEM.schwach[min])})+'</p>':'')+
+    '</div>';
+  el('ichelem').innerHTML=h;
 }
 
 /* ── Sprungmarken ──────────────────────────────────────────────
@@ -1673,18 +1804,15 @@ function haeuserBauen(){
       return P[k]!==undefined&&haus(P,P[k])===n; });
     var heut=PNAMEN.filter(function(k){
       return Q[k]!==undefined&&haus(P,Q[k])===n; });
+    var gl=bew.map(function(k){ return '<i>'+(I_PGL[k]||'')+'</i>'; }).join('');
     h+='<button type="button" class="hz'+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
-      '<span class="nr">'+n+'</span>'+
-      '<span class="hz-inhalt">'+
-        '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
-          I_HAUS[n-1].k+'</span>'+
-        '<span class="ze ac-tech" data-ab="2"><b>'+I_SIGNS[z]+'</b>'+
-          (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
-        '<span class="herr ac-tech" data-ab="2">'+
-          fuellen(I_HAUS_TECH.herr,{herr:herr, haus:hH})+
-          (heut.length?fuellen(I_HAUS_TECH.heute,
-                               {punkte:heut.join(', ')}):'')+'</span>'+
-      '</span>'+
+      '<span class="nr">'+n+(heut.length?'<span class="punkt"></span>':'')+'</span>'+
+      '<span class="was">'+esc(I_HAUS[n-1].k)+'</span>'+
+      '<span class="hz-gl" aria-hidden="true">'+(gl||'<i class="leer">·</i>')+'</span>'+
+      '<span class="ze ac-tech" data-ab="2">'+esc(I_ZGL[z])+'\uFE0E '+esc(I_SIGNS[z])+
+        (bew.length?' · '+esc(bew.join(', ')):'')+'</span>'+
+      '<span class="herr ac-tech" data-ab="2">'+
+        esc(fuellen(I_HAUS_TECH.herr,{herr:herr, haus:hH}))+'</span>'+
       '</button><div class="hdetail" id="d'+n+'" hidden></div>';
   }
   box.innerHTML=h;
@@ -1762,7 +1890,7 @@ function aspekteBauen(){
     if(d&&d.thema) mit.push({x:alle[i], d:d});
   }
   var zeig=mit.slice(0,12);
-  el('ichasp').innerHTML=zeig.map(function(e){
+  function karte(e){
     var x=e.x, d=e.d;
     return '<div class="ia '+x.art+'">'+
       '<div class="f">'+esc(d.thema)+'</div>'+
@@ -1771,7 +1899,11 @@ function aspekteBauen(){
         {a:x.a, typ:x.typ, b:x.b, orb:kz(x.o,2),
          art:(x.art==='hart'?I_ASP_ART.hart:I_ASP_ART.weich)})+'</div>'+
       '</div>';
-  }).join('');
+  }
+  el('ichasph').textContent=I_ASP_TITEL;
+  el('ichasp').innerHTML=zeig.slice(0,3).map(karte).join('');
+  el('ichasp2').innerHTML=zeig.slice(3).map(karte).join('');
+  el('kl-asp').hidden=zeig.length<=3;
   el('ichaspsub').innerHTML=esc(fuellen(I_ASP_SUB,{zahl:zeig.length}))+
     ' <span class="ac-tech" data-ab="2">'+
     esc(fuellen(I_ASP_TECH,{gesamt:alle.length, zahl:zeig.length}))+'</span>';
@@ -1801,6 +1933,7 @@ function indexBauen(){
   var M=auffaelligBauen();
   kopfBauen(p, M);
   dreiBauen();
+  elementBauen();
   haeuserBauen();
   heuteBauen();
   aspekteBauen();

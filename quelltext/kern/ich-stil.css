@@ -48,16 +48,6 @@
 .ich-radfuss i.a{background:#F3EADA;border:1px solid var(--messing,#9A7235);}
 .ich-radfuss i.b{background:var(--nacht,#2E3A5C);}
 
-.ich-drei{display:grid;gap:0;border-top:1px solid var(--linie-stark,#DDD0BC);margin-bottom:22px;}
-.ich-drei>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;align-items:baseline;
- padding:15px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
-@media(max-width:480px){.ich-drei>div{grid-template-columns:1fr;gap:3px;}}
-.ich-drei .rolle{font-size:13px;color:var(--leise,#6B6259);}
-.ich-drei .wert{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(18px,2.4vw,23px);
- font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.3;letter-spacing:-.012em;}
-.ich-drei .zu{display:block;font-family:var(--sans);font-size:14px;font-weight:400;
- color:var(--leise,#6B6259);margin-top:4px;line-height:1.5;}
-
 /* Die Brücke zu Heute */
 .ich-heute{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
  border-radius:17px;padding:16px 19px;}
@@ -70,32 +60,6 @@
 .ich-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
  font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:58px 0 5px;}
 .ich-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 20px;max-width:62ch;line-height:1.6;}
-
-/* Die zwölf Häuser als Zeilen, nicht als Karten */
-.ich-haeuser{border-top:1px solid var(--linie-stark,#DDD0BC);}
-.hz{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;align-items:baseline;
- width:100%;text-align:left;padding:14px 10px;background:none;border:0;
- border-bottom:1px solid var(--linie,#EBE1D2);
- font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;}
-.hz-inhalt{display:block;min-width:0;}
-.hz:hover{background:var(--papier,#FFFDFA);}
-.hz.ist{background:var(--nacht,#2E3A5C);}
-.hz.ist .nr,.hz.ist .ze,.hz.ist .herr,.hz.ist .was{color:#F4EFE6;}
-.hz.ist .ze b{color:#fff;}
-.hz.ist .bew{color:#E8C97A;}
-.hz:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:-2px;}
-.hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:25px;font-weight:300;
- color:var(--leise,#6B6259);line-height:1;}
-.hz.heut .nr{color:var(--messing,#9A7235);}
-.hz .ze{display:block;font-size:14.6px;line-height:1.4;min-width:0;margin-top:3px;}
-.hz .ze b{font-weight:500;color:var(--nacht,#2E3A5C);}
-.hz .bew{display:block;font-size:13.6px;color:var(--messing,#9A7235);margin-top:3px;}
-.hz .herr{display:block;font-size:13.6px;color:var(--leise,#6B6259);
- line-height:1.45;min-width:0;margin-top:2px;}
-.hz .was{display:block;font-family:var(--serif,Fraunces,Georgia,serif);
- font-size:17.5px;font-weight:400;color:var(--nacht,#2E3A5C);line-height:1.3;min-width:0;}
-.hz .punkt{display:inline-block;width:6px;height:6px;border-radius:50%;
- background:var(--messing,#9A7235);vertical-align:2px;margin-right:5px;}
 
 /* Aufgeklapptes Haus */
 .hdetail{border-bottom:1px solid var(--linie,#EBE1D2);background:var(--papier,#FFFDFA);
@@ -170,7 +134,7 @@
 
 
 /* ═══ Kopf: Aussage und Bild nebeneinander ═══════════════════ */
-.ich-kopf{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:40px;
+.ich-kopf{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);gap:44px;
  align-items:center;margin:34px 0 30px;}
 .ich-wer{font-size:13px;color:var(--leise,#6B6259);margin:14px 0 0;}
 .ich-profil{font-size:13px;margin:6px 0 0;}
@@ -191,7 +155,7 @@
 .ich-radfuss i.a{background:var(--messing,#9A7235);}
 @media(max-width:780px){
  .ich-kopf{grid-template-columns:1fr;gap:22px;}
- .ich-kopf-rad{max-width:320px;}
+ .ich-kopf-rad{max-width:360px;margin:0 auto;width:100%;}
 }
 
 /* ═══ Was auffällt: die Zahl ist das Bild ═══════════════════ */
@@ -239,3 +203,91 @@
 .ich-klein summary{font-size:13.5px;}
 .ich-aufgrenze h3{display:none;}
 .ich-aufgrenze p{font-size:13.5px;line-height:1.6;color:var(--leise,#6B6259);margin:0 0 9px;}
+
+/* ═══ 18.11.: Die großen Drei als Karten ════════════════════ */
+.ich-drei{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:6px 0 8px;}
+.dk{position:relative;overflow:hidden;background:var(--papier,#FFFDFA);
+ border:1px solid var(--linie,#EBE1D2);border-radius:18px;padding:20px 20px 18px;min-width:0;}
+.dk-0{background:linear-gradient(160deg,#FBF3E4 0%,var(--papier,#FFFDFA) 70%);}
+.dk-1{background:linear-gradient(160deg,#ECEFF5 0%,var(--papier,#FFFDFA) 70%);}
+.dk-2{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#F4EFE6;}
+.dk-gl{position:absolute;right:14px;top:8px;font-size:60px;line-height:1;
+ color:var(--messing,#9A7235);opacity:.2;font-family:'Segoe UI Symbol','Noto Sans Symbols',serif;}
+.dk-2 .dk-gl{color:#F3C98B;opacity:.35;}
+.dk .rolle{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:12px;}
+.dk-2 .rolle{color:#F3C98B;}
+.dk .wert{position:relative;padding-right:58px;font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(19px,2.1vw,22px);
+ font-weight:400;line-height:1.28;letter-spacing:-.012em;color:var(--nacht,#2E3A5C);margin:0 0 12px;}
+.dk-2 .wert{color:#fff;}
+.dk .zu{font-size:13.8px;line-height:1.5;color:var(--leise,#6B6259);margin:0;}
+.dk-2 .zu{color:rgba(255,255,255,.75);}
+.dk .zu.ac-tech{margin-top:8px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.5px;}
+@media(max-width:760px){.ich-drei{grid-template-columns:1fr;gap:10px;}
+ .dk{padding:15px 16px 14px;} .dk-gl{font-size:54px;} .dk .rolle{margin-bottom:7px;} .dk .wert{margin-bottom:6px;}}
+@media(max-width:560px){.ich-h3{margin-top:26px;} .el-balken{gap:9px;} .el-satz{padding:13px 15px;} .el-satz p{font-size:14.5px;}}
+
+/* ═══ Die vier Elemente ═══════════════════════════════════ */
+.ich-h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:400;
+ color:var(--nacht,#2E3A5C);margin:34px 0 4px;letter-spacing:-.01em;}
+.ich-elem{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px 32px;align-items:start;}
+.el-balken{display:grid;gap:12px;}
+.el-z{display:grid;grid-template-columns:62px minmax(0,1fr) 44px;gap:2px 12px;align-items:center;}
+.el-n{font-size:14px;font-weight:500;color:var(--tinte,#231F1A);}
+.el-spur{height:12px;border-radius:99px;background:var(--linie,#EBE1D2);overflow:hidden;}
+.el-f{display:block;height:100%;border-radius:99px;transition:width .6s ease;}
+.el-0 .el-f{background:#C8643B;} .el-1 .el-f{background:#7C8A4A;}
+.el-2 .el-f{background:#8FA7C4;} .el-3 .el-f{background:#3E6E8E;}
+.el-p{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.5px;text-align:right;color:var(--leise,#6B6259);}
+.el-max .el-p{color:var(--tinte,#231F1A);font-weight:600;}
+.el-w,.el-t{grid-column:2/4;font-size:12.5px;color:var(--leise,#6B6259);line-height:1.35;}
+.el-t{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;}
+.el-satz{background:var(--messing-bg,#F7EFE1);border-radius:16px;padding:16px 18px;}
+.el-satz p{margin:0 0 10px;font-size:15px;line-height:1.6;}
+.el-satz p:last-child{margin:0;}
+.el-satz b{font-weight:600;color:var(--nacht,#2E3A5C);}
+@media(max-width:760px){.ich-elem{grid-template-columns:1fr;}}
+
+/* ═══ Was auffällt: die Nebenbefunde zweispaltig ═════════════ */
+@media(min-width:900px){
+ .ich-auf{grid-template-columns:1fr 1fr;}
+ .ich-auf .au-haupt,.ich-auf .au:last-child:nth-child(even){grid-column:1/-1;}
+ .ich-auf .au:not(.au-haupt){grid-template-columns:96px 1fr;gap:18px;padding:20px;}
+ .ich-auf .au:not(.au-haupt) .au-feld{max-width:96px;}
+ .ich-auf .au:not(.au-haupt) .au-satz{font-size:19px;}
+}
+
+/* ═══ Die zwölf Felder als Kacheln ══════════════════════════ */
+.ich-haeuser{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;grid-auto-flow:dense;}
+@media(max-width:860px){.ich-haeuser{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:560px){.ich-haeuser{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+ .hz{min-height:0;padding:11px 12px 10px;gap:4px;} .hz .nr{font-size:22px;} .hz .was{font-size:15px;}}
+.hz{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+ min-height:104px;padding:14px 14px 12px;text-align:left;cursor:pointer;
+ background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ font-family:inherit;font-size:inherit;color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s;}
+.hz:hover{border-color:var(--messing,#9A7235);transform:translateY(-1px);box-shadow:0 6px 18px rgba(46,58,92,.08);}
+.hz:focus-visible{outline:2px solid var(--nacht,#2E3A5C);outline-offset:2px;}
+.hz .nr{font-family:var(--serif,Fraunces,Georgia,serif);font-size:28px;font-weight:300;line-height:1;
+ color:var(--leise,#6B6259);}
+.hz.heut .nr{color:var(--messing,#9A7235);}
+.hz .punkt{display:inline-block;vertical-align:middle;margin:-4px 0 0 7px;width:7px;height:7px;border-radius:50%;
+ background:var(--messing,#9A7235);box-shadow:0 0 0 4px rgba(154,114,53,.16);}
+.hz .was{font-family:var(--serif,Fraunces,Georgia,serif);font-size:16px;line-height:1.25;
+ color:var(--nacht,#2E3A5C);}
+.hz-gl{position:absolute;right:10px;top:10px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px;max-width:58%;}
+.hz-gl i{font-style:normal;font-size:13px;line-height:1;width:22px;height:22px;display:inline-flex;
+ align-items:center;justify-content:center;border-radius:50%;background:var(--nacht-bg,#E8EBF2);
+ color:var(--nacht,#2E3A5C);font-family:'Segoe UI Symbol','Noto Sans Symbols',serif;}
+.hz-gl i.leer{display:none;}
+.hz .ze,.hz .herr{font-size:12px;line-height:1.4;color:var(--leise,#6B6259);}
+.hz .ze{color:var(--tinte,#231F1A);}
+.hz.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
+.hz.ist .nr,.hz.ist .was,.hz.ist .ze,.hz.ist .herr{color:#F4EFE6;}
+.hz.ist .hz-gl i{background:rgba(255,255,255,.14);color:#fff;}
+.ich-haeuser .hdetail{grid-column:1/-1;border:1px solid var(--linie,#EBE1D2);border-radius:16px;margin:0 0 4px;}
+
+/* ═══ Zusammenhänge offen ════════════════════════════════════ */
+#ichasp{margin-bottom:10px;grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:760px){#ichasp{grid-template-columns:1fr;}}
+#kl-asp .ich-asp{margin-top:10px;}
