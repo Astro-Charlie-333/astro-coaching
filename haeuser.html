@@ -165,6 +165,18 @@ a{color:var(--nacht);}
 .hz-rad-box g[role=button]{cursor:pointer}
 .hz-rad-box g[role=button]:focus{outline:none}
 .hz-rad-box g[role=button]:focus-visible path{stroke:#9A7235;stroke-width:3}
+/* Farben und Schriften des Rads stehen hier und nicht in der Anzeige
+   (Aufgabe 57): haeuser-app.js setzt die Klassen, gestaltet wird hier. */
+.hz-feld path{fill:#FFFDFA;stroke:#EBE1D2;stroke-width:1.5}
+.hz-feld.voll path{fill:#F5ECDD}
+.hz-feld.an path{fill:#2E3A5C}
+.hz-feld circle{fill:#9A7235}
+.hz-feld.an circle{fill:#E8C98D}
+.hz-rad-nr{font-family:'Fraunces',Georgia,serif;font-size:17px;fill:#2E3A5C}
+.hz-feld.an .hz-rad-nr{fill:#FCF7EF}
+.hz-rad-nm{font-family:'DM Sans',system-ui,sans-serif;font-size:11.5px;fill:#6B6259}
+.hz-feld.an .hz-rad-nm{fill:#E8C98D}
+.hz-rad-mitte{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;fill:#6B6259}
 
 .hz-buehnen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
 .hz-buehne{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer}
@@ -313,7 +325,14 @@ body.niv-0 .hz-weiter a[data-ab="1"]{display:none}
     <li>Nah am &Auml;quator, wo Placidus-H&auml;user fast gleich gro&szlig; sind. Je weiter n&ouml;rdlich, desto st&auml;rker die Verzerrung. In Berlin, Kyiv oder Stockholm sind Unterschiede die Regel.</li>
   </ul>
   <h3 class="hz-h3">Ein Beispiel</h3>
-  <div class="hz-beispiel" id="hzbeispiel"></div>
+  <div class="hz-beispiel" id="hzbeispiel">
+    <p class="hz-klein" id="hzbspkopf"></p>
+    <div class="hz-zwei">
+      <div><b>Whole Sign</b><p id="hzbspws"></p></div>
+      <div><b>Placidus</b><p id="hzbsppl"></p></div>
+    </div>
+    <p id="hzbspfazit"></p>
+  </div>
   <h3 class="hz-h3">Wenn beide sich widersprechen</h3>
   <div class="hz-karten">
     <div><b>Beide notieren, nicht w&auml;hlen</b><p>Ein Planet auf einer Hausgrenze geh&ouml;rt zu beiden Bereichen. Das ist keine Unsch&auml;rfe, das ist die Information.</p></div>
@@ -499,7 +518,12 @@ var HZ_ACHSEN = [
    Die Werte prüft bau-haeuser.py beim Bauen gegen engine.js. */
 var HZ_BEISPIEL = {datum:'14.10.1994', zeit:'13:05', ort:'Hamburg',
   p:{y:1994, mo:10, d:14, h:13, mi:5, tz:2, lat:53.55, lon:9.99},
-  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage', wsHaus:11, plHaus:10, abstand:18};
+  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage',
+  /* Die Zeichen stehen einzeln daneben, weil der Text sie nennt
+     („Waage ist ab Schütze das elfte Zeichen"). bau-haeuser.py hält
+     beide gegen asc und sonne und gegen die Rechnung. */
+  ascZ:'Schütze', sonneZ:'Waage',
+  wsHaus:11, mcHaus:11, plHaus:10, abstand:18};
 
 var HZ_QUIZ = [
  {q:'Ein Planet steht nach Whole Sign im 10. und nach Placidus im 9. Haus. Was machst du im Reading?',
@@ -510,12 +534,74 @@ var HZ_QUIZ = [
   e:'Je weiter vom Äquator entfernt, desto ungleichmäßiger fallen die Placidus-Häuser aus. In hohen Breiten werden einzelne Häuser sehr groß. Am Äquator sind beide Systeme fast deckungsgleich.'}
 ];
 
+/* ── Die Sätze der Anzeige ────────────────────────────────────
+   Aufgabe 57 (aus 34 und 38): haeuser-app.js rechnet und setzt ein,
+   geschrieben wird hier. Eine Lücke heißt {so}; dass jede auch
+   gefüllt wird, hält pruefwerk.pruefe_vorlagenluecken fest.
+
+   Wo eine Bühne beschrieben wird, steht keine zweite Beschreibung:
+   {stich} kommt aus HZ_HAUS. Bis zum 2026-11-18 stand im Beispiel
+   unten „11. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit" von
+   Hand — dieselbe Bühne, die zwölf Karten weiter oben
+   „Freundschaft, Netzwerke, Zukunftspläne" heißt. */
+var HZ_T = {
+  /* Die Zeile über dem Rad */
+  profilLeer:'Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> siehst du hier, auf welchen Bühnen bei dir viel los ist.',
+  profilOhneNamen:'das aktive Profil',
+  profilZeile:'Für <b></b>: Auf {voll} von zwölf Bühnen ist bei dir etwas los. Wechseln unter <a href="profile.html">Profile</a>.',
+
+  /* Das Rad */
+  radMarke:'{n}: {titel}',
+  radMarkeVoll:'{n}: {titel}, bei dir belebt',
+  radMitte:'Punkte: bei dir belebt',
+  radMitteLeer:'Tippe eine Bühne an',
+
+  /* Die zwölf Karten */
+  buehneTech:'{n}. Haus',
+  buehneTechEcke:'{n}. Haus · beginnt mit dem {ecke}',
+  beiEine:'Bei dir belebt: Hier steht eine Kraft.',
+  beiMehrere:'Bei dir belebt: Hier stehen {n} Kräfte.',
+  beiLeise:'Bei dir eine leise Bühne.',
+  beiTech:'Zeichen: {zeichen} · Planeten: {pl}',
+  beiTechLeer:'Zeichen: {zeichen} · ohne Planeten',
+
+  /* Die sechs Paare */
+  achseLeise:'Bei dir sind beide Seiten leise. Dieses Paar läuft im Hintergrund.',
+  achseBeide:'Bei dir sind beide Seiten belebt. Ein lebendiges Spannungsfeld: Du pendelst zwischen {links} und {rechts}.',
+  achseEine:'Bei dir liegt das Gewicht auf {links}. Wenn diese Seite überdreht, liegt der Ausgleich in {rechts}.',
+  achseTech:'{links} · {rechts}',
+  achseTechSeite:'{n}. Haus {zeichen} mit {pl}',
+  achseTechSeiteLeer:'{n}. Haus {zeichen}, leer',
+
+  /* Das Beispiel unter „Whole Sign oder Placidus" */
+  bspKopf:'Ein erfundenes Geburtsbild: {datum}, {zeit} Uhr, {ort}. Aszendent {asc}, MC {mc}, Sonne {sonne}.',
+  bspWs:'{sonneZ} ist ab {ascZ} das {ordnung} Zeichen. Die Sonne steht im {wsHaus}. Haus: {stich}. Das MC fällt hier ebenfalls ins {mcHaus}. Haus.',
+  bspPl:'Die Sonne steht {abstand} Bogenminuten hinter dem MC, also im {plHaus}. Haus: {stich}.',
+  bspFazit:'Beides ist rechnerisch richtig, und beides beschreibt dieselbe Person: jemanden, dessen Beruf in Gruppen und Netzwerken stattfindet. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.',
+
+  /* Zählwörter für das Beispiel. bau-haeuser.py hält die Reihenfolge
+     gegen die zwölf Bühnen. */
+  ordnung:['erste','zweite','dritte','vierte','fünfte','sechste','siebte',
+           'achte','neunte','zehnte','elfte','zwölfte']
+};
+
 /* Häuserseite: Anzeige und „bei dir" aus dem aktiven Profil.
-   Gerechnet wird gegen rituale/engine.js (chartVon, haus, SIGNS). */
+   Gerechnet wird gegen rituale/engine.js (chartVon, haus, SIGNS).
+
+   Hier steht kein Satz. Was auf der Seite zu lesen ist, steht als
+   Vorlage in haeuser-daten.js (HZ_T); diese Datei rechnet und setzt
+   mit hzFuell ein (Aufgabe 57, PRODUKT.md Abschnitt 7). Farben und
+   Schriften des Rads stehen in haeuser-stil.css, nicht hier. */
 (function(){
 var el=function(id){return document.getElementById(id);};
 var NS='http://www.w3.org/2000/svg';
 function hzSvg(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+function hzFuell(form,werte){
+  var s=String(form||'');
+  for(var k in werte) if(werte.hasOwnProperty(k))
+    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
+  return s;
+}
 var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 
 function hzProfil(){ try{ var a=AC_P.alle(); return AC_P.aktives()||AC_P.eigenes()||a[0]||null; }catch(e){ return null; } }
@@ -534,13 +620,10 @@ var hzWahl=0;
 
 function hzProfilZeile(){
   var b=el('hzprofil');
-  if(!C){
-    b.innerHTML='Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> siehst du hier, auf welchen B&uuml;hnen bei dir viel los ist.';
-    return;
-  }
-  var name='das aktive Profil'; try{ name=AC_P.anzeige(P,AC_P.zeigeNamen()); }catch(e){}
+  if(!C){ b.innerHTML=HZ_T.profilLeer; return; }
+  var name=HZ_T.profilOhneNamen; try{ name=AC_P.anzeige(P,AC_P.zeigeNamen()); }catch(e){}
   var voll=BEI.filter(function(x){return x.pl.length;}).length;
-  b.innerHTML='F&uuml;r <b></b>: Auf '+voll+' von zw&ouml;lf B&uuml;hnen ist bei dir etwas los. Wechseln unter <a href="profile.html">Profile</a>.';
+  b.innerHTML=hzFuell(HZ_T.profilZeile,{voll:voll});
   b.querySelector('b').textContent=name;
 }
 
@@ -555,24 +638,26 @@ function hzRad(){
     var p=function(a,rr){return [cx+rr*Math.cos(a), cy+rr*Math.sin(a)];};
     var A=p(a0,R),B=p(a1,R),Cc=p(a1,r),D=p(a0,r);
     var voll=BEI[i].pl.length>0, an=i===hzWahl;
-    var g=hzSvg('g',{role:'button',tabindex:0,'aria-label':(i+1)+': '+HZ_HAUS[i].titel+(voll?', bei dir belebt':''),'aria-pressed':String(an)});
-    g.appendChild(hzSvg('path',{d:'M'+A+' A'+R+' '+R+' 0 0 0 '+B+' L'+Cc+' A'+r+' '+r+' 0 0 1 '+D+' Z',
-      fill:an?'#2E3A5C':(voll?'#F5ECDD':'#FFFDFA'),stroke:'#EBE1D2','stroke-width':1.5}));
+    var g=hzSvg('g',{role:'button',tabindex:0,
+      'class':'hz-feld'+(voll?' voll':'')+(an?' an':''),
+      'aria-label':hzFuell(voll?HZ_T.radMarkeVoll:HZ_T.radMarke,{n:i+1,titel:HZ_HAUS[i].titel}),
+      'aria-pressed':String(an)});
+    g.appendChild(hzSvg('path',{d:'M'+A+' A'+R+' '+R+' 0 0 0 '+B+' L'+Cc+' A'+r+' '+r+' 0 0 1 '+D+' Z'}));
     var m=p((a0+a1)/2,(R+r)/2+20), n=p((a0+a1)/2,(R+r)/2-16);
-    var t1=hzSvg('text',{x:m[0],y:m[1]+5,'text-anchor':'middle','font-size':17,'font-family':'Fraunces, Georgia, serif',fill:an?'#FCF7EF':'#2E3A5C'});
+    var t1=hzSvg('text',{'class':'hz-rad-nr',x:m[0],y:m[1]+5,'text-anchor':'middle'});
     t1.textContent=String(i+1); g.appendChild(t1);
-    var t2=hzSvg('text',{x:n[0],y:n[1]+4,'text-anchor':'middle','font-size':11.5,'font-family':'DM Sans, system-ui, sans-serif',fill:an?'#E8C98D':'#6B6259'});
+    var t2=hzSvg('text',{'class':'hz-rad-nm',x:n[0],y:n[1]+4,'text-anchor':'middle'});
     t2.textContent=HZ_HAUS[i].name; g.appendChild(t2);
     if(voll){ for(var k=0;k<BEI[i].pl.length&&k<5;k++){
       var q=p((a0+a1)/2+(k-(Math.min(BEI[i].pl.length,5)-1)/2)*0.09,R-12);
-      g.appendChild(hzSvg('circle',{cx:q[0],cy:q[1],r:3.5,fill:an?'#E8C98D':'#9A7235'})); } }
+      g.appendChild(hzSvg('circle',{cx:q[0],cy:q[1],r:3.5})); } }
     (function(i){ function w(){ hzWahl=i; hzRad(); var c=el('hzbuehnen').children[i]; if(c){ c.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'}); } }
       g.addEventListener('click',w);
       g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); w(); var n2=el('hzrad').querySelectorAll('g[role=button]')[i]; if(n2) n2.focus(); } }); })(i);
     s.appendChild(g);
   }
-  var mitte=hzSvg('text',{x:cx,y:cy+5,'text-anchor':'middle','font-size':13,'font-family':'DM Sans, system-ui, sans-serif',fill:'#6B6259'});
-  mitte.textContent=C?'Punkte: bei dir belebt':'Tippe eine Bühne an';
+  var mitte=hzSvg('text',{'class':'hz-rad-mitte',x:cx,y:cy+5,'text-anchor':'middle'});
+  mitte.textContent=C?HZ_T.radMitte:HZ_T.radMitteLeer;
   s.appendChild(mitte);
   Array.prototype.forEach.call(el('hzbuehnen').children,function(c,i){ c.classList.toggle('an',i===hzWahl); });
 }
@@ -584,18 +669,28 @@ function hzBuehnen(){
     k.innerHTML='<div class="hz-nr"></div><div class="hz-inh"><h3></h3><p class="hz-tech ac-tech" data-ab="1"></p><p></p><p class="hz-stich"></p><p class="hz-frage"></p><p class="hz-bei"></p><p class="hz-bei-tech ac-tech" data-ab="1"></p></div>';
     k.querySelector('.hz-nr').textContent=String(i+1);
     k.querySelector('h3').textContent=h.titel;
-    k.querySelector('.hz-tech').textContent=(i+1)+'. Haus'+(h.ecke?' · beginnt mit dem '+h.ecke:'');
+    k.querySelector('.hz-tech').textContent=
+      hzFuell(h.ecke?HZ_T.buehneTechEcke:HZ_T.buehneTech,{n:i+1,ecke:h.ecke});
     k.querySelectorAll('p')[1].textContent=h.was;
     k.querySelector('.hz-stich').textContent=h.stich;
     k.querySelector('.hz-frage').textContent=h.frage;
     var bei=k.querySelector('.hz-bei'), bt=k.querySelector('.hz-bei-tech');
     if(C){
-      bei.textContent=BEI[i].pl.length?(BEI[i].pl.length===1?'Bei dir belebt: Hier steht eine Kraft.':'Bei dir belebt: Hier stehen '+BEI[i].pl.length+' Kräfte.'):'Bei dir eine leise Bühne.';
-      bt.textContent='Zeichen: '+BEI[i].zeichen+(BEI[i].pl.length?' · Planeten: '+BEI[i].pl.join(', '):' · ohne Planeten');
+      var anz=BEI[i].pl.length;
+      bei.textContent=anz?(anz===1?HZ_T.beiEine:hzFuell(HZ_T.beiMehrere,{n:anz})):HZ_T.beiLeise;
+      bt.textContent=hzFuell(anz?HZ_T.beiTech:HZ_T.beiTechLeer,
+        {zeichen:BEI[i].zeichen, pl:BEI[i].pl.join(', ')});
     } else { bei.remove(); bt.remove(); }
     k.addEventListener('click',function(){ hzWahl=i; hzRad(); });
     box.appendChild(k);
   });
+}
+
+/* Eine Seite der Waage in Maschinensprache: „7. Haus Waage mit Venus" */
+function hzSeiteTech(nr){
+  var b=BEI[nr];
+  return hzFuell(b.pl.length?HZ_T.achseTechSeite:HZ_T.achseTechSeiteLeer,
+    {n:nr+1, zeichen:b.zeichen, pl:b.pl.join(', ')});
 }
 
 function hzAchsen(){
@@ -607,20 +702,18 @@ function hzAchsen(){
       '<h3></h3><p class="prinzip"></p><p class="prinzip"></p><p class="hz-bei"></p><p class="hz-bei-tech ac-tech" data-ab="1"></p>';
     var sa=k.querySelector('.s.a'), sb=k.querySelector('.s.b');
     sa.querySelector('b').textContent=A.titel; sb.querySelector('b').textContent=B.titel;
-    sa.querySelector('span').textContent=(x.a+1)+''; sb.querySelector('span').textContent=(x.b+1)+'';
+    sa.querySelector('span').textContent=String(x.a+1); sb.querySelector('span').textContent=String(x.b+1);
     k.querySelector('h3').textContent=x.name;
     var pr=k.querySelectorAll('.prinzip'); pr[0].textContent=x.zuvielA; pr[1].textContent=x.zuvielB;
     var bei=k.querySelector('.hz-bei'), bt=k.querySelector('.hz-bei-tech');
     if(C){
       if(na) sa.classList.add('voll'); if(nb) sb.classList.add('voll');
       var satz;
-      if(!na&&!nb) satz='Bei dir sind beide Seiten leise. Dieses Paar läuft im Hintergrund.';
-      else if(na&&nb) satz='Bei dir sind beide Seiten belebt. Ein lebendiges Spannungsfeld: Du pendelst zwischen '+A.titel+' und '+B.titel+'.';
-      else { var voll=na?A:B, leer=na?B:A;
-        satz='Bei dir liegt das Gewicht auf '+voll.titel+'. Wenn diese Seite überdreht, liegt der Ausgleich in '+leer.titel+'.'; }
+      if(!na&&!nb) satz=HZ_T.achseLeise;
+      else if(na&&nb) satz=hzFuell(HZ_T.achseBeide,{links:A.titel, rechts:B.titel});
+      else satz=hzFuell(HZ_T.achseEine,{links:(na?A:B).titel, rechts:(na?B:A).titel});
       bei.textContent=satz;
-      bt.textContent=(x.a+1)+'. Haus '+BEI[x.a].zeichen+(na?' mit '+BEI[x.a].pl.join(', '):', leer')+
-        ' · '+(x.b+1)+'. Haus '+BEI[x.b].zeichen+(nb?' mit '+BEI[x.b].pl.join(', '):', leer');
+      bt.textContent=hzFuell(HZ_T.achseTech,{links:hzSeiteTech(x.a), rechts:hzSeiteTech(x.b)});
       k.classList.add(na&&nb?'beide':(na||nb?'eine':'keine'));
     } else { bei.remove(); bt.remove(); }
     box.appendChild(k);
@@ -628,13 +721,17 @@ function hzAchsen(){
 }
 
 function hzBeispiel(){
-  var b=HZ_BEISPIEL, box=el('hzbeispiel');
-  box.innerHTML='<p class="hz-klein"></p><div class="hz-zwei"><div><b>Whole Sign</b><p></p></div><div><b>Placidus</b><p></p></div></div><p></p>';
-  var ps=box.querySelectorAll('p');
-  ps[0].textContent='Ein erfundenes Geburtsbild: '+b.datum+', '+b.zeit+' Uhr, '+b.ort+'. Aszendent '+b.asc+', MC '+b.mc+', Sonne '+b.sonne+'.';
-  ps[1].textContent='Waage ist ab Schütze das elfte Zeichen. Die Sonne steht im '+b.wsHaus+'. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit. Das MC fällt hier ebenfalls ins 11. Haus.';
-  ps[2].textContent='Die Sonne steht '+b.abstand+' Bogenminuten hinter dem MC, also im '+b.plHaus+'. Haus: Beruf, Wirken, Sichtbarkeit.';
-  ps[3].textContent='Beides ist rechnerisch richtig, und beides beschreibt dieselbe Person: jemanden, dessen Beruf in Gruppen und Netzwerken stattfindet. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.';
+  var b=HZ_BEISPIEL;
+  el('hzbspkopf').textContent=hzFuell(HZ_T.bspKopf,
+    {datum:b.datum, zeit:b.zeit, ort:b.ort, asc:b.asc, mc:b.mc, sonne:b.sonne});
+  /* Die Bühnen beschreibt HZ_HAUS, und nur dort. Eine zweite,
+     von Hand geschriebene Beschreibung lässt bau-haeuser.py scheitern. */
+  el('hzbspws').textContent=hzFuell(HZ_T.bspWs,
+    {sonneZ:b.sonneZ, ascZ:b.ascZ, ordnung:HZ_T.ordnung[b.wsHaus-1],
+     wsHaus:b.wsHaus, mcHaus:b.mcHaus, stich:HZ_HAUS[b.wsHaus-1].stich});
+  el('hzbsppl').textContent=hzFuell(HZ_T.bspPl,
+    {abstand:b.abstand, plHaus:b.plHaus, stich:HZ_HAUS[b.plHaus-1].stich});
+  el('hzbspfazit').textContent=HZ_T.bspFazit;
 }
 
 function hzQuiz(){
