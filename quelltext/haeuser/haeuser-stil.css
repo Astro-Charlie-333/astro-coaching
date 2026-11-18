@@ -19,6 +19,18 @@
 .hz-rad-box g[role=button]{cursor:pointer}
 .hz-rad-box g[role=button]:focus{outline:none}
 .hz-rad-box g[role=button]:focus-visible path{stroke:#9A7235;stroke-width:3}
+/* Farben und Schriften des Rads stehen hier und nicht in der Anzeige
+   (Aufgabe 57): haeuser-app.js setzt die Klassen, gestaltet wird hier. */
+.hz-feld path{fill:#FFFDFA;stroke:#EBE1D2;stroke-width:1.5}
+.hz-feld.voll path{fill:#F5ECDD}
+.hz-feld.an path{fill:#2E3A5C}
+.hz-feld circle{fill:#9A7235}
+.hz-feld.an circle{fill:#E8C98D}
+.hz-rad-nr{font-family:'Fraunces',Georgia,serif;font-size:17px;fill:#2E3A5C}
+.hz-feld.an .hz-rad-nr{fill:#FCF7EF}
+.hz-rad-nm{font-family:'DM Sans',system-ui,sans-serif;font-size:11.5px;fill:#6B6259}
+.hz-feld.an .hz-rad-nm{fill:#E8C98D}
+.hz-rad-mitte{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;fill:#6B6259}
 
 .hz-buehnen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
 .hz-buehne{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer}

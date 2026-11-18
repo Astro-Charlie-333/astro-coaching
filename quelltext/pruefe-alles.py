@@ -741,8 +741,10 @@ ANZEIGEN = {
     # ganz heruntergezogen, zeit am 2026-11-14 (Aufgabe 53), karte am
     # 2026-11-15 (Aufgabe 54), mond am 2026-11-16 (Aufgabe 55),
     # zahlen am 2026-11-17 (Aufgabe 56) — die größte der Anzeigen,
-    # 194 Sätze und 13 mal „dein".
-    'haeuser/haeuser-app.js':      (40, 0),
+    # 194 Sätze und 13 mal „dein". haeuser am 2026-11-18 (Aufgabe 57):
+    # die ersten vier ihrer vierzig Zeichenketten waren Schriftnamen
+    # und eine Farbe aus dem Rad — die gehören nicht in eine
+    # Datendatei, sondern in haeuser-stil.css.
     'rituale/zauber-app.js':       (97, 18),
     'geist/geist-app.js':          (174, 31),
     'dossier/dossier-app.js':      (97, 4),
@@ -765,7 +767,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'baukasten/bk-app.js',
           'bez/beziehung-app.js', 'zeit/zeit-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
-          'zahlen/zahlen-app.js'}
+          'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

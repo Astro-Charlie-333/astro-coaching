@@ -33,6 +33,9 @@ def lies(p):
     return p.read_text(encoding='utf-8')
 
 
+sys.path.insert(0, str(rit))
+import pruefwerk
+
 koerper = lies(hier / 'haeuser-koerper.html')
 app = lies(hier / 'haeuser-app.js')
 daten = lies(hier / 'haeuser-daten.js')
@@ -126,7 +129,14 @@ if(!nah(b.asc,C.ASC)) f.push('Beispiel: Aszendent '+b.asc+' stimmt nicht, gerech
 if(!nah(b.mc,C.MC)) f.push('Beispiel: MC '+b.mc+' stimmt nicht, gerechnet '+zg(C.MC));
 if(!nah(b.sonne,C.Sonne)) f.push('Beispiel: Sonne '+b.sonne+' stimmt nicht, gerechnet '+zg(C.Sonne));
 if(haus(C,C.Sonne)!==b.wsHaus) f.push('Beispiel: Whole-Sign-Haus der Sonne ist '+haus(C,C.Sonne));
-if(haus(C,C.MC)!==11) f.push('Beispiel: das MC liegt nicht im 11. Haus, wie der Text sagt');
+if(haus(C,C.MC)!==b.mcHaus) f.push('Beispiel: das MC liegt im '+haus(C,C.MC)+'. Haus, der Text sagt '+b.mcHaus);
+/* Die beiden Zeichennamen nennt der Text einzeln („Waage ist ab
+   Schütze …"). Sie müssen zu asc und sonne passen, sonst steht der
+   Satz neben anderen Werten — dieselbe Klasse wie Prüfung 5. */
+[['ascZ',b.asc],['sonneZ',b.sonne]].forEach(function(p){
+  if(!p[1].endsWith(' '+b[p[0]])) f.push('Beispiel: '+p[0]+' „'+b[p[0]]+'" passt nicht zu „'+p[1]+'"'); });
+if(HZ_T.ordnung.length!==12) f.push('HZ_T.ordnung zählt nicht bis zwölf');
+if(!HZ_T.ordnung[b.wsHaus-1]) f.push('Beispiel: für das '+b.wsHaus+'. Haus fehlt das Zählwort');
 const ab=(((C.Sonne-C.MC)%360)+360)%360, bis11=(((pl[0]-C.MC)%360)+360)%360;
 if(!(ab<bis11)||b.plHaus!==10) f.push('Beispiel: die Sonne liegt nach Placidus nicht im 10. Haus');
 if(Math.abs(ab*60-b.abstand)>6) f.push('Beispiel: Abstand Sonne–MC '+(ab*60).toFixed(0)+"' statt "+b.abstand+"'");
@@ -157,6 +167,103 @@ for name, t in [('haeuser-koerper.html', koerper), ('haeuser-daten.js', daten)]:
 for name, t in [('haeuser-app.js', app), ('haeuser-daten.js', daten), ('haeuser-koerper.html', koerper)]:
     if re.search(r'\b1987\b', t) or re.search(r'\b08:58\b', t) or re.search(r"9°0[0-9] Widder", t):
         fehler.append(f'{name}: sieht nach echten Geburtsdaten aus')
+
+# ── 5 · Eine Bühne wird nur an einer Stelle beschrieben ──────
+#     Gefunden am 2026-11-18 beim Erledigen von Aufgabe 57: Im
+#     Beispiel unter „Whole Sign oder Placidus" stand von Hand
+#     „11. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit" und
+#     „10. Haus: Beruf, Wirken, Sichtbarkeit". Zwölf Karten weiter
+#     oben heißen dieselben Bühnen „Freundschaft, Netzwerke,
+#     Zukunftspläne" und „Beruf, Ruf, Ziele". Wer beides liest, liest
+#     zwei Beschreibungen derselben Sache und hält eine für falsch.
+#
+#     Dieselbe Fehlerklasse wie REGELN.md 6f: Der Schlüssel ist die
+#     Hausnummer, der Text hängt daran, und eine Sperre gab es nicht.
+#     Geprüft wird die Form „N. Haus: …" (REGELN.md 6e), nicht eine
+#     Wortliste: Wo eine Nummer mit Doppelpunkt eine Beschreibung
+#     ankündigt, muss dort das Stichwort aus HZ_HAUS stehen. Eine
+#     Lücke ({stich}) geht durch — dort setzt die Anzeige die eine
+#     Beschreibung ein, und dass sie gefüllt wird, hält Prüfung 6.
+def _haus_von_hand(text, stiche):
+    """Jede Stelle „N. Haus: …", deren Beschreibung nicht die aus
+    HZ_HAUS ist."""
+    schlecht = []
+    for n, wort in re.findall(r'(\d{1,2})\. Haus:\s*([^.<]*)', text):
+        wort = wort.strip()
+        if not wort or wort.startswith('{'):
+            continue
+        i = int(n) - 1
+        if not (0 <= i < len(stiche)) or wort != stiche[i]:
+            schlecht.append(f'{n}. Haus: {wort}')
+    return schlecht
+
+
+_PROBE = ['Auftreten, Körper, Temperament', 'Geld, Besitz, Talente']
+assert _haus_von_hand('steht im 1. Haus: Auftreten, Körper, Temperament.',
+                      _PROBE) == []
+assert _haus_von_hand('steht im 2. Haus: Geld, Besitz, Talente', _PROBE) == []
+assert _haus_von_hand('steht im 2. Haus: Beruf, Wirken.', _PROBE) == \
+    ['2. Haus: Beruf, Wirken']
+assert _haus_von_hand('steht im 1. Haus: Geld, Besitz, Talente.', _PROBE) == \
+    ['1. Haus: Geld, Besitz, Talente']
+assert _haus_von_hand('im {wsHaus}. Haus: {stich}.', _PROBE) == []
+assert _haus_von_hand('Beginn des 1. Hauses', _PROBE) == []
+assert _haus_von_hand('im 9., 10. oder 11. Haus liegen', _PROBE) == []
+# Eine Nummer, die es gar nicht gibt, ist genauso von Hand geschrieben.
+assert _haus_von_hand('im 13. Haus: irgendwas.', _PROBE) == ['13. Haus: irgendwas']
+
+#     In einem Kommentar darf die Form vorkommen — dort steht, warum
+#     sie nicht im Text steht. Dieselbe Entscheidung wie
+#     pruefwerk.nur_code, und ohne sie beißt die Regel in die
+#     Begründung, die sie erklärt.
+def _ohne_kommentar(t):
+    return pruefwerk.nur_code(re.sub(r'<!--.*?-->', ' ', t, flags=re.S))
+
+
+assert _haus_von_hand(_ohne_kommentar('/* im 2. Haus: Beruf. */'), _PROBE) == []
+assert _haus_von_hand(_ohne_kommentar('<!-- im 2. Haus: Beruf. -->'), _PROBE) == []
+assert _haus_von_hand(_ohne_kommentar("t:'im 2. Haus: Beruf.'"), _PROBE) == \
+    ['2. Haus: Beruf']
+
+stiche = re.findall(r"stich:'([^']+)'", daten)
+if len(stiche) != 12:
+    fehler.append(f'{len(stiche)} statt zwölf Stichworte in haeuser-daten.js — '
+                  'ohne sie prüft die Regel darunter nichts')
+else:
+    for name, t in [('haeuser-koerper.html', koerper), ('haeuser-daten.js', daten),
+                    ('haeuser-app.js', app)]:
+        for stelle in _haus_von_hand(_ohne_kommentar(t), stiche):
+            fehler.append(f'{name}: „{stelle}" steht von Hand da — eine Bühne '
+                          'wird in HZ_HAUS beschrieben und nirgends sonst')
+
+# ── 6 · Die Anzeige schreibt keinen Satz und kein „dein" ─────
+#     Aufgabe 57, aus 34 und 38: Die Sätze dieser Seite stehen als
+#     Vorlagen in HZ_T in haeuser-daten.js, haeuser-app.js rechnet
+#     und setzt mit `hzFuell` ein. Was in der Anzeige steht, zieht
+#     beim Umzug in eine andere Umgebung nicht mit (PRODUKT.md
+#     Abschnitt 7) — deshalb eine Sperre und kein Vorsatz.
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'haeuser-app.js', 'haeuser-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'haeuser-app.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei Anführungsarten,
+#     sonst ist die Regel mit einem Anführungszeichen abstellbar.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Bei dir ist hier viel los' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'haeuser-app.js', 'haeuser-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Bühne' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'haeuser-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+#     Jede Lücke einer Vorlage wird auch gefüllt. Was dieser Regel
+#     fehlt, steht in Aufgabe 69; deshalb sieht die Rauchprobe unten
+#     zusätzlich am gezeichneten Ergebnis nach, dass keine
+#     geschweifte Klammer auf der Seite steht.
+fehler += pruefwerk.pruefe_vorlagenluecken(daten, app, 'haeuser-daten.js')
 
 # ── Rauchprobe ───────────────────────────────────────────────
 probe = r'''
@@ -194,6 +301,18 @@ if(a.bei) f.push('ohne Profil steht trotzdem „bei dir" da');
 if(!/Profile/.test(a.profil)) f.push('ohne Profil fehlt der Hinweis auf Profile');
 if(a.q!==2) f.push('das Quiz fehlt');
 if(!/erfunden/.test(a.bsp)) f.push('das Beispiel sagt nicht, dass es erfunden ist');
+/* Keine ungefüllte Lücke auf der gezeichneten Seite. pruefwerk
+   .pruefe_vorlagenluecken sieht die Vorlagen, diese Zeile das
+   Ergebnis (Aufgabe 69). */
+const roh=await p.evaluate(()=>document.body.innerText.match(/\{[a-zA-Z][a-zA-Z0-9]*\}/g)||[]);
+if(roh.length) f.push('ungefüllte Lücke auf der Seite: '+roh.slice(0,4).join(' '));
+/* Und das Beispiel beschreibt seine Bühnen mit den Worten aus
+   HZ_HAUS, nicht mit eigenen (Prüfung 5, am Ergebnis). */
+const bsp=await p.evaluate(()=>({ws:document.getElementById('hzbspws').textContent,
+  pl:document.getElementById('hzbsppl').textContent,
+  st:HZ_HAUS.map(h=>h.stich), b:HZ_BEISPIEL}));
+if(bsp.ws.indexOf(bsp.st[bsp.b.wsHaus-1])<0) f.push('das Beispiel beschreibt das '+bsp.b.wsHaus+'. Haus mit eigenen Worten');
+if(bsp.pl.indexOf(bsp.st[bsp.b.plHaus-1])<0) f.push('das Beispiel beschreibt das '+bsp.b.plHaus+'. Haus mit eigenen Worten');
 /* Die Richtung des Rads: 4 unten, 7 rechts, 10 oben, wie im Geburtsbild */
 const lage=await p.evaluate(()=>[...document.querySelectorAll('#hzrad g[role=button] text:first-of-type')].map(t=>({x:+t.getAttribute('x'),y:+t.getAttribute('y')})));
 if(!(lage[3].y>300&&lage[6].x>300&&lage[9].y<100&&lage[0].x<100)) f.push('das Rad läuft nicht wie ein Geburtsbild: 4 unten, 7 rechts, 10 oben');

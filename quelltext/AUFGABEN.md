@@ -50,7 +50,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
 `monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
 `zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15),
-`mond-app.js` (2026-11-16) und `zahlen-app.js` (2026-11-17);
+`mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17) und
+`haeuser-app.js` (2026-11-18);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -85,9 +86,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 57 · `haeuser-app.js` (41, 0)
-`haeuser-lebensbuehnen.html`.
 
 ### 58 · `zauber-app.js` (97, 18)
 `zauber.html`, die Rituale.
@@ -1046,7 +1044,64 @@ den Daten —, die Wortliste an derselben Stelle steht wie für die
 Hand auf Stufe 0 gestelltes Fachwort den Bau abbricht, gegen feste
 Beispiele gehalten wie `_datum_ohne_jahr` in `bau-heute.py`.
 
+### 84 · Die leere Bühne sagt nicht, was man damit macht
+
+Gefunden am 2026-11-18 beim Erledigen von Aufgabe 57. Auf
+`haeuser.html` steht bei jeder Bühne ohne Planeten „Bei dir eine
+leise Bühne." Das ist eine Feststellung und kein Handgriff: Die
+Besucherin weiß danach, dass dort nichts steht, und nicht, was sie
+damit anfangen soll — obwohl der Körper der Seite die Antwort schon
+kennt („Ist es leer, schau, wo sein Herrscher steht", Abschnitt
+„Für Readings", erst ab Stufe 2 sichtbar). Sieben bis neun der
+zwölf Bühnen sind bei den meisten Menschen leer, das ist also der
+häufigste Satz der Seite und der einzige ohne Folge.
+
+Dieselbe Prüffrage wie in `PRODUKT.md` Abschnitt 6: Könnte ein Mensch
+nach dieser Karte besser sagen, was er tun kann? Heute nein.
+
+**Fertig, wenn:** jede leere Bühne auf Stufe 0 einen Satz trägt, der
+auf eine Handlung hinausläuft statt auf einen Zustand,
+`pruefwerk.pruefe_handgriffe` ihn hält, und ein Satz ohne Folge den
+Bau von `haeuser.html` abbricht — gegen feste Beispiele gehalten
+(REGELN.md 6e).
+
 ## Erledigt
+
+* **2026-11-18** · `haeuser-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 57, aus 34 und 38) — die dreizehnte von zweiundzwanzig
+  Anzeigen. Ihre vierzig Zeichenketten stehen jetzt als Vorlagen in
+  `HZ_T` in `haeuser-daten.js`; die Anzeige rechnet und setzt mit
+  `hzFuell` ein. Von Hand geschriebenes „dein" gab es hier keins.
+
+  Zwei Stellen waren mehr als Umzug:
+
+  * **Vier der vierzig waren gar kein Text**, sondern zwei
+    Schriftnamen, eine Farbe und das Gerüst des Beispielkastens. Eine
+    Datendatei kennt keine Stilvorlage, also sind Farben und Schriften
+    des Rads nach `haeuser-stil.css` gewandert (die Anzeige setzt nur
+    noch die Klassen `hz-feld`, `voll`, `an`) und das Gerüst in den
+    Körper. Das Rad sieht aus wie vorher.
+  * **Dieselbe Bühne stand zweimal verschieden auf der Seite.** Im
+    Beispiel unter „Whole Sign oder Placidus" beschrieb die Anzeige
+    das elfte Haus von Hand als „Gemeinschaft, Netzwerke,
+    Zugehörigkeit" und das zehnte als „Beruf, Wirken, Sichtbarkeit".
+    Zwölf Karten weiter oben heißen dieselben Bühnen
+    „Freundschaft, Netzwerke, Zukunftspläne" und „Beruf, Ruf,
+    Ziele". Wer beides liest, hält eins davon für falsch. Die
+    Beschreibung kommt jetzt aus `HZ_HAUS`, auch die Zeichennamen und
+    das Zählwort im Satz „Waage ist ab Schütze das elfte Zeichen"
+    stehen als Daten daneben und werden gegen die Rechnung gehalten.
+
+  **Neu dauerhaft geprüft** (`bau-haeuser.py`, Prüfung 5): Die Form
+  „N. Haus: …" in Körper, Daten oder Anzeige muss das Stichwort aus
+  `HZ_HAUS` tragen — eine zweite, von Hand geschriebene Beschreibung
+  derselben Bühne lässt den Bau scheitern. Eine Lücke (`{stich}`) geht
+  durch, ein Kommentar auch; acht feste Beispiele stehen darunter
+  (REGELN.md 6e). Dazu die beiden Riegel aus `pruefwerk` samt
+  Gegenprobe in allen drei Anführungsarten und
+  `pruefe_vorlagenluecken`; die Rauchprobe sieht zusätzlich am
+  gezeichneten Ergebnis nach, dass keine geschweifte Klammer
+  dasteht und das Beispiel die Worte aus `HZ_HAUS` benutzt.
 
 * **2026-11-17** · `zahlen-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 56, aus 34 und 38) — die zwölfte von zweiundzwanzig
