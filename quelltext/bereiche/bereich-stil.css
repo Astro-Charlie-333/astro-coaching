@@ -242,3 +242,61 @@
 .b-grenze{margin:14px 0 0;font-size:14px!important;line-height:1.65;
  color:var(--leise);max-width:640px;}
 .b-grenzevor{font-weight:400;color:var(--nacht);}
+
+/* ═══ 18.11.: Kacheln, Kurzfassung, Zeitleiste — Midcentury ═══ */
+.b-kacheln{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;border:0!important;background:none!important;padding:0!important;}
+@media(max-width:900px){.b-kacheln{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.b-kacheln .b-u{display:flex!important;flex-direction:column;align-items:flex-start;gap:6px;min-height:118px;
+  background:#fff;border:0!important;border-radius:22px;padding:14px!important;text-decoration:none;color:#1B1B1B;}
+.b-kacheln .b-u:hover{transform:translateY(-2px);}
+.b-kacheln .b-ubalk{display:none;}
+.b-kacheln .b-un{font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.15;}
+.b-kacheln .b-ul{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.b-kacheln .b-unext{margin-top:auto;font-size:12.5px;color:#5E584D;}
+.b-kacheln .b-u[data-laut="3"]{background:#F05A28;color:#fff;} .b-kacheln .b-u[data-laut="3"] .b-ul,.b-kacheln .b-u[data-laut="3"] .b-unext{color:#fff!important;}
+.b-kacheln .b-u[data-laut="2"]{background:#1F4FD8;color:#fff;} .b-kacheln .b-u[data-laut="2"] .b-ul,.b-kacheln .b-u[data-laut="2"] .b-unext{color:#DCE6FB!important;}
+.b-kacheln .b-u[data-laut="1"]{background:#DCE6FB;}
+.b-kacheln .b-u[aria-current="true"],.b-kacheln .b-u.ist{outline:3px solid #1B1B1B;outline-offset:2px;}
+.bk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 6px;}
+@media(max-width:760px){.bk{grid-template-columns:1fr;}}
+.bk-blk{background:#F6F1E7;border-radius:22px;padding:16px 18px;}
+.bk-blk h4{margin:0 0 8px;font-family:var(--serif);font-size:12px!important;letter-spacing:.14em;text-transform:uppercase;font-weight:600!important;color:#5E584D;}
+.bk-blk p{margin:0 0 8px;font-size:15px;line-height:1.55;}
+.bk-gross{font-family:var(--serif);font-size:19px!important;line-height:1.3!important;font-weight:500;}
+.bk-gross b{font-weight:600;}
+.bk-bild{background:#1F4FD8;color:#fff;} .bk-bild h4{color:#DCE6FB;}
+.bk-kommt{grid-column:1/-1;background:#fff;box-shadow:inset 0 0 0 2px #1B1B1B;}
+.bk-schritt{background:#1B1B1B;color:#fff;} .bk-schritt h4{color:#F2B33D;}
+.bk-schritt b{color:#F2B33D;}
+.bk-um{color:#D9D3C7;font-size:14px!important;}
+.bk-zeit{font-size:13.5px!important;color:#5E584D;}
+.bk-art{display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.04em;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:middle;background:#E6DECF;color:#1B1B1B;}
+.bk-leicht .bk-art,.bk-art.bk-leicht{background:#DCE6FB;color:#1F4FD8;}
+.bk-spannung .bk-art,.bk-art.bk-spannung,.bk-gegenueber .bk-art,.bk-art.bk-gegenueber{background:#FCE4D6;color:#C8441A;}
+.bk-zusammen .bk-art,.bk-art.bk-zusammen{background:#1B1B1B;color:#fff;}
+.bk-mond .bk-art{background:#FCEFD2;color:#8A5A00;}
+.bk-leiste{list-style:none;margin:0;padding:0;position:relative;}
+.bk-leiste::before{content:"";position:absolute;left:86px;top:6px;bottom:6px;width:2px;background:#E6DECF;}
+.bk-e{position:relative;display:grid;grid-template-columns:76px minmax(0,1fr);gap:22px;padding:8px 0;}
+.bk-e::before{content:"";position:absolute;left:81px;top:13px;width:12px;height:12px;border-radius:50%;background:#1B1B1B;box-shadow:0 0 0 3px #fff;}
+.bk-leicht::before{background:#1F4FD8;} .bk-spannung::before,.bk-gegenueber::before{background:#F05A28;}
+.bk-mond::before{background:#F2B33D;} .bk-durchgang::before{background:#11897C;}
+.bk-dat{font-family:var(--serif);font-weight:600;font-size:15px;text-align:right;line-height:1.3;}
+.bk-txt b{font-family:var(--serif);font-weight:600;font-size:16px;}
+.bk-satz{display:block;font-size:14px;color:#5E584D;margin-top:2px;}
+.bk-txt .ac-tech{display:block;font-size:11.5px;margin-top:2px;}
+.bk-mon{font-family:var(--serif);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#C8441A;padding:12px 0 2px 108px;}
+.bk-praxis{margin:12px 2px 0;font-size:14px;color:#5E584D;}
+.bk-praxis a{color:#1B1B1B;font-weight:600;}
+@media(max-width:560px){.bk-leiste::before{left:62px;} .bk-e{grid-template-columns:54px minmax(0,1fr);gap:20px;}
+ .bk-e::before{left:57px;} .bk-dat{font-size:13.5px;} .bk-mon{padding-left:82px;}}
+body[data-modus="kurz"] #tiefgang{display:none;}
+.bk-schritt{grid-column:1/-1;}
+body[data-modus="kurz"] #breiter{display:none;}
+@media(max-width:560px){
+ .bk-leiste::before{left:5px;}
+ .bk-e{grid-template-columns:1fr;gap:2px;padding:8px 0 8px 22px;}
+ .bk-e::before{left:0;top:12px;}
+ .bk-dat{text-align:left;font-size:13px;color:#5E584D;}
+ .bk-mon{padding-left:22px;}
+}

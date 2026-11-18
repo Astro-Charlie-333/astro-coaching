@@ -32,9 +32,11 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'bereich-stil.css')
         + "\n" + lies(hier / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
-          '<script src="wortwahl.js" defer></script>\n</head><body>\n'
+          '<script src="wortwahl.js" defer></script>\n</head><body data-modus="kurz">\n'
         + lies(hier / 'bereich-koerper.html') + "\n<script>\n"
         + lies(rit / 'engine.js') + "\n"
+        # Neu- und Vollmonde für die Vorschau (18.11.)
+        + lies(hier.parent / 'mond' / 'mond-termine.js') + "\n"
         + lies(zeit / 'zeit-rechner.js') + "\n"
         # Die Liste der Bereiche vor allem anderen: der Rechner holt
         # sie dort, und die Auswahl-Leiste auch.
@@ -54,6 +56,23 @@ ziel = wiki / 'bereiche.html'
 # stehen in app/app-kopf.html — an einer Stelle für alle Seiten.
 html = html.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html').read_text(encoding='utf-8'), 1)
 ziel.write_text(html, encoding='utf-8')
+
+# ── Die ausführliche Fassung für die Praxis (18.11.) ───────────
+# Mandy: „die extended Version in meinem Arbeitsbereich und ein
+# Sneak Peek im öffentlichen Bereich." Dieselbe Rechnung, derselbe
+# Code; die Praxisfassung zeigt den ganzen Block und die Zeitleiste
+# Monat für Monat, die öffentliche nur die Kurzfassung.
+_sk = (hier.parent / 'werkstatt' / 'werkstatt-koerper.html').read_text(encoding='utf-8')
+_sk = re.search(r'<div class="sk-leiste">.*?</nav>.*?</div>\s*</div>', _sk, re.S).group(0)
+_sk = re.sub(r' class="ist"', '', _sk)
+voll = html.replace('<body data-modus="kurz">', '<body data-modus="voll">', 1)
+voll = voll.replace('</style><script src="niveau.js"',
+                    lies(wiki / 'schwerkraft.css') + '\n</style><script src="niveau.js"', 1)
+voll = re.sub(r'<div class="ac-leiste">.*?</div></div>', lambda m: _sk, voll, count=1, flags=re.S)
+voll = voll.replace('<title>Was bei dir gerade los ist &middot; Astro-Charlie</title>',
+                    '<title>Lebensbereiche ausf&uuml;hrlich &middot; Praxis</title>', 1)
+ziel_voll = wiki / 'praxis-bereiche.html'
+ziel_voll.write_text(voll, encoding='utf-8')
 
 fehler, hinweise = [], []
 koerper = lies(hier / 'bereich-koerper.html')
@@ -1819,7 +1838,7 @@ for(const w of BREITEN){
 try{ await b.close(); }catch(e){}
 console.log(JSON.stringify({fehler:f, notiz}, null, 1));
 })();
-""".replace('ZIEL', str(ziel)), encoding='utf-8')
+""".replace('ZIEL', str(ziel_voll)), encoding='utf-8')
 
 r = subprocess.run(['node', str(probe)], capture_output=True, text=True, cwd='/tmp')
 if r.returncode != 0:
@@ -2237,6 +2256,62 @@ else:
 probe.unlink(missing_ok=True)
 
 # ── Bericht ────────────────────────────────────────────────────
+
+# ── 8 · Die öffentliche Kurzfassung (18.11.) ───────────────────
+# Die große Rauchprobe läuft auf der Praxisfassung. Die öffentliche
+# Seite bekommt ihre eigene: jeder Bereich hat die vier Kästen, die
+# Zeitleiste ist da, kein Fachwort auf Stufe 0, keine Mechanik
+# sichtbar, kein Tiefgang, und die Grenze steht, wo sie stehen muss.
+kprobe = hier / '_probe-kurz.js'
+kprobe.write_text(r"""
+const {chromium}=(function(){const orte=[process.env.AC_PLAYWRIGHT,'playwright','/opt/npm-tools/node_modules/playwright'];for(const o of orte){if(!o)continue;try{return require(o);}catch(e){}}throw new Error('Playwright fehlt');})();
+const JARGON=['Konjunktion','Opposition','Quadrat','Trigon','Sextil','Orbis','Transit','Aszendent',
+  'rückläufig','Radix','Pluto','Neptun','Uranus','Saturn','Jupiter','Merkur','Haus'];
+(async()=>{
+const b=await chromium.launch(), p=await b.newPage({viewport:{width:390,height:900}}), f=[];
+p.on('pageerror',e=>f.push('JS: '+e.message));
+await p.addInitScript(()=>{ localStorage.setItem('ac_niveau','0');
+  localStorage.setItem('ac_profile_v1',JSON.stringify({v:1,eigen:'p1',aktiv:'p1',zeigeNamen:true,
+  liste:[{id:'p1',name:'Probe',y:1983,mo:6,d:11,h:17,mi:20,tz:2,lat:52.52,lon:13.405,ort:'Berlin',
+  wlat:52.52,wlon:13.405,wort:'Berlin',eigen:true,readings:[]}]})); });
+await p.goto('file://KURZ'); await p.waitForTimeout(900);
+const ks=await p.evaluate(()=>[...document.querySelectorAll('#bueber .b-u')].map(a=>a.getAttribute('data-k')));
+if(ks.length!==10) f.push('Kacheln: '+ks.length+' statt 10');
+for(const k of ks){
+  await p.evaluate(k=>{ location.hash='ber-'+k; window.dispatchEvent(new HashChangeEvent('hashchange')); },k);
+  await p.evaluate(k=>{ const a=document.querySelector('#bueber .b-u[data-k="'+k+'"]'); if(a) a.click(); },k);
+  await p.waitForTimeout(250);
+  const r=await p.evaluate(J=>{ const s=document.querySelector('.b-kurz'); if(!s) return null;
+    const t=document.body.innerText;
+    return {k:s.id, bl:s.querySelectorAll('.bk-blk').length, leiste:!!s.querySelector('.bk-leiste,.bk-kommt p'),
+      jargon:J.filter(w=>new RegExp('(?<![A-Za-zÄÖÜäöüß])'+w+'(?![A-Za-zÄÖÜäöüß])').test(t)),
+      tech:[...document.querySelectorAll('.ac-tech')].filter(e=>e.offsetParent!==null).length,
+      grenze:s.querySelectorAll('.b-grenze').length, voll:document.querySelectorAll('.b-blk').length,
+      tief:(document.getElementById('tiefgang')||{}).offsetParent!==null}; }, JARGON);
+  if(!r){ f.push(k+': keine Kurzfassung'); continue; }
+  if(r.k!=='ber-'+k) f.push(k+': gezeigt wird '+r.k);
+  if(r.bl!==4) f.push(k+': '+r.bl+' Kästen statt 4');
+  if(!r.leiste) f.push(k+': keine Zeitleiste');
+  if(r.jargon.length) f.push(k+': Fachwort auf Stufe 0: '+r.jargon.join(', '));
+  if(r.tech) f.push(k+': Mechanik sichtbar auf Stufe 0');
+  if(r.voll) f.push(k+': der ausführliche Block steht öffentlich');
+  if(r.tief) f.push(k+': der Tiefgang steht öffentlich');
+  if(['gesundheit','umbruch'].includes(k) && r.grenze!==1) f.push(k+': '+r.grenze+' Grenzsätze statt einem');
+}
+const w=await p.evaluate(()=>document.body.scrollWidth); if(w>392) f.push('zu breit: '+w);
+await b.close(); console.log(JSON.stringify(f));
+})().catch(e=>{ console.log(JSON.stringify(['Probe abgebrochen: '+e.message])); });
+""".replace('KURZ', str(ziel)), encoding='utf-8')
+_kr = subprocess.run(['node', str(kprobe)], capture_output=True, text=True, cwd='/tmp')
+try:
+    for x in json.loads((_kr.stdout.strip().splitlines() or ['[]'])[-1]):
+        fehler.append('Kurzfassung: ' + x)
+except Exception:
+    fehler.append('Kurzfassung: Probe lieferte nichts: ' + _kr.stderr[-300:])
+kprobe.unlink()
+if fehler:
+    print('\n'.join('  ✗ ' + x for x in fehler)); sys.exit(1)
+
 print(f'bereiche.html  {ziel.stat().st_size:,} Bytes  →  {ziel}')
 for h in hinweise:
     print('  · ' + h)
