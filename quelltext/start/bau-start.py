@@ -57,7 +57,11 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
 """
 
-html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'start-stil.css')
+# Seit dem 18.11. trägt die Tür denselben Look wie die Praxis: Stein,
+# Moos, Kupfer. Schwerkraft ist eine Marke; Astro-Charlie ist das
+# Werkzeug, das sie benutzt (Mandy am 17.11.).
+html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier.parent / 'wiki' / 'schwerkraft.css')
+        + "\n" + lies(hier / 'start-stil.css')
         + '</style>\n</head><body>\n'
         + koerper + "\n<script>\n" + daten + "\n" + app
         + "\n</script>\n</body></html>\n")

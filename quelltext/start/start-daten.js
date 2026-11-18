@@ -179,8 +179,8 @@ var S_TUER = {
     + 'selbst gebaut, und es erklärt jeden Begriff, den es benutzt.',
   wege: [['uebersicht.html', 'Dein Bild ansehen',
           'Was bei dir angelegt ist, Feld für Feld'],
-         ['index.html', 'Was gerade läuft',
-          'Die Tage, an denen dein Bild diesen Monat getroffen wird'],
+         ['index.html', 'Was gerade los ist',
+          'Deine Woche, und was dein Bild gerade trifft'],
          ['wissen.html', 'Nachlesen',
           'Die Begriffe, ohne Vorwissen erklärt']]
 };
