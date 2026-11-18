@@ -70,9 +70,9 @@
 .pl-chip.pl-chip-bei{background:#C8441A;color:#FFFFFF}
 .pl-el{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px}
 .pl-el.feuer,.pl-z.feuer .gl{background:#FBE3DA;color:#D9481C}
-.pl-el.erde,.pl-z.erde .gl{background:#E8EDDC;color:#11897C}
-.pl-el.luft,.pl-z.luft .gl{background:#DEEBF1;color:#1B1B1B}
-.pl-el.wasser,.pl-z.wasser .gl{background:#E6E1F0;color:#1F4FD8}
+.pl-el.erde,.pl-z.erde .gl{background:#FCEFD2;color:#11897C}
+.pl-el.luft,.pl-z.luft .gl{background:#DCE6FB;color:#1B1B1B}
+.pl-el.wasser,.pl-z.wasser .gl{background:#D7EFEB;color:#1F4FD8}
 .pl-z .gl{border-radius:8px;width:30px;height:30px;display:grid;place-items:center}
 
 /* Zyklen */

@@ -42,7 +42,7 @@
 .bz-kt .kt-m{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
  text-transform:uppercase;border-radius:8px;padding:3px 8px;}
 .bz-kt.hart .kt-m{background:#FBE3DA;color:var(--rost);}
-.bz-kt.weich .kt-m{background:#E8EDDC;color:var(--teal);}
+.bz-kt.weich .kt-m{background:#FCEFD2;color:var(--teal);}
 .bz-kt p{font-size:15px;line-height:1.7;margin:0;}
 .bz-liste{margin:0 0 10px 18px;padding:0;font-size:15.2px;line-height:1.72;}
 .bz-liste li{margin-bottom:5px;}
