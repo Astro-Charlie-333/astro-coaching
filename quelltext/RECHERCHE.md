@@ -621,3 +621,209 @@ sondern die Zusammenfassungen und die Kapitelfassung bei KOPS. Die Zahl
 d = 0,36 steht gegen d = 0,15 in derselben Arbeit, je nach
 Auswertungsverfahren; wer sich darauf stützt, sollte wissen, dass die
 Spanne so breit ist.
+
+### 2026-11-18 · Spur B · Jemand rechnet jetzt auch Häufigkeiten — und sagt genauer, woraus
+
+**Gesehen:** Die Zahl „von 100 Menschen" führt `ich-daten.js` selbst als
+„das belegte Pfund dieser Seite". Bis jetzt stand sie im Markt allein da.
+Seit diesem Sommer nicht mehr: Unter dem Titel „How Rare Are Planetary
+Aspects? 150-Year Study" steht eine durchgerechnete Häufigkeitstabelle im
+Netz, laut Zeitstempel der Seite zuletzt am 27.08.2026 geändert
+(`zodiacroots.com/how-rare-are-planetary-aspects-150-year-study/`).
+Gerechnet wurde vom 1.1.1900 bis zum 31.12.2050 — 151 Jahre, die
+Überschrift sagt 150 —, 55.152 Tagesschnappschüsse jeweils 12:00 UTC,
+zwölf Körper, also 66 Paare, vierzehn Winkelarten, Orbis 0: gezählt wird
+nur der exakte Durchgang zwischen zwei aufeinanderfolgenden Tagen.
+Ergebnis: 688.746 exakte Durchgänge, Mond–Nordknoten mit 52.695 das
+häufigste Paar, Neptun–Pluto mit 98 das seltenste und im ganzen Fenster
+ohne einen einzigen exakten Hauptwinkel; 55 Paar-Winkel-Kombinationen
+kommen zehnmal oder seltener vor.
+
+Zweierlei daran ist wichtiger als die Zahlen. Erstens: Das sind
+Himmelsschnappschüsse, keine Geburtsbilder von Menschen. Die Tabelle
+beantwortet, wie selten eine Stellung **am Himmel** ist, nicht, wie viele
+Menschen sie haben — und das ist nicht dasselbe, weil ein Mensch den
+Himmel eines Augenblicks mitbringt und nicht den eines Mittags. Zweitens
+ist die Arbeit nicht nachrechenbar: kein Verfasser, kein Code, keine
+Daten, keine Fassung der benutzten Ephemeride, die vierzehn Winkelarten
+nicht vollständig aufgezählt, die Regel für das Interpolieren zwischen
+zwei Tagespunkten nicht genannt. Die Seite gehört zu einem Anbieter, der
+daneben einen kostenpflichtigen Bericht verkauft — das ist kein
+unabhängiger Befund, sondern eine Veröffentlichung einer Mitbewerberin,
+dieselbe Einschränkung wie bei drei Quellen der Funde vom 21.10. und
+11.11. In allen drei Suchen dieser Woche stand die Mehrzahl der Treffer
+zu „den besten Astrologie-Apps" auf Netzpräsenzen, die selbst eine
+Anwendung anbieten; bei einer Suche acht von neun. Die Besprechungsschicht
+dieses Marktes ist überwiegend Werbung, und das ist beim Beantworten der
+zweiten Prüffrage aus `PRODUKT.md` Abschnitt 6 jedes Mal einzeln zu
+bedenken.
+
+Gegen diesen Hintergrund unsere Seite. Was die Leserin sieht:
+
+* `uebersicht.html`: „… abgezählt an 10.000 erfundenen Geburtsbildern,
+  nicht geschätzt."
+* `beziehung.html`: „Jeder Balken zeigt, wie stark eine Ebene bei euch
+  anklingt, verglichen mit 20.000 zufällig gerechneten Paaren."
+
+Was im Quelltext steht und nicht auf der Seite — nachgelesen im Repo,
+Stand dieses Commits:
+
+* `quelltext/kern/_taste-haeufig.js`: 10.000 Bilder, Jahrgänge 1930 bis
+  2010, Tag 1 bis 28 jedes Monats, acht feste Orte, alle im
+  deutschsprachigen Raum, fester Startwert.
+* `quelltext/bez/_verteilung-bez.js`: 20.000 Paare, A geboren 1950 bis
+  2005, B höchstens acht Jahre älter oder jünger, Breite 45 bis 55 Grad,
+  Länge 5 bis 20 Grad, beide mit Geburtszeit, fester Startwert. Der
+  Kommentar sagt, warum der Altersabstand begrenzt ist: „mit beliebigem
+  Abstand wären die langsamen Planeten verzerrt."
+
+**Heißt für uns:** Der vierte Vorsprung aus `PRODUKT.md` Abschnitt 3 hält
+und ist in dem Punkt, auf den es ankommt, stärker als die
+Veröffentlichung der Mitbewerberin: Unsere Tabellen haben einen festen
+Startwert, zwei Bauläufe ergeben dieselbe Zahl, und beide Abtaster liegen
+im Repo. Deren Tabelle kann niemand nachrechnen. Daran ist nichts zu
+ändern.
+
+Ein Satz muss trotzdem nachgezogen werden. In `ich-app.js` steht als
+Kommentar, die Seltenheit sei „das Einzige, was diese Plattform hat und
+sonst niemand". Das stimmt so nicht mehr: Veröffentlicht wird sie
+inzwischen auch anderswo. Was uns bleibt, ist der engere und bessere
+Anspruch — nachrechenbar, und über Menschen statt über den Himmel.
+
+Zu ändern ist ein Wort. „20.000 zufällig gerechnete Paare" verspricht
+etwas, das die Stichprobe nicht einlöst. Die Vergleichsgruppe ist mit
+Absicht geformt, und sie ist genau entlang der Größe geformt, über die
+die Zahl Auskunft gibt: Wer den Altersabstand auf acht Jahre begrenzt,
+bestimmt damit, wie selten ein Kontakt zwischen zwei langsamen Planeten
+aussieht. Ein Paar mit zwanzig Jahren Abstand wird mit Paaren verglichen,
+die es nicht geben kann. Dasselbe, schwächer, auf der Ich-Seite: Die
+letzten bis zu drei Tage jedes Monats kommen in den 10.000 Bildern nicht
+vor, und die Jahrgänge enden 2010. Das ist keine falsche Zahl — sie ist
+richtig für die Gruppe, an der sie gemessen wurde. Nur steht diese Gruppe
+nirgends, wo sie jemand liest, und damit steht da eine Zahl ohne ihre
+Grundlage. `REGELN.md` Abschnitt 7 meint diesen Fall.
+
+**Vorschlag:** Der Satz, der die Zahl trägt, nennt die Vergleichsgruppe,
+und die Angabe entsteht aus denselben Werten, mit denen abgetastet wird.
+Siehe Aufgabe 85.
+
+**Dagegen spricht:** Erstens Länge, und zwar an der teuersten Stelle.
+`PRODUKT.md` Abschnitt 2 Punkt 3 sagt, dass die Karten abfotografiert und
+weitergeschickt werden und allein stehen müssen. Ein Halbsatz über
+Jahrgänge, Altersabstand und Mitteleuropa ist genau das, worüber
+hinweggelesen wird — derselbe Einwand wie gegen die Quellenangabe im Fund
+vom 11.11., und er wiegt hier schwerer, weil es die Zeile neben dem
+Balken trifft und nicht einen Ehrlichkeitsabschnitt.
+
+Zweitens hat niemand das Missverständnis gemeldet. Dass eine Leserin
+„zufällig" als „alle Menschen" liest, ist mein Schluss, keine Beobachtung.
+Ich habe keine Nutzerin gefragt, und es ist denkbar, dass die Zahl ohnehin
+als Größenordnung gelesen wird und die Vergleichsgruppe niemanden
+interessiert.
+
+Drittens trägt der Marktteil dieses Fundes den Schluss nur zur Hälfte.
+Die Mitbewerberin zählt Himmel, nicht Menschen; an ihr gemessen sind wir
+voraus, und die Korrektur kommt aus unseren eigenen Dateien. Ein Fund, bei
+dem der Markt nur der Anlass ist, ist ein schwächerer Fund, und das sollte
+beim Abwägen gegen die offenen Aufgaben zählen.
+
+Viertens: Die Aufgabe fasst zwei Sätze an und erzeugt keine Seite. Auf der
+Liste stehen über zwanzig Einträge, von denen jeder einzelne etwas
+betrifft, das eine Besucherin sieht.
+
+Und fünftens wird der Satz, wenn man ihn ehrlich macht, nicht nur länger,
+sondern auch angreifbarer: Wer schreibt, verglichen werde mit Paaren aus
+Mitteleuropa mit höchstens acht Jahren Abstand, lädt die Frage ein, warum
+dann überhaupt verglichen wird. Diese Frage ist berechtigt, und sie hat
+keine kurze Antwort.
+
+### 2026-11-18 · Spur B · Außerhalb der Astrologie steht die Regel für das Urteil über einen Zweiten geschrieben
+
+**Gesehen:** `RECHERCHE.md` zählt zu Spur B ausdrücklich die
+Coaching-Werkzeuge außerhalb der Astrologie. Das bekannteste davon ist
+ein Fragebogen zur Selbsteinschätzung, und seine Herausgeberin hat
+aufgeschrieben, was beim Weitergeben eines Ergebnisses gilt. Zwei Seiten,
+beide ohne Datum außer einem Rechtevermerk von 2026; die Grundsätze
+berufen sich auf einen Leitfaden des Zertifizierungsprogramms von 2011,
+die Regeln sind also mindestens fünfzehn Jahre alt
+(`myersbriggs.org/using-type-as-a-professional/mbti-code-of-ethics/`,
+`themyersbriggs.com/en-us/support/ethical-principles-for-mbti-practitioners`).
+Dem Sinn nach, nicht im Wortlaut, stehen dort vier Dinge:
+
+* Das Ergebnis geht an die Person selbst. An Dritte nur mit ihrer
+  ausdrücklichen Erlaubnis; ob sie es zeigt, entscheidet sie.
+* Es wird nicht benutzt, um jemanden zu etikettieren, zu bewerten oder
+  einzuschränken, und die Teilnahme ist immer freiwillig.
+* Die Person ist die letzte Instanz darüber, was auf sie zutrifft. Wer
+  deutet, beharrt nicht, wenn sie widerspricht, sondern geht dem
+  Unterschied nach.
+* Das Ergebnis sagt nichts über Fähigkeit, Verstand, Erfolgsaussicht,
+  Gefühle oder Normalität, und es wird als Neigung beschrieben, nicht als
+  Festlegung.
+
+Beim Berufsverband der Coachinnen steht das nicht. Der im Oktober 2024
+beschlossene Ethikkodex verlangt zutreffende Angaben über das eigene
+Angebot (5.2), Arbeiten in den Grenzen der eigenen Kompetenz (5.1), das
+Offenlegen anderer Rollen (3.7) und das Ansprechen einer Weitervermittlung,
+wenn die Begleitung nichts mehr bringt (4.3). Einen Standard, der
+verlangt, die Grenzen eines eingesetzten Werkzeugs offenzulegen, habe ich
+darin nicht gefunden
+(`coachingfederation.org/wp-content/uploads/2024/11/ethics-code-of-ethics-2024.11.04.pdf`).
+Die geschriebene Regel sitzt also bei der Herausgeberin des Werkzeugs,
+nicht beim Verband — und die Herausgeberin dieses Werkzeugs sind wir.
+
+Bei uns: `beziehung.html` kündigt oben an „wie du diesen Menschen
+erreichst, wie ihr redet, was bei Streit hilft", wählt das zweite Profil
+in `#bzsteuer` und gibt den Text über `#bzkopie` und `#bzdruck` aus dem
+Haus. Die Wörter „Einverständnis" und „gefragt" kommen auf der Seite
+genau zweimal vor, beide Male innerhalb von Deutungssätzen, keines davon
+über den zweiten Menschen (nachgezählt im Repo, Stand dieses Commits).
+`PRODUKT.md` Abschnitt 5 schließt „Aussagen über eine dritte Person, die
+nicht gefragt wurde" aus.
+
+**Heißt für uns:** Von den vier Regeln ist eine bei uns unterwegs:
+Aufgabe 76 verlangt den fünften Punkt, dass der andere Mensch zu sich
+selbst das letzte Wort hat. Der vierte Punkt — Neigung statt Festlegung —
+ist der Sache nach das, was `REGELN.md` Abschnitt 4 mit „keine laute
+Phase ist ein Versprechen" meint. Die beiden übrigen stehen nirgends: dass
+die Deutung dem gehört, über den sie geht, und dass niemand ungefragt
+hineingerät. Sie gehören auch nicht in den Ehrlichkeitsabschnitt — der
+steht am Ende und spricht die Leserin an. Sie gehören an die Stelle, an
+der der zweite Mensch in die Seite kommt. Diese Stelle hat heute niemand.
+
+**Vorschlag:** Ein Satz dort, wo das zweite Profil gewählt wird. Siehe
+Aufgabe 86. Die Textausgabe bleibt bei Aufgabe 76; sie hier mitzumachen
+hieße, dieselbe Zeile zweimal anzufassen.
+
+**Dagegen spricht:** Erstens hinkt der Vergleich, und zwar an der Stelle,
+auf die es ankommt. Dort füllt die Person selbst einen Fragebogen aus; es
+gibt eine Befragte, und deshalb kann es eine Regel geben, wem ihr Ergebnis
+gehört. Hier füllt niemand etwas aus — jemand tippt ein Geburtsdatum ein.
+Ob eine Regel, die für eine Befragung gemacht wurde, auf eine Rechnung aus
+einem Datum übergeht, sagt keine meiner Quellen. Die Übertragung ist meine.
+
+Zweitens ist ein Einverständnis, das niemand prüfen kann, Theater. Die
+Seite kann nicht wissen, ob der andere Mensch zugestimmt hat. Ein Haken
+zum Anklicken wäre eine Behauptung in der Form einer Sicherung — genau
+das, was `PRODUKT.md` Abschnitt 4 für das Freischalten ausschließt: kein
+Schalter, der etwas nur vortäuscht.
+
+Drittens steht der Satz im Weg. Die Seite wird aus einem Grund geöffnet,
+und `PRODUKT.md` Abschnitt 6 misst sie daran. Aufgabe 75 räumt gerade bei
+`profile.html` drei Einstellungen weg, die vor dem Gegenstand stehen; hier
+würde im selben Zug eine Zeile davor gesetzt.
+
+Viertens könnte die Ebene falsch sein. Eingetippt werden fremde
+Geburtsdaten auf `profile.html`, nicht auf `beziehung.html`. Dort stünde
+der Satz an der Quelle statt an der letzten Station — nur ist
+`profile.html` Handarbeit ohne `bau-*.py`, die Prüfung müsste also nach
+`pruefe-alles.py`, und Aufgabe 75 arbeitet schon an derselben Seite. Wer
+beides zusammenlegen will, legt es zusammen; dann ist es eine andere
+Aufgabe.
+
+Und fünftens trifft es ausgerechnet die Coachin. Sie arbeitet mit Paaren
+und legt den Partner einer Klientin selbstverständlich an. Ein Satz, der
+mitschwingen lässt, dass daran etwas heikel ist, kann für sie wie ein
+Vorwurf klingen. `PRODUKT.md` Abschnitt 2 nennt sie als eine der fünf, für
+die gebaut wird; nichts in meinen Quellen sagt, dass sie diesen Satz
+haben will.
