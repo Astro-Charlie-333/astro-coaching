@@ -576,7 +576,7 @@ function trefferBauen(){
     m.hidden = false;
     m.textContent = TR_ALLE ? B_KOPF.wenigerVor
                             : B_KOPF.mehrVor + ' (' + lang.length + ')';
-    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); };
+    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); setTimeout(kuerzen,60); };
   } else { m.hidden = true; }
 
   /* Die schnellen Wanderer getrennt und klein: Sie machen den Tag,
@@ -663,7 +663,7 @@ function strahlBauen(){
     m.hidden = false;
     m.textContent = ST_ALLE ? B_STRAHL.weniger
       : tf(B_STRAHL.mehr, {n:(e.length - ST_ZEIGE)});
-    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); };
+    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); setTimeout(kuerzen,60); };
   } else { m.hidden = true; }
 }
 
@@ -1068,7 +1068,7 @@ function kapSetzen(s){
   try{ var n=new Date();
     localStorage.setItem(KAP,JSON.stringify({d:n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate(),s:s}));
   }catch(e){}
-  kapBauen(); anwenden(); stellBauen();
+  kapBauen(); anwenden(); stellBauen(); setTimeout(kuerzen,60);
 }
 function kapBauen(){
   var a=kapHeute();
@@ -1087,6 +1087,30 @@ function kapBauen(){
    Bewegung. „Was dein Bild gerade trifft" bleibt — das ist der Kern.
    Wer wenig Kapazität angibt, hat sie nicht für eine längere
    Seite, sondern für eine kürzere. */
+/* ── Kurz zuerst (18.11.) ───────────────────────────────────
+   Lange Absätze zeigen zwei Zeilen; „weiterlesen" öffnet den Rest.
+   Mandy: „als neurodivergente Person ist das alles too much". */
+var KURZ_WAS='.tr-s, .ht-auf-x, .th-was, .st-dg';
+function kuerzen(){
+  Array.prototype.forEach.call(document.querySelectorAll(KURZ_WAS),function(p){
+    if(p.getAttribute('data-kurz')) return;
+    p.setAttribute('data-kurz','1');
+    p.classList.add('kurz');
+    if(!p.offsetHeight || p.scrollHeight<=p.clientHeight+2){
+      if(p.offsetHeight) p.classList.remove('kurz');
+      else p.removeAttribute('data-kurz');
+      return;
+    }
+    var b=document.createElement('button');
+    b.type='button'; b.className='kurz-k'; b.textContent=T_KOPF.kurzMehr;
+    b.onclick=function(){
+      var auf=p.classList.toggle('kurz-auf');
+      b.textContent=auf?T_KOPF.kurzWeniger:T_KOPF.kurzMehr;
+    };
+    p.parentNode.insertBefore(b,p.nextSibling);
+  });
+}
+
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
   ['htwocheteil','htthementeil','htkoerperteil','htstrahlteil'].forEach(function(i){
@@ -1119,9 +1143,9 @@ function stellBauen(){
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
   bereicheBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
-  kapBauen(); anwenden(); stellBauen();
+  kapBauen(); anwenden(); stellBauen(); setTimeout(kuerzen,60);
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); setTimeout(kuerzen,60); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
