@@ -549,6 +549,7 @@ h1,h2,h3,h4{font-feature-settings:"ss01";}
  .el-k.el-leise{grid-column:span 2;}
 }
 .kl-t{font-weight:500;}
+.dk-b{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:600;background:#DCE6FB;color:#1B1B1B;border-radius:999px;padding:3px 10px;}
 </style><script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -1338,6 +1339,7 @@ var I_AUF_MEHR='{n} weitere ansehen';
 var I_AUF_WENIGER='Weniger zeigen';
 var I_ZU_JETZT={text:'Was gerade bei dir los ist', href:'index.html'};
 var I_ELEM_LEISE='am leisesten';
+var I_DREI_BEI={Sonne:'Am stärksten bei: {bereich}', Mond:'Am stärksten bei: {bereich}', ASC:'Hängt zusammen mit: {bereich}'};
 
 var I_HAEUFIG={"n": 10000, "anteil": {"kette_eigen": 0.0867, "rueck0": 0.1058, "rueck1": 0.2141, "rueck2": 0.2387, "rueck3": 0.2163, "rueck4": 0.1513, "rueck5": 0.0606, "rueck6": 0.0132, "sp1": 0.0007, "sp2": 0.3115, "sp3": 0.4845, "sp4": 0.1627, "sp5": 0.0406, "winkel_hart_eng": 0.1237, "winkel_hart_mittel": 0.1774, "winkel_hart_weit": 0.0073, "winkel_weich_eng": 0.2877, "winkel_weich_mittel": 0.384, "winkel_weich_weit": 0.0199}};
 /* ───────────────────────────────────────────────────────────────
@@ -1675,7 +1677,8 @@ function dreiBauen(){
     return '<details class="dk dk-e'+(z%4)+'"><summary>'+
       '<span class="dk-kreis" aria-hidden="true">'+I_DREI_ZEICHEN[d.k]+'\uFE0E</span>'+
       '<span class="dk-t"><span class="dk-l">'+esc(I_DREI_LABEL[d.k])+'</span>'+
-      '<span class="dk-k">'+esc(I_KURZ[d.k][z])+'</span></span>'+
+      '<span class="dk-k">'+esc(I_KURZ[d.k][z])+'</span>'+
+      '<span class="dk-b">'+esc(fuellen(I_DREI_BEI[d.k],{bereich:I_HAUS_KURZ[(d.k==='ASC'?haus(P,P[I_HERR[z]]):haus(P,l))-1]}))+'</span></span>'+
       '<span class="dk-plus" aria-hidden="true"></span></summary>'+
       '<div class="dk-mehr"><p class="wert">'+esc(d.was)+'</p>'+
       '<p class="zu">'+esc(bereich)+'</p>'+

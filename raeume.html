@@ -157,7 +157,35 @@ a{color:var(--nacht);}
 @media(max-width:620px){body{overflow-wrap:anywhere;hyphens:auto;-webkit-hyphens:auto;}}
 /* anywhere statt break-word: nur das verkleinert auch die Mindestbreite,
    nach der Raster- und Flexspalten ihre Breite berechnen. */
+
+/* ═══ 18.11.: persönlich sortiert, Midcentury ═══ */
+h1 em{font-style:normal!important;color:#F05A28!important;}
+.rl-kopf{display:flex;flex-direction:column;gap:2px;margin:6px 0 14px;}
+.rl-kopf b{font-family:var(--serif);font-size:22px;font-weight:600;}
+.rl-kopf span{font-size:15px;color:var(--leise);}
+.rl-gitter{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+@media(max-width:620px){.rl-gitter{grid-template-columns:1fr;}}
+.rk{border:0!important;border-radius:24px!important;padding:18px 20px!important;}
+.rk-name{font-weight:600!important;font-size:21px!important;}
+.rk-frage{font-style:normal!important;color:var(--leise)!important;font-size:15px!important;}
+.rk-zuerst{background:#1F4FD8!important;color:#fff;}
+.rk-zuerst .rk-name{color:#fff!important;} .rk-zuerst .rk-frage{color:#DCE6FB!important;}
+.rk-zuerst .rk-marke{background:#F2B33D!important;color:#1B1B1B!important;}
+.rk-zuerst:first-child{grid-column:1/-1;}
+.rk-leise{opacity:.75;}
+.rk-du{display:flex;flex-direction:column;gap:6px;margin-top:6px;}
+.rk-balken{height:8px;border-radius:99px;background:#EFE8DB;overflow:hidden;}
+.rk-balken i{display:block;height:100%;border-radius:99px;background:#F05A28;}
+.rk-zuerst .rk-balken{background:rgba(255,255,255,.22);} .rk-zuerst .rk-balken i{background:#F2B33D;}
+.rk-zeile{font-size:13.5px;font-weight:500;}
+.rl-mehr{background:#fff;border-radius:22px;padding:14px 18px;margin:26px 0 10px;}
+.rl-mehr>summary{cursor:pointer;font-family:var(--serif);font-weight:600;font-size:18px;}
+.rl-mehr .tip,.rl-mehr .rl-wie{margin:12px 0 0;}
 </style><script src="coach.js" defer></script>
+<script src="profil.js"></script>
+<script src="kleine-punkte.js"></script>
+<script src="raum.js"></script>
+<script src="raeume-sortierung.js" defer></script>
 <script src="niveau.js" defer></script>
 <script src="wortwahl.js" defer></script>
 </head><body>
@@ -171,9 +199,8 @@ a{color:var(--nacht);}
 <div class="wrap">
 <div class="eyebrow">Arbeiten</div>
 <h1>Die <em>Räume.</em></h1>
-<div class="rl-um"><b>Du suchst wahrscheinlich die Bereiche.</b> Was bei dir gerade in Liebe, Beruf, Gesundheit und den anderen Bereichen los ist, steht jetzt auf einer eigenen Seite — mit dem, was läuft, was du tun kannst und wie lange es noch dauert. <a href="bereiche.html">Zu den Bereichen &rarr;</a><br>Diese Seite hier ist das Gegenstück dazu: die langen Texte zum Nachlesen, nach Fragen geordnet statt nach Zeitpunkt.</div>
-<p class="lede">Zehn Themen, mit denen Menschen tatsächlich kommen — alle offen. Jeder Raum hat mehrere Facetten — und dein Chart entscheidet, welche davon bei dir laut sind und welche du getrost liegen lassen kannst. Das ist der Unterschied zwischen vollständig und überfordernd.</p>
-<div class="rl-wie"><h3>So funktioniert ein Raum</h3><ol><li>Du kommst mit einer Frage herein — der Satz, den du tatsächlich denkst.</li><li>Die Plattform gewichtet die Facetten nach deinem Chart und sortiert sie.</li><li>Zu jeder Facette: was deine Stellungen dazu sagen, mit den Daten zum Nachprüfen.</li><li>Eine Übung für diese Woche. Eine, nicht fünf.</li><li>Nach ein paar Tagen die Rückfrage — vier Knöpfe, fertig.</li><li>Und eine Schublade für die Arbeit mit anderen: Gesprächsfragen und Grenzen.</li></ol></div>
+<p class="lede">Zwölf Themen, mit denen Menschen tatsächlich kommen. Jeder Raum hat mehrere Facetten — und dein Chart entscheidet, welche davon bei dir laut sind und welche du getrost liegen lassen kannst. Das ist der Unterschied zwischen vollständig und überfordernd.</p>
+<div class="rl-kopf" id="rlkopf" hidden><b></b><span></span></div>
 <div class="rl-gitter">
 <a class="rk offen" href="raum-selbstwert.html"><div class="rk-name">Selbstwert</div><div class="rk-frage">&bdquo;Warum nehme ich eigentlich zu wenig?&ldquo;</div><div class="rk-anker ac-tech" data-ab="2">2. Haus, Venus, Saturn, Lilith</div><span class="rk-marke fertig">offen</span></a>
 <a class="rk offen" href="raum-berufung.html"><div class="rk-name">Berufung</div><div class="rk-frage">&bdquo;Wofür bin ich eigentlich hier?&ldquo;</div><div class="rk-anker ac-tech" data-ab="2">10./9./2. Haus, MC, Mondknoten, Jupiter</div><span class="rk-marke fertig">offen</span></a>
@@ -185,18 +212,18 @@ a{color:var(--nacht);}
 <a class="rk offen" href="raum-zugehoerigkeit.html"><div class="rk-name">Zugehörigkeit</div><div class="rk-frage">&bdquo;Warum fühle ich mich überall ein bisschen außen?&ldquo;</div><div class="rk-anker ac-tech" data-ab="2">11./3./12. Haus, Uranus, Saturn, Lilith</div><span class="rk-marke fertig">offen</span></a>
 <a class="rk offen" href="raum-alltag.html"><div class="rk-name">Alltag</div><div class="rk-frage">&bdquo;Wie kriege ich Struktur, die hält?&ldquo;</div><div class="rk-anker ac-tech" data-ab="2">6./4./12. Haus, Saturn, Mond, Mars</div><span class="rk-marke fertig">offen</span></a>
 <a class="rk offen" href="raum-koerper.html"><div class="rk-name">Körper</div><div class="rk-frage">&bdquo;Was braucht mein Körper eigentlich von mir?&ldquo;</div><div class="rk-anker ac-tech" data-ab="2">1./6./12. Haus, Mars, Venus, Aszendent</div><span class="rk-marke fertig">offen</span></a>
-</div>
-
-<h2 style="margin-top:30px;">Dazu passt noch</h2>
-<p class="sub">Ein Raum, der etwas anders gebaut ist: Er geht der Frage nach, wie Begehren funktioniert, was es bremst und was es braucht — mit Fachwissen, das über die Astrologie hinausgeht, und einer klaren Grenze oben auf der Seite.</p>
-<div class="rl-gitter">
 <a class="rk offen" href="raum-versorgung.html"><div class="rk-name">Versorgung</div><div class="rk-frage">&bdquo;Warum kriege ich das Einfache nicht hin?&ldquo;</div><div class="rk-worum">Essen, Trinken, Papierkram, Haushalt, Schlaf</div><div class="rk-anker ac-tech" data-ab="2">6./4./12. Haus, Mond, Saturn, Merkur</div><span class="rk-marke fertig">offen</span></a>
 <a class="rk offen" href="raum-sicherheit.html"><div class="rk-name">Sicherheit &amp; Fallenlassen</div><div class="rk-frage">&bdquo;Was brauche ich, um mich fallen lassen zu können?&ldquo;</div><div class="rk-worum">Begehren, Bremsen, Grenzen</div><div class="rk-anker ac-tech" data-ab="2">4./5./8. Haus, Mond, Venus, Mars, Lilith</div><span class="rk-marke fertig">offen</span></a>
 </div>
-
+<details class="rl-mehr"><summary>Wie die Räume arbeiten</summary>
+<div class="rl-um"><b>Du suchst wahrscheinlich die Bereiche.</b> Was bei dir gerade in Liebe, Beruf, Gesundheit und den anderen Bereichen los ist, steht jetzt auf einer eigenen Seite — mit dem, was läuft, was du tun kannst und wie lange es noch dauert. <a href="bereiche.html">Zu den Bereichen &rarr;</a><br>Diese Seite hier ist das Gegenstück dazu: die langen Texte zum Nachlesen, nach Fragen geordnet statt nach Zeitpunkt.</div>
+<div class="rl-wie"><h3>So funktioniert ein Raum</h3><ol><li>Du kommst mit einer Frage herein — der Satz, den du tatsächlich denkst.</li><li>Die Plattform gewichtet die Facetten nach deinem Chart und sortiert sie.</li><li>Zu jeder Facette: was deine Stellungen dazu sagen, mit den Daten zum Nachprüfen.</li><li>Eine Übung für diese Woche. Eine, nicht fünf.</li><li>Nach ein paar Tagen die Rückfrage — vier Knöpfe, fertig.</li><li>Und eine Schublade für die Arbeit mit anderen: Gesprächsfragen und Grenzen.</li></ol></div>
 <div class="tip"><b>Die Haltung dahinter:</b> Die Räume arbeiten nach Alfred Adlers Grundsatz, dass jedes Muster einen Zweck erfüllt — die Frage ist nicht „warum bin ich so", sondern „wozu ist das gut". Woher die Methode sonst noch kommt, steht unter <a href="haltung.html">Haltung &amp; Methode</a>.</div>
 <div class="tip"><b>Warum die Räume so heißen, wie sie heißen:</b> Nicht nach der Technik, sondern nach der Frage. Niemand wacht auf und will „Lilith-Arbeit". Menschen wachen auf und denken „warum traue ich mir das nicht zu". Deshalb steht auf jeder Karte oben die Frage; woraus der Raum gerechnet ist, wartet darunter und erscheint, sobald du den Wissensstand höherdrehst.</div>
 <div class="tip"><b>Und die Grenze, die überall gilt:</b> Ein Raum ist Selbstarbeit oder Coaching — keine Therapie. Wenn beim Arbeiten etwas hochkommt, das größer ist als eine Erinnerung, gehört das begleitet. Siehe <a href="grenzen.html">Wann du nicht deutest</a>.</div>
+</details>
+
+
 <div class="foot">Die R&auml;ume &middot; Jeder Raum gewichtet seine Facetten nach deinem Chart. Selbstarbeit und Coaching &mdash; keine Therapie.</div>
 </div>
 </body></html>

@@ -231,6 +231,12 @@ function moKarte(t,tr){
     p.textContent=typ.alltag;
   }
   inh.appendChild(chips); inh.appendChild(p);
+  if(NAT && window.MT_HAUS_TUN){
+    var hb=moHaus(NAT.ASC,t.g), satz=(MT_HAUS_TUN[t.t==='NM'?'NM':'VM']||[])[hb];
+    if(satz){ var q=document.createElement('p'); q.className='mo-bei';
+      var qb=document.createElement('b'); qb.textContent=moFuell(MT_HAUS_TUN.vor,{bereich:MT_HAUS[hb].kurz});
+      q.appendChild(qb); q.appendChild(document.createTextNode(satz)); inh.appendChild(q); }
+  }
   var f=document.createElement('p'); f.className='mo-klein'; f.textContent=typ.fenster; inh.appendChild(f);
   k.appendChild(dat); k.appendChild(inh);
   return k;

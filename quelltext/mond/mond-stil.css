@@ -129,3 +129,7 @@ body.niv-0 .mo-weiter a[data-ab="1"]{display:none}
 .mo-wrap [hidden]{display:none!important}
 .mo-tab td.mono{white-space:nowrap}
 .mo-tab .detail td>div{position:sticky;left:10px;max-width:min(760px,calc(100vw - 70px))}
+
+/* 18.11.: der persönliche Satz je Termin */
+.mo-bei{background:#DCE6FB;border-radius:14px;padding:9px 12px;margin:8px 0 4px;font-size:14.5px;line-height:1.5;}
+.mo-bei b{color:#1F4FD8;}

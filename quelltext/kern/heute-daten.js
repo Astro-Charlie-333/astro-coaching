@@ -59,6 +59,8 @@ var H_LUN = {
 
 /* ── Band 1 · Jetzt ──────────────────────────────────────────── */
 var H_SEITE = {
+ weilVor:'Gerade wirkt',
+ weilDurch:'{wanderer} läuft durch dieses Feld',
  gruss:{nacht:'Noch wach', morgen:'Guten Morgen', tag:'Guten Tag', abend:'Guten Abend',
         zeile:'{gruss}, <em>{name}</em>.'},
 

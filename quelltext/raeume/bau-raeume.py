@@ -147,6 +147,29 @@ for slug in slugs:
     ziel.write_text(html, encoding='utf-8')
     gebaut.append(ziel)
 
+# ── Die Übersicht sortiert sich nach dem Chart (18.11.) ───────
+# Mandy: „Die Übersicht bei den Räumen ist zu allgemein." Die Karten
+# standen für alle Menschen gleich da. Jetzt rechnet raeume.html jeden
+# Raum mit denselben Facetten wie die Raumseite und stellt die
+# lautesten nach oben. Die Anker kommen aus raum-daten.js, damit
+# Übersicht und Raum nie auseinanderlaufen.
+import json as _json, subprocess as _sp
+_anker = _sp.run(['node', '-e',
+    "global.window=globalThis;eval(require('fs').readFileSync(process.argv[1],'utf8'));"
+    "const o={};for(const k in R_RAEUME){const d=R_RAEUME[k].def.RAUM;"
+    "o[k]={n:d.name,f:d.facetten.map(f=>({n:f.name,a:f.anker}))};}"
+    "process.stdout.write(JSON.stringify(o));", str(hier / 'raum-daten.js')],
+    capture_output=True, text=True)
+if _anker.returncode != 0:
+    fehler.append('Anker für die Übersicht nicht lesbar: ' + _anker.stderr[-200:])
+else:
+    sortier = ('/* Gebaut von quelltext/raeume/bau-raeume.py — nicht von Hand ändern.\n'
+               '   Sortiert die Karten auf raeume.html nach dem aktiven Chart. */\n'
+               + lies(rit / 'engine.js') + '\n'
+               + 'var RS_ANKER=' + _anker.stdout + ';\n'
+               + lies(hier / 'raum-sortierung.js'))
+    (wiki / 'raeume-sortierung.js').write_text(sortier, encoding='utf-8')
+
 # ── 1 · Kein Raum speichert unter dem Namen eines anderen ────
 # Das war der Fehler: fünf Räume schrieben fest nach
 # 'raum-selbstwert-…'. Jetzt kommt der Schlüssel aus RAUM.slug, und das

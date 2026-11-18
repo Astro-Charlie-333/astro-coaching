@@ -714,3 +714,33 @@ var MT_T = {
  stand:'Termine gerechnet am {am}, sie reichen bis {bis}.',
  standBis:'{t}. {monat} {jahr}'
 };
+
+/* 18.11.: Was der Termin im Bereich bei dir heißt — ein Satz je
+   Haus, für Neu- und Vollmond. Dieselben Sätze wie auf „Jetzt". */
+var MT_HAUS_TUN = {
+ vor:'In deinem Bereich {bereich}: ',
+ NM:['Etwas an dir neu anfangen: wie du auftrittst, was du anziehst, wie du dich bewegst.',
+  'Ein kleiner Anfang beim Geld oder beim Selbstwert: ein Preis, ein Konto, ein Nein.',
+  'Ein Gespräch anfangen, das du aufschiebst, oder etwas Neues lernen.',
+  'Zuhause etwas neu ordnen: eine Ecke, ein Ritual, ein Anruf in der Familie.',
+  'Etwas nur aus Freude anfangen. Ohne Ziel, nur weil es dir Spaß macht.',
+  'Eine kleine Gewohnheit starten. Eine, nicht fünf.',
+  'In einer Beziehung etwas neu verabreden: Nähe, Zeit, Regeln.',
+  'Etwas Tiefes klären: Vertrauen, gemeinsames Geld, eine Grenze.',
+  'Einen Plan für etwas Weites machen: eine Reise, ein Kurs, eine große Frage.',
+  'Beruflich einen ersten Schritt setzen, den noch niemand sehen muss.',
+  'Menschen schreiben, die zu dir passen. Ein Wunsch für später.',
+  'Ruhe als Anfang: früher schlafen, weniger Termine, mehr Stille.'],
+ VM:['Du fällst gerade mehr auf als sonst. Schau, wie du ankommst, ohne nachzubessern.',
+  'Beim Geld oder beim Selbstwert zeigt sich, was trägt. Ein ehrlicher Blick reicht.',
+  'Ein Gespräch kommt zum Punkt. Sag den Satz, der noch fehlt.',
+  'Zuhause oder in der Familie wird etwas sichtbar. Nicht alles muss heute gelöst sein.',
+  'Freude, Liebe oder ein Projekt erreicht einen Höhepunkt. Zeig es jemandem.',
+  'Körper und Alltag melden sich. Etwas weglassen statt mehr machen.',
+  'In einer Beziehung wird etwas klar. Erst zuhören, dann entscheiden.',
+  'Etwas Verborgenes kommt hoch. Tief ist in Ordnung, schnell muss es nicht sein.',
+  'Ein Plan oder eine Überzeugung zeigt, ob sie hält. Zieh ein ehrliches Fazit.',
+  'Beruflich wird sichtbar, was du angelegt hast. Nimm Anerkennung an.',
+  'Freundschaften zeigen, wer bleibt. Feier die, die da sind.',
+  'Müdigkeit und Rückzug sind jetzt richtig. Schließ im Stillen ab.']
+};
