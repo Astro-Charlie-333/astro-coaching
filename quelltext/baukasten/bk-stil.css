@@ -2,12 +2,12 @@
 .bk-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-right,0px)) 80px max(18px,env(safe-area-inset-left,0px))}
 .bk-kopf{padding:48px 0 4px;display:grid;gap:12px}
 .bk-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--messing)}
-.bk-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.2rem);line-height:1.08;color:var(--nacht);margin:0}
+.bk-h1{font-family:'Jost',system-ui,sans-serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.2rem);line-height:1.08;color:var(--nacht);margin:0}
 .bk-lede{font-size:1.05rem;line-height:1.6;max-width:62ch;margin:0}
 .bk-zurueck{margin:0;font-size:.92rem}
-.bk-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.5rem;color:var(--nacht);margin:0;display:flex;align-items:center;gap:10px}
+.bk-h2{font-family:'Jost',system-ui,sans-serif;font-weight:400;font-size:1.5rem;color:var(--nacht);margin:0;display:flex;align-items:center;gap:10px}
 .bk-h2 span{width:30px;height:30px;border-radius:50%;background:var(--nacht);color:var(--bg);display:grid;place-items:center;font-size:1rem}
-.bk-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:var(--nacht);margin:0}
+.bk-h3{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.15rem;color:var(--nacht);margin:0}
 .bk-teil{padding-top:40px;display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
 .bk-teil>*{min-width:0}
 .bk-wrap a{color:var(--nacht)}
@@ -16,8 +16,8 @@
 .bk-hinweis{margin:0;background:#FBEFE6;border-left:3px solid var(--rost);border-radius:10px;padding:12px 14px}
 .bk-leise{margin:0;color:var(--leise);font-size:.92rem;line-height:1.55}
 .bk-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
-.bk-karte{font:inherit;text-align:left;cursor:pointer;background:var(--papier);border:1px solid var(--linie);border-radius:14px;padding:16px;display:grid;gap:6px;color:#231F1A}
-.bk-karte b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:var(--nacht)}
+.bk-karte{font:inherit;text-align:left;cursor:pointer;background:var(--papier);border:1px solid var(--linie);border-radius:14px;padding:16px;display:grid;gap:6px;color:#1B1B1B}
+.bk-karte b{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.1rem;color:var(--nacht)}
 .bk-karte span{font-size:.9rem;color:var(--leise);line-height:1.5}
 .bk-karte[aria-pressed=true]{border:2px solid var(--nacht);padding:15px;background:#F5ECDD}
 .bk-werk{display:grid;gap:12px}

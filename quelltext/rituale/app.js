@@ -149,7 +149,7 @@ function jetztBauen(){
 /* Das beleuchtete Stück ist hell, der Rest dunkel — sonst sieht ein Neumond
    aus wie ein Vollmond. Auf dem cremefarbenen Papier heißt das:
    Scheibe navy, Licht gold. */
-var UNBELEUCHTET='#2E3A5C', BELEUCHTET='#E8C97A';
+var UNBELEUCHTET='#1B1B1B', BELEUCHTET='#E8C97A';
 
 function radBauen(){
   var jd=heuteJD(), a=phase(jd), ist=phIndex(a);
@@ -159,21 +159,21 @@ function radBauen(){
   var R = schmal?142:140, mr = schmal?30:25;
   var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" '+
     'aria-label="Die acht Mondphasen im Kreis, von Neumond oben im Uhrzeigersinn">';
-  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#EBE1D2" stroke-width="1.5"/>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#E6DECF" stroke-width="1.5"/>';
   /* Der laufende Abschnitt als Bogen — jede Phase reicht von ihrem Mond bis zum nächsten */
   function pkt(g,rad){ return [cx+rad*Math.sin(g*Math.PI/180), cy-rad*Math.cos(g*Math.PI/180)]; }
   var b1=pkt(ist*45,R), b2=pkt(ist*45+45,R);
   s+='<path d="M '+b1[0].toFixed(1)+' '+b1[1].toFixed(1)+' A '+R+' '+R+' 0 0 1 '+
-     b2[0].toFixed(1)+' '+b2[1].toFixed(1)+'" fill="none" stroke="#9A7235" stroke-width="4" '+
+     b2[0].toFixed(1)+' '+b2[1].toFixed(1)+'" fill="none" stroke="#C8441A" stroke-width="4" '+
      'stroke-linecap="round" opacity=".38"/>';
   /* aktueller Stand auf der Bahn */
   var pp=pkt(a,R);
-  s+='<circle cx="'+pp[0].toFixed(1)+'" cy="'+pp[1].toFixed(1)+'" r="4.5" fill="#9A7235"/>';
+  s+='<circle cx="'+pp[0].toFixed(1)+'" cy="'+pp[1].toFixed(1)+'" r="4.5" fill="#C8441A"/>';
   /* Mitte */
-  s+='<text x="'+cx+'" y="'+(cy-7)+'" text-anchor="middle" style="font-family:Fraunces,serif;'+
-     'font-size:16px;fill:#6B6259;">29 1/2 Tage</text>';
-  s+='<text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" style="font-family:Fraunces,serif;'+
-     'font-size:16px;fill:#6B6259;">ein Zyklus</text>';
+  s+='<text x="'+cx+'" y="'+(cy-7)+'" text-anchor="middle" style="font-family:Jost,sans-serif;'+
+     'font-size:16px;fill:#5E584D;">29 1/2 Tage</text>';
+  s+='<text x="'+cx+'" y="'+(cy+15)+'" text-anchor="middle" style="font-family:Jost,sans-serif;'+
+     'font-size:16px;fill:#5E584D;">ein Zyklus</text>';
   PHASEN.forEach(function(p,i){
     var q=pkt(p.a,R), x=q[0], y=q[1];
     var sin=Math.sin(p.a*Math.PI/180);
@@ -183,7 +183,7 @@ function radBauen(){
     s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(mr-1)+'" fill="'+UNBELEUCHTET+'"/>';
     s+='<path d="'+mondPfad(x,y,mr-1,p.a)+'" fill="'+BELEUCHTET+'"/>';
     s+='<circle class="ring" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+mr+'" fill="none" '+
-       'stroke="'+(i===ist?'#9A7235':'#DDD0BC')+'" stroke-width="'+(i===ist?2.5:1)+'"/>';
+       'stroke="'+(i===ist?'#C8441A':'#D3C9B6')+'" stroke-width="'+(i===ist?2.5:1)+'"/>';
     if(schmal){
       /* Nummer direkt daneben, passend zu „Phase N von 8" im Text darunter */
       var n=pkt(p.a,R+mr+13);

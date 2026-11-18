@@ -91,7 +91,7 @@ var K_BEREICH=['dein Auftreten','deinen Umgang mit Geld und Wert','dein Reden un
  'alles Geteilte und Tiefe','deinen Glauben','deinen Beruf','deine Gruppen','deinen Rückzug'];
 
 /* Elementfarben wie im übrigen System */
-var K_ELFARBE=['#A05A3A','#3D6B62','#2E3A5C','#6A4A62'];
+var K_ELFARBE=['#D9481C','#11897C','#1B1B1B','#1F4FD8'];
 var K_ELEMENT=['Feuer','Erde','Luft','Wasser'];
 var K_MOD=['kardinal','fix','veränderlich'];
 var K_HERR=['Mars','Venus','Merkur','Mond','Sonne','Merkur','Venus','Mars',

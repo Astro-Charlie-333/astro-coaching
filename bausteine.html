@@ -1,35 +1,35 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Die Bausteine · Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="schatten.js"></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
-h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Jost',sans-serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 .tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
@@ -50,7 +50,7 @@ a{color:var(--ind);}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
  text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
 
@@ -176,7 +176,7 @@ a{color:var(--nacht);}
  text-transform:uppercase;color:var(--messing);margin-bottom:5px;}
 .it-z p{margin:0 0 8px;font-size:14.9px;line-height:1.63;}
 .it-z p:last-child{margin-bottom:0;}
-.it-schatten{background:#FBF0E8;border-left:3px solid #A05A3A;border-radius:12px;padding:13px 15px;margin-bottom:8px;}
+.it-schatten{background:#FBF0E8;border-left:3px solid #D9481C;border-radius:12px;padding:13px 15px;margin-bottom:8px;}
 .it-schatten .lab{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:.13em;
  text-transform:uppercase;color:#8A4326;margin-bottom:5px;}
 .it-schatten p{margin:0 0 8px;font-size:14.9px;line-height:1.63;}
@@ -201,8 +201,8 @@ a{color:var(--nacht);}
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
@@ -229,7 +229,7 @@ a{color:var(--nacht);}
     <span><i style="background:#B5502E"></i> Feuer</span>
     <span><i style="background:#6B7C3F"></i> Erde</span>
     <span><i style="background:#3E7C9A"></i> Luft</span>
-    <span><i style="background:#6A4A62"></i> Wasser</span>
+    <span><i style="background:#1F4FD8"></i> Wasser</span>
   </div>
 </div>
 
@@ -299,7 +299,7 @@ function placidus(ramc,epsd,lat){var e=epsd*RAD,phi=lat*RAD;
 
 var SIGNS=['Widder','Stier','Zwillinge','Krebs','Löwe','Jungfrau','Waage','Skorpion','Schütze','Steinbock','Wassermann','Fische'];
 var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
-var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#1F4FD8'];
 var ELN=['Feuer','Erde','Luft','Wasser'];
 var MON=['kardinal','fix','veränderlich'];
 var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
@@ -427,11 +427,11 @@ function radZeichnen(){
     o.push('<path class="seg" data-typ="haus" data-i="'+k+'" d="M'+p0x.toFixed(1)+','+p0y.toFixed(1)+
       ' A'+rInnen+','+rInnen+' 0 0 1 '+p1x.toFixed(1)+','+p1y.toFixed(1)+
       ' L'+p2x.toFixed(1)+','+p2y.toFixed(1)+' A'+rH+','+rH+' 0 0 0 '+p3x.toFixed(1)+','+p3y.toFixed(1)+' Z" '+
-      'fill="'+(akt?'#2E3A5C':'#EDF0F6')+'" opacity="'+(akt?0.9:1)+'" stroke="#D9CDBC" stroke-width="0.8">'+
+      'fill="'+(akt?'#1B1B1B':'#EDF0F6')+'" opacity="'+(akt?0.9:1)+'" stroke="#D9CDBC" stroke-width="0.8">'+
       '<title>'+(k+1)+'. Haus · '+HAUS[k][0]+'</title></path>');
     var bm=(b0+b1)/2, rbm=(rInnen+rH)/2;
     o.push('<text x="'+(C+rbm*Math.cos(bm)).toFixed(1)+'" y="'+(C+rbm*Math.sin(bm)+6).toFixed(1)+
-      '" text-anchor="middle" font-size="16" font-family="Fraunces,serif" fill="'+(akt?'#fff':'#6B6259')+
+      '" text-anchor="middle" font-size="16" font-family="Jost,sans-serif" fill="'+(akt?'#fff':'#5E584D')+
       '" pointer-events="none">'+(k+1)+'</text>');
   }
 
@@ -451,22 +451,22 @@ function radZeichnen(){
       o.push('<line x1="'+ax.toFixed(1)+'" y1="'+ay.toFixed(1)+'" x2="'+ex.toFixed(1)+'" y2="'+ey.toFixed(1)+
         '" stroke="#D9CDBC" stroke-width="0.8"/>');
       o.push('<text class="seg" data-typ="planet" data-i="'+PL.indexOf(k)+'" x="'+ax.toFixed(1)+'" y="'+(ay+7).toFixed(1)+
-        '" text-anchor="middle" font-size="20" fill="#2E3A5C"><title>'+k+' · '+fmt(MEIN[k])+'</title>'+PGL[k]+'</text>');
+        '" text-anchor="middle" font-size="20" fill="#1B1B1B"><title>'+k+' · '+fmt(MEIN[k])+'</title>'+PGL[k]+'</text>');
     });
     /* Achsen */
     [['ASC',MEIN.ASC],['MC',MEIN.MC]].forEach(function(x){
       var w=(x[1]-90)*Math.PI/180;
       o.push('<line x1="'+(C+rKern*Math.cos(w)).toFixed(1)+'" y1="'+(C+rKern*Math.sin(w)).toFixed(1)+
         '" x2="'+(C+rAussen*Math.cos(w)).toFixed(1)+'" y2="'+(C+rAussen*Math.sin(w)).toFixed(1)+
-        '" stroke="#9A7235" stroke-width="1.6"/>');
+        '" stroke="#C8441A" stroke-width="1.6"/>');
     });
     o.push('<circle cx="'+C+'" cy="'+C+'" r="'+rKern+'" fill="#FDFBF7" stroke="#E8E0D4"/>');
-    o.push('<text x="'+C+'" y="'+(C-4)+'" text-anchor="middle" font-size="15" font-family="Fraunces,serif" fill="#2E3A5C">'+MEIN.name+'</text>');
+    o.push('<text x="'+C+'" y="'+(C-4)+'" text-anchor="middle" font-size="15" font-family="Jost,sans-serif" fill="#1B1B1B">'+MEIN.name+'</text>');
     o.push('<text x="'+C+'" y="'+(C+16)+'" text-anchor="middle" font-size="11" font-family="JetBrains Mono,monospace" fill="#9AA79B">dein Chart</text>');
   } else {
     o.push('<circle cx="'+C+'" cy="'+C+'" r="'+rKern+'" fill="#FDFBF7" stroke="#E8E0D4"/>');
     var zt=(radModus==='zeichen')?'Zeichen':'Häuser';
-    o.push('<text x="'+C+'" y="'+(C-2)+'" text-anchor="middle" font-size="17" font-family="Fraunces,serif" fill="#2E3A5C">'+zt+'</text>');
+    o.push('<text x="'+C+'" y="'+(C-2)+'" text-anchor="middle" font-size="17" font-family="Jost,sans-serif" fill="#1B1B1B">'+zt+'</text>');
     if(!MEIN) o.push('<text x="'+C+'" y="'+(C+20)+'" text-anchor="middle" font-size="10.5" font-family="JetBrains Mono,monospace" fill="#9AA79B">kein Chart geladen</text>');
   }
   s.innerHTML=o.join('');
@@ -541,7 +541,7 @@ function gruppenZeichnen(){
         'und im Bereich <b>'+HAUS[hn2-1][0]+'</b>.</p>'+
         '<p style="font-size:14px;color:var(--leise)">'+p[3]+'</p>';
     } else du='<p>Leg unter <a href="profile.html">Profile</a> ein Chart an, dann steht hier deine Stellung.</p>';
-    h+=eintrag('p'+i, PGL[nm], '#2E3A5C', nm, p[1],
+    h+=eintrag('p'+i, PGL[nm], '#1B1B1B', nm, p[1],
       {licht:p[2], schatten:sch, du:du, marke:marke});
   });
   h+='</div></details>';
@@ -586,7 +586,7 @@ function gruppenZeichnen(){
           'er läuft nur unauffälliger. Wer ihn regiert, sagt dir die <a href="herrscher.html">Herrscherkette</a>.</p>';
       }
     } else du='<p>Leg unter <a href="profile.html">Profile</a> ein Chart an.</p>';
-    h+=eintrag('h'+i, (i+1), '#9A7235', (i+1)+'. Haus — '+x[0], x[1],
+    h+=eintrag('h'+i, (i+1), '#C8441A', (i+1)+'. Haus — '+x[0], x[1],
       {licht:x[2], du:du, marke:dr.length?dr.length+' Planeten':''});
   });
   h+='</div></details>';

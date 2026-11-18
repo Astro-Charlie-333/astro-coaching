@@ -127,8 +127,8 @@
 .wk-arbeit-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
 .wk-arbeit-l a{display:grid;gap:3px;padding:14px 16px;border:1px solid var(--linie);border-radius:12px;background:var(--papier);text-decoration:none;color:var(--nacht)}
 .wk-arbeit-l a:hover{border-color:var(--messing)}
-.wk-arbeit-l b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.05rem}
-.wk-arbeit-l span{font-size:.86rem;color:#6B6259}
+.wk-arbeit-l b{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.05rem}
+.wk-arbeit-l span{font-size:.86rem;color:#5E584D}
 
 /* ── Die Praxis (18.11.) ───────────────────────────────────────
    Aus der Werkstatt wurde die Praxis von Schwerkraft: Klient*innen,

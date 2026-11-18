@@ -312,7 +312,7 @@ var I_SPRUNG_TITEL='Auf dieser Seite';
    Fachsprache besteht, ist auf Stufe 0 unsichtbar und hinterlässt
    ein Loch. Wie viele es insgesamt sind, steht daneben: eine
    Auswahl, die sich nicht als Ganzes ausgibt. */
-var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Rot fordert, grün fließt — keins von beidem ist gut oder schlecht.';
+var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Orange reibt, Blau fließt — keins von beidem ist gut oder schlecht.';
 var I_ASP_TECH='Gerechnet sind {gesamt} Aspekte. Hier stehen die {zahl} engsten zwischen zwei Planeten; Aspekte auf Aszendent und MC stehen auf der Achsenseite.';
 /* Die Formel unter einer Karte — ab Stufe 2. „fordernd" und
    „fließend" sind Sprache und standen bis zum 2026-11-11 in der
@@ -378,3 +378,28 @@ var I_INDEX=[
   {s:'berufe.html', t:'Berufe im Chart', w:'Welche Felder zu welchen Stellungen passen.'},
   {s:'wissen.html', t:'Alle Seiten', w:'Das vollständige Regal — 119 Seiten.'}]}
 ];
+
+/* ── 18.11. Midcentury-Umbau: kurze Zeilen statt Absätze ───────
+   Mandy: „als neurodivergente Person ist das alles too much".
+   Jede Karte zeigt zuerst zwei, drei Wörter; der Rest liegt dahinter. */
+var I_DREI_LABEL={Sonne:'Was dich antreibt', Mond:'Was dich beruhigt', ASC:'Wie du wirkst'};
+var I_DREI_ZEICHEN={Sonne:'\u2609', Mond:'\u263D', ASC:'\u2191'};
+var I_KURZ={
+ Sonne:['Anfangen. Vorangehen.','Aufbauen, was bleibt.','Verstehen. Verbinden.','Ein Zuhause schaffen.',
+        'Strahlen. Gestalten.','Dinge richtig machen.','Ausgleich. Schönheit.','Auf den Grund gehen.',
+        'Weite. Sinn.','Etwas erreichen.','Anders denken. Frei sein.','Fühlen. Verbunden sein.'],
+ Mond:['Selbst handeln dürfen.','Ruhe. Genuss. Verlässliches.','Reden. Neues hören.','Geborgenheit.',
+       'Gesehen werden.','Ordnung. Ein Plan.','Harmonie mit anderen.','Echte Nähe. Ehrlichkeit.',
+       'Freiheit. Aussicht.','Struktur. Halt.','Raum für dich.','Rückzug. Träumen.'],
+ ASC:['Direkt. Lebendig.','Ruhig. Bodenständig.','Neugierig. Wach.','Weich. Fürsorglich.',
+      'Warm. Präsent.','Aufmerksam. Genau.','Freundlich. Stilvoll.','Intensiv. Ruhig.',
+      'Offen. Begeistert.','Ernsthaft. Verlässlich.','Eigen. Unabhängig.','Sanft. Schwer zu greifen.']};
+var I_HAUS_KURZ=['Auftreten','Geld','Reden','Zuhause','Liebe','Alltag',
+                 'Partner','Tiefe','Weite','Beruf','Freunde','Rückzug'];
+var I_FELDER_LEG='Orange: dein Schwerpunkt. Blau: Da steht etwas. Der Punkt: heute aktiv.';
+var I_KOPF_AUGE='In einem Satz';
+var I_RAD_LEG={fliesst:'fließt', reibt:'reibt', heute:'heute am Himmel'};
+var I_AUF_MEHR='{n} weitere ansehen';
+var I_AUF_WENIGER='Weniger zeigen';
+var I_ZU_JETZT={text:'Was gerade bei dir los ist', href:'index.html'};
+var I_ELEM_LEISE='am leisesten';

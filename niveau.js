@@ -53,19 +53,19 @@ function profilSetzen(id,n){
 
 /* ── Was die Stufe auf einer Seite bewirkt ──────────── */
 var CSS=`
-.niv-leiste{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--papier,#FFFDFA);
- border:1px solid var(--linie,#EBE1D2);border-radius:16px;padding:11px 14px;margin-bottom:14px;}
+.niv-leiste{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--papier,#FFFFFF);
+ border:1px solid var(--linie,#E6DECF);border-radius:16px;padding:11px 14px;margin-bottom:14px;}
 .niv-lab{font-family:var(--sans,system-ui);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
- color:var(--messing,#9A7235);flex:none;}
+ color:var(--messing,#C8441A);flex:none;}
 .niv-knoepfe{display:flex;gap:4px;flex-wrap:wrap;}
 .niv-knoepfe button{font-family:var(--sans,system-ui);font-size:13.5px;padding:7px 13px;
- border:1px solid var(--linie,#EBE1D2);background:var(--bg,#FCF7EF);color:var(--tinte,#231F1A);
+ border:1px solid var(--linie,#E6DECF);background:var(--bg,#F6F1E7);color:var(--tinte,#1B1B1B);
  border-radius:16px;cursor:pointer;}
-.niv-knoepfe button:hover{border-color:var(--nacht,#2E3A5C);}
-.niv-knoepfe button[aria-pressed="true"]{background:var(--nacht,#2E3A5C);
- border-color:var(--nacht,#2E3A5C);color:#fff;}
-.niv-tipp{font-size:12.5px;color:var(--leise,#6B6259);margin-left:auto;max-width:46ch;line-height:1.45;}
-.niv-tipp b{color:var(--tinte,#231F1A);}
+.niv-knoepfe button:hover{border-color:var(--nacht,#1B1B1B);}
+.niv-knoepfe button[aria-pressed="true"]{background:var(--nacht,#1B1B1B);
+ border-color:var(--nacht,#1B1B1B);color:#fff;}
+.niv-tipp{font-size:12.5px;color:var(--leise,#5E584D);margin-left:auto;max-width:46ch;line-height:1.45;}
+.niv-tipp b{color:var(--tinte,#1B1B1B);}
 @media(max-width:620px){.niv-tipp{margin-left:0;max-width:none;}}
 
 /* Sichtbarkeit nach Stufe: data-ab="2" erscheint ab Stufe 2, data-bis="1" nur bis Stufe 1 */
