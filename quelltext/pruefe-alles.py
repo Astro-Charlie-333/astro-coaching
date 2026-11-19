@@ -745,7 +745,12 @@ ANZEIGEN = {
     # die ersten vier ihrer vierzig Zeichenketten waren Schriftnamen
     # und eine Farbe aus dem Rad — die gehören nicht in eine
     # Datendatei, sondern in haeuser-stil.css.
-    'rituale/zauber-app.js':       (97, 18),
+    # zauber am 2026-11-19 (Aufgabe 58): Dabei kamen zwei Formen
+    # heraus, die am Planeten hängen und von Hand gebildet wurden —
+    # „der Tag des Sonne" (sonntags, montags und freitags falsch) und
+    # „Sonnestunde". Beide stehen jetzt als Tabelle in
+    # zauber-texte.js, und bau-zauber.py lässt keinen Artikel und
+    # keine Endung mehr an eine Lücke heran.
     'geist/geist-app.js':          (174, 31),
     'dossier/dossier-app.js':      (97, 4),
     'analyse/analyse-app.js':      (29, 1),
@@ -767,7 +772,8 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'baukasten/bk-app.js',
           'bez/beziehung-app.js', 'zeit/zeit-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
-          'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js'}
+          'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
+          'rituale/zauber-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
