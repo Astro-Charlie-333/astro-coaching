@@ -50,8 +50,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
 `monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
 `zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15),
-`mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17) und
-`haeuser-app.js` (2026-11-18);
+`mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17),
+`haeuser-app.js` (2026-11-18) und `zauber-app.js` (2026-11-19);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -86,9 +86,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 58 · `zauber-app.js` (97, 18)
-`zauber.html`, die Rituale.
 
 ### 59 · `geist-app.js` (174, 31)
 `geistfuehrung.html`. Trägt die meisten „dein" von Hand — hier zeigt
@@ -532,6 +529,48 @@ Stufe 0 offen steht und nicht in einem Klappelement; und `bau-bez.py` am
 gezeichneten Ergebnis abbricht, wenn er fehlt oder in eine Klappe
 wandert. Die Textausgabe von „Text kopieren" gehört zu Aufgabe 76 und
 wird hier nicht mitgemacht.
+
+### 87 · `zauber.html` nennt „Konjunktion" und hat keine Stufenleiste
+Gefunden beim Erledigen von Aufgabe 58. Die Karte „Der Mond läuft
+gerade leer" sagt: „Seit seinem letzten Aspekt (Konjunktion zu Venus
+um 14:12) …". „Aspekt" und „Konjunktion" verschlüsseln einen Rechenweg
+und gehören auf Stufe 0 nicht auf die Seite (`REGELN.md` 2a) — und die
+Seite trägt kein `#nivleiste`, also gibt es gar keine Stufe, auf der
+sie wartet. Das Wort dafür steht fertig in `B_WINKELWORT` („auf",
+„gegenüber", „quer zu"), das seit Aufgabe 58 ohnehin auf der Seite
+liegt.
+**Fertig, wenn:** auf Stufe 0 kein Mechanikwort auf `zauber.html`
+sichtbar ist, die Mechanik in `ac-tech`/`data-ab="2"` wartet, und die
+Rauchprobe in `bau-zauber.py` die Stufe 0 prüft, wie es
+`bau-haeuser.py` tut.
+
+### 88 · Die Namensprüfung steht in drei `bau-*.py` einzeln
+Auch aus Aufgabe 58: Seit jede Anzeige ihre Sätze auslagert, liegt
+`kern/bahn-daten.js` auf immer mehr Seiten, und jede Seite prüft
+selbst, dass ihre Namen nicht mit `engine.js` kollidieren — in
+`bau-mond.py`, `bau-zahlen.py` und seit heute `bau-zauber.py`, in drei
+Fassungen. Die dritte hat sofort etwas gefunden, wonach die beiden
+anderen nicht gesucht haben: `chartVon`, `datVon` und `gewaehlt`
+standen in `zauber-app.js` ein zweites Mal, Wort für Wort gleich.
+Dieselbe Lehre wie bei den Stufe-0-Prüfungen (`REGELN.md` 5): Eine
+Regel in drei Dateien ist nach der ersten Verschärfung in zwei von
+drei veraltet.
+**Fertig, wenn:** die Regel als `pruefwerk.pruefe_namenskollision` an
+einer Stelle steht, feste Beispiele darunter hat, die drei `bau-*.py`
+sie aufrufen, und ein von Hand eingesetzter Zweitname den Bau
+abbricht.
+
+### 89 · „Vorbei ist es So, 22.11., 08:23 Uhr"
+Dritter Fund aus Aufgabe 58, heute nicht behoben, damit der Umzug ein
+Umzug bleibt. Endet der leere Mondlauf an einem anderen Tag, setzt
+`wannKurz` Tag und Datum mit ein, und das „Uhr" dahinter steht dann
+hinter einem Datum. Innerhalb desselben Tags liest es sich richtig.
+Dieselbe Klasse wie `_datum_ohne_jahr` in `bau-heute.py` (`REGELN.md`
+6e): Der Satz stimmt für die Eingabe des Tages und nicht für die Form.
+**Fertig, wenn:** die Vorlage zwei Fassungen hat — eine mit „Uhr" für
+heute, eine ohne für einen anderen Tag —, die Anzeige die passende
+wählt, und eine Prüfung mit festen Beispielen in `bau-zauber.py` ein
+„Uhr" hinter einem Datum abbricht.
 
 ## Was nicht gemacht wird
 
@@ -1111,6 +1150,45 @@ Bau von `haeuser.html` abbricht — gegen feste Beispiele gehalten
 (REGELN.md 6e).
 
 ## Erledigt
+
+* **2026-11-19** · `zauber-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 58, aus 34 und 38) — die vierzehnte von zweiundzwanzig
+  Anzeigen, mit 97 Zeichenketten und 18 mal „dein" die zweitgrößte.
+  Die Vorlagen stehen jetzt in `ZT_T` in `zauber-texte.js`, die
+  Anzeige rechnet und setzt mit `zFuell` ein, und „dein" vor einer
+  Hausnummer bildet `B_BEUGE`. Der gezeichnete Text der Seite ist
+  Zeile für Zeile derselbe wie vorher, das Bild pixelgleich — bis auf
+  zwei Stellen, die mehr als Umzug waren:
+
+  * **„Heute ist Sonntag, der Tag des Sonne."** Die Genitivtabelle
+    `GEN` lag seit dem ersten Tag der Seite daneben und wurde an einer
+    von zwei Stellen benutzt; die andere klebte den Namen hinter
+    „des". Sonntags, montags und freitags stand dort die falsche Form,
+    an den übrigen vier Tagen die richtige — deshalb ist es so lange
+    niemandem aufgefallen.
+  * **„Es ist gerade Sonnestunde."** Die Anzeige hängte „stunde" an
+    den Namen des Stundenherrschers. Für sechs der sieben geht das
+    auf; die Sonne braucht ein Fugen-n. Das fertige Wort steht jetzt
+    in `ZT_T.stunde`.
+
+  Dazu ein dritter Fund, der kein Text war: `chartVon`, `datVon` und
+  `gewaehlt` standen in `zauber-app.js` ein zweites Mal, Wort für Wort
+  gleich wie in `engine.js` — eine zweite Himmelsrechnung, die
+  `REGELN.md` 5 verbietet. Sie sind heraus; die Seite rechnet gegen
+  die Engine.
+
+  **Neu dauerhaft geprüft** in `bau-zauber.py`, gegen die Klasse und
+  nicht gegen den Fall: Kein Artikel steht direkt vor einer Lücke
+  (`der Tag des {herr}` bricht ab), kein Buchstabe direkt dahinter
+  (`{stamm}stunde` bricht ab), und die Anzeige klebt keine
+  Zeichenkette an einen Ausdruck (`st.herr+'stunde'` bricht ab) — das
+  muss eigens dastehen, weil „stunde" ein Wort ohne Großbuchstaben
+  und ohne Satzzeichen ist und am Satzriegel vorbeikommt. Zwölf feste
+  Beispiele laufen, bevor die Prüfung die Seite ansieht (`REGELN.md`
+  6e). Dazu die beiden Riegel aus `pruefwerk` mit Gegenprobe in allen
+  drei Anführungsarten, die Lückenprüfung, die Namensprüfung und eine
+  Rauchprobe im Browser, die die Seite mit und ohne Profil zeichnet
+  und am Ergebnis nachsieht, dass der Genitiv aus der Tabelle kommt.
 
 * **2026-11-18** · `haeuser-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 57, aus 34 und 38) — die dreizehnte von zweiundzwanzig

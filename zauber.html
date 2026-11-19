@@ -274,6 +274,7 @@ details.pk .in p{margin-bottom:10px;}
 .d-satz{background:var(--messing-bg);border-radius:13px;padding:14px 16px;font-size:14.8px;}
 .d-fuss{font-size:14.3px;color:var(--leise);margin-top:12px;}
 .d-fuss b{color:var(--nacht);}
+.taf-fuss{margin:12px 0 0;}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -703,6 +704,207 @@ window.AC_HIMMEL={
 };
 })();
 
+/* ── Die Worte für das, was dein Bild trifft ──────────────────
+   Mandy am 29.10.: „die Textblöcke sind noch zu bla in teile. Also
+   deine Sprachwahl ist noch immer nicht passend genug."
+
+   Der Grund dafür ist derselbe wie bei dem Satz über die Umrisse
+   (REGELN.md Abschnitt 6d): Ein Satz aus zwei Bausteinen wird nur
+   dann konkret, wenn **beide** Bausteine etwas bezeichnen, das man
+   sich vorstellen kann — und wenn am Ende eine Folge steht.
+
+   Hier sind es drei Bausteine:
+
+     ZIEL     — was dieser Punkt in deinem Leben ist. Kein
+                Planetenname, sondern das, worum es geht.
+     WANDERER — was der laufende Planet damit macht. Ein Verb.
+     FOLGE    — was dabei herauskommt. Unterschiedlich für harte
+                und weiche Winkel.
+
+   Daraus: „Saturn prüft gerade, wofür du gehalten werden willst.
+   Was davon nur Anspruch war, hält diese Zeit nicht."
+
+   Zehn Wanderer mal zwölf Ziele ergeben 120 Paare; einzeln
+   geschrieben wären sie in zwei Jahren noch nicht fertig und jedes
+   dritte wäre schlecht. Zusammengesetzt sind es 42 Texte, und jeder
+   einzelne davon kann gut sein. */
+
+/* ── Beugung ──────────────────────────────────────────────────
+   Bis zum 2.11. setzten die Überschriften immer dasselbe „dein"
+   oder „deine" ein: „Jupiter auf dein Mond", „Mars quer zu dein
+   Mars", „Saturn gegenüber dein Auftreten". Elf Köpfe auf der
+   Startseite, keiner richtig — und es sind genau die Karten, von
+   denen jemand einen Screenshot macht (PRODUKT.md 2, Punkt 3).
+
+   Der Grund war nicht ein vergessenes Wort, sondern eine fehlende
+   Angabe: Die Vorlage kannte weder den Fall, den die Formel
+   verlangt, noch das Geschlecht des Punktes dahinter. Beides steht
+   jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
+   Formel — und die Anzeige setzt nur noch zusammen. */
+
+/* „dein" in den drei Fällen, die hier vorkommen. Mehr braucht es
+   nicht: Ein Genitiv steht in keiner dieser Formeln. */
+var B_DEIN = {
+ m:{nom:'dein',  akk:'deinen', dat:'deinem'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem'}};
+
+/* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
+   entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
+
+   `g`     — das grammatische Geschlecht: m, w oder s.
+   `wort`  — das Hauptwort ohne „dein", damit die Beugung davor
+             passen kann.
+   `beugt` — nur dort, wo sich das Hauptwort selbst ändert: „dem
+             Aszendenten", „der öffentlichen Seite". Deutsche
+             Substantive stehen im Singular sonst in allen drei
+             Fällen gleich, deshalb ist das die Ausnahme.
+   `laie`  — derselbe Punkt in Alltagssprache, mit eigenem
+             Geschlecht: „dein Aszendent" ist männlich, „dein
+             Auftreten" sächlich. */
+var B_ZIEL = {
+ Sonne:  {g:'w', wort:'Sonne',   was:'wofür du gehalten werden willst'},
+ Mond:   {g:'m', wort:'Mond',    was:'was du brauchst, damit es sich sicher anfühlt'},
+ Merkur: {g:'m', wort:'Merkur',  was:'wie du denkst und was du mit anderen ausmachst'},
+ Venus:  {g:'w', wort:'Venus',   was:'was dir nah ist und was du dir wert bist'},
+ Mars:   {g:'m', wort:'Mars',    was:'womit du anfängst und wofür du kämpfst'},
+ Jupiter:{g:'m', wort:'Jupiter', was:'wo du dir etwas zutraust'},
+ Saturn: {g:'m', wort:'Saturn',  was:'wo du dich zusammenreißt und streng mit dir bist'},
+ Uranus: {g:'m', wort:'Uranus',  was:'wo du nicht mitmachst, wie man es macht'},
+ Neptun: {g:'m', wort:'Neptun',  was:'wofür du dich begeisterst, ohne es prüfen zu wollen'},
+ Pluto:  {g:'m', wort:'Pluto',   was:'wo es bei dir um alles oder nichts geht'},
+ ASC:    {g:'m', wort:'Aszendent',
+          beugt:{akk:'Aszendenten', dat:'Aszendenten'},
+          laie:{g:'s', wort:'Auftreten'},
+          was:'wie du ankommst, bevor du etwas gesagt hast'},
+ MC:     {g:'s', wort:'MC',
+          laie:{g:'w', wort:'öffentliche Seite',
+                beugt:{dat:'öffentlichen Seite'}},
+          was:'wohin du öffentlich gehst und wofür man dich kennt'}};
+
+/* Den Punkt in der Sprache holen, die zur Stufe gehört. Gibt es
+   kein Alltagswort, steht dort der Name — „dein Mond" ist auf
+   Stufe 0 kein Fachwort (REGELN.md 2a). */
+function B_PUNKT(k, laie){
+  var z = B_ZIEL[k];
+  if(!z) return {g:'m', wort:String(k)};
+  if(laie && z.laie) return z.laie;
+  return z;
+}
+
+/* Setzt „dein" und das Hauptwort im verlangten Fall zusammen.
+   Die einzige Stelle, an der das passiert. */
+function B_BEUGE(p, fall){
+  var d = (B_DEIN[p.g] || B_DEIN.m)[fall] || B_DEIN.m.nom;
+  var w = (p.beugt && p.beugt[fall]) || p.wort;
+  return d + ' ' + w;
+}
+
+/* Die Winkel in zwei Registern. „Konjunktion" verschlüsselt einen
+   Rechenweg und bleibt auf Stufe 0 draußen (REGELN.md 2a); „auf"
+   sagt dasselbe und braucht keine Vorbildung.
+
+   Jede Formel trägt den Fall, den sie verlangt: „auf" steht hier
+   auf die Frage wohin und zieht den Akkusativ, „zu", „mit", „von"
+   und „gegenüber" ziehen den Dativ. */
+var B_WINKELWORT = {
+ 'Konjunktion':{wort:'auf',               fall:'akk'},
+ 'Opposition' :{wort:'gegenüber',         fall:'dat'},
+ 'Quadrat'    :{wort:'quer zu',           fall:'dat'},
+ 'Trigon'     :{wort:'im Einklang mit',   fall:'dat'},
+ 'Sextil'     :{wort:'in Reichweite von', fall:'dat'}};
+var B_WINKELNOT = {wort:'bei', fall:'dat'};
+
+/* Ab Stufe 2 steht der Fachname. „Jupiter Konjunktion dein Mond"
+   waren zwei Nominative nebeneinander und sagten nicht, was wozu
+   steht; „in Konjunktion zu deinem Mond" sagt es. */
+var B_WINKELTECH = {vor:'in', nach:'zu', fall:'dat'};
+
+/* Was ein laufender Planet mit dem macht, was er berührt.
+   `tut` ist ein Verb mit offener Stelle dahinter, `hart` und
+   `weich` sind die Folgen — die eine für Konjunktion, Opposition
+   und Quadrat, die andere für Trigon und Sextil. */
+var B_WAND = {
+ Mond:{tut:'streift gerade',
+   hart:'Für ein paar Stunden liegt das näher an der Oberfläche als sonst. Es geht vorbei, bevor du etwas daraus machen musst.',
+   weich:'Ein paar Stunden, in denen das leichter von der Hand geht. Nichts, worauf man planen kann — aber brauchbar, wenn es gerade ansteht.'},
+ Merkur:{tut:'bringt gerade zur Sprache',
+   hart:'Es wird darüber geredet, und zwar nicht unbedingt so, wie du es gern hättest. Ein Gespräch, eine Nachricht, ein Satz, der hängen bleibt.',
+   weich:'Es lässt sich in diesen Tagen leichter aussprechen als sonst. Wenn etwas gesagt werden muss, ist jetzt der günstigere Moment.'},
+ Venus:{tut:'macht gerade weicher',
+   hart:'Du willst, dass es angenehm bleibt, und gibst dabei schneller nach, als du es später gutheißt.',
+   weich:'Es fällt leichter, sich darüber zu einigen. Gut für ein Gespräch, das sonst zäh wird.'},
+ Sonne:{tut:'beleuchtet gerade',
+   hart:'Ein paar Tage lang steht das im Mittelpunkt, ob du willst oder nicht. Danach ist es wieder eines unter vielen.',
+   weich:'Ein paar Tage, in denen das sichtbar wird, ohne dass du drängen musst.'},
+ Mars:{tut:'bringt gerade in Bewegung',
+   hart:'Die Sache wird schnell heiß. Entweder du packst sie an, oder sie kommt als Gereiztheit bei jemandem heraus, der nichts dafür kann.',
+   weich:'Du kommst hier gerade leicht in Bewegung. Was du jetzt anfängst, fängt wirklich an.'},
+ Jupiter:{tut:'macht gerade größer',
+   hart:'Es wird mehr, als hineinpasst. Das fühlt sich gut an und wird erst später zum Problem — meist, wenn der Kalender es einholt.',
+   weich:'Hier geht in diesen Monaten mehr als sonst. Türen gehen auf, und es kostet weniger Überredung als üblich.'},
+ Saturn:{tut:'prüft gerade',
+   hart:'Was daran nur Anspruch war, hält diese Zeit nicht. Was echt ist, steht hinterher fester als vorher — aber es dauert, und es fühlt sich zwischendurch nach Rückschritt an.',
+   weich:'Hier lässt sich gerade etwas festmachen, das sonst nicht hält. Keine aufregende Zeit, aber eine, nach der etwas steht.'},
+ Uranus:{tut:'reißt gerade auf',
+   hart:'Das verträgt gerade keine Fortsetzung wie bisher. Entweder du änderst es, oder es wird von außen geändert — das ist der unangenehmere Weg.',
+   weich:'Hier ist gerade Luft für etwas, das du sonst nicht gewagt hättest. Der Widerstand dagegen ist kleiner als üblich.'},
+ Neptun:{tut:'macht gerade unscharf',
+   hart:'Die Umrisse verschwimmen: Du siehst hier gerade schlechter, was wirklich ist und was du dir dazudenkst. Das ist der Moment, in dem man jemanden fragt, der nicht beteiligt ist.',
+   weich:'Hier darf gerade etwas offen bleiben, ohne dass es schadet. Gut für alles, was nicht entschieden werden muss.'},
+ Pluto:{tut:'baut gerade um',
+   hart:'Das geht nicht in Schritten, die du dir aussuchst, und es dauert Jahre statt Wochen. Was dabei verschwindet, war meistens schon vorher geborgt.',
+   weich:'Hier bekommst du in diesen Jahren mehr Gewicht, ohne dass du dafür lauter werden musst.'}};
+
+/* Die drei Tempi. Daraus entsteht die Angabe, wie lange das gilt —
+   ohne sie ist „Saturn auf deiner Sonne" ein Satz ohne Zeitraum. */
+var B_TEMPO = {
+ schnell:{name:'Stunden', satz:'Das ist morgen vorbei.'},
+ mittel: {name:'Tage',    satz:'Das zieht ein paar Tage.'},
+ langsam:{name:'Monate',  satz:'Das ist keine Stimmung, das ist ein Abschnitt.'}};
+
+/* Mehrfachdurchgänge. Ein rückläufiger Wanderer kreuzt dieselbe
+   Stelle bis zu dreimal — und die drei Termine fühlen sich
+   unterschiedlich an. Das ist eine der Sachen, die fast keine App
+   zeigt, obwohl sie leicht zu rechnen ist. */
+var B_DURCHGANG = {
+ 1: {von3:'Das erste von drei Malen. Jetzt zeigt sich, worum es geht; entschieden wird es noch nicht.',
+     von2:'Das erste von zwei Malen. Jetzt kommt das Thema auf den Tisch.'},
+ 2: {von3:'Das zweite von drei Malen, rückwärts. Jetzt geht es noch einmal von innen durch — unangenehmer als beim ersten Mal und meist der Teil, an dem sich etwas dreht.',
+     von2:'Das zweite und letzte Mal. Jetzt steht es fest.'},
+ 3: {von3:'Das dritte und letzte Mal. Was beim zweiten Durchgang klar geworden ist, wird jetzt gemacht.'}};
+
+var B_KOPF = {
+ titel:'Was dein Bild gerade trifft',
+ sub:'Welche Punkte bei dir berührt werden, von wem, und wie nah das dran ist.',
+ nix:'Gerade steht nichts innerhalb der Orbis-Grenzen auf deinem Bild. Das ist selten und hält nie lange.',
+ nahVor:'Abstand',
+ exaktVor:'Genau am',
+ laeuftVor:'Gilt für',
+ rueck:'läuft rückwärts',
+ mehrVor:'Alle Berührungen anzeigen',
+ wenigerVor:'Weniger anzeigen',
+ schnellTitel:'Dazu heute, nur für Stunden',
+ schnellSub:'Mond, Merkur, Venus und Sonne ziehen schnell vorbei. Sie machen den Tag, nicht den Abschnitt.',
+ tech:'{wanderer} {grad} {zeichen} {aspekt} {ziel} {gradZ} {zeichenZ}, Orbis {ab}°'};
+
+var B_STRAHL = {
+ titel:'Die nächsten zwölf Monate',
+ sub:'Die langsamen Wanderer auf deinem Bild, mit dem Tag, an dem der Winkel genau aufgeht. Tipp eine Zeile an, dann steht da, was sie heißt.',
+ nix:'In den nächsten zwölf Monaten geht kein Winkel der langsamen Wanderer auf deinem Bild genau auf. Das kommt vor — dann sind die Jahre davor und danach die dichteren.',
+ heute:'heute',
+ jetztMarke:'Hier stehst du',
+ mehr:'Noch {n} weitere anzeigen',
+ weniger:'Weniger anzeigen',
+ legende:'Gerechnet ist der Tag, an dem der Winkel genau aufgeht. Was er bedeutet, ist Deutung — und die prüfst du an dir.',
+ wieder:'Dieselbe Begegnung noch einmal — was sie heißt, steht beim ersten Mal.',
+ steht:'Läuft schon. Steht oben unter „Was dein Bild gerade trifft".',
+ inTagen:'in {n} T.',
+ inMonaten:'in {n} Mon.',
+ tech:'{wanderer} {aspekt} {ziel} exakt am {datum}{rueck}{durchgang}',
+ techRueck:', rückläufig',
+ techDurchgang:', Durchgang {n} von {alle}'};
+
 /* ── Zauber: Planeten, Zutaten, Steine, Ziele ──────────── */
 
 var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn'];
@@ -1029,20 +1231,203 @@ var HAUSFELD=['dein Auftreten und wie du wirkst','dein Geld, deinen Besitz und d
 var HERRSCHER=['Mars','Venus','Merkur','Mond','Sonne','Merkur',
                'Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
 
-/* ── Zauber: Rechnung und Darstellung ─────────────────── */
-function nrm(x){x=x%360;return x<0?x+360:x;}
+/* ── Die Sätze der Zauberseite ─────────────────────────────────
+   Aufgabe 58, aus 34 und 38. Bis zum 2026-11-18 standen diese
+   siebenundneunzig Zeichenketten in `zauber-app.js`, zwischen der
+   Rechnung. Was in der Anzeige steht, zieht beim Umzug in eine
+   andere Umgebung nicht mit (`PRODUKT.md` Abschnitt 7): Rechnen
+   weiß nichts von Sätzen.
+
+   Die Lücken heißen `{so}` und werden von `zFuell` gefüllt.
+   `bau-zauber.py` zählt nach, dass jede Lücke, die hier steht, auch
+   wirklich gefüllt wird — eine, die niemand füllt, stünde sonst als
+   „{bereich}" auf der Seite.
+
+   „dein" steht hier in gewachsenen Sätzen („deine Geburtsdaten",
+   „Dein Tag"): feste Wörter, deren Geschlecht sich nicht ändert. Wo
+   die Seite „dein" vor etwas setzt, das wechselt, steht eine Lücke,
+   und die Form bildet `B_BEUGE` aus `kern/bahn-daten.js` — die eine
+   Stelle, die ein Geschlecht kennt.
+
+   ── Zwei Formen, die sich mit dem Planeten ändern ──
+   Beide standen hier falsch, und beide fielen nur an bestimmten
+   Tagen auf:
+
+     1 · „der Tag des Sonne". Die Genitivtabelle `gen` gibt es seit
+         dem ersten Tag der Seite, und sie wurde an einer von zwei
+         Stellen benutzt. Die andere klebte den Namen hinter „des" —
+         sonntags, montags und freitags stand dort die falsche Form,
+         an den übrigen vier Tagen die richtige.
+     2 · „Sonnestunde". Die Anzeige hängte „stunde" an den Namen des
+         Stundenherrschers. Für sechs der sieben geht das auf; die
+         Sonne braucht ein Fugen-n.
+
+   Dieselbe Fehlerklasse wie bei „dein" (`REGELN.md` 6f): Jede Form,
+   die sich mit dem eingesetzten Wort ändert, braucht ihre eigene
+   Tabelle — eine Tabelle für einen Fall deckt den anderen nicht.
+   Deshalb stehen beide Formen hier ausgeschrieben, und
+   `bau-zauber.py` hält sie gegen feste Beispiele und lässt keinen
+   Artikel und keine Endung mehr an eine Lücke heran. */
+var ZT_T = {
+
+ /* ── Formen, die am Planeten hängen ──────────────────────── */
+
+ /* Genitiv mit Artikel: „Stunde der Sonne", „der Tag des Mondes". */
+ gen:{Sonne:'der Sonne', Mond:'des Mondes', Merkur:'des Merkur',
+      Venus:'der Venus', Mars:'des Mars', Jupiter:'des Jupiter',
+      Saturn:'des Saturn'},
+
+ /* Das zusammengesetzte Wort, ganz. Nicht Name plus Endung:
+    „Sonnenstunde" trägt ein Fugen-n, das keine Regel aus dem Namen
+    ableitet. */
+ stunde:{Sonne:'Sonnenstunde', Mond:'Mondstunde', Merkur:'Merkurstunde',
+         Venus:'Venusstunde', Mars:'Marsstunde', Jupiter:'Jupiterstunde',
+         Saturn:'Saturnstunde'},
+
+ /* Das Haus steht an acht Stellen im Text. Es steht hier einmal,
+    mit seinem Geschlecht — „dein 5. Haus" bildet damit B_BEUGE und
+    nicht die Anzeige. */
+ haus:{g:'s', wort:'{n}. Haus'},
+
+ /* ── Jetzt: Planetentag, Planetenstunde, Mond ─────────────── */
+ jzKopf:'Jetzt',
+ jzPolarGross:'Planetenstunden gibt es hier gerade nicht',
+ jzPolar:'<p>An diesem Ort geht die Sonne zurzeit nicht auf oder nicht unter. '+
+   'Planetenstunden teilen den Tag zwischen Sonnenauf- und -untergang — ohne '+
+   'die beiden gibt es nichts zu teilen.</p>',
+ jzJetzt:'Jetzt gerade',
+ jzStunde:'Stunde {gen}',
+ jzStundeSatz:'<p>{kurz}. Diese Stunde läuft noch bis <b>{bis}</b>, dann '+
+   'übernimmt {naechster}.</p>',
+ jzTagSatz:'<p>Heute ist <b>{tag}</b>, der Tag {gen} — das färbt alle 24 '+
+   'Stunden. Es ist die {nr}. Stunde seit Sonnenaufgang{nacht}, sie dauert '+
+   '{min} Minuten.</p>',
+ jzNacht:' (Nachtstunde)',
+ jzMond:'Mond',
+ jzMondZeichen:'{glyphe} {zeichen}',
+ jzMondHaus:'<br>{deinHaus}',
+ jzSonne:'Sonne',
+ jzSonneZeit:'auf {auf} · unter {unter}',
+ jzOrt:'<br>{ort}',
+ jzLauf:'Mond ohne Lauf',
+ jzLaufJa:'ja, seit {seit}<br>bis {bis}',
+ jzLaufNein:'nein<br>Wechsel {bis}',
+ jzLeer:'<b>Der Mond läuft gerade leer.</b> Seit seinem letzten Aspekt '+
+   '({winkel} zu {planet} um {zeit}) berührt er bis zum Zeichenwechsel nichts '+
+   'mehr. Die Überlieferung ist hier ungewöhnlich einhellig: <b>nichts Neues '+
+   'anfangen</b>. Was jetzt beginnt, verläuft im Sand — was jetzt endet, endet '+
+   'gut. Vorbei ist es {bis} Uhr, dann tritt der Mond in {zeichen}.',
+
+ /* ── Die Stundentafel ─────────────────────────────────────── */
+ tfLeer:'An diesem Ort geht die Sonne gerade nicht auf oder unter.',
+ tfFuss:'Von Sonnenaufgang bis Sonnenaufgang. Die Stunden sind ungleich lang — '+
+   'im Sommer dauert eine Tagstunde deutlich länger als eine Nachtstunde, im '+
+   'Winter umgekehrt. Dunkel hinterlegt sind die Nachtstunden.',
+
+ /* ── Die sieben Planeten als Werkstoff ────────────────────── */
+ plMeta:'{tag} · {metall}',
+ plKurz:'<p><b>{kurz}.</b> {fuer}.</p>',
+ plTransit:'Läuft gerade durch {zeichen}',
+ plTransitHaus:'Läuft gerade durch {zeichen} — bei dir das {haus}: {feld}',
+ /* Die Karte bringt ihre Hülle mit: „pl-dein" ist eine Klasse, und
+    eine Klasse mit „dein" darin gehört nicht in die Anzeige — dort
+    riegelt pruefe_anzeige_ohne_dein jedes „dein" ab, ohne nach
+    Klasse oder Satz zu fragen. */
+ plNatal:'<div class="pl-dein"><b>Bei dir geboren in {zeichen}</b>, im '+
+   '{haus}.{schmack}</div>',
+ plSchmack:' {satz} <i>Was bei dir nicht trägt: {nicht}.</i>',
+ plFarben:'Farben',
+ plZutaten:'Zutaten',
+ plSteine:'Steine',
+
+ /* ── Wofür du gerade arbeitest ────────────────────────────── */
+ zUnd:' und ',
+ zWann:'<b>Wann:</b> {wann}',
+ zJetzt:'Es ist <b>gerade</b> {stunde}, noch bis {bis}. Wenn du eins davon '+
+   'machen willst, dann jetzt.',
+ zDein:'<div class="z-dein"><b>Bei dir gerade:</b> {planet} läuft durch '+
+   '{zeichen}, {deinHaus} — '+
+   '{feld}. Dorthin gehört das Thema im Moment, auch wenn du eigentlich an '+
+   'etwas anderes gedacht hast.',
+ zKlang:' <br><br><b>Und wie es bei dir klingen muss:</b> {satz}',
+ zFaden:'<br><br><b>{deinZielhaus}</b> steht in {zeichen}, Herrscher ist '+
+   '{herr} — bei dir in {herrZeichen}, im {herrHaus}. Das ist der Faden, an '+
+   'dem dieses Thema bei dir hängt.',
+ zLeer:'Ohne Chart bleibt es allgemein. Unter <a href="profile.html">Profile</a> '+
+   'deine Geburtsdaten anlegen — dann steht hier, durch welches deiner Häuser '+
+   '{planet} gerade läuft und wie ein Ritual bei dir klingen muss.',
+ zZutaten:'Zutaten',
+ zSteine:'Steine',
+ zMond:'Mond',
+
+ /* ── Zutaten und Steine ───────────────────────────────────── */
+ filterAlle:'alle',
+ filterPlanet:'{glyphe} {planet}',
+ stWasserJa:'Wasser ja',
+ stWasserNein:'kein Wasser',
+ stSonneJa:'Sonne ja',
+ stSonneNein:'bleicht in der Sonne',
+ pfReinigen:'Reinigen',
+ pfLaden:'Aufladen',
+ pfWaehlen:'Aussuchen',
+
+ /* ── Dein eigener Draht ───────────────────────────────────── */
+ dtLeer:'<b>Hier würde dein eigener Faden stehen.</b><br><br>Welcher Planet '+
+   'dich regiert, welcher Stein deiner ist, in welcher Stunde du am stärksten '+
+   'arbeitest — dafür brauche ich einmal deine Geburtsdaten. '+
+   '<a href="profile.html">Chart anlegen</a>',
+ dtGross:'Dein Planet ist {herr}',
+ dtSatz:'<p>Dein Aszendent steht in {zeichen}, und {zeichen} wird von {herr} '+
+   'regiert. Damit ist {herr} dein <b>Chartherrscher</b> — der Planet, durch '+
+   'den bei dir alles andere läuft. Bei dir steht er in {herrZeichen}, im '+
+   '{herrHaus}.</p>',
+ dtTag:'Dein Tag',
+ dtTagSatz:'<span>Was du an diesem Tag anfängst, hat den kürzesten Weg.</span>',
+ dtMetall:'Dein Metall',
+ dtFarben:'Deine Farben',
+ dtSteine:'Deine Steine',
+ dtZutaten:'Deine Zutaten',
+ dtLichter:'Sonne und Mond',
+ dtLichterSatz:'Sonne im {sonne}, Mond im {mond}',
+ dtFuss:'Der erste Stein, den du dir zulegst, wenn du einen aussuchen willst '+
+   'statt auf einen zu warten: <b>{stein}</b>. Nicht weil er der stärkste '+
+   'wäre, sondern weil er zu dem Planeten gehört, der bei dir ohnehin alles '+
+   'durchläuft.',
+ dtKeinStein:'Bergkristall',
+
+ /* ── Profilwahl ───────────────────────────────────────────── */
+ pwLabel:'Profil',
+ pwEigen:' (ich)'
+};
+
+/* Die zwölf Zeichen mit ihrem Schriftzeichen. Die Reihenfolge ab
+   Widder ist die Rechnung, nicht der Geschmack — `bau-zauber.py`
+   hält sie dagegen. */
+var ZT_ZEICHEN = [
+ {n:'Widder',     z:'♈'}, {n:'Stier',      z:'♉'},
+ {n:'Zwillinge',  z:'♊'}, {n:'Krebs',      z:'♋'},
+ {n:'Löwe',       z:'♌'}, {n:'Jungfrau',   z:'♍'},
+ {n:'Waage',      z:'♎'}, {n:'Skorpion',   z:'♏'},
+ {n:'Schütze',    z:'♐'}, {n:'Steinbock',  z:'♑'},
+ {n:'Wassermann', z:'♒'}, {n:'Fische',     z:'♓'}];
+
+/* ── Zauber: Rechnung und Darstellung ───────────────────
+   Hier steht kein Satz. Die Vorlagen stehen in ZT_T
+   (zauber-texte.js), `zFuell` setzt ein, und „dein" vor etwas, das
+   wechselt, bildet B_BEUGE aus kern/bahn-daten.js — die eine Stelle,
+   die ein Geschlecht kennt (Aufgabe 58). bau-zauber.py bricht ab,
+   sobald hier wieder eine Zeichenkette mit Sprache auftaucht.
+
+   Und es wird hier nichts mehr angeklebt: „Sonne" plus „stunde" gab
+   „Sonnestunde", der Name hinter „des" gab „der Tag des Sonne". Die
+   fertigen Formen stehen in ZT_T.stunde und ZT_T.gen; bau-zauber.py
+   lässt keinen Artikel und keine Endung mehr an eine Lücke heran. */
 function jetztJD(){var n=new Date();
  return jdFromUT(n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate(),
    n.getUTCHours()+n.getUTCMinutes()/60+n.getUTCSeconds()/3600);}
-function datVon(jd){ return new Date((jd-2440587.5)*86400000); }
 function uhr(jd){ return datVon(jd).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}); }
 function tagUhr(jd){ var d=datVon(jd);
  return d.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'})+', '+uhr(jd); }
-function lonVon(k,jd){var T=(jd-2451545)/36525;
- return k==='Sonne'?sunLon(T):(k==='Mond'?moonLon(T):geo(k,T));}
-/* Genitiv — „der Tag des Sonne" geht nicht */
-var GEN={Sonne:'der Sonne',Mond:'des Mondes',Merkur:'des Merkur',Venus:'der Venus',
-         Mars:'des Mars',Jupiter:'des Jupiter',Saturn:'des Saturn'};
 /* Datum nur nennen, wenn es nicht heute ist */
 function wannKurz(jd){
   var d=datVon(jd), n=new Date();
@@ -1053,21 +1438,31 @@ function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,f
  return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
 function el(i){ return document.getElementById(i); }
 
-var ZEI=[['Widder','♈'],['Stier','♉'],['Zwillinge','♊'],['Krebs','♋'],
- ['Löwe','♌'],['Jungfrau','♍'],['Waage','♎'],['Skorpion','♏'],
- ['Schütze','♐'],['Steinbock','♑'],['Wassermann','♒'],['Fische','♓']];
-
-/* ── Profil ───────────────────────────────────────────── */
-var gewaehlt=null, zielWahl='geld', planetWahl=null;
-function chartVon(p){
-  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
-  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
-  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
-  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
-   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),
-   Uranus:geo('Uranus',T),Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
+/* ── Sätze einsetzen ──────────────────────────────────── */
+var T=ZT_T;
+/* Eine Lücke `{so}` je Schlüssel, in einem Durchgang. */
+function zFuell(form,werte){
+  var s=String(form||'');
+  for(var k in werte) if(werte.hasOwnProperty(k))
+    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
+  return s;
 }
-function hausVon(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
+function zGross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+/* Die Zeichen stehen einmal, in ZT_ZEICHEN. */
+function zZeichen(i){ return ZT_ZEICHEN[i].n; }
+function zGlyphe(i){ return ZT_ZEICHEN[i].z; }
+/* „5. Haus" an einer Stelle, und „dein 5. Haus" über B_BEUGE —
+   das Geschlecht steht in den Daten, nicht hier. */
+function zHaus(n){ return zFuell(T.haus.wort,{n:n}); }
+function zDeinHaus(n){ return B_BEUGE({g:T.haus.g,wort:zHaus(n)},'nom'); }
+
+/* ── Profil ─────────────────────────────────────────────
+   `gewaehlt`, `chartVon`, `haus`, `lon`, `nrm` und `datVon` stehen in
+   engine.js. Bis zum 2026-11-18 standen fünf davon hier ein zweites
+   Mal, Wort für Wort gleich — eine zweite Himmelsrechnung, die
+   REGELN.md Abschnitt 5 verbietet und die Namensprüfung unten jetzt
+   nicht mehr durchlässt. */
+var zielWahl='geld', planetWahl=null;
 function profil(){
   var alle=[]; try{ alle=AC_P.alle()||[]; }catch(e){}
   if(!alle.length) return null;
@@ -1088,43 +1483,42 @@ function ort(){
 function jetztBauen(){
   var jd=jetztJD(), O=ort();
   var st=AC_HIMMEL.planetenStunde(jd,O.lat,O.lon);
-  var ml=lonVon('Mond',jd), zi=Math.floor(nrm(ml)/30);
+  var ml=lon('Mond',jd), zi=Math.floor(nrm(ml)/30);
   var ol=AC_HIMMEL.ohneLauf(jd);
   var P=chart();
 
   var h='<div class="jz">';
   if(st.polar){
-    h+='<div class="jz-k">Jetzt</div><div class="jz-gr">Planetenstunden gibt es hier gerade nicht</div>'+
-      '<p>An diesem Ort geht die Sonne zurzeit nicht auf oder nicht unter. Planetenstunden teilen den '+
-      'Tag zwischen Sonnenauf- und -untergang — ohne die beiden gibt es nichts zu teilen.</p></div>';
+    h+='<div class="jz-k">'+T.jzKopf+'</div>'+
+      '<div class="jz-gr">'+T.jzPolarGross+'</div>'+T.jzPolar+'</div>';
     el('jetztbox').innerHTML=h; return;
   }
   var pd=PLANET[st.tagesherr], ph=PLANET[st.herr];
-  h+='<div class="jz-k">Jetzt gerade</div>'+
-    '<div class="jz-gr"><span class="gl">'+ph.zchn+'</span> Stunde '+GEN[st.herr]+'</div>'+
-    '<p>'+esc(ph.kurz)+'. Diese Stunde läuft noch bis <b>'+uhr(st.bis)+'</b>, dann übernimmt '+
-    AC_HIMMEL.CHALD[(AC_HIMMEL.CHALD.indexOf(st.herr)+1)%7]+'.</p>'+
-    '<p>Heute ist <b>'+pd.tag+'</b>, der Tag des '+st.tagesherr+' — das färbt alle 24 Stunden. '+
-    'Es ist die '+st.nr+'. Stunde seit Sonnenaufgang'+(st.nacht?' (Nachtstunde)':'')+
-    ', sie dauert '+Math.round(st.laengeMin)+' Minuten.</p>';
+  var naechster=AC_HIMMEL.CHALD[(AC_HIMMEL.CHALD.indexOf(st.herr)+1)%7];
+  h+='<div class="jz-k">'+T.jzJetzt+'</div>'+
+    '<div class="jz-gr"><span class="gl">'+ph.zchn+'</span> '+
+    zFuell(T.jzStunde,{gen:T.gen[st.herr]})+'</div>'+
+    zFuell(T.jzStundeSatz,{kurz:esc(ph.kurz),bis:uhr(st.bis),naechster:naechster})+
+    zFuell(T.jzTagSatz,{tag:pd.tag,gen:T.gen[st.tagesherr],nr:st.nr,
+      nacht:(st.nacht?T.jzNacht:''),min:Math.round(st.laengeMin)});
 
   h+='<div class="jz-gitter">';
-  h+='<div class="jzk"><b>Mond</b>'+ZEI[zi][1]+' '+ZEI[zi][0]+
-     (P?'<br>dein '+hausVon(P,ml)+'. Haus':'')+'</div>';
-  h+='<div class="jzk"><b>Sonne</b>auf '+uhr(st.auf)+' · unter '+uhr(st.unter)+
-     (O.name?'<br>'+esc(O.name):'')+'</div>';
+  h+='<div class="jzk"><b>'+T.jzMond+'</b>'+
+     zFuell(T.jzMondZeichen,{glyphe:zGlyphe(zi),zeichen:zZeichen(zi)})+
+     (P?zFuell(T.jzMondHaus,{deinHaus:zDeinHaus(haus(P,ml))}):'')+'</div>';
+  h+='<div class="jzk"><b>'+T.jzSonne+'</b>'+
+     zFuell(T.jzSonneZeit,{auf:uhr(st.auf),unter:uhr(st.unter)})+
+     (O.name?zFuell(T.jzOrt,{ort:esc(O.name)}):'')+'</div>';
   if(ol){
-    h+='<div class="jzk'+(ol.leer?' warn':'')+'"><b>Mond ohne Lauf</b>'+
-      (ol.leer?'ja, seit '+uhr(ol.seit)+'<br>bis '+wannKurz(ol.bis)
-             :'nein<br>Wechsel '+wannKurz(ol.bis))+'</div>';
+    h+='<div class="jzk'+(ol.leer?' warn':'')+'"><b>'+T.jzLauf+'</b>'+
+      (ol.leer?zFuell(T.jzLaufJa,{seit:uhr(ol.seit),bis:wannKurz(ol.bis)})
+             :zFuell(T.jzLaufNein,{bis:wannKurz(ol.bis)}))+'</div>';
   }
   h+='</div>';
   if(ol&&ol.leer){
-    h+='<div class="jz-warn"><b>Der Mond läuft gerade leer.</b> Seit seinem letzten Aspekt '+
-      '('+ol.letzter.name+' zu '+ol.letzter.planet+' um '+uhr(ol.letzter.jd)+') berührt er bis zum '+
-      'Zeichenwechsel nichts mehr. Die Überlieferung ist hier ungewöhnlich einhellig: '+
-      '<b>nichts Neues anfangen</b>. Was jetzt beginnt, verläuft im Sand — was jetzt endet, endet gut. '+
-      'Vorbei ist es '+wannKurz(ol.bis)+' Uhr, dann tritt der Mond in '+ZEI[ol.naechstesZeichen][0]+'.</div>';
+    h+='<div class="jz-warn">'+zFuell(T.jzLeer,{winkel:ol.letzter.name,planet:ol.letzter.planet,
+      zeit:uhr(ol.letzter.jd),bis:wannKurz(ol.bis),
+      zeichen:zZeichen(ol.naechstesZeichen)})+'</div>';
   }
   h+='</div>';
   el('jetztbox').innerHTML=h;
@@ -1134,43 +1528,42 @@ function jetztBauen(){
 function tafelBauen(){
   var jd=jetztJD(), O=ort();
   var t=AC_HIMMEL.stundenTabelle(jd,O.lat,O.lon);
-  if(!t.length){ el('tafel').innerHTML='<div class="leerk">An diesem Ort geht die Sonne gerade nicht auf oder unter.</div>'; return; }
+  if(!t.length){ el('tafel').innerHTML='<div class="leerk">'+T.tfLeer+'</div>'; return; }
   el('tafel').innerHTML='<div class="taf">'+t.map(function(s){
     return '<div class="tz'+(s.jetzt?' jetzt':'')+(s.nacht?' nacht':'')+'">'+
       '<div class="o"><span class="nr">'+s.nr+'</span><span class="zt">'+uhr(s.von)+'</span></div>'+
       '<div class="u"><span class="gl">'+PLANET[s.herr].zchn+'</span>'+
       '<span class="nm">'+s.herr+'</span></div></div>';
   }).join('')+'</div>'+
-  '<p class="sub" style="margin:12px 0 0;">Von Sonnenaufgang bis Sonnenaufgang. Die Stunden sind '+
-  'ungleich lang — im Sommer dauert eine Tagstunde deutlich länger als eine Nachtstunde, im Winter '+
-  'umgekehrt. Dunkel hinterlegt sind die Nachtstunden.</p>';
+  '<p class="sub taf-fuss">'+T.tfFuss+'</p>';
 }
 
 /* ── Planeten ─────────────────────────────────────────── */
 function planetenBauen(){
   var jd=jetztJD(), P=chart();
   el('planeten').innerHTML=PL.map(function(k){
-    var p=PL.indexOf(k), d=PLANET[k];
-    var tl=lonVon(k,jd), tz=Math.floor(nrm(tl)/30);
+    var d=PLANET[k];
+    var tl=lon(k,jd), tz=Math.floor(nrm(tl)/30);
     var zu=ZUTAT.filter(function(z){return z.p===k;}).map(function(z){return z.n;});
     var se=STEIN.filter(function(s){return s.p===k;}).map(function(s){return s.n;});
-    var transit='Läuft gerade durch '+ZEI[tz][0]+
-      (P?' — bei dir das '+hausVon(P,tl)+'. Haus: '+HAUSFELD[hausVon(P,tl)-1]:'');
+    var transit=P?zFuell(T.plTransitHaus,{zeichen:zZeichen(tz),haus:zHaus(haus(P,tl)),
+                    feld:HAUSFELD[haus(P,tl)-1]})
+                 :zFuell(T.plTransit,{zeichen:zZeichen(tz)});
     var natal='';
     if(P){ var nz=Math.floor(nrm(P[k])/30);
-      natal='<div class="pl-dein"><b>Bei dir geboren in '+ZEI[nz][0]+'</b>, im '+
-        hausVon(P,P[k])+'. Haus.'+
-        (GESCHMACK[k]?' '+GESCHMACK[k][nz][0]+' <i>Was bei dir nicht trägt: '+
-          GESCHMACK[k][nz][1].replace(/\.$/,'')+'.</i>':'')+'</div>'; }
+      natal=zFuell(T.plNatal,{zeichen:zZeichen(nz),
+        haus:zHaus(haus(P,P[k])),
+        schmack:(GESCHMACK[k]?zFuell(T.plSchmack,{satz:GESCHMACK[k][nz][0],
+          nicht:GESCHMACK[k][nz][1].replace(/\.$/,'')}):'')}); }
     return '<details class="pk"><summary>'+
       '<span class="gl">'+d.zchn+'</span>'+
       '<span class="t">'+k+'</span>'+
-      '<span class="w">'+d.tag+' · '+d.metall+'</span></summary>'+
-      '<div class="in"><p><b>'+esc(d.kurz)+'.</b> '+esc(d.fuer)+'.</p>'+
+      '<span class="w">'+zFuell(T.plMeta,{tag:d.tag,metall:d.metall})+'</span></summary>'+
+      '<div class="in">'+zFuell(T.plKurz,{kurz:esc(d.kurz),fuer:esc(d.fuer)})+
       '<p class="pl-t">'+esc(transit)+'</p>'+natal+
-      '<div class="pl-r"><div><b>Farben</b>'+esc(d.farben)+'</div>'+
-      '<div><b>Zutaten</b>'+zu.join(', ')+'</div>'+
-      '<div><b>Steine</b>'+se.join(', ')+'</div></div></div></details>';
+      '<div class="pl-r"><div><b>'+T.plFarben+'</b>'+esc(d.farben)+'</div>'+
+      '<div><b>'+T.plZutaten+'</b>'+zu.join(', ')+'</div>'+
+      '<div><b>'+T.plSteine+'</b>'+se.join(', ')+'</div></div></div></details>';
   }).join('');
 }
 
@@ -1190,37 +1583,32 @@ function zieleBauen(){
 
   /* Persönlicher Anschluss: wo läuft der Hauptplanet gerade bei ihr */
   var haupt=z.pl[0];
-  var tl=lonVon(haupt,jd), tz=Math.floor(nrm(tl)/30);
+  var tl=lon(haupt,jd), tz=Math.floor(nrm(tl)/30);
   h+='<div class="zbox">';
   h+='<div class="z-kopf"><span class="gl">'+PLANET[haupt].zchn+'</span>'+
-     '<div><b>'+z.n+'</b><span>'+z.pl.join(' und ')+'</span></div></div>';
-  h+='<p class="z-wann"><b>Wann:</b> '+esc(z.wann)+'</p>';
+     '<div><b>'+z.n+'</b><span>'+z.pl.join(T.zUnd)+'</span></div></div>';
+  h+='<p class="z-wann">'+zFuell(T.zWann,{wann:esc(z.wann)})+'</p>';
   if(st&&!st.polar&&z.pl.indexOf(st.herr)>=0){
-    h+='<div class="z-jetzt">Es ist <b>gerade</b> '+st.herr+'stunde, noch bis '+uhr(st.bis)+
-      '. Wenn du eins davon machen willst, dann jetzt.</div>';
+    h+='<div class="z-jetzt">'+zFuell(T.zJetzt,{stunde:T.stunde[st.herr],bis:uhr(st.bis)})+'</div>';
   }
   if(P){
-    var hs=hausVon(P,tl);
-    h+='<div class="z-dein"><b>Bei dir gerade:</b> '+haupt+' läuft durch '+ZEI[tz][0]+
-      ', dein '+hs+'. Haus — '+HAUSFELD[hs-1]+'. Dorthin gehört das Thema im Moment, '+
-      'auch wenn du eigentlich an etwas anderes gedacht hast.';
+    var hs=haus(P,tl);
+    h+=zFuell(T.zDein,{planet:haupt,zeichen:zZeichen(tz),
+      deinHaus:zDeinHaus(hs),feld:HAUSFELD[hs-1]});
     var nz=Math.floor(nrm(P[haupt])/30);
-    if(GESCHMACK[haupt]) h+=' <br><br><b>Und wie es bei dir klingen muss:</b> '+GESCHMACK[haupt][nz][0];
+    if(GESCHMACK[haupt]) h+=zFuell(T.zKlang,{satz:GESCHMACK[haupt][nz][0]});
     /* Hausherrscher des Zielhauses */
     var zh=(Math.floor(P.ASC/30)+z.haus-1)%12;
     var hr=HERRSCHER[zh];
     var hrz=Math.floor(nrm(P[hr])/30);
-    h+='<br><br><b>Dein '+z.haus+'. Haus</b> steht in '+ZEI[zh][0]+', Herrscher ist '+hr+
-      ' — bei dir in '+ZEI[hrz][0]+', im '+hausVon(P,P[hr])+'. Haus. '+
-      'Das ist der Faden, an dem dieses Thema bei dir hängt.</div>';
+    h+=zFuell(T.zFaden,{deinZielhaus:zGross(zDeinHaus(z.haus)),zeichen:zZeichen(zh),
+      herr:hr,herrZeichen:zZeichen(hrz),herrHaus:zHaus(haus(P,P[hr]))})+'</div>';
   } else {
-    h+='<div class="z-leer">Ohne Chart bleibt es allgemein. Unter <a href="profile.html">Profile</a> '+
-      'deine Geburtsdaten anlegen — dann steht hier, durch welches deiner Häuser '+haupt+
-      ' gerade läuft und wie ein Ritual bei dir klingen muss.</div>';
+    h+='<div class="z-leer">'+zFuell(T.zLeer,{planet:haupt})+'</div>';
   }
-  h+='<div class="z-zeug"><div><b>Zutaten</b>'+esc(z.ein)+'</div>'+
-     '<div><b>Steine</b>'+esc(z.st)+'</div>'+
-     '<div><b>Mond</b>'+esc(z.mond)+'</div></div>';
+  h+='<div class="z-zeug"><div><b>'+T.zZutaten+'</b>'+esc(z.ein)+'</div>'+
+     '<div><b>'+T.zSteine+'</b>'+esc(z.st)+'</div>'+
+     '<div><b>'+T.zMond+'</b>'+esc(z.mond)+'</div></div>';
   h+='</div>';
 
   h+=z.rituale.map(function(r){
@@ -1231,12 +1619,13 @@ function zieleBauen(){
 }
 
 /* ── Zutaten und Steine ───────────────────────────────── */
+function zPlanetChip(k){ return zFuell(T.filterPlanet,{glyphe:PLANET[k].zchn,planet:k}); }
 var zutFilter='alle';
 function zutatenBauen(){
   var f=el('zutfilter'); f.innerHTML='';
   ['alle'].concat(PL).forEach(function(k){
     var b=document.createElement('button'); b.type='button'; b.className='chip';
-    b.innerHTML=(k==='alle'?'alle':PLANET[k].zchn+' '+k);
+    b.innerHTML=(k==='alle'?T.filterAlle:zPlanetChip(k));
     b.setAttribute('aria-pressed', zutFilter===k);
     b.addEventListener('click',function(){ zutFilter=k; zutatenBauen(); });
     f.appendChild(b);
@@ -1244,7 +1633,7 @@ function zutatenBauen(){
   el('zutaten').innerHTML=ZUTAT.filter(function(z){return zutFilter==='alle'||z.p===zutFilter;})
     .map(function(z){
       return '<div class="zt-k"><div class="kopf"><b>'+esc(z.n)+'</b>'+
-        '<span class="pl">'+PLANET[z.p].zchn+' '+z.p+'</span></div>'+
+        '<span class="pl">'+zPlanetChip(z.p)+'</span></div>'+
         '<div class="art">'+esc(z.art)+'</div><p>'+z.t+'</p></div>';
     }).join('');
 }
@@ -1253,7 +1642,7 @@ function steineBauen(){
   var f=el('steinfilter'); f.innerHTML='';
   ['alle'].concat(PL).forEach(function(k){
     var b=document.createElement('button'); b.type='button'; b.className='chip';
-    b.innerHTML=(k==='alle'?'alle':PLANET[k].zchn+' '+k);
+    b.innerHTML=(k==='alle'?T.filterAlle:zPlanetChip(k));
     b.setAttribute('aria-pressed', stFilter===k);
     b.addEventListener('click',function(){ stFilter=k; steineBauen(); });
     f.appendChild(b);
@@ -1261,49 +1650,46 @@ function steineBauen(){
   el('steine').innerHTML=STEIN.filter(function(s){return stFilter==='alle'||s.p===stFilter;})
     .map(function(s){
       return '<div class="st-k"><div class="kopf"><b>'+esc(s.n)+'</b>'+
-        '<span class="pl">'+PLANET[s.p].zchn+' '+s.p+'</span></div>'+
+        '<span class="pl">'+zPlanetChip(s.p)+'</span></div>'+
         '<p>'+s.t+'</p><div class="warn">'+
-        (s.wasser?'<span class="ok">Wasser ja</span>':'<span class="nein">kein Wasser</span>')+
-        (s.sonne?'<span class="ok">Sonne ja</span>':'<span class="nein">bleicht in der Sonne</span>')+
+        (s.wasser?'<span class="ok">'+T.stWasserJa+'</span>'
+                 :'<span class="nein">'+T.stWasserNein+'</span>')+
+        (s.sonne?'<span class="ok">'+T.stSonneJa+'</span>'
+                :'<span class="nein">'+T.stSonneNein+'</span>')+
         '</div></div>';
     }).join('');
   el('pflege').innerHTML=
-    '<div class="pf"><h4>Reinigen</h4>'+PFLEGE.reinigen+'</div>'+
-    '<div class="pf"><h4>Aufladen</h4>'+PFLEGE.laden+'</div>'+
-    '<div class="pf"><h4>Aussuchen</h4>'+PFLEGE.waehlen+'</div>';
+    '<div class="pf"><h4>'+T.pfReinigen+'</h4>'+PFLEGE.reinigen+'</div>'+
+    '<div class="pf"><h4>'+T.pfLaden+'</h4>'+PFLEGE.laden+'</div>'+
+    '<div class="pf"><h4>'+T.pfWaehlen+'</h4>'+PFLEGE.waehlen+'</div>';
 }
 
 /* ── Dein Draht: Aszendentenherrscher und stärkster Planet ── */
 function drahtBauen(){
   var P=chart();
-  if(!P){ el('draht').innerHTML='<div class="leerk"><b>Hier würde dein eigener Faden stehen.</b><br><br>'+
-    'Welcher Planet dich regiert, welcher Stein deiner ist, in welcher Stunde du am stärksten arbeitest '+
-    '— dafür brauche ich einmal deine Geburtsdaten. <a href="profile.html">Chart anlegen</a></div>'; return; }
+  if(!P){ el('draht').innerHTML='<div class="leerk">'+T.dtLeer+'</div>'; return; }
   var ascZ=Math.floor(nrm(P.ASC)/30);
   var hr=HERRSCHER[ascZ];
-  var hrZ=Math.floor(nrm(P[hr])/30), hrH=hausVon(P,P[hr]);
+  var hrZ=Math.floor(nrm(P[hr])/30), hrH=haus(P,P[hr]);
   var steine=STEIN.filter(function(s){return s.p===hr;});
   var zutaten=ZUTAT.filter(function(z){return z.p===hr;});
-  var sonneH=hausVon(P,P.Sonne), mondH=hausVon(P,P.Mond);
+  var sonneH=haus(P,P.Sonne), mondH=haus(P,P.Mond);
   var h='<div class="draht">';
-  h+='<div class="d-gr"><span class="gl">'+PLANET[hr].zchn+'</span>Dein Planet ist '+hr+'</div>';
-  h+='<p>Dein Aszendent steht in '+ZEI[ascZ][0]+', und '+ZEI[ascZ][0]+' wird von '+hr+' regiert. '+
-    'Damit ist '+hr+' dein <b>Chartherrscher</b> — der Planet, durch den bei dir alles andere läuft. '+
-    'Bei dir steht er in '+ZEI[hrZ][0]+', im '+hrH+'. Haus.</p>';
+  h+='<div class="d-gr"><span class="gl">'+PLANET[hr].zchn+'</span>'+
+     zFuell(T.dtGross,{herr:hr})+'</div>';
+  h+=zFuell(T.dtSatz,{zeichen:zZeichen(ascZ),herr:hr,herrZeichen:zZeichen(hrZ),
+     herrHaus:zHaus(hrH)});
   h+='<div class="d-gitter">'+
-    '<div class="dk"><b>Dein Tag</b>'+PLANET[hr].tag+'<br><span>Was du an diesem Tag anfängst, '+
-      'hat den kürzesten Weg.</span></div>'+
-    '<div class="dk"><b>Dein Metall</b>'+PLANET[hr].metall+'</div>'+
-    '<div class="dk"><b>Deine Farben</b>'+PLANET[hr].farben+'</div>'+
-    '<div class="dk"><b>Deine Steine</b>'+steine.map(function(s){return s.n;}).join(', ')+'</div>'+
-    '<div class="dk"><b>Deine Zutaten</b>'+zutaten.map(function(z){return z.n;}).join(', ')+'</div>'+
-    '<div class="dk"><b>Sonne und Mond</b>Sonne im '+sonneH+'. Haus, Mond im '+mondH+'. Haus</div>'+
+    '<div class="dk"><b>'+T.dtTag+'</b>'+PLANET[hr].tag+'<br>'+T.dtTagSatz+'</div>'+
+    '<div class="dk"><b>'+T.dtMetall+'</b>'+PLANET[hr].metall+'</div>'+
+    '<div class="dk"><b>'+T.dtFarben+'</b>'+PLANET[hr].farben+'</div>'+
+    '<div class="dk"><b>'+T.dtSteine+'</b>'+steine.map(function(s){return s.n;}).join(', ')+'</div>'+
+    '<div class="dk"><b>'+T.dtZutaten+'</b>'+zutaten.map(function(z){return z.n;}).join(', ')+'</div>'+
+    '<div class="dk"><b>'+T.dtLichter+'</b>'+
+      zFuell(T.dtLichterSatz,{sonne:zHaus(sonneH),mond:zHaus(mondH)})+'</div>'+
     '</div>';
   if(GESCHMACK[hr]) h+='<p class="d-satz">'+GESCHMACK[hr][hrZ][0]+'</p>';
-  h+='<p class="d-fuss">Der erste Stein, den du dir zulegst, wenn du einen aussuchen willst statt '+
-    'auf einen zu warten: <b>'+(steine[0]?steine[0].n:'Bergkristall')+'</b>. Nicht weil er der '+
-    'stärkste wäre, sondern weil er zu dem Planeten gehört, der bei dir ohnehin alles '+
-    'durchläuft.</p>';
+  h+='<p class="d-fuss">'+zFuell(T.dtFuss,{stein:(steine[0]?steine[0].n:T.dtKeinStein)})+'</p>';
   h+='</div>';
   el('draht').innerHTML=h;
 }
@@ -1314,10 +1700,10 @@ function wahlBauen(){
   try{ alle=AC_P.alle()||[]; }catch(e){}
   box.innerHTML='';
   if(alle.length<2) return;
-  var l=document.createElement('span'); l.className='lab'; l.textContent='Profil'; box.appendChild(l);
+  var l=document.createElement('span'); l.className='lab'; l.textContent=T.pwLabel; box.appendChild(l);
   alle.forEach(function(p){
     var b=document.createElement('button'); b.type='button';
-    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
+    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?T.pwEigen:'');
     b.setAttribute('aria-pressed', gewaehlt===p.id);
     b.addEventListener('click',function(){ gewaehlt=p.id; wahlBauen(); allesNeu(); });
     box.appendChild(b);
