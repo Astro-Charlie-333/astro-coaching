@@ -574,6 +574,36 @@ heute, eine ohne für einen anderen Tag —, die Anzeige die passende
 wählt, und eine Prüfung mit festen Beispielen in `bau-zauber.py` ein
 „Uhr" hinter einem Datum abbricht.
 
+### 91 · Auf `ereignisse-lesen.html` steht über der Falz nur die Stufe
+Aus dem Gestaltungsdurchgang vom 2026-11-20 (Befund 20.11-1) zu
+`ereignisse-lesen.html` — die Seite, die Abschnitt 5 der `GESTALTERIN.md`
+als `ereignisse.html` führt. Bei 390 Pixeln auf Stufe 0 steht der Kasten
+`<div class="tip" data-bis="0">` („Du liest gerade die Fassung ohne
+Fachsprache. …") in `ereignis-koerper.html` zwischen `#nivleiste` und der
+ersten Überschrift und ist dort 234 Pixel hoch. Seine erste Hälfte sagt,
+was 91 Pixel höher schon in `.niv-tipp` steht („Keine Ahnung von
+Astrologie. Alles in Alltagssprache. …"). Dadurch beginnt „Die Grundidee:
+ein Hinweis ist kein Ereignis" bei Pixel 859 und damit unter der Falz von
+844, die Treppe Rauschen · Verdacht · Thema bei 1.107. Auf Stufe 2, wo der
+Kasten wegfällt, steht dieselbe Überschrift bei 602 und die Treppe bei
+850; bei 1.280 Pixeln steht die Treppe auf beiden Stufen über der Falz.
+Wer am wenigsten mitbringt, sieht auf dem Telefon also am wenigsten.
+Der einzige Satz des Kastens, der etwas Eigenes sagt, stimmt zudem nur
+halb: Auf Stufe 0 fehlen nicht nur Fachbegriffe und Beispiele, sondern
+vier ganze Abschnitte — Rezepte (2.666 Pixel), Zwei Charts (999),
+Durchgerechnet (2.541) und Kleines Quiz (1.995) —, und er steht neun
+Telefonbildschirme vor der ersten Lücke.
+**Fertig, wenn:** im gezeichneten `ereignisse-lesen.html` bei 390 Pixeln
+auf Stufe 0 die Überschrift `#idee` und ihr Absatz über der Falz von 844
+stehen, der Kasten mit `data-bis="0"` nicht mehr zwischen `#nivleiste` und
+`#idee` steht, sein Hinweis auf das Fehlende stattdessen in der
+`<section data-ab="1">` der Rezepte steht und dort alle vier auf Stufe 0
+leeren Abschnitte nennt — und `bau-ereignis.py` nach der goldenen Regel
+aus `REGELN.md` Abschnitt 5 am gezeichneten Ergebnis abbricht, sobald auf
+Stufe 0 die erste Überschrift der Seite tiefer steht als auf Stufe 2.
+Gemessen am Ergebnis bei 390 Pixeln, nicht am Quelltext, weil die Höhe
+aus `ereignis-stil.css` und der Textlänge zusammen entsteht.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich
