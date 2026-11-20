@@ -751,7 +751,13 @@ ANZEIGEN = {
     # „Sonnestunde". Beide stehen jetzt als Tabelle in
     # zauber-texte.js, und bau-zauber.py lässt keinen Artikel und
     # keine Endung mehr an eine Lücke heran.
-    'geist/geist-app.js':          (174, 31),
+    # geist am 2026-11-20 (Aufgabe 59): die größte der Anzeigen, 174
+    # Sätze und 31 mal „dein" — und die, an der sich gezeigt hat, dass
+    # B_DEIN nicht für alle Fälle reichte. „Der Herrscher deines 12.
+    # Hauses" braucht einen Genitiv, den die Tabelle nicht hatte;
+    # dieselbe Fehlerklasse wie REGELN.md 6f, eine Tabelle deckt den
+    # Fall, den sie kennt. Der Genitiv steht jetzt in B_DEIN und die
+    # Form des Hauptworts in GT_T.haus.beugt.
     'dossier/dossier-app.js':      (97, 4),
     'analyse/analyse-app.js':      (29, 1),
     'begleitung/begleit-app.js':   (20, 0),
@@ -773,7 +779,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'bez/beziehung-app.js', 'zeit/zeit-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
           'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
-          'rituale/zauber-app.js'}
+          'rituale/zauber-app.js', 'geist/geist-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

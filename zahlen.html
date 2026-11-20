@@ -741,12 +741,26 @@ function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1;
    jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
    Formel — und die Anzeige setzt nur noch zusammen. */
 
-/* „dein" in den drei Fällen, die hier vorkommen. Mehr braucht es
-   nicht: Ein Genitiv steht in keiner dieser Formeln. */
+/* „dein" in den vier Fällen, die vorkommen.
+
+   Bis zum 2026-11-19 standen hier drei, und darüber der Satz, mehr
+   brauche es nicht: ein Genitiv stehe in keiner dieser Formeln. Für
+   die Formeln der Startseite stimmte das. Die Geistführung schreibt
+   aber „der Herrscher deines 12. Hauses" (Aufgabe 59), und damit
+   stand die vierte Form nicht in dieser Tabelle, sondern von Hand in
+   einer Anzeige — genau die Bauart, die diese Tabelle abschaffen
+   sollte.
+
+   Die Lehre daraus ist dieselbe wie in REGELN.md 6f: Eine Tabelle
+   deckt den Fall, den sie kennt. Welche Fälle es gibt, entscheidet
+   nicht die erste Seite, die sie benutzt.
+
+   Ein Hauptwort, das sich im Genitiv selbst ändert („Hauses",
+   „Aszendenten"), trägt diese Form in seinem eigenen `beugt`. */
 var B_DEIN = {
- m:{nom:'dein',  akk:'deinen', dat:'deinem'},
- w:{nom:'deine', akk:'deine',  dat:'deiner'},
- s:{nom:'dein',  akk:'dein',   dat:'deinem'}};
+ m:{nom:'dein',  akk:'deinen', dat:'deinem', gen:'deines'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner', gen:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem', gen:'deines'}};
 
 /* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
    entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
