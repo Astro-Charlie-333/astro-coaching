@@ -865,3 +865,201 @@ Zeilen statt einer, was dort 44 Pixel kostet und nichts verschlechtert —
 der Brief beginnt heute bei 752 und damit ohnehin unterhalb der Falz.
 `mk.style.marginLeft` entfällt. Keine neue Farbe, keine neue Schrift,
 kein neuer Baustein: derselbe Kasten zweimal.
+
+
+### 20.11.2026 · `ereignisse-lesen.html` — Ereignisse lesen
+
+Wie am 17.11. bei `monat.html` stimmt der Dateiname der Liste in
+Abschnitt 5 nicht mit dem gebauten überein: Dort steht `ereignisse.html`,
+gebaut wird von `quelltext/ereignis/bau-ereignis.py` die Datei
+**`ereignisse-lesen.html`**. Eine `ereignisse.html` gibt es nicht.
+Angesehen wurde `ereignisse-lesen.html`.
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil. Seitenhöhe bei 390: 9.455 Pixel auf Stufe 0, 17.930
+auf Stufe 2; bei 1280 sind es 5.352 und 10.241. Keine Fehler in der
+Konsole, nichts läuft über den Rand. Dieselbe Einschränkung wie am
+06.11., 10.11., 13.11. und 17.11.: In dieser Umgebung sind die Schriften
+von Google gesperrt, die Seite zeichnet mit Ersatzschriften. Beurteilt
+wurden Hierarchie, Größen, Abstände und Reihenfolge — nicht das
+Schriftbild.
+
+Was trägt: Die Treppe unter „Die Grundidee" ist das Beste auf dieser
+Seite und das Einzige, was ein Bild ist und kein Absatz. Drei Karten,
+jede mit einer Zahl oben (`1 Baustein`, `2 Bausteine`, `3 Bausteine`),
+darunter ein einziges Wort in 20 Pixeln — **Rauschen**, **Verdacht**,
+**Thema** — und zwei Zeilen dazu. Die dritte trägt als einzige einen
+dunklen Rahmen. Das ist in zwei Sekunden gelesen, es steht allein, und
+es ist eine Behauptung, die die beiden Apps auf ihrem Telefon nicht
+aufstellen: Die meisten Tage sagen nichts. Der Kasten direkt darunter
+sagt dasselbe noch einmal in einem Satz, den man weiterschicken kann
+(„Ein Baustein ist Rauschen. Zwei sind ein Verdacht. Drei, die dasselbe
+sagen, sind ein Thema."). Auch richtig: die Warnung bei den Eltern
+(„Aus dem Ort der Eltern lässt sich *nicht* ablesen, ob jemandes Eltern
+gut oder schlecht zu ihm waren"), der Abschnitt „Was das taugt — und was
+nicht" mit der Häufigkeitsangabe, der Hinweis bei den fremden Rechnern
+(„nicht, weil ihre Deutungen geprüft wären") und die Fußzeile „Alle
+Beispielmenschen auf dieser Seite sind erfunden."
+
+Die beiden Befunde handeln davon, dass genau diese Treppe auf dem
+Telefon nicht zu sehen ist — und dass der einzige Satz, den diese Seite
+selbst zusammensetzt, gegen die Regel verstößt, deren Erklärung die
+Seite ist.
+
+#### 20.11-1 · Auf Stufe 0 steht über der Falz nur, welche Stufe eingestellt ist
+
+**Zitat:** Bei 390 Pixeln auf Stufe 0 besteht der erste Bildschirm aus
+vier Dingen: der Überschrift „Ereignisse lesen: das Bausteine-Prinzip."
+(32 Pixel, ab Pixel 165), sechs Zeilen Vorspann (16 Pixel, ab 245), der
+Wissensstandleiste (148 Pixel hoch, ab 416) und darunter einem Kasten
+mit rotem Balken, 234 Pixel hoch, ab Pixel 588: **„Du liest gerade die
+Fassung ohne Fachsprache. Das Prinzip steht hier vollständig: wie viele
+Hinweise es braucht, aus welchen fünf Teilen eine Aussage besteht, und
+wo im Bild die Menschen stehen, zu denen du eine Verbindung hast. Was
+fehlt, sind die Fachbegriffe und die durchgerechneten Beispiele — dafür
+stell oben eine höhere Stufe ein."**
+
+In der Wissensstandleiste direkt darüber steht, 91 Pixel höher und in
+12,5 Pixeln: „**Keine Ahnung von Astrologie.** Alles in Alltagssprache.
+Keine Fachbegriffe, keine Grade, keine Planetennamen — nur, worum es
+geht." Zwei Blöcke hintereinander, 382 Pixel zusammen, die beide sagen:
+Du bist auf der Stufe ohne Fachsprache, Fachsprache fehlt, oben kannst
+du umstellen.
+
+Die erste Überschrift der Seite, „Die Grundidee: ein Hinweis ist kein
+Ereignis", beginnt bei Pixel **859**. Die Falz liegt bei 844. Die erste
+Karte der Treppe beginnt bei 1.107.
+
+Auf Stufe 2 fällt der Kasten weg (`data-bis="0"`), und dieselbe
+Überschrift steht bei 602, der Absatz darunter bei 696, die Treppe bei
+850. Bei 1.280 Pixeln ist der Kasten nur 99 statt 234 Pixel hoch, weil
+er dort zwei Zeilen braucht statt fünf; die Treppe steht dort auf Stufe
+0 vollständig bei 727 über der Falz von 900.
+
+**Kosten:** Der Drei-Sekunden-Test, und er trifft die Falsche. Wer die
+Stufe 0 eingestellt hat, ist die Suchende aus `PRODUKT.md` Abschnitt 2 —
+die, die keine Astrologie-Kenntnisse hat und oft auch keine will. Sie
+bekommt auf dem Telefon einen ersten Bildschirm, auf dem nach der
+Überschrift nichts steht als eine Einstellung und ein Kasten über diese
+Einstellung. Nach drei Sekunden hat sie verstanden: Hier gibt es fünf
+Stufen, sie ist auf der untersten, und etwas fehlt ihr. Von dem, was auf
+dieser Seite ihr gehört, hat sie nichts gesehen. Dass die Seite auf Stufe
+2 ihre erste Überschrift und ihren ersten Absatz über der Falz hat und
+auf Stufe 0 nicht, dreht das Versprechen aus `PRODUKT.md` Abschnitt 3
+(„Verständlich auf jeder Stufe") um: Wer am wenigsten mitbringt, sieht am
+wenigsten. Der Kasten, der sie beruhigen soll, ist genau das, was ihr die
+Seite wegschiebt — 257 Pixel, also eine knappe Drittelseite Telefon.
+
+Verloren geht dabei die Treppe, die bei 1.107 anfängt und das Einzige
+ist, wovon jemand ein Bild macht. Nichts auf dem ersten Bildschirm deutet
+an, dass sie da unten steht. Bei 1.280 Pixeln fällt der ganze Verlust
+nicht auf, weil die Treppe dort über der Falz steht — es ist ein reiner
+Telefon-Verlust, also der, der zählt.
+
+Der Satz im Kasten, der als Einziger etwas sagt, das nicht schon darüber
+steht, stimmt außerdem nur halb. Auf Stufe 0 verschwinden nicht nur „die
+Fachbegriffe und die durchgerechneten Beispiele", sondern vier ganze
+Abschnitte: „Rezepte: so liest man ein Thema" (2.666 Pixel), „Zwei
+Charts: Synastrie und Composite" (999), „Durchgerechnet: zwei erfundene
+Abende" (2.541) und „Kleines Quiz" (1.995) — zusammen 8.201 Pixel, also
+fast die Hälfte der Seite. Zwei davon nennt der Kasten nicht, und er
+nennt sie an einer Stelle, an der die Lücke noch gar nicht da ist: Die
+erste beginnt neun Telefonbildschirme weiter unten.
+
+**Vorschlag:** Der Kasten `<div class="tip" data-bis="0">` verlässt den
+Kopf der Seite. Seine erste Hälfte entfällt ersatzlos — sie steht 91
+Pixel höher schon in `.niv-tipp`. Sein letzter Satz zieht an die Stelle,
+an der die erste Lücke wirklich entsteht: in den Abschnitt
+`<section data-ab="1">` der Rezepte, als `.tip` mit `data-bis="0"`, also
+genau dort, wo auf Stufe 0 heute wortlos nichts steht. Dort heißt er
+dann, was er meint: dass hier vier Abschnitte mit Rezepten, zwei
+Chartarten, durchgerechneten Beispielen und einem Quiz warten, und dass
+man sie oben einschaltet.
+
+Damit beginnt „Die Grundidee" auf Stufe 0 bei 602 statt bei 859, der
+Absatz darunter steht mit auf dem ersten Bildschirm, und die Treppe
+beginnt bei 850 — die Oberkante der ersten Karte an der Falz, also der
+Hinweis, dass es weitergeht. Keine neue Farbe, keine neue Schrift, kein
+neuer Baustein: derselbe Kasten, 256 Zeichen kürzer und neun
+Bildschirme tiefer. Die Wissensstandleiste bleibt, wo sie ist — sie steht
+nach `REGELN.md` Abschnitt 2a auf jeder Seite oben.
+
+#### 20.11-2 · Der einzige gebaute Satz der Seite endet mit zwei Zuständen
+
+**Zitat:** Im Mischer, dem einzigen Stück dieser Seite, das selbst einen
+Satz zusammensetzt, steht beim Öffnen auf Stufe 0:
+
+> **„Deine Zuneigung geht gerade langsam und beharrlich vor, und zwar in
+> Romantik, Spiel und allem Kreativen. Etwas anderes reibt daran.
+> Verlässlich. Hier darf man etwas sagen."**
+
+Die Vorlage dazu steht in `ereignis-rechner.js`:
+
+```
+gross(P0[planet]) + ' geht gerade ' + Z0[zeichen] + ' vor, und zwar '
+  + H0[haus] + '. Etwas anderes ' + A0[aspekt] + '. ' + L.t
+```
+
+Jede der 43.200 möglichen Mischungen endet deshalb gleich. Beim Drücken
+von „Zufällige Mischung" etwa: „Dein Vertrauen geht gerade abwägend, über
+das Gegenüber vor, und zwar in festen Beziehungen. Etwas anderes bietet
+sich dort an. Nicht mehr als einzelne Aussage benutzen." Oder: „Deine
+Struktur geht gerade weit und meinungsstark vor, und zwar bei Geld und
+Selbstwert. Etwas anderes steht dem gegenüber. Deutlich. Bei langsamen
+Planeten die übliche Grenze."
+
+**Kosten:** Der Stimmen-Test, und zwar an der einen Stelle, an der er auf
+dieser Seite überhaupt etwas kostet: Alles andere hier ist geschrieben,
+nur das hier ist gebaut. `REGELN.md` Abschnitt 6d hält beide Regeln fest,
+gegen die der Satz verstößt, und er verstößt gegen beide zugleich.
+
+*Erstens:* „Etwas anderes" bezeichnet nichts. Es ist dasselbe Muster wie
+„wo dir die Umrisse verschwimmen", über das Mandy am 28.10. geschrieben
+hat: „was soll ein satz bitte bedeuten." Eine Leserin, die fragt, was
+denn daran reibt, findet im ganzen Satz keine Antwort, und der Mischer
+hat auch keine — sie hat die Verbindungsart gewählt, nicht ein zweites
+Gestirn.
+
+*Zweitens:* Der Satz endet mit zwei Zuständen und keiner Folge. „Etwas
+geht so vor" plus „etwas anderes reibt" plus — und dann kommt nicht, was
+dabei herauskommt, sondern ein Urteil über die Methode: „Verlässlich.
+Hier darf man etwas sagen." Das ist der Gütegrad des Orbis, nicht ihr
+Leben. Auf Stufe 0 erklärt er sich zweimal mit dem Rechenweg, den diese
+Stufe gerade nicht zeigen soll — „Bei langsamen Planeten die übliche
+Grenze" und „Gilt für die schnellen Planeten. Bei langsamen schon dünn".
+Beides ist kein verbotenes Wort und bricht den Bau zu Recht nicht ab,
+aber es ist Maschinenraum im Laiensatz (`REGELN.md` Abschnitt 2).
+
+Dazu kommt die Stelle, an der es steht. Die Seite behauptet zwei
+Bildschirme höher, ein einzelner Hinweis sei „ein Wort, kein Satz", und
+erst mehrere gleichzeitig ergäben eine Aussage. Dann baut sie vor den
+Augen der Leserin aus einem einzelnen Hinweis einen Satz, und der Satz
+klingt wie eine Datenbank. Der Mischer ist das Einzige auf dieser Seite,
+das man anfassen kann — bei einer Zielgruppe, die mit Co-Star und The
+Pattern groß geworden ist, ist er die Stelle, die ausprobiert und
+fotografiert wird. Was sie dabei lernt, ist nicht das Bausteine-Prinzip,
+sondern wie die Sätze dieser Plattform entstehen.
+
+**Vorschlag:** Nach dem Muster, das `ich-daten.js` seit dem 28.10. schon
+hat (`will` und `zuweit`), bekommt jeder der fünf Einträge in `A0` einen
+zweiten Teil — die Folge. Aus „reibt daran" wird ein Paar aus der
+Bewegung und dem, was dabei herauskommt, und der Satz endet damit statt
+mit `L.t`:
+
+> „Deine Zuneigung geht gerade langsam und beharrlich vor, und zwar in
+> Romantik, Spiel und allem Kreativen. Was dort gegenhält, reibt sich
+> daran — **also kostet dort gerade jeder Schritt einen Anlauf mehr als
+> sonst.**"
+
+Statt „Etwas anderes" steht das, was die Leserin selbst eingestellt hat:
+die Verbindungsart. `L.t` — „Verlässlich. Hier darf man etwas sagen." —
+verlässt den Satz und zieht in die fünfte Karte der Zerlegung darunter,
+die heute unter **WANN** nur „sehr eng" trägt und damit die leerste der
+fünf ist. Dort ist das Urteil über die Methode am richtigen Platz: neben
+der Frage, auf die es antwortet, und außerhalb des Satzes über sie.
+
+Und nach der goldenen Regel aus `REGELN.md` Abschnitt 5 die Prüfung, die
+die Klasse schließt: `bau-ereignis.py` baut alle 43.200 Mischungen auf
+Stufe 0 und bricht ab, sobald eine davon keinen der Folgeausdrücke
+enthält oder mit einem Text aus `STUFEN_ORB` endet. Keine neue Farbe,
+keine neue Schrift, kein neuer Baustein.
