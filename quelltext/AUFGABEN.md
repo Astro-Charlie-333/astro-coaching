@@ -604,6 +604,58 @@ Stufe 0 die erste Überschrift der Seite tiefer steht als auf Stufe 2.
 Gemessen am Ergebnis bei 390 Pixeln, nicht am Quelltext, weil die Höhe
 aus `ereignis-stil.css` und der Textlänge zusammen entsteht.
 
+### 92 · Im Reading steht die tragende und die reibende Fassung im selben Absatz
+Befund der Prüferin vom 2026-11-20 (Die Coachin, erster Befund). Unter
+„Die stärksten Verbindungen" laufen beide Fassungen einer Verbindung als
+ein Absatz ohne Bindewort, Überschrift oder Absatz dazwischen. Bei Rieke
+(09.03.1990) drei von fünf, bei Tomke (02.11.1986) zwei von fünf, also
+fünf von zehn über zwei Geburtsbilder: „Du weißt meistens, was dir
+guttut, und tust es auch." gefolgt von „Oft übergehst du das Bedürfnis —
+und zahlst später."; „Was du anfängst, bringst du zu Ende." gefolgt von
+„Du trittst gleichzeitig auf Gas und Bremse." Für eine Coachin steht
+damit in dem Text, den sie aus der Hand gibt, über denselben Menschen
+beides — und die Klientin kann keinem der beiden Sätze widersprechen.
+Dieselbe Seite hat weiter unten den Abschnitt „Wo es kippen kann", der
+genau dafür da ist. Es ist die Fehlerklasse aus `REGELN.md` Abschnitt 6d
+(zwei Zustände aneinandergeklebt, keine Folge) und derselbe Riegel, den
+der Monatsbericht am 2026-10-21 bekommen hat („reibende und tragende
+Fassung dürfen nicht gleich sein" — hier: dürfen nicht unmarkiert
+nebeneinander stehen). Betrifft die Stufen „Wenig" aufwärts; auf „Neu"
+ist die zweite Hälfte gar nicht da.
+**Fertig, wenn:** die reibende Fassung entweder im Abschnitt „Wo es
+kippen kann" steht oder im Absatz ein Wort trägt, das die Wendung
+markiert, `pruefwerk` eine Regel bekommt, die am **gezeichneten**
+Reading abbricht, sobald tragende und reibende Fassung derselben
+Verbindung ohne ein solches Wort im selben Absatz stehen, diese Regel
+über alle fünf Stufen und über mindestens zwei verschiedene
+Geburtsbilder läuft, und `assert`-Zeilen in `pruefwerk` die Fälle
+festhalten, die durchgehen müssen, und die, die anschlagen müssen
+(`REGELN.md` Abschnitt 6e).
+
+### 93 · Die Reading-Stufe fängt bei „Mittel" an, auch wenn „Neu" eingestellt ist
+Befund der Prüferin vom 2026-11-20 (Die Coachin, zweiter Befund).
+`ac_niveau` steht auf `0`, von Hand gesetzt, bevor die erste Seite
+gelesen wurde; die Leiste „WISSENSSTAND DER PERSON" auf `reading.html`
+steht beim ersten Aufruf trotzdem auf „Mittel" — bei beiden Profilen und
+bei 390 wie bei 1440. Im Text stehen daraufhin „die Sonne in Fische",
+„der Aszendent in Krebs", „Orbis", „Stellium"; nach dem Umschalten auf
+„Neu" sind sie weg. Die Seite sagt über diese Stufe selbst: „Hier steht
+kein Planetenname und kein Haus. Das ist die Fassung, die du
+verschickst, wenn du nicht sicher bist." Dazu nennt der kopierte Text
+(2.978 Zeichen) in keiner Zeile, für welche der fünf Stufen er
+geschrieben ist — hinterher ist nicht mehr feststellbar, welche Fassung
+verschickt wurde. Dieselbe Klasse wie der Auslieferzustand der globalen
+Leiste (Befund 23.10.) und wie Aufgabe 15 und 16, nur an der zweiten
+Leiste.
+**Fertig, wenn:** die Stufe eines Menschen, für den sie noch nie von Hand
+gesetzt wurde, der plattformweit eingestellten Stufe folgt (und ohne
+jede Einstellung „Neu" ist), erst ein Tipp auf `reading.html` daraus
+eine eigene Einstellung für diesen Menschen macht, „Text kopieren",
+„Als Datei speichern" und „Drucken" in der ersten Zeile die Stufe
+nennen, für die der Text geschrieben ist — und `pruefe-alles.py` am
+gezeichneten Ergebnis abbricht, sobald eine Stufenleiste beim ersten
+Aufruf eine andere Stufe gedrückt zeigt als die, die im Speicher liegt.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich
