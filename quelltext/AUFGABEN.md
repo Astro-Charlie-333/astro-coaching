@@ -51,7 +51,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
 `zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15),
 `mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17),
-`haeuser-app.js` (2026-11-18) und `zauber-app.js` (2026-11-19);
+`haeuser-app.js` (2026-11-18) `zauber-app.js` (2026-11-19) und
+`geist-app.js` (2026-11-20);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -86,10 +87,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 59 · `geist-app.js` (174, 31)
-`geistfuehrung.html`. Trägt die meisten „dein" von Hand — hier zeigt
-sich, ob `B_BEUGE` für alle Fälle reicht.
 
 ### 60 · `dossier-app.js` (97, 4)
 `dossier.html`, der Bestandsbericht.
@@ -274,6 +271,11 @@ Und die Gegenprobe gehört nicht siebenmal abgeschrieben: in zwei
 Dateien steht sie heute Zeile für Zeile gleich, also driftet sie
 beim nächsten Umbau auseinander — dieselbe Klasse wie die eigene
 Satzregel, die heute aus `bau-monat.py` herausgefallen ist.
+
+*Stand 2026-11-20: Es sind inzwischen vierzehn Bauskripte, in denen
+diese Gegenprobe Zeile für Zeile gleich steht — jedes Erledigen einer
+Anzeige aus Aufgabe 34 schreibt sie ein weiteres Mal ab. Die Aufgabe
+wird dadurch nicht anders, nur jeden Tag ein Stück teurer.*
 **Fertig, wenn:** die Gegenprobe in `rituale/pruefwerk.py` steht und
 nicht in den Bauskripten, jeder Aufruf von
 `pruefe_anzeige_satzfrei` und `pruefe_anzeige_ohne_dein` sie
@@ -1149,7 +1151,79 @@ auf eine Handlung hinausläuft statt auf einen Zustand,
 Bau von `haeuser.html` abbricht — gegen feste Beispiele gehalten
 (REGELN.md 6e).
 
+### 90 · Die Klebe-Regel steht in zwei Fassungen an zwei Orten
+Gefunden beim Erledigen von Aufgabe 59 am 2026-11-20. „Jede Form, die
+sich mit dem eingesetzten Wort ändert, braucht ihre eigene Tabelle"
+(`REGELN.md` 6f) wird inzwischen an zwei Stellen erzwungen, und zwar
+mit zwei verschiedenen Mustern: `bau-zauber.py` sucht einen Artikel
+**vor** einer Lücke und einen Buchstaben **dahinter**
+(`der Tag des {herr}`, `{stamm}stunde`), `bau-geist.py` sucht ein
+angeklebtes „dein"/„des"/„der" und ein angehängtes `'. Haus'` in der
+Anzeige. Beide meinen dieselbe Fehlerklasse, keine der beiden findet,
+was die andere findet, und die nächste Anzeige schreibt eine dritte
+Fassung. Das ist genau der Fall, für den `REGELN.md` 5 den
+gemeinsamen Ort vorsieht: Eine Regel in zwei Bauskripten ist nach der
+ersten Verschärfung in einem von zwei veraltet.
+
+**Fertig, wenn:** die Regel als eine Funktion in
+`rituale/pruefwerk.py` steht, beide Fassungen darin aufgehen (ein
+Artikel vor einer Lücke, eine Endung dahinter und eine von Hand
+angeklebte Form in der Anzeige schlagen alle drei an), `bau-zauber.py`
+und `bau-geist.py` nur noch diese Funktion aufrufen, und die festen
+Beispiele beider Seiten beim Import laufen — in beide Richtungen, also
+auch mit den Fällen, die durchgehen müssen (`REGELN.md` 6e).
+
+
 ## Erledigt
+
+* **2026-11-20** · `geist-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 59, aus 34 und 38) — die größte der Anzeigen, 174
+  Zeichenketten und 31 mal „dein" von Hand. Die Vorlagen stehen jetzt
+  in `GT_T` in `geist-texte.js`, die Anzeige rechnet und setzt mit
+  `gFuell` ein. Der gezeichnete Text ist über zehn erfundene Profile
+  hinweg Zeichen für Zeichen derselbe wie vorher, auch das Markup
+  beider Register — es war ein Umzug und keine Änderung an der Seite.
+
+  Was dabei herauskam, war nicht ein Text, sondern eine Lücke in der
+  gemeinsamen Beugung. `AUFGABEN.md` hatte es vorausgesagt: „hier
+  zeigt sich, ob `B_BEUGE` für alle Fälle reicht." Es reichte nicht.
+
+  * **„der Herrscher deines 12. Hauses"** ist ein Genitiv, und
+    `B_DEIN` in `kern/bahn-daten.js` kannte drei Fälle. Darüber stand
+    ausdrücklich, mehr brauche es nicht: ein Genitiv stehe in keiner
+    dieser Formeln. Für die Formeln der Startseite stimmte das; diese
+    Seite hat einen, und deshalb stand die vierte Form von Hand in
+    einer Anzeige — genau die Bauart, die die Tabelle abschaffen
+    sollte. Dieselbe Fehlerklasse wie `REGELN.md` 6f: Eine Tabelle
+    deckt den Fall, den sie kennt, und welche Fälle es gibt,
+    entscheidet nicht die erste Seite, die sie benutzt. Der Genitiv
+    steht jetzt in `B_DEIN`, die Form des Hauptworts („Hauses") in
+    `GT_T.haus.beugt` — alle drei Fälle der Seite („dein", „deinem",
+    „deines") kommen aus der einen Stelle.
+  * **`kz` bedeutete in `bauPraxis` etwas anderes als daneben.** Die
+    Zahlenformatierung mit deutschem Komma heißt `kz`; in dieser
+    Funktion war `kz` das Merkurzeichen. Beides im gleichen
+    Geltungsbereich, und wer dort eine Zahl formatieren wollte, hätte
+    ein Zeichenindex zurückbekommen. Heißt jetzt `merkZ`.
+
+  Dazu heraus: `nameVon`, `esc`, `tagUhr` — nie benutzt. Und
+  `kleine-punkte.js` liegt mit `bahn-daten.js` zusammen auf der Seite,
+  deshalb liest die Namensprüfung jetzt auch diese Datei.
+
+  **Neu dauerhaft geprüft** in `bau-geist.py`, gegen die Klasse und
+  nicht gegen den Fall: die beiden Riegel aus `pruefwerk` mit
+  Gegenprobe in allen drei Anführungsarten, die Lückenprüfung, und
+  eine Regel, die keine Form mehr an eine Lücke heranlässt — kein
+  „dein"/„des"/„der" vor einem Pluszeichen, kein `+'. Haus'` dahinter,
+  mit sechs festen Beispielen in beide Richtungen (`REGELN.md` 6e).
+  Dazu eine Rauchprobe im Browser, die am gezeichneten Ergebnis
+  nachsieht: jeder der neun Blöcke ist gefüllt, nirgends steht eine
+  geschweifte Klammer, und `B_BEUGE` bildet alle drei Fälle richtig.
+  Die zwei Zweige, die nicht jedes Profil zeichnet — der Malefik im
+  12. Haus und der Neumond im Zeichen des 12. Hauses — werden eigens
+  gefüllt und gegen feste Beispiele gehalten, weil ein grüner Riegel
+  bei ihnen sonst nur heißt, dass ihr Fall heute nicht vorkam
+  (`REGELN.md` 6e, Nachsatz).
 
 * **2026-11-19** · `zauber-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 58, aus 34 und 38) — die vierzehnte von zweiundzwanzig
