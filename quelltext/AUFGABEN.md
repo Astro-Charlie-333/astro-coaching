@@ -52,7 +52,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15),
 `mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17),
 `haeuser-app.js` (2026-11-18) `zauber-app.js` (2026-11-19) und
-`geist-app.js` (2026-11-20);
+`geist-app.js` (2026-11-20) und
+`dossier-app.js` (2026-11-21);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -88,8 +89,20 @@ Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
 
-### 60 · `dossier-app.js` (97, 4)
-`dossier.html`, der Bestandsbericht.
+### 94 · Dieselbe Sperre fehlt den anderen Füllfunktionen
+Gefunden beim Erledigen von Aufgabe 60 am 2026-11-21. `doFuell` in
+`dossier-app.js` bricht jetzt ab, wenn eine Lücke ohne Wert ankommt —
+genau der Fall, der „Saturn Sextil Sonne" zu „Saturn  Sonne" gemacht
+hat. Die Schwestern dieser Funktion in den anderen durchgezogenen
+Anzeigen (`gFuell`, `zFuell`, `kFuell`, `moFuell` und die übrigen)
+machen aus `undefined` weiter lautlos eine leere Stelle. Solange das
+so ist, steht derselbe Fehler nur noch nicht dort, wo ihn jemand
+sieht — dieselbe Lage wie bei Aufgabe 40.
+**Fertig, wenn:** die Füllfunktion an einer Stelle steht statt in
+jeder Anzeige einzeln, ein fehlender Wert dort abbricht, ein
+absichtlich leerer weiter durchgeht, und beide Fälle als feste
+Beispiele in `pruefwerk` liegen, sodass eine Anzeige, die wieder eine
+eigene bauen will, den Bau zum Scheitern bringt.
 
 ### 61 · `analyse-app.js` (29, 1)
 `analyse.html`. Gehört in einen Zug mit Aufgabe 9.
@@ -1257,6 +1270,40 @@ auch mit den Fällen, die durchgehen müssen (`REGELN.md` 6e).
 
 
 ## Erledigt
+
+* **2026-11-21** · `dossier-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 60, aus 34 und 38) — 97 Zeichenketten und 4 mal „dein" von
+  Hand. Die Vorlagen stehen jetzt in `DO_T` in `dossier-texte.js`, die
+  Anzeige rechnet und setzt mit `doFuell` ein. Über zehn erfundene
+  Profile und alle zehn Bezüge — 101 Ansichten — ist das gezeichnete
+  Dossier Zeichen für Zeichen dasselbe wie vorher. Ein Umzug, keine
+  Änderung an der Seite.
+
+  Herausgekommen ist dabei eine Fehlerklasse, die keiner der
+  Vorgänger hatte, und sie ist unterwegs zugeschlagen: Die Belege
+  eines Kernthemas nennen den Winkel mit dem Namen, den `AC_RAUM`
+  mitliefert („Sextil"). Nachgeschlagen wurde in der neuen
+  Sprachtafel, und die kennt nur den Schlüssel („sextil"). Die
+  Füllfunktion machte aus dem fehlenden Wert eine leere Stelle, und
+  aus „Saturn Sextil Sonne" wurde „Saturn  Sonne" — ein Wort weg,
+  nichts rot, keine Meldung. Dieselbe Klasse wie `REGELN.md` 6f, nur
+  eine Ebene tiefer: Dort kannte eine Tabelle den Fall nicht, hier
+  hat der Notbehelf das Nichtkennen zugedeckt.
+
+  Die Antwort ist deshalb nicht der eine Nachschlag, sondern die
+  Regel: **Eine Lücke ohne Wert bricht ab, statt leer zu werden.**
+  Ein leerer Wert, den jemand absichtlich einsetzt, geht weiter
+  durch — beides steht als festes Beispiel in der Rauchprobe, sonst
+  wäre die Regel bei der nächsten Verschärfung eine halbe.
+
+  Neu dauerhaft geprüft in `bau-dossier.py`: beide Riegel aus
+  `pruefwerk` mit Gegenprobe in allen drei Anführungsarten, die
+  Lückenprüfung, eine Regel gegen jede an einen Namen oder eine Zahl
+  geklebte Form, und am gezeichneten Ergebnis je Bezug, dass keine
+  geschweifte Klammer übrig bleibt. Zehn Sabotagen — ein Satz in
+  jeder Anführungsart, ein „dein", eine geklebte Form, eine
+  ungefüllte Lücke, ein geschluckter Wert — lassen den Bau jetzt
+  scheitern; vorher ging jede davon durch.
 
 * **2026-11-20** · `geist-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 59, aus 34 und 38) — die größte der Anzeigen, 174

@@ -758,7 +758,15 @@ ANZEIGEN = {
     # dieselbe Fehlerklasse wie REGELN.md 6f, eine Tabelle deckt den
     # Fall, den sie kennt. Der Genitiv steht jetzt in B_DEIN und die
     # Form des Hauptworts in GT_T.haus.beugt.
-    'dossier/dossier-app.js':      (97, 4),
+    # dossier am 2026-11-21 (Aufgabe 60): Dabei ist eine Fehlerklasse
+    # aufgefallen, die keiner der Vorgänger hatte. Der Winkelname der
+    # Belege kommt aus AC_RAUM („Sextil"), nachgeschlagen wurde in der
+    # eigenen Sprachtafel („sextil") — und weil die Füllfunktion
+    # `undefined` zu '' machte, wurde aus „Saturn Sextil Sonne"
+    # lautlos „Saturn  Sonne". Eine Lücke ohne Wert bricht jetzt ab
+    # statt zu verschwinden. Dieselbe Klasse wie REGELN.md 6f, nur
+    # eine Ebene tiefer: Nicht die Tabelle kannte den Fall nicht,
+    # sondern der Notbehelf hat ihn zugedeckt.
     'analyse/analyse-app.js':      (29, 1),
     'begleitung/begleit-app.js':   (20, 0),
     'ereignis/ereignis-app.js':    (28, 10),
@@ -779,7 +787,8 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'bez/beziehung-app.js', 'zeit/zeit-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
           'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
-          'rituale/zauber-app.js', 'geist/geist-app.js'}
+          'rituale/zauber-app.js', 'geist/geist-app.js',
+          'dossier/dossier-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
