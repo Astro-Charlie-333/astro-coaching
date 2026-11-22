@@ -9,16 +9,20 @@
    basis.css, darum wirkt der Look auch auf alles, was darauf aufbaut.
    Eingebunden von praxis.html und baukasten.html (inline beim Bauen). */
 :root{
-  --bg:#F2F0EB; --creme:#F2F0EB; --papier:#FBFAF7; --tinte:#1D2326; --leise:#5E625E;
-  --linie:#DFDBD2; --linie-stark:#CFC9BD;
-  --nacht:#24382F; --nacht-bg:#E4EAE5;
-  --messing:#A3623A; --messing-bg:#F1E5D9;
-  --teal:#3B6656; --rost:#A3503A;
-  --sk-moos:#24382F; --sk-moos-tief:#1A2A23; --sk-kupfer:#A3623A; --sk-kupfer-hell:#E3B48E;
+  /* 18.11. abends: Schwerkraft im Midcentury-Look wie Astro-Charlie.
+     Mandy: „auch meine Seite. soll ja authentisch ich sein."
+     Die Praxis erkennt man jetzt an der schwarzen Leiste mit Senf. */
+  --bg:#F6F1E7; --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --nacht-bg:#DCE6FB;
+  --messing:#C8441A; --messing-bg:#FCE4D6;
+  --teal:#11897C; --rost:#D9481C;
+  --sk-moos:#1B1B1B; --sk-moos-tief:#000000; --sk-kupfer:#F05A28; --sk-kupfer-hell:#F2B33D;
+  --sk-kobalt:#1F4FD8;
 }
 body{background:var(--bg);}
 
-.sk-leiste{position:sticky;top:0;z-index:20;background:var(--sk-moos);color:#E6ECE7;
+.sk-leiste{position:sticky;top:0;z-index:20;background:var(--sk-moos);color:#F6F1E7;
   border-bottom:1px solid var(--sk-moos-tief);}
 .sk-leiste-in{max-width:1020px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .sk-marke{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:#fff;
@@ -27,7 +31,7 @@ body{background:var(--bg);}
 .sk-marke span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--sk-kupfer-hell);border:1px solid rgba(227,180,142,.45);border-radius:999px;padding:3px 8px 2px;}
 .sk-nav{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap;}
-.sk-nav a{font-family:var(--sans);font-size:14px;color:#C9D4CC;text-decoration:none;padding:8px 12px;border-radius:8px;}
+.sk-nav a{font-family:var(--sans);font-size:14px;color:#D9D3C7;text-decoration:none;padding:8px 12px;border-radius:8px;}
 .sk-nav a:hover{color:#fff;background:rgba(255,255,255,.07);}
 .sk-nav a.ist{color:#fff;box-shadow:inset 0 -2px 0 var(--sk-kupfer-hell);border-radius:0;}
 .sk-raus{font-family:var(--sans);font-size:12.5px;color:var(--sk-moos);background:var(--sk-kupfer-hell);

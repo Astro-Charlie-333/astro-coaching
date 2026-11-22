@@ -20,7 +20,7 @@ fehler, hinweise = [], []
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dein Bild &middot; Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="aspekte-daten.js"></script>
@@ -67,11 +67,16 @@ if haeufig:
 tabelle = ('var I_HAEUFIG=' + json.dumps(haeufig or {'n': 0, 'anteil': {}},
                                         ensure_ascii=False) + ';\n')
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + "\n" + lies(hier / 'ich-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + lies(hier / 'ich-koerper.html') + "\n<script>\n"
+        + lies(hier / 'ich-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(hier / 'kern-rad.js') + "\n"
         + lies(hier / 'ich-daten.js') + "\n"
@@ -103,6 +108,7 @@ daten = lies(hier / 'ich-daten.js')
 # Anzeige.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'ich-app.js', 'ich-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'ich-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'ich-app.js')
 
 # Und die Gegenprobe gegen die Fehlerklasse, die ein grüner Riegel
 # nicht ausschließt: dass er heute nur nichts zu finden hatte

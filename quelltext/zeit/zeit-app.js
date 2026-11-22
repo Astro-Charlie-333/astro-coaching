@@ -14,12 +14,10 @@ var ztBereich='arbeit', ztB=null, ztJD=0, ztWortNr=0;
 
 /* Setzt Werte in eine Vorlage aus ZT_T ein. Hier entsteht kein
    Text, nur die Einsetzung. */
-function ztFuell(form, werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function ztFuell(form, werte){ return AC_FUELL(form,werte); }
 
 /* ── Kleinkram ──────────────────────────────────────────────── */
 function ztKZ(x){ var r=Math.round(x*10)/10;
@@ -271,7 +269,7 @@ function ztJetztBauen(){
   ZT_BEREICH.forEach(function(B){
     var L=ztLage(B.k);
     if(!L){ h+='<div class="zt-zl"><span class="zb">'+B.n+'</span>'+
-      '<span class="zs" style="background:#DDD0BC;color:#231F1A">'+ZT_T.ohneStufe+'</span>'+
+      '<span class="zs" style="background:#D3C9B6;color:#1B1B1B">'+ZT_T.ohneStufe+'</span>'+
       '<span class="zk">'+ZT_T.ohnePlanet+'</span></div>'; return; }
     var offen=(ztOffen && ztOffen.b===B.k);
     h+='<button type="button" class="zt-zl'+(offen?' ist':'')+'" data-b="'+B.k+
@@ -480,7 +478,7 @@ function ztDetailBauen(){
   var h='<div class="zt-detail" style="border-left-color:'+S.farbe+'">'+
     '<div class="zt-dkopf"><h3>'+B.kurz+' &middot; '+K.n+'</h3>'+
     '<span class="zt-stufe" style="background:'+S.farbe+'">'+S.n+'</span>'+
-    (laeuft?'<span class="zt-stufe" style="background:#A05A3A">'+
+    (laeuft?'<span class="zt-stufe" style="background:#D9481C">'+
       ZT_T.laeuftGerade+'</span>':'')+'</div>'+
     '<div class="wann">'+ztFuell(ZT_T.detailWann, {
       von:ztDatumText(ztTagVon(a.von)), bis:ztDatumText(ztTagVon(a.bis)),
@@ -489,7 +487,7 @@ function ztDetailBauen(){
     '<p>'+K[ztOffen.b].t+'</p>'+
     '<div class="tun"><b>'+ZT_T.handgriff+'</b>'+K[ztOffen.b].tun+'</div>'+
     '<p style="margin-top:12px">'+ztWorte(S.was)+'</p>'+
-    '<p class="ac-tech" data-ab="2" style="font-size:13px;color:#6B6259">'+S.woher+'</p>'+
+    '<p class="ac-tech" data-ab="2" style="font-size:13px;color:#5E584D">'+S.woher+'</p>'+
     '<div class="zt-tab" style="margin-top:14px"><table><thead><tr>'+
     ztSpalten([ZT_T.spalte.darin, ZT_T.spalte.von, ZT_T.spalte.bis,
                ZT_T.spalte.lautstaerke])+
@@ -504,7 +502,7 @@ function ztDetailBauen(){
       '<td>'+us.n+'</td></tr>';
   });
   h+='</tbody></table></div>'+
-     '<p class="ac-tech" data-ab="3" style="margin-top:12px;font-size:12.5px;color:#6B6259">'+
+     '<p class="ac-tech" data-ab="3" style="margin-top:12px;font-size:12.5px;color:#5E584D">'+
      ztFuell(ZT_T.detailTech, {kapitel:K.n, jahre:a.jahre, herr:a.herr,
        nr:a.vonGlueck})+'</p></div>';
   box.innerHTML=h;
@@ -559,7 +557,7 @@ function ztWeitereBauen(){
   if(!ztB){ box.innerHTML=ztLeer(ZT_T.ohneWeitere); return; }
   var P=ztB.profektion, PT=ZT_PROFEKTION[P.haus-1], F=ztB.firdariaJetzt;
   var h='<div class="zt-jetzt">';
-  h+='<div class="zt-j" style="border-top-color:#3D6B62">'+
+  h+='<div class="zt-j" style="border-top-color:#11897C">'+
     '<div class="lab">'+ztWorte(ZT_T.jahresLab)+'</div>'+
     '<h3>'+PT.n+'</h3>'+
     '<div class="wann">'+ztFuell(ZT_T.jahresWann,
@@ -567,9 +565,9 @@ function ztWeitereBauen(){
       '<span class="ac-tech" data-ab="2">'+ztFuell(ZT_T.jahresTech,
         {zeichen:P.zeichenName, herr:P.herr})+'</span></div>'+
     '<p>'+PT.t+'</p>'+
-    '<p class="ac-tech" data-ab="2" style="font-size:13.6px;color:#6B6259;margin:0">'+
+    '<p class="ac-tech" data-ab="2" style="font-size:13.6px;color:#5E584D;margin:0">'+
       ztFuell(ZT_T.jahresHerr, {herr:P.herr})+'</p></div>';
-  h+='<div class="zt-j" style="border-top-color:#6A4A62">'+
+  h+='<div class="zt-j" style="border-top-color:#1F4FD8">'+
     '<div class="lab">'+ztWorte(ZT_T.firdariaLab)+'</div>'+
     (F?'<h3>'+F.haupt.herr+'</h3>'+
        '<div class="wann">'+ztFuell(ZT_T.firdariaWann,
@@ -581,7 +579,7 @@ function ztWeitereBauen(){
              {herr:F.unter.herr})+'</b><p style="margin:0">'+
            (ZT_FIRDARIA[F.unter.herr]||{t:''}).t+'</p></div>' : '')
       :'<h3>'+ZT_T.firdariaEnde+'</h3><p>'+ZT_T.firdariaEndeT+'</p>')+
-    '<p class="ac-tech" data-ab="2" style="margin:10px 0 0;font-size:13px;color:#6B6259">'+
+    '<p class="ac-tech" data-ab="2" style="margin:10px 0 0;font-size:13px;color:#5E584D">'+
       ztFuell(ZT_T.firdariaTech,
         {geburt:ztB.lose.tag?ZT_T.tag:ZT_T.nacht})+'</p></div>';
   box.innerHTML=h+'</div>';

@@ -17,7 +17,7 @@
       satz:'Hier passiert gerade wenig. Das ist keine Vernachlässigung, sondern eine Pause.' },
     { k:'leise',   n:'Leise',        farbe:'#7E95A8',
       satz:'Etwas bewegt sich, aber ohne Druck. Gut für Dinge, die Zeit brauchen.' },
-    { k:'bewegt',  n:'In Bewegung',  farbe:'#9A7235',
+    { k:'bewegt',  n:'In Bewegung',  farbe:'#C8441A',
       satz:'Hier ist etwas im Gang. Entscheidungen, die du jetzt triffst, haben Gewicht.' },
     { k:'viel',    n:'Viel los',     farbe:'#B5502E',
       satz:'Das ist gerade dein lautester Bereich. Hierhin geht die Energie, ob du willst oder nicht.' }
@@ -868,12 +868,50 @@
       a:'Dann stimmt dein Erleben und nicht die Seite. Deine Lage hat immer Vorrang. Die Seite kennt nur die Uhr, nicht dein Leben.' }
   ];
 
+  /* ── Die Kurzfassung je Bereich (18.11.) ───────────────────────
+     Mandy: „Was sagen die Bereiche genau, und wo liegen die nächsten
+     Schritte oder Punkte in den kommenden Wochen und Monaten? Wo
+     bewegt sich was, und wie sehen die next steps aus?" Öffentlich
+     steht nur diese Kurzfassung; die ausführliche liegt in der Praxis. */
+  var B_KURZ = {
+    bloecke:{ bild:'Was dein Bild hier sagt', gerade:'Was gerade läuft',
+              kommt:'Die nächsten Monate', schritt:'Dein nächster Schritt',
+              umgang:'Wie du damit umgehst', monat:'Monat für Monat' },
+    bildVor:'Bei dir steht vorn: ',
+    wand:{ Pluto:'tiefe Verwandlung', Neptun:'Auflösung und Sehnsucht', Uranus:'Umbruch und Befreiung',
+           Saturn:'Prüfung und Aufbau', Jupiter:'Wachstum und Rückenwind', Mars:'Antrieb und Reibung',
+           Venus:'Nähe und Genuss', Merkur:'Gespräche und Pläne', Sonne:'Aufmerksamkeit' },
+    ziel:{ Sonne:'dein Kern', Mond:'dein Gefühlsleben', Merkur:'dein Denken und Reden',
+           Venus:'deine Art zu lieben', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
+           Saturn:'deine Verantwortung', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
+           Pluto:'deine Tiefe', ASC:'dein Auftreten', MC:'deine Richtung', sonst:'ein Punkt in deinem Bild',
+           feld:'dieser Bereich' },
+    art:{ zusammen:'direkt', gegenueber:'gegenüber', spannung:'reibt', leicht:'stärkt',
+          durchgang:'zieht durch', mond:'Mond' },
+    titel:'{ziel}: {wand}',
+    mond:{ NM:'Neumond in diesem Bereich', VM:'Vollmond in diesem Bereich', F:'Finsternis in diesem Bereich' },
+    mondWas:{ NM:'Ein guter Tag, um hier etwas anzufangen.', VM:'Hier wird etwas sichtbar oder rund.' },
+    um:'um den {datum}', ab:'ab {datum}',
+    tun:{ leicht:'Rückenwind. Fang an, was du hier sonst aufschiebst.',
+          spannung:'Reibung. Nicht wegdrücken: eine Sache klären, nicht alle.',
+          gegenueber:'Etwas spiegelt dich. Erst zuhören, dann entscheiden.',
+          zusammen:'Volle Ladung auf einen Punkt. Bewusst einsetzen, nicht verteilen.',
+          durchgang:'Ein langes Thema zieht durch. Kleine, regelmäßige Schritte statt eines großen.' },
+    vorbereiten:'Mit Blick auf den {datum}:',
+    leerKommt:'In den nächsten sechs Monaten kommt hier nichts Großes dazu. Gut für Ruhe und Pflege.',
+    mehrKommt:'{n} weitere Punkte',
+    praxis:'Die ausführliche Fassung mit allen Zeiträumen, Monat für Monat, und den Fragen fürs Gespräch gehört in die Begleitung.',
+    praxisLink:'Wie die Begleitung abläuft', praxisDatei:'start.html#stangebot',
+    naechster:'Nächster Punkt: {datum}', keinNaechster:'Ruhig in den nächsten Monaten',
+    kachelVor:'Tipp einen Bereich an.'
+  };
+
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH, SEITE:B_SEITE,
     WID:B_WID, FRAGEN:B_FRAGEN, GRENZE:B_GRENZE, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
-    RAUM:B_RAUM
+    RAUM:B_RAUM, KURZ:B_KURZ
   };
 
 })();

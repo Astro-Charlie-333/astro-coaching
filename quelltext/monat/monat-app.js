@@ -29,10 +29,7 @@ function mbEsc(s){
    In dieser Reihenfolge kann kein Wert HTML einschmuggeln, und
    die Sternchen aus den Daten wirken trotzdem. */
 function mbSatz(vorlage, werte){
-  var t = String(vorlage).replace(/\{([a-zA-Z]+)\}/g, function(_, k){
-    return (werte && werte[k] !== undefined) ? String(werte[k]) : '';
-  });
-  return mbEsc(t).replace(/\*([^*]+)\*/g, '<b>$1</b>');
+  return mbEsc(AC_FUELL(vorlage, werte)).replace(/\*([^*]+)\*/g, '<b>$1</b>');
 }
 
 function mbZahl(x){ return String(x.toFixed(1)).replace('.', ','); }

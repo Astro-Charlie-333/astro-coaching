@@ -244,19 +244,24 @@ def lies(p):
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jetzt &middot; Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <style>
 """
 
 ber = hier.parent / 'bereiche'
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + "\n" + lies(hier / 'heute-stil.css')
         + "\n" + lies(ber / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + lies(hier / 'heute-koerper.html') + "\n<script>\n"
+        + lies(hier / 'heute-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(rit / 'himmel.js') + "\n"
         + lies(rit / 'ritual.js') + "\n"
@@ -303,6 +308,7 @@ daten = [lies(hier / 'heute-daten.js'), lies(hier / 'themen-daten.js'),
 # B_BEUGE aus bahn-daten.js.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'heute-app.js', 'heute-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'heute-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'heute-app.js')
 
 # ── Ein Handgriff verspricht nichts ───────────────────────────
 # Dieselbe Regel wie auf der Bereichsseite, aus derselben Datei
@@ -542,7 +548,7 @@ const k=await p.evaluate(()=>({
   wocheWeg:document.getElementById('htwocheteil').hidden,
   themenWeg:document.getElementById('htthementeil').hidden,
   koerperWeg:document.getElementById('htkoerperteil').hidden,
-  laeuftDa:!document.getElementById('htlaeuftteil').hidden,
+  laeuftDa:!document.getElementById('httrefferteil').hidden,
   bereicheDa:!document.getElementById('htbereicheteil').hidden,
   jetztDa:!document.getElementById('htjetzt').hidden}));
 /* Erst die Kapazität zurückstellen, dann auf Stufe 0 messen.
@@ -705,7 +711,7 @@ if pr:
     if not k['koerperWeg']:
         fehler.append('„Wenig" blendet „Schlaf und Bewegung" nicht aus')
     if not k['laeuftDa']:
-        fehler.append('„Wenig" blendet auch „Was gerade läuft" aus — das ist der Kern')
+        fehler.append('„Wenig" blendet auch „Was dein Bild gerade trifft" aus — das ist der Kern')
     if not pr['kapZurueck']:
         fehler.append('die Kapazität lässt sich nicht zurückstellen — dann misst '
                       'alles danach eine halb ausgeblendete Seite')
@@ -958,25 +964,12 @@ if pr:
         if _lauf != sorted(_lauf):
             fehler.append('der Ausblick steht nicht in der Reihenfolge, in der er kommt')
 
-    lf = pr['lauf']
-    if lf['karten'] < 3:
-        fehler.append(f"nur {lf['karten']} Konstellationen unter Was gerade laeuft")
-    if lf['haupt'] != 1:
-        fehler.append(f"{lf['haupt']} hervorgehobene Konstellationen statt genau einer")
-    # Der Befund vom 28.10.: drei Karten sagten wortwörtlich denselben Satz,
-    # weil der Text am Wanderer hängt und Saturn dreimal vorkam.
-    if len(set(lf['saetze'])) != len(lf['saetze']):
-        doppelt = [t[:60] for t in lf['saetze']
-                   if lf['saetze'].count(t) > 1]
-        fehler.append('derselbe Satz steht mehrfach unter „Was gerade läuft": '
-                      + repr(doppelt[0] if doppelt else ''))
-    if len(set(lf['wanderer'])) != len(lf['wanderer']):
-        fehler.append('derselbe Wanderer steht mehrfach: ' + str(lf['wanderer']))
-    for m in lf['marken']:
-        if not m['jetzt']:
-            fehler.append('eine Bahn ohne Marke für den heutigen Stand')
-    if lf['klein']:
-        fehler.append('Aspektname kleingeschrieben: ' + repr(lf['klein'][0]))
+    # Seit dem 18.11. gibt es „Was gerade läuft" nicht mehr: es sagte
+    # dasselbe wie „Was dein Bild gerade trifft". Kommt es zurück,
+    # steht alles wieder doppelt.
+    if pr['lauf']['karten']:
+        fehler.append('„Was gerade läuft" steht wieder auf der Seite — das '
+                      'doppelt „Was dein Bild gerade trifft"')
 
     a = pr['auf']
     if not a['da']:

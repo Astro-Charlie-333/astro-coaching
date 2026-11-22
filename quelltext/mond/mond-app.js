@@ -15,12 +15,10 @@ var SVGNS='http://www.w3.org/2000/svg';
 function moSvg(t,a){var e=document.createElementNS(SVGNS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
 var T=MT_T;
 /* Eine Lücke `{so}` je Schlüssel, in einem Durchgang. */
-function moFuell(form,werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function moFuell(form,werte){ return AC_FUELL(form,werte); }
 function moGross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 /* „deine Venus", „dein Mond" — gebeugt an einer Stelle. */
 function moDein(k){ return B_BEUGE(B_PUNKT(k,false),'nom'); }
@@ -50,7 +48,7 @@ function moMondBild(svg,w,art){
   var cx=60,cy=60,r=46;
   svg.appendChild(moSvg('circle',{cx:cx,cy:cy,r:r,fill:'#1E2742',stroke:'#46557A','stroke-width':1}));
   if(art===T.artName.NMe){
-    svg.appendChild(moSvg('circle',{cx:cx,cy:cy,r:r+6,fill:'none',stroke:'#E8C98D','stroke-width':3,opacity:.85}));
+    svg.appendChild(moSvg('circle',{cx:cx,cy:cy,r:r+6,fill:'none',stroke:'#F2B33D','stroke-width':3,opacity:.85}));
     return;
   }
   var k=Math.cos(nrm(w)*Math.PI/180), rechts=nrm(w)<180;
@@ -138,18 +136,18 @@ function moJetzt(){
 var moWahl=Math.floor(moElong(moJdJetzt())/45)%8;
 function moRad(){
   var s=el('morad'); while(s.firstChild) s.removeChild(s.firstChild);
-  s.appendChild(moSvg('line',{x1:30,y1:78,x2:610,y2:78,stroke:'#EBE1D2','stroke-width':2}));
+  s.appendChild(moSvg('line',{x1:30,y1:78,x2:610,y2:78,stroke:'#E6DECF','stroke-width':2}));
   MT_PHASEN.forEach(function(p,i){
     var x=30+i*(580/7);
     var g=moSvg('g',{role:'button',tabindex:0,
       'aria-label':moFuell(T.radMarke,{name:p.n,wort:p.s}),'aria-pressed':String(i===moWahl)});
-    g.appendChild(moSvg('circle',{class:'ring',cx:x,cy:78,r:30,fill:i===moWahl?'#F5ECDD':'#FFFDFA',stroke:i===moWahl?'#9A7235':'#EBE1D2','stroke-width':i===moWahl?2:1}));
+    g.appendChild(moSvg('circle',{class:'ring',cx:x,cy:78,r:30,fill:i===moWahl?'#F5ECDD':'#FFFFFF',stroke:i===moWahl?'#C8441A':'#E6DECF','stroke-width':i===moWahl?2:1}));
     var sub=moSvg('svg',{x:x-22,y:56,width:44,height:44,viewBox:'0 0 120 120'});
     moMondBild(sub,p.a+22.5);
     g.appendChild(sub);
     /* Die Schrift steht in mond-stil.css, nicht hier: eine Anzeige
        setzt Klassen, keine Schriftnamen. */
-    var t1=moSvg('text',{x:x,y:134,class:'mo-rad-lab','text-anchor':'middle','font-size':13,fill:'#2E3A5C','font-weight':i===moWahl?600:400});
+    var t1=moSvg('text',{x:x,y:134,class:'mo-rad-lab','text-anchor':'middle','font-size':13,fill:'#1B1B1B','font-weight':i===moWahl?600:400});
     t1.textContent=p.s; g.appendChild(t1);
     function waehle(){ moWahl=i; moZeigPhase(); moRad(); }
     g.addEventListener('click',waehle);
@@ -157,8 +155,8 @@ function moRad(){
       var n=el('morad').querySelectorAll('g[role=button]')[i]; if(n) n.focus();} });
     s.appendChild(g);
   });
-  var l1=moSvg('text',{x:30,y:178,class:'mo-rad-rand','font-size':11,fill:'#9A7235'}); l1.textContent=T.radLinks; s.appendChild(l1);
-  var l2=moSvg('text',{x:610,y:178,class:'mo-rad-rand','font-size':11,fill:'#9A7235','text-anchor':'end'}); l2.textContent=T.radRechts; s.appendChild(l2);
+  var l1=moSvg('text',{x:30,y:178,class:'mo-rad-rand','font-size':11,fill:'#C8441A'}); l1.textContent=T.radLinks; s.appendChild(l1);
+  var l2=moSvg('text',{x:610,y:178,class:'mo-rad-rand','font-size':11,fill:'#C8441A','text-anchor':'end'}); l2.textContent=T.radRechts; s.appendChild(l2);
 }
 function moZeigPhase(){
   var p=MT_PHASEN[moWahl];
@@ -231,6 +229,12 @@ function moKarte(t,tr){
     p.textContent=typ.alltag;
   }
   inh.appendChild(chips); inh.appendChild(p);
+  if(NAT && window.MT_HAUS_TUN){
+    var hb=moHaus(NAT.ASC,t.g), satz=(MT_HAUS_TUN[t.t==='NM'?'NM':'VM']||[])[hb];
+    if(satz){ var q=document.createElement('p'); q.className='mo-bei';
+      var qb=document.createElement('b'); qb.textContent=moFuell(MT_HAUS_TUN.vor,{bereich:MT_HAUS[hb].kurz});
+      q.appendChild(qb); q.appendChild(document.createTextNode(satz)); inh.appendChild(q); }
+  }
   var f=document.createElement('p'); f.className='mo-klein'; f.textContent=typ.fenster; inh.appendChild(f);
   k.appendChild(dat); k.appendChild(inh);
   return k;

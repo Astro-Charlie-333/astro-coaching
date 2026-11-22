@@ -1,36 +1,36 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grade lesen · Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="format.js" defer></script>
 <script src="kleine-punkte.js"></script>
 <script src="begriffe.js" defer></script>
 <style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
-h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Jost',sans-serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 .tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
@@ -39,9 +39,9 @@ p{margin-bottom:12px;}
 .foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
 .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
 .pill.fire{background:#FBE3DA;color:var(--fire);}
-.pill.earth{background:#E8EDDC;color:var(--earth);}
-.pill.air{background:#DEEBF1;color:var(--air);}
-.pill.water{background:#E6E1F0;color:var(--water);}
+.pill.earth{background:#FCEFD2;color:var(--earth);}
+.pill.air{background:#DCE6FB;color:var(--air);}
+.pill.water{background:#D7EFEB;color:var(--water);}
 a{color:var(--ind);}
 
 .weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
@@ -51,14 +51,14 @@ a{color:var(--ind);}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
  text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
 
 /* — vereinheitlichte Typografie — */
 body{font-family:var(--sans)!important;}
-h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
-h1{font-weight:300!important;letter-spacing:-.01em;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:500!important;}
+h1{font-weight:600!important;letter-spacing:-.025em;}
 h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
 .eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
  text-transform:uppercase;color:var(--messing);font-weight:500;}
@@ -113,7 +113,7 @@ table.gr tr.warn td{background:#FBF0E8;}
 .gr-mini u{position:absolute;top:0;height:9px;opacity:.35;border-radius:6px;}
 .gr-tag{display:inline-block;font-family:var(--sans);font-size:10px;letter-spacing:.05em;border-radius:10px;
  padding:2px 7px;background:var(--messing);color:#fff;}
-.gr-tag.spaet{background:#A05A3A;} .gr-tag.frueh{background:#3D6B62;}
+.gr-tag.spaet{background:#D9481C;} .gr-tag.frueh{background:#11897C;}
 .gr-leer{background:var(--papier);border:1px dashed var(--linie);border-radius:16px;padding:24px;text-align:center;color:var(--leise);line-height:1.6;}
 
 .gr-det{background:var(--papier);border:1px solid var(--linie);border-radius:15px;padding:13px 16px;margin-bottom:8px;}
@@ -183,8 +183,8 @@ table.gr tr.warn td{background:#FBF0E8;}
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
@@ -214,9 +214,9 @@ table.gr tr.warn td{background:#FBF0E8;}
 <div class="gr-wahl" id="grwahl"></div>
 <div class="gr-band"><svg id="grband" viewBox="0 0 760 200" role="img" aria-label="Gradband eines Zeichens"></svg>
   <div class="gr-legende">
-    <span><i class="gr-punkt" style="background:#3D6B62"></i> Anfangsgrade 0–5°</span>
-    <span><i class="gr-punkt" style="background:#EBE1D2"></i> Mittelgrade 6–23°</span>
-    <span><i class="gr-punkt" style="background:#A05A3A"></i> Endgrade 24–29°</span>
+    <span><i class="gr-punkt" style="background:#11897C"></i> Anfangsgrade 0–5°</span>
+    <span><i class="gr-punkt" style="background:#E6DECF"></i> Mittelgrade 6–23°</span>
+    <span><i class="gr-punkt" style="background:#D9481C"></i> Endgrade 24–29°</span>
   </div>
 </div>
 <div id="grinfo"></div>
@@ -224,11 +224,11 @@ table.gr tr.warn td{background:#FBF0E8;}
 <h2>Was früh, mittig und spät bedeuten</h2>
 
 <div class="gr-zonen">
-  <div class="gr-zone" style="border-color:#3D6B62"><span class="zn">0° bis 5°</span><h4>Roh und unverbraucht</h4>
+  <div class="gr-zone" style="border-color:#11897C"><span class="zn">0° bis 5°</span><h4>Roh und unverbraucht</h4>
   <p>Das Thema ist frisch und ungeformt. Menschen mit vielen Anfangsgraden wirken in diesen Bereichen jung — im guten wie im mühsamen Sinn. Sie fangen leicht an und wissen noch nicht, wohin. <b>0° selbst</b> ist der Extremfall: ganz am Anfang, ohne Erfahrung, aber mit voller Ladung.</p></div>
   <div class="gr-zone"><span class="zn">6° bis 23°</span><h4>Ausgereift und stabil</h4>
   <p>Der unauffällige Bereich, und genau deshalb der verlässlichste. Das Thema steht mitten im Zeichen, hat Substanz und braucht weder Anlauf noch Abschluss. Hier funktioniert die normale Deutung ohne Beiwerk.</p></div>
-  <div class="gr-zone" style="border-color:#A05A3A"><span class="zn">24° bis 29°</span><h4>Reif und drängend</h4>
+  <div class="gr-zone" style="border-color:#D9481C"><span class="zn">24° bis 29°</span><h4>Reif und drängend</h4>
   <p>Das Thema ist fast durch. Es kommt eine Dringlichkeit dazu — als müsste noch etwas erledigt werden. <b>29°</b> ist der bekannteste Fall: viel Erfahrung mit dem Thema, oft eine gewisse Ungeduld, manchmal das Gefühl, damit fertig zu sein und trotzdem nicht loszukommen.</p></div>
 </div>
 
@@ -241,7 +241,7 @@ table.gr tr.warn td{background:#FBF0E8;}
 <div class="gr-zonen" style="grid-template-columns:1fr 1fr;">
   <div class="gr-zone"><h4>Im Whole-Sign-System</h4>
   <p>Haus und Zeichen sind identisch. Der Grad ändert <b>nichts</b> an der Hauszugehörigkeit — ein Planet auf 29° Stier steht im selben Haus wie einer auf 1° Stier. Das ist der große Vorteil dieses Systems: Es ist gegen ungenaue Geburtszeiten robust.</p></div>
-  <div class="gr-zone" style="border-color:#A05A3A"><h4>Im Placidus-System</h4>
+  <div class="gr-zone" style="border-color:#D9481C"><h4>Im Placidus-System</h4>
   <p>Die Häuser fangen mitten in den Zeichen an. Ein Planet nahe einer Hausspitze <b>wechselt bei kleinster Zeitabweichung das Haus</b> — und damit den ganzen Lebensbereich. Deshalb steht in der Tabelle unten eine Warnung, wenn ein Planet nah an einer Grenze sitzt.</p></div>
 </div>
 
@@ -358,8 +358,8 @@ function grenzeVon(g){
 }
 function zone(g){
   var d=g%30;
-  if(d<6) return {k:'frueh',t:'Anfangsgrade',f:'#3D6B62'};
-  if(d>=24) return {k:'spaet',t:'Endgrade',f:'#A05A3A'};
+  if(d<6) return {k:'frueh',t:'Anfangsgrade',f:'#11897C'};
+  if(d>=24) return {k:'spaet',t:'Endgrade',f:'#D9481C'};
   return {k:'mitte',t:'Mittelgrade',f:'#9A8570'};
 }
 
@@ -372,32 +372,32 @@ function bandZeichnen(){
   function x(d){ return X0 + d/30*B; }
 
   /* Zonen als Hintergrund */
-  [[0,6,'#3D6B62'],[6,24,'#EBE1D2'],[24,30,'#A05A3A']].forEach(function(z){
+  [[0,6,'#11897C'],[6,24,'#E6DECF'],[24,30,'#D9481C']].forEach(function(z){
     s.appendChild(NS('rect',{x:x(z[0]),y:28,width:x(z[1])-x(z[0]),height:26,
-      fill:z[2],'fill-opacity':(z[2]==='#EBE1D2'?1:0.3),rx:4}));
+      fill:z[2],'fill-opacity':(z[2]==='#E6DECF'?1:0.3),rx:4}));
   });
-  var t0=NS('text',{x:X0,y:20,'font-size':11,fill:'#6B6259'}); t0.textContent='Zonen'; s.appendChild(t0);
+  var t0=NS('text',{x:X0,y:20,'font-size':11,fill:'#5E584D'}); t0.textContent='Zonen'; s.appendChild(t0);
 
   /* Dekanate */
-  var t1=NS('text',{x:X0,y:80,'font-size':11,fill:'#6B6259'}); t1.textContent='Dekanate'; s.appendChild(t1);
+  var t1=NS('text',{x:X0,y:80,'font-size':11,fill:'#5E584D'}); t1.textContent='Dekanate'; s.appendChild(t1);
   for(var i=0;i<3;i++){
     var von=i*10, bis=von+10, herr=DEKAN[zi][i];
-    var r=NS('rect',{x:x(von)+1,y:88,width:x(bis)-x(von)-2,height:30,fill:'#FFFDFA',
-      stroke:(gewAbschnitt==='d'+i?'#2E3A5C':'#EBE1D2'),'stroke-width':(gewAbschnitt==='d'+i?2:1),rx:6,
+    var r=NS('rect',{x:x(von)+1,y:88,width:x(bis)-x(von)-2,height:30,fill:'#FFFFFF',
+      stroke:(gewAbschnitt==='d'+i?'#1B1B1B':'#E6DECF'),'stroke-width':(gewAbschnitt==='d'+i?2:1),rx:6,
       style:'cursor:pointer'});
     (function(idx,h,v,b){ r.addEventListener('click',function(){ gewAbschnitt='d'+idx; info('dekan',h,v,b); bandZeichnen(); }); })(i,herr,von,bis);
     s.appendChild(r);
-    var tt=NS('text',{x:(x(von)+x(bis))/2,y:107,'text-anchor':'middle','font-size':13,fill:'#2E3A5C',style:'pointer-events:none'});
+    var tt=NS('text',{x:(x(von)+x(bis))/2,y:107,'text-anchor':'middle','font-size':13,fill:'#1B1B1B',style:'pointer-events:none'});
     tt.textContent=herr; s.appendChild(tt);
   }
 
   /* Grenzen */
-  var t2=NS('text',{x:X0,y:140,'font-size':11,fill:'#6B6259'}); t2.textContent='Grenzen'; s.appendChild(t2);
+  var t2=NS('text',{x:X0,y:140,'font-size':11,fill:'#5E584D'}); t2.textContent='Grenzen'; s.appendChild(t2);
   var vor=0;
   GRENZ[zi].forEach(function(g,idx){
     var von=vor, bis=g[0]; vor=bis;
-    var r=NS('rect',{x:x(von)+1,y:148,width:x(bis)-x(von)-2,height:28,fill:'#F7EFE1',
-      stroke:(gewAbschnitt==='g'+idx?'#9A7235':'#EBE1D2'),'stroke-width':(gewAbschnitt==='g'+idx?2:1),rx:6,
+    var r=NS('rect',{x:x(von)+1,y:148,width:x(bis)-x(von)-2,height:28,fill:'#FCE4D6',
+      stroke:(gewAbschnitt==='g'+idx?'#C8441A':'#E6DECF'),'stroke-width':(gewAbschnitt==='g'+idx?2:1),rx:6,
       style:'cursor:pointer'});
     (function(i2,h,v,b){ r.addEventListener('click',function(){ gewAbschnitt='g'+i2; info('grenze',h,v,b); bandZeichnen(); }); })(idx,g[1],von,bis);
     s.appendChild(r);
@@ -409,8 +409,8 @@ function bandZeichnen(){
 
   /* Gradskala */
   for(var d2=0;d2<=30;d2+=5){
-    s.appendChild(NS('line',{x1:x(d2),y1:182,x2:x(d2),y2:188,stroke:'#DDD0BC'}));
-    var tx=NS('text',{x:x(d2),y:198,'text-anchor':'middle','font-size':10,fill:'#6B6259'});
+    s.appendChild(NS('line',{x1:x(d2),y1:182,x2:x(d2),y2:188,stroke:'#D3C9B6'}));
+    var tx=NS('text',{x:x(d2),y:198,'text-anchor':'middle','font-size':10,fill:'#5E584D'});
     tx.textContent=d2+'°'; s.appendChild(tx);
   }
 }
@@ -567,8 +567,8 @@ function chartZeichnen(){
     var g=P[k], d2=g%30, z=zone(g), dek=dekanVon(g), gr=grenzeVon(g), hn=haus(g)+1;
     h+='<tr'+((d2<1||d2>=29)?' class="warn"':'')+'><td class="gl">'+(GLY[k]||'')+'</td>'+
       '<td><b>'+k+'</b></td><td class="m">'+fmt(g)+'</td>'+
-      '<td><div class="gr-mini"><u style="left:0;width:20%;background:#3D6B62"></u>'+
-        '<u style="left:80%;width:20%;background:#A05A3A"></u>'+
+      '<td><div class="gr-mini"><u style="left:0;width:20%;background:#11897C"></u>'+
+        '<u style="left:80%;width:20%;background:#D9481C"></u>'+
         '<i style="left:'+(d2/30*100).toFixed(1)+'%"></i></div></td>'+
       '<td><span class="gr-tag '+z.k+'">'+z.t+'</span></td>'+
       '<td>'+dek+'</td><td>'+gr.herr+'</td><td class="m">'+hn+'.</td></tr>';

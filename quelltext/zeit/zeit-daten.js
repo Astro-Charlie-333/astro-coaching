@@ -9,19 +9,19 @@
    Dieselbe Rechnung, fünfmal von einem anderen Punkt aus gestartet.
    Jeder Punkt gehört zu einem Lebensbereich.                       */
 var ZT_BEREICH=[
- {k:'arbeit', n:'Arbeit & Berufung', kurz:'Arbeit', farbe:'#9A7235',
+ {k:'arbeit', n:'Arbeit & Berufung', kurz:'Arbeit', farbe:'#C8441A',
   frage:'Wann geht beruflich etwas voran, und wann ist Ruhe?',
   worum:'Was du tust, wie du dein Geld verdienst, wohin dein Weg geht.',
   los:'Los des Geistes',
   losErkl:'Der Startpunkt dieser Spur. Er wird aus dem Abstand zwischen Sonne und Mond '+
     'gebildet und steht in der Überlieferung für das, was ein Mensch von sich aus tut.'},
- {k:'liebe', n:'Liebe & Nähe', kurz:'Liebe', farbe:'#A05A3A',
+ {k:'liebe', n:'Liebe & Nähe', kurz:'Liebe', farbe:'#D9481C',
   frage:'Wann passiert in Beziehungen etwas, und wann ist es still?',
   worum:'Verliebtheit, Partnerschaft, Nähe, auch Trennungen.',
   los:'Los des Eros',
   losErkl:'Der Startpunkt dieser Spur. Er wird aus Venus und dem Los des Geistes gebildet '+
     'und steht für Begehren und Zuneigung.'},
- {k:'koerper', n:'Körper, Geld & Umstände', kurz:'Umstände', farbe:'#3D6B62',
+ {k:'koerper', n:'Körper, Geld & Umstände', kurz:'Umstände', farbe:'#11897C',
   frage:'Wann sind die äußeren Umstände günstig, und wann sperrig?',
   worum:'Körper, Wohnort, Einkommen — das, was dir zustößt, statt dass du es machst.',
   los:'Los des Glücks',
@@ -34,7 +34,7 @@ var ZT_BEREICH=[
   los:'Los des Sieges',
   losErkl:'Der Startpunkt dieser Spur, aus Jupiter und dem Los des Geistes gebildet. '+
     'Er steht für Zuversicht und für das, was von außen hilft.'},
- {k:'druck', n:'Druck & Pflicht', kurz:'Druck', farbe:'#6A4A62',
+ {k:'druck', n:'Druck & Pflicht', kurz:'Druck', farbe:'#1F4FD8',
   frage:'Wann wird es eng, und wann lässt der Druck nach?',
   worum:'Verpflichtungen, Zwänge, Dinge, die erledigt werden müssen.',
   los:'Los der Notwendigkeit',
@@ -44,7 +44,7 @@ var ZT_BEREICH=[
 
 /* ── Die drei Lautstärken ────────────────────────────────────  */
 var ZT_STUFE={
- winkel:{n:'Hochphase', kurz:'laut', rang:3, farbe:'#9A7235',
+ winkel:{n:'Hochphase', kurz:'laut', rang:3, farbe:'#C8441A',
    satz:'Hier ist viel los.',
    was:'In so einem Abschnitt passiert mehr als sonst, es wird sichtbarer, und '+
      'Entscheidungen haben größere Folgen. <b>Laut heißt nicht schön.</b> Ein harter '+
@@ -52,7 +52,7 @@ var ZT_STUFE={
      'nicht die Richtung.',
    woher:'Das Zeichen dieses Abschnitts steht im rechten Winkel zum Glückspunkt oder '+
      'genau auf ihm. Vier von zwölf Zeichen tun das.'},
- folgend:{n:'Mittlere Phase', kurz:'normal', rang:2, farbe:'#3D6B62',
+ folgend:{n:'Mittlere Phase', kurz:'normal', rang:2, farbe:'#11897C',
    satz:'Es läuft, ohne dass es dich umwirft.',
    was:'Diese Abschnitte bauen aus, was in einer Hochphase angefangen wurde. Sie sind '+
      'die stabileren und meistens die angenehmeren.',
@@ -558,12 +558,12 @@ var ZT_T={
    Standen bis zum 2026-11-14 in der Anzeige verstreut, und
    dieselbe Farbe bedeutete an vier Stellen nichts Gemeinsames:
    der Streifen unter einem Balken und die Altersachse trugen
-   beide „#DDD0BC", ohne dass irgendwo stand, dass das dasselbe
+   beide „#D3C9B6", ohne dass irgendwo stand, dass das dasselbe
    Grau sein soll. Die Lautstärken haben ihre Farbe in ZT_STUFE;
    das hier ist der Rest.                                       */
 var ZT_FARBE={
- balken:'#DDD0BC',      /* ein Balken ohne eigene Lautstärke */
- balkenHell:'#EBE1D2',  /* der hellere Wechsel, die leere Spur */
- achse:'#DDD0BC',       /* Achse und Achsenstriche */
- merk:'#A05A3A'         /* heute, der große Schnitt, was läuft */
+ balken:'#D3C9B6',      /* ein Balken ohne eigene Lautstärke */
+ balkenHell:'#E6DECF',  /* der hellere Wechsel, die leere Spur */
+ achse:'#D3C9B6',       /* Achse und Achsenstriche */
+ merk:'#D9481C'         /* heute, der große Schnitt, was läuft */
 };

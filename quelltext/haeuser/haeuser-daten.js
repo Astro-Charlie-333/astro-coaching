@@ -64,7 +64,12 @@ var HZ_ACHSEN = [
    Die Werte prüft bau-haeuser.py beim Bauen gegen engine.js. */
 var HZ_BEISPIEL = {datum:'14.10.1994', zeit:'13:05', ort:'Hamburg',
   p:{y:1994, mo:10, d:14, h:13, mi:5, tz:2, lat:53.55, lon:9.99},
-  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage', wsHaus:11, plHaus:10, abstand:18};
+  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage',
+  /* Die Zeichen stehen einzeln daneben, weil der Text sie nennt
+     („Waage ist ab Schütze das elfte Zeichen"). bau-haeuser.py hält
+     beide gegen asc und sonne und gegen die Rechnung. */
+  ascZ:'Schütze', sonneZ:'Waage',
+  wsHaus:11, mcHaus:11, plHaus:10, abstand:18};
 
 var HZ_QUIZ = [
  {q:'Ein Planet steht nach Whole Sign im 10. und nach Placidus im 9. Haus. Was machst du im Reading?',
@@ -74,3 +79,54 @@ var HZ_QUIZ = [
   o:['Quito, Ecuador (0° Breite)','Stockholm (59° Breite)'], r:1,
   e:'Je weiter vom Äquator entfernt, desto ungleichmäßiger fallen die Placidus-Häuser aus. In hohen Breiten werden einzelne Häuser sehr groß. Am Äquator sind beide Systeme fast deckungsgleich.'}
 ];
+
+/* ── Die Sätze der Anzeige ────────────────────────────────────
+   Aufgabe 57 (aus 34 und 38): haeuser-app.js rechnet und setzt ein,
+   geschrieben wird hier. Eine Lücke heißt {so}; dass jede auch
+   gefüllt wird, hält pruefwerk.pruefe_vorlagenluecken fest.
+
+   Wo eine Bühne beschrieben wird, steht keine zweite Beschreibung:
+   {stich} kommt aus HZ_HAUS. Bis zum 2026-11-18 stand im Beispiel
+   unten „11. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit" von
+   Hand — dieselbe Bühne, die zwölf Karten weiter oben
+   „Freundschaft, Netzwerke, Zukunftspläne" heißt. */
+var HZ_T = {
+  /* Die Zeile über dem Rad */
+  profilLeer:'Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> siehst du hier, auf welchen Bühnen bei dir viel los ist.',
+  profilOhneNamen:'das aktive Profil',
+  profilZeile:'Für <b></b>: Auf {voll} von zwölf Bühnen ist bei dir etwas los. Wechseln unter <a href="profile.html">Profile</a>.',
+
+  /* Das Rad */
+  radMarke:'{n}: {titel}',
+  radMarkeVoll:'{n}: {titel}, bei dir belebt',
+  radMitte:'Punkte: bei dir belebt',
+  radMitteLeer:'Tippe eine Bühne an',
+
+  /* Die zwölf Karten */
+  buehneTech:'{n}. Haus',
+  buehneTechEcke:'{n}. Haus · beginnt mit dem {ecke}',
+  beiEine:'Bei dir belebt: Hier steht eine Kraft.',
+  beiMehrere:'Bei dir belebt: Hier stehen {n} Kräfte.',
+  beiLeise:'Bei dir eine leise Bühne.',
+  beiTech:'Zeichen: {zeichen} · Planeten: {pl}',
+  beiTechLeer:'Zeichen: {zeichen} · ohne Planeten',
+
+  /* Die sechs Paare */
+  achseLeise:'Bei dir sind beide Seiten leise. Dieses Paar läuft im Hintergrund.',
+  achseBeide:'Bei dir sind beide Seiten belebt. Ein lebendiges Spannungsfeld: Du pendelst zwischen {links} und {rechts}.',
+  achseEine:'Bei dir liegt das Gewicht auf {links}. Wenn diese Seite überdreht, liegt der Ausgleich in {rechts}.',
+  achseTech:'{links} · {rechts}',
+  achseTechSeite:'{n}. Haus {zeichen} mit {pl}',
+  achseTechSeiteLeer:'{n}. Haus {zeichen}, leer',
+
+  /* Das Beispiel unter „Whole Sign oder Placidus" */
+  bspKopf:'Ein erfundenes Geburtsbild: {datum}, {zeit} Uhr, {ort}. Aszendent {asc}, MC {mc}, Sonne {sonne}.',
+  bspWs:'{sonneZ} ist ab {ascZ} das {ordnung} Zeichen. Die Sonne steht im {wsHaus}. Haus: {stich}. Das MC fällt hier ebenfalls ins {mcHaus}. Haus.',
+  bspPl:'Die Sonne steht {abstand} Bogenminuten hinter dem MC, also im {plHaus}. Haus: {stich}.',
+  bspFazit:'Beides ist rechnerisch richtig, und beides beschreibt dieselbe Person: jemanden, dessen Beruf in Gruppen und Netzwerken stattfindet. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.',
+
+  /* Zählwörter für das Beispiel. bau-haeuser.py hält die Reihenfolge
+     gegen die zwölf Bühnen. */
+  ordnung:['erste','zweite','dritte','vierte','fünfte','sechste','siebte',
+           'achte','neunte','zehnte','elfte','zwölfte']
+};

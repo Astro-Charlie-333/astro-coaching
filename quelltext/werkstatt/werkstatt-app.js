@@ -170,7 +170,7 @@
   function spruenge(p){
     var wege = [['dossier.html','Dossier'], ['begleitung.html','Begleitung'],
       ['uebersicht.html','Sein Bild'], ['index.html','Was gerade läuft'],
-      ['bereiche.html','Lebensbereiche']];
+      ['praxis-bereiche.html','Lebensbereiche']];
     el('wkspruenge').innerHTML = wege.map(function(w){
       return '<a class="wk-sp" href="' + w[0] + '" data-ziel="' + w[0] + '">'
         + esc(w[1]) + '</a>';

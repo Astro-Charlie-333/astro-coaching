@@ -217,6 +217,38 @@ var I_KOPF={
    Alltagsbedeutung darunter. Jetzt umgekehrt: erst, worum es im
    Leben geht, dann der Lebensbereich — und die Mechanik wartet. */
 var I_DREI_TITEL='Was dich trägt';
+/* Zeichen fürs Auge. Die Anzeige hängt U+FE0E an, sonst malt das
+   Telefon bunte Emoji statt Linien. */
+var I_ZGL=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+var I_PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',
+ Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇',Chiron:'⚷',Lilith:'⚸'};
+
+/* ── Die vier Elemente (18.11.) ───────────────────────────────
+   Wie sich die Kräfte auf Feuer, Erde, Luft und Wasser verteilen.
+   Gewichtet: Sonne und Mond je 3, Aszendent 2, Merkur, Venus und
+   Mars je 1,5, Jupiter und Saturn je 1, die drei langsamen je 0,5 —
+   sie stehen bei einer ganzen Generation im selben Zeichen. */
+var I_ELEM={
+ titel:'Deine Elemente',
+ sub:'Wie sich die Kräfte in deinem Bild auf die vier Elemente verteilen. Was dich persönlich ausmacht, zählt mehr als das, was du mit deiner ganzen Generation teilst.',
+ namen:['Feuer','Erde','Luft','Wasser'],
+ wesen:['Begeisterung, Mut, Tempo','Körper, Verlässlichkeit, Greifbares','Gedanken, Gespräche, Abstand','Gefühl, Nähe, Gespür'],
+ stark:[
+  'Du kommst über Begeisterung in Gang. Was dich nicht entzündet, bleibt liegen, und was dich entzündet, fängst du sofort an.',
+  'Du brauchst Boden unter den Füßen. Eine Idee wird für dich erst wahr, wenn sie im Alltag funktioniert.',
+  'Du verstehst die Welt, indem du sie durchdenkst und besprichst. Abstand hilft dir, klar zu sehen.',
+  'Du nimmst mehr wahr, als gesagt wird. Stimmungen erreichen dich, bevor jemand sie ausspricht.'],
+ schwach:[
+  'Begeisterung entsteht bei dir eher langsam. Was dich in Gang bringt, ist selten der erste Funke, sondern ein guter Grund.',
+  'Struktur und Routinen kosten dich mehr als andere. Kleine feste Gewohnheiten geben dir den Halt, den du nicht von selbst mitbringst.',
+  'Abstand zu den eigenen Gefühlen fällt dir schwerer. Aufschreiben oder Aussprechen hilft dir, Gedanken zu sortieren.',
+  'Gefühle zeigen sich bei dir eher auf Umwegen. Was du fühlst, merkst du manchmal erst im Körper oder im Nachhinein.'],
+ formStark:'<b>Am stärksten: {el}.</b> {text}',
+ formSchwach:'<b>Am leisesten: {el}.</b> {text}',
+ prozent:'{p} %',
+ tech:'{punkte}'
+};
+var I_ASP_TITEL='Was in dir zusammenhängt';
 var I_DREI_SUB='Drei Stellen, die bei jedem Menschen den Grundton setzen. Bei dir liegen sie in diesen Bereichen.';
 var I_DREI=[
  {rolle:'Antrieb',   k:'Sonne', was:'Worauf du hinauswillst'},
@@ -280,7 +312,7 @@ var I_SPRUNG_TITEL='Auf dieser Seite';
    Fachsprache besteht, ist auf Stufe 0 unsichtbar und hinterlässt
    ein Loch. Wie viele es insgesamt sind, steht daneben: eine
    Auswahl, die sich nicht als Ganzes ausgibt. */
-var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Rot fordert, grün fließt — keins von beidem ist gut oder schlecht.';
+var I_ASP_SUB='Die {zahl} engsten Verbindungen in deinem Bild, die engste zuerst. Orange reibt, Blau fließt — keins von beidem ist gut oder schlecht.';
 var I_ASP_TECH='Gerechnet sind {gesamt} Aspekte. Hier stehen die {zahl} engsten zwischen zwei Planeten; Aspekte auf Aszendent und MC stehen auf der Achsenseite.';
 /* Die Formel unter einer Karte — ab Stufe 2. „fordernd" und
    „fließend" sind Sprache und standen bis zum 2026-11-11 in der
@@ -311,7 +343,6 @@ var I_INDEX=[
   {s:'asteroiden.html', t:'Asteroiden', w:'Ceres, Pallas, Juno und Vesta — vier Kleinkörper mit Deutungstradition.'},
   {s:'sekte.html', t:'Tag oder Nacht', w:'Die älteste Unterscheidung der Astrologie, und eine der nützlichsten.'},
   {s:'retrograde.html', t:'Rückläufig', w:'Was es heißt, wenn ein Planet bei deiner Geburt rückwärts lief.'},
-  {s:'profil-ansicht.html', t:'Profil-Ansicht', w:'Dasselbe Bild für jede andere Person deiner Liste.'},
   {s:'bazi.html', t:'Andere Linsen', w:'Vier Säulen, Human Design und was sie anders sehen.'},
   {s:'zahlen.html', t:'Deine Zahlen', w:'Lebenszahl, Namenszahlen und was die Hausnummer macht — mit dem, was die Schulen trennt.', neu:1},
   {s:'haeuser.html#systeme', t:'Häusersysteme', w:'Whole Sign oder Placidus — was sich ändert und was nicht.'},
@@ -335,22 +366,41 @@ var I_INDEX=[
   {s:'erinnerung.html', t:'Erinnerung', w:'Was du dir über dich notiert hast.'},
   {s:'methoden.html', t:'Methoden für den Moment', w:'Sieben Werkzeuge für Tage, an denen wenig geht.'},
   {s:'anders-verdrahtet.html#leben', t:'Anders verdrahtet leben', w:'Das Leben nach der eigenen Bauweise einrichten, nicht gegen sie.'},
-  {s:'faden.html', t:'Der rote Faden', w:'Welches Thema zuerst, welches später — und warum in dieser Reihenfolge.'},
   {s:'weg.html', t:'Ein Schritt nach dem anderen', w:'Fünf Stufen, jede für sich abgeschlossen.'}]},
  {g:'Menschen', e:[
-  {s:'profile.html', t:'Profile', w:'Alle Charts, die du angelegt hast.'},
-  {s:'dossier.html', t:'Dossier', w:'Ein Bericht pro Person — und zwar für dein Verhältnis zu ihr.', neu:1},
+  {s:'profile.html', t:'Mein Profil', w:'Dein Profil und die Menschen, die dir nahe sind.'},
   {s:'analyse.html', t:'Die Analyse', w:'Thema wählen, ein oder zwei Charts — Kombinationen, Ergebnis, Ansätze, Bericht.', neu:1},
   {s:'beziehung.html', t:'Beziehung', w:'Zwei Charts nebeneinander, nach Beziehungsart ausgewertet.', neu:1},
   {s:'beziehung.html#lesen', t:'Synastrie lesen lernen', w:'Wie man zwei Geburtsbilder liest, und die Kontakte im Einzelnen.'},
   {s:'dating-muster.html', t:'Dating-Muster', w:'Was sich bei dir wiederholt und woran es kippt.'}]},
  {g:'Für deine Arbeit', e:[
   {s:'reading.html', t:'Reading', w:'Dein Chart als Text — in fünf Wissensständen.', neu:1},
-  {s:'coaching.html', t:'Coaching', w:'Wie eine Stunde aufgebaut ist.'},
-  {s:'klientinnen-fragen.html', t:'Klientinnenfragen', w:'Was oft gefragt wird und was du antworten kannst.'},
-  {s:'haltung-ethik.html', t:'Haltung und Ethik', w:'Die Linien, hinter die du nicht gehst.'},
-  {s:'briefing.html', t:'Briefing', w:'Was du vor einer Stunde parat haben willst.'},
-  {s:'monatsbericht.html', t:'Monatsbericht', w:'Ein fertiger Text pro Person und Monat, in deiner Sprache.'},
   {s:'berufe.html', t:'Berufe im Chart', w:'Welche Felder zu welchen Stellungen passen.'},
   {s:'wissen.html', t:'Alle Seiten', w:'Das vollständige Regal — 119 Seiten.'}]}
 ];
+
+/* ── 18.11. Midcentury-Umbau: kurze Zeilen statt Absätze ───────
+   Mandy: „als neurodivergente Person ist das alles too much".
+   Jede Karte zeigt zuerst zwei, drei Wörter; der Rest liegt dahinter. */
+var I_DREI_LABEL={Sonne:'Was dich antreibt', Mond:'Was dich beruhigt', ASC:'Wie du wirkst'};
+var I_DREI_ZEICHEN={Sonne:'\u2609', Mond:'\u263D', ASC:'\u2191'};
+var I_KURZ={
+ Sonne:['Anfangen. Vorangehen.','Aufbauen, was bleibt.','Verstehen. Verbinden.','Ein Zuhause schaffen.',
+        'Strahlen. Gestalten.','Dinge richtig machen.','Ausgleich. Schönheit.','Auf den Grund gehen.',
+        'Weite. Sinn.','Etwas erreichen.','Anders denken. Frei sein.','Fühlen. Verbunden sein.'],
+ Mond:['Selbst handeln dürfen.','Ruhe. Genuss. Verlässliches.','Reden. Neues hören.','Geborgenheit.',
+       'Gesehen werden.','Ordnung. Ein Plan.','Harmonie mit anderen.','Echte Nähe. Ehrlichkeit.',
+       'Freiheit. Aussicht.','Struktur. Halt.','Raum für dich.','Rückzug. Träumen.'],
+ ASC:['Direkt. Lebendig.','Ruhig. Bodenständig.','Neugierig. Wach.','Weich. Fürsorglich.',
+      'Warm. Präsent.','Aufmerksam. Genau.','Freundlich. Stilvoll.','Intensiv. Ruhig.',
+      'Offen. Begeistert.','Ernsthaft. Verlässlich.','Eigen. Unabhängig.','Sanft. Schwer zu greifen.']};
+var I_HAUS_KURZ=['Auftreten','Geld','Reden','Zuhause','Liebe','Alltag',
+                 'Partner','Tiefe','Weite','Beruf','Freunde','Rückzug'];
+var I_FELDER_LEG='Orange: dein Schwerpunkt. Blau: Da steht etwas. Der Punkt: heute aktiv.';
+var I_KOPF_AUGE='In einem Satz';
+var I_RAD_LEG={fliesst:'fließt', reibt:'reibt', heute:'heute am Himmel'};
+var I_AUF_MEHR='{n} weitere ansehen';
+var I_AUF_WENIGER='Weniger zeigen';
+var I_ZU_JETZT={text:'Was gerade bei dir los ist', href:'index.html'};
+var I_ELEM_LEISE='am leisesten';
+var I_DREI_BEI={Sonne:'Am stärksten bei: {bereich}', Mond:'Am stärksten bei: {bereich}', ASC:'Hängt zusammen mit: {bereich}'};

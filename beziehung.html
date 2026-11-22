@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#FCF7EF">
+<meta name="theme-color" content="#F6F1E7">
 <link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
 <link rel="apple-touch-icon" href="symbol-180.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zwischen euch beiden &middot; Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="asteroiden.js"></script>
@@ -20,29 +20,29 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
-h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Jost',sans-serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 .tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
@@ -51,9 +51,9 @@ p{margin-bottom:12px;}
 .foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
 .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
 .pill.fire{background:#FBE3DA;color:var(--fire);}
-.pill.earth{background:#E8EDDC;color:var(--earth);}
-.pill.air{background:#DEEBF1;color:var(--air);}
-.pill.water{background:#E6E1F0;color:var(--water);}
+.pill.earth{background:#FCEFD2;color:var(--earth);}
+.pill.air{background:#DCE6FB;color:var(--air);}
+.pill.water{background:#D7EFEB;color:var(--water);}
 a{color:var(--ind);}
 
 .weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
@@ -63,14 +63,14 @@ a{color:var(--ind);}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
  text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
 
 /* — vereinheitlichte Typografie — */
 body{font-family:var(--sans)!important;}
-h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
-h1{font-weight:300!important;letter-spacing:-.01em;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:500!important;}
+h1{font-weight:600!important;letter-spacing:-.025em;}
 h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
 .eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
  text-transform:uppercase;color:var(--messing);font-weight:500;}
@@ -145,6 +145,9 @@ a{color:var(--nacht);}
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
 
+/* Jost mit einstöckigem a, wie Futura auf alten Plakaten */
+h1,h2,h3,h4{font-feature-settings:"ss01";}
+
 /* ── Beziehung ────────────────────────────────────────── */
 .wahl{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;align-items:center;}
 .wahl button{font-family:var(--sans);font-size:14px;padding:9px 16px;border:1px solid var(--linie);
@@ -189,7 +192,7 @@ a{color:var(--nacht);}
 .bz-kt .kt-m{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
  text-transform:uppercase;border-radius:8px;padding:3px 8px;}
 .bz-kt.hart .kt-m{background:#FBE3DA;color:var(--rost);}
-.bz-kt.weich .kt-m{background:#E8EDDC;color:var(--teal);}
+.bz-kt.weich .kt-m{background:#FCEFD2;color:var(--teal);}
 .bz-kt p{font-size:15px;line-height:1.7;margin:0;}
 .bz-liste{margin:0 0 10px 18px;padding:0;font-size:15.2px;line-height:1.72;}
 .bz-liste li{margin-bottom:5px;}
@@ -215,12 +218,12 @@ a{color:var(--nacht);}
  font-size:14.9px;line-height:1.62;align-items:baseline;}
 @media(max-width:620px){.kt-s{grid-template-columns:1fr;gap:2px;}}
 .kt-l{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.11em;
- text-transform:uppercase;color:var(--leise,#6B6259);padding-top:3px;}
-.kt-s.hilft{background:var(--messing-bg,#F7EFE1);border-radius:12px;padding:11px 14px;
+ text-transform:uppercase;color:var(--leise,#5E584D);padding-top:3px;}
+.kt-s.hilft{background:var(--messing-bg,#FCE4D6);border-radius:12px;padding:11px 14px;
  margin-top:3px;}
-.kt-s.hilft .kt-l{color:var(--messing,#9A7235);padding-top:1px;}
+.kt-s.hilft .kt-l{color:var(--messing,#C8441A);padding-top:1px;}
 .bz-kt.hart .kt-s.hilft{background:#FBEFE6;}
-.bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#A05A3A);}
+.bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#D9481C);}
 
 /* ── Die Seelenebene ──────────────────────────────────────────
    Der eine dunkle Block der Seite: das Ergebnis. Alles darunter
@@ -228,11 +231,11 @@ a{color:var(--nacht);}
 .bz-seele{background:var(--nacht);color:#E3E7F0;border-radius:20px;padding:24px 22px;margin:18px 0 6px;}
 @media(max-width:620px){.bz-seele{padding:20px 16px;border-radius:16px;margin-left:-4px;margin-right:-4px;}}
 .bz-seele h3{font-family:var(--serif);font-weight:300;font-size:clamp(22px,5vw,28px);color:#fff;margin:4px 0 10px;line-height:1.15;}
-.bs-k,.bs-dl,.bs-l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#E8C98D;}
+.bs-k,.bs-dl,.bs-l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#F2B33D;}
 .bs-vor{font-size:14.6px;line-height:1.65;color:#C9CFDD;margin:0 0 18px;}
 .bs-haupt{display:grid;gap:3px;border-top:1px solid rgba(232,201,141,.35);padding-top:16px;}
 .bs-name{font-family:var(--serif);font-weight:300;font-size:clamp(34px,9vw,48px);line-height:1.05;color:#fff;letter-spacing:-.01em;}
-.bs-kurz{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:#E8C98D;}
+.bs-kurz{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:#F2B33D;}
 .bs-neben{font-size:14.4px;line-height:1.6;color:#C9CFDD;margin:12px 0 0;}
 .bs-neben b{color:#fff;font-weight:600;}
 .bs-balken{display:grid;gap:9px;margin:20px 0 8px;}
@@ -241,14 +244,14 @@ a{color:var(--nacht);}
 .bs-zeile.haupt .bs-en{color:#fff;font-weight:600;}
 .bs-bar{height:8px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;}
 .bs-bar i{display:block;height:100%;border-radius:5px;background:#8E9AB8;}
-.bs-zeile.haupt .bs-bar i{background:#E8C98D;}
+.bs-zeile.haupt .bs-bar i{background:#F2B33D;}
 .bs-p{grid-column:2;font-size:11.5px;color:#AEB6C8;font-family:'JetBrains Mono',monospace;}
 .bs-hin{font-size:12.6px;line-height:1.55;color:#AEB6C8;margin:4px 0 14px;}
 .bs-dicht{font-size:14.6px;line-height:1.65;background:rgba(255,255,255,.06);border-radius:12px;padding:12px 14px;margin:0 0 18px;}
-.bs-dicht b{color:#E8C98D;font-weight:500;}
+.bs-dicht b{color:#F2B33D;font-weight:500;}
 .bs-deut{display:grid;gap:12px;}
 .bs-d p,.bs-frage p{font-size:14.8px;line-height:1.7;margin:4px 0 0;color:#E3E7F0;}
-.bs-frage{border-left:2px solid #E8C98D;padding:2px 0 2px 14px;}
+.bs-frage{border-left:2px solid #F2B33D;padding:2px 0 2px 14px;}
 .bs-frage p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;line-height:1.45;color:#fff;}
 .bs-warum{margin-top:16px;display:grid;gap:8px;}
 .bs-chips{display:flex;flex-wrap:wrap;gap:6px;}
@@ -373,8 +376,8 @@ a{color:var(--nacht);}
 </style></head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
@@ -443,6 +446,61 @@ a{color:var(--nacht);}
 </div>
 
 <script>
+/* ── Eine Lücke, ein Wert ─────────────────────────────────────
+   Die eine Stelle, an der eine Vorlage gefüllt wird.
+
+   Vorher stand diese Funktion in siebzehn Anzeigen einzeln, in
+   drei Fassungen, die sich bei genau einem Fall unterschieden:
+   Was passiert, wenn der Wert zu einer Lücke fehlt?
+
+     dreizehn Anzeigen  machten daraus ''      — das Wort verschwand
+     drei Anzeigen      machten daraus 'undefined' — es stand auf der Seite
+     dossier-app.js     brach ab               — richtig, seit Aufgabe 60
+
+   Die erste Art hat am 2026-11-21 wirklich zugeschlagen: Der
+   Winkelname der Raum-Rechnung heißt „Sextil", nachgeschlagen wurde
+   unter „sextil", und aus „Saturn Sextil Sonne" wurde lautlos
+   „Saturn  Sonne". Eine Tafel, die den Schlüssel nicht kennt,
+   liefert `undefined`; wer das zu '' macht, verliert ein Wort, ohne
+   dass etwas rot wird.
+
+   Das ist dieselbe Klasse wie REGELN.md 6f, und sie war in sechzehn
+   Anzeigen nur noch nicht aufgefallen. Deshalb steht die Funktion
+   jetzt hier und nicht dort: Eine Regel in siebzehn Dateien ist
+   nach der ersten Verschärfung in sechzehn davon veraltet
+   (REGELN.md 5).
+
+   Verriegelt wird das von `pruefwerk.pruefe_fueller`: Eine Anzeige,
+   die wieder selbst eine Lücke aus einem Schlüssel zusammensetzt,
+   bringt ihren Bau zum Scheitern.
+
+   Hier steht kein Satz und keine Rechnung — nur die Einsetzung.
+   Deshalb zieht diese Datei beim Umzug in eine andere Umgebung
+   unverändert mit (PRODUKT.md Abschnitt 7).
+
+   Zwei Fälle, die auseinandergehalten werden müssen:
+
+     fehlt      `undefined` oder `null` — ein Wert, den es nicht
+                gibt. Das ist ein Fehler und bricht ab.
+     leer       '' — eine Lücke, die absichtlich nichts einsetzt
+                (ein Name, den niemand angegeben hat). Das geht
+                durch, und 0 ebenso: `String(0)` ist „0".
+
+   Eine Vorlage, die es nicht gibt, wird zu '' und bricht nicht ab.
+   Das ist eine andere Fehlerklasse — ein fehlender Textschlüssel —,
+   und die fangen in jedem Bau die Textprobe („die Texte sind
+   vollständig") und `pruefwerk.pruefe_vorlagenluecken` ab, bevor die
+   Seite überhaupt entsteht. */
+function AC_FUELL(form, werte){
+  var s = String(form === undefined || form === null ? '' : form), k;
+  for(k in werte) if(Object.prototype.hasOwnProperty.call(werte, k)){
+    if(werte[k] === undefined || werte[k] === null)
+      throw new Error('AC_FUELL: Lücke ohne Wert: {' + k + '}');
+    s = s.split('{' + k + '}').join(String(werte[k]));
+  }
+  return s;
+}
+
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
@@ -504,7 +562,7 @@ var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'
 var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#1F4FD8'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
 var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
@@ -567,12 +625,26 @@ function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1;
    jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
    Formel — und die Anzeige setzt nur noch zusammen. */
 
-/* „dein" in den drei Fällen, die hier vorkommen. Mehr braucht es
-   nicht: Ein Genitiv steht in keiner dieser Formeln. */
+/* „dein" in den vier Fällen, die vorkommen.
+
+   Bis zum 2026-11-19 standen hier drei, und darüber der Satz, mehr
+   brauche es nicht: ein Genitiv stehe in keiner dieser Formeln. Für
+   die Formeln der Startseite stimmte das. Die Geistführung schreibt
+   aber „der Herrscher deines 12. Hauses" (Aufgabe 59), und damit
+   stand die vierte Form nicht in dieser Tabelle, sondern von Hand in
+   einer Anzeige — genau die Bauart, die diese Tabelle abschaffen
+   sollte.
+
+   Die Lehre daraus ist dieselbe wie in REGELN.md 6f: Eine Tabelle
+   deckt den Fall, den sie kennt. Welche Fälle es gibt, entscheidet
+   nicht die erste Seite, die sie benutzt.
+
+   Ein Hauptwort, das sich im Genitiv selbst ändert („Hauses",
+   „Aszendenten"), trägt diese Form in seinem eigenen `beugt`. */
 var B_DEIN = {
- m:{nom:'dein',  akk:'deinen', dat:'deinem'},
- w:{nom:'deine', akk:'deine',  dat:'deiner'},
- s:{nom:'dein',  akk:'dein',   dat:'deinem'}};
+ m:{nom:'dein',  akk:'deinen', dat:'deinem', gen:'deines'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner', gen:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem', gen:'deines'}};
 
 /* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
    entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
@@ -1952,12 +2024,10 @@ function bes(n){ return /[sxzß]$/i.test(n) ? n+"'" : n+'s'; }
 
 /* Setzt Werte in eine Vorlage aus BZ_T ein. Hier entsteht kein
    Text, nur die Einsetzung. */
-function BZ_FUELL(form, werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function BZ_FUELL(form, werte){ return AC_FUELL(form,werte); }
 /* Das Hauptwort eines Punktes ohne Besitzwort — davor steht ein
    Name. Auf Stufe 0 das Alltagswort, darüber der Planetenname. */
 function bzWort(k,n){ return n<=0 ? (BZ_PUNKT[k]||B_PUNKT(k)).wort : B_PUNKT(k).wort; }

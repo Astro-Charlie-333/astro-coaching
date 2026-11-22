@@ -678,3 +678,197 @@ beiden: Wer in „ZWISCHEN" auf J. R. tippt, bekommt „ZWISCHEN J. R. · UND
 M. L." und die gedrehte Deutung — also genau den Tausch, zu dem die Seite
 auffordert, in einem Schritt statt in zwei. Bleibt die Fehlermeldung,
 sagt sie, welche Reihe zu ändern ist.
+
+---
+
+### 2026-11-20 · Die Coachin
+
+Fünfter Durchgang. Zuletzt war das Gegenüber-Paar dran, also die Letzte
+aus `PRODUKT.md` Abschnitt 2: arbeitet mit Menschen, interessiert sich
+für den Menschen vor ihr, kann selbst **wenig Astrologie** und braucht
+Gesprächsfragen statt Deutungen. Ich sehe mir an, ob ich das in einer
+Sitzung benutzen würde.
+
+**Zur Lage dieses Durchgangs:** `astro-charlie-333.github.io` war aus der
+Umgebung dieses Durchgangs zum fünften Mal nicht erreichbar — der
+Netzübergang hat die Adresse abgelehnt (403 auf CONNECT, als
+Richtlinienablehnung vermerkt: „no rule or network setting allows this
+host"). Nicht umgangen. Geprüft wurde deshalb wieder der ausgelieferte
+Stand aus `main` (`0033b91`, 20.11.), lokal ausgeliefert und im Browser
+durchgegangen — dieselben Dateien, die GitHub Pages ausliefert, aber nicht
+die Adresse selbst. Kein Quelltext gelesen, nur der Bildschirm. Wer die
+Befunde nachstellt, nutzt die echte Adresse; weicht sie vom Stand aus
+`main` ab, gilt sie.
+
+Zwei Profile für den Durchgang, beide erfunden: Rieke (09.03.1990, 11:25,
+Kassel) und Tomke (02.11.1986, 07:40, Rostock). Beide Breiten, Stufe 0 von
+Hand gesetzt, **bevor** die erste Seite gelesen wurde.
+
+**Drei Sachen, die ausdrücklich keine Befunde sind,** weil sie schon
+stehen: der Leerzustand von „Jetzt" (23.10., Aufgabe 18), der
+Auslieferzustand „Mittel" der globalen Leiste (23.10.) und dass
+`reading.html` den Abschnitt „Was das taugt — und was nicht" gar nicht
+hat. Zur letzten die Zahl, weil sie hier besonders hart ist: Auf der
+ganzen Seite kommen „taugt", „Erleben", „Vorrang", „nicht überprüft" und
+„häufig" **null** Mal vor, bei 390 wie bei 1440. Das ist wörtlich die
+Fehlerklasse von Aufgabe 40 und 76 (`beziehung.html`, 13.11.) — dieselbe
+Klasse, andere Seite, also keine neue Zeile. Nur der Nachsatz: Es ist die
+Seite, deren Ausgabe eine Coachin unter ihrem eigenen Namen aus der Hand
+gibt. Wenn Aufgabe 40 priorisiert wird, gehört `reading.html` nach vorn.
+
+**Und zwei Sachen, die gut sind und genannt gehören:** Die Umschaltung
+„Für mich / Als Coachin" in `wissen.html` tut wirklich etwas — sie legt
+ein Regal „Mit anderen arbeiten" mit elf Seiten dazu (77 → 88 Seiten),
+statt nur umzusortieren. Und `leitfaden.html` ist genau das, was in
+`PRODUKT.md` Abschnitt 2 für diese Rolle steht: zu jeder der vier Stellen
+„SO SPRICHST DU", „GUTE FRAGE", „VERMEIDE" — Fragen, keine Urteile —, dazu
+ein vollständiges „Was das taugt, und was nicht" mit Häufigkeit
+(„Zwölftel aller Menschen"), „nicht überprüft" und „Der Mensch vor dir hat
+Vorrang vor der Seite." So müsste jede rechnende Seite aussehen. Dass
+`reading.html` daneben steht und nichts davon hat, fällt nur deshalb so
+auf.
+
+---
+
+### `reading.html` · der Text, den ich verschicke, sagt über denselben Menschen A und dann nicht-A
+
+**Rolle:** Die Coachin, Telefon (390) und Rechner (1440), Stufe 0 global
+gesetzt. Im Reading-Text selbst gemessen und über „Text kopieren" in die
+Zwischenablage geholt, also genau das, was bei der Klientin ankommt.
+**Gesehen:** Unter „Die stärksten Verbindungen" läuft jede Verbindung als
+**ein** Absatz ohne Trennung, Überschrift oder Bindewort. Drei der fünf
+bei Rieke stellen erst etwas fest und nehmen es im nächsten Satz zurück:
+
+* „Zuneigung und Begehren gehören bei dir zusammen. Das ist weniger
+  selbstverständlich, als es klingt. **Was du willst und was dir guttut,
+  sind verschiedene Menschen.** Anziehung und Streit hängen zusammen."
+* „Du arbeitest ausdauernd und diszipliniert. Was du anfängst, bringst du
+  zu Ende. **Du trittst gleichzeitig auf Gas und Bremse.** Das ermüdet
+  mehr als jede Anstrengung."
+* „Du denkst über das Bestehende hinaus und findest Bilder dafür.
+  **Unruhe ohne Richtung. Du willst weg, weißt aber nicht wohin.**"
+
+Beim zweiten Profil dieselbe Bauart, zwei von fünf: „Wollen und Brauchen
+ziehen in dieselbe Richtung. Du weißt meistens, was dir guttut, und tust
+es auch. **Oft übergehst du das Bedürfnis — und zahlst später.**" Und:
+„Nähe fühlt sich für dich nährend an, nicht anstrengend. **Du gibst, was
+du selbst bräuchtest, und wunderst dich, dass es nicht zurückkommt.**"
+Fünf von zehn Verbindungen über zwei Geburtsbilder. Auf Stufe „Neu" ist
+die zweite Hälfte nicht da — es trifft „Wenig" aufwärts, also alles außer
+der Fassung, die laut Seite „die Fassung ist, die du verschickst, wenn du
+nicht sicher bist". Am Bildschirm nachgesehen: keine Farbe, kein
+Einzug, kein Absatz zwischen den beiden Hälften — ein durchlaufender
+Fließtext. Dabei hat dieselbe Seite weiter unten einen eigenen Abschnitt
+**„Wo es kippen kann"**, der genau dafür da wäre.
+**Gestolpert:** Ich lese einen Absatz über einen Menschen, der zuerst sagt,
+die Sache gehe bei ihr zusammen, und dann, sie gehe bei ihr auseinander.
+**Was es kostet:** Für diese Rolle das Teuerste, was die Seite falsch
+machen kann, und zwar an genau der Stelle, an der sie für mich gebaut ist.
+Zwei Wege, beide teuer. Entweder ich merke es vor dem Gespräch — dann ist
+das Werkzeug für mich erledigt, weil ich jeden Absatz von Hand nachlesen
+muss und damit nichts gespart habe. Oder ich merke es nicht: Dann sitzt
+die Klientin vor einem Text, in dem beides über sie steht, und egal was sie
+erzählt, der Text hat recht — das ist keine Beschreibung mehr, sondern ein
+Orakel, dem man nicht widersprechen kann. Es trifft auch den
+Markenkern aus `PRODUKT.md` Abschnitt 3 („Gerechnet, nicht behauptet"):
+Was sich selbst widerspricht, ist nicht nachrechenbar, sondern beliebig.
+Und es ist wörtlich die Fehlerklasse aus `REGELN.md` Abschnitt 6d — zwei
+Zustände aneinandergeklebt, und danach kommt keine Folge.
+**Vorschlag:** Die zweite Hälfte ist richtig und gehört nicht weg — sie
+gehört nur ausgewiesen. Entweder sie wandert in den Abschnitt, den die
+Seite schon hat („Wo es kippen kann"), oder sie bleibt stehen und bekommt
+das Bindewort, das aus zwei Zuständen eine Folge macht: „… und wenn es
+kippt, dann: Was du willst und was dir guttut, sind verschiedene
+Menschen." Geprüft wird die Fehlerklasse, nicht der Fall, nach der
+goldenen Regel aus `REGELN.md` Abschnitt 5: Eine tragende und eine
+reibende Fassung derselben Verbindung dürfen nicht ohne ein Wort, das die
+Wendung markiert, im selben Absatz stehen — gemessen am gezeichneten
+Ergebnis, nicht an den Daten, und gegen feste Beispiele gehalten wie
+`_datum_ohne_jahr` in `bau-heute.py`.
+
+---
+
+### `reading.html` · ich stelle Stufe 0 ein, und die Seite verschickt in Fachsprache, ohne zu sagen, welche Fassung das war
+
+**Rolle:** Die Coachin, Telefon (390) und Rechner (1440).
+**Gesehen:** Ich setze den Wissensstand auf „Neu", bevor ich irgendetwas
+lese (`ac_niveau` steht danach auf `0`). `reading.html` verspricht oben:
+„Wer noch nie etwas von Häusern gehört hat, bekommt einen Text ohne ein
+einziges Fachwort", und unten: „**Neu** — … Hier steht kein Planetenname
+und kein Haus. Das ist die Fassung, die du verschickst, wenn du nicht
+sicher bist." Die Leiste „WISSENSSTAND DER PERSON" steht beim ersten
+Aufruf trotzdem auf **Mittel** — bei beiden Profilen, bei beiden Breiten,
+eingestellt hat sie niemand. Im Text stehen daraufhin „die Sonne in
+Fische", „der Mond in Löwe", „der Aszendent in Krebs", „Merkur in Fische",
+„Venus in Wassermann", „Mars in Steinbock", „Orbis", „kardinal",
+„Stellium". Ich drücke „Text kopieren": 2.978 Zeichen, die diese Wörter
+enthalten — und **keine Zeile, die sagt, welche der fünf Fassungen das
+ist**. Nach dem Umschalten auf „Neu" stimmt das Versprechen: Planeten- und
+Hausnamen sind weg, der Text liest sich sauber.
+**Gestolpert:** Die einzige Einstellung, die ich auf der ganzen Plattform
+schon gemacht habe, ist „Neu" — und ausgerechnet die Seite, die nur eine
+Aufgabe hat, nämlich die Stufe zu treffen, fängt bei Mittel an.
+**Was es kostet:** Ich schicke meiner Klientin die falsche Fassung und
+merke es nicht. Ich kann selbst wenig Astrologie — ich erkenne an „Mars in
+Steinbock" nicht, dass das die Fassung für jemanden ist, der Häuser und
+Aspekte zuordnen kann. Was ankommt, ist der Eindruck, hier werde eine
+Sprache gesprochen, die man erst lernen muss — genau das, was
+`PRODUKT.md` Abschnitt 3 ausschließt. Dass der kopierte Text die Stufe
+nicht nennt, macht es unumkehrbar: Weder ich noch die Klientin können
+hinterher sehen, welche Fassung das war. Nach `PRODUKT.md` Abschnitt 2,
+Punkt 3 wird so etwas weitergeschickt, nicht gelesen und weggelegt — dann
+steht es ohne alles, was es einordnen würde.
+**Vorschlag:** Die Stufe für einen Menschen, über den noch nichts bekannt
+ist, fängt bei **„Neu"** an, nicht bei Mittel — das ist die Fassung, die
+die Seite selbst empfiehlt, wenn man nicht sicher ist. Solange sie noch
+nie von Hand gesetzt wurde, folgt sie der Leiste, die die Coachin
+plattformweit eingestellt hat; erst ein Tipp auf dieser Seite macht
+daraus eine eigene Einstellung für diesen Menschen. Und was „Text
+kopieren", „Als Datei speichern" und „Drucken" ausgeben, trägt in der
+ersten Zeile, für welche Stufe es geschrieben ist. Geprüft an der
+Fehlerklasse: Keine Leiste auf der Plattform steht beim ersten Aufruf auf
+einer anderen Stufe als der, die im Speicher liegt — dieselbe Klasse wie
+Aufgabe 15 und 16, nur an der zweiten Leiste.
+
+---
+
+### `reading.html` · „im der Bereich Sinn und Ferne" steht im Text, den ich aus der Hand gebe
+
+**Rolle:** Die Coachin, Telefon (390) und Rechner (1440), Stufe „Mittel"
+(der Zustand beim ersten Aufruf, siehe Befund darüber).
+**Gesehen:** Im Reading für Rieke stehen drei Sätze mit demselben Fehler,
+jeder am Ende eines Absatzes über eine Anlage:
+
+* „… lässt sich oft schwer in gerade Sätze bringen. — **im der Bereich**
+  Sinn und Ferne (Sinn, Überzeugung, Ferne, Lehre)."
+* „… vertreiben dich schneller als Streit. — **im der Bereich** Tiefe und
+  Loslassen (Geteiltes, Krisen, Tiefe, Loslassen)."
+* „… Tempo ist dir weniger wichtig als Richtung. — **im der Bereich**
+  feste Beziehungen (Partnerschaft und verbindliches Gegenüber)."
+
+Alle drei stehen auch in dem, was „Text kopieren" in die Zwischenablage
+legt. Beim zweiten Profil kommt der Satzteil nicht vor — es hängt am
+Geburtsbild, nicht an der Seite, und fällt deshalb bei einer einzelnen
+Durchsicht durch. Auf Stufe „Neu" ist die Stelle richtig gebaut: „Am
+stärksten zeigt sich das im Bereich Sinn und Ferne."
+**Gestolpert:** Drei Mal „im der Bereich" in einem Text, den ich unter
+meinem eigenen Namen weitergebe.
+**Was es kostet:** Kein Abbruch, aber die Frage dieser Rolle lautet
+wörtlich: Kann ich das jemandem zeigen, ohne mich zu schämen? Hier nicht.
+Entweder ich lese jedes Reading vor dem Verschicken Zeile für Zeile
+nach — dann nimmt mir das Werkzeug die Arbeit nicht ab, die es verspricht
+— oder es geht so hinaus, und was meine Klientin über die Sorgfalt dieser
+Arbeit lernt, lernt sie an diesem Satz. Billig zu beheben, deshalb unten;
+aber es steht an der teuersten Stelle, nämlich in dem, was das Haus
+verlässt.
+**Vorschlag:** Dieselbe Beugungsstelle wie Aufgabe 34: Der Bereichsname
+wird in eine Lücke gesetzt, die schon ein „im" davorstehen hat, und bringt
+seinen eigenen Artikel mit. Die Fassung von Stufe „Neu" („Am stärksten
+zeigt sich das im Bereich …") macht es richtig und kann die Form für die
+anderen Stufen hergeben. Geprüft wird die Klasse, nicht der Fall:
+`pruefwerk` bekommt eine Regel, die zwei aufeinanderfolgende Artikel oder
+Präpositionen in einem gebauten Satz findet (`im der`, `in die der`, `am
+dem`), sie läuft über **alle** Stufen und über mehr als ein Geburtsbild —
+sonst findet sie genau diesen Fehler wieder nicht, weil er bei Tomke
+heute zufällig nicht vorkam (`REGELN.md` Abschnitt 6e: dass eine Prüfung
+grün ist, heißt nicht, dass sie etwas geprüft hat).

@@ -26,7 +26,7 @@ bahn = (hier.parent / 'kern' / 'bahn-daten.js').read_text(encoding='utf-8')
 kopf = '''<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zwischen euch beiden &middot; Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="kleine-punkte.js"></script>
 <script src="asteroiden.js"></script>
@@ -35,8 +35,13 @@ kopf = '''<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <script src="wortwahl.js"></script>
 <style>
 '''
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = T('../kern/fuellen.js')
+
 html = (kopf + T('basis.css') + "\n" + T('beziehung-stil.css') + "</style></head><body>\n"
-        + T('beziehung-koerper.html') + "\n<script>\n" + T('engine.js') + "\n"
+        + T('beziehung-koerper.html') + "\n<script>\n" + fuellen + "\n" + T('engine.js') + "\n"
         + bahn + "\n"
         + T('beziehung-daten.js') + "\n" + T('beziehung-seele-daten.js') + "\n"
         + T('beziehung-verteilung.js') + "\n" + T('beziehung-rechner.js') + "\n"
@@ -144,6 +149,7 @@ for m in re.finditer(r"^ '(\w+)\|(\w+)':\{([^\n]*)", kt, re.M):
 #     Punktes kennt.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'beziehung-app.js', 'beziehung-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'beziehung-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'beziehung-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
 #     Riegel nicht ausschließt: dass er heute nur nichts zu finden

@@ -105,8 +105,18 @@ function kopfBauen(p, M){
     zeit:  ('0'+p.h).slice(-2) + ':' + ('0'+p.mi).slice(-2),
     ort:   (p.ort ? fuellen(I_GEBOREN_ORT, {ort:p.ort}) : '')});
   el('ichdat').textContent='';
-  el('ichleit').textContent=kopfSatz(M);
-  el('ichleitzu').textContent=I_KOPF.nach;
+  /* Groß steht nur der erste Satz; der zweite läuft klein weiter. */
+  var satz=kopfSatz(M)||'', cut=satz.indexOf('. ');
+  el('ichleit').textContent=cut>0?satz.slice(0,cut+1):satz;
+  el('ichleitzu').textContent=(cut>0?satz.slice(cut+2)+' ':'')+I_KOPF.nach;
+  el('ichauge').textContent=I_KOPF_AUGE;
+  el('ichradfuss').innerHTML=
+    '<span><i class="lf"></i>'+esc(I_RAD_LEG.fliesst)+'</span>'+
+    '<span><i class="lr"></i>'+esc(I_RAD_LEG.reibt)+'</span>'+
+    '<span><i class="lh"></i>'+esc(I_RAD_LEG.heute)+'</span>';
+  el('ichweitert').textContent=I_ZU_JETZT.text;
+  el('ichweiter').setAttribute('href',I_ZU_JETZT.href);
+  el('ichfelderleg').textContent=I_FELDER_LEG;
 }
 
 /* ── Die drei Stellen, die den Grundton setzen ──────────────────
@@ -131,10 +141,52 @@ function dreiBauen(){
       tech=fuellen(I_DREI_TECH,{zeichen:I_SIGNS[z], grad:gradKurz(l),
                                 haus:h, bereich:I_HAUS[h-1].k});
     }
-    return '<div><div class="rolle">'+esc(d.rolle)+'</div><div class="wert">'+
-      esc(d.was)+'<span class="zu">'+esc(bereich)+'</span>'+
-      '<span class="zu ac-tech" data-ab="2">'+esc(tech)+'</span></div></div>';
+    return '<details class="dk dk-e'+(z%4)+'"><summary>'+
+      '<span class="dk-kreis" aria-hidden="true">'+I_DREI_ZEICHEN[d.k]+'\uFE0E</span>'+
+      '<span class="dk-t"><span class="dk-l">'+esc(I_DREI_LABEL[d.k])+'</span>'+
+      '<span class="dk-k">'+esc(I_KURZ[d.k][z])+'</span>'+
+      '<span class="dk-b">'+esc(fuellen(I_DREI_BEI[d.k],{bereich:I_HAUS_KURZ[(d.k==='ASC'?haus(P,P[I_HERR[z]]):haus(P,l))-1]}))+'</span></span>'+
+      '<span class="dk-plus" aria-hidden="true"></span></summary>'+
+      '<div class="dk-mehr"><p class="wert">'+esc(d.was)+'</p>'+
+      '<p class="zu">'+esc(bereich)+'</p>'+
+      '<p class="zu ac-tech" data-ab="2">'+esc(tech)+'</p></div></details>';
   }).join('');
+}
+
+/* ── Die vier Elemente (18.11.) ────────────────────────────────
+   Gewichtet: Sonne und Mond tragen am meisten, die langsamen
+   Planeten teilt man mit der ganzen Generation, darum zählen sie
+   wenig. Ohne Geburtszeit fällt der Aszendent weg. */
+var ELEM_GEW={Sonne:3,Mond:3,ASC:2,Merkur:1.5,Venus:1.5,Mars:1.5,
+  Jupiter:1,Saturn:1,Uranus:0.5,Neptun:0.5,Pluto:0.5};
+function elementBauen(){
+  var sum=[0,0,0,0], wer=[[],[],[],[]], ges=0;
+  for(var k in ELEM_GEW){
+    if(P[k]===undefined||P[k]===null) continue;
+    var e=zI(P[k])%4; sum[e]+=ELEM_GEW[k]; ges+=ELEM_GEW[k]; wer[e].push(k);
+  }
+  if(!ges){ el('ichelem').innerHTML=''; return; }
+  var pr=sum.map(function(s){ return Math.round(s/ges*100); });
+  var max=0, min=0;
+  for(var i=1;i<4;i++){ if(sum[i]>sum[max]) max=i; if(sum[i]<sum[min]) min=i; }
+  el('ichelemh').textContent=I_ELEM.titel;
+  el('ichelemsub').textContent=I_ELEM.sub;
+  var reihe=[0,1,2,3].sort(function(x,y){ return sum[y]-sum[x]; });
+  var h='<div class="el-kacheln">';
+  reihe.forEach(function(j,r){
+    h+='<div class="el-k el-'+j+(r===0?' el-gross':'')+(r===3?' el-leise':'')+'">'+
+      '<span class="el-n">'+esc(I_ELEM.namen[j])+
+        (r===3?' <em>· '+esc(I_ELEM_LEISE)+'</em>':'')+'</span>'+
+      '<span class="el-p">'+esc(fuellen(I_ELEM.prozent,{p:pr[j]}))+'</span>'+
+      (r===0?'<span class="el-w">'+esc(I_ELEM.wesen[j])+'</span>':'')+
+      '<span class="el-t ac-tech" data-ab="2">'+esc(fuellen(I_ELEM.tech,{punkte:wer[j].join(', ')}))+'</span>'+
+      '</div>';
+  });
+  h+='</div><div class="el-satz">'+
+    '<p>'+fuellen(I_ELEM.formStark,{el:esc(I_ELEM.namen[max]), text:esc(I_ELEM.stark[max])})+'</p>'+
+    (min!==max?'<p>'+fuellen(I_ELEM.formSchwach,{el:esc(I_ELEM.namen[min]), text:esc(I_ELEM.schwach[min])})+'</p>':'')+
+    '</div>';
+  el('ichelem').innerHTML=h;
 }
 
 /* ── Sprungmarken ──────────────────────────────────────────────
@@ -230,12 +282,10 @@ function heuteBauen(){
    liegen; hier werden die Sätze dazu eingesetzt und die gerechnete
    Häufigkeit danebengestellt. Kein Satz entsteht hier — alle
    stehen in ich-daten.js. */
-function fuellen(form, werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function fuellen(form, werte){ return AC_FUELL(form,werte); }
 function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
 
 /* Hundert Punkte, davon n hell. Man kann sie abzählen — genau das
@@ -346,6 +396,14 @@ function auffaelligBauen(){
     h.push('</div></article>');
   }
   el('ichauf').innerHTML=h.join('');
+  /* Nur der seltenste Befund steht offen; der Rest auf Antippen. */
+  var anz=el('ichauf').querySelectorAll('.au').length, kn=el('ichaufmehr');
+  kn.hidden=anz<2;
+  kn.textContent=fuellen(I_AUF_MEHR,{n:anz-1});
+  kn.onclick=function(){
+    var zu=el('ichauf').classList.toggle('zu');
+    kn.textContent=zu?fuellen(I_AUF_MEHR,{n:anz-1}):I_AUF_WENIGER;
+  };
   /* Der ehrliche Teil gehört zu jeder rechnenden Ausgabe. */
   var g=['<h3>'+esc(I_AUF.grenzeTitel)+'</h3>'];
   for(var j=0;j<I_AUF.grenzen.length;j++)
@@ -356,25 +414,26 @@ function auffaelligBauen(){
 
 /* ── Die zwölf Häuser ──────────────────────────────────────── */
 function haeuserBauen(){
-  var box=el('ichhaeuser'), h='';
+  var box=el('ichhaeuser'), h='', zahl=[], meist=0;
+  for(var m=1;m<=12;m++){
+    zahl[m]=PNAMEN.filter(function(k){ return P[k]!==undefined&&haus(P,P[k])===m; }).length;
+    if(zahl[m]>zahl[meist]||!meist) meist=m;
+  }
   for(var n=1;n<=12;n++){
     var z=zeichenDesHauses(P,n), herr=I_HERR[z], hH=haus(P,P[herr]);
     var bew=PNAMEN.concat(EXTRA).filter(function(k){
       return P[k]!==undefined&&haus(P,P[k])===n; });
     var heut=PNAMEN.filter(function(k){
       return Q[k]!==undefined&&haus(P,Q[k])===n; });
-    h+='<button type="button" class="hz'+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
-      '<span class="nr">'+n+'</span>'+
-      '<span class="hz-inhalt">'+
-        '<span class="was">'+(heut.length?'<span class="punkt"></span>':'')+
-          I_HAUS[n-1].k+'</span>'+
-        '<span class="ze ac-tech" data-ab="2"><b>'+I_SIGNS[z]+'</b>'+
-          (bew.length?'<span class="bew">'+bew.join(', ')+'</span>':'')+'</span>'+
-        '<span class="herr ac-tech" data-ab="2">'+
-          fuellen(I_HAUS_TECH.herr,{herr:herr, haus:hH})+
-          (heut.length?fuellen(I_HAUS_TECH.heute,
-                               {punkte:heut.join(', ')}):'')+'</span>'+
-      '</span>'+
+    var gl=bew.map(function(k){ return '<i>'+(I_PGL[k]||'')+'\uFE0E</i>'; }).join('');
+    var art=(n===meist&&zahl[n]>1)?' schwer':(bew.length?' voll':'');
+    h+='<button type="button" class="hz'+art+(heut.length?' heut':'')+'" id="h'+n+'" data-h="'+n+'">'+
+      '<span class="nr">'+n+(heut.length?'<span class="punkt"></span>':'')+'</span>'+
+      '<span class="was">'+esc(I_HAUS_KURZ[n-1])+'</span>'+
+      '<span class="hz-gl" aria-hidden="true">'+gl+'</span>'+
+      '<span class="ze ac-tech" data-ab="2">'+esc(I_ZGL[z])+'\uFE0E '+esc(I_SIGNS[z])+'</span>'+
+      '<span class="herr ac-tech" data-ab="2">'+
+        esc(fuellen(I_HAUS_TECH.herr,{herr:herr, haus:hH}))+'</span>'+
       '</button><div class="hdetail" id="d'+n+'" hidden></div>';
   }
   box.innerHTML=h;
@@ -452,7 +511,7 @@ function aspekteBauen(){
     if(d&&d.thema) mit.push({x:alle[i], d:d});
   }
   var zeig=mit.slice(0,12);
-  el('ichasp').innerHTML=zeig.map(function(e){
+  function karte(e){
     var x=e.x, d=e.d;
     return '<div class="ia '+x.art+'">'+
       '<div class="f">'+esc(d.thema)+'</div>'+
@@ -461,7 +520,11 @@ function aspekteBauen(){
         {a:x.a, typ:x.typ, b:x.b, orb:kz(x.o,2),
          art:(x.art==='hart'?I_ASP_ART.hart:I_ASP_ART.weich)})+'</div>'+
       '</div>';
-  }).join('');
+  }
+  el('ichasph').textContent=I_ASP_TITEL;
+  el('ichasp').innerHTML=zeig.slice(0,3).map(karte).join('');
+  el('ichasp2').innerHTML=zeig.slice(3).map(karte).join('');
+  el('kl-asp').hidden=zeig.length<=3;
   el('ichaspsub').innerHTML=esc(fuellen(I_ASP_SUB,{zahl:zeig.length}))+
     ' <span class="ac-tech" data-ab="2">'+
     esc(fuellen(I_ASP_TECH,{gesamt:alle.length, zahl:zeig.length}))+'</span>';
@@ -491,6 +554,7 @@ function indexBauen(){
   var M=auffaelligBauen();
   kopfBauen(p, M);
   dreiBauen();
+  elementBauen();
   haeuserBauen();
   heuteBauen();
   aspekteBauen();

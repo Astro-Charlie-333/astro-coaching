@@ -741,11 +741,32 @@ ANZEIGEN = {
     # ganz heruntergezogen, zeit am 2026-11-14 (Aufgabe 53), karte am
     # 2026-11-15 (Aufgabe 54), mond am 2026-11-16 (Aufgabe 55),
     # zahlen am 2026-11-17 (Aufgabe 56) — die größte der Anzeigen,
-    # 194 Sätze und 13 mal „dein".
-    'haeuser/haeuser-app.js':      (40, 0),
-    'rituale/zauber-app.js':       (97, 18),
-    'geist/geist-app.js':          (174, 31),
-    'dossier/dossier-app.js':      (97, 4),
+    # 194 Sätze und 13 mal „dein". haeuser am 2026-11-18 (Aufgabe 57):
+    # die ersten vier ihrer vierzig Zeichenketten waren Schriftnamen
+    # und eine Farbe aus dem Rad — die gehören nicht in eine
+    # Datendatei, sondern in haeuser-stil.css.
+    # zauber am 2026-11-19 (Aufgabe 58): Dabei kamen zwei Formen
+    # heraus, die am Planeten hängen und von Hand gebildet wurden —
+    # „der Tag des Sonne" (sonntags, montags und freitags falsch) und
+    # „Sonnestunde". Beide stehen jetzt als Tabelle in
+    # zauber-texte.js, und bau-zauber.py lässt keinen Artikel und
+    # keine Endung mehr an eine Lücke heran.
+    # geist am 2026-11-20 (Aufgabe 59): die größte der Anzeigen, 174
+    # Sätze und 31 mal „dein" — und die, an der sich gezeigt hat, dass
+    # B_DEIN nicht für alle Fälle reichte. „Der Herrscher deines 12.
+    # Hauses" braucht einen Genitiv, den die Tabelle nicht hatte;
+    # dieselbe Fehlerklasse wie REGELN.md 6f, eine Tabelle deckt den
+    # Fall, den sie kennt. Der Genitiv steht jetzt in B_DEIN und die
+    # Form des Hauptworts in GT_T.haus.beugt.
+    # dossier am 2026-11-21 (Aufgabe 60): Dabei ist eine Fehlerklasse
+    # aufgefallen, die keiner der Vorgänger hatte. Der Winkelname der
+    # Belege kommt aus AC_RAUM („Sextil"), nachgeschlagen wurde in der
+    # eigenen Sprachtafel („sextil") — und weil die Füllfunktion
+    # `undefined` zu '' machte, wurde aus „Saturn Sextil Sonne"
+    # lautlos „Saturn  Sonne". Eine Lücke ohne Wert bricht jetzt ab
+    # statt zu verschwinden. Dieselbe Klasse wie REGELN.md 6f, nur
+    # eine Ebene tiefer: Nicht die Tabelle kannte den Fall nicht,
+    # sondern der Notbehelf hat ihn zugedeckt.
     'analyse/analyse-app.js':      (29, 1),
     'begleitung/begleit-app.js':   (20, 0),
     'ereignis/ereignis-app.js':    (28, 10),
@@ -765,7 +786,9 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'baukasten/bk-app.js',
           'bez/beziehung-app.js', 'zeit/zeit-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
-          'zahlen/zahlen-app.js'}
+          'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
+          'rituale/zauber-app.js', 'geist/geist-app.js',
+          'dossier/dossier-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
@@ -871,7 +894,19 @@ if geschrumpft:
 # einer Arbeitsseite auf die andere.
 WERKSTATT_SEITEN = {'angebote-struktur.html', 'ueber-mich-vorlage.html',
                     'learning-seite.html', 'konzept-plattform.html',
-                    'baukasten.html'}
+                    'baukasten.html',
+                    # Seit dem 18.11. auch das Handbuch und die Coach-Werkzeuge
+                    # (Mandy: „ein bereich in dem ich alleine arbeiten kann").
+                    # haltung, grenzen und methoden bleiben draußen: Sie
+                    # erklären auch Nutzerinnen, wie die Seite arbeitet.
+                    'coaching.html', 'coaching-verbinden.html', 'haltung-ethik.html',
+                    'reading-ablauf.html', 'reading-gespraech.html',
+                    'fragen-schatzkiste.html', 'klientinnen-fragen.html',
+                    'werkzeuge.html', 'begleitung.html', 'dossier.html',
+                    'faden.html', 'monatsbericht.html', 'briefing.html',
+                    'profil-ansicht.html',
+                    # Die Lebensbereiche ausführlich (18.11.); öffentlich steht die Kurzfassung.
+                    'praxis-bereiche.html'}
 _quell_ok = WERKSTATT_SEITEN | {'werkstatt.html', 'praxis.html'}
 
 
@@ -903,6 +938,69 @@ if offen or fehlt_werkstatt:
     fehlgeschlagen.append('Arbeitsseite außerhalb der Praxis')
 else:
     print(f'  {len(WERKSTATT_SEITEN)} Arbeitsseiten nur in der Praxis')
+
+# Die Leiste der Praxis tragen genau die Seiten der Praxis — keine
+# Arbeitsseite mit den vier Türen, keine öffentliche Seite mit der Praxis-Leiste.
+sk_falsch = []
+for s in seiten:
+    t_ = s.read_text(encoding='utf-8', errors='replace')
+    hat = 'class="sk-leiste"' in t_
+    soll = s.name in WERKSTATT_SEITEN or s.name == 'praxis.html'
+    if hat != soll and '<meta http-equiv="refresh"' not in t_:
+        sk_falsch.append(s.name + (' (ohne Praxis-Leiste)' if soll else ' (Praxis-Leiste außerhalb)'))
+if sk_falsch:
+    print('  LEISTE FALSCH: ' + ', '.join(sk_falsch[:8]))
+    fehlgeschlagen.append('Praxis-Leiste an der falschen Stelle')
+else:
+    print('  die Praxis-Leiste steht genau auf den Seiten der Praxis')
+
+# ── Eine Lücke wird an einer Stelle gefüllt (Aufgabe 94) ──────
+# Die Riegel in den bau-*.py halten jede Anzeige, die heute gebaut
+# wird. Diese Querprüfung hält zweierlei, das keiner davon sieht:
+# dass AC_FUELL **einmal** im Quelltext steht — zwei Fassungen
+# derselben Funktion wären wieder die Lage, aus der Aufgabe 94
+# entstand —, und dass auch eine Datei, die noch kein bau-*.py
+# verriegelt, sich keine eigene baut. So kann eine neue Anzeige nicht
+# an der Prüfung vorbei entstehen (REGELN.md 6c: was verlässlich sein
+# soll, gehört in die Maschine).
+DIE_STELLE = 'kern/fuellen.js'
+quellen = sorted(hier.glob('*/*.js'))
+fassungen = sorted(q.relative_to(hier).as_posix() for q in quellen
+                   if 'function AC_FUELL(' in q.read_text(encoding='utf-8'))
+eigene = []
+for q in quellen:
+    name = q.relative_to(hier).as_posix()
+    if name == DIE_STELLE:
+        continue
+    for z, art in pruefwerk.eigene_fueller(q.read_text(encoding='utf-8')):
+        eigene.append(f'{name}:{z} ({art})')
+if fassungen != [DIE_STELLE] or eigene:
+    if fassungen != [DIE_STELLE]:
+        print(f'  AC_FUELL steht in: {", ".join(fassungen) or "keiner Datei"}'
+              f' — es gehört genau in {DIE_STELLE}')
+    for e in eigene:
+        print(f'  EIGENER FÜLLER: {e}')
+    fehlgeschlagen.append('eine Lücke wird nicht an einer Stelle gefüllt')
+# Und: Wer AC_FUELL aufruft, muss es auch auf der Seite haben. Beim
+# Umzug am 2026-11-22 ist genau das einmal passiert — die Rechenprüfung
+# der Bereiche lud tief-bauer.js ohne fuellen.js und brach mit
+# „AC_FUELL is not defined" ab. Der Bau hat es gefunden, aber nur, weil
+# diese Rechnung wirklich lief; eine Anzeige, deren Zweig heute nicht
+# gerendert wird, käme damit durch (REGELN.md 6e). Deshalb wird hier
+# die Seite selbst gefragt und nicht der Weg dorthin.
+ohne_stelle = sorted(s.name for s in seiten
+                     if pruefwerk.ruft_ohne_stelle(
+                         s.read_text(encoding='utf-8', errors='replace')))
+if ohne_stelle:
+    for s in ohne_stelle:
+        print(f'  RUFT AC_FUELL, HAT ES ABER NICHT: {s}')
+    fehlgeschlagen.append('eine Seite ruft AC_FUELL ohne fuellen.js')
+elif fassungen == [DIE_STELLE] and not eigene:
+    seiten_mit = sum(1 for s in seiten
+                     if 'function AC_FUELL(' in s.read_text(encoding='utf-8',
+                                                            errors='replace'))
+    print(f'  {len(quellen)} Quelldateien, eine Stelle, die eine Lücke füllt'
+          f' — auf {seiten_mit} Seiten')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')

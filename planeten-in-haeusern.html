@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#FCF7EF">
+<meta name="theme-color" content="#F6F1E7">
 <link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
 <link rel="apple-touch-icon" href="symbol-180.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -10,31 +10,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Planet, Zeichen, Haus · Astrologie-Lernplattform</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
-h3{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0 0 4px;}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:40px 0 8px;color:var(--ind);}
+h3{font-family:'Jost',sans-serif;font-size:19px;font-weight:600;margin:0 0 4px;}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 ul,ol{margin:0 0 14px 20px;font-size:15px;line-height:1.7;}
@@ -46,8 +46,8 @@ li{margin-bottom:6px;}
 .white{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px;}
 .foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
 .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
-.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#E8EDDC;color:var(--earth);}
-.pill.air{background:#DEEBF1;color:var(--air);}.pill.water{background:#E6E1F0;color:var(--water);}
+.pill.fire{background:#FBE3DA;color:var(--fire);}.pill.earth{background:#FCEFD2;color:var(--earth);}
+.pill.air{background:#DCE6FB;color:var(--air);}.pill.water{background:#D7EFEB;color:var(--water);}
 a{color:var(--ind);}
 table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14.5px;}
 th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
@@ -65,13 +65,13 @@ select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
 .steps{counter-reset:s;list-style:none;margin:0;}
 .steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin-bottom:18px;font-size:15px;}
 .steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--ind);font-family:'JetBrains Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
-.steps b{display:block;font-family:'Fraunces',serif;font-size:17px;margin-bottom:2px;}
+.steps b{display:block;font-family:'Jost',sans-serif;font-size:17px;margin-bottom:2px;}
 .weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
 @media(max-width:560px){.weiter{grid-template-columns:1fr;}}
 .weiter a{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s;}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
 .chips button{font-family:'Inter',sans-serif;font-size:13.5px;padding:7px 13px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:20px;cursor:pointer;width:auto;}
@@ -79,14 +79,14 @@ select:focus,input:focus{outline:2px solid var(--gold);outline-offset:-1px;}
 .chips button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
 .chips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
-summary{cursor:pointer;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ind);}
+summary{cursor:pointer;font-family:'Jost',sans-serif;font-size:17px;font-weight:600;color:var(--ind);}
 details[open] summary{margin-bottom:8px;}
 details p{font-size:14.5px;color:var(--soft);}
 .kette{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:15px;margin:10px 0;}
 .kette .node{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
 .kette .arr{color:var(--gold);font-size:16px;}
 .out{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);}
-.big{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
+.big{font-family:'Jost',sans-serif;font-size:23px;font-weight:600;color:var(--ind);margin-bottom:4px;}
 .mono{font-family:'JetBrains Mono',monospace;}
 .waehler{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:14px;}
 .spalten{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
@@ -100,7 +100,7 @@ details p{font-size:14.5px;color:var(--soft);}
 .knoepfe button[aria-pressed="true"]{background:var(--ind);border-color:var(--ind);color:#fff;}
 .knoepfe button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 .ergebnis{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin-bottom:14px;}
-.titel{font-family:'Fraunces',serif;font-size:clamp(22px,4.5vw,30px);font-weight:600;color:var(--ind);line-height:1.15;margin-bottom:4px;}
+.titel{font-family:'Jost',sans-serif;font-size:clamp(22px,4.5vw,30px);font-weight:600;color:var(--ind);line-height:1.15;margin-bottom:4px;}
 .unter{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--soft);margin-bottom:18px;}
 .dreiteil{display:grid;gap:10px;margin-bottom:18px;}
 .teil{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 15px;}
@@ -109,12 +109,12 @@ details p{font-size:14.5px;color:var(--soft);}
 .teil .kopf b{color:var(--ink);font-family:'Inter',sans-serif;font-size:12.5px;letter-spacing:0;text-transform:none;}
 .teil p{margin:0;font-size:14.8px;line-height:1.55;}
 .synth{border-left:3px solid var(--ind);padding:4px 0 4px 16px;margin:0 0 16px;}
-.synth p{margin:0;font-family:'Fraunces',serif;font-size:18px;line-height:1.45;color:var(--ink);}
+.synth p{margin:0;font-family:'Jost',sans-serif;font-size:18px;line-height:1.45;color:var(--ink);}
 .reso{border-radius:12px;padding:13px 15px;margin-bottom:14px;font-size:14.3px;line-height:1.55;}
 .reso.doppelt{background:#FBE3DA;border-left:3px solid var(--fire);}
-.reso.achse{background:#E6E1F0;border-left:3px solid var(--water);}
+.reso.achse{background:#D7EFEB;border-left:3px solid var(--water);}
 .reso.spannung{background:#FBEFE6;border-left:3px solid var(--tense);}
-.reso.fliesst{background:#E8EDDC;border-left:3px solid var(--earth);}
+.reso.fliesst{background:#FCEFD2;border-left:3px solid var(--earth);}
 .reso.neutral{background:#F4F0EA;border-left:3px solid var(--line);}
 .reso b{color:var(--ink);}
 .zeilen{display:grid;gap:9px;}
@@ -136,7 +136,7 @@ details p{font-size:14.5px;color:var(--soft);}
 .lensbox.kaum{background:#F4F0EA;opacity:.9;}
 .lenskopf{display:flex;gap:11px;align-items:center;margin-bottom:11px;}
 .lensico{font-size:22px;line-height:1;}
-.lenskopf b{font-family:'Fraunces',serif;font-size:17px;color:var(--ind);}
+.lenskopf b{font-family:'Jost',sans-serif;font-size:17px;color:var(--ind);}
 .lensfrage{font-size:13px;color:var(--soft);}
 .lensrel{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;
  text-transform:uppercase;background:#fff;border:1px solid var(--line);border-radius:20px;padding:4px 10px;color:var(--soft);}
@@ -149,8 +149,8 @@ details p{font-size:14.5px;color:var(--soft);}
 
 /* — vereinheitlichte Typografie — */
 body{font-family:var(--sans)!important;}
-h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
-h1{font-weight:300!important;letter-spacing:-.01em;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:500!important;}
+h1{font-weight:600!important;letter-spacing:-.025em;}
 h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
 .eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
  text-transform:uppercase;color:var(--messing);font-weight:500;}
@@ -238,18 +238,18 @@ a{color:var(--nacht);}
    nach der Raster- und Flexspalten ihre Breite berechnen. */
 
 /* Nachgerüstet: deine eigenen Stellungen */
-.pih-meins{background:var(--messing-bg,#F7EFE1);border:1px solid var(--messing,#9A7235);
+.pih-meins{background:var(--messing-bg,#FCE4D6);border:1px solid var(--messing,#C8441A);
  border-radius:17px;padding:15px 18px;margin:0 0 18px;}
 .pih-meins .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.13em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:9px;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:9px;}
 .pih-meins .reihe{display:flex;flex-wrap:wrap;gap:6px;}
 .pih-meins button{font-family:inherit;font-size:13.4px;padding:7px 13px;border-radius:17px;
- border:1px solid var(--linie-stark,#DDD0BC);background:var(--papier,#FFFDFA);
- color:var(--tinte,#231F1A);cursor:pointer;}
-.pih-meins button:hover{border-color:var(--nacht,#2E3A5C);}
-.pih-meins button .g{color:var(--messing,#9A7235);margin-right:6px;}
-.pih-meins .hin{font-size:13.2px;color:var(--leise,#6B6259);margin-top:9px;}
-.pih-karte{background:var(--nacht,#2E3A5C);color:#F4EFE6;border-radius:17px;
+ border:1px solid var(--linie-stark,#D3C9B6);background:var(--papier,#FFFFFF);
+ color:var(--tinte,#1B1B1B);cursor:pointer;}
+.pih-meins button:hover{border-color:var(--nacht,#1B1B1B);}
+.pih-meins button .g{color:var(--messing,#C8441A);margin-right:6px;}
+.pih-meins .hin{font-size:13.2px;color:var(--leise,#5E584D);margin-top:9px;}
+.pih-karte{background:var(--nacht,#1B1B1B);color:#F4EFE6;border-radius:17px;
  padding:16px 19px;margin:0 0 18px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;}
 .pih-karte p{margin:0;font-size:14.8px;line-height:1.6;flex:1 1 200px;min-width:0;color:rgba(244,239,230,.9);}
 .pih-karte a{color:#E8C97A;}
@@ -261,8 +261,8 @@ a{color:var(--nacht);}
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html" class="ist">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
@@ -279,9 +279,9 @@ a{color:var(--nacht);}
 <h2>Und warum drei Ebenen?</h2>
 <p>Fast alle Nachschlagewerke erklären zwei Dinge getrennt: Planet im Zeichen und Planet im Haus. Im echten Chart stehen aber immer alle drei zusammen — und erst die Kombination ergibt eine Aussage über einen Menschen.</p>
 <div class="grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-  <div class="card"><h3 style="font-family:Fraunces,serif;font-size:17px;margin-bottom:4px;">Planet</h3><p style="margin:0;font-size:14px;"><b>Was</b> — welche Funktion in dir spricht.</p></div>
-  <div class="card"><h3 style="font-family:Fraunces,serif;font-size:17px;margin-bottom:4px;">Zeichen</h3><p style="margin:0;font-size:14px;"><b>Wie</b> — in welchem Stil sie es tut.</p></div>
-  <div class="card"><h3 style="font-family:Fraunces,serif;font-size:17px;margin-bottom:4px;">Haus</h3><p style="margin:0;font-size:14px;"><b>Wo</b> — auf welcher Lebensbühne.</p></div>
+  <div class="card"><h3 style="font-family:Jost,sans-serif;font-size:17px;margin-bottom:4px;">Planet</h3><p style="margin:0;font-size:14px;"><b>Was</b> — welche Funktion in dir spricht.</p></div>
+  <div class="card"><h3 style="font-family:Jost,sans-serif;font-size:17px;margin-bottom:4px;">Zeichen</h3><p style="margin:0;font-size:14px;"><b>Wie</b> — in welchem Stil sie es tut.</p></div>
+  <div class="card"><h3 style="font-family:Jost,sans-serif;font-size:17px;margin-bottom:4px;">Haus</h3><p style="margin:0;font-size:14px;"><b>Wo</b> — auf welcher Lebensbühne.</p></div>
 </div>
 <p style="margin-top:14px;">Beispiel: <b>Mars</b> ist Antrieb. <b>In Stier</b> heißt: langsam anlaufend, dann unverrückbar. <b>Im 12. Haus</b> heißt: im Verborgenen, auch vor dir selbst. Zusammen: ein Antrieb, der sich unsichtbar auflädt, bis er sich in einem Block entlädt — und der Erschöpfung erst meldet, wenn sie schon da ist. Weder Zeichen noch Haus allein hätten das gesagt.</p>
 
@@ -561,7 +561,7 @@ var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'
 var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#1F4FD8'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
 var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};

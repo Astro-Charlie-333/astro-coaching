@@ -40,16 +40,21 @@ engine = lies(rit / 'engine.js')
 appkopf = lies(hier.parent / 'app' / 'app-kopf.html')
 
 SKRIPTE = ['profil.js', 'begriffe.js', 'niveau.js', 'wortwahl.js']
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<title>Menschen ansprechen &middot; Coaching-Leitfaden &middot; Astro-Charlie</title>\n'
         '<meta name="description" content="Wie du jemanden abholst: in welchem Ton, wie du erklärst, wie er ins Tun kommt und was er schon mitbringt.">\n'
         '<link rel="preconnect" href="https://fonts.googleapis.com">'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-        '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
+        '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
         + '\n'.join(f'<script src="{s}"{"" if s == "profil.js" else " defer"}></script>' for s in SKRIPTE)
         + '\n<style>\n' + lies(rit / 'basis.css') + '\n' + stil + '</style>\n</head><body>\n'
-        + koerper + '\n<script>\n' + engine + '\n' + daten + '\n' + rechner + '\n' + app
+        + koerper + '\n<script>\n' + fuellen + "\n" + engine + '\n' + daten + '\n' + rechner + '\n' + app
         + '\n</script>\n</body></html>\n')
 ziel = wiki / 'leitfaden.html'
 ziel.write_text(html, encoding='utf-8')
@@ -160,6 +165,7 @@ for name, t in [('leitfaden-app.js', app), ('leitfaden-daten.js', daten), ('leit
 # ── 6 · In der Anzeige steht kein Satz, und kein „dein" ──────
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'leitfaden-app.js', 'leitfaden-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'leitfaden-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'leitfaden-app.js')
 for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
     _mit = app + '\nvar _gegenprobe=' + _an + 'So sprichst du mit ihr' + _an + ';\n'
     if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'leitfaden-app.js', 'leitfaden-daten.js'):

@@ -6,9 +6,9 @@
   "beschreibung": "Ein Werkzeug, mit dem du dich selbst und dein Gegenüber verstehen kannst — im Coaching-Format, erklärt über die Astrologie.",
   "start": "index.html",
 
-  "farbe_flaeche": "#FCF7EF",
-  "farbe_ring": "#9A7235",
-  "farbe_kern": "#2E3A5C",
+  "farbe_flaeche": "#F6F1E7",
+  "farbe_ring": "#F05A28",
+  "farbe_kern": "#1F4FD8",
 
   "ohne_netz": {
     "titel": "Ohne Netz",

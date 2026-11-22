@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#FCF7EF">
+<meta name="theme-color" content="#F6F1E7">
 <link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
 <link rel="apple-touch-icon" href="symbol-180.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Die 12 H&auml;user &middot; Lebensb&uuml;hnen, Achsen, Systeme &middot; Astro-Charlie</title>
 <meta name="description" content="Die zwölf Lebensbereiche mit ihrer Frage, die sechs Paare und wo bei dir viel los ist.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <script src="begriffe.js" defer></script>
 <script src="niveau.js" defer></script>
@@ -19,29 +19,29 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
-h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Jost',sans-serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 .tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
@@ -50,9 +50,9 @@ p{margin-bottom:12px;}
 .foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
 .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
 .pill.fire{background:#FBE3DA;color:var(--fire);}
-.pill.earth{background:#E8EDDC;color:var(--earth);}
-.pill.air{background:#DEEBF1;color:var(--air);}
-.pill.water{background:#E6E1F0;color:var(--water);}
+.pill.earth{background:#FCEFD2;color:var(--earth);}
+.pill.air{background:#DCE6FB;color:var(--air);}
+.pill.water{background:#D7EFEB;color:var(--water);}
 a{color:var(--ind);}
 
 .weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
@@ -62,14 +62,14 @@ a{color:var(--ind);}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
  text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
 
 /* — vereinheitlichte Typografie — */
 body{font-family:var(--sans)!important;}
-h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
-h1{font-weight:300!important;letter-spacing:-.01em;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:500!important;}
+h1{font-weight:600!important;letter-spacing:-.025em;}
 h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
 .eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
  text-transform:uppercase;color:var(--messing);font-weight:500;}
@@ -144,101 +144,116 @@ a{color:var(--nacht);}
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
 
+/* Jost mit einstöckigem a, wie Futura auf alten Plakaten */
+h1,h2,h3,h4{font-feature-settings:"ss01";}
+
 /* Häuserseite. Farben aus der SCHWERKRAFT-Palette wie die Mondseite.
    Das Rad ist das Bild der Seite; Karten darunter, Paare als Waage. */
 .hz-wrap{max-width:860px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left,0px)) 80px max(18px,env(safe-area-inset-right,0px))}
 .hz-kopf{padding:52px 0 8px;display:grid;gap:12px}
-.hz-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9A7235}
-.hz-h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.08;color:#2E3A5C;margin:0;letter-spacing:-.01em}
+.hz-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#C8441A}
+.hz-h1{font-family:'Jost',system-ui,sans-serif;font-weight:300;font-size:clamp(2.2rem,7vw,3.4rem);line-height:1.08;color:#1B1B1B;margin:0;letter-spacing:-.01em}
 .hz-lede{font-size:1.08rem;line-height:1.6;max-width:62ch;margin:0}
-.hz-h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#2E3A5C;margin:0;text-wrap:balance}
-.hz-h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;color:#2E3A5C;margin:8px 0 0}
+.hz-h2{font-family:'Jost',system-ui,sans-serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2rem);line-height:1.15;color:#1B1B1B;margin:0;text-wrap:balance}
+.hz-h3{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.2rem;color:#1B1B1B;margin:8px 0 0}
 .hz-text{margin:0;max-width:64ch;line-height:1.6}
-.hz-klein{font-size:.88rem;color:#6B6259;margin:0}
+.hz-klein{font-size:.88rem;color:#5E584D;margin:0}
 .hz-teil{padding-top:60px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .hz-teil>*{min-width:0}
 .hz-profil{background:#F5ECDD;border-radius:12px;padding:14px 16px;font-size:.95rem}
-.hz-profil a,.hz-wrap a{color:#2E3A5C}
+.hz-profil a,.hz-wrap a{color:#1B1B1B}
 
 .hz-rad-box{max-width:420px;width:100%;margin:0 auto}
 .hz-rad-box svg{width:100%;height:auto;display:block}
 .hz-rad-box g[role=button]{cursor:pointer}
 .hz-rad-box g[role=button]:focus{outline:none}
-.hz-rad-box g[role=button]:focus-visible path{stroke:#9A7235;stroke-width:3}
+.hz-rad-box g[role=button]:focus-visible path{stroke:#C8441A;stroke-width:3}
+/* Farben und Schriften des Rads stehen hier und nicht in der Anzeige
+   (Aufgabe 57): haeuser-app.js setzt die Klassen, gestaltet wird hier. */
+.hz-feld path{fill:#FFFFFF;stroke:#E6DECF;stroke-width:1.5}
+.hz-feld.voll path{fill:#F5ECDD}
+.hz-feld.an path{fill:#1B1B1B}
+.hz-feld circle{fill:#C8441A}
+.hz-feld.an circle{fill:#F2B33D}
+.hz-rad-nr{font-family:'Jost',system-ui,sans-serif;font-size:17px;fill:#1B1B1B}
+.hz-feld.an .hz-rad-nr{fill:#F6F1E7}
+.hz-rad-nm{font-family:'DM Sans',system-ui,sans-serif;font-size:11.5px;fill:#5E584D}
+.hz-feld.an .hz-rad-nm{fill:#F2B33D}
+.hz-rad-mitte{font-family:'DM Sans',system-ui,sans-serif;font-size:13px;fill:#5E584D}
 
 .hz-buehnen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
-.hz-buehne{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer}
+.hz-buehne{background:#FFFFFF;border:1px solid #E6DECF;border-radius:14px;padding:16px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start;cursor:pointer}
 .hz-buehne.voll{border-color:#D9C29A}
-.hz-buehne.an{border:2px solid #2E3A5C;padding:15px}
-.hz-nr{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:2rem;color:#9A7235;line-height:1}
+.hz-buehne.an{border:2px solid #1B1B1B;padding:15px}
+.hz-nr{font-family:'Jost',system-ui,sans-serif;font-weight:300;font-size:2rem;color:#C8441A;line-height:1}
 .hz-inh{display:grid;gap:5px;min-width:0}
-.hz-inh h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:#2E3A5C;margin:0}
+.hz-inh h3{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.1rem;color:#1B1B1B;margin:0}
 .hz-inh p{margin:0;font-size:.93rem;line-height:1.5}
-.hz-tech{font-family:'JetBrains Mono',monospace;font-size:.72rem!important;color:#9A7235}
-.hz-stich{color:#6B6259;font-size:.86rem!important}
-.hz-frage{font-style:italic;color:#2E3A5C;border-left:2px solid #9A7235;padding-left:10px}
+.hz-tech{font-family:'JetBrains Mono',monospace;font-size:.72rem!important;color:#C8441A}
+.hz-stich{color:#5E584D;font-size:.86rem!important}
+.hz-frage{font-style:italic;color:#1B1B1B;border-left:2px solid #C8441A;padding-left:10px}
 .hz-bei{font-size:.86rem!important;color:#7A5A27;background:#F5ECDD;border-radius:8px;padding:6px 9px}
-.hz-buehne:not(.voll) .hz-bei{background:#F0EDE9;color:#6B6259}
-.hz-bei-tech{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;color:#6B6259}
+.hz-buehne:not(.voll) .hz-bei{background:#F0EDE9;color:#5E584D}
+.hz-bei-tech{font-family:'JetBrains Mono',monospace;font-size:.74rem!important;color:#5E584D}
 
 .hz-ecken{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
-.hz-ecken div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:2px}
-.hz-ecken b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.1rem;color:#2E3A5C}
-.hz-ecken span{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#9A7235}
+.hz-ecken div{background:#FFFFFF;border:1px solid #E6DECF;border-radius:12px;padding:14px;display:grid;gap:2px}
+.hz-ecken b{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.1rem;color:#1B1B1B}
+.hz-ecken span{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#C8441A}
 .hz-ecken p{margin:4px 0 0;font-size:.9rem}
 
 .hz-achsen{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px}
-.hz-achse{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:14px;padding:16px 18px;display:grid;gap:8px}
-.hz-achse h3{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.15rem;color:#2E3A5C;margin:0}
+.hz-achse{background:#FFFFFF;border:1px solid #E6DECF;border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.hz-achse h3{font-family:'Jost',system-ui,sans-serif;font-weight:500;font-size:1.15rem;color:#1B1B1B;margin:0}
 .hz-achse p{margin:0;font-size:.93rem;line-height:1.5}
 .hz-waage{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:6px;align-items:stretch}
 .hz-waage .s{border-radius:10px;padding:10px;background:#F0EDE9;display:grid;gap:2px;text-align:center}
-.hz-waage .s.voll{background:#F5ECDD;box-shadow:inset 0 -3px 0 #9A7235}
-.hz-waage .s b{font-size:.88rem;font-weight:600;color:#2E3A5C;line-height:1.25}
-.hz-waage .s span{font-family:'Fraunces',Georgia,serif;font-size:1.3rem;color:#9A7235}
-.hz-waage .mitte{display:grid;place-items:center;color:#9A7235;font-size:1.2rem}
+.hz-waage .s.voll{background:#F5ECDD;box-shadow:inset 0 -3px 0 #C8441A}
+.hz-waage .s b{font-size:.88rem;font-weight:600;color:#1B1B1B;line-height:1.25}
+.hz-waage .s span{font-family:'Jost',system-ui,sans-serif;font-size:1.3rem;color:#C8441A}
+.hz-waage .mitte{display:grid;place-items:center;color:#C8441A;font-size:1.2rem}
 .hz-achse .prinzip{color:#3C352E}
 .hz-achse .hz-bei{font-size:.9rem;color:#7A5A27;background:#F5ECDD;border-radius:8px;padding:8px 10px}
-.hz-achse.keine .hz-bei{background:#F0EDE9;color:#6B6259}
+.hz-achse.keine .hz-bei{background:#F0EDE9;color:#5E584D}
 
 .hz-schritte,.hz-liste{margin:0;padding-left:1.3em;display:grid;gap:8px;line-height:1.55}
 .hz-zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
-.hz-zwei>div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:6px}
-.hz-zwei b{font-family:'Fraunces',Georgia,serif;font-weight:500;color:#2E3A5C;font-size:1.05rem}
+.hz-zwei>div{background:#FFFFFF;border:1px solid #E6DECF;border-radius:12px;padding:14px;display:grid;gap:6px}
+.hz-zwei b{font-family:'Jost',system-ui,sans-serif;font-weight:500;color:#1B1B1B;font-size:1.05rem}
 .hz-zwei p{margin:0;font-size:.93rem;line-height:1.5}
-.hz-beispiel{display:grid;gap:10px;background:#FCF7EF;border-radius:14px;padding:16px}
+.hz-beispiel{display:grid;gap:10px;background:#F6F1E7;border-radius:14px;padding:16px}
 .hz-beispiel>p{margin:0;line-height:1.55}
 .hz-karten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
-.hz-karten div{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:4px}
-.hz-karten b{color:#2E3A5C}
+.hz-karten div{background:#FFFFFF;border:1px solid #E6DECF;border-radius:12px;padding:14px;display:grid;gap:4px}
+.hz-karten b{color:#1B1B1B}
 .hz-karten p{margin:0;font-size:.9rem;line-height:1.5}
-.hz-tabbox{overflow-x:auto;border:1px solid #EBE1D2;border-radius:12px;background:#FFFDFA}
+.hz-tabbox{overflow-x:auto;border:1px solid #E6DECF;border-radius:12px;background:#FFFFFF}
 .hz-tab{border-collapse:collapse;width:100%;font-size:.9rem;min-width:460px}
-.hz-tab th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#6B6259;font-weight:500;padding:9px 10px;border-bottom:1px solid #EBE1D2}
+.hz-tab th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#5E584D;font-weight:500;padding:9px 10px;border-bottom:1px solid #E6DECF}
 .hz-tab td{padding:9px 10px;border-bottom:1px solid #F0EAE0}
 .hz-quiz{display:grid;gap:12px}
-.hz-q{background:#FFFDFA;border:1px solid #EBE1D2;border-radius:12px;padding:14px;display:grid;gap:10px}
+.hz-q{background:#FFFFFF;border:1px solid #E6DECF;border-radius:12px;padding:14px;display:grid;gap:10px}
 .hz-q>p{margin:0;font-weight:500}
 .hz-opts{display:grid;gap:6px}
-.hz-opts button{font:inherit;text-align:left;border:1px solid #EBE1D2;background:#FCF7EF;border-radius:10px;padding:9px 12px;cursor:pointer;color:inherit}
+.hz-opts button{font:inherit;text-align:left;border:1px solid #E6DECF;background:#F6F1E7;border-radius:10px;padding:9px 12px;cursor:pointer;color:inherit}
 .hz-opts button.richtig{background:#EAF2EC;border-color:#3F7352}
 .hz-opts button.falsch{background:#F6E6E1;border-color:#8C4A3C}
 .hz-expl{margin:0;font-size:.92rem;line-height:1.5;color:#3C352E}
 
-.hz-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFDFA;border:1px solid #EBE1D2;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
+.hz-ehrlich{margin-top:64px;padding:20px 22px;border-radius:14px;background:#FFFFFF;border:1px solid #E6DECF;display:grid;gap:8px;font-size:.93rem;line-height:1.55}
 .hz-ehrlich p{margin:0}
 .hz-weiter{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;margin-top:28px}
-.hz-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #EBE1D2;border-radius:12px;text-decoration:none;color:#2E3A5C;font-family:'Fraunces',Georgia,serif;font-size:1.05rem}
-.hz-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9A7235}
+.hz-weiter a{display:grid;gap:2px;padding:14px 16px;border:1px solid #E6DECF;border-radius:12px;text-decoration:none;color:#1B1B1B;font-family:'Jost',system-ui,sans-serif;font-size:1.05rem}
+.hz-weiter a span{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#C8441A}
 body.niv-0 .hz-weiter a[data-ab="1"]{display:none}
 .hz-wrap [hidden]{display:none!important}
-.hz-wrap a:focus-visible,.hz-wrap button:focus-visible{outline:2px solid #9A7235;outline-offset:2px}
+.hz-wrap a:focus-visible,.hz-wrap button:focus-visible{outline:2px solid #C8441A;outline-offset:2px}
 </style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
@@ -313,7 +328,14 @@ body.niv-0 .hz-weiter a[data-ab="1"]{display:none}
     <li>Nah am &Auml;quator, wo Placidus-H&auml;user fast gleich gro&szlig; sind. Je weiter n&ouml;rdlich, desto st&auml;rker die Verzerrung. In Berlin, Kyiv oder Stockholm sind Unterschiede die Regel.</li>
   </ul>
   <h3 class="hz-h3">Ein Beispiel</h3>
-  <div class="hz-beispiel" id="hzbeispiel"></div>
+  <div class="hz-beispiel" id="hzbeispiel">
+    <p class="hz-klein" id="hzbspkopf"></p>
+    <div class="hz-zwei">
+      <div><b>Whole Sign</b><p id="hzbspws"></p></div>
+      <div><b>Placidus</b><p id="hzbsppl"></p></div>
+    </div>
+    <p id="hzbspfazit"></p>
+  </div>
   <h3 class="hz-h3">Wenn beide sich widersprechen</h3>
   <div class="hz-karten">
     <div><b>Beide notieren, nicht w&auml;hlen</b><p>Ein Planet auf einer Hausgrenze geh&ouml;rt zu beiden Bereichen. Das ist keine Unsch&auml;rfe, das ist die Information.</p></div>
@@ -347,6 +369,61 @@ body.niv-0 .hz-weiter a[data-ab="1"]{display:none}
 </div>
 
 <script>
+/* ── Eine Lücke, ein Wert ─────────────────────────────────────
+   Die eine Stelle, an der eine Vorlage gefüllt wird.
+
+   Vorher stand diese Funktion in siebzehn Anzeigen einzeln, in
+   drei Fassungen, die sich bei genau einem Fall unterschieden:
+   Was passiert, wenn der Wert zu einer Lücke fehlt?
+
+     dreizehn Anzeigen  machten daraus ''      — das Wort verschwand
+     drei Anzeigen      machten daraus 'undefined' — es stand auf der Seite
+     dossier-app.js     brach ab               — richtig, seit Aufgabe 60
+
+   Die erste Art hat am 2026-11-21 wirklich zugeschlagen: Der
+   Winkelname der Raum-Rechnung heißt „Sextil", nachgeschlagen wurde
+   unter „sextil", und aus „Saturn Sextil Sonne" wurde lautlos
+   „Saturn  Sonne". Eine Tafel, die den Schlüssel nicht kennt,
+   liefert `undefined`; wer das zu '' macht, verliert ein Wort, ohne
+   dass etwas rot wird.
+
+   Das ist dieselbe Klasse wie REGELN.md 6f, und sie war in sechzehn
+   Anzeigen nur noch nicht aufgefallen. Deshalb steht die Funktion
+   jetzt hier und nicht dort: Eine Regel in siebzehn Dateien ist
+   nach der ersten Verschärfung in sechzehn davon veraltet
+   (REGELN.md 5).
+
+   Verriegelt wird das von `pruefwerk.pruefe_fueller`: Eine Anzeige,
+   die wieder selbst eine Lücke aus einem Schlüssel zusammensetzt,
+   bringt ihren Bau zum Scheitern.
+
+   Hier steht kein Satz und keine Rechnung — nur die Einsetzung.
+   Deshalb zieht diese Datei beim Umzug in eine andere Umgebung
+   unverändert mit (PRODUKT.md Abschnitt 7).
+
+   Zwei Fälle, die auseinandergehalten werden müssen:
+
+     fehlt      `undefined` oder `null` — ein Wert, den es nicht
+                gibt. Das ist ein Fehler und bricht ab.
+     leer       '' — eine Lücke, die absichtlich nichts einsetzt
+                (ein Name, den niemand angegeben hat). Das geht
+                durch, und 0 ebenso: `String(0)` ist „0".
+
+   Eine Vorlage, die es nicht gibt, wird zu '' und bricht nicht ab.
+   Das ist eine andere Fehlerklasse — ein fehlender Textschlüssel —,
+   und die fangen in jedem Bau die Textprobe („die Texte sind
+   vollständig") und `pruefwerk.pruefe_vorlagenluecken` ab, bevor die
+   Seite überhaupt entsteht. */
+function AC_FUELL(form, werte){
+  var s = String(form === undefined || form === null ? '' : form), k;
+  for(k in werte) if(Object.prototype.hasOwnProperty.call(werte, k)){
+    if(werte[k] === undefined || werte[k] === null)
+      throw new Error('AC_FUELL: Lücke ohne Wert: {' + k + '}');
+    s = s.split('{' + k + '}').join(String(werte[k]));
+  }
+  return s;
+}
+
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
@@ -408,7 +485,7 @@ var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'
 var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#1F4FD8'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
 var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
@@ -499,7 +576,12 @@ var HZ_ACHSEN = [
    Die Werte prüft bau-haeuser.py beim Bauen gegen engine.js. */
 var HZ_BEISPIEL = {datum:'14.10.1994', zeit:'13:05', ort:'Hamburg',
   p:{y:1994, mo:10, d:14, h:13, mi:5, tz:2, lat:53.55, lon:9.99},
-  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage', wsHaus:11, plHaus:10, abstand:18};
+  asc:'15°46 Schütze', mc:'20°34 Waage', sonne:'20°52 Waage',
+  /* Die Zeichen stehen einzeln daneben, weil der Text sie nennt
+     („Waage ist ab Schütze das elfte Zeichen"). bau-haeuser.py hält
+     beide gegen asc und sonne und gegen die Rechnung. */
+  ascZ:'Schütze', sonneZ:'Waage',
+  wsHaus:11, mcHaus:11, plHaus:10, abstand:18};
 
 var HZ_QUIZ = [
  {q:'Ein Planet steht nach Whole Sign im 10. und nach Placidus im 9. Haus. Was machst du im Reading?',
@@ -510,12 +592,72 @@ var HZ_QUIZ = [
   e:'Je weiter vom Äquator entfernt, desto ungleichmäßiger fallen die Placidus-Häuser aus. In hohen Breiten werden einzelne Häuser sehr groß. Am Äquator sind beide Systeme fast deckungsgleich.'}
 ];
 
+/* ── Die Sätze der Anzeige ────────────────────────────────────
+   Aufgabe 57 (aus 34 und 38): haeuser-app.js rechnet und setzt ein,
+   geschrieben wird hier. Eine Lücke heißt {so}; dass jede auch
+   gefüllt wird, hält pruefwerk.pruefe_vorlagenluecken fest.
+
+   Wo eine Bühne beschrieben wird, steht keine zweite Beschreibung:
+   {stich} kommt aus HZ_HAUS. Bis zum 2026-11-18 stand im Beispiel
+   unten „11. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit" von
+   Hand — dieselbe Bühne, die zwölf Karten weiter oben
+   „Freundschaft, Netzwerke, Zukunftspläne" heißt. */
+var HZ_T = {
+  /* Die Zeile über dem Rad */
+  profilLeer:'Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> siehst du hier, auf welchen Bühnen bei dir viel los ist.',
+  profilOhneNamen:'das aktive Profil',
+  profilZeile:'Für <b></b>: Auf {voll} von zwölf Bühnen ist bei dir etwas los. Wechseln unter <a href="profile.html">Profile</a>.',
+
+  /* Das Rad */
+  radMarke:'{n}: {titel}',
+  radMarkeVoll:'{n}: {titel}, bei dir belebt',
+  radMitte:'Punkte: bei dir belebt',
+  radMitteLeer:'Tippe eine Bühne an',
+
+  /* Die zwölf Karten */
+  buehneTech:'{n}. Haus',
+  buehneTechEcke:'{n}. Haus · beginnt mit dem {ecke}',
+  beiEine:'Bei dir belebt: Hier steht eine Kraft.',
+  beiMehrere:'Bei dir belebt: Hier stehen {n} Kräfte.',
+  beiLeise:'Bei dir eine leise Bühne.',
+  beiTech:'Zeichen: {zeichen} · Planeten: {pl}',
+  beiTechLeer:'Zeichen: {zeichen} · ohne Planeten',
+
+  /* Die sechs Paare */
+  achseLeise:'Bei dir sind beide Seiten leise. Dieses Paar läuft im Hintergrund.',
+  achseBeide:'Bei dir sind beide Seiten belebt. Ein lebendiges Spannungsfeld: Du pendelst zwischen {links} und {rechts}.',
+  achseEine:'Bei dir liegt das Gewicht auf {links}. Wenn diese Seite überdreht, liegt der Ausgleich in {rechts}.',
+  achseTech:'{links} · {rechts}',
+  achseTechSeite:'{n}. Haus {zeichen} mit {pl}',
+  achseTechSeiteLeer:'{n}. Haus {zeichen}, leer',
+
+  /* Das Beispiel unter „Whole Sign oder Placidus" */
+  bspKopf:'Ein erfundenes Geburtsbild: {datum}, {zeit} Uhr, {ort}. Aszendent {asc}, MC {mc}, Sonne {sonne}.',
+  bspWs:'{sonneZ} ist ab {ascZ} das {ordnung} Zeichen. Die Sonne steht im {wsHaus}. Haus: {stich}. Das MC fällt hier ebenfalls ins {mcHaus}. Haus.',
+  bspPl:'Die Sonne steht {abstand} Bogenminuten hinter dem MC, also im {plHaus}. Haus: {stich}.',
+  bspFazit:'Beides ist rechnerisch richtig, und beides beschreibt dieselbe Person: jemanden, dessen Beruf in Gruppen und Netzwerken stattfindet. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.',
+
+  /* Zählwörter für das Beispiel. bau-haeuser.py hält die Reihenfolge
+     gegen die zwölf Bühnen. */
+  ordnung:['erste','zweite','dritte','vierte','fünfte','sechste','siebte',
+           'achte','neunte','zehnte','elfte','zwölfte']
+};
+
 /* Häuserseite: Anzeige und „bei dir" aus dem aktiven Profil.
-   Gerechnet wird gegen rituale/engine.js (chartVon, haus, SIGNS). */
+   Gerechnet wird gegen rituale/engine.js (chartVon, haus, SIGNS).
+
+   Hier steht kein Satz. Was auf der Seite zu lesen ist, steht als
+   Vorlage in haeuser-daten.js (HZ_T); diese Datei rechnet und setzt
+   mit hzFuell ein (Aufgabe 57, PRODUKT.md Abschnitt 7). Farben und
+   Schriften des Rads stehen in haeuser-stil.css, nicht hier. */
 (function(){
 var el=function(id){return document.getElementById(id);};
 var NS='http://www.w3.org/2000/svg';
 function hzSvg(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function hzFuell(form,werte){ return AC_FUELL(form,werte); }
 var PL=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 
 function hzProfil(){ try{ var a=AC_P.alle(); return AC_P.aktives()||AC_P.eigenes()||a[0]||null; }catch(e){ return null; } }
@@ -534,13 +676,10 @@ var hzWahl=0;
 
 function hzProfilZeile(){
   var b=el('hzprofil');
-  if(!C){
-    b.innerHTML='Noch kein Profil aktiv. Mit einem Profil unter <a href="profile.html">Profile</a> siehst du hier, auf welchen B&uuml;hnen bei dir viel los ist.';
-    return;
-  }
-  var name='das aktive Profil'; try{ name=AC_P.anzeige(P,AC_P.zeigeNamen()); }catch(e){}
+  if(!C){ b.innerHTML=HZ_T.profilLeer; return; }
+  var name=HZ_T.profilOhneNamen; try{ name=AC_P.anzeige(P,AC_P.zeigeNamen()); }catch(e){}
   var voll=BEI.filter(function(x){return x.pl.length;}).length;
-  b.innerHTML='F&uuml;r <b></b>: Auf '+voll+' von zw&ouml;lf B&uuml;hnen ist bei dir etwas los. Wechseln unter <a href="profile.html">Profile</a>.';
+  b.innerHTML=hzFuell(HZ_T.profilZeile,{voll:voll});
   b.querySelector('b').textContent=name;
 }
 
@@ -555,24 +694,26 @@ function hzRad(){
     var p=function(a,rr){return [cx+rr*Math.cos(a), cy+rr*Math.sin(a)];};
     var A=p(a0,R),B=p(a1,R),Cc=p(a1,r),D=p(a0,r);
     var voll=BEI[i].pl.length>0, an=i===hzWahl;
-    var g=hzSvg('g',{role:'button',tabindex:0,'aria-label':(i+1)+': '+HZ_HAUS[i].titel+(voll?', bei dir belebt':''),'aria-pressed':String(an)});
-    g.appendChild(hzSvg('path',{d:'M'+A+' A'+R+' '+R+' 0 0 0 '+B+' L'+Cc+' A'+r+' '+r+' 0 0 1 '+D+' Z',
-      fill:an?'#2E3A5C':(voll?'#F5ECDD':'#FFFDFA'),stroke:'#EBE1D2','stroke-width':1.5}));
+    var g=hzSvg('g',{role:'button',tabindex:0,
+      'class':'hz-feld'+(voll?' voll':'')+(an?' an':''),
+      'aria-label':hzFuell(voll?HZ_T.radMarkeVoll:HZ_T.radMarke,{n:i+1,titel:HZ_HAUS[i].titel}),
+      'aria-pressed':String(an)});
+    g.appendChild(hzSvg('path',{d:'M'+A+' A'+R+' '+R+' 0 0 0 '+B+' L'+Cc+' A'+r+' '+r+' 0 0 1 '+D+' Z'}));
     var m=p((a0+a1)/2,(R+r)/2+20), n=p((a0+a1)/2,(R+r)/2-16);
-    var t1=hzSvg('text',{x:m[0],y:m[1]+5,'text-anchor':'middle','font-size':17,'font-family':'Fraunces, Georgia, serif',fill:an?'#FCF7EF':'#2E3A5C'});
+    var t1=hzSvg('text',{'class':'hz-rad-nr',x:m[0],y:m[1]+5,'text-anchor':'middle'});
     t1.textContent=String(i+1); g.appendChild(t1);
-    var t2=hzSvg('text',{x:n[0],y:n[1]+4,'text-anchor':'middle','font-size':11.5,'font-family':'DM Sans, system-ui, sans-serif',fill:an?'#E8C98D':'#6B6259'});
+    var t2=hzSvg('text',{'class':'hz-rad-nm',x:n[0],y:n[1]+4,'text-anchor':'middle'});
     t2.textContent=HZ_HAUS[i].name; g.appendChild(t2);
     if(voll){ for(var k=0;k<BEI[i].pl.length&&k<5;k++){
       var q=p((a0+a1)/2+(k-(Math.min(BEI[i].pl.length,5)-1)/2)*0.09,R-12);
-      g.appendChild(hzSvg('circle',{cx:q[0],cy:q[1],r:3.5,fill:an?'#E8C98D':'#9A7235'})); } }
+      g.appendChild(hzSvg('circle',{cx:q[0],cy:q[1],r:3.5})); } }
     (function(i){ function w(){ hzWahl=i; hzRad(); var c=el('hzbuehnen').children[i]; if(c){ c.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'}); } }
       g.addEventListener('click',w);
       g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); w(); var n2=el('hzrad').querySelectorAll('g[role=button]')[i]; if(n2) n2.focus(); } }); })(i);
     s.appendChild(g);
   }
-  var mitte=hzSvg('text',{x:cx,y:cy+5,'text-anchor':'middle','font-size':13,'font-family':'DM Sans, system-ui, sans-serif',fill:'#6B6259'});
-  mitte.textContent=C?'Punkte: bei dir belebt':'Tippe eine Bühne an';
+  var mitte=hzSvg('text',{'class':'hz-rad-mitte',x:cx,y:cy+5,'text-anchor':'middle'});
+  mitte.textContent=C?HZ_T.radMitte:HZ_T.radMitteLeer;
   s.appendChild(mitte);
   Array.prototype.forEach.call(el('hzbuehnen').children,function(c,i){ c.classList.toggle('an',i===hzWahl); });
 }
@@ -584,18 +725,28 @@ function hzBuehnen(){
     k.innerHTML='<div class="hz-nr"></div><div class="hz-inh"><h3></h3><p class="hz-tech ac-tech" data-ab="1"></p><p></p><p class="hz-stich"></p><p class="hz-frage"></p><p class="hz-bei"></p><p class="hz-bei-tech ac-tech" data-ab="1"></p></div>';
     k.querySelector('.hz-nr').textContent=String(i+1);
     k.querySelector('h3').textContent=h.titel;
-    k.querySelector('.hz-tech').textContent=(i+1)+'. Haus'+(h.ecke?' · beginnt mit dem '+h.ecke:'');
+    k.querySelector('.hz-tech').textContent=
+      hzFuell(h.ecke?HZ_T.buehneTechEcke:HZ_T.buehneTech,{n:i+1,ecke:h.ecke});
     k.querySelectorAll('p')[1].textContent=h.was;
     k.querySelector('.hz-stich').textContent=h.stich;
     k.querySelector('.hz-frage').textContent=h.frage;
     var bei=k.querySelector('.hz-bei'), bt=k.querySelector('.hz-bei-tech');
     if(C){
-      bei.textContent=BEI[i].pl.length?(BEI[i].pl.length===1?'Bei dir belebt: Hier steht eine Kraft.':'Bei dir belebt: Hier stehen '+BEI[i].pl.length+' Kräfte.'):'Bei dir eine leise Bühne.';
-      bt.textContent='Zeichen: '+BEI[i].zeichen+(BEI[i].pl.length?' · Planeten: '+BEI[i].pl.join(', '):' · ohne Planeten');
+      var anz=BEI[i].pl.length;
+      bei.textContent=anz?(anz===1?HZ_T.beiEine:hzFuell(HZ_T.beiMehrere,{n:anz})):HZ_T.beiLeise;
+      bt.textContent=hzFuell(anz?HZ_T.beiTech:HZ_T.beiTechLeer,
+        {zeichen:BEI[i].zeichen, pl:BEI[i].pl.join(', ')});
     } else { bei.remove(); bt.remove(); }
     k.addEventListener('click',function(){ hzWahl=i; hzRad(); });
     box.appendChild(k);
   });
+}
+
+/* Eine Seite der Waage in Maschinensprache: „7. Haus Waage mit Venus" */
+function hzSeiteTech(nr){
+  var b=BEI[nr];
+  return hzFuell(b.pl.length?HZ_T.achseTechSeite:HZ_T.achseTechSeiteLeer,
+    {n:nr+1, zeichen:b.zeichen, pl:b.pl.join(', ')});
 }
 
 function hzAchsen(){
@@ -607,20 +758,18 @@ function hzAchsen(){
       '<h3></h3><p class="prinzip"></p><p class="prinzip"></p><p class="hz-bei"></p><p class="hz-bei-tech ac-tech" data-ab="1"></p>';
     var sa=k.querySelector('.s.a'), sb=k.querySelector('.s.b');
     sa.querySelector('b').textContent=A.titel; sb.querySelector('b').textContent=B.titel;
-    sa.querySelector('span').textContent=(x.a+1)+''; sb.querySelector('span').textContent=(x.b+1)+'';
+    sa.querySelector('span').textContent=String(x.a+1); sb.querySelector('span').textContent=String(x.b+1);
     k.querySelector('h3').textContent=x.name;
     var pr=k.querySelectorAll('.prinzip'); pr[0].textContent=x.zuvielA; pr[1].textContent=x.zuvielB;
     var bei=k.querySelector('.hz-bei'), bt=k.querySelector('.hz-bei-tech');
     if(C){
       if(na) sa.classList.add('voll'); if(nb) sb.classList.add('voll');
       var satz;
-      if(!na&&!nb) satz='Bei dir sind beide Seiten leise. Dieses Paar läuft im Hintergrund.';
-      else if(na&&nb) satz='Bei dir sind beide Seiten belebt. Ein lebendiges Spannungsfeld: Du pendelst zwischen '+A.titel+' und '+B.titel+'.';
-      else { var voll=na?A:B, leer=na?B:A;
-        satz='Bei dir liegt das Gewicht auf '+voll.titel+'. Wenn diese Seite überdreht, liegt der Ausgleich in '+leer.titel+'.'; }
+      if(!na&&!nb) satz=HZ_T.achseLeise;
+      else if(na&&nb) satz=hzFuell(HZ_T.achseBeide,{links:A.titel, rechts:B.titel});
+      else satz=hzFuell(HZ_T.achseEine,{links:(na?A:B).titel, rechts:(na?B:A).titel});
       bei.textContent=satz;
-      bt.textContent=(x.a+1)+'. Haus '+BEI[x.a].zeichen+(na?' mit '+BEI[x.a].pl.join(', '):', leer')+
-        ' · '+(x.b+1)+'. Haus '+BEI[x.b].zeichen+(nb?' mit '+BEI[x.b].pl.join(', '):', leer');
+      bt.textContent=hzFuell(HZ_T.achseTech,{links:hzSeiteTech(x.a), rechts:hzSeiteTech(x.b)});
       k.classList.add(na&&nb?'beide':(na||nb?'eine':'keine'));
     } else { bei.remove(); bt.remove(); }
     box.appendChild(k);
@@ -628,13 +777,17 @@ function hzAchsen(){
 }
 
 function hzBeispiel(){
-  var b=HZ_BEISPIEL, box=el('hzbeispiel');
-  box.innerHTML='<p class="hz-klein"></p><div class="hz-zwei"><div><b>Whole Sign</b><p></p></div><div><b>Placidus</b><p></p></div></div><p></p>';
-  var ps=box.querySelectorAll('p');
-  ps[0].textContent='Ein erfundenes Geburtsbild: '+b.datum+', '+b.zeit+' Uhr, '+b.ort+'. Aszendent '+b.asc+', MC '+b.mc+', Sonne '+b.sonne+'.';
-  ps[1].textContent='Waage ist ab Schütze das elfte Zeichen. Die Sonne steht im '+b.wsHaus+'. Haus: Gemeinschaft, Netzwerke, Zugehörigkeit. Das MC fällt hier ebenfalls ins 11. Haus.';
-  ps[2].textContent='Die Sonne steht '+b.abstand+' Bogenminuten hinter dem MC, also im '+b.plHaus+'. Haus: Beruf, Wirken, Sichtbarkeit.';
-  ps[3].textContent='Beides ist rechnerisch richtig, und beides beschreibt dieselbe Person: jemanden, dessen Beruf in Gruppen und Netzwerken stattfindet. Der Widerspruch verschwindet, sobald man aufhört, sich für eine Schublade zu entscheiden.';
+  var b=HZ_BEISPIEL;
+  el('hzbspkopf').textContent=hzFuell(HZ_T.bspKopf,
+    {datum:b.datum, zeit:b.zeit, ort:b.ort, asc:b.asc, mc:b.mc, sonne:b.sonne});
+  /* Die Bühnen beschreibt HZ_HAUS, und nur dort. Eine zweite,
+     von Hand geschriebene Beschreibung lässt bau-haeuser.py scheitern. */
+  el('hzbspws').textContent=hzFuell(HZ_T.bspWs,
+    {sonneZ:b.sonneZ, ascZ:b.ascZ, ordnung:HZ_T.ordnung[b.wsHaus-1],
+     wsHaus:b.wsHaus, mcHaus:b.mcHaus, stich:HZ_HAUS[b.wsHaus-1].stich});
+  el('hzbsppl').textContent=hzFuell(HZ_T.bspPl,
+    {abstand:b.abstand, plHaus:b.plHaus, stich:HZ_HAUS[b.plHaus-1].stich});
+  el('hzbspfazit').textContent=HZ_T.bspFazit;
 }
 
 function hzQuiz(){

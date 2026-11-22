@@ -42,7 +42,7 @@
 .bz-kt .kt-m{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;
  text-transform:uppercase;border-radius:8px;padding:3px 8px;}
 .bz-kt.hart .kt-m{background:#FBE3DA;color:var(--rost);}
-.bz-kt.weich .kt-m{background:#E8EDDC;color:var(--teal);}
+.bz-kt.weich .kt-m{background:#FCEFD2;color:var(--teal);}
 .bz-kt p{font-size:15px;line-height:1.7;margin:0;}
 .bz-liste{margin:0 0 10px 18px;padding:0;font-size:15.2px;line-height:1.72;}
 .bz-liste li{margin-bottom:5px;}
@@ -68,12 +68,12 @@
  font-size:14.9px;line-height:1.62;align-items:baseline;}
 @media(max-width:620px){.kt-s{grid-template-columns:1fr;gap:2px;}}
 .kt-l{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.11em;
- text-transform:uppercase;color:var(--leise,#6B6259);padding-top:3px;}
-.kt-s.hilft{background:var(--messing-bg,#F7EFE1);border-radius:12px;padding:11px 14px;
+ text-transform:uppercase;color:var(--leise,#5E584D);padding-top:3px;}
+.kt-s.hilft{background:var(--messing-bg,#FCE4D6);border-radius:12px;padding:11px 14px;
  margin-top:3px;}
-.kt-s.hilft .kt-l{color:var(--messing,#9A7235);padding-top:1px;}
+.kt-s.hilft .kt-l{color:var(--messing,#C8441A);padding-top:1px;}
 .bz-kt.hart .kt-s.hilft{background:#FBEFE6;}
-.bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#A05A3A);}
+.bz-kt.hart .kt-s.hilft .kt-l{color:var(--rost,#D9481C);}
 
 /* ── Die Seelenebene ──────────────────────────────────────────
    Der eine dunkle Block der Seite: das Ergebnis. Alles darunter
@@ -81,11 +81,11 @@
 .bz-seele{background:var(--nacht);color:#E3E7F0;border-radius:20px;padding:24px 22px;margin:18px 0 6px;}
 @media(max-width:620px){.bz-seele{padding:20px 16px;border-radius:16px;margin-left:-4px;margin-right:-4px;}}
 .bz-seele h3{font-family:var(--serif);font-weight:300;font-size:clamp(22px,5vw,28px);color:#fff;margin:4px 0 10px;line-height:1.15;}
-.bs-k,.bs-dl,.bs-l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#E8C98D;}
+.bs-k,.bs-dl,.bs-l{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#F2B33D;}
 .bs-vor{font-size:14.6px;line-height:1.65;color:#C9CFDD;margin:0 0 18px;}
 .bs-haupt{display:grid;gap:3px;border-top:1px solid rgba(232,201,141,.35);padding-top:16px;}
 .bs-name{font-family:var(--serif);font-weight:300;font-size:clamp(34px,9vw,48px);line-height:1.05;color:#fff;letter-spacing:-.01em;}
-.bs-kurz{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:#E8C98D;}
+.bs-kurz{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:#F2B33D;}
 .bs-neben{font-size:14.4px;line-height:1.6;color:#C9CFDD;margin:12px 0 0;}
 .bs-neben b{color:#fff;font-weight:600;}
 .bs-balken{display:grid;gap:9px;margin:20px 0 8px;}
@@ -94,14 +94,14 @@
 .bs-zeile.haupt .bs-en{color:#fff;font-weight:600;}
 .bs-bar{height:8px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;}
 .bs-bar i{display:block;height:100%;border-radius:5px;background:#8E9AB8;}
-.bs-zeile.haupt .bs-bar i{background:#E8C98D;}
+.bs-zeile.haupt .bs-bar i{background:#F2B33D;}
 .bs-p{grid-column:2;font-size:11.5px;color:#AEB6C8;font-family:'JetBrains Mono',monospace;}
 .bs-hin{font-size:12.6px;line-height:1.55;color:#AEB6C8;margin:4px 0 14px;}
 .bs-dicht{font-size:14.6px;line-height:1.65;background:rgba(255,255,255,.06);border-radius:12px;padding:12px 14px;margin:0 0 18px;}
-.bs-dicht b{color:#E8C98D;font-weight:500;}
+.bs-dicht b{color:#F2B33D;font-weight:500;}
 .bs-deut{display:grid;gap:12px;}
 .bs-d p,.bs-frage p{font-size:14.8px;line-height:1.7;margin:4px 0 0;color:#E3E7F0;}
-.bs-frage{border-left:2px solid #E8C98D;padding:2px 0 2px 14px;}
+.bs-frage{border-left:2px solid #F2B33D;padding:2px 0 2px 14px;}
 .bs-frage p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;line-height:1.45;color:#fff;}
 .bs-warum{margin-top:16px;display:grid;gap:8px;}
 .bs-chips{display:flex;flex-wrap:wrap;gap:6px;}

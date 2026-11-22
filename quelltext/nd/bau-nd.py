@@ -48,16 +48,21 @@ engine = lies(rit / 'engine.js')
 appkopf = lies(hier.parent / 'app' / 'app-kopf.html')
 
 SKRIPTE = ['profil.js', 'fortschritt.js', 'begriffe.js', 'niveau.js', 'wortwahl.js']
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<title>Anders verdrahtet &middot; ADHS, Autismus, Abkl&auml;rung, Alltag &middot; Astro-Charlie</title>\n'
         '<meta name="description" content="ADHS, Autismus und beides verstehen, der Weg zur Abklärung in Deutschland, und wie man das Leben so einrichtet, dass die eigene Bauweise ein Vorteil wird.">\n'
         '<link rel="preconnect" href="https://fonts.googleapis.com">'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-        '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
+        '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
         + '\n'.join(f'<script src="{s}"{"" if s == "profil.js" else " defer"}></script>' for s in SKRIPTE)
         + '\n<style>\n' + lies(rit / 'basis.css') + '\n' + stil + '</style>\n</head><body>\n'
-        + koerper + '\n<script>\n' + engine + '\n' + daten + '\n' + rechner + '\n' + app
+        + koerper + '\n<script>\n' + fuellen + "\n" + engine + '\n' + daten + '\n' + rechner + '\n' + app
         + '\n</script>\n</body></html>\n')
 ziel = wiki / 'anders-verdrahtet.html'
 ziel.write_text(html, encoding='utf-8')
@@ -181,6 +186,7 @@ for name, t in [('nd-daten.js', daten), ('nd-koerper.html', koerper)]:
 # ── 6 · In der Anzeige steht kein Satz, und kein „dein" ──────
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'nd-app.js', 'nd-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'nd-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'nd-app.js')
 for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
     _mit = app + '\nvar _gegenprobe=' + _an + 'Was dein Bild dazu sagt' + _an + ';\n'
     if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'nd-app.js', 'nd-daten.js'):

@@ -100,7 +100,7 @@ for slug in slugs:
             f'<title>{feld(slug, "titel")} &middot; Themenraum &middot; Astro-Charlie</title>\n'
             '<link rel="preconnect" href="https://fonts.googleapis.com">'
             '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-            '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
+            '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
             # profil.js und raum.js laden ohne defer: Der Seitenaufbau
             # unten braucht AC_P und AC_RAUM sofort. Mit defer liefen sie
             # erst nach dem Inline-Block, und bauen() fand AC_RAUM nicht.
@@ -146,6 +146,29 @@ for slug in slugs:
     ziel = wiki / f'raum-{slug}.html'
     ziel.write_text(html, encoding='utf-8')
     gebaut.append(ziel)
+
+# ── Die Übersicht sortiert sich nach dem Chart (18.11.) ───────
+# Mandy: „Die Übersicht bei den Räumen ist zu allgemein." Die Karten
+# standen für alle Menschen gleich da. Jetzt rechnet raeume.html jeden
+# Raum mit denselben Facetten wie die Raumseite und stellt die
+# lautesten nach oben. Die Anker kommen aus raum-daten.js, damit
+# Übersicht und Raum nie auseinanderlaufen.
+import json as _json, subprocess as _sp
+_anker = _sp.run(['node', '-e',
+    "global.window=globalThis;eval(require('fs').readFileSync(process.argv[1],'utf8'));"
+    "const o={};for(const k in R_RAEUME){const d=R_RAEUME[k].def.RAUM;"
+    "o[k]={n:d.name,f:d.facetten.map(f=>({n:f.name,a:f.anker}))};}"
+    "process.stdout.write(JSON.stringify(o));", str(hier / 'raum-daten.js')],
+    capture_output=True, text=True)
+if _anker.returncode != 0:
+    fehler.append('Anker für die Übersicht nicht lesbar: ' + _anker.stderr[-200:])
+else:
+    sortier = ('/* Gebaut von quelltext/raeume/bau-raeume.py — nicht von Hand ändern.\n'
+               '   Sortiert die Karten auf raeume.html nach dem aktiven Chart. */\n'
+               + lies(rit / 'engine.js') + '\n'
+               + 'var RS_ANKER=' + _anker.stdout + ';\n'
+               + lies(hier / 'raum-sortierung.js'))
+    (wiki / 'raeume-sortierung.js').write_text(sortier, encoding='utf-8')
 
 # ── 1 · Kein Raum speichert unter dem Namen eines anderen ────
 # Das war der Fehler: fünf Räume schrieben fest nach

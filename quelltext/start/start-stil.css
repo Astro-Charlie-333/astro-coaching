@@ -14,7 +14,7 @@
    sie oben abschneiden. Hier gehoert sie an den Anfang und dann weg. */
 .ac-leiste{position:static;background:var(--papier);
   backdrop-filter:none;-webkit-backdrop-filter:none;border-bottom:none;}
-.ac-leiste-inner{max-width:760px;padding:18px 20px;}
+.ac-leiste-inner{max-width:1040px;padding:18px 20px;}
 .st-leiste-w{margin-left:auto;font-size:14px;color:var(--leise);
   text-decoration:none;border-bottom:1px solid var(--linie-stark);
   padding-bottom:2px;white-space:nowrap;}
@@ -26,33 +26,33 @@
 /* Eine sehr leise Andeutung von Bahnen. Kein Bild, kein Ladefehler. */
 .st-kopf::after{content:"";position:absolute;right:-120px;top:-90px;
   width:360px;height:360px;border-radius:50%;
-  border:1px solid rgba(232,201,141,.17);
-  box-shadow:0 0 0 58px rgba(232,201,141,.055),
-             0 0 0 128px rgba(232,201,141,.03);
+  border:1px solid rgba(227,180,142,.17);
+  box-shadow:0 0 0 58px rgba(227,180,142,.055),
+             0 0 0 128px rgba(227,180,142,.03);
   pointer-events:none;}
-.st-kopf-in{max-width:760px;margin:0 auto;padding:0 20px;position:relative;}
+.st-kopf-in{max-width:1040px;margin:0 auto;padding:0 20px;position:relative;}
 .st-wort{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:#E8C98D;margin-bottom:18px;}
+  text-transform:uppercase;color:var(--sk-kupfer-hell);margin-bottom:18px;}
 .st-frage{font-family:var(--serif);font-weight:300;
   font-size:clamp(31px,7.6vw,52px);line-height:1.06;letter-spacing:-.022em;
-  color:#FFFDFA;margin:0 0 20px;max-width:21ch;text-wrap:balance;}
+  color:#FFFFFF;margin:0 0 20px;max-width:21ch;text-wrap:balance;}
 .st-satz{font-size:clamp(16px,2.9vw,18.5px);line-height:1.6;
   color:#DCD6CA;max-width:50ch;margin:0 0 26px;}
 .st-knoepfe{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px;}
 .st-kn{display:inline-block;text-decoration:none;border-radius:999px;
   padding:12px 20px;font-size:15px;font-weight:500;
   transition:transform .14s ease, background .14s ease;}
-.st-kn-1{background:#E8C98D;color:#2B2419;}
+.st-kn-1{background:var(--sk-kupfer-hell);color:var(--sk-moos-tief);}
 .st-kn-2{background:transparent;color:#EFE9DC;
   box-shadow:inset 0 0 0 1px rgba(239,233,220,.4);}
 .st-kn:hover{transform:translateY(-1px);}
-.st-kn-1:hover{background:#F0D7A4;}
+.st-kn-1:hover{background:#F0CBAA;}
 .st-kn-2:hover{background:rgba(239,233,220,.1);}
 .st-rolle{font-size:14.4px;line-height:1.62;color:#BDB6A8;max-width:52ch;
   margin:0;padding-top:20px;border-top:1px solid rgba(244,241,234,.16);}
 
 /* ── Fliessender Teil ───────────────────────────────────────── */
-.st-wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+.st-wrap{max-width:1040px;margin:0 auto;padding:0 20px;}
 .st-ab{padding:50px 0 4px;}
 .st-ue{margin-bottom:22px;}
 .st-ue-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
@@ -129,24 +129,24 @@
 /* ── Was das hier nicht ist: der zweite dunkle Block ────────── */
 .st-nicht{background:var(--nacht);color:#E8E3D9;margin-top:54px;
   padding:48px 0 44px;}
-.st-nicht-in{max-width:760px;margin:0 auto;padding:0 20px;}
-.st-h2-hell{color:#FFFDFA;}
+.st-nicht-in{max-width:1040px;margin:0 auto;padding:0 20px;}
+.st-h2-hell{color:#FFFFFF;}
 .st-sub-hell{color:#C3BCAE;margin-bottom:24px;}
 .st-np{display:grid;gap:10px;margin-bottom:26px;}
 .st-n1{background:rgba(244,241,234,.07);border-radius:13px;padding:15px 17px;}
 .st-n1 b{display:block;font-family:var(--serif);font-size:18.6px;
-  font-weight:500;color:#FFFDFA;margin-bottom:4px;}
+  font-weight:500;color:#FFFFFF;margin-bottom:4px;}
 .st-n1 span{font-size:14.8px;line-height:1.58;color:#D3CCBE;}
-.st-krise{border:1px solid rgba(232,201,141,.42);border-radius:14px;
+.st-krise{border:1px solid rgba(227,180,142,.42);border-radius:14px;
   padding:17px 18px;}
 .st-krise b{display:block;font-family:var(--serif);font-size:19px;
-  font-weight:500;color:#E8C98D;margin-bottom:6px;}
+  font-weight:500;color:var(--sk-kupfer-hell);margin-bottom:6px;}
 .st-krise p{font-size:14.8px;line-height:1.6;color:#D8D1C3;margin:0 0 12px;
   max-width:58ch;}
 .st-krise dl{margin:0;display:grid;gap:7px;}
 .st-krise dt{font-size:14px;font-weight:500;color:#F2EDE2;}
 .st-krise dd{margin:0 0 3px;font-family:var(--mono);font-size:13.4px;
-  color:#E8C98D;}
+  color:var(--sk-kupfer-hell);}
 
 /* Kontakt */
 .st-k{background:var(--papier);border:1px solid var(--linie);
@@ -176,3 +176,76 @@
 .st-fuss-z{font-size:13.8px;line-height:1.56;color:var(--leise);margin:0;}
 
 @media (prefers-reduced-motion:reduce){.st-kn,.st-w{transition:none;}}
+
+/* ═══ 18.11.: Schwerkraft-Look und breitere Bühne ═══════════
+   Die Tür war auf 760 Pixel gebaut; auf dem Rechner standen die
+   Angebote und der Ablauf als lange Säule untereinander. Jetzt
+   nebeneinander, und der Kopf bekommt ein Bild: eine Masse in der
+   Mitte und Bahnen darum — das, was der Name sagt. */
+.st-kopf::after{display:none;}
+.st-kopf{padding:64px 0 56px;}
+.st-kopf-in{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:center;}
+.st-bahnen{display:none;}
+@media(min-width:880px){
+ .st-kopf-in{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;}
+ .st-bahnen{display:block;width:100%;max-width:400px;justify-self:end;}
+}
+.st-bahnen .b{fill:none;stroke:rgba(227,180,142,.28);stroke-width:1;}
+.st-bahnen .b2{stroke:rgba(227,180,142,.16);stroke-dasharray:2 6;}
+.st-bahnen .kern{fill:var(--sk-kupfer-hell);}
+.st-bahnen .hof{fill:rgba(227,180,142,.10);}
+.st-bahnen .k1{fill:#F4F1EA;} .st-bahnen .k2{fill:var(--sk-kupfer-hell);} .st-bahnen .k3{fill:#9FB8A8;}
+.st-bahnen text{font-family:var(--mono);font-size:10px;letter-spacing:.14em;fill:rgba(244,241,234,.6);text-transform:uppercase;}
+@media(prefers-reduced-motion:no-preference){
+ .st-bahnen .lauf{transform-origin:200px 200px;animation:st-um 90s linear infinite;}
+ .st-bahnen .lauf2{transform-origin:200px 200px;animation:st-um 140s linear infinite reverse;}
+}
+@keyframes st-um{to{transform:rotate(360deg);}}
+
+/* Die drei Linsen: Nummer groß, Karte ruhig */
+.st-li{border-top:0;position:relative;padding-top:52px;}
+.st-li::before{counter-increment:li;content:counter(li);position:absolute;left:20px;top:14px;
+ font-family:var(--serif);font-size:30px;font-weight:300;color:var(--messing);line-height:1;}
+.st-linsen{counter-reset:li;}
+
+@media(min-width:820px){
+ .st-ang{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;}
+ .st-a{display:flex;flex-direction:column;}
+ .st-a-nicht{margin-top:auto;}
+ .st-np{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .st-np>:last-child:nth-child(odd){grid-column:1/-1;}
+}
+.st-a:first-child{border-top:3px solid var(--messing);}
+.st-a:nth-child(2){background:var(--nacht);border-color:var(--nacht);color:#E6ECE7;}
+.st-a:nth-child(2) .st-a-n{color:#fff;}
+.st-a:nth-child(2) .st-a-art{color:var(--sk-kupfer-hell);}
+.st-a:nth-child(2) .st-a-f{border-left-color:rgba(227,180,142,.5);}
+.st-a:nth-child(2) .st-a-l li::before{background:var(--sk-kupfer-hell);}
+.st-a:nth-child(2) .st-a-nicht{color:#B9C6BD;border-top-color:rgba(255,255,255,.14);}
+
+/* Der Ablauf als Weg von links nach rechts */
+@media(min-width:880px){
+ .st-schritte{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;position:relative;}
+ .st-schritte li{grid-template-columns:1fr;gap:12px;padding:18px 17px 20px;align-content:start;}
+ .st-schritte li::before{width:34px;height:34px;font-size:14px;}
+}
+
+/* 18.11. abends: Midcentury. Der Kopf blau wie auf Dein Bild,
+   „Was das hier nicht ist" schwarz, die Begleitung als blaue Karte. */
+.st-kopf{background:var(--sk-kobalt);}
+.st-wort{color:#CFE0FF;}
+.st-satz{color:#E4ECFF;} .st-rolle{color:#CFE0FF;border-top-color:rgba(255,255,255,.25);}
+.st-kn-1{background:var(--sk-kupfer);color:#fff;} .st-kn-1:hover{background:#D9481C;}
+.st-bahnen .b{stroke:rgba(255,255,255,.35);} .st-bahnen .b2{stroke:rgba(255,255,255,.22);}
+.st-bahnen .hof{fill:rgba(255,255,255,.12);} .st-bahnen .kern{fill:var(--sk-kupfer);}
+.st-bahnen .k1{fill:#fff;} .st-bahnen .k2{fill:var(--sk-kupfer-hell);} .st-bahnen .k3{fill:var(--sk-kupfer);}
+.st-a:nth-child(2){background:var(--sk-kobalt);border-color:var(--sk-kobalt);}
+.st-a:nth-child(2) .st-a-nicht{color:#CFE0FF;}
+.st-a:first-child{border-top:0;}
+.st-li::before{color:var(--sk-kupfer);font-weight:600;}
+.st-li,.st-a,.st-schritte li,.st-k{border:0;border-radius:24px;}
+.st-schritte li::before{background:var(--sk-kupfer);color:#fff;}
+.st-w{background:#fff;border:0;border-radius:22px;}
+.st-nicht{background:var(--nacht);}
+.st-n1{border-radius:20px;}
+.st-h2{font-weight:600;}

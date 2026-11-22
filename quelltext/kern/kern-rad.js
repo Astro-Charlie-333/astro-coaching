@@ -22,7 +22,10 @@ var PGLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',
  Chiron:'⚷',Lilith:'⚸',ASC:'AC',MC:'MC'};
 var PFOLGE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 /* Elementfarben wie im übrigen System */
-var EFARBE=['#A05A3A','#3D6B62','#2E3A5C','#6A4A62'];
+/* Seit 18.11. (Midcentury-Look): Feuer Orange, Erde Senf, Luft Kobalt,
+   Wasser Petrol. Auf Senf steht die Glyphe dunkel, sonst hell. */
+var EFARBE=['#F05A28','#F2B33D','#1F4FD8','#11897C'];
+var ETINTE=['#FFFFFF','#1B1B1B','#FFFFFF','#FFFFFF'];
 
 function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
 
@@ -123,25 +126,44 @@ window.AC_KERNRAD=function(opt){
        und die Elementfarben sind für Creme gemischt. */
     if(opt.zeichenband!==false) for(var z=0;z<12;z++){
       var zi=(ascZ+z)%12, b1=basis+z*30, b2=basis+(z+1)*30;
-      svg.appendChild(N('path',{d:feld(R_ZA,R_ZI,b1,b2),
-        fill:EFARBE[zi%4],opacity:'.88'}));
+      svg.appendChild(N('path',{d:feld(R_ZA,R_ZI,b1,b2),class:'kr-zf'}));
       var zm=pos(b1+15,(R_ZA+R_ZI)/2);
       svg.appendChild(N('text',{x:zm[0].toFixed(1),y:(zm[1]+7).toFixed(1),
         'text-anchor':'middle',class:'kr-zg'}, ZGLY[zi]+'︎'));
     }
 
+    /* 2b — Die großen Verbindungen innen: Blau fließt, Orange reibt.
+       Nur im großen Rad; im kleinen wäre es Rauschen. */
+    if(gross && opt.aspekte!==false){
+      var AW=[[60,5,'w'],[90,7,'h'],[120,7,'w'],[180,8,'h']];
+      for(var ai=0;ai<PFOLGE.length;ai++) for(var aj=ai+1;aj<PFOLGE.length;aj++){
+        var la=P[PFOLGE[ai]], lb=P[PFOLGE[aj]];
+        if(la===undefined||la===null||lb===undefined||lb===null) continue;
+        var dd=Math.abs(((la-lb)%360+540)%360-180);
+        for(var w=0;w<AW.length;w++) if(Math.abs(dd-AW[w][0])<=AW[w][1]){
+          var p1=pos(la,R_HI-4), p2=pos(lb,R_HI-4);
+          svg.appendChild(N('line',{x1:p1[0].toFixed(1),y1:p1[1].toFixed(1),
+            x2:p2[0].toFixed(1),y2:p2[1].toFixed(1),class:'kr-asp kr-asp-'+AW[w][2]}));
+          break;
+        }
+      }
+    }
+
     /* 3 — Radix-Planeten */
     var vorhanden=PFOLGE.filter(function(k){ return P[k]!==undefined&&P[k]!==null; });
     var roh=vorhanden.map(function(k){ return nrm(P[k]); });
-    var breit=spreizen(roh, gross?8:11);
+    var breit=spreizen(roh, gross?12:11);
     vorhanden.forEach(function(k,ix){
       var echt=nrm(P[k]), zeig=breit[ix];
       var a=pos(echt,R_HI), b=pos(zeig,R_PLT-13);
       svg.appendChild(N('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),
         x2:b[0].toFixed(1),y2:b[1].toFixed(1),class:'kr-strich'}));
-      var g=pos(zeig,R_PLT);
-      svg.appendChild(N('text',{x:g[0].toFixed(1),y:(g[1]+7).toFixed(1),
-        'text-anchor':'middle',class:'kr-pg'}, PGLY[k]));
+      var g=pos(zeig,R_PLT), el=Math.floor(echt/30)%4;
+      if(gross) svg.appendChild(N('circle',{cx:g[0].toFixed(1),cy:g[1].toFixed(1),r:'18',
+        fill:EFARBE[el],class:'kr-pk'}));
+      var pa={x:g[0].toFixed(1),y:(g[1]+7).toFixed(1),'text-anchor':'middle',class:'kr-pg'};
+      if(gross) pa.style='fill:'+ETINTE[el];
+      svg.appendChild(N('text',pa, PGLY[k]+'\uFE0E'));
     });
 
     /* 4 — Achsen */

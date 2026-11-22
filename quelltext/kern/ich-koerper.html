@@ -1,35 +1,31 @@
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html" class="ist">Dein Bild</a><a href="index.html">Jetzt</a><a href="wissen.html">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
 
 <div class="ich-wrap" id="ichinhalt">
 
-<!-- Der Kopf: ein Satz &uuml;ber diesen Menschen, daneben sein Bild.
-     Das Rad stand bis zum 27.10. zugeklappt am Seitenende. Auf einer
-     Astrologieseite ist das Chart das Bild des Menschen &mdash; es geh&ouml;rt
-     neben die Aussage, nicht hinter eine Klappe. -->
+<!-- 18.11. Midcentury-Umbau. Mandy: „ich werde erschlagen und verstehe
+     nichts, obwohl ich mich auskenne." Darum: ein Satz in einer blauen
+     Fläche, darunter das Rad, dann vier kurze Abschnitte. Jeder zeigt
+     eine Sache; alles Weitere liegt hinter einem Antippen. -->
 <header class="ich-kopf">
-  <div class="ich-kopf-text">
+  <div class="ich-held">
+    <span class="ich-held-k1" aria-hidden="true"></span>
+    <span class="ich-held-k2" aria-hidden="true"></span>
+    <p class="ich-auge" id="ichauge"></p>
     <p class="ich-leit" id="ichleit"></p>
-    <h1 class="ich-name" id="ichname">&nbsp;</h1>
     <p class="ich-leit-zu" id="ichleitzu"></p>
+    <h1 class="ich-name" id="ichname">&nbsp;</h1>
     <p class="ich-wer" id="ichdat"></p>
-    <!-- Profile stehen seit dem Umbau auf vier T&uuml;ren nicht mehr im Men&uuml;.
-         Wer schon ein Profil hat, braucht trotzdem einen Weg, ein zweites
-         anzulegen oder zu wechseln (Mandy am 17.11.: &bdquo;aktuell kann ich das
-         nirgends&ldquo;). -->
     <p class="ich-profil"><a href="profile.html">Anderes Profil ansehen oder neu anlegen</a></p>
   </div>
   <figure class="ich-kopf-rad">
     <div class="kr-huelle" id="ichrad"></div>
-    <figcaption class="ich-radfuss">
-      <span><i class="b"></i> dein Geburtsbild</span>
-      <span><i class="a"></i> wo die Planeten heute stehen</span>
-    </figcaption>
+    <figcaption class="ich-radfuss" id="ichradfuss"></figcaption>
   </figure>
 </header>
 
@@ -37,41 +33,43 @@
 
 <nav class="ich-sprung" id="ichsprung" aria-label="Auf dieser Seite"></nav>
 
-<!-- Was an dir auff&auml;llt ──────────────────────────────────── -->
+<section class="ich-ab" id="a-drei" data-sprung="Was dich tr&auml;gt">
+  <h2 class="ich-h"><span class="form form-halb" aria-hidden="true"></span><span id="ichdreih"></span></h2>
+  <p class="ich-sub" id="ichdreisub"></p>
+  <div class="ich-drei" id="ichdrei"></div>
+  <h3 class="ich-h3"><span class="form form-zwei" aria-hidden="true"></span><span id="ichelemh"></span></h3>
+  <p class="ich-sub" id="ichelemsub"></p>
+  <div class="ich-elem" id="ichelem"></div>
+</section>
+
 <section class="ich-ab" id="a-auf" data-sprung="Was auff&auml;llt">
-  <h2 class="ich-h" id="ichaufh"></h2>
+  <h2 class="ich-h"><span class="form form-stern" aria-hidden="true">&#10022;</span><span id="ichaufh"></span></h2>
   <p class="ich-sub" id="ichaufvor"></p>
-  <div class="ich-auf" id="ichauf"></div>
+  <div class="ich-auf zu" id="ichauf"></div>
+  <button type="button" class="ich-mehr" id="ichaufmehr" hidden></button>
   <details class="ich-klappe ich-klein"><summary><span class="kl-t">Was diese Zahlen taugen</span></summary>
     <div class="ich-aufgrenze" id="ichaufgrenze"></div>
   </details>
 </section>
 
-<!-- Die drei Stellen, die den Grundton setzen ──────────────── -->
-<section class="ich-ab" id="a-drei" data-sprung="Was dich tr&auml;gt">
-  <h2 class="ich-h" id="ichdreih"></h2>
-  <p class="ich-sub" id="ichdreisub"></p>
-  <div class="ich-drei" id="ichdrei"></div>
-</section>
-
-<!-- Die zw&ouml;lf Felder, offen ─────────────────────────────── -->
 <section class="ich-ab" id="a-felder" data-sprung="Zw&ouml;lf Felder">
-  <h2 class="ich-h">Die zw&ouml;lf Felder deines Lebens</h2>
-  <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben. Tipp eins an, dann steht da, was bei dir darin liegt. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user; die Zeile nennt das Zeichen, die Besetzung und den Herrscher.</span></p>
+  <h2 class="ich-h"><span class="form form-eck" aria-hidden="true"></span>Deine zw&ouml;lf Bereiche</h2>
+  <p class="ich-sub">Jedes Feld ist ein St&uuml;ck Leben. Tipp eins an. <span class="ac-tech" data-ab="2">In der Astrologie hei&szlig;en diese Felder H&auml;user.</span></p>
   <div class="ich-haeuser" id="ichhaeuser"></div>
+  <p class="ich-leg" id="ichfelderleg"></p>
 </section>
 
-<!-- Die Br&uuml;cke zu Heute ─────────────────────────────────── -->
 <section class="ich-ab" id="a-heute" data-sprung="Jetzt">
   <div class="ich-heute" id="ichheute"></div>
 </section>
 
-<!-- Ab hier das Nachschlagbare ───────────────────────────── -->
 <section class="ich-ab" id="a-zusammen" data-sprung="Was zusammenh&auml;ngt">
-  <details class="ich-klappe" id="kl-asp">
-    <summary><span class="kl-t">Was in dir zusammenh&auml;ngt</span><span class="kl-w">Die Stellen, an denen zwei Antriebe sich begegnen</span></summary>
-    <p class="ich-sub" id="ichaspsub"></p>
-    <div class="ich-asp" id="ichasp"></div>
+  <h2 class="ich-h"><span class="form form-ring" aria-hidden="true"></span><span id="ichasph"></span></h2>
+  <p class="ich-sub" id="ichaspsub"></p>
+  <div class="ich-asp" id="ichasp"></div>
+  <details class="ich-klappe ich-klein" id="kl-asp">
+    <summary><span class="kl-t">Alle weiteren Zusammenh&auml;nge</span></summary>
+    <div class="ich-asp" id="ichasp2"></div>
   </details>
 </section>
 
@@ -82,5 +80,7 @@
     <div id="ichindex"></div>
   </details>
 </section>
+
+<a class="ich-weiter" id="ichweiter" href="index.html"><span id="ichweitert"></span><i aria-hidden="true">&rarr;</i></a>
 
 </div>

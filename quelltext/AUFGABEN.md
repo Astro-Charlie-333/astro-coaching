@@ -50,7 +50,10 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `wahl-app.js` (2026-11-10), `ich-app.js` (2026-11-11),
 `monat-app.js` (2026-11-12), `beziehung-app.js` (2026-11-13),
 `zeit-app.js` (2026-11-14), `karte-app.js` (2026-11-15),
-`mond-app.js` (2026-11-16) und `zahlen-app.js` (2026-11-17);
+`mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17),
+`haeuser-app.js` (2026-11-18) `zauber-app.js` (2026-11-19) und
+`geist-app.js` (2026-11-20) und
+`dossier-app.js` (2026-11-21);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -86,19 +89,6 @@ Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
 
-### 57 · `haeuser-app.js` (41, 0)
-`haeuser-lebensbuehnen.html`.
-
-### 58 · `zauber-app.js` (97, 18)
-`zauber.html`, die Rituale.
-
-### 59 · `geist-app.js` (174, 31)
-`geistfuehrung.html`. Trägt die meisten „dein" von Hand — hier zeigt
-sich, ob `B_BEUGE` für alle Fälle reicht.
-
-### 60 · `dossier-app.js` (97, 4)
-`dossier.html`, der Bestandsbericht.
-
 ### 61 · `analyse-app.js` (29, 1)
 `analyse.html`. Gehört in einen Zug mit Aufgabe 9.
 
@@ -121,6 +111,40 @@ Zeichenketten in Vorlagen einsetzen.
 
 ### 66 · `werkstatt-app.js` (39, 2)
 `werkstatt.html`.
+
+### 95 · Zwei Lücken auf der Jetzt-Seite füllt niemand
+Gefunden beim Erledigen von Aufgabe 94 am 2026-11-22. `AC_FUELL`
+ersetzt nur Schlüssel, die ihm übergeben werden; eine Lücke, die
+niemand füllt, bleibt als `{liste}` in geschweiften Klammern auf der
+Seite stehen. Genau zwei solche gibt es noch, beide in
+`kern/heute-daten.js`: `{liste}` in `auch` und `{zu}` in
+`techAspekt`. Aufgefallen sind sie nur, weil
+`pruefwerk.pruefe_vorlagenluecken` von Hand gegen diese Datei
+gehalten wurde — `bau-heute.py` ruft die Regel nicht auf, und
+deshalb steht sie dort seit Monaten.
+
+Das ist nicht der Fall, sondern die Klasse: Die Regel gibt es seit
+dem 2026-11-16 an einer Stelle, aber nur neun der siebzehn Bauten
+rufen sie. Eine Prüfung, die nicht aufgerufen wird, ist keine.
+**Fertig, wenn:** beide Lücken einen Wert haben oder aus der Vorlage
+heraus sind, `bau-heute.py` `pruefe_vorlagenluecken` aufruft, und
+`pruefe-alles.py` nachzählt, welche Bauten die Regel rufen — sodass
+ein Bau, der sie fallen lässt, auffällt und nicht jahrelang
+durchgeht.
+
+### 96 · Die neunzehn Hüllen um `AC_FUELL`
+Beim Umzug zu Aufgabe 94 am 2026-11-22 ist in jeder Anzeige eine
+einzeilige Hülle stehen geblieben (`moFuell`, `gFuell`, `kFuell`,
+`tf`, `fuell` und die übrigen), die nichts tut, als `AC_FUELL`
+aufzurufen. Das war Absicht: So blieben rund 450 Aufrufstellen
+unberührt und der Umzug nachlesbar. Die Rechnung dafür steht aber
+noch offen — neunzehn Namen für eine Sache, und jeder davon kann
+beim nächsten Umbau wieder einen eigenen Rumpf bekommen, ohne dass
+sich der Name ändert.
+**Fertig, wenn:** die Anzeigen `AC_FUELL` selbst aufrufen, keine
+Hülle mehr dazwischensteht, und `pruefwerk` eine Hülle um `AC_FUELL`
+genauso abweist wie heute einen eigenen Füller — beides mit festen
+Beispielen.
 
 ### 67 · `tief-bauer.js` schreibt „dein" selbst
 Der Rest der früheren Aufgabe 38. `tief-bauer.js` ist keine Anzeige
@@ -279,6 +303,11 @@ Und die Gegenprobe gehört nicht siebenmal abgeschrieben: in zwei
 Dateien steht sie heute Zeile für Zeile gleich, also driftet sie
 beim nächsten Umbau auseinander — dieselbe Klasse wie die eigene
 Satzregel, die heute aus `bau-monat.py` herausgefallen ist.
+
+*Stand 2026-11-20: Es sind inzwischen vierzehn Bauskripte, in denen
+diese Gegenprobe Zeile für Zeile gleich steht — jedes Erledigen einer
+Anzeige aus Aufgabe 34 schreibt sie ein weiteres Mal ab. Die Aufgabe
+wird dadurch nicht anders, nur jeden Tag ein Stück teurer.*
 **Fertig, wenn:** die Gegenprobe in `rituale/pruefwerk.py` steht und
 nicht in den Bauskripten, jeder Aufruf von
 `pruefe_anzeige_satzfrei` und `pruefe_anzeige_ohne_dein` sie
@@ -489,6 +518,175 @@ goldenen Regel aus `REGELN.md` Abschnitt 5 am gezeichneten Ergebnis
 abbricht, sobald eine Lunationsangabe wieder in derselben Schriftgröße
 steht wie der Fließtext des Briefs. Gemessen am Ergebnis, nicht am
 Quelltext, weil die Größen aus der Datei daneben kommen.
+
+### 85 · „20.000 zufällig gerechnete Paare" sagt nicht, welche Paare
+Siehe Recherche vom 2026-11-18, erster Fund. Die Häufigkeitszahlen sind
+gerechnet und mit festem Startwert wiederholbar — im Markt ist das der
+Vorsprung. Was die Leserin sieht, ist aber nur die Anzahl, nicht die
+Vergleichsgruppe: `beziehung.html` sagt „20.000 zufällig gerechnete
+Paare", abgetastet werden nach `quelltext/bez/_verteilung-bez.js` Paare
+mit höchstens acht Jahren Abstand, Jahrgänge 1950 bis 2005,
+Mitteleuropa, beide mit Geburtszeit. Der Altersabstand ist genau die
+Größe, die bestimmt, wie selten ein Kontakt zwischen zwei langsamen
+Planeten aussieht. Auf `uebersicht.html` dasselbe schwächer: 10.000
+Bilder, Jahrgänge 1930 bis 2010, Tag 1 bis 28, acht Orte. Eine Zahl ohne
+ihre Grundlage ist der Fall aus `REGELN.md` Abschnitt 7.
+**Fertig, wenn:** der auf `beziehung.html` sichtbare Satz zur
+Vergleichsgruppe sagt, woraus sie besteht, der Satz auf `uebersicht.html`
+dasselbe für seine Stichprobe tut, beide Sätze aus `beziehung-daten.js`
+beziehungsweise `ich-daten.js` kommen und nicht aus der Anzeige, die
+Angaben beim Bauen aus denselben Werten entstehen, mit denen abgetastet
+wird — nicht von Hand danebengeschrieben, sonst driftet es beim nächsten
+Lauf —, und `bau-bez.py` und `bau-ich.py` am gezeichneten Ergebnis
+abbrechen, sobald eine Häufigkeitszahl ohne ihre Vergleichsgruppe
+dasteht. Gegen feste Beispiele gehalten wie `_datum_ohne_jahr` in
+`bau-heute.py`, damit die Prüfung nicht davon abhängt, welches
+Geburtsbild gerade gerechnet wird.
+
+### 86 · Auf `beziehung.html` steht nirgends, wessen Daten der zweite Mensch sind
+Siehe Recherche vom 2026-11-18, zweiter Fund. Die Seite wählt in
+`#bzsteuer` ein zweites Profil, sagt vier Abschnitte lang, wie dieser
+Mensch ist, und gibt das über „Text kopieren" und „Drucken" aus dem Haus.
+Dass die Deutung über einen Menschen geht, der sie weder in Auftrag
+gegeben hat noch zu sehen bekommt, steht nirgends — obwohl
+`PRODUKT.md` Abschnitt 5 Aussagen über eine dritte Person, die nicht
+gefragt wurde, ausschließt. Aufgabe 76 bringt den Satz, dass dieser
+Mensch zu sich selbst das letzte Wort hat, in den Ehrlichkeitsabschnitt
+am Ende. Hier geht es um die andere Stelle: den Anfang.
+**Fertig, wenn:** dort, wo das zweite Profil gewählt wird, ein Satz
+steht, dass dies die Geburtsdaten eines anderen Menschen sind und die
+Deutung über ihn ihm gehört — in der Sprache der Seite, ohne Haken und
+ohne Sperre, weil die Seite nicht wissen kann, ob jemand zugestimmt hat,
+und ein Haken nur eine Sicherung vortäuschen würde; der Satz aus
+`beziehung-daten.js` kommt und nicht aus `beziehung-app.js`; er auf
+Stufe 0 offen steht und nicht in einem Klappelement; und `bau-bez.py` am
+gezeichneten Ergebnis abbricht, wenn er fehlt oder in eine Klappe
+wandert. Die Textausgabe von „Text kopieren" gehört zu Aufgabe 76 und
+wird hier nicht mitgemacht.
+
+### 87 · `zauber.html` nennt „Konjunktion" und hat keine Stufenleiste
+Gefunden beim Erledigen von Aufgabe 58. Die Karte „Der Mond läuft
+gerade leer" sagt: „Seit seinem letzten Aspekt (Konjunktion zu Venus
+um 14:12) …". „Aspekt" und „Konjunktion" verschlüsseln einen Rechenweg
+und gehören auf Stufe 0 nicht auf die Seite (`REGELN.md` 2a) — und die
+Seite trägt kein `#nivleiste`, also gibt es gar keine Stufe, auf der
+sie wartet. Das Wort dafür steht fertig in `B_WINKELWORT` („auf",
+„gegenüber", „quer zu"), das seit Aufgabe 58 ohnehin auf der Seite
+liegt.
+**Fertig, wenn:** auf Stufe 0 kein Mechanikwort auf `zauber.html`
+sichtbar ist, die Mechanik in `ac-tech`/`data-ab="2"` wartet, und die
+Rauchprobe in `bau-zauber.py` die Stufe 0 prüft, wie es
+`bau-haeuser.py` tut.
+
+### 88 · Die Namensprüfung steht in drei `bau-*.py` einzeln
+Auch aus Aufgabe 58: Seit jede Anzeige ihre Sätze auslagert, liegt
+`kern/bahn-daten.js` auf immer mehr Seiten, und jede Seite prüft
+selbst, dass ihre Namen nicht mit `engine.js` kollidieren — in
+`bau-mond.py`, `bau-zahlen.py` und seit heute `bau-zauber.py`, in drei
+Fassungen. Die dritte hat sofort etwas gefunden, wonach die beiden
+anderen nicht gesucht haben: `chartVon`, `datVon` und `gewaehlt`
+standen in `zauber-app.js` ein zweites Mal, Wort für Wort gleich.
+Dieselbe Lehre wie bei den Stufe-0-Prüfungen (`REGELN.md` 5): Eine
+Regel in drei Dateien ist nach der ersten Verschärfung in zwei von
+drei veraltet.
+**Fertig, wenn:** die Regel als `pruefwerk.pruefe_namenskollision` an
+einer Stelle steht, feste Beispiele darunter hat, die drei `bau-*.py`
+sie aufrufen, und ein von Hand eingesetzter Zweitname den Bau
+abbricht.
+
+### 89 · „Vorbei ist es So, 22.11., 08:23 Uhr"
+Dritter Fund aus Aufgabe 58, heute nicht behoben, damit der Umzug ein
+Umzug bleibt. Endet der leere Mondlauf an einem anderen Tag, setzt
+`wannKurz` Tag und Datum mit ein, und das „Uhr" dahinter steht dann
+hinter einem Datum. Innerhalb desselben Tags liest es sich richtig.
+Dieselbe Klasse wie `_datum_ohne_jahr` in `bau-heute.py` (`REGELN.md`
+6e): Der Satz stimmt für die Eingabe des Tages und nicht für die Form.
+**Fertig, wenn:** die Vorlage zwei Fassungen hat — eine mit „Uhr" für
+heute, eine ohne für einen anderen Tag —, die Anzeige die passende
+wählt, und eine Prüfung mit festen Beispielen in `bau-zauber.py` ein
+„Uhr" hinter einem Datum abbricht.
+
+### 91 · Auf `ereignisse-lesen.html` steht über der Falz nur die Stufe
+Aus dem Gestaltungsdurchgang vom 2026-11-20 (Befund 20.11-1) zu
+`ereignisse-lesen.html` — die Seite, die Abschnitt 5 der `GESTALTERIN.md`
+als `ereignisse.html` führt. Bei 390 Pixeln auf Stufe 0 steht der Kasten
+`<div class="tip" data-bis="0">` („Du liest gerade die Fassung ohne
+Fachsprache. …") in `ereignis-koerper.html` zwischen `#nivleiste` und der
+ersten Überschrift und ist dort 234 Pixel hoch. Seine erste Hälfte sagt,
+was 91 Pixel höher schon in `.niv-tipp` steht („Keine Ahnung von
+Astrologie. Alles in Alltagssprache. …"). Dadurch beginnt „Die Grundidee:
+ein Hinweis ist kein Ereignis" bei Pixel 859 und damit unter der Falz von
+844, die Treppe Rauschen · Verdacht · Thema bei 1.107. Auf Stufe 2, wo der
+Kasten wegfällt, steht dieselbe Überschrift bei 602 und die Treppe bei
+850; bei 1.280 Pixeln steht die Treppe auf beiden Stufen über der Falz.
+Wer am wenigsten mitbringt, sieht auf dem Telefon also am wenigsten.
+Der einzige Satz des Kastens, der etwas Eigenes sagt, stimmt zudem nur
+halb: Auf Stufe 0 fehlen nicht nur Fachbegriffe und Beispiele, sondern
+vier ganze Abschnitte — Rezepte (2.666 Pixel), Zwei Charts (999),
+Durchgerechnet (2.541) und Kleines Quiz (1.995) —, und er steht neun
+Telefonbildschirme vor der ersten Lücke.
+**Fertig, wenn:** im gezeichneten `ereignisse-lesen.html` bei 390 Pixeln
+auf Stufe 0 die Überschrift `#idee` und ihr Absatz über der Falz von 844
+stehen, der Kasten mit `data-bis="0"` nicht mehr zwischen `#nivleiste` und
+`#idee` steht, sein Hinweis auf das Fehlende stattdessen in der
+`<section data-ab="1">` der Rezepte steht und dort alle vier auf Stufe 0
+leeren Abschnitte nennt — und `bau-ereignis.py` nach der goldenen Regel
+aus `REGELN.md` Abschnitt 5 am gezeichneten Ergebnis abbricht, sobald auf
+Stufe 0 die erste Überschrift der Seite tiefer steht als auf Stufe 2.
+Gemessen am Ergebnis bei 390 Pixeln, nicht am Quelltext, weil die Höhe
+aus `ereignis-stil.css` und der Textlänge zusammen entsteht.
+
+### 92 · Im Reading steht die tragende und die reibende Fassung im selben Absatz
+Befund der Prüferin vom 2026-11-20 (Die Coachin, erster Befund). Unter
+„Die stärksten Verbindungen" laufen beide Fassungen einer Verbindung als
+ein Absatz ohne Bindewort, Überschrift oder Absatz dazwischen. Bei Rieke
+(09.03.1990) drei von fünf, bei Tomke (02.11.1986) zwei von fünf, also
+fünf von zehn über zwei Geburtsbilder: „Du weißt meistens, was dir
+guttut, und tust es auch." gefolgt von „Oft übergehst du das Bedürfnis —
+und zahlst später."; „Was du anfängst, bringst du zu Ende." gefolgt von
+„Du trittst gleichzeitig auf Gas und Bremse." Für eine Coachin steht
+damit in dem Text, den sie aus der Hand gibt, über denselben Menschen
+beides — und die Klientin kann keinem der beiden Sätze widersprechen.
+Dieselbe Seite hat weiter unten den Abschnitt „Wo es kippen kann", der
+genau dafür da ist. Es ist die Fehlerklasse aus `REGELN.md` Abschnitt 6d
+(zwei Zustände aneinandergeklebt, keine Folge) und derselbe Riegel, den
+der Monatsbericht am 2026-10-21 bekommen hat („reibende und tragende
+Fassung dürfen nicht gleich sein" — hier: dürfen nicht unmarkiert
+nebeneinander stehen). Betrifft die Stufen „Wenig" aufwärts; auf „Neu"
+ist die zweite Hälfte gar nicht da.
+**Fertig, wenn:** die reibende Fassung entweder im Abschnitt „Wo es
+kippen kann" steht oder im Absatz ein Wort trägt, das die Wendung
+markiert, `pruefwerk` eine Regel bekommt, die am **gezeichneten**
+Reading abbricht, sobald tragende und reibende Fassung derselben
+Verbindung ohne ein solches Wort im selben Absatz stehen, diese Regel
+über alle fünf Stufen und über mindestens zwei verschiedene
+Geburtsbilder läuft, und `assert`-Zeilen in `pruefwerk` die Fälle
+festhalten, die durchgehen müssen, und die, die anschlagen müssen
+(`REGELN.md` Abschnitt 6e).
+
+### 93 · Die Reading-Stufe fängt bei „Mittel" an, auch wenn „Neu" eingestellt ist
+Befund der Prüferin vom 2026-11-20 (Die Coachin, zweiter Befund).
+`ac_niveau` steht auf `0`, von Hand gesetzt, bevor die erste Seite
+gelesen wurde; die Leiste „WISSENSSTAND DER PERSON" auf `reading.html`
+steht beim ersten Aufruf trotzdem auf „Mittel" — bei beiden Profilen und
+bei 390 wie bei 1440. Im Text stehen daraufhin „die Sonne in Fische",
+„der Aszendent in Krebs", „Orbis", „Stellium"; nach dem Umschalten auf
+„Neu" sind sie weg. Die Seite sagt über diese Stufe selbst: „Hier steht
+kein Planetenname und kein Haus. Das ist die Fassung, die du
+verschickst, wenn du nicht sicher bist." Dazu nennt der kopierte Text
+(2.978 Zeichen) in keiner Zeile, für welche der fünf Stufen er
+geschrieben ist — hinterher ist nicht mehr feststellbar, welche Fassung
+verschickt wurde. Dieselbe Klasse wie der Auslieferzustand der globalen
+Leiste (Befund 23.10.) und wie Aufgabe 15 und 16, nur an der zweiten
+Leiste.
+**Fertig, wenn:** die Stufe eines Menschen, für den sie noch nie von Hand
+gesetzt wurde, der plattformweit eingestellten Stufe folgt (und ohne
+jede Einstellung „Neu" ist), erst ein Tipp auf `reading.html` daraus
+eine eigene Einstellung für diesen Menschen macht, „Text kopieren",
+„Als Datei speichern" und „Drucken" in der ersten Zeile die Stufe
+nennen, für die der Text geschrieben ist — und `pruefe-alles.py` am
+gezeichneten Ergebnis abbricht, sobald eine Stufenleiste beim ersten
+Aufruf eine andere Stufe gedrückt zeigt als die, die im Speicher liegt.
 
 ## Was nicht gemacht wird
 
@@ -1046,7 +1244,265 @@ den Daten —, die Wortliste an derselben Stelle steht wie für die
 Hand auf Stufe 0 gestelltes Fachwort den Bau abbricht, gegen feste
 Beispiele gehalten wie `_datum_ohne_jahr` in `bau-heute.py`.
 
+### 84 · Die leere Bühne sagt nicht, was man damit macht
+
+Gefunden am 2026-11-18 beim Erledigen von Aufgabe 57. Auf
+`haeuser.html` steht bei jeder Bühne ohne Planeten „Bei dir eine
+leise Bühne." Das ist eine Feststellung und kein Handgriff: Die
+Besucherin weiß danach, dass dort nichts steht, und nicht, was sie
+damit anfangen soll — obwohl der Körper der Seite die Antwort schon
+kennt („Ist es leer, schau, wo sein Herrscher steht", Abschnitt
+„Für Readings", erst ab Stufe 2 sichtbar). Sieben bis neun der
+zwölf Bühnen sind bei den meisten Menschen leer, das ist also der
+häufigste Satz der Seite und der einzige ohne Folge.
+
+Dieselbe Prüffrage wie in `PRODUKT.md` Abschnitt 6: Könnte ein Mensch
+nach dieser Karte besser sagen, was er tun kann? Heute nein.
+
+**Fertig, wenn:** jede leere Bühne auf Stufe 0 einen Satz trägt, der
+auf eine Handlung hinausläuft statt auf einen Zustand,
+`pruefwerk.pruefe_handgriffe` ihn hält, und ein Satz ohne Folge den
+Bau von `haeuser.html` abbricht — gegen feste Beispiele gehalten
+(REGELN.md 6e).
+
+### 90 · Die Klebe-Regel steht in zwei Fassungen an zwei Orten
+Gefunden beim Erledigen von Aufgabe 59 am 2026-11-20. „Jede Form, die
+sich mit dem eingesetzten Wort ändert, braucht ihre eigene Tabelle"
+(`REGELN.md` 6f) wird inzwischen an zwei Stellen erzwungen, und zwar
+mit zwei verschiedenen Mustern: `bau-zauber.py` sucht einen Artikel
+**vor** einer Lücke und einen Buchstaben **dahinter**
+(`der Tag des {herr}`, `{stamm}stunde`), `bau-geist.py` sucht ein
+angeklebtes „dein"/„des"/„der" und ein angehängtes `'. Haus'` in der
+Anzeige. Beide meinen dieselbe Fehlerklasse, keine der beiden findet,
+was die andere findet, und die nächste Anzeige schreibt eine dritte
+Fassung. Das ist genau der Fall, für den `REGELN.md` 5 den
+gemeinsamen Ort vorsieht: Eine Regel in zwei Bauskripten ist nach der
+ersten Verschärfung in einem von zwei veraltet.
+
+**Fertig, wenn:** die Regel als eine Funktion in
+`rituale/pruefwerk.py` steht, beide Fassungen darin aufgehen (ein
+Artikel vor einer Lücke, eine Endung dahinter und eine von Hand
+angeklebte Form in der Anzeige schlagen alle drei an), `bau-zauber.py`
+und `bau-geist.py` nur noch diese Funktion aufrufen, und die festen
+Beispiele beider Seiten beim Import laufen — in beide Richtungen, also
+auch mit den Fällen, die durchgehen müssen (`REGELN.md` 6e).
+
+
 ## Erledigt
+
+* **2026-11-22** · Eine Lücke wird an einer Stelle gefüllt
+  (Aufgabe 94). Die Funktion, die `{so}` durch einen Wert ersetzt,
+  stand in **neunzehn** Dateien einzeln — und in vier Fassungen, die
+  sich bei genau einem Fall unterschieden: Was passiert, wenn der
+  Wert fehlt?
+
+  | Fassung | Dateien | aus `undefined` wurde |
+  |---|---|---|
+  | Notbehelf | 7 | `''` — das Wort verschwand |
+  | ohne alles | 5 | `undefined` — es stand auf der Seite |
+  | Lücke bleibt | 1 | `{liste}` — die Klammern blieben stehen |
+  | Abbruch | 1 | ein Fehler — richtig, seit einem Tag |
+
+  Gesucht waren sechs. Gefunden hat sie nicht das Suchen nach den
+  Namen, sondern die Prüfung selbst: Sie fragt nicht, wie eine
+  Funktion heißt, sondern nach der **Form**, in der sich ein Füller
+  überhaupt bauen lässt — eine Lücke aus dem Schlüssel
+  zusammengesetzt, oder ein Suchmuster mit Fanggruppe. Drei Dateien
+  waren auf diese Weise dabei, nach denen niemand gesucht hätte,
+  `kern/heute-app.js` darunter.
+
+  Die Funktion steht jetzt in `kern/fuellen.js` als `AC_FUELL` und
+  liegt auf achtzehn Seiten mit. Ein fehlender Wert bricht dort ab;
+  ein absichtlich leerer (`''`) und eine Null gehen durch. Auf der
+  Seite ändert sich nichts — kein Text, keine Gestaltung, alle 3.615
+  Rechenprüfungen der Bereiche und jede Rauchprobe unverändert
+  grün. Was sich ändert, ist, was beim nächsten Mal passiert, wenn
+  ein Schlüssel nicht gefunden wird.
+
+  Verriegelt ist das dreifach, weil jede der drei Sperren etwas
+  anderes nicht sieht:
+
+  * `pruefwerk.pruefe_fueller` in jedem `bau-*.py` — eine Anzeige,
+    die sich wieder eine eigene baut, bringt ihren Bau zum Scheitern
+    (nachgewiesen: `exit=1`).
+  * eine Querprüfung in `pruefe-alles.py` — `AC_FUELL` steht genau
+    einmal im Quelltext, und auch eine Datei, die noch kein
+    `bau-*.py` verriegelt, baut sich keine eigene.
+  * `pruefwerk.ruft_ohne_stelle` — wer `AC_FUELL` aufruft, hat es
+    auch auf der Seite.
+
+  Die dritte ist unterwegs entstanden, und zwar aus einem echten
+  Fehlschlag: Die Rechenprüfung der Bereiche lud `tief-bauer.js`
+  ohne `fuellen.js` und brach mit „AC_FUELL is not defined" ab. Dort
+  hat der Bau es gefunden, weil diese Rechnung wirklich lief — eine
+  Anzeige, deren Zweig heute nicht gerendert wird, wäre damit
+  durchgekommen (`REGELN.md` 6e). Deshalb wird jetzt die Seite selbst
+  gefragt und nicht der Weg dorthin.
+
+  Was offen bleibt, steht als Aufgabe 95 (zwei Lücken in
+  `kern/heute-daten.js`, die niemand füllt — und acht Bauten, die
+  `pruefe_vorlagenluecken` nicht aufrufen) und 96 (die neunzehn
+  einzeiligen Hüllen um `AC_FUELL`, die den Umzug nachlesbar
+  gehalten haben).
+
+
+* **2026-11-21** · `dossier-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 60, aus 34 und 38) — 97 Zeichenketten und 4 mal „dein" von
+  Hand. Die Vorlagen stehen jetzt in `DO_T` in `dossier-texte.js`, die
+  Anzeige rechnet und setzt mit `doFuell` ein. Über zehn erfundene
+  Profile und alle zehn Bezüge — 101 Ansichten — ist das gezeichnete
+  Dossier Zeichen für Zeichen dasselbe wie vorher. Ein Umzug, keine
+  Änderung an der Seite.
+
+  Herausgekommen ist dabei eine Fehlerklasse, die keiner der
+  Vorgänger hatte, und sie ist unterwegs zugeschlagen: Die Belege
+  eines Kernthemas nennen den Winkel mit dem Namen, den `AC_RAUM`
+  mitliefert („Sextil"). Nachgeschlagen wurde in der neuen
+  Sprachtafel, und die kennt nur den Schlüssel („sextil"). Die
+  Füllfunktion machte aus dem fehlenden Wert eine leere Stelle, und
+  aus „Saturn Sextil Sonne" wurde „Saturn  Sonne" — ein Wort weg,
+  nichts rot, keine Meldung. Dieselbe Klasse wie `REGELN.md` 6f, nur
+  eine Ebene tiefer: Dort kannte eine Tabelle den Fall nicht, hier
+  hat der Notbehelf das Nichtkennen zugedeckt.
+
+  Die Antwort ist deshalb nicht der eine Nachschlag, sondern die
+  Regel: **Eine Lücke ohne Wert bricht ab, statt leer zu werden.**
+  Ein leerer Wert, den jemand absichtlich einsetzt, geht weiter
+  durch — beides steht als festes Beispiel in der Rauchprobe, sonst
+  wäre die Regel bei der nächsten Verschärfung eine halbe.
+
+  Neu dauerhaft geprüft in `bau-dossier.py`: beide Riegel aus
+  `pruefwerk` mit Gegenprobe in allen drei Anführungsarten, die
+  Lückenprüfung, eine Regel gegen jede an einen Namen oder eine Zahl
+  geklebte Form, und am gezeichneten Ergebnis je Bezug, dass keine
+  geschweifte Klammer übrig bleibt. Zehn Sabotagen — ein Satz in
+  jeder Anführungsart, ein „dein", eine geklebte Form, eine
+  ungefüllte Lücke, ein geschluckter Wert — lassen den Bau jetzt
+  scheitern; vorher ging jede davon durch.
+
+* **2026-11-20** · `geist-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 59, aus 34 und 38) — die größte der Anzeigen, 174
+  Zeichenketten und 31 mal „dein" von Hand. Die Vorlagen stehen jetzt
+  in `GT_T` in `geist-texte.js`, die Anzeige rechnet und setzt mit
+  `gFuell` ein. Der gezeichnete Text ist über zehn erfundene Profile
+  hinweg Zeichen für Zeichen derselbe wie vorher, auch das Markup
+  beider Register — es war ein Umzug und keine Änderung an der Seite.
+
+  Was dabei herauskam, war nicht ein Text, sondern eine Lücke in der
+  gemeinsamen Beugung. `AUFGABEN.md` hatte es vorausgesagt: „hier
+  zeigt sich, ob `B_BEUGE` für alle Fälle reicht." Es reichte nicht.
+
+  * **„der Herrscher deines 12. Hauses"** ist ein Genitiv, und
+    `B_DEIN` in `kern/bahn-daten.js` kannte drei Fälle. Darüber stand
+    ausdrücklich, mehr brauche es nicht: ein Genitiv stehe in keiner
+    dieser Formeln. Für die Formeln der Startseite stimmte das; diese
+    Seite hat einen, und deshalb stand die vierte Form von Hand in
+    einer Anzeige — genau die Bauart, die die Tabelle abschaffen
+    sollte. Dieselbe Fehlerklasse wie `REGELN.md` 6f: Eine Tabelle
+    deckt den Fall, den sie kennt, und welche Fälle es gibt,
+    entscheidet nicht die erste Seite, die sie benutzt. Der Genitiv
+    steht jetzt in `B_DEIN`, die Form des Hauptworts („Hauses") in
+    `GT_T.haus.beugt` — alle drei Fälle der Seite („dein", „deinem",
+    „deines") kommen aus der einen Stelle.
+  * **`kz` bedeutete in `bauPraxis` etwas anderes als daneben.** Die
+    Zahlenformatierung mit deutschem Komma heißt `kz`; in dieser
+    Funktion war `kz` das Merkurzeichen. Beides im gleichen
+    Geltungsbereich, und wer dort eine Zahl formatieren wollte, hätte
+    ein Zeichenindex zurückbekommen. Heißt jetzt `merkZ`.
+
+  Dazu heraus: `nameVon`, `esc`, `tagUhr` — nie benutzt. Und
+  `kleine-punkte.js` liegt mit `bahn-daten.js` zusammen auf der Seite,
+  deshalb liest die Namensprüfung jetzt auch diese Datei.
+
+  **Neu dauerhaft geprüft** in `bau-geist.py`, gegen die Klasse und
+  nicht gegen den Fall: die beiden Riegel aus `pruefwerk` mit
+  Gegenprobe in allen drei Anführungsarten, die Lückenprüfung, und
+  eine Regel, die keine Form mehr an eine Lücke heranlässt — kein
+  „dein"/„des"/„der" vor einem Pluszeichen, kein `+'. Haus'` dahinter,
+  mit sechs festen Beispielen in beide Richtungen (`REGELN.md` 6e).
+  Dazu eine Rauchprobe im Browser, die am gezeichneten Ergebnis
+  nachsieht: jeder der neun Blöcke ist gefüllt, nirgends steht eine
+  geschweifte Klammer, und `B_BEUGE` bildet alle drei Fälle richtig.
+  Die zwei Zweige, die nicht jedes Profil zeichnet — der Malefik im
+  12. Haus und der Neumond im Zeichen des 12. Hauses — werden eigens
+  gefüllt und gegen feste Beispiele gehalten, weil ein grüner Riegel
+  bei ihnen sonst nur heißt, dass ihr Fall heute nicht vorkam
+  (`REGELN.md` 6e, Nachsatz).
+
+* **2026-11-19** · `zauber-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 58, aus 34 und 38) — die vierzehnte von zweiundzwanzig
+  Anzeigen, mit 97 Zeichenketten und 18 mal „dein" die zweitgrößte.
+  Die Vorlagen stehen jetzt in `ZT_T` in `zauber-texte.js`, die
+  Anzeige rechnet und setzt mit `zFuell` ein, und „dein" vor einer
+  Hausnummer bildet `B_BEUGE`. Der gezeichnete Text der Seite ist
+  Zeile für Zeile derselbe wie vorher, das Bild pixelgleich — bis auf
+  zwei Stellen, die mehr als Umzug waren:
+
+  * **„Heute ist Sonntag, der Tag des Sonne."** Die Genitivtabelle
+    `GEN` lag seit dem ersten Tag der Seite daneben und wurde an einer
+    von zwei Stellen benutzt; die andere klebte den Namen hinter
+    „des". Sonntags, montags und freitags stand dort die falsche Form,
+    an den übrigen vier Tagen die richtige — deshalb ist es so lange
+    niemandem aufgefallen.
+  * **„Es ist gerade Sonnestunde."** Die Anzeige hängte „stunde" an
+    den Namen des Stundenherrschers. Für sechs der sieben geht das
+    auf; die Sonne braucht ein Fugen-n. Das fertige Wort steht jetzt
+    in `ZT_T.stunde`.
+
+  Dazu ein dritter Fund, der kein Text war: `chartVon`, `datVon` und
+  `gewaehlt` standen in `zauber-app.js` ein zweites Mal, Wort für Wort
+  gleich wie in `engine.js` — eine zweite Himmelsrechnung, die
+  `REGELN.md` 5 verbietet. Sie sind heraus; die Seite rechnet gegen
+  die Engine.
+
+  **Neu dauerhaft geprüft** in `bau-zauber.py`, gegen die Klasse und
+  nicht gegen den Fall: Kein Artikel steht direkt vor einer Lücke
+  (`der Tag des {herr}` bricht ab), kein Buchstabe direkt dahinter
+  (`{stamm}stunde` bricht ab), und die Anzeige klebt keine
+  Zeichenkette an einen Ausdruck (`st.herr+'stunde'` bricht ab) — das
+  muss eigens dastehen, weil „stunde" ein Wort ohne Großbuchstaben
+  und ohne Satzzeichen ist und am Satzriegel vorbeikommt. Zwölf feste
+  Beispiele laufen, bevor die Prüfung die Seite ansieht (`REGELN.md`
+  6e). Dazu die beiden Riegel aus `pruefwerk` mit Gegenprobe in allen
+  drei Anführungsarten, die Lückenprüfung, die Namensprüfung und eine
+  Rauchprobe im Browser, die die Seite mit und ohne Profil zeichnet
+  und am Ergebnis nachsieht, dass der Genitiv aus der Tabelle kommt.
+
+* **2026-11-18** · `haeuser-app.js` ist aus dem Satzgeschäft heraus
+  (Aufgabe 57, aus 34 und 38) — die dreizehnte von zweiundzwanzig
+  Anzeigen. Ihre vierzig Zeichenketten stehen jetzt als Vorlagen in
+  `HZ_T` in `haeuser-daten.js`; die Anzeige rechnet und setzt mit
+  `hzFuell` ein. Von Hand geschriebenes „dein" gab es hier keins.
+
+  Zwei Stellen waren mehr als Umzug:
+
+  * **Vier der vierzig waren gar kein Text**, sondern zwei
+    Schriftnamen, eine Farbe und das Gerüst des Beispielkastens. Eine
+    Datendatei kennt keine Stilvorlage, also sind Farben und Schriften
+    des Rads nach `haeuser-stil.css` gewandert (die Anzeige setzt nur
+    noch die Klassen `hz-feld`, `voll`, `an`) und das Gerüst in den
+    Körper. Das Rad sieht aus wie vorher.
+  * **Dieselbe Bühne stand zweimal verschieden auf der Seite.** Im
+    Beispiel unter „Whole Sign oder Placidus" beschrieb die Anzeige
+    das elfte Haus von Hand als „Gemeinschaft, Netzwerke,
+    Zugehörigkeit" und das zehnte als „Beruf, Wirken, Sichtbarkeit".
+    Zwölf Karten weiter oben heißen dieselben Bühnen
+    „Freundschaft, Netzwerke, Zukunftspläne" und „Beruf, Ruf,
+    Ziele". Wer beides liest, hält eins davon für falsch. Die
+    Beschreibung kommt jetzt aus `HZ_HAUS`, auch die Zeichennamen und
+    das Zählwort im Satz „Waage ist ab Schütze das elfte Zeichen"
+    stehen als Daten daneben und werden gegen die Rechnung gehalten.
+
+  **Neu dauerhaft geprüft** (`bau-haeuser.py`, Prüfung 5): Die Form
+  „N. Haus: …" in Körper, Daten oder Anzeige muss das Stichwort aus
+  `HZ_HAUS` tragen — eine zweite, von Hand geschriebene Beschreibung
+  derselben Bühne lässt den Bau scheitern. Eine Lücke (`{stich}`) geht
+  durch, ein Kommentar auch; acht feste Beispiele stehen darunter
+  (REGELN.md 6e). Dazu die beiden Riegel aus `pruefwerk` samt
+  Gegenprobe in allen drei Anführungsarten und
+  `pruefe_vorlagenluecken`; die Rauchprobe sieht zusätzlich am
+  gezeichneten Ergebnis nach, dass keine geschweifte Klammer
+  dasteht und das Beispiel die Worte aus `HZ_HAUS` benutzt.
 
 * **2026-11-17** · `zahlen-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 56, aus 34 und 38) — die zwölfte von zweiundzwanzig

@@ -53,11 +53,15 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Schwerkraft &middot; Coaching mit Mandy Netta</title>
 <meta name="description" content="Coaching in Berlin, bei dem das Geburtsbild als Landkarte dient und nicht als Befund. Keine Vorhersage, keine Therapie, erstes Gespr&auml;ch kostenlos.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 """
 
-html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'start-stil.css')
+# Seit dem 18.11. trägt die Tür denselben Look wie die Praxis: Stein,
+# Moos, Kupfer. Schwerkraft ist eine Marke; Astro-Charlie ist das
+# Werkzeug, das sie benutzt (Mandy am 17.11.).
+html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier.parent / 'wiki' / 'schwerkraft.css')
+        + "\n" + lies(hier / 'start-stil.css')
         + '</style>\n</head><body>\n'
         + koerper + "\n<script>\n" + daten + "\n" + app
         + "\n</script>\n</body></html>\n")

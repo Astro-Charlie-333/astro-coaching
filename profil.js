@@ -184,11 +184,18 @@
       if(!neuD||!neuD.liste) throw new Error('Keine gültige Profildatei.');
       if(ersetzen){ sichere(neuD); return neuD.liste.length; }
       var d=lade(), vorhanden={};
-      d.liste.forEach(function(p){ vorhanden[p.y+'|'+p.mo+'|'+p.d+'|'+p.h+'|'+p.mi+'|'+p.lat]=true; });
+      d.liste.forEach(function(p){ vorhanden[p.y+'|'+p.mo+'|'+p.d+'|'+p.h+'|'+p.mi+'|'+p.lat]=p; });
       var n=0;
       neuD.liste.forEach(function(p){
-        var k=p.y+'|'+p.mo+'|'+p.d+'|'+p.h+'|'+p.mi+'|'+p.lat;
-        if(!vorhanden[k]){ p.id=id(); p.eigen=false; d.liste.push(p); n++; }
+        var k=p.y+'|'+p.mo+'|'+p.d+'|'+p.h+'|'+p.mi+'|'+p.lat, da=vorhanden[k];
+        if(!da){ p.id=id(); p.eigen=false; d.liste.push(p); n++; return; }
+        /* Gibt es den Menschen schon, kommen nur neue Readings dazu
+           (19.11.): So lässt sich eine Auswertung einem vorhandenen
+           Profil zuweisen, ohne es doppelt anzulegen. */
+        var hat={}; (da.readings||[]).forEach(function(r){ hat[r.id]=true; });
+        (p.readings||[]).forEach(function(r){
+          if(!hat[r.id]){ da.readings=da.readings||[]; da.readings.push(r); n++; }
+        });
       });
       sichere(d); return n;
     }

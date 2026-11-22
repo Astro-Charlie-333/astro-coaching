@@ -44,7 +44,7 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Praxis &middot; Schwerkraft</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="staedte.js"></script>
 <script src="profil.js"></script>
 <script src="profil-formular.js"></script>
@@ -126,7 +126,11 @@ verlinkt = []
 for s in sorted(wiki.glob('*.html')):
     if s.name in HINTER_DER_TUER:
         continue
-    if re.search(r'["\'](praxis|werkstatt)\.html', s.read_text(encoding='utf-8', errors='replace')):
+    _t = s.read_text(encoding='utf-8', errors='replace')
+    # Seiten mit der Praxis-Leiste gehören selbst zur Praxis
+    if 'class="sk-leiste"' in _t:
+        continue
+    if re.search(r'["\'](praxis|werkstatt)\.html', _t):
         verlinkt.append(s.name)
 if verlinkt:
     fehler.append('die Praxis ist verlinkt in: ' + ', '.join(verlinkt[:6])

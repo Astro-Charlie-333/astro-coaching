@@ -1,4 +1,14 @@
-/* Astro-Charlie · Dossier — Rechnung und Darstellung */
+/* Astro-Charlie · Dossier — Rechnung und Darstellung
+   ──────────────────────────────────────────────────────────────
+   Hier steht kein Satz. Die Vorlagen stehen in DO_T
+   (dossier-texte.js), `doFuell` setzt ein (Aufgabe 60, aus 34
+   und 38). `bau-dossier.py` bricht ab, sobald hier wieder eine
+   Zeichenkette mit Sprache auftaucht — und auch dann, wenn eine
+   Form an eine Zahl oder einen Namen geklebt wird.
+
+   Was in der Anzeige steht, zieht beim Umzug in eine andere
+   Umgebung nicht mit (PRODUKT.md Abschnitt 7). Deshalb liegt hier
+   nur das Gerüst: Klassen, Tags und die Zahlen aus der Rechnung. */
 function nrm(x){x=x%360;return x<0?x+360:x;}
 function el(i){ return document.getElementById(i); }
 function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
@@ -9,9 +19,30 @@ function fmt(l){ l=nrm(l); var r=l-Math.floor(l/30)*30, g=Math.floor(r), m=Math.
  if(m===60){g++;m=0;} return g+'° '+SIGNS[zi(l)]+' '+(m<10?'0':'')+m+'′'; }
 function elemVon(z){ return ELN[z%4]; }
 
-/* Genus, damit „Venus … er" nicht passiert */
-var PRON={Sonne:'sie',Mond:'er',Merkur:'er',Venus:'sie',Mars:'er',Jupiter:'er',
- Saturn:'er',Uranus:'er',Neptun:'er',Pluto:'er',Chiron:'er',Lilith:'sie'};
+/* ── Sätze einsetzen ──────────────────────────────────────── */
+var DT=DO_T;
+/* Eine Lücke `{so}` je Schlüssel, in einem Durchgang.
+
+   Ein Wert, den es nicht gibt, bricht hier ab und wird nicht zu
+   einer leeren Stelle. Beim Umzug ist genau das einmal passiert:
+   Der Winkelname der Raum-Rechnung heißt „Sextil", nachgeschlagen
+   wurde unter „sextil" — und aus „Saturn Sextil Sonne" wurde
+   lautlos „Saturn  Sonne". Eine Tafel, die den Schlüssel nicht
+   kennt, liefert `undefined`; wer das zu '' macht, verliert ein
+   Wort, ohne dass etwas rot wird (dieselbe Klasse wie REGELN.md
+   6f). Deshalb ist das hier ein Abbruch und kein Notbehelf. */
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function doFuell(form,werte){ return AC_FUELL(form,werte); }
+/* „7. Haus" an einer Stelle: die Zahl rechnet, das Hauptwort steht
+   in DO_T. Nichts davon wird hier zusammengeklebt. */
+function doHaus(n){ return doFuell(DT.haus,{n:n}); }
+/* Der Name des Winkels kommt aus der Sprachtafel, nicht aus der
+   eigenen Rechnung — die kennt nur den Schlüssel. Was AC_RAUM in
+   `f.aspekte` liefert, trägt seinen Namen schon mit und wird
+   durchgereicht, nicht zweimal nachgeschlagen. */
+function doWinkel(k){ return DT.winkel[k]; }
 
 function wuerde(pl,z){
   var d=DOMIZIL[pl];
@@ -27,8 +58,10 @@ function chartVon(p){ return AC_RAUM.chart(p); }
 function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
 function zeichenDesHauses(P,h){ return (Math.floor(nrm(P.ASC)/30)+h-1)%12; }
 
-var WINKEL=[[0,'Konjunktion','weich'],[180,'Opposition','hart'],[90,'Quadrat','hart'],
- [120,'Trigon','weich'],[60,'Sextil','weich']];
+/* Der Winkel rechnet und gibt einen Schlüssel zurück. Wie er heißt,
+   entscheidet DO_T.winkel. */
+var WINKEL=[[0,'konjunktion','weich'],[180,'opposition','hart'],[90,'quadrat','hart'],
+ [120,'trigon','weich'],[60,'sextil','weich']];
 function aspekt(P,a,b,orb){
   if(P[a]===undefined||P[b]===undefined||P[a]===null||P[b]===null) return null;
   var d=Math.abs(nrm(P[a]-P[b])); if(d>180) d=360-d;
@@ -76,17 +109,20 @@ function bauKopf(P,p,B){
   var nm=AC_P.anzeige(p,AC_P.zeigeNamen());
   var zS=zi(P.Sonne), zM=zi(P.Mond), zA=zi(P.ASC);
   var hp=HERR[zA], hpH=(P[hp]!==undefined)?haus(P,P[hp]):null;
-  var h='<div class="do-kopf"><div class="lab">Bestandsbericht · '+esc(B.n)+'</div>'+
+  var h='<div class="do-kopf"><div class="lab">'+doFuell(DT.kopfLabel,{bezug:esc(B.n)})+'</div>'+
     '<h2>'+esc(nm)+'</h2>'+
-    '<div class="dat">'+p.d+'.'+p.mo+'.'+p.y+' · '+('0'+p.h).slice(-2)+':'+('0'+p.mi).slice(-2)+
-      ' · '+esc(p.ort||'')+'</div>'+
+    '<div class="dat">'+doFuell(DT.kopfDatum,{d:p.d,mo:p.mo,y:p.y,
+      h:('0'+p.h).slice(-2),mi:('0'+p.mi).slice(-2),ort:esc(p.ort||'')})+'</div>'+
     '<div class="do-drei">'+
-     '<div class="do-d"><div class="k">Sonne · Antrieb</div><div class="v">'+SIGNS[zS]+'</div>'+
-       '<div class="z">'+haus(P,P.Sonne)+'. Haus · '+HK[haus(P,P.Sonne)-1]+'</div></div>'+
-     '<div class="do-d"><div class="k">Mond · Bedürfnis</div><div class="v">'+SIGNS[zM]+'</div>'+
-       '<div class="z">'+haus(P,P.Mond)+'. Haus · '+HK[haus(P,P.Mond)-1]+'</div></div>'+
-     '<div class="do-d"><div class="k">Aszendent · Wirkung</div><div class="v">'+SIGNS[zA]+'</div>'+
-       '<div class="z">Herrscher '+hp+(hpH?' im '+hpH+'.':'')+'</div></div>'+
+     '<div class="do-d"><div class="k">'+DT.kopfSonne+'</div><div class="v">'+SIGNS[zS]+'</div>'+
+       '<div class="z">'+doFuell(DT.kopfHaus,{n:haus(P,P.Sonne),
+         kurz:HK[haus(P,P.Sonne)-1]})+'</div></div>'+
+     '<div class="do-d"><div class="k">'+DT.kopfMond+'</div><div class="v">'+SIGNS[zM]+'</div>'+
+       '<div class="z">'+doFuell(DT.kopfHaus,{n:haus(P,P.Mond),
+         kurz:HK[haus(P,P.Mond)-1]})+'</div></div>'+
+     '<div class="do-d"><div class="k">'+DT.kopfAsz+'</div><div class="v">'+SIGNS[zA]+'</div>'+
+       '<div class="z">'+(hpH?doFuell(DT.kopfHerrImHaus,{pl:hp,n:hpH})
+                             :doFuell(DT.kopfHerr,{pl:hp}))+'</div></div>'+
     '</div></div>';
   return h;
 }
@@ -94,14 +130,14 @@ function bauKopf(P,p,B){
 /* ── 0 · Deine Stellung ───────────────────────────────────── */
 function bauStellung(B){
   var S=STELLUNG[B.klasse];
-  return '<div class="do-ab do-stellung"><h3>Deine Stellung</h3>'+
-   '<div class="sub7">Bevor irgendetwas gedeutet wird: was dein Verhältnis zu dieser Person dir erlaubt — und wo es endet.</div>'+
+  return '<div class="do-ab do-stellung"><h3>'+DT.stellungTitel+'</h3>'+
+   '<div class="sub7">'+DT.stellungSub+'</div>'+
    '<p class="bist">'+S.bist+'</p>'+
    '<div class="do-zwei">'+
-    '<div class="dk gut"><b>Du darfst</b>'+S.darfst+'</div>'+
-    '<div class="dk warn"><b>Du darfst nicht</b>'+S.nicht+'</div>'+
+    '<div class="dk gut"><b>'+DT.stellungDarfst+'</b>'+S.darfst+'</div>'+
+    '<div class="dk warn"><b>'+DT.stellungNicht+'</b>'+S.nicht+'</div>'+
    '</div>'+
-   '<div class="dk voll"><b>Die typische Entgleisung</b>'+S.gefahr+'</div></div>';
+   '<div class="dk voll"><b>'+DT.stellungGefahr+'</b>'+S.gefahr+'</div></div>';
 }
 
 /* ── 1 · Wie die Person gebaut ist ────────────────────────── */
@@ -129,33 +165,28 @@ function bauBau(P,B){
   });
   var lMax=Object.keys(lz).sort(function(a,b){return lz[b]-lz[a];})[0];
 
-  var ELT=['geht voran, braucht Tempo und verbraucht sich, wenn nichts passiert',
-   'braucht Greifbares und Verlässlichkeit; Ideen ohne Umsetzung machen unruhig',
-   'denkt und redet, bevor gefühlt wird — Austausch ist kein Luxus, sondern Bedarf',
-   'nimmt auf, was im Raum ist, auch Unausgesprochenes'];
-  var MOT=['startet gern und verliert schnell die Lust',
-   'braucht lange zum Anfangen und ist dann kaum zu stoppen',
-   'passt sich an und wechselt die Richtung, bevor es eng wird'];
-
-  var h='<div class="do-ab"><h3>Wie diese Person gebaut ist</h3>'+
-   '<div class="sub7">Die Grundanlage — als Einstieg, nicht als Urteil.</div>'+
-   '<p><b>Grundton '+ELN[eMax]+', '+MON[mMax]+'.</b> Die Person '+ELT[eMax]+'. Und sie '+MOT[mMax]+'. '+
-   'Am wenigsten ausgeprägt ist <b>'+ELN[eMin]+'</b> — die Qualität, die sie sich bewusst holen muss, '+
-   'weil sie nicht von allein kommt.</p>'+
-   '<p><b>Gewicht '+LAGE[lMax].n+'.</b> '+LAGE[lMax].t+'</p>';
+  var h='<div class="do-ab"><h3>'+DT.bauTitel+'</h3>'+
+   '<div class="sub7">'+DT.bauSub+'</div>'+
+   '<p>'+doFuell(DT.bauGrundton,{element:ELN[eMax],motus:MON[mMax],
+     tutElement:DT.bauElement[eMax],tutMotus:DT.bauMotus[mMax],
+     wenigsten:ELN[eMin]})+'</p>'+
+   '<p>'+doFuell(DT.bauGewicht,{lage:LAGE[lMax].n,text:LAGE[lMax].t})+'</p>';
 
   /* Chartherrscher, mit Würde */
-  h+='<p><b>Chart-Herrscher '+hp+'</b>'+(hpH?' im '+hpH+'. Haus ('+HT[hpH-1]+')':'')+
-   (hpW?', <span class="ac-tech">'+WNAME[hpW]+'</span>':'')+'. '+
-   'Das ist der Steuermann: Alles läuft praktisch über '+(hpH?HK[hpH-1]:'diesen Punkt')+'. '+
-   'Wenn du nicht weißt, wo du ansetzen sollst — dort.'+
-   (hpW?' Und '+PRON[hp]+' '+WDEUT[hpW]+'.':'')+'</p>';
+  h+='<p>'+doFuell(DT.herrKopf,{pl:hp})+
+   (hpH?doFuell(DT.herrImHaus,{n:hpH,titel:HT[hpH-1]}):'')+
+   (hpW?doFuell(DT.herrWuerde,{wuerde:WNAME[hpW]}):'')+
+   doFuell(DT.herrSteuer,{ueber:(hpH?HK[hpH-1]:DT.herrPunkt)})+
+   (hpW?doFuell(DT.herrDeut,{pron:DT.pron[hp],deutung:WDEUT[hpW]}):'')+'</p>';
 
   /* Sonne, Mond, Aszendent im Klartext */
   h+='<div class="do-zeilen">'+
-   '<div class="dz"><span class="p">Sonne in '+SIGNS[zS]+'</span><span class="t">Will: '+SONNE[zS]+'</span></div>'+
-   '<div class="dz"><span class="p">Mond in '+SIGNS[zM]+'</span><span class="t">Braucht: '+MOND[zM]+'</span></div>'+
-   '<div class="dz"><span class="p">Aszendent '+SIGNS[zA]+'</span><span class="t">Wirkt '+ASZ[zA]+'</span></div>'+
+   '<div class="dz"><span class="p">'+doFuell(DT.zeileSonne,{zeichen:SIGNS[zS]})+
+     '</span><span class="t">'+doFuell(DT.zeileSonneT,{text:SONNE[zS]})+'</span></div>'+
+   '<div class="dz"><span class="p">'+doFuell(DT.zeileMond,{zeichen:SIGNS[zM]})+
+     '</span><span class="t">'+doFuell(DT.zeileMondT,{text:MOND[zM]})+'</span></div>'+
+   '<div class="dz"><span class="p">'+doFuell(DT.zeileAsz,{zeichen:SIGNS[zA]})+
+     '</span><span class="t">'+doFuell(DT.zeileAszT,{text:ASZ[zA]})+'</span></div>'+
    '</div>';
   var ab=Math.abs(nrm(P.Sonne-P.ASC)); if(ab>180) ab=360-ab;
   if(ab>100) h+='<p class="do-hin">'+ASZ_SONNE+'</p>';
@@ -163,37 +194,37 @@ function bauBau(P,B){
   /* Sekte */
   var tag=(haus(P,P.Sonne)>=7), S=tag?SEKTE.tag:SEKTE.nacht;
   var raus=S.raus, rH=(P[raus]!==undefined)?haus(P,P[raus]):null;
-  h+='<p class="ac-tech"><b>'+S.n+'.</b> '+S.t+
-   (rH?' Bei dieser Person steht '+raus+' im '+rH+'. Haus — '+HT[rH-1]+'.':'')+'</p>';
+  h+='<p class="ac-tech">'+doFuell(DT.sekteKopf,{name:S.n,text:S.t})+
+   (rH?doFuell(DT.sekteRaus,{pl:raus,n:rH,titel:HT[rH-1]}):'')+'</p>';
 
   /* Mondphase */
   var ph=PHASE[Math.floor(nrm(P.Mond-P.Sonne)/45)];
-  h+='<p><b>Mondphase bei der Geburt: '+ph[0]+'.</b> Diese Person '+ph[1]+'</p>';
+  h+='<p>'+doFuell(DT.phase,{name:ph[0],text:ph[1]})+'</p>';
   h+='</div>';
   return h;
 }
 
 /* ── 2 · Umgang: Merkur, Venus, Mars ──────────────────────── */
 function bauUmgang(P,B){
-  var h='<div class="do-ab"><h3>Umgang</h3>'+
-   '<div class="sub7">Drei Stellungen, die im Alltag mehr entscheiden als das Sonnenzeichen: '+
-   'wie man redet, woran man Zuneigung erkennt, und wie Wut aussieht.</div><div class="do-zeilen">';
-  [['Merkur','Reden',MERKUR],['Venus','Mag etwas',VENUS],['Mars','Wird wütend',MARS]].forEach(function(x){
-    if(P[x[0]]===undefined) return;
-    var z=zi(P[x[0]]), w=wuerde(x[0],z);
-    h+='<div class="dz"><span class="p">'+x[0]+' in '+SIGNS[z]+
-      (w?' <i class="ac-tech">'+WNAME[w]+'</i>':'')+'</span>'+
-      '<span class="t"><b>'+x[1]+':</b> '+x[2][z]+'</span></div>';
+  var TAFEL={Merkur:MERKUR,Venus:VENUS,Mars:MARS};
+  var h='<div class="do-ab"><h3>'+DT.umgangTitel+'</h3>'+
+   '<div class="sub7">'+DT.umgangSub+'</div><div class="do-zeilen">';
+  ['Merkur','Venus','Mars'].forEach(function(pl){
+    if(P[pl]===undefined) return;
+    var z=zi(P[pl]), w=wuerde(pl,z);
+    h+='<div class="dz"><span class="p">'+doFuell(DT.umgangZeile,{pl:pl,zeichen:SIGNS[z]})+
+      (w?doFuell(DT.umgangWuerde,{wuerde:WNAME[w]}):'')+'</span>'+
+      '<span class="t">'+doFuell(DT.umgangText,{lab:DT.umgangLab[pl],
+        text:TAFEL[pl][z]})+'</span></div>';
   });
   h+='</div>';
   /* Mond, im Licht des Bezugs */
   var MB=MOND_BEZUG[B.klasse], MT=MOND_TUN[B.klasse][elemVon(zi(P.Mond))];
-  h+='<div class="do-mond"><div class="k">Der Mond — in diesem Verhältnis '+MB.ist+'</div>'+
+  h+='<div class="do-mond"><div class="k">'+doFuell(DT.mondKopf,{ist:MB.ist})+'</div>'+
    '<p>'+MB.t+'</p>'+
-   /* Nicht kleinschreiben — die Tafel beginnt mit Substantiven. */
-   '<p><b>'+SIGNS[zi(P.Mond)]+', '+haus(P,P.Mond)+'. Haus ('+HT[haus(P,P.Mond)-1]+').</b> '+
-   'Was hier Sicherheit schafft: '+MOND[zi(P.Mond)]+'</p>'+
-   '<div class="tun"><b>Also konkret</b>'+MT+'</div></div>';
+   '<p>'+doFuell(DT.mondStellung,{zeichen:SIGNS[zi(P.Mond)],n:haus(P,P.Mond),
+     titel:HT[haus(P,P.Mond)-1],text:MOND[zi(P.Mond)]})+'</p>'+
+   '<div class="tun"><b>'+DT.mondTun+'</b>'+MT+'</div></div>';
   h+='</div>';
   return h;
 }
@@ -216,47 +247,48 @@ function bauThemen(P,B){
   var max=res.length?res[0].sB:1;
   res.forEach(function(r){ r.relB=max?Math.round(r.sB/max*100):0; });
 
-  var h='<div class="do-ab"><h3>Kernthemen</h3>'+
-   '<div class="sub7">Gewichtet nach Planeten in den Häusern, Herrscherlage, engen Aspekten und Achsennähe — '+
-   'und dann noch einmal danach, in welchem Verhältnis du zu dieser Person stehst.</div>'+
-   '<div class="do-warum"><b>Umgewichtet für „'+esc(B.n)+'"</b>'+G.warum+'</div>';
+  var h='<div class="do-ab"><h3>'+DT.themenTitel+'</h3>'+
+   '<div class="sub7">'+DT.themenSub+'</div>'+
+   '<div class="do-warum">'+doFuell(DT.themenWarum,{bezug:esc(B.n),warum:G.warum})+'</div>';
   res.slice(0,7).forEach(function(r){
-    h+='<div class="do-bal"><div>'+r.t.n+(r.faktor>1?' <i class="hoch" title="durch den Bezug höher gewichtet">↑</i>':'')+
-      '</div><div class="bar"><i class="'+(r.relB<45?'leise':'')+'" style="width:'+Math.max(4,r.relB)+'%"></i></div>'+
+    h+='<div class="do-bal"><div>'+r.t.n+(r.faktor>1?DT.balkenHoch:'')+
+      '</div>'+doFuell(DT.balken,{leise:(r.relB<45?'leise':''),
+        breite:Math.max(4,r.relB)})+
       '<div class="pz">'+r.relB+'</div></div>';
   });
   h+='</div>';
   res.slice(0,3).forEach(function(r,i){
     var bel=[];
-    (r.f.planeten||[]).slice(0,4).forEach(function(y){ bel.push(y.p+' im '+y.haus+'.'); });
-    (r.f.aspekte||[]).slice(0,2).forEach(function(y){ bel.push(y.a+' '+y.typ+' '+y.b+' '+kz(y.o)+'°'); });
-    (r.f.achsnah||[]).slice(0,2).forEach(function(y){ bel.push(y.p+' auf '+y.zu); });
-    h+='<div class="do-kern"><div class="nr">Kernthema '+(i+1)+' · Gewicht '+r.relB+
-      (r.faktor>1?' · durch den Bezug angehoben':'')+'</div>'+
+    (r.f.planeten||[]).slice(0,4).forEach(function(y){
+      bel.push(doFuell(DT.belPlanet,{pl:y.p,n:y.haus})); });
+    (r.f.aspekte||[]).slice(0,2).forEach(function(y){
+      bel.push(doFuell(DT.belAspekt,{a:y.a,typ:y.typ,b:y.b,orb:kz(y.o)})); });
+    (r.f.achsnah||[]).slice(0,2).forEach(function(y){
+      bel.push(doFuell(DT.belAchse,{pl:y.p,zu:y.zu})); });
+    h+='<div class="do-kern"><div class="nr">'+
+      doFuell(DT.kernNr,{i:(i+1),g:r.relB})+(r.faktor>1?DT.kernHoch:'')+'</div>'+
       '<div class="tt">'+r.t.n+'</div><p>'+r.t.kern+'</p>'+
-      /* Die Hinweise sind aus der Coaching-Praxis geschrieben. In privaten
-         Bezügen bleiben sie brauchbar, aber sie heißen dann nicht „arbeiten". */
-      '<p><b>'+({klientin:'Wie du hier arbeitest:',selbst:'Dein Hebel:'}[B.klasse]
-        ||'Der Hebel — aus der Coaching-Praxis, auch privat brauchbar:')+'</b> '+r.t.hilfe+'</p>'+
-      (bel.length?'<div class="bel ac-tech">'+bel.join(' · ')+'</div>':'')+
-      ' <a href="'+r.t.s+'">Raum öffnen →</a></div>';
+      '<p><b>'+(DT.hebel[B.klasse]||DT.hebelSonst)+'</b> '+r.t.hilfe+'</p>'+
+      (bel.length?'<div class="bel ac-tech">'+bel.join(DT.punkte)+'</div>':'')+
+      doFuell(DT.raumLink,{s:r.t.s})+'</div>';
   });
   return h;
 }
 
 /* ── 4 · Die Häuser, die euch verbinden ───────────────────── */
 function bauHaeuser(P,B){
-  var h='<div class="do-ab"><h3>Die Häuser, die euer Verhältnis tragen</h3>'+
-   '<div class="sub7">Nicht jedes Haus geht dich etwas an. Diese schon — sie sind es, '+
-   'in denen sich ein Verhältnis dieser Art abspielt.</div><div class="do-haeuser">';
+  var h='<div class="do-ab"><h3>'+DT.haeuserTitel+'</h3>'+
+   '<div class="sub7">'+DT.haeuserSub+'</div><div class="do-haeuser">';
   B.haus.forEach(function(hh){
     var z=zeichenDesHauses(P,hh), hr=HERR[z], hrH=(P[hr]!==undefined)?haus(P,P[hr]):null;
     var drin=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto','Chiron','Lilith']
       .filter(function(k){ return P[k]!==undefined&&P[k]!==null&&haus(P,P[k])===hh; });
-    h+='<div class="dh"><div class="nr">'+hh+'. Haus</div>'+
+    h+='<div class="dh"><div class="nr">'+doHaus(hh)+'</div>'+
       '<div class="na">'+HT[hh-1]+'</div>'+
-      '<div class="ze">'+GLY[z]+' '+SIGNS[z]+' · Herrscher '+hr+(hrH?' im '+hrH+'.':'')+'</div>'+
-      '<div class="be">'+(drin.length?drin.join(', '):'<i>leer — läuft über '+hr+' im '+(hrH||'?')+'. Haus</i>')+'</div>'+
+      '<div class="ze">'+(hrH?doFuell(DT.hausZeichenHaus,{glyphe:GLY[z],zeichen:SIGNS[z],pl:hr,n:hrH})
+                             :doFuell(DT.hausZeichen,{glyphe:GLY[z],zeichen:SIGNS[z],pl:hr}))+'</div>'+
+      '<div class="be">'+(drin.length?drin.join(DT.komma)
+        :doFuell(DT.hausLeer,{pl:hr,n:(hrH||'?')}))+'</div>'+
       '</div>';
   });
   h+='</div>';
@@ -265,11 +297,13 @@ function bauHaeuser(P,B){
   B.punkte.forEach(function(k){
     if(P[k]===undefined||P[k]===null) return;
     var z=zi(P[k]), w=(k==='ASC')?'':wuerde(k,z);
-    pz.push('<li><b>'+k+' in '+SIGNS[z]+'</b>'+(k!=='ASC'?', '+haus(P,P[k])+'. Haus':'')+
-      (w?' <span class="ac-tech">— '+WNAME[w]+', '+PRON[k]+' '+WDEUT[w]+'</span>':'')+'</li>');
+    pz.push('<li>'+doFuell(DT.punktZeile,{pl:k,zeichen:SIGNS[z]})+
+      (k!=='ASC'?doFuell(DT.punktHaus,{n:haus(P,P[k])}):'')+
+      (w?doFuell(DT.punktWuerde,{wuerde:WNAME[w],pron:DT.pron[k],
+        deutung:WDEUT[w]}):'')+'</li>');
   });
-  if(pz.length) h+='<p style="margin-top:14px"><b>Über diese Stellungen läuft bei „'+esc(B.n)+
-    '" das Verhältnis:</b></p><ul class="do-li">'+pz.join('')+'</ul>';
+  if(pz.length) h+='<p style="margin-top:14px">'+
+    doFuell(DT.punkteKopf,{bezug:esc(B.n)})+'</p><ul class="do-li">'+pz.join('')+'</ul>';
   h+='</div>';
   return h;
 }
@@ -277,19 +311,20 @@ function bauHaeuser(P,B){
 /* ── 5 · Wo es klemmt — Saturn und Chiron, je nach Bezug ──── */
 function bauKlemmt(P,B){
   var hs=haus(P,P.Saturn), zs=zi(P.Saturn), ws=wuerde('Saturn',zs);
-  var h='<div class="do-ab"><h3>Wo es klemmt</h3>'+
-   '<div class="sub7">Saturn, Chiron und die engsten harten Aspekte — gelesen für dein Verhältnis zu dieser Person.</div>'+
-   '<div class="do-stell"><span class="p">Saturn in '+SIGNS[zs]+'</span>'+
-     '<span class="f">'+hs+'. Haus · '+HT[hs-1]+'</span>'+
+  var h='<div class="do-ab"><h3>'+DT.klemmtTitel+'</h3>'+
+   '<div class="sub7">'+DT.klemmtSub+'</div>'+
+   '<div class="do-stell"><span class="p">'+
+     doFuell(DT.stellPl,{pl:'Saturn',zeichen:SIGNS[zs]})+'</span>'+
+     '<span class="f">'+doFuell(DT.stellHaus,{n:hs,titel:HT[hs-1]})+'</span>'+
      (ws?'<span class="o ac-tech">'+WNAME[ws]+'</span>':'')+'</div>'+
    '<p>'+SATURN_BEZUG[B.klasse]+'</p>'+
-   '<p class="ac-tech">Sachlich: Der Beweisdruck sitzt in '+HT[hs-1]+'. Was diese Person dort tut, '+
-   'macht sie gründlich und selten mit dem Gefühl, dass es reicht.</p>';
+   '<p class="ac-tech">'+doFuell(DT.saturnTech,{titel:HT[hs-1]})+'</p>';
 
   if(P.Chiron!==undefined&&P.Chiron!==null){
     var hc=haus(P,P.Chiron);
-    h+='<div class="do-stell"><span class="p">Chiron in '+SIGNS[zi(P.Chiron)]+'</span>'+
-      '<span class="f">'+hc+'. Haus · '+HT[hc-1]+'</span></div>'+
+    h+='<div class="do-stell"><span class="p">'+
+      doFuell(DT.stellPl,{pl:'Chiron',zeichen:SIGNS[zi(P.Chiron)]})+'</span>'+
+      '<span class="f">'+doFuell(DT.stellHaus,{n:hc,titel:HT[hc-1]})+'</span></div>'+
       '<p>'+CHIRON_BEZUG[B.klasse]+'</p>';
   }
   var hart=[];
@@ -301,12 +336,10 @@ function bauKlemmt(P,B){
   });
   hart.sort(function(u,v){return u.x.o-v.x.o;});
   if(hart.length){
-    var HD={Saturn:'Druck und Begrenzung',Pluto:'Macht und Intensität',
-     Uranus:'Unruhe und Abbruch',Neptun:'Unschärfe und Auflösung'};
-    h+='<p><b>Die engsten Spannungen:</b> '+hart.slice(0,3).map(function(y){
-      return y.a+' '+y.x.typ+' '+y.b+' <span class="ac-grad">('+kz(y.x.o)+'°)</span> — '+HD[y.b]+' trifft auf '+y.a;
-    }).join('; ')+'. Diese Achsen lösen sich nicht auf. Die Arbeit besteht darin, beide Seiten '+
-    'abwechselnd zu bedienen, statt eine gewinnen zu lassen.</p>';
+    h+='<p>'+DT.spannKopf+hart.slice(0,3).map(function(y){
+      return doFuell(DT.spannZeile,{a:y.a,typ:doWinkel(y.x.typ),b:y.b,
+        orb:kz(y.x.o),deut:DT.hartDeut[y.b],a2:y.a});
+    }).join(DT.spannTrenner)+DT.spannSchluss+'</p>';
   }
   h+='</div>';
   return h;
@@ -319,31 +352,30 @@ function bauMuster(P){
     var x=aspekt(P,M.a,M.b,M.max);
     if(!x) return;
     if(M.hart && x.art!=='hart') return;
-    tr.push('<li><b>'+M.n+'</b><span class="q ac-tech">'+M.a+' '+x.typ+' '+M.b+
-      ' <span class="ac-grad">'+kz(x.o)+'°</span></span>'+M.t+'</li>');
+    tr.push('<li>'+doFuell(DT.musterZeile,{name:M.n,a:M.a,typ:doWinkel(x.typ),
+      b:M.b,orb:kz(x.o),text:M.t})+'</li>');
   });
   var h12=['Sonne','Mond','Merkur','Venus','Mars','Saturn','Neptun','Pluto'].filter(function(k){
     return P[k]!==undefined&&P[k]!==null&&haus(P,P[k])===12; });
-  if(h12.length>=2) tr.push('<li><b>Vieles läuft verdeckt</b><span class="q ac-tech">'+
-    h12.join(', ')+' im 12. Haus</span>Energie wird verbraucht, ohne dass die Person es bemerkt — '+
-    'Erschöpfung kommt plötzlich statt angekündigt.</li>');
+  if(h12.length>=2) tr.push('<li>'+doFuell(DT.musterVerdeckt,
+    {wer:h12.join(DT.komma),n:12})+'</li>');
   if(!tr.length) return '';
-  return '<div class="do-ab"><h3>Hinweise auf Belastungsmuster</h3>'+
-   '<div class="sub7">Keine Diagnosen. Konstellationen, die erfahrungsgemäß mit bestimmten '+
-   'Alltagsschwierigkeiten einhergehen — brauchbar als Frage, nicht als Befund.</div>'+
+  return '<div class="do-ab"><h3>'+DT.musterTitel+'</h3>'+
+   '<div class="sub7">'+DT.musterSub+'</div>'+
    '<ul class="do-muster">'+tr.join('')+'</ul></div>';
 }
 
 /* ── 7 · Konflikt, Einstiege, Grenze ──────────────────────── */
 function bauSchluss(P,B){
   var K=KONFLIKT[B.klasse];
-  var h='<div class="do-ab"><h3>Wenn es schwierig wird</h3>'+
-   '<p>'+K.t+'</p><div class="dk voll"><b>Was hilft</b>'+K.tun+'</div></div>';
-  h+='<div class="do-ab"><h3>Gesprächseinstiege</h3>'+
-   '<div class="sub7">Drei Fragen, die zu diesem Verhältnis passen — nicht zu jedem.</div>'+
+  var h='<div class="do-ab"><h3>'+DT.schwierigTitel+'</h3>'+
+   '<p>'+K.t+'</p><div class="dk voll"><b>'+DT.schwierigTun+'</b>'+K.tun+'</div></div>';
+  h+='<div class="do-ab"><h3>'+DT.einstiegTitel+'</h3>'+
+   '<div class="sub7">'+DT.einstiegSub+'</div>'+
    '<ul class="do-fragen">'+EINSTIEG[B.klasse].map(function(f){
      return '<li>'+f+'</li>'; }).join('')+'</ul></div>';
-  h+='<div class="do-grenze"><div class="k">Die Grenze</div><p>'+GRENZE[B.klasse]+'</p></div>';
+  h+='<div class="do-grenze"><div class="k">'+DT.grenzeTitel+'</div><p>'+
+   GRENZE[B.klasse]+'</p></div>';
   return h;
 }
 
@@ -353,7 +385,7 @@ function zeigen(){
   if(!p){ el('dossier').innerHTML=''; return; }
   var B=BEZUG[bezug]||BEZUG.klientin;
   var P;
-  try{ P=chartVon(p); }catch(e){ el('dossier').innerHTML='<p>Chart ließ sich nicht rechnen.</p>'; return; }
+  try{ P=chartVon(p); }catch(e){ el('dossier').innerHTML='<p>'+DT.rechenFehler+'</p>'; return; }
   el('dossier').innerHTML =
     bauKopf(P,p,B) + bauStellung(B) + bauBau(P,B) + bauUmgang(P,B) +
     bauThemen(P,B) + bauHaeuser(P,B) + bauKlemmt(P,B) + bauMuster(P) + bauSchluss(P,B);
@@ -366,9 +398,7 @@ function wahlZeichnen(){
   try{ alle=AC_P.alle()||[]; }catch(e){}
   box.innerHTML='';
   if(!alle.length){
-    box.innerHTML='<p class="do-leer">Noch kein Profil angelegt. '+
-      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und Geburtsort '+
-      'kann das Dossier nichts rechnen, weil alles an den Häusern hängt.</p>';
+    box.innerHTML='<p class="do-leer">'+DT.leer+'</p>';
     el('dobezug').innerHTML=''; el('dossier').innerHTML='';
     return;
   }
@@ -386,7 +416,7 @@ function wahlZeichnen(){
 function bezugZeichnen(){
   var box=el('dobezug'), p=profil();
   if(!p){ box.innerHTML=''; return; }
-  var h='<div class="bz-k">In welchem Verhältnis stehst du zu dieser Person?</div><div class="bz-reihe">';
+  var h='<div class="bz-k">'+DT.bezugFrage+'</div><div class="bz-reihe">';
   BEZUG_FOLGE.forEach(function(k){
     h+='<button type="button" class="bzb'+(k===bezug?' ist':'')+'" data-b="'+k+'">'+
       esc(BEZUG[k].n)+'</button>';

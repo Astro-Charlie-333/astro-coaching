@@ -1,22 +1,22 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fang bei dir an · Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 html{-webkit-text-size-adjust:100%;}
 body{margin:0;background:var(--creme);color:var(--tinte);
@@ -82,8 +82,8 @@ svg.rad{display:block;width:100%;height:auto;max-width:440px;margin:0 auto;}
 
 /* — vereinheitlichte Typografie — */
 body{font-family:var(--sans)!important;}
-h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
-h1{font-weight:300!important;letter-spacing:-.01em;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:500!important;}
+h1{font-weight:600!important;letter-spacing:-.025em;}
 h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
 .eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
  text-transform:uppercase;color:var(--messing);font-weight:500;}
@@ -108,13 +108,13 @@ a{color:var(--nacht);}
  border:1px solid var(--linie,#E9DECF);border-radius:12px;box-shadow:0 8px 24px rgba(40,30,20,.13);
  max-height:270px;overflow-y:auto;display:none;}
 .ortliste.auf{display:block;}
-.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--linie,#EBE1D2);
- padding:10px 13px;cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.35;}
+.ortliste button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--linie,#E6DECF);
+ padding:10px 13px;cursor:pointer;font-family:inherit;font-size:14.5px;color:var(--tinte,#1B1B1B);line-height:1.35;}
 .ortliste button:last-child{border-bottom:0;}
-.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg,#E9EDF4);}
-.ortliste .land{font-size:12px;color:var(--leise,#6B6259);}
-.ortok{font-size:12.5px;color:var(--leise,#6B6259);margin-top:5px;line-height:1.45;}
-.ortok b{color:var(--tinte,#231F1A);}
+.ortliste button:hover,.ortliste button.aktiv{background:var(--nacht-bg,#DCE6FB);}
+.ortliste .land{font-size:12px;color:var(--leise,#5E584D);}
+.ortok{font-size:12.5px;color:var(--leise,#5E584D);margin-top:5px;line-height:1.45;}
+.ortok b{color:var(--tinte,#1B1B1B);}
 
 .ac-profilbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:var(--nacht-bg);
  border:1px solid #D3D9E6;border-radius:14px;padding:10px 15px;margin:16px 0 4px;font-size:14px;}
@@ -186,8 +186,8 @@ a{color:var(--nacht);}
 </head><body>
 <div class="leiste"><div class="leiste-inner">
   <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-    <circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+    <circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+    <circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
   <span class="marke">Astro-Charlie</span>
   <a class="zurueck" href="index.html">← Startseite</a>
 </div></div>
@@ -414,10 +414,10 @@ function radZeichnen(P){
   for(var i=0;i<12;i++){
     var a=basis+i*30,p1=pos(a,154),p2=pos(a,192);
     s.appendChild(EL('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:'#E9DECF','stroke-width':1.2}));
-    var m=pos(a+15,173),t=EL('text',{x:m[0],y:m[1]+6,'text-anchor':'middle','font-size':17,fill:'#9A7235'});
+    var m=pos(a+15,173),t=EL('text',{x:m[0],y:m[1]+6,'text-anchor':'middle','font-size':17,fill:'#C8441A'});
     t.textContent=GL[Math.floor(norm(a)/30)];s.appendChild(t);
     var q1=pos(a,118),q2=pos(a,154),main=(i%3===0);
-    s.appendChild(EL('line',{x1:q1[0],y1:q1[1],x2:q2[0],y2:q2[1],stroke:main?'#2E3A5C':'#E9DECF','stroke-width':main?1.8:1}));
+    s.appendChild(EL('line',{x1:q1[0],y1:q1[1],x2:q2[0],y2:q2[1],stroke:main?'#1B1B1B':'#E9DECF','stroke-width':main?1.8:1}));
     var hn=pos(a+15,132),ht=EL('text',{x:hn[0],y:hn[1]+4,'text-anchor':'middle','font-size':10.5,fill:'#8B8177'});
     ht.textContent=(i+1);s.appendChild(ht);
   }
@@ -428,11 +428,11 @@ function radZeichnen(P){
     while(benutzt.some(function(b){return Math.abs(norm(b.l-l+180)-180)<9 && Math.abs(b.r-r)<12;})) r-=19;
     benutzt.push({l:l,r:r});
     var p=pos(l,r);
-    var t=EL('text',{x:p[0],y:p[1]+7,'text-anchor':'middle','font-size':20,fill:'#2E3A5C'});
+    var t=EL('text',{x:p[0],y:p[1]+7,'text-anchor':'middle','font-size':20,fill:'#1B1B1B'});
     t.textContent=GLY[k];s.appendChild(t);
   });
   [['ASC',P.ASC],['MC',P.MC]].forEach(function(x){
-    var p=pos(x[1],205),t=EL('text',{x:p[0],y:p[1]+4,'text-anchor':'middle','font-size':11,fill:'#9A7235'});
+    var p=pos(x[1],205),t=EL('text',{x:p[0],y:p[1]+4,'text-anchor':'middle','font-size':11,fill:'#C8441A'});
     t.textContent=x[0];s.appendChild(t);
   });
 }
@@ -440,7 +440,7 @@ function radZeichnen(P){
 function mondSVG(w){
   var k=Math.cos(w*Math.PI/180),re=w<180;
   var d='M 60 14 A 46 46 0 0 '+(re?1:0)+' 60 106 A '+(46*Math.abs(k)).toFixed(2)+' 46 0 0 '+(re?(k>0?0:1):(k>0?1:0))+' 60 14 Z';
-  return '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" fill="#2E3A5C"/>'+
+  return '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" fill="#1B1B1B"/>'+
    '<path d="'+d+'" fill="#F5E6C8"/><circle cx="60" cy="60" r="46" fill="none" stroke="#E9DECF" stroke-width="2"/></svg>';
 }
 function phase(w){if(w<20)return 'Neumond';if(w<70)return 'zunehmende Sichel';if(w<110)return 'erstes Viertel';
@@ -546,7 +546,7 @@ function AC_ortFeld(inputId, listId, statusId){
     inp.value=o.name+(o.alt?' ('+o.alt+')':'')+', '+o.land;
     if(st) st.innerHTML='Gew&auml;hlt: <b>'+o.name+', '+o.land+'</b> &middot; '+
       o.lat.toFixed(2)+'&deg;, '+o.lon.toFixed(2)+'&deg; &middot; Zeitzone '+o.tz+
-      ' <span style="color:var(--messing,#9A7235)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
+      ' <span style="color:var(--messing,#C8441A)">(Sommerzeit wird automatisch ber&uuml;cksichtigt)</span>';
     zu();
     try{ localStorage.setItem('ac_ort', JSON.stringify(o)); }catch(e){}
   }

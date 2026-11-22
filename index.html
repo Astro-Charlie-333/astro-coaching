@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="de"><head>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#FCF7EF">
+<meta name="theme-color" content="#F6F1E7">
 <link rel="icon" type="image/png" sizes="192x192" href="symbol-192.png">
 <link rel="apple-touch-icon" href="symbol-180.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -10,34 +10,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jetzt &middot; Astro-Charlie</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="profil.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --creme:#FCF7EF; --papier:#FFFDFA; --tinte:#231F1A; --leise:#6B6259;
-  --linie:#EBE1D2; --linie-stark:#DDD0BC;
-  --nacht:#2E3A5C; --messing:#9A7235;
-  --nacht-bg:#E9EDF4; --messing-bg:#F7EFE1;
-  --teal:#3D6B62; --pflaume:#6A4A62; --rost:#A05A3A; --rose:#8A575B;
+  --creme:#F6F1E7; --papier:#FFFFFF; --tinte:#1B1B1B; --leise:#5E584D;
+  --linie:#E6DECF; --linie-stark:#D3C9B6;
+  --nacht:#1B1B1B; --messing:#C8441A;
+  --nacht-bg:#DCE6FB; --messing-bg:#FCE4D6;
+  --teal:#11897C; --pflaume:#1F4FD8; --rost:#D9481C; --rose:#B07A0C;
   --sans:'DM Sans',system-ui,-apple-system,sans-serif;
-  --serif:'Fraunces',Georgia,serif;
+  --serif:'Jost',system-ui,sans-serif;
   /* Kompatibilität: alte Namen zeigen auf die neuen Werte */
-  --bg:#FCF7EF; --card:#F7EFE1; --ink:#231F1A; --soft:#6B6259;
-  --ind:#2E3A5C; --gold:#9A7235; --line:#EBE1D2;
-  --fire:#A05A3A; --earth:#3D6B62; --air:#2E3A5C; --water:#6A4A62;
-  --flow:#3D6B62; --tense:#A05A3A;
+  --bg:#F6F1E7; --card:#FCE4D6; --ink:#1B1B1B; --soft:#5E584D;
+  --ind:#1B1B1B; --gold:#C8441A; --line:#E6DECF;
+  --fire:#D9481C; --earth:#11897C; --air:#1B1B1B; --water:#1F4FD8;
+  --flow:#11897C; --tense:#D9481C;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
 
 .back{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ind);text-decoration:none;margin-bottom:22px;}
 .back:hover{text-decoration:underline;}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
+h1{font-family:'Jost',sans-serif;font-weight:400;font-size:clamp(32px,6.5vw,52px);line-height:1.03;letter-spacing:-.02em;margin-bottom:14px;color:var(--ind);}
 h1 em{font-style:italic;}
 .lede{font-size:16px;color:var(--soft);max-width:640px;line-height:1.7;margin-bottom:8px;}
-h2{font-family:'Fraunces',serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
-h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
+h2{font-family:'Jost',sans-serif;font-size:26px;font-weight:600;margin:38px 0 8px;color:var(--ind);}
+h3{font-family:'Jost',sans-serif;font-size:20px;font-weight:600;margin:24px 0 6px;}
 .sub{font-size:14px;color:var(--soft);margin-bottom:16px;}
 p{margin-bottom:12px;}
 .tip{background:#FBEFE6;border-left:3px solid var(--gold);border-radius:10px;padding:16px 18px;margin:24px 0;font-size:14px;line-height:1.6;color:var(--soft);}
@@ -46,9 +46,9 @@ p{margin-bottom:12px;}
 .foot{margin-top:44px;padding-top:22px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--soft);line-height:1.6;}
 .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;}
 .pill.fire{background:#FBE3DA;color:var(--fire);}
-.pill.earth{background:#E8EDDC;color:var(--earth);}
-.pill.air{background:#DEEBF1;color:var(--air);}
-.pill.water{background:#E6E1F0;color:var(--water);}
+.pill.earth{background:#FCEFD2;color:var(--earth);}
+.pill.air{background:#DCE6FB;color:var(--air);}
+.pill.water{background:#D7EFEB;color:var(--water);}
 a{color:var(--ind);}
 
 .weiter{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:38px 0 0;}
@@ -58,14 +58,14 @@ a{color:var(--ind);}
 .weiter a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(193,68,14,.10);}
 .weiter .lbl{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;
  text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
-.weiter .ttl{font-family:'Fraunces',serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
+.weiter .ttl{font-family:'Jost',sans-serif;font-size:16.5px;font-weight:600;color:var(--ind);line-height:1.25;}
 .weiter .nx{text-align:right;}
 .weiter .end{grid-column:1/-1;text-align:center;}
 
 /* — vereinheitlichte Typografie — */
 body{font-family:var(--sans)!important;}
-h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:400!important;}
-h1{font-weight:300!important;letter-spacing:-.01em;}
+h1,h2,h3,h4,.titel,.nm,.pos{font-family:var(--serif)!important;font-weight:500!important;}
+h1{font-weight:600!important;letter-spacing:-.025em;}
 h1 em{font-style:italic;font-weight:400;color:var(--nacht);}
 .eyebrow,.augenbraue{font-family:var(--sans)!important;font-size:11.5px;letter-spacing:.16em;
  text-transform:uppercase;color:var(--messing);font-weight:500;}
@@ -140,29 +140,60 @@ a{color:var(--nacht);}
 .wrap{max-width:900px;margin:0 auto;padding:46px 26px 90px;}
 
 
+/* Jost mit einstöckigem a, wie Futura auf alten Plakaten */
+h1,h2,h3,h4{font-feature-settings:"ss01";}
+
 /* ── Rad als Bedienfläche ──────────────────────────────────── */
 .kr-huelle{position:relative;}
 .kr-huelle svg{display:block;width:100%;height:auto;}
-.kr-hf{fill:var(--papier,#FFFDFA);stroke:var(--linie,#EBE1D2);stroke-width:1;
+.kr-hf{fill:var(--papier,#FFFFFF);stroke:var(--linie,#E6DECF);stroke-width:1;
  transition:fill .12s ease;}
 .kr-haus.heut .kr-hf{fill:#F3EADA;}
-.kr-haus.ist .kr-hf{fill:var(--nacht,#2E3A5C);}
+.kr-haus.ist .kr-hf{fill:var(--nacht,#1B1B1B);}
 .kr-haus:hover .kr-hf{fill:#EDE4D4;}
-.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#2E3A5C);}
-.kr-hz{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;fill:var(--leise,#6B6259);}
-.kr-haus.heut .kr-hz{fill:var(--messing,#9A7235);font-weight:600;}
+.kr-haus.ist:hover .kr-hf{fill:var(--nacht,#1B1B1B);}
+.kr-hz{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:17px;fill:var(--leise,#5E584D);}
+.kr-haus.heut .kr-hz{fill:var(--messing,#C8441A);font-weight:600;}
 .kr-haus.ist .kr-hz{fill:#fff;font-weight:600;}
 .kr-haus:focus-visible{outline:none;}
-.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#2E3A5C);stroke-width:2.5;}
+.kr-haus:focus-visible .kr-hf{stroke:var(--nacht,#1B1B1B);stroke-width:2.5;}
 .kr-zg{font-size:22px;fill:#fff;}
-.kr-pg{font-size:27px;fill:var(--nacht,#2E3A5C);}
-.kr-strich{stroke:var(--linie-stark,#DDD0BC);stroke-width:.9;}
-.kr-achse{stroke:var(--messing,#9A7235);stroke-width:2;}
-.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#9A7235);}
-.kr-tring{fill:none;stroke:var(--linie-stark,#DDD0BC);stroke-width:1;stroke-dasharray:2 4;}
-.kr-tk{fill:var(--messing-bg,#F7EFE1);stroke:var(--messing,#9A7235);stroke-width:1.2;}
-.kr-tg{font-size:14px;fill:var(--messing,#9A7235);}
+.kr-pg{font-size:27px;fill:var(--nacht,#1B1B1B);}
+.kr-strich{stroke:var(--linie-stark,#D3C9B6);stroke-width:.9;}
+.kr-achse{stroke:var(--messing,#C8441A);stroke-width:2;}
+.kr-al{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11px;fill:var(--messing,#C8441A);}
+.kr-tring{fill:none;stroke:var(--linie-stark,#D3C9B6);stroke-width:1;stroke-dasharray:2 4;}
+.kr-tk{fill:var(--messing-bg,#FCE4D6);stroke:var(--messing,#C8441A);stroke-width:1.2;}
+.kr-tg{font-size:14px;fill:var(--messing,#C8441A);}
 @media (prefers-reduced-motion:reduce){.kr-hf{transition:none;}}
+
+/* 18.11. Midcentury: schwarzer Zeichenring, Planeten als Farbscheiben */
+.kr-zf{fill:#1B1B1B;}
+.kr-zg{font-size:20px;fill:#F6F1E7;}
+.kr-pk{stroke:#FFFFFF;stroke-width:2;}
+.kr-pg{font-size:21px;}
+.kr-hf{fill:#FFFFFF;stroke:#E6DECF;}
+.kr-haus.heut .kr-hf{fill:#DCE6FB;}
+.kr-haus.ist .kr-hf{fill:#1F4FD8;}
+.kr-haus.ist:hover .kr-hf{fill:#1F4FD8;}
+.kr-haus:hover .kr-hf{fill:#F2EBDD;}
+.kr-hz{font-size:15px;font-weight:500;}
+.kr-haus.heut .kr-hz{fill:#1F4FD8;}
+.kr-strich{stroke:#D3C9B6;}
+.kr-asp{stroke-width:1.6;opacity:.8;}
+.kr-asp-w{stroke:#1F4FD8;}
+.kr-asp-h{stroke:#F05A28;}
+.kr-achse{stroke:#F05A28;stroke-width:2.5;}
+.kr-al{fill:#F05A28;font-weight:600;}
+
+/* Die Rubrik-Formen (Midcentury × Art Toy), für Dein Bild und Jetzt */
+.form{flex:none;display:inline-block;}
+.form-halb{width:30px;height:15px;border-radius:30px 30px 0 0;background:#F05A28;}
+.form-zwei{width:16px;height:16px;border-radius:50%;background:#F2B33D;box-shadow:11px 0 0 #1F4FD8;margin-right:11px;}
+.form-stern{color:#F05A28;font-size:24px;line-height:1;}
+.form-eck{width:20px;height:20px;border-radius:5px;background:#11897C;}
+.form-ring{width:22px;height:22px;border-radius:50%;border:6px solid #1F4FD8;box-sizing:border-box;}
+.form-mond{width:22px;height:22px;border-radius:50%;background:#1B1B1B;box-shadow:inset -8px 0 0 #F2B33D;}
 
 /* ── Heute: nach Zeitdruck geordnet ─────────────────────────── */
 .ht-wrap{max-width:1180px;margin:0 auto;padding:0 26px 100px;}
@@ -172,34 +203,34 @@ a{color:var(--nacht);}
 /* Der Kopf war ein dunkler Block und hat die Seite schwer gemacht.
    Jetzt trägt er dieselbe warme Farbe wie alles andere, nur eine
    Spur dichter, mit einer Messinglinie als Abschluss. */
-.ht-jetzt{background:linear-gradient(180deg,#FFFDFA 0%,#F7EFE1 100%);
-  color:var(--tinte,#231F1A);margin:0 0 4px;border-bottom:1px solid var(--linie-stark,#DDD0BC);}
+.ht-jetzt{background:linear-gradient(180deg,#FFFFFF 0%,#FCE4D6 100%);
+  color:var(--tinte,#1B1B1B);margin:0 0 4px;border-bottom:1px solid var(--linie-stark,#D3C9B6);}
 .ht-jetzt-in{max-width:1180px;margin:0 auto;padding:40px 26px 36px;
  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,300px);gap:44px;align-items:center;}
 @media(max-width:900px){.ht-jetzt-in{grid-template-columns:1fr;gap:26px;padding:30px 20px 28px;}}
 @media(max-width:620px){.ht-jetzt-in{padding:26px 17px 24px;}}
 .ht-tag{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
- letter-spacing:.06em;color:var(--messing,#9A7235);margin-bottom:14px;}
-.ht-gruss{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(30px,5.4vw,52px);
- font-weight:300;line-height:1.04;letter-spacing:-.025em;color:var(--nacht,#2E3A5C);margin:0 0 16px;}
-.ht-gruss em{font-style:italic;color:var(--messing,#9A7235);}
-.ht-satz{font-size:clamp(16.5px,2vw,19.5px);line-height:1.62;color:var(--tinte,#231F1A);
+ letter-spacing:.06em;color:var(--messing,#C8441A);margin-bottom:14px;}
+.ht-gruss{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:clamp(30px,5.4vw,52px);
+ font-weight:300;line-height:1.04;letter-spacing:-.025em;color:var(--nacht,#1B1B1B);margin:0 0 16px;}
+.ht-gruss em{font-style:italic;color:var(--messing,#C8441A);}
+.ht-satz{font-size:clamp(16.5px,2vw,19.5px);line-height:1.62;color:var(--tinte,#1B1B1B);
  max-width:52ch;margin:0 0 22px;}
-.ht-satz b{color:var(--nacht,#2E3A5C);font-weight:600;}
+.ht-satz b{color:var(--nacht,#1B1B1B);font-weight:600;}
 .ht-techzeile{margin:-8px 0 20px;max-width:52ch;font-family:var(--mono,'JetBrains Mono',monospace);
- font-size:12.5px;line-height:1.6;color:var(--leise,#6B6259);
- background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ font-size:12.5px;line-height:1.6;color:var(--leise,#5E584D);
+ background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);
  border-radius:9px;padding:8px 11px;}
 .ht-fakten{margin:0;}
 .ht-fin{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
- background:var(--linie,#EBE1D2);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
+ background:var(--linie,#E6DECF);border:1px solid var(--linie,#E6DECF);border-radius:14px;
  overflow:hidden;}
-.ht-f{background:var(--papier,#FFFDFA);padding:12px 14px;min-width:0;}
-.ht-f .l{font-size:12px;color:var(--leise,#6B6259);margin-bottom:3px;}
-.ht-f .v{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;
- color:var(--nacht,#2E3A5C);line-height:1.15;}
-.ht-f .z{font-size:12.3px;color:var(--leise,#6B6259);margin-top:3px;}
-.ht-radmini{background:var(--nacht,#2E3A5C);border-radius:20px;padding:14px;
+.ht-f{background:var(--papier,#FFFFFF);padding:12px 14px;min-width:0;}
+.ht-f .l{font-size:12px;color:var(--leise,#5E584D);margin-bottom:3px;}
+.ht-f .v{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:19px;
+ color:var(--nacht,#1B1B1B);line-height:1.15;}
+.ht-f .z{font-size:12.3px;color:var(--leise,#5E584D);margin-top:3px;}
+.ht-radmini{background:var(--nacht,#1B1B1B);border-radius:20px;padding:14px;
  box-shadow:0 10px 30px rgba(46,58,92,.16);}
 
 .ht-radmini .kr-hz{fill:rgba(244,239,230,.55);font-size:18px;}
@@ -210,42 +241,42 @@ a{color:var(--nacht);}
 .ht-radmini .kr-al{fill:#E8C97A;}
 .ht-radmini .kr-tring{stroke:rgba(255,255,255,.2);}
 .ht-radmini .kr-tk{fill:#E8C97A;stroke:none;}
-.ht-radmini .kr-tg{fill:var(--nacht,#2E3A5C);font-size:13px;}
+.ht-radmini .kr-tg{fill:var(--nacht,#1B1B1B);font-size:13px;}
 .ht-radmini .kr-zg{font-size:16px;fill:rgba(244,239,230,.82);}
 /* Ohne Zeichenband trägt der Kontrast zwischen besetzt und leer die Aussage.
    Leere Häuser nur angedeutet, besetzte deutlich in Gold. */
 .ht-radmini .kr-hf{fill:rgba(255,255,255,.03);stroke:rgba(255,255,255,.1);}
 .ht-radmini .kr-haus.heut .kr-hf{fill:rgba(232,201,122,.46);stroke:rgba(232,201,122,.75);}
-.ht-radmini .kr-haus.heut .kr-hz{fill:#2E3A5C;font-weight:600;}
-.ht-radu{font-size:12.4px;color:var(--leise,#6B6259);text-align:center;padding-top:9px;}
-.ht-radu a{color:var(--messing,#9A7235);}
+.ht-radmini .kr-haus.heut .kr-hz{fill:#1B1B1B;font-weight:600;}
+.ht-radu{font-size:12.4px;color:var(--leise,#5E584D);text-align:center;padding-top:9px;}
+.ht-radu a{color:var(--messing,#C8441A);}
 
 /* ── Die lautesten Bereiche ───────────────────────────────── */
 .ht-ber{display:grid;gap:9px;margin-bottom:14px;}
 .ht-b{display:grid;grid-template-columns:11px 1fr auto;gap:12px;align-items:baseline;
- background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);border-radius:14px;
- padding:15px 18px;text-decoration:none;color:var(--tinte,#231F1A);
+ background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);border-radius:14px;
+ padding:15px 18px;text-decoration:none;color:var(--tinte,#1B1B1B);
  transition:transform .14s ease,box-shadow .14s ease;}
 .ht-b:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(46,58,92,.09);}
 .ht-bp{width:9px;height:9px;border-radius:50%;display:block;margin-top:6px;}
-.ht-bn{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.5px;
- color:var(--nacht,#2E3A5C);line-height:1.2;}
+.ht-bn{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:19.5px;
+ color:var(--nacht,#1B1B1B);line-height:1.2;}
 .ht-bl{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10px;letter-spacing:.1em;
  text-transform:uppercase;white-space:nowrap;}
-.ht-bs{grid-column:2/-1;font-size:14.5px;color:var(--leise,#6B6259);line-height:1.55;margin-top:3px;}
+.ht-bs{grid-column:2/-1;font-size:14.5px;color:var(--leise,#5E584D);line-height:1.55;margin-top:3px;}
 .ht-bz{grid-column:2/-1;display:block;margin-top:9px;padding-top:10px;
- border-top:1px solid var(--linie,#EBE1D2);}
+ border-top:1px solid var(--linie,#E6DECF);}
 .ht-bz-l{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:4px;}
-.ht-bt{display:block;font-size:14.5px;color:var(--tinte,#231F1A);line-height:1.6;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:4px;}
+.ht-bt{display:block;font-size:14.5px;color:var(--tinte,#1B1B1B);line-height:1.6;}
 .ht-bbis{grid-column:2/-1;display:block;margin-top:9px;}
-.ht-bbis-v{display:block;font-size:14px;color:var(--nacht,#2E3A5C);line-height:1.5;}
-.ht-b-gross{padding:21px 24px;border-color:var(--nacht,#2E3A5C);
+.ht-bbis-v{display:block;font-size:14px;color:var(--nacht,#1B1B1B);line-height:1.5;}
+.ht-b-gross{padding:21px 24px;border-color:var(--nacht,#1B1B1B);
  box-shadow:0 3px 18px rgba(46,58,92,.07);}
 .ht-b-gross .ht-bn{font-size:25px;}
 .ht-b-gross .ht-bs{font-size:16px;margin-top:5px;}
 .ht-b-gross .ht-bt{font-size:15.5px;}
-.ht-mehr{display:inline-block;font-size:14.5px;color:var(--messing,#9A7235);text-decoration:none;}
+.ht-mehr{display:inline-block;font-size:14.5px;color:var(--messing,#C8441A);text-decoration:none;}
 .ht-mehr:hover{text-decoration:underline;}
 @media(max-width:620px){
  .ht-b{grid-template-columns:9px 1fr auto;gap:9px;padding:13px 14px;}
@@ -253,9 +284,9 @@ a{color:var(--nacht);}
 }
 
 /* Abschnittsköpfe */
-.ht-h{font-family:var(--serif,Fraunces,Georgia,serif);font-size:clamp(25px,3.6vw,34px);
- font-weight:300;letter-spacing:-.02em;color:var(--nacht,#2E3A5C);margin:52px 0 4px;}
-.ht-sub{font-size:14.6px;color:var(--leise,#6B6259);margin:0 0 22px;max-width:62ch;line-height:1.6;}
+.ht-h{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:clamp(25px,3.6vw,34px);
+ font-weight:300;letter-spacing:-.02em;color:var(--nacht,#1B1B1B);margin:52px 0 4px;}
+.ht-sub{font-size:14.6px;color:var(--leise,#5E584D);margin:0 0 22px;max-width:62ch;line-height:1.6;}
 
 /* Band 2 — Diese Woche. Eine echte Folge, also eine Zeitachse. */
 /* ═══ Die großen Themen ═════════════════════════════════════
@@ -265,385 +296,465 @@ a{color:var(--nacht);}
 .ht-themen{display:grid;gap:13px;margin:4px 0 10px;}
 @media(min-width:760px){.ht-themen{grid-template-columns:repeat(2,minmax(0,1fr));}
  .ht-themen .th-gross{grid-column:1/-1;}}
-.th{border:1px solid var(--linie,#EBE1D2);border-radius:15px;
- background:var(--papier,#FFFDFA);padding:15px 16px 13px;}
-.th-gross{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);color:#F3EFE7;}
+.th{border:1px solid var(--linie,#E6DECF);border-radius:15px;
+ background:var(--papier,#FFFFFF);padding:15px 16px 13px;}
+.th-gross{background:var(--nacht,#1B1B1B);border-color:var(--nacht,#1B1B1B);color:#F3EFE7;}
 .th-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
  margin-bottom:3px;}
-.th-n{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
- color:var(--nacht,#2E3A5C);line-height:1.22;margin:0;}
-.th-gross .th-n{color:#FFFDFA;font-size:23.5px;}
+.th-n{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:21px;font-weight:500;
+ color:var(--nacht,#1B1B1B);line-height:1.22;margin:0;}
+.th-gross .th-n{color:#FFFFFF;font-size:23.5px;}
 .th-marke{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
- letter-spacing:.04em;color:var(--messing,#9A7235);white-space:nowrap;
- border:1px solid var(--linie,#EBE1D2);border-radius:999px;padding:3px 9px;}
-.th-gross .th-marke{color:#E8C98D;border-color:rgba(232,201,141,.45);}
+ letter-spacing:.04em;color:var(--messing,#C8441A);white-space:nowrap;
+ border:1px solid var(--linie,#E6DECF);border-radius:999px;padding:3px 9px;}
+.th-gross .th-marke{color:#F2B33D;border-color:rgba(232,201,141,.45);}
 .th-spanne{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.6px;
- color:var(--leise,#6B6259);margin-bottom:9px;}
+ color:var(--leise,#5E584D);margin-bottom:9px;}
 .th-gross .th-spanne{color:#BFC7DC;}
 .th-bahn{position:relative;height:3px;border-radius:2px;margin:0 0 11px;
- background:var(--linie,#EBE1D2);}
+ background:var(--linie,#E6DECF);}
 .th-gross .th-bahn{background:rgba(243,239,231,.22);}
 .th-bahn .th-jetzt{position:absolute;top:-3.5px;width:10px;height:10px;border-radius:50%;
- margin-left:-5px;background:var(--messing,#9A7235);}
-.th-gross .th-bahn .th-jetzt{background:#E8C98D;}
-.th-was{font-size:14.6px;line-height:1.62;color:var(--leise,#6B6259);margin:0 0 8px;}
+ margin-left:-5px;background:var(--messing,#C8441A);}
+.th-gross .th-bahn .th-jetzt{background:#F2B33D;}
+.th-was{font-size:14.6px;line-height:1.62;color:var(--leise,#5E584D);margin:0 0 8px;}
 .th-gross .th-was{color:#C7CEE0;}
-.th-tut{font-size:15.4px;line-height:1.66;color:var(--tinte,#231F1A);margin:0 0 10px;}
+.th-tut{font-size:15.4px;line-height:1.66;color:var(--tinte,#1B1B1B);margin:0 0 10px;}
 .th-gross .th-tut{color:#F3EFE7;}
-.th-z{font-size:14.4px;line-height:1.58;margin:0 0 7px;color:var(--tinte,#231F1A);}
+.th-z{font-size:14.4px;line-height:1.58;margin:0 0 7px;color:var(--tinte,#1B1B1B);}
 .th-gross .th-z{color:#E6E3DA;}
 .th-z b{display:block;font-size:11.4px;font-weight:400;letter-spacing:.07em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:2px;}
-.th-gross .th-z b{color:#E8C98D;}
-.th-z a{color:var(--messing,#9A7235);}
-.th-gross .th-z a{color:#E8C98D;}
-.th-dazu{margin-top:9px;border-top:1px solid var(--linie,#EBE1D2);padding-top:8px;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:2px;}
+.th-gross .th-z b{color:#F2B33D;}
+.th-z a{color:var(--messing,#C8441A);}
+.th-gross .th-z a{color:#F2B33D;}
+.th-dazu{margin-top:9px;border-top:1px solid var(--linie,#E6DECF);padding-top:8px;}
 .th-gross .th-dazu{border-top-color:rgba(243,239,231,.2);}
-.th-dazu summary{cursor:pointer;font-size:13.2px;color:var(--leise,#6B6259);
+.th-dazu summary{cursor:pointer;font-size:13.2px;color:var(--leise,#5E584D);
  list-style:none;}
 .th-gross .th-dazu summary{color:#BFC7DC;}
 .th-dazu summary::-webkit-details-marker{display:none;}
 .th-dazu summary::before{content:'＋ ';font-family:var(--mono,'JetBrains Mono',monospace);}
 .th-dazu[open] summary::before{content:'− ';}
-.th-dazu p{font-size:14px;line-height:1.62;margin:7px 0 0;color:var(--tinte,#231F1A);}
+.th-dazu p{font-size:14px;line-height:1.62;margin:7px 0 0;color:var(--tinte,#1B1B1B);}
 .th-gross .th-dazu p{color:#E6E3DA;}
 .th-tech{margin-top:9px;font-family:var(--mono,'JetBrains Mono',monospace);
- font-size:11.8px;line-height:1.5;color:var(--leise,#6B6259);}
+ font-size:11.8px;line-height:1.5;color:var(--leise,#5E584D);}
 .th-gross .th-tech{color:#A9B2C8;}
-.th-langsam{font-size:13.8px;line-height:1.6;color:var(--tinte,#231F1A);
+.th-langsam{font-size:13.8px;line-height:1.6;color:var(--tinte,#1B1B1B);
  margin:2px 0 0;max-width:64ch;}
-.th-langsam b{font-weight:400;color:var(--nacht,#2E3A5C);}
-.th-langsam .th-leise{color:var(--leise,#6B6259);}
+.th-langsam b{font-weight:400;color:var(--nacht,#1B1B1B);}
+.th-langsam .th-leise{color:var(--leise,#5E584D);}
 
 /* Die Woche als Woche: Form, Band, dann die Tage. */
-.wo-form{font-family:var(--serif,Fraunces,Georgia,serif);font-size:19.4px;line-height:1.45;
- color:var(--nacht,#2E3A5C);margin:0 0 14px;max-width:46ch;}
+.wo-form{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:19.4px;line-height:1.45;
+ color:var(--nacht,#1B1B1B);margin:0 0 14px;max-width:46ch;}
 .wo-band{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;
  margin:0 0 26px;max-width:470px;}
 .wo-band .wt{display:flex;flex-direction:column;align-items:center;gap:3px;
  padding:7px 2px 8px;border-radius:11px;text-decoration:none;
- border:1px solid var(--linie,#EBE1D2);background:var(--papier,#FFFDFA);}
+ border:1px solid var(--linie,#E6DECF);background:var(--papier,#FFFFFF);}
 .wo-band .wt-k{font-family:var(--mono,'JetBrains Mono',monospace);font-size:10.8px;
- letter-spacing:.07em;text-transform:uppercase;color:var(--leise,#6B6259);}
-.wo-band .wt-z{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.6px;
- font-weight:500;color:var(--nacht,#2E3A5C);line-height:1;}
+ letter-spacing:.07em;text-transform:uppercase;color:var(--leise,#5E584D);}
+.wo-band .wt-z{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:17.6px;
+ font-weight:500;color:var(--nacht,#1B1B1B);line-height:1;}
 .wo-band .wt-p{display:flex;gap:2.5px;height:5px;align-items:center;}
-.wo-band .wt-p i{width:5px;height:5px;border-radius:50%;background:var(--messing,#9A7235);}
+.wo-band .wt-p i{width:5px;height:5px;border-radius:50%;background:var(--messing,#C8441A);}
 .wo-band .wt.leer{background:transparent;border-style:dashed;}
-.wo-band .wt.leer .wt-z{color:var(--leise,#6B6259);font-weight:400;}
-.wo-band .wt.ist{border-color:var(--nacht,#2E3A5C);box-shadow:inset 0 0 0 1px var(--nacht,#2E3A5C);}
-.wo-band a.wt:hover{border-color:var(--messing,#9A7235);}
+.wo-band .wt.leer .wt-z{color:var(--leise,#5E584D);font-weight:400;}
+.wo-band .wt.ist{border-color:var(--nacht,#1B1B1B);box-shadow:inset 0 0 0 1px var(--nacht,#1B1B1B);}
+.wo-band a.wt:hover{border-color:var(--messing,#C8441A);}
 .wo-grp{margin:0 0 4px;}
 .wo-gh{display:flex;align-items:baseline;gap:9px;margin:0 0 13px;
- padding-bottom:6px;border-bottom:1px solid var(--linie,#EBE1D2);}
+ padding-bottom:6px;border-bottom:1px solid var(--linie,#E6DECF);}
 @media(min-width:701px){.wo-gh{margin-left:-124px;}}
-.wo-gh b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18.6px;font-weight:500;
- color:var(--nacht,#2E3A5C);}
+.wo-gh b{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:18.6px;font-weight:500;
+ color:var(--nacht,#1B1B1B);}
 .wo-gh span{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;
- color:var(--leise,#6B6259);}
-.wo-danach{font-size:14.2px;line-height:1.6;color:var(--leise,#6B6259);
+ color:var(--leise,#5E584D);}
+.wo-danach{font-size:14.2px;line-height:1.6;color:var(--leise,#5E584D);
  margin:6px 0 0;max-width:64ch;}
-.wo-danach b{font-weight:400;color:var(--nacht,#2E3A5C);}
+.wo-danach b{font-weight:400;color:var(--nacht,#1B1B1B);}
 .ht-woche{position:relative;padding-left:124px;}
 @media(max-width:700px){.ht-woche{padding-left:0;}}
 .ht-woche::before{content:'';position:absolute;left:97px;top:6px;bottom:18px;width:1px;
- background:var(--linie-stark,#DDD0BC);}
+ background:var(--linie-stark,#D3C9B6);}
 @media(max-width:700px){.ht-woche::before{display:none;}}
 .we{position:relative;padding:0 0 26px;}
 .we .wann{position:absolute;left:-124px;top:1px;width:92px;text-align:right;
- font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;color:var(--leise,#6B6259);
+ font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.4px;color:var(--leise,#5E584D);
  line-height:1.4;}
-.we .wann b{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
- font-weight:500;color:var(--nacht,#2E3A5C);}
+.we .wann b{display:block;font-family:var(--serif,Jost,system-ui,sans-serif);font-size:17px;
+ font-weight:500;color:var(--nacht,#1B1B1B);}
 @media(max-width:700px){.we .wann{position:static;width:auto;text-align:left;margin-bottom:5px;}
  .we .wann b{display:inline;margin-right:8px;}}
 .we::after{content:'';position:absolute;left:-28px;top:7px;width:9px;height:9px;border-radius:50%;
- background:var(--papier,#FFFDFA);border:2px solid var(--linie-stark,#DDD0BC);}
+ background:var(--papier,#FFFFFF);border:2px solid var(--linie-stark,#D3C9B6);}
 @media(max-width:700px){.we::after{display:none;}}
-.we.jetzt::after{background:var(--messing,#9A7235);border-color:var(--messing,#9A7235);}
-.we .tt{font-family:var(--serif,Fraunces,Georgia,serif);font-size:20px;font-weight:500;
- color:var(--nacht,#2E3A5C);line-height:1.3;margin-bottom:5px;}
-.we .tx{font-size:15.1px;line-height:1.66;color:var(--tinte,#231F1A);max-width:64ch;}
+.we.jetzt::after{background:var(--messing,#C8441A);border-color:var(--messing,#C8441A);}
+.we .tt{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:20px;font-weight:500;
+ color:var(--nacht,#1B1B1B);line-height:1.3;margin-bottom:5px;}
+.we .tx{font-size:15.1px;line-height:1.66;color:var(--tinte,#1B1B1B);max-width:64ch;}
 .we .tx b{font-weight:500;}
-.we .wo{display:inline-block;margin-top:7px;font-size:13.6px;color:var(--messing,#9A7235);}
-.we .wo a{color:var(--messing,#9A7235);}
-.we .mit{margin-top:10px;background:var(--messing-bg,#F7EFE1);border-radius:12px;
+.we .wo{display:inline-block;margin-top:7px;font-size:13.6px;color:var(--messing,#C8441A);}
+.we .wo a{color:var(--messing,#C8441A);}
+.we .mit{margin-top:10px;background:var(--messing-bg,#FCE4D6);border-radius:12px;
  padding:11px 14px;font-size:14.3px;line-height:1.58;max-width:64ch;}
-.we .mit b{display:block;font-size:12.6px;color:var(--messing,#9A7235);
+.we .mit b{display:block;font-size:12.6px;color:var(--messing,#C8441A);
  margin-bottom:4px;font-weight:400;}
 
 /* Band 3 — Läuft. Dicht und ruhig. */
-.ht-laeuft{border-top:1px solid var(--linie-stark,#DDD0BC);}
+.ht-laeuft{border-top:1px solid var(--linie-stark,#D3C9B6);}
 .lf{display:grid;grid-template-columns:128px minmax(0,1fr) minmax(0,1.25fr);gap:18px;
- padding:13px 2px;border-bottom:1px solid var(--linie,#EBE1D2);align-items:baseline;}
+ padding:13px 2px;border-bottom:1px solid var(--linie,#E6DECF);align-items:baseline;}
 @media(max-width:760px){.lf{grid-template-columns:1fr;gap:4px;padding:12px 2px;}}
-.lf .p{font-family:var(--serif,Fraunces,Georgia,serif);font-size:17.5px;font-weight:500;
- color:var(--nacht,#2E3A5C);}
-.lf .p i{font-style:normal;color:var(--rost,#A05A3A);font-size:14px;}
-.lf .w{font-size:14.2px;color:var(--leise,#6B6259);line-height:1.5;}
+.lf .p{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:17.5px;font-weight:500;
+ color:var(--nacht,#1B1B1B);}
+.lf .p i{font-style:normal;color:var(--rost,#D9481C);font-size:14px;}
+.lf .w{font-size:14.2px;color:var(--leise,#5E584D);line-height:1.5;}
 .lf .d{font-size:14.4px;line-height:1.55;}
-.lf .d a{color:var(--nacht,#2E3A5C);}
+.lf .d a{color:var(--nacht,#1B1B1B);}
 
 /* Kapazität */
-.ht-kap{margin-top:52px;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+.ht-kap{margin-top:52px;background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);
  border-radius:20px;padding:22px 25px;}
 @media(max-width:620px){.ht-kap{padding:18px 17px;}}
-.ht-kap h3{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;font-weight:500;
- color:var(--nacht,#2E3A5C);margin:0 0 5px;}
-.ht-kap p{font-size:14.6px;color:var(--leise,#6B6259);line-height:1.6;margin:0 0 15px;max-width:60ch;}
+.ht-kap h3{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:21px;font-weight:500;
+ color:var(--nacht,#1B1B1B);margin:0 0 5px;}
+.ht-kap p{font-size:14.6px;color:var(--leise,#5E584D);line-height:1.6;margin:0 0 15px;max-width:60ch;}
 .ht-kapr{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
-.kb{padding:14px 10px;border-radius:14px;border:1px solid var(--linie-stark,#DDD0BC);
- background:var(--creme,#FCF7EF);cursor:pointer;font-family:inherit;text-align:center;}
-.kb:hover{border-color:var(--nacht,#2E3A5C);}
-.kb.ist{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);}
-.kb .n{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:19px;color:var(--nacht,#2E3A5C);line-height:1.2;}
-.kb .u{display:block;font-size:12.6px;color:var(--leise,#6B6259);margin-top:3px;}
+.kb{padding:14px 10px;border-radius:14px;border:1px solid var(--linie-stark,#D3C9B6);
+ background:var(--creme,#F6F1E7);cursor:pointer;font-family:inherit;text-align:center;}
+.kb:hover{border-color:var(--nacht,#1B1B1B);}
+.kb.ist{background:var(--nacht,#1B1B1B);border-color:var(--nacht,#1B1B1B);}
+.kb .n{display:block;font-family:var(--serif,Jost,system-ui,sans-serif);font-size:19px;color:var(--nacht,#1B1B1B);line-height:1.2;}
+.kb .u{display:block;font-size:12.6px;color:var(--leise,#5E584D);margin-top:3px;}
 .kb.ist .n{color:#fff;} .kb.ist .u{color:rgba(244,239,230,.62);}
 
-.ht-leer{background:var(--card,#F7EFE1);border:1px solid var(--linie,#EBE1D2);
+.ht-leer{background:var(--card,#FCE4D6);border:1px solid var(--linie,#E6DECF);
  border-radius:17px;padding:22px 24px;font-size:15.4px;line-height:1.7;margin-top:30px;}
-.ht-nix{font-size:15px;color:var(--leise,#6B6259);padding:14px 2px;}
+.ht-nix{font-size:15px;color:var(--leise,#5E584D);padding:14px 2px;}
 
 
 /* ── Der Aufmacher: das eine Ding mit Datum ───────────────── */
 .ht-auf{margin:16px 0 20px;}
-.ht-auf-k{background:var(--papier,#FFFDFA);border:1px solid var(--nacht,#2E3A5C);
+.ht-auf-k{background:var(--papier,#FFFFFF);border:1px solid var(--nacht,#1B1B1B);
  border-radius:18px;padding:19px 22px;box-shadow:0 4px 20px rgba(46,58,92,.08);}
-.ht-auf-ruhig{border-color:var(--linie,#EBE1D2);box-shadow:none;}
+.ht-auf-ruhig{border-color:var(--linie,#E6DECF);box-shadow:none;}
 .ht-auf-w{font-family:var(--sans,system-ui);font-size:10.5px;letter-spacing:.15em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:7px;}
-.ht-auf-t{font-family:var(--serif,Fraunces,Georgia,serif);font-weight:400;
- font-size:clamp(21px,2.6vw,27px);line-height:1.22;color:var(--nacht,#2E3A5C);margin:0 0 9px;}
-.ht-auf-x{font-size:15.5px;line-height:1.62;color:var(--tinte,#231F1A);margin:0;}
-.ht-auf-x b{color:var(--nacht,#2E3A5C);font-weight:600;}
-.ht-auf-m{margin-top:12px;padding:11px 14px;background:var(--bg,#FCF7EF);border-radius:11px;
- font-size:14px;line-height:1.55;color:var(--tinte,#231F1A);}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:7px;}
+.ht-auf-t{font-family:var(--serif,Jost,system-ui,sans-serif);font-weight:400;
+ font-size:clamp(21px,2.6vw,27px);line-height:1.22;color:var(--nacht,#1B1B1B);margin:0 0 9px;}
+.ht-auf-x{font-size:15.5px;line-height:1.62;color:var(--tinte,#1B1B1B);margin:0;}
+.ht-auf-x b{color:var(--nacht,#1B1B1B);font-weight:600;}
+.ht-auf-m{margin-top:12px;padding:11px 14px;background:var(--bg,#F6F1E7);border-radius:11px;
+ font-size:14px;line-height:1.55;color:var(--tinte,#1B1B1B);}
 .ht-auf-m b{display:block;font-family:var(--sans,system-ui);font-size:9.5px;letter-spacing:.14em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;font-weight:500;}
-.ht-auf-bis{margin-top:11px;font-size:13.5px;color:var(--leise,#6B6259);}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:3px;font-weight:500;}
+.ht-auf-bis{margin-top:11px;font-size:13.5px;color:var(--leise,#5E584D);}
 .ht-auf-tech{margin-top:11px;font-family:var(--mono,'JetBrains Mono',monospace);font-size:12px;
- line-height:1.55;color:var(--leise,#6B6259);}
+ line-height:1.55;color:var(--leise,#5E584D);}
 
 /* ── Einstellen: zugeklappt, unter dem Inhalt ─────────────── */
-.ht-stell{margin-top:54px;background:var(--papier,#FFFDFA);
- border:1px solid var(--linie,#EBE1D2);border-radius:18px;padding:14px 20px;}
+.ht-stell{margin-top:54px;background:var(--papier,#FFFFFF);
+ border:1px solid var(--linie,#E6DECF);border-radius:18px;padding:14px 20px;}
 .ht-stell summary{cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
  list-style:none;}
 .ht-stell summary::-webkit-details-marker{display:none;}
-.ht-stell summary::before{content:"+";font-family:var(--mono,monospace);color:var(--messing,#9A7235);
+.ht-stell summary::before{content:"+";font-family:var(--mono,monospace);color:var(--messing,#C8441A);
  margin-right:2px;}
 .ht-stell[open] summary::before{content:"–";}
-.ht-stell-t{font-family:var(--sans,system-ui);font-size:14.5px;color:var(--nacht,#2E3A5C);}
-.ht-stell-u{font-size:13px;color:var(--leise,#6B6259);}
+.ht-stell-t{font-family:var(--sans,system-ui);font-size:14.5px;color:var(--nacht,#1B1B1B);}
+.ht-stell-u{font-size:13px;color:var(--leise,#5E584D);}
 .ht-stell-in{padding-top:16px;}
 .ht-stell-in .ht-kap{margin-top:14px;}
 
 .we-oben{opacity:.6;}
 .we-oben .tx{font-style:italic;}
-.ht-bwhin{font-size:13.8px;line-height:1.55;color:var(--messing,#9A7235);
- background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+.ht-bwhin{font-size:13.8px;line-height:1.55;color:var(--messing,#C8441A);
+ background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);
  border-radius:12px;padding:10px 14px;margin:0 0 14px;}
 
 /* ═══ Was gerade läuft ══════════════════════════════════════ */
 .ht-lauf{display:grid;gap:11px;margin:4px 0 8px;}
-.lf{display:block;background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
- border-radius:16px;padding:16px 19px;text-decoration:none;color:var(--tinte,#231F1A);
+.lf{display:block;background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);
+ border-radius:16px;padding:16px 19px;text-decoration:none;color:var(--tinte,#1B1B1B);
  transition:border-color .14s ease;}
-.lf:hover{border-color:var(--nacht,#2E3A5C);}
-.lf-haupt{border-color:var(--nacht,#2E3A5C);padding:21px 24px;
+.lf:hover{border-color:var(--nacht,#1B1B1B);}
+.lf-haupt{border-color:var(--nacht,#1B1B1B);padding:21px 24px;
  box-shadow:0 3px 16px rgba(46,58,92,.06);}
 .lf-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:8px;}
-.lf-ber{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18px;
- color:var(--nacht,#2E3A5C);}
+.lf-ber{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:18px;
+ color:var(--nacht,#1B1B1B);}
 .lf-haupt .lf-ber{font-size:22px;}
 .lf-wann{margin-left:auto;font-family:var(--mono,'JetBrains Mono',monospace);
- font-size:11.5px;color:var(--messing,#9A7235);white-space:nowrap;}
-.lf-was{font-size:15px;line-height:1.6;margin:0;color:var(--tinte,#231F1A);}
+ font-size:11.5px;color:var(--messing,#C8441A);white-space:nowrap;}
+.lf-was{font-size:15px;line-height:1.6;margin:0;color:var(--tinte,#1B1B1B);}
 .lf-haupt .lf-was{font-size:16.5px;}
 /* Die Bahn des Fensters: wo stehen wir darin, und wo ist der Höhepunkt. */
 .lf-bahn{position:relative;height:3px;border-radius:2px;margin:13px 0 0;
- background:var(--linie,#EBE1D2);}
+ background:var(--linie,#E6DECF);}
 .lf-bahn i{position:absolute;top:50%;transform:translate(-50%,-50%);display:block;}
-.lf-jetzt{width:9px;height:9px;border-radius:50%;background:var(--nacht,#2E3A5C);
- box-shadow:0 0 0 3px var(--papier,#FFFDFA);}
-.lf-exakt{width:2px;height:11px;background:var(--messing,#9A7235);border-radius:1px;}
+.lf-jetzt{width:9px;height:9px;border-radius:50%;background:var(--nacht,#1B1B1B);
+ box-shadow:0 0 0 3px var(--papier,#FFFFFF);}
+.lf-exakt{width:2px;height:11px;background:var(--messing,#C8441A);border-radius:1px;}
 .lf-tech{margin:11px 0 0;font-family:var(--mono,'JetBrains Mono',monospace);
- font-size:11.5px;line-height:1.5;color:var(--leise,#6B6259);}
+ font-size:11.5px;line-height:1.5;color:var(--leise,#5E584D);}
 @media(max-width:560px){
  .lf,.lf-haupt{padding:15px 15px;}
  .lf-wann{margin-left:0;width:100%;}
 }
-.lf-auch{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--leise,#6B6259);}
+.lf-auch{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--leise,#5E584D);}
 
 /* Sonnennähe gehört zum Planeten, nicht neben ihn. */
 .th-auch{font-size:13.8px;line-height:1.58;margin:0 0 9px;padding:8px 11px;
- border-radius:10px;background:var(--messing-bg,#F7EFE1);color:var(--tinte,#231F1A);}
+ border-radius:10px;background:var(--messing-bg,#FCE4D6);color:var(--tinte,#1B1B1B);}
 .th-gross .th-auch{background:rgba(232,201,141,.14);color:#E6E3DA;}
 
 /* Die vier Ecken, an denen es klemmt. */
 .th-felder{list-style:none;margin:0 0 11px;padding:0;display:grid;gap:7px;}
-.th-felder li{font-size:14.6px;line-height:1.55;color:var(--tinte,#231F1A);
- padding-left:13px;border-left:2px solid var(--linie,#EBE1D2);}
+.th-felder li{font-size:14.6px;line-height:1.55;color:var(--tinte,#1B1B1B);
+ padding-left:13px;border-left:2px solid var(--linie,#E6DECF);}
 .th-gross .th-felder li{color:#E6E3DA;border-left-color:rgba(232,201,141,.4);}
 .th-felder li b{display:block;font-size:12.2px;font-weight:400;letter-spacing:.06em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:1px;}
-.th-gross .th-felder li b{color:#E8C98D;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:1px;}
+.th-gross .th-felder li b{color:#F2B33D;}
 
 /* Verschiebbares verschieben — mit der Grenze dazu. */
 .th-schnitt{margin:0 0 10px;padding:11px 13px;border-radius:11px;
- background:var(--messing-bg,#F7EFE1);}
+ background:var(--messing-bg,#FCE4D6);}
 .th-gross .th-schnitt{background:rgba(232,201,141,.13);}
 .th-schnitt b{display:block;font-size:13.2px;font-weight:500;
- color:var(--nacht,#2E3A5C);margin-bottom:4px;}
-.th-gross .th-schnitt b{color:#E8C98D;}
+ color:var(--nacht,#1B1B1B);margin-bottom:4px;}
+.th-gross .th-schnitt b{color:#F2B33D;}
 .th-schnitt p{font-size:14.2px;line-height:1.58;margin:0 0 7px;
- color:var(--tinte,#231F1A);}
+ color:var(--tinte,#1B1B1B);}
 .th-gross .th-schnitt p{color:#E6E3DA;}
-.th-schnitt .th-grenze{font-size:13px;color:var(--leise,#6B6259);
- border-top:1px solid var(--linie,#EBE1D2);padding-top:7px;margin-bottom:0;}
+.th-schnitt .th-grenze{font-size:13px;color:var(--leise,#5E584D);
+ border-top:1px solid var(--linie,#E6DECF);padding-top:7px;margin-bottom:0;}
 .th-gross .th-schnitt .th-grenze{color:#BFC7DC;border-top-color:rgba(243,239,231,.2);}
 .th-schnitt .th-dazu{border-top:0;padding-top:4px;margin-top:4px;}
 
 /* ═══ Schlaf und Bewegung ═══════════════════════════════════ */
-.ht-koerper{border:1px solid var(--linie,#EBE1D2);border-radius:15px;
- background:var(--papier,#FFFDFA);padding:15px 16px 14px;margin:4px 0 10px;}
+.ht-koerper{border:1px solid var(--linie,#E6DECF);border-radius:15px;
+ background:var(--papier,#FFFFFF);padding:15px 16px 14px;margin:4px 0 10px;}
 .kp-kopf{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;
- padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid var(--linie,#EBE1D2);}
+ padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid var(--linie,#E6DECF);}
 .kp-vor{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.2px;
- letter-spacing:.08em;text-transform:uppercase;color:var(--messing,#9A7235);}
-.kp-kopf b{font-family:var(--serif,Fraunces,Georgia,serif);font-size:21px;
- font-weight:500;color:var(--nacht,#2E3A5C);}
-.kp-ber{font-size:13.4px;color:var(--leise,#6B6259);}
+ letter-spacing:.08em;text-transform:uppercase;color:var(--messing,#C8441A);}
+.kp-kopf b{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:21px;
+ font-weight:500;color:var(--nacht,#1B1B1B);}
+.kp-ber{font-size:13.4px;color:var(--leise,#5E584D);}
 .kp-zwei{display:grid;gap:14px;}
 @media(min-width:620px){.kp-zwei{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .kp-t{font-size:11.4px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;
- color:var(--messing,#9A7235);margin-bottom:4px;}
-.kp-k p{font-size:15px;line-height:1.62;margin:0 0 7px;color:var(--tinte,#231F1A);}
-.kp-mess{font-size:13.8px;line-height:1.58;color:var(--leise,#6B6259);
- border-left:2px solid var(--linie-stark,#DDD0BC);padding-left:10px;}
-.kp-treffer{margin-top:14px;padding-top:12px;border-top:1px solid var(--linie,#EBE1D2);}
+ color:var(--messing,#C8441A);margin-bottom:4px;}
+.kp-k p{font-size:15px;line-height:1.62;margin:0 0 7px;color:var(--tinte,#1B1B1B);}
+.kp-mess{font-size:13.8px;line-height:1.58;color:var(--leise,#5E584D);
+ border-left:2px solid var(--linie-stark,#D3C9B6);padding-left:10px;}
+.kp-treffer{margin-top:14px;padding-top:12px;border-top:1px solid var(--linie,#E6DECF);}
 .kp-tr{margin-bottom:10px;}
-.kp-tr b{display:block;font-family:var(--serif,Fraunces,Georgia,serif);font-size:17px;
- font-weight:500;color:var(--nacht,#2E3A5C);margin-bottom:4px;}
-.kp-tr p{font-size:14.8px;line-height:1.6;margin:0 0 5px;color:var(--tinte,#231F1A);}
-.kp-tr .kp-rat{color:var(--nacht,#2E3A5C);}
+.kp-tr b{display:block;font-family:var(--serif,Jost,system-ui,sans-serif);font-size:17px;
+ font-weight:500;color:var(--nacht,#1B1B1B);margin-bottom:4px;}
+.kp-tr p{font-size:14.8px;line-height:1.6;margin:0 0 5px;color:var(--tinte,#1B1B1B);}
+.kp-tr .kp-rat{color:var(--nacht,#1B1B1B);}
 .kp-tech{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.6px;
- line-height:1.5;color:var(--leise,#6B6259);}
+ line-height:1.5;color:var(--leise,#5E584D);}
 .kp-herkunft{margin-top:13px;display:grid;gap:2px;}
 .kp-selbst{margin-top:12px;padding:11px 13px;border-radius:11px;
- background:var(--messing-bg,#F7EFE1);font-size:14.2px;line-height:1.6;
- color:var(--tinte,#231F1A);}
+ background:var(--messing-bg,#FCE4D6);font-size:14.2px;line-height:1.6;
+ color:var(--tinte,#1B1B1B);}
 .kp-selbst b{display:block;font-size:12.2px;font-weight:400;letter-spacing:.06em;
- text-transform:uppercase;color:var(--messing,#9A7235);margin-bottom:3px;}
+ text-transform:uppercase;color:var(--messing,#C8441A);margin-bottom:3px;}
 
 /* ═══ Was dein Bild gerade trifft ═══════════════════════════ */
 .ht-treffer{display:grid;gap:11px;margin:4px 0 10px;}
 @media(min-width:760px){.ht-treffer{grid-template-columns:repeat(2,minmax(0,1fr));}
  .ht-treffer .tr-gross{grid-column:1/-1;}}
-.tr{border:1px solid var(--linie,#EBE1D2);border-radius:14px;
- background:var(--papier,#FFFDFA);padding:13px 15px 11px;
- border-left:3px solid var(--linie-stark,#DDD0BC);}
-.tr-hart{border-left-color:var(--messing,#9A7235);}
+.tr{border:1px solid var(--linie,#E6DECF);border-radius:14px;
+ background:var(--papier,#FFFFFF);padding:13px 15px 11px;
+ border-left:3px solid var(--linie-stark,#D3C9B6);}
+.tr-hart{border-left-color:var(--messing,#C8441A);}
 .tr-weich{border-left-color:#8FA6B8;}
-.tr-gross{background:var(--nacht,#2E3A5C);border-color:var(--nacht,#2E3A5C);
- border-left-color:#E8C98D;color:#F3EFE7;}
+.tr-gross{background:var(--nacht,#1B1B1B);border-color:var(--nacht,#1B1B1B);
+ border-left-color:#F2B33D;color:#F3EFE7;}
 .tr-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
-.tr-n{font-family:var(--serif,Fraunces,Georgia,serif);font-size:18.6px;font-weight:500;
- color:var(--nacht,#2E3A5C);line-height:1.25;margin:0;}
-.tr-gross .tr-n{color:#FFFDFA;font-size:22px;}
+.tr-n{font-family:var(--serif,Jost,system-ui,sans-serif);font-size:18.6px;font-weight:500;
+ color:var(--nacht,#1B1B1B);line-height:1.25;margin:0;}
+.tr-gross .tr-n{color:#FFFFFF;font-size:22px;}
 .tr-nah{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.6px;
- color:var(--messing,#9A7235);}
-.tr-gross .tr-nah{color:#E8C98D;}
-.tr-bahn{height:3px;border-radius:2px;background:var(--linie,#EBE1D2);margin:8px 0 10px;
+ color:var(--messing,#C8441A);}
+.tr-gross .tr-nah{color:#F2B33D;}
+.tr-bahn{height:3px;border-radius:2px;background:var(--linie,#E6DECF);margin:8px 0 10px;
  overflow:hidden;}
 .tr-gross .tr-bahn{background:rgba(243,239,231,.2);}
-.tr-bahn i{display:block;height:100%;background:var(--messing,#9A7235);border-radius:2px;}
-.tr-gross .tr-bahn i{background:#E8C98D;}
-.tr-s{font-size:15.2px;line-height:1.64;margin:0 0 9px;color:var(--tinte,#231F1A);}
+.tr-bahn i{display:block;height:100%;background:var(--messing,#C8441A);border-radius:2px;}
+.tr-gross .tr-bahn i{background:#F2B33D;}
+.tr-s{font-size:15.2px;line-height:1.64;margin:0 0 9px;color:var(--tinte,#1B1B1B);}
 .tr-gross .tr-s{color:#F3EFE7;font-size:16px;}
 .tr-unten{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;font-size:13.2px;}
-.tr-ber{color:var(--messing,#9A7235);}
-.tr-gross .tr-ber{color:#E8C98D;}
-.tr-t{color:var(--leise,#6B6259);}
+.tr-ber{color:var(--messing,#C8441A);}
+.tr-gross .tr-ber{color:#F2B33D;}
+.tr-t{color:var(--leise,#5E584D);}
 .tr-gross .tr-t{color:#BFC7DC;}
 .tr-r{font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
- color:var(--leise,#6B6259);border:1px solid var(--linie,#EBE1D2);
+ color:var(--leise,#5E584D);border:1px solid var(--linie,#E6DECF);
  border-radius:999px;padding:2px 8px;}
 .tr-gross .tr-r{color:#BFC7DC;border-color:rgba(243,239,231,.3);}
 .tr-tech{margin-top:8px;font-family:var(--mono,'JetBrains Mono',monospace);
- font-size:11.4px;line-height:1.5;color:var(--leise,#6B6259);}
+ font-size:11.4px;line-height:1.5;color:var(--leise,#5E584D);}
 .tr-gross .tr-tech{color:#A9B2C8;}
 .tr-mehr{display:block;width:100%;margin:2px 0 12px;padding:10px;
- background:transparent;border:1px dashed var(--linie-stark,#DDD0BC);border-radius:11px;
- font-family:inherit;font-size:13.8px;color:var(--messing,#9A7235);cursor:pointer;}
+ background:transparent;border:1px dashed var(--linie-stark,#D3C9B6);border-radius:11px;
+ font-family:inherit;font-size:13.8px;color:var(--messing,#C8441A);cursor:pointer;}
 .tr-mehr:hover{border-style:solid;}
 .trs-t{font-size:11.4px;letter-spacing:.07em;text-transform:uppercase;
- color:var(--messing,#9A7235);margin-bottom:3px;}
-.trs-s{font-size:13.6px;line-height:1.55;color:var(--leise,#6B6259);margin:0 0 8px;
+ color:var(--messing,#C8441A);margin-bottom:3px;}
+.trs-s{font-size:13.6px;line-height:1.55;color:var(--leise,#5E584D);margin:0 0 8px;
  max-width:64ch;}
 .trs-l{list-style:none;margin:0;padding:0;display:grid;gap:4px;}
 .trs-l li{display:flex;justify-content:space-between;gap:12px;font-size:14px;
- padding:5px 0;border-bottom:1px solid var(--linie,#EBE1D2);}
-.trs-l li b{font-weight:400;color:var(--nacht,#2E3A5C);}
+ padding:5px 0;border-bottom:1px solid var(--linie,#E6DECF);}
+.trs-l li b{font-weight:400;color:var(--nacht,#1B1B1B);}
 .trs-l li span{font-family:var(--mono,'JetBrains Mono',monospace);font-size:12.2px;
- color:var(--leise,#6B6259);}
+ color:var(--leise,#5E584D);}
 
 /* ═══ Der Zeitstrahl ════════════════════════════════════════ */
 .ht-strahl{position:relative;padding-left:22px;margin:4px 0 10px;}
 .ht-strahl::before{content:'';position:absolute;left:6px;top:8px;bottom:26px;width:2px;
- background:var(--linie-stark,#DDD0BC);border-radius:1px;}
+ background:var(--linie-stark,#D3C9B6);border-radius:1px;}
 .st-jetzt{position:relative;font-family:var(--mono,'JetBrains Mono',monospace);
  font-size:11.4px;letter-spacing:.06em;text-transform:uppercase;
- color:var(--messing,#9A7235);margin-bottom:12px;}
+ color:var(--messing,#C8441A);margin-bottom:12px;}
 .st-jetzt i{position:absolute;left:-21px;top:3px;width:11px;height:11px;border-radius:50%;
- background:var(--messing,#9A7235);border:2px solid var(--creme,#FCF7EF);}
-.st-m{position:relative;font-family:var(--serif,Fraunces,Georgia,serif);font-size:15px;
- font-weight:500;color:var(--leise,#6B6259);margin:16px 0 7px;}
+ background:var(--messing,#C8441A);border:2px solid var(--creme,#F6F1E7);}
+.st-m{position:relative;font-family:var(--serif,Jost,system-ui,sans-serif);font-size:15px;
+ font-weight:500;color:var(--leise,#5E584D);margin:16px 0 7px;}
 .st-m::before{content:'';position:absolute;left:-19px;top:7px;width:7px;height:7px;
- border-radius:50%;background:var(--creme,#FCF7EF);
- border:2px solid var(--linie-stark,#DDD0BC);}
-.st-e{position:relative;border:1px solid var(--linie,#EBE1D2);border-radius:12px;
- background:var(--papier,#FFFDFA);margin-bottom:7px;
- border-left:3px solid var(--linie-stark,#DDD0BC);}
-.st-e.st-hart{border-left-color:var(--messing,#9A7235);}
+ border-radius:50%;background:var(--creme,#F6F1E7);
+ border:2px solid var(--linie-stark,#D3C9B6);}
+.st-e{position:relative;border:1px solid var(--linie,#E6DECF);border-radius:12px;
+ background:var(--papier,#FFFFFF);margin-bottom:7px;
+ border-left:3px solid var(--linie-stark,#D3C9B6);}
+.st-e.st-hart{border-left-color:var(--messing,#C8441A);}
 .st-e.st-weich{border-left-color:#8FA6B8;}
 .st-e summary{display:flex;align-items:baseline;gap:9px;padding:10px 13px;
  cursor:pointer;list-style:none;}
 .st-e summary::-webkit-details-marker{display:none;}
 .st-d{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:13.4px;
- color:var(--messing,#9A7235);min-width:2.2em;}
-.st-n{flex:1;font-family:var(--serif,Fraunces,Georgia,serif);font-size:16.4px;
- font-weight:500;color:var(--nacht,#2E3A5C);line-height:1.3;}
+ color:var(--messing,#C8441A);min-width:2.2em;}
+.st-n{flex:1;font-family:var(--serif,Jost,system-ui,sans-serif);font-size:16.4px;
+ font-weight:500;color:var(--nacht,#1B1B1B);line-height:1.3;}
 .st-w{flex:none;font-family:var(--mono,'JetBrains Mono',monospace);font-size:11.4px;
- color:var(--leise,#6B6259);}
-.st-e[open] summary{border-bottom:1px solid var(--linie,#EBE1D2);}
+ color:var(--leise,#5E584D);}
+.st-e[open] summary{border-bottom:1px solid var(--linie,#E6DECF);}
 .st-i{padding:10px 13px 11px;}
-.st-i p{font-size:14.8px;line-height:1.62;margin:0 0 7px;color:var(--tinte,#231F1A);}
-.st-i .st-dg{background:var(--messing-bg,#F7EFE1);border-radius:9px;padding:8px 11px;
+.st-i p{font-size:14.8px;line-height:1.62;margin:0 0 7px;color:var(--tinte,#1B1B1B);}
+.st-i .st-dg{background:var(--messing-bg,#FCE4D6);border-radius:9px;padding:8px 11px;
  font-size:14px;}
-.st-legende{font-size:12.8px;line-height:1.5;color:var(--leise,#6B6259);
+.st-legende{font-size:12.8px;line-height:1.5;color:var(--leise,#5E584D);
  margin:14px 0 0;max-width:64ch;}
-.st-i .st-schon{font-style:italic;color:var(--leise,#6B6259);}
+.st-i .st-schon{font-style:italic;color:var(--leise,#5E584D);}
+
+/* ── 18.11.: Bereiche als Raster, die Themen dreispaltig ─────── */
+@media(min-width:760px){
+ .ht-ber{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+ .ht-ber>*:first-child{grid-column:1/-1;}
+ .ht-ber>*:first-child:nth-last-child(even)~*:last-child{grid-column:1/-1;}
+}
+@media(min-width:1040px){
+ .ht-themen{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(min-width:760px){
+ .ht-treffer>*:first-child:nth-last-child(even)~*:last-child{grid-column:1/-1;}
+}
+/* Auf dem Telefon schiebt das Rad die Woche zwei Bildschirme nach unten */
+@media(max-width:900px){.ht-radmini{max-width:280px;margin:0 auto;}}
+
+/* ═══ 18.11. abends: Midcentury × Art Toy ══════════════════ */
+:root{--ko:#1F4FD8; --or:#F05A28; --se:#F2B33D; --pe:#11897C; --ti:#1B1B1B; --pa:#F6F1E7;}
+.ht-jetzt{background:var(--pa);border-bottom:0;}
+@media(min-width:901px){.ht-jetzt-in{grid-template-columns:minmax(0,1.5fr) minmax(0,340px);padding-top:26px;}}
+.ht-held{position:relative;overflow:hidden;background:var(--ko);color:#fff;border-radius:34px;padding:30px 30px 26px;}
+.ht-held>*{position:relative;}
+.ht-held-k1{position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:var(--or);}
+.ht-held-k2{position:absolute;right:60px;top:104px;width:34px;height:34px;border-radius:50%;background:var(--se);}
+.ht-tag{font-family:var(--serif);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px;color:#CFE0FF;}
+.ht-gruss{color:#fff;font-weight:600!important;padding-right:90px;}
+.ht-gruss em{color:var(--se);font-style:normal;}
+.ht-satz,.ht-satz b{color:#fff;}
+.ht-satz{font-size:clamp(16px,1.8vw,18px);margin-bottom:6px;}
+.ht-auf-k{border:0!important;border-radius:24px;box-shadow:none;color:var(--ti);}
+.ht-auf-w{color:var(--or)!important;}
+.ht-techzeile{background:rgba(255,255,255,.12);border:0;color:#E4ECFF;margin-top:12px;}
+@media(max-width:900px){.ht-held{padding:24px 20px 20px;border-radius:28px;}
+ .ht-held-k1{width:160px;height:160px;right:-60px;top:-60px;} .ht-held-k2{right:44px;top:82px;width:28px;height:28px;}
+ .ht-gruss{padding-right:70px;}}
+
+/* Das kleine Rad hell, ohne dunklen Kasten */
+.ht-radmini{background:none;box-shadow:none;padding:0;max-width:320px;margin:0 auto;}
+.ht-radmini .kr-hf{fill:#FFFFFF;stroke:#E6DECF;}
+.ht-radmini .kr-haus.heut .kr-hf{fill:#DCE6FB;stroke:#E6DECF;}
+.ht-radmini .kr-hz{fill:#8C8273;font-size:17px;}
+.ht-radmini .kr-haus.heut .kr-hz{fill:var(--ko);font-weight:600;}
+.ht-radmini .kr-pg{fill:var(--ti);font-size:24px;}
+.ht-radmini .kr-strich{stroke:#D3C9B6;}
+.ht-radmini .kr-achse{stroke:var(--or);}
+.ht-radmini .kr-al{fill:var(--or);}
+.ht-radmini .kr-tring{stroke:#D3C9B6;}
+.ht-radmini .kr-tk{fill:var(--or);stroke:#fff;stroke-width:2;}
+.ht-radmini .kr-tg{fill:#fff;font-size:13px;}
+.ht-radu a{color:var(--ti);font-weight:500;}
+
+/* Überschriften mit Form */
+.ht-h{display:flex;align-items:center;gap:12px;font-weight:600!important;letter-spacing:-.02em;}
+
+/* Karten: weiß, rund, ohne Rahmen; die Farbe trägt die Art */
+.ht-b,.tr,.th,.ht-wk,.ht-k,.ht-strahl li,.st-z{border-color:transparent;}
+.ht-b,.th{border-radius:24px!important;border:0!important;background:#fff;}
+.th-marke{background:var(--ti)!important;color:#fff!important;border:0!important;border-radius:999px;}
+.th-mehr{margin-top:12px;border-top:1px solid #EFE8DB;padding-top:10px;}
+.th-mehr>summary{cursor:pointer;font-weight:600;color:var(--ti);list-style:none;display:flex;align-items:center;gap:8px;min-height:36px;}
+.th-mehr>summary::-webkit-details-marker{display:none;}
+.th-mehr>summary::before{content:"+";width:26px;height:26px;border-radius:50%;background:var(--pa);display:inline-flex;align-items:center;justify-content:center;font-weight:500;}
+.th-mehr[open]>summary::before{content:"–";}
+@media(max-width:900px){.ht-radmini{max-width:250px;}}
+/* Kurz zuerst */
+.kurz{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ht-auf-x.kurz{-webkit-line-clamp:3;}
+.kurz.kurz-auf{display:block;-webkit-line-clamp:unset;overflow:visible;}
+.kurz-k{display:inline-flex;align-items:center;gap:6px;margin:2px 0 8px;padding:3px 12px;border:0;border-radius:999px;
+ background:var(--pa);color:var(--ti);font:inherit;font-size:13px;font-weight:600;cursor:pointer;min-height:28px;}
+.kurz-k:hover{background:#EDE4D3;}
+.ht-held .kurz-k{background:#F6F1E7;}
+/* Neumond und Vollmond: was es bei dir heißt, zuerst */
+.th-pers{background:#DCE6FB;border-radius:18px;padding:12px 14px;margin:10px 0 12px;}
+.th-pers b{display:block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#1F4FD8;margin-bottom:2px;}
+.th-pers a,.th-pers span{font-family:var(--serif);font-size:18px;font-weight:600;color:#1B1B1B;text-decoration:none;}
+.th-pers p{margin:6px 0 0;font-size:15px;line-height:1.5;}
+.th-pers .th-pers-t{font-weight:600;}
+.ht-bw{grid-column:2/-1;display:block;margin:2px 0 6px;}
+.ht-bw-t{display:inline-block;background:#DCE6FB;color:#1B1B1B;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:600;margin-top:4px;}
 
 /* Die Bereichsauswahl. Sieht aus wie die Leiste für den
    Wissensstand daneben — beides sind Einstellungen, die
    plattformweit gelten, und sie sollen als Paar erkennbar sein. */
 .bw-leiste{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
- background:var(--papier,#FFFDFA);border:1px solid var(--linie,#EBE1D2);
+ background:var(--papier,#FFFFFF);border:1px solid var(--linie,#E6DECF);
  border-radius:16px;padding:11px 14px;margin-bottom:14px;}
 .bw-lab{font-family:var(--sans,system-ui);font-size:10px;letter-spacing:.13em;
- text-transform:uppercase;color:var(--messing,#9A7235);flex:none;}
+ text-transform:uppercase;color:var(--messing,#C8441A);flex:none;}
 .bw-knoepfe{display:flex;gap:4px;flex-wrap:wrap;}
 .bw-knoepfe button{font-family:var(--sans,system-ui);font-size:13.5px;
- padding:7px 13px;border:1px solid var(--linie,#EBE1D2);
- background:var(--bg,#FCF7EF);color:var(--tinte,#231F1A);
+ padding:7px 13px;border:1px solid var(--linie,#E6DECF);
+ background:var(--bg,#F6F1E7);color:var(--tinte,#1B1B1B);
  border-radius:16px;cursor:pointer;}
-.bw-knoepfe button:hover{border-color:var(--nacht,#2E3A5C);}
-.bw-knoepfe button[aria-pressed="true"]{background:var(--nacht,#2E3A5C);
- border-color:var(--nacht,#2E3A5C);color:#fff;}
-.bw-knoepfe button.bw-alle[aria-pressed="true"]{background:var(--messing,#9A7235);
- border-color:var(--messing,#9A7235);}
-.bw-tipp{font-size:12.5px;color:var(--leise,#6B6259);margin-left:auto;
+.bw-knoepfe button:hover{border-color:var(--nacht,#1B1B1B);}
+.bw-knoepfe button[aria-pressed="true"]{background:var(--nacht,#1B1B1B);
+ border-color:var(--nacht,#1B1B1B);color:#fff;}
+.bw-knoepfe button.bw-alle[aria-pressed="true"]{background:var(--messing,#C8441A);
+ border-color:var(--messing,#C8441A);}
+.bw-tipp{font-size:12.5px;color:var(--leise,#5E584D);margin-left:auto;
  max-width:46ch;line-height:1.45;}
 @media(max-width:620px){.bw-tipp{margin-left:0;max-width:none;}}
 </style><script src="niveau.js" defer></script>
@@ -651,14 +762,17 @@ a{color:var(--nacht);}
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
 <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="12" cy="12" r="10.5" fill="none" stroke="#9A7235" stroke-width="1"/>
-<circle cx="12" cy="12" r="4" fill="none" stroke="#2E3A5C" stroke-width="1"/></svg>
+<circle cx="12" cy="12" r="10.5" fill="none" stroke="#C8441A" stroke-width="1"/>
+<circle cx="12" cy="12" r="4" fill="none" stroke="#1B1B1B" stroke-width="1"/></svg>
 <a class="ac-marke" href="index.html">Astro-Charlie</a>
 <nav class="ac-nav"><a href="start.html">Start</a><a href="uebersicht.html">Dein Bild</a><a href="index.html" class="ist">Jetzt</a><a href="wissen.html">Wissen</a></nav><a class="ac-ich" href="profile.html">Mein Profil</a>
 </div></div>
 
 <div class="ht-jetzt" id="htjetzt"><div class="ht-jetzt-in">
-  <div>
+  <!-- 18.11. Midcentury: der Tag in einer blauen Fläche, wie auf Dein Bild -->
+  <div class="ht-held">
+    <span class="ht-held-k1" aria-hidden="true"></span>
+    <span class="ht-held-k2" aria-hidden="true"></span>
     <div class="ht-tag" id="httag"></div>
     <h1 class="ht-gruss" id="htgruss">&nbsp;</h1>
     <div class="ht-auf" id="htaufmacher"></div>
@@ -675,6 +789,44 @@ a{color:var(--nacht);}
 
 <div class="ht-wrap" id="htinhalt">
 
+<!-- 18.11.: Erst die Woche, dann was dich gerade trifft, dann die
+     Bereiche. „Was gerade l&auml;uft" ist weg: es sagte dasselbe wie
+     „Was dein Bild gerade trifft", nur unter Bereichsnamen, und
+     dieselben Bereiche standen weiter unten ein drittes Mal. -->
+<!-- Die Woche als Woche.
+     Bis zum 28.10. stand hier eine Liste von zehn Tagen. Eine Liste
+     beantwortet „was kommt als N&auml;chstes" &mdash; nicht „wie ist meine
+     Woche". Jetzt steht zuerst ihre Form, dann die Tage.
+     ENTWURF-JETZT.md Abschnitt 3. -->
+<div id="htwocheteil">
+  <h2 class="ht-h"><span class="form form-zwei" aria-hidden="true"></span>Deine Woche</h2>
+  <p class="ht-sub">Sieben Tage ab heute. Erst die Form der Woche, dann die Tage mit festem Termin. Was eine Vorbereitung braucht, sagt es dazu.</p>
+  <p class="wo-form" id="htwoform"></p>
+  <nav class="wo-band" id="htwoband" aria-label="Die sieben Tage dieser Woche"></nav>
+  <div class="ht-woche" id="htwoche"></div>
+  <p class="wo-danach" id="htwodanach"></p>
+</div>
+
+<!-- Was dein Bild gerade trifft.
+     Mandy am 29.10.: "welche punkte werden heute und in den tagen
+     konkret getroffen? Heute ist da angeblich nichts bei mir, aber
+     das wage ich zu bezweifeln." Sie hatte recht. -->
+<div id="httrefferteil">
+  <h2 class="ht-h"><span class="form form-stern" aria-hidden="true">&#10022;</span><span id="httrefferh"></span></h2>
+  <p class="ht-sub" id="httreffersub"></p>
+  <div class="ht-treffer" id="httreffer"></div>
+  <button type="button" class="tr-mehr" id="httreffermehr" hidden></button>
+  <div class="tr-schnell" id="httrefferschnell"></div>
+</div>
+
+<div id="htbereicheteil">
+  <h2 class="ht-h"><span class="form form-eck" aria-hidden="true"></span>Wo gerade am meisten los ist</h2>
+  <p class="ht-sub">Deine Lebensbereiche, der lauteste zuerst. Zu jedem steht, was los ist, was du tun kannst und bis wann es l&auml;uft.</p>
+  <p class="ht-bwhin" id="htbwhin" hidden></p>
+  <div class="ht-ber" id="htber"></div>
+  <a class="ht-mehr" href="bereiche.html">Alle zehn Bereiche ansehen &rarr;</a>
+</div>
+
 <!-- Was gerade l&auml;uft: die st&auml;rksten Konstellationen, die das
      Geburtsbild gerade ber&uuml;hren. Bis zum 28.10. standen sie nirgends —
      der Rechner kannte sie l&auml;ngst, gezeigt wurden sie nicht. -->
@@ -684,10 +836,18 @@ a{color:var(--nacht);}
      obwohl die Rechnung sie l&auml;ngst kannte: Sie wurden in
      Bereichsnamen &uuml;bersetzt und damit unkenntlich gemacht. -->
 <div id="htthementeil">
-  <h2 class="ht-h" id="htthemenh"></h2>
+  <h2 class="ht-h"><span class="form form-halb" aria-hidden="true"></span><span id="htthemenh"></span></h2>
   <p class="ht-sub" id="htthemensub"></p>
   <div class="ht-themen" id="htthemen"></div>
   <p class="th-langsam" id="htthlangsam"></p>
+</div>
+
+<!-- Der Zeitstrahl: zwoelf Monate, exakte Tage, aufklappbar. -->
+<div id="htstrahlteil">
+  <h2 class="ht-h"><span class="form form-ring" aria-hidden="true"></span><span id="htstrahlh"></span></h2>
+  <p class="ht-sub" id="htstrahlsub"></p>
+  <div class="ht-strahl" id="htstrahl"></div>
+  <button type="button" class="tr-mehr" id="htstrahlmehr" hidden></button>
 </div>
 
 <!-- Schlaf und Bewegung.
@@ -695,58 +855,11 @@ a{color:var(--nacht);}
      nebeneinanderstehen &mdash; deshalb stehen sie hier getrennt
      ausgewiesen und nicht vermischt. -->
 <div id="htkoerperteil">
-  <h2 class="ht-h" id="htkoerperh"></h2>
+  <h2 class="ht-h"><span class="form form-mond" aria-hidden="true"></span><span id="htkoerperh"></span></h2>
   <p class="ht-sub" id="htkoerpersub"></p>
   <div class="ht-koerper" id="htkoerper"></div>
 </div>
 
-<!-- Was dein Bild gerade trifft.
-     Mandy am 29.10.: "welche punkte werden heute und in den tagen
-     konkret getroffen? Heute ist da angeblich nichts bei mir, aber
-     das wage ich zu bezweifeln." Sie hatte recht. -->
-<div id="httrefferteil">
-  <h2 class="ht-h" id="httrefferh"></h2>
-  <p class="ht-sub" id="httreffersub"></p>
-  <div class="ht-treffer" id="httreffer"></div>
-  <button type="button" class="tr-mehr" id="httreffermehr" hidden></button>
-  <div class="tr-schnell" id="httrefferschnell"></div>
-</div>
-
-<!-- Der Zeitstrahl: zwoelf Monate, exakte Tage, aufklappbar. -->
-<div id="htstrahlteil">
-  <h2 class="ht-h" id="htstrahlh"></h2>
-  <p class="ht-sub" id="htstrahlsub"></p>
-  <div class="ht-strahl" id="htstrahl"></div>
-  <button type="button" class="tr-mehr" id="htstrahlmehr" hidden></button>
-</div>
-
-<div id="htlaeuftteil">
-  <h2 class="ht-h">Was gerade l&auml;uft</h2>
-  <p class="ht-sub">Was gerade auf dein Geburtsbild trifft, das St&auml;rkste zuerst. Wo ein Winkel genau aufgeht, steht der Tag dabei.</p>
-  <div class="ht-lauf" id="htlauf"></div>
-</div>
-
-<!-- Die Woche als Woche.
-     Bis zum 28.10. stand hier eine Liste von zehn Tagen. Eine Liste
-     beantwortet „was kommt als N&auml;chstes" &mdash; nicht „wie ist meine
-     Woche". Jetzt steht zuerst ihre Form, dann die Tage.
-     ENTWURF-JETZT.md Abschnitt 3. -->
-<div id="htwocheteil">
-  <h2 class="ht-h">Deine Woche</h2>
-  <p class="ht-sub">Sieben Tage ab heute. Erst die Form der Woche, dann die Tage mit festem Termin. Was eine Vorbereitung braucht, sagt es dazu.</p>
-  <p class="wo-form" id="htwoform"></p>
-  <nav class="wo-band" id="htwoband" aria-label="Die sieben Tage dieser Woche"></nav>
-  <div class="ht-woche" id="htwoche"></div>
-  <p class="wo-danach" id="htwodanach"></p>
-</div>
-
-<div id="htbereicheteil">
-  <h2 class="ht-h">Wo gerade am meisten los ist</h2>
-  <p class="ht-sub">Deine Lebensbereiche, der lauteste zuerst. Zu jedem steht, was los ist, was du tun kannst und bis wann es l&auml;uft.</p>
-  <p class="ht-bwhin" id="htbwhin" hidden></p>
-  <div class="ht-ber" id="htber"></div>
-  <a class="ht-mehr" href="bereiche.html">Alle zehn Bereiche ansehen &rarr;</a>
-</div>
 
 <details class="ht-stell" id="htstell">
 <summary><span class="ht-stell-t">Seite einstellen</span><span class="ht-stell-u" id="htstellu"></span></summary>
@@ -767,6 +880,61 @@ a{color:var(--nacht);}
 </div>
 
 <script>
+/* ── Eine Lücke, ein Wert ─────────────────────────────────────
+   Die eine Stelle, an der eine Vorlage gefüllt wird.
+
+   Vorher stand diese Funktion in siebzehn Anzeigen einzeln, in
+   drei Fassungen, die sich bei genau einem Fall unterschieden:
+   Was passiert, wenn der Wert zu einer Lücke fehlt?
+
+     dreizehn Anzeigen  machten daraus ''      — das Wort verschwand
+     drei Anzeigen      machten daraus 'undefined' — es stand auf der Seite
+     dossier-app.js     brach ab               — richtig, seit Aufgabe 60
+
+   Die erste Art hat am 2026-11-21 wirklich zugeschlagen: Der
+   Winkelname der Raum-Rechnung heißt „Sextil", nachgeschlagen wurde
+   unter „sextil", und aus „Saturn Sextil Sonne" wurde lautlos
+   „Saturn  Sonne". Eine Tafel, die den Schlüssel nicht kennt,
+   liefert `undefined`; wer das zu '' macht, verliert ein Wort, ohne
+   dass etwas rot wird.
+
+   Das ist dieselbe Klasse wie REGELN.md 6f, und sie war in sechzehn
+   Anzeigen nur noch nicht aufgefallen. Deshalb steht die Funktion
+   jetzt hier und nicht dort: Eine Regel in siebzehn Dateien ist
+   nach der ersten Verschärfung in sechzehn davon veraltet
+   (REGELN.md 5).
+
+   Verriegelt wird das von `pruefwerk.pruefe_fueller`: Eine Anzeige,
+   die wieder selbst eine Lücke aus einem Schlüssel zusammensetzt,
+   bringt ihren Bau zum Scheitern.
+
+   Hier steht kein Satz und keine Rechnung — nur die Einsetzung.
+   Deshalb zieht diese Datei beim Umzug in eine andere Umgebung
+   unverändert mit (PRODUKT.md Abschnitt 7).
+
+   Zwei Fälle, die auseinandergehalten werden müssen:
+
+     fehlt      `undefined` oder `null` — ein Wert, den es nicht
+                gibt. Das ist ein Fehler und bricht ab.
+     leer       '' — eine Lücke, die absichtlich nichts einsetzt
+                (ein Name, den niemand angegeben hat). Das geht
+                durch, und 0 ebenso: `String(0)` ist „0".
+
+   Eine Vorlage, die es nicht gibt, wird zu '' und bricht nicht ab.
+   Das ist eine andere Fehlerklasse — ein fehlender Textschlüssel —,
+   und die fangen in jedem Bau die Textprobe („die Texte sind
+   vollständig") und `pruefwerk.pruefe_vorlagenluecken` ab, bevor die
+   Seite überhaupt entsteht. */
+function AC_FUELL(form, werte){
+  var s = String(form === undefined || form === null ? '' : form), k;
+  for(k in werte) if(Object.prototype.hasOwnProperty.call(werte, k)){
+    if(werte[k] === undefined || werte[k] === null)
+      throw new Error('AC_FUELL: Lücke ohne Wert: {' + k + '}');
+    s = s.split('{' + k + '}').join(String(werte[k]));
+  }
+  return s;
+}
+
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
@@ -828,7 +996,7 @@ var GLZ=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'
 var WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 var MK=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-var ELF=['#B5502E','#6B7C3F','#3E7C9A','#6A4A62'];
+var ELF=['#B5502E','#6B7C3F','#3E7C9A','#1F4FD8'];
 var HT=['Person und Auftreten','Wert und Besitz','Sprache und Nahbereich','Zuhause und Wurzeln','Ausdruck und Romantik',
  'Alltag und Arbeit','Partnerschaft','Tiefe und Geteiltes','Sinn und Weite','Beruf und Sichtbarkeit','Gruppen und Ziele','Rückzug und Inneres'];
 var PGL={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',Jupiter:'♃',Saturn:'♄',Uranus:'♅',Neptun:'♆',Pluto:'♇'};
@@ -1476,7 +1644,10 @@ var PGLY={Sonne:'☉',Mond:'☽',Merkur:'☿',Venus:'♀',Mars:'♂',
  Chiron:'⚷',Lilith:'⚸',ASC:'AC',MC:'MC'};
 var PFOLGE=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','Uranus','Neptun','Pluto'];
 /* Elementfarben wie im übrigen System */
-var EFARBE=['#A05A3A','#3D6B62','#2E3A5C','#6A4A62'];
+/* Seit 18.11. (Midcentury-Look): Feuer Orange, Erde Senf, Luft Kobalt,
+   Wasser Petrol. Auf Senf steht die Glyphe dunkel, sonst hell. */
+var EFARBE=['#F05A28','#F2B33D','#1F4FD8','#11897C'];
+var ETINTE=['#FFFFFF','#1B1B1B','#FFFFFF','#FFFFFF'];
 
 function haus(P,l){ return ((Math.floor(nrm(l)/30)-Math.floor(nrm(P.ASC)/30))%12+12)%12+1; }
 
@@ -1577,25 +1748,44 @@ window.AC_KERNRAD=function(opt){
        und die Elementfarben sind für Creme gemischt. */
     if(opt.zeichenband!==false) for(var z=0;z<12;z++){
       var zi=(ascZ+z)%12, b1=basis+z*30, b2=basis+(z+1)*30;
-      svg.appendChild(N('path',{d:feld(R_ZA,R_ZI,b1,b2),
-        fill:EFARBE[zi%4],opacity:'.88'}));
+      svg.appendChild(N('path',{d:feld(R_ZA,R_ZI,b1,b2),class:'kr-zf'}));
       var zm=pos(b1+15,(R_ZA+R_ZI)/2);
       svg.appendChild(N('text',{x:zm[0].toFixed(1),y:(zm[1]+7).toFixed(1),
         'text-anchor':'middle',class:'kr-zg'}, ZGLY[zi]+'︎'));
     }
 
+    /* 2b — Die großen Verbindungen innen: Blau fließt, Orange reibt.
+       Nur im großen Rad; im kleinen wäre es Rauschen. */
+    if(gross && opt.aspekte!==false){
+      var AW=[[60,5,'w'],[90,7,'h'],[120,7,'w'],[180,8,'h']];
+      for(var ai=0;ai<PFOLGE.length;ai++) for(var aj=ai+1;aj<PFOLGE.length;aj++){
+        var la=P[PFOLGE[ai]], lb=P[PFOLGE[aj]];
+        if(la===undefined||la===null||lb===undefined||lb===null) continue;
+        var dd=Math.abs(((la-lb)%360+540)%360-180);
+        for(var w=0;w<AW.length;w++) if(Math.abs(dd-AW[w][0])<=AW[w][1]){
+          var p1=pos(la,R_HI-4), p2=pos(lb,R_HI-4);
+          svg.appendChild(N('line',{x1:p1[0].toFixed(1),y1:p1[1].toFixed(1),
+            x2:p2[0].toFixed(1),y2:p2[1].toFixed(1),class:'kr-asp kr-asp-'+AW[w][2]}));
+          break;
+        }
+      }
+    }
+
     /* 3 — Radix-Planeten */
     var vorhanden=PFOLGE.filter(function(k){ return P[k]!==undefined&&P[k]!==null; });
     var roh=vorhanden.map(function(k){ return nrm(P[k]); });
-    var breit=spreizen(roh, gross?8:11);
+    var breit=spreizen(roh, gross?12:11);
     vorhanden.forEach(function(k,ix){
       var echt=nrm(P[k]), zeig=breit[ix];
       var a=pos(echt,R_HI), b=pos(zeig,R_PLT-13);
       svg.appendChild(N('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),
         x2:b[0].toFixed(1),y2:b[1].toFixed(1),class:'kr-strich'}));
-      var g=pos(zeig,R_PLT);
-      svg.appendChild(N('text',{x:g[0].toFixed(1),y:(g[1]+7).toFixed(1),
-        'text-anchor':'middle',class:'kr-pg'}, PGLY[k]));
+      var g=pos(zeig,R_PLT), el=Math.floor(echt/30)%4;
+      if(gross) svg.appendChild(N('circle',{cx:g[0].toFixed(1),cy:g[1].toFixed(1),r:'18',
+        fill:EFARBE[el],class:'kr-pk'}));
+      var pa={x:g[0].toFixed(1),y:(g[1]+7).toFixed(1),'text-anchor':'middle',class:'kr-pg'};
+      if(gross) pa.style='fill:'+ETINTE[el];
+      svg.appendChild(N('text',pa, PGLY[k]+'\uFE0E'));
     });
 
     /* 4 — Achsen */
@@ -2706,6 +2896,76 @@ window.AC_LB = {
     return bereiche;
   }
 
+  /* ── Vorschau: was in den nächsten Monaten kommt (18.11.) ─────
+     Mandy: „wo liegen die nächsten Schritte oder Punkte in den
+     kommenden Wochen und Monaten? Wo bewegt sich was?" Die Seite
+     zeigte nur, was heute läuft. Hier wird Woche für Woche
+     vorausgerechnet, mit derselben Rechnung wie heute; jeder Vorgang
+     bekommt das Datum, an dem er am genauesten steht (sonst den Tag,
+     an dem er beginnt). Die schnellen Planeten bleiben draußen — sie
+     wären jede Woche ein neuer Punkt und damit Rauschen. Neu- und
+     Vollmonde kommen aus mond-termine.js, wenn die Seite es lädt. */
+  var VOR_LANGSAM = { Pluto:1, Neptun:1, Uranus:1, Saturn:1, Jupiter:1, Mars:1 };
+  function vorschau(C, jd, wochen){
+    wochen = wochen || 26;
+    var ende = jd + wochen*7, je = {}, i, w, n;
+    for(i=0;i<B_BEREICHE.length;i++) je[B_BEREICHE[i].k] = {};
+    for(w=0; w<=wochen; w++){
+      var t = jd + w*7, V = vorgaenge(C, t);
+      for(i=0;i<B_BEREICHE.length;i++){
+        var B = B_BEREICHE[i], L = fuerBereich(V, B), M = je[B.k];
+        for(n=0;n<L.length;n++){
+          var v = L[n];
+          if(!VOR_LANGSAM[v.wanderer]) continue;
+          var key = v.wanderer+'|'+v.form+'|'+(v.ziel||'')+'|'+(v.aspekt||'')+'|'+(v.haus||'');
+          if(M[key]) continue;
+          var am = (v.f && v.f.exakt) ? v.f.exakt : t;
+          M[key] = { form:v.form, wanderer:v.wanderer, ziel:v.ziel, zielArt:v.zielArt,
+                     aspekt:v.aspekt, art:v.art, haus:v.haus, kern:v.kern,
+                     gewicht:v.bGewicht, am:am, ab:v.ab, start:(w===0 ? null : t),
+                     bis:(v.f && v.f.bis) || null, jetzt:(w===0) };
+        }
+      }
+    }
+    var out = {};
+    for(var k in je){
+      var liste = [];
+      for(var s in je[k]){
+        var e = je[k][s];
+        /* Was heute schon läuft, zählt nur mit einem genauen Tag in
+           der Zukunft; sonst steht es oben unter „Gerade". */
+        if(e.jetzt && !(e.am > jd && e.am <= ende)) continue;
+        if(e.form === 'durchgang' && e.jetzt) continue;
+        if(e.am < jd) e.am = e.start || jd;
+        if(e.am > ende) continue;
+        liste.push(e);
+      }
+      liste.sort(function(a,b){ return b.gewicht - a.gewicht; });
+      out[k] = liste;
+    }
+    return out;
+  }
+
+  /* Neu- und Vollmonde, die in die Felder eines Bereichs fallen.
+     Nur Kernfeld und zweites Feld — das dritte wäre fast jeder Mond. */
+  function monde(C, k, jd, tage){
+    var MT = (typeof window !== 'undefined' && window.MT_TERMINE) ||
+             (typeof MT_TERMINE !== 'undefined' ? MT_TERMINE : null);
+    if(!MT) return [];
+    var B = null; for(var i=0;i<B_BEREICHE.length;i++) if(B_BEREICHE[i].k === k) B = B_BEREICHE[i];
+    if(!B) return [];
+    var out = [];
+    for(var j=0;j<MT.length;j++){
+      var m = MT[j], d = m.d.split('-'), z = (m.z||'12:00').split(':');
+      var mjd = Date.UTC(+d[0], +d[1]-1, +d[2], +z[0]-1, +z[1]) / 86400000 + 2440587.5;
+      if(mjd < jd || mjd > jd + tage) continue;
+      var h = haus(C, m.g), p = B.haeuser.indexOf(h);
+      if(p < 0 || p > 1) continue;
+      out.push({ form:'mond', t:m.t, e:m.e, am:mjd, haus:h, kern:(p === 0), g:m.g });
+    }
+    return out;
+  }
+
   /* ── Ein Blatt für alle Bereiche ──────────────────────────────
      Z und tage sind freiwillig: ohne sie rechnet die Seite nur mit
      Transiten, mit ihnen kommt das Kapitel dazu. */
@@ -2736,7 +2996,8 @@ window.AC_LB = {
     seitenweit: seitenweit, BLOCK1: BLOCK1,
     absatzSchluessel: absatzSchluessel,
     facetten: facetten, herrGewicht: herrGewicht, buendelung: buendelung,
-    widersprueche: widersprueche, blatt: blatt
+    widersprueche: widersprueche, blatt: blatt,
+    vorschau: vorschau, monde: monde
   };
 
 })();
@@ -2760,7 +3021,7 @@ window.AC_LB = {
       satz:'Hier passiert gerade wenig. Das ist keine Vernachlässigung, sondern eine Pause.' },
     { k:'leise',   n:'Leise',        farbe:'#7E95A8',
       satz:'Etwas bewegt sich, aber ohne Druck. Gut für Dinge, die Zeit brauchen.' },
-    { k:'bewegt',  n:'In Bewegung',  farbe:'#9A7235',
+    { k:'bewegt',  n:'In Bewegung',  farbe:'#C8441A',
       satz:'Hier ist etwas im Gang. Entscheidungen, die du jetzt triffst, haben Gewicht.' },
     { k:'viel',    n:'Viel los',     farbe:'#B5502E',
       satz:'Das ist gerade dein lautester Bereich. Hierhin geht die Energie, ob du willst oder nicht.' }
@@ -3611,12 +3872,50 @@ window.AC_LB = {
       a:'Dann stimmt dein Erleben und nicht die Seite. Deine Lage hat immer Vorrang. Die Seite kennt nur die Uhr, nicht dein Leben.' }
   ];
 
+  /* ── Die Kurzfassung je Bereich (18.11.) ───────────────────────
+     Mandy: „Was sagen die Bereiche genau, und wo liegen die nächsten
+     Schritte oder Punkte in den kommenden Wochen und Monaten? Wo
+     bewegt sich was, und wie sehen die next steps aus?" Öffentlich
+     steht nur diese Kurzfassung; die ausführliche liegt in der Praxis. */
+  var B_KURZ = {
+    bloecke:{ bild:'Was dein Bild hier sagt', gerade:'Was gerade läuft',
+              kommt:'Die nächsten Monate', schritt:'Dein nächster Schritt',
+              umgang:'Wie du damit umgehst', monat:'Monat für Monat' },
+    bildVor:'Bei dir steht vorn: ',
+    wand:{ Pluto:'tiefe Verwandlung', Neptun:'Auflösung und Sehnsucht', Uranus:'Umbruch und Befreiung',
+           Saturn:'Prüfung und Aufbau', Jupiter:'Wachstum und Rückenwind', Mars:'Antrieb und Reibung',
+           Venus:'Nähe und Genuss', Merkur:'Gespräche und Pläne', Sonne:'Aufmerksamkeit' },
+    ziel:{ Sonne:'dein Kern', Mond:'dein Gefühlsleben', Merkur:'dein Denken und Reden',
+           Venus:'deine Art zu lieben', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
+           Saturn:'deine Verantwortung', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
+           Pluto:'deine Tiefe', ASC:'dein Auftreten', MC:'deine Richtung', sonst:'ein Punkt in deinem Bild',
+           feld:'dieser Bereich' },
+    art:{ zusammen:'direkt', gegenueber:'gegenüber', spannung:'reibt', leicht:'stärkt',
+          durchgang:'zieht durch', mond:'Mond' },
+    titel:'{ziel}: {wand}',
+    mond:{ NM:'Neumond in diesem Bereich', VM:'Vollmond in diesem Bereich', F:'Finsternis in diesem Bereich' },
+    mondWas:{ NM:'Ein guter Tag, um hier etwas anzufangen.', VM:'Hier wird etwas sichtbar oder rund.' },
+    um:'um den {datum}', ab:'ab {datum}',
+    tun:{ leicht:'Rückenwind. Fang an, was du hier sonst aufschiebst.',
+          spannung:'Reibung. Nicht wegdrücken: eine Sache klären, nicht alle.',
+          gegenueber:'Etwas spiegelt dich. Erst zuhören, dann entscheiden.',
+          zusammen:'Volle Ladung auf einen Punkt. Bewusst einsetzen, nicht verteilen.',
+          durchgang:'Ein langes Thema zieht durch. Kleine, regelmäßige Schritte statt eines großen.' },
+    vorbereiten:'Mit Blick auf den {datum}:',
+    leerKommt:'In den nächsten sechs Monaten kommt hier nichts Großes dazu. Gut für Ruhe und Pflege.',
+    mehrKommt:'{n} weitere Punkte',
+    praxis:'Die ausführliche Fassung mit allen Zeiträumen, Monat für Monat, und den Fragen fürs Gespräch gehört in die Begleitung.',
+    praxisLink:'Wie die Begleitung abläuft', praxisDatei:'start.html#stangebot',
+    naechster:'Nächster Punkt: {datum}', keinNaechster:'Ruhig in den nächsten Monaten',
+    kachelVor:'Tipp einen Bereich an.'
+  };
+
   window.AC_BDAT = {
     LAUT:B_LAUT, BER:B_BER, WAND:B_WAND, ART:B_ART,
     DURCH:B_DURCH, HAUS:B_HAUS, FACET:B_FACET,
     KAP:B_KAP, EHRLICH:B_EHRLICH, SEITE:B_SEITE,
     WID:B_WID, FRAGEN:B_FRAGEN, GRENZE:B_GRENZE, TIEF:B_TIEF, FORM:B_FORM, LEER:B_LEER,
-    RAUM:B_RAUM
+    RAUM:B_RAUM, KURZ:B_KURZ
   };
 
 })();
@@ -3684,10 +3983,7 @@ function bwEsc(s){
 /* Lücken füllen, dann maskieren. In dieser Reihenfolge kann kein
    Wert HTML einschmuggeln. */
 function bwSatz(vorlage, werte){
-  var t = String(vorlage || '').replace(/\{([a-zA-Z]+)\}/g, function(_, k){
-    return (werte && werte[k] !== undefined) ? String(werte[k]) : '';
-  });
-  return bwEsc(t);
+  return bwEsc(AC_FUELL(vorlage, werte));
 }
 
 /* ── Zustand ────────────────────────────────────────────────── */
@@ -4010,6 +4306,9 @@ var T_KOPF = {
  beiDirVor:'Bei dir',
  gutVor:'Gut dafür',
  dazuVor:'Was oft zu groß erzählt wird',
+ mehrVor:'Mehr dazu',
+ kurzMehr:'weiterlesen',
+ kurzWeniger:'weniger',
  nochEinenTag:'noch 1 Tag',
  laeuft:'läuft',
  heute:'heute',
@@ -4125,6 +4424,42 @@ var T_MONDTREFFER = {
  Venus:{was:'Der Mond läuft heute über deine Venus.',
         tut:'Ein weicher Tag. Nähe, Essen, Schönes fallen leichter als Disziplin.',
         rat:'Gut für Bewegung, die sich gut anfühlt, statt für eine, die etwas beweist.'}};
+
+/* 18.11.: Neumond und Vollmond auf dein Bild bezogen. Mandy: „zu
+   allgemein auch bei den Lunationen. Mehr persönlichen Bezug zum
+   Chart." Der Bereich, in den er fällt, bekommt einen eigenen Satz;
+   trifft er einen deiner Hauptpunkte, steht das dabei. */
+var T_MOND_PERS = {
+ vor:'Bei dir',
+ trifft:'Er trifft genau die Stelle in dir, {was}.',
+ tech:'auf deinen {punkt} · {ab}°',
+ neu:[
+  'Etwas an dir neu anfangen: wie du auftrittst, was du anziehst, wie du dich bewegst.',
+  'Ein kleiner Anfang beim Geld oder beim Selbstwert: ein Preis, ein Konto, ein Nein.',
+  'Ein Gespräch anfangen, das du aufschiebst, oder etwas Neues lernen.',
+  'Zuhause etwas neu ordnen: eine Ecke, ein Ritual, ein Anruf in der Familie.',
+  'Etwas nur aus Freude anfangen. Ohne Ziel, nur weil es dir Spaß macht.',
+  'Eine kleine Gewohnheit starten. Eine, nicht fünf.',
+  'In einer Beziehung etwas neu verabreden: Nähe, Zeit, Regeln.',
+  'Etwas Tiefes klären: Vertrauen, gemeinsames Geld, eine Grenze.',
+  'Einen Plan für etwas Weites machen: eine Reise, ein Kurs, eine große Frage.',
+  'Beruflich einen ersten Schritt setzen, den noch niemand sehen muss.',
+  'Menschen schreiben, die zu dir passen. Ein Wunsch für später.',
+  'Ruhe als Anfang: früher schlafen, weniger Termine, mehr Stille.'],
+ voll:[
+  'Du fällst gerade mehr auf als sonst. Schau, wie du ankommst, ohne nachzubessern.',
+  'Beim Geld oder beim Selbstwert zeigt sich, was trägt. Ein ehrlicher Blick reicht.',
+  'Ein Gespräch kommt zum Punkt. Sag den Satz, der noch fehlt.',
+  'Zuhause oder in der Familie wird etwas sichtbar. Nicht alles muss heute gelöst sein.',
+  'Freude, Liebe oder ein Projekt erreicht einen Höhepunkt. Zeig es jemandem.',
+  'Körper und Alltag melden sich. Etwas weglassen statt mehr machen.',
+  'In einer Beziehung wird etwas klar. Erst zuhören, dann entscheiden.',
+  'Etwas Verborgenes kommt hoch. Tief ist in Ordnung, schnell muss es nicht sein.',
+  'Ein Plan oder eine Überzeugung zeigt, ob sie hält. Zieh ein ehrliches Fazit.',
+  'Beruflich wird sichtbar, was du angelegt hast. Nimm Anerkennung an.',
+  'Freundschaften zeigen, wer bleibt. Feier die, die da sind.',
+  'Müdigkeit und Rückzug sind jetzt richtig. Schließ im Stillen ab.']
+};
 
 /* ── Was dein Bild trifft, und wann genau ─────────────────────
    Mandy am 29.10.:
@@ -4346,12 +4681,26 @@ window.AC_BAHN = {
    jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
    Formel — und die Anzeige setzt nur noch zusammen. */
 
-/* „dein" in den drei Fällen, die hier vorkommen. Mehr braucht es
-   nicht: Ein Genitiv steht in keiner dieser Formeln. */
+/* „dein" in den vier Fällen, die vorkommen.
+
+   Bis zum 2026-11-19 standen hier drei, und darüber der Satz, mehr
+   brauche es nicht: ein Genitiv stehe in keiner dieser Formeln. Für
+   die Formeln der Startseite stimmte das. Die Geistführung schreibt
+   aber „der Herrscher deines 12. Hauses" (Aufgabe 59), und damit
+   stand die vierte Form nicht in dieser Tabelle, sondern von Hand in
+   einer Anzeige — genau die Bauart, die diese Tabelle abschaffen
+   sollte.
+
+   Die Lehre daraus ist dieselbe wie in REGELN.md 6f: Eine Tabelle
+   deckt den Fall, den sie kennt. Welche Fälle es gibt, entscheidet
+   nicht die erste Seite, die sie benutzt.
+
+   Ein Hauptwort, das sich im Genitiv selbst ändert („Hauses",
+   „Aszendenten"), trägt diese Form in seinem eigenen `beugt`. */
 var B_DEIN = {
- m:{nom:'dein',  akk:'deinen', dat:'deinem'},
- w:{nom:'deine', akk:'deine',  dat:'deiner'},
- s:{nom:'dein',  akk:'dein',   dat:'deinem'}};
+ m:{nom:'dein',  akk:'deinen', dat:'deinem', gen:'deines'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner', gen:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem', gen:'deines'}};
 
 /* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
    entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
@@ -4570,6 +4919,8 @@ var H_LUN = {
 
 /* ── Band 1 · Jetzt ──────────────────────────────────────────── */
 var H_SEITE = {
+ weilVor:'Gerade wirkt',
+ weilDurch:'{wanderer} läuft durch dieses Feld',
  gruss:{nacht:'Noch wach', morgen:'Guten Morgen', tag:'Guten Tag', abend:'Guten Abend',
         zeile:'{gruss}, <em>{name}</em>.'},
 
@@ -5012,8 +5363,10 @@ function ereignisse(jd){
    „Merkur rückläufig, 24. Oktober bis 13. November" — nur dass
    niemand sie wiedererkennt. Siehe themen-daten.js. */
 
-function tf(s, w){ return String(s).replace(/\{(\w+)\}/g, function(m,k){
-  return (w && w[k]!==undefined) ? w[k] : m; }); }
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function tf(s, w){ return AC_FUELL(s, w); }
 function gr(l){ var g=nrm(l)%30; return Math.floor(g)+'°'+
   ('0'+Math.floor((g%1)*60)).slice(-2)+'′'; }
 function wochentagDatum(jd){ return datVon(jd).toLocaleDateString('de-DE',
@@ -5061,18 +5414,45 @@ function nochWie(bis, jd){
   return tf(T_KOPF.nochTage,{n:t});
 }
 
+/* Neumond und Vollmond auf das Bild bezogen (18.11.): Bereich,
+   ein Satz dazu, und ob er einen Hauptpunkt trifft. */
+function lunaPersoenlich(ml, art){
+  if(!P || !window.T_MOND_PERS) return '';
+  var b=beiDir(ml); if(!b) return '';
+  var satz=(T_MOND_PERS[art]||[])[b.haus-1]||'';
+  var orte=[ml]; if(art==='voll') orte.push((ml+180)%360);
+  var treffer=null;
+  ['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn','ASC','MC'].forEach(function(k){
+    if(P[k]===undefined||!B_ZIEL[k]) return;
+    orte.forEach(function(o){
+      var ab=Math.abs(((o-P[k])%360+540)%360-180);
+      if(ab<=5 && (!treffer||ab<treffer.ab)) treffer={k:k, ab:ab};
+    });
+  });
+  var h='<div class="th-pers"><b>'+esc(T_MOND_PERS.vor)+'</b>'+
+    (b.bereich ? '<a href="'+esc(H_SEITE.berZiel)+esc(b.bereich.k)+'">'+esc(b.name)+' →</a>' : '<span>'+esc(b.name)+'</span>')+
+    '<p>'+esc(satz)+'</p>';
+  if(treffer) h+='<p class="th-pers-t">'+esc(tf(T_MOND_PERS.trifft,{was:B_ZIEL[treffer.k].was}))+
+    ' <span class="ac-tech" data-ab="2">'+esc(tf(T_MOND_PERS.tech,{punkt:B_ZIEL[treffer.k].wort, ab:treffer.ab.toFixed(1)}))+'</span></p>';
+  return h+'</div>';
+}
+
 function themaKarte(o){
   var h=['<article class="th'+(o.gross?' th-gross':'')+'">'];
   h.push('<div class="th-kopf"><h3 class="th-n">'+esc(o.name)+'</h3>'+
          (o.marke?'<span class="th-marke">'+esc(o.marke)+'</span>':'')+'</div>');
   if(o.spanne) h.push('<div class="th-spanne">'+esc(o.spanne)+'</div>');
   if(o.bahn) h.push(o.bahn);
+  if(o.pers) h.push(o.pers);
   if(o.was) h.push('<p class="th-was">'+esc(o.was)+'</p>');
   if(o.tut) h.push('<p class="th-tut">'+esc(o.tut)+'</p>');
   /* Die vier Ecken, an denen es klemmt. Eine Liste sagt hier mehr
      als ein Absatz: Mandy am 28.10. wollte genau diese Konkretheit
      — „wichtig dass technik kaputt gehen kann oder travel
      Schwierigkeiten". */
+  /* 18.11.: Was danach kommt, liegt hinter „Mehr dazu" — sonst war
+     jede Karte ein ganzer Bildschirm (Mandy: „too much"). */
+  var vorMehr=h.length;
   if(o.felder && o.felder.length)
     h.push('<ul class="th-felder">'+o.felder.map(function(f){
       return '<li><b>'+esc(f[0])+'</b>'+esc(f[1])+'</li>'; }).join('')+'</ul>');
@@ -5086,6 +5466,10 @@ function themaKarte(o){
   if(o.gut) h.push('<div class="th-z"><b>'+esc(T_KOPF.gutVor)+'</b>'+esc(o.gut)+'</div>');
   if(o.dazu) h.push('<details class="th-dazu"><summary>'+esc(T_KOPF.dazuVor)+
                     '</summary><p>'+esc(o.dazu)+'</p></details>');
+  if(h.length>vorMehr){
+    var rest=h.splice(vorMehr);
+    h.push('<details class="th-mehr"><summary>'+esc(T_KOPF.mehrVor)+'</summary>'+rest.join('')+'</details>');
+  }
   if(o.tech) h.push('<div class="th-tech ac-tech" data-ab="2">'+esc(o.tech)+'</div>');
   h.push('</article>');
   return h.join('');
@@ -5135,8 +5519,8 @@ function themenBauen(){
       marke:(t<=0?T_KOPF.heute:t===1?T_KOPF.morgen:tf(T_KOPF.inTagen,{n:t})),
       spanne:tf(T_MOND.spanne,{tag:wochentagDatum(l.jd), uhr:uhr(l.jd),
         zeichen:tf(T_MOND.inZeichen,{zeichen:H_SIGNS[zI(ml)]})}),
+      pers:lunaPersoenlich(ml, art),
       was:D.was, tut:tut, felder:D.felder, gut:D.gut, dazu:dazu,
-      beiDir:beiDirZeile(ml),
       tech:tf(T_MOND.tech,{art:D.name, grad:gr(ml), zeichen:H_SIGNS[zI(ml)],
         knoten:(fi?tf(T_MOND.techKnoten,{ab:fi.knoten.toFixed(1)}):'')})});
   });
@@ -5307,7 +5691,7 @@ function trefferBauen(){
     m.hidden = false;
     m.textContent = TR_ALLE ? B_KOPF.wenigerVor
                             : B_KOPF.mehrVor + ' (' + lang.length + ')';
-    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); };
+    m.onclick = function(){ TR_ALLE = !TR_ALLE; trefferBauen(); anwenden(); setTimeout(kuerzen,60); };
   } else { m.hidden = true; }
 
   /* Die schnellen Wanderer getrennt und klein: Sie machen den Tag,
@@ -5394,7 +5778,7 @@ function strahlBauen(){
     m.hidden = false;
     m.textContent = ST_ALLE ? B_STRAHL.weniger
       : tf(B_STRAHL.mehr, {n:(e.length - ST_ZEIGE)});
-    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); };
+    m.onclick = function(){ ST_ALLE = !ST_ALLE; strahlBauen(); anwenden(); setTimeout(kuerzen,60); };
   } else { m.hidden = true; }
 }
 
@@ -5692,6 +6076,24 @@ function lautesterBereich(){
            bis:bisWann(b, jetztJD()) };
 }
 
+/* Was einen Bereich gerade laut macht, beim Namen (18.11.).
+   Mandy: „zu unpersönlich" — „In Bewegung" allein sagt nicht, warum. */
+function weilZeile(b){
+  var L=(b.laeuft||[]).slice().sort(function(x,y){ return (y.gewicht||0)-(x.gewicht||0); });
+  for(var i=0;i<L.length;i++){
+    var v=L[i], titel='';
+    if(v.form==='aspekt' && v.zielArt==='planet' && B_ZIEL[v.ziel]){
+      var asp=v.aspekt?v.aspekt.charAt(0).toUpperCase()+v.aspekt.slice(1):'';
+      titel=bahnTitel({wanderer:v.wanderer, aspekt:asp, ziel:v.ziel});
+    } else if(v.form==='durchgang'){
+      titel=esc(tf(H_SEITE.weilDurch,{wanderer:v.wanderer}));
+    }
+    if(titel) return '<span class="ht-bw"><span class="ht-bz-l">'+esc(H_SEITE.weilVor)+'</span>'+
+      '<span class="ht-bw-t">'+titel+'</span></span>';
+  }
+  return '';
+}
+
 function bereicheBauen(p){
   var ziel=el('htber');
   if(!ziel) return;
@@ -5749,6 +6151,7 @@ function bereicheBauen(p){
       '<span class="ht-bn">'+esc(b.name)+'</span>'+
       '<span class="ht-bl" style="color:'+L.farbe+'">'+esc(L.n)+'</span>'+
       '<span class="ht-bs">'+esc(T.lautSatz[b.laut])+'</span>'+
+      weilZeile(b)+
       '<span class="ht-bz"><span class="ht-bz-l">'+esc(H_SEITE.tunVor)+'</span>'+
       '<span class="ht-bt">'+esc(tun)+'</span></span>'+
       (bis?'<span class="ht-bbis"><span class="ht-bz-l">'+esc(H_SEITE.langeVor)+'</span>'+
@@ -5766,21 +6169,12 @@ function bereicheBauen(p){
    Die Regel "Inhalt statt Maschinenraum" heißt: nicht damit
    anfangen. Sie heißt nicht: weglassen. Ab Stufe 2 steht der
    Aspekt deshalb im Klartext darunter. */
-var LAUF_ZEIGE = 5;
 
 function monatTag(jd){
   return datVon(jd).toLocaleDateString('de-DE',{day:'numeric',month:'long'});
 }
 /* Wie weit ist das Fenster durch? Gibt null, wenn es keinen Anfang
    hat — dann ist der Balken eine Behauptung und bleibt weg. */
-function fensterStand(f, jd){
-  if(!f || f.von === null || f.von === undefined || !f.bis) return null;
-  var ganz = f.bis - f.von;
-  if(!(ganz > 0)) return null;
-  return { anteil: Math.max(0, Math.min(1, (jd - f.von) / ganz)),
-           exakt: (f.exakt && f.exakt >= f.von && f.exakt <= f.bis)
-                  ? (f.exakt - f.von) / ganz : null };
-}
 function laufSatz(v){
   var W = AC_BDAT.WAND[v.wanderer];
   if(!W) return null;
@@ -5791,109 +6185,6 @@ function laufSatz(v){
 /* Die Liste der Aspektnamen steht in heute-daten.js — hier steht
    kein Text. Warum eine Liste und keine Umschaltung, steht dort. */
 function aspektName(k){ return H_ASP[k] || k; }
-
-function laufTech(v){
-  if(v.form === 'durchgang')
-    return tf(H_LAUF.techDurchgang,
-      {wanderer:v.wanderer, haus:v.haus,
-       rueck:(v.rueck ? H_LAUF.techRueck : '')});
-  return tf(H_LAUF.techAspekt,
-    {wanderer:v.wanderer, aspekt:aspektName(v.aspekt),
-     ziel:(v.zielArt === 'achse' ? v.ziel
-           : tf(H_LAUF.techRadix, {ziel:v.ziel})),
-     ab:v.ab.toFixed(1).replace('.', ','),
-     zu:(v.zu ? H_LAUF.techZu : H_LAUF.techWeg),
-     rueck:(v.rueck ? H_LAUF.techRueck : '')});
-}
-function laufBauen(p){
-  var ziel = el('htlauf');
-  if(!ziel) return;
-  if(!window.AC_BER || !window.AC_BDAT || !BL_ALLE){ ziel.innerHTML = ''; return; }
-  var jd = jetztJD();
-
-  /* Ein Aspekt ist ein Ereignis, ein Hausdurchgang ist Wetter.
-     Dieser Abschnitt handelt von Ereignissen — sonst stehen hier
-     fünf Zeilen "läuft durch das 7. Haus" ohne einen einzigen Tag.
-     Durchgänge füllen nur auf, wenn es zu wenige Aspekte gibt. */
-  var nachGewicht = function(a,b){ return b.gewicht - a.gewicht; };
-  var asp = BL_ALLE.filter(function(v){ return v.form === 'aspekt'; }).sort(nachGewicht);
-  var dur = BL_ALLE.filter(function(v){ return v.form !== 'aspekt'; }).sort(nachGewicht);
-
-  /* Höchstens ein Eintrag je Wanderer. Sonst stehen drei Karten
-     untereinander, die wortwörtlich denselben Satz sagen — der Text
-     hängt am Wanderer, nicht am Ziel. Dieselbe Fehlerklasse, die auf
-     der Bereichsseite schon abgefangen wird.
-     Was ein Wanderer sonst noch berührt, steht als Zeile darunter. */
-  var proWanderer = {}, vs = [];
-  asp.forEach(function(v){
-    var k = v.wanderer;
-    if(proWanderer[k]){ proWanderer[k].weitere.push(v); return; }
-    if(vs.length >= LAUF_ZEIGE) return;
-    proWanderer[k] = { haupt:v, weitere:[] };
-    vs.push(v);
-  });
-  if(vs.length < 3){
-    dur.forEach(function(v){
-      if(vs.length >= 3 || proWanderer[v.wanderer]) return;
-      proWanderer[v.wanderer] = { haupt:v, weitere:[] };
-      vs.push(v);
-    });
-  }
-  if(!vs.length){
-    ziel.innerHTML = '<p class="ht-nix">' + esc(H_LAUF.nix) + '</p>';
-    return;
-  }
-  ziel.innerHTML = vs.map(function(v, i){
-    var B = bereichZuHaus(v.haeuser && v.haeuser[0]);
-    var satz = laufSatz(v);
-    if(!satz) return '';
-    var st = fensterStand(v.f, jd);
-    var h = ['<a class="lf' + (i === 0 ? ' lf-haupt' : '') + '" href="' +
-             esc(H_SEITE.berZiel) + esc(B ? B.k : '') + '">'];
-    h.push('<div class="lf-kopf">');
-    h.push('<span class="lf-ber">' + esc(B ? B.name : H_HAUS[(v.haeuser && v.haeuser[0] || 1)-1]) + '</span>');
-    if(v.f && v.f.exakt){
-      var t = tagesAbstand(v.f.exakt);
-      h.push('<span class="lf-wann">' +
-        (t === 0 ? esc(H_LAUF.heuteGenau) : t === 1 ? esc(H_LAUF.morgenGenau)
-         : tf(t > 0 ? H_LAUF.genauAm : H_LAUF.genauWar,
-              {datum:esc(monatTag(v.f.exakt))})) + '</span>');
-    } else if(v.f && v.f.bis){
-      h.push('<span class="lf-wann">' +
-        tf(H_LAUF.bis, {datum:esc(monatTag(v.f.bis))}) + '</span>');
-    }
-    h.push('</div>');
-    h.push('<p class="lf-was">' + esc(satz) + '</p>');
-    if(st){
-      h.push('<div class="lf-bahn"><i class="lf-jetzt" style="left:' +
-             (st.anteil*100).toFixed(1) + '%"></i>' +
-             (st.exakt !== null ? '<i class="lf-exakt" style="left:' +
-                (st.exakt*100).toFixed(1) + '%"></i>' : '') + '</div>');
-    }
-    /* Was derselbe Wanderer sonst noch berührt — kurz, ohne den
-       Satz zu wiederholen. */
-    var w = proWanderer[v.wanderer] ? proWanderer[v.wanderer].weitere : [];
-    if(w.length){
-      var orte = [], eigener = B ? B.name : null;
-      w.slice(0,4).forEach(function(x){
-        var XB = bereichZuHaus(x.haeuser && x.haeuser[0]);
-        var n = XB ? XB.name : null;
-        /* Den Bereich, auf dem die Karte ohnehin steht, nicht noch
-           einmal aufzählen. */
-        if(n && n !== eigener && orte.indexOf(n) < 0) orte.push(n);
-      });
-      if(orte.length)
-        h.push('<p class="lf-auch">' +
-               tf(H_LAUF.auch, {liste:esc(orte.join(', '))}) + '</p>');
-    }
-    h.push('<p class="lf-tech ac-tech" data-ab="2">' + esc(laufTech(v)) +
-      (w.length ? tf(H_LAUF.techWeitere,
-                     {n:esc(String(w.length)), wanderer:esc(v.wanderer)})
-                : '') + '</p>');
-    h.push('</a>');
-    return h.join('');
-  }).join('');
-}
 
 /* ── Rad ──────────────────────────────────────────────────── */
 function radBauen(){
@@ -5911,7 +6202,7 @@ function kapSetzen(s){
   try{ var n=new Date();
     localStorage.setItem(KAP,JSON.stringify({d:n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate(),s:s}));
   }catch(e){}
-  kapBauen(); anwenden(); stellBauen();
+  kapBauen(); anwenden(); stellBauen(); setTimeout(kuerzen,60);
 }
 function kapBauen(){
   var a=kapHeute();
@@ -5927,9 +6218,33 @@ function kapBauen(){
 /* Bei „wenig" bleiben der Kopf und die Bereiche stehen.
    Weggelassen wird, was Zeit zum Lesen braucht: die Terminliste,
    die ausführlichen Themen und der Abschnitt zu Schlaf und
-   Bewegung. „Was gerade läuft" bleibt — das ist der Kern.
+   Bewegung. „Was dein Bild gerade trifft" bleibt — das ist der Kern.
    Wer wenig Kapazität angibt, hat sie nicht für eine längere
    Seite, sondern für eine kürzere. */
+/* ── Kurz zuerst (18.11.) ───────────────────────────────────
+   Lange Absätze zeigen zwei Zeilen; „weiterlesen" öffnet den Rest.
+   Mandy: „als neurodivergente Person ist das alles too much". */
+var KURZ_WAS='.tr-s, .ht-auf-x, .th-was, .st-dg';
+function kuerzen(){
+  Array.prototype.forEach.call(document.querySelectorAll(KURZ_WAS),function(p){
+    if(p.getAttribute('data-kurz')) return;
+    p.setAttribute('data-kurz','1');
+    p.classList.add('kurz');
+    if(!p.offsetHeight || p.scrollHeight<=p.clientHeight+2){
+      if(p.offsetHeight) p.classList.remove('kurz');
+      else p.removeAttribute('data-kurz');
+      return;
+    }
+    var b=document.createElement('button');
+    b.type='button'; b.className='kurz-k'; b.textContent=T_KOPF.kurzMehr;
+    b.onclick=function(){
+      var auf=p.classList.toggle('kurz-auf');
+      b.textContent=auf?T_KOPF.kurzWeniger:T_KOPF.kurzMehr;
+    };
+    p.parentNode.insertBefore(b,p.nextSibling);
+  });
+}
+
 function anwenden(){
   var a=kapHeute(), knapp=(a==='wenig');
   ['htwocheteil','htthementeil','htkoerperteil','htstrahlteil'].forEach(function(i){
@@ -5961,14 +6276,14 @@ function stellBauen(){
     return;
   }
   P=chartVon(p); Q=chartZu(jetztJD()); O=ort();
-  bereicheBauen(p); laufBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
-  kapBauen(); anwenden(); stellBauen();
+  bereicheBauen(p); jetztBauen(p); radBauen(); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen();
+  kapBauen(); anwenden(); stellBauen(); setTimeout(kuerzen,60);
   try{ if(window.AC_NIV) AC_NIV.leiste(el('nivleiste'), function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); themenBauen(); trefferBauen(); strahlBauen(); koerperBauen(); wocheBauen(); stellBauen(); setTimeout(kuerzen,60); }); }catch(e){}
   /* Wählt jemand hier oder auf einer anderen Seite andere Bereiche,
      wird der Kurzblick neu gezeichnet. */
   try{ window.addEventListener('ac-bereiche',function(){
-    bereicheBauen(p); laufBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
+    bereicheBauen(p); jetztBauen(p); stellBauen(); }); }catch(e){}
   try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){}
   setInterval(function(){ Q=chartZu(jetztJD()); bereicheBauen(p); jetztBauen(p);
     try{ if(window.AC_NIV) AC_NIV.anwenden(); }catch(e){} }, 60000);

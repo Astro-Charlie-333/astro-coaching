@@ -143,7 +143,7 @@ details.tr .in .nicht b{color:var(--rost);}
 .mk p:last-child{margin-bottom:0;}
 .mk .mark{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
  border-radius:8px;padding:3px 8px;display:inline-block;margin-bottom:8px;}
-.mk .mark.gut{background:#E8EDDC;color:var(--teal);}
+.mk .mark.gut{background:#FCEFD2;color:var(--teal);}
 .mk .mark.acht{background:#FBE3DA;color:var(--rost);}
 .mk .mark.frei{background:var(--nacht-bg);color:var(--nacht);}
 
