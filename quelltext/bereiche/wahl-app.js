@@ -26,10 +26,7 @@ function bwEsc(s){
 /* Lücken füllen, dann maskieren. In dieser Reihenfolge kann kein
    Wert HTML einschmuggeln. */
 function bwSatz(vorlage, werte){
-  var t = String(vorlage || '').replace(/\{([a-zA-Z]+)\}/g, function(_, k){
-    return (werte && werte[k] !== undefined) ? String(werte[k]) : '';
-  });
-  return bwEsc(t);
+  return bwEsc(AC_FUELL(vorlage, werte));
 }
 
 /* ── Zustand ────────────────────────────────────────────────── */

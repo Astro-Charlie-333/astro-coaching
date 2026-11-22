@@ -28,12 +28,10 @@ function el(i){ return document.getElementById(i); }
 /* ── Sätze einsetzen ──────────────────────────────────── */
 var T=ZT_T;
 /* Eine Lücke `{so}` je Schlüssel, in einem Durchgang. */
-function zFuell(form,werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function zFuell(form,werte){ return AC_FUELL(form,werte); }
 function zGross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 /* Die Zeichen stehen einmal, in ZT_ZEICHEN. */
 function zZeichen(i){ return ZT_ZEICHEN[i].n; }

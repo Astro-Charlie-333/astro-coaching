@@ -635,3 +635,117 @@ assert luecken_ohne_fueller('/* Die Lücken heißen {so}. */\n', '') == []
 assert pruefe_vorlagenluecken("a:'{herr}'", '', 'x-daten.js') == [
     'Vorlagenlücke in x-daten.js, die niemand füllt: {herr}']
 assert pruefe_vorlagenluecken("a:'{herr}'", 'moFuell(T.a,{herr:x})', 'x-daten.js') == []
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Eine Anzeige baut keinen eigenen Füller
+#
+#  Aufgabe 94, gefunden beim Erledigen von Aufgabe 60 am
+#  2026-11-21. Die Funktion, die `{so}` durch einen Wert ersetzt,
+#  stand in siebzehn Anzeigen einzeln — und in drei Fassungen, die
+#  sich bei genau einem Fall unterschieden: Was passiert, wenn der
+#  Wert fehlt? Dreizehn machten aus `undefined` ein '', drei ein
+#  'undefined' auf der Seite, eine brach ab. Nur die letzte war
+#  richtig, und sie war es erst seit einem Tag.
+#
+#  Die Funktion steht jetzt an einer Stelle (`kern/fuellen.js`,
+#  `AC_FUELL`). Diese Regel hält das: Sie sucht nicht nach einem
+#  Namen — der ist frei wählbar und die Regel damit abstellbar —,
+#  sondern nach der **Form**, in der sich ein Füller überhaupt
+#  bauen lässt (REGELN.md 6e). Eine Lücke entsteht nur auf zwei
+#  Arten, und beide brauchen den Schlüssel als Veränderliche:
+#
+#   A  aus dem Schlüssel zusammengesetzt:  '{' + k + '}'
+#   B  als Suchmuster mit Fanggruppe:      /\{([a-zA-Z]+)\}/g
+#
+#  Was ausdrücklich durchgeht: ein Aufruf von `AC_FUELL`, und ein
+#  Suchmuster auf eine **feste** Lücke — `/\{A\}s/g` in
+#  beziehung-app.js setzt zwei Namen samt deutscher Besitzform ein
+#  und ist kein Füller über Schlüssel, sondern eine eigene Sache.
+# ═══════════════════════════════════════════════════════════════
+
+# A: eine Lücke, deren Name erst beim Laufen entsteht.
+_FUELL_GEBAUT = re.compile(r"""['"]\{['"]\s*\+""")
+
+# B: ein Suchmuster, das den Namen der Lücke fängt. Ohne Fanggruppe
+#    ist es eine feste Lücke und keine über Schlüssel.
+_FUELL_MUSTER = re.compile(r'/\\\{\s*\([^)\n]*\)\s*\\\}')
+
+
+def _ohne_kommentar(t):
+    """Nur die Kommentare weg. `nur_code` zieht auch Suchmuster ab —
+    und genau die sind hier das Gesuchte."""
+    t = re.sub(r'/\*.*?\*/', ' ', t, flags=re.S)
+    return re.sub(r'(?m)^\s*//.*$', ' ', t)
+
+
+def eigene_fueller(code):
+    """Jede Stelle, an der eine Anzeige selbst eine Lücke aus einem
+    Schlüssel baut, als (Zeile, Art)."""
+    t = _ohne_kommentar(code)
+    raus = [(t.count('\n', 0, m.start()) + 1, 'zusammengesetzt')
+            for m in _FUELL_GEBAUT.finditer(t)]
+    raus += [(t.count('\n', 0, m.start()) + 1, 'als Suchmuster')
+             for m in _FUELL_MUSTER.finditer(t)]
+    return sorted(raus)
+
+
+def pruefe_fueller(code, anzeige):
+    """Bricht ab, sobald `anzeige` sich einen eigenen Füller baut."""
+    return [f'eigener Füller in {anzeige} (Zeile {z}, {art}) — eine '
+            'Lücke füllt AC_FUELL aus kern/fuellen.js, die eine '
+            'Stelle, an der ein fehlender Wert abbricht statt zu '
+            'verschwinden (Aufgabe 94)'
+            for z, art in eigene_fueller(code)]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Die beiden Arten, die es wirklich gab.
+assert [a for _, a in eigene_fueller(
+    "s=s.split('{'+k+'}').join(String(werte[k]));")] == ['zusammengesetzt']
+assert [a for _, a in eigene_fueller(
+    's = s.split("{" + k + "}").join(m[k]);')] == ['zusammengesetzt']
+assert [a for _, a in eigene_fueller(
+    r"String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return w[k]; })"
+)] == ['als Suchmuster']
+assert [a for _, a in eigene_fueller(
+    r"String(v).replace(/\{([a-zA-Z0-9]+)\}/g, f)")] == ['als Suchmuster']
+# Der Aufruf der einen Stelle ist kein eigener Füller.
+assert eigene_fueller("var t = AC_FUELL(T.a, {name:n, haus:h});") == []
+assert eigene_fueller("return mbEsc(AC_FUELL(vorlage, werte));") == []
+# Eine feste Lücke ohne Fanggruppe bleibt erlaubt: beziehung-app.js
+# setzt zwei Namen mit deutscher Besitzform ein.
+assert eigene_fueller(r"x.replace(/\{A\}s/g, esc(bes(A)))") == []
+assert eigene_fueller(r"x.replace(/\{B\}/g, esc(B))") == []
+# Eine geschweifte Klammer im Text ist keine Form.
+assert eigene_fueller("var a='Die Lücken heißen {so}.';") == []
+# Ein Kommentar darf die Form zeigen, die hier nicht stehen darf.
+assert eigene_fueller("/* nicht: '{' + k + '}' */\nvar a=1;") == []
+assert eigene_fueller("// auch nicht: '{'+k+'}'\nvar a=1;") == []
+# Beide Arten in einer Datei werden beide gemeldet, nach Zeile.
+assert [z for z, _ in eigene_fueller(
+    "a('{'+k+'}');\n" + r"b(/\{([a-z]+)\}/g);" + "\n")] == [1, 2]
+assert pruefe_fueller("s.split('{'+k+'}')", 'x-app.js')[0].startswith(
+    'eigener Füller in x-app.js (Zeile 1, zusammengesetzt)')
+assert pruefe_fueller('AC_FUELL(a,b)', 'x-app.js') == []
+
+
+# Wer AC_FUELL aufruft, muss es auch mitbringen. Beim Umzug am
+# 2026-11-22 ist das einmal passiert: Die Rechenprüfung der Bereiche
+# lud tief-bauer.js ohne fuellen.js und brach mit „AC_FUELL is not
+# defined" ab. Dort hat es der Bau gefunden, weil diese Rechnung
+# wirklich lief — eine Anzeige, deren Zweig heute nicht gerendert
+# wird, käme damit durch (REGELN.md 6e).
+def ruft_ohne_stelle(seite):
+    """Wahr, wenn hier eine Lücke gefüllt wird, ohne dass AC_FUELL
+    auf der Seite steht."""
+    return 'AC_FUELL(' in seite and 'function AC_FUELL(' not in seite
+
+
+assert ruft_ohne_stelle('var t = AC_FUELL(T.a, {n:1});')
+assert not ruft_ohne_stelle('function AC_FUELL(form, werte){}\n'
+                            'var t = AC_FUELL(T.a, {n:1});')
+assert not ruft_ohne_stelle('<p>eine Seite ohne Lücken</p>')
+# Der Name allein ist kein Aufruf — so steht er in einem Kommentar
+# und in dieser Meldung.
+assert not ruft_ohne_stelle('/* gefüllt wird mit AC_FUELL */')

@@ -274,8 +274,10 @@ function ereignisse(jd){
    „Merkur rückläufig, 24. Oktober bis 13. November" — nur dass
    niemand sie wiedererkennt. Siehe themen-daten.js. */
 
-function tf(s, w){ return String(s).replace(/\{(\w+)\}/g, function(m,k){
-  return (w && w[k]!==undefined) ? w[k] : m; }); }
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function tf(s, w){ return AC_FUELL(s, w); }
 function gr(l){ var g=nrm(l)%30; return Math.floor(g)+'°'+
   ('0'+Math.floor((g%1)*60)).slice(-2)+'′'; }
 function wochentagDatum(jd){ return datVon(jd).toLocaleDateString('de-DE',

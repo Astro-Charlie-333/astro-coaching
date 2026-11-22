@@ -15,7 +15,10 @@
 var T = ND_TEXT;
 var el = function(id){ return document.getElementById(id); };
 function ndEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-function ndFuell(v, w){ return String(v).replace(/\{([a-zA-Z0-9]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function ndFuell(v, w){ return AC_FUELL(v, w); }
 function ndNeu(tag, klasse, text){ var e = document.createElement(tag); if(klasse) e.className = klasse; if(text !== undefined) e.textContent = text; return e; }
 
 function ndProfil(){ try{ var a = AC_P.alle(); return AC_P.aktives() || AC_P.eigenes() || a[0] || null; }catch(e){ return null; } }

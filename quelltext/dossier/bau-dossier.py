@@ -35,10 +35,15 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 
 # engine.js muss mit hinein: raum.js ist eine IIFE, die jdFromUT, angles und
 # geo aus dem globalen Raum holt. Ohne die Engine rechnet AC_RAUM.chart nicht.
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen   = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = (kopf + css_alt + "\n" + css_neu
         + '</style><link rel="stylesheet" href="schwerkraft.css"><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + koerper + "\n<script>\n"
+        + koerper + "\n<script>\n" + fuellen + "\n"
         + engine + "\n" + daten + "\n" + bezugjs + "\n" + texte + "\n" + app
         + "\n</script>\n</body></html>\n")
 
@@ -81,6 +86,7 @@ if not re.search(r'\bvar DO_T\s*=', texte):
     fehler.append('Tafel DO_T fehlt in dossier-texte.js')
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'dossier-app.js', 'dossier-texte.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'dossier-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'dossier-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
 #     Riegel nicht ausschließt: dass er heute nur nichts zu finden

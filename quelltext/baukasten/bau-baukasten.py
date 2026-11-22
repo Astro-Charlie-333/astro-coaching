@@ -35,6 +35,11 @@ stil = lies(hier / 'bk-stil.css')
 engine = lies(rit / 'engine.js')
 appkopf = lies(hier.parent / 'app' / 'app-kopf.html')
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<meta name="robots" content="noindex, nofollow">\n'
@@ -44,7 +49,7 @@ html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-
         '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
         '<script src="profil.js"></script>\n'
         '<style>\n' + lies(rit / 'basis.css') + '\n' + lies(wiki / 'schwerkraft.css') + '\n' + stil + '</style>\n</head><body>\n'
-        + koerper + '\n<script>\n' + engine + '\n' + daten + '\n' + rechner + '\n' + app
+        + koerper + '\n<script>\n' + fuellen + "\n" + engine + '\n' + daten + '\n' + rechner + '\n' + app
         + '\n</script>\n</body></html>\n')
 ziel = wiki / 'baukasten.html'
 ziel.write_text(html, encoding='utf-8')
@@ -143,6 +148,7 @@ for name, t in [('bk-app.js', app), ('bk-daten.js', daten), ('bk-koerper.html', 
 # ── 6 · Satzfrei, ohne „dein" ────────────────────────────────
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'bk-app.js', 'bk-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'bk-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'bk-app.js')
 for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
     if not pruefwerk.pruefe_anzeige_satzfrei(app + '\nvar _g=' + _an + 'Diesem Profil zuweisen' + _an + ';\n', 'bk-app.js', 'bk-daten.js'):
         fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht')

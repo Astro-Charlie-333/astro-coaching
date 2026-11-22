@@ -251,12 +251,17 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 
 ber = hier.parent / 'bereiche'
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + "\n" + lies(hier / 'heute-stil.css')
         + "\n" + lies(ber / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + lies(hier / 'heute-koerper.html') + "\n<script>\n"
+        + lies(hier / 'heute-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(rit / 'himmel.js') + "\n"
         + lies(rit / 'ritual.js') + "\n"
@@ -303,6 +308,7 @@ daten = [lies(hier / 'heute-daten.js'), lies(hier / 'themen-daten.js'),
 # B_BEUGE aus bahn-daten.js.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'heute-app.js', 'heute-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'heute-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'heute-app.js')
 
 # ── Ein Handgriff verspricht nichts ───────────────────────────
 # Dieselbe Regel wie auf der Bereichsseite, aus derselben Datei

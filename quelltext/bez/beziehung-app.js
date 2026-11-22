@@ -17,12 +17,10 @@ function bes(n){ return /[sxzß]$/i.test(n) ? n+"'" : n+'s'; }
 
 /* Setzt Werte in eine Vorlage aus BZ_T ein. Hier entsteht kein
    Text, nur die Einsetzung. */
-function BZ_FUELL(form, werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function BZ_FUELL(form, werte){ return AC_FUELL(form,werte); }
 /* Das Hauptwort eines Punktes ohne Besitzwort — davor steht ein
    Name. Auf Stufe 0 das Alltagswort, darüber der Planetenname. */
 function bzWort(k,n){ return n<=0 ? (BZ_PUNKT[k]||B_PUNKT(k)).wort : B_PUNKT(k).wort; }

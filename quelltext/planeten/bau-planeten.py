@@ -48,6 +48,11 @@ bahn = lies(hier.parent / 'kern' / 'bahn-daten.js')
 appkopf = lies(hier.parent / 'app' / 'app-kopf.html')
 
 SKRIPTE = ['profil.js', 'begriffe.js', 'niveau.js', 'wortwahl.js']
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<title>Die zehn Planeten &middot; in den Zeichen &middot; Zyklen &middot; Astro-Charlie</title>\n'
@@ -57,7 +62,7 @@ html = ('<!DOCTYPE html><html lang="de"><head>' + appkopf + '<meta charset="UTF-
         '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
         + '\n'.join(f'<script src="{s}"{"" if s == "profil.js" else " defer"}></script>' for s in SKRIPTE)
         + '\n<style>\n' + lies(rit / 'basis.css') + '\n' + stil + '</style>\n</head><body>\n'
-        + koerper + '\n<script>\n' + engine + '\n' + bahn + '\n' + daten + '\n' + rechner + '\n' + app
+        + koerper + '\n<script>\n' + fuellen + "\n" + engine + '\n' + bahn + '\n' + daten + '\n' + rechner + '\n' + app
         + '\n</script>\n</body></html>\n')
 ziel = wiki / 'planeten.html'
 ziel.write_text(html, encoding='utf-8')
@@ -187,6 +192,7 @@ for name, t in [('planeten-app.js', app), ('planeten-daten.js', daten), ('planet
 #     heißt sonst nur, dass heute nichts dastand.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'planeten-app.js', 'planeten-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'planeten-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'planeten-app.js')
 for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
     _mit = app + '\nvar _gegenprobe=' + _an + 'Die zehn Kräfte in dir' + _an + ';\n'
     if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'planeten-app.js', 'planeten-daten.js'):

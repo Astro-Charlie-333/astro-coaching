@@ -14,12 +14,10 @@ var ztBereich='arbeit', ztB=null, ztJD=0, ztWortNr=0;
 
 /* Setzt Werte in eine Vorlage aus ZT_T ein. Hier entsteht kein
    Text, nur die Einsetzung. */
-function ztFuell(form, werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function ztFuell(form, werte){ return AC_FUELL(form,werte); }
 
 /* ── Kleinkram ──────────────────────────────────────────────── */
 function ztKZ(x){ var r=Math.round(x*10)/10;

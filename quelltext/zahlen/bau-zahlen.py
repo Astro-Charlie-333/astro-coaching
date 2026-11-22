@@ -21,10 +21,15 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 # Seit Aufgabe 56 liegen zahlen-texte.js (die Sätze) und
 # kern/bahn-daten.js (die Beugung von „dein") mit auf der Seite: Die
 # Anzeige rechnet und setzt ein, sie schreibt nichts mehr.
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'zahlen-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + lies(hier / 'zahlen-koerper.html') + "\n<script>\n"
+        + lies(hier / 'zahlen-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(hier.parent / 'kern' / 'bahn-daten.js') + "\n"
         + lies(hier / 'zahlen-rechner.js') + "\n"
@@ -253,6 +258,7 @@ for _w in _tafel_tadel(_AEISCH.findall(_klartext(koerper + texte)),
 #     genau deshalb ist das hier eine Sperre und kein Vorsatz.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'zahlen-app.js', 'zahlen-texte.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'zahlen-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'zahlen-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
 #     Riegel nicht ausschließt: dass er heute nur nichts zu finden

@@ -58,8 +58,13 @@ kopf = ('<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">\n'
         + '\n'.join(f'<script src="{s}"{"" if s == "profil.js" else " defer"}></script>'
                     for s in SKRIPTE) + '\n<style>\n')
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + '\n' + stil + '</style>\n</head><body>\n'
-        + koerper + '\n<script>\n' + engine + '\n' + bahn + '\n' + termine + '\n' + texte + '\n'
+        + koerper + '\n<script>\n' + fuellen + "\n" + engine + '\n' + bahn + '\n' + termine + '\n' + texte + '\n'
         + app + '\n</script>\n</body></html>\n')
 html = html.replace('<head>', '<head>' + lies(hier.parent / 'app' / 'app-kopf.html'), 1)
 ziel = wiki / 'mond.html'
@@ -188,6 +193,7 @@ finally:
 #     genau deshalb ist das hier eine Sperre und kein Vorsatz.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'mond-app.js', 'mond-texte.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'mond-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'mond-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
 #     Riegel nicht ausschließt: dass er heute nur nichts zu finden

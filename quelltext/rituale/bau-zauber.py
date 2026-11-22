@@ -15,6 +15,9 @@ teile = {n: (hier / n).read_text(encoding='utf-8') for n in
           'himmel.js', 'zauber-inhalt.js', 'zauber-person.js',
           'zauber-texte.js', 'zauber-app.js']}
 teile['bahn-daten.js'] = (hier.parent / 'kern' / 'bahn-daten.js').read_text(encoding='utf-8')
+# Aufgabe 94: AC_FUELL ist die eine Stelle, an der eine Lücke gefüllt
+# wird — ein fehlender Wert bricht dort ab statt zu verschwinden.
+teile['fuellen.js'] = (hier.parent / 'kern' / 'fuellen.js').read_text(encoding='utf-8')
 
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,6 +30,7 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 html = (kopf + teile['basis.css'] + "\n" + teile['zauber-stil.css'] + "</style></head><body>\n"
         + teile['zauber-koerper.html']
         + "\n<script>\n"
+        + teile['fuellen.js'] + "\n"
         + teile['engine.js'] + "\nvar window=window||{};\n"
         + teile['himmel.js'] + "\n"
         + teile['bahn-daten.js'] + "\n"
@@ -98,6 +102,7 @@ if koll:
 #     genau deshalb ist das hier eine Sperre und kein Vorsatz.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'zauber-app.js', 'zauber-texte.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'zauber-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'zauber-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
 #     Riegel nicht ausschließt: dass er heute nur nichts zu finden

@@ -15,12 +15,10 @@ var SVGNS='http://www.w3.org/2000/svg';
 function moSvg(t,a){var e=document.createElementNS(SVGNS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
 var T=MT_T;
 /* Eine Lücke `{so}` je Schlüssel, in einem Durchgang. */
-function moFuell(form,werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function moFuell(form,werte){ return AC_FUELL(form,werte); }
 function moGross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 /* „deine Venus", „dein Mond" — gebeugt an einer Stelle. */
 function moDein(k){ return B_BEUGE(B_PUNKT(k,false),'nom'); }

@@ -12,7 +12,9 @@ function laden(dateien){
   return f(sandkasten.window, console);
 }
 
-const U = laden(['rituale/engine.js', 'zeit/zeit-rechner.js',
+/* fuellen.js zuerst: tief-bauer.js setzt die Lücken seiner Vorlagen
+   mit AC_FUELL ein (Aufgabe 94), und das steht dort. */
+const U = laden(['kern/fuellen.js', 'rituale/engine.js', 'zeit/zeit-rechner.js',
                  'bereiche/lebensbereiche.js', 'bereiche/bereich-rechner.js',
                  'bereiche/bereich-daten.js', 'bereiche/tief-bauer.js']);
 const AC = U.window.AC_BER;
