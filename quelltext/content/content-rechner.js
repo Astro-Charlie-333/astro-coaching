@@ -59,6 +59,13 @@ function pflicht(name, liste){
 }
 pflicht('AC_BER.BEREICHE', AC && AC.BEREICHE);
 pflicht('AC_BDAT.EHRLICH', DAT && DAT.EHRLICH);
+/* Die Blockbeschriftungen der Bereichsseite. Ein Reel ist eine
+   Bildschirmaufnahme: Die Anweisung „filme Block X" muss einen Block
+   nennen, den es gibt, und zwar den, aus dem der Sprechtext kommt.
+   Darum kommen die Namen von hier und nicht aus mach-content.py —
+   sonst zeigt die Aufnahme irgendwann einen anderen Block als den,
+   den die Stimme vorliest. */
+pflicht('AC_BDAT.SEITE.bloecke', DAT && DAT.SEITE && DAT.SEITE.bloecke);
 if(DAT && AC) for(const B of AC.BEREICHE){
   const T = DAT.BER[B.k];
   if(!T || !T.frage || !T.worum || !T.meistern){
@@ -266,5 +273,6 @@ console.log(JSON.stringify({
   woche,
   wocheVon: W.montag.toISOString().slice(0, 10),
   wocheBis: sonntag.toISOString().slice(0, 10),
-  stand, lunationen, stationen, aufhaenger, bereiche, ehrlich
+  stand, lunationen, stationen, aufhaenger, bereiche, ehrlich,
+  bloecke: DAT.SEITE.bloecke
 }, null, 1));

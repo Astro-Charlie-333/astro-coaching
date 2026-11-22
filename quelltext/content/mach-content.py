@@ -31,7 +31,7 @@ D = json.loads(r.stdout)
 # content-rechner.js nicht mehr mitlud. Die Rechnung lief trotzdem
 # durch und lieferte leere Bereiche; der Entwurf hätte „None" in
 # jedem Karussellbild gehabt. Lieber hier abbrechen.
-for feld in ('bereiche', 'ehrlich', 'stand'):
+for feld in ('bereiche', 'ehrlich', 'stand', 'bloecke'):
     if not D.get(feld):
         print(f'Die Rechnung kam ohne „{feld}" zurück — da fehlt eine Quelldatei. '
               'Siehe die Ladeliste in content-rechner.js.')
@@ -43,6 +43,34 @@ if luecken:
     sys.exit(1)
 
 SPRECHTEMPO = 2.2          # Wörter je Sekunde, ruhig gesprochen
+
+# ── Wie lang ein Karussell sein darf ──────────────────────────
+# Die Spanne steht in CONTENT-REGELN.md und wird von dort gelesen,
+# nicht hier noch einmal hingeschrieben. Der Grund ist eine echte
+# Fehlerklasse: Die Regel sagt „Karussell (6–9 Bilder)", die Prüfung
+# unten verlangte einmal mindestens vierzehn — ein eigenes Bild je
+# Aszendent plus Rahmen. Der Entwurf kam also mit sechzehn Bildern
+# heraus und wurde als „gegen CONTENT-REGELN.md geprüft" gemeldet,
+# während er gegen genau diese Regel verstieß. Wer die Zahl an einer
+# Stelle hat, kann sie nicht an der anderen vergessen.
+REGELN = (hier / 'CONTENT-REGELN.md')
+if not REGELN.exists():
+    print(f'CONTENT-REGELN.md liegt nicht neben diesem Skript ({REGELN}) — '
+          'ohne die Regeln wird hier nichts erzeugt.')
+    sys.exit(1)
+REGELN_TEXT = REGELN.read_text(encoding='utf-8')
+_m = re.search(r'\*\*Karussell\*\*\s*\((\d+)\s*[\u2013-]\s*(\d+)\s*Bilder\)', REGELN_TEXT)
+if not _m:
+    print('In CONTENT-REGELN.md steht keine Bildzahl für das Karussell mehr '
+          '(erwartet: „**Karussell** (6–9 Bilder)" im Abschnitt „Die drei '
+          'Formate"). Die Prüfung kann sich dann nicht an der Regel messen — '
+          'lieber abbrechen als eine Länge erfinden.')
+    sys.exit(1)
+KAR_MIN, KAR_MAX = int(_m.group(1)), int(_m.group(2))
+if KAR_MIN > KAR_MAX:
+    print(f'Die Bildzahl in CONTENT-REGELN.md steht verdreht da: {KAR_MIN}–{KAR_MAX}.')
+    sys.exit(1)
+KAR_RAHMEN = 4             # Aufhänger, Übersetzung, Handgriff, Hinweis
 
 # Zeichennamen gebeugt. „Vollmond in Zwillinge" stand wochenlang so im
 # Entwurf: Die Rechnung liefert den Namen im Nominativ, und eingesetzt
@@ -244,20 +272,77 @@ else:
 handgriff = ohne_wiederholung(handgriff, uebersetzung)
 nutzen = ohne_wiederholung(nutzen, uebersetzung + ' ' + handgriff)
 
+# Zehn Bereiche auf zwölf Häuser: zwei Aszendenten landen im selben
+# Bereich. Je Aszendent ein eigenes Bild hieß darum zweimal dasselbe
+# Bild, Wort für Wort — und sechzehn Bilder, wo die Regeln sechs bis
+# neun nennen. Dagegen stand der Satz „bei diesem Aszendenten trifft
+# es den Bereich am Rand, nicht in der Mitte": Er erklärte, warum zwei
+# Bilder gleich aussehen, und übersetzte selbst nichts ins Leben —
+# „am Rand" heißt für eine Leserin gar nichts.
+#
+# Nach Lebensbereich gebündelt löst sich beides auf: Jeder Bereich
+# steht einmal da, und die Aszendenten, die dort landen, stehen
+# nebeneinander in derselben Zeile.
+nach_bereich = []
+for x in A['proAszendent']:
+    for e in nach_bereich:
+        if e['bereich'] == x['bereich']:
+            e['aszendenten'].append(x['aszendent'])
+            break
+    else:
+        nach_bereich.append({'bereich': x['bereich'], 'worum': x['worum'],
+                             'aszendenten': [x['aszendent']]})
+
+
+def aufzaehlung(namen):
+    """[„Widder", „Fische"] → „Widder oder Fische".
+
+    „und" wäre falsch: Niemand hat zwei Aszendenten. Die Zeile sagt,
+    welche zwei im selben Lebensbereich landen — für die Leserin ist
+    das ein Entweder-oder.
+    """
+    if len(namen) == 1:
+        return namen[0]
+    return ', '.join(namen[:-1]) + ' oder ' + namen[-1]
+
+
+def verteilen(liste, n):
+    """Zerlegt `liste` in n möglichst gleich große Stücke.
+
+    Gleich groß, weil ein Karussell mit vier, vier und zwei Zeilen
+    schief aussieht, wo drei Bilder mit vier, drei und drei sauber
+    liegen.
+    """
+    k, r = divmod(len(liste), n)
+    aus, i = [], 0
+    for j in range(n):
+        m = k + (1 if j < r else 0)
+        aus.append(liste[i:i + m])
+        i += m
+    return [g for g in aus if g]
+
+
+# So viele Inhaltsbilder, dass das Karussell in der Mitte der erlaubten
+# Spanne landet — nicht am oberen Rand, damit noch ein Bild dazukann,
+# ohne die Regel zu reißen.
+inhaltsbilder = max(1, min((KAR_MIN + KAR_MAX) // 2 - KAR_RAHMEN,
+                           len(nach_bereich)))
+gruppen = verteilen(nach_bereich, inhaltsbilder)
+
 bilder = [
     ('1 · Aufhänger', aufreisser + '\n\nWas das für dich heißt, hängt von deinem Aszendenten ab.'),
     ('2 · Übersetzung', uebersetzung),
 ]
-for x in A['proAszendent']:
-    # Zehn Bereiche auf zwölf Häuser: zwei Aszendenten landen im selben
-    # Bereich. Einer davon über das Kernfeld, einer über ein Nebenfeld —
-    # ohne diesen Satz sind die beiden Bilder Wort für Wort gleich und
-    # sehen wie ein Versehen aus.
-    rand = ('' if x.get('kern') else
-            '\n\nBei diesem Aszendenten trifft es den Bereich am Rand, '
-            'nicht in der Mitte.')
-    bilder.append((f"Aszendent {x['aszendent']}",
-                   f"**{x['bereich']}**\n\n{x['worum']}{rand}"))
+for i, gruppe in enumerate(gruppen, 1):
+    zeilen = []
+    for e in gruppe:
+        if zeilen:
+            zeilen.append('')
+        zeilen.append(f"**{e['bereich']}** · Aszendent "
+                      f"{aufzaehlung(e['aszendenten'])}")
+        zeilen.append('')
+        zeilen.append(e['worum'])
+    bilder.append((f"Aszendenten · {i} von {len(gruppen)}", '\n'.join(zeilen)))
 bilder.append(('Vorletztes · Handgriff', handgriff + '\n\n' + nutzen))
 bilder.append(('Letztes · Hinweis',
                'Auf der Seite steht, wie lange das bei dir läuft und was dein '
@@ -276,6 +361,12 @@ B = D['bereiche'][woche_nr % len(D['bereiche'])]
 #     aufgeklappt wird, und nicht, dass er oben steht.
 #   · „Man kann es ausrechnen" behaupten. Die Rechnung ist belegt, die
 #     Deutung nicht; die Seite beantwortet die Frage nicht, sie sortiert.
+# Die Blöcke, die im Reel vorkommen — über ihren Platz in der Liste,
+# die die Plattform selbst führt. Umbenennt jemand dort einen Block,
+# wandert der neue Name in die Aufnahmeanweisung mit.
+BLOCK_ZEIT = D['bloecke'][2]      # „3 · Wie lange das läuft"
+BLOCK_DAUER = D['bloecke'][-1]    # „5 · Dein Dauerthema hier"
+
 reel = [
     ('Hook', 'Bildschirm: die Seite, noch nichts eingegeben',
      f"{B['frage']} Aus dem Bauch beantwortet man das jeden Tag anders. "
@@ -290,9 +381,16 @@ reel = [
      f"steht, hängt an deinen Daten — ich klappe hier einen auf."),
     ('Was da steht', f"Bildschirm: {B['name']} aufklappen, langsam scrollen",
      f"{B['worum']}"),
-    ('Der Punkt', 'Bildschirm: Block „Was du tun kannst"',
+    # Die Blocknamen kommen aus bereich-daten.js (D['bloecke']), nicht
+    # aus diesem Skript. Vorher stand neben dem Dauerthema-Satz die
+    # Anweisung, Block „Was du tun kannst" zu filmen. Dort steht aber
+    # der Handgriff eines einzelnen Vorgangs; das Dauerthema steht im
+    # letzten Block. Die Aufnahme hätte einen anderen Block gezeigt als
+    # den, den die Stimme vorliest — und niemand hätte es gemerkt, weil
+    # der Name hier hartcodiert stand.
+    ('Der Punkt', f'Bildschirm: Block „{BLOCK_DAUER}"',
      f"{satzende(B['dauerthema'])}"),
-    ('Abschluss', 'Bildschirm: Block „Wie lange das läuft"',
+    ('Abschluss', f'Bildschirm: Block „{BLOCK_ZEIT}"',
      'Das Nützlichste ist nicht, dass da etwas los ist — sondern dass '
      'dabeisteht, wann es vorbei ist.'),
 ]
@@ -333,8 +431,14 @@ z.append(f"> {aufreisser} {uebersetzung}")
 z.append('>')
 z.append('> Welcher Lebensbereich das bei dir ist, steht im Karussell — such deinen Aszendenten.')
 z.append('>')
-z.append('> Wenn du deinen Aszendenten nicht kennst: Der Rechner auf der Seite sagt ihn dir '
-         'in zehn Sekunden, du brauchst nur Geburtsdatum, -zeit und -ort.')
+# „in zehn Sekunden" war erfunden: Die Plattform verspricht nirgends
+# eine Dauer, und sie sagt an anderer Stelle das Gegenteil davon, dass
+# das schnell hingetippt ist — der Aszendent wechselt etwa alle zwei
+# Stunden, die Geburtszeit muss also stimmen. Das gehört in die
+# Caption, nicht das Tempo.
+z.append('> Wenn du deinen Aszendenten nicht kennst: Der Rechner auf der Seite '
+         'rechnet ihn aus, du brauchst Geburtsdatum, -zeit und -ort. Der '
+         'Aszendent wechselt etwa alle zwei Stunden — die Uhrzeit sollte stimmen.')
 z.append('')
 z.append('---')
 z.append('')
@@ -392,17 +496,26 @@ z.append('')
 z.append('---')
 z.append('')
 
-z.append('## Zum Nachschlagen · die nächsten gut zwei Wochen')
+z.append('## Zum Nachschlagen')
 z.append('')
-z.append('Diese Vorschau reicht weiter als die Woche oben. Was hier mit Datum '
-         'steht und nach dem ' + deutsch(D['wocheBis']) + ' liegt, ist noch '
-         'nicht dran — es wird der Aufhänger der Woche, in der es stattfindet.')
+z.append('Die Tabelle ist der Dauerstand, keine Vorschau: Die langsamen '
+         'Wanderer stehen Jahre im selben Zeichen, und das Datum ist der '
+         'Zeichenwechsel — kein Termin für diese Woche.')
 z.append('')
-z.append('| Wanderer | Zeichen | noch bis |')
-z.append('|---|---|---|')
+# Rückläufig und Zeichenwechsel sind zwei verschiedene Tatsachen und
+# brauchen zwei Spalten. „Saturn ℞ | Widder | 15. April 2028" las sich
+# als „rückläufig bis 2028": Rückläufig ist Saturn Wochen, im Widder
+# bleibt er bis 2028. Das Datum gehört zum Zeichen, nicht zur Richtung.
+z.append('| Wanderer | Zeichen | Richtung | im Zeichen noch bis |')
+z.append('|---|---|---|---|')
 for s in D['stand']:
     bis = s['bis']['kurz'] + ' ' + str(s['bis']['jahr']) if s['bis'] else 'offen'
-    z.append(f"| {s['planet']}{' ℞' if s['rueck'] else ''} | {s['zeichenName']} | {bis} |")
+    richtung = 'rückläufig' if s['rueck'] else 'direkt'
+    z.append(f"| {s['planet']} | {s['zeichenName']} | {richtung} | {bis} |")
+z.append('')
+z.append('Die Daten der nächsten gut zwei Wochen stehen darunter. Was nach '
+         'dem ' + deutsch(D['wocheBis']) + ' liegt, ist noch nicht dran — es '
+         'wird der Aufhänger der Woche, in der es stattfindet.')
 z.append('')
 if D['lunationen']:
     z.append('**Mondphasen:** ' + ' · '.join(
@@ -461,14 +574,42 @@ for name, inhalt in bilder[1:-2]:
         fehler.append(f'„{name}" ist fast nur Fachsprache ({", ".join(treffer)}) '
                       'und übersetzt nichts ins Leben')
 
-# 3 · Vollständigkeit
-if len(bilder) < 14:
-    fehler.append(f'nur {len(bilder)} Karussellbilder — zwölf Aszendenten plus Rahmen fehlen')
-aszendenten = [b[0] for b in bilder if b[0].startswith('Aszendent')]
-if len(aszendenten) != 12:
-    fehler.append(f'{len(aszendenten)} statt 12 Aszendenten im Karussell')
-if len(set(aszendenten)) != 12:
-    fehler.append('ein Aszendent kommt doppelt vor')
+# 3 · Länge und Vollständigkeit des Karussells.
+#     Die Länge wird gegen die Spanne aus CONTENT-REGELN.md geprüft, die
+#     oben aus der Datei gelesen wird. Vorher stand hier „mindestens 14",
+#     also das Gegenteil der Regel („6–9 Bilder"), und der Entwurf ging
+#     mit sechzehn Bildern als geprüft durch. Eine Prüfung, die ihre
+#     eigene Zahl mitbringt, prüft irgendwann sich selbst.
+if not (KAR_MIN <= len(bilder) <= KAR_MAX):
+    fehler.append(f'{len(bilder)} Karussellbilder — CONTENT-REGELN.md sagt '
+                  f'{KAR_MIN} bis {KAR_MAX}')
+#     Gebündelt heißt nicht weggefallen: Jeder der zwölf Aszendenten muss
+#     genau einmal vorkommen, und zwar sichtbar im Bild und nicht nur in
+#     der Datenstruktur.
+gezeigt = [a for g in gruppen for e in g for a in e['aszendenten']]
+if sorted(gezeigt) != sorted(ZEICHEN_FALL):
+    fehlt = sorted(set(ZEICHEN_FALL) - set(gezeigt))
+    doppelt_asz = sorted({a for a in gezeigt if gezeigt.count(a) > 1})
+    if fehlt:
+        fehler.append('diese Aszendenten stehen in keinem Karussellbild: '
+                      + ', '.join(fehlt))
+    if doppelt_asz:
+        fehler.append('diese Aszendenten stehen doppelt im Karussell: '
+                      + ', '.join(doppelt_asz))
+asz_bilder = '\n'.join(t for n, t in bilder if n.startswith('Aszendenten'))
+nicht_im_bild = [a for a in sorted(set(gezeigt))
+                 if not re.search(r'\b' + re.escape(a) + r'\b', asz_bilder)]
+if nicht_im_bild:
+    fehler.append('diese Aszendenten sind gebündelt, stehen aber in keinem '
+                  'Bildtext: ' + ', '.join(nicht_im_bild))
+#     Und kein Bereich darf zweimal auftauchen — genau das war der Grund
+#     für die zwei Wort-für-Wort gleichen Bilder.
+bereiche_gezeigt = [e['bereich'] for g in gruppen for e in g]
+doppelte_bereiche = sorted({b for b in bereiche_gezeigt
+                            if bereiche_gezeigt.count(b) > 1})
+if doppelte_bereiche:
+    fehler.append('dieser Lebensbereich steht in mehr als einem Karussellbild: '
+                  + ', '.join(doppelte_bereiche))
 leer = [n for n, t in bilder if len(t.strip()) < 15]
 if leer:
     fehler.append('leere Karussellbilder: ' + ', '.join(leer))
@@ -499,6 +640,27 @@ for name, bild, sprech in reel:
 for name, bild, sprech in reel:
     if re.search(r'Geburtsdaten (eingeben|eintippen)|Eingabe .{0,12}aufnehmen', bild):
         fehler.append(f'Reel „{name}": die Anweisung filmt Geburtsdaten mit')
+
+# 4d · Jede Blockbeschriftung in einer Aufnahmeanweisung muss ein Block
+#      sein, den die Plattform wirklich hat — und der Sprechtext daneben
+#      muss aus genau diesem Block kommen. Die Fehlerklasse ist echt:
+#      Neben dem Dauerthema-Satz stand die Anweisung, Block „Was du tun
+#      kannst" zu filmen. Dort steht der Handgriff eines einzelnen
+#      Vorgangs; das Dauerthema steht im letzten Block. Die Aufnahme
+#      hätte etwas anderes gezeigt als das, was die Stimme vorliest.
+for name, bild, sprech in reel:
+    for genannt in re.findall(r'„([^„"]+)"', bild):
+        if genannt not in D['bloecke']:
+            fehler.append(f'Reel „{name}": „{genannt}" ist kein Block der '
+                          'Bereichsseite. Die Blöcke heißen: '
+                          + ' · '.join(D['bloecke']))
+    if sprech.strip() == satzende(B['dauerthema']).strip() \
+            and BLOCK_DAUER not in bild:
+        fehler.append(f'Reel „{name}": der Sprechtext ist das Dauerthema, die '
+                      f'Aufnahme zeigt aber nicht „{BLOCK_DAUER}"')
+    if sprech.strip() == B['worum'].strip() and '„' in bild:
+        fehler.append(f'Reel „{name}": „worum es geht" steht auf der '
+                      'Bereichsseite über den Blöcken, nicht in einem Block')
 
 # 4c · Kein Satz zweimal. Captions dürfen den Aufhänger aufgreifen —
 #      innerhalb eines Beitrags ist dieselbe Zeile dagegen Füllung.
@@ -567,6 +729,19 @@ if A['art'] in ('station', 'lunation'):
     if not (D['wocheVon'] <= A['datum']['iso'] <= D['wocheBis']):
         fehler.append(f"der Aufhänger liegt am {A['datum']['iso']}, der Entwurf "
                       f"gilt aber für {D['wocheVon']} bis {D['wocheBis']}")
+
+# 10 · In der Standtabelle darf das Rückläufig-Zeichen nicht in derselben
+#      Zelle stehen wie der Planetenname, weil daneben ein Datum steht,
+#      das den Zeichenwechsel meint. „Saturn ℞ | Widder | 15. April 2028"
+#      liest sich als „rückläufig bis 2028" — rückläufig ist Saturn
+#      Wochen, im Widder bleibt er bis 2028. Zwei Tatsachen, ein Datum:
+#      Die Spalten müssen sie trennen.
+for zeile in text.splitlines():
+    if zeile.startswith('|') and '℞' in zeile:
+        fehler.append('in der Standtabelle steht „℞" in der Zeile zu einem '
+                      'Datum, das den Zeichenwechsel meint — die Richtung '
+                      'gehört in eine eigene Spalte')
+        break
 
 print(f"{ziel.name}  {len(text):,} Zeichen  →  {ziel}")
 print(f"  Karussell mit {len(bilder)} Bildern · Reel {gesamt} s · ein Einzelbild")
