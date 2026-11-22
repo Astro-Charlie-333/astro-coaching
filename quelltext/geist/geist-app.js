@@ -24,12 +24,10 @@ function lonVon(k,jd){var T=(jd-2451545)/36525;
 /* ── Sätze einsetzen ────────────────────────────────────── */
 var T=GT_T;
 /* Eine Lücke `{so}` je Schlüssel, in einem Durchgang. */
-function gFuell(form,werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function gFuell(form,werte){ return AC_FUELL(form,werte); }
 /* Nur der erste Buchstabe groß — deutscher Text wird nie
    kleingeschrieben (REGELN.md 4). */
 function gGross(s){ return String(s).charAt(0).toUpperCase()+String(s).slice(1); }

@@ -33,12 +33,10 @@
   function F(){ return bD().FORM; }
 
   /* ── Hilfen ─────────────────────────────────────────────────── */
-  function fuellen(form, werte){
-    var s = String(form || '');
-    for(var k in werte) if(werte.hasOwnProperty(k))
-      s = s.split('{' + k + '}').join(String(werte[k]));
-    return s;
-  }
+  /* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+     Ein fehlender Wert bricht dort ab, statt als „undefined" im
+     Tiefgang zu landen (Aufgabe 94). */
+  function fuellen(form, werte){ return AC_FUELL(form, werte); }
   function komma(x){ return String(x).replace('.', ','); }
 
   /* Eine Zeile unterstreichen, damit der Text ohne Auszeichnung

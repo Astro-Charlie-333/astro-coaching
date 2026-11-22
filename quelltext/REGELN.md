@@ -198,7 +198,9 @@ Nicht nur den Fall reparieren — die Klasse. Beispiele, die es schon gibt:
 die Altersachse muss zur Markierung passen; die Auswahl „Als" muss die
 Befunde wirklich ändern; auf Stufe 0 kein Fachwort; derselbe Satz nicht
 zweimal in einem Bereich; die vier Lautstärken müssen sich wirklich
-unterscheiden.
+unterscheiden; eine Lücke ohne Wert bricht ab, statt leer zu werden,
+und die Funktion dafür steht an einer Stelle (`AC_FUELL` in
+`kern/fuellen.js`, Aufgabe 94).
 
 ---
 

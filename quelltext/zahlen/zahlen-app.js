@@ -14,12 +14,10 @@ function zPz(x,n){ return (100*x).toFixed(n===undefined?1:n).replace('.',','); }
 var Z_NSU='http://www.w3.org/2000/svg';
 
 /* Eine Lücke `{so}` je Schlüssel, in einem Durchgang. */
-function zFuell(form,werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]===undefined||werte[k]===null?'':werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function zFuell(form,werte){ return AC_FUELL(form,werte); }
 /* „deine Lebenszahl", „dein Ausdruck" — gebeugt an einer Stelle.
    Vorher stand hier „deine "+Name, und damit „deine Ausdruck". */
 function zDein(k){ var L=Z_LABEL[k]; return L ? B_BEUGE(L,'nom') : ''; }

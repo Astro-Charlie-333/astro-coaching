@@ -29,11 +29,16 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
 """
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'bereich-stil.css')
         + "\n" + lies(hier / 'wahl-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body data-modus="kurz">\n'
-        + lies(hier / 'bereich-koerper.html') + "\n<script>\n"
+        + lies(hier / 'bereich-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         # Neu- und Vollmonde für die Vorschau (18.11.)
         + lies(hier.parent / 'mond' / 'mond-termine.js') + "\n"
@@ -793,6 +798,7 @@ if "addEventListener('ac-bereiche'" not in app:
 fehler += pruefwerk.pruefe_anzeige_satzfrei(
     wapp, 'wahl-app.js', 'wahl-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(wapp, 'wahl-app.js')
+fehler += pruefwerk.pruefe_fueller(wapp, 'wahl-app.js')
 # Die Sätze der Leiste: vollständig, ohne Fachwort, und der Satz über
 # eine getroffene Auswahl muss sagen, dass Ausgeblendetes nicht
 # dasselbe ist wie Ruhe.
@@ -962,6 +968,10 @@ fehler += pruefwerk.pruefe_anzeige_satzfrei(
 # zwar nach, hat aber nur nach dem einen Aufruf gesucht. Seit heute
 # verlangt sie beide.
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'bereich-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'bereich-app.js')
+# tief-bauer.js ist keine Anzeige und steht nicht in ANZEIGEN, setzt
+# aber dieselben Lücken ein — Aufgabe 94 gilt dort genauso.
+fehler += pruefwerk.pruefe_fueller(bauer, 'tief-bauer.js')
 # Derselbe Code ohne Kommentare — darunter prüft noch eine engere
 # Regel, dass keine der fünf Blocküberschriften dort wieder auftaucht.
 app_code = pruefwerk.nur_code(app)

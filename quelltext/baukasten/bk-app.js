@@ -16,7 +16,10 @@
 var T = BK_TEXT;
 var el = function(id){ return document.getElementById(id); };
 function bkEsc(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-function bkFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function bkFuell(v, w){ return AC_FUELL(v, w); }
 function bkNeu(tag, klasse, text){ var e = document.createElement(tag); if(klasse) e.className = klasse; if(text !== undefined) e.textContent = text; return e; }
 function bkDef(art){ for(var i = 0; i < BK_BAUSTEINE.length; i++) if(BK_BAUSTEINE[i].k === art) return BK_BAUSTEINE[i]; return null; }
 

@@ -17,7 +17,10 @@ var el = function(id){ return document.getElementById(id); };
 var NS = 'http://www.w3.org/2000/svg';
 function plSvg(t, a){ var e = document.createElementNS(NS, t); for(var k in a) e.setAttribute(k, a[k]); return e; }
 function plEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-function plFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function plFuell(v, w){ return AC_FUELL(v, w); }
 /* Zeichen für Textdarstellung (U+FE0E), sonst malen manche Systeme
    die Symbole als farbige Emoji. */
 var PL_TEXTFORM = String.fromCharCode(0xFE0E);

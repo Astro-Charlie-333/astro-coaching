@@ -16,7 +16,11 @@ koerper   = lies(hier / 'geist-koerper.html')
 # bahn-daten.js liegt seit Aufgabe 59 mit auf der Seite: dort steht
 # B_BEUGE, die eine Stelle, die „dein" beugt. geist-texte.js trägt
 # die Sätze — beides vor geist-app.js, weil die Anzeige sie liest.
-js = [lies(rit / 'engine.js'), lies(rit / 'himmel.js'),
+# Aufgabe 94: fuellen.js liegt mit auf der Seite — AC_FUELL ist die
+# eine Stelle, an der eine Lücke gefüllt wird und ein fehlender Wert
+# abbricht statt lautlos zu verschwinden.
+js = [lies(kern / 'fuellen.js'),
+      lies(rit / 'engine.js'), lies(rit / 'himmel.js'),
       lies(wiki / 'kleine-punkte.js'), lies(kern / 'bahn-daten.js'),
       lies(hier / 'geist-texte.js'), lies(hier / 'geist-inhalt.js'),
       lies(hier / 'geist-app.js')]
@@ -86,6 +90,7 @@ for tafel in ['GT_T', 'GT_ZEICHEN', 'GT_ELEMENTE']:
 #     genau deshalb ist das hier eine Sperre und kein Vorsatz.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'geist-app.js', 'geist-texte.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'geist-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'geist-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
 #     Riegel nicht ausschließt: dass er heute nur nichts zu finden

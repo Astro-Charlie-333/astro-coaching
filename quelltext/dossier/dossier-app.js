@@ -31,15 +31,10 @@ var DT=DO_T;
    kennt, liefert `undefined`; wer das zu '' macht, verliert ein
    Wort, ohne dass etwas rot wird (dieselbe Klasse wie REGELN.md
    6f). Deshalb ist das hier ein Abbruch und kein Notbehelf. */
-function doFuell(form,werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k)){
-    if(werte[k]===undefined||werte[k]===null)
-      throw new Error(DT.fehltWert+k);
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  }
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function doFuell(form,werte){ return AC_FUELL(form,werte); }
 /* „7. Haus" an einer Stelle: die Zahl rechnet, das Hauptwort steht
    in DO_T. Nichts davon wird hier zusammengeklebt. */
 function doHaus(n){ return doFuell(DT.haus,{n:n}); }

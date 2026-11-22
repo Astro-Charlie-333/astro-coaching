@@ -40,7 +40,6 @@ var DO_T = {
     steht hier, weil auch eine Werkstattmeldung ein Satz ist und die
     Anzeige keinen trägt. `doFuell` bricht damit ab, wenn eine Lücke
     ohne Wert ankommt. */
- fehltWert:'Vorlagenlücke ohne Wert: ',
 
  /* Was zwischen zwei Angaben steht. */
  komma:', ',

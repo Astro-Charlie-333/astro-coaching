@@ -282,12 +282,10 @@ function heuteBauen(){
    liegen; hier werden die Sätze dazu eingesetzt und die gerechnete
    Häufigkeit danebengestellt. Kein Satz entsteht hier — alle
    stehen in ich-daten.js. */
-function fuellen(form, werte){
-  var s=String(form||'');
-  for(var k in werte) if(werte.hasOwnProperty(k))
-    s=s.split('{'+k+'}').join(String(werte[k]));
-  return s;
-}
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function fuellen(form, werte){ return AC_FUELL(form,werte); }
 function bereichName(n){ return I_HAUS[n-1] ? I_HAUS[n-1].k : ''; }
 
 /* Hundert Punkte, davon n hell. Man kann sie abzählen — genau das

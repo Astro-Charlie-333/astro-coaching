@@ -67,11 +67,16 @@ if haeufig:
 tabelle = ('var I_HAEUFIG=' + json.dumps(haeufig or {'n': 0, 'anteil': {}},
                                         ensure_ascii=False) + ';\n')
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'kern-stil.css')
         + "\n" + lies(hier / 'ich-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + lies(hier / 'ich-koerper.html') + "\n<script>\n"
+        + lies(hier / 'ich-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(hier / 'kern-rad.js') + "\n"
         + lies(hier / 'ich-daten.js') + "\n"
@@ -103,6 +108,7 @@ daten = lies(hier / 'ich-daten.js')
 # Anzeige.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'ich-app.js', 'ich-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'ich-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'ich-app.js')
 
 # Und die Gegenprobe gegen die Fehlerklasse, die ein grüner Riegel
 # nicht ausschließt: dass er heute nur nichts zu finden hatte

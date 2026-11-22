@@ -30,12 +30,10 @@
   function SE(){ return bD().SEITE; }
   /* Eine Vorlage füllen: {name} wird ersetzt. Was eingesetzt wird,
      ist entweder schon maskiert oder absichtlich Markup. */
-  function fuell(v, m){
-    var s = String(v === undefined || v === null ? '' : v);
-    for(var k in m) if(Object.prototype.hasOwnProperty.call(m, k))
-      s = s.split('{' + k + '}').join(m[k]);
-    return s;
-  }
+  /* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+     Ein fehlender Wert bricht dort ab, statt als „undefined" auf
+     der Seite zu landen (Aufgabe 94). */
+  function fuell(v, m){ return AC_FUELL(v, m); }
 
   /* ── Hilfen ─────────────────────────────────────────────────── */
   function esc(s){

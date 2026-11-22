@@ -89,21 +89,6 @@ Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
 
-### 94 · Dieselbe Sperre fehlt den anderen Füllfunktionen
-Gefunden beim Erledigen von Aufgabe 60 am 2026-11-21. `doFuell` in
-`dossier-app.js` bricht jetzt ab, wenn eine Lücke ohne Wert ankommt —
-genau der Fall, der „Saturn Sextil Sonne" zu „Saturn  Sonne" gemacht
-hat. Die Schwestern dieser Funktion in den anderen durchgezogenen
-Anzeigen (`gFuell`, `zFuell`, `kFuell`, `moFuell` und die übrigen)
-machen aus `undefined` weiter lautlos eine leere Stelle. Solange das
-so ist, steht derselbe Fehler nur noch nicht dort, wo ihn jemand
-sieht — dieselbe Lage wie bei Aufgabe 40.
-**Fertig, wenn:** die Füllfunktion an einer Stelle steht statt in
-jeder Anzeige einzeln, ein fehlender Wert dort abbricht, ein
-absichtlich leerer weiter durchgeht, und beide Fälle als feste
-Beispiele in `pruefwerk` liegen, sodass eine Anzeige, die wieder eine
-eigene bauen will, den Bau zum Scheitern bringt.
-
 ### 61 · `analyse-app.js` (29, 1)
 `analyse.html`. Gehört in einen Zug mit Aufgabe 9.
 
@@ -126,6 +111,40 @@ Zeichenketten in Vorlagen einsetzen.
 
 ### 66 · `werkstatt-app.js` (39, 2)
 `werkstatt.html`.
+
+### 95 · Zwei Lücken auf der Jetzt-Seite füllt niemand
+Gefunden beim Erledigen von Aufgabe 94 am 2026-11-22. `AC_FUELL`
+ersetzt nur Schlüssel, die ihm übergeben werden; eine Lücke, die
+niemand füllt, bleibt als `{liste}` in geschweiften Klammern auf der
+Seite stehen. Genau zwei solche gibt es noch, beide in
+`kern/heute-daten.js`: `{liste}` in `auch` und `{zu}` in
+`techAspekt`. Aufgefallen sind sie nur, weil
+`pruefwerk.pruefe_vorlagenluecken` von Hand gegen diese Datei
+gehalten wurde — `bau-heute.py` ruft die Regel nicht auf, und
+deshalb steht sie dort seit Monaten.
+
+Das ist nicht der Fall, sondern die Klasse: Die Regel gibt es seit
+dem 2026-11-16 an einer Stelle, aber nur neun der siebzehn Bauten
+rufen sie. Eine Prüfung, die nicht aufgerufen wird, ist keine.
+**Fertig, wenn:** beide Lücken einen Wert haben oder aus der Vorlage
+heraus sind, `bau-heute.py` `pruefe_vorlagenluecken` aufruft, und
+`pruefe-alles.py` nachzählt, welche Bauten die Regel rufen — sodass
+ein Bau, der sie fallen lässt, auffällt und nicht jahrelang
+durchgeht.
+
+### 96 · Die neunzehn Hüllen um `AC_FUELL`
+Beim Umzug zu Aufgabe 94 am 2026-11-22 ist in jeder Anzeige eine
+einzeilige Hülle stehen geblieben (`moFuell`, `gFuell`, `kFuell`,
+`tf`, `fuell` und die übrigen), die nichts tut, als `AC_FUELL`
+aufzurufen. Das war Absicht: So blieben rund 450 Aufrufstellen
+unberührt und der Umzug nachlesbar. Die Rechnung dafür steht aber
+noch offen — neunzehn Namen für eine Sache, und jeder davon kann
+beim nächsten Umbau wieder einen eigenen Rumpf bekommen, ohne dass
+sich der Name ändert.
+**Fertig, wenn:** die Anzeigen `AC_FUELL` selbst aufrufen, keine
+Hülle mehr dazwischensteht, und `pruefwerk` eine Hülle um `AC_FUELL`
+genauso abweist wie heute einen eigenen Füller — beides mit festen
+Beispielen.
 
 ### 67 · `tief-bauer.js` schreibt „dein" selbst
 Der Rest der früheren Aufgabe 38. `tief-bauer.js` ist keine Anzeige
@@ -1270,6 +1289,62 @@ auch mit den Fällen, die durchgehen müssen (`REGELN.md` 6e).
 
 
 ## Erledigt
+
+* **2026-11-22** · Eine Lücke wird an einer Stelle gefüllt
+  (Aufgabe 94). Die Funktion, die `{so}` durch einen Wert ersetzt,
+  stand in **neunzehn** Dateien einzeln — und in vier Fassungen, die
+  sich bei genau einem Fall unterschieden: Was passiert, wenn der
+  Wert fehlt?
+
+  | Fassung | Dateien | aus `undefined` wurde |
+  |---|---|---|
+  | Notbehelf | 7 | `''` — das Wort verschwand |
+  | ohne alles | 5 | `undefined` — es stand auf der Seite |
+  | Lücke bleibt | 1 | `{liste}` — die Klammern blieben stehen |
+  | Abbruch | 1 | ein Fehler — richtig, seit einem Tag |
+
+  Gesucht waren sechs. Gefunden hat sie nicht das Suchen nach den
+  Namen, sondern die Prüfung selbst: Sie fragt nicht, wie eine
+  Funktion heißt, sondern nach der **Form**, in der sich ein Füller
+  überhaupt bauen lässt — eine Lücke aus dem Schlüssel
+  zusammengesetzt, oder ein Suchmuster mit Fanggruppe. Drei Dateien
+  waren auf diese Weise dabei, nach denen niemand gesucht hätte,
+  `kern/heute-app.js` darunter.
+
+  Die Funktion steht jetzt in `kern/fuellen.js` als `AC_FUELL` und
+  liegt auf achtzehn Seiten mit. Ein fehlender Wert bricht dort ab;
+  ein absichtlich leerer (`''`) und eine Null gehen durch. Auf der
+  Seite ändert sich nichts — kein Text, keine Gestaltung, alle 3.615
+  Rechenprüfungen der Bereiche und jede Rauchprobe unverändert
+  grün. Was sich ändert, ist, was beim nächsten Mal passiert, wenn
+  ein Schlüssel nicht gefunden wird.
+
+  Verriegelt ist das dreifach, weil jede der drei Sperren etwas
+  anderes nicht sieht:
+
+  * `pruefwerk.pruefe_fueller` in jedem `bau-*.py` — eine Anzeige,
+    die sich wieder eine eigene baut, bringt ihren Bau zum Scheitern
+    (nachgewiesen: `exit=1`).
+  * eine Querprüfung in `pruefe-alles.py` — `AC_FUELL` steht genau
+    einmal im Quelltext, und auch eine Datei, die noch kein
+    `bau-*.py` verriegelt, baut sich keine eigene.
+  * `pruefwerk.ruft_ohne_stelle` — wer `AC_FUELL` aufruft, hat es
+    auch auf der Seite.
+
+  Die dritte ist unterwegs entstanden, und zwar aus einem echten
+  Fehlschlag: Die Rechenprüfung der Bereiche lud `tief-bauer.js`
+  ohne `fuellen.js` und brach mit „AC_FUELL is not defined" ab. Dort
+  hat der Bau es gefunden, weil diese Rechnung wirklich lief — eine
+  Anzeige, deren Zweig heute nicht gerendert wird, wäre damit
+  durchgekommen (`REGELN.md` 6e). Deshalb wird jetzt die Seite selbst
+  gefragt und nicht der Weg dorthin.
+
+  Was offen bleibt, steht als Aufgabe 95 (zwei Lücken in
+  `kern/heute-daten.js`, die niemand füllt — und acht Bauten, die
+  `pruefe_vorlagenluecken` nicht aufrufen) und 96 (die neunzehn
+  einzeiligen Hüllen um `AC_FUELL`, die den Umzug nachlesbar
+  gehalten haben).
+
 
 * **2026-11-21** · `dossier-app.js` ist aus dem Satzgeschäft heraus
   (Aufgabe 60, aus 34 und 38) — 97 Zeichenketten und 4 mal „dein" von

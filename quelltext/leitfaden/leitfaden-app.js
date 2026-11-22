@@ -13,7 +13,10 @@
 var T = LF_TEXT;
 var el = function(id){ return document.getElementById(id); };
 function lfEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-function lfFuell(v, w){ return String(v).replace(/\{([a-zA-Z]+)\}/g, function(_, k){ return (w && w[k] !== undefined) ? String(w[k]) : ''; }); }
+/* Gefüllt wird an einer Stelle: AC_FUELL in kern/fuellen.js.
+   Ein fehlender Wert bricht dort ab, statt lautlos zu
+   verschwinden (Aufgabe 94). */
+function lfFuell(v, w){ return AC_FUELL(v, w); }
 /* Hängt an ein Symbol das Zeichen für Textdarstellung (U+FE0E), sonst
    malen manche Systeme die Tierkreiszeichen als farbige Emoji. */
 var LF_TEXTFORM = String.fromCharCode(0xFE0E);

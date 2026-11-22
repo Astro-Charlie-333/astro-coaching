@@ -954,6 +954,54 @@ if sk_falsch:
 else:
     print('  die Praxis-Leiste steht genau auf den Seiten der Praxis')
 
+# ── Eine Lücke wird an einer Stelle gefüllt (Aufgabe 94) ──────
+# Die Riegel in den bau-*.py halten jede Anzeige, die heute gebaut
+# wird. Diese Querprüfung hält zweierlei, das keiner davon sieht:
+# dass AC_FUELL **einmal** im Quelltext steht — zwei Fassungen
+# derselben Funktion wären wieder die Lage, aus der Aufgabe 94
+# entstand —, und dass auch eine Datei, die noch kein bau-*.py
+# verriegelt, sich keine eigene baut. So kann eine neue Anzeige nicht
+# an der Prüfung vorbei entstehen (REGELN.md 6c: was verlässlich sein
+# soll, gehört in die Maschine).
+DIE_STELLE = 'kern/fuellen.js'
+quellen = sorted(hier.glob('*/*.js'))
+fassungen = sorted(q.relative_to(hier).as_posix() for q in quellen
+                   if 'function AC_FUELL(' in q.read_text(encoding='utf-8'))
+eigene = []
+for q in quellen:
+    name = q.relative_to(hier).as_posix()
+    if name == DIE_STELLE:
+        continue
+    for z, art in pruefwerk.eigene_fueller(q.read_text(encoding='utf-8')):
+        eigene.append(f'{name}:{z} ({art})')
+if fassungen != [DIE_STELLE] or eigene:
+    if fassungen != [DIE_STELLE]:
+        print(f'  AC_FUELL steht in: {", ".join(fassungen) or "keiner Datei"}'
+              f' — es gehört genau in {DIE_STELLE}')
+    for e in eigene:
+        print(f'  EIGENER FÜLLER: {e}')
+    fehlgeschlagen.append('eine Lücke wird nicht an einer Stelle gefüllt')
+# Und: Wer AC_FUELL aufruft, muss es auch auf der Seite haben. Beim
+# Umzug am 2026-11-22 ist genau das einmal passiert — die Rechenprüfung
+# der Bereiche lud tief-bauer.js ohne fuellen.js und brach mit
+# „AC_FUELL is not defined" ab. Der Bau hat es gefunden, aber nur, weil
+# diese Rechnung wirklich lief; eine Anzeige, deren Zweig heute nicht
+# gerendert wird, käme damit durch (REGELN.md 6e). Deshalb wird hier
+# die Seite selbst gefragt und nicht der Weg dorthin.
+ohne_stelle = sorted(s.name for s in seiten
+                     if pruefwerk.ruft_ohne_stelle(
+                         s.read_text(encoding='utf-8', errors='replace')))
+if ohne_stelle:
+    for s in ohne_stelle:
+        print(f'  RUFT AC_FUELL, HAT ES ABER NICHT: {s}')
+    fehlgeschlagen.append('eine Seite ruft AC_FUELL ohne fuellen.js')
+elif fassungen == [DIE_STELLE] and not eigene:
+    seiten_mit = sum(1 for s in seiten
+                     if 'function AC_FUELL(' in s.read_text(encoding='utf-8',
+                                                            errors='replace'))
+    print(f'  {len(quellen)} Quelldateien, eine Stelle, die eine Lücke füllt'
+          f' — auf {seiten_mit} Seiten')
+
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')
 if fehlgeschlagen:

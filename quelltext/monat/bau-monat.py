@@ -47,11 +47,16 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 
 ber = hier.parent / 'bereiche'
 
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# einer Vorlage füllt AC_FUELL — die eine Stelle, an der ein
+# fehlender Wert abbricht statt lautlos zu verschwinden.
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
+
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'monat-stil.css')
         + "\n" + lies(ber / 'wahl-stil.css')
         + '</style><link rel="stylesheet" href="schwerkraft.css"><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
-        + lies(hier / 'monat-koerper.html') + "\n<script>\n"
+        + lies(hier / 'monat-koerper.html') + "\n<script>\n" + fuellen + "\n"
         + lies(rit / 'engine.js') + "\n"
         # Die zehn Bereiche und die Auswahl-Leiste. Der Brief rechnet
         # nichts von der Bereichsseite, muss aber wissen, welche
@@ -152,6 +157,7 @@ if 'ELEM' in rechner and 'ELEM=' in rechner.replace(' ', ''):
 #     halten beide Riegel aus rituale/pruefwerk.py diese Anzeige.
 fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'monat-app.js', 'monat-daten.js')
 fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'monat-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'monat-app.js')
 
 #     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner Riegel
 #     nicht ausschließt: dass er heute nur nichts zu finden hatte
