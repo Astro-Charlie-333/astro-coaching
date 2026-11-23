@@ -767,7 +767,15 @@ ANZEIGEN = {
     # statt zu verschwinden. Dieselbe Klasse wie REGELN.md 6f, nur
     # eine Ebene tiefer: Nicht die Tabelle kannte den Fall nicht,
     # sondern der Notbehelf hat ihn zugedeckt.
-    'analyse/analyse-app.js':      (29, 1),
+    # analyse am 2026-11-23 (Aufgabe 61). Auch hier kam eine
+    # Fehlerklasse mit heraus, die keiner der Vorgänger hatte: Die
+    # Waage des Ergebnisses klebte ihre Beschriftung an die Zahl
+    # davor — „1 gemeinsame Nenner" und „4 trägt". Eine Form, die
+    # von der Zahl abhängt, braucht ihre eigene Vorlage; Einzahl und
+    # Mehrzahl stehen jetzt in AN_T.waage, die Rechnung liefert nur
+    # Schlüssel und Zahl. Dieselbe Klasse wie REGELN.md 6f, eine
+    # Ebene weiter: Nicht der Satz hing am falschen Schlüssel,
+    # sondern die Beugung am Wert.
     'begleitung/begleit-app.js':   (20, 0),
     'ereignis/ereignis-app.js':    (28, 10),
     'oph/oph-app.js':              (65, 4),
@@ -788,7 +796,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
           'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
           'rituale/zauber-app.js', 'geist/geist-app.js',
-          'dossier/dossier-app.js'}
+          'dossier/dossier-app.js', 'analyse/analyse-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
