@@ -53,7 +53,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `mond-app.js` (2026-11-16), `zahlen-app.js` (2026-11-17),
 `haeuser-app.js` (2026-11-18) `zauber-app.js` (2026-11-19) und
 `geist-app.js` (2026-11-20) und
-`dossier-app.js` (2026-11-21);
+`dossier-app.js` (2026-11-21) und
+`analyse-app.js` (2026-11-23);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -88,9 +89,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 61 · `analyse-app.js` (29, 1)
-`analyse.html`. Gehört in einen Zug mit Aufgabe 9.
 
 ### 62 · `begleit-app.js` (20, 0)
 `begleitung.html`.
@@ -687,6 +685,43 @@ eine eigene Einstellung für diesen Menschen macht, „Text kopieren",
 nennen, für die der Text geschrieben ist — und `pruefe-alles.py` am
 gezeichneten Ergebnis abbricht, sobald eine Stufenleiste beim ersten
 Aufruf eine andere Stufe gedrückt zeigt als die, die im Speicher liegt.
+
+### 97 · „Noch 1 Tage bis zu deinem Solar Return"
+Gefunden beim Erledigen von Aufgabe 61 am 2026-11-23. Die
+Fehlerklasse von dort — eine Form, die sich mit der eingesetzten Zahl
+ändert, wird an die Zahl geklebt — steckt auch außerhalb der Analyse.
+In `rituale/ritual.js` Zeile 151 steht `'Noch '+tage+' Tage bis …'`,
+und `tage` darf `1` sein: An dem einen Tag im Jahr, an dem es zutrifft,
+liest die Besucherin „Noch 1 Tage". Dasselbe in
+`werkstatt/werkstatt-app.js` Zeile 153 (`a + ' Jahre'`). Gesucht wurde
+nach der Form „Wert plus Hauptwort", nicht nach den Wörtern; die
+Suche nach den Wörtern hätte beide nicht gefunden.
+
+Die Prüfung dazu gehört nach `rituale/pruefwerk.py`, nicht in ein
+einzelnes `bau-*.py`: Die Klasse betrifft jede Seite, und eine Regel
+in sechsundzwanzig Ordnern ist nach der ersten Verschärfung in
+fünfundzwanzig davon veraltet (`REGELN.md` Abschnitt 5). Eine
+Einheit, die sich nicht beugt („Grad", „Uhr", „Prozent"), geht durch —
+die Regel prüft, ob es zu einem gebeugten Hauptwort eine Einzahlform
+gibt, nicht ob irgendwo ein Plus steht.
+
+**Fertig, wenn:** keine Seite der Plattform mehr eine Zahl mit einem
+gebeugten Hauptwort zusammenklebt, die Einzahl überall aus einer
+Vorlage kommt, `pruefwerk` die Regel mit festen Beispielen für die
+Eins, die Null und die Mehrzahl trägt (`REGELN.md` Abschnitt 6e), und
+der Bau jeder Seite abbricht, sobald jemand es wieder tut.
+
+### 98 · `thema-rest.js` gibt ein Feld zurück, das niemand liest
+Gefunden beim Erledigen von Aufgabe 61 am 2026-11-23. `T_ALLTAG` und
+`T_KOMM` liefern im Ergebnis `zahl:{reibung:…}`. Gelesen wurde das
+schon vorher nicht — die Anzeige verlangte `zahl.nenner`, und das gab
+es dort nie. Seit die Waage über `waage:{lk, ln, rk, rn}` läuft, ist
+das Feld sichtbar toter Ballast: Es sieht aus wie eine Waage, die
+nicht gezeichnet wird.
+**Fertig, wenn:** die beiden Themen entweder eine richtige Waage
+liefern oder das Feld nicht mehr, und `bau-analyse.py` abbricht,
+sobald ein Thema ein Ergebnisfeld zurückgibt, das die Anzeige nicht
+liest.
 
 ## Was nicht gemacht wird
 
@@ -1289,6 +1324,41 @@ auch mit den Fällen, die durchgehen müssen (`REGELN.md` 6e).
 
 
 ## Erledigt
+
+* **2026-11-23** · `analyse-app.js` kommt aus dem Satzgeschäft heraus
+  (Aufgabe 61, aus 34 und 38). Die neunundzwanzig Sätze und das eine
+  von Hand geschriebene „dein" stehen jetzt in `analyse-texte.js`
+  als `AN_T`; die Anzeige rechnet, gruppiert und setzt mit `anFuell`
+  ein, das `AC_FUELL` aufruft. Verriegelt ist das in
+  `bau-analyse.py`: beide Riegel aus `pruefwerk`, in allen drei
+  Anführungsarten gegengeprobt, dazu `pruefe_fueller` und
+  `pruefe_vorlagenluecken`.
+
+  Dabei ist eine Fehlerklasse herausgefallen, die auf der Seite stand
+  und nach der niemand gesucht hat. Die Waage unter dem Ergebnis
+  beschriftete sich, indem sie ihr Hauptwort an die Zahl davor klebte:
+
+  | gerechnet | auf der Seite | richtig wäre |
+  |---|---|---|
+  | 1 Nenner | „1 gemeinsame Nenner" | 1 gemeinsamer Nenner |
+  | 4 Befunde | „4 trägt" | 4 Befunde tragen |
+  | 1 Reibungspunkt | „1 Reibungspunkte" | 1 Reibungspunkt |
+
+  Das ist dieselbe Klasse wie `REGELN.md` 6f, eine Ebene weiter:
+  Dort hing der Satz am falschen Schlüssel, hier hängt die **Beugung
+  am Wert**. Eine Form, die sich mit der eingesetzten Zahl ändert,
+  braucht ihre eigene Vorlage. Einzahl und Mehrzahl stehen jetzt je
+  Schlüssel in `AN_T.waage`, und die drei Themendateien liefern nur
+  noch Schlüssel und Zahl.
+
+  Die dauerhafte Prüfung dazu sitzt an der Form, nicht am Wort
+  (`REGELN.md` 6e): `bau-analyse.py` bricht ab, sobald irgendwo eine
+  Beschriftung zusammengesetzt wird — acht feste Beispiele laufen
+  vorher —, verlangt zu jedem Schlüssel eine Einzahl ohne Lücke und
+  eine Mehrzahl mit `{n}`, und hält die Regel in der Rauchprobe
+  direkt gegen `anZahl` für 0, 1, 2, 3 und 11. Dazu findet die
+  Rauchprobe jetzt jede offene Vorlagenlücke auf der gerenderten
+  Seite, nicht nur die zwei Namen, nach denen sie bisher gesucht hat.
 
 * **2026-11-22** · Eine Lücke wird an einer Stelle gefüllt
   (Aufgabe 94). Die Funktion, die `{so}` durch einen Wert ersetzt,

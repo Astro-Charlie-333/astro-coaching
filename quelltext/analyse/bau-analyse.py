@@ -21,16 +21,22 @@ kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
 """
 
+# analyse-texte.js trägt seit Aufgabe 61 die Sätze der Seite, und
+# kern/fuellen.js die eine Stelle, an der eine Lücke gefüllt wird
+# (Aufgabe 94). Beides steht vor analyse-app.js, weil die Anzeige es
+# liest.
 html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'analyse-stil.css')
         + '</style><script src="niveau.js" defer></script>\n'
           '<script src="wortwahl.js" defer></script>\n</head><body>\n'
         + lies(hier / 'analyse-koerper.html') + "\n<script>\n"
+        + lies(hier.parent / 'kern' / 'fuellen.js') + "\n"
         + lies(rit / 'engine.js') + "\n"
         + lies(hier / 'engine.js') + "\n"
         + lies(hier / 'thema-paar.js') + "\n"
         + lies(hier / 'thema-zusammen.js') + "\n"
         + lies(hier / 'thema-beruf.js') + "\n"
         + lies(hier / 'thema-rest.js') + "\n"
+        + lies(hier / 'analyse-texte.js') + "\n"
         + lies(hier / 'analyse-app.js')
         + "\n</script>\n</body></html>\n")
 
@@ -43,6 +49,7 @@ ziel.write_text(html, encoding='utf-8')
 fehler, hinweise = [], []
 koerper = lies(hier / 'analyse-koerper.html')
 app = lies(hier / 'analyse-app.js')
+texte = lies(hier / 'analyse-texte.js')
 paar = lies(hier / 'thema-paar.js')
 zus  = lies(hier / 'thema-zusammen.js')
 bruf = lies(hier / 'thema-beruf.js')
@@ -69,7 +76,8 @@ def oben(t):
     return set(re.findall(r'^(?:var|function)\s+([A-Za-z_$][\w$]*)', t, re.M))
 
 
-koll = (oben(app) | oben(paar) | oben(zus) | oben(bruf) | oben(rest) | oben(kern)) \
+koll = (oben(app) | oben(texte) | oben(paar) | oben(zus) | oben(bruf)
+        | oben(rest) | oben(kern)) \
        & oben(lies(rit / 'engine.js')) - ERLAUBT
 if koll:
     fehler.append('Namenskollision mit der Rechen-Engine: ' + ', '.join(sorted(koll)))
@@ -130,6 +138,114 @@ for block, name in THEMENDATEIEN:
                 fehler.append(f'{name}: {mm.group(1)} nennt die Form "{g}", '
                               'die es in dieser Datei nicht gibt')
 
+# ── Die Anzeige schreibt keinen Satz und kein „dein" ─────────
+#     Aufgabe 61, aus 34 und 38: Die Sätze dieser Seite stehen in
+#     analyse-texte.js (AN_T), die Anzeige rechnet und setzt mit
+#     `anFuell` ein. Was in analyse-app.js steht, zieht beim Umzug in
+#     eine andere Umgebung nicht mit (PRODUKT.md Abschnitt 7) — und
+#     genau deshalb ist das hier eine Sperre und kein Vorsatz.
+sys.path.insert(0, str(rit))
+import pruefwerk
+
+if not re.search(r'\bvar AN_T\s*=', texte):
+    fehler.append('Tafel AN_T fehlt in analyse-texte.js')
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'analyse-app.js', 'analyse-texte.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'analyse-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'analyse-app.js')
+fehler += pruefwerk.pruefe_vorlagenluecken(texte, app, 'analyse-texte.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei Anführungsarten —
+#     ein Satz, der in doppelten oder schrägen Anführungszeichen
+#     durchgeht, wäre das Loch, über das die Sätze einzeln
+#     zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Für diese Kombination' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'analyse-app.js', 'analyse-texte.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Vorbereitung' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'analyse-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+#     Wer AC_FUELL aufruft, bringt es auch mit.
+if pruefwerk.ruft_ohne_stelle(lies(ziel)):
+    fehler.append('die Seite füllt Lücken, aber kern/fuellen.js liegt nicht mit darauf')
+
+# ── Keine Beschriftung wird an eine Zahl geklebt ─────────────
+#     Der Fehler, der beim Umzug am 2026-11-22 aufgefallen ist. Die
+#     Waage beschriftete sich so:
+#
+#         llab: erg.nenner + ' gemeinsame Nenner'  → „1 gemeinsame Nenner"
+#         llab: nt + ' trägt'                      → „4 trägt"
+#
+#     Beide Formen hängen an der Zahl davor, und beide waren für die
+#     Eins beziehungsweise für alles außer der Eins falsch. Das ist
+#     dieselbe Klasse wie REGELN.md 6f: Was sich mit dem eingesetzten
+#     Wert ändert, braucht seine eigene Vorlage — und eine Sperre, die
+#     am Schlüssel sitzt, der im Text landet.
+#
+#     Geprüft wird die Form, die gemeint ist, nicht ein Wort, das
+#     meistens dabeisteht (REGELN.md 6e): eine Zuweisung an ein
+#     Beschriftungsfeld, deren rechte Seite ein Plus trägt.
+_KLEBT = re.compile(r"""\b(l{1,2}lab|r{1,2}lab|lk|rk)\s*:\s*[^,}\n]*\+""")
+
+
+def klebt_an_zahl(quell):
+    """Zeilen, in denen eine Beschriftung zusammengesetzt wird."""
+    rein = pruefwerk.nur_code(quell)
+    return [rein.count('\n', 0, m.start()) + 1 for m in _KLEBT.finditer(rein)]
+
+
+# Die festen Beispiele (REGELN.md 6e) — die beiden Fassungen, die es
+# wirklich gab, und die Formen, die durchgehen müssen.
+assert klebt_an_zahl("waage:{llab:nt+' trägt'}") == [1]
+assert klebt_an_zahl('waage:{rlab: nb + " bremst"}') == [1]
+assert klebt_an_zahl("x={llab:erg.nenner+' gemeinsame Nenner'}") == [1]
+assert klebt_an_zahl("x={lk:'nenner'+s}") == [1]
+assert klebt_an_zahl("waage:{lk:'traegt', ln:nt, rk:'bremst', rn:nb}") == []
+assert klebt_an_zahl("var llab=anZahl(W.lk, W.ln);") == []
+assert klebt_an_zahl("/* vorher: llab:nt+' trägt' */\nvar a=1;") == []
+assert klebt_an_zahl("waage:{links:a+b, rechts:c+d}") == []
+
+for _quell, _name in list(THEMENDATEIEN) + [(app, 'analyse-app'), (texte, 'analyse-texte')]:
+    for _z in klebt_an_zahl(_quell):
+        fehler.append(f'{_name}.js Zeile {_z}: eine Beschriftung wird '
+                      'zusammengesetzt — die Rechnung liefert Schlüssel und '
+                      'Zahl, die Form steht in AN_T.waage (REGELN.md 6f)')
+
+# ── Jede Waage-Beschriftung hat eine Einzahl und eine Mehrzahl ──
+#     Sonst wäre die Regel darüber umsonst: Ein Schlüssel ohne
+#     Einzahlform müsste wieder von Hand gebildet werden.
+_WAAGE = re.search(r'waage:\s*\{(.*?)\n\s*\},', texte, re.S)
+if not _WAAGE:
+    fehler.append('AN_T.waage fehlt in analyse-texte.js')
+else:
+    _PAAR_FORM = re.compile(
+        r"(\w+)\s*:\s*\{\s*ein:\s*'([^']*)',\s*viele:\s*'([^']*)'\s*\}")
+    _formen = {m.group(1): (m.group(2), m.group(3))
+               for m in _PAAR_FORM.finditer(_WAAGE.group(1))}
+    _alle = set(re.findall(r'^\s*(\w+)\s*:\s*\{', _WAAGE.group(1), re.M))
+    _ohne = sorted(_alle - set(_formen))
+    if _ohne:
+        fehler.append('Waage-Schlüssel ohne Einzahl und Mehrzahl: '
+                      + ', '.join(_ohne))
+    for _k, (_ein, _viele) in _formen.items():
+        if '{n}' in _ein:
+            fehler.append(f'AN_T.waage.{_k}.ein trägt eine Lücke — die '
+                          'Einzahlform gilt genau für die Eins')
+        if '{n}' not in _viele:
+            fehler.append(f'AN_T.waage.{_k}.viele trägt keine Lücke ' + '{n}'
+                          ' — dann steht dort keine Zahl')
+    # Und jeder Schlüssel, den eine Themendatei nennt, muss es geben.
+    for _quell, _name in THEMENDATEIEN:
+        for _m in re.finditer(r"\b[lr]k\s*:\s*'(\w+)'", _quell):
+            if _m.group(1) not in _formen:
+                fehler.append(f'{_name}.js nennt den Waage-Schlüssel '
+                              f'"{_m.group(1)}", den AN_T.waage nicht kennt')
+
 for href in sorted(set(re.findall(r'href="([a-z0-9_-]+\.html)', koerper))):
     if not (wiki / href).exists():
         fehler.append('Verweis ins Leere: ' + href)
@@ -166,13 +282,18 @@ async function lage(){
     erg:(document.querySelector('.an-erg .gr')||{}).textContent||'',
     titel:[...document.querySelectorAll('.an-b h3')].map(x=>x.textContent).join('|'),
     fehler:(document.getElementById('anfehler')||{}).textContent||'',
-    schlecht:/undefined|NaN|\[object|\{A\}|\{B\}|ihr ihr/.test(document.body.innerText),
-    waage:!!document.querySelector('.w-bar'),
+    schlecht:/undefined|NaN|\[object|ihr ihr/.test(document.body.innerText),
+    /* Eine Lücke, die niemand füllt, steht in geschweiften Klammern
+       auf der Seite (Aufgabe 61). Die Textprüfung in bau-analyse.py
+       sieht nur die Vorlagen, nicht den gerenderten Zweig. */
+    klammer:(document.body.innerText.match(/\{[a-zA-Z][a-zA-Z0-9]*\}/)||[''])[0],
+    waage:[...document.querySelectorAll('.an-waage .w-l b')].map(x=>x.textContent),
     breit:document.body.scrollWidth}));
 }
 
 /* Alle Themen × mehrere Paarungen × alle Formen */
 let min=1e9, max=0, leer=0, laeufe=0, regelFehler='';
+const waageLabels=[];
 const gesehen=new Set(); const formWirkt={}; const formZahl={};
 for(const t of themen){
   await p.evaluate(t=>document.querySelector('.th[data-t="'+t+'"]').click(), t);
@@ -195,6 +316,8 @@ for(const t of themen){
       const r=await lage();
       if(r.fehler) regelFehler=r.fehler;
       if(r.schlecht) f.push('undefined/NaN bei '+t+'/'+fm+'/'+k);
+      if(r.klammer) f.push('offene Vorlagenlücke '+r.klammer+' bei '+t+'/'+fm);
+      if(r.waage.length) waageLabels.push(...r.waage);
       if(r.breit>390) f.push('Überlauf '+r.breit+' bei '+t+'/'+fm);
       if(r.n===0) leer++;
       if(r.n<min) min=r.n; if(r.n>max) max=r.n;
@@ -214,7 +337,25 @@ await p.waitForTimeout(260);
 await p.evaluate(()=>{const b=document.querySelector('.pb[data-w="b"]'); if(b) b.click();});
 await p.waitForTimeout(260);
 const bericht=await p.evaluate(()=>typeof berichtText==='function'?berichtText():'');
+/* Die Regel selbst, gegen feste Zahlen gehalten (REGELN.md 6e): Die
+   Einzahlform gilt genau für die Eins, jede andere Zahl steht in der
+   Beschriftung. So bricht sie an der Regel und nicht an dem Lauf, in
+   dem heute zufällig genau ein Befund stand. */
+const zahlProbe=await p.evaluate(()=>{
+  const schlecht=[];
+  for(const k of Object.keys(AN_T.waage)){
+    const f=AN_T.waage[k];
+    if(anZahl(k,1)!==f.ein) schlecht.push(k+': die Eins nimmt nicht die Einzahl');
+    for(const n of [0,2,3,11]){
+      const s=anZahl(k,n);
+      if(s===f.ein) schlecht.push(k+': '+n+' nimmt die Einzahl');
+      if(s.indexOf(String(n))<0) schlecht.push(k+': '+n+' steht nicht in „'+s+'"');
+    }
+  }
+  return schlecht;
+});
 console.log(JSON.stringify({themen,start,min,max,leer,laeufe,formWirkt,formZahl,
+  zahlProbe, waageLabels:[...new Set(waageLabels)],
   ergebnisse:[...gesehen].length, regelFehler, berichtLaenge:bericht.length,
   berichtForm:/·/.test(bericht.split('\n')[0]),
   fehler:[...new Set(f)]}));
@@ -233,6 +374,11 @@ finally:
 if pr:
     for f_ in pr['fehler']:
         fehler.append(f_)
+    for _m in pr['zahlProbe']:
+        fehler.append('Einzahl und Mehrzahl der Waage — ' + _m)
+    if not pr['waageLabels']:
+        fehler.append('über alle Läufe wurde keine Waage beschriftet — '
+                      'dann prüft die Regel darüber nichts')
     if pr['regelFehler']:
         fehler.append('Regel wirft Fehler — ' + pr['regelFehler'][:180])
     if len(pr['themen']) != 5:
@@ -264,6 +410,7 @@ if pr:
           '%d verschiedene Ergebnisse, Bericht %d Zeichen'
           % (pr['laeufe'], len(pr['themen']), pr['min'], pr['max'],
              pr['ergebnisse'], pr['berichtLaenge']))
+    print('    %d verschiedene Waage-Beschriftungen' % len(pr['waageLabels']))
     print('    Formen je Thema: %s' % pr['formZahl'])
     print('    davon wirksam (verschiedene Befunde): %s' % pr['formWirkt'])
 

@@ -624,8 +624,11 @@ function berufErgebnis(treffer, A, B, H, N){
   };
   return {stufe:stufe, titel:T[stufe].t, text:T[stufe].x,
     dichte:dichte,
+    /* Nur Schlüssel und Zahl. Die Beschriftung steht in
+       AN_T.waage, in Einzahl und Mehrzahl — eine Form, die von der
+       Zahl abhängt, wird nicht an sie geklebt (REGELN.md 6f). */
     waage:{links:Math.round(gt), rechts:Math.round(gb),
-           llab:nt+' trägt', rlab:nb+' bremst'}};
+           lk:'traegt', ln:nt, rk:'bremst', rn:nb}};
 }
 
 T_BERUF.regeln=R_BERUF;

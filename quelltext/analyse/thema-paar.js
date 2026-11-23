@@ -610,7 +610,11 @@ function paarErgebnis(treffer, A, B, H, N){
   };
   return {stufe:stufe, titel:T[stufe].t, text:T[stufe].x,
     nenner:n, reibung:r, anteil:anteil,
-    zahl:{nenner:Math.round(gn), reibung:Math.round(gr)}};
+    /* Nur Schlüssel und Zahl — siehe AN_T.waage. Vorher stand hier
+       eine Zahlentafel, aus der die Anzeige „1 gemeinsame Nenner"
+       zusammenklebte. */
+    waage:{links:Math.round(gn), rechts:Math.round(gr),
+           lk:'nenner', ln:n, rk:'punkte', rn:r}};
 }
 
 T_PAAR.regeln=R_PAAR;

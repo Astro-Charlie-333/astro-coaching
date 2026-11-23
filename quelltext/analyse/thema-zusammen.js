@@ -544,8 +544,9 @@ function zusammenErgebnis(treffer, A, B, H, N){
        'wie man besser zusammenarbeitet, sondern wie viel gemeinsame Zuständigkeit es wirklich braucht.'}
   };
   return {stufe:stufe, titel:T[stufe].t, text:T[stufe].x,
+    /* Nur Schlüssel und Zahl — siehe AN_T.waage. */
     waage:{links:Math.round(gn), rechts:Math.round(gr),
-           llab:n+' trägt', rlab:r+' reibt'}};
+           lk:'traegt', ln:n, rk:'reibt', rn:r}};
 }
 
 T_ZUSAMMEN.regeln=R_ZUSAMMEN;

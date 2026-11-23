@@ -1,11 +1,28 @@
 /* Astro-Charlie · Analyse — Oberfläche
-   Thema wählen, Person(en) wählen, rechnen lassen, Bericht ziehen. */
+   Thema wählen, Person(en) wählen, rechnen lassen, Bericht ziehen.
+
+   Hier steht kein Satz. Die Vorlagen stehen in AN_T
+   (analyse-texte.js), `anFuell` setzt ein (Aufgabe 61, aus 34
+   und 38). Verriegelt ist das in `bau-analyse.py`. */
 function nrm(x){x=x%360;return x<0?x+360:x;}
 function el(i){ return document.getElementById(i); }
 function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
  return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
 
 var E=window.AC_ENGINE, H=E.H;
+var AT=AN_T;
+/* Eine Lücke füllt AC_FUELL aus kern/fuellen.js — die eine Stelle,
+   an der ein fehlender Wert abbricht statt lautlos zu verschwinden
+   (Aufgabe 94). Diese Anzeige baut sich keinen eigenen Füller. */
+function anFuell(form,werte){ return AC_FUELL(form,werte); }
+/* Eine Beschriftung, deren Form von der Zahl abhängt, wird nicht an
+   die Zahl geklebt (REGELN.md 6f): Die Zahl entscheidet nur, welche
+   der beiden Formen aus AT.waage genommen wird. */
+function anZahl(k,n){
+  var f=AT.waage[k];
+  return n===1 ? f.ein : anFuell(f.viele,{n:n});
+}
+
 var themaK='paar', aId=null, bId=null, letzte=null;
 /* Die gewählte Form wird je Thema gemerkt — wer bei Paaren „Geschwister"
    eingestellt hat, soll sie beim Zurückwechseln wiederfinden. */
@@ -39,7 +56,7 @@ function themaBauen(){
   el('anthema').innerHTML=THEMEN.map(function(t){
     return '<button type="button" class="th'+(t.schluessel===themaK?' ist':'')+
       '" data-t="'+t.schluessel+'"><b>'+esc(t.n)+'</b><span>'+esc(t.was)+'</span>'+
-      (t.regeln.length<10?'<i>im Aufbau</i>':'')+'</button>'; }).join('');
+      (t.regeln.length<10?AT.aufbau:'')+'</button>'; }).join('');
   Array.prototype.forEach.call(el('anthema').querySelectorAll('.th'),function(b){
     b.addEventListener('click',function(){ themaK=b.getAttribute('data-t');
       themaBauen(); personenBauen(); rechnen(); });
@@ -49,7 +66,7 @@ function themaBauen(){
 function personenBauen(){
   var T=thema(), l=alle(), zwei=(T.modus==='paar'||T.modus==='beides');
   if(!l.length){ el('antpersonen').innerHTML=
-    '<p class="an-leer">Noch kein Profil angelegt. <a href="profile.html">Hier legst du eins an</a>.</p>';
+    '<p class="an-leer">'+AT.keinProfil+'</p>';
     return; }
   if(!aId) aId=(l.filter(function(p){return p.eigen;})[0]||l[0]).id;
   if(zwei && !bId){ var and=l.filter(function(p){return p.id!==aId;})[0]; bId=and?and.id:null; }
@@ -59,14 +76,14 @@ function personenBauen(){
     return '<div class="an-zeile"><span class="lab">'+lab+'</span><div class="an-knoepfe">'+
       l.map(function(p){
         return '<button type="button" class="pb'+(p.id===akt?' ist':'')+'" data-w="'+welche+
-          '" data-id="'+p.id+'">'+esc(nameVon(p))+(p.eigen?' (ich)':'')+'</button>'; }).join('')+
+          '" data-id="'+p.id+'">'+esc(nameVon(p))+(p.eigen?AT.ichMarke:'')+'</button>'; }).join('')+
       '</div></div>';
   }
-  var h=reihe('a', aId, T.modus==='solo'?'Person':'Zwischen');
-  if(zwei) h+=reihe('b', bId, 'und');
+  var h=reihe('a', aId, T.modus==='solo'?AT.werEins:AT.werErste);
+  if(zwei) h+=reihe('b', bId, AT.werZweite);
   if(T.formen&&T.formen.length){
     var f0=formVon(T);
-    h+='<div class="an-zeile"><span class="lab">'+esc(T.formLabel||'Als')+'</span>'+
+    h+='<div class="an-zeile"><span class="lab">'+esc(T.formLabel||AT.formLabel)+'</span>'+
       '<div class="an-knoepfe">'+
       T.formen.map(function(f){
         return '<button type="button" class="fb'+(f.k===f0?' ist':'')+'" data-f="'+f.k+
@@ -87,22 +104,17 @@ function personenBauen(){
   });
 }
 
-/* ── Rechnen ──────────────────────────────────────────────── */
-var ARTEN=[
- {k:'bild',     n:'Das Bild',          u:'Was für ein Fall das überhaupt ist'},
- {k:'nenner',   n:'Gemeinsame Nenner', u:'Worauf ihr euch treffen könnt — hier fängt die Arbeit an'},
- {k:'staerke',  n:'Was trägt',         u:'Die Stellen, auf die Verlass ist'},
- {k:'reibung',  n:'Wo es reibt',       u:'Jede mit einem Ansatz, der für beide gilt'},
- {k:'aufgabe',  n:'Für beide etwas zu tun', u:'Konkret, klein genug, dass es passiert'},
- {k:'beratung', n:'Für dich als Coachin', u:'Nicht zum Vorlesen — deine Vorbereitung'}
-];
+/* ── Rechnen ──────────────────────────────────────────────────
+   Welche Arten von Befund es gibt und in welcher Reihenfolge sie
+   stehen, ist Gerüst und steht hier. Wie sie heißen, steht in
+   AT.art. */
+var ARTEN=['bild','nenner','staerke','reibung','aufgabe','beratung'];
 
 function rechnen(){
   var T=thema(), pa=pVon(aId), pb=bId?pVon(bId):null;
   if(!pa){ el('anergebnis').innerHTML=''; el('anbefunde').innerHTML=''; return; }
   if((T.modus==='paar') && !pb){
-    el('anergebnis').innerHTML='<div class="an-hinweis">Für dieses Thema brauchst du '+
-      '<b>zwei Profile</b>. <a href="profile.html">Noch eins anlegen</a> — dann rechnet es.</div>';
+    el('anergebnis').innerHTML='<div class="an-hinweis">'+AT.zweiProfile+'</div>';
     el('anbefunde').innerHTML=''; el('anwerk').hidden=true; return; }
 
   var A=chartVon(pa), B=pb?chartVon(pb):null;
@@ -120,21 +132,21 @@ function rechnen(){
   var h='';
   if(erg){
     h='<div class="an-erg '+erg.stufe+'">'+
-      '<div class="k">Das Ergebnis</div>'+
+      '<div class="k">'+AT.ergebnisLabel+'</div>'+
       '<div class="gr">'+esc(erg.titel)+'</div>'+
       '<p>'+erg.text+'</p>';
-    var W=erg.waage || (erg.zahl&&erg.zahl.nenner!==undefined
-      ? {links:erg.zahl.nenner, rechts:erg.zahl.reibung,
-         llab:erg.nenner+' gemeinsame Nenner', rlab:erg.reibung+' Reibungspunkte'}
-      : null);
+    var W=erg.waage;
     if(W){
       var ges=W.links+W.rechts||1, pl=H.prozent(W.links/ges), pr=100-pl;
-      h+='<div class="an-waage" role="img" aria-label="'+pl+' Prozent '+esc(W.llab)+
-        ', '+pr+' Prozent '+esc(W.rlab)+'">'+
+      /* Die Rechnung liefert den Schlüssel und die Zahl, die Sprache
+         kommt aus AT.waage — nichts wird zusammengeklebt. */
+      var llab=anZahl(W.lk, W.ln), rlab=anZahl(W.rk, W.rn);
+      h+='<div class="an-waage" role="img" aria-label="'+
+        esc(anFuell(AT.waageBild,{pl:pl, pr:pr, llab:llab, rlab:rlab}))+'">'+
         '<div class="w-bar"><i class="n" style="width:'+pl+'%"></i>'+
         '<i class="r" style="width:'+pr+'%"></i></div>'+
-        '<div class="w-l"><span><b>'+esc(W.llab)+'</b></span>'+
-        '<span><b>'+esc(W.rlab)+'</b></span></div></div>';
+        '<div class="w-l"><span><b>'+esc(llab)+'</b></span>'+
+        '<span><b>'+esc(rlab)+'</b></span></div></div>';
     }
     h+='</div>';
   }
@@ -142,25 +154,26 @@ function rechnen(){
 
   /* Befunde */
   var b='';
-  ARTEN.forEach(function(a){
-    var liste=g[a.k]; if(!liste||!liste.length) return;
-    b+='<section class="an-gruppe '+a.k+'"><h2>'+esc(a.n)+'<span>'+esc(a.u)+'</span></h2>';
+  ARTEN.forEach(function(k){
+    var liste=g[k]; if(!liste||!liste.length) return;
+    var a=AT.art[k];
+    b+='<section class="an-gruppe '+k+'"><h2>'+esc(a.n)+'<span>'+esc(a.u)+'</span></h2>';
     liste.forEach(function(t){
       b+='<article class="an-b"><h3>'+esc(t.titel)+'</h3>'+
         '<p>'+t.text+'</p>'+
-        (t.ansatz?'<div class="an-ansatz"><b>Ansatz</b>'+t.ansatz+'</div>':'')+
-        (t.tun?'<div class="an-tun"><b>Konkret</b>'+t.tun+'</div>':'')+
+        (t.ansatz?'<div class="an-ansatz"><b>'+AT.ansatzLabel+'</b>'+t.ansatz+'</div>':'')+
+        (t.tun?'<div class="an-tun"><b>'+AT.tunLabel+'</b>'+t.tun+'</div>':'')+
         (t.beleg?'<div class="an-beleg ac-tech">'+esc(t.beleg)+'</div>':'')+
         '</article>';
     });
     b+='</section>';
   });
-  if(!b) b='<p class="an-leer">Für diese Kombination hat keine Regel gegriffen. '+
-    'Das kommt bei den Themen im Aufbau noch vor.</p>';
+  if(!b) b='<p class="an-leer">'+AT.keineRegel+'</p>';
   el('anbefunde').innerHTML=b;
   el('anwerk').hidden=false;
   el('anzahl').textContent=r.treffer.length;
-  if(r.fehler.length) el('anfehler').textContent='Regelfehler: '+r.fehler.join(' | ');
+  if(r.fehler.length) el('anfehler').textContent=
+    anFuell(AT.regelfehler,{liste:r.fehler.join(AT.regelTrenner)});
   if(window.AC_NIV&&window.AC_NIV.anwenden) try{ window.AC_NIV.anwenden(); }catch(e){}
 }
 
@@ -168,26 +181,29 @@ function rechnen(){
 function berichtText(){
   if(!letzte) return '';
   var L=letzte, z=[];
-  z.push(L.T.n.toUpperCase()+(L.N.b?' — '+L.N.a+' und '+L.N.b:' — '+L.N.a)+
-    (L.N.formName?' · '+L.N.formName:''));
+  /* Der Themenname, wie ihn thema-*.js nennt. */
+  var thn=L.T.n.toUpperCase();
+  z.push((L.N.b ? anFuell(AT.berichtKopfZwei,{thema:thn, a:L.N.a, b:L.N.b})
+                : anFuell(AT.berichtKopfEins,{thema:thn, a:L.N.a}))+
+    (L.N.formName?anFuell(AT.berichtForm,{form:L.N.formName}):''));
   z.push(new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'}));
   z.push('');
-  if(L.erg){ z.push('ERGEBNIS: '+L.erg.titel);
+  if(L.erg){ z.push(anFuell(AT.berichtErgebnis,{titel:L.erg.titel}));
     z.push(L.erg.text.replace(/<[^>]+>/g,'')); z.push(''); }
-  ARTEN.forEach(function(a){
-    var liste=L.g[a.k]; if(!liste||!liste.length) return;
-    z.push('── '+a.n.toUpperCase()+' ──');
+  ARTEN.forEach(function(k){
+    var liste=L.g[k]; if(!liste||!liste.length) return;
+    z.push(anFuell(AT.berichtTrenner,{n:AT.art[k].n.toUpperCase()}));
     liste.forEach(function(t){
       z.push('');
       z.push(t.titel);
       z.push(t.text.replace(/<[^>]+>/g,''));
-      if(t.ansatz) z.push('Ansatz: '+t.ansatz.replace(/<[^>]+>/g,''));
-      if(t.tun)    z.push('Konkret: '+t.tun.replace(/<[^>]+>/g,''));
-      if(t.beleg)  z.push('('+t.beleg+')');
+      if(t.ansatz) z.push(anFuell(AT.berichtAnsatz,{text:t.ansatz.replace(/<[^>]+>/g,'')}));
+      if(t.tun)    z.push(anFuell(AT.berichtTun,{text:t.tun.replace(/<[^>]+>/g,'')}));
+      if(t.beleg)  z.push(anFuell(AT.berichtBeleg,{beleg:t.beleg}));
     });
     z.push('');
   });
-  z.push('— Astro-Charlie. Hypothesen aus einer Rechnung, gültig nur soweit die Menschen sie bestätigen.');
+  z.push(AT.berichtFuss);
   return z.join('\n');
 }
 
@@ -199,9 +215,9 @@ function berichtText(){
     function echo(s){ el('anecho').textContent=s;
       setTimeout(function(){ el('anecho').textContent=''; }, 2600); }
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(t).then(function(){ echo('Bericht kopiert.'); },
-        function(){ echo('Kopieren ging nicht — markier den Text und nimm Strg+C.'); });
-    } else echo('Dieser Browser kann nicht kopieren — markier den Text und nimm Strg+C.');
+      navigator.clipboard.writeText(t).then(function(){ echo(AT.kopiert); },
+        function(){ echo(AT.kopieFehler); });
+    } else echo(AT.kopieNichts);
   });
   el('andruck').addEventListener('click',function(){ window.print(); });
 })();
