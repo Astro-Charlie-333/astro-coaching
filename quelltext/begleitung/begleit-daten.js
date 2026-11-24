@@ -67,10 +67,10 @@ var C_SITZUNGEN = [
   ziel:'Du verstehst, woran er arbeiten will — in seinen Worten, nicht in deinen.',
   chartZu:true,
   chartSatz:'Das Chart bleibt diese Sitzung zu. Wer mit einer Deutung anfängt, bekommt für den Rest der Begleitung Bestätigung statt Material.',
-  ablauf:[['10 Min','Ankommen, Rahmen wiederholen, Fragen dazu'],
-          ['35 Min','Sein Anliegen — und zwar an Beispielen, nicht als Überschrift'],
-          ['20 Min','Den Auftrag schärfen, bis er in einem Satz steht'],
-          ['10 Min','Abschluss, Hausaufgabe, nächster Termin']],
+  ablauf:[[10,'Ankommen, Rahmen wiederholen, Fragen dazu'],
+          [35,'Sein Anliegen — und zwar an Beispielen, nicht als Überschrift'],
+          [20,'Den Auftrag schärfen, bis er in einem Satz steht'],
+          [10,'Abschluss, Hausaufgabe, nächster Termin']],
   oeffnung:'Was soll anders sein, wenn wir in sechs Terminen fertig sind?',
   kern:['Erzähl mir eine Situation aus der letzten Woche, in der das ein Thema war.',
         'Woran genau hast du gemerkt, dass es dich stört?',
@@ -87,10 +87,10 @@ var C_SITZUNGEN = [
   ziel:'Ihr seht, wo sich dasselbe wiederholt — und was jedes Mal gleich abläuft.',
   chartZu:false,
   chartSatz:'Ab jetzt kommt das Chart dazu — als Frage, nie als Aussage. Was er nicht wiedererkennt, gilt nicht.',
-  ablauf:[['10 Min','Die Woche, die Notizen'],
-          ['40 Min','Drei Situationen nebeneinanderlegen'],
-          ['20 Min','Was ist jedes Mal gleich?'],
-          ['10 Min','Abschluss']],
+  ablauf:[[10,'Die Woche, die Notizen'],
+          [40,'Drei Situationen nebeneinanderlegen'],
+          [20,'Was ist jedes Mal gleich?'],
+          [10,'Abschluss']],
   oeffnung:'Was ist dir diese Woche aufgefallen, als du es aufgeschrieben hast?',
   kern:['Erzähl mir drei Male, bei denen das passiert ist — einmal aus dieser Woche, einmal aus diesem Jahr, einmal aus früher.',
         'Was ist bei allen dreien gleich? Nicht die Situation — der Ablauf.',
@@ -107,10 +107,10 @@ var C_SITZUNGEN = [
   ziel:'Ihr findet, was bei ihm bereits funktioniert — und übertragt es.',
   chartZu:false,
   chartSatz:'Hier eignen sich die Stellen seines Bildes, an denen etwas leicht läuft. Die werden meistens übersehen, weil sie nicht wehtun.',
-  ablauf:[['10 Min','Die Woche'],
-          ['35 Min','Wo geht es schon? Auch in ganz anderen Lebensbereichen'],
-          ['25 Min','Was davon lässt sich übertragen?'],
-          ['10 Min','Abschluss']],
+  ablauf:[[10,'Die Woche'],
+          [35,'Wo geht es schon? Auch in ganz anderen Lebensbereichen'],
+          [25,'Was davon lässt sich übertragen?'],
+          [10,'Abschluss']],
   oeffnung:'Wo in deinem Leben hast du etwas Ähnliches schon mal hinbekommen?',
   kern:['Erzähl mir von etwas, das du gut kannst und das dich keine Überwindung kostet.',
         'Wie machst du das? Beschreib die Schritte, als müsstest du es jemandem beibringen.',
@@ -127,10 +127,10 @@ var C_SITZUNGEN = [
   ziel:'Ihr versteht, wofür das Muster gut ist. Nichts hält sich jahrelang, das nichts bringt.',
   chartZu:false,
   chartSatz:'Hier gehören die Spannungen aus seinem Bild hin — aber als Frage nach dem Nutzen, nicht nach dem Fehler.',
-  ablauf:[['10 Min','Die Woche, der Versuch'],
-          ['40 Min','Wofür ist das Muster gut?'],
-          ['20 Min','Was kostet es, es aufzugeben?'],
-          ['10 Min','Abschluss, Zwischenbilanz: sind wir auf Kurs?']],
+  ablauf:[[10,'Die Woche, der Versuch'],
+          [40,'Wofür ist das Muster gut?'],
+          [20,'Was kostet es, es aufzugeben?'],
+          [10,'Abschluss, Zwischenbilanz: sind wir auf Kurs?']],
   oeffnung:'Du hast es diese Woche einmal anders gemacht. Was war daran unangenehm?',
   kern:['Angenommen, das Muster wäre klug: Wovor schützt es dich?',
         'Was müsstest du können oder aushalten, wenn du es nicht mehr hättest?',
@@ -147,10 +147,10 @@ var C_SITZUNGEN = [
   ziel:'Er entscheidet etwas Konkretes. Klein, datiert, überprüfbar.',
   chartZu:false,
   chartSatz:'Jetzt sind die laufenden Zeiten nützlich: Wo etwas ohnehin in Bewegung ist, fällt der Anfang leichter.',
-  ablauf:[['10 Min','Die Woche'],
-          ['30 Min','Was ändert sich jetzt wirklich?'],
-          ['30 Min','Daraus einen Schritt machen, der am Dienstag funktioniert'],
-          ['10 Min','Abschluss']],
+  ablauf:[[10,'Die Woche'],
+          [30,'Was ändert sich jetzt wirklich?'],
+          [30,'Daraus einen Schritt machen, der am Dienstag funktioniert'],
+          [10,'Abschluss']],
   oeffnung:'Wenn du von allem, was wir besprochen haben, eine Sache mitnimmst — welche?',
   kern:['Was machst du ab jetzt anders? Sag es als Handlung, nicht als Haltung.',
         'Wann zum ersten Mal? Nenn mir einen Tag.',
@@ -168,10 +168,10 @@ var C_SITZUNGEN = [
   ziel:'Er geht mit etwas, das er allein weiterführen kann — und weiß, was er erreicht hat.',
   chartZu:false,
   chartSatz:'Zum Schluss darf das Bild als Ganzes vorkommen: nicht als Deutung, sondern als das, was ihr beide inzwischen daran wiedererkennt.',
-  ablauf:[['15 Min','Was ist in den letzten Wochen passiert?'],
-          ['30 Min','Rückblick auf den Auftrag aus Sitzung 1'],
-          ['25 Min','Was führt er allein weiter?'],
-          ['10 Min','Abschied']],
+  ablauf:[[15,'Was ist in den letzten Wochen passiert?'],
+          [30,'Rückblick auf den Auftrag aus Sitzung 1'],
+          [25,'Was führt er allein weiter?'],
+          [10,'Abschied']],
   oeffnung:'Lies mir deinen Satz aus der ersten Sitzung vor. Was sagst du heute dazu?',
   kern:['Was ist anders als vor sechs Terminen? Auch Kleines.',
         'Was davon hast du selbst gemacht?',
@@ -353,6 +353,7 @@ var C_JETZT = {
   weich:['Wo geht dir gerade in {feld} etwas leichter von der Hand als sonst?',
          'Was wäre in {feld} gerade möglich, das sonst schwerer wäre?',
          'Wo hast du in {feld} im Moment Rückenwind, ohne es zu merken?']},
+ nix:'Gerade trifft nichts Langsames sein Bild. Dann arbeitet ihr mit dem, was er mitbringt — so soll es ohnehin sein.',
  warnung:'Sag ihm nicht, dass gerade „ein Transit läuft". Stell die Frage und sieh, ob sie trifft. Tut sie es nicht, war es die falsche Woche dafür.'};
 
 var C_KOPF = {
@@ -457,3 +458,76 @@ var C_SPICK = {
  minuten:'Minuten',
  raus:'Wenn es zu viel wird',
  rausSatz:'„Das ist zu wichtig für das, was ich hier mache. Lass uns zusammen jemanden finden, der das richtig kann."'};
+
+/* ── Was die Anzeige schreibt ──────────────────────────────────
+   Aufgabe 62, aus 34 und 38. Bis zum 2026-11-24 standen zwanzig
+   Sätze und jede Beschriftung in `begleit-app.js`: die Überschrift
+   über den Chart-Fragen, „Wenn es hakt", der Satz für den Fall, dass
+   gerade nichts läuft. Was dort steht, zieht beim Umzug in eine
+   andere Umgebung nicht mit (PRODUKT.md Abschnitt 7) — die Anzeige
+   rechnet und setzt ein, formuliert aber nichts.
+
+   Drei Formen stecken hier, und die Unterscheidung ist der Grund,
+   warum die Tabelle so aussieht:
+
+   · eine Beschriftung — ein Wort über einem Kasten
+   · ein Satz — steht für sich und wird gelesen
+   · eine Vorlage mit Lücken — wird mit `AC_FUELL` gefüllt, nie mit
+     einem Plus zusammengesetzt
+
+   Die Einheit gehört zur Vorlage und nicht zum Wert: `ablauf` trägt
+   Minuten als Zahl, `ablaufZeit` macht daraus „10 Min" und
+   `spickZeit` dieselbe Zahl ohne Einheit. Vorher stand „10 Min" in
+   den Daten und der Spickzettel schnitt mit
+   `replace(' Min','')` das Wort wieder heraus — eine Anzeige, die
+   in der Wortwahl der Daten herumschneidet, und dieselbe Klasse wie
+   die Beugung am Wert in AN_T.waage (Aufgabe 61).
+
+   Und jede Zahl wird an einer Stelle zu Text: `grad` ist die
+   einzige Vorlage, in der eine Gradzahl landet, und `kommaZahl` in
+   der Anzeige die einzige Stelle, die aus 4.2 „4,2" macht. Deutsche
+   Zahlen tragen ein Komma (REGELN.md Abschnitt 4); bis zum
+   2026-11-24 stand an vier Stellen „4.2°" auf der Seite, weil
+   `toFixed` dort ohne Umweg in den Text ging. */
+var C_T = {
+ /* Kein Profil: der Weg dorthin ist ein Verweis, kein Satzteil. */
+ leer:'Noch kein Profil angelegt. {weg} — ohne Geburtszeit und Geburtsort kann hier nichts gerechnet werden, weil alles an den Häusern hängt.',
+ leerWeg:'Hier legst du eins an',
+ leerZiel:'profile.html',
+
+ /* Die Sitzung */
+ sitzung:'Sitzung {n}',
+ ziel:'Ziel',
+ chartZu:'Das Chart bleibt zu',
+ chartAuf:'Das Chart kommt dazu',
+ ablaufT:'Ablauf',
+ ablaufZeit:'{n} Min',
+ spickZeit:'{n}',
+ anfang:'Womit du anfängst',
+ dann:'Dann',
+ haken:'Wenn es hakt',
+ aufgabe:'Bis zum nächsten Mal',
+ notiz:'Was du dir notierst',
+ fertig:'Sitzung {n} erledigt',
+
+ /* Die Fragen aus dem Bild */
+ chartKopf:'Fragen aus seinem Bild',
+ chartLeer:'Diese Sitzung ohne Chart. Die Fragen aus seinem Bild stehen ab Sitzung 2 hier.',
+ spannung:'Eine Spannung',
+ vorratSpannung:'Spannung: {a} und {b}',
+
+ /* Die Mechanik, sichtbar ab Wissensstufe 2 */
+ grad:'{g}°',
+ spannungTech:'{a} und {b}, {g}° — {art}',
+ jetztTech:'{wanderer} {aspekt} {ziel}, {g}°',
+
+ /* Die Methode und die Werkzeuge */
+ methodeKopf:'{titel} — {name}',
+ linseWo:'Wo im Bogen',
+ linseFalle:'Die Falle',
+ werkzeugWozu:'Wozu',
+ werkzeugNicht:'Wann nicht',
+
+ /* Die Grenzen */
+ grenzenHart:'Die harten Grenzen',
+ grenzenWeich:'Die weichen Grenzen'};

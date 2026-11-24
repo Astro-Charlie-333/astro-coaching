@@ -749,3 +749,77 @@ assert not ruft_ohne_stelle('<p>eine Seite ohne Lücken</p>')
 # Der Name allein ist kein Aufruf — so steht er in einem Kommentar
 # und in dieser Meldung.
 assert not ruft_ohne_stelle('/* gefüllt wird mit AC_FUELL */')
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Ein Artikel verlangt die Form, die die Tabelle vorgibt
+#
+#  Am 2026-11-24 war `main` rot, ohne dass sich ein Commit geändert
+#  hatte — dieselbe Klasse wie REGELN.md 6e, zum zweiten Mal. Die
+#  Meldung von `bau-zauber.py`:
+#
+#      FEHLER: ohne Profil: „des Mond" steht auf der Seite
+#      FEHLER: ohne Profil: „der Mond" steht auf der Seite
+#
+#  Auf der Seite stand „Heute ist Montag, der Tag des Mondes" — also
+#  genau die Form aus der Tabelle — und daneben „Der Mond läuft
+#  gerade leer", ein richtiger deutscher Satz. Geprüft wurde aber:
+#  *steht die Zeichenkette „des " + Name irgendwo im Text?* „des
+#  Mondes" enthält „des Mond", und „der Mond" ist ein Nominativ, den
+#  keine Vorlage zusammengeklebt hat. Die Regel ging seit dem
+#  2026-11-19 durch, weil der Tagesherrscher an keinem Bautag Mond
+#  hieß; sie schlug an dem Tag zu, an dem er es war.
+#
+#  Gemeint war: *hinter einem Artikel steht der rohe Name, obwohl die
+#  Tabelle eine andere Form vorgibt.* Daraus zwei Formen, die die
+#  Regel einhalten muss (REGELN.md 6e, Punkt 1):
+#
+#    · Der Name ist ein eigenes Wort. „des Mondes" ist nicht
+#      „des Mond".
+#    · Geprüft wird der Artikel, in dem die Beugung wirklich sitzt:
+#      der Genitiv. „der Mond", „den Mond", „dem Mond" sind Fälle,
+#      die ein Satz richtig braucht — kein zusammengeklebtes Wort.
+#
+#  Und die Entscheidung steht hier und nicht im Browser: Der
+#  Rauchlauf berichtet, was auf der Seite steht; was daran falsch
+#  ist, entscheidet diese Funktion — darunter die festen Beispiele.
+_GEN_ARTIKEL = 'des'
+
+
+def roh_hinter_artikel(text, roh, *tabelle):
+    """Die Formen, in denen `roh` hinter dem Genitivartikel als
+    eigenes Wort steht, obwohl keine Tabellenform so lautet."""
+    if not roh or not text:
+        return []
+    falsch = _GEN_ARTIKEL + ' ' + roh
+    if falsch in tabelle:
+        return []
+    treffer = re.search(r'(?<![A-Za-zÄÖÜäöüß])' + _GEN_ARTIKEL + r' '
+                        + re.escape(roh) + r'(?![A-Za-zÄÖÜäöüß])', text)
+    return [falsch] if treffer else []
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Der Fall vom 2026-11-24: die Tabellenform steht da, die Regel
+# schweigt.
+assert roh_hinter_artikel('Heute ist Montag, der Tag des Mondes — das '
+                          'färbt alle 24 Stunden.', 'Mond',
+                          'des Mondes', 'des Jupiter') == []
+# Und der Nominativ im Nebensatz ist keine gebaute Form.
+assert roh_hinter_artikel('Der Mond läuft gerade leer. Vorbei ist es '
+                          '12:14 Uhr, dann tritt der Mond in Zwillinge.',
+                          'Mond', 'des Mondes') == []
+assert roh_hinter_artikel('Sie berührt den Mond nicht mehr.', 'Mond',
+                          'des Mondes') == []
+# Der Fehler, um den es geht: der rohe Name hinter dem Genitiv.
+assert roh_hinter_artikel('Heute ist Montag, der Tag des Mond.', 'Mond',
+                          'des Mondes') == ['des Mond']
+assert roh_hinter_artikel('Heute ist Sonntag, der Tag des Sonne.', 'Sonne',
+                          'der Sonne') == ['des Sonne']
+# Wo die Tabelle selbst „des " + Name sagt, ist die Form richtig.
+assert roh_hinter_artikel('Stunde des Merkur', 'Merkur', 'des Merkur') == []
+# Ein Name, der in einem längeren Wort steckt, ist nicht dieser Name.
+assert roh_hinter_artikel('die Bahn des Marsmondes', 'Mars',
+                          'des Mars') == []
+assert roh_hinter_artikel('', 'Mond', 'des Mondes') == []
+assert roh_hinter_artikel('der Tag des Mondes', '', 'des Mondes') == []

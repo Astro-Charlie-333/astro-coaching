@@ -65,9 +65,8 @@ function wenBauen(){
   var box = el('bgwahl'), alle = [];
   try{ alle = AC_P.alle() || []; }catch(err){}
   if(!alle.length){
-    box.innerHTML = '<p class="bg-leer">Noch kein Profil angelegt. ' +
-      '<a href="profile.html">Hier legst du eins an</a> — ohne Geburtszeit und ' +
-      'Geburtsort kann hier nichts gerechnet werden, weil alles an den Häusern hängt.</p>';
+    box.innerHTML = '<p class="bg-leer">' + AC_FUELL(C_T.leer, {weg:
+      '<a href="' + esc(C_T.leerZiel) + '">' + esc(C_T.leerWeg) + '</a>'}) + '</p>';
   } else {
     var zn = false; try{ zn = AC_P.zeigeNamen(); }catch(err){}
     box.innerHTML = '';
@@ -140,25 +139,35 @@ function leisteBauen(){
    diese Stellung zutreffen. Hier wird nichts formuliert; die
    Wortwahl steht in begleit-daten.js, die Tatsachen kommen aus
    begleit-rechner.js. Sichtbar erst ab Wissensstufe 2. */
+/* Die einzige Stelle, an der aus einer Zahl Text wird. Deutsche
+   Zahlen tragen ein Komma (REGELN.md Abschnitt 4); bis zum
+   2026-11-24 ging `toFixed` an vier Stellen ohne Umweg in den Text
+   und schrieb „4.2°" auf die Seite. */
 function kommaZahl(n, stellen){
-  return String(n.toFixed(stellen)).replace('.', ',');
+  return String(Number(n).toFixed(stellen === undefined ? 1 : stellen))
+    .replace('.', ',');
+}
+/* Und die einzige Stelle, an der eine Gradzahl eine Vorlage trifft. */
+function grad(n, stellen){
+  return AC_FUELL(C_T.grad, {g:kommaZahl(n, stellen)});
 }
 
 function stellTech(s){
   var T = window.C_STELL_TECH; if(!T) return '';
-  var teile = [T.feld.replace('{anlage}', s.anlage).replace('{haus}', s.haus)];
-  teile.push(T.grad.replace('{grad}', kommaZahl(s.grad, 1)));
+  var teile = [AC_FUELL(T.feld, {anlage:s.anlage, haus:s.haus})];
+  teile.push(AC_FUELL(T.grad, {grad:kommaZahl(s.grad, 1)}));
   if(s.winkelfeld) teile.push(T.winkelfeld);
   if(s.eigenherr) teile.push(T.eigenherr);
   if(s.chartherr) teile.push(T.chartherr);
   if(s.herrnah) teile.push(T.herrnah);
-  teile.push(T.verknuepft.replace('{gv}', kommaZahl(s.gv, 2)));
+  teile.push(AC_FUELL(T.verknuepft, {gv:kommaZahl(s.gv, 2)}));
   return teile.join(' · ');
 }
 
 function fragenBlock(f){
   if(!f) return '';
-  var h = ['<div class="sz-chart"><div class="sz-chart-t">Fragen aus seinem Bild</div>'];
+  var h = ['<div class="sz-chart"><div class="sz-chart-t">' +
+    esc(C_T.chartKopf) + '</div>'];
   f.stellungen.forEach(function(s){
     h.push('<div class="cf"><div class="cf-th">' + esc(s.thema) + '</div><ul>' +
       s.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
@@ -167,10 +176,12 @@ function fragenBlock(f){
   });
   if(f.spannung){
     var sp = f.spannung;
-    h.push('<div class="cf cf-sp"><div class="cf-th">Eine Spannung</div><ul>' +
+    h.push('<div class="cf cf-sp"><div class="cf-th">' + esc(C_T.spannung) +
+      '</div><ul>' +
       sp.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
-      '</ul><div class="cf-tech ac-tech" data-ab="2">' + esc(sp.a) + ' und ' +
-      esc(sp.b) + ', ' + sp.ab.toFixed(1) + '° — ' + esc(sp.art) + '</div></div>');
+      '</ul><div class="cf-tech ac-tech" data-ab="2">' +
+      esc(AC_FUELL(C_T.spannungTech, {a:sp.a, b:sp.b, g:kommaZahl(sp.ab, 1),
+                                   art:sp.art})) + '</div></div>');
   }
   h.push('</div>');
   return h.join('');
@@ -182,40 +193,43 @@ function sitzungBauen(){
   var f = (P && window.AC_BEGLEIT) ? AC_BEGLEIT.fuerSitzung(P, SITZUNG) : null;
   var h = [];
 
-  h.push('<div class="sz-kopf"><div class="sz-nr">Sitzung ' + s.n + '</div>' +
+  h.push('<div class="sz-kopf"><div class="sz-nr">' +
+    esc(AC_FUELL(C_T.sitzung, {n:s.n})) + '</div>' +
     '<h3 class="sz-h">' + esc(s.titel) + '</h3>' +
-    '<p class="sz-ziel"><b>Ziel</b>' + esc(s.ziel) + '</p></div>');
+    '<p class="sz-ziel"><b>' + esc(C_T.ziel) + '</b>' + esc(s.ziel) + '</p></div>');
 
   h.push('<div class="sz-chartlage' + (s.chartZu ? ' sz-zu' : '') + '">' +
-    '<b>' + (s.chartZu ? 'Das Chart bleibt zu' : 'Das Chart kommt dazu') + '</b>' +
+    '<b>' + esc(s.chartZu ? C_T.chartZu : C_T.chartAuf) + '</b>' +
     esc(s.chartSatz) + '</div>');
 
   h.push('<div class="sz-zwei">');
-  h.push('<div class="sz-sp"><div class="sz-t">Ablauf</div><table class="sz-ablauf">' +
+  h.push('<div class="sz-sp"><div class="sz-t">' + esc(C_T.ablaufT) +
+    '</div><table class="sz-ablauf">' +
     s.ablauf.map(function(a){
-      return '<tr><td>' + esc(a[0]) + '</td><td>' + esc(a[1]) + '</td></tr>'; }).join('') +
+      return '<tr><td>' + esc(AC_FUELL(C_T.ablaufZeit, {n:a[0]})) + '</td><td>' +
+        esc(a[1]) + '</td></tr>'; }).join('') +
     '</table></div>');
 
-  h.push('<div class="sz-sp"><div class="sz-t">Womit du anfängst</div>' +
+  h.push('<div class="sz-sp"><div class="sz-t">' + esc(C_T.anfang) + '</div>' +
     '<p class="sz-oeff">' + esc(s.oeffnung) + '</p>' +
-    '<div class="sz-t">Dann</div><ul class="sz-kern">' +
+    '<div class="sz-t">' + esc(C_T.dann) + '</div><ul class="sz-kern">' +
     s.kern.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></div>');
   h.push('</div>');
 
   if(!s.chartZu && f) h.push(fragenBlock(f));
   else if(s.chartZu) h.push('<div class="sz-chart sz-chart-zu">' +
-    'Diese Sitzung ohne Chart. Die Fragen aus seinem Bild stehen ab Sitzung 2 hier.</div>');
+    esc(C_T.chartLeer) + '</div>');
 
-  h.push('<div class="sz-haken"><div class="sz-t">Wenn es hakt</div>' +
+  h.push('<div class="sz-haken"><div class="sz-t">' + esc(C_T.haken) + '</div>' +
     s.haken.map(function(x){
       return '<div class="hk"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>';
     }).join('') + '</div>');
 
   h.push('<div class="sz-zwei">');
-  h.push('<div class="sz-sp sz-auf"><div class="sz-t">Bis zum nächsten Mal</div><p>' +
-    esc(s.aufgabe) + '</p></div>');
-  h.push('<div class="sz-sp sz-no"><div class="sz-t">Was du dir notierst</div><p>' +
-    esc(s.notiz) + '</p></div>');
+  h.push('<div class="sz-sp sz-auf"><div class="sz-t">' + esc(C_T.aufgabe) +
+    '</div><p>' + esc(s.aufgabe) + '</p></div>');
+  h.push('<div class="sz-sp sz-no"><div class="sz-t">' + esc(C_T.notiz) +
+    '</div><p>' + esc(s.notiz) + '</p></div>');
   h.push('</div>');
 
   h.push('<div class="sz-notiz"><label class="sz-t" for="bgnotiz">' +
@@ -223,8 +237,8 @@ function sitzungBauen(){
     '<textarea id="bgnotiz" rows="7" placeholder="…"></textarea></div>');
 
   h.push('<div class="sz-fuss">' +
-    '<label class="sz-fertig"><input type="checkbox" id="bgfertig"> Sitzung ' + s.n + ' ' +
-    esc(C_KOPF.erledigt) + '</label>' +
+    '<label class="sz-fertig"><input type="checkbox" id="bgfertig"> ' +
+    esc(AC_FUELL(C_T.fertig, {n:s.n})) + '</label>' +
     '<span class="sz-knoepfe">' +
     '<button type="button" class="sz-druck" id="bgspickan">' + esc(C_SPICK.knopf) + '</button>' +
     '<button type="button" class="sz-druck" id="bgdruck">' + esc(C_KOPF.drucken) + '</button>' +
@@ -262,11 +276,13 @@ function spickBauen(s, f){
   if(!s.chartZu && f && f.stellungen.length && f.stellungen[0].fragen.length)
     fragen.push(f.stellungen[0].fragen[0]);
   z.innerHTML =
-    '<div class="sp-kopf"><div><span class="sp-nr">Sitzung ' + s.n + '</span>' +
+    '<div class="sp-kopf"><div><span class="sp-nr">' +
+    esc(AC_FUELL(C_T.sitzung, {n:s.n})) + '</span>' +
     '<b>' + esc(s.titel) + '</b></div>' +
     '<button type="button" class="sp-zu" id="bgspickzu">' + esc(C_SPICK.zu) + '</button></div>' +
     '<div class="sp-min">' + s.ablauf.map(function(a){
-      return '<span><i>' + esc(a[0].replace(' Min','')) + '</i>' + esc(a[1]) + '</span>';
+      return '<span><i>' + esc(AC_FUELL(C_T.spickZeit, {n:a[0]})) + '</i>' +
+        esc(a[1]) + '</span>';
     }).join('') + '</div>' +
     '<p class="sp-oeff">' + esc(s.oeffnung) + '</p>' +
     '<ol class="sp-fragen">' + fragen.map(function(q){
@@ -289,15 +305,17 @@ function jetztBauen(){
     new Date().getUTCDate(), new Date().getUTCHours() + new Date().getUTCMinutes()/60);
   }catch(e){ z.innerHTML = ''; return; }
   var l = AC_BEGLEIT.jetzt(P, jd, 3);
-  if(!l.length){ z.innerHTML = '<p class="bg-nix">Gerade trifft nichts Langsames sein ' +
-    'Bild. Dann arbeitet ihr mit dem, was er mitbringt — so soll es ohnehin sein.</p>'; return; }
+  if(!l.length){ z.innerHTML = '<p class="bg-nix">' + esc(C_JETZT.nix) +
+    '</p>'; return; }
   z.innerHTML = l.map(function(x, i){
     return '<div class="jz"><div class="jz-k">' +
       '<span class="jz-f">' + (i === 0 ? esc(C_JETZT.frageVor) : '') + '</span>' +
-      '<span class="jz-n">' + x.ab.toFixed(1) + '°</span></div>' +
+      '<span class="jz-n">' + esc(grad(x.ab, 1)) + '</span></div>' +
       '<p class="jz-q">' + esc(x.frage) + '</p>' +
-      '<div class="jz-tech ac-tech" data-ab="2">' + esc(x.wanderer) + ' ' +
-      esc(x.aspekt) + ' ' + esc(x.ziel) + ', ' + x.ab.toFixed(2) + '°</div></div>';
+      '<div class="jz-tech ac-tech" data-ab="2">' +
+      esc(AC_FUELL(C_T.jetztTech, {wanderer:x.wanderer, aspekt:x.aspekt,
+                                ziel:x.ziel, g:kommaZahl(x.ab, 2)})) +
+      '</div></div>';
   }).join('');
 }
 
@@ -312,9 +330,10 @@ function vorratBauen(){
         return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></details>';
   });
   sp.forEach(function(x){
-    h.push('<details class="vf vf-sp"><summary><span class="vf-t">Spannung: ' +
-      esc(x.a) + ' und ' + esc(x.b) + '</span>' +
-      '<span class="vf-h ac-tech" data-ab="2">' + x.ab.toFixed(1) + '°</span></summary><ul>' +
+    h.push('<details class="vf vf-sp"><summary><span class="vf-t">' +
+      esc(AC_FUELL(C_T.vorratSpannung, {a:x.a, b:x.b})) + '</span>' +
+      '<span class="vf-h ac-tech" data-ab="2">' + esc(grad(x.ab, 1)) +
+      '</span></summary><ul>' +
       x.fragen.map(function(q){ return '<li>' + esc(q) + '</li>'; }).join('') +
       '</ul></details>');
   });
@@ -325,7 +344,8 @@ function vorratBauen(){
 /* ── Die Methode und die Werkzeuge ──────────────────────── */
 function methodeBauen(){
   if(!window.C_METHODE) return;
-  el('bgmethodeh').textContent = C_METHODE.titel + ' — ' + C_METHODE.name;
+  el('bgmethodeh').textContent = AC_FUELL(C_T.methodeKopf,
+    {titel:C_METHODE.titel, name:C_METHODE.name});
   el('bgmethodesub').textContent = C_METHODE.sub;
   el('bgehrlich').textContent = C_METHODE.ehrlich;
   el('bgabgrenzung').textContent = C_METHODE.abgrenzung;
@@ -334,8 +354,9 @@ function methodeBauen(){
       '<div class="ln-n"><span class="ln-z">' + (i+1) + '</span>' + esc(L.n) + '</div>' +
       '<p class="ln-f">' + esc(L.frage) + '</p>' +
       '<p class="ln-d">' + esc(L.d) + '</p>' +
-      '<div class="ln-z2"><b>Wo im Bogen</b>' + esc(L.wo) + '</div>' +
-      '<div class="ln-z2 ln-falle"><b>Die Falle</b>' + esc(L.falle) + '</div>' +
+      '<div class="ln-z2"><b>' + esc(C_T.linseWo) + '</b>' + esc(L.wo) + '</div>' +
+      '<div class="ln-z2 ln-falle"><b>' + esc(C_T.linseFalle) + '</b>' +
+      esc(L.falle) + '</div>' +
       '</div>';
   }).join('');
 }
@@ -345,8 +366,10 @@ function werkzeugBauen(){
     return '<details class="wz"><summary><span class="wz-n">' + esc(W.n) + '</span>' +
       '<span class="wz-w">' + esc(W.wann) + '</span></summary>' +
       '<div class="wz-i"><p class="wz-s">' + esc(W.satz) + '</p>' +
-      '<div class="wz-z"><b>Wozu</b>' + esc(W.wozu) + '</div>' +
-      '<div class="wz-z wz-nicht"><b>Wann nicht</b>' + esc(W.nicht) + '</div>' +
+      '<div class="wz-z"><b>' + esc(C_T.werkzeugWozu) + '</b>' +
+      esc(W.wozu) + '</div>' +
+      '<div class="wz-z wz-nicht"><b>' + esc(C_T.werkzeugNicht) + '</b>' +
+      esc(W.nicht) + '</div>' +
       '<div class="wz-her">' + esc(W.her) + '</div></div></details>';
   }).join('');
 }
@@ -368,7 +391,7 @@ function festBauen(){
 
   el('bggrenzenh').textContent = C_GRENZEN.titel;
   el('bggrenzensub').textContent = C_GRENZEN.sub;
-  el('bghart').innerHTML = '<div class="gr-t">Die harten Grenzen</div>' +
+  el('bghart').innerHTML = '<div class="gr-t">' + esc(C_T.grenzenHart) + '</div>' +
     C_GRENZEN.hart.map(function(g){
       return '<div class="gr"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>';
     }).join('');
@@ -381,7 +404,7 @@ function festBauen(){
       return '<li><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'; }).join('') +
     '</ul><p class="kr-d">' + esc(K.danach) + '</p></div>';
 
-  el('bgweich').innerHTML = '<div class="gr-t">Die weichen Grenzen</div>' +
+  el('bgweich').innerHTML = '<div class="gr-t">' + esc(C_T.grenzenWeich) + '</div>' +
     C_GRENZEN.weich.map(function(g){
       return '<div class="gr gr-w"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>';
     }).join('');

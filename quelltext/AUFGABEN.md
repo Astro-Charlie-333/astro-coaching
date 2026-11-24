@@ -54,7 +54,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `haeuser-app.js` (2026-11-18) `zauber-app.js` (2026-11-19) und
 `geist-app.js` (2026-11-20) und
 `dossier-app.js` (2026-11-21) und
-`analyse-app.js` (2026-11-23);
+`analyse-app.js` (2026-11-23) und
+`begleit-app.js` (2026-11-24);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -89,9 +90,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 62 · `begleit-app.js` (20, 0)
-`begleitung.html`.
 
 ### 63 · `ereignis-app.js` (28, 10)
 `ereignisse-lesen.html`.
@@ -1323,7 +1321,117 @@ Beispiele beider Seiten beim Import laufen — in beide Richtungen, also
 auch mit den Fällen, die durchgehen müssen (`REGELN.md` 6e).
 
 
+### 99 · Dieselbe Zahl ohne Komma steht noch auf anderen Seiten
+Gefunden beim Erledigen von Aufgabe 62 am 2026-11-24. Dort ging
+`x.ab.toFixed(1)` an vier Stellen ohne Umweg in den Text, und auf
+der Seite stand „4.2°" statt „4,2°" (`REGELN.md` Abschnitt 4). Die
+Regel dagegen steht jetzt in `bau-begleitung.py` und gilt für eine
+Datei.
+
+Nachgezählt am 2026-11-24: In dreizehn weiteren Anzeigen steht
+`toFixed`, und jede bringt ihre eigene Kommafunktion mit — `komma`
+in `ereignis-rechner.js` und `tief-bauer.js`, `kommaZahl` hier,
+eine namenlose in `dossier-app.js`, `geist-app.js`, `ich-app.js`
+und `monat-app.js`. Das ist dieselbe Lage wie vor Aufgabe 94: eine
+Regel in vierzehn Dateien ist nach der ersten Verschärfung in
+dreizehn davon veraltet. Ein Teil der Aufrufe ist dabei richtig —
+in `karte-app.js` und `mond-app.js` rechnet `toFixed` Punkte eines
+SVG-Pfades aus, und dort gehört der Punkt hin. Die Regel muss also
+zwischen *wird gezeichnet* und *wird gelesen* unterscheiden, sonst
+greift sie zu weit (`REGELN.md` 6e).
+**Fertig, wenn:** eine Zahl an einer Stelle zu deutschem Text wird,
+diese Stelle in `kern/` steht, jedes `bau-*.py` einer rechnenden
+Seite die Regel ruft, `pruefe-alles.py` nachzählt, welche Bauten sie
+rufen — sodass ein Bau, der sie fallen lässt, auffällt —, und eine
+Gradzahl mit Punkt in jeder dieser Seiten den Bau abbricht, am
+gezeichneten Ergebnis gemessen und nicht an den Daten.
+
+### 100 · Der Satz für „noch kein Profil" steht auf keiner Seite
+Gefunden beim Erledigen von Aufgabe 62 am 2026-11-24. In
+`begleit-app.js` gibt es einen Zweig für den Fall, dass noch kein
+Profil angelegt ist: „Noch kein Profil angelegt. Hier legst du eins
+an — ohne Geburtszeit und Geburtsort kann hier nichts gerechnet
+werden." Er wird nie erreicht. `neu()` fragt zuerst `profil()`, und
+ohne Profil steigt es dort aus, bevor `wenBauen()` überhaupt läuft;
+auf der Seite steht dann `C_KOPF.keinProfil`, ein anderer Satz ohne
+den Weg zum Profil. Zwei Sätze für denselben Fall, und der
+ausführlichere ist toter Text.
+
+Das ist nicht der Fall, sondern die Klasse: Ein Zweig, den kein
+Durchgang der Rauchprobe betritt, kann jeden Unsinn enthalten und
+bleibt grün. Die Rauchprobe hat den Fall ohne Profil, sie prüft dort
+nur nicht, welcher der beiden Sätze kommt.
+**Fertig, wenn:** es für „noch kein Profil" einen Satz gibt und
+nicht zwei, der Weg zum Profil darin steht, die Rauchprobe ohne
+Profil darauf abbricht, und `bau-begleitung.py` einen Zweig
+anschlägt, dessen Text in keinem der beiden Durchgänge auf der Seite
+landet.
+
+---
+
 ## Erledigt
+
+* **2026-11-24** · `begleit-app.js` kommt aus dem Satzgeschäft heraus
+  (Aufgabe 62, aus 34 und 38). Die zwanzig Sätze und jede
+  Beschriftung stehen jetzt in `begleit-daten.js` als `C_T`; die
+  Anzeige rechnet und setzt mit `AC_FUELL` ein — ohne Hülle, die
+  nichts tut (Aufgabe 96). Verriegelt ist das in
+  `bau-begleitung.py`: beide Riegel aus `pruefwerk`, in allen drei
+  Anführungsarten gegengeprobt, dazu `pruefe_fueller` und
+  `pruefe_vorlagenluecken`. Gefüllt wird auf dieser Seite an zwei
+  Stellen — die Fragen aus dem Bild setzt der Rechner ein —, also
+  werden beide gefragt; nur die Anzeige zu fragen hieße, `{feld}`
+  für ungefüllt zu halten, obwohl es gefüllt wird.
+
+  Zwei Fehlerklassen kamen mit heraus, beide auf der Seite sichtbar:
+
+  | gerechnet | auf der Seite | richtig wäre |
+  |---|---|---|
+  | 4,2 Grad | „4.2°" | 4,2° |
+  | 10 Minuten | „10 Min", im Spickzettel wieder herausgeschnitten | 10 |
+
+  Die Gradzahl: `kommaZahl` gab es auf dieser Seite vom ersten Tag an
+  und wurde nur in der Mechanik der Stellungen benutzt. Daneben
+  stand viermal `toFixed` und damit der Punkt. Die Sperre saß am
+  Aufruf, den jemand im Kopf hatte, nicht an der Form, die im Text
+  landet — dieselbe Klasse wie `REGELN.md` 6f. `bau-begleitung.py`
+  bricht jetzt an jedem `toFixed` ab, dessen Ergebnis nicht durch
+  `kommaZahl` geht, mit festen Beispielen darunter.
+
+  Die Einheit: Die Daten trugen `'10 Min'`, und der Spickzettel
+  schnitt mit `replace(' Min','')` das Wort wieder heraus, um die
+  Zahl allein zu zeigen. Eine Anzeige, die in der Wortwahl der Daten
+  herumschneidet, ist dieselbe Klasse wie die Beugung am Wert in
+  `AN_T.waage` (Aufgabe 61): Was sich mit dem Wert ändert, gehört in
+  die Vorlage. `ablauf` trägt jetzt Minuten als Zahl, `ablaufZeit`
+  macht daraus „10 Min" und `spickZeit` dieselbe Zahl ohne Einheit.
+
+* **2026-11-24** · Die Prüfung des Genitivs auf `zauber.html` prüft
+  eine Form und kein Textstück. `main` war rot, ohne dass sich ein
+  Commit geändert hatte:
+
+  ```
+  FEHLER: ohne Profil: „des Mond" steht auf der Seite
+  FEHLER: ohne Profil: „der Mond" steht auf der Seite
+  ```
+
+  Auf der Seite stand „Heute ist Montag, der Tag des Mondes" — genau
+  die Form aus der Tabelle — und daneben „Der Mond läuft gerade
+  leer", ein richtiger deutscher Satz. Geprüft wurde aber, ob die
+  Zeichenkette „des " plus Name *irgendwo* vorkommt: „des Mondes"
+  enthält „des Mond", und „der Mond" ist ein Nominativ, den keine
+  Vorlage zusammengeklebt hat. Die Regel ging seit dem 2026-11-19
+  durch, weil der Tagesherrscher an keinem Bautag Mond hieß — genau
+  der Fall aus `REGELN.md` 6e, zum zweiten Mal.
+
+  Gemeint war: hinter einem Artikel steht der rohe Name, obwohl die
+  Tabelle eine andere Form vorgibt. Die Regel steht jetzt als
+  `pruefwerk.roh_hinter_artikel` an einer Stelle, liest den Namen als
+  eigenes Wort und nur hinter dem Genitivartikel, in dem die Beugung
+  wirklich sitzt; darunter stehen zehn feste Beispiele, unter ihnen
+  der Fall vom 2026-11-24. Und die Entscheidung ist aus dem Browser
+  heraus: Die Rauchprobe berichtet, was auf der Seite steht, die
+  Regel sagt, was daran falsch ist.
 
 * **2026-11-23** · `analyse-app.js` kommt aus dem Satzgeschäft heraus
   (Aufgabe 61, aus 34 und 38). Die neunundzwanzig Sätze und das eine

@@ -776,7 +776,18 @@ ANZEIGEN = {
     # Schlüssel und Zahl. Dieselbe Klasse wie REGELN.md 6f, eine
     # Ebene weiter: Nicht der Satz hing am falschen Schlüssel,
     # sondern die Beugung am Wert.
-    'begleitung/begleit-app.js':   (20, 0),
+    # begleitung am 2026-11-24 (Aufgabe 62). Zwei Fehlerklassen kamen
+    # mit heraus. Die erste: An vier Stellen ging „x.ab.toFixed(1)"
+    # ohne Umweg in den Text, und auf der Seite stand „4.2°" —
+    # deutsche Zahlen tragen ein Komma (REGELN.md Abschnitt 4). Die
+    # Seite hatte `kommaZahl` seit dem ersten Tag und benutzte es nur
+    # in der Mechanik der Stellungen; die Sperre saß also am Aufruf,
+    # den jemand im Kopf hatte, und nicht an der Form, die im Text
+    # landet (REGELN.md 6f). Die zweite: Der Spickzettel schnitt mit
+    # `replace(' Min','')` die Einheit aus den Daten heraus. Die
+    # Einheit gehört in die Vorlage, nicht an den Wert — dieselbe
+    # Klasse wie AN_T.waage am 2026-11-23; `ablauf` trägt jetzt
+    # Minuten als Zahl.
     'ereignis/ereignis-app.js':    (28, 10),
     'oph/oph-app.js':              (65, 4),
     'niveau/reading-app.js':       (70, 14),
@@ -796,7 +807,8 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'karte/karte-app.js', 'mond/mond-app.js',
           'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
           'rituale/zauber-app.js', 'geist/geist-app.js',
-          'dossier/dossier-app.js', 'analyse/analyse-app.js'}
+          'dossier/dossier-app.js', 'analyse/analyse-app.js',
+          'begleitung/begleit-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion

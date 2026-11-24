@@ -158,7 +158,7 @@ function stellungen(P){
     var G = gewichte(P, k, h);
     out.push({
       anlage:k, haus:h, feld:feld, thema:V.thema,
-      fragen:V.fragen.map(function(f){ return f.replace('{feld}', feld); }),
+      fragen:V.fragen.map(function(f){ return AC_FUELL(f, {feld:feld}); }),
       gewicht:G.g, g:G.g, gv:G.gv, gs:G.gs, lon:bgNrm(P[k]),
       grad:G.grad, herr:G.herr, eigenherr:G.eigenherr,
       chartherr:G.chartherr, winkelfeld:G.winkelfeld, herrnah:G.herrnah
@@ -203,7 +203,7 @@ function spannungen(P, hoechstens){
         out.push({
           a:a, b:b, ab:ab, art:art,
           fragen:C_WINKEL[art].map(function(f){
-            return f.replace('{a}', fa).replace('{b}', fb); }),
+            return AC_FUELL(f, {a:fa, b:fb}); }),
           gewicht:(3 - ab) * ((BG_GEWICHT[a]||0.5) + (BG_GEWICHT[b]||0.5))
         });
       });
@@ -230,7 +230,7 @@ function jetzt(P, jd, hoechstens){
       haus:h, feld:feld,
       frage: feld ? (function(){
         var v = C_JETZT.fragen[x.art];
-        return (Array.isArray(v) ? v[i % v.length] : v).replace('{feld}', feld);
+        return AC_FUELL(Array.isArray(v) ? v[i % v.length] : v, {feld:feld});
       })() : null
     };
   }).filter(function(x){ return !!x.frage; });
