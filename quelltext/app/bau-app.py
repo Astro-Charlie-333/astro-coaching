@@ -312,10 +312,15 @@ for name in ('sw.js', 'app-start.js'):
 # 10 · Der Zwischenspeicher fragt erst das Netz. Fehlerklasse: eine Regel,
 #      die zuerst in den Speicher greift und alte Texte als heutige ausgibt.
 sw = lies(hier / 'sw.js')
-if 'fetch(anfrage)' not in sw or 'caches.match' not in sw:
+if 'fetch(frisch)' not in sw or 'caches.match' not in sw:
     fehler.append('der Zwischenspeicher fragt nicht erst das Netz und dann den Speicher')
-if sw.index('fetch(anfrage)') > sw.index('caches.match'):
+elif sw.index('fetch(frisch)') > sw.index('caches.match'):
     fehler.append('im Zwischenspeicher kommt der Speicher vor dem Netz')
+# 10b · Eigene Dateien gehen am Browser-Zwischenspeicher vorbei.
+#      Fehlerklasse: Nach einer Änderung zeigt der Browser bis zu zehn
+#      Minuten die alte Seite, oder neue Seite und altes Skript mischen sich.
+if "cache: 'no-cache'" not in sw or 'self.location.origin' not in sw:
+    fehler.append('eigene Dateien kommen aus dem Browser-Zwischenspeicher statt frisch vom Server')
 
 # 11 · Regeln, die plattformweit gelten.
 #      Die beiden Muster werden zusammengesetzt, damit das echte Datum
@@ -353,6 +358,9 @@ if '--schnell' not in sys.argv:
     # zumacht, ist für beide dasselbe, in jeder Fassung.
     am_netz = threading.Event()
     am_netz.set()
+    # Für die Frische-Probe: eine Seite, die bei jedem Abruf anders lautet
+    # und sich wie bei GitHub zehn Minuten festhalten lassen will.
+    abrufe = [0]
 
     class Still(http.server.SimpleHTTPRequestHandler):
         # Ohne eigenen Eintrag liefert Python das Manifest als Text aus.
@@ -366,6 +374,16 @@ if '--schnell' not in sys.argv:
                 self.send_header('Content-Length', '2')
                 self.end_headers()
                 self.wfile.write(b'ok')
+                return
+            if self.path.startswith('/__frisch'):
+                abrufe[0] += 1
+                koerper = ('<!doctype html><title>Stand %d</title>' % abrufe[0]).encode()
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Length', str(len(koerper)))
+                self.send_header('Cache-Control', 'max-age=600')
+                http.server.BaseHTTPRequestHandler.end_headers(self)
+                self.wfile.write(koerper)
                 return
             if not am_netz.is_set():
                 # Zumachen, ohne ein Byte zu schreiben: der Browser sieht
@@ -432,6 +450,15 @@ if(!kopf.manifest) f.push('die Startseite bindet das Manifest nicht ein');
 if(!kopf.symbol) f.push('die Startseite nennt kein Symbol für den Startbildschirm');
 
 if(uebernommen){
+  /* 0 · Eine geänderte Seite ist sofort zu sehen, auch wenn der Server
+         wie GitHub erlaubt, sie zehn Minuten festzuhalten. */
+  await p.goto(BASIS+'/__frisch.html',{waitUntil:'load'});
+  const stand1=await p.title();
+  await p.goto(BASIS+'/index.html',{waitUntil:'load'});
+  await p.goto(BASIS+'/__frisch.html',{waitUntil:'load'});
+  const stand2=await p.title();
+  if(stand1===stand2) f.push('nach einer Änderung zeigt der Browser noch die alte Seite ('+stand2+')');
+
   /* Eine zweite Seite, diesmal durch den Speicher hindurch geladen. */
   await p.goto(BASIS+'/bereiche.html',{waitUntil:'load'});
   const titelBer=await p.evaluate(()=>document.title);
