@@ -155,19 +155,26 @@ var S_ICH = {
    + 'rückblickend so viel über mich erklärt. Ich weiß also ziemlich gut, '
    + 'wie es sich anfühlt, wenn man lange nicht versteht, warum man anders '
    + 'tickt.',
-   'Um mich und mein Leben besser zu verstehen, hab ich zweimal eine '
-   + 'Verhaltenstherapie gemacht. Meine Therapeutin hat mal zu mir gesagt, '
-   + 'dass ich zu jeder Sitzung schon mit der Lösung kam, weil ich die Wege '
-   + 'meistens selbst gesehen habe. Nach der Therapie stand ich trotzdem da '
-   + 'und dachte: Und jetzt? Für mich hat genau da die eigentliche Arbeit '
-   + 'angefangen. Und ich glaube, an dieser Stelle hören viele auf, weil '
-   + 'ihnen niemand zeigt, wie es weitergeht.',
-   'Ich hab mich danach viel mit mir beschäftigt und ein Buch nach dem '
-   + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
-   + 'Leben umgehe. Die letzten Fragezeichen hat mir die Astrologie '
-   + 'beantwortet: Wieso fühle ich so? Wieso handle ich so? Wieso hatte ich '
-   + 'genau diese Challenges? Nicht als Beweis, sondern als Sprache, die '
-   + 'für mich endlich gepasst hat.',
+   ],
+  /* Mandy am 24.11.: Therapie und Astrologie klarer trennen und
+     hervorheben. Darum drei Stationen nacheinander, als Karten. */
+  wege: [
+   {k:'Erst', titel:'Zweimal Verhaltenstherapie',
+    text:'Um mich und mein Leben besser zu verstehen. Meine Therapeutin hat '
+    + 'mal zu mir gesagt, dass ich zu jeder Sitzung schon mit der Lösung '
+    + 'kam, weil ich die Wege meistens selbst gesehen habe.'},
+   {k:'Dann', titel:'Und jetzt?',
+    text:'Nach der Therapie stand ich da und wusste nicht weiter. Für mich hat '
+    + 'genau da die eigentliche Arbeit angefangen. Ich hab ein Buch nach dem '
+    + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
+    + 'Leben umgehe. Und ich glaube, an dieser Stelle hören viele auf, weil '
+    + 'ihnen niemand zeigt, wie es weitergeht.'},
+   {k:'Und dann', titel:'Astrologie',
+    text:'Hier hab ich Antworten auf die letzten Fragezeichen gefunden: Wieso fühle ich '
+    + 'so? Wieso handle ich so? Wieso hatte ich genau diese Challenges? '
+    + 'Nicht als Beweis, sondern als Sprache, die für mich endlich gepasst '
+    + 'hat.'}],
+  schluss: [
    'Was sich durch mein ganzes Leben zieht, sind Menschen. Mich '
    + 'interessiert, wie sie denken, womit sie kämpfen und was sie trägt. '
    + 'Ich bin oft hingefallen und jedes Mal wieder aufgestanden, und aus '

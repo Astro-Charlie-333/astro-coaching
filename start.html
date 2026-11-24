@@ -457,6 +457,16 @@ body{background:var(--bg);}
 .st-zitat{margin:20px 0 0;padding:18px 20px;border-left:5px solid var(--sk-kupfer,#F05A28);background:#fff;border-radius:0 18px 18px 0;max-width:62ch;}
 .st-zitat p{font-family:var(--serif);font-size:20px;line-height:1.35;margin:0 0 8px;}
 .st-zitat cite{font-style:normal;font-size:13.5px;color:var(--leise);}
+
+/* Wer ich bin: drei Stationen nacheinander */
+.st-wege-ich{list-style:none;margin:22px 0 22px;padding:0;display:grid;gap:12px;}
+@media(min-width:760px){.st-wege-ich{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.st-wege-ich li{background:#fff;border-radius:24px;padding:20px 20px 22px;border-top:8px solid var(--sk-kupfer,#F05A28);}
+.st-wege-ich li:nth-child(2){border-top-color:var(--sk-kobalt,#1F4FD8);}
+.st-wege-ich li:nth-child(3){border-top-color:var(--sk-kupfer-hell,#F2B33D);}
+.st-wege-ich .k{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--leise);margin-bottom:6px;}
+.st-wege-ich b{display:block;font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.25;margin-bottom:8px;}
+.st-wege-ich li>span:last-child{font-size:15.2px;line-height:1.6;}
 </style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
@@ -763,19 +773,26 @@ var S_ICH = {
    + 'rückblickend so viel über mich erklärt. Ich weiß also ziemlich gut, '
    + 'wie es sich anfühlt, wenn man lange nicht versteht, warum man anders '
    + 'tickt.',
-   'Um mich und mein Leben besser zu verstehen, hab ich zweimal eine '
-   + 'Verhaltenstherapie gemacht. Meine Therapeutin hat mal zu mir gesagt, '
-   + 'dass ich zu jeder Sitzung schon mit der Lösung kam, weil ich die Wege '
-   + 'meistens selbst gesehen habe. Nach der Therapie stand ich trotzdem da '
-   + 'und dachte: Und jetzt? Für mich hat genau da die eigentliche Arbeit '
-   + 'angefangen. Und ich glaube, an dieser Stelle hören viele auf, weil '
-   + 'ihnen niemand zeigt, wie es weitergeht.',
-   'Ich hab mich danach viel mit mir beschäftigt und ein Buch nach dem '
-   + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
-   + 'Leben umgehe. Die letzten Fragezeichen hat mir die Astrologie '
-   + 'beantwortet: Wieso fühle ich so? Wieso handle ich so? Wieso hatte ich '
-   + 'genau diese Challenges? Nicht als Beweis, sondern als Sprache, die '
-   + 'für mich endlich gepasst hat.',
+   ],
+  /* Mandy am 24.11.: Therapie und Astrologie klarer trennen und
+     hervorheben. Darum drei Stationen nacheinander, als Karten. */
+  wege: [
+   {k:'Erst', titel:'Zweimal Verhaltenstherapie',
+    text:'Um mich und mein Leben besser zu verstehen. Meine Therapeutin hat '
+    + 'mal zu mir gesagt, dass ich zu jeder Sitzung schon mit der Lösung '
+    + 'kam, weil ich die Wege meistens selbst gesehen habe.'},
+   {k:'Dann', titel:'Und jetzt?',
+    text:'Nach der Therapie stand ich da und wusste nicht weiter. Für mich hat '
+    + 'genau da die eigentliche Arbeit angefangen. Ich hab ein Buch nach dem '
+    + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
+    + 'Leben umgehe. Und ich glaube, an dieser Stelle hören viele auf, weil '
+    + 'ihnen niemand zeigt, wie es weitergeht.'},
+   {k:'Und dann', titel:'Astrologie',
+    text:'Hier hab ich Antworten auf die letzten Fragezeichen gefunden: Wieso fühle ich '
+    + 'so? Wieso handle ich so? Wieso hatte ich genau diese Challenges? '
+    + 'Nicht als Beweis, sondern als Sprache, die für mich endlich gepasst '
+    + 'hat.'}],
+  schluss: [
    'Was sich durch mein ganzes Leben zieht, sind Menschen. Mich '
    + 'interessiert, wie sie denken, womit sie kämpfen und was sie trägt. '
    + 'Ich bin oft hingefallen und jedes Mal wieder aufgestanden, und aus '
@@ -947,8 +964,14 @@ var S_EHRLICH = {
 
   /* ── Wer ich bin ─────────────────────────────────────────── */
   setz('stichtitel', S_ICH.titel);
-  html('stichtext', S_ICH.text.map(function(p){
-    return '<p>' + esc(p) + '</p>'; }).join('')
+  function absaetze(l){ return l.map(function(p){
+    return '<p>' + esc(p) + '</p>'; }).join(''); }
+  html('stichtext', absaetze(S_ICH.text)
+    + '<ol class="st-wege-ich">' + S_ICH.wege.map(function(w){
+        return '<li><span class="k">' + esc(w.k) + '</span><b>'
+          + esc(w.titel) + '</b><span>' + esc(w.text) + '</span></li>';
+      }).join('') + '</ol>'
+    + absaetze(S_ICH.schluss)
     + '<blockquote class="st-zitat"><p>' + esc(S_ICH.zitat.text)
     + '</p><cite>' + esc(S_ICH.zitat.quelle) + '</cite></blockquote>');
 

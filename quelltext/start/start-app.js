@@ -64,8 +64,14 @@
 
   /* ── Wer ich bin ─────────────────────────────────────────── */
   setz('stichtitel', S_ICH.titel);
-  html('stichtext', S_ICH.text.map(function(p){
-    return '<p>' + esc(p) + '</p>'; }).join('')
+  function absaetze(l){ return l.map(function(p){
+    return '<p>' + esc(p) + '</p>'; }).join(''); }
+  html('stichtext', absaetze(S_ICH.text)
+    + '<ol class="st-wege-ich">' + S_ICH.wege.map(function(w){
+        return '<li><span class="k">' + esc(w.k) + '</span><b>'
+          + esc(w.titel) + '</b><span>' + esc(w.text) + '</span></li>';
+      }).join('') + '</ol>'
+    + absaetze(S_ICH.schluss)
     + '<blockquote class="st-zitat"><p>' + esc(S_ICH.zitat.text)
     + '</p><cite>' + esc(S_ICH.zitat.quelle) + '</cite></blockquote>');
 
