@@ -51,9 +51,9 @@ kopf = ('<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<title>Der Mond im Takt &middot; Neumond, Vollmond, Finsternisse &middot; Astro-Charlie</title>\n'
         '<meta name="description" content="Wo der Mond gerade steht, wann die nächsten Neu- und Vollmonde und Finsternisse kommen und welche davon dich betreffen.">\n'
-        '<link rel="preconnect" href="https://fonts.googleapis.com">'
-        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-        '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\n'
+        ''
+        ''
+        '<link rel="stylesheet" href="schriften/schriften.css">\n'
         # profil.js ohne defer: Die Seite liest AC_P beim Aufbau.
         + '\n'.join(f'<script src="{s}"{"" if s == "profil.js" else " defer"}></script>'
                     for s in SKRIPTE) + '\n<style>\n')
