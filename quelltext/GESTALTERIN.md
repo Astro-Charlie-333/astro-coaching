@@ -1063,3 +1063,178 @@ die Klasse schließt: `bau-ereignis.py` baut alle 43.200 Mischungen auf
 Stufe 0 und bricht ab, sobald eine davon keinen der Folgeausdrücke
 enthält oder mit einem Text aus `STUFEN_ORB` endet. Keine neue Farbe,
 keine neue Schrift, kein neuer Baustein.
+
+
+### 24.11.2026 · `analyse.html`
+
+Der Dateiname stimmt diesmal mit der Liste in Abschnitt 5 überein.
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, einmal mit
+einem und einmal mit zwei erfundenen Profilen. Seitenhöhe bei 390 mit
+einem Profil: 2.691 Pixel, auf beiden Stufen gleich. Mit zwei Profilen:
+9.006 Pixel auf Stufe 0 und 9.330 auf Stufe 2; bei 1.280 sind es 5.944
+und 6.230. Keine Fehler in der Konsole, nichts läuft über den Rand.
+Dieselbe Einschränkung wie am 06.11. und danach: In dieser Umgebung sind
+die Schriften von Google gesperrt, die Seite zeichnet mit Ersatzschriften.
+Beurteilt wurden Hierarchie, Größen, Abstände und Reihenfolge — nicht das
+Schriftbild.
+
+Eine zweite Einschränkung, die hier keinen Befund ergibt, weil sie die
+Prüfung angeht und nicht die Gestaltung: Diese Seite trägt als einzige
+der bisher angesehenen kein `#nivleiste`. Die Stufe lässt sich auf ihr
+nicht einstellen; ich habe sie über `localStorage` gesetzt. Die Mechanik
+wartet korrekt in `ac-tech` und wird erst auf Stufe 2 sichtbar — im
+Laientext selbst stehen auf Stufe 0 aber „die Häuser 7, 8, 5, 4, 1",
+„Sonne und Mond berühren sich", „Beide Monde stehen in Luft", „Saturn",
+„Jupiter". Das ist `REGELN.md` Abschnitt 2 und gehört der Prüferin.
+
+Was trägt: „Wo es reibt" und „Für beide etwas zu tun". Jede Karte dort
+hat unter dem Absatz einen Kasten — **ANSATZ** oder **KONKRET** — und
+darin steht wirklich ein Handgriff: „Nehmt eine Viertelstunde in der
+Woche, immer am selben Tag. Kein Problem lösen — nur zwei Fragen: Was war
+gut, und was ist offen geblieben?", darunter „Diese Woche einen Tag
+festlegen und ihn in beide Kalender eintragen." Das ist der Vorsprung aus
+`PRODUKT.md` Abschnitt 3 wörtlich: nicht die Beschreibung, sondern das,
+was man damit anfangen kann. Dazu die dunkle Ergebniskarte mit der Waage
+(„Diese Verbindung trägt von selbst · 5 gemeinsame Nenner | 1
+Reibungspunkt") — sie ist auf dieser Seite das Einzige, was ein Bild ist
+und kein Absatz — und im Fuß „Und die Grenze. Ein Chart sagt nichts
+darüber, ob zwei Menschen zusammen glücklich werden."
+
+Die beiden Befunde handeln davon, dass die häufigste Besucherin von
+alldem nichts zu sehen bekommt — und dass die, die es sieht, am Ende
+etwas liest, das nicht für sie geschrieben ist.
+
+#### 24.11-1 · Mit einem Profil ist die Seite vorgewählt auf das eine Thema, das sie nicht rechnen kann
+
+**Zitat:** Mit einem Profil — dem eigenen — steht bei 390 Pixeln ab Pixel
+1.432, 84 Pixel hoch: **„Für dieses Thema brauchst du zwei Profile. Noch
+eins anlegen — dann rechnet es."** Darüber in der Zeile „Zwischen" ein
+einziger Knopf: „Teska Vohwinkel (ich)". Darunter in der Zeile „und"
+derselbe Knopf noch einmal: „Teska Vohwinkel (ich)". Die Seite ist in
+diesem Zustand 2.691 Pixel hoch und enthält kein Ergebnis; was auf die
+Warnung folgt, ist ab Pixel 1.568 „Wie das Ergebnis zustande kommt".
+
+Vorgewählt ist „Zwei Menschen", fest: `var themaK='paar'` in
+`analyse-app.js` Zeile 26. Von den fünf Themen rechnen mit einem Profil
+drei — „Berufung & Beruf" liefert 8.583 Pixel Ergebnis, „Alltag &
+Energie" 4.477, „Kommunikation" 4.236. Die beiden, die **nicht** rechnen
+(„Zwei Menschen", „Zusammenarbeit"), tragen keine Markierung. Die
+Markierung **IM AUFBAU** tragen „Alltag & Energie" und „Kommunikation" —
+also zwei der drei, die rechnen. Sie entsteht aus
+`(t.regeln.length<10?AT.aufbau:'')` und zählt Regeln, nicht ob das Thema
+für diesen Menschen etwas ergibt.
+
+**Kosten:** Der Drei-Sekunden-Test und der Kauf-Test, beide im
+Ausgangszustand. Die Suchende aus `PRODUKT.md` Abschnitt 2 ist die erste
+der fünf und die häufigste, und sie hat genau ein Profil: ihr eigenes.
+Sie bekommt auf dem Telefon eine Überschrift, zehn Zeilen darüber, wie
+das System rechnet, fünf Themenkarten — und dann einen Kasten, der ihr
+sagt, dass sie erst einen zweiten Menschen eintragen muss. Dazwischen
+steht ihr eigener Name zweimal untereinander in zwei Zeilen, die nach
+zwei verschiedenen Personen fragen. Das ist kein Wartezustand, sondern
+eine Sackgasse mit Hausaufgabe: Wer hier weiterkommen will, muss
+Geburtsdatum, -zeit und -ort eines anderen Menschen besorgen, bevor die
+Seite überhaupt einmal gezeigt hat, was sie kann.
+
+Das Teure daran ist, dass direkt daneben 8.583 Pixel liegen, die für sie
+allein rechnen. „Berufung & Beruf" ist die dritte Karte, sieht aus wie die
+beiden davor und sagt mit keinem Zeichen, dass sie die einzige ist, die
+jetzt gerade funktioniert. Die einzige Auszeichnung, die die Kartenreihe
+überhaupt trägt, zeigt in die falsche Richtung: Sie markiert zwei Themen,
+die rechnen, als unfertig, und lässt die zwei, die nicht rechnen,
+unmarkiert. Eine 28-Jährige, die drei Apps auf dem Telefon hat, probiert
+nicht fünf Karten durch, um herauszufinden, welche von ihnen für sie
+gedacht ist. Sie liest „brauchst du zwei Profile" und ist weg. Und die
+Seite, die nach `PRODUKT.md` Abschnitt 3 ihr stärkstes Stück ist — nicht
+die Beschreibung, sondern der Handgriff —, hat ihr nie etwas gezeigt,
+wofür ein Gedanke wie „das wäre mir etwas wert" überhaupt entstehen
+könnte.
+
+**Vorschlag:** Drei Änderungen an Vorhandenem, keine neue Fläche.
+*Erstens:* `themaK` steht nicht mehr fest auf `'paar'`, sondern wird beim
+Start aus der Zahl der Profile bestimmt — unter zwei Profilen das erste
+Thema mit `modus:'solo'`, also „Berufung & Beruf"; ab zwei Profilen wie
+heute „Zwei Menschen". *Zweitens:* Der Zustand zieht in die Karte, wo die
+Besucherin hinsieht, statt in einen Kasten unter das ganze Feld. Die
+Themen mit `modus:'paar'` bekommen bei weniger als zwei Profilen dasselbe
+`<i>`, das „IM AUFBAU" schon benutzt, mit dem Text „braucht zwei Profile",
+und sind bis dahin nicht wählbar. Derselbe Baustein, dieselbe Stelle,
+dieselben Farben. *Drittens:* Die Zeile „und" bietet den Menschen nicht
+mehr an, der in der Zeile „Zwischen" schon gewählt ist — dann steht ein
+Name nicht zweimal untereinander, und die Zeile ist bei einem Profil leer
+statt falsch gefüllt.
+
+Dazu, nach der goldenen Regel aus `REGELN.md` Abschnitt 5 und der Form aus
+Abschnitt 6e, die Prüfung, die die Klasse schließt: `bau-analyse.py` baut
+die Seite mit einem festen erfundenen Profil und bricht ab, sobald das
+vorgewählte Thema kein Ergebnis zeichnet — gemessen am gezeichneten
+Ergebnis, nicht am Quelltext, und mit festen Beispielen für ein, zwei und
+kein Profil. Dieselbe Prüfung fängt den Fall mit ab, dass eine
+Themenkarte eine Markierung trägt, die nichts darüber sagt, ob das Thema
+jetzt rechnet.
+
+#### 24.11-2 · Der einzige Block mit eigener Farbfläche ist der, der nicht für sie geschrieben ist
+
+**Zitat:** Mit zwei Profilen endet das Ergebnis bei 390 Pixeln mit einer
+Gruppe ab Pixel 6.511, 1.193 Pixel hoch, offen und ohne `details`:
+**„Für dich als Coachin — Nicht zum Vorlesen — deine Vorbereitung"**, die
+Überschrift in 22 Pixeln (bei 1.280: ab 4.277, 815 Pixel hoch, 29 Pixel).
+Darin drei Karten. Die zweite heißt „Wer zustimmt, ohne es zu meinen" und
+sagt: „Teska Vohwinkel wird in der Stunde eher ausgleichen als
+widersprechen. Zustimmung von Teska Vohwinkel ist deshalb kein
+verlässliches Signal — erst recht nicht, wenn die andere gerade etwas
+Deutliches gesagt hat." Der Kasten darunter: „Nicht nach Einverständnis
+fragen, sondern nach Einwänden: ‚Was daran passt dir nicht?' Und zwar
+bevor die andere Person antwortet."
+
+Diese Gruppe ist die einzige der fünf mit einer eigenen Hintergrundfläche:
+`.an-gruppe.beratung .an-b{…background:var(--nacht-bg,#DCE6FB);}`. Das
+Bild, Gemeinsame Nenner, Wo es reibt und Für beide etwas zu tun stehen
+alle auf `--papier`. Auf der ganzen Seite gibt es kein einziges `details`,
+und es gibt keinen Schalter „Für mich / Als Coachin" — „Als: Paar · Eltern
+& Kind · Freundschaft · Geschwister" ist die Art der Beziehung, nicht die
+Rolle der Lesenden.
+
+**Kosten:** `REGELN.md` Abschnitt 1 verlangt für die zweite Sicht zwei
+Sachen, und die Seite verfehlt beide zugleich: „Die zweite Sicht wird
+**zugeklappt** angeboten, **nie im Vordergrund**." Hier ist sie nicht
+zugeklappt, und sie steht auf der am stärksten gestalteten Fläche der
+Seite — in einem Ergebnis, in dem sonst alles auf Weiß steht, ist der
+blaue Block das, worauf das Auge zuerst fällt. Es ist dieselbe Klasse wie
+Aufgabe 46, nur eine Stufe teurer: Dort steht die Coach-Ansprache auf
+Nischenseiten, hier mitten im Ergebnis über die Leserin selbst.
+
+Der Normalfall aus `REGELN.md` Abschnitt 1 ist „für sich selbst" — sie und
+ihr Mensch. Für sie endet die Seite damit, dass drei Karten in der dritten
+Person über sie sprechen, zu jemand anderem, unter einer Zeile, die sagt,
+dass das nicht vorgelesen werden soll. Und was dort steht, nimmt dem
+zurück, was zwei Blöcke höher stand: „Für beide etwas zu tun" schlägt vor,
+dass beide dieselbe Frage getrennt aufschreiben und dann vergleichen. Der
+Block danach erklärt einer dritten Person, dass ihre Zustimmung kein
+verlässliches Signal ist und man sie besser nach Einwänden fragt, bevor
+die andere antwortet. Wer das über sich liest, liest die vier Abschnitte
+davor noch einmal anders. Das ist der Kauf-Test, und er fällt nicht daran
+durch, dass zu wenig dasteht, sondern daran, dass das Beste auf der Seite
+— die eigene Schublade der Coachin aus `PRODUKT.md` Abschnitt 4 — ohne
+Griff im Flur steht. Eine Schublade, die man nicht aufziehen muss, ist
+keine.
+
+**Vorschlag:** Die Gruppe `beratung` wird ein `details`, zugeklappt, das
+einzige auf dieser Seite. Die Zusammenfassung besteht aus den Texten, die
+schon dastehen: „Für dich als Coachin · Nicht zum Vorlesen — deine
+Vorbereitung (3 Punkte)". Alles darin bleibt Wort für Wort, an derselben
+Stelle, in derselben Farbe — nur hinter einem Griff, den jemand bewusst
+zieht. `ARTEN` in `analyse-app.js` behält seine Reihenfolge, `beratung`
+steht weiter zuletzt; sie wird bloß nicht mehr aufgeschlagen. Damit endet
+die Seite für den Normalfall mit „Für beide etwas zu tun" und dem
+Handgriff, der dort steht.
+
+Und nach der goldenen Regel aus `REGELN.md` Abschnitt 5 die Prüfung, die
+die Klasse schließt — geprüft an der Form, nicht an einem Wort
+(Abschnitt 6e): In `AT.art` bekommt jede Befundart ein Feld, das sagt, an
+wen sie gerichtet ist. `bau-analyse.py` bricht ab, sobald eine Gruppe, die
+nicht an die Leserin gerichtet ist, im gezeichneten Ergebnis außerhalb
+eines zugeklappten `details` steht — gegen feste Beispiele gehalten, weil
+die Gruppen je Thema andere sind. Keine neue Farbe, keine neue Schrift,
+kein neuer Baustein.

@@ -721,6 +721,35 @@ liefern oder das Feld nicht mehr, und `bau-analyse.py` abbricht,
 sobald ein Thema ein Ergebnisfeld zurückgibt, das die Anzeige nicht
 liest.
 
+### 101 · Mit einem Profil wählt `analyse.html` ein Thema vor, das nicht rechnet
+Aus dem Gestaltungsdurchgang vom 2026-11-24 (Befund 24.11-1) zu
+`analyse.html`. `analyse-app.js` Zeile 26 setzt `var themaK='paar'` fest.
+Wer nur sein eigenes Profil hat — die Suchende aus `PRODUKT.md`
+Abschnitt 2, der häufigste Fall —, bekommt deshalb bei 390 Pixeln ab
+Pixel 1.432 den Kasten „Für dieses Thema brauchst du zwei Profile. Noch
+eins anlegen — dann rechnet es.", eine Seite von 2.691 Pixeln und kein
+Ergebnis. Darüber steht ihr eigener Name zweimal untereinander, in der
+Zeile „Zwischen" und in der Zeile „und". Dabei rechnen drei der fünf
+Themen mit einem Profil: „Berufung & Beruf" zeichnet 8.583 Pixel
+Ergebnis, „Alltag & Energie" 4.477, „Kommunikation" 4.236. Die einzige
+Auszeichnung der Kartenreihe zeigt in die falsche Richtung: **IM AUFBAU**
+entsteht aus `(t.regeln.length<10?AT.aufbau:'')`, zählt also Regeln und
+markiert zwei der drei Themen, die rechnen — während die beiden, die mit
+einem Profil nicht rechnen können, unmarkiert bleiben.
+**Fertig, wenn:** `analyse.html`, mit einem festen erfundenen Profil
+gezeichnet, ein Ergebnis zeigt statt des Kastens; das vorgewählte Thema
+aus der Zahl der Profile folgt statt aus einer festen Zeichenkette (unter
+zwei Profilen das erste mit `modus:'solo'`); die Themen mit
+`modus:'paar'` in diesem Zustand auf der Karte selbst als „braucht zwei
+Profile" markiert und nicht wählbar sind, mit demselben `<i>`, das
+„IM AUFBAU" schon benutzt; die Zeile „und" den in „Zwischen" gewählten
+Menschen nicht noch einmal anbietet; und `bau-analyse.py` nach der
+goldenen Regel aus `REGELN.md` Abschnitt 5 am gezeichneten Ergebnis
+abbricht, sobald das vorgewählte Thema kein Ergebnis zeichnet — mit
+festen Beispielen für kein, ein und zwei Profile (`REGELN.md`
+Abschnitt 6e), weil die Eingabe je Besucherin eine andere ist.
+
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich
