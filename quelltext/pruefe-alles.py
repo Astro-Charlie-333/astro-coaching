@@ -65,6 +65,9 @@ BAUTEN = [
     # Zuletzt: die Rauchprobe der App-Ansicht lädt die eben gebauten
     # Seiten unter einem echten Netzprotokoll und schaltet das Netz ab.
     ('app/bau-app.py',        'App'),
+    # Ganz zuletzt, wenn jede Seite gebaut ist: Schriften ablegen und
+    # prüfen, dass keine Seite mehr zu Google geht.
+    ('schriften/bau-schriften.py', 'Schriften'),
 ]
 
 print('Astro-Charlie · alles bauen und prüfen')
