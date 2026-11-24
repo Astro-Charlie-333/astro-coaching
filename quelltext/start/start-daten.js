@@ -137,31 +137,42 @@ var S_ABMACHEN = {
 
 /* ── Wer ich bin ───────────────────────────────────────────────
    Nur, was Mandy selbst gesagt hat und selbst öffentlich machen will.
-   Am 24.11. hat sie es so gewollt: queer, spätes Coming-out mit 27,
-   AuDHS-Diagnose mit 37, ein Weg mit vielen Stationen und vielen
-   Neuanfängen, und etwas von Alfred Adler. */
+   Am 24.11. hat sie es so gewollt: Teil der LGBTQIA+ Community,
+   Coming-out mit 27, AuDHS-Diagnose mit 37, zweimal Verhaltenstherapie,
+   ein Weg mit vielen Stationen, Astrologie als Sprache für die letzten
+   Fragezeichen, und etwas von Alfred Adler. Nicht „kurvig" (Mandy). */
 var S_ICH = {
   titel: 'Wer ich bin',
-  text: ['Ich bin Mandy Netta, 39, und lebe und arbeite in Berlin.',
-   'Ich hab mich mein Leben lang durchgeschlagen. Gearbeitet hab ich, '
-   + 'seit ich 14 bin. Unterwegs waren da Jura, Islamwissenschaften, die '
-   + 'Tischlerei und Eventmanagement, danach rund zehn Jahre in '
-   + 'Unternehmen: sechseinhalb davon bei McFIT Models, später im '
-   + 'Vertrieb eines Coaching-Unternehmens, im Social-Media- und '
-   + 'Influencer-Marketing und in der Beratung von Coaches. Da hab ich '
-   + 'viel gesehen, wie in dieser Branche verkauft wird. Deshalb findest '
-   + 'du auf dieser Seite keinen Countdown.',
-   'Ein gerader Weg war das nicht. Aber ich bin nach jeder Niederlage '
-   + 'wieder aufgestanden und hab aus jeder Station etwas mitgenommen.',
-   'Mein Coming-out hatte ich mit 27, heute sehe ich mich als queer. Mit '
-   + '37 kam die Diagnose AuDHS, also Autismus und ADHS zusammen. Beides '
-   + 'spät, und beides hat im Rückblick so vieles erklärt.',
-   'Menschen haben mich schon immer interessiert: wie sie ticken, womit '
-   + 'sie kämpfen, was sie trägt. Mir liegt es einfach, mich in ganz '
-   + 'unterschiedliche Leben und Situationen hineinzuversetzen, und meine '
-   + 'eigenen Umwege helfen mir dabei mehr als jedes Lehrbuch. Besonders '
-   + 'gern arbeite ich mit Menschen, bei denen die üblichen Ratschläge '
-   + 'nicht greifen, weil sie für andere Köpfe gemacht sind.'],
+  text: ['Ich bin Mandy, 39, und lebe in Berlin. Mein Weg hierher hatte '
+   + 'viele Umwege, und genau die sind heute meine Stärke.',
+   'Ich arbeite, seit ich 14 bin, und hab mich durch vieles ausprobiert: '
+   + 'Jura, Islamwissenschaften, die Tischlerei, Eventmanagement und '
+   + 'später zehn Jahre in Unternehmen, unter anderem im Vertrieb einer '
+   + 'Coaching-Firma. Dort hab ich auch gesehen, wie in dieser Branche oft '
+   + 'verkauft wird. Deshalb findest du auf dieser Seite keinen Countdown.',
+   'Ich bin Teil der LGBTQIA+ Community. Mein Coming-out hatte ich mit 27, '
+   + 'die Diagnose AuDHS kam mit 37. Beides kam spät, und beides hat mir '
+   + 'rückblickend so viel über mich erklärt. Ich weiß also ziemlich gut, '
+   + 'wie es sich anfühlt, wenn man lange nicht versteht, warum man anders '
+   + 'tickt.',
+   'Um mich und mein Leben besser zu verstehen, hab ich zweimal eine '
+   + 'Verhaltenstherapie gemacht. Meine Therapeutin hat mal zu mir gesagt, '
+   + 'dass ich zu jeder Sitzung schon mit der Lösung kam, weil ich die Wege '
+   + 'meistens selbst gesehen habe. Nach der Therapie stand ich trotzdem da '
+   + 'und dachte: Und jetzt? Für mich hat genau da die eigentliche Arbeit '
+   + 'angefangen. Und ich glaube, an dieser Stelle hören viele auf, weil '
+   + 'ihnen niemand zeigt, wie es weitergeht.',
+   'Ich hab mich danach viel mit mir beschäftigt und ein Buch nach dem '
+   + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
+   + 'Leben umgehe. Die letzten Fragezeichen hat mir die Astrologie '
+   + 'beantwortet: Wieso fühle ich so? Wieso handle ich so? Wieso hatte ich '
+   + 'genau diese Challenges? Nicht als Beweis, sondern als Sprache, die '
+   + 'für mich endlich gepasst hat.',
+   'Was sich durch mein ganzes Leben zieht, sind Menschen. Mich '
+   + 'interessiert, wie sie denken, womit sie kämpfen und was sie trägt. '
+   + 'Ich bin oft hingefallen und jedes Mal wieder aufgestanden, und aus '
+   + 'all dem ist ein Blick entstanden, mit dem ich mich in ganz '
+   + 'unterschiedliche Leben hineinversetzen kann.'],
   /* Kein wörtliches Zitat, sondern Adlers Gedanke in Kurzform. Belegt
      ist er im Englischen („it is the use they make of it", u. a. in
      The Individual Psychology of Alfred Adler, 1956). Deshalb „nach". */
