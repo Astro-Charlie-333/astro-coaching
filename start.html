@@ -458,15 +458,22 @@ body{background:var(--bg);}
 .st-zitat p{font-family:var(--serif);font-size:20px;line-height:1.35;margin:0 0 8px;}
 .st-zitat cite{font-style:normal;font-size:13.5px;color:var(--leise);}
 
-/* Wer ich bin: drei Stationen nacheinander */
-.st-wege-ich{list-style:none;margin:22px 0 22px;padding:0;display:grid;gap:12px;}
-@media(min-width:760px){.st-wege-ich{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.st-wege-ich li{background:#fff;border-radius:24px;padding:20px 20px 22px;border-top:8px solid var(--sk-kupfer,#F05A28);}
-.st-wege-ich li:nth-child(2){border-top-color:var(--sk-kobalt,#1F4FD8);}
-.st-wege-ich li:nth-child(3){border-top-color:var(--sk-kupfer-hell,#F2B33D);}
-.st-wege-ich .k{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--leise);margin-bottom:6px;}
-.st-wege-ich b{display:block;font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.25;margin-bottom:8px;}
-.st-wege-ich li>span:last-child{font-size:15.2px;line-height:1.6;}
+/* Wer ich bin: eine Spalte, die Stationen als ruhige Zeitleiste darin.
+   Mandy am 24.11.: Karten in voller Breite neben schmalem Text wirkten
+   durcheinander. Alles hat jetzt dieselbe Breite. */
+.st-ich{max-width:660px;}
+.st-ich p{max-width:none;}
+.st-wege-ich{list-style:none;margin:26px 0 26px;padding:0 0 0 34px;position:relative;}
+.st-wege-ich::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--linie,#E6DECF);}
+.st-wege-ich li{position:relative;padding:0 0 22px;}
+.st-wege-ich li:last-child{padding-bottom:0;}
+.st-wege-ich li::before{content:"";position:absolute;left:-34px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--sk-kupfer,#F05A28);box-shadow:0 0 0 4px var(--papier,#F6F1E7);}
+.st-wege-ich li:nth-child(2)::before{background:var(--sk-kobalt,#1F4FD8);}
+.st-wege-ich li:nth-child(3)::before{background:var(--sk-kupfer-hell,#F2B33D);}
+.st-wege-ich .k{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--leise);margin-bottom:2px;}
+.st-wege-ich b{display:block;font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.25;margin-bottom:6px;}
+.st-wege-ich li>span:last-child{display:block;font-size:15.8px;line-height:1.66;}
+.st-ich .st-zitat{max-width:none;}
 </style>
 </head><body>
 <div class="ac-leiste"><div class="ac-leiste-inner">
