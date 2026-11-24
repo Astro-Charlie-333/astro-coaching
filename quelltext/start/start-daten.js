@@ -33,6 +33,29 @@ var S_MARKE = {
        + 'Fragen daraus, und was davon stimmt, entscheidest du.'
 };
 
+/* ── Für wen das ist ───────────────────────────────────────────
+   Mandy am 24.11.: „Es soll Menschen erreichen, die in Umbrüchen sind
+   oder sich selbst besser verstehen wollen." Und zum ersten Entwurf:
+   „mehr wie ich formulieren". Also locker, direkt, ohne Hochglanz. */
+var S_FUERWEN = {
+  titel: 'Für wen das ist',
+  satz: 'Für Menschen, bei denen gerade was in Bewegung ist. Oder die '
+    + 'einfach mal verstehen wollen, warum sie immer wieder an derselben '
+    + 'Stelle landen.',
+  punkte: [
+   ['Bei dir bricht was um', 'Job, Beziehung, Wohnort, oder einfach '
+    + 'dieses Gefühl, dass das Alte nicht mehr passt und das Neue noch '
+    + 'keinen Namen hat.'],
+   ['Du willst dich besser verstehen', 'Nicht dein Sternzeichen, '
+    + 'sondern dich: wie du tickst, was dich antreibt und was dich immer '
+    + 'wieder ausbremst.'],
+   ['Du willst nicht nur Einsichten', 'Sondern rausgehen mit einem '
+    + 'Schritt, den du auch wirklich gehst.']],
+  nachsatz: 'Vorwissen brauchst du keins, ein fertig formuliertes Problem '
+    + 'auch nicht. Und wenn dein Kopf anders funktioniert als bei den '
+    + 'meisten: Dann verstehen wir uns wahrscheinlich ziemlich schnell.'
+};
+
 /* ── Wie ich arbeite: drei Linsen ──────────────────────────────
    Dieselben drei wie in der Begleitung (begleit-daten.js C_METHODE) —
    hier in der zweiten Person und ohne Werkstattsprache. Eine Seite je
@@ -113,21 +136,39 @@ var S_ABMACHEN = {
 };
 
 /* ── Wer ich bin ───────────────────────────────────────────────
-   Kurz, ohne Heldenreise (ENTWURF Abschnitt 3, Punkt 5). Nur, was
-   Mandy selbst gesagt hat, und nichts über ihre Person, was sie nicht
-   selbst öffentlich machen wollte. */
+   Nur, was Mandy selbst gesagt hat und selbst öffentlich machen will.
+   Am 24.11. hat sie es so gewollt: queer, spätes Coming-out mit 27,
+   AuDHS-Diagnose mit 37, ein Weg mit vielen Stationen und vielen
+   Neuanfängen, und etwas von Alfred Adler. */
 var S_ICH = {
   titel: 'Wer ich bin',
-  text: ['Ich heiße Mandy Netta, bin 39 und arbeite in Berlin.',
-   'Vor diesem hier waren es rund zehn Jahre in Unternehmen: sechseinhalb '
-   + 'davon bei McFIT Models, danach im Vertrieb eines '
-   + 'Coaching-Unternehmens, im Social-Media- und Influencer-Marketing und '
-   + 'in der Beratung von Coaches. Das heißt vor allem: Ich habe viel '
-   + 'gesehen, wie in dieser Branche verkauft wird. Deshalb findest du '
-   + 'auf dieser Seite keinen Countdown.',
-   'Ich arbeite besonders gern mit neurodivergenten Menschen — mit '
-   + 'Leuten also, bei denen die üblichen Ratschläge regelmäßig nicht '
-   + 'greifen, weil sie für andere Köpfe gemacht sind.'],
+  text: ['Ich bin Mandy Netta, 39, und lebe und arbeite in Berlin.',
+   'Ich hab mich mein Leben lang durchgeschlagen. Gearbeitet hab ich, '
+   + 'seit ich 14 bin. Unterwegs waren da Jura, Islamwissenschaften, die '
+   + 'Tischlerei und Eventmanagement, danach rund zehn Jahre in '
+   + 'Unternehmen: sechseinhalb davon bei McFIT Models, später im '
+   + 'Vertrieb eines Coaching-Unternehmens, im Social-Media- und '
+   + 'Influencer-Marketing und in der Beratung von Coaches. Da hab ich '
+   + 'viel gesehen, wie in dieser Branche verkauft wird. Deshalb findest '
+   + 'du auf dieser Seite keinen Countdown.',
+   'Ein gerader Weg war das nicht. Aber ich bin nach jeder Niederlage '
+   + 'wieder aufgestanden und hab aus jeder Station etwas mitgenommen.',
+   'Mein Coming-out hatte ich mit 27, heute sehe ich mich als queer. Mit '
+   + '37 kam die Diagnose AuDHS, also Autismus und ADHS zusammen. Beides '
+   + 'spät, und beides hat im Rückblick so vieles erklärt.',
+   'Menschen haben mich schon immer interessiert: wie sie ticken, womit '
+   + 'sie kämpfen, was sie trägt. Mir liegt es einfach, mich in ganz '
+   + 'unterschiedliche Leben und Situationen hineinzuversetzen, und meine '
+   + 'eigenen Umwege helfen mir dabei mehr als jedes Lehrbuch. Besonders '
+   + 'gern arbeite ich mit Menschen, bei denen die üblichen Ratschläge '
+   + 'nicht greifen, weil sie für andere Köpfe gemacht sind.'],
+  /* Kein wörtliches Zitat, sondern Adlers Gedanke in Kurzform. Belegt
+     ist er im Englischen („it is the use they make of it", u. a. in
+     The Individual Psychology of Alfred Adler, 1956). Deshalb „nach". */
+  zitat: {text: 'Entscheidend ist nicht, was du mitbringst, sondern was du '
+    + 'daraus machst.',
+   quelle: 'nach Alfred Adler, aus dessen Individualpsychologie viele '
+    + 'meiner Fragen kommen'},
   /* Gilt für die ganze Seite: zweite Person Singular. Der Absatz
      darüber hat beim ersten Entwurf „Sie" gesagt — die Prüfung fängt
      das, siehe bau-start.py. */

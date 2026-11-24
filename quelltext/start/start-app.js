@@ -18,6 +18,14 @@
   setz('strolle', S_MARKE.rolle);
   setz('stfussmarke', S_MARKE.wort + ' — ' + S_MARKE.zusatz);
 
+  /* ── Für wen ─────────────────────────────────────────────── */
+  setz('stfwtitel', S_FUERWEN.titel);
+  setz('stfwsatz', S_FUERWEN.satz);
+  html('stfw', S_FUERWEN.punkte.map(function(p){
+    return '<div class="st-fw1"><b>' + esc(p[0]) + '</b>'
+      + '<span>' + esc(p[1]) + '</span></div>'; }).join(''));
+  setz('stfwnach', S_FUERWEN.nachsatz);
+
   /* ── Die drei Linsen ─────────────────────────────────────── */
   html('stlinsen', S_LINSEN.map(function(l){
     return '<div class="st-li">'
@@ -57,7 +65,9 @@
   /* ── Wer ich bin ─────────────────────────────────────────── */
   setz('stichtitel', S_ICH.titel);
   html('stichtext', S_ICH.text.map(function(p){
-    return '<p>' + esc(p) + '</p>'; }).join(''));
+    return '<p>' + esc(p) + '</p>'; }).join('')
+    + '<blockquote class="st-zitat"><p>' + esc(S_ICH.zitat.text)
+    + '</p><cite>' + esc(S_ICH.zitat.quelle) + '</cite></blockquote>');
 
   /* ── Was das hier nicht ist ──────────────────────────────── */
   setz('stnichttitel', S_NICHT.titel);
