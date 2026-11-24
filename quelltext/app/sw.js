@@ -46,8 +46,18 @@ self.addEventListener('fetch', function (e) {
   var schema = new URL(anfrage.url).protocol;
   if (schema !== 'http:' && schema !== 'https:') return;
 
+  /* Eigene Dateien holt er am Browser-Zwischenspeicher vorbei: GitHub
+     erlaubt dem Browser, eine Datei zehn Minuten lang festzuhalten, und
+     nach einer Änderung sah man dann noch die alte Seite. "no-cache" heißt
+     nicht "neu laden", sondern "beim Server nachfragen": Ist nichts neu,
+     antwortet er kurz mit "unverändert" und es kostet fast nichts. Seite,
+     Skripte und Stil kommen so immer aus demselben Stand. Schriften und
+     alles von fremden Adressen dürfen weiter aus dem Browser kommen. */
+  var eigene = new URL(anfrage.url).origin === self.location.origin;
+  var frisch = eigene ? new Request(anfrage, { cache: 'no-cache' }) : anfrage;
+
   e.respondWith(
-    fetch(anfrage).then(function (antwort) {
+    fetch(frisch).then(function (antwort) {
       if (antwort && (antwort.status === 200 || antwort.type === 'opaque')) {
         var kopie = antwort.clone();
         caches.open(SPEICHER)
