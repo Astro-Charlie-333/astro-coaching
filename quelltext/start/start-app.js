@@ -68,7 +68,7 @@
     return '<p>' + esc(p) + '</p>'; }).join(''); }
   html('stichtext', absaetze(S_ICH.text)
     + '<ol class="st-wege-ich">' + S_ICH.wege.map(function(w){
-        return '<li><span class="k">' + esc(w.k) + '</span><b>'
+        return '<li><b>'
           + esc(w.titel) + '</b><span>' + esc(w.text) + '</span></li>';
       }).join('') + '</ol>'
     + absaetze(S_ICH.schluss)

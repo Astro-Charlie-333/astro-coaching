@@ -784,17 +784,17 @@ var S_ICH = {
   /* Mandy am 24.11.: Therapie und Astrologie klarer trennen und
      hervorheben. Darum drei Stationen nacheinander, als Karten. */
   wege: [
-   {k:'Erst', titel:'Zweimal Verhaltenstherapie',
+   {titel:'Zweimal Verhaltenstherapie',
     text:'Um mich und mein Leben besser zu verstehen. Meine Therapeutin hat '
     + 'mal zu mir gesagt, dass ich zu jeder Sitzung schon mit der Lösung '
     + 'kam, weil ich die Wege meistens selbst gesehen habe.'},
-   {k:'Dann', titel:'Und jetzt?',
+   {titel:'Und jetzt?',
     text:'Nach der Therapie stand ich da und wusste nicht weiter. Für mich hat '
     + 'genau da die eigentliche Arbeit angefangen. Ich hab ein Buch nach dem '
     + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
     + 'Leben umgehe. Und ich glaube, an dieser Stelle hören viele auf, weil '
     + 'ihnen niemand zeigt, wie es weitergeht.'},
-   {k:'Und dann', titel:'Astrologie',
+   {titel:'Astrologie',
     text:'Hier hab ich Antworten auf die letzten Fragezeichen gefunden: Wieso fühle ich '
     + 'so? Wieso handle ich so? Wieso hatte ich genau diese Challenges? '
     + 'Nicht als Beweis, sondern als Sprache, die für mich endlich gepasst '
@@ -975,7 +975,7 @@ var S_EHRLICH = {
     return '<p>' + esc(p) + '</p>'; }).join(''); }
   html('stichtext', absaetze(S_ICH.text)
     + '<ol class="st-wege-ich">' + S_ICH.wege.map(function(w){
-        return '<li><span class="k">' + esc(w.k) + '</span><b>'
+        return '<li><b>'
           + esc(w.titel) + '</b><span>' + esc(w.text) + '</span></li>';
       }).join('') + '</ol>'
     + absaetze(S_ICH.schluss)
