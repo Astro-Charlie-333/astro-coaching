@@ -186,15 +186,16 @@ var S_TUER = {
 };
 
 /* ── Kontakt ───────────────────────────────────────────────────
-   Mandy am 2.11.: „Muss noch eine e-mail adresse dafür erstellen."
+   Mandy am 24.11.: „reicht erst mal eine wie netta.mandy@gmail.com?"
+   Ja, ihre eigene Wahl für den Anfang. Kommt später eine Adresse für
+   Schwerkraft, wird nur diese eine Zeile getauscht.
 
-   Die Adresse steht an genau einer Stelle — hier. Solange sie null
-   ist, zeigt die Seite an der Stelle eine sichtbare Lücke statt einer
-   erfundenen Adresse, und bau-start.py sagt es im Bau als Hinweis.
-   Eine erfundene oder private Adresse wäre schlimmer als eine Lücke:
-   Die Lücke sieht nur Mandy, denn die Seite ist nirgends verlinkt. */
+   Die Adresse steht an genau einer Stelle — hier. Wäre sie null,
+   zeigte die Seite an der Stelle eine sichtbare Lücke statt einer
+   erfundenen Adresse, und bau-start.py sagte es im Bau als Hinweis. */
 var S_KONTAKT = {
-  mail: null,
+  mail: 'netta.mandy@gmail.com',
+  zusatz: 'Einfach per Mail, ohne Formular und ohne Newsletter.',
   lueckeTitel: 'Hier fehlt noch die Adresse',
   luecke: 'Sobald die Mailadresse für Schwerkraft steht, kommt sie in '
     + 'start-daten.js an eine Stelle (S_KONTAKT.mail) — und erscheint '
