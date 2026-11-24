@@ -79,7 +79,7 @@ gesucht = set(re.findall(r"""\b(?:setz|html)\(['"]([A-Za-z0-9_-]+)['"]""", app))
 fehlt = gesucht - ids
 if fehlt:
     fehler.append('Skript füllt IDs, die es nicht gibt: ' + ', '.join(sorted(fehlt)))
-leer = ids - gesucht - {'stmethode', 'stangebot', 'stabmachen', 'sttuer',
+leer = ids - gesucht - {'stfuerwen', 'stmethode', 'stangebot', 'stabmachen', 'sttuer',
                         'stich', 'stnicht', 'stkontakt', 'stehrlich'}
 if leer:
     hinweise.append('IDs ohne Inhalt: ' + ', '.join(sorted(leer)))
@@ -249,6 +249,7 @@ const ab=await p.evaluate(()=>{
   const n=i=>{const e=document.getElementById(i);
     return e?e.innerText.trim().length:-1;};
   return {linsen:document.querySelectorAll('.st-li').length,
+    fuerwen:document.querySelectorAll('#stfw .st-fw1').length,
     angebote:document.querySelectorAll('.st-a').length,
     schritte:document.querySelectorAll('.st-schritte li').length,
     wege:document.querySelectorAll('.st-w').length,
@@ -260,6 +261,7 @@ const ab=await p.evaluate(()=>{
     listen:[...document.querySelectorAll('.st-a-l')].map(u=>u.children.length)};
 });
 if(ab.linsen!==3) f.push(ab.linsen+' statt 3 Linsen');
+if(ab.fuerwen!==3) f.push(ab.fuerwen+' statt 3 Karten in Für wen');
 if(ab.angebote!==2) f.push(ab.angebote+' statt 2 Angebote');
 if(ab.schritte!==4) f.push(ab.schritte+' statt 4 Schritte im Ablauf');
 if(ab.wege!==3) f.push(ab.wege+' statt 3 Wege hinein');

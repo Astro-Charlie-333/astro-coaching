@@ -33,6 +33,29 @@ var S_MARKE = {
        + 'Fragen daraus, und was davon stimmt, entscheidest du.'
 };
 
+/* ── Für wen das ist ───────────────────────────────────────────
+   Mandy am 24.11.: „Es soll Menschen erreichen, die in Umbrüchen sind
+   oder sich selbst besser verstehen wollen." Und zum ersten Entwurf:
+   „mehr wie ich formulieren". Also locker, direkt, ohne Hochglanz. */
+var S_FUERWEN = {
+  titel: 'Für wen das ist',
+  satz: 'Für Menschen, bei denen gerade was in Bewegung ist. Oder die '
+    + 'einfach mal verstehen wollen, warum sie immer wieder an derselben '
+    + 'Stelle landen.',
+  punkte: [
+   ['Bei dir bricht was um', 'Job, Beziehung, Wohnort, oder einfach '
+    + 'dieses Gefühl, dass das Alte nicht mehr passt und das Neue noch '
+    + 'keinen Namen hat.'],
+   ['Du willst dich besser verstehen', 'Nicht dein Sternzeichen, '
+    + 'sondern dich: wie du tickst, was dich antreibt und was dich immer '
+    + 'wieder ausbremst.'],
+   ['Du willst nicht nur Einsichten', 'Sondern rausgehen mit einem '
+    + 'Schritt, den du auch wirklich gehst.']],
+  nachsatz: 'Vorwissen brauchst du keins, ein fertig formuliertes Problem '
+    + 'auch nicht. Und wenn dein Kopf anders funktioniert als bei den '
+    + 'meisten: Dann verstehen wir uns wahrscheinlich ziemlich schnell.'
+};
+
 /* ── Wie ich arbeite: drei Linsen ──────────────────────────────
    Dieselben drei wie in der Begleitung (begleit-daten.js C_METHODE) —
    hier in der zweiten Person und ohne Werkstattsprache. Eine Seite je
@@ -113,21 +136,57 @@ var S_ABMACHEN = {
 };
 
 /* ── Wer ich bin ───────────────────────────────────────────────
-   Kurz, ohne Heldenreise (ENTWURF Abschnitt 3, Punkt 5). Nur, was
-   Mandy selbst gesagt hat, und nichts über ihre Person, was sie nicht
-   selbst öffentlich machen wollte. */
+   Nur, was Mandy selbst gesagt hat und selbst öffentlich machen will.
+   Am 24.11. hat sie es so gewollt: Teil der LGBTQIA+ Community,
+   Coming-out mit 27, AuDHS-Diagnose mit 37, zweimal Verhaltenstherapie,
+   ein Weg mit vielen Stationen, Astrologie als Sprache für die letzten
+   Fragezeichen, und etwas von Alfred Adler. Nicht „kurvig" (Mandy). */
 var S_ICH = {
   titel: 'Wer ich bin',
-  text: ['Ich heiße Mandy Netta, bin 39 und arbeite in Berlin.',
-   'Vor diesem hier waren es rund zehn Jahre in Unternehmen: sechseinhalb '
-   + 'davon bei McFIT Models, danach im Vertrieb eines '
-   + 'Coaching-Unternehmens, im Social-Media- und Influencer-Marketing und '
-   + 'in der Beratung von Coaches. Das heißt vor allem: Ich habe viel '
-   + 'gesehen, wie in dieser Branche verkauft wird. Deshalb findest du '
-   + 'auf dieser Seite keinen Countdown.',
-   'Ich arbeite besonders gern mit neurodivergenten Menschen — mit '
-   + 'Leuten also, bei denen die üblichen Ratschläge regelmäßig nicht '
-   + 'greifen, weil sie für andere Köpfe gemacht sind.'],
+  text: ['Ich bin Mandy, 39, und lebe in Berlin. Mein Weg hierher hatte '
+   + 'viele Umwege, und genau die sind heute meine Stärke.',
+   'Ich arbeite, seit ich 14 bin, und hab mich durch vieles ausprobiert: '
+   + 'Jura, Islamwissenschaften, die Tischlerei, Eventmanagement und '
+   + 'später zehn Jahre in Unternehmen, unter anderem im Vertrieb einer '
+   + 'Coaching-Firma. Dort hab ich auch gesehen, wie in dieser Branche oft '
+   + 'verkauft wird. Deshalb findest du auf dieser Seite keinen Countdown.',
+   'Ich bin Teil der LGBTQIA+ Community. Mein Coming-out hatte ich mit 27, '
+   + 'die Diagnose AuDHS kam mit 37. Beides kam spät, und beides hat mir '
+   + 'rückblickend so viel über mich erklärt. Ich weiß also ziemlich gut, '
+   + 'wie es sich anfühlt, wenn man lange nicht versteht, warum man anders '
+   + 'tickt.',
+   ],
+  /* Mandy am 24.11.: Therapie und Astrologie klarer trennen und
+     hervorheben. Darum drei Stationen nacheinander, als Karten. */
+  wege: [
+   {titel:'Zweimal Verhaltenstherapie',
+    text:'Um mich und mein Leben besser zu verstehen. Meine Therapeutin hat '
+    + 'mal zu mir gesagt, dass ich zu jeder Sitzung schon mit der Lösung '
+    + 'kam, weil ich die Wege meistens selbst gesehen habe.'},
+   {titel:'Und jetzt?',
+    text:'Nach der Therapie stand ich da und wusste nicht weiter. Für mich hat '
+    + 'genau da die eigentliche Arbeit angefangen. Ich hab ein Buch nach dem '
+    + 'anderen gelesen, um zu verstehen, wie ich besser mit mir und mit dem '
+    + 'Leben umgehe. Und ich glaube, an dieser Stelle hören viele auf, weil '
+    + 'ihnen niemand zeigt, wie es weitergeht.'},
+   {titel:'Astrologie',
+    text:'Hier hab ich Antworten auf die letzten Fragezeichen gefunden: Wieso fühle ich '
+    + 'so? Wieso handle ich so? Wieso hatte ich genau diese Challenges? '
+    + 'Nicht als Beweis, sondern als Sprache, die für mich endlich gepasst '
+    + 'hat.'}],
+  schluss: [
+   'Was sich durch mein ganzes Leben zieht, sind Menschen. Mich '
+   + 'interessiert, wie sie denken, womit sie kämpfen und was sie trägt. '
+   + 'Ich bin oft hingefallen und jedes Mal wieder aufgestanden, und aus '
+   + 'all dem ist ein Blick entstanden, mit dem ich mich in ganz '
+   + 'unterschiedliche Leben hineinversetzen kann.'],
+  /* Kein wörtliches Zitat, sondern Adlers Gedanke in Kurzform. Belegt
+     ist er im Englischen („it is the use they make of it", u. a. in
+     The Individual Psychology of Alfred Adler, 1956). Deshalb „nach". */
+  zitat: {text: 'Entscheidend ist nicht, was du mitbringst, sondern was du '
+    + 'daraus machst.',
+   quelle: 'nach Alfred Adler, aus dessen Individualpsychologie viele '
+    + 'meiner Fragen kommen'},
   /* Gilt für die ganze Seite: zweite Person Singular. Der Absatz
      darüber hat beim ersten Entwurf „Sie" gesagt — die Prüfung fängt
      das, siehe bau-start.py. */
