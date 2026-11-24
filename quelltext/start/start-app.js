@@ -78,7 +78,8 @@
      Lücke. Keine erfundene Adresse, kein Formular ins Nichts. */
   if(S_KONTAKT.mail){
     html('stkbox', '<div class="st-k"><a class="st-k-a" href="mailto:'
-      + esc(S_KONTAKT.mail) + '">' + esc(S_KONTAKT.mail) + '</a></div>');
+      + esc(S_KONTAKT.mail) + '">' + esc(S_KONTAKT.mail) + '</a>'
+      + '<p class="st-k-z">' + esc(S_KONTAKT.zusatz) + '</p></div>');
   } else {
     html('stkbox', '<div class="st-luecke"><b>'
       + esc(S_KONTAKT.lueckeTitel) + '</b><p>'
