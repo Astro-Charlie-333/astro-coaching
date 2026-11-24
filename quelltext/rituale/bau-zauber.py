@@ -277,7 +277,7 @@ for _n, _q in teile.items():
 rauch = r'''
 const {chromium}=require('playwright');
 (async()=>{
-const f=[]; const b=await chromium.launch();
+const f=[], beugung=[]; const b=await chromium.launch();
 const schau=async(pg,wo)=>{
   const a=await pg.evaluate(()=>({
     jetzt:document.getElementById('jetztbox').textContent.trim().length,
@@ -315,11 +315,11 @@ const schau=async(pg,wo)=>{
   if(g){
     if(g.t.indexOf('der Tag '+g.tag)<0) f.push(wo+': der Tagesherrscher steht nicht im Genitiv aus der Tabelle');
     if(g.t.indexOf('Stunde '+g.std)<0) f.push(wo+': der Stundenherrscher steht nicht im Genitiv aus der Tabelle');
-    /* Und die rohe Form daneben, aber nur, wenn sie nicht zufällig
-       die richtige ist: „des Merkur" ist der Genitiv, „des Mond"
-       wäre der Fehler. */
-    ['des ','dem ','der ','den '].map(a=>a+g.roh).forEach(x=>{
-      if(x!==g.tag&&x!==g.std&&g.t.indexOf(x)>=0) f.push(wo+': „'+x+'" steht auf der Seite'); });
+    /* Und die rohe Form daneben. Was daran falsch ist, entscheidet
+       nicht dieser Lauf, sondern pruefwerk.roh_hinter_artikel — dort
+       stehen die festen Beispiele darunter (REGELN.md 6e). Hier wird
+       nur berichtet, was auf der Seite steht. */
+    beugung.push({wo:wo, roh:g.roh, tabelle:[g.tag, g.std], text:g.t});
   }
   /* Nichts läuft auf dem Telefon über den Rand. */
   const r=await pg.evaluate(()=>{const w=document.documentElement.clientWidth; const r=[];
@@ -367,7 +367,7 @@ const hh=await q.evaluate(()=>({t:document.body.innerText,
 if(hh.soll!=='dein 4. Haus') f.push('B_BEUGE bildet „'+hh.soll+'" statt „dein 4. Haus"');
 if(!/dein \d+\. Haus/.test(hh.t)) f.push('mit Profil steht nirgends „dein N. Haus"');
 if(/deine \d+\. Haus|dein \d+ Haus/.test(hh.t)) f.push('das Haus steht ungebeugt auf der Seite');
-console.log(JSON.stringify({fehler:f})); await b.close();})();
+console.log(JSON.stringify({fehler:f,beugung:beugung})); await b.close();})();
 '''
 rp = hier / '.rauch-zauber.js'
 rp.write_text(rauch.replace('ZIEL', str(ziel)), encoding='utf-8')
@@ -376,7 +376,22 @@ try:
     if r.returncode != 0:
         fehler.append('Rauchprobe gescheitert: ' + (r.stderr or '')[-400:])
     else:
-        fehler.extend(json.loads(r.stdout.strip().splitlines()[-1])['fehler'])
+        gelesen = json.loads(r.stdout.strip().splitlines()[-1])
+        fehler.extend(gelesen['fehler'])
+        # Und jetzt die Entscheidung, die am 2026-11-24 im Browser
+        # falsch getroffen wurde: Der Lauf berichtet den rohen Namen,
+        # die Tabellenformen und den Text der Seite — welche Form
+        # daran falsch ist, sagt die Regel mit den festen Beispielen.
+        for _b in gelesen.get('beugung', []):
+            for _x in pruefwerk.roh_hinter_artikel(_b['text'], _b['roh'],
+                                                   *_b['tabelle']):
+                fehler.append(
+                    _b['wo'] + ': „' + _x + '“ steht auf der Seite '
+                    '— die Form gehört aus der Tabelle in '
+                    'zauber-texte.js')
+        if not gelesen.get('beugung'):
+            fehler.append('die Rauchprobe hat keine gebeugte Form '
+                          'berichtet — dann prüft die Regel nichts')
 except Exception as e:
     fehler.append('Rauchprobe nicht gelaufen: ' + str(e)[:200])
 finally:

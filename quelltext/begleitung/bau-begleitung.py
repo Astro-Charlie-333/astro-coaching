@@ -29,6 +29,10 @@ koerper = lies(hier / 'begleit-koerper.html')
 daten = lies(hier / 'begleit-daten.js')
 rechner = lies(hier / 'begleit-rechner.js')
 app = lies(hier / 'begleit-app.js')
+# Aufgabe 94: kern/fuellen.js liegt mit auf der Seite. Die Lücken
+# dieser Anzeige füllt AC_FUELL und nichts sonst — ein fehlender
+# Wert bricht dort ab statt zu verschwinden.
+fuellen = lies(kern / 'fuellen.js')
 
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +49,7 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(hier / 'begleit-stil.css')
         + lies(rit / 'engine.js') + "\n"
         + lies(rit / 'himmel.js') + "\n"
         + lies(kern / 'bahn-rechner.js') + "\n"
-        + daten + "\n" + rechner + "\n" + app
+        + fuellen + "\n" + daten + "\n" + rechner + "\n" + app
         + "\n</script>\n</body></html>\n")
 
 ziel = wiki / 'begleitung.html'
@@ -53,6 +57,100 @@ html = html.replace('<head>', '<head>' + (hier.parent / 'app' / 'app-kopf.html')
 ziel.write_text(html, encoding='utf-8')
 
 fehler, hinweise = [], []
+
+# ── Die Anzeige schreibt keinen Satz und kein „dein" ─────────
+#     Aufgabe 62, aus 34 und 38. Die Sätze dieser Seite stehen in
+#     begleit-daten.js (C_T und die Tafeln daneben), die Anzeige
+#     rechnet und setzt mit AC_FUELL ein. Was in begleit-app.js
+#     steht, zieht beim Umzug in eine andere Umgebung nicht mit
+#     (PRODUKT.md Abschnitt 7) — und genau deshalb ist das hier eine
+#     Sperre und kein Vorsatz.
+sys.path.insert(0, str(rit))
+import pruefwerk
+
+if not re.search(r'\bvar C_T\s*=', daten):
+    fehler.append('Tafel C_T fehlt in begleit-daten.js')
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'begleit-app.js',
+                                            'begleit-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'begleit-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'begleit-app.js')
+#     Gefüllt wird auf dieser Seite an zwei Stellen: Die Fragen aus
+#     dem Bild setzt begleit-rechner.js ein, alles andere die
+#     Anzeige. Die Regel fragt, ob eine Lücke *jemand* füllt — also
+#     werden beide gefragt. Nur die Anzeige zu fragen hieße, {feld}
+#     für ungefüllt zu halten, obwohl es gefüllt wird.
+fehler += pruefwerk.pruefe_vorlagenluecken(daten, app + '\n' + rechner,
+                                           'begleit-daten.js')
+fehler += pruefwerk.pruefe_fueller(rechner, 'begleit-rechner.js')
+
+#     Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#     Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#     hatte (REGELN.md 6e, Nachsatz). In allen drei Anführungsarten —
+#     ein Satz, der in doppelten oder schrägen Anführungszeichen
+#     durchgeht, wäre das Loch, über das die Sätze einzeln
+#     zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Fragen aus seinem Bild' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'begleit-app.js',
+                                             'begleit-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Notizen' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'begleit-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+#     Wer AC_FUELL aufruft, bringt es auch mit.
+if pruefwerk.ruft_ohne_stelle(lies(ziel)):
+    fehler.append('die Seite füllt Lücken, aber kern/fuellen.js liegt nicht mit darauf')
+
+# ── Keine Zahl wird außerhalb der einen Stelle zu Text ───────
+#     Der Fehler, der beim Umzug am 2026-11-24 aufgefallen ist. An
+#     vier Stellen ging eine Gradzahl ohne Umweg in den Text:
+#
+#         x.ab.toFixed(1) + '°'          → „4.2°"
+#         ', ' + x.ab.toFixed(2) + '°'   → „, 4.21°"
+#
+#     Deutsche Zahlen tragen ein Komma (REGELN.md Abschnitt 4). Die
+#     Seite hatte `kommaZahl` seit dem ersten Tag und benutzte es nur
+#     in der Mechanik der Stellungen; daneben stand der Punkt. Das
+#     ist dieselbe Klasse wie REGELN.md 6f: Die Sperre muss an dem
+#     Schlüssel sitzen, der im Text landet — und das ist jedes
+#     `toFixed`, dessen Ergebnis in eine Zeichenkette wandert, nicht
+#     nur das, an das jemand gedacht hat.
+#
+#     Geprüft wird die Form, die gemeint ist (REGELN.md 6e): ein
+#     `toFixed`, das weder in `kommaZahl` steht noch dessen Ergebnis
+#     durch `kommaZahl` geht. Die festen Beispiele stehen darunter.
+_ROHE_ZAHL = re.compile(r'(?<!kommaZahl\()[A-Za-z_$][\w.$\[\]]*\.toFixed\(')
+
+
+def rohe_zahlen(quell):
+    """Zeilen, in denen eine Zahl ohne Komma zu Text wird."""
+    rein = pruefwerk.nur_code(quell)
+    raus = []
+    for m in _ROHE_ZAHL.finditer(rein):
+        zeile = rein.count('\n', 0, m.start()) + 1
+        # Die eine Stelle selbst darf `toFixed` benutzen; sie setzt
+        # das Komma danach.
+        if "replace('.', ',')" in rein.split('\n')[zeile - 1]:
+            continue
+        raus.append(zeile)
+    return raus
+
+
+assert rohe_zahlen("h += x.ab.toFixed(1) + '°';") == [1]
+assert rohe_zahlen("h += ', ' + s.gv.toFixed(2);") == [1]
+assert rohe_zahlen("h += esc(kommaZahl(x.ab, 1));") == []
+assert rohe_zahlen("h += esc(grad(x.ab, 1));") == []
+assert rohe_zahlen("return String(Number(n).toFixed(s)).replace('.', ',');") == []
+assert rohe_zahlen("/* nicht: x.ab.toFixed(1) + '°' */\nvar a = 1;") == []
+
+for _z in rohe_zahlen(app):
+    fehler.append(f'Zahl ohne Komma in begleit-app.js (Zeile {_z}) — eine '
+                  'Gradzahl wird über kommaZahl zu Text, sonst steht '
+                  '„4.2°" auf der Seite (REGELN.md Abschnitt 4)')
+
 
 # ── Die IDs, die das Skript sucht, gibt es auch ──────────────
 ids = set(re.findall(r'\bid="([A-Za-z0-9_-]+)"', koerper))
@@ -264,7 +362,11 @@ sprobe.write_text(r"""
 /* Probedaten sind erfunden — nie echte Geburtsdaten hier hinein. */
 const fs=require('fs'), path=require('path');
 const wurzel=path.join(__dirname,'..');
-const code=['rituale/engine.js','begleitung/begleit-daten.js',
+/* kern/fuellen.js liegt mit dabei: der Rechner setzt das Lebensfeld
+   mit AC_FUELL ein (Aufgabe 94). Ohne diese Zeile bricht die Probe
+   mit „AC_FUELL is not defined" ab — und zwar zu Recht. */
+const code=['rituale/engine.js','kern/fuellen.js',
+            'begleitung/begleit-daten.js',
             'begleitung/begleit-rechner.js']
   .map(f=>fs.readFileSync(path.join(wurzel,f),'utf8')).join('\n;\n');
 const w={}; new Function('window','console','document',code)(w,console,undefined);
