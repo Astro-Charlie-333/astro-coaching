@@ -1,9 +1,15 @@
 /* Astro-Charlie · Ereignisse lesen — die Anzeige.
    Rechnet nichts und formuliert nichts. Setzt nur zusammen,
-   was Daten und Rechner liefern, und zieht bei Stufenwechsel nach. */
+   was Daten und Rechner liefern, und zieht bei Stufenwechsel nach.
+
+   Seit dem 2026-11-25 steht hier kein Satz und keine Beschriftung
+   mehr: alles davon in ereignis-daten.js als EG_T. Eingesetzt wird
+   mit AC_FUELL aus kern/fuellen.js, „dein" bildet B_BEUGE aus
+   kern/bahn-daten.js. bau-ereignis.py bricht ab, sobald eine der
+   drei Formen zurückkommt (Aufgabe 63, aus 34 und 38). */
 (function(){
 'use strict';
-var D = window.AC_EREIG, R = window.AC_EREIGR;
+var D = window.AC_EREIG, R = window.AC_EREIGR, T = D.T;
 function el(id){ return document.getElementById(id); }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
   return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
@@ -15,18 +21,13 @@ function stufe(){
 }
 
 /* ── 1 · Der Stapel: ein Hinweis, zwei, drei ───────────── */
-var STAPEL = [
- ['1 Baustein','Rauschen','Zu wenig. Jeder Tag hat davon mehrere. Wer hier schon deutet, deutet ins Blaue.'],
- ['2 Bausteine','Verdacht','Eine Richtung zeichnet sich ab. Man denkt darüber nach, sagt es aber noch nicht.'],
- ['3 Bausteine','Thema','Jetzt trägt es. Und selbst jetzt beschreibt man ein Zeitfenster, keine Tatsache.']
-];
 function stapelBauen(){
   var z = el('egstapel'); if(!z) return;
-  z.innerHTML = STAPEL.map(function(s, i){
+  z.innerHTML = T.stapel.map(function(s, i){
     return '<div class="eg-st eg-st-' + i + '">'
-         + '<div class="eg-st-zahl">' + esc(s[0]) + '</div>'
-         + '<div class="eg-st-name">' + esc(s[1]) + '</div>'
-         + '<div class="eg-st-text">' + esc(s[2]) + '</div></div>';
+         + '<div class="eg-st-zahl">' + esc(s.zahl) + '</div>'
+         + '<div class="eg-st-name">' + esc(s.name) + '</div>'
+         + '<div class="eg-st-text">' + esc(s.text) + '</div></div>';
   }).join('');
 }
 
@@ -60,46 +61,64 @@ var wahl = { planet:R.START.planet, zeichen:R.START.zeichen, haus:R.START.haus,
              aspekt:R.START.aspekt, orbis:R.START.orbis };
 var ORBWERTE = R.ORBWERTE;
 
+/* Auf Stufe 0 trägt eine Rung des Lautstärkereglers nur den Namen
+   der Klasse, und zwei Orbiswerte können in dieselbe Klasse fallen:
+   0,2° und 0,5° sind beide „Volltreffer". Dann stand dort zweimal
+   dasselbe Wort, und eine der beiden Rungen war eine Wahl ohne
+   Unterschied (gefunden am 2026-11-25). Also eine Rung je Klasse.
+   Sichtbar ändert das sonst nichts — auf Stufe 0 steht kein Grad
+   auf der Seite, Satz und Zerlegung lesen allein die Lautstärke. */
+function orbRungen(fach){
+  if(fach) return ORBWERTE;
+  var gesehen = {}, raus = [];
+  ORBWERTE.forEach(function(o){
+    var k = R.laut(o).n;
+    if(gesehen[k]) return;
+    gesehen[k] = true; raus.push(o);
+  });
+  return raus;
+}
+/* Wer von Stufe 1 herunterschaltet, hat vielleicht die Rung gewählt,
+   die es auf Stufe 0 nicht gibt. Dann rückt die Wahl auf die Rung
+   derselben Lautstärke — dieselbe Klasse, also derselbe Text. */
+function orbAngleichen(rungen){
+  if(rungen.indexOf(wahl.orbis) >= 0) return;
+  var k = R.laut(wahl.orbis).n;
+  for(var i = 0; i < rungen.length; i++)
+    if(R.laut(rungen[i]).n === k){ wahl.orbis = rungen[i]; return; }
+}
+
 function reglerBauen(){
   var pl = el('egpl'), zc = el('egzc'), hs = el('eghs'), as = el('egas'), or = el('egor');
   if(!pl) return;
   var n = stufe(), fach = n >= 1;
-  pl.innerHTML = R.PLANETEN.map(function(p, i){
-    var t = fach ? p : grossErst(mundart(p));
+  pl.innerHTML = R.PLANETEN.map(function(p){
+    var t = fach ? p : grossErst(kraftWort(p));
     return '<option value="' + esc(p) + '"' + (p===wahl.planet?' selected':'') + '>' + esc(t) + '</option>';
   }).join('');
   zc.innerHTML = R.ZEICHEN.map(function(z, i){
     return '<option value="' + i + '"' + (i===wahl.zeichen?' selected':'') + '>'
-         + esc(fach ? z : grossErst(zStil(i))) + '</option>'; }).join('');
+         + esc(fach ? z : grossErst(T.stilZeichen[i])) + '</option>'; }).join('');
   hs.innerHTML = R.H0.map(function(h, i){
     return '<option value="' + i + '"' + (i===wahl.haus?' selected':'') + '>'
-         + esc(fach ? ((i+1) + '. Haus — ' + kurzHaus(i)) : grossErst(h)) + '</option>'; }).join('');
+         + esc(fach ? AC_FUELL(T.wahlHaus, {n:(i+1), was:T.kurzHaus[i]}) : grossErst(h))
+         + '</option>'; }).join('');
   as.innerHTML = R.ASPEKTE.map(function(a, i){
     return '<option value="' + i + '"' + (i===wahl.aspekt?' selected':'') + '>'
-         + esc(fach ? a : aStil(i)) + '</option>'; }).join('');
-  or.innerHTML = ORBWERTE.map(function(o){
+         + esc(fach ? a : T.stilWinkel[i]) + '</option>'; }).join('');
+  var rungen = orbRungen(fach);
+  orbAngleichen(rungen);
+  or.innerHTML = rungen.map(function(o){
     var L = R.laut(o);
-    var t = fach ? (R.komma(o,1) + '° — ' + L.n) : L.n;
+    var t = fach ? AC_FUELL(T.wahlOrbis, {grad:R.komma(o,1), laut:L.n}) : L.n;
     return '<option value="' + o + '"' + (o===wahl.orbis?' selected':'') + '>' + esc(t) + '</option>';
   }).join('');
 }
-function mundart(p){
-  var m = { Sonne:'dein Wesenskern', Mond:'dein Gefühl', Merkur:'dein Denken',
-    Venus:'deine Zuneigung', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
-    Saturn:'deine Struktur', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
-    Pluto:'deine Tiefe' };
-  return m[p] || p;
-}
-function zStil(i){
-  return ['direkt','langsam','beweglich','vorsichtig','sichtbar','genau',
-          'abwägend','tief','weit','ernst','eigensinnig','durchlässig'][i];
-}
-function aStil(i){
-  return ['verschmolzen','angeboten','reibend','fließend','gegenübergestellt'][i];
-}
-function kurzHaus(i){
-  return ['Auftreten','Geld und Selbstwert','Nachrichten','Zuhause','Romantik','Alltag',
-          'Partnerschaft','Tiefe','Ferne','Berufung','Freundschaften','Verborgenes'][i];
+/* „dein" steht an einer Stelle: B_BEUGE kennt das Geschlecht, das
+   in EG_T.punkt am Wort hängt (kern/bahn-daten.js). */
+function kraftWort(p){
+  var k = T.punkt[p];
+  return k ? B_BEUGE(k, 'nom') : p;
 }
 
 function mischerZeigen(){
@@ -120,8 +139,8 @@ function mischerBinden(){
       mischerZeigen();
     });
   });
-  var w = el('egwuerfel');
-  if(w) w.addEventListener('click', function(){
+  var wf = el('egwuerfel');
+  if(wf) wf.addEventListener('click', function(){
     wahl = R.zufall(); reglerBauen(); mischerZeigen();
   });
 }
@@ -137,7 +156,7 @@ function rezepteBauen(){
       + '<div class="eg-formel">' + formel + '<span class="eg-f-g">=</span>'
       + '<span class="eg-f-e">' + esc(r.ergebnis) + '</span></div>'
       + '<ul>' + r.zutaten.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>'
-      + '<p class="eg-ehrlich-klein"><b>Ehrlich dazu:</b> ' + esc(r.ehrlich) + '</p>'
+      + '<p class="eg-ehrlich-klein"><b>' + esc(T.rEhrlich) + '</b> ' + esc(r.ehrlich) + '</p>'
       + '</div>';
   }).join('');
 }
@@ -145,17 +164,17 @@ function rezepteBauen(){
 /* ── 5 · Menschen im Chart ─────────────────────────────── */
 var mWahl = 'mutter';
 function menschenBauen(){
-  var w = el('egmwahl'); if(!w) return;
-  w.innerHTML = D.MENSCHEN.map(function(m){
+  var z = el('egmwahl'); if(!z) return;
+  z.innerHTML = D.MENSCHEN.map(function(m){
     return '<button type="button" class="eg-mb" data-m="' + esc(m.k) + '" '
          + 'aria-pressed="' + (m.k===mWahl) + '">'
          + '<span class="eg-mb-i" aria-hidden="true">' + esc(m.icon) + '</span>'
          + esc(m.name) + '</button>';
   }).join('');
-  Array.prototype.forEach.call(w.querySelectorAll('button[data-m]'), function(b){
+  Array.prototype.forEach.call(z.querySelectorAll('button[data-m]'), function(b){
     b.addEventListener('click', function(){
       mWahl = b.getAttribute('data-m');
-      Array.prototype.forEach.call(w.querySelectorAll('button[data-m]'), function(x){
+      Array.prototype.forEach.call(z.querySelectorAll('button[data-m]'), function(x){
         x.setAttribute('aria-pressed', String(x.getAttribute('data-m')===mWahl)); });
       personZeigen();
     });
@@ -173,24 +192,27 @@ function personZeigen(){
     + '<div class="eg-p-kopf"><span class="eg-p-i" aria-hidden="true">' + esc(m.icon) + '</span>'
     + '<h3>' + esc(m.name) + '</h3></div>'
     + '<div class="eg-p-zeilen">'
-    + '<div><span class="eg-p-lab">Wo</span><span class="eg-p-wert">' + esc(w(m.wo, fach)) + '</span></div>'
-    + '<div><span class="eg-p-lab">Welche Kraft</span><span class="eg-p-wert">' + esc(w(m.kraft, fach)) + '</span></div>'
+    + '<div><span class="eg-p-lab">' + esc(T.pWo) + '</span>'
+    + '<span class="eg-p-wert">' + esc(w(m.wo, fach)) + '</span></div>'
+    + '<div><span class="eg-p-lab">' + esc(T.pKraft) + '</span>'
+    + '<span class="eg-p-wert">' + esc(w(m.kraft, fach)) + '</span></div>'
     + '</div>'
     + '<p>' + esc(w(m.text, fach)) + '</p>'
-    + '<h4>Worauf du schaust</h4>'
+    + '<h4>' + esc(T.pAspekte) + '</h4>'
     + '<ul class="eg-p-asp">' + asp.map(function(a){ return '<li>' + esc(a) + '</li>'; }).join('') + '</ul>'
-    + '<p class="eg-p-streit"><b>Wo die \u00dcberlieferung streitet:</b> ' + esc(w(m.streit, fach)) + '</p>'
+    + '<p class="eg-p-streit"><b>' + esc(T.pStreit) + '</b> ' + esc(w(m.streit, fach)) + '</p>'
     + '</div>';
 }
 function tabelleBauen(){
   var t = el('egmtab'); if(!t) return;
   var fach = stufe() >= 1;
-  t.innerHTML = '<thead><tr><th>Verbindung</th><th>' + (fach ? 'Haus' : 'Lebensbereich')
-    + '</th><th>Kraft</th></tr></thead><tbody>'
+  var sp = fach ? T.tabHaus : T.tabBereich;
+  t.innerHTML = '<thead><tr><th>' + esc(T.tabVerbindung) + '</th><th>' + esc(sp)
+    + '</th><th>' + esc(T.tabKraft) + '</th></tr></thead><tbody>'
     + D.MENSCHEN.map(function(m){
-        return '<tr><td data-sp="Verbindung">' + esc(m.name) + '</td>'
-             + '<td data-sp="' + (fach ? 'Haus' : 'Lebensbereich') + '">' + esc(w(m.wo, fach)) + '</td>'
-             + '<td data-sp="Kraft">' + esc(w(m.kraft, fach)) + '</td></tr>';
+        return '<tr><td data-sp="' + esc(T.tabVerbindung) + '">' + esc(m.name) + '</td>'
+             + '<td data-sp="' + esc(sp) + '">' + esc(w(m.wo, fach)) + '</td>'
+             + '<td data-sp="' + esc(T.tabKraft) + '">' + esc(w(m.kraft, fach)) + '</td></tr>';
       }).join('')
     + '</tbody>';
 }
@@ -209,7 +231,7 @@ function faelleBauen(){
     return '<div class="eg-fall">'
       + '<h3>' + esc(f.name) + '</h3>'
       + '<div class="eg-schritte">' + schritte + '</div>'
-      + '<div class="eg-deutung"><b>So sagt man es:</b> ' + esc(f.deutung) + '</div>'
+      + '<div class="eg-deutung"><b>' + esc(T.fDeutung) + '</b> ' + esc(f.deutung) + '</div>'
       + '<div class="eg-nicht">' + esc(f.nicht) + '</div>'
       + '</div>';
   }).join('');
@@ -225,7 +247,8 @@ function quizBauen(){
            + esc(a) + '</button>';
     }).join('');
     return '<div class="eg-q" data-qi="' + i + '">'
-      + '<div class="eg-q-nr">Frage ' + (i+1) + ' von ' + D.QUIZ.length + '</div>'
+      + '<div class="eg-q-nr">'
+      + esc(AC_FUELL(T.qNr, {i:(i+1), alle:D.QUIZ.length})) + '</div>'
       + '<p class="eg-q-f">' + esc(q.f) + '</p>'
       + '<div class="eg-q-opts">' + opt + '</div>'
       + '<div class="eg-q-echo" id="egqe' + i + '"></div></div>';
@@ -243,7 +266,7 @@ function quizBauen(){
         if(xi === q.r) x.classList.add('ist-richtig');
         else if(xi === ai) x.classList.add('ist-falsch');
       });
-      el('egqe' + qi).innerHTML = '<b>' + (richtig ? 'Stimmt.' : 'Nicht ganz.') + '</b> ' + esc(q.e);
+      el('egqe' + qi).innerHTML = '<b>' + esc(richtig ? T.qJa : T.qNein) + '</b> ' + esc(q.e);
       standZeigen();
     });
   });
@@ -251,16 +274,16 @@ function quizBauen(){
 }
 function standZeigen(){
   var s = el('egquizstand'); if(!s) return;
-  var n = 0, r = 0;
+  var alle = D.QUIZ.length, n = 0, r = 0;
   for(var k in qAntwort){ if(Object.prototype.hasOwnProperty.call(qAntwort,k)){
     n++; if(qAntwort[k] === D.QUIZ[k].r) r++; } }
   if(!n){ s.textContent = ''; return; }
-  s.innerHTML = n < D.QUIZ.length
-    ? esc(r + ' von ' + n + ' richtig — noch ' + (D.QUIZ.length - n) + ' offen.')
-    : '<b>' + esc(r + ' von ' + D.QUIZ.length + ' richtig.') + '</b> '
-      + esc(r === D.QUIZ.length ? 'Das sitzt.'
-          : r >= 3 ? 'Die Richtung stimmt. Die Erklärungen oben sind die Nacharbeit.'
-          : 'Lies die Erklärungen in Ruhe — die Bausteinkarten weiter oben helfen dabei.');
+  if(n < alle){
+    s.innerHTML = esc(AC_FUELL(T.qOffen, {r:r, n:n, offen:(alle - n)}));
+    return;
+  }
+  s.innerHTML = '<b>' + esc(AC_FUELL(T.qGanz, {r:r, alle:alle})) + '</b> '
+    + esc(r === alle ? T.qAlles : r >= 3 ? T.qViel : T.qWenig);
 }
 
 /* ── Alles zusammen ────────────────────────────────────── */
