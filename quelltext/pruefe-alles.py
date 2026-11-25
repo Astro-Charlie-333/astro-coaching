@@ -791,7 +791,17 @@ ANZEIGEN = {
     # Einheit gehört in die Vorlage, nicht an den Wert — dieselbe
     # Klasse wie AN_T.waage am 2026-11-23; `ablauf` trägt jetzt
     # Minuten als Zahl.
-    'ereignis/ereignis-app.js':    (28, 10),
+    # ereignis am 2026-11-25 (Aufgabe 63). Hier stand die Tafel der
+    # zehn Kräfte in Alltagssprache zweimal von Hand: einmal als
+    # `mundart` in der Anzeige, einmal als `P0` im Rechner, Wort für
+    # Wort gleich. Gedruckt hat die Seite beide Male dasselbe, und
+    # gemerkt hätte es niemand, sobald eine der beiden sich ändert.
+    # Dazu kam ein Fehler, den man auf der Seite sehen konnte: Der
+    # Lautstärkeregler bot auf Stufe 0 zwei Rungen namens
+    # „Volltreffer" an, weil der Wert der Orbis ist und die
+    # Beschriftung an der Lautstärkeklasse hängt — 0,2° und 0,5°
+    # fallen in dieselbe. Dieselbe Klasse wie REGELN.md 6f, nur an
+    # einem Bedienelement statt in einem Satz.
     'oph/oph-app.js':              (65, 4),
     'niveau/reading-app.js':       (70, 14),
     'werkstatt/werkstatt-app.js':  (38, 2),
@@ -811,7 +821,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
           'rituale/zauber-app.js', 'geist/geist-app.js',
           'dossier/dossier-app.js', 'analyse/analyse-app.js',
-          'begleitung/begleit-app.js'}
+          'begleitung/begleit-app.js', 'ereignis/ereignis-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
@@ -1024,6 +1034,85 @@ elif fassungen == [DIE_STELLE] and not eigene:
                                                             errors='replace'))
     print(f'  {len(quellen)} Quelldateien, eine Stelle, die eine Lücke füllt'
           f' — auf {seiten_mit} Seiten')
+
+# ── Wer einen Regler hat, prüft seine Beschriftungen (Aufgabe 63) ──
+# Gefunden am 2026-11-25 auf `ereignisse-lesen.html`: zwei Rungen des
+# Lautstärkereglers hießen auf Stufe 0 beide „Volltreffer". Die Regel
+# dagegen steht seit heute in `rituale/pruefwerk.py`
+# (`doppelte_beschriftung`), und `bau-ereignis.py` ruft sie am
+# gezeichneten Ergebnis auf, auf jeder Stufe.
+#
+# Eine Regel, die nur eine Seite ruft, ist für die anderen keine
+# (Aufgabe 95). Hier wird deshalb nachgezählt, welcher Bau mit einem
+# Regler im Körper sie aufruft — und welcher nicht. Die Liste kann nur
+# schrumpfen: Eine Seite, die einen Regler bekommt und die Regel nicht
+# ruft, fällt auf; eine Seite, die sie ruft und hier noch unter
+# OFFEN steht, ebenso. Eine Zahl in einem Satz driftet (REGELN.md 6c).
+REGLER_OFFEN = {
+    # Bau                        Seite
+    'baukasten/bau-baukasten.py',   # baukasten.html
+    'mond/bau-mond.py',             # mond.html
+}
+REGLER_DURCH = {'ereignis/bau-ereignis.py'}
+
+
+# Gesucht wird der **Aufruf**, nicht das Wort. Die erste Fassung
+# dieser Prüfung fragte, ob `doppelte_beschriftung` irgendwo in der
+# Datei steht — und war damit sofort grün, weil der Name auch in
+# einem Kommentar daneben vorkam, der erklärt, was die Regel tut.
+# Das ist genau `REGELN.md` 6e: Geprüft wird die Form, die gemeint
+# ist, nicht ein Wort, das meistens dabeisteht. Also: Kommentarzeilen
+# weg, und danach der Name mit einer offenen Klammer dahinter.
+_REGLERAUFRUF = re.compile(r'\bpruefwerk\.doppelte_beschriftung\s*\(')
+
+
+def _ruft_regel(quelle):
+    ohne = re.sub(r'(?m)^[ \t]*#.*$', '', quelle)
+    return bool(_REGLERAUFRUF.search(ohne))
+
+
+assert _ruft_regel('fehler += pruefwerk.doppelte_beschriftung(liste)')
+assert _ruft_regel('    for m in pruefwerk.doppelte_beschriftung( x ):')
+# Der Fall, an dem die erste Fassung gescheitert ist.
+assert not _ruft_regel('# beurteilt in (pruefwerk.doppelte_beschriftung)')
+assert not _ruft_regel('   # ruft pruefwerk.doppelte_beschriftung(x) auf')
+assert not _ruft_regel('fehler += []  # statt doppelte_beschriftung')
+assert not _ruft_regel('x = doppelte_beschriftung')
+assert not _ruft_regel('')
+# Ein Kommentar hinter dem Aufruf macht ihn nicht unsichtbar.
+assert _ruft_regel('f += pruefwerk.doppelte_beschriftung(l)  # je Stufe')
+
+mit_regler, ruft = set(), set()
+for k in sorted(hier.glob('*/*-koerper.html')):
+    if '<select' not in k.read_text(encoding='utf-8', errors='replace'):
+        continue
+    bauten = sorted(k.parent.glob('bau-*.py'))
+    if not bauten:
+        continue
+    name = bauten[0].relative_to(hier).as_posix()
+    mit_regler.add(name)
+    if _ruft_regel(bauten[0].read_text(encoding='utf-8')):
+        ruft.add(name)
+
+reglerfehler = []
+if mit_regler != REGLER_OFFEN | REGLER_DURCH:
+    reglerfehler.append(
+        'die Liste der Bauten mit Regler stimmt nicht: '
+        + ', '.join(sorted(mit_regler ^ (REGLER_OFFEN | REGLER_DURCH))))
+if ruft - REGLER_DURCH:
+    reglerfehler.append('ruft die Regel, steht aber unter OFFEN: '
+                        + ', '.join(sorted(ruft - REGLER_DURCH))
+                        + ' — nach REGLER_DURCH verschieben')
+if REGLER_DURCH - ruft:
+    reglerfehler.append('steht unter DURCH, ruft die Regel aber nicht: '
+                        + ', '.join(sorted(REGLER_DURCH - ruft)))
+if reglerfehler:
+    for r in reglerfehler:
+        print('  REGLER: ' + r)
+    fehlgeschlagen.append('die Reglerprüfung wird nicht überall gerufen')
+else:
+    print(f'  {len(ruft)} von {len(mit_regler)} gebauten Seiten mit Regler'
+          ' prüfen, dass keine zwei Rungen gleich heißen')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')

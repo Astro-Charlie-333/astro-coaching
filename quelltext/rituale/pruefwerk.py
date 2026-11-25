@@ -823,3 +823,67 @@ assert roh_hinter_artikel('die Bahn des Marsmondes', 'Mars',
                           'des Mars') == []
 assert roh_hinter_artikel('', 'Mond', 'des Mondes') == []
 assert roh_hinter_artikel('der Tag des Mondes', '', 'des Mondes') == []
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Zwei Optionen eines Reglers heißen nicht gleich
+#
+#  Gefunden am 2026-11-25 auf `ereignisse-lesen.html`. Der Regler
+#  für die Lautstärke bot auf Stufe 0 sechs Rungen an, und zwei
+#  davon lasen „Volltreffer":
+#
+#      ORBWERTE = [0.2, 0.5, 1.0, 2.0, 3.0, 4.5]
+#      laut(0,2) → Volltreffer   laut(0,5) → Volltreffer
+#
+#  Der **Wert** einer Option ist der Orbis, die **Beschriftung**
+#  hängt an der Lautstärkeklasse — und zwei Werte fallen in
+#  dieselbe Klasse. Das ist genau die Fehlerklasse aus REGELN.md
+#  6f: Die Sperre saß am Wert, der Text hängt am Schlüssel
+#  daneben. Wer die zweite Rung wählt, bedient einen Regler, der
+#  nichts sagt; und der Superlativ „Volltreffer" gilt zweimal,
+#  also keinmal.
+#
+#  Geprüft wird am gezeichneten Ergebnis, nicht an den Daten: ob
+#  zwei Werte in einer Klasse landen, entscheidet die Rechnung,
+#  und sichtbar wird es erst in der Liste.
+def doppelte_beschriftung(regler):
+    """`regler` ist eine Liste von (Name, [Beschriftungen]) — eine
+    Meldung je Regler, in dem eine Beschriftung zweimal steht."""
+    raus = []
+    for name, texte in regler:
+        sauber = [t.strip() for t in texte]
+        doppelt = sorted({t for t in sauber
+                          if t and sauber.count(t) > 1})
+        if doppelt:
+            raus.append(
+                f'der Regler „{name}" bietet {", ".join(doppelt)} '
+                'zweimal an — zwei Rungen mit demselben Namen sind '
+                'eine Wahl ohne Unterschied (REGELN.md 6f)')
+    return raus
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Der Fall vom 2026-11-25.
+assert len(doppelte_beschriftung(
+    [('egor', ['Volltreffer', 'Volltreffer', 'sehr eng', 'eng'])])) == 1
+assert 'Volltreffer' in doppelte_beschriftung(
+    [('egor', ['Volltreffer', 'Volltreffer'])])[0]
+# Was durchgehen muss.
+assert doppelte_beschriftung([('egor', ['Volltreffer', 'sehr eng'])]) == []
+assert doppelte_beschriftung([('egpl', [])]) == []
+assert doppelte_beschriftung([]) == []
+# Führende Leerzeichen machen aus zwei gleichen Namen keine zwei.
+assert len(doppelte_beschriftung(
+    [('x', ['Volltreffer', ' Volltreffer '])])) == 1
+# Eine leere Beschriftung ist keine Dopplung, sondern ein
+# Platzhalter („bitte wählen") — davon gibt es je Regler einen.
+assert doppelte_beschriftung([('x', ['', '', 'eng'])]) == []
+# Jeder Regler wird einzeln gezählt: derselbe Name in zwei
+# verschiedenen Reglern ist kein Fehler.
+assert doppelte_beschriftung([('a', ['eng']), ('b', ['eng'])]) == []
+# Und mehr als eine Dopplung in einem Regler wird in einer
+# Meldung genannt, alphabetisch.
+assert doppelte_beschriftung(
+    [('x', ['a', 'a', 'b', 'b'])]) == [
+    'der Regler „x" bietet a, b zweimal an — zwei Rungen mit '
+    'demselben Namen sind eine Wahl ohne Unterschied (REGELN.md 6f)']

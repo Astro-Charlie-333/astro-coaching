@@ -514,6 +514,276 @@ Beispiel: Geschwister (3) &minus; 1 + Partnerschaft (7) = <b>9. Haus</b></p>
 </div>
 
 <script>
+/* ── Eine Lücke, ein Wert ─────────────────────────────────────
+   Die eine Stelle, an der eine Vorlage gefüllt wird.
+
+   Vorher stand diese Funktion in siebzehn Anzeigen einzeln, in
+   drei Fassungen, die sich bei genau einem Fall unterschieden:
+   Was passiert, wenn der Wert zu einer Lücke fehlt?
+
+     dreizehn Anzeigen  machten daraus ''      — das Wort verschwand
+     drei Anzeigen      machten daraus 'undefined' — es stand auf der Seite
+     dossier-app.js     brach ab               — richtig, seit Aufgabe 60
+
+   Die erste Art hat am 2026-11-21 wirklich zugeschlagen: Der
+   Winkelname der Raum-Rechnung heißt „Sextil", nachgeschlagen wurde
+   unter „sextil", und aus „Saturn Sextil Sonne" wurde lautlos
+   „Saturn  Sonne". Eine Tafel, die den Schlüssel nicht kennt,
+   liefert `undefined`; wer das zu '' macht, verliert ein Wort, ohne
+   dass etwas rot wird.
+
+   Das ist dieselbe Klasse wie REGELN.md 6f, und sie war in sechzehn
+   Anzeigen nur noch nicht aufgefallen. Deshalb steht die Funktion
+   jetzt hier und nicht dort: Eine Regel in siebzehn Dateien ist
+   nach der ersten Verschärfung in sechzehn davon veraltet
+   (REGELN.md 5).
+
+   Verriegelt wird das von `pruefwerk.pruefe_fueller`: Eine Anzeige,
+   die wieder selbst eine Lücke aus einem Schlüssel zusammensetzt,
+   bringt ihren Bau zum Scheitern.
+
+   Hier steht kein Satz und keine Rechnung — nur die Einsetzung.
+   Deshalb zieht diese Datei beim Umzug in eine andere Umgebung
+   unverändert mit (PRODUKT.md Abschnitt 7).
+
+   Zwei Fälle, die auseinandergehalten werden müssen:
+
+     fehlt      `undefined` oder `null` — ein Wert, den es nicht
+                gibt. Das ist ein Fehler und bricht ab.
+     leer       '' — eine Lücke, die absichtlich nichts einsetzt
+                (ein Name, den niemand angegeben hat). Das geht
+                durch, und 0 ebenso: `String(0)` ist „0".
+
+   Eine Vorlage, die es nicht gibt, wird zu '' und bricht nicht ab.
+   Das ist eine andere Fehlerklasse — ein fehlender Textschlüssel —,
+   und die fangen in jedem Bau die Textprobe („die Texte sind
+   vollständig") und `pruefwerk.pruefe_vorlagenluecken` ab, bevor die
+   Seite überhaupt entsteht. */
+function AC_FUELL(form, werte){
+  var s = String(form === undefined || form === null ? '' : form), k;
+  for(k in werte) if(Object.prototype.hasOwnProperty.call(werte, k)){
+    if(werte[k] === undefined || werte[k] === null)
+      throw new Error('AC_FUELL: Lücke ohne Wert: {' + k + '}');
+    s = s.split('{' + k + '}').join(String(werte[k]));
+  }
+  return s;
+}
+
+/* ── Die Worte für das, was dein Bild trifft ──────────────────
+   Mandy am 29.10.: „die Textblöcke sind noch zu bla in teile. Also
+   deine Sprachwahl ist noch immer nicht passend genug."
+
+   Der Grund dafür ist derselbe wie bei dem Satz über die Umrisse
+   (REGELN.md Abschnitt 6d): Ein Satz aus zwei Bausteinen wird nur
+   dann konkret, wenn **beide** Bausteine etwas bezeichnen, das man
+   sich vorstellen kann — und wenn am Ende eine Folge steht.
+
+   Hier sind es drei Bausteine:
+
+     ZIEL     — was dieser Punkt in deinem Leben ist. Kein
+                Planetenname, sondern das, worum es geht.
+     WANDERER — was der laufende Planet damit macht. Ein Verb.
+     FOLGE    — was dabei herauskommt. Unterschiedlich für harte
+                und weiche Winkel.
+
+   Daraus: „Saturn prüft gerade, wofür du gehalten werden willst.
+   Was davon nur Anspruch war, hält diese Zeit nicht."
+
+   Zehn Wanderer mal zwölf Ziele ergeben 120 Paare; einzeln
+   geschrieben wären sie in zwei Jahren noch nicht fertig und jedes
+   dritte wäre schlecht. Zusammengesetzt sind es 42 Texte, und jeder
+   einzelne davon kann gut sein. */
+
+/* ── Beugung ──────────────────────────────────────────────────
+   Bis zum 2.11. setzten die Überschriften immer dasselbe „dein"
+   oder „deine" ein: „Jupiter auf dein Mond", „Mars quer zu dein
+   Mars", „Saturn gegenüber dein Auftreten". Elf Köpfe auf der
+   Startseite, keiner richtig — und es sind genau die Karten, von
+   denen jemand einen Screenshot macht (PRODUKT.md 2, Punkt 3).
+
+   Der Grund war nicht ein vergessenes Wort, sondern eine fehlende
+   Angabe: Die Vorlage kannte weder den Fall, den die Formel
+   verlangt, noch das Geschlecht des Punktes dahinter. Beides steht
+   jetzt in den Daten — das Geschlecht am Punkt, der Fall an der
+   Formel — und die Anzeige setzt nur noch zusammen. */
+
+/* „dein" in den vier Fällen, die vorkommen.
+
+   Bis zum 2026-11-19 standen hier drei, und darüber der Satz, mehr
+   brauche es nicht: ein Genitiv stehe in keiner dieser Formeln. Für
+   die Formeln der Startseite stimmte das. Die Geistführung schreibt
+   aber „der Herrscher deines 12. Hauses" (Aufgabe 59), und damit
+   stand die vierte Form nicht in dieser Tabelle, sondern von Hand in
+   einer Anzeige — genau die Bauart, die diese Tabelle abschaffen
+   sollte.
+
+   Die Lehre daraus ist dieselbe wie in REGELN.md 6f: Eine Tabelle
+   deckt den Fall, den sie kennt. Welche Fälle es gibt, entscheidet
+   nicht die erste Seite, die sie benutzt.
+
+   Ein Hauptwort, das sich im Genitiv selbst ändert („Hauses",
+   „Aszendenten"), trägt diese Form in seinem eigenen `beugt`. */
+var B_DEIN = {
+ m:{nom:'dein',  akk:'deinen', dat:'deinem', gen:'deines'},
+ w:{nom:'deine', akk:'deine',  dat:'deiner', gen:'deiner'},
+ s:{nom:'dein',  akk:'dein',   dat:'deinem', gen:'deines'}};
+
+/* Was ein Punkt deines Geburtsbilds im Leben ist. Diese Hälfte
+   entscheidet, ob der Satz nach dir klingt oder nach Lehrbuch.
+
+   `g`     — das grammatische Geschlecht: m, w oder s.
+   `wort`  — das Hauptwort ohne „dein", damit die Beugung davor
+             passen kann.
+   `beugt` — nur dort, wo sich das Hauptwort selbst ändert: „dem
+             Aszendenten", „der öffentlichen Seite". Deutsche
+             Substantive stehen im Singular sonst in allen drei
+             Fällen gleich, deshalb ist das die Ausnahme.
+   `laie`  — derselbe Punkt in Alltagssprache, mit eigenem
+             Geschlecht: „dein Aszendent" ist männlich, „dein
+             Auftreten" sächlich. */
+var B_ZIEL = {
+ Sonne:  {g:'w', wort:'Sonne',   was:'wofür du gehalten werden willst'},
+ Mond:   {g:'m', wort:'Mond',    was:'was du brauchst, damit es sich sicher anfühlt'},
+ Merkur: {g:'m', wort:'Merkur',  was:'wie du denkst und was du mit anderen ausmachst'},
+ Venus:  {g:'w', wort:'Venus',   was:'was dir nah ist und was du dir wert bist'},
+ Mars:   {g:'m', wort:'Mars',    was:'womit du anfängst und wofür du kämpfst'},
+ Jupiter:{g:'m', wort:'Jupiter', was:'wo du dir etwas zutraust'},
+ Saturn: {g:'m', wort:'Saturn',  was:'wo du dich zusammenreißt und streng mit dir bist'},
+ Uranus: {g:'m', wort:'Uranus',  was:'wo du nicht mitmachst, wie man es macht'},
+ Neptun: {g:'m', wort:'Neptun',  was:'wofür du dich begeisterst, ohne es prüfen zu wollen'},
+ Pluto:  {g:'m', wort:'Pluto',   was:'wo es bei dir um alles oder nichts geht'},
+ ASC:    {g:'m', wort:'Aszendent',
+          beugt:{akk:'Aszendenten', dat:'Aszendenten'},
+          laie:{g:'s', wort:'Auftreten'},
+          was:'wie du ankommst, bevor du etwas gesagt hast'},
+ MC:     {g:'s', wort:'MC',
+          laie:{g:'w', wort:'öffentliche Seite',
+                beugt:{dat:'öffentlichen Seite'}},
+          was:'wohin du öffentlich gehst und wofür man dich kennt'}};
+
+/* Den Punkt in der Sprache holen, die zur Stufe gehört. Gibt es
+   kein Alltagswort, steht dort der Name — „dein Mond" ist auf
+   Stufe 0 kein Fachwort (REGELN.md 2a). */
+function B_PUNKT(k, laie){
+  var z = B_ZIEL[k];
+  if(!z) return {g:'m', wort:String(k)};
+  if(laie && z.laie) return z.laie;
+  return z;
+}
+
+/* Setzt „dein" und das Hauptwort im verlangten Fall zusammen.
+   Die einzige Stelle, an der das passiert. */
+function B_BEUGE(p, fall){
+  var d = (B_DEIN[p.g] || B_DEIN.m)[fall] || B_DEIN.m.nom;
+  var w = (p.beugt && p.beugt[fall]) || p.wort;
+  return d + ' ' + w;
+}
+
+/* Die Winkel in zwei Registern. „Konjunktion" verschlüsselt einen
+   Rechenweg und bleibt auf Stufe 0 draußen (REGELN.md 2a); „auf"
+   sagt dasselbe und braucht keine Vorbildung.
+
+   Jede Formel trägt den Fall, den sie verlangt: „auf" steht hier
+   auf die Frage wohin und zieht den Akkusativ, „zu", „mit", „von"
+   und „gegenüber" ziehen den Dativ. */
+var B_WINKELWORT = {
+ 'Konjunktion':{wort:'auf',               fall:'akk'},
+ 'Opposition' :{wort:'gegenüber',         fall:'dat'},
+ 'Quadrat'    :{wort:'quer zu',           fall:'dat'},
+ 'Trigon'     :{wort:'im Einklang mit',   fall:'dat'},
+ 'Sextil'     :{wort:'in Reichweite von', fall:'dat'}};
+var B_WINKELNOT = {wort:'bei', fall:'dat'};
+
+/* Ab Stufe 2 steht der Fachname. „Jupiter Konjunktion dein Mond"
+   waren zwei Nominative nebeneinander und sagten nicht, was wozu
+   steht; „in Konjunktion zu deinem Mond" sagt es. */
+var B_WINKELTECH = {vor:'in', nach:'zu', fall:'dat'};
+
+/* Was ein laufender Planet mit dem macht, was er berührt.
+   `tut` ist ein Verb mit offener Stelle dahinter, `hart` und
+   `weich` sind die Folgen — die eine für Konjunktion, Opposition
+   und Quadrat, die andere für Trigon und Sextil. */
+var B_WAND = {
+ Mond:{tut:'streift gerade',
+   hart:'Für ein paar Stunden liegt das näher an der Oberfläche als sonst. Es geht vorbei, bevor du etwas daraus machen musst.',
+   weich:'Ein paar Stunden, in denen das leichter von der Hand geht. Nichts, worauf man planen kann — aber brauchbar, wenn es gerade ansteht.'},
+ Merkur:{tut:'bringt gerade zur Sprache',
+   hart:'Es wird darüber geredet, und zwar nicht unbedingt so, wie du es gern hättest. Ein Gespräch, eine Nachricht, ein Satz, der hängen bleibt.',
+   weich:'Es lässt sich in diesen Tagen leichter aussprechen als sonst. Wenn etwas gesagt werden muss, ist jetzt der günstigere Moment.'},
+ Venus:{tut:'macht gerade weicher',
+   hart:'Du willst, dass es angenehm bleibt, und gibst dabei schneller nach, als du es später gutheißt.',
+   weich:'Es fällt leichter, sich darüber zu einigen. Gut für ein Gespräch, das sonst zäh wird.'},
+ Sonne:{tut:'beleuchtet gerade',
+   hart:'Ein paar Tage lang steht das im Mittelpunkt, ob du willst oder nicht. Danach ist es wieder eines unter vielen.',
+   weich:'Ein paar Tage, in denen das sichtbar wird, ohne dass du drängen musst.'},
+ Mars:{tut:'bringt gerade in Bewegung',
+   hart:'Die Sache wird schnell heiß. Entweder du packst sie an, oder sie kommt als Gereiztheit bei jemandem heraus, der nichts dafür kann.',
+   weich:'Du kommst hier gerade leicht in Bewegung. Was du jetzt anfängst, fängt wirklich an.'},
+ Jupiter:{tut:'macht gerade größer',
+   hart:'Es wird mehr, als hineinpasst. Das fühlt sich gut an und wird erst später zum Problem — meist, wenn der Kalender es einholt.',
+   weich:'Hier geht in diesen Monaten mehr als sonst. Türen gehen auf, und es kostet weniger Überredung als üblich.'},
+ Saturn:{tut:'prüft gerade',
+   hart:'Was daran nur Anspruch war, hält diese Zeit nicht. Was echt ist, steht hinterher fester als vorher — aber es dauert, und es fühlt sich zwischendurch nach Rückschritt an.',
+   weich:'Hier lässt sich gerade etwas festmachen, das sonst nicht hält. Keine aufregende Zeit, aber eine, nach der etwas steht.'},
+ Uranus:{tut:'reißt gerade auf',
+   hart:'Das verträgt gerade keine Fortsetzung wie bisher. Entweder du änderst es, oder es wird von außen geändert — das ist der unangenehmere Weg.',
+   weich:'Hier ist gerade Luft für etwas, das du sonst nicht gewagt hättest. Der Widerstand dagegen ist kleiner als üblich.'},
+ Neptun:{tut:'macht gerade unscharf',
+   hart:'Die Umrisse verschwimmen: Du siehst hier gerade schlechter, was wirklich ist und was du dir dazudenkst. Das ist der Moment, in dem man jemanden fragt, der nicht beteiligt ist.',
+   weich:'Hier darf gerade etwas offen bleiben, ohne dass es schadet. Gut für alles, was nicht entschieden werden muss.'},
+ Pluto:{tut:'baut gerade um',
+   hart:'Das geht nicht in Schritten, die du dir aussuchst, und es dauert Jahre statt Wochen. Was dabei verschwindet, war meistens schon vorher geborgt.',
+   weich:'Hier bekommst du in diesen Jahren mehr Gewicht, ohne dass du dafür lauter werden musst.'}};
+
+/* Die drei Tempi. Daraus entsteht die Angabe, wie lange das gilt —
+   ohne sie ist „Saturn auf deiner Sonne" ein Satz ohne Zeitraum. */
+var B_TEMPO = {
+ schnell:{name:'Stunden', satz:'Das ist morgen vorbei.'},
+ mittel: {name:'Tage',    satz:'Das zieht ein paar Tage.'},
+ langsam:{name:'Monate',  satz:'Das ist keine Stimmung, das ist ein Abschnitt.'}};
+
+/* Mehrfachdurchgänge. Ein rückläufiger Wanderer kreuzt dieselbe
+   Stelle bis zu dreimal — und die drei Termine fühlen sich
+   unterschiedlich an. Das ist eine der Sachen, die fast keine App
+   zeigt, obwohl sie leicht zu rechnen ist. */
+var B_DURCHGANG = {
+ 1: {von3:'Das erste von drei Malen. Jetzt zeigt sich, worum es geht; entschieden wird es noch nicht.',
+     von2:'Das erste von zwei Malen. Jetzt kommt das Thema auf den Tisch.'},
+ 2: {von3:'Das zweite von drei Malen, rückwärts. Jetzt geht es noch einmal von innen durch — unangenehmer als beim ersten Mal und meist der Teil, an dem sich etwas dreht.',
+     von2:'Das zweite und letzte Mal. Jetzt steht es fest.'},
+ 3: {von3:'Das dritte und letzte Mal. Was beim zweiten Durchgang klar geworden ist, wird jetzt gemacht.'}};
+
+var B_KOPF = {
+ titel:'Was dein Bild gerade trifft',
+ sub:'Welche Punkte bei dir berührt werden, von wem, und wie nah das dran ist.',
+ nix:'Gerade steht nichts innerhalb der Orbis-Grenzen auf deinem Bild. Das ist selten und hält nie lange.',
+ nahVor:'Abstand',
+ exaktVor:'Genau am',
+ laeuftVor:'Gilt für',
+ rueck:'läuft rückwärts',
+ mehrVor:'Alle Berührungen anzeigen',
+ wenigerVor:'Weniger anzeigen',
+ schnellTitel:'Dazu heute, nur für Stunden',
+ schnellSub:'Mond, Merkur, Venus und Sonne ziehen schnell vorbei. Sie machen den Tag, nicht den Abschnitt.',
+ tech:'{wanderer} {grad} {zeichen} {aspekt} {ziel} {gradZ} {zeichenZ}, Orbis {ab}°'};
+
+var B_STRAHL = {
+ titel:'Die nächsten zwölf Monate',
+ sub:'Die langsamen Wanderer auf deinem Bild, mit dem Tag, an dem der Winkel genau aufgeht. Tipp eine Zeile an, dann steht da, was sie heißt.',
+ nix:'In den nächsten zwölf Monaten geht kein Winkel der langsamen Wanderer auf deinem Bild genau auf. Das kommt vor — dann sind die Jahre davor und danach die dichteren.',
+ heute:'heute',
+ jetztMarke:'Hier stehst du',
+ mehr:'Noch {n} weitere anzeigen',
+ weniger:'Weniger anzeigen',
+ legende:'Gerechnet ist der Tag, an dem der Winkel genau aufgeht. Was er bedeutet, ist Deutung — und die prüfst du an dir.',
+ wieder:'Dieselbe Begegnung noch einmal — was sie heißt, steht beim ersten Mal.',
+ steht:'Läuft schon. Steht oben unter „Was dein Bild gerade trifft".',
+ inTagen:'in {n} T.',
+ inMonaten:'in {n} Mon.',
+ tech:'{wanderer} {aspekt} {ziel} exakt am {datum}{rueck}{durchgang}',
+ techRueck:', rückläufig',
+ techDurchgang:', Durchgang {n} von {alle}'};
+
 /* Astro-Charlie · Ereignisse lesen — die Texte.
    Hier stehen nur Sätze. Nichts rechnet, nichts zeigt an.
 
@@ -959,8 +1229,84 @@ var QUIZ = [
     + 'noch einmal ansehen. Was in dieser Zeit neu aufgesetzt wird, kommt oft noch einmal auf den Tisch.' }
 ];
 
+/* ── Was die Anzeige beschriftet ───────────────────────── */
+/* Bis zum 2026-11-25 standen diese achtundzwanzig Sätze und
+   Beschriftungen in ereignis-app.js, und die zehn Kräfte dort noch
+   ein zweites Mal — eine Tabelle, zweimal von Hand geschrieben, in
+   zwei Dateien. Gedruckt hat die Seite beide Male dasselbe; gemerkt
+   hätte es niemand, sobald eine der beiden sich ändert.
+
+   Was in der Anzeige steht, zieht beim Umzug in eine andere
+   Umgebung nicht mit (PRODUKT.md Abschnitt 7). Deshalb steht es
+   hier, und bau-ereignis.py lässt es nicht zurück. */
+var EG_T = {
+
+ /* Der Stapel: ein Hinweis, zwei, drei */
+ stapel:[
+  { zahl:'1 Baustein',  name:'Rauschen',
+    text:'Zu wenig. Jeder Tag hat davon mehrere. Wer hier schon deutet, deutet ins Blaue.' },
+  { zahl:'2 Bausteine', name:'Verdacht',
+    text:'Eine Richtung zeichnet sich ab. Man denkt darüber nach, sagt es aber noch nicht.' },
+  { zahl:'3 Bausteine', name:'Thema',
+    text:'Jetzt trägt es. Und selbst jetzt beschreibt man ein Zeitfenster, keine Tatsache.' }],
+
+ /* Die Personenkarte und die Tabelle darunter */
+ pWo:'Wo',
+ pKraft:'Welche Kraft',
+ pAspekte:'Worauf du schaust',
+ pStreit:'Wo die Überlieferung streitet:',
+ tabVerbindung:'Verbindung',
+ tabHaus:'Haus',
+ tabBereich:'Lebensbereich',
+ tabKraft:'Kraft',
+
+ /* Rezepte und durchgerechnete Fälle */
+ rEhrlich:'Ehrlich dazu:',
+ fDeutung:'So sagt man es:',
+
+ /* Das Quiz */
+ qNr:'Frage {i} von {alle}',
+ qJa:'Stimmt.',
+ qNein:'Nicht ganz.',
+ qOffen:'{r} von {n} richtig — noch {offen} offen.',
+ qGanz:'{r} von {alle} richtig.',
+ qAlles:'Das sitzt.',
+ qViel:'Die Richtung stimmt. Die Erklärungen oben sind die Nacharbeit.',
+ qWenig:'Lies die Erklärungen in Ruhe — die Bausteinkarten weiter oben helfen dabei.',
+
+ /* Die Beschriftungen des Mischers */
+ wahlHaus:'{n}. Haus — {was}',
+ wahlOrbis:'{grad}° — {laut}',
+
+ /* Die zehn Kräfte in Alltagssprache. Ohne „dein" — das setzt
+    B_BEUGE aus kern/bahn-daten.js davor, an der einen Stelle, die
+    das Geschlecht kennt. „deine Zuneigung" und „dein Antrieb"
+    unterscheiden sich nur darin, und von Hand geschrieben steht die
+    falsche Form irgendwann dort, wo jemand sie sieht. */
+ punkt:{
+  Sonne:  {g:'m', wort:'Wesenskern'},
+  Mond:   {g:'s', wort:'Gefühl'},
+  Merkur: {g:'s', wort:'Denken'},
+  Venus:  {g:'w', wort:'Zuneigung'},
+  Mars:   {g:'m', wort:'Antrieb'},
+  Jupiter:{g:'s', wort:'Vertrauen'},
+  Saturn: {g:'w', wort:'Struktur'},
+  Uranus: {g:'m', wort:'Freiheitsdrang'},
+  Neptun: {g:'w', wort:'Sehnsucht'},
+  Pluto:  {g:'w', wort:'Tiefe'}},
+
+ /* Die Kurzformen für die drei übrigen Regler, in der Reihenfolge
+    der Rechnung: zwölf Zeichen, fünf Winkel, zwölf Häuser. */
+ stilZeichen:['direkt','langsam','beweglich','vorsichtig','sichtbar','genau',
+              'abwägend','tief','weit','ernst','eigensinnig','durchlässig'],
+ stilWinkel:['verschmolzen','angeboten','reibend','fließend','gegenübergestellt'],
+ kurzHaus:['Auftreten','Geld und Selbstwert','Nachrichten','Zuhause','Romantik','Alltag',
+           'Partnerschaft','Tiefe','Ferne','Berufung','Freundschaften','Verborgenes']
+};
+
 window.AC_EREIG = { BAUSTEINE:BAUSTEINE, REZEPTE:REZEPTE,
-                    MENSCHEN:MENSCHEN, FAELLE:FAELLE, QUIZ:QUIZ };
+                    MENSCHEN:MENSCHEN, FAELLE:FAELLE, QUIZ:QUIZ,
+                    T:EG_T };
 })();
 
 /* Astro-Charlie · Ereignisse lesen — die Mechanik.
@@ -1077,10 +1423,16 @@ window.AC_EREIGR = {
 
 /* Astro-Charlie · Ereignisse lesen — die Anzeige.
    Rechnet nichts und formuliert nichts. Setzt nur zusammen,
-   was Daten und Rechner liefern, und zieht bei Stufenwechsel nach. */
+   was Daten und Rechner liefern, und zieht bei Stufenwechsel nach.
+
+   Seit dem 2026-11-25 steht hier kein Satz und keine Beschriftung
+   mehr: alles davon in ereignis-daten.js als EG_T. Eingesetzt wird
+   mit AC_FUELL aus kern/fuellen.js, „dein" bildet B_BEUGE aus
+   kern/bahn-daten.js. bau-ereignis.py bricht ab, sobald eine der
+   drei Formen zurückkommt (Aufgabe 63, aus 34 und 38). */
 (function(){
 'use strict';
-var D = window.AC_EREIG, R = window.AC_EREIGR;
+var D = window.AC_EREIG, R = window.AC_EREIGR, T = D.T;
 function el(id){ return document.getElementById(id); }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
   return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
@@ -1092,18 +1444,13 @@ function stufe(){
 }
 
 /* ── 1 · Der Stapel: ein Hinweis, zwei, drei ───────────── */
-var STAPEL = [
- ['1 Baustein','Rauschen','Zu wenig. Jeder Tag hat davon mehrere. Wer hier schon deutet, deutet ins Blaue.'],
- ['2 Bausteine','Verdacht','Eine Richtung zeichnet sich ab. Man denkt darüber nach, sagt es aber noch nicht.'],
- ['3 Bausteine','Thema','Jetzt trägt es. Und selbst jetzt beschreibt man ein Zeitfenster, keine Tatsache.']
-];
 function stapelBauen(){
   var z = el('egstapel'); if(!z) return;
-  z.innerHTML = STAPEL.map(function(s, i){
+  z.innerHTML = T.stapel.map(function(s, i){
     return '<div class="eg-st eg-st-' + i + '">'
-         + '<div class="eg-st-zahl">' + esc(s[0]) + '</div>'
-         + '<div class="eg-st-name">' + esc(s[1]) + '</div>'
-         + '<div class="eg-st-text">' + esc(s[2]) + '</div></div>';
+         + '<div class="eg-st-zahl">' + esc(s.zahl) + '</div>'
+         + '<div class="eg-st-name">' + esc(s.name) + '</div>'
+         + '<div class="eg-st-text">' + esc(s.text) + '</div></div>';
   }).join('');
 }
 
@@ -1137,46 +1484,64 @@ var wahl = { planet:R.START.planet, zeichen:R.START.zeichen, haus:R.START.haus,
              aspekt:R.START.aspekt, orbis:R.START.orbis };
 var ORBWERTE = R.ORBWERTE;
 
+/* Auf Stufe 0 trägt eine Rung des Lautstärkereglers nur den Namen
+   der Klasse, und zwei Orbiswerte können in dieselbe Klasse fallen:
+   0,2° und 0,5° sind beide „Volltreffer". Dann stand dort zweimal
+   dasselbe Wort, und eine der beiden Rungen war eine Wahl ohne
+   Unterschied (gefunden am 2026-11-25). Also eine Rung je Klasse.
+   Sichtbar ändert das sonst nichts — auf Stufe 0 steht kein Grad
+   auf der Seite, Satz und Zerlegung lesen allein die Lautstärke. */
+function orbRungen(fach){
+  if(fach) return ORBWERTE;
+  var gesehen = {}, raus = [];
+  ORBWERTE.forEach(function(o){
+    var k = R.laut(o).n;
+    if(gesehen[k]) return;
+    gesehen[k] = true; raus.push(o);
+  });
+  return raus;
+}
+/* Wer von Stufe 1 herunterschaltet, hat vielleicht die Rung gewählt,
+   die es auf Stufe 0 nicht gibt. Dann rückt die Wahl auf die Rung
+   derselben Lautstärke — dieselbe Klasse, also derselbe Text. */
+function orbAngleichen(rungen){
+  if(rungen.indexOf(wahl.orbis) >= 0) return;
+  var k = R.laut(wahl.orbis).n;
+  for(var i = 0; i < rungen.length; i++)
+    if(R.laut(rungen[i]).n === k){ wahl.orbis = rungen[i]; return; }
+}
+
 function reglerBauen(){
   var pl = el('egpl'), zc = el('egzc'), hs = el('eghs'), as = el('egas'), or = el('egor');
   if(!pl) return;
   var n = stufe(), fach = n >= 1;
-  pl.innerHTML = R.PLANETEN.map(function(p, i){
-    var t = fach ? p : grossErst(mundart(p));
+  pl.innerHTML = R.PLANETEN.map(function(p){
+    var t = fach ? p : grossErst(kraftWort(p));
     return '<option value="' + esc(p) + '"' + (p===wahl.planet?' selected':'') + '>' + esc(t) + '</option>';
   }).join('');
   zc.innerHTML = R.ZEICHEN.map(function(z, i){
     return '<option value="' + i + '"' + (i===wahl.zeichen?' selected':'') + '>'
-         + esc(fach ? z : grossErst(zStil(i))) + '</option>'; }).join('');
+         + esc(fach ? z : grossErst(T.stilZeichen[i])) + '</option>'; }).join('');
   hs.innerHTML = R.H0.map(function(h, i){
     return '<option value="' + i + '"' + (i===wahl.haus?' selected':'') + '>'
-         + esc(fach ? ((i+1) + '. Haus — ' + kurzHaus(i)) : grossErst(h)) + '</option>'; }).join('');
+         + esc(fach ? AC_FUELL(T.wahlHaus, {n:(i+1), was:T.kurzHaus[i]}) : grossErst(h))
+         + '</option>'; }).join('');
   as.innerHTML = R.ASPEKTE.map(function(a, i){
     return '<option value="' + i + '"' + (i===wahl.aspekt?' selected':'') + '>'
-         + esc(fach ? a : aStil(i)) + '</option>'; }).join('');
-  or.innerHTML = ORBWERTE.map(function(o){
+         + esc(fach ? a : T.stilWinkel[i]) + '</option>'; }).join('');
+  var rungen = orbRungen(fach);
+  orbAngleichen(rungen);
+  or.innerHTML = rungen.map(function(o){
     var L = R.laut(o);
-    var t = fach ? (R.komma(o,1) + '° — ' + L.n) : L.n;
+    var t = fach ? AC_FUELL(T.wahlOrbis, {grad:R.komma(o,1), laut:L.n}) : L.n;
     return '<option value="' + o + '"' + (o===wahl.orbis?' selected':'') + '>' + esc(t) + '</option>';
   }).join('');
 }
-function mundart(p){
-  var m = { Sonne:'dein Wesenskern', Mond:'dein Gefühl', Merkur:'dein Denken',
-    Venus:'deine Zuneigung', Mars:'dein Antrieb', Jupiter:'dein Vertrauen',
-    Saturn:'deine Struktur', Uranus:'dein Freiheitsdrang', Neptun:'deine Sehnsucht',
-    Pluto:'deine Tiefe' };
-  return m[p] || p;
-}
-function zStil(i){
-  return ['direkt','langsam','beweglich','vorsichtig','sichtbar','genau',
-          'abwägend','tief','weit','ernst','eigensinnig','durchlässig'][i];
-}
-function aStil(i){
-  return ['verschmolzen','angeboten','reibend','fließend','gegenübergestellt'][i];
-}
-function kurzHaus(i){
-  return ['Auftreten','Geld und Selbstwert','Nachrichten','Zuhause','Romantik','Alltag',
-          'Partnerschaft','Tiefe','Ferne','Berufung','Freundschaften','Verborgenes'][i];
+/* „dein" steht an einer Stelle: B_BEUGE kennt das Geschlecht, das
+   in EG_T.punkt am Wort hängt (kern/bahn-daten.js). */
+function kraftWort(p){
+  var k = T.punkt[p];
+  return k ? B_BEUGE(k, 'nom') : p;
 }
 
 function mischerZeigen(){
@@ -1197,8 +1562,8 @@ function mischerBinden(){
       mischerZeigen();
     });
   });
-  var w = el('egwuerfel');
-  if(w) w.addEventListener('click', function(){
+  var wf = el('egwuerfel');
+  if(wf) wf.addEventListener('click', function(){
     wahl = R.zufall(); reglerBauen(); mischerZeigen();
   });
 }
@@ -1214,7 +1579,7 @@ function rezepteBauen(){
       + '<div class="eg-formel">' + formel + '<span class="eg-f-g">=</span>'
       + '<span class="eg-f-e">' + esc(r.ergebnis) + '</span></div>'
       + '<ul>' + r.zutaten.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>'
-      + '<p class="eg-ehrlich-klein"><b>Ehrlich dazu:</b> ' + esc(r.ehrlich) + '</p>'
+      + '<p class="eg-ehrlich-klein"><b>' + esc(T.rEhrlich) + '</b> ' + esc(r.ehrlich) + '</p>'
       + '</div>';
   }).join('');
 }
@@ -1222,17 +1587,17 @@ function rezepteBauen(){
 /* ── 5 · Menschen im Chart ─────────────────────────────── */
 var mWahl = 'mutter';
 function menschenBauen(){
-  var w = el('egmwahl'); if(!w) return;
-  w.innerHTML = D.MENSCHEN.map(function(m){
+  var z = el('egmwahl'); if(!z) return;
+  z.innerHTML = D.MENSCHEN.map(function(m){
     return '<button type="button" class="eg-mb" data-m="' + esc(m.k) + '" '
          + 'aria-pressed="' + (m.k===mWahl) + '">'
          + '<span class="eg-mb-i" aria-hidden="true">' + esc(m.icon) + '</span>'
          + esc(m.name) + '</button>';
   }).join('');
-  Array.prototype.forEach.call(w.querySelectorAll('button[data-m]'), function(b){
+  Array.prototype.forEach.call(z.querySelectorAll('button[data-m]'), function(b){
     b.addEventListener('click', function(){
       mWahl = b.getAttribute('data-m');
-      Array.prototype.forEach.call(w.querySelectorAll('button[data-m]'), function(x){
+      Array.prototype.forEach.call(z.querySelectorAll('button[data-m]'), function(x){
         x.setAttribute('aria-pressed', String(x.getAttribute('data-m')===mWahl)); });
       personZeigen();
     });
@@ -1250,24 +1615,27 @@ function personZeigen(){
     + '<div class="eg-p-kopf"><span class="eg-p-i" aria-hidden="true">' + esc(m.icon) + '</span>'
     + '<h3>' + esc(m.name) + '</h3></div>'
     + '<div class="eg-p-zeilen">'
-    + '<div><span class="eg-p-lab">Wo</span><span class="eg-p-wert">' + esc(w(m.wo, fach)) + '</span></div>'
-    + '<div><span class="eg-p-lab">Welche Kraft</span><span class="eg-p-wert">' + esc(w(m.kraft, fach)) + '</span></div>'
+    + '<div><span class="eg-p-lab">' + esc(T.pWo) + '</span>'
+    + '<span class="eg-p-wert">' + esc(w(m.wo, fach)) + '</span></div>'
+    + '<div><span class="eg-p-lab">' + esc(T.pKraft) + '</span>'
+    + '<span class="eg-p-wert">' + esc(w(m.kraft, fach)) + '</span></div>'
     + '</div>'
     + '<p>' + esc(w(m.text, fach)) + '</p>'
-    + '<h4>Worauf du schaust</h4>'
+    + '<h4>' + esc(T.pAspekte) + '</h4>'
     + '<ul class="eg-p-asp">' + asp.map(function(a){ return '<li>' + esc(a) + '</li>'; }).join('') + '</ul>'
-    + '<p class="eg-p-streit"><b>Wo die \u00dcberlieferung streitet:</b> ' + esc(w(m.streit, fach)) + '</p>'
+    + '<p class="eg-p-streit"><b>' + esc(T.pStreit) + '</b> ' + esc(w(m.streit, fach)) + '</p>'
     + '</div>';
 }
 function tabelleBauen(){
   var t = el('egmtab'); if(!t) return;
   var fach = stufe() >= 1;
-  t.innerHTML = '<thead><tr><th>Verbindung</th><th>' + (fach ? 'Haus' : 'Lebensbereich')
-    + '</th><th>Kraft</th></tr></thead><tbody>'
+  var sp = fach ? T.tabHaus : T.tabBereich;
+  t.innerHTML = '<thead><tr><th>' + esc(T.tabVerbindung) + '</th><th>' + esc(sp)
+    + '</th><th>' + esc(T.tabKraft) + '</th></tr></thead><tbody>'
     + D.MENSCHEN.map(function(m){
-        return '<tr><td data-sp="Verbindung">' + esc(m.name) + '</td>'
-             + '<td data-sp="' + (fach ? 'Haus' : 'Lebensbereich') + '">' + esc(w(m.wo, fach)) + '</td>'
-             + '<td data-sp="Kraft">' + esc(w(m.kraft, fach)) + '</td></tr>';
+        return '<tr><td data-sp="' + esc(T.tabVerbindung) + '">' + esc(m.name) + '</td>'
+             + '<td data-sp="' + esc(sp) + '">' + esc(w(m.wo, fach)) + '</td>'
+             + '<td data-sp="' + esc(T.tabKraft) + '">' + esc(w(m.kraft, fach)) + '</td></tr>';
       }).join('')
     + '</tbody>';
 }
@@ -1286,7 +1654,7 @@ function faelleBauen(){
     return '<div class="eg-fall">'
       + '<h3>' + esc(f.name) + '</h3>'
       + '<div class="eg-schritte">' + schritte + '</div>'
-      + '<div class="eg-deutung"><b>So sagt man es:</b> ' + esc(f.deutung) + '</div>'
+      + '<div class="eg-deutung"><b>' + esc(T.fDeutung) + '</b> ' + esc(f.deutung) + '</div>'
       + '<div class="eg-nicht">' + esc(f.nicht) + '</div>'
       + '</div>';
   }).join('');
@@ -1302,7 +1670,8 @@ function quizBauen(){
            + esc(a) + '</button>';
     }).join('');
     return '<div class="eg-q" data-qi="' + i + '">'
-      + '<div class="eg-q-nr">Frage ' + (i+1) + ' von ' + D.QUIZ.length + '</div>'
+      + '<div class="eg-q-nr">'
+      + esc(AC_FUELL(T.qNr, {i:(i+1), alle:D.QUIZ.length})) + '</div>'
       + '<p class="eg-q-f">' + esc(q.f) + '</p>'
       + '<div class="eg-q-opts">' + opt + '</div>'
       + '<div class="eg-q-echo" id="egqe' + i + '"></div></div>';
@@ -1320,7 +1689,7 @@ function quizBauen(){
         if(xi === q.r) x.classList.add('ist-richtig');
         else if(xi === ai) x.classList.add('ist-falsch');
       });
-      el('egqe' + qi).innerHTML = '<b>' + (richtig ? 'Stimmt.' : 'Nicht ganz.') + '</b> ' + esc(q.e);
+      el('egqe' + qi).innerHTML = '<b>' + esc(richtig ? T.qJa : T.qNein) + '</b> ' + esc(q.e);
       standZeigen();
     });
   });
@@ -1328,16 +1697,16 @@ function quizBauen(){
 }
 function standZeigen(){
   var s = el('egquizstand'); if(!s) return;
-  var n = 0, r = 0;
+  var alle = D.QUIZ.length, n = 0, r = 0;
   for(var k in qAntwort){ if(Object.prototype.hasOwnProperty.call(qAntwort,k)){
     n++; if(qAntwort[k] === D.QUIZ[k].r) r++; } }
   if(!n){ s.textContent = ''; return; }
-  s.innerHTML = n < D.QUIZ.length
-    ? esc(r + ' von ' + n + ' richtig — noch ' + (D.QUIZ.length - n) + ' offen.')
-    : '<b>' + esc(r + ' von ' + D.QUIZ.length + ' richtig.') + '</b> '
-      + esc(r === D.QUIZ.length ? 'Das sitzt.'
-          : r >= 3 ? 'Die Richtung stimmt. Die Erklärungen oben sind die Nacharbeit.'
-          : 'Lies die Erklärungen in Ruhe — die Bausteinkarten weiter oben helfen dabei.');
+  if(n < alle){
+    s.innerHTML = esc(AC_FUELL(T.qOffen, {r:r, n:n, offen:(alle - n)}));
+    return;
+  }
+  s.innerHTML = '<b>' + esc(AC_FUELL(T.qGanz, {r:r, alle:alle})) + '</b> '
+    + esc(r === alle ? T.qAlles : r >= 3 ? T.qViel : T.qWenig);
 }
 
 /* ── Alles zusammen ────────────────────────────────────── */

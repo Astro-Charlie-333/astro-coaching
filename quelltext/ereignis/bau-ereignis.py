@@ -34,9 +34,16 @@ app     = T('ereignis-app.js')
 daten   = T('ereignis-daten.js')
 rechner = T('ereignis-rechner.js')
 stil    = T('ereignis-stil.css')
+# Aufgabe 94: kern/fuellen.js ist die eine Stelle, die eine Lücke
+# füllt — ein fehlender Wert bricht dort ab statt zu verschwinden.
+# Aufgabe 63: kern/bahn-daten.js bringt B_BEUGE mit, die eine Stelle,
+# die „dein" vor ein Hauptwort setzt und dessen Geschlecht kennt.
+fuellen = T('../kern/fuellen.js')
+bahn    = T('../kern/bahn-daten.js')
 
 html = (KOPF + T('../niveau/basis.css') + '\n' + stil + '</style></head><body>\n'
-        + koerper + '\n<script>\n' + daten + '\n' + rechner + '\n' + app
+        + koerper + '\n<script>\n' + fuellen + '\n' + bahn + '\n'
+        + daten + '\n' + rechner + '\n' + app
         + '\n</script>\n</body></html>\n')
 
 ziel = wiki / 'ereignisse-lesen.html'
@@ -71,6 +78,52 @@ if meine & belegt:
     fehler.append('Namenskollision: ' + ', '.join(sorted(meine & belegt)))
 if meine != {'AC_EREIG', 'AC_EREIGR'}:
     fehler.append('unerwartete globale Namen: ' + ', '.join(sorted(meine)))
+
+# 3a · Die Anzeige schreibt keinen Satz und kein „dein"
+#      Aufgabe 63, aus 34 und 38. Alles, was die Seite beschriftet,
+#      steht in ereignis-daten.js als EG_T; die Anzeige setzt mit
+#      AC_FUELL ein und lässt „dein" von B_BEUGE bilden. Was in
+#      ereignis-app.js stünde, zöge beim Umzug in eine andere
+#      Umgebung nicht mit (PRODUKT.md Abschnitt 7) — deshalb ist das
+#      hier eine Sperre und kein Vorsatz.
+sys.path.insert(0, str(hier.parent / 'rituale'))
+import pruefwerk
+
+if not re.search(r'\bvar EG_T\s*=', daten):
+    fehler.append('Tafel EG_T fehlt in ereignis-daten.js')
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'ereignis-app.js',
+                                            'ereignis-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'ereignis-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'ereignis-app.js')
+fehler += pruefwerk.pruefe_vorlagenluecken(daten, app, 'ereignis-daten.js')
+if pruefwerk.ruft_ohne_stelle(ziel.read_text(encoding='utf-8')):
+    fehler.append('die Seite füllt Lücken, aber kern/fuellen.js liegt nicht mit darauf')
+
+#      Und die Gegenprobe gegen die Fehlerklasse, die ein grüner
+#      Riegel nicht ausschließt: dass er heute nur nichts zu finden
+#      hatte (REGELN.md 6e, Nachsatz). In allen drei Anführungsarten,
+#      denn ein Satz, der in doppelten oder schrägen
+#      Anführungszeichen durchgeht, wäre das Loch, über das die
+#      Sätze einzeln zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Worauf du schaust' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'ereignis-app.js',
+                                             'ereignis-daten.js'):
+        fehler.append(f'der Riegel sieht einen Satz in {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Zuneigung' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'ereignis-app.js'):
+        fehler.append(f'der Riegel sieht ein „dein" in {_art} Anführung nicht — '
+                      'dann kommt die ungebeugte Form einzeln zurück')
+
+# 3b · Keine Namenskollision mit den mitgelieferten Modulen
+fremd = set(re.findall(r'^(?:var|function)\s+([A-Za-z_][A-Za-z0-9_]*)',
+                       fuellen + '\n' + bahn, re.M))
+eigen = set(re.findall(r'^(?:var|function)\s+([A-Za-z_][A-Za-z0-9_]*)',
+                       daten + '\n' + rechner + '\n' + app, re.M))
+if fremd & eigen:
+    fehler.append('Namen kollidieren mit fuellen.js oder bahn-daten.js: '
+                  + ', '.join(sorted(fremd & eigen)))
 
 klar = htmlmod.unescape(re.sub(r'<[^>]+>', ' ', koerper))
 
@@ -198,8 +251,20 @@ const ueber=await p.evaluate(()=>[...document.querySelectorAll('.wrap *')]
   .filter(e=>e.getBoundingClientRect().right>window.innerWidth+1.5)
   .map(e=>e.className||e.tagName).slice(0,6));
 
+/* Jeder Regler, auf jeder Stufe: welche Beschriftungen er anbietet.
+   Beurteilt wird das in Python (pruefwerk.doppelte_beschriftung) —
+   hier wird nur abgelesen, was dasteht. */
+const regler={};
+for(const n of [0,1,2,3]){
+  await p.evaluate(s=>{ if(window.AC_NIV) AC_NIV.setzen(s); }, n);
+  await p.waitForTimeout(350);
+  regler[n]=await p.evaluate(()=>[...document.querySelectorAll('select')]
+    .map(s=>[s.id||s.name||'(ohne Kennung)',
+             [...s.options].map(o=>o.textContent)]));
+}
+
 console.log(JSON.stringify({da,vorher,nachher,p1:p1.length,p2,quiz,j0,t0,t3,
-  satz0,satz3,ueber,fehler:[...new Set(f)]}));
+  satz0,satz3,ueber,regler,fehler:[...new Set(f)]}));
 await b.close();})();
 """.replace('ZIEL', str(ziel)), encoding='utf-8')
 
@@ -252,6 +317,31 @@ try:
             fehler.append('Stufe 0 zeigt eine Gradangabe')
         if '°' not in pr['satz3']:
             fehler.append('Stufe 3 zeigt keine Gradangabe')
+
+        # Keine zwei Rungen eines Reglers heißen gleich.
+        #
+        #     Der Fehler vom 2026-11-25: Der Lautstärkeregler bot auf
+        #     Stufe 0 sechs Rungen an, und zwei lasen „Volltreffer" —
+        #     weil der Wert der Orbis ist und die Beschriftung an der
+        #     Lautstärkeklasse hängt, in die 0,2° und 0,5° beide
+        #     fallen. Wer die zweite wählte, bediente einen Regler
+        #     ohne Unterschied, und der Superlativ galt zweimal, also
+        #     keinmal (REGELN.md 6f).
+        #
+        #     Geprüft wird am gezeichneten Ergebnis und auf jeder
+        #     Stufe, denn die Beschriftungen wechseln mit ihr: auf
+        #     Stufe 0 steht nur die Klasse, ab Stufe 1 der Grad davor.
+        #     Die Regel selbst steht in rituale/pruefwerk.py mit
+        #     festen Beispielen, weil sie jeden Regler angeht und
+        #     nicht nur diesen (REGELN.md Abschnitt 5).
+        if not pr.get('regler'):
+            fehler.append('die Rauchprobe hat keinen Regler gefunden — '
+                          'dann prüft sie die Beschriftungen nicht')
+        for _stufe, _liste in sorted((pr.get('regler') or {}).items()):
+            if len(_liste) != 5:
+                fehler.append(f'Stufe {_stufe}: {len(_liste)} statt 5 Regler')
+            for _m in pruefwerk.doppelte_beschriftung(_liste):
+                fehler.append(f'Stufe {_stufe}: ' + _m)
 except subprocess.TimeoutExpired:
     fehler.append('Rauchprobe: Zeitüberschreitung')
 finally:

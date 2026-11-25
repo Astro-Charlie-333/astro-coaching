@@ -443,6 +443,82 @@ var QUIZ = [
     + 'noch einmal ansehen. Was in dieser Zeit neu aufgesetzt wird, kommt oft noch einmal auf den Tisch.' }
 ];
 
+/* ── Was die Anzeige beschriftet ───────────────────────── */
+/* Bis zum 2026-11-25 standen diese achtundzwanzig Sätze und
+   Beschriftungen in ereignis-app.js, und die zehn Kräfte dort noch
+   ein zweites Mal — eine Tabelle, zweimal von Hand geschrieben, in
+   zwei Dateien. Gedruckt hat die Seite beide Male dasselbe; gemerkt
+   hätte es niemand, sobald eine der beiden sich ändert.
+
+   Was in der Anzeige steht, zieht beim Umzug in eine andere
+   Umgebung nicht mit (PRODUKT.md Abschnitt 7). Deshalb steht es
+   hier, und bau-ereignis.py lässt es nicht zurück. */
+var EG_T = {
+
+ /* Der Stapel: ein Hinweis, zwei, drei */
+ stapel:[
+  { zahl:'1 Baustein',  name:'Rauschen',
+    text:'Zu wenig. Jeder Tag hat davon mehrere. Wer hier schon deutet, deutet ins Blaue.' },
+  { zahl:'2 Bausteine', name:'Verdacht',
+    text:'Eine Richtung zeichnet sich ab. Man denkt darüber nach, sagt es aber noch nicht.' },
+  { zahl:'3 Bausteine', name:'Thema',
+    text:'Jetzt trägt es. Und selbst jetzt beschreibt man ein Zeitfenster, keine Tatsache.' }],
+
+ /* Die Personenkarte und die Tabelle darunter */
+ pWo:'Wo',
+ pKraft:'Welche Kraft',
+ pAspekte:'Worauf du schaust',
+ pStreit:'Wo die Überlieferung streitet:',
+ tabVerbindung:'Verbindung',
+ tabHaus:'Haus',
+ tabBereich:'Lebensbereich',
+ tabKraft:'Kraft',
+
+ /* Rezepte und durchgerechnete Fälle */
+ rEhrlich:'Ehrlich dazu:',
+ fDeutung:'So sagt man es:',
+
+ /* Das Quiz */
+ qNr:'Frage {i} von {alle}',
+ qJa:'Stimmt.',
+ qNein:'Nicht ganz.',
+ qOffen:'{r} von {n} richtig — noch {offen} offen.',
+ qGanz:'{r} von {alle} richtig.',
+ qAlles:'Das sitzt.',
+ qViel:'Die Richtung stimmt. Die Erklärungen oben sind die Nacharbeit.',
+ qWenig:'Lies die Erklärungen in Ruhe — die Bausteinkarten weiter oben helfen dabei.',
+
+ /* Die Beschriftungen des Mischers */
+ wahlHaus:'{n}. Haus — {was}',
+ wahlOrbis:'{grad}° — {laut}',
+
+ /* Die zehn Kräfte in Alltagssprache. Ohne „dein" — das setzt
+    B_BEUGE aus kern/bahn-daten.js davor, an der einen Stelle, die
+    das Geschlecht kennt. „deine Zuneigung" und „dein Antrieb"
+    unterscheiden sich nur darin, und von Hand geschrieben steht die
+    falsche Form irgendwann dort, wo jemand sie sieht. */
+ punkt:{
+  Sonne:  {g:'m', wort:'Wesenskern'},
+  Mond:   {g:'s', wort:'Gefühl'},
+  Merkur: {g:'s', wort:'Denken'},
+  Venus:  {g:'w', wort:'Zuneigung'},
+  Mars:   {g:'m', wort:'Antrieb'},
+  Jupiter:{g:'s', wort:'Vertrauen'},
+  Saturn: {g:'w', wort:'Struktur'},
+  Uranus: {g:'m', wort:'Freiheitsdrang'},
+  Neptun: {g:'w', wort:'Sehnsucht'},
+  Pluto:  {g:'w', wort:'Tiefe'}},
+
+ /* Die Kurzformen für die drei übrigen Regler, in der Reihenfolge
+    der Rechnung: zwölf Zeichen, fünf Winkel, zwölf Häuser. */
+ stilZeichen:['direkt','langsam','beweglich','vorsichtig','sichtbar','genau',
+              'abwägend','tief','weit','ernst','eigensinnig','durchlässig'],
+ stilWinkel:['verschmolzen','angeboten','reibend','fließend','gegenübergestellt'],
+ kurzHaus:['Auftreten','Geld und Selbstwert','Nachrichten','Zuhause','Romantik','Alltag',
+           'Partnerschaft','Tiefe','Ferne','Berufung','Freundschaften','Verborgenes']
+};
+
 window.AC_EREIG = { BAUSTEINE:BAUSTEINE, REZEPTE:REZEPTE,
-                    MENSCHEN:MENSCHEN, FAELLE:FAELLE, QUIZ:QUIZ };
+                    MENSCHEN:MENSCHEN, FAELLE:FAELLE, QUIZ:QUIZ,
+                    T:EG_T };
 })();

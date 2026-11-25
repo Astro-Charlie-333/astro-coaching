@@ -55,7 +55,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `geist-app.js` (2026-11-20) und
 `dossier-app.js` (2026-11-21) und
 `analyse-app.js` (2026-11-23) und
-`begleit-app.js` (2026-11-24);
+`begleit-app.js` (2026-11-24) und
+`ereignis-app.js` (2026-11-25);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -91,9 +92,6 @@ Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
 
-### 63 · `ereignis-app.js` (28, 10)
-`ereignisse-lesen.html`.
-
 ### 64 · `oph-app.js` (65, 4)
 `ophiuchus.html`.
 
@@ -107,6 +105,58 @@ Zeichenketten in Vorlagen einsetzen.
 
 ### 66 · `werkstatt-app.js` (39, 2)
 `werkstatt.html`.
+
+### 97 · `ereignis-rechner.js` schreibt die Sätze der Seite
+Gefunden beim Erledigen von Aufgabe 63 am 2026-11-25. Die Anzeige ist
+jetzt satzfrei, der Rechner daneben aber nicht: `P0`, `P1`, `Z0`, `H0`,
+`A0`, `A1` und die Texte in `STUFEN_ORB` stehen dort, und `satz()` und
+`zerlegung()` kleben daraus die Sätze zusammen — mitsamt zehnmal „dein"
+von Hand. Eine der beiden Tafeln, die der Umzug heute entdoppelt hat
+(`mundart` in der Anzeige, `P0` im Rechner, Wort für Wort gleich),
+liegt damit weiterhin dort. `PRODUKT.md` Abschnitt 7 verlangt, dass
+`*-rechner.js` nichts von Sätzen weiß; `REGELN.md` Abschnitt 5 sagt es
+noch einmal. Heute fällt das nicht auf, weil beide Tafeln dasselbe
+sagen — das ist Glück und keine Prüfung, dieselbe Lage wie bei
+Aufgabe 41.
+
+Die Richtung steht schon fest und ist bei `AN_T.waage` am 2026-11-23
+erprobt: Die Rechnung liefert Schlüssel, die Anzeige setzt ein.
+**Fertig, wenn:** `ereignis-rechner.js` keine Zeichenkette mehr trägt,
+die auf der Seite landet — `satz()` und `zerlegung()` geben
+Schlüssel und Zahlen zurück, die Worte dazu stehen in
+`ereignis-daten.js`, die zehn Kräfte in Alltagssprache genau einmal —,
+`bau-ereignis.py` `pruefe_anzeige_satzfrei` und
+`pruefe_anzeige_ohne_dein` auch auf den Rechner anwendet, ein von Hand
+eingesetzter Satz dort den Bau abbricht (in allen drei
+Anführungsarten), und der sichtbare Text der Seite auf allen fünf
+Stufen derselbe bleibt wie heute — gemessen am gezeichneten Ergebnis.
+
+### 98 · Zehn Seiten mit Regler prüfen ihre Beschriftungen nicht
+Gefunden beim Erledigen von Aufgabe 63 am 2026-11-25. Der Fehler des
+Tages — zwei Rungen eines Reglers, die beide „Volltreffer" hießen —
+ist mit `pruefwerk.doppelte_beschriftung` beantwortet, und
+`bau-ereignis.py` ruft die Regel am gezeichneten Ergebnis auf, auf
+jeder Stufe. Elf ausgelieferte Seiten haben einen Regler; geprüft wird
+genau eine.
+
+Zwei davon sind gebaut und haben eine Rauchprobe, in die die Regel
+hineinpasst: `baukasten.html` und `mond.html`. Nachgemessen sind beide
+heute sauber — das ist der Stand von heute und keine Zusage. Die
+übrigen acht (`briefing`, `chart-rechner`, `dating-muster`,
+`finsternisse`, `herrscher`, `orbis-gewichtung`, `profektionen`,
+`spannungskarte`) sind Handarbeit ohne `bau-*.py`; für sie gilt
+dasselbe wie für `profile.html` in Aufgabe 75 — die Prüfung gehört
+nach `pruefe-alles.py` und muss die Seite dafür im Browser zeichnen,
+was es dort heute noch nicht gibt.
+
+Welcher Bau die Regel ruft, zählt `pruefe-alles.py` seit heute nach
+(`REGLER_OFFEN` und `REGLER_DURCH`); die Liste kann nur schrumpfen.
+**Fertig, wenn:** `REGLER_OFFEN` leer ist, jede gebaute Seite mit
+Regler die Regel in ihrer Rauchprobe auf jeder Stufe aufruft, eine
+absichtlich doppelte Beschriftung in jeder dieser Seiten den Bau
+abbricht, und `pruefe-alles.py` die handgemachten Seiten mit Regler
+genauso nachmisst — am gezeichneten Ergebnis, weil erst die Rechnung
+entscheidet, ob zwei Werte in dieselbe Klasse fallen.
 
 ### 95 · Zwei Lücken auf der Jetzt-Seite füllt niemand
 Gefunden beim Erledigen von Aufgabe 94 am 2026-11-22. `AC_FUELL`
@@ -1399,6 +1449,50 @@ landet.
 ---
 
 ## Erledigt
+
+* **2026-11-25** · `ereignis-app.js` kommt aus dem Satzgeschäft heraus
+  (Aufgabe 63, aus 34 und 38). Die achtundzwanzig Sätze und
+  Beschriftungen stehen jetzt in `ereignis-daten.js` als `EG_T`; die
+  Anzeige setzt mit `AC_FUELL` ein und lässt „dein" von `B_BEUGE`
+  bilden, das das Geschlecht am Wort liest. Verriegelt ist das in
+  `bau-ereignis.py`: beide Riegel aus `pruefwerk`, in allen drei
+  Anführungsarten gegengeprobt, dazu `pruefe_fueller`,
+  `pruefe_vorlagenluecken` und `ruft_ohne_stelle`.
+
+  Zwei Fehlerklassen kamen mit heraus.
+
+  Die erste stand **auf der Seite**: Der Lautstärkeregler bot auf
+  Stufe 0 sechs Rungen an, und zwei lasen „Volltreffer".
+
+  | Rung | Wert | Beschriftung auf Stufe 0 |
+  |---|---|---|
+  | 1 | 0,2° | Volltreffer |
+  | 2 | 0,5° | Volltreffer |
+
+  Der **Wert** einer Rung ist der Orbis, die **Beschriftung** hängt an
+  der Lautstärkeklasse — und 0,2° und 0,5° fallen in dieselbe. Wer die
+  zweite wählte, bediente einen Regler ohne Unterschied, und ein
+  Superlativ, der zweimal gilt, gilt keinmal. Das ist `REGELN.md` 6f
+  an einem Bedienelement statt in einem Satz: Die Sperre saß am Wert,
+  der Text hängt am Schlüssel daneben. Auf Stufe 0 gibt es jetzt eine
+  Rung je Klasse — sichtbar ändert das sonst nichts, weil dort kein
+  Grad dasteht. Die Regel dagegen heißt
+  `pruefwerk.doppelte_beschriftung`, hat neun feste Beispiele und wird
+  in der Rauchprobe auf jeder Stufe gegen jeden Regler der Seite
+  gehalten. Elf ausgelieferte Seiten haben einen Regler; wie viele die
+  Regel rufen, zählt `pruefe-alles.py` seit heute nach (Aufgabe 98).
+
+  Die zweite war unsichtbar und hätte es nicht bleiben müssen: Die
+  Tafel der zehn Kräfte in Alltagssprache stand zweimal von Hand da —
+  als `mundart` in der Anzeige und als `P0` im Rechner, Wort für Wort
+  gleich. Gedruckt hat die Seite beide Male dasselbe; gemerkt hätte es
+  niemand, sobald eine der beiden sich ändert. Die Anzeige hat jetzt
+  keine eigene mehr; die im Rechner bleibt, bis `satz()` nur noch
+  Schlüssel liefert (Aufgabe 97).
+
+  Nachgemessen am gezeichneten Text, auf allen Stufen und mit
+  beantwortetem Quiz: Außer der verschwundenen Rung steht Zeile für
+  Zeile dasselbe da wie vorher.
 
 * **2026-11-24** · `begleit-app.js` kommt aus dem Satzgeschäft heraus
   (Aufgabe 62, aus 34 und 38). Die zwanzig Sätze und jede
