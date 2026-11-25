@@ -800,6 +800,53 @@ festen Beispielen für kein, ein und zwei Profile (`REGELN.md`
 Abschnitt 6e), weil die Eingabe je Besucherin eine andere ist.
 
 
+### 102 · „Saturn Return" und „big three" stehen auf keiner Seite
+Aus der Recherche vom 2026-11-25 (Spur C, erster Fund). `PRODUKT.md`
+Abschnitt 2 Punkt 1 nennt vier Wörter, die die Zielgruppe mitbringt;
+zwei davon stehen auf keiner der 134 ausgelieferten Seiten, obwohl beide
+Sachen da sind — die Saturnrückkehr als große Karte auf `index.html`
+(aus `kern/themen-daten.js`, und nur innerhalb von 8 Grad sichtbar), die
+drei Großen auf `tool.html`, `chart-lesen.html`, `reading-ablauf.html`
+und `profil-ansicht.html`. „Solar Return" steht dagegen auf 15 Dateien,
+im Glossar, im Suchindex und in `begriffe.js`. `glossar.html` kennt
+keinen der beiden Begriffe; das Suchfeld auf `wissen.html`, verlinkt von
+83 Seiten, antwortet auf „saturn return" und „big three" mit „Nichts
+gefunden".
+**Fertig, wenn:** beide Namen in der Tabelle in `REGELN.md`
+Abschnitt 2a stehen; jeder dort an der Stelle auftaucht, an der die
+Sache schon erklärt ist — auf der Saturnkarte und dort, wo Sonne, Mond
+und Aszendent zusammen erklärt werden —, jeweils mit der Erklärung auf
+derselben Karte und der Zeile „Was oft zu groß erzählt wird", wie
+Abschnitt 2a es verlangt; beide über `glossar.html` und über den
+Suchindex von `wissen.html` zu finden sind; und `pruefe-alles.py`
+abbricht, sobald ein in der Tabelle von `REGELN.md` Abschnitt 2a
+geführter Name auf keiner ausgelieferten Seite oder in keinem Suchindex
+vorkommt — als Regel in einer eigenen Funktion mit festen Beispielen,
+die durchgehen und anschlagen müssen (`REGELN.md` Abschnitt 6e), damit
+die Prüfung an der Regel bricht und nicht an der Seite.
+
+### 103 · Die Antwort für die Skeptikerin endet auf dem gefühlten Nutzen
+Aus der Recherche vom 2026-11-25 (Spur C, zweiter Fund). Auf
+`klientinnen-fragen.html` endet die Antwort auf „Glaubst du wirklich
+daran? Ist das nicht Unsinn?" mit „Was zählt: Hilft es dir, dich klarer
+zu sehen? Wenn ja, hat es seinen Zweck erfüllt." Der erste Satzteil
+derselben Antwort weist den Wissenschaftsanspruch zurück und ist
+richtig; der letzte macht die gefühlte Passung zum Maßstab, und genau
+die benennt die Coaching-Fachpresse als den Mechanismus der Täuschung
+(Coaching-Magazin 1|2025). Die Seite verspricht „Deine Sicherheit im
+Gespräch". Dieselbe Seite ist außerdem eine fünfte Stelle mit einer
+eigenen Aussage über den Forschungsstand, die Aufgabe 71 nicht führt:
+nachgezählt am 2026-11-25 tragen elf ausgelieferte Seiten siebzehn
+solche Sätze, darunter drei auf `index.html`, die je Verfahren schon
+richtig sind. Deshalb nach Aufgabe 71 oder mit ihr zusammen.
+**Fertig, wenn:** die Antwort nicht mehr mit der gefühlten Hilfe als
+Maßstab endet, sondern „hat mir beim Denken geholfen" von „hat über mich
+gestimmt" selbst unterscheidet und für den Forschungsstand auf dieselbe
+Stelle zeigt, die Aufgabe 71 anlegt; und in Aufgabe 71 die vollständige
+Liste der Stellen steht, damit die dort verlangte Prüfung die drei
+richtigen Sätze auf `index.html` nicht mitabbricht.
+
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich

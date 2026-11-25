@@ -827,3 +827,246 @@ mitschwingen lässt, dass daran etwas heikel ist, kann für sie wie ein
 Vorwurf klingen. `PRODUKT.md` Abschnitt 2 nennt sie als eine der fünf, für
 die gebaut wird; nichts in meinen Quellen sagt, dass sie diesen Satz
 haben will.
+
+### 2026-11-25 · Spur C · Zwei der vier Wörter, unter denen die Zielgruppe die Sache kennt, kommen auf keiner Seite vor
+
+**Gesehen:** `PRODUKT.md` Abschnitt 2 Punkt 1 nennt vier Wörter, die diese
+Zielgruppe mitbringt: „Merkur rückläufig", „big three", „Saturn Return",
+„mein Mars in …". Nachgezählt im Auslieferstand — 134 HTML-Seiten im
+Wurzelordner, Stand dieses Commits:
+
+* „Merkur rückläufig" steht auf 4 Dateien, „rückläufig" auf 28.
+* „Saturn Return" steht auf **keiner**. Die Sache selbst ist da, unter
+  deutschen Namen: „Deine Saturnrückkehr" als große Karte auf
+  `index.html` (aus `kern/themen-daten.js`), „Erste" und „Zweite
+  Saturn-Rückkehr" auf der Altersachse von `planeten.html`,
+  „Saturnwiederkehr um 29 und um 58" auf `ereignisse-lesen.html`.
+* „big three", „Big Three" und „Big 3" stehen auf **keiner**. Die Sache
+  ist da als „die drei Großen" (`chart-lesen.html`,
+  `reading-ablauf.html`) und „die drei Kernsätze" (`tool.html`,
+  `profil-ansicht.html`).
+* Zum Vergleich: „Solar Return" — das deutlich weniger bekannte Wort —
+  steht auf 15 Dateien, hat zwei eigene Seiten, einen Glossareintrag,
+  wird von `begriffe.js` automatisch verlinkt und steht im Suchindex der
+  Bibliothek. Englische Namen sind hier also nicht grundsätzlich
+  ausgeschlossen.
+
+Am deutlichsten wird es beim Nachschlagen. `glossar.html` hat keinen
+Eintrag für Saturnrückkehr, Saturn Return, big three oder die drei
+Großen. Das Suchfeld auf `wissen.html` — verlinkt von 83 der
+ausgelieferten Seiten, und sein eigener Platzhalter schlägt „Saturn" als
+Beispiel vor — kennt zu „saturn" zwei Einträge, von denen einer auf
+`planetenzyklen.html` zeigt, eine Weiterleitungshülle. Zu „saturn
+return", „big three" und „merkur rückläufig" steht im Index nichts; die
+Suche antwortet „Nichts gefunden."
+
+Dazu kommt, dass die Saturnkarte an eine Bedingung hängt: `heute-app.js`
+zeigt sie nur, solange der Abstand des laufenden zum eigenen Saturn
+höchstens 8 Grad beträgt. Wer 24 ist und das Wort gehört hat, findet
+weder die Karte noch das Wort.
+
+Dass es das Wort ist, mit dem die Leute kommen, zeigt die
+deutschsprachige Publizistik: Sie führt den englischen Begriff als
+Hauptbegriff. `desired.de` titelt am 25. Juli 2023 (Nadine Jungbluth)
+„Saturn Return: Die Bedeutung hinter Saturns Rückkehr", behält den
+englischen Begriff durchgehend, übersetzt ihn einmal als „Rückkehr des
+Saturns" und beginnt mit dem Hinweis, Leserinnen könnten dem Begriff in
+sozialen Medien begegnet sein und sich gefragt haben, was er bedeutet;
+genannt werden rund 29,5 Jahre Umlauf und Wiederkehren mit etwa 29, 58
+und 87 (`desired.de/horoskop/saturn-return-bist-du-schon-astrologisch-erwachsen/`).
+Das evangelische `sonntagsblatt.de` bringt am 31. Mai 2024 einen
+kritischen Beitrag (Gunter Stemmler, Rubrik Glaube, Stichwort
+Aberglaube) unter demselben englischen Begriff; „Rückkehr von Saturn"
+steht nur als Umschreibung in der Überschrift, einen deutschen
+Fachbegriff bildet der Text nicht, das Alter nennt er mit etwa 29 und
+den Anlass mit Popstars und englischsprachigen Medien
+(`sonntagsblatt.de/artikel/glaube/astrologie-saturn-return-warum-prominente-ueber-eine-rueckkehr-von-saturn`).
+Für das zweite Wort: `sternengedanken.de`, veröffentlicht am
+15. September 2023, führt „Die Big 3 in der Astrologie", benutzt „Big 3"
+und „Big Three" durchgehend und bietet überhaupt kein deutsches Wort an
+(`sternengedanken.de/die-big-3-in-der-astrologie/`). Deutsche Rechner
+verkaufen unter dem Wort: „Big-3-Rechner"
+(`upastrology.com/de/big-3-calculator`), „deine Big Three"
+(`chartodyssey.com/de`). Eine Zahl zum Suchvolumen im deutschen Raum
+habe ich nicht; ich habe keine gefunden, die ich nachprüfen konnte.
+
+**Heißt für uns:** Das ist Mandys Einwand aus `REGELN.md` Abschnitt 2a,
+eine Ebene höher. Dort kannte die Rechnung die Rückläufigkeiten und die
+Lunationen seit Monaten, und die Seite hat jede davon in einen
+Bereichsnamen übersetzt — „Es war alles da und nichts davon zu finden."
+Die Antwort darauf war die Unterscheidung zwischen Mechanik und Namen,
+und die Tabelle führt fünf Namen auf. Die beiden Wörter, die
+`PRODUKT.md` selbst nennt, stehen nicht in dieser Tabelle, und der
+Auslieferstand zeigt, warum das zählt: Beide Themen sind da, sorgfältig
+geschrieben, und unter dem Wort, mit dem jemand ankommt, nicht
+erreichbar. `PRODUKT.md` Abschnitt 2 Punkt 1 sagt die Folge selbst: Eine
+Seite, die diese Worte vermeidet, wirkt auf diese Gruppe nicht
+zugänglicher, sondern wie ein anderes Thema.
+
+**Vorschlag:** Die beiden Namen in die Tabelle in `REGELN.md`
+Abschnitt 2a aufnehmen und dort ankommen lassen, wo die Sache schon
+erklärt steht — auf der Karte, im Glossar, im Suchindex. Siehe
+Aufgabe 102.
+
+**Dagegen spricht:** Erstens, und das ist der stärkste Einwand: Der Fund
+argumentiert über Auffindbarkeit, und diese Plattform ist nicht darauf
+gebaut, gefunden zu werden. Es gibt keine `robots.txt` und keine
+`sitemap.xml`, und eine `meta name="description"` tragen 7 der 134
+Seiten. Wer sagt, die Besucherin komme mit dem Wort an, argumentiert über
+einen Weg, den es noch nicht gibt. Ist die Frage wirklich, wie Menschen
+hier ankommen, dann steht nicht ein Wort zur Entscheidung, sondern der
+Zugang — und diese Entscheidung gehört vor die kleine.
+
+Zweitens habe ich keine Zahl. Ich habe, was Verlage schreiben, nicht,
+wonach unsere Besucherinnen suchen. Beim Fund vom 28.10. war der Einwand,
+„nicht wenige" sei der Eindruck einer Praktikerin; hier ist er härter:
+Ich habe gar keine Zahl, und es ist denkbar, dass deutschsprachige
+Leserinnen „Saturnrückkehr" sagen und der englische Begriff vor allem
+eine Sache der englischsprachigen Presse ist, die deutsche Verlage
+übernehmen.
+
+Drittens arbeitet ein englisches Schlagwort gegen den Ton. `PRODUKT.md`
+Abschnitt 8 will lieber warm als technisch, `REGELN.md` Abschnitt 4
+ruhiges, erwachsenes Deutsch. „Saturn Return" auf Stufe 0 ist das
+Register der Apps, von denen sich die Plattform unterscheidet, und
+`PRODUKT.md` Abschnitt 2 Punkt 2 sagt, diese Gruppe erkennt ein Format.
+Ein Wort, das eingesetzt wird, um gefunden zu werden, kann sich lesen wie
+ein Wort, das eingesetzt wird, um zu verkaufen.
+
+Viertens löst die billige Hälfte den Fund nicht. Ein Wort auf der
+Saturnkarte kostet fast nichts, aber diese Karte läuft nur innerhalb von
+8 Grad. Was wirklich hilft — Glossar und Suchindex — sitzt auf zwei
+Seiten, die `pruefe-alles.py` unter `HANDARBEIT` führt und für die es
+kein `bau-*.py` gibt; die Prüfung muss also in `pruefe-alles.py`, und
+eine von Hand gepflegte Liste von Zweitwörtern altert genau so wie der
+Berlin-Absatz aus dem Fund vom 28.10.
+
+Fünftens hat die Namenserlaubnis einen Preis, und diese Aufgabe muss ihn
+zweimal zahlen: `REGELN.md` Abschnitt 2a verlangt die Erklärung auf
+derselben Karte, in Alltagssprache, vor der Wirkung, dazu die Zeile „Was
+oft zu groß erzählt wird". Für den Saturn steht beides schon auf der
+Karte. Für die drei Großen stehen die erklärenden Stellen auf Lese- und
+Praxisseiten; wandert das Wort dorthin, muss diese Zeile dafür erst
+geschrieben werden. Das ist mehr, als ein Wort einzusetzen.
+
+Und sechstens erzeugt die Aufgabe keine Seite. Unter „Als Nächstes"
+stehen 37 Einträge; Aufgabe 101 betrifft eine Seite, auf der eine
+Besucherin mit einem Profil überhaupt kein Ergebnis bekommt. Daneben ist
+ein zweites Wort für ein Thema, das schon geschrieben ist, klein.
+
+### 2026-11-25 · Spur C · Die Frage, die jede Coachin gestellt bekommt, ist beantwortet — der letzte Halbsatz der Antwort hält nicht
+
+**Gesehen:** Spur C fragt, welche Frage immer wieder gestellt wird. Für
+die Coachin aus `PRODUKT.md` Abschnitt 2 hat die deutschsprachige
+Coaching-Fachpresse aufgeschrieben, woraus der Angriff besteht:
+Coaching-Magazin, Ausgabe 1|2025, veröffentlicht am 18. Februar 2025,
+Verfasser Dawid Barczynski, in der Rubrik „Kontrovers", aber ohne
+Gegenstimme — eine Befürworterin kommt nicht zu Wort. Dem Sinn nach,
+nicht im Wortlaut, stehen dort vier Vorwürfe: Zwillings- und
+Zeitzwillingsuntersuchungen fanden keinen Zusammenhang zwischen
+Geburtszeit und Persönlichkeit (angeführt werden Dean und Kelly 2003
+sowie Hartmann und andere 2006); die gefühlte Passung erklärt sich über
+den Barnum-Effekt, also darüber, dass vage Allgemeinaussagen als
+persönlich treffend angenommen werden; die genannten Angebote —
+Einstellung nach Sternzeichen, Teamentwicklung nach Horoskop,
+planetengetaktete Karriereplanung — nehmen echte Tatsachen aus einer
+Entscheidung heraus und erzeugen falsche Sicherheit, und der Beitrag
+fragt, wer die Verantwortung trägt, wenn die Einstellung oder das Team
+scheitert; und das Kernproblem sei nicht der private Glaube, sondern
+dass Coachinnen Glauben als Wissenschaft darstellen. Ein Selbstversuch
+der Redaktion befragte Karriere-Horoskopseiten und einen Chatbot und
+bekam für jedes Zeichen bestätigende Auskünfte, dieselbe Paarung je
+nach Blickrichtung verschieden
+(`coaching-magazin.de/kontrovers/astrologie-im-coaching`). Einen
+Ethikkodex eines Coaching-Verbands führt der Beitrag nicht an.
+
+Gegen den Auslieferstand gehalten trifft das meiste davon auf festen
+Boden. `klientinnen-fragen.html`, die Seite, die für genau diese Lage
+geschrieben ist, führt sieben Klientinnenfragen mit Antworten, darunter
+„Glaubst du wirklich daran? Ist das nicht Unsinn?", und weist den
+Wissenschaftsanspruch im ersten Satzteil zurück. `berufe.html` — die
+Seite, die Charts auf Arbeitsfelder abbildet, also die Praxis, die der
+Beitrag angreift — schreibt, es gebe keinen Beleg für einen Zusammenhang
+von Geburtsdaten mit Berufswahl oder Berufserfolg, Untersuchungen dazu
+seien wiederholt negativ ausgefallen, niemand solle einen Beruf aus einem
+Chart wählen, und sagt der Coachin ausdrücklich, nicht „du solltest X
+werden" zu sagen. `PRODUKT.md` Abschnitt 5 schließt Diagnose, Vorhersage
+und Aussagen über eine nicht gefragte dritte Person aus.
+
+Ein Halbsatz hält nicht, und es ist der letzte genau dieser Antwort.
+Nach „Ich sehe Astrologie nicht als Wissenschaft, sondern als Werkzeug
+zur Selbstreflexion" endet sie auf: „Was zählt: Hilft es dir, dich klarer
+zu sehen? Wenn ja, hat es seinen Zweck erfüllt." Die gefühlte Passung ist
+der Maßstab, den der Beitrag als den Mechanismus der Täuschung benennt.
+Eine Coachin, die einer Skeptikerin damit antwortet, hat den Punkt
+eingeräumt, ohne es zu merken.
+
+Dabei liegt diese Seite außerhalb dessen, wohin Aufgabe 71 schaut. Jene
+Aufgabe stützt sich auf vier Fassungen der Forschungsstandsaussage in
+vier Dateien. Nachgezählt im Repo über acht feste Wendungen, Stand
+dieses Commits, tragen elf ausgelieferte Seiten siebzehn solche Sätze
+(dazu einer auf `baukasten.html`, der von Nahrungsergänzung handelt und
+nicht von Astrologie). Darunter: `praxis-bereiche.html` trägt denselben
+Satz aus `B_EHRLICH` wie `bereiche.html` und `index.html`, wird in der
+Aufgabe aber nicht geführt; `index.html` trägt vier, von denen drei je
+Verfahren sagen, was gemessen ist und was nicht — also genau das, was
+Aufgabe 71 verlangt, und zwar bereits fertig; `zeitqualitaet.html` trägt
+zwei weitere; `beziehung.html` sagt von den Seelenebenen, sie seien nicht
+überprüft und auch nicht überprüfbar, was eine andere Aussage ist; und
+`klientinnen-fragen.html` trägt die oben genannte. Das Fertig-Kriterium
+von Aufgabe 71 würde `pruefe-alles.py` an jeder ausgelieferten Seite
+abbrechen lassen, die eine eigene Aussage trägt — auch an den drei auf
+`index.html`, die richtig sind.
+
+**Heißt für uns:** Der Angriff ist veröffentlicht, datiert und kommt aus
+der Fachpresse des Berufs, zu dem die Coachin gehört — und die Antwort
+der Plattform darauf steht besser da, als der Beitrag vermuten lässt. Das
+ist das Ergebnis, und es ist ein gutes. Daraus folgen zwei Dinge, und
+keines davon ist groß. Erstens endet die eine Antwort, die ihr Sicherheit
+im Gespräch geben soll, auf dem Maßstab, mit dem die Kritik sie
+auseinandernimmt. Zweitens zählt Aufgabe 71 vier Stellen, und es sind
+mehr; wer die dort verlangte Prüfung ohne die vollständige Liste baut,
+bricht entweder die richtigen Sätze auf `index.html` mit ab oder weicht
+die Prüfung auf, bis sie durchgeht.
+
+**Vorschlag:** Den letzten Halbsatz der Antwort ersetzen und die Stelle
+in Aufgabe 71 mitführen. Siehe Aufgabe 103. Zu den anderen drei
+Vorwürfen schlage ich nichts vor: `berufe.html`,
+`klientinnen-fragen.html` und `PRODUKT.md` Abschnitt 5 beantworten sie
+schon.
+
+**Dagegen spricht:** Erstens ist es ein Satz auf einer Seite, die von
+zwei der 134 ausgelieferten Seiten verlinkt wird
+(`fragen-schatzkiste.html` und `praxis.html`), geschrieben für eine der
+fünf, in der Sicht, die `REGELN.md` Abschnitt 1 zugeklappt anbietet.
+Gegen Aufgabe 101 gerechnet, wo eine Besucherin mit einem Profil
+überhaupt kein Ergebnis sieht, ist der Hebel klein.
+
+Zweitens ist die Kritik an dem Halbsatz meine, nicht die des Beitrags. Er
+behandelt diese Seite nicht und sagt nirgends, „hilft es dir" sei im
+Coaching ein unzulässiger Maßstab; er sagt im Gegenteil, Metaphern und
+Analogien seien legitime Coaching-Werkzeuge, solange sie nur die Einsicht
+stützen. So gelesen ist „hilft es dir, dich klarer zu sehen" genau der
+legitime Gebrauch und kein Eingeständnis. Welche der beiden Lesarten eine
+Klientin hört, weiß ich nicht; ich habe keine gefragt.
+
+Drittens ist die Quelle ein einziger Beitrag, und einseitig nach eigener
+Bauart: keine Befürworterin zitiert, kein Verbandsstandard angeführt, und
+auf derselben Seite steht eine Anzeige für konkurrierende
+Eignungsdiagnostik. Darauf eine Änderung der eigenen Antwort zu bauen
+heißt, die Formulierung von der schärfsten Kritikerin setzen zu lassen.
+
+Viertens wird der Ersatz länger und schwerer. Die jetzige Antwort
+funktioniert, weil sie kurz ist und sich laut sagen lässt. Ein Satz, der
+„hat mir beim Denken geholfen" von „hat über mich gestimmt" unterscheidet,
+ist richtig und zwei Teilsätze länger — und die Seite verspricht
+Sicherheit im Gespräch, nicht Vollständigkeit.
+
+Und fünftens schneidet die Zählung in beide Richtungen. Siebzehn Sätze
+auf elf Seiten lassen sich als Wildwuchs lesen, den Aufgabe 71 aufräumen
+soll — oder als Beweis, dass die Plattform je Verfahren längst tut, was
+die Aufgabe zentralisieren will. Trifft das Zweite zu, dann ist der
+richtige Schritt, die Sätze auf `index.html` als Vorbild zu nehmen und
+Aufgabe 71 kleiner zu machen, statt ihr eine Stelle hinzuzufügen. Ich
+habe nicht alle siebzehn im Zusammenhang gelesen, sondern nach acht
+Wendungen gesucht und gelesen, was sie zurückgaben.
