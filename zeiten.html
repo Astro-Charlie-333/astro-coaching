@@ -601,6 +601,55 @@ function AC_FUELL(form, werte){
   return s;
 }
 
+/* ── Eine Zahl, ein Komma ─────────────────────────────────────
+   Die eine Stelle, an der aus einer Zahl deutscher Text wird.
+
+   `REGELN.md` Abschnitt 4 sagt es seit Monaten: Zahlen mit Komma,
+   nicht mit Punkt. Auf `ophiuchus.html` stand am 2026-11-26 trotzdem
+   „44.6 Tage", „6.7", „17.1 Grad" und „-4.9° Breite" — jede Zahl der
+   Seite, zwanzig Stellen. Dieselbe Fehlerklasse wie auf der
+   Begleitungsseite am 2026-11-24, nur zwei Tage später und
+   vollständig: Dort gingen vier `toFixed(1)` ohne Umweg in den Text,
+   hier alle.
+
+   Die Lehre ist dieselbe wie bei `AC_FUELL` (Aufgabe 94): Vor dieser
+   Zeile gab es die Umwandlung dreimal, unter drei Namen —
+   `kommaZahl` in `begleit-app.js`, `komma` in `ereignis-rechner.js`,
+   `komma` in `tief-bauer.js`. Drei Fassungen heißt: Wer eine davon
+   verschärft, hat zwei veraltete. Und eine vierte Seite, die keine
+   davon kennt, liefert einfach Punkte aus — genau das ist hier
+   passiert.
+
+   Deshalb steht sie hier, neben `AC_FUELL`: Beide machen aus einem
+   Wert Text, beide brechen ab, wenn der Wert fehlt, und beide ziehen
+   beim Umzug in eine andere Umgebung unverändert mit
+   (`PRODUKT.md` Abschnitt 7).
+
+   `stellen` ist die Zahl der Nachkommastellen. Ohne Angabe bleibt
+   die Zahl, wie sie ist — nur der Punkt wird zum Komma.
+
+   Was hier **nicht** durchgeht, und zwar mit Absicht:
+
+     fehlt      `undefined`, `null` oder `NaN`. Eine Gradzahl, die
+                die Rechnung nicht geliefert hat, soll abbrechen und
+                nicht als „undefined° Breite" auf der Seite stehen —
+                dieselbe Entscheidung wie bei AC_FUELL.
+     unendlich  Eine Division durch Null bricht ab, statt „∞" zu
+                drucken.
+
+   Eine Zahl, die in ein Stilattribut geht (eine Balkenbreite in
+   Prozent), gehört **nicht** hierher: CSS verlangt den Punkt. Diese
+   Funktion ist für Text, und `pruefwerk.dezimalpunkte` prüft
+   deshalb den sichtbaren Text der Seite und nicht den Quelltext. */
+function AC_KOMMA(wert, stellen){
+  var z = Number(wert);
+  if(wert === undefined || wert === null || wert === '' || z !== z || !isFinite(z))
+    throw new Error('AC_KOMMA: keine Zahl: ' + wert);
+  var s = (stellen === undefined || stellen === null) ? String(z)
+        : z.toFixed(stellen);
+  return s.split('.').join(',');
+}
+
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
