@@ -802,7 +802,25 @@ ANZEIGEN = {
     # Beschriftung an der Lautstärkeklasse hängt — 0,2° und 0,5°
     # fallen in dieselbe. Dieselbe Klasse wie REGELN.md 6f, nur an
     # einem Bedienelement statt in einem Satz.
-    'oph/oph-app.js':              (65, 4),
+    # oph am 2026-11-26 (Aufgabe 64), die letzte des Zuges, der am
+    # 2026-11-07 mit bereich-app.js begann. Zwei Fehlerklassen kamen
+    # mit heraus, und beide waren auf der Seite zu sehen.
+    #
+    # Die erste: Jede Zahl der Seite trug einen Punkt statt eines
+    # Kommas — „44.6 Tage", „-4.9° Breite", „für den Skorpion 6.7."
+    # Das ist derselbe Fehler wie auf der Begleitungsseite am
+    # 2026-11-24, nur vollständig statt an vier Stellen, und der
+    # Grund ist derselbe wie bei AC_FUELL vor Aufgabe 94: Die
+    # Umwandlung gab es dreimal, unter drei Namen (`kommaZahl`,
+    # zweimal `komma`) — und eine vierte Seite, die keine davon
+    # kannte, lieferte einfach Punkte aus. Sie steht jetzt als
+    # AC_KOMMA an einer Stelle, neben AC_FUELL.
+    #
+    # Die zweite: Die Anzeige vergab `nrm` und `gewaehlt` im
+    # globalen Namensraum — genau die zwei Namen, die `engine.js`
+    # dort schon führt. Die Seite lief, weil der Rumpf von `nrm`
+    # Zeichen für Zeichen derselbe war und `gewaehlt` auch dort
+    # `null` sein sollte. Glück, keine Prüfung (REGELN.md 6f).
     'niveau/reading-app.js':       (70, 14),
     'werkstatt/werkstatt-app.js':  (38, 2),
 }
@@ -821,7 +839,8 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'zahlen/zahlen-app.js', 'haeuser/haeuser-app.js',
           'rituale/zauber-app.js', 'geist/geist-app.js',
           'dossier/dossier-app.js', 'analyse/analyse-app.js',
-          'begleitung/begleit-app.js', 'ereignis/ereignis-app.js'}
+          'begleitung/begleit-app.js', 'ereignis/ereignis-app.js',
+          'oph/oph-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
@@ -1034,6 +1053,82 @@ elif fassungen == [DIE_STELLE] and not eigene:
                                                             errors='replace'))
     print(f'  {len(quellen)} Quelldateien, eine Stelle, die eine Lücke füllt'
           f' — auf {seiten_mit} Seiten')
+
+# ── Eine Zahl wird an einer Stelle zu Text (Aufgabe 64) ──────
+# Gefunden am 2026-11-26 auf `ophiuchus.html`: jede Zahl der Seite mit
+# Punkt statt Komma, gegen REGELN.md Abschnitt 4. Zwei Tage vorher
+# derselbe Fehler auf der Begleitungsseite, an vier Stellen.
+#
+# Der Grund ist nicht Unachtsamkeit, sondern die Bauart: Die
+# Umwandlung gab es dreimal, unter drei Namen — `kommaZahl` in
+# `begleit-app.js`, `komma` in `ereignis-rechner.js`, `komma` in
+# `tief-bauer.js`. Drei Fassungen heißt: Wer eine verschärft, hat zwei
+# veraltete; und eine vierte Seite, die keine davon kennt, liefert
+# Punkte aus. Genau wie bei AC_FUELL vor Aufgabe 94.
+#
+# Sie steht jetzt als `AC_KOMMA` in `kern/fuellen.js`. Diese
+# Querprüfung hält, was kein bau-*.py sieht: dass es bei einer Stelle
+# bleibt. Die drei eigenen Fassungen sind eingetragen und können nur
+# schrumpfen — eine Liste in einem Dokument driftet, diese Liste
+# bricht in beide Richtungen (REGELN.md 6c).
+#
+# Eingetragen ist, was diese Prüfung bei ihrem ersten Lauf wirklich
+# gefunden hat, und das waren mehr als die drei, die oben nach ihrem
+# Namen gesucht wurden: zwölf Dateien bauen sich die Umwandlung
+# selbst. Deshalb steht hier keine Zahl in einem Satz, sondern die
+# Liste — gezählt wird bei jedem Lauf.
+KOMMA_OFFEN = {
+    'analyse/engine.js':            'replace in der Rechnung',
+    'begleitung/begleit-app.js':    'kommaZahl',
+    'bereiche/tief-bauer.js':       'komma',
+    'bez/beziehung-app.js':         'zwei Stellen',
+    'dossier/dossier-app.js':       'eigene Fassung',
+    'ereignis/ereignis-rechner.js': 'komma',
+    'geist/geist-app.js':           'eigene Fassung',
+    'kern/ich-app.js':              'eigene Fassung',
+    'monat/monat-app.js':           'eigene Fassung',
+    'mond/mond-app.js':             'eigene Fassung',
+    'zahlen/zahlen-app.js':         'eigene Fassung',
+    'zeit/zeit-app.js':             'eigene Fassung'}
+_KOMMA_STELLE = 'kern/fuellen.js'
+_EIGENES_KOMMA = re.compile(r"replace\(\s*['\"]\.['\"]\s*,\s*['\"],['\"]\s*\)"
+                           r"|split\(\s*['\"]\.['\"]\s*\)\s*\.join\("
+                           r"\s*['\"],['\"]\s*\)")
+# Feste Beispiele, damit aus der Sperre nicht lautlos eine halbe wird
+# (REGELN.md 6e).
+assert _EIGENES_KOMMA.search("String(x).replace('.', ',')")
+assert _EIGENES_KOMMA.search('s.split(".").join(",")')
+assert not _EIGENES_KOMMA.search("s.split('.').join('')")
+assert not _EIGENES_KOMMA.search("t.replace(',', '.')")
+
+komma_fassungen = sorted(q.relative_to(hier).as_posix() for q in quellen
+                         if 'function AC_KOMMA(' in q.read_text(encoding='utf-8'))
+komma_eigene = {}
+for q in quellen:
+    name = q.relative_to(hier).as_posix()
+    if name == _KOMMA_STELLE:
+        continue
+    quell = pruefwerk.nur_code(q.read_text(encoding='utf-8'))
+    if _EIGENES_KOMMA.search(quell):
+        komma_eigene[name] = True
+neu_eigen = sorted(set(komma_eigene) - set(KOMMA_OFFEN))
+weg_eigen = sorted(set(KOMMA_OFFEN) - set(komma_eigene))
+if komma_fassungen != [_KOMMA_STELLE]:
+    print(f'  AC_KOMMA steht in: {", ".join(komma_fassungen) or "keiner Datei"}'
+          f' — es gehört genau in {_KOMMA_STELLE}')
+    fehlgeschlagen.append('AC_KOMMA steht nicht an einer Stelle')
+if neu_eigen:
+    print('  EIGENE KOMMAZAHL: ' + ', '.join(neu_eigen))
+    print('      (eine Zahl wird über AC_KOMMA aus kern/fuellen.js zu Text —')
+    print('       REGELN.md Abschnitt 4, Aufgabe 64)')
+    fehlgeschlagen.append('eine Datei baut sich ihre eigene Kommazahl')
+if weg_eigen:
+    print('  EINTRAG ÜBERHOLT: ' + ', '.join(weg_eigen) + ' braucht keine')
+    print('      eigene Kommazahl mehr — Zeile aus KOMMA_OFFEN nehmen')
+    fehlgeschlagen.append('KOMMA_OFFEN ist überholt')
+if not neu_eigen and not weg_eigen and komma_fassungen == [_KOMMA_STELLE]:
+    print(f'  eine Stelle, an der eine Zahl zu Text wird'
+          f' — noch {len(KOMMA_OFFEN)} Dateien mit eigener Fassung')
 
 # ── Wer einen Regler hat, prüft seine Beschriftungen (Aufgabe 63) ──
 # Gefunden am 2026-11-25 auf `ereignisse-lesen.html`: zwei Rungen des

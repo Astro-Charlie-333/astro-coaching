@@ -887,3 +887,96 @@ assert doppelte_beschriftung(
     [('x', ['a', 'a', 'b', 'b'])]) == [
     'der Regler „x" bietet a, b zweimal an — zwei Rungen mit '
     'demselben Namen sind eine Wahl ohne Unterschied (REGELN.md 6f)']
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Eine Zahl im Text trägt ein Komma
+#
+#  Gefunden am 2026-11-26 auf `ophiuchus.html`: „44.6 Tage",
+#  „-4.9° Breite", „Die Sonne braucht für den Skorpion 6.7." — jede
+#  Zahl der Seite trug einen Punkt. `REGELN.md` Abschnitt 4 verlangt
+#  seit Monaten das Komma, und die Begleitungsseite hatte am
+#  2026-11-24 denselben Fehler an vier Stellen.
+#
+#  Dort wurde er mit einer Regel über den Quelltext beantwortet
+#  (`.toFixed(` außerhalb von `kommaZahl`). Die greift hier nicht:
+#  Dieselbe Seite rechnet mit `toFixed(1)` auch eine Balkenbreite in
+#  Prozent aus, und **CSS verlangt den Punkt**. Eine Regel, die den
+#  Quelltext liest, müsste die beiden Fälle am Aufruf
+#  unterscheiden — und steht damit wieder an dem Schlüssel, den
+#  jemand im Kopf hatte, und nicht an der Form, die im Text landet
+#  (REGELN.md 6f, derselbe Nachsatz wie bei `kommaZahl`).
+#
+#  Geprüft wird deshalb der **sichtbare Text der gezeichneten
+#  Seite**. Das ist die Form, die gemeint ist (REGELN.md 6e): Was im
+#  Stilattribut steht, liest diese Regel nie, und was ein Mensch
+#  liest, prüft sie immer — gleich, über welchen Weg es dorthin kam.
+#
+#  Der deutsche Tausenderpunkt bleibt erlaubt, und er kommt wirklich
+#  vor: Im Text der Seite steht „rund 25.800 Jahren". Ihn vom
+#  Dezimalpunkt zu trennen ist eine Formfrage und keine Wortfrage —
+#  hinter einem Tausenderpunkt stehen genau drei Ziffern, hinter
+#  einem Dezimalpunkt eine, zwei oder mehr als drei.
+# Der Punkt am Satzende gehört nicht zur Zahl: „für den Skorpion 6.7."
+# ist eine Zahl mit Punkt und ein Satzende, nicht eine Zahl mit zwei.
+# Deshalb sperrt der Blick nach vorn nur Ziffern und das Komma.
+_ZAHLKETTE = re.compile(r'(?<![\d,.])\d+(?:\.\d+)+(?![\d,])')
+
+
+def dezimalpunkte(text):
+    """Jede Zahl im sichtbaren Text, die einen Punkt als
+    Dezimaltrenner trägt. Rückgabe sind die Zahlen selbst, damit die
+    Meldung zeigt, wonach man auf der Seite sucht."""
+    raus = []
+    for m in _ZAHLKETTE.finditer(text):
+        teile = m.group(0).split('.')
+        if any(len(t) != 3 for t in teile[1:]):
+            raus.append(m.group(0))
+    return sorted(set(raus))
+
+
+def pruefe_dezimalpunkte(text, woher='der Seite'):
+    """Bricht ab, sobald auf `text` eine Zahl mit Punkt steht."""
+    schlimm = dezimalpunkte(text)
+    if not schlimm:
+        return []
+    return ['Zahl mit Punkt statt Komma auf %s: %s — eine Zahl wird '
+            'über AC_KOMMA aus kern/fuellen.js zu Text '
+            '(REGELN.md Abschnitt 4)'
+            % (woher, ', '.join(schlimm[:8]))]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Der Eingang dieser Regel ist der Text einer Seite und ändert sich
+# mit jedem Chart, das sie zeichnet. Diese Zeilen laufen beim Import,
+# also bevor die erste Seite gebaut wird.
+#
+# Was anschlagen muss — die Zahlen, die am 2026-11-26 wirklich
+# dastanden.
+for _t, _w in [('44.6 Tage', ['44.6']),
+               ('6.7', ['6.7']),
+               ('-4.9° Breite', ['4.9']),
+               ('und für den Skorpion 6.7. Der Schlangenträger', ['6.7']),
+               ('17.1 Grad nördlich', ['17.1']),
+               ('44.0 Grad', ['44.0']),
+               ('2.25 Grad', ['2.25']),
+               # Mehr als drei Ziffern hinter dem Punkt ist kein
+               # Tausenderpunkt, sondern eine krumme Zahl.
+               ('0.12345', ['0.12345'])]:
+    assert dezimalpunkte(_t) == _w, f'müsste anschlagen: {_t}'
+# Was durchgehen muss.
+for _t in ['44,6 Tage',                   # so ist es richtig
+           'rund 25.800 Jahren',          # Tausenderpunkt, steht im Körper
+           'von 1.234.567 Jahren',        # mehrere Tausendergruppen
+           '1930 festgelegt',             # eine Jahreszahl hat keinen Punkt
+           'etwa vom 29. November bis zum 17. Dezember',
+           'Abschnitt 4. Die Zahl steht da',   # Satzende hinter einer Zahl
+           'zu je 27 Grad 41 Minuten',
+           '97,5 Prozent',
+           '17° Krebs 19\'',
+           '']:
+    assert dezimalpunkte(_t) == [], f'müsste durchgehen: {_t} → {dezimalpunkte(_t)}'
+# Und die Meldung nennt die Zahl, nicht nur, dass es eine gibt.
+assert '44.6' in pruefe_dezimalpunkte('44.6 Tage')[0]
+assert pruefe_dezimalpunkte('44,6 Tage') == []
+del _t, _w

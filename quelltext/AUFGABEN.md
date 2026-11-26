@@ -56,7 +56,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `dossier-app.js` (2026-11-21) und
 `analyse-app.js` (2026-11-23) und
 `begleit-app.js` (2026-11-24) und
-`ereignis-app.js` (2026-11-25);
+`ereignis-app.js` (2026-11-25) und
+`oph-app.js` (2026-11-26);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -91,9 +92,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 64 · `oph-app.js` (65, 4)
-`ophiuchus.html`.
 
 ### 65 · `reading-app.js` (70, 14)
 `reading.html` — das Werkzeug, mit dem die Coachin einen Tiefgang
@@ -1465,12 +1463,42 @@ in `karte-app.js` und `mond-app.js` rechnet `toFixed` Punkte eines
 SVG-Pfades aus, und dort gehört der Punkt hin. Die Regel muss also
 zwischen *wird gezeichnet* und *wird gelesen* unterscheiden, sonst
 greift sie zu weit (`REGELN.md` 6e).
-**Fertig, wenn:** eine Zahl an einer Stelle zu deutschem Text wird,
-diese Stelle in `kern/` steht, jedes `bau-*.py` einer rechnenden
-Seite die Regel ruft, `pruefe-alles.py` nachzählt, welche Bauten sie
-rufen — sodass ein Bau, der sie fallen lässt, auffällt —, und eine
-Gradzahl mit Punkt in jeder dieser Seiten den Bau abbricht, am
-gezeichneten Ergebnis gemessen und nicht an den Daten.
+Am 2026-11-26 ist genau das eingetreten, was diese Zeile vorausgesagt
+hat, und zwar auf einer Seite, die in der Zählung von damals nicht
+einmal vorkam: Auf `ophiuchus.html` trug **jede** Zahl einen Punkt —
+„44.6 Tage", „-4.9° Breite", „für den Skorpion 6.7." Die Seite kannte
+keine der dreizehn Kommafunktionen, also hatte sie keine.
+
+Beim Erledigen von Aufgabe 64 sind deshalb drei der fünf Punkte
+eingelöst:
+
+* Die Stelle gibt es und sie steht in `kern/`: `AC_KOMMA` in
+  `kern/fuellen.js`, neben `AC_FUELL`. Ein fehlender Wert und eine
+  Division durch Null brechen dort ab, statt gedruckt zu werden.
+* Die Regel unterscheidet *wird gezeichnet* von *wird gelesen*, und
+  zwar auf dem einzigen Weg, der dafür trägt:
+  `pruefwerk.dezimalpunkte` liest den **sichtbaren Text der
+  gezeichneten Seite**. Was in ein Stilattribut geht — die
+  Balkenbreite auf dieser Seite, die SVG-Pfade in `karte-app.js` und
+  `mond-app.js` — sieht sie nie. Den deutschen Tausenderpunkt lässt
+  sie an der Form durch: dahinter stehen genau drei Ziffern.
+* `pruefe-alles.py` zählt nach. `bau-oph.py` ruft die Regel auf
+  jeder Stufe und in jeder Lage.
+
+Offen ist der Rest, und er ist größer als gedacht: Die Querprüfung hat
+beim ersten Lauf **zwölf** Dateien gefunden, die sich die Umwandlung
+selbst bauen — darunter `analyse/engine.js`, `bez/beziehung-app.js`,
+`zahlen-app.js`, `zeit-app.js` und `mond-app.js`, die in der Zählung
+vom 2026-11-24 nicht genannt waren. Welche es sind, steht in
+`KOMMA_OFFEN` in `pruefe-alles.py`; die Liste bricht in beide
+Richtungen und kann nur schrumpfen.
+
+**Fertig, wenn:** `KOMMA_OFFEN` leer ist, keine Datei außer
+`kern/fuellen.js` einen Punkt selbst zu einem Komma macht, jedes
+`bau-*.py` einer rechnenden Seite `pruefe_dezimalpunkte` am
+gezeichneten Ergebnis ruft, `pruefe-alles.py` nachzählt, welche
+Bauten sie rufen — sodass ein Bau, der sie fallen lässt, auffällt —,
+und eine Gradzahl mit Punkt in jeder dieser Seiten den Bau abbricht.
 
 ### 100 · Der Satz für „noch kein Profil" steht auf keiner Seite
 Gefunden beim Erledigen von Aufgabe 62 am 2026-11-24. In
@@ -1495,7 +1523,123 @@ landet.
 
 ---
 
+*Gefunden am 2026-11-26 beim Erledigen von Aufgabe 64.*
+
+### 104 · Der Wissensregler auf `ophiuchus.html` ändert nichts
+Beim Abgleich des gezeichneten Ergebnisses über alle fünf Stufen
+aufgefallen. Die Seite trägt die Stufenleiste oben, hört auf
+`ac-niveau` und zeichnet bei jedem Wechsel neu — und ihr sichtbarer
+Text ist auf Stufe 0 und auf Stufe 4 **Wort für Wort derselbe**. Der
+einzige Unterschied ist die Beschreibung, die die Leiste über sich
+selbst schreibt.
+
+Das ist dieselbe Fehlerklasse wie die zwei Rungen namens
+„Volltreffer" am 2026-11-25, eine Größe höher: ein Bedienelement, das
+eine Wahl anbietet, die keinen Unterschied macht. Fünf Stufen, eine
+Ausgabe.
+
+Und es ist `REGELN.md` Abschnitt 2 von der anderen Seite her: Auf
+Stufe 0 stehen auf dieser Seite Ekliptik, Präzession, Ayanamsa,
+Siderisch und zehn Planetennamen. Die Seite *handelt* von der
+Mechanik und darf sie benennen (Abschnitt 2a, `ereignisse-lesen.html`
+macht es vor) — aber dann muss die Stufe auch etwas tun: auf Stufe 0
+der Rechenweg in `ac-tech` und die Aussage in Alltagssprache davor.
+
+Dahinter steckt eine Sachfrage und nicht nur eine Bauweise: Was
+bleibt von dieser Seite auf Stufe 0 übrig? Die Antwort auf „bin ich in
+Wahrheit Schlangenträger" lässt sich ohne ein einziges Fachwort geben,
+und sie ist das, wovon jemand einen Screenshot macht (`PRODUKT.md` 2,
+Punkt 3). Die drei geprüften Behauptungen oben auf der Seite sind
+schon so geschrieben; die gerechnete Hälfte darunter ist es nicht.
+**Fertig, wenn:** der sichtbare Text der Seite sich zwischen Stufe 0
+und Stufe 4 wirklich unterscheidet, auf Stufe 0 kein Fachwort und
+keine Gradangabe sichtbar ist, ab Stufe 2 die Mechanik in `ac-tech`
+dazukommt, und `bau-oph.py` beides in seiner Rauchprobe festhält —
+wie `bau-ereignis.py` es für `ereignisse-lesen.html` tut.
+
 ## Erledigt
+
+* **2026-11-26** · `oph-app.js` kommt aus dem Satzgeschäft heraus
+  (Aufgabe 64, aus 34 und 38) — die **letzte** Anzeige des Zuges, der
+  am 2026-11-07 mit `bereich-app.js` begann. Die fünfundsechzig Sätze
+  und Beschriftungen stehen jetzt in `oph-daten.js` als `OP_T`; die
+  Anzeige setzt mit `AC_FUELL` ein und lässt „dein" von `B_BEUGE`
+  bilden. Verriegelt ist das in `bau-oph.py`: beide Riegel aus
+  `pruefwerk`, in allen drei Anführungsarten gegengeprobt, dazu
+  `pruefe_fueller`, `pruefe_vorlagenluecken` und `ruft_ohne_stelle`.
+  Die Seite hatte bis heute **keine Rauchprobe**; sie hat jetzt eine.
+
+  Dabei sind drei Doppelungen zusammengefallen, die alle dasselbe
+  zweimal sagten: die zwölf Zeichennamen (als `ZN` *und* in `Z13`,
+  wo nur ein dreizehnter Name dazwischensteht), der kopierbare
+  Absatz für Klientinnen (einmal im Körper, einmal als `ANTWORT` in
+  der Anzeige) und die beiden Sternbilder, die der Spannensatz
+  vergleicht (genannt im Satz, nachgeschlagen in der Anzeige). Die
+  dreizehn Zeichen entstehen jetzt aus den zwölf, der Absatz steht
+  einmal und wird zweimal verschieden ausgegeben — auf der Seite
+  kursiv, in der Zwischenablage ohne Auszeichnung.
+
+  Zwei Fehlerklassen kamen mit heraus, und beide waren **auf der
+  Seite** zu sehen.
+
+  Die erste: **Jede Zahl der Seite trug einen Punkt statt eines
+  Kommas.**
+
+  | auf der Seite | richtig |
+  |---|---|
+  | 44.6 Tage | 44,6 Tage |
+  | -4.9° Breite | -4,9° Breite |
+  | für den Skorpion 6.7. | für den Skorpion 6,7. |
+
+  `REGELN.md` Abschnitt 4 sagt es seit Monaten, und am 2026-11-24
+  stand derselbe Fehler auf der Begleitungsseite — dort an vier
+  Stellen, hier an allen zwanzig. Der Grund ist nicht
+  Unachtsamkeit: Die Umwandlung gab es zwölfmal, unter drei Namen,
+  und diese Seite kannte keine davon. Sie steht jetzt als
+  `AC_KOMMA` in `kern/fuellen.js`, neben `AC_FUELL` — beide machen
+  aus einem Wert Text, beide brechen ab, wenn der Wert fehlt.
+
+  Die Regel dagegen liest **nicht den Quelltext**, und das ist der
+  Punkt: Dieselbe Seite rechnet mit `toFixed(1)` auch eine
+  Balkenbreite in Prozent aus, und dort verlangt CSS den Punkt. Eine
+  Regel über den Quelltext müsste die beiden Fälle am Aufruf
+  unterscheiden und saß damit wieder an dem Schlüssel, den jemand im
+  Kopf hat, statt an der Form, die im Text landet (`REGELN.md` 6f).
+  `pruefwerk.dezimalpunkte` liest deshalb den sichtbaren Text der
+  gezeichneten Seite, auf jeder Stufe und in jeder Lage. Den
+  deutschen Tausenderpunkt lässt sie durch, und zwar an der Form:
+  hinter einem Tausenderpunkt stehen genau drei Ziffern. Auf dieser
+  Seite steht wirklich einer — „rund 25.800 Jahren".
+
+  Die zweite: Die Anzeige vergab `nrm` und `gewaehlt` im **globalen
+  Namensraum** — genau die zwei Namen, die `engine.js` dort schon
+  führt. Die Seite lief, weil der Rumpf von `nrm` Zeichen für Zeichen
+  derselbe war und `gewaehlt` auch in der Engine `null` sein sollte.
+  Glück, keine Prüfung. Die Anzeige liegt jetzt in einer eigenen
+  Hülle, und `bau-oph.py` zählt nach, welcher Name wirklich global
+  wird — eine Datei in eigener Hülle gibt nur ihre `window.`-Namen
+  heraus, sonst schlüge die Regel auf jeden Namen an, den eine Hülle
+  gerade schützt.
+
+  Dreimal ist dabei eine eigene Prüfung zu weit gegriffen, bevor sie
+  saß, und jedes Mal auf dieselbe Weise: Sie zählte Zeichen, statt
+  die Form zu prüfen (`REGELN.md` 6e). „Jeder Text ist länger als
+  sechs Zeichen" schlug auf `ohne: '—'` an, „eine Vorlage mit Lücke
+  ist länger als vierzehn" auf `'{tage} Tage'`, und „nichts ragt über
+  den Rand" auf die Vergleichstabelle, die auf dem Telefon
+  absichtlich seitwärts rollt. Gemeint war jedes Mal etwas
+  Genaueres — eine leere Vorlage, eine Vorlage, die nichts als ihre
+  Lücke ist, und ein Element, über dem **kein** rollender Kasten
+  steht. Eine Prüfung, die bei richtiger Bauart meckert, wird
+  abgeschaltet.
+
+  Nachgemessen: Der sichtbare Text der Seite ist auf allen fünf
+  Stufen, mit und ohne Profil und für beide Probecharts derselbe wie
+  vorher — bis auf die Punkte, die Kommas geworden sind. Nebenbei
+  wirft die Schaltfläche „Diesen Absatz kopieren" keinen Seitenfehler
+  mehr: Die abgelehnte Zusage der Zwischenablage wird jetzt
+  abgefangen.
+
 
 * **2026-11-25** · `ereignis-app.js` kommt aus dem Satzgeschäft heraus
   (Aufgabe 63, aus 34 und 38). Die achtundzwanzig Sätze und
