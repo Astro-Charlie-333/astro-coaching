@@ -990,6 +990,74 @@ für eine Vier (7,7), eine Eins (11,1) und eine Zwei (3,3) nach
 `REGELN.md` Abschnitt 6e, weil die Eingabe je Besucherin eine andere
 ist.
 
+### 106 · Auf Stufe 0 stehen auf „Jetzt" Planetennamen, Zeichen und Grade in den Überschriften
+Befund der Prüferin vom 2026-11-27 (Die Suchende, zweiter Befund).
+`index.html` zeigt mit von Hand gesetzter Stufe „Neu" 18
+Kartenüberschriften der Bauart „Neptun auf deine Sonne · 1.1°",
+„Jupiter quer zu deiner öffentlichen Seite · 0.7°", „Saturn läuft
+durch dieses Feld" — über die sichtbare Seite gezählt zehn
+Planetennamen 55 Mal, zwei Zeichennamen („im Zeichen Schütze", „im
+Zeichen Krebs") und sechs Gradangaben; beim zweiten erfundenen Profil
+16 Überschriften und neun Gradangaben. Die Stufenleiste derselben Seite
+verspricht über „Neu" wörtlich „Keine Fachbegriffe, keine Grade, keine
+Planetennamen". `REGELN.md` Abschnitt 2 schließt Zeichen und
+Gradzeichen auf Stufe 0 aus; Abschnitt 2a erlaubt den Namen nur mit
+Erklärung auf derselben Karte und **vor** der Wirkung — hier steht der
+Name in der Überschrift und die Erklärung im Absatz darunter. Die
+Zeilen „Saturn läuft wieder direkt", „Jupiter wird rückläufig" und der
+Kazimi-Abschnitt sind **nicht** gemeint: Das sind erlaubte Namen nach
+2a, erklärt und an der richtigen Stelle.
+
+Es ist die Seite, die `index.html` ist, und es ist die Karte, von der
+jemand einen Screenshot macht (`PRODUKT.md` 2, Punkt 3) — allein
+stehend sagt „Neptun auf deine Sonne · 1.1°" nichts. Der Satz, der es
+sagt, liegt schon fertig darunter: „Neptun macht gerade unscharf, wofür
+du gehalten werden willst." Dieselbe Fehlerklasse wie Aufgabe 74, 82
+und 27, und der Vorschlag vom 23.10. (Auslieferzustand „Neu") fängt sie
+nicht, weil die Stufe hier bereits 0 ist.
+**Fertig, wenn:** auf Stufe 0 auf „Jetzt" kein Planetenname, kein
+Zeichenname und kein Gradzeichen sichtbar ist, die Überschrift stattdessen
+sagt, was passiert (die Wirkungssätze der Karten liefern den Text), Name
+und Winkel ab Stufe 2 in `ac-tech` mit `data-ab="2"` warten, Gradangaben
+dort mit Komma statt Punkt stehen (`REGELN.md` Abschnitt 4), und der Bau
+von „Jetzt" abbricht, sobald im auf Stufe 0 gezeichneten Text eines
+dieser Wörter vorkommt — am gezeichneten Ergebnis gemessen, über
+mindestens zwei feste erfundene Geburtsbilder, mit `assert`-Fällen nach
+`REGELN.md` Abschnitt 6e, weil die Treffer am Himmel des Tages hängen.
+
+### 107 · Der Begrüßungssatz auf „Jetzt" sagt den Ertrag des Vormittags voraus
+Befund der Prüferin vom 2026-11-27 (Die Suchende, erster Befund, weil
+Grenzen zuerst kommen). Im Begrüßungsblock steht, am Telefon bei 508
+Pixeln und damit im ersten Bildschirm: „Dazu kommt: bis 12:23 lohnt sich
+nichts, was ein Ergebnis haben soll — Angefangenes bleibt heute eher
+liegen." Das behauptet eine Zukunft und setzt einen Preis darauf;
+`PRODUKT.md` Abschnitt 5 schließt beides aus („Keine Vorhersage",
+„Keine Angst als Hebel. Keine Dringlichkeit, die es nicht gibt."). Der
+Satz hängt am Himmel des Tages und nicht am Geburtsbild — bei beiden
+erfundenen Profilen steht er wortgleich da —, also bekommt ihn an einem
+solchen Tag jede Besucherin, und zwar als dritten Satz, den die Seite
+überhaupt an sie richtet.
+
+Die Regel dagegen gibt es seit dem 5.11.: `pruefwerk.handgriff_tadel`
+verbietet Preis, Folge nach dem Fenster und Vorhersage des Ertrags — und
+die zehn Handgriffe in `bereich-daten.js` sind damit sauber (nachgesehen:
+„Nimm dir die Sache vor, die du aufschiebst."). Die Sperre sitzt nur am
+falschen Schlüssel: Sie gilt für Handgriffe, der Satz steht in der
+Begrüßung. Das ist die Fehlerklasse aus `REGELN.md` Abschnitt 6f, auf
+eine Sprachprüfung angewandt. Verwandt mit Aufgabe 17, aber nicht
+dasselbe: Dort ist nur noch der Ehrlichkeitsabschnitt offen.
+**Fertig, wenn:** der Satz die Sache beschreibt, statt den Ertrag
+vorherzusagen (etwa: „Bis 12:23 läuft eine Phase, der die Überlieferung
+nachsagt, dass Angefangenes liegen bleibt. Ob das bei dir stimmt, weißt
+nur du."), er wie jeder andere Text aus einer Datendatei kommt, die
+Verbote aus `handgriff_tadel` auf **jeden** auf einer rechnenden Seite im
+Laientext sichtbaren Satz laufen statt nur auf die zehn Handgriffe, und
+die Regel `assert`-Fälle nach `REGELN.md` Abschnitt 6e trägt — mit
+mindestens einem Beispiel, das anschlagen muss („lohnt sich nichts, was
+ein Ergebnis haben soll") und einem, das durchgehen muss —, weil der Satz
+nur an Tagen erscheint, an denen der Mond ohne Anschluss läuft, und eine
+Prüfung sonst grün ist, ohne etwas geprüft zu haben.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich

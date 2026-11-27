@@ -872,3 +872,193 @@ dem`), sie läuft über **alle** Stufen und über mehr als ein Geburtsbild —
 sonst findet sie genau diesen Fehler wieder nicht, weil er bei Tomke
 heute zufällig nicht vorkam (`REGELN.md` Abschnitt 6e: dass eine Prüfung
 grün ist, heißt nicht, dass sie etwas geprüft hat).
+
+---
+
+### 2026-11-27 · Die Suchende
+
+Sechster Durchgang. Zuletzt war die Coachin dran, also wieder die Erste
+aus `PRODUKT.md` Abschnitt 2: will sich verstehen und ihr Leben bewusst
+gestalten, braucht keine Astrologie-Kenntnisse — und will oft auch keine.
+
+**Zur Lage dieses Durchgangs:** `astro-charlie-333.github.io` war aus der
+Umgebung dieses Durchgangs zum sechsten Mal nicht erreichbar — der
+Netzübergang hat die Adresse abgelehnt (403 auf CONNECT, als
+Richtlinienablehnung vermerkt). Nicht umgangen. Geprüft wurde deshalb
+wieder der ausgelieferte Stand aus `main` (`f3893ab`, 27.11.), lokal
+ausgeliefert und im Browser durchgegangen — dieselben Dateien, die GitHub
+Pages ausliefert, aber nicht die Adresse selbst. Kein Quelltext gelesen,
+nur der Bildschirm. Wer die Befunde nachstellt, nutzt die echte Adresse;
+weicht sie vom Stand aus `main` ab, gilt sie.
+
+Zwei Profile, beide erfunden: Juna (21.03.1995, 16:10, Dortmund) für den
+Durchgang, Toril (09.07.1988, 05:40, Kiel) zum Gegenprüfen jedes Befunds
+an einem zweiten Geburtsbild. Beide Breiten (390 und 1440), Stufe „Neu"
+von Hand gesetzt, **bevor** die erste Seite geladen wurde (`ac_niveau`
+steht auf `0`).
+
+**Vier Sachen, die ausdrücklich keine Befunde sind,** weil sie schon
+stehen: der Leerzustand von „Jetzt" (23.10., Aufgabe 18 — unverändert das
+Erste, was eine Neue sieht), der Auslieferzustand „Mittel" der globalen
+Leiste (23.10.), die Lage von „Seite einstellen" am Fuß der Seite
+(06.11.) und der fehlende Abschnitt „Was das taugt — und was nicht" auf
+`index.html` (Aufgabe 17, dort der einzige noch offene Rest).
+
+**Und zwei Sachen, die gut sind und genannt gehören:** `bereiche.html`
+beantwortet die Prüffrage aus `PRODUKT.md` Abschnitt 6 vollständig und
+ohne ein einziges Fachwort — was los ist, ein Handgriff, ein Datum, dazu
+„Was das taugt — und was nicht" mit vier echten Fragen, darunter „Was,
+wenn ein Bereich still ist und sich trotzdem alles dreht? — Dann stimmt
+dein Erleben und nicht die Seite. Deine Lage hat immer Vorrang." Und die
+Handgriffe aus dem Befund vom 23.10. sind wirklich weg: Auf „Jetzt" steht
+heute „Nimm dir die Sache vor, die du aufschiebst. Eine reicht, und sie
+darf klein sein." Kein Preis, keine Folge. An diesen beiden sieht man,
+wie der Rest aussehen müsste — und deshalb fällt der erste Befund unten
+so auf.
+
+---
+
+### `index.html`, Begrüßung · die Seite sagt mir im ersten Bildschirm, dass sich mein Vormittag nicht lohnt
+
+**Rolle:** Die Suchende, Telefon (390) und Rechner (1440), Stufe „Neu"
+von Hand gesetzt.
+**Gesehen:** Im Begrüßungsblock, direkt unter „Guten Morgen, Juna", steht:
+„Im Hintergrund liegt deine Aufmerksamkeit die nächsten zwei Tage bei
+einem Thema: Freunde. … Dazu kommt: **bis 12:23 lohnt sich nichts, was
+ein Ergebnis haben soll — Angefangenes bleibt heute eher liegen.**" Am
+Telefon steht der Satz bei 508 Pixeln, am Rechner bei 410 — im ersten
+Bildschirm, ohne zu scrollen. Beim zweiten Profil steht er wortgleich da
+(nur das Thema wechselt von Freunde auf Selbstwert): Er hängt am Himmel
+des Tages und nicht am Geburtsbild, bekommt ihn an so einem Tag also
+jede Besucherin. Eine Einordnung steht nirgends in der Nähe.
+**Gestolpert:** Der dritte Satz, den die Seite überhaupt an mich richtet,
+sagt mir, dass das, was ich heute Vormittag anfange, nichts bringt.
+**Was es kostet:** Zwei Wege, beide teuer. Entweder ich glaube es — dann
+habe ich einen halben Tag nicht angefangen, weil eine Rechnung mir
+gesagt hat, es lohne sich nicht. Oder ich erkenne den Ton: „Merkur
+rückläufig, unterschreib jetzt bloß nichts" ist genau das Format, das
+`PRODUKT.md` Abschnitt 2, Punkt 2 als das beschreibt, was diese
+Zielgruppe sofort wiedererkennt — und dann hat die Seite ihren
+Unterschied im ersten Bildschirm verspielt, bevor sie ihn zeigen konnte.
+`PRODUKT.md` Abschnitt 5 schließt beides aus: „Keine Vorhersage und kein
+Versprechen über die Zukunft" und „Keine Angst als Hebel. Keine
+Dringlichkeit, die es nicht gibt." Dass die Regel schon existiert, macht
+es nicht billiger, sondern teurer: `pruefwerk.handgriff_tadel` verbietet
+die Vorhersage des Ertrags seit dem 5.11. und hat die Handgriffe
+tatsächlich sauber bekommen (siehe oben) — aber sie gilt nur für die
+zehn Handgriffe aus `bereich-daten.js`. Dieser Satz steht woanders und
+geht deshalb durch. Es ist derselbe Ast wie am 23.10., nur an der Stelle,
+an der die Sperre nicht sitzt.
+**Vorschlag:** Die Sache selbst darf bleiben; sie ist eine alte und
+bekannte Beobachtung. Sie gehört nur als Beschreibung formuliert und
+nicht als Ertragsvorhersage: „Bis 12:23 läuft eine Phase, der die
+Überlieferung nachsagt, dass Angefangenes liegen bleibt. Ob das bei dir
+stimmt, weißt nur du." Geprüft wird die Klasse und nicht der Fall, nach
+der goldenen Regel aus `REGELN.md` Abschnitt 5: Die vier Verbote aus
+`handgriff_tadel` — kein Preis, keine Folge nach dem Fenster, keine
+Vorhersage des Ertrags — gelten für **jeden** Satz, der auf einer
+rechnenden Seite im Laientext landet, nicht nur für die zehn Handgriffe.
+Und sie werden gegen feste Beispiele gehalten (`REGELN.md` Abschnitt 6e),
+weil dieser Satz nur an Tagen erscheint, an denen der Mond ohne Anschluss
+läuft: Eine Prüfung, die heute grün ist, hat an den anderen Tagen nichts
+geprüft.
+
+---
+
+### `index.html` auf Stufe „Neu" · achtzehn Überschriften mit Planetennamen, und die Leiste verspricht auf derselben Seite „keine Planetennamen"
+
+**Rolle:** Die Suchende, Telefon (390) und Rechner (1440), Stufe „Neu",
+von Hand gesetzt, bevor die erste Seite geladen wurde.
+**Gesehen:** Im Abschnitt „Was dein Bild gerade trifft" und weiter unten
+stehen **18 Kartenüberschriften** dieser Bauart: „Jupiter quer zu deiner
+öffentlichen Seite · 0.7°", „Neptun auf deine Sonne · 1.1°", „Neptun im
+Einklang mit deinem Mond · 0.4°", „Sonne quer zu deinem Auftreten ·
+0.7°", „Saturn läuft durch dieses Feld", „Mars gegenüber deinem Merkur".
+Dazu „Mittwoch, 9. Dezember, 01:58 — im Zeichen Schütze" und „im Zeichen
+Krebs". Über den sichtbaren Text der Seite gezählt: zehn Planetennamen
+55 Mal, zwei Zeichennamen, sechs Gradangaben. Die erste dieser
+Überschriften steht am Telefon bei 2.585 von 9.218 Pixeln, am Rechner bei
+1.740 von 6.187 — also im ersten Drittel. Beim zweiten Profil dasselbe
+Bild: 16 solche Überschriften, neun Gradangaben, darunter „0.0°". Die
+Stufenleiste liegt auf dieser Seite im zugeklappten „Seite einstellen"
+ganz unten, und was dort über „Neu" steht, ist wörtlich: „Keine Ahnung
+von Astrologie. Alles in Alltagssprache. **Keine Fachbegriffe, keine
+Grade, keine Planetennamen** — nur, worum es geht."
+
+Nicht gemeint sind die Zeilen „Saturn läuft wieder direkt", „Jupiter wird
+rückläufig" und der Kazimi-Abschnitt. Das sind Namen im Sinne von
+`REGELN.md` Abschnitt 2a, sie werden auf derselben Karte erklärt, und sie
+gehören genau deshalb dorthin.
+**Gestolpert:** Ich habe die Stufe eingestellt, die mir verspricht, dass
+keine Planetennamen und keine Grade kommen, und lese eine Seite voller
+Planetennamen und Grade.
+**Was es kostet:** Abbruch — und einer, den der Vorschlag vom 23.10. nicht
+auffängt. Dort stand „Dass auf Stufe 0 keine Fachsprache sichtbar ist,
+stimmt", und vorgeschlagen war, Stufe 0 auszuliefern. Das würde hier
+nichts ändern: Ich *bin* auf Stufe 0. Was ankommt, ist, dass ich erst
+eine Sprache lernen muss, bevor ich etwas über mich erfahre — genau das,
+was `PRODUKT.md` Abschnitt 3 als Vorsprung ausschließt („Niemand muss
+erst eine Sprache lernen, um etwas über sich zu erfahren"). Zwei Sachen
+machen es teurer als eine gewöhnliche Fachsprachenstelle. Es steht in den
+**Überschriften**, also in dem, was ich lese, bevor ich mich entscheide
+weiterzulesen. Und es ist die Karte, von der jemand einen Screenshot
+macht (`PRODUKT.md` Abschnitt 2, Punkt 3): Allein stehend sagt „Neptun
+auf deine Sonne · 1.1°" einer Freundin gar nichts. Der Absatz direkt
+darunter kann es — „Neptun macht gerade unscharf, wofür du gehalten
+werden willst" —, nur steht er an zweiter Stelle.
+**Vorschlag:** Die Überschrift sagt, was passiert; Name und Winkel warten
+in `ac-tech` (`REGELN.md` Abschnitt 2: „Eine Überschrift sagt, was
+passiert, nicht nur, woran man es abliest"). Die Worte dafür liegen
+schon fertig auf derselben Karte. Grade gehören auf Stufe 0 gar nicht auf
+die Seite — und wo sie ab Stufe 2 stehen, mit Komma statt Punkt
+(`REGELN.md` Abschnitt 4: „0,7 Grad", nicht „0.7°"). Geprüft wird die
+Klasse: Der Bau von „Jetzt" bricht ab, sobald im auf Stufe 0 gezeichneten
+Text ein Planetenname, ein Zeichenname oder ein Gradzeichen sichtbar ist
+— am gezeichneten Ergebnis gemessen, über mehr als ein Geburtsbild und
+gegen feste Beispiele gehalten (`REGELN.md` Abschnitt 6e), weil die
+Treffer am Himmel des Tages hängen. Dieselbe Fehlerklasse wie Aufgabe 74
+(`beziehung.html`), Aufgabe 82 (`zahlen.html`) und Aufgabe 27
+(Ich-Seite) — hier auf der Seite, die `index.html` ist.
+
+---
+
+### „Jetzt" und `bereiche.html` · zwei Bereiche sind gleichzeitig „dein lautester Bereich"
+
+**Rolle:** Die Suchende, Telefon (390) und Rechner (1440), Stufe „Neu".
+**Gesehen:** Im Abschnitt „Wo gerade am meisten los ist", unter der Zeile
+„Deine Lebensbereiche, der lauteste zuerst", steht als erste Karte
+„Umbruch · VIEL LOS · **Umbruch ist gerade dein lautester Bereich.**"
+und als zweite „Beruf · VIEL LOS · **Der Beruf ist gerade dein lautester
+Bereich.**" Bei beiden Breiten. Auf `bereiche.html` steht der Satz beim
+Aufschlagen nur einmal; tippt man in „Auf einen Blick" den Beruf an,
+steht oben „Umbruch ist gerade dein lautester Bereich." und im Einzelteil
+darunter „Der Beruf ist gerade dein lautester Bereich." — beides
+gleichzeitig auf einem Bildschirm. Der Satz hängt also nicht am Rang,
+sondern an der Lautstärkestufe „VIEL LOS": Jeder Bereich auf dieser Stufe
+trägt ihn. Beim zweiten Profil steht heute kein Bereich auf „VIEL LOS",
+und die Dopplung kommt nicht vor.
+**Gestolpert:** Ich frage die Seite, wo ich anfangen soll, und bekomme
+zwei Antworten, die sich gegenseitig ausschließen.
+**Was es kostet:** Kein Abbruch, aber der Satz ist die einzige Stelle, die
+mir die Reihenfolge erklärt, und er ist falsch. Entweder ich merke es —
+dann weiß ich nicht mehr, worauf die Sortierung beruht, und die
+Sortierung ist das, was diese Seite überhaupt brauchbar macht. Oder ich
+merke es nicht und nehme zwei Baustellen mit statt der einen, zu der die
+Seite mir raten wollte. `REGELN.md` Abschnitt 6f ist dazu wörtlich:
+„**„der deutlichste", „der stärkste", „der nächste" gibt es je Bezug
+genau einmal.** Kommt er zweimal vor, ist keiner von beiden wahr." Der
+Bezug ist hier der Mensch und nicht der Bereich. Es ist derselbe Fall wie
+am 1.11. mit den zwei „deutlichsten Tagen", eine Ebene höher — und die
+Prüfung von damals greift nicht, weil sie die Titel der Terminliste
+zählt und nicht die Lautstärketexte.
+**Vorschlag:** Der Superlativ gehört an den Rang und nicht an die Stufe:
+Der oberste Bereich bekommt „ist gerade dein lautester Bereich", jeder
+weitere mit derselben Lautstärke einen Satz, der eine Menge beschreibt
+und keinen ersten Platz („Hier ist gerade ebenso viel los."). Geprüft
+wird die Klasse nach `REGELN.md` Abschnitt 6f: Die Prüfung, die seit dem
+1.11. die Titel der Terminliste zählt, zählt zusätzlich die Superlative
+im gezeichneten Text einer Seite und bricht ab, sobald „lautester",
+„deutlichster", „stärkster" oder „nächster" zweimal auf denselben Bezug
+zeigt — gegen feste Beispiele gehalten und über mehrere Geburtsbilder
+gerechnet, weil er beim zweiten Profil heute zufällig nicht vorkam
+(`REGELN.md` Abschnitt 6e).
