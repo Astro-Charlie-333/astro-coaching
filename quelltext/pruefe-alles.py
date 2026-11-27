@@ -821,7 +821,35 @@ ANZEIGEN = {
     # dort schon führt. Die Seite lief, weil der Rumpf von `nrm`
     # Zeichen für Zeichen derselbe war und `gewaehlt` auch dort
     # `null` sein sollte. Glück, keine Prüfung (REGELN.md 6f).
-    'niveau/reading-app.js':       (70, 14),
+    # reading am 2026-11-27 (Aufgabe 65). Vier Fehlerklassen kamen
+    # mit heraus, und drei davon konnte man auf der Seite lesen.
+    #
+    # Die erste: Auf Stufe 0 stand „Krebs-Anteil:" — ein Zeichenname
+    # auf der Stufe, die keinen kennt (REGELN.md Abschnitt 2). Der
+    # Grund war, dass dieser Bau als einziger keine Rauchprobe hatte
+    # und die Grundregel der Plattform deshalb nie gemessen wurde.
+    # Die Wortliste dazu stand in acht Bauten einzeln; sie steht
+    # jetzt als `pruefwerk.STUFE0_VERBOTEN` an einer Stelle.
+    #
+    # Die zweite: Auf Stufe 1 fingen drei Absätze klein an („deine
+    # Sonne in Krebs — …"), zwei Absätze weiter unten stand dieselbe
+    # Form groß. Elf Dateien bauten sich den großen Satzanfang selbst,
+    # unter sieben Namen, und keine davon fand den ersten Buchstaben
+    # hinter einem `<b>`. Er steht jetzt als AC_GROSS neben AC_FUELL
+    # und AC_KOMMA — dieselbe Lehre zum dritten Mal.
+    #
+    # Die dritte: Ab Stufe 3 trug jede Gradzahl einen Punkt statt
+    # eines Kommas („(1.6°)", „Feuer 0.0 · Erde 6.0"), dieselbe
+    # Klasse wie auf ophiuchus.html am 2026-11-26. Die Regel dagegen
+    # gab es schon; gerufen hat sie nur ein Bau.
+    #
+    # Die vierte, nicht sichtbar, aber die gefährlichste: Die Anzeige
+    # führte `nrm`, `chartVon`, `haus` und `gewaehlt` im globalen
+    # Namensraum — die vier Namen, die `engine.js` dort schon
+    # vergibt. Die drei Funktionen standen Zeichen für Zeichen
+    # gleich, die Seite lief also. Glück, keine Prüfung
+    # (REGELN.md 6f); die Rechnung steht jetzt in
+    # reading-rechner.js und gegen die Engine.
     'werkstatt/werkstatt-app.js':  (38, 2),
 }
 # Diese sind durch und werden von ihrem eigenen bau-*.py gehalten;
@@ -840,7 +868,7 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'rituale/zauber-app.js', 'geist/geist-app.js',
           'dossier/dossier-app.js', 'analyse/analyse-app.js',
           'begleitung/begleit-app.js', 'ereignis/ereignis-app.js',
-          'oph/oph-app.js'}
+          'oph/oph-app.js', 'niveau/reading-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
@@ -1040,13 +1068,16 @@ if fassungen != [DIE_STELLE] or eigene:
 # diese Rechnung wirklich lief; eine Anzeige, deren Zweig heute nicht
 # gerendert wird, käme damit durch (REGELN.md 6e). Deshalb wird hier
 # die Seite selbst gefragt und nicht der Weg dorthin.
-ohne_stelle = sorted(s.name for s in seiten
-                     if pruefwerk.ruft_ohne_stelle(
-                         s.read_text(encoding='utf-8', errors='replace')))
+ohne_stelle = sorted(
+    (s.name, pruefwerk.ruft_ohne_stelle(
+        s.read_text(encoding='utf-8', errors='replace')))
+    for s in seiten
+    if pruefwerk.ruft_ohne_stelle(
+        s.read_text(encoding='utf-8', errors='replace')))
 if ohne_stelle:
-    for s in ohne_stelle:
-        print(f'  RUFT AC_FUELL, HAT ES ABER NICHT: {s}')
-    fehlgeschlagen.append('eine Seite ruft AC_FUELL ohne fuellen.js')
+    for s, welche in ohne_stelle:
+        print(f'  RUFT {", ".join(welche)}, HAT ES ABER NICHT: {s}')
+    fehlgeschlagen.append('eine Seite ruft eine Stelle ohne fuellen.js')
 elif fassungen == [DIE_STELLE] and not eigene:
     seiten_mit = sum(1 for s in seiten
                      if 'function AC_FUELL(' in s.read_text(encoding='utf-8',
@@ -1208,6 +1239,146 @@ if reglerfehler:
 else:
     print(f'  {len(ruft)} von {len(mit_regler)} gebauten Seiten mit Regler'
           ' prüfen, dass keine zwei Rungen gleich heißen')
+
+# ── Ein Satzanfang wird an einer Stelle groß (Aufgabe 65) ────
+# Gefunden am 2026-11-27 auf `reading.html`, auf Stufe 1 und mit
+# bloßem Auge: Drei Absätze fingen mit einem kleinen Buchstaben an
+# („deine Sonne in Krebs — …"), zwei Absätze weiter unten stand
+# dieselbe Form groß — dort hatte jemand `gross()` davorgeschrieben.
+#
+# Der Grund ist derselbe wie bei AC_FUELL vor Aufgabe 94 und bei
+# AC_KOMMA vor Aufgabe 64: Die Umwandlung gab es elfmal, unter sieben
+# Namen (`gross` viermal, `gr`, `moGross`, `zGross` zweimal,
+# `gGross`, `grossErst`) — und keine der elf fand den ersten
+# Buchstaben hinter einem `<b>`. Elf Fassungen heißt: Wer eine klüger
+# macht, hat zehn veraltete, und eine zwölfte Stelle, die keine davon
+# kennt, liefert einen kleinen Buchstaben aus.
+#
+# Sie steht jetzt als `AC_GROSS` in `kern/fuellen.js`. Eingetragen
+# ist, was diese Prüfung bei ihrem ersten Lauf wirklich gefunden
+# hat; die Liste kann nur schrumpfen und bricht in beide Richtungen
+# (REGELN.md 6c).
+GROSS_OFFEN = {
+    'bereiche/bereich-app.js':      'gross',
+    'bez/beziehung-app.js':         'gross',
+    'ereignis/ereignis-app.js':     'grossErst',
+    'ereignis/ereignis-rechner.js': 'gross',
+    'geist/geist-app.js':           'gGross',
+    'kern/heute-app.js':            'an der Aufrufstelle',
+    'mond/mond-app.js':             'moGross',
+    # niveau.js lädt jede Seite, auch die siebenundsechzig
+    # handgemachten — die kennen `kern/fuellen.js` nicht. Diese Zeile
+    # wandert erst, wenn AC_GROSS überall liegt.
+    'niveau/niveau.js':             'gr in formelText',
+    'rituale/zauber-app.js':        'zGross',
+    'zahlen/zahlen-app.js':         'zGross',
+    # Zwei weitere, gefunden beim ersten Lauf dieser Prüfung: eine
+    # handgemachte Datei am Wurzelort, die keine Quelle in
+    # `quelltext/` hat und `.slice(0,1).toUpperCase()` zweimal führt.
+    'wiki/profil.js':               'zweimal, über slice(0,1)'}
+_GROSS_STELLE = 'kern/fuellen.js'
+
+# Eine Datei, die oben **und** in `quelltext/` liegt, wird hier nur
+# einmal gezählt: Oben steht die Kopie, die Prüfung 7 aus der Quelle
+# erneuert. Stünde sie auch in dieser Liste, müsste sie im selben
+# Atemzug mit ihrer Quelle wandern — und eine Liste, deren Einträge
+# aneinanderhängen, driftet (REGELN.md 6c). Was oben liegt und keine
+# Quelle hat, ist dagegen selbst eine Quelle und zählt mit.
+def _ist_kopie(q):
+    return (wiki in q.parents
+            and any(a.name == q.name and wiki not in a.parents
+                    for a in hier.glob('*/*.js')))
+
+
+gross_fassungen = sorted(q.relative_to(hier).as_posix() for q in quellen
+                         if 'function AC_GROSS(' in q.read_text(encoding='utf-8'))
+gross_eigene = set()
+for q in quellen:
+    name = q.relative_to(hier).as_posix()
+    if name == _GROSS_STELLE or _ist_kopie(q):
+        continue
+    if pruefwerk.eigene_grossschreibung(q.read_text(encoding='utf-8')):
+        gross_eigene.add(name)
+neu_gross = sorted(gross_eigene - set(GROSS_OFFEN))
+weg_gross = sorted(set(GROSS_OFFEN) - gross_eigene)
+if gross_fassungen != [_GROSS_STELLE]:
+    print(f'  AC_GROSS steht in: {", ".join(gross_fassungen) or "keiner Datei"}'
+          f' — es gehört genau in {_GROSS_STELLE}')
+    fehlgeschlagen.append('AC_GROSS steht nicht an einer Stelle')
+if neu_gross:
+    print('  EIGENE GROSSSCHREIBUNG: ' + ', '.join(neu_gross))
+    print('      (ein Halbsatz fängt über AC_GROSS aus kern/fuellen.js groß an —')
+    print('       REGELN.md Abschnitt 5, Aufgabe 65)')
+    fehlgeschlagen.append('eine Datei baut sich ihre eigene Großschreibung')
+if weg_gross:
+    print('  EINTRAG ÜBERHOLT: ' + ', '.join(weg_gross) + ' braucht keine')
+    print('      eigene Großschreibung mehr — Zeile aus GROSS_OFFEN nehmen')
+    fehlgeschlagen.append('GROSS_OFFEN ist überholt')
+if not neu_gross and not weg_gross and gross_fassungen == [_GROSS_STELLE]:
+    print(f'  eine Stelle, an der ein Satz groß anfängt'
+          f' — noch {len(GROSS_OFFEN)} Dateien mit eigener Fassung')
+
+# ── Wer eine Seite zeichnet, liest ihre Zahlen nach (Aufgabe 65) ──
+# `pruefwerk.pruefe_dezimalpunkte` gibt es seit dem 2026-11-26, und
+# sie fängt eine Fehlerklasse, die kein Blick in den Quelltext findet:
+# Die Zahl entsteht erst beim Rendern. Gerufen hat sie bis heute genau
+# ein Bau — und auf `reading.html` stand deshalb weiter „(1.6°)" und
+# „Feuer 0.0 · Erde 6.0".
+#
+# Das ist dieselbe Lehre wie bei Aufgabe 95 und beim Regler darüber:
+# **Eine Prüfung, die nicht aufgerufen wird, ist keine.** Hier wird
+# nachgezählt, welcher Bau mit einer Rauchprobe sie am gezeichneten
+# Text aufruft. Die Liste kann nur schrumpfen.
+PUNKT_OFFEN = {
+    'analyse/bau-analyse.py', 'begleitung/bau-begleitung.py',
+    'bereiche/bau-bereiche.py', 'bez/bau-bez.py', 'dossier/bau-dossier.py',
+    'ereignis/bau-ereignis.py', 'geist/bau-geist.py',
+    'haeuser/bau-haeuser.py', 'karte/bau-karte.py', 'kern/bau-heute.py',
+    'kern/bau-ich.py', 'leitfaden/bau-leitfaden.py', 'monat/bau-monat.py',
+    'mond/bau-mond.py', 'nd/bau-nd.py', 'planeten/bau-planeten.py',
+    'raeume/bau-raeume.py', 'rituale/bau-zauber.py', 'start/bau-start.py',
+    'zahlen/bau-zahlen.py', 'zeit/bau-zeit.py', 'app/bau-app.py',
+    'baukasten/bau-baukasten.py', 'schriften/bau-schriften.py',
+    'karte/bau-tiefe.py', 'werkstatt/bau-werkstatt.py'}
+PUNKT_DURCH = {'oph/bau-oph.py', 'niveau/bau-reading.py'}
+
+_PUNKTAUFRUF = re.compile(r'\bpruefwerk\.pruefe_dezimalpunkte\s*\(')
+
+
+def _ruft_punkt(quelle):
+    return bool(_PUNKTAUFRUF.search(re.sub(r'(?m)^[ \t]*#.*$', '', quelle)))
+
+
+# Feste Beispiele (REGELN.md 6e), dieselbe Falle wie beim Regler: Der
+# Name steht auch im Kommentar daneben.
+assert _ruft_punkt('fehler += pruefwerk.pruefe_dezimalpunkte(t, "x")')
+assert _ruft_punkt('  for m in pruefwerk.pruefe_dezimalpunkte( t ):  # je Stufe')
+assert not _ruft_punkt('# ruft pruefwerk.pruefe_dezimalpunkte(t) auf')
+assert not _ruft_punkt('x = pruefe_dezimalpunkte')
+assert not _ruft_punkt('')
+
+alle_bauten = {b.relative_to(hier).as_posix() for b in hier.glob('*/bau-*.py')}
+punkt_ruft = {b for b in alle_bauten
+              if _ruft_punkt((hier / b).read_text(encoding='utf-8'))}
+punktfehler = []
+if alle_bauten != PUNKT_OFFEN | PUNKT_DURCH:
+    punktfehler.append('die Liste der Bauten stimmt nicht: '
+                       + ', '.join(sorted(alle_bauten
+                                          ^ (PUNKT_OFFEN | PUNKT_DURCH))))
+if punkt_ruft - PUNKT_DURCH:
+    punktfehler.append('liest die Zahlen nach, steht aber unter OFFEN: '
+                       + ', '.join(sorted(punkt_ruft - PUNKT_DURCH))
+                       + ' — nach PUNKT_DURCH verschieben')
+if PUNKT_DURCH - punkt_ruft:
+    punktfehler.append('steht unter DURCH, liest aber nicht nach: '
+                       + ', '.join(sorted(PUNKT_DURCH - punkt_ruft)))
+if punktfehler:
+    for r in punktfehler:
+        print('  ZAHLEN: ' + r)
+    fehlgeschlagen.append('die Zahlenprüfung wird nicht überall gerufen')
+else:
+    print(f'  {len(punkt_ruft)} von {len(alle_bauten)} Bauten lesen die Zahlen'
+          ' der gezeichneten Seite nach')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')

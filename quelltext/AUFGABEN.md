@@ -57,7 +57,8 @@ geschriebene „dein". Durch und verriegelt sind `bereich-app.js`,
 `analyse-app.js` (2026-11-23) und
 `begleit-app.js` (2026-11-24) und
 `ereignis-app.js` (2026-11-25) und
-`oph-app.js` (2026-11-26);
+`oph-app.js` (2026-11-26) und
+`reading-app.js` (2026-11-27);
 dazu `planeten-app.js`, `leitfaden-app.js` und `nd-app.js`, die von
 Anfang an satzfrei gebaut wurden. Wie viele es sind, zählt
 `pruefe-alles.py` nach: Der Satz hier stand bis zum 2026-11-13 auf
@@ -74,6 +75,9 @@ Coachin. **Wie weit es ist, steht nicht hier, sondern in
 `pruefe-alles.py`, Querprüfung 13** — dort wird bei jedem Lauf
 nachgezählt, und die Liste bricht in beide Richtungen. Eine Liste in
 einem Dokument driftet; diese kann nur schrumpfen.
+
+Nach `reading-app.js` am 2026-11-27 ist von diesem Zug **eine**
+Anzeige übrig: Aufgabe 66.
 
 Für jede der Aufgaben 51 bis 66 gilt dasselbe, deshalb steht es
 einmal hier. **Fertig, wenn:** die Sätze dieser Anzeige in ihrer
@@ -92,14 +96,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 65 · `reading-app.js` (70, 14)
-`reading.html` — das Werkzeug, mit dem die Coachin einen Tiefgang
-herausgibt (`PRODUKT.md` Abschnitt 4, Weg 1). `niveau/wortwahl.js`
-trägt in `PLANET[k].kurz(n)` ein festes „dein" samt einer
-Ersetzung, die daraus wieder einen Satzanfang macht; das gehört mit
-in diesen Zug, weil `reading-app.js` und `tief-bauer.js` diese
-Zeichenketten in Vorlagen einsetzen.
 
 ### 66 · `werkstatt-app.js` (39, 2)
 `werkstatt.html`.
@@ -155,6 +151,126 @@ absichtlich doppelte Beschriftung in jeder dieser Seiten den Bau
 abbricht, und `pruefe-alles.py` die handgemachten Seiten mit Regler
 genauso nachmisst — am gezeichneten Ergebnis, weil erst die Rechnung
 entscheidet, ob zwei Werte in dieselbe Klasse fallen.
+
+### 99 · Elf Dateien schreiben den Satzanfang selbst groß
+Gefunden beim Erledigen von Aufgabe 65 am 2026-11-27, und zwar auf
+der Seite: Auf Stufe 1 fingen drei Absätze des Readings mit einem
+kleinen Buchstaben an („deine Sonne in Krebs — …"), zwei Absätze
+weiter unten stand dieselbe Form groß. Der Unterschied war nicht die
+Sprache, sondern ob jemand `gross()` davorgeschrieben hatte.
+
+Die Umwandlung gab es elfmal, unter sieben Namen: `gross` viermal,
+dazu `gr`, `moGross`, `zGross` zweimal, `gGross`, `grossErst` — und
+keine der elf fand den ersten Buchstaben hinter einem `<b>`, weshalb
+die Aspektzeile des Readings sich nicht großschreiben ließ. Dieselbe
+Lage wie bei `AC_FUELL` vor Aufgabe 94 und `AC_KOMMA` vor Aufgabe 64,
+nur zum dritten Mal: Elf Fassungen heißt, dass zehn veraltet sind,
+sobald eine klüger wird.
+
+`AC_GROSS` steht seit heute in `kern/fuellen.js`, neben `AC_FUELL`
+und `AC_KOMMA`, und findet den ersten Buchstaben auch hinter einem
+Tag. `reading-app.js` ist durch. Die übrigen elf stehen in
+`pruefe-alles.py` als `GROSS_OFFEN` und werden bei jedem Lauf
+nachgezählt; dazugekommen ist dabei eine zwölfte, die niemand
+gesucht hatte: `wiki/profil.js` führt `.slice(0,1).toUpperCase()`
+zweimal und hat keine Quelle in `quelltext/`.
+
+`niveau/niveau.js` ist der harte Fall und gehört zuletzt angefasst:
+Die Datei lädt **jede** Seite, auch die siebenundsechzig
+handgemachten, und die kennen `kern/fuellen.js` nicht.
+**Fertig, wenn:** `GROSS_OFFEN` leer ist, `AC_GROSS` die einzige
+Fassung ist, jede dieser Dateien ihren Satzanfang darüber bildet, und
+eine neu eingebaute eigene Großschreibung den Lauf abbricht — was
+`pruefwerk.pruefe_grossschreibung` mit festen Beispielen schon tut.
+
+### 100 · Sechsundzwanzig Bauten lesen ihre Zahlen nicht nach
+Gefunden beim Erledigen von Aufgabe 65 am 2026-11-27.
+`pruefwerk.pruefe_dezimalpunkte` gibt es seit dem 2026-11-26 und sie
+fängt eine Fehlerklasse, die kein Blick in den Quelltext findet: Die
+Zahl mit dem Punkt entsteht erst beim Rendern. Gerufen hat sie bis
+heute genau **ein** Bau — und auf `reading.html` stand deshalb weiter
+„(1.6°)", „Orbis 3.00°" und „Feuer 0.0 · Erde 6.0", drei Tage nach
+demselben Fehler auf `ophiuchus.html`.
+
+Das ist dieselbe Lehre wie bei Aufgabe 95 und bei der Reglerprüfung:
+**Eine Prüfung, die nicht aufgerufen wird, ist keine.** Wer sie
+rufen soll, zählt `pruefe-alles.py` seit heute nach (`PUNKT_OFFEN`
+und `PUNKT_DURCH`); die Liste kann nur schrumpfen. Dass es so viele
+sind, hat einen Grund: Die meisten dieser Bauten haben keine
+Rauchprobe, und ohne gezeichnete Seite gibt es keinen Text zum
+Nachlesen — die Aufgabe ist also größer als ein Aufruf.
+**Fertig, wenn:** `PUNKT_OFFEN` leer ist, jeder Bau den sichtbaren
+Text seiner Seite auf jeder Stufe gegen die Regel hält, und eine
+absichtlich eingesetzte Zahl mit Punkt jeden dieser Bauten abbricht.
+
+### 101 · Die Stufe-0-Wortliste steht in acht Bauten einzeln
+Gefunden beim Erledigen von Aufgabe 65 am 2026-11-27. `REGELN.md`
+Abschnitt 2 ist die Grundregel der Plattform und Abschnitt 5
+verlangt sie von jedem `bau-*.py` — die Wortliste dazu stand aber in
+acht Bauten getrennt und in acht verschiedenen Fassungen:
+`bau-bereiche.py` führte 59 Wörter (zweimal, einmal als `VERBOTEN`
+und einmal als `JARGON` im Rauchlauf), `bau-zeit.py` sechs ganz
+andere, `bau-bez.py` eigene mit „Composite", `bau-app.py`,
+`bau-start.py` und `mach-content.py` je eine weitere — und
+`bau-reading.py` gar keine. Genau dort stand deshalb auf Stufe 0
+„Krebs-Anteil:".
+
+Das ist die Lage von `pruefe_handgriffe` vor dem 5.11.: eine Regel in
+acht Dateien ist nach der ersten Verschärfung in sieben davon
+veraltet (`REGELN.md` Abschnitt 5). Die Liste steht seit heute als
+`pruefwerk.STUFE0_VERBOTEN` mit `pruefe_stufe0`, einem `extra` für
+die Wörter, die nur eine Seite kennt, und festen Beispielen; gerufen
+wird sie von `bau-reading.py`.
+
+Dabei ist eine Entscheidung zu treffen und sie steht im Kommentar
+der Liste: „Chart" gehört **nicht** hinein. Es ist kein Fachwort,
+sondern das Wort, unter dem die Zielgruppe die Sache kennt
+(`PRODUKT.md` Abschnitt 2, Punkt 1 und `REGELN.md` 2a).
+**Fertig, wenn:** keine Wortliste mehr in einem `bau-*.py` steht,
+alle acht `pruefwerk.pruefe_stufe0` rufen, `pruefe-alles.py`
+nachzählt, welcher Bau sie ruft, und ein Fachwort, das auf Stufe 0
+auf einer dieser Seiten erscheint, den Bau abbricht.
+
+### 102 · Der globale Wissensstand schreibt auf einer Seite mit, die ihn nicht benutzt
+Gefunden beim Erledigen von Aufgabe 65 am 2026-11-27, beim ersten
+Blick auf die Seite. `reading.html` trägt `data-niv-keine` und hat
+einen **eigenen** Regler, weil hier der Wissensstand der
+*Empfängerin* gilt und nicht der der Coachin. `niveau.js` läuft
+trotzdem mit: `nachbearbeiten()` ersetzt im fertigen Text „9. Haus"
+durch „der Bereich Sinn und Ferne", sobald irgendwo auf der
+Plattform Stufe 0 eingestellt wurde. Auf der Seite stand dann:
+
+```
+… — im der Bereich Sinn und Ferne (Sinn, Überzeugung, Ferne, Lehre).
+Im der Bereich Freundschaft und Zukunft (…) stehen bei dir 3 Planeten
+```
+
+Heute fällt es nicht mehr auf, weil die Hausnummer seit dem Umzug in
+einem `<b>` steht und der Ersetzer sie dort nicht erwischt. Das ist
+Glück und keine Prüfung (`REGELN.md` 6f): Die Sperre, die es bräuchte,
+sitzt nirgends — `data-niv-keine` hält nur die Leiste zurück, nicht
+den Nachbearbeiter.
+**Fertig, wenn:** `nachbearbeiten()` auf einer Seite mit
+`data-niv-keine` nichts mehr ersetzt, die Rauchprobe von
+`bau-reading.py` das mit global eingestellter Stufe 0 nachmisst, und
+eine Seite, auf der beide Stände gleichzeitig wirken, den Bau
+abbricht.
+
+### 103 · Drei Alltagswörter für die Modi hatten keinen Platz
+Gefunden beim Erledigen von Aufgabe 65 am 2026-11-27. `R_MODUS` in
+`reading-daten.js` trug neben der Deutung je ein Alltagswort —
+„anfangend", „haltend", „anpassend" —, und keines davon stand
+jemals auf der Seite: Auf Stufe 0 heißt die Zeile „Dein Tempo", ab
+Stufe 1 „Modus: beweglich", also das Fachwort. Beim Umstellen der
+Tafel auf benannte Felder sind die drei herausgefallen.
+
+Sie sind nicht falsch, sie hatten nur keine Stelle — und genau das
+wäre eine: Auf Stufe 0 steht dort heute kein Wort für das Tempo,
+sondern nur die Deutung.
+**Fertig, wenn:** entschieden ist, ob auf Stufe 0 „Dein Tempo:
+anpassend" steht oder weiter nur „Dein Tempo" — und, wenn ja, die
+drei Wörter in `R_MODUS` zurück sind, auf Stufe 0 gezeichnet werden
+und kein Fachwort dabei sichtbar wird.
 
 ### 95 · Zwei Lücken auf der Jetzt-Seite füllt niemand
 Gefunden beim Erledigen von Aufgabe 94 am 2026-11-22. `AC_FUELL`
@@ -1558,6 +1674,70 @@ dazukommt, und `bau-oph.py` beides in seiner Rauchprobe festhält —
 wie `bau-ereignis.py` es für `ereignisse-lesen.html` tut.
 
 ## Erledigt
+
+* **2026-11-27** · `reading-app.js` kommt aus dem Satzgeschäft heraus
+  (Aufgabe 65, aus 34 und 38) — `reading.html`, das Werkzeug, mit dem
+  die Coachin einen Tiefgang herausgibt. Die siebzig Sätze und
+  Beschriftungen stehen jetzt in `reading-daten.js` als `RD_T`, je
+  Wissensstufe eine Stelle in einer Liste statt einer Kette von
+  `if(n===0)` in der Anzeige. Die Rechnung ist in ein eigenes
+  `reading-rechner.js` gezogen, die Anzeige in eine eigene Hülle;
+  „dein" bildet `B_BEUGE`, die Zahl `AC_KOMMA`, der große Anfang
+  `AC_GROSS`. Verriegelt ist das in `bau-reading.py`, das vorher
+  dreißig Zeilen hatte, zwei Dinge prüfte und **keine Rauchprobe**
+  war. Es hat jetzt eine, auf jeder der fünf Stufen und in beiden
+  Lagen.
+
+  Dass diese Seite nie gezeichnet geprüft wurde, ist der Grund,
+  warum vier Fehler monatelang ausgeliefert wurden — drei davon zum
+  Mitlesen:
+
+  **Auf Stufe 0 stand „Krebs-Anteil:"** — ein Zeichenname auf der
+  Stufe, die keinen kennt (`REGELN.md` Abschnitt 2, die Grundregel
+  der Plattform). Daneben hieß es „Dein Gefühl:" und „Wie du auf
+  andere wirkst:", also zweimal die Aufgabe im Leben und einmal ein
+  Sternzeichen. Jetzt steht dort „Dein Wesenskern:". Die Wortliste
+  dazu stand in acht Bauten einzeln und in `bau-reading.py` gar
+  nicht; sie steht jetzt als `pruefwerk.STUFE0_VERBOTEN` an einer
+  Stelle (Aufgabe 101).
+
+  **Auf Stufe 1 fingen drei Absätze klein an** („deine Sonne in
+  Krebs — …"), zwei Absätze weiter unten stand dieselbe Form groß.
+  Elf Dateien bauten sich den großen Satzanfang selbst, unter sieben
+  Namen, und keine fand den ersten Buchstaben hinter einem `<b>`.
+  `AC_GROSS` steht jetzt in `kern/fuellen.js` neben `AC_FUELL` und
+  `AC_KOMMA` — dieselbe Lehre zum dritten Mal (Aufgabe 99).
+
+  **Ab Stufe 3 trug jede Gradzahl einen Punkt** — „(1.6°)", „Orbis
+  3.00°", „Feuer 0.0 · Erde 6.0", gegen `REGELN.md` Abschnitt 4 und
+  drei Tage nach demselben Fehler auf `ophiuchus.html`. Die Regel
+  dagegen gab es schon; gerufen hat sie genau ein Bau (Aufgabe 100).
+  `wortwahl.js` nimmt den Orbis seit heute als **Text** und nicht
+  als Zahl: Ein Wörterbuch hält Worte, kein Zahlenformat, und bleibt
+  so für jede Seite ladbar, die es einbindet.
+
+  Dazu **ein Gedankenstrich hinter einem Satzpunkt**: „… funktioniert
+  bei dir nicht. — im 9. Haus (…)." Zwei Bausteine aneinandergeklebt,
+  dieselbe Bauart wie bei dem Satz über die Umrisse (`REGELN.md` 6d).
+  Jetzt steht dort ein eigener Satz, auf jeder Stufe derselbe:
+  „Am stärksten zeigt sich das im 9. Haus (…)."
+
+  Und der vierte, nicht sichtbar und der gefährlichste: **Die
+  Anzeige führte vier Namen, die `engine.js` schon vergibt** — `nrm`,
+  `chartVon`, `haus` und `gewaehlt`. Die drei Funktionen standen
+  Zeichen für Zeichen gleich und `gewaehlt` sollte auch dort `null`
+  sein, die Seite lief also; sobald eine der beiden Fassungen sich
+  ändert, rechnet diese Seite lautlos anders als der Rest der
+  Plattform. Glück, keine Prüfung (`REGELN.md` 6f) — genau die Lage,
+  die `bau-oph.py` am Tag davor gefunden hat. Die Kopien sind weg,
+  gerechnet wird gegen die Engine.
+
+  Nebenbei gestrichen: `ueberschrift()` in `wortwahl.js`, die aus
+  „deine Sonne" per Suchmuster „Deine Sonne" machte — die Beugung
+  von Hand, neben `B_BEUGE`. Aufgerufen hat sie niemand. Und der
+  Dateiname des Readings nahm den Vornamen durch `toLowerCase`: aus
+  „Müller" wurde „müller", was `REGELN.md` Abschnitt 4 seit Monaten
+  verbietet und hier nie geprüft wurde.
 
 * **2026-11-26** · `oph-app.js` kommt aus dem Satzgeschäft heraus
   (Aufgabe 64, aus 34 und 38) — die **letzte** Anzeige des Zuges, der

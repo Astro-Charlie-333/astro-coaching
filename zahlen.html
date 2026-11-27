@@ -721,6 +721,66 @@ function AC_KOMMA(wert, stellen){
   return s.split('.').join(',');
 }
 
+/* ── Ein Satz, ein großer Anfang ──────────────────────────────
+   Die eine Stelle, an der ein deutscher Halbsatz groß anfängt.
+
+   Dieselbe Lehre zum dritten Mal, und diesmal war sie auf der Seite
+   zu lesen. Auf `reading.html` stand am 2026-11-27 auf Stufe 1:
+
+       deine Sonne in Krebs — Du spürst zuerst und denkst danach.
+       dein Mond in Jungfrau — Du beruhigst dich, indem du …
+       deine Sonne und dein Uranus stehen harmonisch — Trigon.
+
+   Drei Absätze, die mit einem kleinen Buchstaben beginnen. Zwei
+   Zeilen darunter stand im selben Reading „Dein Merkur in Krebs" —
+   richtig, weil *dort* jemand `gross()` davorgeschrieben hatte.
+
+   Der Grund ist nicht ein vergessener Aufruf, sondern dass es ihn
+   überhaupt zu rufen gibt: `PLANET[k].kurz(n)` liefert „deine
+   Sonne", also eine gebeugte Form in Kleinschreibung, und wer sie an
+   einen Absatzanfang setzt, muss sich daran erinnern. Elf Dateien
+   haben sich die Umwandlung dafür selbst gebaut, unter sieben Namen
+   (`gross`, `gr`, `moGross`, `zGross` zweimal, `gGross`,
+   `grossErst`) — und `wortwahl.js` hatte zusätzlich eine Fassung,
+   die „dein" per Suchmuster wieder zu „Dein" zusammensetzte.
+
+   Elf Fassungen heißt: Wer eine verschärft, hat zehn veraltete. Und
+   eine zwölfte Stelle, die keine davon kennt, liefert einen kleinen
+   Buchstaben aus — genau das ist hier passiert.
+
+   Deshalb steht sie hier, neben `AC_FUELL` und `AC_KOMMA`: Alle drei
+   machen aus einem Wert Text, alle drei brechen ab, wenn der Wert
+   fehlt, und alle drei ziehen beim Umzug in eine andere Umgebung
+   unverändert mit (`PRODUKT.md` Abschnitt 7).
+
+   Was diese Fassung kann und keine der elf konnte: **Sie findet den
+   ersten Buchstaben auch hinter einem Tag.** Die Aspektzeile des
+   Readings beginnt mit `<b>`, und `s.charAt(0).toUpperCase()` macht
+   daraus ein großes „<" — also nichts. Eine Umwandlung, die an elf
+   Stellen steht, kann so etwas nicht lernen.
+
+   Was hier **nicht** passiert, und zwar mit Absicht:
+
+     kleiner    Nichts wird kleingeschrieben. `toLowerCase` auf
+                deutschem Text ist verboten (`REGELN.md` Abschnitt 4),
+                und diese Stelle ist keine Ausnahme davon.
+     ß          Ein deutsches Wort fängt nicht mit „ß" an, und
+                `'ß'.toUpperCase()` wären zwei Zeichen. Bleibt außen
+                vor.
+     Rest       Alles hinter dem ersten Buchstaben bleibt, wie es
+                ist — auch ein Großbuchstabe mitten im Wort.
+
+   Steht vorn schon ein Großbuchstabe, eine Ziffer oder ein
+   Satzzeichen, kommt der Text unverändert zurück. */
+var _AC_ERSTER = /^(\s*(?:<[^>]*>\s*)*)([a-zäöü])/;
+function AC_GROSS(text){
+  if(text === undefined || text === null)
+    throw new Error('AC_GROSS: kein Text: ' + text);
+  var s = String(text), m = _AC_ERSTER.exec(s);
+  if(!m) return s;
+  return m[1] + m[2].toUpperCase() + s.slice(m[0].length);
+}
+
 var RAD=Math.PI/180;
 function norm(x){x=x%360;return x<0?x+360:x;}
 function jdFromUT(y,m,d,h){if(m<=2){y-=1;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4);

@@ -158,8 +158,19 @@ function stellung(k,h,zi,n,pos){
   return p+' '+(pos!==undefined?grad(pos):z.n)+', '+h+'. Haus';
 }
 
-/* Ein Aspekt zwischen zwei Punkten */
-function aspekt(a,b,typ,n,orb){
+/* Ein Aspekt zwischen zwei Punkten.
+
+   `orbText` ist der Abstand **als Text**, nicht als Zahl: Diese
+   Datei hält Worte und kein Zahlenformat. Bis zum 2026-11-27 stand
+   hier `orb.toFixed(1)`, und auf `reading.html` las man deshalb
+   „(1.6°)" und „Orbis 3.00°" — ein Punkt statt eines Kommas, gegen
+   `REGELN.md` Abschnitt 4, dieselbe Fehlerklasse wie auf
+   `ophiuchus.html` am 2026-11-26. Die Umwandlung gehört an die eine
+   Stelle, die sie kennt (`AC_KOMMA` in `kern/fuellen.js`), und die
+   ruft die Anzeige — so braucht dieses Wörterbuch keine der drei
+   Stellen aus `fuellen.js` und bleibt für jede Seite ladbar, die es
+   einbindet. */
+function aspekt(a,b,typ,n,orbText){
   var A=PLANET[a], B=PLANET[b], T=ASPEKT[typ];
   if(!T) return '';
   if(n===0){
@@ -172,22 +183,28 @@ function aspekt(a,b,typ,n,orb){
     return '<b>'+a+' '+typ+' '+b+'</b>. '+T.satz(2);
   }
   if(n===3){
-    return '<b>'+a+' '+typ+' '+b+'</b>'+(orb!==undefined?' ('+orb.toFixed(1)+'°)':'')+'. '+T.satz(2);
+    return '<b>'+a+' '+typ+' '+b+'</b>'+(orbText?' ('+orbText+'°)':'')+'. '+T.satz(2);
   }
-  return '<b>'+a+' '+typ+' '+b+'</b>'+(orb!==undefined?', Orbis '+orb.toFixed(2)+'°':'')+
+  return '<b>'+a+' '+typ+' '+b+'</b>'+(orbText?', Orbis '+orbText+'°':'')+
     ', '+T.art+'er Aspekt. '+T.satz(2);
 }
 
-/* Überschrift für einen Planeten in einem Reading */
-function ueberschrift(k,n){
-  if(n===0) return PLANET[k]?PLANET[k].kurz(0).replace(/^dein(e)? /,'Dein'+(PLANET[k].kurz(0).indexOf('deine')===0?'e':'')+' '):k;
-  return pName(k,n);
-}
+/* Hier stand bis zum 2026-11-27 `ueberschrift(k,n)`: Sie hat aus
+   „deine Sonne" per Suchmuster „Deine Sonne" gemacht, indem sie
+   „dein" abschnitt, die Endung aus der Zeichenkette selbst erriet
+   und das Wort wieder zusammensetzte — also die Beugung von Hand,
+   neben `B_BEUGE` in `kern/bahn-daten.js`, der einen Stelle, die das
+   Geschlecht eines Punktes kennt.
+
+   Aufgerufen hat sie niemand; sie ist deshalb nicht ersetzt, sondern
+   gestrichen. Wer einen großen Anfang braucht, nimmt `AC_GROSS` aus
+   `kern/fuellen.js`, und wer eine andere Form als den Nominativ
+   braucht, `B_BEUGE`. `bau-reading.py` lässt keine zweite Beugung
+   mehr in diese Datei (Aufgabe 65). */
 
 window.AC_WORT={
  PLANET:PLANET, ZEICHEN:ZEICHEN, HAUS:HAUS, ASPEKT:ASPEKT, BEGRIFF:BEGRIFF,
  grad:grad, pName:pName, hName:hName, stellung:stellung, aspekt:aspekt,
- ueberschrift:ueberschrift,
  begriff:function(w,n){ return BEGRIFF[w]?BEGRIFF[w](n):w; },
  zeichen:function(zi,n){ return n===0?ZEICHEN[zi].stil:ZEICHEN[zi].n; }
 };
