@@ -736,13 +736,24 @@ assert pruefe_fueller('AC_FUELL(a,b)', 'x-app.js') == []
 # defined" ab. Dort hat es der Bau gefunden, weil diese Rechnung
 # wirklich lief — eine Anzeige, deren Zweig heute nicht gerendert
 # wird, käme damit durch (REGELN.md 6e).
+# Alle drei Stellen aus `kern/fuellen.js`, nicht nur die erste. Bis
+# zum 2026-11-27 fragte diese Regel allein nach `AC_FUELL` — und
+# hätte eine Seite durchgelassen, die `AC_KOMMA` ruft, ohne es zu
+# haben. Dieselbe Fehlerklasse wie REGELN.md 6f: Die Sperre saß am
+# ersten Namen und nicht an der Datei, um die es geht.
+DIE_STELLEN = ('AC_FUELL', 'AC_KOMMA', 'AC_GROSS')
+
+
 def ruft_ohne_stelle(seite):
-    """Wahr, wenn hier eine Lücke gefüllt wird, ohne dass AC_FUELL
-    auf der Seite steht."""
-    return 'AC_FUELL(' in seite and 'function AC_FUELL(' not in seite
+    """Welche Stelle aus kern/fuellen.js hier gerufen wird, ohne dass
+    sie auf der Seite steht. Leere Liste heißt: alles da."""
+    return [n for n in DIE_STELLEN
+            if n + '(' in seite and 'function ' + n + '(' not in seite]
 
 
-assert ruft_ohne_stelle('var t = AC_FUELL(T.a, {n:1});')
+assert ruft_ohne_stelle('var t = AC_FUELL(T.a, {n:1});') == ['AC_FUELL']
+assert ruft_ohne_stelle('var t = AC_KOMMA(2.5, 1);') == ['AC_KOMMA']
+assert ruft_ohne_stelle('var t = AC_GROSS(s);') == ['AC_GROSS']
 assert not ruft_ohne_stelle('function AC_FUELL(form, werte){}\n'
                             'var t = AC_FUELL(T.a, {n:1});')
 assert not ruft_ohne_stelle('<p>eine Seite ohne Lücken</p>')
@@ -979,4 +990,185 @@ for _t in ['44,6 Tage',                   # so ist es richtig
 # Und die Meldung nennt die Zahl, nicht nur, dass es eine gibt.
 assert '44.6' in pruefe_dezimalpunkte('44.6 Tage')[0]
 assert pruefe_dezimalpunkte('44,6 Tage') == []
+del _t, _w
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Ein Satz fängt an einer Stelle groß an
+#
+#  Gefunden am 2026-11-27 auf `reading.html`, und zwar sichtbar: Auf
+#  Stufe 1 begannen drei Absätze mit einem kleinen Buchstaben
+#  („deine Sonne in Krebs — …"), zwei Absätze weiter unten stand
+#  dieselbe Form richtig groß. Der Unterschied war nicht die Sprache,
+#  sondern ob jemand `gross()` davorgeschrieben hatte.
+#
+#  Elf Dateien bauten sich diese Umwandlung selbst, unter sieben
+#  Namen: `gross` (viermal), `gr`, `moGross`, `zGross` (zweimal),
+#  `gGross`, `grossErst` — und keine davon fand den ersten Buchstaben
+#  hinter einem `<b>`. Dieselbe Lage wie bei `AC_FUELL` vor Aufgabe 94
+#  und bei `AC_KOMMA` vor Aufgabe 64: Elf Fassungen heißt, dass neun
+#  veraltet sind, sobald eine klüger wird.
+#
+#  Sie steht jetzt als `AC_GROSS` in `kern/fuellen.js`. Diese Regel
+#  hält, dass es dabei bleibt.
+#
+#  Was sie **nicht** anschlagen darf: eine Überschrift, die ganz in
+#  Großbuchstaben gesetzt wird (`TI.titel.toUpperCase()` im Tiefgang,
+#  `B.n.toUpperCase()` im Zeitstrahl). Das ist kein Satzanfang,
+#  sondern Typografie, und eine Regel, die bei richtiger Bauart
+#  meckert, wird abgeschaltet (REGELN.md 6e).
+_EIGENES_GROSS = re.compile(
+    r'charAt\(\s*0\s*\)\s*\.\s*toUpperCase'
+    r'|\.\s*slice\(\s*0\s*,\s*1\s*\)\s*\.\s*toUpperCase'
+    r'|\.\s*substr\(\s*0\s*,\s*1\s*\)\s*\.\s*toUpperCase'
+    r'|\.\s*toUpperCase\(\)\s*\+\s*[A-Za-z_$][\w$.\'"()\[\]|& ]*\.\s*slice\(\s*1\s*\)')
+
+
+def eigene_grossschreibung(code):
+    """Jede Stelle, die sich den großen Satzanfang selbst baut, als
+    (Zeile, Fund). Kommentare zählen nicht mit: dort darf stehen,
+    warum hier keine steht."""
+    code = nur_code(code)
+    return [(code.count('\n', 0, m.start()) + 1, m.group(0).strip())
+            for m in _EIGENES_GROSS.finditer(code)]
+
+
+def pruefe_grossschreibung(code, datei):
+    """Bricht ab, sobald `datei` einen Satzanfang selbst großschreibt."""
+    return [f'eigene Großschreibung in {datei} (Zeile {z}): „{f}" — ein '
+            'deutscher Halbsatz fängt über AC_GROSS aus kern/fuellen.js '
+            'groß an, an einer Stelle (REGELN.md Abschnitt 5)'
+            for z, f in eigene_grossschreibung(code)]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Was anschlagen muss — die elf Fassungen, die am 2026-11-27 wirklich
+# dastanden, in jeder ihrer Schreibweisen.
+for _c in ["function gross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }",
+           "return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;",
+           "String(s).charAt(0).toUpperCase()+String(s).slice(1)",
+           "String(s||'').charAt(0).toUpperCase()+String(s||'').slice(1)",
+           "v.aspekt.charAt(0).toUpperCase()+v.aspekt.slice(1)",
+           "s.slice(0,1).toUpperCase()+s.slice(1)",
+           "s.substr(0,1).toUpperCase()+s.slice(1)",
+           "s.charAt( 0 ).toUpperCase()"]:
+    assert eigene_grossschreibung(_c), f'müsste anschlagen: {_c}'
+# Was durchgehen muss. Eine Überschrift ganz in Großbuchstaben ist
+# kein Satzanfang, und die eine Stelle selbst darf es natürlich.
+for _c in ["z.push(TI.titel.toUpperCase() + ' · ' + kopf.wer);",
+           "L.push(B.n.toUpperCase());",
+           "anFuell(AT.berichtTrenner,{n:AT.art[k].n.toUpperCase()})",
+           "s = String(s||'').toUpperCase();",
+           "// s.charAt(0).toUpperCase() stand hier bis zum 2026-11-27",
+           "/* gross(s) hieß s.charAt(0).toUpperCase()+s.slice(1) */",
+           "return m[1] + m[2].toUpperCase() + s.slice(m[0].length);",
+           "AC_GROSS(W.pName(k, n))",
+           ""]:
+    assert not eigene_grossschreibung(_c), \
+        f'müsste durchgehen: {_c} → {eigene_grossschreibung(_c)}'
+# Und die Meldung sagt, wo die eine Stelle liegt.
+assert 'AC_GROSS' in pruefe_grossschreibung(
+    "var a=s.charAt(0).toUpperCase()+s.slice(1);", 'x.js')[0]
+del _c
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Auf Stufe 0 steht kein Fachwort
+#
+#  `REGELN.md` Abschnitt 2 ist die Grundregel der Plattform, und
+#  `REGELN.md` Abschnitt 5 verlangt sie von jedem `bau-*.py`. Die
+#  Wortliste dazu stand am 2026-11-27 in acht Bauten einzeln, in acht
+#  verschiedenen Fassungen: `bau-bereiche.py` führte 59 Wörter,
+#  `bau-zeit.py` sechs ganz andere, `bau-reading.py` keine — und
+#  genau dort stand deshalb auf Stufe 0 „Krebs-Anteil:".
+#
+#  Das ist dieselbe Lage wie bei `pruefe_handgriffe` vor dem 5.11.:
+#  eine Regel in acht Dateien ist nach der ersten Verschärfung in
+#  sieben davon veraltet (REGELN.md Abschnitt 5). Deshalb steht die
+#  Liste jetzt hier. Die acht Bauten ziehen nach; welcher noch seine
+#  eigene führt, zählt `pruefe-alles.py` nach.
+#
+#  Gemessen wird am **gezeichneten** Ergebnis und nicht an den Daten:
+#  Ein Fachwort kann aus einer Tafel kommen, die die Seite erst beim
+#  Rendern aufschlägt (REGELN.md 6e).
+STUFE0_VERBOTEN = (
+    ['Sonne', 'Mond', 'Merkur', 'Venus', 'Mars', 'Jupiter', 'Saturn',
+     'Uranus', 'Neptun', 'Pluto', 'Lilith', 'Chiron']
+    + ['Haus', 'Häuser', 'Hauses', 'Stellium', 'Planet', 'Planeten']
+    + ['Aspekt', 'Aspekte', 'Konjunktion', 'Opposition', 'Quadrat',
+       'Trigon', 'Sextil', 'Orbis', 'Orben']
+    + ['Transit', 'Transite', 'Aszendent', 'Deszendent', 'Medium Coeli',
+       'rückläufig', 'winkelhaft', 'Radix', 'Ekliptik', 'Dispositor',
+       'Profektion', 'Firdaria', 'Aphesis', 'Whole Sign', 'Whole-Sign',
+       'tropisch', 'Herrscher']
+    # „Chart" steht mit Absicht **nicht** auf dieser Liste. Es ist
+    # kein Fachwort, sondern das Wort, unter dem die Zielgruppe die
+    # Sache kennt — dieselbe Unterscheidung wie in `REGELN.md` 2a
+    # zwischen Mechanik und Namen, und `PRODUKT.md` Abschnitt 2,
+    # Punkt 1 sagt, warum: Eine Seite, die dieses Wort vermeidet,
+    # wirkt nicht zugänglicher, sondern wie ein anderes Thema.
+    + ['Widder', 'Stier', 'Zwillinge', 'Krebs', 'Löwe', 'Jungfrau',
+       'Waage', 'Skorpion', 'Schütze', 'Steinbock', 'Wassermann', 'Fische']
+)
+# Ein Wort steht hier als Wort und nicht als Zeichenfolge: „Haus"
+# darf nicht an „Zuhause" anschlagen und „Mars" nicht an „Marsch".
+_STUFE0 = {w: re.compile(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(w)
+                         + r'(?![A-Za-zÄÖÜäöüß])')
+           for w in STUFE0_VERBOTEN}
+
+
+def fachwoerter_auf_stufe0(text, extra=()):
+    """Welche Fachwörter in `text` sichtbar sind. `extra` sind die
+    Wörter, die nur diese Seite kennt."""
+    gefunden = [w for w in STUFE0_VERBOTEN if _STUFE0[w].search(text)]
+    gefunden += [w for w in extra
+                 if re.search(r'(?<![A-Za-zÄÖÜäöüß])' + re.escape(w)
+                              + r'(?![A-Za-zÄÖÜäöüß])', text)]
+    return sorted(set(gefunden))
+
+
+def pruefe_stufe0(text, woher='der Seite', extra=()):
+    """Bricht ab, sobald auf Stufe 0 ein Fachwort sichtbar ist."""
+    treffer = fachwoerter_auf_stufe0(text, extra)
+    if not treffer:
+        return []
+    return ['Fachsprache auf Stufe 0 sichtbar auf %s: %s '
+            '(REGELN.md Abschnitt 2)' % (woher, ', '.join(treffer[:10]))]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Was anschlagen muss — darunter das, was am 2026-11-27 wirklich auf
+# Stufe 0 stand.
+for _t, _w in [('Krebs-Anteil: Du spürst zuerst', ['Krebs']),
+               ('Im 11. Haus stehen bei dir 3 Planeten',
+                ['Haus', 'Planeten']),
+               ('Stellium im 11. Haus, 3 Faktoren.',
+                ['Haus', 'Stellium']),
+               ('Whole Sign, tropisch.', ['Whole Sign', 'tropisch']),
+               ('Sonne Trigon Uranus', ['Sonne', 'Trigon', 'Uranus']),
+               ('der Aszendent in Skorpion', ['Aszendent', 'Skorpion']),
+               ('Stellium im 9. Haus', ['Haus', 'Stellium'])]:
+    assert fachwoerter_auf_stufe0(_t) == sorted(_w), \
+        f'müsste anschlagen: {_t} → {fachwoerter_auf_stufe0(_t)}'
+# Was durchgehen muss. Ein Fachwort als Teil eines Alltagsworts ist
+# keins — sonst schlägt die Regel auf „Zuhause" an und wird
+# abgeschaltet (REGELN.md 6e).
+for _t in ['Zuhause und Herkunft',
+           'Du brauchst ein Zuhause im wörtlichen Sinn.',
+           'ein Marschbefehl, kein Wunsch',
+           'Dein Gefühl: Du beruhigst dich, indem du etwas in Ordnung bringst.',
+           'Wie du auf andere wirkst',
+           'Am stärksten zeigt sich das im Bereich Sinn und Ferne.',
+           'Besonders viel spielt sich bei dir im Bereich Freunde ab',
+           'Dein Wesenskern und dein Freiheitsdrang laufen mühelos zusammen.',
+           'Was dir weniger liegt',
+           # „Chart" ist ein Name und kein Fachwort (REGELN.md 2a).
+           'Ein Chart sagt nicht, wie dein Leben ausgeht.',
+           '']:
+    assert fachwoerter_auf_stufe0(_t) == [], \
+        f'müsste durchgehen: {_t} → {fachwoerter_auf_stufe0(_t)}'
+# Und die Wörter, die nur eine Seite kennt, zählen mit.
+assert fachwoerter_auf_stufe0('Los des Dämons', extra=['Los des']) == ['Los des']
+assert 'Krebs' in pruefe_stufe0('Krebs-Anteil')[0]
+assert pruefe_stufe0('Dein Gefühl') == []
 del _t, _w

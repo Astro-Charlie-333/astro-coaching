@@ -1,288 +1,291 @@
-/* ── Reading in der Sprache der Empfängerin ──────────── */
-function nrm(x){x=x%360;return x<0?x+360:x;}
+/* ── Das Reading anzeigen ─────────────────────────────────────
+   Diese Datei setzt zusammen und formuliert nicht. Jedes Wort, das
+   auf der Seite landet, kommt aus `RD_T` in `reading-daten.js`
+   (Aufgabe 65, aus dem Zug von Aufgabe 34); jede Zahl geht durch
+   `AC_KOMMA`, jeder Satzanfang durch `AC_GROSS`, und „dein" vor
+   einem Punkt des Geburtsbilds bildet `B_BEUGE` — die eine Stelle,
+   die das Geschlecht des Punktes kennt.
+
+   Verriegelt ist das in `bau-reading.py`: Ein Satz oder ein „dein"
+   von Hand bricht den Bau ab.
+
+   Die Datei steht in einer eigenen Hülle. Vorher lagen `nrm`,
+   `chartVon`, `haus` und `gewaehlt` im globalen Namensraum neben
+   denen der Engine — vier Namen, die `engine.js` dort schon führt
+   (`REGELN.md` 6f). Die Rechnung steht jetzt in
+   `reading-rechner.js`. */
+(function(){
+'use strict';
+
+var W = window.AC_WORT, R = window.AC_RDR;
+var reg = RD_REG;
+
 function el(i){ return document.getElementById(i); }
-function esc(s){ return String(s===undefined||s===null?'':s).replace(/[<>&"]/g,function(c){
- return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]; }); }
-function gross(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-var W=window.AC_WORT;
-var ZN=W.ZEICHEN.map(function(z){return z.n;});
-var MODUS=['kardinal','fix','beweglich'];
-var ELE=['Feuer','Erde','Luft','Wasser'];
-var GEW={Sonne:3,Mond:3,Merkur:2,Venus:2,Mars:2,Jupiter:1.5,Saturn:1.5};
-var HAUPT=['Sonne','Mond','Merkur','Venus','Mars','Jupiter','Saturn'];
-var SIGNS_TXT={Sonne:R_SONNE,Mond:R_MOND,Merkur:R_MERKUR,Venus:R_VENUS,Mars:R_MARS};
-
-var gewaehlt=null, stufe=2;
-
-function chartVon(p){
-  var ut=p.h+p.mi/60-p.tz,y=p.y,mo=p.mo,d=p.d;
-  if(ut<0){ut+=24;d-=1;} if(ut>=24){ut-=24;d+=1;}
-  var jd=jdFromUT(y,mo,d,ut),T=(jd-2451545)/36525,a=angles(jd,p.lat,p.lon);
-  return {Sonne:sunLon(T),Mond:moonLon(T),Merkur:geo('Merkur',T),Venus:geo('Venus',T),
-   Mars:geo('Mars',T),Jupiter:geo('Jupiter',T),Saturn:geo('Saturn',T),Uranus:geo('Uranus',T),
-   Neptun:geo('Neptun',T),Pluto:geo('Pluto',T),ASC:a.asc,MC:a.mc};
-}
-function haus(P,l){ return ((Math.floor(l/30)-Math.floor(P.ASC/30))%12+12)%12+1; }
-function zi(l){ return Math.floor(nrm(l)/30); }
-
-/* Die stärksten Aspekte im Chart */
-var ASPW=[[0,'Konjunktion',8],[60,'Sextil',4],[90,'Quadrat',7],[120,'Trigon',6],[180,'Opposition',7]];
-function aspekte(P){
-  var out=[], k=HAUPT.concat(['Uranus','Neptun','Pluto']);
-  for(var i=0;i<k.length;i++) for(var j=i+1;j<k.length;j++){
-    var d=Math.abs(((P[k[i]]-P[k[j]]+540)%360)-180);
-    ASPW.forEach(function(a){
-      var orb=Math.abs(d-a[0]);
-      var max=(a[0]===0||a[0]===180)?8:6;
-      if(orb<=max){
-        var stark=(max-orb)/max*a[2]*((GEW[k[i]]||1)+(GEW[k[j]]||1))/4;
-        out.push({a:k[i],b:k[j],art:a[1],orb:orb,s:stark});
-      }
-    });
-  }
-  out.sort(function(x,y){return y.s-x.s;});
-  return out;
-}
-function bilanz(P){
-  var e={Feuer:0,Erde:0,Luft:0,Wasser:0}, m={kardinal:0,fix:0,beweglich:0}, g=0;
-  HAUPT.concat(['ASC']).forEach(function(k){
-    var w=(k==='ASC')?2:(GEW[k]||1), z=zi(P[k]);
-    e[ELE[z%4]]+=w; m[MODUS[z%3]]+=w; g+=w;
-  });
-  return {e:e,m:m,g:g};
-}
-function haeuserBetont(P){
-  var z={};
-  HAUPT.forEach(function(k){ var h=haus(P,P[k]); z[h]=(z[h]||0)+1; });
-  return Object.keys(z).filter(function(h){return z[h]>=3;})
-    .map(function(h){return {h:+h,n:z[h]};}).sort(function(a,b){return b.n-a.n;});
+function esc(s){
+  return String(s === undefined || s === null ? '' : s)
+    .replace(/[<>&"]/g, function(c){
+      return {'<':'&lt;', '>':'&gt;', '&':'&amp;', '"':'&quot;'}[c]; });
 }
 
-/* ── Ein Abschnitt, in der Sprache der Stufe ─────────── */
+var gewaehlt = null, stufe = 2;
+
+/* ── Wie ein Punkt des Geburtsbilds auf dieser Stufe heißt ────
+   Auf Stufe 1 bildet `B_BEUGE` die Form: „deine Sonne", „dein
+   Mond", „dein Aszendent" — mit dem Geschlecht aus `B_ZIEL` und
+   nicht von Hand. Auf den übrigen Stufen steht das Wort des
+   Registers in `wortwahl.js`: auf 0 die Aufgabe im Leben („dein
+   Wesenskern"), auf 2 der Artikel („die Sonne"), darüber der
+   nackte Name. */
+function punkt(k, n){
+  if(n === 1) return B_BEUGE(B_PUNKT(k, false), 'nom');
+  return W.pName(k, n);
+}
+function kopfPunkt(k, n){ return AC_GROSS(punkt(k, n)); }
+
+/* ── Ein Abschnitt ───────────────────────────────────────────── */
 function abschnitt(titel, kern, technik, n){
-  var h='<section class="rd-ab"><h3>'+titel+'</h3>';
-  h+='<p>'+kern+'</p>';
-  if(technik && n>=2) h+='<p class="rd-tech">'+technik+'</p>';
-  h+='</section>';
-  return h;
+  return '<section class="rd-ab"><h3>' + titel + '</h3><p>' + kern + '</p>'
+    + ((technik && n >= 2) ? '<p class="rd-tech">' + technik + '</p>' : '')
+    + '</section>';
 }
 
 function readingBauen(p, n){
-  var P=chartVon(p);
-  var name=(p.name||'').trim().split(/\s+/)[0]||'du';
-  var sz=zi(P.Sonne), mz=zi(P.Mond), az=zi(P.ASC);
-  var h='';
+  var P = chartVon(p);
+  var vorname = (p.name || '').trim().split(/\s+/)[0] || RD_T.ohneName;
+  var sz = R.zeichen(P.Sonne), mz = R.zeichen(P.Mond), az = R.zeichen(P.ASC);
+  var ZN = W.ZEICHEN.map(function(z){ return z.n; });
+  var h = '';
 
   /* Kopf */
-  h+='<div class="rd-kopf"><div class="rd-k">Reading für '+esc(name)+'</div>';
-  if(n===0){
-    h+='<h2>Drei Dinge über dich</h2>'+
-      '<p class="rd-ein">Was hier steht, kommt aus dem Himmelsbild von deinem Geburtstag. '+
-      'Du musst nichts über Astrologie wissen, um es zu lesen — es steht alles in normalen Worten da. '+
-      'Nimm mit, was dich trifft, und lass liegen, was nicht passt.</p>';
-  } else if(n===1){
-    h+='<h2>Dein Chart in Worten</h2>'+
-      '<p class="rd-ein">Ein Geburtschart ist eine Momentaufnahme des Himmels zu deiner Geburt. '+
-      'Jeder Planet steht für eine Grundfunktion — die Sonne für deinen Wesenskern, der Mond für dein '+
-      'Gefühl, der Aszendent für dein Auftreten. Fachbegriffe stehen in Klammern dabei.</p>';
-  } else if(n>=3){
-    h+='<h2>'+(n===4?'Chartanalyse':'Dein Chart')+'</h2>'+
-      '<p class="rd-ein">Whole Sign, tropisch. '+
-      (n===4?'Orbis bis 8° für Konjunktion und Opposition, 6° sonst, nach Gewicht sortiert.':'')+'</p>';
-  } else {
-    h+='<h2>Dein Chart</h2>'+
-      '<p class="rd-ein">Die drei Grundlagen zuerst, danach die einzelnen Funktionen, '+
-      'die stärksten Verbindungen und die Gewichtung.</p>';
-  }
-  h+='</div>';
+  h += '<div class="rd-kopf"><div class="rd-k">'
+    + AC_FUELL(RD_T.kopfFuer, {name: esc(vorname)}) + '</div>'
+    + '<h2>' + reg(RD_T.titel, n) + '</h2>'
+    + '<p class="rd-ein">' + reg(RD_T.einstieg, n) + '</p></div>';
 
   /* Die drei Grundlagen */
-  var g='';
-  if(n===0){
-    g='<p><b>'+gross(ZN[sz])+'-Anteil:</b> '+R_SONNE[sz]+'</p>'+
-      '<p><b>Dein Gefühl:</b> '+R_MOND[mz]+'</p>'+
-      '<p><b>Wie du auf andere wirkst:</b> '+R_ASC[az]+'</p>';
-  } else {
-    g='<p><b>'+W.pName('Sonne',n)+' in '+ZN[sz]+'</b> — '+R_SONNE[sz]+'</p>'+
-      '<p><b>'+W.pName('Mond',n)+' in '+ZN[mz]+'</b> — '+R_MOND[mz]+'</p>'+
-      '<p><b>'+W.pName('ASC',n)+' in '+ZN[az]+'</b> — '+R_ASC[az]+'</p>';
-  }
-  var tech3 = n>=3 ? ('Sonne '+W.grad(P.Sonne)+' · Mond '+W.grad(P.Mond)+' · ASC '+W.grad(P.ASC)+
-    ' · MC '+W.grad(P.MC)) : null;
-  h+='<section class="rd-ab rd-drei"><h3>'+
-     (n<=1?'Die drei wichtigsten Sachen':'Die drei Grundlagen')+'</h3>'+g+
-     (tech3?'<p class="rd-tech">'+tech3+'</p>':'')+'</section>';
+  var drei = [['Sonne', sz, R_SONNE[sz]], ['Mond', mz, R_MOND[mz]],
+              ['ASC', az, R_ASC[az]]];
+  var g = '';
+  drei.forEach(function(x){
+    g += (n === 0)
+      ? AC_FUELL(RD_T.dreiZeileLaie,
+                 {punkt: RD_T.dreiLaie[x[0]], text: x[2]})
+      : AC_FUELL(RD_T.dreiZeile,
+                 {punkt: kopfPunkt(x[0], n), zeichen: ZN[x[1]], text: x[2]});
+  });
+  var dreiTech = (n >= 3) ? AC_FUELL(RD_T.dreiTech, {
+    sonne: W.grad(P.Sonne), mond: W.grad(P.Mond),
+    asc: W.grad(P.ASC), mc: W.grad(P.MC)}) : null;
+  h += '<section class="rd-ab rd-drei"><h3>' + reg(RD_T.dreiTitel, n) + '</h3>'
+    + g + (dreiTech ? '<p class="rd-tech">' + dreiTech + '</p>' : '')
+    + '</section>';
 
   /* Die einzelnen Funktionen */
-  ['Merkur','Venus','Mars'].forEach(function(k){
-    var z=zi(P[k]), hs=haus(P,P[k]);
-    var titel = n===0
-      ? gross(W.PLANET[k].kurz(0))
-      : gross(W.pName(k,n))+' in '+ZN[z];
-    var kern=SIGNS_TXT[k][z];
-    var ort = n===0
-      ? ' Am stärksten zeigt sich das im Bereich <b>'+W.HAUS[hs-1].kurz+'</b>.'
-      : ' — im '+hs+'. Haus ('+W.HAUS[hs-1].lang+').';
-    h+=abschnitt(titel, kern+ort,
-      n>=3?(k+' '+W.grad(P[k])+', '+hs+'. Haus'):null, n);
+  var SINN = {Merkur: R_MERKUR, Venus: R_VENUS, Mars: R_MARS};
+  ['Merkur', 'Venus', 'Mars'].forEach(function(k){
+    var z = R.zeichen(P[k]), hs = haus(P, P[k]), hw = W.HAUS[hs - 1];
+    var titel = (n === 0) ? kopfPunkt(k, 0)
+      : AC_FUELL(RD_T.funkTitel, {punkt: kopfPunkt(k, n), zeichen: ZN[z]});
+    var ort = (n === 0)
+      ? AC_FUELL(RD_T.ortLaie, {bereich: hw.kurz})
+      : AC_FUELL(RD_T.ort, {haus: hs, lang: hw.lang});
+    h += abschnitt(titel, SINN[k][z] + ort,
+      (n >= 3) ? AC_FUELL(RD_T.funkTech,
+        {punkt: k, grad: W.grad(P[k]), haus: hs}) : null, n);
   });
 
-  /* Was wo besonders betont ist */
-  var hb=haeuserBetont(P);
+  /* Wo am meisten los ist */
+  var hb = R.betont(P);
   if(hb.length){
-    var b=hb[0];
-    h+=abschnitt(n<=1?'Wo bei dir am meisten los ist':'Betonter Lebensbereich',
-      (n===0?'Besonders viel spielt sich bei dir im Bereich <b>'+W.HAUS[b.h-1].kurz+'</b> ab — '
-            :'Im <b>'+b.h+'. Haus</b> ('+W.HAUS[b.h-1].lang+') stehen bei dir '+b.n+' Planeten — ')+
-      'das ist der Teil deines Lebens, der am lautesten mitredet, ob du willst oder nicht.',
-      n>=3?('Stellium im '+b.h+'. Haus, '+b.n+' Faktoren.'):null, n);
+    var b = hb[0], bw = W.HAUS[b.h - 1];
+    var auf = (n === 0)
+      ? AC_FUELL(RD_T.betontLaie, {bereich: bw.kurz})
+      : AC_FUELL(b.n === 1 ? RD_T.betontEin : RD_T.betontViele,
+                 {haus: b.h, lang: bw.lang, zahl: b.n});
+    h += abschnitt(reg(RD_T.betontTitel, n), auf + RD_T.betontFolge,
+      (n >= 3) ? AC_FUELL(RD_T.betontTech, {haus: b.h, zahl: b.n}) : null, n);
   }
 
   /* Die stärksten Verbindungen */
-  var as=aspekte(P).slice(0, n<=1?3:(n===2?5:7));
+  var as = R.aspekte(P).slice(0, n <= 1 ? 3 : (n === 2 ? 5 : 7));
   if(as.length){
-    var at='';
+    var at = '';
     as.forEach(function(x){
-      var deut=null;
-      try{ deut=window.AC_ASP?AC_ASP.deutung(x.a,x.b,x.art):null; }catch(e){}
-      at+='<p>'+W.aspekt(x.a,x.b,x.art,n,x.orb);
-      if(deut&&n>=1) at+=' '+(typeof deut==='string'?deut:(deut.text||deut.kern||''));
-      at+='</p>';
+      var deut = null;
+      try{ deut = window.AC_ASP ? AC_ASP.deutung(x.a, x.b, x.art) : null; }
+      catch(e){}
+      if(deut && typeof deut !== 'string') deut = deut.text || deut.kern || '';
+      /* Die Genauigkeit wächst mit der Stufe: eine Nachkommastelle
+         für die Lesende, zwei für die Fachperson. Die Zahl wird hier
+         zu Text und nicht im Wörterbuch (REGELN.md Abschnitt 4). */
+      var orbText = (n >= 3) ? AC_KOMMA(x.orb, n >= 4 ? 2 : 1) : '';
+      var zeile = AC_GROSS(W.aspekt(x.a, x.b, x.art, n, orbText));
+      at += (deut && n >= 1)
+        ? AC_FUELL(RD_T.aspMitDeutung, {zeile: zeile, deutung: deut})
+        : AC_FUELL(RD_T.aspZeile, {zeile: zeile});
     });
-    h+='<section class="rd-ab"><h3>'+
-      (n===0?'Was bei dir zusammenhängt':(n<=2?'Die stärksten Verbindungen':'Aspekte, nach Gewicht'))+
-      '</h3>'+
-      (n===0?'<p class="rd-vor">Manche Anteile von dir arbeiten zusammen, andere reiben sich. Das sind die auffälligsten:</p>':'')+
-      at+'</section>';
+    h += '<section class="rd-ab"><h3>' + reg(RD_T.aspTitel, n) + '</h3>'
+      + (n === 0 ? '<p class="rd-vor">' + RD_T.aspVor + '</p>' : '')
+      + at + '</section>';
   }
 
-  /* Element- und Modusmischung */
-  var bi=bilanz(P);
-  var stark=Object.keys(bi.e).sort(function(a,b){return bi.e[b]-bi.e[a];})[0];
-  var fehlt=Object.keys(bi.e).filter(function(k){return bi.e[k]<=1;});
-  var mstark=Object.keys(bi.m).sort(function(a,b){return bi.m[b]-bi.m[a];})[0];
-  var bt='<p><b>'+(n===0?'Dein Grundton':'Betont: '+R_ELEMENT[stark][0])+'</b> — '+R_ELEMENT[stark][1]+'</p>';
-  if(fehlt.length) bt+='<p><b>'+(n===0?'Was dir weniger liegt':'Schwach: '+fehlt.join(' und '))+'</b> — '+
-    R_ELEMENT_FEHLT[fehlt[0]]+'</p>';
-  bt+='<p><b>'+(n===0?'Dein Tempo':'Modus: '+mstark)+'</b> — '+R_MODUS[mstark][1]+'</p>';
-  if(n>=3){
-    bt+='<p class="rd-tech">'+ELE.map(function(k){return k+' '+bi.e[k].toFixed(1);}).join(' · ')+
-      ' — '+MODUS.map(function(k){return k+' '+bi.m[k].toFixed(1);}).join(' · ')+'</p>';
+  /* Woraus jemand gemischt ist */
+  var bi = R.bilanz(P);
+  var stark = R.ELE.slice().sort(function(a, b){ return bi.e[b] - bi.e[a]; })[0];
+  var fehlt = R.ELE.filter(function(k){ return bi.e[k] <= 1; });
+  var mstark = R.MODUS.slice().sort(function(a, b){ return bi.m[b] - bi.m[a]; })[0];
+  var bt = AC_FUELL(RD_T.mischZeile, {
+    marke: (n === 0) ? RD_T.starkLaie
+      : AC_FUELL(RD_T.stark, {was: R_ELEMENT[stark].n}),
+    text: R_ELEMENT[stark].text});
+  if(fehlt.length) bt += AC_FUELL(RD_T.mischZeile, {
+    marke: (n === 0) ? RD_T.fehltLaie
+      : AC_FUELL(RD_T.fehlt, {was: fehlt.map(function(k){
+          return R_ELEMENT[k].n; }).join(RD_T.fehltUnd)}),
+    text: R_ELEMENT_FEHLT[fehlt[0]]});
+  bt += AC_FUELL(RD_T.mischZeile, {
+    marke: (n === 0) ? RD_T.tempoLaie
+      : AC_FUELL(RD_T.tempo, {was: R_MODUS[mstark].n}),
+    text: R_MODUS[mstark].text});
+  if(n >= 3){
+    var waage = function(tafel, werte, namen){
+      return tafel.map(function(k){
+        return namen[k].n + RD_T.waageRaum + AC_KOMMA(werte[k], 1);
+      }).join(RD_T.waageTrenn);
+    };
+    bt += '<p class="rd-tech">' + AC_FUELL(RD_T.waageZeile, {
+      elemente: waage(R.ELE, bi.e, R_ELEMENT),
+      modi: waage(R.MODUS, bi.m, R_MODUS)}) + '</p>';
   }
-  h+='<section class="rd-ab"><h3>'+(n<=1?'Woraus du gemischt bist':'Element- und Modusbilanz')+'</h3>'+bt+'</section>';
+  h += '<section class="rd-ab"><h3>' + reg(RD_T.mischTitel, n) + '</h3>'
+    + bt + '</section>';
 
-  /* Schatten — erst ab Stufe 2, und nur einer */
-  if(n>=2){
-    var sp=null;
+  /* Wo es kippen kann — erst ab Stufe 2, und nur einer */
+  if(n >= 2){
+    var sp = null;
     try{
-      for(var i=0;i<HAUPT.length&&!sp;i++){
-        var k=HAUPT[i];
-        if(window.AC_SCHATTEN&&AC_SCHATTEN.hat(k)){
-          var t=AC_SCHATTEN.haus(k,haus(P,P[k]));
-          if(t) sp={k:k,h:haus(P,P[k]),t:t};
-        }
-      }
+      R.HAUPT.forEach(function(k){
+        if(sp || !window.AC_SCHATTEN || !AC_SCHATTEN.hat(k)) return;
+        var hs = haus(P, P[k]), t = AC_SCHATTEN.haus(k, hs);
+        if(t) sp = {k:k, h:hs, t:t};
+      });
     }catch(e){}
-    if(sp) h+=abschnitt('Wo es kippen kann', sp.t,
-      n>=4?(sp.k+' im '+sp.h+'. Haus — Schattenmechanik, nicht Diagnose.'):null, n);
+    if(sp) h += abschnitt(RD_T.kippTitel, sp.t,
+      (n >= 4) ? AC_FUELL(RD_T.kippTech, {punkt: sp.k, haus: sp.h}) : null, n);
   }
 
-  /* Abschluss */
-  h+='<section class="rd-ab rd-schluss"><h3>Zum Schluss</h3>'+
-    '<p>'+(n===0
-      ? 'Ein Chart sagt nicht, wie dein Leben ausgeht. Es beschreibt, womit du ausgestattet bist — '+
-        'so ähnlich wie eine Beschreibung deiner Stärken und wunden Punkte. Was du damit machst, '+
-        'steht nirgends geschrieben.'
-      : 'Ein Chart beschreibt Anlagen, keine Ereignisse. Es sagt, womit du arbeitest — nicht, '+
-        'was daraus wird. Alles, was hier steht, ist ein Angebot zum Abgleichen: '+
-        'Was stimmt, erkennst du; was nicht stimmt, lass liegen.')+'</p></section>';
+  /* Zum Schluss */
+  h += '<section class="rd-ab rd-schluss"><h3>' + RD_T.schlussTitel + '</h3>'
+    + '<p>' + reg(RD_T.schluss, n) + '</p></section>';
   return h;
 }
 
-/* ── Oberfläche ───────────────────────────────────────── */
-function alle(){ try{ return AC_P.alle()||[]; }catch(e){ return []; } }
+/* ── Oberfläche ──────────────────────────────────────────────── */
+function alle(){ try{ return AC_P.alle() || []; }catch(e){ return []; } }
+
 function wahlBauen(){
-  var box=el('rdwahl'), l=alle();
-  box.innerHTML='';
+  var box = el('rdwahl'), l = alle();
+  box.innerHTML = '';
   if(!l.length) return;
-  var lab=document.createElement('span'); lab.className='lab'; lab.textContent='Für wen';
+  var lab = document.createElement('span');
+  lab.className = 'lab'; lab.textContent = RD_T.wahlLabel;
   box.appendChild(lab);
   l.forEach(function(p){
-    var b=document.createElement('button'); b.type='button';
-    b.textContent=AC_P.anzeige(p,AC_P.zeigeNamen())+(p.eigen?' (ich)':'');
-    b.setAttribute('aria-pressed', gewaehlt===p.id);
-    b.addEventListener('click',function(){
-      gewaehlt=p.id; stufe=AC_NIV.fuerProfil(p.id); wahlBauen(); stufeBauen(); zeigen();
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = AC_P.anzeige(p, AC_P.zeigeNamen())
+      + (p.eigen ? RD_T.wahlEigen : '');
+    b.setAttribute('aria-pressed', gewaehlt === p.id);
+    b.addEventListener('click', function(){
+      gewaehlt = p.id; stufe = AC_NIV.fuerProfil(p.id);
+      wahlBauen(); stufeBauen(); zeigen();
     });
     box.appendChild(b);
   });
 }
+
 function stufeBauen(){
-  var box=el('rdstufe');
-  var h='<span class="lab">Wissensstand der Person</span><div class="niv-knoepfe">';
+  var box = el('rdstufe');
+  var h = '<span class="lab">' + RD_T.stufeLabel + '</span>'
+        + '<div class="niv-knoepfe">';
   AC_NIV.STUFEN.forEach(function(s){
-    h+='<button type="button" data-s="'+s.id+'" aria-pressed="'+(s.id===stufe)+'" title="'+s.lang+'">'+s.n+'</button>';
+    h += '<button type="button" data-s="' + s.id + '" aria-pressed="'
+      + (s.id === stufe) + '" title="' + esc(s.lang) + '">' + s.n + '</button>';
   });
-  h+='</div><div class="rd-tipp"><b>'+AC_NIV.lang(stufe)+'.</b> '+AC_NIV.STUFEN[stufe].u+'</div>';
-  box.innerHTML=h;
-  Array.prototype.forEach.call(box.querySelectorAll('button[data-s]'),function(b){
-    b.addEventListener('click',function(){
-      stufe=+b.getAttribute('data-s');
-      if(gewaehlt) AC_NIV.profilSetzen(gewaehlt, stufe);
-      stufeBauen(); zeigen();
+  h += '</div><div class="rd-tipp">'
+    + AC_FUELL(RD_T.stufeTipp,
+               {lang: AC_NIV.lang(stufe), u: AC_NIV.STUFEN[stufe].u})
+    + '</div>';
+  box.innerHTML = h;
+  Array.prototype.forEach.call(box.querySelectorAll('button[data-s]'),
+    function(b){
+      b.addEventListener('click', function(){
+        stufe = +b.getAttribute('data-s');
+        if(gewaehlt) AC_NIV.profilSetzen(gewaehlt, stufe);
+        stufeBauen(); zeigen();
+      });
     });
-  });
-}
-function zeigen(){
-  var l=alle(), box=el('rdinhalt');
-  if(!l.length){
-    box.innerHTML='<div class="rd-leer"><b>Noch kein Profil angelegt.</b><br><br>'+
-      'Unter <a href="profile.html">Profile</a> einen Menschen mit Geburtsdaten anlegen — '+
-      'dann entsteht hier das Reading.</div>'; return;
-  }
-  if(!gewaehlt){ gewaehlt=(l.filter(function(p){return p.eigen;})[0]||l[0]).id;
-    stufe=AC_NIV.fuerProfil(gewaehlt); wahlBauen(); stufeBauen(); }
-  var p=l.filter(function(x){return x.id===gewaehlt;})[0];
-  if(!p){ box.innerHTML=''; return; }
-  box.innerHTML='<article class="rd niv-'+stufe+'">'+readingBauen(p,stufe)+'</article>';
 }
 
-/* Als reiner Text zum Verschicken */
+function zeigen(){
+  var l = alle(), box = el('rdinhalt');
+  if(!l.length){
+    box.innerHTML = '<div class="rd-leer">' + RD_T.leer + '</div>';
+    return;
+  }
+  if(!gewaehlt){
+    gewaehlt = (l.filter(function(p){ return p.eigen; })[0] || l[0]).id;
+    stufe = AC_NIV.fuerProfil(gewaehlt);
+    wahlBauen(); stufeBauen();
+  }
+  var p = l.filter(function(x){ return x.id === gewaehlt; })[0];
+  if(!p){ box.innerHTML = ''; return; }
+  box.innerHTML = '<article class="rd niv-' + stufe + '">'
+    + readingBauen(p, stufe) + '</article>';
+}
+
+/* ── Herausgeben: als Text, als Datei, auf Papier ───────────── */
 function alsText(){
-  var art=document.querySelector('.rd'); if(!art) return '';
-  var t=art.innerText.replace(/\n{3,}/g,'\n\n').trim();
-  return t;
+  var art = document.querySelector('.rd');
+  return art ? art.innerText.replace(/\n{3,}/g, '\n\n').trim() : '';
+}
+function echo(s){
+  var e = el('rdecho'); e.textContent = s;
+  setTimeout(function(){ if(e.textContent === s) e.textContent = ''; }, 4000);
 }
 function kopieren(){
-  var t=alsText(); if(!t) return;
-  var ta=document.createElement('textarea'); ta.value=t;
-  ta.style.position='fixed'; ta.style.opacity='0';
+  var t = alsText(); if(!t) return;
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
   document.body.appendChild(ta); ta.select();
-  var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(t).then(function(){ echo('In die Zwischenablage kopiert.'); },
-      function(){ echo(ok?'Kopiert.':'Kopieren ging nicht — markier den Text und nimm Strg+C.'); });
-  } else echo(ok?'Kopiert.':'Kopieren ging nicht — markier den Text und nimm Strg+C.');
+  var ok = false;
+  try{ ok = document.execCommand('copy'); }catch(e){}
+  var nicht = ok ? RD_T.echoKurz : RD_T.echoHand;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(
+      function(){ echo(RD_T.echoKopiert); },
+      function(){ echo(nicht); });
+  } else echo(nicht);
   ta.remove();
 }
-function echo(s){ var e=el('rdecho'); e.textContent=s;
-  setTimeout(function(){ if(e.textContent===s) e.textContent=''; },4000); }
 function datei(){
-  var t=alsText(); if(!t) return;
-  var p=alle().filter(function(x){return x.id===gewaehlt;})[0];
-  var nm=((p&&p.name)||'reading').trim().split(/\s+/)[0].toLowerCase();
-  var b=new Blob([t],{type:'text/plain;charset=utf-8'});
-  var a=document.createElement('a'); a.href=URL.createObjectURL(b);
-  a.download='reading-'+nm+'-'+AC_NIV.STUFEN[stufe].k+'.txt';
+  var t = alsText(); if(!t) return;
+  var p = alle().filter(function(x){ return x.id === gewaehlt; })[0];
+  /* Der Name bleibt, wie er geschrieben wird. `toLowerCase` auf
+     deutschem Text ist verboten (`REGELN.md` Abschnitt 4). */
+  var nm = ((p && p.name) || '').trim().split(/\s+/)[0] || RD_T.dateiOhne;
+  var b = new Blob([t], {type:'text/plain;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(b);
+  a.download = AC_FUELL(RD_T.dateiName,
+    {name: nm.replace(/[^A-Za-zÄÖÜäöüß0-9-]/g, '-'),
+     stufe: AC_NIV.STUFEN[stufe].k});
   document.body.appendChild(a); a.click();
-  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },400);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 400);
 }
 
-function start(){
-  wahlBauen(); stufeBauen(); zeigen();
-  el('rdkopie').addEventListener('click',kopieren);
-  el('rddatei').addEventListener('click',datei);
-  el('rddruck').addEventListener('click',function(){ window.print(); });
-}
-start();
+wahlBauen(); stufeBauen(); zeigen();
+el('rdkopie').addEventListener('click', kopieren);
+el('rddatei').addEventListener('click', datei);
+el('rddruck').addEventListener('click', function(){ window.print(); });
+})();
