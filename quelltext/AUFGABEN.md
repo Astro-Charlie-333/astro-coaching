@@ -961,6 +961,35 @@ Liste der Stellen steht, damit die dort verlangte Prüfung die drei
 richtigen Sätze auf `index.html` nicht mitabbricht.
 
 
+### 105 · `zahlen.html` rechnet die Häufigkeit der Lebenszahl und zeigt sie nicht
+Aus dem Gestaltungsdurchgang vom 2026-11-27 (Befund 27.11-2) zu
+`zahlen.html`. `zAnteil()` in `zahlen-rechner.js` rechnet den Anteil
+jeder Lebenszahl an allen Geburtstagen von 1940 bis 2039, `B.anteil`
+liegt in `zahlen-app.js` bereit, `zPz()` formt die Prozentzahl. Sichtbar
+wird das Ergebnis nur in `Z_T.ketteVier` — das `data-ab="4"` trägt, also
+erst auf Stufe 4 erscheint — und im Text von „Blatt kopieren"
+(`Z_T.berGrenze1`). Auf den Stufen 0 bis 3 steht stattdessen ein fester
+Satz in `zahlen-koerper.html` Zeile 114: „Rund jeder neunte Mensch hat
+also deine Lebenszahl." Für sechs der zwölf Zahlen stimmt er nicht — die
+2 hat 3,3 %, die 4 7,7 %, die 6 7,0 %, die 11 7,8 %, die 22 3,4 %, die
+33 4,1 %; 11,1 % gelten nur für 1, 3, 5, 7, 8 und 9. Bei 390 Pixeln
+steht der Satz in 15,3 Pixeln ab Pixel 11.145 einer 13.666 Pixel hohen
+Seite, 9.606 Pixel unter der Ziffer, auf die er sich bezieht. Damit
+steht der Markenkern aus `PRODUKT.md` Abschnitt 3 — „wie häufig eine
+Aussage rechnerisch überhaupt ist" — in der kleinsten Schrift der Seite
+und ist für die Leserin obendrein falsch.
+**Fertig, wenn:** die Häufigkeit der eigenen Lebenszahl aus
+`zPz(B.anteil)` auf der Lebenszahlkarte neben der Ziffer steht und auf
+jeder Stufe sichtbar ist; der feste Satz in `zahlen-koerper.html`
+Zeile 114 aus derselben Lücke gefüllt wird statt „jeder neunte" zu
+behaupten; und `bau-zahlen.py` die Seite mit festen erfundenen Profilen
+zeichnet und abbricht, sobald die im Laientext sichtbare
+Häufigkeitsangabe nicht mit `zAnteil()` für dieses Profil übereinstimmt
+— am gezeichneten Text gemessen, nicht am Quelltext, mit `assert`-Fällen
+für eine Vier (7,7), eine Eins (11,1) und eine Zwei (3,3) nach
+`REGELN.md` Abschnitt 6e, weil die Eingabe je Besucherin eine andere
+ist.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich

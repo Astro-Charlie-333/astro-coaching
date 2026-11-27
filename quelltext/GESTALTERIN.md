@@ -1238,3 +1238,163 @@ nicht an die Leserin gerichtet ist, im gezeichneten Ergebnis außerhalb
 eines zugeklappten `details` steht — gegen feste Beispiele gehalten, weil
 die Gruppen je Thema andere sind. Keine neue Farbe, keine neue Schrift,
 kein neuer Baustein.
+
+### 27.11.2026 · `zahlen.html`
+
+Angesehen bei 390 und 1280 Pixeln, auf Stufe 0 und Stufe 2, mit einem
+erfundenen Profil (15.07.1980, 11:20, Berlin). Seitenhöhe bei 390:
+13.666 Pixel auf Stufe 0 und 14.198 auf Stufe 2; bei 1.280 sind es
+11.082 und 11.365. Keine Fehler in der Konsole, nichts läuft über den
+Rand. Dieselbe Einschränkung wie seit dem 06.11.: In dieser Umgebung
+sind die Schriften von Google gesperrt, die Seite zeichnet mit
+Ersatzschriften. Beurteilt wurden Hierarchie, Größen, Abstände und
+Reihenfolge — nicht das Schriftbild.
+
+Was trägt: „Die Schulen" und der dunkle Block „Was die Zahlen taugen".
+Neun Ansätze nebeneinander, jeder mit denselben vier Feldern — wie
+gerechnet wird, woher es kommt, wofür es gut ist, was dagegen spricht —
+und bei der Pythagoräischen steht als Letztes: „Das Alter wird
+regelmäßig überschätzt. Es ist ein System aus dem frühen zwanzigsten
+Jahrhundert, keines aus der Antike." Im dunklen Block dazu die
+Zwischenüberschrift „Eine Zahl sagt nichts über einen Neurotyp" samt
+Begründung. Das ist `PRODUKT.md` Abschnitt 3 (Ehrlichkeit über die
+eigenen Grenzen) und Abschnitt 5 (keine Diagnose) wörtlich, und es ist
+hier nicht Kleingedrucktes, sondern ausgeschrieben. Der Stimmen-Test
+geht glatt durch: „Du landest überall da, wo sich jemand kümmern muss,
+und zwar auch dann, wenn das nicht deine Aufgabe ist" ist ein Satz, den
+ein Mensch geschrieben hat, keine Vorlage.
+
+Eine Beobachtung, die hier keinen Befund ergibt, weil sie klein ist und
+die Prüferin sie schärfer stellen kann: Über dem Ring steht „Deine
+eigenen Zahlen sind markiert", und die Legende darunter nennt sechs —
+3, 4, 5, 6, 7, 9. Im Ring selbst trägt genau ein Segment die
+Messingkante (`stroke="#E8C97A"`, 3 Pixel, nur bei `data-z="4"`); die
+anderen fünf stehen auf `stroke="none"`, obwohl ihre `aria-label` sie
+kennen („5 — Die Bewegung, dein Jahr").
+
+Die beiden Befunde handeln davon, dass die Seite ihre Zahlen zweimal
+nicht zeigt: oben gar nicht, und unten nicht groß genug.
+
+#### 27.11-1 · Der erste Bildschirm erklärt Numerologie, ihre eigene Zahl steht zwei Bildschirme tiefer
+
+**Zitat:** Bei 390 Pixeln steht über dem ersten Falz, in dieser
+Reihenfolge: „Die Zahlen." (32 Pixel, ab Pixel 112), dann 252 Pixel
+Absatz — **„Numerologie rechnet aus Geburtsdatum und Namen eine Handvoll
+Zahlen und liest daraus Themen. Diese Seite rechnet sie dir aus, zeigt
+jede Zahl durch acht Lebensbereiche hindurch, nimmt die Wohnungsnummer
+als eigene Kategorie dazu und stellt die neun Schulen nebeneinander, die
+es dazu gibt — samt der Stellen, an denen sie sich widersprechen."** —
+dann 140 Pixel zweiter Absatz, dann die Wissensstandleiste (Pixel 634)
+und acht Sprungmarken in 10,5 Pixeln (Pixel 757 bis 869). Bei Pixel 895
+beginnt die Überschrift „Dein Blatt".
+
+Ihre erste eigene Zahl — die Lebenszahl, „4 · Die Struktur", die Ziffer
+in 40 Pixeln — steht bei Pixel 1.539. Bei 1.280 Pixeln dasselbe Bild:
+Titel bei 108, die beiden Absätze bis 700, die Zahl bei 1.018, also auch
+dort unter dem Falz. Auf Stufe 2 ändert sich an der Reihenfolge nichts;
+der einzige Unterschied im ersten Bildschirm ist, welche Rung der Leiste
+schwarz ist.
+
+**Kosten:** Der Drei-Sekunden-Test. Die Seite kennt ihre acht Zahlen in
+dem Moment, in dem sie lädt — sie stehen im aktiven Profil und sind in
+Millisekunden gerechnet. Gezeigt wird ihr zuerst, was Numerologie ist,
+dann eine Inhaltsangabe dieser Seite, dann ein Einstellelement, dann ein
+Inhaltsverzeichnis. 392 der ersten 900 Pixel sind Definition. Nach drei
+Sekunden auf dem Telefon weiß sie, dass es hier um Zahlen geht — und das
+stand schon in der Überschrift.
+
+Der Einwand liegt nahe, die Seite hänge unter „Wissen" und dürfe deshalb
+erklären. Er trägt hier nicht: Die Seite setzt ihren Namen ins
+Namensfeld, rechnet acht Zahlen aus ihrem Datum, schreibt „DEINE
+LEBENSZAHL" an eine Karte und sagt im zweiten Satz selbst „Diese Seite
+rechnet sie dir aus". Sie ist eine persönliche Seite, die im
+Wissensbereich steht — und ihre Reihenfolge ist die eines
+Lexikonartikels. Eine 28-Jährige, von deren drei Apps zwei ihr die Zahl
+sofort hinschreiben, liest keine Definition zu Ende, um herauszufinden,
+ob darunter noch etwas kommt.
+
+**Vorschlag:** Die Lebenszahlkarte, die es schon gibt (bei Pixel 1.500,
+180 Pixel hoch, die Ziffer in `.zif`), wandert aus „Dein Blatt" nach oben
+und steht direkt unter „Die Zahlen.", vor den beiden Absätzen. Derselbe
+Baustein, dieselbe Größe, dieselben Farben — nur an erster Stelle. Die
+beiden Absätze rutschen unter „Dein Blatt", wo der Satz „Aus dem Datum
+des aktiven Profils, und aus dem Namen, wenn du einen einträgst" ohnehin
+schon dasselbe erklärt; die Sprungmarken bleiben, wo sie sind. Dann
+steht über dem ersten Falz ihre Zahl, ihr Wort dazu und wofür die Zahl
+gilt, und die Erklärung kommt da, wo sie gebraucht wird.
+
+#### 27.11-2 · Die Zahl, die diese Seite von Co-Star unterscheidet, wird gerechnet und niemandem gezeigt
+
+**Zitat:** Im dunklen Block „Was die Zahlen taugen", bei 390 Pixeln ab
+Pixel 11.145 — 82 Prozent der Seite tief —, in 15,3 Pixeln, Strichstärke
+400, ohne Absatzabstand direkt an den Absatz davor geklebt: **„Rund
+jeder neunte Mensch hat also deine Lebenszahl. Ein Chart dagegen
+wiederholt sich praktisch nie."**
+
+Dieser Satz steht fest in `zahlen-koerper.html` Zeile 114. Ihre
+wirkliche Zahl kennt die Seite: `zAnteil()` in `zahlen-rechner.js`
+rechnet den Anteil jeder Lebenszahl über alle Geburtstage von 1940 bis
+2039, `B.anteil` liegt in `zahlen-app.js` bereit, `zPz()` macht die
+Prozentzahl daraus. Sichtbar wird sie an zwei Stellen: in
+`Z_T.ketteVier`, das `data-ab="4"` trägt und also erst auf Stufe 4
+erscheint, und in `Z_T.berGrenze1`, das in den Text von „Blatt kopieren"
+läuft. Auf den Stufen 0 bis 3 steht sie nirgends — nachgesehen auf
+Stufe 0: das Element ist da und nicht sichtbar.
+
+Für dieses Profil ist die Lebenszahl eine Vier, und ihr Anteil beträgt
+**7,7 %** — rund jeder dreizehnte Mensch, nicht jeder neunte. Die 11,1 %
+gelten für 1, 3, 5, 7, 8 und 9; für die 2 sind es 3,3 %, für die 6
+7,0 %, für die 11 7,8 %, für die 22 3,4 %, für die 33 4,1 %. Bei genau
+der Hälfte der zwölf Zahlen sagt der feste Satz der Leserin etwas
+Falsches — und zwar drei Zeilen unter dem Absatz, der selbst erklärt,
+dass „dasselbe für 4 und 22" gilt. Dass er falsch ist, gehört der
+Prüferin. Hier zählt, warum er überhaupt dasteht: weil die gerechnete
+Zahl keinen Platz hat.
+
+**Kosten:** Der Screenshot-Test und der Kauf-Test, beide an derselben
+Stelle. „7,7 % aller Menschen haben deine Lebenszahl" ist das Einzige
+auf dieser Seite, was Co-Star und The Pattern nicht sagen. Beide
+schreiben die Zahl hin und deuten sie; keiner sagt dazu, wie grob das
+Raster ist. `PRODUKT.md` Abschnitt 3 nennt genau das den Markenkern:
+„Jede rechnende Seite sagt, was die Methode nicht kann, wie häufig eine
+Aussage rechnerisch überhaupt ist … In diesem Feld tut das fast
+niemand."
+
+Diese Seite tut es — in ihrer kleinsten Schriftgröße, am Ende, als
+allgemeine Bemerkung, und 9.606 Pixel von der Vier entfernt, auf die sie
+sich bezieht. Die 40 Pixel der Seite gehen an acht Ziffern, die jede
+Numerologie-App auch ausrechnet. Der Satz, der sagt, was diese Ziffern
+wert sind, bekommt 15,3. Ein Bild von „4 · Die Struktur" schickt niemand
+weiter; ein Bild von „4 — und 7,7 % aller Menschen haben sie auch" ist
+die Mischung aus persönlich und ehrlich, von der `PRODUKT.md`
+Abschnitt 2 sagt, dass sie weitergeschickt wird. Und für den Kauf-Test:
+Der Gedanke „das wäre mir etwas wert" entsteht nicht an der Deutung, die
+überall steht, sondern an der Einordnung, die sonst niemand liefert. Sie
+ist hier vorhanden, gerechnet und geprüft — und für die Leserin
+unsichtbar.
+
+**Vorschlag:** Die gerechnete Prozentzahl zieht an die Lebenszahlkarte,
+dorthin, wo die Vier steht, und ist auf jeder Stufe sichtbar. Unter
+„4 · Die Struktur" und dem vorhandenen Erklärsatz steht eine Zeile aus
+`zPz(B.anteil)`: „7,7 % aller Geburtstage von 1940 bis 2039 ergeben
+diese Zahl." Derselbe Baustein wie der Satz darüber, dieselbe Farbe,
+keine neue Fläche. Der feste Satz in `zahlen-koerper.html` Zeile 114
+wird aus derselben Lücke gefüllt, statt „jeder neunte" zu behaupten.
+Und der Kasten unter dem Ring, der beim Laden „Noch keine Zahl
+ausgewählt. Tippe im Ring eine an" sagt (Pixel 4.213, 110 Pixel hoch),
+zeigt von Anfang an die Lebenszahl mit ihrem Anteil — dann trägt der
+Ring, das einzige Bild der Seite, beim ersten Blick etwas, das nur ihr
+gehört.
+
+Dazu, nach der goldenen Regel aus `REGELN.md` Abschnitt 5 und der Form
+aus Abschnitt 6e, die Prüfung, die die Klasse schließt: `bau-zahlen.py`
+zeichnet die Seite mit festen erfundenen Profilen, deren Lebenszahl
+bekannt ist, und vergleicht die im Laientext **sichtbare**
+Häufigkeitsangabe mit `zAnteil()` für dieses Profil — am gezeichneten
+Text gemessen, nicht am Quelltext, und gegen feste Beispiele gehalten
+(eine Vier muss 7,7 ergeben, eine Eins 11,1, eine Zwei 3,3), weil das
+Ergebnis je Besucherin ein anderes ist. Geprüft wird die Form, nicht das
+Wort „neunte": Der Bau bricht ab, sobald im gezeichneten Text eine
+Häufigkeit steht, die nicht aus `zAnteil()` stammt — und ebenso, sobald
+die Seite eine Angabe, die sie rechnen kann, nur hinter `data-ab="4"`
+führt.
