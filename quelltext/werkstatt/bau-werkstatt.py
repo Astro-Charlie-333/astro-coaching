@@ -39,6 +39,10 @@ def lies(p):
 
 koerper = lies(hier / 'werkstatt-koerper.html')
 app = lies(hier / 'werkstatt-app.js')
+# Seit Aufgabe 66 steht jedes Wort der Seite hier und nicht in der
+# Anzeige; gefüllt wird mit AC_FUELL aus kern/fuellen.js.
+daten = lies(hier / 'werkstatt-daten.js')
+fuellen = lies(hier.parent / 'kern' / 'fuellen.js')
 
 kopf = """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,7 +59,8 @@ html = (kopf + lies(rit / 'basis.css') + "\n" + lies(wiki / 'schwerkraft.css') +
         + lies(wiki / 'profil-formular.css') + "\n" + lies(hier / 'werkstatt-stil.css')
         + '</style>\n</head><body>\n'
         + koerper + "\n<script>\n"
-        + lies(rit / 'engine.js') + "\n" + app
+        + lies(rit / 'engine.js') + "\n" + fuellen + "\n" + daten
+        + "\n" + app
         + "\n</script>\n</body></html>\n")
 
 ziel = wiki / 'praxis.html'
@@ -94,11 +99,25 @@ if auf != zu:
 # Deshalb ist die Sperre hier schärfer als anderswo: Es wird nicht nur
 # nach ihren eigenen Daten gesucht, sondern nach jedem Datum, das wie
 # ein Geburtsdatum aussieht, und nach jedem Namen aus den Prüfdaten.
+#
+# Welche Dateien geprüft werden, steht nicht als Liste da, sondern
+# wird aus dem Ordner geholt: Eine Liste von Hand hätte am 2026-11-28
+# die neue `werkstatt-daten.js` nicht gekannt — genau die Datei, in
+# die jetzt alle Texte wandern. Dieselbe Lehre wie REGELN.md 6f: Die
+# Sperre sitzt an der Form („jede Quelle dieser Seite") und nicht an
+# den Namen, die jemand im Kopf hatte.
+QUELLEN = [(lies(q), q.name) for q in sorted(hier.glob('werkstatt-*'))
+           if q.suffix in ('.html', '.js')]
+ERWARTET = {'werkstatt-koerper.html', 'werkstatt-app.js', 'werkstatt-daten.js'}
+if {n for _, n in QUELLEN} != ERWARTET:
+    fehler.append('die Quellen der Praxis sind andere als erwartet: '
+                  + ', '.join(sorted({n for _, n in QUELLEN} ^ ERWARTET))
+                  + ' — eine neue Quelle gehört in diese Prüfung, bevor '
+                  'Personendaten darin landen können')
 for muster, was in [(r'\b(19|20)\d\d\b', 'eine Jahreszahl'),
                     (r'\b\d{1,2}\.\d{1,2}\.(19|20)\d\d\b', 'ein Datum'),
                     (r'\b\d{1,2}:\d\d\b', 'eine Uhrzeit')]:
-    for datei, name in [(koerper, 'werkstatt-koerper.html'),
-                        (app, 'werkstatt-app.js')]:
+    for datei, name in QUELLEN:
         if re.search(muster, datei):
             fehler.append(f'{was} steht in {name} — auf dieser Seite dürfen '
                           'Geburtsdaten ausschließlich aus dem Browser kommen')
@@ -109,11 +128,91 @@ for muster, was in [(r'\b(19|20)\d\d\b', 'eine Jahreszahl'),
 # gefülltes Namens- oder Aliasfeld als Festwert hat hier nichts zu
 # suchen, egal wie die Person heißt.
 for feld in ['name', 'alias', 'ort', 'wort']:
-    m = re.search(feld + r"\s*:\s*'([^']+)'", koerper + '\n' + app)
+    m = re.search(feld + r"\s*:\s*'([^']+)'",
+                  '\n'.join(q for q, _ in QUELLEN))
     if m:
         fehler.append(f'ein {feld}-Feld steht als Festwert im Quelltext: '
                       + repr(m.group(1)[:30]) + ' — Personendaten kommen hier '
                       'ausschließlich aus dem Browser')
+
+# ── 1a · Die Anzeige schreibt keinen Satz ────────────────────
+#
+#     Aufgabe 66, die letzte des Zuges, der am 2026-11-07 mit
+#     `bereich-app.js` begann. Jedes Wort der Seite steht in
+#     `werkstatt-daten.js` als `WK_T`; die Anzeige setzt mit
+#     `AC_FUELL` ein und jede Zahl geht durch `AC_KOMMA`. Was in
+#     `werkstatt-app.js` stünde, zöge beim Umzug in eine andere
+#     Umgebung nicht mit (`PRODUKT.md` Abschnitt 7) — deshalb ist das
+#     hier eine Sperre und kein Vorsatz.
+sys.path.insert(0, str(rit))
+import pruefwerk
+
+if not re.search(r'\bvar WK_T\s*=', daten):
+    fehler.append('Tafel WK_T fehlt in werkstatt-daten.js')
+fehler += pruefwerk.pruefe_anzeige_satzfrei(app, 'werkstatt-app.js',
+                                            'werkstatt-daten.js')
+fehler += pruefwerk.pruefe_anzeige_ohne_dein(app, 'werkstatt-app.js')
+fehler += pruefwerk.pruefe_fueller(app, 'werkstatt-app.js')
+fehler += pruefwerk.pruefe_vorlagenluecken(daten, app, 'werkstatt-daten.js')
+# Deutscher Text wird nicht kleingeschrieben (`REGELN.md` Abschnitt 4).
+# Hier hat es wirklich zugeschlagen: Der Dateiname eines Readings lief
+# bis zum 2026-11-28 durch `toLowerCase`, und aus „Reading Müller"
+# wurde „reading-müller". Neun Bauten hatten diese Regel, dieser nicht
+# — und genau dort stand die letzte Stelle.
+for _datei, _quelle in (('werkstatt-app.js', app),
+                        ('werkstatt-daten.js', daten)):
+    fehler += pruefwerk.pruefe_grossschreibung(_quelle, _datei)
+    fehler += pruefwerk.pruefe_kein_kleinschreiben(_quelle, _datei)
+fehlt_stelle = pruefwerk.ruft_ohne_stelle(html)
+if fehlt_stelle:
+    fehler.append('die Seite ruft ' + ', '.join(fehlt_stelle)
+                  + ', hat aber kern/fuellen.js nicht mit darauf')
+
+#     Die Anzeige liegt in einer eigenen Hülle, und die Datentafel ist
+#     der einzige neue Name daneben. Ohne das liegen ihre Namen neben
+#     denen der Engine, und die Seite läuft, solange zwei Fassungen
+#     zufällig dasselbe tun — Glück, keine Prüfung (REGELN.md 6f).
+if not re.search(r'^\(function\(\)\{', app, re.M):
+    fehler.append('werkstatt-app.js steht nicht in einer eigenen Hülle — '
+                  'ihre Namen liegen dann neben denen der Engine')
+_OBEN = re.compile(r'^\s*(?:function|var|let|const)\s+([A-Za-z_$][\w$]*)', re.M)
+_fremd = set()
+for _q in (lies(rit / 'engine.js'), fuellen, lies(wiki / 'profil.js'),
+           lies(wiki / 'profil-formular.js'), lies(wiki / 'staedte.js')):
+    _fremd |= set(_OBEN.findall(_q))
+_meine = set(_OBEN.findall(daten))
+if _meine != {'WK_T'}:
+    fehler.append('werkstatt-daten.js vergibt mehr als WK_T: '
+                  + ', '.join(sorted(_meine)))
+if _meine & _fremd:
+    fehler.append('der Name kollidiert mit einer anderen Datei der Seite: '
+                  + ', '.join(sorted(_meine & _fremd)))
+
+#     Die Gegenprobe gegen die Fehlerklasse, die ein grüner Riegel
+#     nicht ausschließt: dass er heute nur nichts zu finden hatte
+#     (`REGELN.md` 6e, Nachsatz). In allen drei Anführungsarten, denn
+#     ein Satz, der in doppelten oder schrägen Anführungszeichen
+#     durchgeht, wäre das Loch, über das die Sätze einzeln
+#     zurückkommen.
+for _art, _an in (('einfache', "'"), ('doppelte', '"'), ('schräge', '`')):
+    _mit = app + '\nvar _gegenprobe=' + _an + 'Noch keine Sitzungsnotizen' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_satzfrei(_mit, 'werkstatt-app.js',
+                                             'werkstatt-daten.js'):
+        fehler.append(f'der Satzriegel sieht eine {_art} Anführung nicht — '
+                      'dann hält er nur, was heute zufällig nicht dasteht')
+    _mit = app + '\nvar _gegenprobe=' + _an + 'deine Sonne' + _an + ';\n'
+    if not pruefwerk.pruefe_anzeige_ohne_dein(_mit, 'werkstatt-app.js'):
+        fehler.append(f'der „dein"-Riegel sieht eine {_art} Anführung nicht '
+                      '— dann kommt die ungebeugte Form einzeln zurück')
+_mit = app + '\nvar _gegenprobe=s.charAt(0).toUpperCase()+s.slice(1);\n'
+if not pruefwerk.pruefe_grossschreibung(_mit, 'werkstatt-app.js'):
+    fehler.append('der Riegel gegen die eigene Großschreibung greift nicht')
+_mit = app + '\nvar _gegenprobe=String(t).toLowerCase();\n'
+if not pruefwerk.pruefe_kein_kleinschreiben(_mit, 'werkstatt-app.js'):
+    fehler.append('der Riegel gegen das Kleinschreiben greift nicht')
+_mit = daten + "\nvar WK_X={a:'{nirgendsgefuellt}'};\n"
+if not pruefwerk.pruefe_vorlagenluecken(_mit, app, 'werkstatt-daten.js'):
+    fehler.append('eine Vorlagenlücke, die niemand füllt, bricht nicht ab')
 
 # ── 2 · Die Tür bleibt still ─────────────────────────────────
 # Verlinkt irgendeine andere ausgelieferte Seite hierher, steht der
@@ -149,6 +248,9 @@ probe = r'''
 const {chromium}=require('playwright');
 (async()=>{
 const f=[];
+/* Was auf der Seite steht, je Ansicht. Geprueft wird in Python:
+   Der Rauchlauf berichtet, die Regel entscheidet (REGELN.md 6e). */
+const texte=[];
 const b=await chromium.launch();
 const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
 p.on('pageerror',e=>f.push('Skriptfehler: '+String(e.message).slice(0,140)));
@@ -179,6 +281,7 @@ if(li.karten!==2) f.push(li.karten+' statt 2 Karten in der Liste');
 if(li.leerSichtbar) f.push('der Leer-Hinweis steht da, obwohl Menschen da sind');
 if(!/1 Mensch|Ein Mensch/.test(li.anzahl)) f.push('die Anzahl stimmt nicht: '+li.anzahl);
 if(li.balken!==2) f.push(li.balken+' statt 2 gefuellte Sitzungsbalken');
+texte.push(['Liste',await p.evaluate(()=>document.body.innerText)]);
 
 /* Einzelansicht oeffnen */
 await p.evaluate(()=>{
@@ -210,6 +313,7 @@ if(de.sitzungen!==6) f.push(de.sitzungen+' statt 6 Sitzungszeilen');
 if(de.gefuellt!==2) f.push(de.gefuellt+' statt 2 gefuellte Sitzungen');
 if(de.spruenge<4) f.push('nur '+de.spruenge+' Spruenge');
 if(de.readings!==1) f.push(de.readings+' statt 1 Reading');
+texte.push(['Einzelansicht',await p.evaluate(()=>document.body.innerText)]);
 
 /* Ein Dokument anlegen und wieder entfernen */
 await p.fill('#wkdt','Analyse');
@@ -261,6 +365,7 @@ const o=await p2.evaluate(()=>({leer:!document.getElementById('wkleer').hidden,
 if(o.karten!==0) f.push(o.karten+' Karten, obwohl niemand angelegt ist');
 if(!o.leer) f.push('ohne Profile fehlt der Hinweis, wo man Menschen anlegt');
 if(!/anlegen/.test(o.text)) f.push('der Leer-Hinweis sagt nicht, wo es weitergeht');
+texte.push(['Liste ohne Profile',await p2.evaluate(()=>document.body.innerText)]);
 
 /* Eine Klient*in in der Praxis anlegen, ohne die Profilseite */
 await p2.click('#wkneu'); await p2.waitForTimeout(150);
@@ -274,6 +379,7 @@ const neu=await p2.evaluate(()=>({n:AC_P.alle().length, detail:!document.getElem
   name:(document.getElementById('wkname')||{}).textContent||'', form:document.getElementById('wkform').hidden}));
 if(neu.n!==1) f.push('nach dem Anlegen stehen '+neu.n+' Profile da');
 if(!neu.detail||!/Probe Drei/.test(neu.name)) f.push('nach dem Anlegen öffnet die Einzelansicht nicht');
+texte.push(['Einzelansicht ohne Notizen',await p2.evaluate(()=>document.body.innerText)]);
 /* Ein Reading ablegen und wieder löschen */
 await p2.fill('#wkrt','Reading Probe'); await p2.fill('#wkrx','Ein Satz.');
 await p2.click('#wkrneu button'); await p2.waitForTimeout(200);
@@ -297,7 +403,7 @@ await p2.click('.wk-k'); await p2.waitForTimeout(200);
 p2.once('dialog',d=>d.accept()); await p2.click('#wkloeschen'); await p2.waitForTimeout(250);
 if(await p2.evaluate(()=>AC_P.alle().length)!==0) f.push('Löschen hat nicht gelöscht');
 
-console.log(JSON.stringify({fehler:f}));
+console.log(JSON.stringify({fehler:f,texte:texte}));
 await b.close();})();
 '''
 
@@ -308,7 +414,29 @@ try:
     if r.returncode != 0:
         fehler.append('Rauchprobe gescheitert: ' + (r.stderr or '')[-300:])
     else:
-        fehler.extend(json.loads(r.stdout.strip().splitlines()[-1])['fehler'])
+        ergebnis = json.loads(r.stdout.strip().splitlines()[-1])
+        fehler.extend(ergebnis['fehler'])
+        # ── Die Seite gibt einem Menschen kein Geschlecht ────
+        #     `PRODUKT.md` Abschnitt 2: keine Seite setzt ein
+        #     männliches Gegenüber voraus. Bis zum 28.11. stand auf
+        #     dieser hier an sechs Stellen „Wie er auf andere wirkt",
+        #     „Seine öffentliche Richtung", „Sein Bild" — für eine
+        #     Zielgruppe, die die Seite selbst „Klient*innen" nennt
+        #     und die überwiegend Frauen sind. Im Profil steht kein
+        #     Geschlecht; die Seite kann es also nicht wissen.
+        #
+        #     Geprüft wird am gezeichneten Text und nicht im
+        #     Quelltext: Die Hälfte dieser Sätze entsteht erst beim
+        #     Zeichnen. Und die Zahl der Ansichten wird mitgeprüft —
+        #     eine Regel ohne Eingabe ist keine (REGELN.md 6e).
+        texte = ergebnis.get('texte', [])
+        if len(texte) < 4:
+            fehler.append(f'die Rauchprobe hat nur {len(texte)} von vier '
+                          'Ansichten gelesen — ohne Text prüft die '
+                          'Geschlechtsregel nichts')
+        for lage, text in texte:
+            fehler += pruefwerk.pruefe_ohne_geschlecht(text,
+                                                       f'der Seite ({lage})')
 except Exception as e:
     fehler.append('Rauchprobe nicht gelaufen: ' + str(e)[:200])
 finally:

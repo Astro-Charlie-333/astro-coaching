@@ -76,8 +76,12 @@ Coachin. **Wie weit es ist, steht nicht hier, sondern in
 nachgezählt, und die Liste bricht in beide Richtungen. Eine Liste in
 einem Dokument driftet; diese kann nur schrumpfen.
 
-Nach `reading-app.js` am 2026-11-27 ist von diesem Zug **eine**
-Anzeige übrig: Aufgabe 66.
+Mit `werkstatt-app.js` am 2026-11-28 ist dieser Zug **zu Ende**.
+`ANZEIGEN` in `pruefe-alles.py` ist leer, alle sechsundzwanzig stehen
+unter `FERTIG`, und jede hat beide Riegel. Von hier an bricht die
+Liste nur noch in eine Richtung: Jeder Satz, der in eine Anzeige
+zurückkommt, ist einer zu viel. Was von der Aufgabe bleibt, sind die
+Rechner — Aufgabe 97 nennt den ersten.
 
 Für jede der Aufgaben 51 bis 66 gilt dasselbe, deshalb steht es
 einmal hier. **Fertig, wenn:** die Sätze dieser Anzeige in ihrer
@@ -96,9 +100,6 @@ hinterher.
 Die Zahlen in Klammern sind der Stand vom 2026-11-07: (Sätze, „dein"
 von Hand). Sie stehen hier nur, damit man den Umfang einer Aufgabe
 abschätzen kann — gezählt wird in `pruefe-alles.py`.
-
-### 66 · `werkstatt-app.js` (39, 2)
-`werkstatt.html`.
 
 ### 97 · `ereignis-rechner.js` schreibt die Sätze der Seite
 Gefunden beim Erledigen von Aufgabe 63 am 2026-11-25. Die Anzeige ist
@@ -202,6 +203,18 @@ Nachlesen — die Aufgabe ist also größer als ein Aufruf.
 **Fertig, wenn:** `PUNKT_OFFEN` leer ist, jeder Bau den sichtbaren
 Text seiner Seite auf jeder Stufe gegen die Regel hält, und eine
 absichtlich eingesetzte Zahl mit Punkt jeden dieser Bauten abbricht.
+
+*Nachtrag vom 2026-11-28, beim Erledigen von Aufgabe 66:* Die
+Praxisseite konnte die Regel nicht dazunehmen, und das ist kein
+Versäumnis, sondern eine Lücke in der Regel selbst. `praxis.html`
+druckt Geburtsdaten in deutscher Schreibung — „9.3.1975" —, und
+`pruefwerk.dezimalpunkte` liest darin eine Zahl mit zwei Punkten.
+Ein Datum erkennt man an Tag-Punkt-Monat-Punkt-Jahr und nicht
+daran, dass irgendwo ein Punkt zwischen Ziffern steht
+(`REGELN.md` 6e, Punkt 1). Wer diese Aufgabe anfasst, fängt dort an:
+Solange die Regel ein Datum für eine krumme Zahl hält, kann keine
+Seite sie rufen, die Daten zeigt — und das sind die meisten
+Arbeitsseiten der Praxis.
 
 ### 101 · Die Stufe-0-Wortliste steht in acht Bauten einzeln
 Gefunden beim Erledigen von Aufgabe 65 am 2026-11-27. `REGELN.md`
@@ -1058,6 +1071,76 @@ ein Ergebnis haben soll") und einem, das durchgehen muss —, weil der Satz
 nur an Tagen erscheint, an denen der Mond ohne Anschluss läuft, und eine
 Prüfung sonst grün ist, ohne etwas geprüft zu haben.
 
+### 108 · Siebenundzwanzig Bauten halten die deutsche Großschreibung nicht
+Gefunden beim Erledigen von Aufgabe 66 am 2026-11-28, und zwar an der
+Datei, die dabei herauskommt: Der Dateiname eines heruntergeladenen
+Readings lief durch `toLowerCase`, und aus „Reading Müller" wurde
+`reading-müller.html`. `REGELN.md` Abschnitt 4 verbietet das seit
+Monaten und sagt, es werde geprüft — geprüft haben es neun von
+achtundzwanzig Bauten, in fünf verschiedenen Fassungen, und
+`bau-werkstatt.py` war keiner davon. Die letzte Stelle im ganzen
+Quelltext stand genau dort, wo keine der neun hinsah.
+
+Dieselbe Lehre wie bei `AC_FUELL`, `AC_KOMMA` und `AC_GROSS`, nur auf
+der Prüfseite: Fünf Fassungen heißt, dass vier veraltet sind, sobald
+eine klüger wird. Die Regel steht seit heute als
+`pruefwerk.pruefe_kein_kleinschreiben` an einer Stelle, mit festen
+Beispielen; gerufen hat sie genau ein Bau. Wer sie ruft, zählt
+`pruefe-alles.py` bei jedem Lauf nach (`KLEIN_DURCH`), und die Liste
+kann nur schrumpfen.
+
+Zu entscheiden ist dabei eine Sache, die die Regel nicht an der Form
+entscheiden kann: `tagName.toLowerCase()` in einer Rauchprobe
+vergleicht Markennamen von Tags und keinen deutschen Text. Deutsche
+Großschreibung und ASCII sind an der Form nicht zu trennen — die
+Auswahl der übergebenen Dateien trennt sie. Jeder Bau übergibt also
+die Dateien, aus denen der **Text** der Seite entsteht, und nicht
+sein Probeskript.
+**Fertig, wenn:** jeder Bau `pruefwerk.pruefe_kein_kleinschreiben` auf
+seine Text-Dateien ruft, `KLEIN_DURCH` alle achtundzwanzig nennt, keine
+eigene Fassung dieser Regel mehr in einem `bau-*.py` steht, und ein von
+Hand eingesetztes `.toLowerCase(` jeden dieser Bauten abbrechen lässt —
+nachgewiesen mit einer Gegenprobe je Bau, wie in `bau-werkstatt.py`.
+
+### 109 · Vier Arbeitsseiten geben ihren Klient*innen ein Geschlecht
+Gefunden beim Erledigen von Aufgabe 66 am 2026-11-28 und dort für die
+Praxisseite behoben. Auf `praxis.html` hieß es an sechs Stellen „Wie
+er auf andere wirkt", „Worauf er hinauswill", „Was er braucht",
+„Seine öffentliche Richtung", „Wo sein Leben hauptsächlich
+stattfindet" und „Sein Bild" — auf der Seite, die ihre Menschen selbst
+„Klient*innen" nennt und deren Zielgruppe überwiegend Frauen sind
+(`PRODUKT.md` Abschnitt 2, Punkt 4). Im Profil steht kein Geschlecht;
+die Seite konnte es nie wissen. Das ist dieselbe Fehlerklasse wie „der
+Tag des Sonne" am 2026-11-19 — eine deutsche Form, von Hand gesetzt,
+die für die meisten Fälle falsch ist —, nur an einem Menschen statt an
+einem Planeten.
+
+`pruefwerk.pruefe_ohne_geschlecht` hält das seit heute fest, am
+gezeichneten Text und auf allen vier Ansichten der Praxis. Gerufen
+wird sie von einem Bau. Nachgemessen im sichtbaren Text der anderen
+Arbeitsseiten stehen heute: `begleitung.html` („er", „ihn",
+„seinem"), `monatsbericht.html` („er", „ihn"), `praxis-bereiche.html`
+(„er") und `dossier.html` („ihm"). Das ist der Stand von heute und
+keine Zusage — gemessen ist nur das Markup, nicht, was diese Seiten
+beim Rechnen dazuschreiben.
+
+Was die Regel **nicht** fängt, und zwar mit Absicht: die weiblichen
+Formen. „sie" ist zugleich die Mehrzahl, „ihr" zugleich die Anrede an
+zwei Menschen („Wo ihr steht"), „ihre" zugleich der Besitz einer
+Gruppe. Eine Regel darauf wäre genau der Fehler aus `REGELN.md` 6e —
+ein Wort, das meistens dabeisteht, statt der gemeinten Form. Gefangen
+wird die Seite, in die deutscher Text von allein kippt, und das ist
+die männliche. Wer mehr will, braucht einen anderen Griff als ein
+Suchmuster.
+**Fertig, wenn:** die vier Seiten keinen Menschen mehr in einem
+Geschlecht nennen — weder im Markup noch in dem, was sie rechnen —,
+jeder ihrer Bauten `pruefwerk.pruefe_ohne_geschlecht` am gezeichneten
+Text jeder Ansicht ruft, eine von Hand eingesetzte Form wie „Sein
+Bild" jeden dieser Bauten abbrechen lässt, und die handgemachten
+Seiten darunter (`briefing`, `faden`, `monatsbericht`) wie
+`profile.html` in Aufgabe 75 von `pruefe-alles.py` nachgemessen
+werden.
+
 ## Was nicht gemacht wird
 
 * Keine neuen Rechenverfahren, solange die vorhandenen nicht verständlich
@@ -1771,6 +1854,64 @@ dazukommt, und `bau-oph.py` beides in seiner Rauchprobe festhält —
 wie `bau-ereignis.py` es für `ereignisse-lesen.html` tut.
 
 ## Erledigt
+
+* **2026-11-28** · `werkstatt-app.js` kommt aus dem Satzgeschäft heraus
+  (Aufgabe 66, aus 34 und 38) — `praxis.html`, Mandys Arbeitsplatz.
+  **Damit ist dieser Zug zu Ende**: `ANZEIGEN` in `pruefe-alles.py`
+  ist leer, alle sechsundzwanzig Anzeigen stehen unter `FERTIG`, und
+  jede hat beide Riegel. Die achtunddreißig Sätze und Beschriftungen
+  stehen jetzt in `werkstatt-daten.js` als `WK_T`, gefüllt mit
+  `AC_FUELL`, jede Zahl durch `AC_KOMMA`. Einzahl und Mehrzahl sind
+  eigene Vorlagen und kein Satz mit angeklebter Zahl („Ein Mensch,
+  mit dem du arbeitest" neben „{n} Menschen, mit denen du
+  arbeitest") — die Lehre aus `AN_T.waage` vom 2026-11-23.
+
+  Drei Fehlerklassen kamen mit heraus, und zwei davon konnte man
+  sehen.
+
+  **Die Seite gab jedem Menschen dasselbe Geschlecht.** An sechs
+  Stellen stand „Wie er auf andere wirkt", „Worauf er hinauswill",
+  „Was er braucht", „Seine öffentliche Richtung", „Wo sein Leben
+  hauptsächlich stattfindet", „Sein Bild" — auf der Seite, die ihre
+  Menschen selbst „Klient*innen" nennt und deren Zielgruppe
+  überwiegend Frauen sind (`PRODUKT.md` Abschnitt 2, Punkt 4). Im
+  Profil steht kein Geschlecht; die Seite konnte es nie wissen.
+  Dieselbe Fehlerklasse wie „der Tag des Sonne" am 2026-11-19 — eine
+  deutsche Form von Hand, die für die meisten Fälle falsch ist —, nur
+  an einem Menschen statt an einem Planeten. Die Sätze nennen jetzt
+  keines („Worauf dieser Mensch hinauswill"), und
+  `pruefwerk.pruefe_ohne_geschlecht` prüft das am gezeichneten Text
+  jeder der vier Ansichten. Vier weitere Arbeitsseiten haben
+  dasselbe: Aufgabe 109.
+
+  **Der Dateiname eines Readings wurde kleingeschrieben.** Aus
+  „Reading Müller" wurde `reading-müller.html`. `REGELN.md` Abschnitt
+  4 verbietet `toLowerCase` auf deutschem Text seit Monaten und sagt,
+  es werde geprüft — geprüft haben es neun von achtundzwanzig Bauten,
+  in fünf Fassungen, und dieser nicht. Genau dort stand die letzte
+  Stelle im ganzen Quelltext. Die Regel steht jetzt als
+  `pruefwerk.pruefe_kein_kleinschreiben` an einer Stelle; wer sie
+  ruft, zählt `pruefe-alles.py` nach (Aufgabe 108).
+
+  **Die schärfste Sperre des Projekts las eine Liste von zwei
+  Dateinamen.** Prüfung 1 dieses Baus sucht nach jedem Datum, das wie
+  ein Geburtsdatum aussieht, weil hier die Daten fremder Menschen
+  liegen. Sie prüfte `werkstatt-koerper.html` und
+  `werkstatt-app.js` — die neue `werkstatt-daten.js`, in die heute
+  alle Texte gewandert sind, stand nicht darin und wäre ungeprüft
+  gewesen. Sie holt die Quellen jetzt aus dem Ordner und meldet, wenn
+  eine dazukommt, die niemand eingetragen hat. Dieselbe Lehre wie
+  `REGELN.md` 6f: Die Sperre saß an den Namen, die jemand im Kopf
+  hatte, und nicht an der Form.
+
+  Die Riegel haben ihre Gegenproben, in allen drei Anführungsarten:
+  ein von Hand eingesetzter Satz, ein von Hand eingesetztes „dein",
+  eine eigene Großschreibung, ein `.toLowerCase(` und eine
+  Vorlagenlücke, die niemand füllt, bringen den Bau jeweils zum
+  Abbruch. Dazu neu: die Anzeige liegt in einer eigenen Hülle, und
+  `WK_T` ist der einzige Name, den die Seite neben Engine, Profil und
+  `kern/fuellen.js` vergibt — bis heute hat das niemand nachgesehen
+  (`REGELN.md` Abschnitt 5, Punkt 3).
 
 * **2026-11-27** · `reading-app.js` kommt aus dem Satzgeschäft heraus
   (Aufgabe 65, aus 34 und 38) — `reading.html`, das Werkzeug, mit dem
