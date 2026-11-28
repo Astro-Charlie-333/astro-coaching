@@ -850,7 +850,48 @@ ANZEIGEN = {
     # gleich, die Seite lief also. Glück, keine Prüfung
     # (REGELN.md 6f); die Rechnung steht jetzt in
     # reading-rechner.js und gegen die Engine.
-    'werkstatt/werkstatt-app.js':  (38, 2),
+    # werkstatt am 28.11. (Aufgabe 66) — die letzte. Dieser Zug begann
+    # am 7.11. mit bereich-app.js und ist mit dieser Zeile zu Ende:
+    # ANZEIGEN ist leer, und jede Anzeige steht unter FERTIG mit
+    # beiden Riegeln. Die Liste bricht ab hier in nur noch eine
+    # Richtung — jeder Satz, der in eine Anzeige zurückkommt, ist
+    # einer zu viel.
+    #
+    # Drei Fehlerklassen kamen mit heraus, und zwei davon konnte man
+    # auf der Seite sehen.
+    #
+    # Die erste: Die Praxisseite gab jedem Menschen, mit dem Mandy
+    # arbeitet, dasselbe Geschlecht — „Wie er auf andere wirkt",
+    # „Worauf er hinauswill", „Was er braucht", „Seine öffentliche
+    # Richtung", „Wo sein Leben hauptsächlich stattfindet", „Sein
+    # Bild". Sechs Stellen, auf einer Seite, die ihre Menschen selbst
+    # „Klient*innen" nennt und deren Zielgruppe überwiegend Frauen
+    # sind (PRODUKT.md Abschnitt 2). Im Profil steht kein Geschlecht;
+    # die Seite konnte es also nie wissen. Dieselbe Fehlerklasse wie
+    # „der Tag des Sonne" am 19.11. — eine deutsche Form von Hand,
+    # die für die meisten Fälle falsch ist —, nur an einem Menschen
+    # statt an einem Planeten. Die Sätze nennen jetzt keines, und
+    # pruefwerk.pruefe_ohne_geschlecht hält das am gezeichneten Text
+    # fest.
+    #
+    # Die zweite: Der Dateiname eines heruntergeladenen Readings lief
+    # durch toLowerCase — aus „Reading Müller" wurde
+    # „reading-müller". REGELN.md Abschnitt 4 verbietet das seit
+    # Monaten und sagt, es werde geprüft; geprüft haben es neun von
+    # siebenundzwanzig Bauten, in fünf Fassungen, und dieser nicht.
+    # Genau dort stand die letzte Stelle im ganzen Quelltext. Die
+    # Regel steht jetzt als pruefwerk.pruefe_kein_kleinschreiben an
+    # einer Stelle; welcher Bau sie ruft, zählt KLEIN_OFFEN unten
+    # nach.
+    #
+    # Die dritte, nicht sichtbar: Prüfung 1 dieses Baus — „kein
+    # echtes Geburtsdatum im Quelltext", die schärfste Sperre des
+    # Projekts, weil hier fremde Daten liegen — las eine Liste von
+    # zwei Dateinamen. Die neue werkstatt-daten.js, in die alle Texte
+    # wandern, stand nicht darin und wäre ungeprüft gewesen. Sie holt
+    # die Quellen jetzt aus dem Ordner. Dieselbe Lehre wie REGELN.md
+    # 6f: Die Sperre saß an den Namen, die jemand im Kopf hatte, und
+    # nicht an der Form.
 }
 # Diese sind durch und werden von ihrem eigenen bau-*.py gehalten;
 # sie stehen hier nur, damit auffällt, wenn eine davon zurückfällt und
@@ -868,7 +909,8 @@ FERTIG = {'bereiche/bereich-app.js', 'bereiche/wahl-app.js',
           'rituale/zauber-app.js', 'geist/geist-app.js',
           'dossier/dossier-app.js', 'analyse/analyse-app.js',
           'begleitung/begleit-app.js', 'ereignis/ereignis-app.js',
-          'oph/oph-app.js', 'niveau/reading-app.js'}
+          'oph/oph-app.js', 'niveau/reading-app.js',
+          'werkstatt/werkstatt-app.js'}
 
 # Die Sperre bricht in beide Richtungen. Welche Richtung es ist,
 # entscheidet diese Regel — und sie steht in einer eigenen Funktion
@@ -1379,6 +1421,57 @@ if punktfehler:
 else:
     print(f'  {len(punkt_ruft)} von {len(alle_bauten)} Bauten lesen die Zahlen'
           ' der gezeichneten Seite nach')
+
+# ── Wer deutschen Text baut, lässt ihn groß (Aufgabe 66) ──────
+# `REGELN.md` Abschnitt 4 sagt seit Monaten: „Niemals `toLowerCase`
+# auf deutschen Text — das ist beim Bauen verboten und wird geprüft."
+# Geprüft haben es am 28.11. neun von siebenundzwanzig Bauten, in
+# fünf verschiedenen Fassungen — und die letzte Stelle im ganzen
+# Quelltext stand in `werkstatt-app.js`, also genau dort, wo keine
+# davon hinsah: Aus dem Reading für „Müller" wurde die Datei
+# „reading-müller".
+#
+# Dieselbe Lehre wie bei AC_FUELL, AC_KOMMA und AC_GROSS: Fünf
+# Fassungen heißt, dass vier veraltet sind, sobald eine klüger wird.
+# Die Regel steht jetzt als `pruefwerk.pruefe_kein_kleinschreiben` an
+# einer Stelle. Hier wird nachgezählt, wer sie ruft; wer eine eigene
+# Fassung führt, steht unter OFFEN. Die Liste kann nur schrumpfen und
+# bricht in beide Richtungen.
+KLEIN_DURCH = {'werkstatt/bau-werkstatt.py'}
+_KLEINAUFRUF = re.compile(r'\bpruefwerk\.pruefe_kein_kleinschreiben\s*\(')
+
+
+def _ruft_klein(quelle):
+    return bool(_KLEINAUFRUF.search(re.sub(r'(?m)^[ \t]*#.*$', '', quelle)))
+
+
+# Feste Beispiele (REGELN.md 6e), dieselbe Falle wie bei den Zahlen:
+# Der Name steht auch im Kommentar daneben.
+assert _ruft_klein('fehler += pruefwerk.pruefe_kein_kleinschreiben(q, d)')
+assert _ruft_klein('  for m in pruefwerk.pruefe_kein_kleinschreiben( q, d ):')
+assert not _ruft_klein('# ruft pruefwerk.pruefe_kein_kleinschreiben(q, d) auf')
+assert not _ruft_klein('x = pruefe_kein_kleinschreiben')
+assert not _ruft_klein('')
+
+KLEIN_OFFEN = alle_bauten - KLEIN_DURCH
+klein_ruft = {b for b in alle_bauten
+              if _ruft_klein((hier / b).read_text(encoding='utf-8'))}
+kleinfehler = []
+if klein_ruft - KLEIN_DURCH:
+    kleinfehler.append('ruft die gemeinsame Regel, steht aber unter OFFEN: '
+                       + ', '.join(sorted(klein_ruft - KLEIN_DURCH))
+                       + ' — nach KLEIN_DURCH verschieben')
+if KLEIN_DURCH - klein_ruft:
+    kleinfehler.append('steht unter DURCH, ruft die Regel aber nicht: '
+                       + ', '.join(sorted(KLEIN_DURCH - klein_ruft)))
+if kleinfehler:
+    for r in kleinfehler:
+        print('  KLEINSCHREIBUNG: ' + r)
+    fehlgeschlagen.append('die Kleinschreibregel wird nicht überall gerufen')
+else:
+    print(f'  {len(klein_ruft)} von {len(alle_bauten)} Bauten halten die '
+          f'deutsche Großschreibung über die gemeinsame Regel'
+          f' — noch {len(KLEIN_OFFEN)} mit eigener Fassung oder ohne')
 
 print('=' * 62)
 print(f'  {time.time() - t0:.0f} Sekunden')

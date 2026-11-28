@@ -1172,3 +1172,180 @@ assert fachwoerter_auf_stufe0('Los des Dämons', extra=['Los des']) == ['Los des
 assert 'Krebs' in pruefe_stufe0('Krebs-Anteil')[0]
 assert pruefe_stufe0('Dein Gefühl') == []
 del _t, _w
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Deutscher Text wird nicht kleingeschrieben
+#
+#  `REGELN.md` Abschnitt 4 sagt es seit Monaten: „Niemals
+#  `toLowerCase` auf deutschen Text — das ist beim Bauen verboten und
+#  wird geprüft." Geprüft haben es neun von siebenundzwanzig Bauten,
+#  in fünf verschiedenen Fassungen — und am 2026-11-28 stand die
+#  letzte Stelle genau dort, wo keine davon hinsah:
+#
+#      a.download = (x.titel || 'reading').toLowerCase()…
+#
+#  Aus dem Reading für „Müller" wurde die Datei „reading-müller".
+#  Dieselbe Lehre wie bei `AC_FUELL`, `AC_KOMMA` und `AC_GROSS`: Eine
+#  Regel in fünf Fassungen ist nach der ersten Verschärfung in vier
+#  davon veraltet (REGELN.md Abschnitt 5). Deshalb steht sie hier.
+#
+#  Geprüft wird die **Umwandlung**, nicht das Wort: `.toLowerCase(`
+#  mit Punkt und Klammer. Der Name allein steht in Kommentaren und in
+#  dieser Meldung, und `'toLowerCase'` als Zeichenkette ist ein Name
+#  und keine Umwandlung.
+#
+#  Wer diese Regel ruft, übergibt die Dateien, aus denen der **Text**
+#  der Seite entsteht — Anzeige, Daten, Rechner. Ein Rauchlauf, der
+#  `tagName.toLowerCase()` benutzt, vergleicht Markennamen von Tags
+#  und keinen deutschen Text; deutsche Großschreibung und ASCII
+#  lassen sich nicht an der Form auseinanderhalten, also entscheidet
+#  die Auswahl der Dateien und nicht ein Sonderfall in der Regel.
+_KLEIN = re.compile(r'\.toLowerCase\s*\(')
+
+
+def kleinschreibt(code):
+    """Jede Stelle, an der `code` Text kleinschreibt, als Zeile."""
+    t = nur_code(code)
+    return [t.count('\n', 0, m.start()) + 1 for m in _KLEIN.finditer(t)]
+
+
+def pruefe_kein_kleinschreiben(code, datei):
+    """Bricht ab, sobald `datei` deutschen Text kleinschreibt."""
+    return [f'toLowerCase in {datei} (Zeile {z}) — deutsche Substantive '
+            'bleiben groß (REGELN.md Abschnitt 4); aus „Müller" wird '
+            'sonst „müller"'
+            for z in kleinschreibt(code)]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+assert kleinschreibt("a.download=(x.titel||'reading').toLowerCase();") == [1]
+assert kleinschreibt('var s = t\n  .toLowerCase()\n  .trim();') == [2]
+assert kleinschreibt('s.toLowerCase ()') == [1]
+# Der Name ohne Umwandlung ist keine Umwandlung — so steht er im
+# Kommentar daneben, in dieser Datei und in der Meldung.
+assert kleinschreibt('/* toLowerCase auf deutschem Text ist verboten */') == []
+assert kleinschreibt('// kein .toLowerCase() hier') == []
+assert kleinschreibt("var name = 'toLowerCase';") == []
+assert kleinschreibt('s.toUpperCase()') == []
+assert kleinschreibt('') == []
+assert pruefe_kein_kleinschreiben('s.toLowerCase()', 'x-app.js')[0].startswith(
+    'toLowerCase in x-app.js (Zeile 1)')
+assert pruefe_kein_kleinschreiben('s.toUpperCase()', 'x-app.js') == []
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Eine Seite gibt einem Menschen kein Geschlecht
+#
+#  `PRODUKT.md` Abschnitt 2: Die Zielgruppe sind überwiegend Frauen,
+#  und keine Seite setzt ein männliches Gegenüber voraus. Auf der
+#  Praxisseite stand bis zum 2026-11-28 trotzdem an sechs Stellen:
+#
+#      Wie er auf andere wirkt · Worauf er hinauswill · Was er
+#      braucht · Seine öffentliche Richtung · Wo sein Leben
+#      hauptsächlich stattfindet · Sein Bild
+#
+#  Das ist dieselbe Fehlerklasse wie „der Tag des Sonne" am
+#  2026-11-19: eine deutsche Form, von Hand gesetzt, die für die
+#  meisten Fälle falsch ist. Nur sitzt sie hier nicht an einem
+#  Planeten, sondern an einem Menschen — und die Seite kann sein
+#  Geschlecht gar nicht wissen, weil im Profil keines steht.
+#
+#  Geprüft wird die Form, nicht ein Wort, das meistens dabeisteht
+#  (REGELN.md 6e):
+#
+#    · Die Pronomen stehen als eigene Wörter. „Sommer" ist nicht
+#      „er", „Seinerzeit" nicht „seiner".
+#    · „sein" ist auch ein Verb („das kann nicht sein"). Als
+#      Besitzform steht es unmittelbar vor einem Hauptwort, und
+#      deutsche Hauptwörter sind groß — geprüft wird deshalb „sein"
+#      plus Leerzeichen plus Großbuchstabe, in derselben Zeile.
+#
+#  Was diese Regel **nicht** fängt, und zwar mit Absicht: die
+#  weiblichen Formen. „sie" ist zugleich die Mehrzahl („die Teile …
+#  sie lagen auf fünf Seiten"), „ihr" zugleich die Anrede an zwei
+#  Menschen („Wo ihr steht"), und „ihre" zugleich der Besitz einer
+#  Gruppe. Eine Regel darauf wäre genau der Fehler, vor dem
+#  REGELN.md 6e warnt: ein Wort, das meistens dabeisteht, statt der
+#  gemeinten Form. Gefangen wird also die Seite, in die deutscher
+#  Text von allein kippt — und das ist die männliche.
+#
+#  Gelesen wird der gezeichnete Text, und der steht da, wo das CSS
+#  Großbuchstaben setzt, in Großbuchstaben. Deshalb lesen die ersten
+#  drei Muster ohne Rücksicht auf die Schreibung — sonst versteckt
+#  sich „SEINE RICHTUNG" hinter einer Stilregel. Das vierte kann das
+#  nicht: Es unterscheidet Besitzform und Verb genau daran, dass ein
+#  Großbuchstabe folgt, und bekommt deshalb die Großform einzeln.
+_GESCHLECHT = [
+    re.compile(r'(?<![A-Za-zÄÖÜäöüß])er(?![A-Za-zÄÖÜäöüß])', re.I),
+    re.compile(r'(?<![A-Za-zÄÖÜäöüß])ih[nm](?![A-Za-zÄÖÜäöüß])', re.I),
+    re.compile(r'(?<![A-Za-zÄÖÜäöüß])seine[mnrs]?(?![A-Za-zÄÖÜäöüß])', re.I),
+    # Die Besitzform vor einem Hauptwort, nicht das Verb.
+    re.compile(r'(?<![A-Za-zÄÖÜäöüß])(?:[Ss]ein|SEIN) +(?=[A-ZÄÖÜ])'),
+]
+
+
+def geschlecht_im_text(text):
+    """Jede Stelle, an der ein Text einem Menschen ein Geschlecht
+    gibt, als Wort."""
+    raus = []
+    for muster in _GESCHLECHT:
+        raus += [m.group(0).strip() for m in muster.finditer(text)]
+    return sorted(set(raus))
+
+
+def pruefe_ohne_geschlecht(text, woher='der Seite'):
+    """Bricht ab, sobald ein Text über einen Menschen so spricht, als
+    wüsste die Seite sein Geschlecht."""
+    treffer = geschlecht_im_text(text)
+    if not treffer:
+        return []
+    return ['auf %s bekommt ein Mensch ein Geschlecht: %s — im Profil '
+            'steht keines (PRODUKT.md Abschnitt 2)'
+            % (woher, ', '.join(treffer[:8]))]
+
+
+# ── Die festen Beispiele (REGELN.md 6e) ────────────────────────
+# Was anschlagen muss: die sechs Stellen, die am 2026-11-28 wirklich
+# auf praxis.html standen.
+for _t, _w in [('Wie er auf andere wirkt', ['er']),
+               ('Worauf er hinauswill', ['er']),
+               ('Seine öffentliche Richtung', ['Seine']),
+               ('Wo sein Leben hauptsächlich stattfindet', ['sein']),
+               ('Sein Bild', ['Sein']),
+               ('mit allem, was du zu ihm sammelst', ['ihm']),
+               ('Du siehst ihn zum ersten Mal', ['ihn']),
+               ('in seinem Bild', ['seinem']),
+               ('der Herrscher seines 1. Hauses', ['seines']),
+               # Was das CSS in Großbuchstaben setzt, liest innerText
+               # auch so — die Regel darf daran nicht vorbeisehen.
+               ('SEINE ÖFFENTLICHE RICHTUNG', ['SEINE']),
+               ('WIE ER AUF ANDERE WIRKT', ['ER']),
+               ('SEIN BILD', ['SEIN'])]:
+    assert geschlecht_im_text(_t) == _w, \
+        f'müsste anschlagen: {_t} → {geschlecht_im_text(_t)}'
+# Was durchgehen muss. Ein Pronomen als Teil eines Wortes ist keins —
+# sonst schlägt die Regel auf „Sommer" an und wird abgeschaltet.
+for _t in ['Worauf dieser Mensch hinauswill',
+           'Wie dieser Mensch auf andere wirkt',
+           'Wo das Leben hauptsächlich stattfindet',
+           'Das Bild · Die öffentliche Richtung',
+           'Sommer, Herkunft, Erfahrung, Vermieter, Seinerzeit',
+           'aber wer der Erste war, weiß keiner',
+           # Das Verb „sein", in allen Stellungen, die vorkommen.
+           'Das kann ein Zufall sein.',
+           'Was es heißt, erwachsen zu sein',
+           'Es muss nicht bequem sein',
+           'Das kann nicht sein. Dein Profil steht oben.',
+           # Die weiblichen Formen bleiben draußen, und zwar bewusst:
+           # sie sind von Mehrzahl und Anrede nicht zu unterscheiden.
+           'Wo ihr steht',
+           'Die Teile lagen auf fünf Seiten, und sie lagen dort lange',
+           'Schwerkraft, wie alle sie sehen',
+           'Die Praxis legt ihre Klient*innen selbst an',
+           '']:
+    assert geschlecht_im_text(_t) == [], \
+        f'müsste durchgehen: {_t} → {geschlecht_im_text(_t)}'
+assert 'er' in pruefe_ohne_geschlecht('Was er braucht')[0]
+assert pruefe_ohne_geschlecht('Was dieser Mensch braucht') == []
+del _t, _w
